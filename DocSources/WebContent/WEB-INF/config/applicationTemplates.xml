@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="template.completeDOM" template="/WEB-INF/templates/completeDOM.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/fragments/Header.jspf"/>
+        <put-attribute name="menu" value="/WEB-INF/jsp/fragments/Menu.jspf"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jspf"/>
+    </definition>
+        
+    <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/fragments/Header.jspf"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jspf"/>
+    </definition>
+
+    <definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp">
+    </definition>
+
+    <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp">
+    </definition>
+
+	<!-- Authentication Module BEGIN -->
+    <definition name="LoginUser" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/LoginUser.jsp"/>
+    </definition>
+    
+    <definition name="user/RegisterUser" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUser.jsp"/>
+    </definition>
+
+	<definition name="user/SendUserDetails" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserDetails.jsp"/>
+	</definition>
+
+	<!-- Authentication Module END -->
+    <definition name="Home" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/Home.jsp"/>
+    </definition>
+
+    <definition name="user/DeleteUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/delete.jsp"/>
+    </definition>
+
+	<definition name="user/AdvancedSearchUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/advancedsearch.jsp"/>
+    </definition>
+
+   	<definition name="user/SearchUserResult" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUserResult.jsp"/>
+    </definition>
+    
+   	<definition name="user/SearchUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUser.jsp"/>
+    </definition>
+
+    <definition name="user/UpdateUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/UpdateUser.jsp"/>
+    </definition>
+    
+    <definition name="user/UpdateUserPassword" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/UpdateUserPassword.jsp"/>
+    </definition>
+    
+	<definition name="user/UploadUserPhoto" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/user/UploadUserPhoto.jsp"/>
+	</definition>
+	
+	<definition name="volbase/ShowVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowVolume.jsp"/>
+	</definition>
+
+    <definition name="responseKO" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/response/KO.jsp"/>
+    </definition>
+
+    <definition name="responseOK" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/response/OK.jsp"/>
+    </definition>
+
+    <definition name="accessDenied" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/accessDenied.jsp"/>
+    </definition>
+
+    <definition name="404" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/404.jsp"/>
+    </definition>
+
+    <definition name="500" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/500.jsp"/>
+    </definition>
+    
+</tiles-definitions>

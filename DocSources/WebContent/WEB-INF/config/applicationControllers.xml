@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+    
+    <context:component-scan base-package="org.medici.docsources.controller"/>
+    
+	<!--  http://localhost:8080/DocSourcesProject -->
+	<mvc:annotation-driven/>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+	       	<bean id="historyLogAction" class="org.medici.docsources.audit.HistoryLogAction">
+		        <description>Modulo history log.</description>
+		        <property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+	    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+	        <description>Interceptor per la modifica del locale su singola richiesta.</description>
+	        <property name="paramName" value="locale"/>
+	    </bean>
+	</mvc:interceptors>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+				</bean>
+				
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<constructor-arg>
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller" />
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+		<property name="defaultContentType" ref="jsonMediaType" />
+		<property name="ignoreAcceptHeader" value="true" />
+	</bean>
+
+	<bean id="viewResolver"  class="org.springframework.web.servlet.view.UrlBasedViewResolver">  
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>  
+	</bean>  
+
+	<bean id="jsonMediaType" class="org.springframework.http.MediaType" factory-method="parseMediaType">
+		<constructor-arg value="application/json" />
+	</bean>
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+    
+    <bean id="uploadProgressListener" class="org.medici.docsources.common.ajax.UploadProgressListener">
+    	<description>Common bean for manage progress bar in upload functions.</description>
+    </bean>
+
+	<bean id="multipartResolver" class="org.medici.docsources.common.ajax.AjaxMultipartResolver">
+		<description>Resolver for multipart form</description>
+		<property name="maxInMemorySize">
+			<description>Max in memory 10kbytes </description>		
+    	    <value>100000240</value>
+		</property>
+		<property name="maxUploadSize">
+        	<description>10 MB Max upload size</description>
+        	<value>1024000000</value>
+		</property>
+		<property name="uploadProgressListener">
+        	<ref bean="uploadProgressListener" />
+ 		</property>
+    </bean>
+</beans>

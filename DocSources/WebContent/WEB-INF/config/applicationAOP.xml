@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <context:component-scan base-package="org.medici.docsources"/>
+
+	<bean id="logServiceAdvice" class="org.medici.docsources.audit.LogServiceAdvice" />
+	<bean id="logValidatorAdvice" class="org.medici.docsources.audit.LogValidatorAdvice" />
+
+    <aop:config>
+        <aop:pointcut id="serviceOperation" expression="execution(* org.medici.docsources.service..*Service*.*(..))"/>
+       	<aop:pointcut id="validatorOperation" expression="execution(* org.medici.docsources.validator..*Validator.validate(..))"/>
+		<aop:advisor pointcut-ref="validatorOperation" advice-ref="logValidatorAdvice" />
+		<aop:advisor pointcut-ref="serviceOperation" advice-ref="logServiceAdvice" />
+        <aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice"/>
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="search*" read-only="true"/>
+            <tx:method name="send*" />
+            <tx:method name="merge*" />
+            <tx:method name="persist*" />
+            <tx:method name="save*" />
+            <tx:method name="traceAction*" />
+        </tx:attributes>
+    </tx:advice>
+
+	<tx:annotation-driven/>
+	   
+</beans>

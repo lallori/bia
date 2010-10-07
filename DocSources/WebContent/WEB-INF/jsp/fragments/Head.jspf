@@ -1,0 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:url var="pippo" value="/styles/demo_table.css" />
+
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<link rel="stylesheet" href="${pippo}" type="text/css" media="screen, projection">

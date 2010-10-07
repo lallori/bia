@@ -1,0 +1,20 @@
+
+<style type="text/css">
+<!--
+body,td,th {
+font-family: Trebuchet MS;
+font-size: 10pt;
+}
+.grassetto {
+font-weight: bold;
+}
+.rosso {
+font-weight: bold;
+color: red;
+}
+.verde {
+font-weight: bold;
+color: green;
+}
+-->
+</style>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+
+    <context:component-scan base-package="org.medici.archive"/>
+
+    <bean id="docBaseService" class="org.medici.docsources.service.docbase.DocBaseServiceImpl">
+    	<description>Service that manages documents informations.</description>
+    </bean>
+
+    <bean id="geoBaseService" class="org.medici.docsources.service.geobase.GeoBaseServiceImpl">
+    	<description>Service that manages Geographics locations.</description>
+    </bean>
+
+    <bean id="historyLogService" class="org.medici.docsources.service.historylog.HistoryLogServiceImpl">
+        <description>History Log Service.</description>
+    </bean>
+    
+    <bean id="mailService" class="org.medici.docsources.service.mail.MailServiceImpl">
+    	<description>Service that manages mail service.</description>
+    </bean>
+
+    <bean id="peopleBaseService" class="org.medici.docsources.service.peoplebase.PeopleBaseServiceImpl">
+    	<description>Service that manages peoples informations.</description>
+    </bean>
+
+    <bean id="reCaptchaService" class="org.medici.docsources.service.recaptcha.ReCaptchaServiceImpl">
+    	<description>Service to interface Recaptcha Antispam functions</description>
+    </bean>
+
+    <bean id="userService" class="org.medici.docsources.service.user.UserServiceImpl">
+        <description>Service that manages user's information.</description>
+    </bean>
+
+    <bean id="volBaseService" class="org.medici.docsources.service.volbase.VolBaseServiceImpl">
+    	<description>Service that manages voBase informations.</description>
+    </bean>
+
+</beans>
