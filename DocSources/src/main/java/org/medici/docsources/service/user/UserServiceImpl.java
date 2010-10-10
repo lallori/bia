@@ -36,8 +36,10 @@ import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.ajax.Page;
 import org.medici.docsources.common.util.ApplicationError;
 import org.medici.docsources.dao.country.CountryDAO;
+import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.domain.Country;
+import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +54,16 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private CountryDAO countryDao;
 	@Autowired
-	private UserDAO userDao;
+	private PasswordChangeRequestDAO passwordChangeRequestDAO;
+	@Autowired
+	private UserDAO userDAO; 
 
 	/**
 	 * 
 	 */
 	public void deleteUser(User user) throws ApplicationThrowable {
 		try {
-			getUserDao().remove(user);
+			getUserDAO().remove(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -93,13 +97,24 @@ public class UserServiceImpl implements UserService {
 
 	/**
 	 * 
+	 */
+	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable {
+		try {
+			return getPasswordChangeRequestDAO().find(uuid.toString());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * 
 	 * @param account
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public User findUser(String account) throws ApplicationThrowable {
 		try {
-			User user = getUserDao().findUser(account);
+			User user = getUserDAO().findUser(account);
 
 			if (user != null) {
 				return user;
@@ -120,7 +135,7 @@ public class UserServiceImpl implements UserService {
 	public User findUser(User userToFind) throws ApplicationThrowable {
 		User user = new User();
 		try {
-			user = getUserDao().findUser(userToFind);
+			user = getUserDAO().findUser(userToFind);
 
 			if (user != null) {
 				return user;
@@ -141,7 +156,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	public List<User> findUsers(User user) throws ApplicationThrowable {
 		try {
-			return getUserDao().findUsers(user);
+			return getUserDAO().findUsers(user);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -151,7 +166,7 @@ public class UserServiceImpl implements UserService {
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable {
 		Page result;
 		try {
-			result = getUserDao().findUsers(user,pageNumber, pageSize);
+			result = getUserDAO().findUsers(user,pageNumber, pageSize);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -167,10 +182,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * @return the dao
+	 * @return the passwordChangeRequestDAO
 	 */
-	public UserDAO getUserDao() {
-		return userDao;
+	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
+		return passwordChangeRequestDAO;
+	}
+
+	/**
+	 * @return the userDAO
+	 */
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
 
 	/**
@@ -179,7 +201,7 @@ public class UserServiceImpl implements UserService {
 	public Boolean isAccountAvailable(String account)
 	throws ApplicationThrowable {
 		try {
-			return (getUserDao().findUser(account) == null);
+			return (getUserDAO().findUser(account) == null);
 		} catch (Throwable th) {
 			ApplicationThrowable applicationException = new ApplicationThrowable(
 					th);
@@ -196,98 +218,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void lockUser(User user) throws ApplicationThrowable {
 		try {
-			getUserDao().removeAllUserRoles(user.getAccount());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * @param
-	 */
-	public void registerNewUser(User user) throws ApplicationThrowable {
-		try {
-			getUserDao().persist(user);
-			getUserDao().persistUserRoles(user.getAccount(),
-					user.getUserRoles());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * @param user
-	 */
-	public String resetPassword(User user) throws ApplicationThrowable {
-		try {
-			UUID uuid = UUID.randomUUID();
-
-			user.setPassword(uuid.toString());
-			getUserDao().merge(user);
-
-			return user.getPassword();
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * @param countryDao
-	 *            the countryDao to set
-	 */
-	public void setCountryDao(CountryDAO countryDao) {
-		this.countryDao = countryDao;
-	}
-
-	public void setUserDao(UserDAO daoInput) {
-		userDao = daoInput;
-	}
-
-	/**
-	 * @param user
-	 */
-	public void updateUser(User user) throws ApplicationThrowable {
-		try {
-			getUserDao().merge(user);
-
-			getUserDao().removeAllUserRoles(user.getAccount());
-			getUserDao().persistUserRoles(user.getAccount(),
-					user.getUserRoles());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	
-	/**
-	 * @param user
-	 */
-	public void updateUserPhoto(User user, BufferedImage bufferedImage) throws ApplicationThrowable {
-		try {
-			user.setPhoto(bufferedImage);
-			getUserDao().merge(user);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * @param user
-	 */
-	public String resetUserPassword(User user) throws ApplicationThrowable {
-		try {
-			user.setPassword(RandomStringUtils.random(12, true, true));
-			getUserDao().merge(user);
-			return user.getPassword();
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable {
-		try {
-			user.setPassword(newPassword);
-			getUserDao().merge(user);
+			getUserDAO().removeAllUserRoles(user.getAccount());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -317,5 +248,117 @@ public class UserServiceImpl implements UserService {
 			return 4;
 
 		return 0;
+	}
+
+	/**
+	 * @param
+	 */
+	public void registerNewUser(User user) throws ApplicationThrowable {
+		try {
+			getUserDAO().persist(user);
+			getUserDAO().persistUserRoles(user.getAccount(),
+					user.getUserRoles());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * 
+	 * @param countryDao the countryDao to set
+	 */
+	public void setCountryDao(CountryDAO countryDao) {
+		this.countryDao = countryDao;
+	}
+
+	/**
+	 * 
+	 * @param passwordChangeRequestDAO the passwordChangeRequestDAO to set
+	 */
+	public void setPasswordChangeRequestDAO(PasswordChangeRequestDAO passwordChangeRequestDAO) {
+		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
+	}
+	
+	/**
+	 * @param userDAO the userDAO to set
+	 */
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	/**
+	 * 
+	 * @param uuid
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public void updateUserPassword(UUID uuid, String password) throws ApplicationThrowable {
+		try {
+			PasswordChangeRequest passwordChangeRequest = getPasswordChangeRequestDAO().find(uuid.toString());
+
+			User user = getUserDAO().findUser(passwordChangeRequest.getAccount());
+			user.setPassword(password);
+			getUserDAO().merge(user);
+			getPasswordChangeRequestDAO().remove(passwordChangeRequest);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public void updateUser(User user) throws ApplicationThrowable {
+		try {
+			getUserDAO().merge(user);
+
+			getUserDAO().removeAllUserRoles(user.getAccount());
+			getUserDAO().persistUserRoles(user.getAccount(), user.getUserRoles());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public String updateUserPassword(User user) throws ApplicationThrowable {
+		try {
+			user.setPassword(RandomStringUtils.random(12, true, true));
+			getUserDAO().merge(user);
+			return user.getPassword();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * 
+	 * @param user
+	 * @param newPassword
+	 */
+	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable {
+		try {
+			user.setPassword(newPassword);
+			getUserDAO().merge(user);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * 
+	 * @param user
+	 * @param bufferedImage
+	 */
+	public void updateUserPhoto(User user, BufferedImage bufferedImage) throws ApplicationThrowable {
+		try {
+			user.setPhoto(bufferedImage);
+			getUserDAO().merge(user);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 }

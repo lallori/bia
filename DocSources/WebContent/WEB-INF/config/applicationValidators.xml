@@ -69,10 +69,14 @@
         <description>User registration validator.</description>
     </bean>
 
-    <bean id="resetUserValidator" class="org.medici.docsources.validator.user.ResetUserPasswordValidator">
+    <bean id="resetUserPasswordRequestValidator" class="org.medici.docsources.validator.user.ResetUserPasswordRequestValidator">
         <description>User registration validator.</description>
     </bean>
     
+    <bean id="resetUserPasswordValidator" class="org.medici.docsources.validator.user.ResetUserPasswordValidator">
+        <description>User registration validator.</description>
+    </bean>
+
   	<bean id="showUserPhotoValidator" class="org.medici.docsources.validator.user.ShowUserPhotoValidator">
         <description>User registration validator.</description>
 	</bean>

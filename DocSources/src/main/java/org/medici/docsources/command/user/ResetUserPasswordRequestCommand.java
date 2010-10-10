@@ -1,7 +1,7 @@
 /*
- * MailServiceImpl.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * ResetUserPasswordCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -25,47 +25,32 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.service.passwordchangerequest;
+package org.medici.docsources.command.user;
 
 import java.util.UUID;
 
-import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
-import org.medici.docsources.domain.PasswordChangeRequest;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import javax.validation.constraints.NotNull;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
+ *
  */
-@Service
-public class PasswordChangeRequestServiceImpl implements PasswordChangeRequestService {
-	@Autowired
-	private PasswordChangeRequestDAO passwordChangeRequestDAO; 
-
+public class ResetUserPasswordRequestCommand {
+	@NotNull
+	private UUID uuid;
 
 	/**
-	 * @param passwordChangeRequestDAO the passwordChangeRequestDAO to set
+	 * @param uuid the uuid to set
 	 */
-	public void setPasswordChangeRequestDAO(PasswordChangeRequestDAO passwordChangeRequestDAO) {
-		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
 	}
 
 	/**
-	 * @return the passwordChangeRequestDAO
+	 * @return the uuid
 	 */
-	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
-		return passwordChangeRequestDAO;
-	}
-
-	@Override
-	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable {
-		try {
-			return getPasswordChangeRequestDAO().find(uuid);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+	public UUID getUuid() {
+		return uuid;
 	}
 }

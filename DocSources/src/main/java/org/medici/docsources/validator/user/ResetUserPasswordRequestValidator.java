@@ -27,13 +27,14 @@
  */
 package org.medici.docsources.validator.user;
 
+import java.util.Date;
 import java.util.UUID;
 
-import org.medici.docsources.command.user.RegisterUserCommand;
-import org.medici.docsources.command.user.ResetUserPasswordFormCommand;
+import org.apache.commons.lang.time.DateUtils;
+import org.medici.docsources.command.user.ResetUserPasswordRequestCommand;
 import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.passwordchangerequest.PasswordChangeRequestService;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -48,25 +49,9 @@ import org.springframework.validation.Validator;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class ResetUserPasswordFormValidator extends AbstractUserValidator implements Validator {
+public class ResetUserPasswordRequestValidator extends AbstractUserValidator implements Validator {
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private PasswordChangeRequestService passwordChangeRequestService;
-
-	/**
-	 * @return the passwordChangeRequestService
-	 */
-	public PasswordChangeRequestService getPasswordChangeRequestService() {
-		return passwordChangeRequestService;
-	}
-
-	/**
-	 * @param passwordChangeRequestService the passwordChangeRequestService to set
-	 */
-	public void setPasswordChangeRequestService(PasswordChangeRequestService passwordChangeRequestService) {
-		this.passwordChangeRequestService = passwordChangeRequestService;
-	}
 
 	/**
 	 * @return the userService
@@ -93,7 +78,7 @@ public class ResetUserPasswordFormValidator extends AbstractUserValidator implem
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(ResetUserPasswordFormCommand.class);
+		return givenClass.equals(ResetUserPasswordRequestCommand.class);
 	}
 
 	/**
@@ -108,37 +93,50 @@ public class ResetUserPasswordFormValidator extends AbstractUserValidator implem
 	 *            contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		ResetUserPasswordFormCommand resetUserPasswordFormCommand = (ResetUserPasswordFormCommand) object;
+		ResetUserPasswordRequestCommand resetUserPasswordRequestCommand = (ResetUserPasswordRequestCommand) object;
 
-		validateUuid(resetUserPasswordFormCommand.getUuid(), errors);
+		validateUuid(resetUserPasswordRequestCommand.getUuid(), errors);
 	}
 
 	/**
-	 * 
-	 * @param uuid
+	 * This method make a bussiness validation on uuid (identifier of password
+	 * change request ndr) :
+	 * - It checks if the request exist as entity
+	 * - It checks if the request is in last 24 hours
+	 * - It checks if the account is on customer data base.
+	 *   
+	 * @param uuid The unique identify of password change request.
 	 * @param errors
 	 */
 	private void validateUuid(UUID uuid, Errors errors) {
 		if (errors.hasErrors())
 			return;
-		
-		PasswordChangeRequest passwordChangeRequest = null; 
+
 		try {
-			passwordChangeRequest = getPasswordChangeRequestService().findPasswordChangeRequest(uuid);
-			
-			/*if (passwordChangeRequest.getRequestDate()) {
-				
-			}*/
-			
-			if (getUserService().findUser(passwordChangeRequest.getAccount()) == null) {
-				;
+			PasswordChangeRequest passwordChangeRequest = getUserService().findPasswordChangeRequest(uuid);
+			if (passwordChangeRequest == null) {
+				errors.rejectValue("uuid", "error.uuid.notfound");
+				return;
 			}
-		} catch (ApplicationThrowable at){
-			
+
+			if (passwordChangeRequest.getRequestDate().before(new Date(System.currentTimeMillis()-DateUtils.MILLIS_PER_DAY))) {
+				errors.rejectValue("uuid", "error.uuid.notvalid");
+				return;
+			}
+
+			User user = getUserService().findUser(passwordChangeRequest.getAccount());
+			if (user == null) {
+				errors.rejectValue("uuid", "error.account.notfound");
+				return;
+			}
+
+			// the request can be done only by users with granted roles.
+			if (user.getUserRoles().size() ==0) {
+				errors.rejectValue("uuid", "error.account.notapproved");
+				return;
+			}
+		} catch(ApplicationThrowable ath) {
+			errors.rejectValue("uuid", "error.uuid.notfound");
 		}
-		// TODO Auto-generated method stub
-		
 	}
-
-
 }

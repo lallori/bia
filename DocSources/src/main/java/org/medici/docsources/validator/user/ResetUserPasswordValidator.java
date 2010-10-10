@@ -27,8 +27,13 @@
  */
 package org.medici.docsources.validator.user;
 
-import org.medici.docsources.command.user.RegisterUserCommand;
+import java.util.Date;
+import java.util.UUID;
+
+import org.apache.commons.lang.time.DateUtils;
 import org.medici.docsources.command.user.ResetUserPasswordCommand;
+import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,27 +93,49 @@ public class ResetUserPasswordValidator extends AbstractUserValidator implements
 	 *            contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		RegisterUserCommand registerCommand = (RegisterUserCommand) object;
+		ResetUserPasswordCommand resetUserPasswordCommand = (ResetUserPasswordCommand) object;
 
-		validateAccount(registerCommand.getAccount(), errors);
-		validateMail(registerCommand.getMail(), errors);
-		validateReCaptcha(registerCommand.getRemoteAddress(), registerCommand.getRecaptcha_challenge_field(), registerCommand.getRecaptcha_response_field(), errors);
+		validateReCaptcha(resetUserPasswordCommand.getRemoteAddress(), resetUserPasswordCommand.getRecaptcha_challenge_field(), resetUserPasswordCommand.getRecaptcha_response_field(), errors);
+		validateUuid(resetUserPasswordCommand.getUuid(), errors);
+		validateConfirmPassword(resetUserPasswordCommand.getPassword(), resetUserPasswordCommand.getConfirmPassword(), errors);
 	}
 
 	/**
-	 * 
-	 * @param account
+	 * This method make a bussiness validation on uuid (identifier of password
+	 * change request ndr) :
+	 * - It checks if the request exist as entity
+	 * - It checks if the request is in last 24 hours
+	 * - It checks if the account is on customer data base.
+	 *   
+	 * @param uuid The unique identify of password change request.
 	 * @param errors
 	 */
-	public void validateAccount(String account, Errors errors) {
-		if (!errors.hasErrors()) {
-			try {
-				if (!getUserService().isAccountAvailable(account)) {
-					errors.rejectValue("account", "error.account.notavailable");
-				}
-			} catch(ApplicationThrowable ath) {
-				errors.rejectValue("account", "error.account.notavailable");
+	private void validateUuid(UUID uuid, Errors errors) {
+		if (errors.hasErrors())
+			return;
+
+		try {
+			PasswordChangeRequest passwordChangeRequest = getUserService().findPasswordChangeRequest(uuid);
+			if (passwordChangeRequest == null) {
+				errors.rejectValue("uuid", "error.uuid.notfound");
+				return;
 			}
+
+			if (passwordChangeRequest.getRequestDate().before(new Date(System.currentTimeMillis()-DateUtils.MILLIS_PER_DAY))) {
+				errors.rejectValue("uuid", "error.uuid.notvalid");
+			}
+
+			User user = getUserService().findUser(passwordChangeRequest.getAccount());
+			if (user == null) {
+				errors.rejectValue("uuid", "error.account.notfound");
+			}
+
+			// the change of user password can be maded by accounts that are already approved.
+			if (user.getUserRoles().size() ==0) {
+				errors.rejectValue("uuid", "error.account.notapproved");
+			}
+		} catch(ApplicationThrowable ath) {
+			errors.rejectValue("uuid", "error.uuid.notfound");
 		}
 	}
 }

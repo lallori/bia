@@ -1,5 +1,5 @@
 /*
- * PasswordChangeRequestService.java
+ * CatalogServiceImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,25 +25,24 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.service.passwordchangerequest;
+package org.medici.docsources.service.catalog;
 
-import java.util.UUID;
-
-import org.medici.docsources.domain.PasswordChangeRequest;
-import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.domain.Catalog;
+import org.springframework.stereotype.Service;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
  */
-public interface PasswordChangeRequestService {
+@Service
+public class CatalogServiceImpl implements CatalogService {
 
 	/**
-	 * This method will send user information to permit data recovery by mail.
 	 * 
-	 * @param uuid
-	 * @return PasswordChangeRequest Request to change password 
 	 */
-	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable;
+	public Catalog findCatalog(Integer catalogId) {
+		// TODO Auto-generated method stub
+		return new Catalog();
+	}
+
 }

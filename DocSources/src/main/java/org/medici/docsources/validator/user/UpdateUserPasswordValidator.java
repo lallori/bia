@@ -45,15 +45,29 @@ import org.springframework.validation.Validator;
  */
 public class UpdateUserPasswordValidator extends AbstractUserValidator implements Validator {
 	@Autowired
-	private UserService userService;
-	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UserService userService;
+
+	/**
+	 * @return the passwordEncoder
+	 */
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
+	}
 
 	/**
 	 * @return the userService
 	 */
 	public UserService getUserService() {
 		return userService;
+	}
+
+	/**
+	 * @param passwordEncoder the passwordEncoder to set
+	 */
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	/**
@@ -115,19 +129,5 @@ public class UpdateUserPasswordValidator extends AbstractUserValidator implement
 		} catch(ApplicationThrowable ath) {
 
 		}
-	}
-
-	/**
-	 * @param passwordEncoder the passwordEncoder to set
-	 */
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
-
-	/**
-	 * @return the passwordEncoder
-	 */
-	public PasswordEncoder getPasswordEncoder() {
-		return passwordEncoder;
 	}
 }

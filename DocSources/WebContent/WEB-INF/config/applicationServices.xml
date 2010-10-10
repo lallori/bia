@@ -24,7 +24,7 @@
     </bean>
     
     <bean id="mailService" class="org.medici.docsources.service.mail.MailServiceImpl">
-    	<description>Service that manages mail service.</description>
+    	<description>Service that manages mail.</description>
     </bean>
 
     <bean id="peopleBaseService" class="org.medici.docsources.service.peoplebase.PeopleBaseServiceImpl">

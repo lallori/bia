@@ -29,9 +29,11 @@ package org.medici.docsources.service.user;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.UUID;
 
 import org.medici.docsources.common.ajax.Page;
 import org.medici.docsources.domain.Country;
+import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -66,6 +68,14 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Country findCountry(String countryCode) throws ApplicationThrowable;
+
+	/**
+	 * This method finds a "password change request user information to permit data recovery by mail.
+	 * 
+	 * @param uuid
+	 * @return PasswordChangeRequest Request to change password 
+	 */
+	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -117,6 +127,14 @@ public interface UserService {
 	public void lockUser(User user) throws ApplicationThrowable;
 
 	/**
+	 * This method implement business logic for password rating.
+	 * 
+	 * @param password The password object to be rated.
+	 * @return An integer rappresenting the rate. Values are between 1 and 4. 
+	 */
+	public Integer ratePassword(String password);
+
+	/**
 	 * 
 	 * @param user
 	 * @throws ApplicationThrowable
@@ -125,10 +143,12 @@ public interface UserService {
 
 	/**
 	 * 
-	 * @param user
+	 * @param uuid
+	 * @param password
 	 * @return
+	 * @throws ApplicationThrowable
 	 */
-	public String resetUserPassword(User user) throws ApplicationThrowable;
+	public void updateUserPassword(UUID uuid, String password) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -137,6 +157,7 @@ public interface UserService {
 	 */
 	public void updateUser(User user) throws ApplicationThrowable;
 
+
 	/**
 	 * 
 	 * @param user
@@ -144,7 +165,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param user
@@ -152,12 +173,4 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void updateUserPhoto(User user, BufferedImage bufferedImage) throws ApplicationThrowable;
-
-	/**
-	 * This method implement business logic for password rating.
-	 * 
-	 * @param password The password object to be rated.
-	 * @return An integer rappresenting the rate. Values are between 1 and 4. 
-	 */
-	public Integer ratePassword(String password);
 }

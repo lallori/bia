@@ -1,5 +1,5 @@
 /*
- * PasswordChangeRequestDAO.java
+ * CatalogService.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,16 +25,21 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.passwordchangerequest;
+package org.medici.docsources.service.catalog;
 
-import org.medici.docsources.dao.Dao;
-import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.Catalog;
 
 /**
- * Month Dao.
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public interface PasswordChangeRequestDAO extends Dao<String, PasswordChangeRequest> {
+public interface CatalogService {
 
+	/**
+	 * 
+	 * @param catalogId
+	 * @return
+	 */
+	public Catalog findCatalog(Integer catalogId);
 }

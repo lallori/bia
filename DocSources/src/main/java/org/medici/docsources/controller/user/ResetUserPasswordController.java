@@ -27,26 +27,24 @@
  */
 package org.medici.docsources.controller.user;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.medici.docsources.command.user.RegisterUserCommand;
 import org.medici.docsources.command.user.ResetUserPasswordCommand;
-import org.medici.docsources.command.user.ResetUserPasswordFormCommand;
-import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.command.user.ResetUserPasswordRequestCommand;
+import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.recaptcha.ReCaptchaService;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -67,18 +65,62 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/user/ResetUserPassword")
 public class ResetUserPasswordController {
 	@Autowired
+	@Qualifier("org.springframework.security.authentication.ProviderManager#0")
+	private ProviderManager authenticationManager;
+
+	@Autowired
 	private ReCaptchaService reCaptchaService;
+
+	@Autowired(required = false)
+	@Qualifier("resetUserPasswordRequestValidator")
+	private Validator requestValidator;
+
 	@Autowired
 	private UserService userService;
+
 	@Autowired(required = false)
 	@Qualifier("resetUserPasswordValidator")
 	private Validator validator;
-	@Autowired(required = false)
-	@Qualifier("resetUserPasswordFormValidator")
-	private Validator validatorForm;
-	
+
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @param username
+	 * @param password
+	 */
+	private void autoLogin(HttpServletRequest request, HttpServletResponse response, String username, String password) {
+		try {
+			// Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+			token.setDetails(new WebAuthenticationDetails(request));
+			Authentication authentication = authenticationManager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		} catch (Exception e) {
+			SecurityContextHolder.getContext().setAuthentication(null);
+		}
+	}
+
+	/**
+	 * @return the authenticationManager
+	 */
+	public ProviderManager getAuthenticationManager() {
+		return authenticationManager;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	public ReCaptchaService getReCaptchaService() {
 		return reCaptchaService;
+	}
+
+	/**
+	 * @return the requestValidator
+	 */
+	public Validator getRequestValidator() {
+		return requestValidator;
 	}
 
 	/**
@@ -99,48 +141,100 @@ public class ResetUserPasswordController {
 		return validator;
 	}
 
+	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
 	@InitBinder("command")
 	public void initBinder(WebDataBinder binder, HttpServletRequest request) {
-		// Don't allow user to override the
-		binder.setDisallowedFields("remoteAddr"); 
-		// value
-		((RegisterUserCommand) binder.getTarget()).setRemoteAddress(request.getRemoteAddr());
-	}
+		if (binder.getTarget().getClass().equals(ResetUserPasswordCommand.class)) {
+			// Don't allow user to override the
+			binder.setDisallowedFields("remoteAddr"); 
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ResetUserPasswordCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return new ModelAndView();
-		} else {
-			return new ModelAndView("");
+			((ResetUserPasswordCommand) binder.getTarget()).setRemoteAddress(request.getRemoteAddr());
 		}
-
-	}
-
-	public void setReCaptchaService(ReCaptchaService reCaptchaService) {
-		this.reCaptchaService = reCaptchaService;
 	}
 
 	/**
 	 * 
 	 * @param command
+	 * @param result
 	 * @param request
-	 * @param model
+	 * @param response
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@Valid @ModelAttribute("command") ResetUserPasswordFormCommand command, BindingResult result) {
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ResetUserPasswordCommand command, BindingResult result, HttpServletRequest request, HttpServletResponse response) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView();
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("reCaptchaHTML", getReCaptchaService().getReCaptchaObjectNoSSL().createRecaptchaHtml(null, null));
+
+			return new ModelAndView("user/ResetUserPassword", model);
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+			
+			try {
+				PasswordChangeRequest passwordChangeRequest = getUserService().findPasswordChangeRequest(command.getUuid());
+				getUserService().updateUserPassword(command.getUuid(), command.getPassword());
+				autoLogin(request, response, passwordChangeRequest.getAccount(), command.getPassword());
+			} catch (ApplicationThrowable aex) {
+				return new ModelAndView("responseKO", model);
+			}
+
+			return new ModelAndView("Home", model);
+		}
+
+	}
+
+	/**
+	 * @param authenticationManager the authenticationManager to set
+	 */
+	public void setAuthenticationManager(ProviderManager authenticationManager) {
+		this.authenticationManager = authenticationManager;
+	}
+
+	/**
+	 * 
+	 * @param reCaptchaService
+	 */
+	public void setReCaptchaService(ReCaptchaService reCaptchaService) {
+		this.reCaptchaService = reCaptchaService;
+	}
+
+	/**
+	 * @param requestValidator the requestValidator to set
+	 */
+	public void setRequestValidator(Validator requestValidator) {
+		this.requestValidator = requestValidator;
+	}
+
+	/**
+	 * This method receive the request to view the user form. This method has
+	 * an important function called inside : the autologin. The form
+	 * for updating user is callable only if the user is correctly authenticated.
+	 * 
+	 * @param command Command bean rappresenting input parameters
+	 * @param request Http servlet request object
+	 * @param response Http servlet response object
+	 * @param model the Map that contains model names as keys and model objects
+	 * as values
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm(@Valid @ModelAttribute("requestCommand") ResetUserPasswordRequestCommand command, BindingResult result) {
+		getRequestValidator().validate(command, result);
+
+		if (result.hasErrors()) {
+			return new ModelAndView("error/ResetUserPassword");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 			ResetUserPasswordCommand resetUserPasswordCommand = new ResetUserPasswordCommand();
 			resetUserPasswordCommand.setUuid(command.getUuid());
-			
+
 			model.put("command", resetUserPasswordCommand);
 			model.put("reCaptchaHTML", getReCaptchaService().getReCaptchaObjectNoSSL().createRecaptchaHtml(null, null));
 
@@ -156,6 +250,10 @@ public class ResetUserPasswordController {
 		this.userService = userService;
 	}
 
+	/**
+	 * 
+	 * @param validator
+	 */
 	public void setValidator(Validator validator) {
 		this.validator = validator;
 	}

@@ -27,18 +27,27 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/LoginUser.jsp"/>
     </definition>
     
+    <definition name="Home" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/Home.jsp"/>
+    </definition>
+
+	<definition name="error/ResetUserPassword" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/ResetUserPassword.jsp"/>
+    </definition>
+    
     <definition name="user/RegisterUser" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUser.jsp"/>
     </definition>
 
+	<definition name="user/ResetUserPassword" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPassword.jsp"/>
+    </definition>
+    
 	<definition name="user/SendUserDetails" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserDetails.jsp"/>
 	</definition>
 
-	<!-- Authentication Module END -->
-    <definition name="Home" extends="template.completeDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/Home.jsp"/>
-    </definition>
+    <!-- Authentication Module END -->
 
     <definition name="user/DeleteUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/delete.jsp"/>

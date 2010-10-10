@@ -1,5 +1,5 @@
 /*
- * PasswordChangeRequestJpaImpl.java
+ * CatalogDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,21 +25,21 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.passwordchangerequest;
+package org.medici.docsources.dao.catalog;
 
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.Catalog;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>CatalogDAOJpaImpl</b> is a default implementation of <b>CatalogDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * 
+ * @see org.medici.docsources.domain.Catalog
  */
 @Repository
-public class PasswordChangeRequestJpaImpl extends JpaDao<String, PasswordChangeRequest> implements PasswordChangeRequestDAO {
+public class CatalogDAOJpaImpl extends JpaDao<Integer, Catalog> implements CatalogDAO {
 
 	/**
 	 * 
@@ -59,6 +59,5 @@ public class PasswordChangeRequestJpaImpl extends JpaDao<String, PasswordChangeR
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = 8582736566153311653L;
-
+	private static final long serialVersionUID = -7766262138445120927L;
 }

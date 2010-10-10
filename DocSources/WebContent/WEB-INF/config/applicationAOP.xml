@@ -31,6 +31,7 @@
             <tx:method name="merge*" />
             <tx:method name="persist*" />
             <tx:method name="save*" />
+            <tx:method name="update*" />
             <tx:method name="traceAction*" />
         </tx:attributes>
     </tx:advice>

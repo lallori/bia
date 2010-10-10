@@ -28,7 +28,6 @@
 package org.medici.docsources.common.util;
 
 import javax.naming.Name;
-
 import org.medici.docsources.security.LdapConfiguration;
 import org.springframework.ldap.core.DistinguishedName;
 
@@ -70,8 +69,7 @@ public class LdapUtils {
 		if ((ldapConfiguration == null) || (role == null))
 			return new DistinguishedName("");
 
-		StringBuffer fullUserRoleDistinguishedName = new StringBuffer(
-				ldapConfiguration.getRoleAttribute());
+		StringBuffer fullUserRoleDistinguishedName = new StringBuffer(ldapConfiguration.getRoleAttribute());
 		fullUserRoleDistinguishedName.append("=");
 		fullUserRoleDistinguishedName.append(role);
 		fullUserRoleDistinguishedName.append(",");
@@ -111,13 +109,28 @@ public class LdapUtils {
 		if ((ldapConfiguration == null) || (role == null))
 			return new DistinguishedName("");
 
-		StringBuffer userRoleDistinguishedName = new StringBuffer(
-				ldapConfiguration.getRoleAttribute());
+		StringBuffer userRoleDistinguishedName = new StringBuffer(ldapConfiguration.getRoleAttribute());
 		userRoleDistinguishedName.append("=");
 		userRoleDistinguishedName.append(role);
 		userRoleDistinguishedName.append(",");
 		userRoleDistinguishedName.append(ldapConfiguration.getUsersDN());
 
 		return new DistinguishedName(userRoleDistinguishedName.toString());
+	}
+	
+	/**
+	 * 
+	 * @param inputString
+	 * @return
+	 */
+	public static String getStringRole(String inputString) {
+		if (inputString == null)
+			return inputString;
+		
+		if (inputString.indexOf("=") > 0) {
+			return inputString.substring(inputString.indexOf("=") +1);
+		}
+		
+		return null;
 	}
 }

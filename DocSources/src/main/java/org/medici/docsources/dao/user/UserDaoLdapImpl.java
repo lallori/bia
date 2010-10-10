@@ -123,7 +123,7 @@ public class UserDaoLdapImpl implements UserDAO {
 			if (userRolesAttribute != null) {
 				for(String role : userRolesAttribute) {
 					try {
-						userRoles.add(UserRole.valueOf(role));
+						userRoles.add(UserRole.valueOf(LdapUtils.getStringRole(role)));
 					} catch(IllegalArgumentException iaex){
 						// if the specified enum type has no constant with the 
 						// specified name, or the specified class object does not 
@@ -410,9 +410,7 @@ public class UserDaoLdapImpl implements UserDAO {
 		context.setAttributeValues("objectclass", new String[] { "top", "extensibleObject", "person", "organizationalPerson" });
 		context.setAttributeValue("cn", user.getAccount());
 		mapUserToContext(user, context);
-		getLdapTemplate().bind(
-				LdapUtils.userDistinguishedName(getLdapConfiguration(),
-						user.getAccount()), context, null);
+		getLdapTemplate().bind(LdapUtils.userDistinguishedName(getLdapConfiguration(), user.getAccount()), context, null);
 	}
 
 	/**
@@ -455,8 +453,7 @@ public class UserDaoLdapImpl implements UserDAO {
 		getLdapTemplate().modifyAttributes(context);
 		
 		for (User.UserRole singleRole : user.getUserRoles()) {
-			context.removeAttributeValue("member", LdapUtils
-					.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
+			context.removeAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
 		}
 	}
 
@@ -468,9 +465,7 @@ public class UserDaoLdapImpl implements UserDAO {
 		if ((account == null) || (userRoles == null))
 			return;
 
-		DirContextOperations context = getLdapTemplate().lookupContext(
-				LdapUtils.userDistinguishedName(getLdapConfiguration(),
-						account));
+		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 		
 		for (User.UserRole singleRole : userRoles) {
 			context.removeAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));

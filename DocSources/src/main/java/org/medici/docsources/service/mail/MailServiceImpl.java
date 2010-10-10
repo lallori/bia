@@ -91,9 +91,8 @@ public class MailServiceImpl implements MailService {
 			message.setText(getMessageSource().getMessage("mail.userDetails.text", 
 							new String[]{user.getFirstName(), 
 							user.getAccount(), 
-							user.getPassword(), 
-							URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8") }
-							, Locale.ENGLISH));
+							URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8") },
+							Locale.ENGLISH));
 			getJavaMailSender().send(message);
 			
 			getPasswordChangeRequestDAO().persist(passwordChangeRequest);

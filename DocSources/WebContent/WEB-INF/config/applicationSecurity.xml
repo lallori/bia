@@ -9,12 +9,13 @@
 
     <security:http auto-config="true">
         <security:intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/Login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/logoutSuccess*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/LoginUser" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/LogoutUser" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/css/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/scripts/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/RegisterUser.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ResetUserPassword.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/SendUserDetails.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ajax/**.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
@@ -39,7 +40,7 @@
                     default-target-url="/Home.do"
                     authentication-failure-url="/LoginUser.do?login_error=1" />
   
-        <security:logout logout-url="/Logout.do" logout-success-url="/LoginUser.do" />
+        <security:logout logout-url="/LogoutUser.do" logout-success-url="/LoginUser.do" />
 
     </security:http>
 
