@@ -1,5 +1,5 @@
 /*
- * SendUserOrPasswordCommand.java
+ * SendUserDetailsCommand.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,13 +30,13 @@ package org.medici.docsources.command.user;
 import javax.validation.constraints.NotNull;
 
 /**
- * Command bean for action "send user or password by email".
+ * Command bean for action "send password reset by email".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.SendUserDetailsController.docsources.controller.user.SendUserOrPasswordController
+ * @see org.SendUserPasswordResetController.controller.user.SendUserDetailsController
  */
-public class SendUserDetailsCommand {
+public class SendUserPasswordResetCommand {
 	@NotNull
 	private String mail;
 	@NotNull

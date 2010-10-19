@@ -54,8 +54,7 @@ public class UpdateUserValidator extends AbstractUserValidator implements Valida
 	}
 
 	/**
-	 * @param userService
-	 *            the userService to set
+	 * @param userService the userService to set
 	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -65,8 +64,7 @@ public class UpdateUserValidator extends AbstractUserValidator implements Valida
 	 * Indicates whether the given class is supported by this converter. This
 	 * validator supports only UpdaateUserCommand.
 	 * 
-	 * @param givenClass
-	 *            the class to test for support
+	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")

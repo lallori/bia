@@ -1,7 +1,7 @@
 /*
- * SendUserDetailsValidator.java
- *
- * Developed by The Medici Archive Project Inc. (2010-2012)
+ * EditCatalogRequestValidator.java
+ * 
+ * Developed by Medici Archive Project (2010-2012).
  * 
  * This file is part of DocSources.
  * 
@@ -25,42 +25,41 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.validator.user;
+package org.medici.docsources.validator.catalog;
 
-import org.medici.docsources.command.user.SendUserDetailsCommand;
-import org.medici.docsources.domain.User;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.user.UserService;
+import org.medici.docsources.command.catalog.EditCatalogCommand;
+import org.medici.docsources.service.catalog.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
+ * Validator bean for action "Edit Catalog".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class SendUserDetailsValidator extends AbstractUserValidator implements Validator {
+public class EditCatalogRequestValidator implements Validator {
 	@Autowired
-	private UserService userService;
+	private CatalogService catalogService;
 
 	/**
-	 * @return the userService
+	 * @return the catalogService
 	 */
-	public UserService getUserService() {
-		return userService;
+	public CatalogService getCatalogService() {
+		return catalogService;
 	}
 
 	/**
-	 * @param userService the userService to set
+	 * @param catalogService the catalogService to set
 	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	public void setCatalogService(CatalogService catalogService) {
+		this.catalogService = catalogService;
 	}
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only SendUserOrPasswordCommand.
+	 * validator supports only ModifyDocumentCommand.
 	 * 
 	 * @param givenClass
 	 *            the class to test for support
@@ -68,7 +67,7 @@ public class SendUserDetailsValidator extends AbstractUserValidator implements V
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(SendUserDetailsCommand.class);
+		return givenClass.equals(EditCatalogCommand.class);
 	}
 
 	/**
@@ -83,24 +82,29 @@ public class SendUserDetailsValidator extends AbstractUserValidator implements V
 	 *            contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		SendUserDetailsCommand sendUserOrPasswordCommand = (SendUserDetailsCommand) object;
-
-		validateReCaptcha(sendUserOrPasswordCommand.getRemoteAddress(), sendUserOrPasswordCommand.getRecaptcha_challenge_field(), sendUserOrPasswordCommand.getRecaptcha_response_field(), errors);
-		validateMail(sendUserOrPasswordCommand.getMail(), errors);
+		EditCatalogCommand editCatalogCommand = (EditCatalogCommand) object;
+		editCatalogCommand.getId();
+		// TODO : implement validation logic
+		
 	}
 
-	public void validateMail(String mail, Errors errors) {
-		if (errors.hasErrors())
-			return;
 
-		try {
-			User user = new User();
-			user.setMail(mail);
-			if (getUserService().findUser(user) == null) {
-				errors.rejectValue("mail", "error.mail.notfound");
+	/**
+	 * 
+	 * @param catalogId
+	 * @param errors
+	 */
+	public void validateCatalogId(Integer catalogId, Errors errors) {
+		if (errors.hasErrors()) {
+			return;
+		}
+		
+		if (catalogId != null) {
+			if (catalogId > 0) {
+				if (getCatalogService().findCatalog(catalogId) == null) {
+					errors.reject("catalogId", "error.catalogId.notfound");
+				}
 			}
-		} catch(ApplicationThrowable ath) {
-			errors.rejectValue("mail", "error.mail.notfound");
 		}
 	}
 }

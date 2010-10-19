@@ -5,7 +5,7 @@
 	<artifactId>DocumentarySources</artifactId>
 	<packaging>war</packaging>
 	<name>DocSources</name>
-	<version>0.0.1-alpha</version>
+	<version>0.0.2-alpha</version>
 	<url>https://docsources.dev.java.net/issues/</url>
 	<issueManagement>
 		<system>JIRA</system>
@@ -29,6 +29,15 @@
 			<organization>Java Consulting</organization>
 			<roles>
 				<role>Senior Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>Amill</id>
+			<name>Joana Amill</name>
+			<email>joana.amill@gmail.com</email>
+			<organization>Joana Amill</organization>
+			<roles>
+				<role>Web Designer</role>
 			</roles>
 		</developer>
 	</developers>
@@ -581,6 +590,12 @@
 			<groupId>net.tanesha.recaptcha4j</groupId>
 			<artifactId>recaptcha4j</artifactId>
 			<version>${recaptcha4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opensymphony.quartz</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.6.1</version>
 		</dependency>
 	</dependencies>
 </project>

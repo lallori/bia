@@ -6,13 +6,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>the MEDICI ARCHIVE PROJECT</title>
 	<link href="<c:url value="/styles/style.css"/>" rel="stylesheet" type="text/css" />
+	<script>
+			var RecaptchaOptions = {
+			   theme : 'clean'
+			};
+	</script> 
 </head>
 
 <body>
 	<div id="layout">
-		<div id="map">
-			<a href="<c:url value="/LoginUser.do"/>"><img src="<c:url value="/images/map.png"/>" width="270" height="175" alt="the Medicis Archive Project" /></a>
-		</div>
+		<div id="map"><a href="<c:url value="/LoginUser.do"/>"><img src="<c:url value="/images/map.png"/>" width="270" height="175" alt="the Medicis Archive Project" /></a></div>
 <tiles:insertAttribute name="main"/>
 <tiles:insertAttribute name="footer"/>
 	</div>

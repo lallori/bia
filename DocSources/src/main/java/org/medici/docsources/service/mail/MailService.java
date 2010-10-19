@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.service.mail;
 
+import org.medici.docsources.domain.ActivationUser;
+import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.User;
 
 /**
@@ -37,11 +39,20 @@ import org.medici.docsources.domain.User;
 public interface MailService {
 
 	/**
-	 * This method will send user information to permit data recovery by mail.
-	 * 
-	 * @param user
-	 * @param remoteAddress
-	 * @return Boolean rapresenting result of sending mail : true sended, otherwise false- 
+	 * This method will send an activation mail to user, and update the state
+	 * of entity activationUser.
+	 *  
+	 * @param activationUser Entity representing the activation
+	 * @param user User entity that contains email address
 	 */
-	public Boolean sendUserInformationMail(User user, String remoteAddress);
+	public Boolean sendActivationMail(ActivationUser activationUser, User user);
+
+	/**
+	 * This method will send an mail for password recovery , and update the state
+	 * of entity passwordChangeRequest.
+	 * 
+	 * @param passwordChangeRequest Entity representing the request for password change
+	 * @param user User entity that contains email address
+	 */
+	public Boolean sendUserPasswordResetMail(PasswordChangeRequest passwordChangeRequest, User user);
 }

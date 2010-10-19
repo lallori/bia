@@ -32,8 +32,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.imageio.ImageIO;
 import javax.naming.Name;
 
@@ -94,7 +98,24 @@ public class UserDaoLdapImpl implements UserDAO {
 			user.setMail(context.getStringAttribute("mail"));
 			user.setTitle(context.getStringAttribute("personalTitle"));
 			user.setInterests(context.getStringAttribute("info"));
-
+			user.setActive(!Boolean.valueOf(context.getStringAttribute("krb5AccountDisabled")));
+			user.setLocked(Boolean.valueOf(context.getStringAttribute("krb5AccountLockedOut")));
+			try {
+				// 20101030214433+0100
+				DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
+				user.setExpirationDate(dateFormat.parse(context.getStringAttribute("krb5AccountExpirationTime")));
+				user.setExpirationPasswordDate(dateFormat.parse(context.getStringAttribute("krb5PasswordEnd")));
+				user.setRegistrationDate(dateFormat.parse(context.getStringAttribute("krb5ValidStart")));
+			} catch (ParseException pex) {
+				pex.printStackTrace();
+			}
+			try {
+				user.setInvalidAccess(Integer.valueOf(context.getStringAttribute("krb5MaxLife")));
+				user.setInvalidAccessMax(Integer.valueOf(context.getStringAttribute("krb5MaxRenew")));
+			} catch (NumberFormatException nfex) {
+				nfex.printStackTrace();
+			}
+			
 			try {
 				if (context.getObjectAttribute("photo") != null) {
 					InputStream in = new ByteArrayInputStream((byte[]) context.getObjectAttribute("photo"));
@@ -173,9 +194,13 @@ public class UserDaoLdapImpl implements UserDAO {
 	 */
 	@Override
 	public User findUser(String account) {
-		Name dn = LdapUtils.userDistinguishedName(getLdapConfiguration(), account);
-
-		return (User) getLdapTemplate().lookup(dn, getUserContextMapper());
+		try {
+			Name dn = LdapUtils.userDistinguishedName(getLdapConfiguration(), account);
+	
+			return (User) getLdapTemplate().lookup(dn, getUserContextMapper());
+		} catch (NameNotFoundException nameNotFoundException) {
+			return null;
+		}
 	}
 
 	/**
@@ -211,7 +236,7 @@ public class UserDaoLdapImpl implements UserDAO {
 		if (users.size() > 1) {
 			throw new TooManyUsersException();
 		} else if (users.size() == 0) {
-			throw new TooManyUsersException();
+			return null;
 		}
 
 		return (User) users.get(0);
@@ -223,12 +248,10 @@ public class UserDaoLdapImpl implements UserDAO {
 	 * @return
 	 */
 	public UserRole findUserRole(UserRole userRole) {
-		Name dn = LdapUtils.userRoleDistinguishedName(getLdapConfiguration(),
-				userRole.name());
+		Name dn = LdapUtils.userRoleDistinguishedName(getLdapConfiguration(), userRole.name());
 
 		try {
-			return (UserRole) getLdapTemplate().lookup(dn,
-					getUserRoleContextMapper());
+			return (UserRole) getLdapTemplate().lookup(dn, getUserRoleContextMapper());
 		} catch (NameNotFoundException nameNotFoundException) {
 			return null;
 		}
@@ -248,8 +271,7 @@ public class UserDaoLdapImpl implements UserDAO {
 		AndFilter filter = getSearchFilter(user);
 		List users = null;
 		try {
-			users = getLdapTemplate().search(DistinguishedName.EMPTY_PATH,
-				filter.encode(), getUserContextMapper());
+			users = getLdapTemplate().search(DistinguishedName.EMPTY_PATH,filter.encode(), getUserContextMapper());
 		} catch (Throwable th) {
 			th.printStackTrace();
 		}
@@ -339,8 +361,7 @@ public class UserDaoLdapImpl implements UserDAO {
 	 */
 	protected void mapUserRoleToContext(UserRole userRole,
 			DirContextOperations context) {
-		context.setAttributeValues("objectclass", new String[] { "top",
-		"groupOfNames" });
+		context.setAttributeValues("objectclass", new String[] { "top", "groupOfNames" });
 	}
 
 	/**
@@ -351,27 +372,55 @@ public class UserDaoLdapImpl implements UserDAO {
 	 * @param context Context that receives the data from user
 	 */
 	protected void mapUserToContext(User user, DirContextOperations context) {
-		if (user.getPassword() != null)
-			context.setAttributeValue("userPassword", passwordEncoder.encodePassword(user.getPassword(), null));
+		if (user.getPassword() != null) {
+			if (!user.getPassword().startsWith("{SHA}")) {
+				context.setAttributeValue("userPassword", passwordEncoder.encodePassword(user.getPassword(), null));
+			}
+		}
 		if (user.getFirstName() != null)
-			context.setAttributeValue("givenName", user.getFirstName());
+			if (!user.getFirstName().equals("")) 
+				context.setAttributeValue("givenName", user.getFirstName());
 		if (user.getLastName() != null)
-			context.setAttributeValue("surname", user.getLastName());
+			if (!user.getLastName().equals("")) 
+				context.setAttributeValue("surname", user.getLastName());
 		if (user.getOrganization() != null)
-			context.setAttributeValue("ou", user.getOrganization());
+			if (!user.getOrganization().equals("")) 
+				context.setAttributeValue("ou", user.getOrganization());
 		if (user.getAddress() != null)
-			context.setAttributeValue("street", user.getAddress());
+			if (!user.getAddress().equals(""))
+				context.setAttributeValue("street", user.getAddress());
 		if (user.getCity() != null)
-			context.setAttributeValue("l", user.getCity());
+			if (!user.getCity().equals(""))
+				context.setAttributeValue("l", user.getCity());
 		if (user.getCountry() != null)
-			context.setAttributeValue("c", user.getCountry());
+			if (!user.getCountry().equals(""))
+				context.setAttributeValue("c", user.getCountry());
 		if (user.getMail() != null)
-			context.setAttributeValue("mail", user.getMail());
+			if (!user.getMail().equals(""))
+				context.setAttributeValue("mail", user.getMail());
 		if (user.getTitle() != null)
-			context.setAttributeValue("personalTitle", user.getTitle());
+			if (!user.getTitle().equals(""))
+				context.setAttributeValue("personalTitle", user.getTitle());
 		if (user.getInterests() != null)
-			context.setAttributeValue("info", user.getInterests());
-		
+			if (!user.getInterests().equals(""))
+				context.setAttributeValue("info", user.getInterests());
+
+		if (user.getActive() != null) 
+			context.setAttributeValue("krb5AccountDisabled", (user.getActive()) ? Boolean.FALSE.toString() : Boolean.TRUE.toString());
+		if (user.getLocked() != null) 
+			context.setAttributeValue("krb5AccountLockedOut", user.getLocked().toString());
+		if (user.getInvalidAccess() != null)
+			context.setAttributeValue("krb5MaxLife", user.getInvalidAccess().toString());
+		if (user.getInvalidAccessMax() != null)
+			context.setAttributeValue("krb5MaxRenew", user.getInvalidAccessMax().toString());
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
+		if (user.getExpirationDate() != null)
+			context.setAttributeValue("krb5AccountExpirationTime", dateFormat.format(user.getExpirationDate()));
+		if (user.getExpirationPasswordDate() != null)
+			context.setAttributeValue("krb5PasswordEnd", dateFormat.format(user.getExpirationPasswordDate()));
+		if (user.getRegistrationDate() != null)
+			context.setAttributeValue("krb5ValidStart", dateFormat.format(user.getRegistrationDate()));
+
 		if (context.getObjectAttribute("photo") != null)  {
 			context.removeAttributeValue("photo;binary", context.getObjectAttribute("photo"));
 		}
@@ -392,8 +441,9 @@ public class UserDaoLdapImpl implements UserDAO {
 		}
 		
 		if (user.getUserRoles() != null) {
-			//List<UserRole> userRoles = getUserRoles(context, "member");
-			//user.setUserRoles(userRoles);
+			for (User.UserRole singleRole : user.getUserRoles()) {
+				context.addAttributeValue("member", "cn=" + singleRole);
+			}
 		}
 	}
 
@@ -407,8 +457,9 @@ public class UserDaoLdapImpl implements UserDAO {
 	@Override
 	public void persist(User user) {
 		DirContextAdapter context = new DirContextAdapter();
-		context.setAttributeValues("objectclass", new String[] { "top", "extensibleObject", "person", "organizationalPerson" });
+		context.setAttributeValues("objectclass", new String[] { "top", "extensibleObject", "krb5Principal", "person", "organizationalPerson" });
 		context.setAttributeValue("cn", user.getAccount());
+		context.setAttributeValue("krb5PrincipalName", user.getAccount());
 		mapUserToContext(user, context);
 		getLdapTemplate().bind(LdapUtils.userDistinguishedName(getLdapConfiguration(), user.getAccount()), context, null);
 	}
@@ -434,9 +485,7 @@ public class UserDaoLdapImpl implements UserDAO {
 	public void remove(User user) {
 		DirContextAdapter context = new DirContextAdapter();
 		mapUserToContext(user, context);
-		getLdapTemplate().unbind(
-				LdapUtils.userDistinguishedName(getLdapConfiguration(),
-						user.getAccount()));
+		getLdapTemplate().unbind(LdapUtils.userDistinguishedName(getLdapConfiguration(), user.getAccount()));
 	}
 
 	/**

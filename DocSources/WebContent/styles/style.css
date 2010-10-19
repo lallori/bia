@@ -20,10 +20,10 @@ body {
 	position:relative;
 }
 
-#stemma {
+#map { /* The Medici Archive Project image */
 	width:270px;
 	height:175px;
-	margin-left:390px;
+	margin-left:365px;
 	position:absolute;
 }
 
@@ -48,117 +48,231 @@ body {
 
 /*  Log in - Form */
 
-.form{ /*  Form class */
-	width:170px;
-	height:170px;
-	margin-top: 80px;
-	margin-left:75px;
+.loginform{ /*  Form class */
+	width:200px;
+	height:220px;
+	margin-top: 70px;
+	margin-left:55px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 .fyp { /* Forgot your password class */
-	font-size: 85%;
-	margin-top:250px;
-	margin-left:65px;
+	font-size: 80%;
+	line-height:17px;
 }
 
+.fyp a {
+	font-size:90%;
+}
 
 input {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	margin-top:7px;
 	border:none;
 	color:#60584d;
+	float:left;
 }
 
-.input { /* input class */
+.input { /* input text class */
 	background-image:url(/DocSources/images/input_bg.png);
+	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
 	border:none;
 	width:150px;
 	padding-left:10px;
-	border:none;
-}
-
-.login_button { /* Log in button class */
-	margin-left:15px;
+	margin-top:0px;
 }
 
 /*  Register - Form */
 
-#regist_form {
-	width:570px;
-	height:400px;
-	margin-top:200px;
-	margin-left: 85px;	
+#registrationForm  { /*  Form content */
+	width:850px;
+	height:420px;
+	margin-top:190px;
+	margin-left: 75px;	
 	position:absolute;
-	background-image:url(/DocSources/images/regist_bg.png);
+	background-image:url(../images/regist_bg.png);
 	background-repeat:no-repeat;
+	z-index:1;
 }
 
-.regist_form{ /*  Form class */
-	width:550px;
-	height:320px;
-	margin-top: 70px;
+.registrationForm { /*  Form class */
+	width:850px;
+	height:300px;
+	margin-top: 85px;
 	margin-left:20px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
 }
 
-.input { /* input class */
-	background-image:url(/DocSources/images/input_bg.png);
-	background-repeat:no-repeat;
-	height:30px;
-	border:none;
-	width:150px;
-	padding-left:10px;
-	border:none;
+.registrationFormKO { /*  Form class */
+	width:850px;
+	height:290px;
+	margin-top: 85px;
+	margin-left:20px;
+	position:absolute;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
 }
 
-#captcha{
-	margin-top:350px;
-	margin-left:700px;
+
+#captcha_register{
+	margin-top:455px;
+	margin-left:200px;
 	position:absolute;
 	width:250px;
 	height:130px;
+	z-index:2;
 }
 
-.textarea { /* input class */
-	background-image:url(/DocSources/images/txtarea_bg.png);
-	background-repeat:no-repeat;
-	height:70px;
-	border:none;
-	width:150px;
-	padding-left:10px;
-	border:none;
-}
-
-#readthis {
-	margin-top:500px;
-	margin-left:690px;
-	position:absolute;
-	width:300px;
-	height:100px;
+.readThis { /* read this text class */
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size: 90%;
+	margin:10px 0px 0px 240px;
 }
 
-/* Buttons */
+.readThis a {
+	font-size:95%;
+}
+
+#submitbutton { /* submit button class */
+	margin-left:140px;
+	position:absolute;
+	width:100px;
+	height:30px;
+}
+
+.already { /* Already have an account? */
+	font-family:Georgia, "Times New Roman", Times, serif;
+	color:#886863;
+	font-size: 95%;
+	margin:0px 0px 0px 670px;
+}
+
+.already a { /* Already have an account? Links */
+	font-family:Georgia, "Times New Roman", Times, serif;
+	color:#642221;
+	font-size: 95%;
+}
+
+.inputerrors { /* Error Span messages */
+	color:#900;
+	font-size:85%;
+	float:left;
+}
+
+/*  Recovery - Form */
+
+#recovery { /*  Form content */
+	width:480px;
+	height:380px;
+	margin-top:200px;
+	margin-left: 265px;	
+	position:absolute;
+	background-image:url(/DocSources/images/recovery_bg.png);
+}
+
+.recovery { /*  Form class */
+	margin-left:120px;
+	height:100px;
+	width:250px;
+	position:absolute;
+}
+
+.recoveryKO { /*  Form KO class */
+	margin-left:120px;
+	height:100px;
+	width:450px;
+	position:absolute;
+}
+
+#stemma { /*  Medici symbol */
+	width:180px;
+	height:220px;
+	margin-top:260px;
+	margin-left: 620px;	
+	position:absolute;
+	background-image:url(/DocSources/images/stemma.png);
+}
+
+.input_recovery { /* input text class */
+	background-image:url(/DocSources/images/input_recovery_bg.png);
+	background-color: transparent;
+	background-repeat:no-repeat;
+	height:30px;
+	border:none;
+	width:250px;
+	padding-left:10px;
+	margin-top:0px;
+}
+
+#captcha_recovery{
+	margin-top:400px;
+	margin-left:300px;
+	position:absolute;
+	width:250px;
+	height:130px;
+	z-index:2;
+}
+
+#recovery p {
+	text-align:center;
+	margin-top:70px;
+	line-height: 20px;
+}
+
+.inputerrors_recovery { /* Error Span messages */
+	color:#900;
+	font-size:85%;
+	float:inherit;
+}
+
+/*  Registration Success */
+
+#usersuccess { /* Div content */
+	width:305px;
+	height:295px;
+	margin-top:220px;
+	margin-left: 210px;	
+	position:absolute;
+	background-image:url(/DocSources/images/success_bg.png);
+}
+
+.usersuccess {  /* p class */
+	margin-top:100px;
+	margin-left:25px;
+	height:50px;
+	width:250px;
+	position:absolute;
+	text-align:center;
+	line-height:20px;
+}
+
+.activsuccess {  /* p class */
+	margin-top:100px;
+	margin-left:25px;
+	height:50px;
+	width:250px;
+	position:absolute;
+	text-align:center;
+	line-height:30px;
+}
+
+/* buttonons */
 
 #register{
-	width:230px;
-	height:65px;
 	margin-top:220px;
-	margin-left:585px;	
+	margin-left:585px;
 	position:absolute;
 }
 
 #guest {
 	width:230px;
 	height:65px;
-	margin-top:300px;
-	margin-left:585px;	
+	margin-top:80px;
 	position:absolute;
 }
 
@@ -186,3 +300,20 @@ a {
 	color:#6F6B69;
 	font-size:small;
 }
+
+/* ReCaptcha */
+
+.recaptchatable .recaptcha_image_cell, #recaptcha_table {
+	background-color:transparent; //reCaptcha widget background color
+}
+ 
+#recaptcha_table {
+	border-color: none; //reCaptcha widget border color
+	background-color:transparent;
+}
+ 
+#recaptcha_response_field {
+	border-color:#6F6B69; //Text input field border color
+}
+
+

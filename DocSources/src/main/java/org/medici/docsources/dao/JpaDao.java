@@ -56,10 +56,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 
 	@SuppressWarnings("unchecked")
 	public JpaDao() {
-		ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-		.getGenericSuperclass();
-		this.entityClass = (Class<E>) genericSuperclass
-		.getActualTypeArguments()[1];
+		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
 	}
 
 	public E find(K id) throws PersistenceException {

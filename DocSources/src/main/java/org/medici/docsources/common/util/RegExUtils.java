@@ -29,7 +29,6 @@ package org.medici.docsources.common.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -51,6 +50,16 @@ public class RegExUtils {
 		String regExEmail = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
 
 		return searchPattern(regExEmail, mail);
+	}
+
+	/**
+	 * This method returns the input string without any not unicode letters.
+	 * 
+	 * @param inputString The input string to be clean.
+	 * @return The input string with only unico deletters.
+	 */
+	public static String trimNonAlphaChars(String inputString) {
+		return inputString.replaceAll("[^a-zA-Z]", "");
 	}
 
 	/**

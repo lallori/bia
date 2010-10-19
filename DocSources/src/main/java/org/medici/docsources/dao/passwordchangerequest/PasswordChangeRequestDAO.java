@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.passwordchangerequest;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.PasswordChangeRequest;
 
@@ -37,4 +41,11 @@ import org.medici.docsources.domain.PasswordChangeRequest;
  */
 public interface PasswordChangeRequestDAO extends Dao<String, PasswordChangeRequest> {
 
+	/**
+	 * 
+	 * @param passwordChangeRequest
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<PasswordChangeRequest> search(PasswordChangeRequest passwordChangeRequest) throws PersistenceException;
 }

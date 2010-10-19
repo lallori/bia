@@ -6,92 +6,70 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-		<script type='text/javascript' src='<c:url value="/scripts/jquery-1.4.2.js"/>'></script>
-		<script type='text/javascript' src='<c:url value="/scripts/jquery.autocomplete.js"/>'></script>
+			<script type='text/javascript' src='<c:url value="/scripts/jquery-1.4.2.js"/>'></script>
+			<script type='text/javascript' src='<c:url value="/scripts/jquery.autocomplete.js"/>'></script>
+	
+			<link rel="stylesheet" href="<c:url value="/styles/popup.css" />" type="text/css" media="screen, projection">
+			<link rel="stylesheet" href="<c:url value="/styles/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
 
-		<link rel="stylesheet" href="<c:url value="/styles/popup.css" />" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="<c:url value="/styles/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
-
-		<div class="container">
-			<h1>
-				Create Account
-			</h1>
-			<div class="span-12 last">	
-				<form:form method="post">
-				  	<fieldset>		
-						<legend>Account Fields</legend>
-						<p>
-							<form:label	id="accountLabel" for="account" path="account" cssErrorClass="error">Name*</form:label><br/>
-							<form:input path="account" /><form:errors path="account" />
-						</p>
-						<p>
-							<form:label id="passwordLabel" for="password" path="password" cssErrorClass="error">Password*</form:label><br/>
-							<form:password path="password" /><form:errors path="password" />
-						</p>
-						<p>
-							<form:label id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error">Confirm Password*</form:label><br/>
-							<form:password path="confirmPassword" /><form:errors path="confirmPassword" />
-						</p>
-						<p>	
-							<form:label id="firstNameLabel" for="firstName" path="firstName" cssErrorClass="error">First Name*</form:label><br/>
-							<form:input path="firstName" /><form:errors path="firstName" />
-						</p>
-						<p>	
-							<form:label id="lastNameLabel" for="lastName" path="lastName" cssErrorClass="error">Last Name*</form:label><br/>
-							<form:input path="lastName" /><form:errors path="lastName" />
-						</p>
-						<p>	
-							<form:label id="cityLabel" for="city" path="city" cssErrorClass="error">City*</form:label><br/>
-							<form:input path="city" /><form:errors path="city"/>
-						</p>
-						<p>	
-							<form:label id="countryDescriptionLabel" for="countryDescription" path="countryDescription" cssErrorClass="error">Country*</form:label><br/>
-							<form:input path="countryDescription" id="countryAutoCompleter"/><form:errors path="countryDescription"/>
-						</p>
-						<p>	
-							<form:label id="mailLabel" for="mail" path="mail" cssErrorClass="error">Mail*</form:label><br/>
-							<form:input path="mail" /><form:errors path="mail"/>
-						</p>
-						<p>	
-							<form:label id="addressLabel" for="address" path="address" cssErrorClass="error">Address</form:label><br/>
-							<form:input path="address" /><form:errors path="address"/>
-						</p>
-						<p>	
-							<form:label id="organizationLabel" for="organization" path="organization" cssErrorClass="error">Organization</form:label><br/>
-							<form:input path="organization" /><form:errors path="organization"/>
-						</p>
-						<p>	
-							<form:label id="titleLabel" for="title" path="title" cssErrorClass="error">Title</form:label><br/>
-							<form:input path="title" /><form:errors path="title"/>
-						</p>
-						<p>	
-							<form:label id="interestsLabel" for="interests" path="interests" cssErrorClass="error">Interests*</form:label><br/>
-							<form:input path="interests" /><form:errors path="interests"/>
-						</p>
-						<c:out value="${reCaptchaHTML}" escapeXml="false"/>
-						<p>	
-							<input id="create" type="submit" value="Create" />
-						</p>
-      					<form:hidden path="countryCode"/>
-					</fieldset>
-					Please read this disclaimer and check the 'I agree' box ONLY if you agree to the terms!
-				</form:form>
-			</div>
-		</div>
-
-	<c:url var="checkAccountUrl" value="/user/ajax/IsAccountAvailable.do"/>
+			<form:form method="post">
+				<div id="captcha_register">
+					<c:out value="${reCaptchaHTML}" escapeXml="false"/>
+				</div>
+	  
+				<div id="registrationForm">
+					<table class="registrationForm" cellpadding="3">
+						<tr>
+							<td align="right"><form:label id="firstNameLabel" for="firstName" path="firstName" cssErrorClass="error"><b>First Name:<font color="#990000">*</font></b></form:label></td>
+							<td><form:input id="firstName" path="firstName" cssClass="input"/><form:errors path="firstName" cssClass="inputerrors"/></td>
+							<td align="right"><form:label id="passwordLabel" for="password" path="password" cssErrorClass="error"><b>Password<font color="#990000">*</font></b></form:label></td>
+							<td><form:password path="password" cssClass="input" cssStyle="align:left"/><form:errors path="password" cssClass="inputerrors"/></td>
+							<td align="right" width="90"><form:label id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error"><b>Confirm Password<font color="#990000">*</font></b></form:label></td>       
+							<td><input id="confirmPassword" name="confirmPassword" type="password"class="input" value=""/></td>
+						</tr>    	
+						<tr>        		
+							<td align="right"><form:label id="lastNameLabel" for="lastName" path="lastName" cssErrorClass="error"><b>Last Name:<font color="#990000">*</font></b></form:label></td>
+							<td><form:input id="lastName" path="lastName" cssClass="input"/><form:errors path="lastName" cssClass="inputerrors"/></td>
+							<td align="right"><form:label id="countryDescriptionLabel" for="countryDescription" path="countryDescription" cssErrorClass="error"><b>Country:<font color="#990000">*</font></b></form:label></td>
+							<td><form:input id="countryAutoCompleter" path="countryDescription" cssClass="input"/><form:errors path="countryDescription" cssClass="inputerrors"/></td>
+							<td align="right"><form:label id="organizationLabel" for="organization" path="organization" cssErrorClass="error">Organization:</form:label></td>
+							<td><form:input id="organization" path="organization" cssClass="input"/><form:errors path="organization" cssClass="inputerrors"/></td>
+						</tr>	
+						<tr>
+							<td align="right"><form:label id="mailLabel" for="mail" path="mail" cssErrorClass="error"><b>Email:<font color="#990000">*</font></b></form:label></td>
+							<td><form:input id="mail" path="mail" cssClass="input"/><form:errors path="mail" cssClass="inputerrors"/></td>
+							<td align="right"><form:label id="cityLabel" for="city" path="city" cssErrorClass="error"><b>City:<font color="#990000">*</font></b></form:label></td>
+							<td><form:input id="city" path="city" cssClass="input"/><form:errors path="city" cssClass="inputerrors"/></td>
+							<td align="right"><form:label id="titleLabel" for="title" path="title" cssErrorClass="error">Title:</form:label></td>
+							<td><form:input id="tittle" path="title" cssClass="input"/><form:errors path="title" cssClass="inputerrors"/></td>
+						</tr>     
+						<tr>        	        	
+							<td align="right"><b>Verification:<font color="#990000">*</font></b></td>
+							<td></td>
+							<td align="right"></td>
+							<td colspan="3"><form:checkbox path="agree" cssStyle="margin:10px 0px 0px 220px"/><p class="readThis">I have read and agree to the <b><a href="#">Terms of Use</a></b>.<font color="#990000">*</font></p></td>
+						</tr>
+						<tr>
+							<td colspan="6"><input id="register" type="image" src="<c:url value="/images/button_regist.jpg"/>" alt="submit" title="submit form" style="margin:12px 0px 0px 670px"/></td>
+						</tr>
+						<tr>
+							<td colspan="6"><p class="already">Already registered? <b><a href="<c:url value="/"/>">Log in.</a>a</b></p></td>
+						</tr>
+					</table>
+   					<form:hidden id="countryCode" path="countryCode"/>
+				</div>
+			</form:form>
+        
 	<c:url var="findCountryUrl" value="/user/ajax/FindCountry.json"/>
 	<c:url var="tickIcon" value="/images/tick.png"/>
 	<c:url var="busyIcon" value="/images/busy_icon.gif"/>
 
-
 	<script type="text/javascript">
+		var RecaptchaOptions = {
+		   theme : 'clean'
+		};
+
 		$(document).ready(function() {
-			$('#account').blur(function() {
-				if ($('#account').val()) {
-					checkAccount();
-				}
-			});
 			var a = $('#countryAutoCompleter').autocomplete({ 
 			    serviceUrl:'${findCountryUrl}',
 			    minChars:1, 
@@ -101,19 +79,9 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: false, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#countryAutoCompleter').parent().next().find("#countryCode").val(data); }
+			    onSelect: function(value, data){ $('#countryCode').val(data); }
 			  });
 		});
-
-		function checkAccount() {
-			$.getJSON("${checkAccountUrl}", { 'account' : $('#account').val() }, function(response) {
-				if (response) {
-					fieldValidated("account", { valid : true });
-				} else {
-					fieldValidated("account", { valid : false, message : $('#account').val() + " is not available."});
-				}
-			});
-		}
 
 		function fieldValidated(field, result) {
 			if (result.valid) {

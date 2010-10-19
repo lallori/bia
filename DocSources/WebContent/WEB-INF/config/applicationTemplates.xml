@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tiles-definitions PUBLIC
-       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
-       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
 
@@ -31,23 +29,56 @@
         <put-attribute name="main" value="/WEB-INF/jsp/Home.jsp"/>
     </definition>
 
-	<definition name="error/ResetUserPassword" extends="template.completeDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/error/ResetUserPassword.jsp"/>
+	<definition name="error/ActivateUser" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
     </definition>
-    
+
+    <definition name="error/ResetUserPassword" extends="template.completeDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/error/ResetUserPassword"/>
+	</definition>
+
+    <definition name="user/ActivateUserSuccess" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ActivateUserSuccess.jsp"/>
+    </definition>
+
     <definition name="user/RegisterUser" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUser.jsp"/>
+    </definition>
+
+    <definition name="user/RegisterUserSuccess" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUserSuccess.jsp"/>
     </definition>
 
 	<definition name="user/ResetUserPassword" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPassword.jsp"/>
     </definition>
     
-	<definition name="user/SendUserDetails" extends="template.loginDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserDetails.jsp"/>
+	<definition name="user/SendUserActivationCode" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserActivationCode.jsp"/>
 	</definition>
 
+	<definition name="user/SendUserActivationCodeSuccess" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserActivationCodeSuccess.jsp"/>
+	</definition>
+
+	<definition name="user/SendUserPasswordReset" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordReset.jsp"/>
+	</definition>
+	
+	<definition name="user/SendUserPasswordResetSuccess" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordResetSuccess.jsp"/>
+	</definition>
     <!-- Authentication Module END -->
+    
+    <!-- Digitization Module BEGIN -->
+    <definition name="catalog/EditCatalog" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/EditCatalog.jsp"/>
+    </definition>
+
+    <definition name="catalog/EditCatalogResult" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/catalog/EditCatalog.jsp"/>
+    </definition>
+    <!-- Digitization Module END -->
 
     <definition name="user/DeleteUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/delete.jsp"/>

@@ -35,7 +35,6 @@ import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.ldap.authentication.*;
 import org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator;
 
 /**

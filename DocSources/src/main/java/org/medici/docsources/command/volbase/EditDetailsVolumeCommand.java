@@ -35,24 +35,15 @@ package org.medici.docsources.command.volbase;
  * @see org.docsources.controller.volbase.EditDetailsVolumeController
  */
 public class EditDetailsVolumeCommand {
-	private Integer volumeId;
-
 	/**
-	 * This method returns volumeId property.
-	 * 
-	 * @return the volumeId
+	 * Mdp or Volume Number
+	 * Start Date
+	 * End Date
+	 * Date Note
 	 */
-	public Integer getVolumeId() {
-		return volumeId;
-	}
-
-	/**
-	 * This method sets volumeId property.
-	 * 
-	 * @param volumeId
-	 *            the volumeId to set
-	 */
-	public void setVolumeId(Integer volumeId) {
-		this.volumeId = volumeId;
-	}
+	private Integer summaryId;
+	
+	private String volLeText;
+	private String dateNotes;
+	
 }

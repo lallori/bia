@@ -27,7 +27,10 @@
  */
 package org.medici.docsources.service.catalog;
 
+import org.medici.docsources.dao.catalog.CatalogDAO;
 import org.medici.docsources.domain.Catalog;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,6 +39,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CatalogServiceImpl implements CatalogService {
+	@Autowired
+	private CatalogDAO catalogDAO;
 
 	/**
 	 * 
@@ -43,6 +48,37 @@ public class CatalogServiceImpl implements CatalogService {
 	public Catalog findCatalog(Integer catalogId) {
 		// TODO Auto-generated method stub
 		return new Catalog();
+	}
+
+	/**
+	 * @return the catalogDAO
+	 */
+	public CatalogDAO getCatalogDAO() {
+		return catalogDAO;
+	}
+
+	/**
+	 * 
+	 * @param catalog
+	 */
+	public void save(Catalog catalog) throws ApplicationThrowable {
+		try {
+			if ((catalog.getId() != null) && (catalog.getId() > 0)) {
+				getCatalogDAO().persist(catalog);
+			} else {
+				getCatalogDAO().merge(catalog);
+			}
+				
+		}catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @param catalogDAO the catalogDAO to set
+	 */
+	public void setCatalogDAO(CatalogDAO catalogDAO) {
+		this.catalogDAO = catalogDAO;
 	}
 
 }

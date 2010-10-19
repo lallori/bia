@@ -61,8 +61,7 @@ public class LockUserValidator extends AbstractUserValidator implements Validato
 	 * Indicates whether the given class is supported by this converter. This
 	 * validator supports only LockUserCommand.
 	 * 
-	 * @param givenClass
-	 *            the class to test for support
+	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
@@ -71,15 +70,13 @@ public class LockUserValidator extends AbstractUserValidator implements Validato
 	}
 
 	/**
-	 * Metodo che si occupa di effettuare la validazione dell'oggetto Command.
-	 * Nel caso in cui ci siano degli errori, vengono inseriti nell'oggetto
-	 * errors, usando come chiave il seguente standard :
-	 * errore.nomecampo.causaerrore
+	 * Validate the supplied target object, which must be of a Class for which
+	 * the supports(Class) method typically has (or would) return true. The
+	 * supplied errors instance can be used to report any resulting validation
+	 * errors.
 	 * 
-	 * @param obj
-	 *            Command Object da validare.
-	 * @param errors
-	 *            Lista degli errori.
+	 * @param obj the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
 		LockUserCommand lockUserCommand = (LockUserCommand) object;

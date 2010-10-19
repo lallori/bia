@@ -17,5 +17,5 @@ I land on DocSource home page!
     	<a href="<c:url value="/user/AdvancedSearchUser.do"/>">Advanced Search Users</a>
     </sec:authorize>
     <a href="<c:url value="/user/DeleteUser.do"/>">Unregister from service</a>
-    <a href="<c:url value="/Logout.do"/>">Exit</a>
+    <a href="<c:url value="/LogoutUser.do"/>">Exit</a>
 </pre>

@@ -28,9 +28,7 @@
 package org.medici.docsources.controller.user;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +37,6 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.user.RegisterUserCommand;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.recaptcha.ReCaptchaService;
 import org.medici.docsources.service.user.UserService;
@@ -114,20 +111,17 @@ public class RegisterUserController {
 			User user = new User();
 			try {
 				BeanUtils.copyProperties(user, command);
-				List<UserRole> userRoles = new ArrayList<UserRole>();
-				//userRoles.add(UserRole.GUESTS);
-				user.setUserRoles(userRoles);
 			} catch (IllegalAccessException iaex) {
 			} catch (InvocationTargetException itex) {
 			}
 
 			try {
-				getUserService().registerNewUser(user);
-				model.put("user", getUserService().findUser(user.getAccount()));
+				getUserService().registerUser(user);
+				model.put("user", user);
 			} catch (ApplicationThrowable aex) {
 			}
 
-			return new ModelAndView("responseOK",model);
+			return new ModelAndView("user/RegisterUserSuccess",model);
 		}
 
 	}
@@ -144,7 +138,7 @@ public class RegisterUserController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") RegisterUserCommand command) {
+	public ModelAndView setupForm(RegisterUserCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		model.put("command", command);

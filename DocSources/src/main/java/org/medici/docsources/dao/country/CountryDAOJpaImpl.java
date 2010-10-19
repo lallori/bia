@@ -76,24 +76,14 @@ public class CountryDAOJpaImpl extends JpaDao<String, Country> implements Countr
 	 *         description
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<Country> findByDescription(String description)
-	throws PersistenceException {
+	public List<Country> findByDescription(String description) throws PersistenceException {
 
-		CriteriaBuilder criteriaBuilder = getEntityManager()
-		.getCriteriaBuilder();
-		CriteriaQuery<Country> criteriaQuery = criteriaBuilder
-		.createQuery(Country.class);
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Country> criteriaQuery = criteriaBuilder.createQuery(Country.class);
 		Root countryEntity = criteriaQuery.from(Country.class);
 		Path nameAttr = countryEntity.get("name");
 		criteriaQuery.where(criteriaBuilder.like(nameAttr, description + "%"));
 		TypedQuery typedQuery = getEntityManager().createQuery(criteriaQuery);
 		return typedQuery.getResultList();
-
-		/*
-		 * Query query = getEntityManager().createQuery(
-		 * "from Country where lower(name) like :name");
-		 * query.setParameter("name", description); return
-		 * query.getResultList();
-		 */
 	}
 }

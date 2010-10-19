@@ -29,6 +29,7 @@ package org.medici.docsources.domain;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,6 +38,7 @@ import java.util.List;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public class User implements Serializable {
+
 	/**
 	 * Class for mapping role application informations.
 	 * 
@@ -126,22 +128,36 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = -4232226019305595581L;
 	private String account;
+	private Boolean active;
 	private String address;
 	private String city;
 	private String country;
+	private Date expirationDate;
+	private Date expirationPasswordDate;
 	private String firstName;
 	private String interests;
+	private Integer invalidAccess;
+	private Integer invalidAccessMax;
 	private String lastName;
+	private Boolean locked;
 	private String mail;
 	private String organization;
 	private String password;
 	private BufferedImage photo;
+	private Date registrationDate;
 	private String title;
 
 	private List<UserRole> userRoles;
 
 	public String getAccount() {
 		return account;
+	}
+
+	/**
+	 * @return the active
+	 */
+	public Boolean getActive() {
+		return active;
 	}
 
 	/**
@@ -165,6 +181,20 @@ public class User implements Serializable {
 		return country;
 	}
 
+	/**
+	 * @return the expirationDate
+	 */
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	/**
+	 * @return the expirationPasswordDate
+	 */
+	public Date getExpirationPasswordDate() {
+		return expirationPasswordDate;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -177,10 +207,31 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return the invalidAccess
+	 */
+	public Integer getInvalidAccess() {
+		return invalidAccess;
+	}
+
+	/**
+	 * @return the invalidAccessMax
+	 */
+	public Integer getInvalidAccessMax() {
+		return invalidAccessMax;
+	}
+
+	/**
 	 * @return the surname
 	 */
 	public String getLastName() {
 		return lastName;
+	}
+
+	/**
+	 * @return the locked
+	 */
+	public Boolean getLocked() {
+		return locked;
 	}
 
 	/**
@@ -209,6 +260,13 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @return the registrationDate
+	 */
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	/**
 	 * @return person title
 	 */
 	public String getTitle() {
@@ -224,6 +282,13 @@ public class User implements Serializable {
 
 	public void setAccount(String account) {
 		this.account = account;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	/**
@@ -250,6 +315,20 @@ public class User implements Serializable {
 		this.country = country;
 	}
 
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+	/**
+	 * @param expirationPasswordDate the expirationPasswordDate to set
+	 */
+	public void setExpirationPasswordDate(Date expirationPasswordDate) {
+		this.expirationPasswordDate = expirationPasswordDate;
+	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -263,11 +342,32 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * @param invalidAccess the invalidAccess to set
+	 */
+	public void setInvalidAccess(Integer invalidAccess) {
+		this.invalidAccess = invalidAccess;
+	}
+
+	/**
+	 * @param invalidAccessMax the invalidAccessMax to set
+	 */
+	public void setInvalidAccessMax(Integer invalidAccessMax) {
+		this.invalidAccessMax = invalidAccessMax;
+	}
+
+	/**
 	 * @param lastName
 	 *            the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	/**
+	 * @param locked the locked to set
+	 */
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
 	}
 
 	/**
@@ -296,6 +396,13 @@ public class User implements Serializable {
 	 */
 	public void setPhoto(BufferedImage photo) {
 		this.photo = photo;
+	}
+
+	/**
+	 * @param registrationDate the registrationDate to set
+	 */
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 
 	/**

@@ -61,8 +61,7 @@ public class ResetUserPasswordRequestValidator extends AbstractUserValidator imp
 	}
 
 	/**
-	 * @param userService
-	 *            the userService to set
+	 * @param userService the userService to set
 	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -72,8 +71,7 @@ public class ResetUserPasswordRequestValidator extends AbstractUserValidator imp
 	 * Indicates whether the given class is supported by this converter. This
 	 * validator supports only RegisterUserCommand.
 	 * 
-	 * @param givenClass
-	 *            the class to test for support
+	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
@@ -87,10 +85,8 @@ public class ResetUserPasswordRequestValidator extends AbstractUserValidator imp
 	 * supplied errors instance can be used to report any resulting validation
 	 * errors.
 	 * 
-	 * @param obj
-	 *            the object that is to be validated (can be null)
-	 * @param errors
-	 *            contextual state about the validation process (never null)
+	 * @param obj the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
 		ResetUserPasswordRequestCommand resetUserPasswordRequestCommand = (ResetUserPasswordRequestCommand) object;
@@ -116,6 +112,11 @@ public class ResetUserPasswordRequestValidator extends AbstractUserValidator imp
 			PasswordChangeRequest passwordChangeRequest = getUserService().findPasswordChangeRequest(uuid);
 			if (passwordChangeRequest == null) {
 				errors.rejectValue("uuid", "error.uuid.notfound");
+				return;
+			}
+
+			if (passwordChangeRequest.getReset()) {
+				errors.rejectValue("uuid", "error.password.alreadyresetted");
 				return;
 			}
 

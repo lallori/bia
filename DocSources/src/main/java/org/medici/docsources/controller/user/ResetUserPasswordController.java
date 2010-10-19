@@ -178,8 +178,9 @@ public class ResetUserPasswordController {
 			Map<String, Object> model = new HashMap<String, Object>();
 			
 			try {
-				PasswordChangeRequest passwordChangeRequest = getUserService().findPasswordChangeRequest(command.getUuid());
 				getUserService().updateUserPassword(command.getUuid(), command.getPassword());
+
+				PasswordChangeRequest passwordChangeRequest = getUserService().findPasswordChangeRequest(command.getUuid());
 				autoLogin(request, response, passwordChangeRequest.getAccount(), command.getPassword());
 			} catch (ApplicationThrowable aex) {
 				return new ModelAndView("responseKO", model);
@@ -187,7 +188,6 @@ public class ResetUserPasswordController {
 
 			return new ModelAndView("Home", model);
 		}
-
 	}
 
 	/**

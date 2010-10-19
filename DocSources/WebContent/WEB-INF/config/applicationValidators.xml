@@ -53,6 +53,10 @@
 	</bean>
 
 	<!-- User's Validators-->
+    <bean id="activateUserRequestValidator" class="org.medici.docsources.validator.user.ActivateUserRequestValidator">
+        <description>Validator for action "Activate user.".</description>
+    </bean>
+    
     <bean id="advancedSearchUserValidator" class="org.medici.docsources.validator.user.AdvancedSearchUserValidator">
         <description>Advanced search user validator.</description>
     </bean>
@@ -77,14 +81,18 @@
         <description>User registration validator.</description>
     </bean>
 
+    <bean id="sendUserActivationCodeValidator" class="org.medici.docsources.validator.user.SendUserActivationCodeValidator">
+        <description>Validator for action "Send user activation code by mail".</description>
+    </bean>
+
+    <bean id="sendUserPasswordResetValidator" class="org.medici.docsources.validator.user.SendUserPasswordResetValidator">
+        <description>Validator for action "Send user passowrd reset by mail".</description>
+    </bean>
+
   	<bean id="showUserPhotoValidator" class="org.medici.docsources.validator.user.ShowUserPhotoValidator">
         <description>User registration validator.</description>
 	</bean>
     
-    <bean id="sendUserDetailsValidator" class="org.medici.docsources.validator.user.SendUserDetailsValidator">
-        <description>Validator for action "Send user details by mail".</description>
-    </bean>
-
     <bean id="searchUserValidator" class="org.medici.docsources.validator.user.SearchUserValidator">
         <description>User search validator.</description>
     </bean>

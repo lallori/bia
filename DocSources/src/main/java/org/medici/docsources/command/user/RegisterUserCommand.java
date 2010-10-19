@@ -38,10 +38,6 @@ import javax.validation.constraints.Size;
  * @see org.merdici.docsources.controller.user.RegisterUserController
  */
 public class RegisterUserCommand {
-	/** User account */
-	@NotNull
-	@Size(min = 4, max = 15)
-	private String account;
 	private String address;
 	@NotNull
 	private Boolean agree;
@@ -60,8 +56,6 @@ public class RegisterUserCommand {
 	@NotNull
 	private String firstName;
 	@NotNull
-	private String interests;
-	@NotNull
 	private String lastName;
 	@NotNull
 	private String mail;
@@ -77,14 +71,6 @@ public class RegisterUserCommand {
 	private String remoteAddress;
 	private String title;
 
-	/**
-	 * This method returns account property.
-	 * 
-	 * @return
-	 */
-	public String getAccount() {
-		return account;
-	}
 
 	/**
 	 * This method returns address property.
@@ -147,15 +133,6 @@ public class RegisterUserCommand {
 	 */
 	public String getFirstName() {
 		return firstName;
-	}
-
-	/**
-	 * This method returns interests property.
-	 * 
-	 * @return the interests
-	 */
-	public String getInterests() {
-		return interests;
 	}
 
 	/**
@@ -234,20 +211,9 @@ public class RegisterUserCommand {
 	}
 
 	/**
-	 * This method sets account property.
-	 * 
-	 * @param account
-	 *            the account to set
-	 */
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
-	/**
 	 * This method sets address property.
 	 * 
-	 * @param address
-	 *            the address to set
+	 * @param address the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -256,8 +222,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets agreement property.
 	 * 
-	 * @param agree
-	 *            the agree to set
+	 * @param agree the agree to set
 	 */
 	public void setAgree(Boolean agree) {
 		this.agree = agree;
@@ -266,8 +231,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets city property.
 	 * 
-	 * @param city
-	 *            the city to set
+	 * @param city the city to set
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -276,8 +240,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets confirmation password property.
 	 * 
-	 * @param confirmPassword
-	 *            the confirmPassword to set
+	 * @param confirmPassword the confirmPassword to set
 	 */
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
@@ -286,8 +249,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets country code property.
 	 * 
-	 * @param countryCode
-	 *            the countryCode to set
+	 * @param countryCode the countryCode to set
 	 */
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
@@ -296,8 +258,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets country description property.
 	 * 
-	 * @param countryDescription
-	 *            the countryDescription to set
+	 * @param countryDescription the countryDescription to set
 	 */
 	public void setCountryDescription(String countryDescription) {
 		this.countryDescription = countryDescription;
@@ -306,28 +267,16 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets first name property.
 	 * 
-	 * @param firstName
-	 *            the first name to set
+	 * @param firstName the first name to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
 	/**
-	 * This method sets user's interests property.
-	 * 
-	 * @param interests
-	 *            interests to set
-	 */
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
-
-	/**
 	 * This method sets surname property.
 	 * 
-	 * @param surname
-	 *            the surname to set
+	 * @param surname the surname to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -336,8 +285,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets mail property.
 	 * 
-	 * @param mail
-	 *            the mail to set
+	 * @param mail the mail to set
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
@@ -346,8 +294,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets organization property.
 	 * 
-	 * @param organization
-	 *            the organization to set
+	 * @param organization the organization to set
 	 */
 	public void setOrganization(String organization) {
 		this.organization = organization;
@@ -356,8 +303,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets password property.
 	 * 
-	 * @param password
-	 *            the password to set
+	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -367,8 +313,7 @@ public class RegisterUserCommand {
 	 * This method sets recaptcha_challenge_field property.It's used by
 	 * ReCaptcha (antispam) control to validate captcha image.
 	 * 
-	 * @param recaptcha_challenge_field
-	 *            the recaptcha_challenge_field to set
+	 * @param recaptcha_challenge_field the recaptcha_challenge_field to set
 	 */
 	public void setRecaptcha_challenge_field(String recaptcha_challenge_field) {
 		this.recaptcha_challenge_field = recaptcha_challenge_field;
@@ -378,8 +323,7 @@ public class RegisterUserCommand {
 	 * This method sets recaptcha_response_field property.It's used by ReCaptcha
 	 * (antispam) control to validate captcha image.
 	 * 
-	 * @param recaptcha_response_field
-	 *            the recaptcha_response_field to set
+	 * @param recaptcha_response_field the recaptcha_response_field to set
 	 */
 	public void setRecaptcha_response_field(String recaptcha_response_field) {
 		this.recaptcha_response_field = recaptcha_response_field;
@@ -389,8 +333,7 @@ public class RegisterUserCommand {
 	 * This method sets remote address property.It's used by ReCaptcha
 	 * (antispam) control to validate captcha image.
 	 * 
-	 * @param remoteAddress
-	 *            the remoteAddress to set
+	 * @param remoteAddress the remoteAddress to set
 	 */
 	public void setRemoteAddress(String remoteAddress) {
 		this.remoteAddress = remoteAddress;
@@ -399,8 +342,7 @@ public class RegisterUserCommand {
 	/**
 	 * This method sets title property.
 	 * 
-	 * @param title
-	 *            the title to set
+	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;

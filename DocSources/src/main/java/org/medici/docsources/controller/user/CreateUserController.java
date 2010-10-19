@@ -28,9 +28,7 @@
 package org.medici.docsources.controller.user;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -38,7 +36,6 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.user.CreateUserCommand;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,18 +78,12 @@ public class CreateUserController {
 			User user = new User();
 			try {
 				BeanUtils.copyProperties(user, command);
-
-				List<UserRole> userRole = new ArrayList<UserRole>();
-				userRole.add(UserRole.COMMUNITY_USERS);
-				user.setUserRoles(userRole);
 			} catch (InvocationTargetException itex) {
 			} catch (IllegalAccessException iaex) {
-				// TODO Auto-generated catch block
-			} finally {
 			}
 
 			try {
-				getUserService().registerNewUser(user);
+				getUserService().registerUser(user);
 				model.put("user", getUserService().findUser(user.getAccount()));
 			} catch (ApplicationThrowable aex) {
 			}

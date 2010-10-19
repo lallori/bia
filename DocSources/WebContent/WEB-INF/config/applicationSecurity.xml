@@ -14,9 +14,11 @@
         <security:intercept-url pattern="/css/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/scripts/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ActivateUser.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/RegisterUser.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ResetUserPassword.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/SendUserDetails.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/SendUserActivationCode.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/SendUserPasswordReset.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ajax/**.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
         <security:intercept-url pattern="/adm/**"   access="ROLE_ADMINISTRATORS" />
@@ -119,6 +121,8 @@
    		<constructor-arg index="1">
    			<ref local="ldapAuthoritiesPopulator" />
    		</constructor-arg>
+   		
+   		<property name="userDetailsContextMapper" ref="ldapUserDetailsMapper"></property>
    	</bean>
 
 	<bean id="ldapAuthoritiesPopulator" class="org.medici.docsources.security.DocSourcesAuthoritiesPopulator">

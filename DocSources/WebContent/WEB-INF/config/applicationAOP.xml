@@ -16,10 +16,12 @@
 
     <aop:config>
         <aop:pointcut id="serviceOperation" expression="execution(* org.medici.docsources.service..*Service*.*(..))"/>
+        <aop:pointcut id="schedulerOperation" expression="execution(* org.medici.docsources.scheduler..*Job.*(..))"/>
        	<aop:pointcut id="validatorOperation" expression="execution(* org.medici.docsources.validator..*Validator.validate(..))"/>
 		<aop:advisor pointcut-ref="validatorOperation" advice-ref="logValidatorAdvice" />
 		<aop:advisor pointcut-ref="serviceOperation" advice-ref="logServiceAdvice" />
         <aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice"/>
+        <aop:advisor pointcut-ref="schedulerOperation" advice-ref="txAdvice"/>
     </aop:config>
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
@@ -27,12 +29,15 @@
             <tx:method name="get*" read-only="true"/>
             <tx:method name="find*" read-only="true"/>
             <tx:method name="search*" read-only="true"/>
-            <tx:method name="send*" />
+            <tx:method name="activate*"/>
+            <tx:method name="add*" />
             <tx:method name="merge*" />
             <tx:method name="persist*" />
+            <tx:method name="register*" />
             <tx:method name="save*" />
-            <tx:method name="update*" />
+            <tx:method name="send*" />
             <tx:method name="traceAction*" />
+            <tx:method name="update*" />
         </tx:attributes>
     </tx:advice>
 

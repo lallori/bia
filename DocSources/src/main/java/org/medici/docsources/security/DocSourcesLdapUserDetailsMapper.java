@@ -27,11 +27,16 @@
  */
 package org.medici.docsources.security;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Enumeration;
+import java.util.Date;
 
-import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
+import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.ldap.userdetails.LdapUserDetails;
@@ -54,18 +59,35 @@ public class DocSourcesLdapUserDetailsMapper extends LdapUserDetailsMapper {
 	 * @param username
 	 * @param authorities
 	 */
-	@SuppressWarnings("rawtypes")
 	@Override
 	public UserDetails mapUserFromContext(DirContextOperations ctx,String username, Collection<GrantedAuthority> authorities) {
 		UserDetails ud = super.mapUserFromContext(ctx, username, authorities);
-		LdapUserDetails ldapUserDetails = (LdapUserDetailsImpl) ud;
-		DirContextAdapter dca = (DirContextAdapter) ctx;
-		Collection<GrantedAuthority> ldapUserGrantedAuthority = ldapUserDetails.getAuthorities();
-		Enumeration e = dca.getAttributes().getAll();
-		while (e.hasMoreElements()) {
-			ldapUserGrantedAuthority.add((GrantedAuthority) e.nextElement());
+		LdapUserDetailsImpl.Essence essence = new LdapUserDetailsImpl.Essence((LdapUserDetailsImpl) ud);
+
+		essence.setEnabled(!Boolean.valueOf(ctx.getStringAttribute("krb5AccountDisabled")));
+		essence.setAccountNonLocked(!Boolean.valueOf(ctx.getStringAttribute("krb5AccountLockedOut")));
+		try {
+			// 20101030214433+0100
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
+			Date expirationDate = dateFormat.parse(ctx.getStringAttribute("krb5AccountExpirationTime"));
+			essence.setAccountNonExpired(!expirationDate.before(new Date()));
+		} catch (ParseException pex) {
+			pex.printStackTrace();
 		}
-		return ud;
+
+
+		LdapUserDetails ldapUserDetails = essence.createUserDetails();
+
+		if (!ldapUserDetails.isEnabled()) 
+			throw new DisabledException("User is not activated");
+		
+		if (!ldapUserDetails.isAccountNonExpired()) 
+			throw new AccountExpiredException("User is expired");
+
+		if (!ldapUserDetails.isAccountNonLocked()) 
+			throw new LockedException("User is locked");
+
+		return ldapUserDetails;
 	}
 
 }

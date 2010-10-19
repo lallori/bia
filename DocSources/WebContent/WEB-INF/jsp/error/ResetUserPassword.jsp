@@ -5,6 +5,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
-	<form:form commandName="requestCommand" method="post">
-		<form:errors path="uuid" />
-	</form:form>
+		<form:form commandName="requestCommand" method="post">
+			<div id="usersuccess">
+				<form:errors path="uuid" />  		
+			</div>
+
+			<div id="stemma"></div>
+		</form:form>

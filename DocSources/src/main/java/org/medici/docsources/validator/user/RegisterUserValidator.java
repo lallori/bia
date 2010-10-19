@@ -28,7 +28,6 @@
 package org.medici.docsources.validator.user;
 
 import org.medici.docsources.command.user.RegisterUserCommand;
-import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -88,25 +87,27 @@ public class RegisterUserValidator extends AbstractUserValidator implements Vali
 	public void validate(Object object, Errors errors) {
 		RegisterUserCommand registerCommand = (RegisterUserCommand) object;
 
-		validateAccount(registerCommand.getAccount(), errors);
+		validateFirstName(registerCommand.getFirstName(), errors);
+		validateLastName(registerCommand.getLastName(), errors);
+		validateCountryCode(registerCommand.getCountryCode(), errors);
+		validateOrganization(registerCommand.getOrganization(), errors);
+		validateCity(registerCommand.getCity(), errors);
 		validateMail(registerCommand.getMail(), errors);
 		validateReCaptcha(registerCommand.getRemoteAddress(), registerCommand.getRecaptcha_challenge_field(), registerCommand.getRecaptcha_response_field(), errors);
 	}
 
-	/**
-	 * 
-	 * @param account
-	 * @param errors
-	 */
-	public void validateAccount(String account, Errors errors) {
-		if (!errors.hasErrors()) {
-			try {
-				if (!getUserService().isAccountAvailable(account)) {
-					errors.rejectValue("account", "error.account.notavailable");
-				}
-			} catch(ApplicationThrowable ath) {
-				errors.rejectValue("account", "error.account.notavailable");
-			}
-		}
+	private void validateCountryCode(String countryCode, Errors errors) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void validateCity(String city, Errors errors) {
+		if (errors.hasErrors())
+			return;
+	}
+
+	private void validateOrganization(String organization, Errors errors) {
+		if (errors.hasErrors())
+			return;
 	}
 }

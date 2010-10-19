@@ -1,5 +1,5 @@
 /*
- * SendUserDetailsController.java
+ * SendUserActivationCodeController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -33,7 +33,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.medici.docsources.command.user.SendUserDetailsCommand;
+import org.medici.docsources.command.user.SendUserActivationCodeCommand;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.mail.MailService;
@@ -53,37 +53,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for sending user details to user mail address.
+ * Controller for receiving activation code by mail.
  * 
- * 1. The user enters his username and hits "forgot password". Optionally 
- *    you can ask for email and look the username up by the email, but this 
- *    might fail if two users share the same email address.
- * 2. The system has a table password_change_requests with the columns ID, 
- *    Time and UserID. The ID is a long random ID (GUID might do). The Time 
- *    column contains the time when the user pressed the "Forgot Password" 
- *    button. When the new user presses the button, a record is created 
- *    in the table.
- * 3. The system sends an email to the user which contains a link in it. 
- *    The link also contains the ID in the above mentioned table. The link 
- *    will be something like this: 
- *    http://www.mysite.com/forgotpassword.jsp?ID=01234567890ABCDEF. 
- *    The forgotpassword.jsp page should be able to retrieve the ID parameter. 
- * 4. When the user clicks the link in the email, he is moved to your page. 
- *    The page retrieves the ID from the URL and checks against the table. 
- *    If such a record is there and is no more than, say, 24 hours old, the 
- *    password is changed to a new random password. The record is also deleted, 
- *    so that it cannot be reused.
- * 5. Now you have a choice of how you want to display the password to the user. 
- *    You can either send another email with it, or display it on the screen. 
- *    Or both, just to be sure. I always like to send important information to 
- *    the email as well, because that makes it easier for the user not to forget 
- *    it.
+ * 1. The user enters his mail address, captcha words and hits the submit.
+ * 2. The system persists the request for sending activation code in an entity.
  *    
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/user/SendUserDetails")
-public class SendUserDetailsController {
+@RequestMapping("/user/SendUserActivationCode")
+public class SendUserActivationCodeController {
 	@Autowired
 	private MailService mailService;
 	@Autowired
@@ -91,7 +70,7 @@ public class SendUserDetailsController {
 	@Autowired
 	private UserService userService;
 	@Autowired(required = false)
-	@Qualifier("sendUserDetailsValidator")
+	@Qualifier("sendUserActivationCodeValidator")
 	private Validator validator;
 	@Autowired
 	private MessageSource messageSource;
@@ -137,7 +116,7 @@ public class SendUserDetailsController {
 	public void initBinder(WebDataBinder binder, HttpServletRequest request) {
 		binder.setDisallowedFields("ip"); // Don't allow user to override the
 		// value
-		((SendUserDetailsCommand) binder.getTarget()).setRemoteAddress(request.getRemoteAddr());
+		((SendUserActivationCodeCommand) binder.getTarget()).setRemoteAddress(request.getRemoteAddr());
 	}
 
 	/**
@@ -148,23 +127,25 @@ public class SendUserDetailsController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") SendUserDetailsCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") SendUserActivationCodeCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+
 			User user = new User();
 			user.setMail(command.getMail());
 
 			try {
 				user = getUserService().findUser(user);
-				if (getMailService().sendUserInformationMail(user, command.getRemoteAddress())) {}
-				
+				getUserService().addActivationUserRequest(user, command.getRemoteAddress());
+				model.put("user", user);
 			} catch (ApplicationThrowable aex) {
 			}
 
-			return new ModelAndView("responseOK");
+			return new ModelAndView("user/SendUserActivationCodeSuccess", model);
 		}
 
 	}
@@ -193,11 +174,11 @@ public class SendUserDetailsController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") SendUserDetailsCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") SendUserActivationCodeCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("reCaptchaHTML", getReCaptchaService().getReCaptchaObjectNoSSL().createRecaptchaHtml(null, null));
 		getMessageSource();
-		return new ModelAndView("user/SendUserDetails", model);
+		return new ModelAndView("user/SendUserActivationCode", model);
 	}
 
 	/**

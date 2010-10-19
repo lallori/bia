@@ -63,8 +63,7 @@ public class EditDetailsVolumeValidator implements Validator {
 	 * Indicates whether the given class is supported by this converter. This
 	 * validator supports only ModifyVolumeCommand.
 	 * 
-	 * @param givenClass
-	 *            the class to test for support
+	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
@@ -85,7 +84,8 @@ public class EditDetailsVolumeValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDetailsVolumeCommand editDetailsVolumeCommand = (EditDetailsVolumeCommand) object;
-		validateVolumeId(editDetailsVolumeCommand.getVolumeId(), errors);
+		editDetailsVolumeCommand.toString();
+		//validateVolumeId(editDetailsVolumeCommand.getVolumeId(), errors);
 	}
 
 	public void validateVolumeId(Integer volumeId, Errors errors) {

@@ -28,6 +28,7 @@
 package org.medici.docsources.service.catalog;
 
 import org.medici.docsources.domain.Catalog;
+import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
  * 
@@ -42,4 +43,10 @@ public interface CatalogService {
 	 * @return
 	 */
 	public Catalog findCatalog(Integer catalogId);
+
+	/**
+	 * 
+	 * @param catalog
+	 */
+	public void save(Catalog catalog) throws ApplicationThrowable;
 }

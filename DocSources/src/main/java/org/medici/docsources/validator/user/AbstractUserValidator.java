@@ -28,7 +28,7 @@
 package org.medici.docsources.validator.user;
 
 import net.tanesha.recaptcha.ReCaptchaResponse;
-
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.recaptcha.ReCaptchaService;
@@ -112,6 +112,32 @@ public abstract class AbstractUserValidator implements Validator {
 	}
 
 	/**
+	 * 
+	 * @param firstName
+	 * @param errors
+	 */
+	public void validateFirstName(String firstName, Errors errors) {
+		if (errors.hasErrors())
+			return;
+		
+		if (!StringUtils.isAlpha(firstName))
+			errors.rejectValue("firstName", "error.firstName.onlyalphacharacters");
+	}
+	
+	/**
+	 * 
+	 * @param lastName
+	 * @param errors
+	 */
+	public void validateLastName(String lastName, Errors errors) {
+		if (errors.hasErrors())
+			return;
+
+		if (!StringUtils.isAlpha(lastName))
+			errors.rejectValue("firstName", "error.lastName.onlyalphacharacters");
+	}
+
+	/**
 	 * This make a checks to control if mail field is already registered
 	 * in other account.
 	 * 
@@ -148,6 +174,7 @@ public abstract class AbstractUserValidator implements Validator {
 		ReCaptchaResponse reCaptchaResponse = getReCaptchaService().checkReCaptcha(remoteAddress, challenge, response);
 
 		if (!reCaptchaResponse.isValid()) {
+			errors.reject("mail", "error.incorrect-captcha-sol");
 			/** @TODO :errors.rejectValue(arg0, arg1, arg2); */
 		}
 	}

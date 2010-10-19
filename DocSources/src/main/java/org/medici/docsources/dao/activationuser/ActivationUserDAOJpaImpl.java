@@ -1,5 +1,5 @@
 /*
- * PasswordChangeRequestJpaImpl.java
+ * ActivationUserDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,21 +25,32 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.passwordchangerequest;
+package org.medici.docsources.dao.activationuser;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.ActivationUser;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>ActivationUserDAOJpaImpl</b> is a default implementation of <b>ActivationUserDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * 
+ * @see org.medici.docsources.domain.ActivationUser
  */
 @Repository
-public class PasswordChangeRequestJpaImpl extends JpaDao<String, PasswordChangeRequest> implements PasswordChangeRequestDAO {
+public class ActivationUserDAOJpaImpl extends JpaDao<String, ActivationUser> implements ActivationUserDAO {
 
 	/**
 	 * 
@@ -59,6 +70,30 @@ public class PasswordChangeRequestJpaImpl extends JpaDao<String, PasswordChangeR
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = 8582736566153311653L;
+	private static final long serialVersionUID = 617902723399766439L;
 
+	/**
+	 * 
+	 */
+	public List<ActivationUser> searchUsersToActivate(ActivationUser activationUser) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<ActivationUser> criteriaQuery = criteriaBuilder.createQuery(ActivationUser.class);
+		Root<ActivationUser> root = criteriaQuery.from(ActivationUser.class);
+
+		// Define predicate's elements
+		List<Predicate> criteria = new ArrayList<Predicate>();
+		ParameterExpression<Boolean> parameterActive = criteriaBuilder.parameter(Boolean.class, "active");
+		ParameterExpression<Boolean> parameterMailSended = criteriaBuilder.parameter(Boolean.class, "mailSended");
+		criteria.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("active"), parameterActive), criteriaBuilder.equal(root.get("mailSended"), parameterMailSended)));
+		criteriaQuery.where(criteria.get(0));
+
+		// Set values in predicate's elements  
+		TypedQuery<ActivationUser> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("active", activationUser.getActive());
+		typedQuery.setParameter("mailSended", activationUser.getMailSended());
+
+		//Execute query
+		return typedQuery.getResultList();
+	}
 }

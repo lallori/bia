@@ -28,11 +28,12 @@
 package org.medici.docsources.service.mail;
 
 import java.net.URLEncoder;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Locale;
-import java.util.UUID;
 
+import org.medici.docsources.dao.activationuser.ActivationUserDAO;
 import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
+import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,20 +51,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailServiceImpl implements MailService {
 	@Autowired
-	private JavaMailSender javaMailSender;
+	private ActivationUserDAO activationUserDAO;
 	@Autowired
-	private PasswordChangeRequestDAO passwordChangeRequestDAO; 
+	private JavaMailSender javaMailSender; 
+	@Autowired
+	private PasswordChangeRequestDAO passwordChangeRequestDAO;
 	@Autowired
 	@Qualifier("messageSource")
 	private MessageSource messageSource;
 	@Autowired
-	private String mailFrom;
+	private String mailFrom; 
+
+	/**
+	 * @return the activationUserDAO
+	 */
+	public ActivationUserDAO getActivationUserDAO() {
+		return activationUserDAO;
+	}
 
 	/**
 	 * @return the javaMailSender
 	 */
 	public JavaMailSender getJavaMailSender() {
 		return javaMailSender;
+	}
+
+	/**
+	 * @return the mailFrom
+	 */
+	private String getMailFrom() {
+		return mailFrom;
 	}
 
 	/**
@@ -74,33 +91,61 @@ public class MailServiceImpl implements MailService {
 	}
 
 	/**
+	 * @return the passwordChangeRequestDAO
+	 */
+	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
+		return passwordChangeRequestDAO;
+	}
+
+	/**
 	 * 
 	 */
-	public Boolean sendUserInformationMail(User user, String remoteAddress) {
-		try{
-			PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest();
-			passwordChangeRequest.setUuid(UUID.randomUUID().toString());
-			passwordChangeRequest.setAccount(user.getAccount());
-			passwordChangeRequest.setRequestDate(new Timestamp(System.currentTimeMillis()));
-			passwordChangeRequest.setIpAddress(remoteAddress);
-
+	public Boolean sendActivationMail(ActivationUser activationUser, User user) {
+		try {
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setFrom(getMailFrom());
 			message.setTo(user.getMail());
-			message.setSubject(getMessageSource().getMessage("mail.userDetails.subject", null, Locale.ENGLISH));
-			message.setText(getMessageSource().getMessage("mail.userDetails.text", 
-							new String[]{user.getFirstName(), 
-							user.getAccount(), 
-							URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8") },
-							Locale.ENGLISH));
+			message.setSubject(getMessageSource().getMessage("mail.activationUser.subject", null, Locale.ENGLISH));
+			message.setText(getMessageSource().getMessage("mail.activationUser.text", new String[]{user.getFirstName(), user.getAccount(), URLEncoder.encode(activationUser.getUuid().toString(),"UTF-8") }, Locale.ENGLISH));
 			getJavaMailSender().send(message);
 			
-			getPasswordChangeRequestDAO().persist(passwordChangeRequest);
+			activationUser.setMailSended(Boolean.TRUE);
+			activationUser.setMailSendedDate(new Date());
+			getActivationUserDAO().merge(activationUser);
 			return Boolean.TRUE;
 		} catch (Throwable th) {
 			th.printStackTrace();
 			return Boolean.FALSE;
 		}
+	}
+
+	/**
+	 * 
+	 */
+	public Boolean sendUserPasswordResetMail(PasswordChangeRequest passwordChangeRequest, User user) {
+		try {
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom(getMailFrom());
+			message.setTo(user.getMail());
+			message.setSubject(getMessageSource().getMessage("mail.resetUserPassword.subject", null, Locale.ENGLISH));
+			message.setText(getMessageSource().getMessage("mail.resetUserPassword.text", new String[]{user.getFirstName(), user.getAccount(), URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8") }, Locale.ENGLISH));
+			getJavaMailSender().send(message);
+
+			passwordChangeRequest.setMailSended(Boolean.TRUE);
+			passwordChangeRequest.setMailSendedDate(new Date());
+			getPasswordChangeRequestDAO().merge(passwordChangeRequest);
+			return Boolean.TRUE;
+		} catch (Throwable th) {
+			th.printStackTrace();
+			return Boolean.FALSE;
+		}
+	}
+
+	/**
+	 * @param activationUserDAO the activationUserDAO to set
+	 */
+	public void setActivationUserDAO(ActivationUserDAO activationUserDAO) {
+		this.activationUserDAO = activationUserDAO;
 	}
 
 	/**
@@ -112,14 +157,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	/**
-	 * @param messageSource
-	 *            the messageSource to set
-	 */
-	public void setMessageSource(MessageSource messageSource) {
-		this.messageSource = messageSource;
-	}
-
-	/**
 	 * @param mailFrom the mailFrom to set
 	 */
 	@SuppressWarnings("unused")
@@ -128,10 +165,11 @@ public class MailServiceImpl implements MailService {
 	}
 
 	/**
-	 * @return the mailFrom
+	 * @param messageSource
+	 *            the messageSource to set
 	 */
-	private String getMailFrom() {
-		return mailFrom;
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
 	}
 
 	/**
@@ -139,12 +177,5 @@ public class MailServiceImpl implements MailService {
 	 */
 	public void setPasswordChangeRequestDAO(PasswordChangeRequestDAO passwordChangeRequestDAO) {
 		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
-	}
-
-	/**
-	 * @return the passwordChangeRequestDAO
-	 */
-	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
-		return passwordChangeRequestDAO;
 	}
 }
