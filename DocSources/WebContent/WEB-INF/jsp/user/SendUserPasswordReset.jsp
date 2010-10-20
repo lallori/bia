@@ -4,25 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-		<form:form method="post" cssClass="recovery">
-
-			<div id="captcha_recovery">
-				<c:out value="${reCaptchaHTML}" escapeXml="false"/>
-			</div>
-			
 			<div id="recovery">
 				<p>Did you forget your password?<br/>Enter here your E-mail adress to get a new one:</p><br/>  		
-					<table align="center">
-						<tr>
-							<td><form:input path="mail" cssClass="input_recovery"/><form:errors path="mail" /></td>
-						</tr>
-						<tr>
-							<td align="center">
-								<input name="submit" type="image" src="<c:url value="/images/button_submit.jpg"/>" alt="submit" title="submit" style="margin:145px 0px 0px 70px"/>
-							</td>
-						</tr>
-
-					</table>
+				<form:form method="post" cssClass="recovery">
+					<form:input path="mail" cssClass="input_recovery"/><form:errors path="mail"/><br/><br/>
+					<div id="captcha_recovery">
+						<c:out value="${reCaptchaHTML}" escapeXml="false"/>
+					</div>
+					<input name="submit" type="image" src="<c:url value="/images/button_submit.jpg"/>" alt="submit" title="submit" style="margin:10px 0px 0px 170px"/>
+				</form:form>  
 			</div>
-		</form:form>  
 			

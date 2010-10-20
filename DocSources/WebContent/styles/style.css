@@ -1,5 +1,5 @@
 body {
-	background-image:url(/DocSources/images/bg_image2.jpg);
+	background-image:url(../images/bg_image2.jpg);
 	background-position:center;
 	background-repeat:no-repeat;
 	background-color:#f6edec;
@@ -7,6 +7,7 @@ body {
 	padding:0;
 	font-size:small;
 	color:#6F6B69;
+	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 /* Structural Divs */
@@ -43,7 +44,7 @@ body {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(/DocSources/images/login_bg.png);
+	background-image:url(../images/login_bg.png);
 }
 
 /*  Log in - Form */
@@ -51,7 +52,7 @@ body {
 .loginform{ /*  Form class */
 	width:200px;
 	height:220px;
-	margin-top: 70px;
+	margin-top: 60px;
 	margin-left:55px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -75,7 +76,7 @@ input {
 }
 
 .input { /* input text class */
-	background-image:url(/DocSources/images/input_bg.png);
+	background-image:url(../images/input_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -83,6 +84,31 @@ input {
 	width:150px;
 	padding-left:10px;
 	margin-top:0px;
+}
+
+.remember { /* Remember me class */
+	font-size: 80%;
+	margin-left: 70px;
+}
+
+/* buttonons */
+
+#register_here{
+	margin-top:220px;
+	margin-left:585px;
+	position:absolute;
+}
+
+#guest {
+	width:230px;
+	height:65px;
+	margin-top:300px;
+	margin-left:585px;
+	position:absolute;
+}
+
+.guest {
+	margin:0px;
 }
 
 /*  Register - Form */
@@ -172,11 +198,11 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/recovery_bg.png);
+	background-image:url(../images/recovery_bg.png);
 }
 
 .recovery { /*  Form class */
-	margin-left:120px;
+	margin-left:20px;
 	height:100px;
 	width:250px;
 	position:absolute;
@@ -195,11 +221,11 @@ input {
 	margin-top:260px;
 	margin-left: 620px;	
 	position:absolute;
-	background-image:url(/DocSources/images/stemma.png);
+	background-image:url(../images/stemma.png);
 }
 
 .input_recovery { /* input text class */
-	background-image:url(/DocSources/images/input_recovery_bg.png);
+	background-image:url(../images/input_recovery_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -207,14 +233,14 @@ input {
 	width:250px;
 	padding-left:10px;
 	margin-top:0px;
+	margin-left:100px;
 }
 
 #captcha_recovery{
-	margin-top:400px;
-	margin-left:300px;
-	position:absolute;
 	width:250px;
 	height:130px;
+	margin-left: 10px;
+	margin-top:10px;
 	z-index:2;
 }
 
@@ -238,7 +264,7 @@ input {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(/DocSources/images/success_bg.png);
+	background-image:url(../images/success_bg.png);
 }
 
 .usersuccess {  /* p class */
@@ -249,6 +275,7 @@ input {
 	position:absolute;
 	text-align:center;
 	line-height:20px;
+	font-size:90%;
 }
 
 .activsuccess {  /* p class */
@@ -261,20 +288,7 @@ input {
 	line-height:30px;
 }
 
-/* buttonons */
 
-#register{
-	margin-top:220px;
-	margin-left:585px;
-	position:absolute;
-}
-
-#guest {
-	width:230px;
-	height:65px;
-	margin-top:80px;
-	position:absolute;
-}
 
 
 /* Tag */

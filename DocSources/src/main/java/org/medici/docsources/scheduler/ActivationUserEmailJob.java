@@ -63,7 +63,7 @@ public class ActivationUserEmailJob {
 	/**
 	 * 
 	 */
-	@Scheduled(fixedRate=60000)
+	@Scheduled(fixedRate=600000)
 	public void execute() {
 		try {
 			List<ActivationUser> usersToActivate = getUserService().findActivationUsers();

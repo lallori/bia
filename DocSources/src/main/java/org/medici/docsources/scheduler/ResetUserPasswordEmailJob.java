@@ -65,7 +65,7 @@ public class ResetUserPasswordEmailJob {
 	 * 
 	 * Scheduled is defined in milliseconds
 	 */
-	@Scheduled(fixedRate=60000)
+	@Scheduled(fixedRate=600000)
 	public void execute() {
 		try {
 			List<PasswordChangeRequest> passwordChangeRequests = getUserService().findPasswordResetRequests();
