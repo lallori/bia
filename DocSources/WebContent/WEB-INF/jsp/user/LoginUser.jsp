@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 			<div id="login">
-	  			<form action="<c:url value="/loginProcess" />" method="post" class="form">
+	  			<form name="login" action="<c:url value="/loginProcess" />" method="post">
 					<table class="loginform">
 						<tr>
 							<td>Name:</td>
@@ -17,11 +17,16 @@
 							<td>Password:</td>
 						</tr>
 						<tr>
-							<td><input type="password" name="j_password" class="input" style="margin-left:15px"/><br/><br/></td>
+							<td>
+								<input type="password" name="j_password" class="input" style="margin-left:15px"/><br/><br/>
+							</td>
 						</tr>
 						<tr>
-							<td align="right">
-								<input name="Log in" type="image" src="<c:url value="/images/button_login.jpg"/>" alt="Log_in" title="send the module" style="margin-left:35px"/>
+							<td align="right"><input name="Log in" type="image" src="<c:url value="/images/button_login.jpg"/>" alt="Log_in" title="send the module" style="margin-left:35px"/>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="_spring _security_remember_me" style="margin:11px 0px 0px 50px"/><p class="remember">Remember me</p>
 							</td>
 						</tr>
 						<tr>
@@ -33,12 +38,12 @@
 				</form>  
 			</div>
       
-			<div id="register">
+			<div id="register_here">
 				<a href="<c:url value="/user/RegisterUser.do"/>"><img src="<c:url value="/images/button_register.jpg"/>" alt="register_here" /></a>
 			</div>
   
 			<div id="guest">
-				<form action="<c:url value="/loginProcess" />" method="post"><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /><br/><input id="loginAsGuest" type="image" src="<c:url value="/images/button_guest.jpg"/>" alt="LoginGuest" title="Login as guest"/></form>
+				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="loginAsGuest" type="image" src="<c:url value="/images/button_guest.jpg"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form>
 			</div>
 
 			<c:if test="${not empty param.login_error}">
