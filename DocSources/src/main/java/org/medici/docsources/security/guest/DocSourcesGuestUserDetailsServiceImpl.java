@@ -34,6 +34,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.memory.InMemoryDaoImpl;
 
 /**
+ * This class retrieves user details from an in-memory list created in the 
+ * application context and extends the UserDetails object with a custom object
+ * which contains additional fields. This is necessary to permit an unique use of
+ * Spring Security TagLibs without a differentation base on guest role
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *

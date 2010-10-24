@@ -60,6 +60,9 @@ public class DocSourcesGuestUserDetailsImpl implements UserDetails {
 	@SuppressWarnings("unused")
 	private String username;
 
+	/**
+	 * Default constructor.
+	 */
 	protected DocSourcesGuestUserDetailsImpl() {
 	}
 
@@ -70,6 +73,9 @@ public class DocSourcesGuestUserDetailsImpl implements UserDetails {
 		return active;
 	}
 
+	/**
+	 * This method return granted authorities
+	 */
 	@Override
 	public Collection<GrantedAuthority> getAuthorities() {
 		return authorities;

@@ -44,7 +44,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 /**
- * 
+ * Implementation for MailService. 
+ * It's use two DAO objects, one java mail sender, one messagesource, and a common
+ * mailFrom definition, to retrieve request, compose message (with retrieving
+ * text as application message), and send mail.
+ *   
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */

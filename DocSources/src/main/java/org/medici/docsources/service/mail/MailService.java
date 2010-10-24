@@ -32,7 +32,10 @@ import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.User;
 
 /**
- * 
+ * This interface is designed to provide a service working on mail objects.
+ * It defines two methods which manage send mail for activation and password
+ * reset process.
+ *  
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */

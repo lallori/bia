@@ -38,16 +38,16 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * This class implements the scheduler to perform send mail to users who
- * request a reset password.
- * There are two tasks performed :
- * - extracting list of users with forgotten password.
+ * request a reset password.<br>
+ * There are two tasks performed :<br>
+ * - extracting list of users with forgotten password.<br>
  * - for every user in list, this job will send an mail with a personal link
- *   to application where he can update his password.
+ *   to application where he can update his password.<p>
  * 
- * The system sends an email to the user which contains a link in it.
+ * The system sends an email to the user which contains a link in it.<p>
  *    
  * The link also contains the ID of the request. The link will be something like 
- * this:
+ * this:<p>
  *  
  *    http://www.medici.org/DocSources/user/ResetUserPassword.do?uuid=7a68ff13-7aed-4d59-82a1-78b0463af9d5 
  * 

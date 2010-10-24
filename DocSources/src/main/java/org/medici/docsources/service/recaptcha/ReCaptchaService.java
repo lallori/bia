@@ -30,36 +30,44 @@ package org.medici.docsources.service.recaptcha;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
-import org.medici.docsources.exception.ApplicationThrowable;
-
 /**
- * 
- * @author Lorenzo Pasquinelli (<a
- *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * This class implements business method to work with Recaptcha platform.
+ * It's used to implements application antispam controls.
+ *  
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
 public interface ReCaptchaService {
 
 	/**
+	 * Given in input, the address of client requester, the challenge string 
+	 * specified by user, and response channel string, this method will query
+	 * Recaptcha Servers to obtain the match between the recaptcha object
+	 * and the string specified by the user.
 	 * 
-	 * @param remoteAddress
-	 * @param challenge
-	 * @param response
-	 * @return
+	 * @param remoteAddress {@link java.lang.String} client ip address
+	 * @param challenge {@link java.lang.String} recaptcha string created by the 
+	 * user
+	 * @param response {@link java.lang.String} response string channel for 
+	 * recaptcha
+	 * @return {@link net.tanesha.recaptcha.ReCaptchaResponse} rapresenting the 
+	 * remote response from Recaptcha Servers.
 	 */
-	public ReCaptchaResponse checkReCaptcha(String remoteAddress,
-			String challenge, String response);
+	public ReCaptchaResponse checkReCaptcha(String remoteAddress, String challenge, String response);
 
 	/**
+	 * This method return an RecaptchaObject without Secure Socket Layer.
 	 * 
-	 * @return
-	 * @throws ApplicationThrowable
+	 * @return {@link net.tanesha.recaptcha.ReCaptcha } object containing the 
+	 * antispam control with link to http protocol
 	 */
 	public ReCaptcha getReCaptchaObjectNoSSL();
 
 	/**
+	 * This method return an RecaptchaObject with Secure Socket Layer.
 	 * 
-	 * @return
+	 * @return {@link net.tanesha.recaptcha.ReCaptcha } object containing the 
+	 * antispam control with link to https protocol.
 	 */
 	public ReCaptcha getReCaptchaObjectSSL();
 }

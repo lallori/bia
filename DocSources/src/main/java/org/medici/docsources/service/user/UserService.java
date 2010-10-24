@@ -89,16 +89,16 @@ public interface UserService {
 	/**
 	 * Removes specified user from persistent layer.
 	 * 
-	 * @param user The {@link org.medici.docsources.domain.User} object to be removed.
-	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 * @param user the {@link org.medici.docsources.domain.User} object to be removed.
+	 * @throws org.medici.docsources.exception.ApplicationThrowable application throwable throwed if an error is occured.
 	 */
 	public void deleteUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * This method will find an activation user entity.
 	 * 
-	 * @param uuid The unique identify of activation process
-	 * @return The istance of ActivationUser linked to the primary key. 
+	 * @param uuid the unique identify of activation process
+	 * @return the {@link org.medici.docsources.domain.ActivationUser} linked to the primary key. 
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public ActivationUser findActivationUser(UUID uuid) throws ApplicationThrowable;
@@ -107,7 +107,7 @@ public interface UserService {
 	 * This method searchs for user to be activated. The condition is composed
 	 * of "active" flag equals false and "mail sended" flag equals false.
 	 *
-	 * @return 
+	 * @return The {@link java.util.List} of users that needs to be activated 
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<ActivationUser> findActivationUsers() throws ApplicationThrowable;
@@ -116,16 +116,16 @@ public interface UserService {
 	 * This method returns a list of country object which match description
 	 * field with inpurt parameter description. 
 	 * 
-	 * @param description The {@link java.util.String} country's description. 
+	 * @param description the {@link java.util.String} country's description. 
 	 * @return
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<Country> findCountries(String description) throws ApplicationThrowable;
 
 	/**
-	 * 
+	 * This method finds country with the specified countryCode given in input
 	 * @param countryCode The {@link java.util.String} country's code. 
-	 * @return
+	 * @return The {@link org.medici.docsources.domain.Country} country object or null if it's not available 
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Country findCountry(String countryCode) throws ApplicationThrowable;
@@ -133,8 +133,8 @@ public interface UserService {
 	/**
 	 * This method finds a "password change request user information to permit data recovery by mail.
 	 * 
-	 * @param uuid
-	 * @return PasswordChangeRequest Request to change password
+	 * @param uuid {@link java.lang.String} unique identify of password change request
+	 * @return {@link org.medici.docsources.domain.PasswordChangeRequest} istance of request or null
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured. 
 	 */
 	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable;
@@ -143,14 +143,15 @@ public interface UserService {
 	 * This method searchs for password resetrequests.<br>
 	 * Condition search is composed of "active flag" equals false and "mail sended flag" equals false.
 	 * 
-	 * @return
+	 * @return {@link java.util.List} PasswordChangeRequest founds.
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<PasswordChangeRequest> findPasswordResetRequests() throws ApplicationThrowable;
 
 	/**
+	 * Given in input user account, this method returns the user object.
 	 * 
-	 * @param account
+	 * @param account the {@link java.lang.String} user account that we are searching 
 	 * @return
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
@@ -165,21 +166,24 @@ public interface UserService {
 	public User findUser(User user) throws ApplicationThrowable;
 
 	/**
-	 * 
-	 * @param user
-	 * @return
+	 * Given in input an user containing search fields conditions, this method
+	 * will returns {@link java.util.List} of User object that match with the search
+	 *   
+	 * @param user {@link org.medici.docsources.domain.User} containing search fields
+	 * @return {@link java.util.List} User search result.
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<User> findUsers(User user) throws ApplicationThrowable;
 
 	/**
+	 * This method will make a search paginated.
 	 * 
-	 * @param user
-	 * @param pageNumber
-	 * @param pageSize
-	 * @param cookie
-	 * @return
+	 * @param user {@link org.medici.docsources.domain.User} containing search fields
+	 * @param pageNumber {@link java.lang.Integer} Number of page result that we want to obtain
+	 * @param pageSize {@link java.lang.Integer} Number of records that compose a single page result
+	 * @return {@link org.medici.docsources.common.ajax.Page} containing the result page.
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 * {@inheritDoc}
 	 */
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable;
 
@@ -246,6 +250,8 @@ public interface UserService {
 	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable;
 
 	/**
+	 * This method update user password on the user account linked to the request
+	 * identify by the uuid.
 	 * 
 	 * @param uuid
 	 * @param password

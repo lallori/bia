@@ -48,10 +48,9 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
 	private ReCaptchaConfiguration reCaptchaConfiguration;
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
-	public ReCaptchaResponse checkReCaptcha(String remoteAddress,
-			String challenge, String response) {
+	public ReCaptchaResponse checkReCaptcha(String remoteAddress, String challenge, String response) {
 		return getReCaptcha().checkAnswer(remoteAddress, challenge, response);
 	}
 
@@ -71,26 +70,21 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public ReCaptcha getReCaptchaObjectNoSSL() {
-		return ReCaptchaFactory.newReCaptcha(getReCaptchaConfiguration()
-				.getPublicKey(), getReCaptchaConfiguration().getPrivateKey(),
-				false);
+		return ReCaptchaFactory.newReCaptcha(getReCaptchaConfiguration().getPublicKey(), getReCaptchaConfiguration().getPrivateKey(), false);
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public ReCaptcha getReCaptchaObjectSSL() {
-		return ReCaptchaFactory.newSecureReCaptcha(getReCaptchaConfiguration()
-				.getPublicKey(), getReCaptchaConfiguration().getPrivateKey(),
-				false);
+		return ReCaptchaFactory.newSecureReCaptcha(getReCaptchaConfiguration().getPublicKey(), getReCaptchaConfiguration().getPrivateKey(), false);
 	}
 
 	/**
-	 * @param reCaptcha
-	 *            the reCaptcha to set
+	 * @param reCaptcha the reCaptcha to set
 	 */
 	public void setReCaptcha(ReCaptcha reCaptcha) {
 		this.reCaptcha = reCaptcha;
@@ -101,8 +95,7 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
 	 * @param reCaptchaConfiguration
 	 */
 	@SuppressWarnings("unused")
-	private void setReCaptchaConfiguration(
-			ReCaptchaConfiguration reCaptchaConfiguration) {
+	private void setReCaptchaConfiguration(ReCaptchaConfiguration reCaptchaConfiguration) {
 		this.reCaptchaConfiguration = reCaptchaConfiguration;
 	}
 

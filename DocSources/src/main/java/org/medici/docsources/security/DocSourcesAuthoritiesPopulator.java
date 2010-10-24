@@ -38,7 +38,10 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator;
 
 /**
- * 
+ * This class implements authorities population.
+ * It extends DefaultLdapAuthoritiesPopulator and populate application authorities
+ * in getAdditionalRoles(DirContextOperations user, String username). 
+ *   
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
@@ -48,10 +51,19 @@ public class DocSourcesAuthoritiesPopulator extends DefaultLdapAuthoritiesPopula
     private String rolePrefix = "ROLE_";
     private String userAttributeForRole;
 
+    /**
+     * Class constructor 
+     * @param contextSource Ldap contextSource
+     * @param groupSearchBase LDap Group DN containing roles definition.
+     */
     public DocSourcesAuthoritiesPopulator(ContextSource contextSource, String groupSearchBase) {
         super(contextSource, groupSearchBase);
     }
 
+    /**
+     * This method implements the logic to obtains application's roles-
+     * 
+     */
 	@Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected Set getAdditionalRoles(DirContextOperations user, String username) {

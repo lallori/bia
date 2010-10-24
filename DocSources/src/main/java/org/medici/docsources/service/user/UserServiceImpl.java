@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO; 
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public void activateUser(UUID uuid) throws ApplicationThrowable {
 		try {
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public void addActivationUserRequest(User user, String remoteAddress) throws ApplicationThrowable {
 		try {
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public void addPasswordChangeRequest(User user, String remoteAddress) throws ApplicationThrowable {
 		try {
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public void deleteUser(User user) throws ApplicationThrowable {
 		try {
@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public ActivationUser findActivationUser(UUID uuid) throws ApplicationThrowable {
 		try {
@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public List<ActivationUser> findActivationUsers() throws ApplicationThrowable {
 		try {
@@ -173,7 +173,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public List<Country> findCountries(String description) throws ApplicationThrowable {
 		try {
@@ -184,7 +184,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public Country findCountry(String countryCode) throws ApplicationThrowable {
 		try {
@@ -195,7 +195,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable {
 		try {
@@ -206,7 +206,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public List<PasswordChangeRequest> findPasswordResetRequests() throws ApplicationThrowable {
 		try {
@@ -220,7 +220,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public User findUser(String account) throws ApplicationThrowable {
 		try {
@@ -237,7 +237,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public User findUser(User userToFind) throws ApplicationThrowable {
 		try {
@@ -248,7 +248,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public List<User> findUsers(User user) throws ApplicationThrowable {
 		try {
@@ -259,7 +259,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable {
 		Page result;
@@ -352,7 +352,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public void lockUser(User user) throws ApplicationThrowable {
 		try {
@@ -363,7 +363,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public Integer ratePassword(String password) {
 		if ((password == null) || password.equals(""))
@@ -385,7 +385,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public void registerUser(User user) throws ApplicationThrowable {
 		try {
@@ -452,8 +452,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
-	 * @param user
+	 * {@inheritDoc}
 	 */
 	public void updateUser(User user) throws ApplicationThrowable {
 		try {
@@ -467,8 +466,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
-	 * @param user
+	 * {@inheritDoc}
 	 */
 	public String updateUserPassword(User user) throws ApplicationThrowable {
 		try {
@@ -481,9 +479,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
-	 * @param user
-	 * @param newPassword
+	 * {@inheritDoc}
 	 */
 	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable {
 		try {
@@ -495,10 +491,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
-	 * @param uuid
-	 * @return
-	 * @throws ApplicationThrowable
+	 * {@inheritDoc}
 	 */
 	public void updateUserPassword(UUID uuid, String password) throws ApplicationThrowable {
 		try {
@@ -517,9 +510,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 
-	 * @param user
-	 * @param bufferedImage
+	 * {@inheritDoc}
 	 */
 	public void updateUserPhoto(User user, BufferedImage bufferedImage) throws ApplicationThrowable {
 		try {

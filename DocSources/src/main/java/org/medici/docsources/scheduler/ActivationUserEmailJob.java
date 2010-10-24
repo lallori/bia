@@ -39,15 +39,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * This class implements the scheduler to perform send mail to all users
- * that aren't in active state.
- * There are two tasks performed :
- * - extracting list of users that needs to be activated.
- * - for every user in this list, job will send the activation mail.
+ * that aren't in active state.<br>
+ * There are two tasks performed :<br>
+ * - extracting list of users that needs to be activated.<br>
+ * - for every user in this list, job will send the activation mail.<p>
  *
- * The system sends an email to the user which contains a link in it.
+ * The system sends an email to the user which contains a link in it.<p>
  *    
  * The link also contains the ID of the request. The link will be something like 
- * this:
+ * this:<p>
  *  
  *    http://www.medici.org/DocSources/user/ActivateUser.do?uuid=7a68ff13-7aed-4d59-82a1-78b0463af9d5 
  * 
