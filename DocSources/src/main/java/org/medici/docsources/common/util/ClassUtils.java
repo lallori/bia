@@ -57,10 +57,12 @@ public class ClassUtils {
 	}
 
 	/**
-	 * 
-	 * @param object
-	 * @param clazz
-	 * @param list
+	 * This method populate the input List using every declared field
+	 * in object class which is defined as input clazz.
+	 * The format of list element is name field equals value.
+	 * @param object The istance where we take fields
+	 * @param clazz Class type of previous parameter
+	 * @param list list to populate with class's fields values.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static void toString(Object object, Class clazz, List list) {
