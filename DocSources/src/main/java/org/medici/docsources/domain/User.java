@@ -40,19 +40,19 @@ import java.util.List;
 public class User implements Serializable {
 
 	/**
-	 * Class for mapping role application informations.
+	 * Class for mapping role application informations.<p><br>
 	 * 
 	 * 
 	 * User Groups The defined user groups are: Administrators, On-site Fellows,
 	 * Senior Distant Fellows, Distant Fellows, Digitization Technicians,
-	 * Community users and Guests. Some special role users are also present:
+	 * Community users and Guests.<br> Some special role users are also present:
 	 * Distant Fellow Coordinator, Community Coordinator and Digitization
-	 * Coordinator. For a detailed description of the each user group see the
-	 * 2.4 chapter of Phase1_TLSRL.pdf document.
+	 * Coordinator.<br> For a detailed description of the each user group see the
+	 * 2.4 chapter of Phase1_TLSRL.pdf document.<p>
 	 * 
 	 * Administrators Users belonging to this group are able to use all the
 	 * Administration Module’s sub-modules: User Management, Reports and
-	 * Revisions and System Management.
+	 * Revisions and System Management.<p>
 	 * 
 	 * On-site Fellows Users belonging to this group are able to use the Data
 	 * Entry Module and have the permission to correct and vet other On-site and
@@ -61,7 +61,7 @@ public class User implements Serializable {
 	 * exception of the Digitization Module (see 2.7) and the Administration
 	 * Module (see 2.6). The On-site Fellows can be assigned (or “flagged”) as
 	 * Distant Fellows Coordinator or Community Coordinator or Digitization
-	 * Coordinator.
+	 * Coordinator.<p>
 	 * 
 	 * Senior Distant Fellows Users belonging to this group are experienced
 	 * scholars that have been trained by the On-site Fellows on how to use the
@@ -70,7 +70,7 @@ public class User implements Serializable {
 	 * They are part of the Scholarly Community and have also access to all the
 	 * other modules, with the exception of the Digitization Module and the
 	 * Administration Module. The Senior Distant Fellows can be assigned (or
-	 * “flagged”) as Distant Fellows Coordinator or Community Coordinator.
+	 * “flagged”) as Distant Fellows Coordinator or Community Coordinator.<p>
 	 * 
 	 * Distant Fellows Users belonging to this group are able to use the Data
 	 * Entry Module. Unlike the On-site Fellows or the Senior Distant Fellows,
@@ -78,27 +78,26 @@ public class User implements Serializable {
 	 * volume or delete any content, which has not been created by them. They
 	 * are part of the Scholarly Community and have also access to all the other
 	 * modules, with the exception of the Digitization Module and the
-	 * Administration Module.
+	 * Administration Module.<p>
 	 * 
 	 * Community Users Users belonging to this group can access the Search
 	 * Module. They can also access the Community module’s three sub-modules:
-	 * comments, profiles and personal messages.
+	 * comments, profiles and personal messages.<p>
 	 * 
 	 * Digitization Technicians Users belonging to this group are allowed to
 	 * access the Digitization Module and are in charge of uploading the
 	 * digitized documents to the system. The Digitization Technician is also
 	 * belongs to the Community User Group so has a read-only access al the
-	 * items contained into the database and can post comments.
+	 * items contained into the database and can post comments.<p>
 	 * 
 	 * Guests These are the users that browse MAP’s system without logging with
 	 * username and password. They can access the Search Module and the access
 	 * to the Manuscript Viewer module though is forbidden. They can though fill
 	 * in the User Registration Form to become regular Community Users. Every
 	 * request is checked by the Community Coordinator and if accepted the user
-	 * become a regular Community User.
+	 * become a regular Community User.<p>
 	 * 
-	 * @author Lorenzo Pasquinelli (<a
-	 *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
 	 * 
 	 */
 	public static enum UserRole {

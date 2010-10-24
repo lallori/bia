@@ -78,7 +78,7 @@ public class EditTitlesOrOccupationsPersonValidator implements Validator {
 	 * supplied errors instance can be used to report any resulting validation
 	 * errors.
 	 * 
-	 * @param obj the object that is to be validated (can be null)
+	 * @param object the object that is to be validated (can be null)
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {

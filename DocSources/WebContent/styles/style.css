@@ -1,5 +1,5 @@
 body {
-	background-image:url(../images/bg_image2.jpg);
+	background-image:url(../images/bg_image.jpg);
 	background-position:center;
 	background-repeat:no-repeat;
 	background-color:#f6edec;
@@ -146,12 +146,9 @@ input {
 
 
 #captcha_register{
-	margin-top:455px;
-	margin-left:200px;
 	position:absolute;
 	width:250px;
 	height:130px;
-	z-index:2;
 }
 
 .readThis { /* read this text class */
@@ -209,9 +206,9 @@ input {
 }
 
 .recoveryKO { /*  Form KO class */
-	margin-left:120px;
+	margin-left:20px;
 	height:100px;
-	width:450px;
+	width:650px;
 	position:absolute;
 }
 
@@ -240,7 +237,15 @@ input {
 	width:250px;
 	height:130px;
 	margin-left: 10px;
-	margin-top:10px;
+	margin-top:50px;
+	z-index:2;
+}
+
+#captcha_recoveryKO{
+	width:250px;
+	height:130px;
+	margin-left: 10px;
+	margin-top:4px;
 	z-index:2;
 }
 
@@ -253,7 +258,7 @@ input {
 .inputerrors_recovery { /* Error Span messages */
 	color:#900;
 	font-size:85%;
-	float:inherit;
+	margin-left:60px;
 }
 
 /*  Registration Success */

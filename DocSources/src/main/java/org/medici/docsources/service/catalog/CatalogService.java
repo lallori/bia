@@ -32,8 +32,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
  * 
- * @author Lorenzo Pasquinelli (<a
- *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface CatalogService {
 

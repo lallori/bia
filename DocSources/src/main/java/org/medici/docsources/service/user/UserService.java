@@ -39,40 +39,58 @@ import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
+ * This interface is designed to work on {@link org.medici.docsources.domain.User} 
+ * User object.<br>
+ * It defines every business methods needed to work on authentication and
+ * administrator module.<br>
+ * With this service, you can :<br>
+ * - create new user<br> 
+ * - search an user by a property field, or unique identify field (acocunt ndr)<br>
+ * - obtaining user's roles<br>
+ * - request user activation<br>
+ * - lock a user<br>
+ * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface UserService {
 
 	/**
-	 * This method implements business logic for user activation.
+	 * This method activates a new user.<br>
+	 * Using the unique identify of activation request (uuid ndr), this method
+	 * will search the user on persistence layer and provides to update
+	 * all user's state informations (lock flag, activate flag). 
 	 * 
-	 * @param uuid The unique indentify for the request of activation.
-	 * @throws ApplicationThrowable
+	 * @param uuid  The {@link java.util.UUID} object which is the unique identify of activation request.
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void activateUser(UUID uuid) throws ApplicationThrowable;
 
 	/**
+	 * This method add an "Activation User Request" in persistent layer.<br>
+	 * The request is created the {@link org.medici.docsources.domain.User} user, and
+	 * Internet Address of client requester.
 	 * 
-	 * @param user
-	 * @param remoteAddress
-	 * @throws ApplicationThrowable
+	 * @param user The {@link org.medici.docsources.domain.User} object to be activated.
+	 * @param remoteAddress The {@link java.util.String} Internet Address of client requester.
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 * @see org.medici.docsources.domain.ActivationUser
 	 */
 	public void addActivationUserRequest(User user, String remoteAddress) throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @param user
-	 * @param remoteAddress
+	 * @param user The {@link org.medici.docsources.domain.User} object changes password.
+	 * @param remoteAddress The {@link java.util.String} Internet Address of requester.
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void addPasswordChangeRequest(User user, String remoteAddress) throws ApplicationThrowable;
 
 	/**
-	 * Removes Application User from database.
+	 * Removes specified user from persistent layer.
 	 * 
-	 * @param user the application user to remove.
-	 * 
-	 * @throws ApplicationThrowable
+	 * @param user The {@link org.medici.docsources.domain.User} object to be removed.
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void deleteUser(User user) throws ApplicationThrowable;
 
@@ -81,30 +99,34 @@ public interface UserService {
 	 * 
 	 * @param uuid The unique identify of activation process
 	 * @return The istance of ActivationUser linked to the primary key. 
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public ActivationUser findActivationUser(UUID uuid) throws ApplicationThrowable;
 
 	/**
 	 * This method searchs for user to be activated. The condition is composed
 	 * of "active" flag equals false and "mail sended" flag equals false.
-	 * 
+	 *
+	 * @return 
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<ActivationUser> findActivationUsers() throws ApplicationThrowable;
 
 	/**
+	 * This method returns a list of country object which match description
+	 * field with inpurt parameter description. 
 	 * 
-	 * @param user
+	 * @param description The {@link java.util.String} country's description. 
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<Country> findCountries(String description) throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @param user
+	 * @param countryCode The {@link java.util.String} country's code. 
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Country findCountry(String countryCode) throws ApplicationThrowable;
 
@@ -112,15 +134,17 @@ public interface UserService {
 	 * This method finds a "password change request user information to permit data recovery by mail.
 	 * 
 	 * @param uuid
-	 * @return PasswordChangeRequest Request to change password 
+	 * @return PasswordChangeRequest Request to change password
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured. 
 	 */
 	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable;
 
 	/**
-	 * This method searchs for requests to password reset. The condition is composed
-	 * of "active" flag equals false and "mail sended" flag equals false.
+	 * This method searchs for password resetrequests.<br>
+	 * Condition search is composed of "active flag" equals false and "mail sended flag" equals false.
 	 * 
 	 * @return
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<PasswordChangeRequest> findPasswordResetRequests() throws ApplicationThrowable;
 
@@ -128,7 +152,7 @@ public interface UserService {
 	 * 
 	 * @param account
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public User findUser(String account) throws ApplicationThrowable;
 
@@ -136,7 +160,7 @@ public interface UserService {
 	 * 
 	 * @param user
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public User findUser(User user) throws ApplicationThrowable;
 
@@ -144,7 +168,7 @@ public interface UserService {
 	 * 
 	 * @param user
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<User> findUsers(User user) throws ApplicationThrowable;
 
@@ -155,6 +179,7 @@ public interface UserService {
 	 * @param pageSize
 	 * @param cookie
 	 * @return
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable;
 
@@ -163,14 +188,14 @@ public interface UserService {
 	 * 
 	 * @param account
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Boolean isAccountAvailable(String account) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @param user
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void lockUser(User user) throws ApplicationThrowable;
 
@@ -187,28 +212,28 @@ public interface UserService {
 	public Integer ratePassword(String password);
 
 	/**
-	 * This method implements business logic for register a new user.
-	 * The input user must be completed, with following informations :
-	 * - active flag equals false
-	 * - lock flag equals false
-	 * - user expiration Date equals "current date + 1 year"
-	 * - password expiration Date equals "current date + 3 month"
-	 * - invalid access must be filled with 0
-	 * - max invalid access must be filled with 5
-	 * - default user's roles must be defined as COMMUNITY
+	 * This method implements business logic for register a new user.<br>
+	 * The input user must be completed, with following informations :<br>
+	 * - active flag equals false<br>
+	 * - lock flag equals false<br>
+	 * - user expiration Date equals "current date + 1 year"<br>
+	 * - password expiration Date equals "current date + 3 month"<br>
+	 * - invalid access must be filled with 0<br>
+	 * - max invalid access must be filled with 5<br>
+	 * - default user's roles must be defined as COMMUNITY<p>
 	 * 
 	 * After the pesistation process, the method must fill an activation request
-	 * entity to permit user activation. 
+	 * entity to permit user activation.
 	 *    
 	 * @param user The user to be registered.
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void registerUser(User user) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @param user
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void updateUser(User user) throws ApplicationThrowable;
 
@@ -216,7 +241,7 @@ public interface UserService {
 	 * 
 	 * @param user
 	 * @param newPassword
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable;
 
@@ -225,15 +250,15 @@ public interface UserService {
 	 * @param uuid
 	 * @param password
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void updateUserPassword(UUID uuid, String password) throws ApplicationThrowable;
 
 	/**
 	 * 
 	 * @param user
-	 * @param read
-	 * @throws ApplicationThrowable
+	 * @param bufferedImage
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void updateUserPhoto(User user, BufferedImage bufferedImage) throws ApplicationThrowable;
 }

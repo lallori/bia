@@ -1,0 +1,69 @@
+.menumain {
+	z-index:2;
+	padding-left:15px;
+}
+
+.menumain ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+/*Top level list items*/
+.menumain ul li{
+	position: relative;
+	display: inline;
+	float: left;
+	width:100px;
+}
+
+/*Top level menu link items style*/
+.menumain ul li a{
+	display: block;
+	padding: 0;
+	color: #6F6B69;
+	text-decoration: none;
+	font-size:85%;
+	
+}
+
+.menumain ul li a:hover{
+	background-image: url(../images/mainmenu_rollover.png);  /*tab link background during hover state*/
+}
+	
+/*1st sub level menu*/
+.menumain ul li ul{
+	position: absolute;
+	display: block;
+	visibility: hidden;
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.menumain ul li ul li{
+	display: list-item;
+	float: none;
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.menumain ul li ul li ul{
+	top: 0;
+}
+
+/* Sub level menu links style */
+.menumain ul li ul li a{
+	width: 150px; /*width of sub menus*/
+	background-color: #fbf6f0;
+	color: #6F6B69;
+	margin: 0;
+	padding-left:5px;
+	padding-top:5px;
+
+}
+
+.menumain ul li ul li a:hover{ /*sub menus hover style*/
+	background: #F5DFD3;
+	color: #6F6B69;
+}
+
+
+

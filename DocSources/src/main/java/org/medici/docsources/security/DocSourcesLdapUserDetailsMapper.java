@@ -27,67 +27,100 @@
  */
 package org.medici.docsources.security;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.ldap.userdetails.LdapUserDetails;
-import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
+import org.springframework.security.ldap.ppolicy.PasswordPolicyControl;
+import org.springframework.security.ldap.ppolicy.PasswordPolicyResponseControl;
 import org.springframework.security.ldap.userdetails.LdapUserDetailsMapper;
 
 /**
  * This class extends LdapUserDetailsMapper to provide full support to our LDAP
- * server.
+ * server. The purpose of extending LdapUserDetailsMapper is very important beacause
+ * with this configuration we can use Spring Security taglibs to print in Java
+ * Server Pages not only username but every fields defined in DocSourcesLdapUserDetailsImpl.
+ * This class overriding follows logical model of extended class. 
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
+ * @see org.springframework.security.ldap.userdetails.LdapUserDetailsMapper
+ * 
+ * @see org.medici.docsources.security.DocSourcesLdapUserDetailsImpl
  */
 public class DocSourcesLdapUserDetailsMapper extends LdapUserDetailsMapper {
+	private final Log logger = LogFactory.getLog(DocSourcesLdapUserDetailsMapper.class);
+	private String passwordAttributeName = "userPassword";
+	private String[] roleAttributes = null;
 
 	/**
 	 * 
 	 * @param ctx
-	 *            ,
 	 * @param username
 	 * @param authorities
+	 * @return UserDetails 
 	 */
 	@Override
 	public UserDetails mapUserFromContext(DirContextOperations ctx,String username, Collection<GrantedAuthority> authorities) {
-		UserDetails ud = super.mapUserFromContext(ctx, username, authorities);
-		LdapUserDetailsImpl.Essence essence = new LdapUserDetailsImpl.Essence((LdapUserDetailsImpl) ud);
+		DocSourcesLdapUserDetailsImpl.Essence essence = new DocSourcesLdapUserDetailsImpl.Essence(ctx);
+		Object passwordValue = ctx.getObjectAttribute(passwordAttributeName);
 
-		essence.setEnabled(!Boolean.valueOf(ctx.getStringAttribute("krb5AccountDisabled")));
-		essence.setAccountNonLocked(!Boolean.valueOf(ctx.getStringAttribute("krb5AccountLockedOut")));
-		try {
-			// 20101030214433+0100
-			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
-			Date expirationDate = dateFormat.parse(ctx.getStringAttribute("krb5AccountExpirationTime"));
-			essence.setAccountNonExpired(!expirationDate.before(new Date()));
-		} catch (ParseException pex) {
-			pex.printStackTrace();
+		if (passwordValue != null) {
+			essence.setPassword(mapPassword(passwordValue));
 		}
 
+		essence.setUsername(username);
 
-		LdapUserDetails ldapUserDetails = essence.createUserDetails();
+		// Map the roles
+		for (int i = 0; (roleAttributes != null) && (i < roleAttributes.length); i++) {
+			String[] rolesForAttribute = ctx.getStringAttributes(roleAttributes[i]);
 
-		if (!ldapUserDetails.isEnabled()) 
+			if (rolesForAttribute == null) {
+				logger.debug("Couldn't read role attribute '" + roleAttributes[i] + "' for user " + ctx.getNameInNamespace() );
+				continue;
+			}
+
+			for (int j = 0; j < rolesForAttribute.length; j++) {
+				GrantedAuthority authority = createAuthority(rolesForAttribute[j]);
+
+				if (authority != null) {
+					essence.addAuthority(authority);
+				}
+			}
+		}
+
+		// Add the supplied authorities
+
+		for (GrantedAuthority authority : authorities) {
+			essence.addAuthority(authority);
+		}
+
+		// Check for PPolicy data
+		PasswordPolicyResponseControl ppolicy = (PasswordPolicyResponseControl) ctx.getObjectAttribute(PasswordPolicyControl.OID);
+
+		if (ppolicy != null) {
+			essence.setTimeBeforeExpiration(ppolicy.getTimeBeforeExpiration());
+			essence.setGraceLoginsRemaining(ppolicy.getGraceLoginsRemaining());
+		}
+
+		DocSourcesLdapUserDetailsImpl docSourcesLdapUserDetailsImpl = essence.createUserDetails();
+
+		if (!docSourcesLdapUserDetailsImpl.isEnabled()) 
 			throw new DisabledException("User is not activated");
-		
-		if (!ldapUserDetails.isAccountNonExpired()) 
+
+		if (!docSourcesLdapUserDetailsImpl.isAccountNonExpired()) 
 			throw new AccountExpiredException("User is expired");
 
-		if (!ldapUserDetails.isAccountNonLocked()) 
+		if (!docSourcesLdapUserDetailsImpl.isAccountNonLocked()) 
 			throw new LockedException("User is locked");
 
-		return ldapUserDetails;
+		return docSourcesLdapUserDetailsImpl;
 	}
 
 }

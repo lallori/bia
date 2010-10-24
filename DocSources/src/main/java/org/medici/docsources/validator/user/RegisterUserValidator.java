@@ -64,8 +64,7 @@ public class RegisterUserValidator extends AbstractUserValidator implements Vali
 	 * Indicates whether the given class is supported by this converter. This
 	 * validator supports only RegisterUserCommand.
 	 * 
-	 * @param givenClass
-	 *            the class to test for support
+	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
@@ -79,10 +78,8 @@ public class RegisterUserValidator extends AbstractUserValidator implements Vali
 	 * supplied errors instance can be used to report any resulting validation
 	 * errors.
 	 * 
-	 * @param obj
-	 *            the object that is to be validated (can be null)
-	 * @param errors
-	 *            contextual state about the validation process (never null)
+	 * @param object the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
 		RegisterUserCommand registerCommand = (RegisterUserCommand) object;

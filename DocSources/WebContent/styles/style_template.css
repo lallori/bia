@@ -1,0 +1,227 @@
+body {
+	background-image:url(../images/bg_image.jpg);
+	background-position:center;
+	background-repeat:no-repeat;
+	background-color:#f6edec;
+	margin:0;
+	padding:0;
+	font-size:small;
+	color:#6F6B69;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+/* Structural Divs */
+
+#layout {
+	width:1000px;
+	height:750px;
+	margin:0px auto 0 auto;
+	padding:0px;
+	top:0px;
+	position:relative;
+}
+
+#map { /* The Medici Archive Project image */
+	width:270px;
+	height:165px;
+	position:absolute;
+	z-index:2;
+}
+
+#top_top { /* Menu top */
+	width:750px;
+	height:95px;
+	margin-left:250px;
+	position:absolute;
+}
+
+#top_middle { /* Menu middle */
+	width:745px;
+	height:60px;
+	margin-top:95px;
+	margin-left:255px;
+	position:absolute;
+	z-index:2;
+	background-image:url(../images/top_middle_bg.png);
+}
+
+#top_bottom { /* User Interface */
+	width:1000px;
+	height:25px;
+	margin-top:158px;
+	position:absolute;
+	z-index:1;
+}
+
+#body { /* Main content */
+	width:1000px;
+	height:100%;
+	margin-top:185px;
+	position:absolute;
+}
+
+#footer {
+	width:1000px;
+	height:30px;
+	margin-top:620px;
+	position:absolute;
+}
+
+
+/* top_top (Search form) */
+
+#searchForm {
+	width:240px;
+	height:80px;
+	margin-left:40px;
+	margin-top:2px;
+	position:absolute;
+	font-size:85%;
+}
+
+.input_search { /* input text class */
+	background-image:url(../images/input_search_bg.png);
+	background-color: transparent;
+	background-repeat:no-repeat;
+	height:30px;
+	border:none;
+	width:150px;
+	padding-left:10px;
+	margin-top:0px;
+}
+
+.select{ /* dropdown menu class */
+	background-image:url(../images/select_bg.png);
+	background-color: transparent;
+	background-repeat:no-repeat;
+	height:25px;
+	border:none;
+	width:100px;
+	padding-left:10px;
+	padding-top:7px;
+	margin-top:10px;
+	font-size:103%;
+	color:#c18d72;
+	outline:0px; 
+}
+
+.select option{
+	background-color: transparent;
+	
+}
+
+/* top_top (Last Entry) */
+
+#lastentry {
+	width:480px;
+	height:90px;
+	margin-left:240px;
+	position:absolute;
+	list-style:none;
+	float:left;
+}
+
+#menulastentry {
+	width:480px;
+	height:90px;
+	list-style:none;
+	float:left;
+}
+
+#menulastentry li{
+	float:left;
+}
+
+#menulastentry a{
+	float:left;
+	display:block;
+	text-decoration:none;
+	padding-left:10px;
+}
+
+
+/* top_middle (Main Menu) */
+
+.menumain {
+	margin-left:0px;
+	z-index:2;
+}
+
+/* top_bottom (User Interface) backgrounds */
+
+.docs {
+	background-image:url(../images/user_interface_docs.png);
+}
+
+.docs p{
+	color:#FFF;
+	margin-top:5px;
+	float:right;
+	padding-right:30px;
+	font-size:80%;
+}
+
+.person {
+	background-image:url(../images/user_interface_person.png);
+}
+
+.vol {
+	background-image:url(../images/user_interface_vol.png);
+}
+
+.geo {
+	background-image:url(../images/user_interface_geo.png);
+}
+
+
+/* top_bottom (Administrator Menu) */
+
+#adm_menu {
+	float:left;
+	height:25px;
+	width: 600px;
+	margin-top:0px;
+	font-size: 80%;
+
+}
+
+#adm_menu a{
+	color:#fff;
+}
+
+/* Tag */
+
+h1 {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:110%;
+	color:#6F6B69;
+}
+
+a img {
+   border:0px;
+}
+
+a:focus { 
+	outline: 0px; 
+}
+
+a {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	text-decoration:none;
+	color:#6F6B69;
+	font-size:small;
+}
+
+hr {
+	margin:0 0 0 25px;
+	padding:0;
+	width:700px;
+	color:#E5B091;
+	background-color:#E5B091;
+	height:1px;
+	border:0;
+}
+
+input { 
+	outline: 0px; 
+}

@@ -12,19 +12,15 @@
 			<link rel="stylesheet" href="<c:url value="/styles/popup.css" />" type="text/css" media="screen, projection">
 			<link rel="stylesheet" href="<c:url value="/styles/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
 
-			<form:form method="post">
-				<div id="captcha_register">
-					<c:out value="${reCaptchaHTML}" escapeXml="false"/>
-				</div>
-	  
-				<div id="registrationForm">
+			<div id="registrationForm">
+				<form:form method="post">
 					<table class="registrationForm" cellpadding="3">
 						<tr>
 							<td align="right"><form:label id="firstNameLabel" for="firstName" path="firstName" cssErrorClass="error"><b>First Name:<font color="#990000">*</font></b></form:label></td>
 							<td><form:input id="firstName" path="firstName" cssClass="input"/><form:errors path="firstName" cssClass="inputerrors"/></td>
-							<td align="right"><form:label id="passwordLabel" for="password" path="password" cssErrorClass="error"><b>Password<font color="#990000">*</font></b></form:label></td>
+							<td align="right"><form:label id="passwordLabel" for="password" path="password" cssErrorClass="error"><b>Password:<font color="#990000">*</font></b></form:label></td>
 							<td><form:password path="password" cssClass="input" cssStyle="align:left"/><form:errors path="password" cssClass="inputerrors"/></td>
-							<td align="right" width="90"><form:label id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error"><b>Confirm Password<font color="#990000">*</font></b></form:label></td>       
+							<td align="right" width="90"><form:label id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error"><b>Confirm Password:<font color="#990000">*</font></b></form:label></td>       
 							<td><input id="confirmPassword" name="confirmPassword" type="password"class="input" value=""/></td>
 						</tr>    	
 						<tr>        		
@@ -45,7 +41,7 @@
 						</tr>     
 						<tr>        	        	
 							<td align="right"><b>Verification:<font color="#990000">*</font></b></td>
-							<td></td>
+							<td><div id="captcha_register"><c:out value="${reCaptchaHTML}" escapeXml="false"/></div></td>
 							<td align="right"></td>
 							<td colspan="3"><form:checkbox path="agree" cssStyle="margin:10px 0px 0px 220px"/><p class="readThis">I have read and agree to the <b><a href="#">Terms of Use</a></b>.<font color="#990000">*</font></p></td>
 						</tr>
@@ -53,12 +49,12 @@
 							<td colspan="6"><input id="register" type="image" src="<c:url value="/images/button_regist.jpg"/>" alt="submit" title="submit form" style="margin:12px 0px 0px 670px"/></td>
 						</tr>
 						<tr>
-							<td colspan="6"><p class="already">Already registered? <b><a href="<c:url value="/"/>">Log in.</a>a</b></p></td>
+							<td colspan="6"><p class="already">Already registered? <b><a href="<c:url value="/"/>">Log in</a></b></p></td>
 						</tr>
 					</table>
-   					<form:hidden id="countryCode" path="countryCode"/>
-				</div>
-			</form:form>
+	  					<form:hidden id="countryCode" path="countryCode"/>
+				</form:form>
+			</div>
         
 	<c:url var="findCountryUrl" value="/user/ajax/FindCountry.json"/>
 	<c:url var="tickIcon" value="/images/tick.png"/>

@@ -4,6 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+			<script type='text/javascript' src='<c:url value="/scripts/jquery-1.4.2.js"/>'></script>
+			<script type='text/javascript' src='<c:url value="/scripts/jquery.blockUI.js"/>'></script>
+
 			<div id="login">
 	  			<form name="login" action="<c:url value="/loginProcess" />" method="post">
 					<table class="loginform">
@@ -22,7 +25,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td align="right"><input name="Log in" type="image" src="<c:url value="/images/button_login.jpg"/>" alt="Log_in" title="send the module" style="margin-left:35px"/>
+							<td align="right"><input name="Login" type="image" src="<c:url value="/images/button_login.jpg"/>" alt="Log_in" title="send the module" style="margin-left:35px"/>
 							</td>
 						</tr>
 						<tr>
@@ -39,7 +42,7 @@
 			</div>
       
 			<div id="register_here">
-				<a href="<c:url value="/user/RegisterUser.do"/>"><img src="<c:url value="/images/button_register.jpg"/>" alt="register_here" /></a>
+				<a id="RegisterUser" href="<c:url value="/user/RegisterUser.do"/>"><img src="<c:url value="/images/button_register.jpg"/>" alt="register_here" /></a>
 			</div>
   
 			<div id="guest">
@@ -53,3 +56,21 @@
 					</span>
 				</c:if>
 			</c:if>
+			<script type="text/javascript">
+			$(document).ready( function(){
+				$("#login").submit(function (){$.blockUI();});
+				$("#RegisterUser").click(function (){$.blockUI();});
+				$("#loginAsGuest").click(function (){$.blockUI();});
+				$(window).unload(function (){$.unblockUI();});
+			});
+			</script>
+
+			<style type="text/css">
+				.blockUI h1 {
+					font-family: 'trebuchet ms', verdana, arial;
+					font-size: 20px;
+					margin: 0;
+					padding: 10px;
+				}
+			</style>
+			

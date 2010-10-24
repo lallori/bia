@@ -9,15 +9,24 @@
         <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jspf"/>
     </definition>
         
+    <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp">
+    </definition>
+
     <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
         <put-attribute name="header" value="/WEB-INF/jsp/fragments/Header.jspf"/>
         <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jspf"/>
     </definition>
 
+	<definition name="template.main" template="/WEB-INF/templates/main.jsp">
+		<put-attribute name="searchForm" value="/WEB-INF/jsp/menu/SearchForm.jsp"/>
+		<put-attribute name="lastEntryMenu" value="/WEB-INF/jsp/menu/LastEntry.jsp"/>
+		<put-attribute name="dataEntryMenu" value="/WEB-INF/jsp/menu/DataEntry.jsp"/>
+		<put-attribute name="profileMenu" value="/WEB-INF/jsp/menu/Profile.jsp"/>
+		<put-attribute name="administratorMenu" value="/WEB-INF/jsp/menu/Administrator.jsp"/>
+		<put-attribute name="whoAmIMenu" value="/WEB-INF/jsp/menu/WhoAmI.jsp"/>
+	</definition>
+    
     <definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp">
-    </definition>
-
-    <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp">
     </definition>
 
 	<!-- Authentication Module BEGIN -->
@@ -25,8 +34,7 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/LoginUser.jsp"/>
     </definition>
     
-    <definition name="Home" extends="template.completeDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/Home.jsp"/>
+    <definition name="Home" extends="template.main">
     </definition>
 
 	<definition name="error/ActivateUser" extends="template.completeDOM">
@@ -80,6 +88,7 @@
     </definition>
     <!-- Digitization Module END -->
 
+	<!-- Administrator Module BEGIN -->
     <definition name="user/DeleteUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/delete.jsp"/>
     </definition>
@@ -107,10 +116,13 @@
 	<definition name="user/UploadUserPhoto" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/user/UploadUserPhoto.jsp"/>
 	</definition>
-	
+	<!-- Administration Module END -->
+
+	<!-- VolBase Module START -->
 	<definition name="volbase/ShowVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowVolume.jsp"/>
 	</definition>
+	<!-- VolBase Module END -->
 
     <definition name="responseKO" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/response/KO.jsp"/>
@@ -124,6 +136,7 @@
         <put-attribute name="main" value="/WEB-INF/jsp/accessDenied.jsp"/>
     </definition>
 
+	<!-- Errors START -->
     <definition name="404" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/404.jsp"/>
     </definition>
@@ -131,5 +144,5 @@
     <definition name="500" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/500.jsp"/>
     </definition>
-    
+	<!-- Errors END -->
 </tiles-definitions>

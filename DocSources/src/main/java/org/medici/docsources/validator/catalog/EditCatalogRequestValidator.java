@@ -61,8 +61,7 @@ public class EditCatalogRequestValidator implements Validator {
 	 * Indicates whether the given class is supported by this converter. This
 	 * validator supports only ModifyDocumentCommand.
 	 * 
-	 * @param givenClass
-	 *            the class to test for support
+	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
@@ -76,10 +75,8 @@ public class EditCatalogRequestValidator implements Validator {
 	 * supplied errors instance can be used to report any resulting validation
 	 * errors.
 	 * 
-	 * @param obj
-	 *            the object that is to be validated (can be null)
-	 * @param errors
-	 *            contextual state about the validation process (never null)
+	 * @param object the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
 		EditCatalogCommand editCatalogCommand = (EditCatalogCommand) object;

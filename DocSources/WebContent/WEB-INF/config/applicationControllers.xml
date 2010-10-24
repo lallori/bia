@@ -29,6 +29,13 @@
 	        <description>Interceptor per la modifica del locale su singola richiesta.</description>
 	        <property name="paramName" value="locale"/>
 	    </bean>
+		<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<description>HTTP/1.1 Cache-Control headers</description>
+			<property name="cacheSeconds" value="0"/>
+			<property name="useExpiresHeader" value="true"/>
+			<property name="useCacheControlHeader" value="true"/>
+			<property name="useCacheControlNoStore" value="true"/>
+		</bean>
 	</mvc:interceptors>
 
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
@@ -54,7 +61,7 @@
 		<property name="ignoreAcceptHeader" value="true" />
 	</bean>
 
-	<bean id="viewResolver"  class="org.springframework.web.servlet.view.UrlBasedViewResolver">  
+	<bean id="viewResolver"  class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>  
 	</bean>  
 

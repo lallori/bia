@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<pre>
+<!-- <pre>
 Hello! I'm <sec:authentication property="principal.username"/>
 
 I land on DocSource home page!
@@ -19,3 +19,4 @@ I land on DocSource home page!
     <a href="<c:url value="/user/DeleteUser.do"/>">Unregister from service</a>
     <a href="<c:url value="/LogoutUser.do"/>">Exit</a>
 </pre>
+ -->

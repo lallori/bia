@@ -42,18 +42,15 @@
                     default-target-url="/Home.do"
                     authentication-failure-url="/LoginUser.do?login_error=1" />
   
-        <security:logout logout-url="/LogoutUser.do" logout-success-url="/LoginUser.do" />
-
+        <security:logout invalidate-session="true" logout-url="/LogoutUser.do" logout-success-url="/LoginUser.do" />
+		<security:session-management session-fixation-protection="newSession" />
+		<security:remember-me key="docSources" user-service-ref="ldapUserDetailsService"/>
     </security:http>
 
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<!--  unique user, original password !www.m3d1c1.0rg -->
-				<security:user name="guest" password="guest" authorities="ROLE_GUESTS" />
-			</security:user-service>
+		<security:authentication-provider ref="guestAuthenticationProvider">
 		</security:authentication-provider>
-		<security:authentication-provider ref="ldapAuthenticationProvider">
+		<security:authentication-provider ref="ldapAuthenticationProvider" >
 			<security:password-encoder ref="passwordLdapShaEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
@@ -113,7 +110,17 @@
    		</constructor-arg>
    		<property name="userSearch" ref="userSearch" />
    	</bean>
-    	
+
+	<bean id="guestAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="guestUserDetailsServiceImpl"></property>
+	</bean>
+
+	<bean id="guestUserDetailsServiceImpl" class="org.medici.docsources.security.userdetails.DocSourcesGuestUserDetailsServiceImpl">
+		<property name="userMap">
+			<value>guest=guest,ROLE_GUESTS</value>
+		</property> 
+	</bean>
+
    	<bean id="ldapAuthenticationProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
    		<constructor-arg index="0">
    			<ref local="bindAuthenticator" />

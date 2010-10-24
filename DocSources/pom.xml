@@ -5,7 +5,7 @@
 	<artifactId>DocumentarySources</artifactId>
 	<packaging>war</packaging>
 	<name>DocSources</name>
-	<version>0.0.2-alpha</version>
+	<version>0.0.3-alpha</version>
 	<url>https://docsources.dev.java.net/issues/</url>
 	<issueManagement>
 		<system>JIRA</system>
