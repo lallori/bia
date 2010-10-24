@@ -70,8 +70,8 @@ public class GrantedAuthorityUtils {
 	 **/
 	public static String toString(Collection<GrantedAuthority> grantedAuthorities) {
 		StringBuffer stringBuffer = new StringBuffer("[");
-		for (int i = 0; i < grantedAuthorities.size(); i++) {
-			//stringBuffer.append(grantedAuthorities.[i].getAuthority());
+		for (GrantedAuthority currentGrantedAutorithy : grantedAuthorities) {
+			stringBuffer.append(currentGrantedAutorithy);
 			stringBuffer.append(",");
 		}
 		stringBuffer.replace(stringBuffer.length() - 1, stringBuffer.length(),

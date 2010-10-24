@@ -30,9 +30,13 @@ package org.medici.docsources.security;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.ldap.core.DirContextAdapter;
+import org.medici.docsources.common.util.LdapUtils;
+import org.medici.docsources.common.util.UserRoleUtils;
+import org.medici.docsources.domain.User.UserRole;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
 import org.springframework.util.Assert;
@@ -41,152 +45,32 @@ import org.springframework.util.Assert;
  * This class extends LdapUserDetailsImpl to permit storage in UserDetails
  * of custom attribute like first name, last name.
  * 
+ * From UserDetails Javadoc :
+ * Concrete implementations must take particular care to ensure the non-null
+ * contract detailed for each method is enforced. See
+ * {@link org.springframework.security.core.userdetails.User} for a
+ * reference implementation (which you might like to extend).
+ * <p>
+ * Concrete implementations should be preferably be immutable &ndash; they should
+ * have value object semantics, like a String. The <code>UserDetails</code> may be
+ * stored in a cache and multiple threads may use the same instance. Immutable
+ * objects are more robust and are guaranteed to be thread-safe. This is not strictly
+ * essential (there's nothing within Spring Security itself which absolutely requires it),
+ * but if your <tt>UserDetails</tt> object <em>can</em> be modified then it's up to you to make
+ * sure that you do so safely and that you manage any caches which may contain copies of
+ * the object. 
+ * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
 public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	/**
+	 * Variation of essence pattern. Used to create mutable intermediate object.
+	 * The idea of using an essence is 
 	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
 	 */
-	private static final long serialVersionUID = 2764404863477028517L;
-
-	private Boolean active;
-	private Date expirationDate;
-	private Date expirationPasswordDate;
-	private String firstName;
-	private Integer invalidAccess;
-	private Integer invalidAccessMax;
-	private String lastName;
-	private String mail;
-
-	/**
-	 * @return the expirationDate
-	 */
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	/**
-	 * @param expirationDate the expirationDate to set
-	 */
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-	/**
-	 * @return the expirationPasswordDate
-	 */
-	public Date getExpirationPasswordDate() {
-		return expirationPasswordDate;
-	}
-
-	/**
-	 * @param expirationPasswordDate the expirationPasswordDate to set
-	 */
-	public void setExpirationPasswordDate(Date expirationPasswordDate) {
-		this.expirationPasswordDate = expirationPasswordDate;
-	}
-
-	/**
-	 * @return the firstName
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-
-	/**
-	 * @param firstName the firstName to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
-	 * @return the invalidAccess
-	 */
-	public Integer getInvalidAccess() {
-		return invalidAccess;
-	}
-
-	/**
-	 * @param invalidAccess the invalidAccess to set
-	 */
-	public void setInvalidAccess(Integer invalidAccess) {
-		this.invalidAccess = invalidAccess;
-	}
-
-	/**
-	 * @return the invalidAccessMax
-	 */
-	public Integer getInvalidAccessMax() {
-		return invalidAccessMax;
-	}
-
-	/**
-	 * @param invalidAccessMax the invalidAccessMax to set
-	 */
-	public void setInvalidAccessMax(Integer invalidAccessMax) {
-		this.invalidAccessMax = invalidAccessMax;
-	}
-
-	/**
-	 * @return the lastName
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-	/**
-	 * @param lastName the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	/**
-	 * @return the mail
-	 */
-	public String getMail() {
-		return mail;
-	}
-
-	/**
-	 * @param mail the mail to set
-	 */
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
-	protected DocSourcesLdapUserDetailsImpl() {
-	}
-
-	protected void populateContext(DirContextAdapter adapter) {
-		/*        adapter.setAttributeValue("sn", sn);
-        adapter.setAttributeValues("cn", getCn());
-        adapter.setAttributeValue("description", getDescription());
-        adapter.setAttributeValue("telephoneNumber", getTelephoneNumber());
-
-        if(getPassword() != null) {
-            adapter.setAttributeValue("userPassword", getPassword());
-        }
-        adapter.setAttributeValues("objectclass", new String[] {"top", "person"});
-		 */
-	}
-
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
-	/**
-	 * @return the active
-	 */
-	public Boolean getActive() {
-		return active;
-	}
-
 	public static class Essence extends LdapUserDetailsImpl.Essence {
 		// 20101030214433+0100
 		private DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
@@ -206,6 +90,7 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 			setMail(ctx.getStringAttribute("mail"));
 			setActive(ctx.getStringAttribute("krb5AccountDisabled"));
 			setAccountNonLocked(ctx.getStringAttribute("krb5AccountLockedOut"));
+			setSignificantRoleDescritpion(ctx.getStringAttributes("member"));
 			setAccountNonExpired();
 		}
 
@@ -221,33 +106,60 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 			setActive(copyMe.getActive().toString());
 			setAccountNonLocked(((LdapUserDetailsImpl)copyMe).isAccountNonLocked());
 			setAccountNonExpired();
+			setSignificantRoleDescritpion(copyMe.getSignificantRoleDescription());
 		}
 
 		protected LdapUserDetailsImpl createTarget() {
 			return new DocSourcesLdapUserDetailsImpl();
 		}
 
-		public void setActive(String disabled) {
-			((DocSourcesLdapUserDetailsImpl) instance).active = !Boolean.valueOf(disabled);
+		/**
+		 * This method created an UserDetails object using his superclass.
+		 */
+		public DocSourcesLdapUserDetailsImpl createUserDetails() {
+			DocSourcesLdapUserDetailsImpl p = (DocSourcesLdapUserDetailsImpl) super.createUserDetails();
+			Assert.notNull(p.getActive());
+			Assert.notNull(p.getActive());
+
+			return p;
 		}
 
-		public void setAccountNonLocked(String accountNonLocked) {
-			super.setAccountNonLocked(!Boolean.valueOf(accountNonLocked));        	
-		}
-
+		/**
+		 * 
+		 */
 		public void setAccountNonExpired() {
 			//The user is not expired if expiration date is after or equals today
 			super.setAccountNonExpired((!((DocSourcesLdapUserDetailsImpl) instance).expirationDate.before(new Date())));        	
 		}
 
+		/**
+		 * 
+		 * @param accountNonLocked
+		 */
+		public void setAccountNonLocked(String accountNonLocked) {
+			super.setAccountNonLocked(!Boolean.valueOf(accountNonLocked));        	
+		}
+
+		/**
+		 * 
+		 * @param disabled
+		 */
+		public void setActive(String disabled) {
+			((DocSourcesLdapUserDetailsImpl) instance).active = !Boolean.valueOf(disabled);
+		}
+
+		/**
+		 * 
+		 * @param expirationDate
+		 */
 		public void setExpirationDate(Date expirationDate) {
 			((DocSourcesLdapUserDetailsImpl) instance).expirationDate = expirationDate;
 		}
 
-		public void setExpirationPasswordDate(Date expirationPasswordDate) {
-			((DocSourcesLdapUserDetailsImpl) instance).expirationPasswordDate = expirationPasswordDate;
-		}
-
+		/**
+		 * 
+		 * @param expirationDate
+		 */
 		public void setExpirationDate(String expirationDate) {
 			try {
 				((DocSourcesLdapUserDetailsImpl) instance).expirationDate = dateFormat.parse(expirationDate);
@@ -256,6 +168,18 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 			}
 		}
 
+		/**
+		 * 
+		 * @param expirationPasswordDate
+		 */
+		public void setExpirationPasswordDate(Date expirationPasswordDate) {
+			((DocSourcesLdapUserDetailsImpl) instance).expirationPasswordDate = expirationPasswordDate;
+		}
+
+		/**
+		 * 
+		 * @param expirationPasswordDate
+		 */
 		public void setExpirationPasswordDate(String expirationPasswordDate) {
 			try {
 				((DocSourcesLdapUserDetailsImpl) instance).expirationPasswordDate = dateFormat.parse(expirationPasswordDate);
@@ -264,33 +188,217 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 			}
 		}
 
+		/**
+		 * 
+		 * @param firstName
+		 */
 		public void setFirstName(String firstName) {
 			((DocSourcesLdapUserDetailsImpl) instance).firstName = firstName;
 		}
 
+		/**
+		 * 
+		 * @param invalidAccess
+		 */
 		public void setInvalidAccess(String invalidAccess) {
 
 		}
 
+		/**
+		 * 
+		 * @param invalidAccessMax
+		 */
 		public void setInvalidAccessMax(String invalidAccessMax) {
 
 		}
 
+		/**
+		 * 
+		 * @param lastName
+		 */
 		public void setLastName(String lastName) {
 			((DocSourcesLdapUserDetailsImpl) instance).lastName = lastName;
 		}
 
+		/**
+		 * 
+		 * @param mail
+		 */
 		public void setMail(String mail) {
 			((DocSourcesLdapUserDetailsImpl) instance).mail = mail;
 		}
 
-		public DocSourcesLdapUserDetailsImpl createUserDetails() {
-			DocSourcesLdapUserDetailsImpl p = (DocSourcesLdapUserDetailsImpl) super.createUserDetails();
-			Assert.notNull(p.getActive());
-			Assert.notNull(p.getActive());
-
-			// TODO: Check contents for null entries
-			return p;
+		/**
+		 * 
+		 * @param significantRoleDescription
+		 */
+		private void setSignificantRoleDescritpion(String significantRoleDescription) {
+			((DocSourcesLdapUserDetailsImpl) instance).significantRoleDescription = significantRoleDescription;
 		}
+
+		/**
+		 * 
+		 * @param roles
+		 */
+		private void setSignificantRoleDescritpion(String[] roles) {
+			List<UserRole> userRoles = new ArrayList<UserRole>();
+			
+			if (roles != null) {
+				for(String role : roles) {
+					try {
+						userRoles.add(UserRole.valueOf(LdapUtils.getStringRole(role)));
+					} catch(IllegalArgumentException iaex){
+					} catch (NullPointerException nex){
+						// if enum name is null
+					}
+				}
+
+				((DocSourcesLdapUserDetailsImpl) instance).significantRoleDescription = UserRoleUtils.toDescriptionString(UserRoleUtils.getMostSignificantRole(userRoles));
+			}
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2764404863477028517L;
+	private Boolean active;
+	private Date expirationDate;
+	private Date expirationPasswordDate;
+	private String firstName;
+	private Integer invalidAccess;
+	private Integer invalidAccessMax;
+	private String lastName;
+	private String mail;
+	// This field rapresents the most significant roleDescription
+	private String significantRoleDescription;
+
+	protected DocSourcesLdapUserDetailsImpl() {
+	}
+
+	/**
+	 * @return the active
+	 */
+	public Boolean getActive() {
+		return active;
+	}
+
+	/**
+	 * @return the expirationDate
+	 */
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	/**
+	 * @return the expirationPasswordDate
+	 */
+	public Date getExpirationPasswordDate() {
+		return expirationPasswordDate;
+	}
+
+	/**
+	 * @return the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+	/**
+	 * @return the invalidAccess
+	 */
+	public Integer getInvalidAccess() {
+		return invalidAccess;
+	}
+
+	/**
+	 * @return the invalidAccessMax
+	 */
+	public Integer getInvalidAccessMax() {
+		return invalidAccessMax;
+	}
+
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @return the mail
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @return the significantRoleDescription
+	 */
+	public String getSignificantRoleDescription() {
+		return significantRoleDescription;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+	/**
+	 * @param expirationPasswordDate the expirationPasswordDate to set
+	 */
+	public void setExpirationPasswordDate(Date expirationPasswordDate) {
+		this.expirationPasswordDate = expirationPasswordDate;
+	}
+
+	/**
+	 * @param firstName the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @param invalidAccess the invalidAccess to set
+	 */
+	public void setInvalidAccess(Integer invalidAccess) {
+		this.invalidAccess = invalidAccess;
+	}
+
+	/**
+	 * @param invalidAccessMax the invalidAccessMax to set
+	 */
+	public void setInvalidAccessMax(Integer invalidAccessMax) {
+		this.invalidAccessMax = invalidAccessMax;
+	}
+
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/**
+	 * @param mail the mail to set
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	/**
+	 * @param significantRoleDescription the significantRoleDescription to set
+	 */
+	public void setSignificantRoleDescription(String significantRoleDescription) {
+		this.significantRoleDescription = significantRoleDescription;
 	}
 }
