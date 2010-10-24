@@ -115,7 +115,7 @@
 		<property name="userDetailsService" ref="guestUserDetailsServiceImpl"></property>
 	</bean>
 
-	<bean id="guestUserDetailsServiceImpl" class="org.medici.docsources.security.userdetails.DocSourcesGuestUserDetailsServiceImpl">
+	<bean id="guestUserDetailsServiceImpl" class="org.medici.docsources.security.guest.DocSourcesGuestUserDetailsServiceImpl">
 		<property name="userMap">
 			<value>guest=guest,ROLE_GUESTS</value>
 		</property> 
