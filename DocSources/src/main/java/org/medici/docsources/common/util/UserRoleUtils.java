@@ -71,20 +71,16 @@ public class UserRoleUtils {
 
 		if (userRoles.contains(UserRole.ADMINISTRATORS))
 			return UserRole.ADMINISTRATORS;
-		else if (userRoles.contains(UserRole.DISTANCE_FELLOWS_COORDINATORS))
-			return UserRole.DISTANCE_FELLOWS_COORDINATORS;
-		else if (userRoles.contains(UserRole.COMMUNITY_COORDINATORS))
-			return UserRole.COMMUNITY_COORDINATORS;
-		else if (userRoles.contains(UserRole.DIGITIZATION_COORDINATORS))
-			return UserRole.DIGITIZATION_COORDINATORS;
-		else if (userRoles.contains(UserRole.SENIOR_DISTANT_FELLOWS))
-			return UserRole.SENIOR_DISTANT_FELLOWS;
-		else if (userRoles.contains(UserRole.DIGITIZATION_TECHNICIANS))
-			return UserRole.DIGITIZATION_TECHNICIANS;
-		else if (userRoles.contains(UserRole.DISTANT_FELLOWS))
-			return UserRole.DISTANT_FELLOWS;
 		else if (userRoles.contains(UserRole.ONSITE_FELLOWS))
 			return UserRole.ONSITE_FELLOWS;
+		else if (userRoles.contains(UserRole.SENIOR_DISTANCE_FELLOWS))
+			return UserRole.SENIOR_DISTANCE_FELLOWS;
+		else if (userRoles.contains(UserRole.DISTANCE_FELLOWS))
+			return UserRole.DISTANCE_FELLOWS;
+		else if (userRoles.contains(UserRole.DIGITIZATION_TECHNICIANS))
+			return UserRole.DIGITIZATION_TECHNICIANS;
+		else if (userRoles.contains(UserRole.COMMUNITY_USERS))
+			return UserRole.COMMUNITY_USERS;
 		else
 			return UserRole.GUESTS;
 	}
@@ -94,8 +90,8 @@ public class UserRoleUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println(UserRole.SENIOR_DISTANT_FELLOWS + " : " + UserRoleUtils.toDescriptionString(UserRole.SENIOR_DISTANT_FELLOWS));
+		System.out.println(UserRole.SENIOR_DISTANCE_FELLOWS + " : " + UserRoleUtils.toDescriptionString(UserRole.SENIOR_DISTANCE_FELLOWS));
 		System.out.println(UserRole.ADMINISTRATORS + " : " + UserRoleUtils.toDescriptionString(UserRole.ADMINISTRATORS));
-		System.out.println(UserRole.DIGITIZATION_TECHNICIANS + " : " + UserRoleUtils.toDescriptionString(UserRole.SENIOR_DISTANT_FELLOWS));
+		System.out.println(UserRole.DIGITIZATION_TECHNICIANS + " : " + UserRoleUtils.toDescriptionString(UserRole.DIGITIZATION_TECHNICIANS));
 	}
 }

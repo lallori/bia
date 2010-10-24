@@ -44,9 +44,9 @@ public class User implements Serializable {
 	 * 
 	 * 
 	 * User Groups The defined user groups are: Administrators, On-site Fellows,
-	 * Senior Distant Fellows, Distant Fellows, Digitization Technicians,
+	 * Senior Distance Fellows, Distance Fellows, Digitization Technicians,
 	 * Community users and Guests.<br> Some special role users are also present:
-	 * Distant Fellow Coordinator, Community Coordinator and Digitization
+	 * Distance Fellow Coordinator, Community Coordinator and Digitization
 	 * Coordinator.<br> For a detailed description of the each user group see the
 	 * 2.4 chapter of Phase1_TLSRL.pdf document.<p>
 	 * 
@@ -56,25 +56,25 @@ public class User implements Serializable {
 	 * 
 	 * On-site Fellows Users belonging to this group are able to use the Data
 	 * Entry Module and have the permission to correct and vet other On-site and
-	 * the Distant Fellows entered documents. They are part of the Scholarly
+	 * the Distance Fellows entered documents. They are part of the Scholarly
 	 * Community and have also access to all the other modules, with the
 	 * exception of the Digitization Module (see 2.7) and the Administration
 	 * Module (see 2.6). The On-site Fellows can be assigned (or “flagged”) as
-	 * Distant Fellows Coordinator or Community Coordinator or Digitization
+	 * Distance Fellows Coordinator or Community Coordinator or Digitization
 	 * Coordinator.<p>
 	 * 
-	 * Senior Distant Fellows Users belonging to this group are experienced
+	 * Senior Distance Fellows Users belonging to this group are experienced
 	 * scholars that have been trained by the On-site Fellows on how to use the
 	 * system. They able to use the Data Entry Module (see 2.4) and have the
-	 * permission to correct and vet other Distant Fellows entered documents.
+	 * permission to correct and vet other Distance Fellows entered documents.
 	 * They are part of the Scholarly Community and have also access to all the
 	 * other modules, with the exception of the Digitization Module and the
-	 * Administration Module. The Senior Distant Fellows can be assigned (or
-	 * “flagged”) as Distant Fellows Coordinator or Community Coordinator.<p>
+	 * Administration Module. The Senior Distance Fellows can be assigned (or
+	 * “flagged”) as Distance Fellows Coordinator or Community Coordinator.<p>
 	 * 
-	 * Distant Fellows Users belonging to this group are able to use the Data
-	 * Entry Module. Unlike the On-site Fellows or the Senior Distant Fellows,
-	 * the Distant Fellows are able to enter data but not to vet any document or
+	 * Distance Fellows Users belonging to this group are able to use the Data
+	 * Entry Module. Unlike the On-site Fellows or the Senior Distance Fellows,
+	 * the Distance Fellows are able to enter data but not to vet any document or
 	 * volume or delete any content, which has not been created by them. They
 	 * are part of the Scholarly Community and have also access to all the other
 	 * modules, with the exception of the Digitization Module and the
@@ -107,10 +107,10 @@ public class User implements Serializable {
 		DIGITIZATION_COORDINATORS("DIGITIZATION_COORDINATORS"), 
 		DIGITIZATION_TECHNICIANS("DIGITIZATION_TECHNICIANS"), 
 		DISTANCE_FELLOWS_COORDINATORS("DISTANCE_FELLOWS_COORDINATORS"),
-		DISTANT_FELLOWS("DISTANT_FELLOWS"), 
+		DISTANCE_FELLOWS("DISTANCE_FELLOWS"), 
 		GUESTS("GUESTS"), 
 		ONSITE_FELLOWS("ONSITE_FELLOWS"), 
-		SENIOR_DISTANT_FELLOWS("SENIOR_DISTANT_FELLOWS");
+		SENIOR_DISTANCE_FELLOWS("SENIOR_DISTANCE_FELLOWS");
 
 		private final String role;
 

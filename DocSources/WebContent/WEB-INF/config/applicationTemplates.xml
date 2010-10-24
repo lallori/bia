@@ -6,7 +6,7 @@
     <definition name="template.completeDOM" template="/WEB-INF/templates/completeDOM.jsp">
         <put-attribute name="header" value="/WEB-INF/jsp/fragments/Header.jspf"/>
         <put-attribute name="menu" value="/WEB-INF/jsp/fragments/Menu.jspf"/>
-        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jspf"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp"/>
     </definition>
         
     <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp">
@@ -14,7 +14,7 @@
 
     <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
         <put-attribute name="header" value="/WEB-INF/jsp/fragments/Header.jspf"/>
-        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jspf"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp"/>
     </definition>
 
 	<definition name="template.main" template="/WEB-INF/templates/main.jsp">

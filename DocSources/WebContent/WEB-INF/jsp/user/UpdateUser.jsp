@@ -85,16 +85,6 @@
 			    onSelect: function(value, data){ $('#countryAutoCompleter').parent().next().find("#countryCode").val(data); }
 			  });
 
-			function checkAccount() {
-				$.getJSON("${checkAccountUrl}", { 'account' : $('#account').val() }, function(response) {
-					if (response) {
-						fieldValidated("account", { valid : true });
-					} else {
-						fieldValidated("account", { valid : false, message : $('#account').val() + " is not available."});
-					}
-				});
-			}
-
 			function fieldValidated(field, result) {
 				if (result.valid) {
 					$("#" + field ).removeClass("error");

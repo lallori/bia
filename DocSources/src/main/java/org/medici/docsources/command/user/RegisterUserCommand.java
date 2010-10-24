@@ -41,15 +41,11 @@ public class RegisterUserCommand {
 	private String address;
 	@NotNull
 	private Boolean agree;
+	@NotNull
 	private String city;
 	@NotNull
 	@Size(min = 8, max = 15)
 	private String confirmPassword;
-	/**
-	 * @TODO :
-	 * @NotNull
-	 * @Size(min=2, max=2)
-	 */
 	private String countryCode;
 	@NotNull
 	private String countryDescription;

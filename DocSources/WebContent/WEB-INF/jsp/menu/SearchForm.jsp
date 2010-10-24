@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 				<div id="searchForm">
-					<form name="command" action="#" method="post">
+					<form name="SearchForm" action="<c:url value="/SearchData.do"/>" method="post">
 						Search in <select name="search" class="select" style="margin-left:8px">
 										<option value="documents" selected>Documents</option>
 										<option value="volumes">Volumes</option>
@@ -13,7 +13,15 @@
 										<option value="places">Places</option>
 								</select>
 						<br/>
-							for <input id="firstName" name="firstName" type="text" value="" class="input_search" style="margin-top:5px"/>
+							for <input id="text" name="text" type="text" value="" class="input_search" style="margin-top:5px"/>
 						<br/><input id="create" type="image" src="<c:url value="/images/button_search.png"/>" alt="submit" title="submit form" style="margin-left:125px"/>
 					</form>
 				</div>
+				<script type="text/javascript">
+					$("#SearchForm").bind('submit',function() {
+					  $.post("/user/RegisterUser.do",this.serialize(),function(data) { 
+						  $('DocSourcesContent').html(response_data);
+					  });
+					  return false;
+					});
+				</script>

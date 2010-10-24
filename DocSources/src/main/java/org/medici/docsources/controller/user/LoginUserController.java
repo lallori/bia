@@ -46,7 +46,7 @@ public class LoginUserController {
 	/**
 	 * Method to obtain linked View.
 	 * 
-	 * @return Name of the view to invoke
+	 * @return ModelAndView object pointing to LoginUser View
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {

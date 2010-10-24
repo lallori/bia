@@ -1,7 +1,7 @@
 /*
- * HomeController.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * SearchDataController.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -27,29 +27,44 @@
  */
 package org.medici.docsources.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import org.medici.docsources.command.SearchDataCommand;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Home". 
- * This is the entry point after login.
- *  
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ *
  */
 @Controller
-@RequestMapping("/Home")
-public class HomeController {
+@RequestMapping("/SearchData")
+public class SearchDataController {
+
 	/**
 	 * 
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
-		//TODO : implement business invocation to retrieve statistics
-		
-		return new ModelAndView("Home");
+		return new ModelAndView("LoginUser");
+	}
+
+	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@ModelAttribute("command") SearchDataCommand command, BindingResult result) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		return new ModelAndView("",model);
 	}
 }

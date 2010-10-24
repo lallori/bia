@@ -1,5 +1,5 @@
 /*
- * PasswordChangeRequest.java
+ * ActivationUser.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -36,6 +36,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 /**
  * Entity for store user's activation.
  * 
@@ -43,6 +45,7 @@ import javax.persistence.TemporalType;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Audited
 @Table ( name = "\"tblActivationUser\"" ) 
 public class ActivationUser implements Serializable {
 	/**

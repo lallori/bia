@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.common.ajax;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.medici.docsources.domain.User;

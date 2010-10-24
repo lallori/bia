@@ -114,8 +114,7 @@ public class HttpUtils {
 	 *         parameter1Name=parameter1Value&parameter2Name=parameter2Value).
 	 */
 	@SuppressWarnings("unchecked")
-	public static String retrieveHttpParametersAsString(HttpServletRequest req,
-			boolean encodeParameterName, boolean encodeParameterValue) {
+	public static String retrieveHttpParametersAsString(HttpServletRequest req, boolean encodeParameterName, boolean encodeParameterValue) {
 		if (req == null)
 			return "";
 
@@ -126,8 +125,7 @@ public class HttpUtils {
 			String paramName = enumer.nextElement();
 			try {
 				if (encodeParameterName)
-					buffer.append(URLEncoder.encode(paramName,
-							HttpUtils.ENCODING_SCHEME));
+					buffer.append(URLEncoder.encode(paramName, HttpUtils.ENCODING_SCHEME));
 				else
 					buffer.append(paramName);
 				buffer.append("=");

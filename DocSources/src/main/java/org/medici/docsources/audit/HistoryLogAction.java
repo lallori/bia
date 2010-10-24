@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.util.GrantedAuthorityUtils;
+import org.medici.docsources.common.util.HttpUtils;
 import org.medici.docsources.domain.HistoryLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.historylog.HistoryLogService;
@@ -111,8 +112,7 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 		HistoryLog historyLog = (HistoryLog) request.getAttribute("historyLog");
 
 		if (modelAndView != null) {
-			if (modelAndView.getModelMap().get(
-			"org.springframework.validation.BindingResult.command") != null) {
+			if (modelAndView.getModelMap().get("org.springframework.validation.BindingResult.command") != null) {
 				List errors = ((BeanPropertyBindingResult) modelAndView.getModelMap().get("org.springframework.validation.BindingResult.command")).getAllErrors();
 
 				if (errors.size() > 0) {
@@ -126,8 +126,7 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 			}
 		}
 
-		historyLog.setExecutionTime(System.currentTimeMillis()
-				- historyLog.getExecutionTime());
+		historyLog.setExecutionTime(System.currentTimeMillis() - historyLog.getExecutionTime());
 
 		try {
 			getHistoryLogService().traceAction(historyLog);
@@ -158,7 +157,7 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 		historyLog.setDateAndTime(new Date(System.currentTimeMillis()));
 		historyLog.setIpAddress(request.getRemoteAddr());
 		historyLog.setAction(request.getRequestURI().toString());
-		historyLog.setInformations("");
+		historyLog.setInformations(HttpUtils.retrieveHttpParametersAsString(request, false, true));
 		historyLog.setExecutionTime(System.currentTimeMillis());
 		request.setAttribute("historyLog", historyLog);
 

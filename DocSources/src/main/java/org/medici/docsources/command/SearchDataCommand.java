@@ -1,7 +1,7 @@
 /*
- * HomeController.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * SearchDataCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -25,31 +25,42 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+package org.medici.docsources.command;
 
 /**
- * Controller for action "Home". 
- * This is the entry point after login.
- *  
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ *
  */
-@Controller
-@RequestMapping("/Home")
-public class HomeController {
+public class SearchDataCommand {
+	private String search;
+	private String text;
+	
 	/**
-	 * 
-	 * @return
+	 * @param search the search to set
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
-		//TODO : implement business invocation to retrieve statistics
-		
-		return new ModelAndView("Home");
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	
+	/**
+	 * @return the search
+	 */
+	public String getSearch() {
+		return search;
+	}
+	
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
 	}
 }

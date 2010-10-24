@@ -27,14 +27,10 @@
  */
 package org.medici.docsources.common.ajax;
 
-import java.text.NumberFormat;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.ProgressListener;
 import org.apache.log4j.Logger;
-import org.springframework.web.multipart.MultipartException;
 
 /**
  * Listener for upload progress bar.

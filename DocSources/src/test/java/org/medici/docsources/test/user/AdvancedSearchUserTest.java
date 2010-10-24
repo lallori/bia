@@ -33,9 +33,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.medici.docsources.command.user.AdvancedSearchUserCommand;
-import org.medici.docsources.command.user.SearchUserCommand;
 import org.medici.docsources.controller.user.AdvancedSearchUserController;
-import org.medici.docsources.controller.user.SearchUserController;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -76,6 +74,7 @@ public class AdvancedSearchUserTest extends AbstractJUnit4SpringContextTests {
 	private AdvancedSearchUserController controller;
 	private Logger logger;
 	private ModelMap model;
+	@SuppressWarnings("unused")
 	private SessionStatus sessionStatus;
 	private UserService userService;
 	private Validator validator;

@@ -91,6 +91,11 @@ public class RegisterUserController {
 		return validator;
 	}
 
+	/**
+	 * 
+	 * @param binder
+	 * @param request
+	 */
 	@InitBinder("command")
 	public void initBinder(WebDataBinder binder, HttpServletRequest request) {
 		// Don't allow user to override the
@@ -99,6 +104,12 @@ public class RegisterUserController {
 		((RegisterUserCommand) binder.getTarget()).setRemoteAddress(request.getRemoteAddr());
 	}
 
+	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") RegisterUserCommand command, BindingResult result) {
 		getValidator().validate(command, result);
@@ -133,8 +144,6 @@ public class RegisterUserController {
 	/**
 	 * 
 	 * @param command
-	 * @param request
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
