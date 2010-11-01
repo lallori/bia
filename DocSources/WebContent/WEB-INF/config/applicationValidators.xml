@@ -24,6 +24,10 @@
 	<bean id="editTopicsDocumentValidator" class="org.medici.docsources.validator.docbase.EditTopicsDocumentValidator">
         <description>Edit Topics Document Validator.</description>
 	</bean>
+	
+	<bean id="searchDocumentValidator" class="org.medici.docsources.validator.docbase.SearchDocumentValidator">
+        <description>Search Document Validator.</description>
+	</bean>
 
 	<!-- Person base Validators -->
 	<bean id="editDetailsPlaceValidator" class="org.medici.docsources.validator.geobase.EditDetailsPlaceValidator">

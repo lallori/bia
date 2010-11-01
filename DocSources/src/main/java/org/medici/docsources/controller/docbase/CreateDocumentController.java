@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.controller.docbase;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -81,7 +85,13 @@ public class CreateDocumentController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
-		return new ModelAndView("docbase/ShowDocument");
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		Document document = new Document();
+		document.setEntryId(-1);
+		model.put("document", document);
+
+		return new ModelAndView("docbase/ShowDocument", model);
 	}
 
 	/**

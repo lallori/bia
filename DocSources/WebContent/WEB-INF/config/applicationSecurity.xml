@@ -9,7 +9,7 @@
 
     <security:http auto-config="true">
         <security:intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/LoginUser" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/LoginUser" filters="none" />
         <security:intercept-url pattern="/LogoutUser" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/css/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -43,7 +43,9 @@
                     authentication-failure-url="/LoginUser.do?login_error=1" />
   
         <security:logout invalidate-session="true" logout-url="/LogoutUser.do" logout-success-url="/LoginUser.do" />
-		<security:session-management session-fixation-protection="newSession" />
+		<security:session-management session-fixation-protection="newSession">
+		 	<security:concurrency-control max-sessions="1"/>
+		</security:session-management>
 		<security:remember-me key="docSources" user-service-ref="ldapUserDetailsService"/>
     </security:http>
 

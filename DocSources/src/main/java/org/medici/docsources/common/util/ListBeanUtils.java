@@ -27,12 +27,14 @@
  */
 package org.medici.docsources.common.util;
 
+import com.mchange.v1.util.StringTokenizerUtils;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -68,6 +70,57 @@ public class ListBeanUtils {
 			} catch (InvocationTargetException itex) {
 				retValue.set(i, null);
 			}
+		}
+
+		return retValue;
+	}
+
+	/**
+	 * Method to obtains a plain list of multiple fields contained in a bean input list.
+	 * The fields are marked by third parameter which is the separator.
+	 * The outputString
+	 * 
+	 * @param beansList List of bean from which we estract the plain list of multiple fields. 
+	 * @param concatenatedFields List of bean's fields we want to concatenate in outputlist
+	 * @param fieldsSeparator String Separator of previous parameter
+	 * @param outputFieldsSeparator Separator of fields in output list
+	 * @param addBlankSpace A boolean parameter to insert a blank space before and after every separatore of output fields 
+	 * @return
+	 */
+	public static ArrayList<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace) {
+		if ((beansList.size() == 0) || (StringUtils.isEmpty(fieldsSeparator)) || (StringUtils.isEmpty(outputFieldsSeparator)))
+			return new ArrayList<String>(0);
+
+		ArrayList<String> retValue = new ArrayList<String>(beansList.size());
+		String[] fields = StringTokenizerUtils.tokenizeToArray(concatenatedFields, fieldsSeparator);
+		StringBuffer stringBuffer = null;  
+
+		for (int i = 0; i<beansList.size(); i++) {
+			stringBuffer = new StringBuffer();
+			for (int j=0; j<fields.length; j++) {
+				PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(beansList.get(0).getClass(), fields[j]);
+				Method method = pd.getReadMethod();
+				try {
+					Object fieldBeanValue =method.invoke(beansList.get(i), (Object[]) null);
+					if (fieldBeanValue != null) {
+						if (j>0) {
+							if (addBlankSpace) {
+								stringBuffer.append(" ");
+								stringBuffer.append(outputFieldsSeparator);
+								stringBuffer.append(" ");
+							} else {
+								stringBuffer.append(outputFieldsSeparator);
+							}
+						}
+						stringBuffer.append(fieldBeanValue.toString());
+					}
+				} catch (IllegalAccessException iaex) {
+					retValue.set(i, null);
+				} catch (InvocationTargetException itex) {
+					retValue.set(i, null);
+				}
+			}
+			retValue.add(i, stringBuffer.toString());
 		}
 
 		return retValue;

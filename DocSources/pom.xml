@@ -5,7 +5,7 @@
 	<artifactId>DocumentarySources</artifactId>
 	<packaging>war</packaging>
 	<name>DocSources</name>
-	<version>0.0.3-alpha</version>
+	<version>0.0.4-alpha</version>
 	<url>https://docsources.dev.java.net/issues/</url>
 	<issueManagement>
 		<system>JIRA</system>
@@ -237,6 +237,7 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
+					<include>**/ehcache.xml</include>
 					<include>**/import.sql</include>
 				</includes>
 			</resource>
@@ -299,6 +300,11 @@
 			<version>2.1_3</version>
 		</dependency>
 		<dependency>
+			<groupId>com.googlecode.ehcache-spring-annotations</groupId>
+			<artifactId>ehcache-spring-annotations</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
@@ -352,6 +358,11 @@
 					<artifactId>webdavlib</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>1.6.2</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -596,7 +607,6 @@
 			<artifactId>recaptcha4j</artifactId>
 			<version>${recaptcha4j.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.opensymphony.quartz</groupId>
 			<artifactId>quartz</artifactId>

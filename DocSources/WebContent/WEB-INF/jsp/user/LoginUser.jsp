@@ -34,7 +34,7 @@
 						</tr>
 						<tr>
 							<td align="center" colspan="2">
-								<p class="fyp"><fmt:message key="jsp.user.LoginUser.SendUserPasswordResetLink"/><a href="<c:url value="/user/SendUserPasswordReset.do"/>"><i><b>Click here</b></i></a><br/><fmt:message key="jsp.user.LoginUser.SendUserActivationCodeLink"/><a href="<c:url value="/user/SendUserActivationCode.do"/>"><i><b>Click here</b></i></a></p>
+								<p class="fyp"><fmt:message key="jsp.user.LoginUser.SendUserPasswordResetLink"/><a id="SendUserPasswordReset" href="<c:url value="/user/SendUserPasswordReset.do"/>"><i><b>Click here</b></i></a><br/><fmt:message key="jsp.user.LoginUser.SendUserActivationCodeLink"/><a id="SendUserActivationCode" href="<c:url value="/user/SendUserActivationCode.do"/>"><i><b>Click here</b></i></a></p>
 							</td>
 						</tr>
 					</table>
@@ -61,6 +61,8 @@
 				$("#login").submit(function (){$.blockUI();});
 				$("#RegisterUser").click(function (){$.blockUI();});
 				$("#loginAsGuest").click(function (){$.blockUI();});
+				$("#SendUserPasswordReset").click(function (){$.blockUI();});
+				$("#SendUserActivationCode").click(function (){$.blockUI();});
 				$(window).unload(function (){$.unblockUI();});
 			});
 			</script>

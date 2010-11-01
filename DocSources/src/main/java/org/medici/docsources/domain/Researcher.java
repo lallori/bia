@@ -30,6 +30,7 @@ package org.medici.docsources.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,6 +45,7 @@ import javax.persistence.TemporalType;
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
+@Cacheable
 @Entity
 @Table (name="\"tblRESEARCHERS\"")
 public class Researcher implements Serializable {

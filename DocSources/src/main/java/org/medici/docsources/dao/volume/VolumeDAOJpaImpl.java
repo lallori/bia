@@ -27,14 +27,19 @@
  */
 package org.medici.docsources.dao.volume;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>VolumeDAOJpaImpl</b> is a default implementation of <b>VolumeDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -60,5 +65,40 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -7671104408958929124L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Volume findVolume(Integer summaryId, Integer volNum, String volLeText) {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Volume> criteriaQuery = criteriaBuilder.createQuery(Volume.class);
+		Root<Volume> root = criteriaQuery.from(Volume.class);
+	
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterSummaryId = criteriaBuilder.parameter(Integer.class, "summaryId");
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLeText") ? null : criteriaBuilder.parameter(String.class, "volLeText"); 
+		
+		criteriaQuery.where(
+			criteriaBuilder.and(
+				criteriaBuilder.equal(root.get("summaryId"), parameterSummaryId), 
+				criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
+				StringUtils.isEmpty(volLeText) ? 
+					criteriaBuilder.isNull(root.get("volLeText")) : 
+					criteriaBuilder.equal(root.get("volLeText"), parameterVolLeText)
+			)
+		);
+
+		// Set values in predicate's elements  
+		TypedQuery<Volume> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("summaryId", summaryId);
+		typedQuery.setParameter("volNum", volNum);
+		if (!StringUtils.isEmpty(volLeText))
+			typedQuery.setParameter("volLeText", volLeText);
+
+		return typedQuery.getSingleResult();
+	}
 
 }

@@ -28,15 +28,20 @@
 package org.medici.docsources.controller.volbase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.command.volbase.ShowVolumeRequestCommand;
+import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -64,13 +69,28 @@ public class ShowVolumeController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@RequestParam("volumeId") Integer volumeId){
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowVolumeRequestCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
+		Volume volume = null;
+		
+		//TODO : change example test
+		command.setSummaryId(86);
+		command.setVolNum(1170);
+		command.setVolLeText("a");
+		
+		try {
+			volume = getVolBaseService().findVolume(command.getSummaryId(), command.getVolNum(), command.getVolLeText());
+			List<SerieList> series = getVolBaseService().findSeries("Francesco");
+			for (SerieList serie : series) {
+				System.out.println(" " + serie.getTitle() + " / " + serie.getSubTitle1() + " / " + serie.getSubTitle2());
+			}
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/ShowVolume", model);
+		}
 
-		Volume volume = getVolBaseService().findVolume(volumeId);
 		model.put("volume", volume);
 
-		return new ModelAndView("volbase/show", model);
+		return new ModelAndView("volbase/ShowVolume", model);
 	}
 
 	/**

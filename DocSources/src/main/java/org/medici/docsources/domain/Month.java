@@ -29,6 +29,7 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,7 @@ import javax.persistence.Table;
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
+@Cacheable
 @Entity
 @Table ( name = "\"tblMonths\"" ) 
 public class Month implements Serializable {
@@ -55,28 +57,63 @@ public class Month implements Serializable {
 	private Integer monthNum;
 	@Column (name="\"MONTHNAME\"", length=50)
 	private String monthName;
+	
 	/**
 	 * @return the monthNum
 	 */
 	public Integer getMonthNum() {
 		return monthNum;
 	}
+	
 	/**
 	 * @param monthNum the monthNum to set
 	 */
 	public void setMonthNum(Integer monthNum) {
 		this.monthNum = monthNum;
 	}
+	
 	/**
 	 * @return the monthName
 	 */
 	public String getMonthName() {
 		return monthName;
 	}
+	
 	/**
 	 * @param monthName the monthName to set
 	 */
 	public void setMonthName(String monthName) {
 		this.monthName = monthName;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((monthNum == null) ? 0 : monthNum.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Month other = (Month) obj;
+		if (monthNum == null) {
+			if (other.monthNum != null)
+				return false;
+		} else if (!monthNum.equals(other.monthNum))
+			return false;
+		return true;
 	}
 }

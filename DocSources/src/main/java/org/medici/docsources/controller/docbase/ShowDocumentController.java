@@ -28,9 +28,12 @@
 package org.medici.docsources.controller.docbase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.SerieList;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,7 +72,14 @@ public class ShowDocumentController {
 	public ModelAndView processSubmit(@RequestParam("documentId") Integer documentId,BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		Document document = getDocBaseService().findDocument(documentId);
+		Document document = new Document();
+
+		try {
+			document = getDocBaseService().findDocument(documentId);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/ShowDocument", model);
+		}
+		
 		model.put("document", document);
 
 		return new ModelAndView("docbase/ShowDocument", model);

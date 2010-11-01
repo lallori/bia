@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.docbase;
 
 import org.medici.docsources.command.docbase.EditTopicsDocumentCommand;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -84,7 +85,7 @@ public class EditTopicsDocumentValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditTopicsDocumentCommand modifyDocumentCommand = (EditTopicsDocumentCommand) object;
-		validateDocumentId(modifyDocumentCommand.getDocumentId(), errors);
+		validateDocumentId(modifyDocumentCommand.getEntryId(), errors);
 	}
 
 	/**
@@ -92,13 +93,16 @@ public class EditTopicsDocumentValidator implements Validator {
 	 * @param documentId
 	 * @param errors
 	 */
-	public void validateDocumentId(Integer documentId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "documentId",
-		"error.documentId.null");
+	public void validateDocumentId(Integer entryId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
 
 		if (!errors.hasErrors()) {
-			if (getDocBaseService().findDocument(documentId) == null) {
-				errors.reject("documentId", "error.documentId.notfound");
+			try {
+				if (getDocBaseService().findDocument(entryId) == null) {
+					errors.reject("entryId", "error.entryId.notfound");
+				}
+			} catch (ApplicationThrowable ath) {
+				errors.reject("entryId", "error.entryId.notfound");
 			}
 		}
 	}

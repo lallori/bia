@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.document;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
 import org.springframework.stereotype.Repository;
@@ -60,5 +62,11 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 270290031716661534L;
+
+	@Override
+	public Document findDocumentByVolumeId(Integer volumeId) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

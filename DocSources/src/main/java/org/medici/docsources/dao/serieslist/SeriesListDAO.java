@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.serieslist;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.SerieList;
 
@@ -37,5 +41,13 @@ import org.medici.docsources.domain.SerieList;
  * 
  */
 public interface SeriesListDAO extends Dao<Integer, SerieList> {
+
+	/**
+	 * This method extras all seriesList objects that contain alias string  
+	 * @param alias
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<SerieList> findSeries(String alias) throws PersistenceException;
 
 }

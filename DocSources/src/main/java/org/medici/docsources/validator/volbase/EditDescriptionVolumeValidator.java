@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.volbase;
 
 import org.medici.docsources.command.volbase.EditDescriptionVolumeCommand;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -82,18 +83,17 @@ public class EditDescriptionVolumeValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDescriptionVolumeCommand editDescriptionVolumeCommand = (EditDescriptionVolumeCommand) object;
-		validateVolumeId(editDescriptionVolumeCommand.getVolumeId(), errors);
+		validateVolume(editDescriptionVolumeCommand.getSummaryId(), editDescriptionVolumeCommand.getVolNum(), editDescriptionVolumeCommand.getVolLeText(), errors);
 	}
 
-	/**
-	 * 
-	 * @param volumeId
-	 * @param errors
-	 */
-	public void validateVolumeId(Integer volumeId, Errors errors) {
+	public void validateVolume(Integer summaryId, Integer volNum, String volLeText, Errors errors) {
 		if (!errors.hasErrors()) {
-			if (getVolBaseService().findVolume(volumeId) == null) {
-				errors.reject("volumeId", "error.volumeId.notfound");
+			try {
+				if (getVolBaseService().findVolume(summaryId, volNum, volLeText) == null) {
+					errors.reject("volumeId", "error.volume.notfound");
+				}
+			} catch (ApplicationThrowable ath) {
+				
 			}
 		}
 	}

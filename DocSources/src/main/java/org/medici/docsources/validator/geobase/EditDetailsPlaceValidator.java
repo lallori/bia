@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.geobase;
 
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -91,10 +92,12 @@ public class EditDetailsPlaceValidator implements Validator {
 	 * @param errors
 	 */
 	public void validatePlaceId(Integer placeId, Errors errors) {
-
 		if (!errors.hasErrors()) {
-			if (getGeoBaseService().findPlace(placeId) == null) {
-				errors.reject("placeId", "error.placeId.notfound");
+			try {
+				if (getGeoBaseService().findPlace(placeId) == null) {
+					errors.reject("placeId", "error.placeId.notfound");
+				}
+			} catch (ApplicationThrowable ath) {
 			}
 		}
 	}

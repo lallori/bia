@@ -27,7 +27,11 @@
  */
 package org.medici.docsources.service.geobase;
 
+import java.util.List;
+
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,9 +42,18 @@ import org.springframework.stereotype.Service;
 public class GeoBaseServiceImpl implements GeoBaseService {
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
-	public Place findPlace(Integer peopleId) {
+	public Place findPlace(Integer peopleId) throws ApplicationThrowable {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> searchPlaces(String text) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

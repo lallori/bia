@@ -32,9 +32,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,37 +49,38 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table ( name = "\"TblVolumes\"" ) 
-public class Volume implements Serializable{
+public class Volume implements Serializable {
 	/**
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = 3127626344157278734L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"SummaryId\"", length=10, nullable=false)
+	@Column (name="\"SUMMARYID\"", length=10, nullable=false)
 	private Integer summaryId;
-	@Column (name="\"SeriesRefNum\"", length=10)
-	private SerieList seriesRefNum;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="\"SeriesRefNum\"")
+	private SerieList serieList;
 	@Column (name="\"VolNum\"", length=10)
 	private Integer volNum;
 	@Column (name="\"VolLeText\"", length=1)
 	private String volLeText;
-	@Column (name="\"ResId\"", length=50)
-	private String resId;
+	@Column (name="\"ResId\"")
+	private String researcher;
 	@Column (name="\"DateCreated\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 	@Column (name="\"VolTobeVettedDate\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date volTobeVettedDate;
-	@Column (name="\"VolTobeVetted\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"VolTobeVetted\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean volTobeVetted;
 	@Column (name="\"VolVetId\"", length=50)
 	private String volVetId;
 	@Column (name="\"VolVetBegins\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date volVetBegins;
-	@Column (name="\"VolVetted\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"VolVetted\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean volVetted;
 	@Column (name="\"VolVettedDate\"")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -84,7 +88,7 @@ public class Volume implements Serializable{
 	@Column (name="\"STATBOX\"", length=50)
 	private String statBox;
 	@Column (name="\"STARTYEAR\"", length=5)
-	private Short startYear;
+	private Integer startYear;
 	@Column (name="\"STARTMONTH\"", length=50)
 	private String startMonth;
 	@Column (name="\"STARTMONTHNUM\"", length=10)
@@ -92,7 +96,7 @@ public class Volume implements Serializable{
 	@Column (name="\"STARTDAY\"", length=3, columnDefinition="TINYINT")
 	private Integer startDay;
 	@Column (name="\"ENDYEAR\"", length=5)
-	private Short endYear;
+	private Integer endYear;
 	@Column (name="\"ENDMONTH\"", length=50)
 	private String endMonth;
 	@Column (name="\"ENDMONTHNUM\"", length=10)
@@ -109,29 +113,29 @@ public class Volume implements Serializable{
 	private String context;
 	@Column (name="\"FOLIOCOUNT\"", length=50)
 	private String folioCount;
-	@Column (name="\"BOUND\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"BOUND\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean bound;
-	@Column (name="\"FOLSNUMBRD\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"FOLSNUMBRD\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean folsNumbrd;
-	@Column (name="\"OLDALPHAINDEX\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"OLDALPHAINDEX\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean oldalphaindex;
 	@Column (name="\"CONDITION\"", columnDefinition="LONGTEXT")
 	private String condition;
-	@Column (name="\"ITALIAN\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"ITALIAN\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean italian;
-	@Column (name="\"SPANISH\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"SPANISH\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean spanish;
-	@Column (name="\"ENGLISH\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"ENGLISH\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean english;
-	@Column (name="\"LATIN\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"LATIN\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean latin;
-	@Column (name="\"GERMAN\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"GERMAN\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean german;
-	@Column (name="\"FRENCH\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"FRENCH\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean french;
 	@Column (name="\"OTHERLANG\"", length=50)
 	private String otherLang;
-	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
 	private Boolean cipher;
 	@Column (name="\"CIPHERNOTES\"", length=255)
 	private String cipherNotes;
@@ -153,16 +157,16 @@ public class Volume implements Serializable{
 		this.summaryId = summaryId;
 	}
 	/**
-	 * @return the seriesRefNum
+	 * @return the serieList
 	 */
-	public SerieList getSeriesRefNum() {
-		return seriesRefNum;
+	public SerieList getSerieList() {
+		return serieList;
 	}
 	/**
-	 * @param seriesRefNum the seriesRefNum to set
+	 * @param serieList the serieList to set
 	 */
-	public void setSeriesRefNum(SerieList seriesRefNum) {
-		this.seriesRefNum = seriesRefNum;
+	public void setSerieList(SerieList serieList) {
+		this.serieList = serieList;
 	}
 	/**
 	 * @return the volNum
@@ -189,16 +193,16 @@ public class Volume implements Serializable{
 		this.volLeText = volLeText;
 	}
 	/**
-	 * @return the resId
+	 * @return the researcher
 	 */
-	public String getResId() {
-		return resId;
+	public String getResearcher() {
+		return researcher;
 	}
 	/**
-	 * @param resId the resId to set
+	 * @param researcher the researcher to set
 	 */
-	public void setResId(String resId) {
-		this.resId = resId;
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
 	}
 	/**
 	 * @return the dateCreated
@@ -299,13 +303,13 @@ public class Volume implements Serializable{
 	/**
 	 * @return the startYear
 	 */
-	public Short getStartYear() {
+	public Integer getStartYear() {
 		return startYear;
 	}
 	/**
 	 * @param startYear the startYear to set
 	 */
-	public void setStartYear(Short startYear) {
+	public void setStartYear(Integer startYear) {
 		this.startYear = startYear;
 	}
 	/**
@@ -347,13 +351,13 @@ public class Volume implements Serializable{
 	/**
 	 * @return the endYear
 	 */
-	public Short getEndYear() {
+	public Integer getEndYear() {
 		return endYear;
 	}
 	/**
 	 * @param endYear the endYear to set
 	 */
-	public void setEndYear(Short endYear) {
+	public void setEndYear(Integer endYear) {
 		this.endYear = endYear;
 	}
 	/**
@@ -631,6 +635,36 @@ public class Volume implements Serializable{
 	 */
 	public void setStaffMemo(String staffMemo) {
 		this.staffMemo = staffMemo;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((summaryId == null) ? 0 : summaryId.hashCode());
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Volume other = (Volume) obj;
+		if (summaryId == null) {
+			if (other.summaryId != null)
+				return false;
+		} else if (!summaryId.equals(other.summaryId))
+			return false;
+		return true;
 	}
 
 }

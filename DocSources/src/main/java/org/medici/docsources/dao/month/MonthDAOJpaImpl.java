@@ -27,14 +27,15 @@
  */
 package org.medici.docsources.dao.month;
 
+import java.util.List;
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Month;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>MonthDAOJpaImpl</b> is a default implementation of <b>MonthDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -60,5 +61,17 @@ public class MonthDAOJpaImpl extends JpaDao<Integer, Month> implements MonthDAO 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 8582736566153311653L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Month> getAllMonths() throws PersistenceException {
+		// Execute a full scan on this entity
+		Query query = getEntityManager().createQuery("from Month");
+
+		return query.getResultList();	
+	}
 
 }

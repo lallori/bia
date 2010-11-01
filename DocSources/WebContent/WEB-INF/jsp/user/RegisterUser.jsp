@@ -56,7 +56,7 @@
 				</form:form>
 			</div>
         
-	<c:url var="findCountryUrl" value="/user/ajax/FindCountry.json"/>
+	<c:url var="findCountryUrl" value="/user/ajax/FindCountries.json"/>
 	<c:url var="tickIcon" value="/images/tick.png"/>
 	<c:url var="busyIcon" value="/images/busy_icon.gif"/>
 

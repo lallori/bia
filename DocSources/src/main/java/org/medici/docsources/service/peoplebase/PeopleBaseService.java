@@ -27,9 +27,21 @@
  */
 package org.medici.docsources.service.peoplebase;
 
+import java.util.List;
+
 import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
+ * This interface is designed to work on {@link org.medici.docsources.domain.People} 
+ * object.<br>
+ * It defines every business methods needed to work on people.
+ * With this service, you can :<br>
+ * - add a new person<br>
+ * - modify an existing person<br> 
+ * - search a person by his unique id<br>
+ * - execute complex search on people<br>
+ * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -40,5 +52,13 @@ public interface PeopleBaseService {
 	 * @param peopleId
 	 * @return
 	 */
-	public People findPeople(Integer peopleId);
+	public People findPeople(Integer peopleId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param text
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> searchPeople(String text) throws ApplicationThrowable;
 }

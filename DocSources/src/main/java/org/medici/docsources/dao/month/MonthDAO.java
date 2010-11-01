@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.month;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Month;
 
@@ -36,5 +40,12 @@ import org.medici.docsources.domain.Month;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface MonthDAO extends Dao<Integer, Month> {
+	
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Month> getAllMonths() throws PersistenceException;
 
 }

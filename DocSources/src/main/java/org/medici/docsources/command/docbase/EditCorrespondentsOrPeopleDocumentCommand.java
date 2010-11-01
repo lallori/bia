@@ -35,25 +35,24 @@ package org.medici.docsources.command.docbase;
  * @see org.EditDetailsDocumentController.docsources.controller.docbase.ModifyDocumentController
  */
 public class EditCorrespondentsOrPeopleDocumentCommand {
-	private Integer documentId;
+	private Integer entryId;
 
 	/**
-	 * This method returns documentId property.
+	 * This method returns entryId property.
 	 * 
-	 * @return the documentId
+	 * @return the entryId
 	 */
-	public Integer getDocumentId() {
-		return documentId;
+	public Integer getEntryId() {
+		return entryId;
 	}
 
 	/**
-	 * This method sets documentId property.
+	 * This method sets document unique id property.
 	 * 
-	 * @param the
-	 *            documentId to set
+	 * @param the entryId to set
 	 */
-	public void setDocumentId(Integer documentId) {
-		this.documentId = documentId;
+	public void setEntryId(Integer entryId) {
+		this.entryId = entryId;
 	}
 
 }

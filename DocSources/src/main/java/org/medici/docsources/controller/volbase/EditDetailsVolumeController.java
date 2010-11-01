@@ -27,10 +27,20 @@
  */
 package org.medici.docsources.controller.volbase;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
+import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.volbase.EditDetailsVolumeCommand;
+import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.Researcher;
+import org.medici.docsources.domain.SerieList;
+import org.medici.docsources.domain.Volume;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,7 +61,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/de/volbase/EditDetailsVolume")
 public class EditDetailsVolumeController {
 	@Autowired(required = false)
-	@Qualifier("editDetailsVolume")
+	@Qualifier("editDetailsVolumeValidator")
 	private Validator validator;
 	@Autowired
 	private VolBaseService volBaseService;
@@ -88,8 +98,35 @@ public class EditDetailsVolumeController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			return new ModelAndView("volbase/ShowDetailsVolume", model);
+			Volume volume = new Volume();
+			volume.setSummaryId(command.getSummaryId());
+			volume.setVolNum(command.getVolNum());
+			volume.setVolLeText(command.getVolLeText());
+			volume.setResearcher(command.getResDescription());
+			volume.setDateCreated(command.getDateCreated());
+			volume.setSerieList(new SerieList());
+			volume.getSerieList().setSeriesRefNum(command.getSeriesRefNum());
+			volume.setStartYear(command.getStartYear());
+			volume.setStartMonth(command.getStartMonth());
+			volume.setStartDay(command.getStartDay());
+			volume.setEndYear(command.getEndYear());
+			volume.setEndMonth(command.getEndMonth());
+			volume.setEndDay(command.getEndDay());
+			volume.setDateNotes(command.getDateNotes());
+			volume.setStaffMemo(command.getStaffMemo());
+
+			try {
+				if (command.getSummaryId().equals(0)) {
+					getVolBaseService().addNewVolume(volume);
+				} else {
+					getVolBaseService().editVolume(volume);
+				}
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsVolume", model);
+			}
+			
+			model.put("volume", volume);
+			return new ModelAndView("volbase/ShowVolume", model);
 		}
 
 	}
@@ -102,8 +139,40 @@ public class EditDetailsVolumeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsVolumeCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		Volume volume = new Volume();
+		List<Month> months = new ArrayList<Month>(0); 
 
-		return new ModelAndView("volbase/modifyvolume", model);
+		if ((command != null) && (command.getSummaryId() > 0)) {
+			try {
+				volume = getVolBaseService().findVolume(command.getSummaryId(), command.getVolNum(), command.getVolLeText());
+				model.put("volume", volume);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsVolume", model);
+			}
+		} else {
+			volume.setSummaryId(null);
+			volume.setVolNum(null);
+			volume.setDateCreated(new Date());
+			volume.setSerieList(new SerieList());
+		}
+
+		try {
+			months = getVolBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/ShowVolume", model);
+		}
+
+		try {
+			BeanUtils.copyProperties(command, volume);
+		} catch (IllegalAccessException iaex) {
+		} catch (InvocationTargetException itex) {
+		}
+
+		command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
+		command.setSeriesRefDescription(volume.getSerieList().getTitle());
+		
+		return new ModelAndView("volbase/EditDetailsVolume", model);
 	}
 
 	/**

@@ -27,7 +27,15 @@
  */
 package org.medici.docsources.service.docbase;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,13 +44,79 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DocBaseServiceImpl implements DocBaseService {
+	@Autowired
+	private DocumentDAO documentDAO;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addNewDocument(Document inputDocument) throws ApplicationThrowable {
+		try {
+			getDocumentDAO().persist(inputDocument);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
-	public Document findDocument(Integer documentId) {
+	@Override
+	public void editDocument(Document inputDocument) throws ApplicationThrowable {
+		Document document = null;
+		try {
+			document = getDocumentDAO().find(inputDocument.getEntryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		try {
+			BeanUtils.copyProperties(document, inputDocument);
+		} catch (IllegalAccessException iaex) {
+		} catch (InvocationTargetException itex) {
+		}
+
+		try {
+			getDocumentDAO().merge(document);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document findDocument(Integer documentId) throws ApplicationThrowable { 
 		// TODO Auto-generated method stub
 		return new Document();
+	}
+
+	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Document> searchDocuments(String text) throws ApplicationThrowable  {
+		// TODO Auto-generated method stub
+		return new ArrayList<Document>(0);
+	}
+
+
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
 	}
 
 }

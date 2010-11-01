@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,9 +78,13 @@ public class ShowPersonController {
 	public ModelAndView setupForm(@RequestParam("peopleId") Integer peopleId, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		People people = getPeopleBaseService().findPeople(peopleId);
-		model.put("people", people);
+		try {
+			People people = getPeopleBaseService().findPeople(peopleId);
+			model.put("people", people);
+		} catch (ApplicationThrowable ath) {
+			new ModelAndView("error/ShowPerson", model);
+		}
 
-		return new ModelAndView("docbase/ShowDocument", model);
+		return new ModelAndView("peoplebase/ShowPerson", model);
 	}
 }

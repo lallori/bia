@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,9 +78,14 @@ public class ShowPlaceController {
 	public ModelAndView setupForm(@RequestParam("placeId") Integer placeId, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		Place place = getGeoBaseService().findPlace(placeId);
-		model.put("place", place);
+		Place place = new Place();
+		try {
+			place = getGeoBaseService().findPlace(placeId);
+			model.put("place", place);
+		} catch (ApplicationThrowable ath) {
+			new ModelAndView("error/ShowPlace", model);
+		}
 
-		return new ModelAndView("docbase/show", model);
+		return new ModelAndView("geobase/ShowPlace", model);
 	}
 }

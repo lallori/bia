@@ -27,12 +27,17 @@
  */
 package org.medici.docsources.service.peoplebase;
 
+import java.util.List;
+
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * This class is the default implementation of service responsible for every 
+ * action on people.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -41,8 +46,27 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired
 	private PeopleDAO peopleDAO;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public People findPeople(Integer peopleId) {
+	public People findPeople(Integer peopleId)  throws ApplicationThrowable {
+		return null;
+	}
+
+	/**
+	 * @return the peopleDAO
+	 */
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchPeople(String text) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -51,13 +75,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setPeopleDAO(PeopleDAO peopleDAO) {
 		this.peopleDAO = peopleDAO;
-	}
-
-	/**
-	 * @return the peopleDAO
-	 */
-	public PeopleDAO getPeopleDAO() {
-		return peopleDAO;
 	}
 
 }

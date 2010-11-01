@@ -27,15 +27,35 @@
  */
 package org.medici.docsources.dao.researcher;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Researcher;
 
 /**
  * Researcher Dao.
  * 
- * @author Lorenzo Pasquinelli (<a
- *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface ResearcherDAO extends Dao<Integer, Researcher> {
+
+	/**
+	 * 
+	 * @param alias
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Researcher> findResearchers(String alias) throws PersistenceException;
+
+	/**
+	 * This method find a researcher identified by his initial resId.
+	 * 
+	 * @param resId Researcher's initial
+	 * @return 
+	 * @throws PersistenceException
+	 */
+	public Researcher findResearcher(String resId) throws PersistenceException;
 
 }

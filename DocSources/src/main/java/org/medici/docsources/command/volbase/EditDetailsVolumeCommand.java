@@ -27,6 +27,15 @@
  */
 package org.medici.docsources.command.volbase;
 
+import java.util.Date;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * Command bean for action "Edit Description Volume".
  * 
@@ -35,15 +44,260 @@ package org.medici.docsources.command.volbase;
  * @see org.docsources.controller.volbase.EditDetailsVolumeController
  */
 public class EditDetailsVolumeCommand {
-	/**
-	 * Mdp or Volume Number
-	 * Start Date
-	 * End Date
-	 * Date Note
-	 */
+	@NotNull
 	private Integer summaryId;
-	
+	@NotNull
+	private Integer volNum;
+	@Size (max=1)
 	private String volLeText;
+	// unique identifier of researcher
+	private Integer resIdNo;
+	// researcher description
+	private String resDescription;
+	@DateTimeFormat(pattern="MM/dd/yyyy hh:mm:ss")
+	private Date dateCreated;
+	// This is the linked "Carteggio" @see org.medici.docsources.domain.SerieList
+	private Integer seriesRefNum;
+	// This is the concatenation of seriesRef Description (Title / SubTitle 1 /SubTitle 2)
+	private String seriesRefDescription;
+	@Min (value=1200)
+	@Max (value=1800)
+	private Integer startYear;
+	private String startMonth;
+	@Min (value=1)
+	@Max (value=31)
+	private Integer startDay;
+	@Min (value=1200)
+	@Max (value=1800)
+	private Integer endYear;
+	private String endMonth;
+	@Min (value=1)
+	@Max (value=31)
+	private Integer endDay;
 	private String dateNotes;
+	// This is the Internal Memo field on MS-Access interface 
+	private String staffMemo;
 	
+	/**
+	 * @return the summaryId
+	 */
+	public Integer getSummaryId() {
+		return summaryId;
+	}
+	
+	/**
+	 * @param summaryId the summaryId to set
+	 */
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
+	}
+	
+	/**
+	 * @return the volNum
+	 */
+	public Integer getVolNum() {
+		return volNum;
+	}
+	/**
+	 * @param volNum the volNum to set
+	 */
+	public void setVolNum(Integer volNum) {
+		this.volNum = volNum;
+	}
+	
+	/**
+	 * @return the volLeText
+	 */
+	public String getVolLeText() {
+		return volLeText;
+	}
+	
+	/**
+	 * @param volLeText the volLeText to set
+	 */
+	public void setVolLeText(String volLeText) {
+		this.volLeText = volLeText;
+	}
+	
+	/**
+	 * @return the resIdNo
+	 */
+	public Integer getResIdNo() {
+		return resIdNo;
+	}
+	
+	/**
+	 * @param resIdNo the resIdNo to set
+	 */
+	public void setResIdNo(Integer resIdNo) {
+		this.resIdNo = resIdNo;
+	}
+	
+	/**
+	 * @return the resDescription
+	 */
+	public String getResDescription() {
+		return resDescription;
+	}
+	
+	/**
+	 * @param resDescription the resDescription to set
+	 */
+	public void setResDescription(String resDescription) {
+		this.resDescription = resDescription;
+	}
+	
+	/**
+	 * @return the dateCreated
+	 */
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	
+	/**
+	 * @return the seriesRefNum
+	 */
+	public Integer getSeriesRefNum() {
+		return seriesRefNum;
+	}
+	
+	/**
+	 * @param seriesRefNum the seriesRefNum to set
+	 */
+	public void setSeriesRefNum(Integer seriesRefNum) {
+		this.seriesRefNum = seriesRefNum;
+	}
+	
+	/**
+	 * @return the seriesRefDescription
+	 */
+	public String getSeriesRefDescription() {
+		return seriesRefDescription;
+	}
+	
+	/**
+	 * @param seriesRefDescription the seriesRefDescription to set
+	 */
+	public void setSeriesRefDescription(String seriesRefDescription) {
+		this.seriesRefDescription = seriesRefDescription;
+	}
+	
+	/**
+	 * @return the startYear
+	 */
+	public Integer getStartYear() {
+		return startYear;
+	}
+	
+	/**
+	 * @param startYear the startYear to set
+	 */
+	public void setStartYear(Integer startYear) {
+		this.startYear = startYear;
+	}
+	
+	/**
+	 * @return the startMonth
+	 */
+	public String getStartMonth() {
+		return startMonth;
+	}
+	
+	/**
+	 * @param startMonth the startMonth to set
+	 */
+	public void setStartMonth(String startMonth) {
+		this.startMonth = startMonth;
+	}
+	
+	/**
+	 * @return the startDay
+	 */
+	public Integer getStartDay() {
+		return startDay;
+	}
+	
+	/**
+	 * @param startDay the startDay to set
+	 */
+	public void setStartDay(Integer startDay) {
+		this.startDay = startDay;
+	}
+	
+	/**
+	 * @return the endYear
+	 */
+	public Integer getEndYear() {
+		return endYear;
+	}
+	
+	/**
+	 * @param endYear the endYear to set
+	 */
+	public void setEndYear(Integer endYear) {
+		this.endYear = endYear;
+	}
+	
+	/**
+	 * @return the endMonth
+	 */
+	public String getEndMonth() {
+		return endMonth;
+	}
+	
+	/**
+	 * @param endMonth the endMonth to set
+	 */
+	public void setEndMonth(String endMonth) {
+		this.endMonth = endMonth;
+	}
+	
+	/**
+	 * @return the endDay
+	 */
+	public Integer getEndDay() {
+		return endDay;
+	}
+	
+	/**
+	 * @param endDay the endDay to set
+	 */
+	public void setEndDay(Integer endDay) {
+		this.endDay = endDay;
+	}
+	
+	/**
+	 * @return the dateNotes
+	 */
+	public String getDateNotes() {
+		return dateNotes;
+	}
+	
+	/**
+	 * @param dateNotes the dateNotes to set
+	 */
+	public void setDateNotes(String dateNotes) {
+		this.dateNotes = dateNotes;
+	}
+	
+	/**
+	 * @return the staffMemo
+	 */
+	public String getStaffMemo() {
+		return staffMemo;
+	}
+	
+	/**
+	 * @param staffMemo the staffMemo to set
+	 */
+	public void setStaffMemo(String staffMemo) {
+		this.staffMemo = staffMemo;
+	}
 }

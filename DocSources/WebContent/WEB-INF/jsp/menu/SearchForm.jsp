@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 				<div id="searchForm">
-					<form name="SearchForm" action="<c:url value="/SearchData.do"/>" method="post">
+					<form id="SearchForm" action="<c:url value="/SearchData.do"/>" method="post">
 						Search in <select name="search" class="select" style="margin-left:8px">
 										<option value="documents" selected>Documents</option>
 										<option value="volumes">Volumes</option>
@@ -18,10 +18,13 @@
 					</form>
 				</div>
 				<script type="text/javascript">
-					$("#SearchForm").bind('submit',function() {
-					  $.post("/user/RegisterUser.do",this.serialize(),function(data) { 
-						  $('DocSourcesContent').html(response_data);
-					  });
-					  return false;
+					$(document).ready(function() {
+						$("#SearchForm").submit(function() {
+							$.post($(this).attr("action"), $(this).serialize(), function() {
+								// In questa function si definisce la sostituzione del div dove visualizzare il risultato
+								// questa function rappresenta 
+								alert('done!');
+							});
+						return false;});
 					});
 				</script>

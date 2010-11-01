@@ -35,6 +35,7 @@ import org.medici.docsources.common.ajax.Page;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.Researcher;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -54,6 +55,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface UserService {
+
 
 	/**
 	 * This method activates a new user.<br>
@@ -77,7 +79,7 @@ public interface UserService {
 	 * @see org.medici.docsources.domain.ActivationUser
 	 */
 	public void addActivationUserRequest(User user, String remoteAddress) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param user The {@link org.medici.docsources.domain.User} object changes password.
@@ -140,13 +142,35 @@ public interface UserService {
 	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable;
 
 	/**
-	 * This method searchs for password resetrequests.<br>
+	 * This method searchs for password reset requests.<br>
 	 * Condition search is composed of "active flag" equals false and "mail sended flag" equals false.
 	 * 
 	 * @return {@link java.util.List} PasswordChangeRequest founds.
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<PasswordChangeRequest> findPasswordResetRequests() throws ApplicationThrowable;
+
+	/**
+	 * This method extract {@link org.medici.docsources.domain.Researcher} identified
+	 * by his resIdNo.
+	 * 
+	 * @param resIdNo
+	 * @return
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public Researcher findResearcher(Integer resIdNo) throws ApplicationThrowable;
+
+	/**
+	 * This method searchs researchers.<br>
+	 * Condition search is composed of input text contained in fields of 
+	 * {@link org.medici.docsources.domain.Researcher}.
+	 * 
+	 * @param text Text to search in {@link org.medici.docsources.domain.Researcher} 
+	 * @return
+	 * @throws ApplicationThrowable
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public List<Researcher> findResearchers(String text) throws ApplicationThrowable;
 
 	/**
 	 * Given in input user account, this method returns the user object.
@@ -214,7 +238,7 @@ public interface UserService {
 	 *          - 3, password contains alphabetic chars and letters;
 	 */
 	public Integer ratePassword(String password);
-
+	
 	/**
 	 * This method implements business logic for register a new user.<br>
 	 * The input user must be completed, with following informations :<br>
@@ -240,6 +264,14 @@ public interface UserService {
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void updateUser(User user) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public String updateUserPassword(User user) throws ApplicationThrowable;
 
 	/**
 	 * 

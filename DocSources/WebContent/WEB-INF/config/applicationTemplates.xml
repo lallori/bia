@@ -4,8 +4,7 @@
 <tiles-definitions>
 
     <definition name="template.completeDOM" template="/WEB-INF/templates/completeDOM.jsp">
-        <put-attribute name="header" value="/WEB-INF/jsp/fragments/Header.jspf"/>
-        <put-attribute name="menu" value="/WEB-INF/jsp/fragments/Menu.jspf"/>
+        <put-attribute name="header" value="/WEB-INF/jsp/fragments/Header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp"/>
     </definition>
         
@@ -13,7 +12,6 @@
     </definition>
 
     <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
-        <put-attribute name="header" value="/WEB-INF/jsp/fragments/Header.jspf"/>
         <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp"/>
     </definition>
 
@@ -30,20 +28,21 @@
     </definition>
 
 	<!-- Authentication Module BEGIN -->
-    <definition name="LoginUser" extends="template.loginDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/LoginUser.jsp"/>
-    </definition>
-    
-    <definition name="Home" extends="template.main">
-    </definition>
-
-	<definition name="error/ActivateUser" extends="template.completeDOM">
+	<definition name="error/ActivateUser" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
     </definition>
 
     <definition name="error/ResetUserPassword" extends="template.completeDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/error/ResetUserPassword"/>
 	</definition>
+
+    <definition name="LoginUser" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/LoginUser.jsp"/>
+    </definition>
+    
+    <definition name="Home" extends="template.main">
+    	<put-attribute name="main" value="/WEB-INF/jsp/Home.jsp"/>
+    </definition>
 
     <definition name="user/ActivateUserSuccess" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ActivateUserSuccess.jsp"/>
@@ -57,8 +56,11 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUserSuccess.jsp"/>
     </definition>
 
-	<definition name="user/ResetUserPassword" extends="template.completeDOM">
+	<definition name="user/ResetUserPassword" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPassword.jsp"/>
+    </definition>
+    <definition name="user/ResetUserPasswordSuccess" extends="template.loginDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPasswordSuccess.jsp"/>
     </definition>
     
 	<definition name="user/SendUserActivationCode" extends="template.loginDOM">
@@ -118,7 +120,40 @@
 	</definition>
 	<!-- Administration Module END -->
 
+	<!-- DocBase Module START -->
+	<definition name="docbase/SearchDocumentResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/SearchDocumentResult.jsp"/>
+	</definition>
+	<definition name="docbase/ShowDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDocument.jsp"/>
+	</definition>
+	<!-- DocBase Module END -->
+
+	<!-- GeoBase Module START -->
+	<definition name="geobase/ShowPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowPlace.jsp"/>
+	</definition>
+	<!-- GeoBase Module END -->
+	
+	<!-- PeopleBase Module START -->
+	<definition name="peoplebase/ShowPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowPeople.jsp"/>
+	</definition>
+	<!-- PeopleBase Module END -->
+
 	<!-- VolBase Module START -->
+	<definition name="volbase/EditContextVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditContextVolume.jsp"/>
+	</definition>
+	<definition name="volbase/EditCorrespondentsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditCorrespondentsVolume.jsp"/>
+	</definition>
+	<definition name="volbase/EditDescriptionVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDescriptionVolume.jsp"/>
+	</definition>
+	<definition name="volbase/EditDetailsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDetailsVolume.jsp"/>
+	</definition>
 	<definition name="volbase/ShowVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowVolume.jsp"/>
 	</definition>
@@ -137,6 +172,10 @@
     </definition>
 
 	<!-- Errors START -->
+    <definition name="403" extends="template.completeDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/403.jsp"/>
+    </definition>
+    
     <definition name="404" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/404.jsp"/>
     </definition>

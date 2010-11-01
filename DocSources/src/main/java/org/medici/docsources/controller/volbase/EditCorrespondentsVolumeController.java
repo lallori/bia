@@ -27,10 +27,15 @@
  */
 package org.medici.docsources.controller.volbase;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.volbase.EditCorrespondentsVolumeCommand;
+import org.medici.docsources.domain.Volume;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -87,8 +92,23 @@ public class EditCorrespondentsVolumeController {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-			/** TODO : Implement invocation business logic */
-			return new ModelAndView("volbase/ShowCorrespondentsVolume", model);
+			Volume volume = new Volume();
+
+			try {
+				BeanUtils.copyProperties(volume, command);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
+
+			try {
+				getVolBaseService().editVolume(volume);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditCorrespondentsVolume", model);
+			}
+			
+			model.put("volume", volume);
+
+			return new ModelAndView("volbase/ShowVolume", model);
 		}
 
 	}

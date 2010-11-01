@@ -77,7 +77,7 @@ public class AjaxController {
 	 * @param name Description field of the country
 	 * @return ModelAndView containing country result list.
 	 */
-	@RequestMapping(value = "/user/ajax/FindCountry", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/ajax/FindCountries", method = RequestMethod.GET)
 	public ModelAndView searchCountries(@RequestParam("query") String name) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
@@ -122,6 +122,7 @@ public class AjaxController {
 	 * @param model
 	 * @return
 	 */
+	@SuppressWarnings({ "unused", "rawtypes", "unchecked" })
 	@RequestMapping(value = "/user/ajax/PaginationUser.do", method = RequestMethod.GET)
 	public String searchPagination(@RequestParam("sSearch") String alias, Model model) {
 		List<User> searchResults = null;

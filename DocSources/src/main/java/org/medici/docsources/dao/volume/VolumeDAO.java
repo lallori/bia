@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.volume;
 
+import javax.persistence.PersistenceException;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Volume;
 
@@ -38,4 +39,14 @@ import org.medici.docsources.domain.Volume;
  */
 public interface VolumeDAO extends Dao<Integer, Volume> {
 
+	/**
+	 * This method searches a single volume identified by is unique identifiers.
+	 * 
+	 * @param summaryId
+	 * @param volNum
+	 * @param volLeText
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Volume findVolume(Integer summaryId, Integer volNum, String volLeText) throws PersistenceException;
 }

@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
-       http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     
     <context:component-scan base-package="org.medici.docsources.controller"/>
     
@@ -18,6 +15,12 @@
 	<mvc:annotation-driven/>
 	
 	<mvc:interceptors>
+		<!-- <bean id ="openSessionInViewInterceptor" name="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+    		<property name="sessionFactory">
+        		<ref bean="sessionFactory" />
+    		</property>
+		</bean>
+	     -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 	       	<bean id="historyLogAction" class="org.medici.docsources.audit.HistoryLogAction">
@@ -29,6 +32,7 @@
 	        <description>Interceptor per la modifica del locale su singola richiesta.</description>
 	        <property name="paramName" value="locale"/>
 	    </bean>
+		
 		<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
 			<description>HTTP/1.1 Cache-Control headers</description>
 			<property name="cacheSeconds" value="0"/>

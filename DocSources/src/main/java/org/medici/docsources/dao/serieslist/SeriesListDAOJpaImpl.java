@@ -27,14 +27,21 @@
  */
 package org.medici.docsources.dao.serieslist;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.SerieList;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>SeriesListDAOJpaImpl</b> is a default implementation of <b>SeriesListDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -58,4 +65,27 @@ public class SeriesListDAOJpaImpl extends JpaDao<Integer, SerieList> implements 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 1677483115463135112L;
+
+	@SuppressWarnings({"unchecked", "rawtypes" })
+	@Override
+	public List<SerieList> findSeries(String alias) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<SerieList> criteriaQuery = criteriaBuilder.createQuery(SerieList.class);
+		Root root = criteriaQuery.from(SerieList.class);
+
+		//Construct literal and predicates
+		Expression<String> literal = criteriaBuilder.upper(criteriaBuilder.literal("%" + alias + "%"));
+		Predicate predicateTitle = criteriaBuilder.like(criteriaBuilder.upper(root.get("title")), literal);
+		Predicate predicateSubTitle1 = criteriaBuilder.like(criteriaBuilder.upper(root.get("subTitle1")), literal);
+		Predicate predicateSubTitle2 = criteriaBuilder.like(criteriaBuilder.upper(root.get("subTitle2")), literal);
+		
+		//Add where clause
+		criteriaQuery.where(criteriaBuilder.or(predicateTitle,predicateSubTitle1, predicateSubTitle2)); 
+
+		// create query using criteria   
+		TypedQuery<SerieList> typedQuery = getEntityManager().createQuery(criteriaQuery);
+
+		return typedQuery.getResultList();	
+	}
 }

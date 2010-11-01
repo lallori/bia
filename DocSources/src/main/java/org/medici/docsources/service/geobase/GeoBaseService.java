@@ -27,13 +27,39 @@
  */
 package org.medici.docsources.service.geobase;
 
+import java.util.List;
+
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
+ * This interface is designed to work on {@link org.medici.docsources.domain.Place} 
+ * object.<br>
+ * It defines every business methods needed to work on places.
+ * With this service, you can :<br>
+ * - add a new place<br>
+ * - modify an existing place<br> 
+ * - search a place by his unique id<br>
+ * - execute complex search on places<br>
+ * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface GeoBaseService {
 
-	public Place findPlace(Integer peopleId);
+	/**
+	 * 
+	 * @param peopleId
+	 * @return
+	 */
+	public Place findPlace(Integer peopleId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param text
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Document> searchPlaces(String text) throws ApplicationThrowable;
 }

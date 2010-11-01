@@ -32,9 +32,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,8 +59,9 @@ public class Document implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"EntryId\"", length=10, nullable=false)
 	private Integer entryId;
-	@Column (name="\"SummaryId\"", length=10)
-	private Volume summaryId;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="\"SummaryId\"")
+	private Volume volume;
 	@Column (name="\"SubVol\"", length=50)
 	private String subVol;
 	@Column (name="\"ResId\"", length=50)
@@ -155,16 +159,16 @@ public class Document implements Serializable{
 		this.entryId = entryId;
 	}
 	/**
-	 * @return the summaryId
+	 * @return the volume
 	 */
-	public Volume getSummaryId() {
-		return summaryId;
+	public Volume getVolume() {
+		return volume;
 	}
 	/**
-	 * @param summaryId the summaryId to set
+	 * @param volume the volume to set
 	 */
-	public void setSummaryId(Volume summaryId) {
-		this.summaryId = summaryId;
+	public void setVolume(Volume volume) {
+		this.volume = volume;
 	}
 	/**
 	 * @return the subVol

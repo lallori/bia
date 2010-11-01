@@ -30,6 +30,7 @@ package org.medici.docsources.controller.volbase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,6 +65,12 @@ public class CreateVolumeController {
 	public ModelAndView setupForm() {
 		Map<String, Object> model = new HashMap<String, Object>();
 
+		Volume volume = new Volume();
+		volume.setSummaryId(0);
+		volume.setVolNum(0);
+		volume.setVolLeText("");
+		model.put("volume", volume);
+		
 		return new ModelAndView("volbase/ShowVolume", model);
 	}
 

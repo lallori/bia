@@ -146,12 +146,17 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 		// dell'operazione
 		HistoryLog historyLog = new HistoryLog();
 
-		if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("AnonymousAuthenticationToken")) {
-			historyLog.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		} else if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("UsernamePasswordAuthenticationToken")) {
-			UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-			historyLog.setUsername(userNamePasswordAuthenticationToken.getName());
-			historyLog.setInformations(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
+		if (SecurityContextHolder.getContext().getAuthentication() != null) {
+			if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("AnonymousAuthenticationToken")) {
+				historyLog.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+			} else if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("UsernamePasswordAuthenticationToken")) {
+				UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+				historyLog.setUsername(userNamePasswordAuthenticationToken.getName());
+				historyLog.setInformations(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
+			}
+		} else {
+			historyLog.setUsername("");
+			historyLog.setInformations("");
 		}
 
 		historyLog.setDateAndTime(new Date(System.currentTimeMillis()));

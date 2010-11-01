@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.document;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Document;
 
@@ -38,4 +40,12 @@ import org.medici.docsources.domain.Document;
  */
 public interface DocumentDAO extends Dao<Integer, Document> {
 
+	/**
+	 * This method searches a single document identified by his volume.
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document findDocumentByVolumeId(Integer summaryId) throws PersistenceException;
 }

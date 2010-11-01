@@ -27,19 +27,77 @@
  */
 package org.medici.docsources.service.volbase;
 
+import java.util.List;
+
+import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
+import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
+ * This interface is designed to work on {@link org.medici.docsources.domain.Volume} 
+ * object.<br>
+ * It defines every business methods needed to work on volumes.
+ * With this service, you can :<br>
+ * - add a new volume<br>
+ * - modify an existing volume<br> 
+ * - search a volume by is summaryId, volNum and volLeText (this last is optional ndr)<br>
+ * - execute complex search on volumes<br>
+ * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
 public interface VolBaseService {
+	/**
+	 * This method add a new Volume.
+	 * 
+	 * @param volume
+	 * @throws ApplicationThrowable
+	 */
+	public void addNewVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
+	 * This method modify an existing Volume.
 	 * 
-	 * @param volumeId
+	 * @param volume
+	 * @throws ApplicationThrowable
+	 */
+	public void editVolume(Volume volume) throws ApplicationThrowable;
+
+	/**
+	 * This method will search an existing volume by his unique identifiers.
+	 * 
+	 * @param summaryId
+	 * @param volNum
+	 * @param volLeText
 	 * @return
 	 */
-	public Volume findVolume(Integer volumeId);
+	public Volume findVolume(Integer summaryId, Integer volNum, String volLeText) throws ApplicationThrowable;
+
+	/**
+	 * This method searches for existing seriesList object.
+	 * 
+	 * @param alias
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<SerieList> findSeries(String alias) throws ApplicationThrowable;
+
+	/**
+	 * This method searches for existing volumes that contains input text.
+	 * 
+	 * @param text
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Volume> searchVolumes(String text) throws ApplicationThrowable;
+
+	/**
+	 * This method extracts all months available.
+	 *  
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable;
 }

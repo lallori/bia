@@ -27,7 +27,10 @@
  */
 package org.medici.docsources.service.docbase;
 
+import java.util.List;
+
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
  * 
@@ -36,9 +39,33 @@ import org.medici.docsources.domain.Document;
 public interface DocBaseService {
 
 	/**
+	 * This method add a new Document.
 	 * 
-	 * @param documentId
+	 * @param document
+	 * @throws ApplicationThrowable
+	 */
+	public void addNewDocument(Document inputDocument) throws ApplicationThrowable;
+
+	/**
+	 * This method modify an existing document.
+	 * 
+	 * @param inputDocument
+	 * @throws ApplicationThrowable
+	 */
+	public void editDocument(Document inputDocument) throws ApplicationThrowable;
+
+	/**
+	 * This method will search an existing document by his unique identifiers.
+	 * 
+	 * @param entryId
 	 * @return
 	 */
-	public Document findDocument(Integer documentId);
+	public Document findDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param text
+	 * @return
+	 */
+	public List<Document> searchDocuments(String text) throws ApplicationThrowable;
 }

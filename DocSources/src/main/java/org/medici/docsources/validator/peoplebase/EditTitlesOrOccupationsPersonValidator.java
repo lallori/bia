@@ -29,6 +29,7 @@ package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
 import org.medici.docsources.command.peoplebase.EditTitlesOrOccupationsPersonCommand;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -93,8 +94,12 @@ public class EditTitlesOrOccupationsPersonValidator implements Validator {
 	 */
 	public void validatePersonId(Integer personId, Errors errors) {
 		if (!errors.hasErrors()) {
-			if (getPeopleBaseService().findPeople(personId) == null) {
-				errors.reject("personId", "error.personId.notfound");
+			try {
+				if (getPeopleBaseService().findPeople(personId) == null) {
+					errors.reject("personId", "error.personId.notfound");
+				}
+			} catch (ApplicationThrowable ath) {
+				
 			}
 		}
 	}

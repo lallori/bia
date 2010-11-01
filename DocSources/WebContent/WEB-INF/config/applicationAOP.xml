@@ -36,7 +36,8 @@
             <tx:method name="register*" />
             <tx:method name="save*" />
             <tx:method name="send*" />
-            <tx:method name="traceAction*" />
+            <tx:method name="traceAction*" propagation="REQUIRES_NEW"/>
+            <tx:method name="after*" propagation="REQUIRES_NEW"/>
             <tx:method name="update*" />
         </tx:attributes>
     </tx:advice>

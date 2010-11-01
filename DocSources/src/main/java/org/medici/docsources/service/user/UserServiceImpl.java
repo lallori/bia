@@ -42,10 +42,12 @@ import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.activationuser.ActivationUserDAO;
 import org.medici.docsources.dao.country.CountryDAO;
 import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
+import org.medici.docsources.dao.researcher.ResearcherDAO;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.Researcher;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -75,11 +77,14 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordChangeRequestDAO passwordChangeRequestDAO; 
 	@Autowired
+	private ResearcherDAO researcherDAO;
+	@Autowired
 	private UserDAO userDAO; 
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void activateUser(UUID uuid) throws ApplicationThrowable {
 		try {
 			//Extract activationUser entity to obtains account linked the activation request
@@ -103,6 +108,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void addActivationUserRequest(User user, String remoteAddress) throws ApplicationThrowable {
 		try {
 			ActivationUser activationUser = new ActivationUser();
@@ -121,6 +127,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void addPasswordChangeRequest(User user, String remoteAddress) throws ApplicationThrowable {
 		try {
 			PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest();
@@ -139,6 +146,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void deleteUser(User user) throws ApplicationThrowable {
 		try {
 			getUserDAO().remove(user);
@@ -150,6 +158,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public ActivationUser findActivationUser(UUID uuid) throws ApplicationThrowable {
 		try {
 			return getActivationUserDAO().find(uuid.toString());
@@ -161,6 +170,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<ActivationUser> findActivationUsers() throws ApplicationThrowable {
 		try {
 			ActivationUser activationUser = new ActivationUser();
@@ -175,6 +185,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<Country> findCountries(String description) throws ApplicationThrowable {
 		try {
 			return getCountryDao().findByDescription(description);
@@ -186,6 +197,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Country findCountry(String countryCode) throws ApplicationThrowable {
 		try {
 			return getCountryDao().find(countryCode);
@@ -197,6 +209,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public PasswordChangeRequest findPasswordChangeRequest(UUID uuid) throws ApplicationThrowable {
 		try {
 			return getPasswordChangeRequestDAO().find(uuid.toString());
@@ -208,6 +221,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<PasswordChangeRequest> findPasswordResetRequests() throws ApplicationThrowable {
 		try {
 			PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest();
@@ -222,6 +236,31 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Researcher findResearcher(Integer resIdNo) throws ApplicationThrowable {
+		try {
+			return getResearcherDAO().find(resIdNo);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Researcher> findResearchers(String text) throws ApplicationThrowable {
+		try {
+			return getResearcherDAO().findResearchers(text);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public User findUser(String account) throws ApplicationThrowable {
 		try {
 			User user = getUserDAO().findUser(account);
@@ -239,6 +278,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public User findUser(User userToFind) throws ApplicationThrowable {
 		try {
 			return getUserDAO().findUser(userToFind);
@@ -250,6 +290,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<User> findUsers(User user) throws ApplicationThrowable {
 		try {
 			return getUserDAO().findUsers(user);
@@ -261,6 +302,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable {
 		Page result;
 		try {
@@ -304,7 +346,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * @return the activationUserDAO
 	 */
@@ -318,12 +360,19 @@ public class UserServiceImpl implements UserService {
 	public CountryDAO getCountryDao() {
 		return countryDao;
 	}
-	
+
 	/**
 	 * @return the passwordChangeRequestDAO
 	 */
 	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
 		return passwordChangeRequestDAO;
+	}
+
+	/**
+	 * @return the researcherDAO
+	 */
+	public ResearcherDAO getResearcherDAO() {
+		return researcherDAO;
 	}
 
 	/**
@@ -334,10 +383,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * @param account
+	 * {@inheritDoc}
 	 */
-	public Boolean isAccountAvailable(String account)
-	throws ApplicationThrowable {
+	@Override
+	public Boolean isAccountAvailable(String account) throws ApplicationThrowable {
 		try {
 			return (getUserDAO().findUser(account) == null);
 		} catch (Throwable th) {
@@ -354,6 +403,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void lockUser(User user) throws ApplicationThrowable {
 		try {
 			getUserDAO().removeAllUserRoles(user.getAccount());
@@ -365,6 +415,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Integer ratePassword(String password) {
 		if ((password == null) || password.equals(""))
 			return 0;
@@ -387,6 +438,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void registerUser(User user) throws ApplicationThrowable {
 		try {
 			user.setAccount(generateAccount(user));
@@ -445,6 +497,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * @param researcherDAO the researcherDAO to set
+	 */
+	public void setResearcherDAO(ResearcherDAO researcherDAO) {
+		this.researcherDAO = researcherDAO;
+	}
+
+	/**
 	 * @param userDAO the userDAO to set
 	 */
 	public void setUserDAO(UserDAO userDAO) {
@@ -454,6 +513,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void updateUser(User user) throws ApplicationThrowable {
 		try {
 			getUserDAO().merge(user);
@@ -468,6 +528,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String updateUserPassword(User user) throws ApplicationThrowable {
 		try {
 			user.setPassword(RandomStringUtils.random(12, true, true));
@@ -481,6 +542,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void updateUserPassword(User user, String newPassword) throws ApplicationThrowable {
 		try {
 			user.setPassword(newPassword);
@@ -493,6 +555,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void updateUserPassword(UUID uuid, String password) throws ApplicationThrowable {
 		try {
 			PasswordChangeRequest passwordChangeRequest = getPasswordChangeRequestDAO().find(uuid.toString());
@@ -512,6 +575,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void updateUserPhoto(User user, BufferedImage bufferedImage) throws ApplicationThrowable {
 		try {
 			user.setPhoto(bufferedImage);
