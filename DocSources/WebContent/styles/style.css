@@ -261,6 +261,23 @@ input {
 	margin-left:60px;
 }
 
+/*  SendUserActivationCode */
+
+#activationcode { /*  Form content */
+	width:480px;
+	height:380px;
+	margin-top:200px;
+	margin-left: 265px;	
+	position:absolute;
+	background-image:url(../images/activationcode_bg.png);
+}
+
+#activationcode p {
+	text-align:center;
+	margin-top:70px;
+	line-height: 20px;
+}
+
 /*  Registration Success */
 
 #usersuccess { /* Div content */
@@ -294,7 +311,56 @@ input {
 }
 
 
+/* Reset Password */
 
+#reset { /*  Form content */
+	width:480px;
+	height:380px;
+	margin-top:200px;
+	margin-left: 265px;	
+	position:absolute;
+	background-image:url(../images/reset_bg.png);
+}
+
+.reset { /*  Form class */
+	margin-top:75px;
+	margin-left:20px;
+	height:100px;
+	width:250px;
+	position:absolute;
+}
+
+#reset p{
+	text-align:center;
+	margin-top:170px;
+	line-height:20px;
+}
+
+#reset a{
+	text-decoration:underline;
+	font-weight:bold;
+}
+
+#captcha_reset{
+	width:250px;
+	height:130px;
+	margin-left: 10px;
+	margin-top:24px;
+	z-index:2;
+}
+
+#captcha_resetKO{
+	width:250px;
+	height:130px;
+	margin-left: 10px;
+	z-index:2;
+}
+
+.inputerrors_reset { /* Error Span messages */
+	color:#900;
+	font-size:85%;
+	margin-left:5px;
+}
 
 /* Tag */
 

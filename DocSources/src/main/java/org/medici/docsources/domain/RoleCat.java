@@ -38,6 +38,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 /**
  * RoleCat entity.
  * 
@@ -45,6 +47,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
+@Audited
 @Table (name="\"tblRoleCats\"")
 public class RoleCat implements Serializable {
 

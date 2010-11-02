@@ -41,12 +41,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 /**
  * PrcLink entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Audited
 @Table ( name = "\"tblPrcLink\"" )
 public class PrcLink implements Serializable {
 

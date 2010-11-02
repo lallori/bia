@@ -39,12 +39,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 /**
  * Place entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Audited
 @Table ( name = "\"tblPlaces\"" ) 
 public class Place implements Serializable {
 

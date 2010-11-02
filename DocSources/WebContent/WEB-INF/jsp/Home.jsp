@@ -5,4 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<div id="DocSourcesContent">
+		<div id="body_left"></div>	
+		<div id="body_right"></div>
 	</div>
+	

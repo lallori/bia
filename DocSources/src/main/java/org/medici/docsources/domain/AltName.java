@@ -38,12 +38,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 /**
  * AltName entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Audited
 @Table ( name = "\"tblAltNames\"" ) 
 public class AltName implements Serializable{
 	/**

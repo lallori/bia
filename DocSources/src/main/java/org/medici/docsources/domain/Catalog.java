@@ -38,6 +38,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 /**
  * This class represents entity Catalog. This is the unique entity in domain 
  * which has fields defined in italian language. 
@@ -46,6 +48,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
+@Audited
 @Table ( name = "\"tblCatalog\"" ) 
 public class Catalog {
 	@Id

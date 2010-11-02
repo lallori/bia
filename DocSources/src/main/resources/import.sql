@@ -1,6 +1,9 @@
+CREATE DATABASE `docsources` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+CREATE DATABASE `docsources_audit` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
 -- Table schema is based on ISO standard 3166 code lists 
 -- http://www.iso.org/iso/list-en1-semic-3.txt
-
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ÅLAND ISLANDS', 'AX');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ALBANIA', 'AL');

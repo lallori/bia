@@ -39,12 +39,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 /**
  * Person entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Audited
 @Table ( name = "\"tblPeople\"" ) 
 public class People implements Serializable {
 	/**

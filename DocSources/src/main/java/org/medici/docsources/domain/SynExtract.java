@@ -29,7 +29,6 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,12 +40,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 /**
  * SynExtract entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Audited
 @Table ( name = "\"tblSynExtracts\"" ) 
 public class SynExtract implements Serializable{
 

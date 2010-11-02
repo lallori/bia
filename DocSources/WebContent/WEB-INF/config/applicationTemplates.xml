@@ -121,8 +121,20 @@
 	<!-- Administration Module END -->
 
 	<!-- DocBase Module START -->
-	<definition name="docbase/SearchDocumentResult" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/SearchDocumentResult.jsp"/>
+	<definition name="docbase/EditCorrespondentsOrPeopleDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditCorrespondentsOrPeopleDocument.jsp"/>
+	</definition>
+	<definition name="docbase/EditDetailsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditDetailsDocument.jsp"/>
+	</definition>
+	<definition name="docbase/EditExtractOrSynopsisDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	<definition name="docbase/EditFactChecksDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditFactChecksDocument.jsp"/>
+	</definition>
+	<definition name="docbase/EditTopicsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicsDocument.jsp"/>
 	</definition>
 	<definition name="docbase/ShowDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDocument.jsp"/>
@@ -136,8 +148,20 @@
 	<!-- GeoBase Module END -->
 	
 	<!-- PeopleBase Module START -->
+	<definition name="peoplebase/EditDetailsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditDetailsPerson.jsp"/>
+	</definition>
+	<definition name="peoplebase/EditNamesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditNamesPerson.jsp"/>
+	</definition>
+	<definition name="peoplebase/EditRelationships" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditRelationshipsPerson.jsp"/>
+	</definition>
+	<definition name="peoplebase/EditTitlesOrOccupationsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitlesOrOccupationsPerson.jsp"/>
+	</definition>
 	<definition name="peoplebase/ShowPerson" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowPeople.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowPerson.jsp"/>
 	</definition>
 	<!-- PeopleBase Module END -->
 

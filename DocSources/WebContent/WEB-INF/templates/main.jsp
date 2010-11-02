@@ -46,7 +46,7 @@
 <tiles:insertAttribute name="administratorMenu"/>
 <tiles:insertAttribute name="whoAmIMenu"/>
 			</div>
-		</div>
 <tiles:insertAttribute name="main"/>
+		</div>
 	</body>
 </html>

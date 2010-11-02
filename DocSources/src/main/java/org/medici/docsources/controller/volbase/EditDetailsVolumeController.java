@@ -37,7 +37,6 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.volbase.EditDetailsVolumeCommand;
 import org.medici.docsources.domain.Month;
-import org.medici.docsources.domain.Researcher;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;

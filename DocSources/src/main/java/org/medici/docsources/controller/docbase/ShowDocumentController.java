@@ -28,11 +28,9 @@
 package org.medici.docsources.controller.docbase;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
