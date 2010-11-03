@@ -28,7 +28,6 @@
 package org.medici.docsources.controller.volbase;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +39,11 @@ import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -101,7 +102,7 @@ public class EditDetailsVolumeController {
 			volume.setSummaryId(command.getSummaryId());
 			volume.setVolNum(command.getVolNum());
 			volume.setVolLeText(command.getVolLeText());
-			volume.setResearcher(command.getResDescription());
+			volume.setResearcher(command.getResearcher());
 			volume.setDateCreated(command.getDateCreated());
 			volume.setSerieList(new SerieList());
 			volume.getSerieList().setSeriesRefNum(command.getSeriesRefNum());
@@ -112,7 +113,6 @@ public class EditDetailsVolumeController {
 			volume.setEndMonth(command.getEndMonth());
 			volume.setEndDay(command.getEndDay());
 			volume.setDateNotes(command.getDateNotes());
-			volume.setStaffMemo(command.getStaffMemo());
 
 			try {
 				if (command.getSummaryId().equals(0)) {
@@ -139,7 +139,13 @@ public class EditDetailsVolumeController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsVolumeCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Volume volume = new Volume();
-		List<Month> months = new ArrayList<Month>(0); 
+
+		try {
+			List<Month> months = getVolBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/ShowVolume", model);
+		}
 
 		if ((command != null) && (command.getSummaryId() > 0)) {
 			try {
@@ -148,29 +154,32 @@ public class EditDetailsVolumeController {
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsVolume", model);
 			}
+
+			try {
+				BeanUtils.copyProperties(command, volume);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
+
+			command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
+			command.setSeriesRefDescription(volume.getSerieList().getTitle());
 		} else {
-			volume.setSummaryId(null);
-			volume.setVolNum(null);
-			volume.setDateCreated(new Date());
-			volume.setSerieList(new SerieList());
+			// On VOlume creation, the research is always the current user.
+			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			command.setSummaryId(null);
+			command.setVolNum(null);
+			command.setSummaryId(null);
+			command.setStartDay(null);
+			command.setStartMonth(null);
+			command.setStartYear(null);
+			command.setEndDay(null);
+			command.setEndMonth(null);
+			command.setEndYear(null);
+			command.setDateCreated(new Date());
+			command.setSeriesRefDescription(null);
+			command.setSeriesRefNum(null);
 		}
 
-		try {
-			months = getVolBaseService().getMonths();
-			model.put("months", months);
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowVolume", model);
-		}
-
-		try {
-			BeanUtils.copyProperties(command, volume);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
-		}
-
-		command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
-		command.setSeriesRefDescription(volume.getSerieList().getTitle());
-		
 		return new ModelAndView("volbase/EditDetailsVolume", model);
 	}
 

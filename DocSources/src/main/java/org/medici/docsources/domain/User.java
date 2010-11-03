@@ -106,8 +106,9 @@ public class User implements Serializable {
 		COMMUNITY_USERS("COMMUNITY_USERS"), 
 		DIGITIZATION_COORDINATORS("DIGITIZATION_COORDINATORS"), 
 		DIGITIZATION_TECHNICIANS("DIGITIZATION_TECHNICIANS"), 
+		DISTANCE_FELLOWS("DISTANCE_FELLOWS"),
 		DISTANCE_FELLOWS_COORDINATORS("DISTANCE_FELLOWS_COORDINATORS"),
-		DISTANCE_FELLOWS("DISTANCE_FELLOWS"), 
+		FORMER_FELLOWS("FORMER_FELLOWS"),
 		GUESTS("GUESTS"), 
 		ONSITE_FELLOWS("ONSITE_FELLOWS"), 
 		SENIOR_DISTANCE_FELLOWS("SENIOR_DISTANCE_FELLOWS");
@@ -136,6 +137,7 @@ public class User implements Serializable {
 	private Date expirationDate;
 	private Date expirationPasswordDate;
 	private String firstName;
+	private String initials;
 	private String interests;
 	private Integer invalidAccess;
 	private Integer invalidAccessMax;
@@ -198,6 +200,13 @@ public class User implements Serializable {
 
 	public String getFirstName() {
 		return firstName;
+	}
+
+	/**
+	 * @return the initials
+	 */
+	public String getInitials() {
+		return initials;
 	}
 
 	/**
@@ -332,6 +341,13 @@ public class User implements Serializable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	/**
+	 * @param initial the initial to set
+	 */
+	public void setInitials(String initials) {
+		this.initials = initials;
 	}
 
 	/**

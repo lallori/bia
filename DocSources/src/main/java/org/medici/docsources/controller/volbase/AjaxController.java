@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.common.util.ListBeanUtils;
-import org.medici.docsources.domain.Researcher;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
@@ -55,29 +54,6 @@ public class AjaxController {
 	private UserService userService;
 	@Autowired
 	private VolBaseService volBaseService;
-
-	/**
-	 * This method returns a list of researchers. 
-	 *  
-	 * @param text Text to search in research name and surname 
-	 * @return ModelAndView containing researchers list.
-	 */
-	@RequestMapping(value = "/de/volbase/FindResearchers", method = RequestMethod.GET)
-	public ModelAndView findResearchers(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			List<Researcher> researcher = getUserService().findResearchers(query);
-			model.put("query", query);
-			model.put("data", ListBeanUtils.transformList(researcher, "resIdNo"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(researcher, "resFirst/resLast", "/", " ", Boolean.FALSE));
-
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
 
 	/**
 	 * This method returns a list of seriesList. 

@@ -8,22 +8,18 @@
 	<link rel="stylesheet" href="<c:url value="/styles/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
 
 <div>
-	<!-- The class assigned to href is the default of jqModal -->
-	<a href="#" class="jqmClose">Close edit Window</a>
+	<h5>Volume DETAILS <a id="EditDetailsVolume" href="/DocSources/de/volbase/EditDetailsVolume.do?summaryId=0&volNum=0&volLeText=">edit</a></h5>
+	<h6>CREATED BY ${command.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${command.dateCreated}" /></h6><br /><br />
 	<form:form id="EditDetailsVolume" method="post">
 		<form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error">Vol Num</form:label>
 		<form:input id="volNum" path="volNum" cssClass="input" /><form:errors path="volNum" cssClass="inputerrors"/>
 		<p>
 		<form:label id="volLeTextLabel" for="volLeText" path="volLeText" cssErrorClass="error">Vol le text</form:label>
-		<form:input id="volLeText" path="volLeText" cssClass="input"/><form:errors path="volLeText" cssClass="inputerrors"/>
-		<p>
-		<%-- Research field --%>
-		<form:label id="resDescriptionLabel" for="resDescription" path="resDescription" cssErrorClass="error">Research Name and Surname : </form:label>
-		<form:input id="resDescriptionAutoCompleter" path="resDescription" cssClass="input"/><form:errors path="resDescription" cssClass="inputerrors"/>
+		<form:input id="volLeText" path="volLeText" size="1" cssClass="input"/><form:errors path="volLeText" cssClass="inputerrors"/>
 		<p>
 		<%-- Serie Description suggester... --%>
 		<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error">Series List</form:label>
-		<form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input"/><form:errors path="resDescription" cssClass="inputerrors"/>
+		<form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input"/><form:errors path="seriesRefDescription" cssClass="inputerrors"/>
 		<p>
 
 		<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">startYearLabel</form:label>
@@ -56,12 +52,8 @@
 		<form:textarea id="dateNotes" path="dateNotes" cssClass="input"/><form:errors path="dateNotes" cssClass="inputerrors"/>
 		<p>
 
-		<form:label id="staffMemoLabel" for="staffMemo" path="staffMemo" cssErrorClass="error">staffMemoLabel</form:label>
-		<form:textarea id="staffMemo" path="staffMemo" cssClass="input"/><form:errors path="staffMemo" cssClass="inputerrors"/>
-		<p>
 
 		<form:hidden path="summaryId"/>
-		<form:hidden path="resIdNo"/>
 		<form:hidden path="seriesRefNum"/>
 		<form:hidden path="dateCreated"/>
 		<input id="update" type="submit" value="Save" />
@@ -72,18 +64,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		var a = $('#resDescriptionAutoCompleter').autocomplete({ 
-		    serviceUrl:'${findResearchersUrl}',
-		    minChars:3, 
-		    delimiter: /(,|;)\s*/, // regex or character
-		    maxHeight:400,
-		    width:600,
-		    zIndex: 9999,
-		    deferRequestBy: 0, //miliseconds
-		    noCache: false, //default is false, set to true to disable caching
-		    onSelect: function(value, data){ $('#resIdNo').val(data); } 
-		  });
-		var b = $('#seriesRefDescriptionAutoCompleter').autocomplete({ 
+		var a = $('#seriesRefDescriptionAutoCompleter').autocomplete({ 
 		    serviceUrl:'${findSeriesUrl}',
 		    minChars:3, 
 		    delimiter: /(,|;)\s*/, // regex or character

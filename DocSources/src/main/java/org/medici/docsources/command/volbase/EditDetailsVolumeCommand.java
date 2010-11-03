@@ -50,10 +50,8 @@ public class EditDetailsVolumeCommand {
 	private Integer volNum;
 	@Size (max=1)
 	private String volLeText;
-	// unique identifier of researcher
-	private Integer resIdNo;
 	// researcher description
-	private String resDescription;
+	private String researcher;
 	@DateTimeFormat(pattern="MM/dd/yyyy hh:mm:ss")
 	private Date dateCreated;
 	// This is the linked "Carteggio" @see org.medici.docsources.domain.SerieList
@@ -75,8 +73,6 @@ public class EditDetailsVolumeCommand {
 	@Max (value=31)
 	private Integer endDay;
 	private String dateNotes;
-	// This is the Internal Memo field on MS-Access interface 
-	private String staffMemo;
 	
 	/**
 	 * @return the summaryId
@@ -117,34 +113,6 @@ public class EditDetailsVolumeCommand {
 	 */
 	public void setVolLeText(String volLeText) {
 		this.volLeText = volLeText;
-	}
-	
-	/**
-	 * @return the resIdNo
-	 */
-	public Integer getResIdNo() {
-		return resIdNo;
-	}
-	
-	/**
-	 * @param resIdNo the resIdNo to set
-	 */
-	public void setResIdNo(Integer resIdNo) {
-		this.resIdNo = resIdNo;
-	}
-	
-	/**
-	 * @return the resDescription
-	 */
-	public String getResDescription() {
-		return resDescription;
-	}
-	
-	/**
-	 * @param resDescription the resDescription to set
-	 */
-	public void setResDescription(String resDescription) {
-		this.resDescription = resDescription;
 	}
 	
 	/**
@@ -288,16 +256,16 @@ public class EditDetailsVolumeCommand {
 	}
 	
 	/**
-	 * @return the staffMemo
+	 * @param researcher the researcher to set
 	 */
-	public String getStaffMemo() {
-		return staffMemo;
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
 	}
-	
+
 	/**
-	 * @param staffMemo the staffMemo to set
+	 * @return the researcher
 	 */
-	public void setStaffMemo(String staffMemo) {
-		this.staffMemo = staffMemo;
+	public String getResearcher() {
+		return researcher;
 	}
 }

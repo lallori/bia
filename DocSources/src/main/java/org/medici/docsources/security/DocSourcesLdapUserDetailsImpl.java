@@ -84,6 +84,7 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 			setExpirationDate(ctx.getStringAttribute("krb5AccountExpirationTime"));
 			setExpirationPasswordDate(ctx.getStringAttribute("krb5PasswordEnd"));
 			setFirstName(ctx.getStringAttribute("givenName"));
+			setInitials(ctx.getStringAttribute("initials"));
 			setInvalidAccess(ctx.getStringAttribute("krb5MaxLife"));
 			setInvalidAccessMax(ctx.getStringAttribute("krb5MaxRenew"));
 			setLastName(ctx.getStringAttribute("surname"));
@@ -200,8 +201,19 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 		 * 
 		 * @param invalidAccess
 		 */
+		public void setInitials(String initials) {
+			((DocSourcesLdapUserDetailsImpl) instance).initials = initials;
+		}
+		
+		/**
+		 * 
+		 * @param invalidAccess
+		 */
 		public void setInvalidAccess(String invalidAccess) {
-
+			try {
+				((DocSourcesLdapUserDetailsImpl) instance).invalidAccess = Integer.valueOf(invalidAccess);
+			} catch(NumberFormatException nfex) {
+			}
 		}
 
 		/**
@@ -209,7 +221,10 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 		 * @param invalidAccessMax
 		 */
 		public void setInvalidAccessMax(String invalidAccessMax) {
-
+			try {
+				((DocSourcesLdapUserDetailsImpl) instance).invalidAccessMax = Integer.valueOf(invalidAccessMax);
+			} catch(NumberFormatException nfex) {
+			}
 		}
 
 		/**
@@ -266,6 +281,7 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	private Date expirationDate;
 	private Date expirationPasswordDate;
 	private String firstName;
+	private String initials;
 	private Integer invalidAccess;
 	private Integer invalidAccessMax;
 	private String lastName;
@@ -302,6 +318,13 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	 */
 	public String getFirstName() {
 		return firstName;
+	}
+
+	/**
+	 * @return the initials
+	 */
+	public String getInitials() {
+		return initials;
 	}
 
 	/**
@@ -365,6 +388,13 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	/**
+	 * @param initials the initials to set
+	 */
+	public void setInitials(String initials) {
+		this.initials = initials;
 	}
 
 	/**

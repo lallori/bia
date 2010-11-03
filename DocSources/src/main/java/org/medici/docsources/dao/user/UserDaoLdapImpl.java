@@ -95,6 +95,7 @@ public class UserDaoLdapImpl implements UserDAO {
 			user.setAddress(context.getStringAttribute("street"));
 			user.setCity(context.getStringAttribute("l"));
 			user.setCountry(context.getStringAttribute("c"));
+			user.setInitials(context.getStringAttribute("initials"));
 			user.setMail(context.getStringAttribute("mail"));
 			user.setTitle(context.getStringAttribute("personalTitle"));
 			user.setInterests(context.getStringAttribute("info"));
@@ -213,6 +214,9 @@ public class UserDaoLdapImpl implements UserDAO {
 		OrFilter inputfilter = new OrFilter();
 		if (user.getAccount() != null) {
 			inputfilter.or(new LikeFilter("cn", user.getAccount()));
+		}
+		if (user.getInitials() != null) {
+			inputfilter.or(new LikeFilter("initials", user.getLastName()));
 		}
 		if (user.getFirstName() != null) {
 			inputfilter.or(new LikeFilter("givenName", user.getFirstName()));

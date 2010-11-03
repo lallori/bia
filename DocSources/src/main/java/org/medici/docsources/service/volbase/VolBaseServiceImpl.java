@@ -31,7 +31,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.dao.month.MonthDAO;
-import org.medici.docsources.dao.researcher.ResearcherDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Month;
@@ -56,8 +55,6 @@ import org.springframework.stereotype.Service;
 public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
 	private MonthDAO monthDAO;
-	@Autowired
-	private ResearcherDAO researcherDAO;
 	@Autowired
 	private SeriesListDAO seriesListDAO;
 	@Autowired
@@ -165,13 +162,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 
 	/**
-	 * @return the researcherDAO
-	 */
-	public ResearcherDAO getResearcherDAO() {
-		return researcherDAO;
-	}
-
-	/**
 	 * @return the seriesListDAO
 	 */
 	public SeriesListDAO getSeriesListDAO() {
@@ -204,13 +194,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
-	}
-
-	/**
-	 * @param researcherDAO the researcherDAO to set
-	 */
-	public void setResearcherDAO(ResearcherDAO researcherDAO) {
-		this.researcherDAO = researcherDAO;
 	}
 
 	/**
