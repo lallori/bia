@@ -84,14 +84,15 @@ public class EditDetailsVolumeValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDetailsVolumeCommand editDetailsVolumeCommand = (EditDetailsVolumeCommand) object;
 		editDetailsVolumeCommand.toString();
-		validateVolume(editDetailsVolumeCommand.getSummaryId(), editDetailsVolumeCommand.getVolNum(), editDetailsVolumeCommand.getVolLeText(), errors);
+		validateVolume(editDetailsVolumeCommand.getSummaryId(), errors);
 	}
 
-	public void validateVolume(Integer summaryId, Integer volNum, String volLeText, Errors errors) {
+	public void validateVolume(Integer summaryId, Errors errors) {
 		if (!errors.hasErrors()) {
+			// summary id equals zero is 'New Document', it shouldn't be validated  
 			if (summaryId > 0) {
 				try {
-					if (getVolBaseService().findVolume(summaryId, volNum, volLeText) == null) {
+					if (getVolBaseService().findVolume(summaryId) == null) {
 						errors.reject("volumeId", "error.volume.notfound");
 					}
 				} catch (ApplicationThrowable ath) {

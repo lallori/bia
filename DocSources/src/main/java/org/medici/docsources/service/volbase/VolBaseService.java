@@ -66,14 +66,12 @@ public interface VolBaseService {
 	public void editVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
-	 * This method will search an existing volume by his unique identifiers.
+	 * This method will search an existing volume by his unique identifier.
 	 * 
 	 * @param summaryId
-	 * @param volNum
-	 * @param volLeText
 	 * @return
 	 */
-	public Volume findVolume(Integer summaryId, Integer volNum, String volLeText) throws ApplicationThrowable;
+	public Volume findVolume(Integer summaryId) throws ApplicationThrowable;
 
 	/**
 	 * This method searches for existing seriesList object.

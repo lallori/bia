@@ -149,7 +149,7 @@ public class EditDetailsVolumeController {
 
 		if ((command != null) && (command.getSummaryId() > 0)) {
 			try {
-				volume = getVolBaseService().findVolume(command.getSummaryId(), command.getVolNum(), command.getVolLeText());
+				volume = getVolBaseService().findVolume(command.getSummaryId());
 				model.put("volume", volume);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsVolume", model);
@@ -166,9 +166,7 @@ public class EditDetailsVolumeController {
 		} else {
 			// On VOlume creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-			command.setSummaryId(null);
 			command.setVolNum(null);
-			command.setSummaryId(null);
 			command.setStartDay(null);
 			command.setStartMonth(null);
 			command.setStartYear(null);

@@ -27,16 +27,17 @@
  */
 package org.medici.docsources.controller.volbase;
 
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.volbase.ShowVolumeRequestCommand;
-import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -71,21 +72,19 @@ public class ShowVolumeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowVolumeRequestCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
-		Volume volume = null;
+		Volume volume = new Volume();
 		
-		//TODO : change example test
-		command.setSummaryId(86);
-		command.setVolNum(1170);
-		command.setVolLeText("a");
-		
-		try {
-			volume = getVolBaseService().findVolume(command.getSummaryId(), command.getVolNum(), command.getVolLeText());
-			List<SerieList> series = getVolBaseService().findSeries("Francesco");
-			for (SerieList serie : series) {
-				System.out.println(" " + serie.getTitle() + " / " + serie.getSubTitle1() + " / " + serie.getSubTitle2());
+		if (command.getSummaryId() > 0) {
+			try {
+				volume = getVolBaseService().findVolume(command.getSummaryId());
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowVolume", model);
 			}
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowVolume", model);
+		} else {
+			//SummaryId equals to zero is 'New Volume'
+			volume.setSummaryId(command.getSummaryId());
+			volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			volume.setDateCreated(new Date());
 		}
 
 		model.put("volume", volume);

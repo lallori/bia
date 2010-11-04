@@ -67,8 +67,7 @@ public class CreateVolumeController {
 
 		Volume volume = new Volume();
 		volume.setSummaryId(0);
-		volume.setVolNum(0);
-		volume.setVolLeText("");
+
 		model.put("volume", volume);
 		
 		return new ModelAndView("volbase/ShowVolume", model);

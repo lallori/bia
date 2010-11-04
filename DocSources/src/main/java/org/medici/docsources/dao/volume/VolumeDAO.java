@@ -42,11 +42,10 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	/**
 	 * This method searches a single volume identified by is unique identifiers.
 	 * 
-	 * @param summaryId
 	 * @param volNum
 	 * @param volLeText
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Volume findVolume(Integer summaryId, Integer volNum, String volLeText) throws PersistenceException;
+	public Volume findVolume(Integer volNum, String volLeText) throws PersistenceException;
 }

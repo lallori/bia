@@ -84,13 +84,13 @@ public class EditContextVolumeValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditContextVolumeCommand editContextVolumeCommand = (EditContextVolumeCommand) object;
-		validateVolume(editContextVolumeCommand.getSummaryId(), editContextVolumeCommand.getVolNum(), editContextVolumeCommand.getVolLeText(), errors);
+		validateVolume(editContextVolumeCommand.getSummaryId(), errors);
 	}
 
-	public void validateVolume(Integer summaryId, Integer volNum, String volLeText, Errors errors) {
+	public void validateVolume(Integer summaryId, Errors errors) {
 		if (!errors.hasErrors()) {
 			try {
-				if (getVolBaseService().findVolume(summaryId, volNum, volLeText) == null) {
+				if (getVolBaseService().findVolume(summaryId) == null) {
 					errors.reject("volumeId", "error.summaId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {

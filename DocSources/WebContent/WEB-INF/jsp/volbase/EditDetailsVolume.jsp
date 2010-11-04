@@ -40,19 +40,20 @@
 			<form:hidden path="seriesRefNum"/>
 			<form:hidden path="dateCreated"/>
 			<div style="margin-top:5px">
-				<input id="close" type="submit" value="Close edit window" class="button" /><input id="save" type="submit" value="Save" style="margin-left:235px" class="button"/>
+				<input id="close" type="button" value="Close edit window" class="button" /><input id="save" type="submit" value="Save" style="margin-left:235px" class="button"/>
 			</div>
 		</fieldset>	
 	</form:form>
 
-	<c:url var="findResearchersUrl" value="/de/volbase/FindResearchers.json"/>
 	<c:url var="findSeriesUrl" value="/de/volbase/FindSeries.json"/>
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+			$(document).ajaxStop($.unblockUI);
 			var a = $('#seriesRefDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${findSeriesUrl}',
-			    minChars:3, 
+			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
 			    width:600,
@@ -61,6 +62,11 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ $('#seriesRefNum').val(data); }
 			  });
+
+			$('#close').click(function() { 
+				$.blockUI({ message: $('#question'), css: { width: '275px' } }); 
+	        }); 
+
 			$("#EditDetailsVolumeForm").submit(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
 						if(html.match(/inputerrors/g)){
@@ -72,5 +78,31 @@
 				});
 				return false;
 			});
+		});
+	</script>
+	
+	<div id="question" style="display:none; cursor: default"> 
+        <h1>Would you like to contine?.</h1> 
+        <input type="button" id="yes" value="Yes" /> 
+        <input type="button" id="no" value="No" /> 
+	</div> 
+
+	<c:url var="ShowVolume" value="/src/volbase/ShowVolume.do">
+		<c:param name="summaryId"   value="${command.summaryId}" />
+	</c:url>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+	        $('#yes').click(function() { 
+	 			$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+					if(html.match(/inputerrors/g)){
+						$("#EditDetailsVolumeDiv").html(html);
+					} else {
+						$("#body_left").html(html);
+					}
+	 			}
+			}); 
+	        }); 
+	        $('#no').click(function() { $.unblockUI(); return false; }); 
 		});
 	</script>

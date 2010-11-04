@@ -100,7 +100,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public void editVolume(Volume volume) throws ApplicationThrowable {
 		Volume vol = null;
 		try {
-			vol = getVolumeDAO().findVolume(volume.getSummaryId(), volume.getVolNum(), volume.getVolLeText());
+			vol = getVolumeDAO().find(volume.getSummaryId());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -134,9 +134,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Volume findVolume(Integer summaryId, Integer volNum, String volLeText) throws ApplicationThrowable {
+	public Volume findVolume(Integer summaryId) throws ApplicationThrowable {
 		try {
-			return getVolumeDAO().findVolume(summaryId, volNum, volLeText);
+			return getVolumeDAO().find(summaryId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -182,7 +182,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public List<Volume> searchVolumes(String text) throws ApplicationThrowable {
 		try {
-			getVolumeDAO().findVolume(1, 1 ,null);
+			getVolumeDAO().findVolume(1 ,null);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

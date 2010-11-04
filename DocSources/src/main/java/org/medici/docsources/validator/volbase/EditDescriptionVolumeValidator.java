@@ -83,13 +83,13 @@ public class EditDescriptionVolumeValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDescriptionVolumeCommand editDescriptionVolumeCommand = (EditDescriptionVolumeCommand) object;
-		validateVolume(editDescriptionVolumeCommand.getSummaryId(), editDescriptionVolumeCommand.getVolNum(), editDescriptionVolumeCommand.getVolLeText(), errors);
+		validateVolume(editDescriptionVolumeCommand.getSummaryId(), errors);
 	}
 
-	public void validateVolume(Integer summaryId, Integer volNum, String volLeText, Errors errors) {
+	public void validateVolume(Integer summaryId, Errors errors) {
 		if (!errors.hasErrors()) {
 			try {
-				if (getVolBaseService().findVolume(summaryId, volNum, volLeText) == null) {
+				if (getVolBaseService().findVolume(summaryId) == null) {
 					errors.reject("volumeId", "error.volume.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
