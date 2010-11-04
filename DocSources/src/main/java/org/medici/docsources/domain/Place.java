@@ -113,7 +113,7 @@ public class Place implements Serializable {
 	private Integer language;
 	@Column (name="\"OTHER_FLAGS\"", length=50)
 	private String otherFlags;
-	@Column (name="\"GEOGKEY_CHILDREN\"", columnDefinition="LONG_TEXT")
+	@Column (name="\"GEOGKEY_CHILDREN\"", columnDefinition="LONGTEXT")
 	private String geogkeyChildren;
 	
 	/**

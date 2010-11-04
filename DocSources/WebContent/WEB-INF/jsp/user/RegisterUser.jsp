@@ -74,7 +74,7 @@
 			    width:300,
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
-			    noCache: false, //default is false, set to true to disable caching
+			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ $('#countryCode').val(data); }
 			  });
 		});

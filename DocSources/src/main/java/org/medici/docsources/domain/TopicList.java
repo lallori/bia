@@ -56,11 +56,11 @@ public class TopicList implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"TOPICID\"", length=10, nullable=false)
+	@Column (name="\"topicId\"", length=10, nullable=false)
 	private Integer topicId;
-	@Column (name="\"TOPICTITLE\"", length=50)
+	@Column (name="\"topicTitle\"", length=50)
 	private String topicTitle;
-	@Column (name="\"DESCRIPTION\"", columnDefinition="LONGTEXT")
+	@Column (name="\"description\"", columnDefinition="LONGTEXT")
 	private String description;
 	/**
 	 * @return the topicId

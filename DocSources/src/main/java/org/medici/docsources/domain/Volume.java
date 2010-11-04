@@ -51,7 +51,7 @@ import org.hibernate.envers.Audited;
  */
 @Entity
 @Audited
-@Table ( name = "\"TblVolumes\"" ) 
+@Table ( name = "\"tblVolumes\"" ) 
 public class Volume implements Serializable {
 	/**
 	 * serialVersionUID
@@ -59,92 +59,93 @@ public class Volume implements Serializable {
 	private static final long serialVersionUID = 3127626344157278734L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"SUMMARYID\"", length=10, nullable=false)
+	@Column (name="\"summaryId\"", length=10, nullable=false)
 	private Integer summaryId;
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="\"SeriesRefNum\"")
+	@JoinColumn(name="\"seriesRefNum\"")
 	private SerieList serieList;
-	@Column (name="\"VolNum\"", length=10)
+	@Column (name="\"volNum\"", length=10)
 	private Integer volNum;
-	@Column (name="\"VolLeText\"", length=1)
+	@Column (name="\"volLeText\"", length=1)
 	private String volLeText;
-	@Column (name="\"ResId\"")
+	@Column (name="\"researcher\"")
 	private String researcher;
 	@Column (name="\"DateCreated\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
-	@Column (name="\"VolTobeVettedDate\"")
+	@Column (name="\"volTobeVettedDate\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date volTobeVettedDate;
-	@Column (name="\"VolTobeVetted\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"volTobeVetted\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean volTobeVetted;
-	@Column (name="\"VolVetId\"", length=50)
+	@Column (name="\"volVetId\"", length=50)
 	private String volVetId;
-	@Column (name="\"VolVetBegins\"")
+	@Column (name="\"volVetBegins\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date volVetBegins;
-	@Column (name="\"VolVetted\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"volVetted\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean volVetted;
-	@Column (name="\"VolVettedDate\"")
+	@Column (name="\"volVettedDate\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date volVettedDate;
-	@Column (name="\"STATBOX\"", length=50)
+	@Column (name="\"statBox\"", length=50)
 	private String statBox;
-	@Column (name="\"STARTYEAR\"", length=5)
+	@Column (name="\"startYear\"", length=5)
 	private Integer startYear;
-	@Column (name="\"STARTMONTH\"", length=50)
+	@Column (name="\"startMonth\"", length=50)
 	private String startMonth;
-	@Column (name="\"STARTMONTHNUM\"", length=10)
+	@Column (name="\"startMonthNum\"", length=10)
 	private Integer startMonthNum;
-	@Column (name="\"STARTDAY\"", length=3, columnDefinition="TINYINT")
+	@Column (name="\"startDay\"", length=3, columnDefinition="TINYINT")
 	private Integer startDay;
-	@Column (name="\"ENDYEAR\"", length=5)
+	@Column (name="\"endYear\"", length=5)
 	private Integer endYear;
-	@Column (name="\"ENDMONTH\"", length=50)
+	@Column (name="\"endMonth\"", length=50)
 	private String endMonth;
-	@Column (name="\"ENDMONTHNUM\"", length=10)
+	@Column (name="\"endMonthNum\"", length=10)
 	private Integer endMonthNum;
-	@Column (name="\"ENDDAY\"", length=3, columnDefinition="TINYINT")
+	@Column (name="\"endDay\"", length=3, columnDefinition="TINYINT")
 	private Integer endDay;
-	@Column (name="\"DATENOTES\"", columnDefinition="LONGTEXT")
+	@Column (name="\"dateNotes\"", columnDefinition="LONGTEXT")
 	private String dateNotes;
-	@Column (name="\"SENDERS\"", columnDefinition="LONGTEXT")
+	@Column (name="\"senders\"", columnDefinition="LONGTEXT")
 	private String senders;
-	@Column (name="\"RECIPS\"", columnDefinition="LONGTEXT")
+	@Column (name="\"recips\"", columnDefinition="LONGTEXT")
 	private String recips;
-	@Column (name="\"CONTEXT\"", columnDefinition="LONGTEXT")
+	@Column (name="\"context\"", columnDefinition="LONGTEXT")
 	private String context;
-	@Column (name="\"FOLIOCOUNT\"", length=50)
+	@Column (name="\"folioCount\"", length=50)
 	private String folioCount;
-	@Column (name="\"BOUND\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"bound\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean bound;
-	@Column (name="\"FOLSNUMBRD\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"folsNumbrd\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean folsNumbrd;
-	@Column (name="\"OLDALPHAINDEX\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"oldalphaindex\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean oldalphaindex;
-	@Column (name="\"CONDITION\"", columnDefinition="LONGTEXT")
+	//double column name quote is necessary to fix a hibernate bug : it does not support jpa escape char in column name definition 
+	@Column (name="\"\"condition\"\"", columnDefinition="LONGTEXT")
 	private String condition;
-	@Column (name="\"ITALIAN\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"italian\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean italian;
-	@Column (name="\"SPANISH\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"spanish\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean spanish;
-	@Column (name="\"ENGLISH\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"english\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean english;
-	@Column (name="\"LATIN\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"latin\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean latin;
-	@Column (name="\"GERMAN\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"german\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean german;
-	@Column (name="\"FRENCH\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"french\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean french;
-	@Column (name="\"OTHERLANG\"", length=50)
+	@Column (name="\"otherLang\"", length=50)
 	private String otherLang;
-	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT, default '-1'", nullable=false)
+	@Column (name="\"cipher\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean cipher;
-	@Column (name="\"CIPHERNOTES\"", length=255)
+	@Column (name="\"cipherNotes\"", length=255)
 	private String cipherNotes;
-	@Column (name="\"ORGNOTES\"", columnDefinition="LONGTEXT")
+	@Column (name="\"orgNotes\"", columnDefinition="LONGTEXT")
 	private String orgNotes;
-	@Column (name="\"STAFFMEMO\"", columnDefinition="LONGTEXT")
+	@Column (name="\"staffMemo\"", columnDefinition="LONGTEXT")
 	private String staffMemo;
 
 	/**

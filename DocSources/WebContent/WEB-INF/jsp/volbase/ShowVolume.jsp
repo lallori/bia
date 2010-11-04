@@ -7,27 +7,19 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditContextVolume" value="/de/volbase/EditContextVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
-	  		<c:param name="volNum"    value="${volume.volNum}" />
-	  		<c:param name="volLeText" value="${volume.volLeText}" />
 		</c:url>
 		<c:url var="EditCorrespondentsVolume" value="/de/volbase/EditCorrespondentsVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
-	  		<c:param name="volNum"    value="${volume.volNum}" />
-	  		<c:param name="volLeText" value="${volume.volLeText}" />
 		</c:url>
 		<c:url var="EditDescriptionVolume" value="/de/volbase/EditDescriptionVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
-	  		<c:param name="volNum"    value="${volume.volNum}" />
-	  		<c:param name="volLeText" value="${volume.volLeText}" />
 		</c:url>
 		<c:url var="EditDetailsVolume" value="/de/volbase/EditDetailsVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
-	  		<c:param name="volNum"    value="${volume.volNum}" />
-	  		<c:param name="volLeText" value="${volume.volLeText}" />
 		</c:url>
 	</security:authorize>
 	
-	<div id="EditDetailsVolumeForm">
+	<div id="EditDetailsVolumeDiv">
 		<h5>Volume DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a></security:authorize></h5>
 		<h6>CREATED BY KH 11/28/1996</h6><br /><br />
 		<h3>Carteggio dei segretari / Pier Francesco del Riccio</h3>
@@ -42,7 +34,7 @@
 
 	<br />
 
-	<div id="EditDetailsVolumeForm">
+	<div id="EditDetailsVolumeDiv">
 		<h5>Description <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDescriptionVolume" href="${EditDescriptionVolume}">edit</a></security:authorize></h5>
 		<ul>
 			<li><b>Organizational Criteria: </b>A very loose series (including material relocated from the Miscellanea Medicea) divided into 5 inserts of varying sizes (I, II, IIa, III, IV), wich are independently numered and sometimes sub-divided. <br />
@@ -59,7 +51,7 @@
 		
 	<br />
 
-	<div id="EditCorrespondentsVolumeForm">
+	<div id="EditCorrespondentsVolumeDiv">
 		<h5>Correspondents <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolume}">edit</a></security:authorize></h5>
 		<ul>
 			<li><b>From:</b> Tuscany and abroad (Secretaries, Agents, Administrators, Artists, including: Lorenzo Pagni, Cristian Pagni, Giovanni Francesco Lottini, Niccolò Campana, Vincenzo Ferrini, Agnolo Bronzino, Bernardo Saliti, Giorgio Dati, Agnolo Divozi da Bibbiena)s</li>
@@ -69,7 +61,7 @@
 		
 	<br />
 	
-	<div id="EditContextVolumeForm">
+	<div id="EditContextVolumeDiv">
 		<h5>Context <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditContextVolume" href="${EditContextVolume}">edit</a></security:authorize></h5>
 		<ul>
 			<li>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
@@ -80,10 +72,10 @@
 		<script type="text/javascript">
 			$().ready(function() {
 				$(document).ready(function() {
-					$("#EditDetailsVolume").click(function(){$("#EditDetailsVolumeForm").load($(this).attr("href"));return false;});
-					$("#EditDescriptionVolume").click(function(){$("#EditDescriptionVolumeForm").load($(this).attr("href"));return false;});
-					$("#EditCorrespondentsVolume").click(function(){$("#EditCorrespondentsVolumeForm").load($(this).attr("href"));return false;});
-					$("#EditContextVolume").click(function(){$("#EditContextVolumeForm").load($(this).attr("href"));return false;});
+					$("#EditDetailsVolume").click(function(){$("#EditDetailsVolumeDiv").load($(this).attr("href"));return false;});
+					$("#EditDescriptionVolume").click(function(){$("#EditDescriptionVolumeDiv").load($(this).attr("href"));return false;});
+					$("#EditCorrespondentsVolume").click(function(){$("#EditCorrespondentsVolumeDiv").load($(this).attr("href"));return false;});
+					$("#EditContextVolume").click(function(){$("#EditContextVolumeDiv").load($(this).attr("href"));return false;});
 				});
 			});
 		</script>

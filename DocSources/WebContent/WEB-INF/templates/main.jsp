@@ -10,7 +10,6 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/admmenu.css"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/mainmenu.css"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/style_template.css"/>"/>
-		<link rel="stylesheet" type="text/css"  href='<c:url value="/styles/jqModal.css" />'media="screen, projection"/>
 
 		<!--[if lte IE 7]>
 		<style type="text/css">
@@ -19,7 +18,6 @@
 		<![endif]-->
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.4.2.js"/>"></script>
-		<script type='text/javascript' src='<c:url value="/scripts/jqModal.js"/>'></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuADM.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuMAIN.js"/>"></script>
