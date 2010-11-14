@@ -6,7 +6,7 @@
 
 				<div id="searchForm">
 					<form id="SearchForm" action="<c:url value="/SearchData.do"/>" method="post">
-						Search in <select name="search" class="select" style="margin-left:8px">
+						Search in <select name="searchType" class="select" style="margin-left:8px">
 										<option value="documents" selected>Documents</option>
 										<option value="volumes">Volumes</option>
 										<option value="people">People</option>
@@ -20,10 +20,9 @@
 				<script type="text/javascript">
 					$(document).ready(function() {
 						$("#SearchForm").submit(function() {
-							$.post($(this).attr("action"), $(this).serialize(), function() {
-								// In questa function si definisce la sostituzione del div dove visualizzare il risultato
-								// questa function rappresenta 
-								alert('done!');
+							$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) {
+									$("#body_left").html(html);
+								}
 							});
 						return false;});
 					});

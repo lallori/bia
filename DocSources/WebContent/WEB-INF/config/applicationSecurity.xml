@@ -14,6 +14,7 @@
         <security:intercept-url pattern="/css/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/scripts/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/swf/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ActivateUser.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/RegisterUser.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/user/ResetUserPassword.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -32,12 +33,14 @@
         <security:intercept-url pattern="/dig/**"   access="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_USERS" />
         
         <security:intercept-url pattern="/**.do"                 access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/**.json"                 access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
         <security:intercept-url pattern="/user/UpdateUser.do"    access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
         <security:intercept-url pattern="/user/ShowUserPhoto.do" access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
 
 		<security:intercept-url pattern="/user/**.do" access="ROLE_ADMINISTRATORS" />
 
-        <security:form-login login-page="/LoginUser.do"
+        <security:form-login always-use-default-target="true"
+        			login-page="/LoginUser.do"
                     login-processing-url="/loginProcess" 
                     default-target-url="/Home.do"
                     authentication-failure-url="/LoginUser.do?login_error=1" />
@@ -110,16 +113,6 @@
    		</constructor-arg>
    		<property name="userSearch" ref="userSearch" />
    	</bean>
-
-	<bean id="guestAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		<property name="userDetailsService" ref="guestUserDetailsServiceImpl"></property>
-	</bean>
-
-	<bean id="guestUserDetailsServiceImpl" class="org.medici.docsources.security.guest.DocSourcesGuestUserDetailsServiceImpl">
-		<property name="userMap">
-			<value>guest=guest,ROLE_GUESTS</value>
-		</property> 
-	</bean>
 
    	<bean id="ldapAuthenticationProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
    		<constructor-arg index="0">

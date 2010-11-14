@@ -178,6 +178,9 @@
 	<definition name="volbase/EditDetailsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDetailsVolume.jsp"/>
 	</definition>
+	<definition name="volbase/SearchResultVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/SearchResultVolume.jsp"/>
+	</definition>
 	<definition name="volbase/ShowVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowVolume.jsp"/>
 	</definition>

@@ -1,9 +1,58 @@
-h6 {
-	font-size:90%;
+.titlepeople{ /* Series List */
+	padding-top:15px;
+	padding-bottom:15px;
+	font-size:150%;
+	font-style:italic;
+	color:#242e44;
+}
+
+h3{ /* Series List */
+	text-align:center;
+	font-style:italic;
+	padding-top:15px;
+	padding-bottom:15px;
+}
+
+h5{ /* Titles */
+	font-size:100%;
+	display:inline;
+	color:#6d5c4d;
+}
+
+h6{ /* Created by Text */
+	font-size:85%;
 	text-align:right;
 	font-weight:normal;
+}
+
+#createdby { /* Created by DIV */
+	position:absolute;
+	margin-left:300px;
+	margin-top:-30px;
+	width:150px;
+}
+
+#body_left a{ /* Edit buttons */
+	text-decoration:underline;
+	font-weight:100;
+	font-size:95%;
+	color:#b99c84;
+}
+
+.edit_button {
+	font-size:90%;
+	color:#b99c84;
+}
+
+ul li{ /* Lists */
+	list-style:none;
+	line-height:18px;
+	text-align:justify;
+}
+
+.inline { /* inline lists */
 	display:inline;
-	padding-left:300px;
+	padding-right:50px;
 }
 
 .edit { /* Edit Form class */
@@ -29,23 +78,15 @@ input {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.checkbox{
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+}
 .button {
 	background-color: #e6d0c6;
 	border:none;
 	display:inline;
-}
-
-input.text:focus {
-    background: #CCCCFF;
-    } 
-
-.input_long { 
-	width: 250px;
-	border: 1px solid #e6d0c6;
-	background-color: #fbf7f4;
-	color: #000000;
-	padding-left:10px;
-	margin: 5px 6px 5px 5px; /* top right bottom left */
 }
 
 .input_1c { 
@@ -66,12 +107,21 @@ input.text:focus {
 	margin: 5px 7px 5px 5px; /* top right bottom left */
 }
 
+.input_3c { 
+	width: 25px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:5px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
 .input_4c { 
 	width: 30px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
-	padding-left:7px;
+	padding-left:5px;
 	margin: 5px 7px 5px 5px; /* top right bottom left */
 }
 
@@ -85,6 +135,116 @@ input.text:focus {
 	margin: 5px 7px 5px 5px; /* top right bottom left */
 }
 
+.input_10c { 
+	width: 87px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_14c { 
+	width: 110px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_15c { 
+	width: 120px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_20c { 
+	width: 160px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_23c { 
+	width: 180px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_25c { 
+	width: 220px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_28c { 
+	width: 240px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_30c { 
+	width: 250px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 6px 5px 5px; /* top right bottom left */
+}
+
+.input_33c { 
+	width: 280px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 6px 5px 5px; /* top right bottom left */
+}
+
+
+.input_35c { 
+	width: 308px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 6px 5px 5px; /* top right bottom left */
+}
+
+.input_39c { 
+	width: 320px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 6px 5px 5px; /* top right bottom left */
+}
+
+.input_40c { 
+	width: 345px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 6px 5px 5px; /* top right bottom left */
+}
+
+
 .selectform{ /* dropdown menu class */
 	width:80px;
 	border: 1px solid #e6d0c6;
@@ -95,12 +255,76 @@ input.text:focus {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.selectform_short{ /* short dropdown menu class */
+	width:50px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.selectform_long{ /* dropdown menu class */
+	width:100px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
 .txtarea { 
-	width: 370px;
+	width: 372px;
+	height:40px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
 	padding-left:10px;
 	margin: 5px 7px 5px 0px; /* top right bottom left */
 }
 
+.txtarea_small { 
+	width: 372px;
+	height:30px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
+	padding-left:10px;
+	margin: 5px 7px 5px 0px; /* top right bottom left */
+}
+
+hr {
+	margin:5px 0 5px 0;
+	padding:0;
+	width:383px;
+	color:#e6d0c6;
+	background-color:#e6d0c6;
+	height:1px;
+	border:0;
+}
+
+
+#EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv {
+	width:450px;
+}
+
+select {
+	color: #6d5c4d;
+	background-color: #fbf7f4;
+}
+
+#EditDetailsPersonDiv {
+	width:275px;
+}
+
+#EditPortraitPersonDiv {
+	float:right;
+	margin-right:30px;
+	margin-top:25px;
+}

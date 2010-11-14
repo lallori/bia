@@ -1,32 +1,31 @@
-.menuadm {
+.actionsmenu {
 	padding-left: 15px; /*offset of tabs relative to browser left edge*/
 }
 
-.menuadm ul{
+.actionsmenu ul{
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
 
 /*Top level list items*/
-.menuadm ul li{
+.actionsmenu ul li{
 	position: relative;
 	display: inline;
 	float: left;
 }
 
 /*Top level menu link items style*/
-.menuadm ul li a{
+.actionsmenu ul li a{
 	display: block;
 	padding: 3px 7px 4px 7px;
 	color: #FFFDF5;
 	text-decoration: none;
 	font-size:95%;
 }
-
 	
 /*1st sub level menu*/
-.menuadm ul li ul{
+.actionsmenu ul li ul{
 	position: absolute;
 	left: 0;
 	display: block;
@@ -35,25 +34,25 @@
 }
 
 /*Sub level menu list items (undo style from Top level List Items)*/
-.menuadm ul li ul li{
+.actionsmenu ul li ul li{
 	display: list-item;
 	float: none;
 }
 
 /*All subsequent sub menu levels vertical offset after 1st level sub menu */
-.menuadm ul li ul li ul{
+.actionsmenu ul li ul li ul{
 	top: 0;
 }
 
 /* Sub level menu links style */
-.menuadm ul li ul li a{
-	width: 160px; /*width of sub menus*/
+.actionsmenu ul li ul li a{
+	width: 100px; /*width of sub menus*/
 	background-color: #BEA088;
 	color: white;
 	padding: 0px 5px;
 }
 
-.menuadm ul li ul li a:hover{ /*sub menus hover style*/
+.actionsmenu ul li ul li a:hover{ /*sub menus hover style*/
 	background: #85705E;
 	color: white;
 }

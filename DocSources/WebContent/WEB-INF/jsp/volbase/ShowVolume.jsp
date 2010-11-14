@@ -20,32 +20,37 @@
 	</security:authorize>
 	
 	<div id="EditDetailsVolumeDiv">
-		<h5>Volume DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a></security:authorize></h5>
-		<h6>CREATED BY KH 11/28/1996</h6><br /><br />
-		<h3>Carteggio dei segretari / Pier Francesco del Riccio</h3>
+		<div id="createdby"><h6>CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></h6></div>
+		<h5>VOLUME DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a></security:authorize></h5>
+		<h3>${volume.serieList}</h3>
 		<ul>
-			<li><b>Volume/Filsa (MDP):</b> 1170a</li>
-			<li><b>Start Date:</b> 1534 Setember 6</li>
-
-			<li><b>End Date:</b> 1573 April 2</li>
-			<li><b>Date Notes.</b> None</li>
+			<li><b>Volume/Filsa (MDP): </b> ${volume.volNum}${volume.volLeText}</li>
+			<li><b>Start Date: </b> ${volume.startYear} ${volume.startMonth} ${volume.startDay}</li>
+			<li><b>End Date: </b> ${volume.endYear} ${volume.endMonth} ${volume.endDay}</li>
+			<li><b>Date Notes: </b> ${volume.dateNotes}</li>
 		</ul>
 	</div>
 
 	<br />
 
-	<div id="EditDetailsVolumeDiv">
+	<div id="EditDescriptionVolumeDiv">
 		<h5>Description <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDescriptionVolume" href="${EditDescriptionVolume}">edit</a></security:authorize></h5>
 		<ul>
-			<li><b>Organizational Criteria: </b>A very loose series (including material relocated from the Miscellanea Medicea) divided into 5 inserts of varying sizes (I, II, IIa, III, IV), wich are independently numered and sometimes sub-divided. <br />
-				Insert I [1534 to 1555: ff. 1-88]; Insert II [1547 to 1553; ff. 1-170]; Insert IIa [1537 to 1555; ff. 422-44]; Insert III [1545 to 1546; ff. 1-389]; Insert IV [irregulary dated: 1543 to 1667; ff. 501-710]; ff. 573/575 lost (attachment f.574 present); no ff. 645-898 (lost?).</li>
-			<li><b>Condition:</b> Good</li>
-			<li><b>Bound: </b>No</li>
-			<li><b>Folios Numbered: </b>Yes</li>
-			<li><b>Alphabetical Index: </b>No</li>
-			<li><b>Languages: </b>Italian, Spanish, Latin</li>
-			<li><b>Some Documents in Cipher: </b>No</li>
-			<li><b>Chipher Notes: </b>None</li>
+			<li><b>Organizational Criteria: </b>${volume.orgNotes}</li>
+			<li><b>Condition: </b> ${volume.ccondition}</li>
+			<li><b>Bound: </b>${volume.bound ? 'Yes' : 'No'}</li>
+			<li><b>Folios Numbered: </b>${volume.folsNumbrd ? 'Yes' : 'No'}</li>
+			<li><b>Alphabetical Index: </b>${volume.oldAlphaIndex ? 'Yes' : 'No'}</li>
+			<li><b>Languages: </b>  ${volume.italian ? 'Italian' : '' } 
+									${volume.spanish ? 'Italian' : ''}
+									${volume.english ? 'English' : ''}
+									${volume.latin ? 'Latin' : ''}
+									${volume.german ? 'German' : ''}
+									${volume.french ? 'French' : ''}
+									${otherLang}
+			</li>
+			<li><b>Some Documents in Cipher: </b>${volume.cipher ? 'Yes' : 'No'}</li>
+			<li><b>Cipher Notes: </b>${volume.cipherNotes}</li>
 		</ul>
 	</div>
 		
@@ -54,8 +59,8 @@
 	<div id="EditCorrespondentsVolumeDiv">
 		<h5>Correspondents <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolume}">edit</a></security:authorize></h5>
 		<ul>
-			<li><b>From:</b> Tuscany and abroad (Secretaries, Agents, Administrators, Artists, including: Lorenzo Pagni, Cristian Pagni, Giovanni Francesco Lottini, Niccolò Campana, Vincenzo Ferrini, Agnolo Bronzino, Bernardo Saliti, Giorgio Dati, Agnolo Divozi da Bibbiena)s</li>
-			<li><b>To:</b> Florence (Pierfrancesco Riccio)</li>
+			<li><b>From:</b>${volume.senders}</li>
+			<li><b>To:</b>${volume.recips}</li>
 		</ul>
 	</div>
 		
@@ -64,7 +69,7 @@
 	<div id="EditContextVolumeDiv">
 		<h5>Context <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditContextVolume" href="${EditContextVolume}">edit</a></security:authorize></h5>
 		<ul>
-			<li>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+			<li>${volume.ccontext}</li>
 		</ul>
 	</div>
 

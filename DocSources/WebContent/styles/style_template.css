@@ -182,8 +182,7 @@ body {
 #adm_menu {
 	float:left;
 	height:25px;
-	width: 600px;
-	margin-top:0px;
+	width: 500px;
 	font-size: 80%;
 
 }
@@ -191,6 +190,17 @@ body {
 #adm_menu a{
 	color:#fff;
 }
+
+
+/* top_bottom (Actions Menu) */
+
+#menu_actions {
+	height:25px;
+	width: 100px;
+	margin-left: 520px;
+	font-size: 80%;
+}
+
 
 /* Welcome Page */
 
@@ -238,18 +248,19 @@ body {
 /* Slipt Screen */
 
 #body_left{
-	width:45%;
+	width:47%;
 	height:auto;
 	padding-left:25px;
-	padding-top:10px;
+	margin-top:10px;
 	float:left;
 	position:absolute;
 	font-size:85%;
-	
-}
+	border-right: 1px solid #e6d0c6;
 
+}
+	
 #body_right{
-	width:45%;
+	width:47%;
 	height:auto;
 	padding-left:10px;
 	padding-right:25px;
@@ -258,52 +269,11 @@ body {
 	background-color:#000;
 }
 
-#body_separator {
+/* #body_separator 
 	width:10%;
 	height:auto;
 	position:absolute;
-	background-image:url(../images/line.png);
-	background-repeat:repeat-y;
-}
-
-/* Tag - Slipt Screen*/
-
-#body_left ul li{
-	list-style:none;
-	line-height:18px;
-	margin:0px;
-	padding:0px;
-	text-align:justify;
-}
-
-#body_left h5{
-	font-size:100%;
-	padding-right:170px;
-	display:inline;
-	color:#6d5c4d;
-}
-
-#body_left h6{
-	font-size:90%;
-	text-align:right;
-	font-weight:normal;
-	display:inline;
-}
-
-#body_left h3{
-	text-align:center;
-	font-style:italic;
-	padding-top:15px;
-	padding-bottom:15px;
-}
-
-#body_left a{
-	text-decoration:underline;
-	font-weight:100;
-	font-size:95%;
-	color:#b99c84;
-}
-
+*/
 
 
 /* Tag */
@@ -329,16 +299,12 @@ a {
 	font-size:small;
 }
 
-hr {
-	margin:0 0 0 25px;
-	padding:0;
-	width:700px;
-	color:#E5B091;
-	background-color:#E5B091;
-	height:1px;
-	border:0;
-}
+
 
 input { 
 	outline: 0px; 
 }
+
+
+
+
