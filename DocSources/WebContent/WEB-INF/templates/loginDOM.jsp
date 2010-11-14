@@ -7,12 +7,18 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
 		<title>the MEDICI ARCHIVE PROJECT</title>
-		<link rel="shortcut icon" href="<c:url value="images/favicon_medici.jpg"/>" type="image/x-icon" />
-		<link href="<c:url value="/styles/style.css"/>" rel="stylesheet" type="text/css" />
+		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="images/favicon_medici.jpg"/>" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/style.css"/>" />
+		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.4.2.js"/>"></script>
 		<script>
-				var RecaptchaOptions = {
-				   theme : 'clean'
-				};
+		 	$(document).ready(function () {
+		        if ($("#site").length > 0) {
+		            window.location = "<c:url value="/"/>";
+		        }
+		    });
+			var RecaptchaOptions = {
+			   theme : 'clean'
+			};
 		</script> 
 	</head>
 	

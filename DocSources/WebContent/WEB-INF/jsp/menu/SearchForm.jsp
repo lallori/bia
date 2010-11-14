@@ -21,7 +21,7 @@
 					$(document).ready(function() {
 						$("#SearchForm").submit(function() {
 							$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) {
-									$("#body_left").html(html);
+									$("#body_right").html(html);
 								}
 							});
 						return false;});

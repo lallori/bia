@@ -32,7 +32,6 @@ import java.util.List;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,23 +58,106 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void editCorrespondentsOrPeopleDocument(Document document) throws ApplicationThrowable {
+		Document documentToUpdate = null;
+		try {
+			documentToUpdate = getDocumentDAO().find(document.getEntryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		//TODO : fill fields to update document section
+		
+		try {
+			getDocumentDAO().merge(documentToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editDocument(Document inputDocument) throws ApplicationThrowable {
-		Document document = null;
+	public void editDetailsDocument(Document document) throws ApplicationThrowable {
+		Document documentToUpdate = null;
 		try {
-			document = getDocumentDAO().find(inputDocument.getEntryId());
+			documentToUpdate = getDocumentDAO().find(document.getEntryId());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 
-		BeanUtils.copyProperties(inputDocument, document);
-
+		//TODO : fill fields to update document section
+		
 		try {
-			getDocumentDAO().merge(document);
+			getDocumentDAO().merge(documentToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void editExtractOrSynopsisDocument(Document document) throws ApplicationThrowable {
+		Document documentToUpdate = null;
+		try {
+			documentToUpdate = getDocumentDAO().find(document.getEntryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		//TODO : fill fields to update document section
+		
+		try {
+			getDocumentDAO().merge(documentToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void editFactChecksDocument(Document document) throws ApplicationThrowable {
+		Document documentToUpdate = null;
+		try {
+			documentToUpdate = getDocumentDAO().find(document.getEntryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		//TODO : fill fields to update document section
+		
+		try {
+			getDocumentDAO().merge(documentToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void editTopicsDocument(Document document) throws ApplicationThrowable {
+		Document documentToUpdate = null;
+		try {
+			documentToUpdate = getDocumentDAO().find(document.getEntryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		//TODO : fill fields to update document section
+		
+		try {
+			getDocumentDAO().merge(documentToUpdate);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -109,7 +191,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return documentDAO;
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -119,12 +200,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return new ArrayList<Document>(0);
 	}
 
-
 	/**
 	 * @param documentDAO the documentDAO to set
 	 */
 	public void setDocumentDAO(DocumentDAO documentDAO) {
 		this.documentDAO = documentDAO;
 	}
-
 }

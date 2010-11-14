@@ -4,7 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<link rel="stylesheet" href="<c:url value="/styles/style_editform.css" />" type="text/css" media="screen, projection">
 	<form:form id="EditDescriptionVolumeForm" method="post">
 		<fieldset>
 			<legend><b>Volume DESCRIPTION</b></legend>
@@ -67,36 +66,11 @@
 			<div>				
 			</div>
 			<div style="margin-top:5px">
-				<input id="close" type="button" value="Close edit window" class="button" /><input id="save" type="submit" value="Save" style="margin-left:235px" class="button"/>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" /><input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
 			</div>
 			<form:hidden path="summaryId"/>
 		</fieldset>
 	</form:form>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#close').click(function() { 
-				$.blockUI({ message: $('#question'), css: { width: '275px' } }); 
-	        }); 
-
-			$("#EditDescriptionVolumeForm").submit(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-						if(html.match(/inputerrors/g)){
-							$("#EditDescriptionVolumeDiv").html(html);
-						} else {
-							$("#body_left").html(html);
-						}
-					} 
-				});
-				return false;
-			});
-		});
-	</script>
-
-	<div id="question" style="display:none; cursor: default"> 
-        <h1>Would you like to contine?.</h1> 
-        <input type="button" id="yes" value="Yes" /> 
-        <input type="button" id="no" value="No" /> 
-	</div> 
 
 	<c:url var="ShowVolume" value="/src/volbase/ShowVolume.do">
 		<c:param name="summaryId"   value="${command.summaryId}" />
@@ -104,16 +78,22 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-	        $('#yes').click(function() { 
-	 			$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+	        $('#close').click(function() {
+	        	$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+	 			}}); 
+				return false;
+			});
+
+	        $("#EditDescriptionVolumeForm").submit(function (){
+				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
 					if(html.match(/inputerrors/g)){
-						$("#EditDetailsVolumeDiv").html(html);
+						$("#EditDescriptionVolumeDiv").html(html);
 					} else {
 						$("#body_left").html(html);
 					}
-	 			}
-			}); 
-	        }); 
-	        $('#no').click(function() { $.unblockUI(); return false; }); 
+				}});
+				return false;
+			});
 		});
 	</script>

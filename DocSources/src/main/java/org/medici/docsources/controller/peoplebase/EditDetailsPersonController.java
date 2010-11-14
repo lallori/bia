@@ -27,12 +27,16 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -113,7 +117,22 @@ public class EditDetailsPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPersonCommand command) {
-		return new ModelAndView("peoplebase/modifyperson");
+		Map<String, Object> model = new HashMap<String, Object>();
+		People people = new People();
+
+		try {
+			people = getPeopleBaseService().findPeople(command.getPersonId());
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/EditDetailsPerson", model);
+		}
+
+		try {
+			BeanUtils.copyProperties(command, people);
+		} catch (IllegalAccessException iaex) {
+		} catch (InvocationTargetException itex) {
+		}
+
+		return new ModelAndView("peoplebase/EditDetailsPerson", model);
 	}
 
 	/**

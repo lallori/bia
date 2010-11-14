@@ -68,7 +68,7 @@ public class Document implements Serializable{
 	@Column (name="\"SUBVOL\"", length=50)
 	private String subVol;
 	@Column (name="\"RESID\"", length=50)
-	private String resId;
+	private String researcher;
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
@@ -186,16 +186,16 @@ public class Document implements Serializable{
 		this.subVol = subVol;
 	}
 	/**
-	 * @return the resId
+	 * @return the researcher
 	 */
-	public String getResId() {
-		return resId;
+	public String getResearcher() {
+		return researcher;
 	}
 	/**
-	 * @param resId the resId to set
+	 * @param researcher the researcher to set
 	 */
-	public void setResId(String resId) {
-		this.resId = resId;
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
 	}
 	/**
 	 * @return the dateCreated

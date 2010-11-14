@@ -49,7 +49,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
 public interface DocBaseService {
 
 	/**
-	 * This method add a new Document.
+	 * This method add a new {@link org.medici.docsources.domain.Document}.
 	 * 
 	 * @param document
 	 * @throws ApplicationThrowable
@@ -57,12 +57,44 @@ public interface DocBaseService {
 	public void addNewDocument(Document inputDocument) throws ApplicationThrowable;
 
 	/**
-	 * This method modify an existing document.
+	 * This method modify correspondents or people of an existing {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param inputDocument
+	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editDocument(Document inputDocument) throws ApplicationThrowable;
+	public void editCorrespondentsOrPeopleDocument(Document document) throws ApplicationThrowable;
+
+	/**
+	 * This method modify details of an existing {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
+	 * @throws ApplicationThrowable
+	 */
+	public void editDetailsDocument(Document document) throws ApplicationThrowable;
+
+	/**
+	 * This method modify extract or Synopsis of an existing {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
+	 * @throws ApplicationThrowable
+	 */
+	public void editExtractOrSynopsisDocument(Document document) throws ApplicationThrowable;
+
+	/**
+	 * This method modify fact checks of an existing {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
+	 * @throws ApplicationThrowable
+	 */
+	public void editFactChecksDocument(Document document) throws ApplicationThrowable;
+
+	/**
+	 * This method modify topics of an existing {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param document
+	 * @throws ApplicationThrowable
+	 */
+	public void editTopicsDocument(Document document) throws ApplicationThrowable;
 
 	/**
 	 * This method will search an existing document by his unique identifiers.

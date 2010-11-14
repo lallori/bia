@@ -27,13 +27,16 @@
  */
 package org.medici.docsources.controller.docbase;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,7 +91,10 @@ public class CreateDocumentController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Document document = new Document();
-		document.setEntryId(-1);
+		document.setEntryId(0);
+		document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		document.setDateCreated(new Date());
+
 		model.put("document", document);
 
 		return new ModelAndView("docbase/ShowDocument", model);

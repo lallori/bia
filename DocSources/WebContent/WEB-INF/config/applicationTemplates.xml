@@ -186,19 +186,11 @@
 	</definition>
 	<!-- VolBase Module END -->
 
-    <definition name="responseKO" extends="template.partialDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/response/KO.jsp"/>
-    </definition>
-
-    <definition name="responseOK" extends="template.partialDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/response/OK.jsp"/>
-    </definition>
-
+	<!-- Errors START -->
     <definition name="accessDenied" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/accessDenied.jsp"/>
     </definition>
 
-	<!-- Errors START -->
     <definition name="403" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/403.jsp"/>
     </definition>

@@ -24,37 +24,47 @@
 
 			<div>
 				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Start year: </form:label><form:input id="startYear" path="startYear" cssClass="input_4c" maxlength="4"/><form:errors path="startYear" cssClass="inputerrors"/>
-				<form:label id="startMonthLabel" for="startMonth" path="startMonth" cssStyle="margin-left:19px" cssErrorClass="error">Start month: </form:label><form:select id="startMonth" path="startMonth" cssClass="selectform">
-				<form:options items="${months}" itemValue="monthName" itemLabel="monthName"/></form:select><form:errors path="startMonth" cssClass="inputerrors"/>
+				<form:label id="startMonthLabel" for="startMonth" path="startMonth" cssStyle="margin-left:19px" cssErrorClass="error">Start month: </form:label>
+				<form:select id="startMonth" path="startMonth" cssClass="selectform"><form:options items="${months}" itemValue="monthName" itemLabel="monthName"/></form:select><form:errors path="startMonth" cssClass="inputerrors"/>
 				<form:label id="startDayLabel" for="startDay" path="startDay" style="margin-left:19px" cssErrorClass="error">Start day: </form:label>
 				<form:input id="startDay" path="startDay" cssClass="input_2c" maxlength="2"/><form:errors path="startDay" cssClass="inputerrors"/>
 			</div>
+
 			<div>
-				<form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">End year: </form:label><form:input id="endYear" path="endYear" cssClass="input_4c" maxlength="4" cssStyle="margin-left:8px"/><form:errors path="endYear" cssClass="inputerrors"/>
-				<form:label id="endMonthLabel" for="endMonth" path="endMonth" cssErrorClass="error">End month: </form:label><form:select id="endMonth" path="endMonth" cssClass="selectform" cssStyle="margin-left:8px"><form:options items="${months}" itemValue="monthName" itemLabel="monthName"/></form:select><form:errors path="endMonth" cssClass="inputerrors"/>
-				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">End day: </form:label><form:input id="endDay" path="endDay" cssClass="input_2c" maxlength="2" cssStyle="margin-left:10px"/><form:errors path="endDay" cssClass="inputerrors"/>
+				<form:label id="endYearLabel" for="endYear" path="endYear" cssStyle="margin-left:4px" cssErrorClass="error">End year: </form:label>
+				<form:input id="endYear" path="endYear" cssClass="input_4c" maxlength="4"/><form:errors path="endYear" cssClass="inputerrors"/>
+				<form:label id="endMonthLabel" for="endMonth" path="endMonth" cssStyle="margin-left:23px" cssErrorClass="error">End month: </form:label>
+				<form:select id="endMonth" path="endMonth" cssClass="selectform"><form:options items="${months}" itemValue="monthName" itemLabel="monthName"/></form:select><form:errors path="endMonth" cssClass="inputerrors"/>
+				<form:label id="endDayLabel" for="endDay" path="endDay" cssStyle="margin-left:24px" cssErrorClass="error">End day: </form:label>
+				<form:input id="endDay" path="endDay" cssClass="input_2c" maxlength="2"/><form:errors path="endDay" cssClass="inputerrors"/>
 			</div>
-			<div style="margin:0">
+
+			<div style="margin:5px 0 0 0">
 				<form:label id="dateNotesLabel" for="dateNotes" path="dateNotes" cssErrorClass="error">Date notes: </form:label>
 			</div>
+
 			<div style="margin:0">
 				<form:textarea id="dateNotes" path="dateNotes" cssClass="txtarea"/><form:errors path="dateNotes" cssClass="inputerrors"/>
 			</div>
-			<div style="margin-top:5px">
-				<input id="close" type="button" value="Close edit window" class="button" /><input id="save" type="submit" value="Save" style="margin-left:235px" class="button"/>
-			</div>
+
 			<form:hidden path="summaryId"/>
 			<form:hidden path="seriesRefNum"/>
 			<form:hidden path="dateCreated"/>
+
+			<div style="margin-top:5px">
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" /><input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+			</div>
 		</fieldset>	
 	</form:form>
 
 	<c:url var="findSeriesUrl" value="/de/volbase/FindSeries.json"/>
+
+	<c:url var="ShowVolume" value="/src/volbase/ShowVolume.do">
+		<c:param name="summaryId"   value="${command.summaryId}" />
+	</c:url>
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
-			$(document).ajaxStop($.unblockUI);
 			var a = $('#seriesRefDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${findSeriesUrl}',
 			    minChars:1, 
@@ -67,46 +77,23 @@
 			    onSelect: function(value, data){ $('#seriesRefNum').val(data); }
 			  });
 
-			$('#close').click(function() { 
-				$.blockUI({ message: $('#question'), css: { width: '275px' } }); 
-	        }); 
-
-			$("#EditDetailsVolumeForm").submit(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-						if(html.match(/inputerrors/g)){
-							$("#EditDetailsVolumeDiv").html(html);
-						} else {
-							$("#body_left").html(html);
-						}
-					} 
-				});
+	        $('#close').click(function() {
+	        	$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+	 			}}); 
 				return false;
 			});
-		});
-	</script>
-	
-	<div id="question" style="display:none; cursor: default"> 
-        <h1>Would you like to contine?.</h1> 
-        <input type="button" id="yes" value="Yes" /> 
-        <input type="button" id="no" value="No" /> 
-	</div> 
 
-	<c:url var="ShowVolume" value="/src/volbase/ShowVolume.do">
-		<c:param name="summaryId"   value="${command.summaryId}" />
-	</c:url>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-	        $('#yes').click(function() { 
-	 			$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+	 		$("#EditDetailsVolumeForm").submit(function (){
+	 			alert('submit');
+	 			$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
 					if(html.match(/inputerrors/g)){
 						$("#EditDetailsVolumeDiv").html(html);
 					} else {
 						$("#body_left").html(html);
 					}
-	 			}
-			}); 
-	        }); 
-	        $('#no').click(function() { $.unblockUI(); return false; }); 
+				}});
+				return false;
+			});
 		});
 	</script>
