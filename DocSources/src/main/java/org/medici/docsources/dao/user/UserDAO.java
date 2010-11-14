@@ -28,7 +28,8 @@
 package org.medici.docsources.dao.user;
 
 import java.util.List;
-import org.medici.docsources.common.ajax.Page;
+
+import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.exception.TooManyUsersException;

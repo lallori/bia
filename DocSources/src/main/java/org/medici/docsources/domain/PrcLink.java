@@ -60,15 +60,15 @@ public class PrcLink implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"PRCLinkID\"", nullable=false)
+	@Column (name="\"PRCLINKID\"", nullable=false)
 	private Integer prcLinkId;
 	@ManyToOne
-	@JoinColumn(name="\"PersonID\"")
+	@JoinColumn(name="\"PERSONID\"")
 	private People personId;
 	@ManyToOne
-	@JoinColumn (name="\"RoleCatID\"")
+	@JoinColumn (name="\"ROLECATID\"")
 	private RoleCat roleCatId;
-	@Column (name="\"DateCreated\"")
+	@Column (name="\"DATECREATED\"")
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date dateCreated;
 	

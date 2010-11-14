@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.people;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.People;
 
@@ -37,4 +39,14 @@ import org.medici.docsources.domain.People;
  */
 public interface PeopleDAO extends Dao<Integer, People> {
 
+	/**
+	 * This method returns last entry {@link org.medici.docsources.domain.People} 
+	 * created on database.
+	 * 
+	 * @return Last entry {@link org.medici.docsources.domain.People}
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public People findLastEntryPerson() throws PersistenceException;
 }

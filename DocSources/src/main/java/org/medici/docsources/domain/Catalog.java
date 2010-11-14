@@ -53,62 +53,62 @@ import org.hibernate.envers.Audited;
 public class Catalog {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"id\"", length=10, nullable=false)
+	@Column (name="\"ID\"", length=10, nullable=false)
 	private Integer id;
-	@Column (name="\"istituto\"", length=50)
+	@Column (name="\"ISTITUTO\"", length=50)
 	private String istituto;
-	@Column (name="\"fondo\"", length=50)
+	@Column (name="\"FONDO\"", length=50)
 	private String fondo;
-	@Column (name="\"serie\"", length=50)
+	@Column (name="\"SERIE\"", length=50)
 	private String serie;
-	@Column (name="\"n_unita\"")
+	@Column (name="\"N_UNITA\"")
 	private Integer nUnita;
-	@Column (name="\"date_estreme\"", length=50)
+	@Column (name="\"DATE_ESTREME\"", length=50)
 	private String dateEstreme;
-	@Column (name="\"titolo\"", length=50)
+	@Column (name="\"TITOLO\"", length=50)
 	private String titolo;
-	@Column (name="\"descrizione_contenuto\"", length=50)
+	@Column (name="\"DESCRIZIONE_CONTENUTO\"", length=50)
 	private String descrizioneContenuto;
-	@Column (name="\"legatura\"", length=50)
+	@Column (name="\"LEGATURA\"", length=50)
 	private String legatura;
-	@Column (name="\"supporto\"", length=50)
+	@Column (name="\"SUPPORTO\"", length=50)
 	private String supporto;
-	@Column (name="\"cartulazione\"", length=50)
+	@Column (name="\"CARTULAZIONE\"", length=50)
 	private String cartulazione;
-	@Column (name="\"note_alla_cartulazione\"", length=50)
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", length=50)
 	private String noteCartulazione;
-	@Column (name="\"carte_bianche\"", length=50)
+	@Column (name="\"CARTE_BIANCHE\"", length=50)
 	private String carteBianche;
-	@Column (name="\"carte_mancanti\"", length=50)
+	@Column (name="\"CARTE_MANCANTI\"", length=50)
 	private String carteMancanti;
-	@Column (name="\"dimensioni_base\"", length=50)
+	@Column (name="\"DIMENSIONI_BASE\"", length=50)
 	private String dimensioniBase;
-	@Column (name="\"dimensioni_altezza\"", length=50)
+	@Column (name="\"DIMENSIONI_ALTEZZA\"", length=50)
 	private Integer dimensioniAltezza;
-	@Column (name="\"sistema_di_scansione\"", length=50)
+	@Column (name="\"SISTEMA_DI_SCANSIONE\"", length=50)
 	private String sistemaScansione;
-	@Column (name="\"profondita_di_colore\"", length=50)
+	@Column (name="\"PROFONDITA_COLORE\"", length=50)
 	private String profonditaColore;
-	@Column (name="\"risoluzione\"", length=50)
+	@Column (name="\"RISOLUZIONE\"", length=50)
 	private String risoluzione;
-	@Column (name="\"formato\"", length=50)
+	@Column (name="\"FORMATO\"", length=50)
 	private String formato;
-	@Column (name="\"compressione\"", length=50)
+	@Column (name="\"COMPRESSIONE\"", length=50)
 	private String compressione;
-	@Column (name="\"nome_files\"", length=50)
+	@Column (name="\"NOME_FILES\"", length=50)
 	private String nomeFiles;
-	@Column (name="\"numero_totale_immagini\"")
+	@Column (name="\"NUMERO_TOTALE_IMMAGINI\"")
 	private Integer numeroTotaleImmagini;
-	@Column (name="\"dim_media_immagini\"")
+	@Column (name="\"DIM_MEDIA_IMMAGINI\"")
 	private Long dimMediaImmagini;
-	@Column (name="\"dim_totale_immagini\"")
+	@Column (name="\"DIM_TOTALE_IMMAGINI\"")
 	private Long dimTotaleImmagini;
-	@Column (name="\"responsabile_fotoriproduzione\"", length=50)
+	@Column (name="\"RESPONSABILE_FOTORIPRODUZIONE\"", length=50)
 	private String responsabileFotoRiproduzione;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"data_ripresa\"", length=50)
+	@Column (name="\"DATA_RIPRESA\"", length=50)
 	private Date data_ripresa;
-	@Column (name="\"operatore\"", length=50)
+	@Column (name="\"OEPRATORE\"", length=50)
 	private String operatore;
 	
 	/**

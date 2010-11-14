@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.place;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Place;
 
@@ -36,5 +38,12 @@ import org.medici.docsources.domain.Place;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface PlaceDAO extends Dao<Integer, Place> {
+
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Place findLastEntryPlace() throws PersistenceException;
 
 }

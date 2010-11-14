@@ -29,23 +29,49 @@ package org.medici.docsources.service.geobase;
 
 import java.util.List;
 
+import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * This class is the default implementation of service responsible for every 
+ * action on Place.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
 public class GeoBaseServiceImpl implements GeoBaseService {
+	@Autowired
+	private PlaceDAO placeDAO;
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Place findLastEntryPlace() throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().findLastEntryPlace();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Place findPlace(Integer peopleId) throws ApplicationThrowable {
 		return null;
+	}
+
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
 	}
 
 	/**
@@ -55,6 +81,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public List<Document> searchPlaces(String text) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
 	}
 
 }

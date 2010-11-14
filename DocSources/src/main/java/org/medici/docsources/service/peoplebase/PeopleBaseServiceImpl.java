@@ -46,12 +46,25 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired
 	private PeopleDAO peopleDAO;
 
+	@Override
+	public People findLastEntryPerson() throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().findLastEntryPerson();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public People findPeople(Integer peopleId)  throws ApplicationThrowable {
-		return null;
+		try {
+			return getPeopleDAO().find(peopleId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -66,7 +79,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Override
 	public List<People> searchPeople(String text) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

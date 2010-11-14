@@ -45,7 +45,16 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * 
 	 * @param summaryId
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws PersistenceException
 	 */
 	public Document findDocumentByVolumeId(Integer summaryId) throws PersistenceException;
+
+	/**
+	 * This method returns last entry {@link org.medici.docsources.domain.Document} 
+	 * created on database.
+	 * 
+	 * @return Last entry {@link org.medici.docsources.domain.Document}
+	 * @throws PersistenceException
+	 */
+	public Document findLastEntryDocument() throws PersistenceException;
 }

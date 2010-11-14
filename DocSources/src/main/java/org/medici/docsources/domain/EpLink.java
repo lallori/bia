@@ -66,15 +66,15 @@ public class EpLink implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="\"PERSONID\"")
 	private People personId;
-	@Column (name="\"Portrait\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Column (name="\"PORTRAIT\"", length=1, columnDefinition="tinyint", nullable=false)
 	private Boolean portrait;
-	@Column (name="\"DateCreated\"")
+	@Column (name="\"ASSIGNUNSURE\"", length=1, columnDefinition="tinyint", nullable=false)
+	private Boolean AssignUnsure;
+	@Column (name="\"DOCROLE\"", length=50)
+	private String DocRole;
+	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
-	@Column (name="\"AssignUnsure\"", length=1, columnDefinition="tinyint", nullable=false)
-	private Boolean AssignUnsure;
-	@Column (name="\"DocRole\"", length=50)
-	private String DocRole;
 
 	/**
 	 * @return the epLinkId

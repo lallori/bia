@@ -58,16 +58,16 @@ public class RoleCat implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"RoleCatID\"", length=10, nullable=false)
+	@Column (name="\"ROLECATID\"", length=10, nullable=false)
 	private Integer roleCatId;
-	@Column (name="\"RoleCatMinor\"", length=255)
+	@Column (name="\"ROLECATMINOR\"", length=255)
 	private String roleCatMinor;
-	@Column (name="\"RoleCatMajor\"", length=255)
+	@Column (name="\"ROLECATMAJOR\"", length=255)
 	private String roleCatMajor;
 	@ManyToOne
-	@JoinColumn(name="\"RoleCatMajorID\"")
+	@JoinColumn(name="\"ROLECATMAJORID\"")
 	private RoleCat roleCatMajorId;
-	@Column (name="\"SortGroups\"", length=10)
+	@Column (name="\"SORTGROUS\"", length=10)
 	private Integer sortGroups;
 	/**
 	 * @return the roleCatId

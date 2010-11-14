@@ -50,63 +50,70 @@ public class PasswordChangeRequest implements Serializable {
 	 */
 	private static final long serialVersionUID = 4069049433392567124L;
 	@Id
-	@Column (name="\"Uuid\"", length=50, nullable=false)
+	@Column (name="\"UUID\"", length=50, nullable=false)
 	private String uuid;
-	@Column (name="\"account\"", length=30, nullable=false)
+	@Column (name="\"ACCOUNT\"", length=30, nullable=false)
 	private String account;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"requestDate\"", nullable=false)
+	@Column (name="\"REQUESTDATE\"", nullable=false)
 	private Date requestDate;
-	@Column (name="\"requestIPAddress\"", length=50, nullable=false)
+	@Column (name="\"REQUESTIPADDRESS\"", length=50, nullable=false)
 	private String requestIPAddress;
-	@Column (name="\"mailSended\"", nullable=false)
+	@Column (name="\"MAILSENDED\"", nullable=false)
 	private Boolean mailSended;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"mailSendedDate\"")
+	@Column (name="\"MAILSENDEDDATE\"")
 	private Date mailSendedDate;
-	@Column (name="\"reset\"", length=30, nullable=false)
+	@Column (name="\"RESET\"", length=30, nullable=false)
 	private Boolean reset;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"resetDate\"")
+	@Column (name="\"RESETDATE\"")
 	private Date resetDate;
-	@Column (name="\"resetIPAddress\"", length=50)
+	@Column (name="\"RESETIPADDRESS\"", length=50)
 	private String resetIPAddress;
+
 	/**
 	 * @return the uuid
 	 */
 	public String getUuid() {
 		return uuid;
 	}
+	
 	/**
 	 * @param uuid the uuid to set
 	 */
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
+	
 	/**
 	 * @return the account
 	 */
 	public String getAccount() {
 		return account;
 	}
+	
 	/**
 	 * @param account the account to set
 	 */
 	public void setAccount(String account) {
 		this.account = account;
 	}
+	
 	/**
 	 * @return the requestDate
 	 */
 	public Date getRequestDate() {
 		return requestDate;
 	}
+	
 	/**
 	 * @param requestDate the requestDate to set
 	 */
 	public void setRequestDate(Date requestDate) {
 		this.requestDate = requestDate;
 	}
+	
 	/**
 	 * @return the requestIPAddress
 	 */
@@ -131,53 +138,60 @@ public class PasswordChangeRequest implements Serializable {
 	public void setMailSended(Boolean mailSended) {
 		this.mailSended = mailSended;
 	}
+	
 	/**
 	 * @return the mailSendedDate
 	 */
 	public Date getMailSendedDate() {
 		return mailSendedDate;
 	}
+	
 	/**
 	 * @param mailSendedDate the mailSendedDate to set
 	 */
 	public void setMailSendedDate(Date mailSendedDate) {
 		this.mailSendedDate = mailSendedDate;
 	}
+	
 	/**
 	 * @return the reset
 	 */
 	public Boolean getReset() {
 		return reset;
 	}
+	
 	/**
 	 * @param reset the reset to set
 	 */
 	public void setReset(Boolean reset) {
 		this.reset = reset;
 	}
+	
 	/**
 	 * @return the resetDate
 	 */
 	public Date getResetDate() {
 		return resetDate;
 	}
+	
 	/**
 	 * @param resetDate the resetDate to set
 	 */
 	public void setResetDate(Date resetDate) {
 		this.resetDate = resetDate;
 	}
+	
 	/**
 	 * @return the resetIPAddress
 	 */
 	public String getResetIPAddress() {
 		return resetIPAddress;
 	}
+	
 	/**
 	 * @param resetIPAddress the resetIPAddress to set
 	 */
 	public void setResetIPAddress(String resetIPAddress) {
 		this.resetIPAddress = resetIPAddress;
 	}
-
 }

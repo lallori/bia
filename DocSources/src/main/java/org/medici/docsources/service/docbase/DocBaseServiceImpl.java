@@ -27,18 +27,18 @@
  */
 package org.medici.docsources.service.docbase;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * This class is the default implementation of service responsible for every 
+ * action on document.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -72,11 +72,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
-		try {
-			BeanUtils.copyProperties(document, inputDocument);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
-		}
+		BeanUtils.copyProperties(inputDocument, document);
 
 		try {
 			getDocumentDAO().merge(document);
@@ -92,6 +88,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public Document findDocument(Integer documentId) throws ApplicationThrowable { 
 		// TODO Auto-generated method stub
 		return new Document();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document findLastEntryDocument() throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().findLastEntryDocument();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

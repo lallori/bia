@@ -91,17 +91,17 @@ public class People implements Serializable {
 	private String first;
 	@Column (name="\"SUCNUM\"", length=6)
 	private String sucNum;
-	@Column (name="\"Middle\"", length=50)
+	@Column (name="\"MIDDLE\"", length=50)
 	private String middle;
-	@Column (name="\"midprefix\"", length=50)
+	@Column (name="\"MIDPREFIX\"", length=50)
 	private String midPrefix;
-	@Column (name="\"Last\"", length=50)
+	@Column (name="\"LAST\"", length=50)
 	private String last;
-	@Column (name="\"lastprefix\"", length=50)
+	@Column (name="\"LASTPREFIX\"", length=50)
 	private String lastPrefix;
-	@Column (name="\"Postlast\"", length=50)
+	@Column (name="\"POSTLAST\"", length=50)
 	private String postLast;
-	@Column (name="\"postlastprefix\"", length=50)
+	@Column (name="\"POSTLASTPREFIX\"", length=50)
 	private String postLastPrefix;
 	@Column (name="\"BAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
 	private Boolean bApprox;
@@ -131,9 +131,9 @@ public class People implements Serializable {
 	private People motherId;
 	@Column (name="\"RESID\"", length=50)
 	private String resId;
-	@Column (name="\"DateCreated\"")
+	@Column (name="\"DATECREATED\"")
 	private Date dateCreated;
-	@Column (name="\"LastUpdate\"")
+	@Column (name="\"LASTUPDATE\"")
 	private Date lastUpdate;
 
 	

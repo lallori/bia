@@ -48,6 +48,14 @@ import org.medici.docsources.exception.ApplicationThrowable;
 public interface PeopleBaseService {
 
 	/**
+	 * This method last entry {@link org.medici.docsources.domain.People}.
+	 * 
+	 * @return Last entry {@link org.medici.docsources.domain.People}
+	 * @throws ApplicationThrowable
+	 */
+	public People findLastEntryPerson() throws ApplicationThrowable;
+
+	/**
 	 * 
 	 * @param peopleId
 	 * @return

@@ -62,9 +62,9 @@ public class PoLink implements Serializable {
 	@Column (name="\"PRLINKID\"", length=10, nullable=false)
 	private Integer prfLinkId;
 	@ManyToOne
-	@JoinColumn(name="\"PersonID\"")
+	@JoinColumn(name="\"PERSONID\"")
 	private People personId;
-	@Column (name="\"TitleOccID\"")
+	@Column (name="\"TITLEOCCID\"")
 	private TitleOccsList titleOccId;
 	@Column (name="\"STARTYEAR\"", length=10)
 	private Integer startYear;
@@ -80,7 +80,7 @@ public class PoLink implements Serializable {
 	private Integer endDay;
 	@Column (name="\"PRTAG\"", length=10)
 	private Integer prTag;
-	@Column (name="\"PRLinkNotes\"", columnDefinition="LONGTEXT")
+	@Column (name="\"PRLINKNOTES\"", columnDefinition="LONGTEXT")
 	private String prLinkNotes;
 	@Column (name="\"STARTAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
 	private Boolean startApprox;
@@ -94,7 +94,7 @@ public class PoLink implements Serializable {
 	private Integer startMonthNum;
 	@Column (name="\"ENDMONTHNUM\"", length=10)
 	private Integer endMonthNum;
-	@Column (name="\"DateCreated\"")
+	@Column (name="\"DATECREATED\"")
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date dateCreated;
 	/**

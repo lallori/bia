@@ -60,22 +60,22 @@ public class Document implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"EntryId\"", length=10, nullable=false)
+	@Column (name="\"ENTRYID\"", length=10, nullable=false)
 	private Integer entryId;
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="\"SummaryId\"")
+	@JoinColumn(name="\"SUMMARYID\"")
 	private Volume volume;
-	@Column (name="\"SubVol\"", length=50)
+	@Column (name="\"SUBVOL\"", length=50)
 	private String subVol;
-	@Column (name="\"ResId\"", length=50)
+	@Column (name="\"RESID\"", length=50)
 	private String resId;
-	@Column (name="\"DateCreated\"")
+	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
-	@Column (name="\"LastUpdate\"")
+	@Column (name="\"LASTUPDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
-	@Column (name="\"DocTobeVetted\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Column (name="\"DOCTOBEVETTED\"", length=1, columnDefinition="tinyint", nullable=false)
 	private Boolean docTobeVetted;
 	@Column (name="\"DOCTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)

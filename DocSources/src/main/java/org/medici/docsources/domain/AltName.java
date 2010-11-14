@@ -55,18 +55,18 @@ public class AltName implements Serializable{
 	private static final long serialVersionUID = 5441152442133272419L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"NameID\"", length=10, nullable=false)
+	@Column (name="\"NAMEID\"", length=10, nullable=false)
 	private Integer nameID;
 	@ManyToOne
-	@JoinColumn(name="\"PersonID\"")
+	@JoinColumn(name="\"PERSONID\"")
 	private People personId;
-	@Column (name="\"NamePrefix\"", length=50)
+	@Column (name="\"NAMEPREFIX\"", length=50)
 	private String namePrefix;
-	@Column (name="\"AltName\"", length=255)
+	@Column (name="\"ALTNAME\"", length=255)
 	private String altName;
-	@Column (name="\"NameType\"", length=50)
+	@Column (name="\"NAMETYPE\"", length=50)
 	private String nameType;
-	@Column (name="\"Notes\"", columnDefinition="LONGTEXT")
+	@Column (name="\"NOTES\"", columnDefinition="LONGTEXT")
 	private String notes;
 	
 	/**

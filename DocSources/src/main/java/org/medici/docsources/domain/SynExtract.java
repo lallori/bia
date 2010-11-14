@@ -68,12 +68,12 @@ public class SynExtract implements Serializable{
 	private String docExtract;
 	@Column(name="\"SYNOPSIS\"", columnDefinition="LONGTEXT")
 	private String synopsis;
-	@Column(name="\"LastUpdate\"")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastUpdate;
-	@Column(name="\"DateCreated\"")
+	@Column(name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+	@Column(name="\"LASTUPDATE\"")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastUpdate;
 	/**
 	 * @return the synExtrId
 	 */

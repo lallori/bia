@@ -59,93 +59,93 @@ public class Volume implements Serializable {
 	private static final long serialVersionUID = 3127626344157278734L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"summaryId\"", length=10, nullable=false)
+	@Column (name="\"SUMMARYID\"", length=10, nullable=false)
 	private Integer summaryId;
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="\"seriesRefNum\"")
+	@JoinColumn(name="\"SERIESREFNUM\"")
 	private SerieList serieList;
-	@Column (name="\"volNum\"", length=10)
+	@Column (name="\"VOLNUM\"", length=10)
 	private Integer volNum;
-	@Column (name="\"volLeText\"", length=1)
+	@Column (name="\"VOLLETEXT\"", length=1)
 	private String volLeText;
-	@Column (name="\"researcher\"")
+	@Column (name="\"RESID\"")
 	private String researcher;
-	@Column (name="\"DateCreated\"")
+	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
-	@Column (name="\"volTobeVettedDate\"")
+	@Column (name="\"VOLTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date volTobeVettedDate;
-	@Column (name="\"volTobeVetted\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"VOLTOBEVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean volTobeVetted;
-	@Column (name="\"volVetId\"", length=50)
+	@Column (name="\"VOLVETID\"", length=50)
 	private String volVetId;
-	@Column (name="\"volVetBegins\"")
+	@Column (name="\"VOLVETBEGINS\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date volVetBegins;
-	@Column (name="\"volVetted\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"VOLVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean volVetted;
-	@Column (name="\"volVettedDate\"")
+	@Column (name="\"VOLVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date volVettedDate;
-	@Column (name="\"statBox\"", length=50)
+	@Column (name="\"STATBOX\"", length=50)
 	private String statBox;
-	@Column (name="\"startYear\"", length=5)
+	@Column (name="\"STARTYEAR\"", length=5)
 	private Integer startYear;
-	@Column (name="\"startMonth\"", length=50)
+	@Column (name="\"STARTMONTH\"", length=50)
 	private String startMonth;
-	@Column (name="\"startMonthNum\"", length=10)
+	@Column (name="\"STARTMONTHNUM\"", length=10)
 	private Integer startMonthNum;
-	@Column (name="\"startDay\"", length=3, columnDefinition="TINYINT")
+	@Column (name="\"STARTDAY\"", length=3, columnDefinition="TINYINT")
 	private Integer startDay;
-	@Column (name="\"endYear\"", length=5)
+	@Column (name="\"ENDYEAR\"", length=5)
 	private Integer endYear;
-	@Column (name="\"endMonth\"", length=50)
+	@Column (name="\"ENDMONTH\"", length=50)
 	private String endMonth;
-	@Column (name="\"endMonthNum\"", length=10)
+	@Column (name="\"ENDMONTHNUM\"", length=10)
 	private Integer endMonthNum;
-	@Column (name="\"endDay\"", length=3, columnDefinition="TINYINT")
+	@Column (name="\"ENDDAY\"", length=3, columnDefinition="TINYINT")
 	private Integer endDay;
-	@Column (name="\"dateNotes\"", columnDefinition="LONGTEXT")
+	@Column (name="\"DATENOTES\"", columnDefinition="LONGTEXT")
 	private String dateNotes;
-	@Column (name="\"senders\"", columnDefinition="LONGTEXT")
+	@Column (name="\"SENDERS\"", columnDefinition="LONGTEXT")
 	private String senders;
-	@Column (name="\"recips\"", columnDefinition="LONGTEXT")
+	@Column (name="\"RECIPS\"", columnDefinition="LONGTEXT")
 	private String recips;
-	@Column (name="\"context\"", columnDefinition="LONGTEXT")
-	private String context;
-	@Column (name="\"folioCount\"", length=50)
+	@Column (name="\"CCONTEXT\"", columnDefinition="LONGTEXT")
+	private String ccontext;
+	@Column (name="\"FOLIOCOUNT\"", length=50)
 	private String folioCount;
-	@Column (name="\"bound\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"BOUND\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean bound;
-	@Column (name="\"folsNumbrd\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"FOLSNUMBRD\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean folsNumbrd;
-	@Column (name="\"oldalphaindex\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	private Boolean oldalphaindex;
-	//double column name quote is necessary to fix a hibernate bug : it does not support jpa escape char in column name definition 
-	@Column (name="\"\"condition\"\"", columnDefinition="LONGTEXT")
-	private String condition;
-	@Column (name="\"italian\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"OLDALPHAINDEX\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	private Boolean oldAlphaIndex;
+	// Column condition renamed in ccondition beacause inital word is reserved on Mysql 
+	@Column (name="\"CCONDITION\"", columnDefinition="LONGTEXT")
+	private String ccondition;
+	@Column (name="\"ITALIAN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean italian;
-	@Column (name="\"spanish\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"SPANISH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean spanish;
-	@Column (name="\"english\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"ENGLISH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean english;
-	@Column (name="\"latin\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"LATIN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean latin;
-	@Column (name="\"german\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"GERMAN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean german;
-	@Column (name="\"french\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"FRENCH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean french;
-	@Column (name="\"otherLang\"", length=50)
+	@Column (name="\"OTHERLANG\"", length=50)
 	private String otherLang;
-	@Column (name="\"cipher\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean cipher;
-	@Column (name="\"cipherNotes\"", length=255)
+	@Column (name="\"CIPHERNOTES\"", length=255)
 	private String cipherNotes;
-	@Column (name="\"orgNotes\"", columnDefinition="LONGTEXT")
+	@Column (name="\"ORGNOTES\"", columnDefinition="LONGTEXT")
 	private String orgNotes;
-	@Column (name="\"staffMemo\"", columnDefinition="LONGTEXT")
+	@Column (name="\"STAFFMEMO\"", columnDefinition="LONGTEXT")
 	private String staffMemo;
 
 	/**
@@ -154,300 +154,350 @@ public class Volume implements Serializable {
 	public Integer getSummaryId() {
 		return summaryId;
 	}
+	
 	/**
 	 * @param summaryId the summaryId to set
 	 */
 	public void setSummaryId(Integer summaryId) {
 		this.summaryId = summaryId;
 	}
+	
 	/**
 	 * @return the serieList
 	 */
 	public SerieList getSerieList() {
 		return serieList;
 	}
+	
 	/**
 	 * @param serieList the serieList to set
 	 */
 	public void setSerieList(SerieList serieList) {
 		this.serieList = serieList;
 	}
+	
 	/**
 	 * @return the volNum
 	 */
 	public Integer getVolNum() {
 		return volNum;
 	}
+	
 	/**
 	 * @param volNum the volNum to set
 	 */
 	public void setVolNum(Integer volNum) {
 		this.volNum = volNum;
 	}
+	
 	/**
 	 * @return the volLeText
 	 */
 	public String getVolLeText() {
 		return volLeText;
 	}
+	
 	/**
 	 * @param volLeText the volLeText to set
 	 */
 	public void setVolLeText(String volLeText) {
 		this.volLeText = volLeText;
 	}
+	
 	/**
 	 * @return the researcher
 	 */
 	public String getResearcher() {
 		return researcher;
 	}
+	
 	/**
 	 * @param researcher the researcher to set
 	 */
 	public void setResearcher(String researcher) {
 		this.researcher = researcher;
 	}
+	
 	/**
 	 * @return the dateCreated
 	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+	
 	/**
 	 * @param dateCreated the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+	
 	/**
 	 * @return the volTobeVettedDate
 	 */
 	public Date getVolTobeVettedDate() {
 		return volTobeVettedDate;
 	}
+	
 	/**
 	 * @param volTobeVettedDate the volTobeVettedDate to set
 	 */
 	public void setVolTobeVettedDate(Date volTobeVettedDate) {
 		this.volTobeVettedDate = volTobeVettedDate;
 	}
+	
 	/**
 	 * @return the volTobeVetted
 	 */
 	public Boolean getVolTobeVetted() {
 		return volTobeVetted;
 	}
+	
 	/**
 	 * @param volTobeVetted the volTobeVetted to set
 	 */
 	public void setVolTobeVetted(Boolean volTobeVetted) {
 		this.volTobeVetted = volTobeVetted;
 	}
+	
 	/**
 	 * @return the volVetId
 	 */
 	public String getVolVetId() {
 		return volVetId;
 	}
+	
 	/**
 	 * @param volVetId the volVetId to set
 	 */
 	public void setVolVetId(String volVetId) {
 		this.volVetId = volVetId;
 	}
+	
 	/**
 	 * @return the volVetBegins
 	 */
 	public Date getVolVetBegins() {
 		return volVetBegins;
 	}
+	
 	/**
 	 * @param volVetBegins the volVetBegins to set
 	 */
 	public void setVolVetBegins(Date volVetBegins) {
 		this.volVetBegins = volVetBegins;
 	}
+	
 	/**
 	 * @return the volVetted
 	 */
 	public Boolean getVolVetted() {
 		return volVetted;
 	}
+	
 	/**
 	 * @param volVetted the volVetted to set
 	 */
 	public void setVolVetted(Boolean volVetted) {
 		this.volVetted = volVetted;
 	}
+	
 	/**
 	 * @return the volVettedDate
 	 */
 	public Date getVolVettedDate() {
 		return volVettedDate;
 	}
+	
 	/**
 	 * @param volVettedDate the volVettedDate to set
 	 */
 	public void setVolVettedDate(Date volVettedDate) {
 		this.volVettedDate = volVettedDate;
 	}
+	
 	/**
 	 * @return the statBox
 	 */
 	public String getStatBox() {
 		return statBox;
 	}
+	
 	/**
 	 * @param statBox the statBox to set
 	 */
 	public void setStatBox(String statBox) {
 		this.statBox = statBox;
 	}
+	
 	/**
 	 * @return the startYear
 	 */
 	public Integer getStartYear() {
 		return startYear;
 	}
+	
 	/**
 	 * @param startYear the startYear to set
 	 */
 	public void setStartYear(Integer startYear) {
 		this.startYear = startYear;
 	}
+	
 	/**
 	 * @return the startMonth
 	 */
 	public String getStartMonth() {
 		return startMonth;
 	}
+	
 	/**
 	 * @param startMonth the startMonth to set
 	 */
 	public void setStartMonth(String startMonth) {
 		this.startMonth = startMonth;
 	}
+	
 	/**
 	 * @return the startMonthNum
 	 */
 	public Integer getStartMonthNum() {
 		return startMonthNum;
 	}
+	
 	/**
 	 * @param startMonthNum the startMonthNum to set
 	 */
 	public void setStartMonthNum(Integer startMonthNum) {
 		this.startMonthNum = startMonthNum;
 	}
+	
 	/**
 	 * @return the startDay
 	 */
 	public Integer getStartDay() {
 		return startDay;
 	}
+	
 	/**
 	 * @param startDay the startDay to set
 	 */
 	public void setStartDay(Integer startDay) {
 		this.startDay = startDay;
 	}
+	
 	/**
 	 * @return the endYear
 	 */
 	public Integer getEndYear() {
 		return endYear;
 	}
+	
 	/**
 	 * @param endYear the endYear to set
 	 */
 	public void setEndYear(Integer endYear) {
 		this.endYear = endYear;
 	}
+	
 	/**
 	 * @return the endMonth
 	 */
 	public String getEndMonth() {
 		return endMonth;
 	}
+	
 	/**
 	 * @param endMonth the endMonth to set
 	 */
 	public void setEndMonth(String endMonth) {
 		this.endMonth = endMonth;
 	}
+	
 	/**
 	 * @return the endMonthNum
 	 */
 	public Integer getEndMonthNum() {
 		return endMonthNum;
 	}
+	
 	/**
 	 * @param endMonthNum the endMonthNum to set
 	 */
 	public void setEndMonthNum(Integer endMonthNum) {
 		this.endMonthNum = endMonthNum;
 	}
+	
 	/**
 	 * @return the endDay
 	 */
 	public Integer getEndDay() {
 		return endDay;
 	}
+	
 	/**
 	 * @param endDay the endDay to set
 	 */
 	public void setEndDay(Integer endDay) {
 		this.endDay = endDay;
 	}
+	
 	/**
 	 * @return the dateNotes
 	 */
 	public String getDateNotes() {
 		return dateNotes;
 	}
+	
 	/**
 	 * @param dateNotes the dateNotes to set
 	 */
 	public void setDateNotes(String dateNotes) {
 		this.dateNotes = dateNotes;
 	}
+	
 	/**
 	 * @return the senders
 	 */
 	public String getSenders() {
 		return senders;
 	}
+	
 	/**
 	 * @param senders the senders to set
 	 */
 	public void setSenders(String senders) {
 		this.senders = senders;
 	}
+	
 	/**
 	 * @return the recips
 	 */
 	public String getRecips() {
 		return recips;
 	}
+	
 	/**
 	 * @param recips the recips to set
 	 */
 	public void setRecips(String recips) {
 		this.recips = recips;
 	}
+	
 	/**
-	 * @return the context
+	 * @return the ccontext
 	 */
-	public String getContext() {
-		return context;
+	public String getCcontext() {
+		return ccontext;
 	}
+	
 	/**
-	 * @param context the context to set
+	 * @param ccontext the ccontext to set
 	 */
-	public void setContext(String context) {
-		this.context = context;
+	public void setCcontext(String ccontext) {
+		this.ccontext = ccontext;
 	}
+	
 	/**
 	 * @return the folioCount
 	 */
@@ -472,108 +522,126 @@ public class Volume implements Serializable {
 	public void setBound(Boolean bound) {
 		this.bound = bound;
 	}
+	
 	/**
 	 * @return the folsNumbrd
 	 */
 	public Boolean getFolsNumbrd() {
 		return folsNumbrd;
 	}
+	
 	/**
 	 * @param folsNumbrd the folsNumbrd to set
 	 */
 	public void setFolsNumbrd(Boolean folsNumbrd) {
 		this.folsNumbrd = folsNumbrd;
 	}
+	
 	/**
-	 * @return the oldalphaindex
+	 * @return the oldAlphaIndex
 	 */
-	public Boolean getOldalphaindex() {
-		return oldalphaindex;
+	public Boolean getOldAlphaIndex() {
+		return oldAlphaIndex;
 	}
+	
 	/**
-	 * @param oldalphaindex the oldalphaindex to set
+	 * @param oldAlphaIndex the oldAlphaIndex to set
 	 */
-	public void setOldalphaindex(Boolean oldalphaindex) {
-		this.oldalphaindex = oldalphaindex;
+	public void setOldAlphaIndex(Boolean oldAlphaIndex) {
+		this.oldAlphaIndex = oldAlphaIndex;
 	}
+	
 	/**
 	 * @return the condition
 	 */
-	public String getCondition() {
-		return condition;
+	public String getCcondition() {
+		return ccondition;
 	}
+	
 	/**
 	 * @param condition the condition to set
 	 */
-	public void setCondition(String condition) {
-		this.condition = condition;
+	public void setCcondition(String ccondition) {
+		this.ccondition = ccondition;
 	}
+	
 	/**
 	 * @return the italian
 	 */
 	public Boolean getItalian() {
 		return italian;
 	}
+	
 	/**
 	 * @param italian the italian to set
 	 */
 	public void setItalian(Boolean italian) {
 		this.italian = italian;
 	}
+	
 	/**
 	 * @return the spanish
 	 */
 	public Boolean getSpanish() {
 		return spanish;
 	}
+	
 	/**
 	 * @param spanish the spanish to set
 	 */
 	public void setSpanish(Boolean spanish) {
 		this.spanish = spanish;
 	}
+	
 	/**
 	 * @return the english
 	 */
 	public Boolean getEnglish() {
 		return english;
 	}
+	
 	/**
 	 * @param english the english to set
 	 */
 	public void setEnglish(Boolean english) {
 		this.english = english;
 	}
+	
 	/**
 	 * @return the latin
 	 */
 	public Boolean getLatin() {
 		return latin;
 	}
+	
 	/**
 	 * @param latin the latin to set
 	 */
 	public void setLatin(Boolean latin) {
 		this.latin = latin;
 	}
+	
 	/**
 	 * @return the german
 	 */
 	public Boolean getGerman() {
 		return german;
 	}
+	
 	/**
 	 * @param german the german to set
 	 */
 	public void setGerman(Boolean german) {
 		this.german = german;
 	}
+	
 	/**
 	 * @return the french
 	 */
 	public Boolean getFrench() {
 		return french;
 	}
+	
 	/**
 	 * @param french the french to set
 	 */
@@ -586,54 +654,63 @@ public class Volume implements Serializable {
 	public String getOtherLang() {
 		return otherLang;
 	}
+	
 	/**
 	 * @param otherLang the otherLang to set
 	 */
 	public void setOtherLang(String otherLang) {
 		this.otherLang = otherLang;
 	}
+	
 	/**
 	 * @return the cipher
 	 */
 	public Boolean getCipher() {
 		return cipher;
 	}
+	
 	/**
 	 * @param cipher the cipher to set
 	 */
 	public void setCipher(Boolean cipher) {
 		this.cipher = cipher;
 	}
+	
 	/**
 	 * @return the cipherNotes
 	 */
 	public String getCipherNotes() {
 		return cipherNotes;
 	}
+	
 	/**
 	 * @param cipherNotes the cipherNotes to set
 	 */
 	public void setCipherNotes(String cipherNotes) {
 		this.cipherNotes = cipherNotes;
 	}
+	
 	/**
 	 * @return the orgNotes
 	 */
 	public String getOrgNotes() {
 		return orgNotes;
 	}
+	
 	/**
 	 * @param orgNotes the orgNotes to set
 	 */
 	public void setOrgNotes(String orgNotes) {
 		this.orgNotes = orgNotes;
 	}
+	
 	/**
 	 * @return the staffMemo
 	 */
 	public String getStaffMemo() {
 		return staffMemo;
 	}
+	
 	/**
 	 * @param staffMemo the staffMemo to set
 	 */
@@ -651,6 +728,7 @@ public class Volume implements Serializable {
 		result = prime * result + ((summaryId == null) ? 0 : summaryId.hashCode());
 		return result;
 	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -670,5 +748,4 @@ public class Volume implements Serializable {
 			return false;
 		return true;
 	}
-
 }

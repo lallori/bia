@@ -94,7 +94,7 @@ public class Marriage implements Serializable {
 	private Integer startMonthNum;
 	@Column (name="\"ENDMONTHNUM\"", length=10)
 	private Integer endMonthNum;
-	@Column (name="\"DateCreated\"")
+	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 	/**

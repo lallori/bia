@@ -68,7 +68,7 @@ public class EplToLink implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="\"PLACESALLID\"", nullable=false)
 	private Place placesAllId;
-	@Column (name="\"DateCreated\"", nullable=false)
+	@Column (name="\"DATECREATED\"", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 

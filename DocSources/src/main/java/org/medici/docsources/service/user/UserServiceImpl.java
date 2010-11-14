@@ -36,7 +36,7 @@ import java.util.UUID;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
-import org.medici.docsources.common.ajax.Page;
+import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.util.ApplicationError;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.activationuser.ActivationUserDAO;

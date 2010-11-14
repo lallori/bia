@@ -27,14 +27,15 @@
  */
 package org.medici.docsources.dao.place;
 
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Place;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>PlaceDAOJpaImpl</b> is a default implementation of <b>PlaceDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -60,5 +61,16 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -2993971980020334157L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place findLastEntryPlace() throws PersistenceException {
+        Query query = getEntityManager().createQuery("FROM Place ORDER BY dateCreated DESC");
+        query.setMaxResults(1);
+
+        return (Place) query.getSingleResult();
+	}
 
 }

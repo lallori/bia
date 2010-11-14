@@ -33,8 +33,18 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
+ * This interface is designed to work on {@link org.medici.docsources.domain.Document} 
+ * object.<br>
+ * It defines every business methods needed to work on documents.
+ * With this service, you can :<br>
+ * - add a new document<br>
+ * - modify an existing document<br> 
+ * - search a document by is unique id<br>
+ * - execute complex search on volumes<br>
+ * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * 
  */
 public interface DocBaseService {
 
@@ -59,13 +69,23 @@ public interface DocBaseService {
 	 * 
 	 * @param entryId
 	 * @return
+	 * @throws ApplicationThrowable
 	 */
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
+	 * This method last entry {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @return Last entry {@link org.medici.docsources.domain.Document}
+	 * @throws ApplicationThrowable
+	 */
+	public Document findLastEntryDocument() throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @param text
 	 * @return
+	 * @throws ApplicationThrowable
 	 */
 	public List<Document> searchDocuments(String text) throws ApplicationThrowable;
 }

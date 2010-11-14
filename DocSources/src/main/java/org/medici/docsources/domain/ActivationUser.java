@@ -51,26 +51,26 @@ public class ActivationUser implements Serializable {
 	private static final long serialVersionUID = 2520604342480766749L;
 
 	@Id
-	@Column (name="\"Uuid\"", length=50, nullable=false)
+	@Column (name="\"UUID\"", length=50, nullable=false)
 	private String uuid;
-	@Column (name="\"account\"", length=30, nullable=false)
+	@Column (name="\"ACCOUNT\"", length=30, nullable=false)
 	private String account;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"requestDate\"", nullable=false)
+	@Column (name="\"REQUESTDATE\"", nullable=false)
 	private Date requestDate;
-	@Column (name="\"requestIPAddress\"", length=50, nullable=false)
+	@Column (name="\"REQUESTIPADDRESS\"", length=50, nullable=false)
 	private String requestIPAddress;
-	@Column (name="\"mailSended\"", nullable=false)
+	@Column (name="\"MAILSENDED\"", nullable=false)
 	private Boolean mailSended;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"mailSendedDate\"")
+	@Column (name="\"MAILSENDEDDATE\"")
 	private Date mailSendedDate;
-	@Column (name="\"active\"", length=30, nullable=false)
+	@Column (name="\"ACTIVE\"", length=30, nullable=false)
 	private Boolean active;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"activationDate\"")
+	@Column (name="\"ACTIVATIONDATE\"")
 	private Date activationDate;
-	@Column (name="\"activationIPAddress\"", length=50)
+	@Column (name="\"ACTIOVATIONIPADDRESS\"", length=50)
 	private String activationIPAddress;
 
 	/**

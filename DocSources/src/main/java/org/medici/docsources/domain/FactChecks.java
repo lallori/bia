@@ -57,16 +57,16 @@ public class FactChecks implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"VetID\"", length=10, nullable=false)
+	@Column (name="\"VETID\"", length=10, nullable=false)
 	private Integer vetId;
 	@ManyToOne
 	@JoinColumn(name="\"ENTRYID\"")
 	private Document entryId;
-	@Column (name="\"Person\"", length=50)
+	@Column (name="\"PERSON\"", length=50)
 	private String person; 
-	@Column (name="\"Place\"", length=50)
+	@Column (name="\"PLACE\"", length=50)
 	private String place;
-	@Column (name="\"DateInfo\"", length=50)
+	@Column (name="\"DATEINFO\"", length=50)
 	private String dateInfo;
 	@Column (name="\"ADDLRES\"", columnDefinition="LONGTEXT")
 	private String addLRes;

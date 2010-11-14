@@ -57,62 +57,69 @@ public class TitleOccsList implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"TitleOccID\"", length=10, nullable=false)
+	@Column (name="\"TITLEOCCID\"", length=10, nullable=false)
 	private Integer titleOccId;
-	@Column (name="\"TitleOcc\"", length=255)
+	@Column (name="\"TITLEOCC\"", length=255)
 	private String titleOcc;
 	@ManyToOne
-	@JoinColumn(name="\"RoleCatMinorID\"")
+	@JoinColumn(name="\"ROLECATMINORID\"")
 	private RoleCat roleCatMinorId;
-	@Column (name="\"TitleVariants\"", columnDefinition="LONGTEXT")
+	@Column (name="\"TITLEVARIANTS\"", columnDefinition="LONGTEXT")
 	private String titleVariants;
+
 	/**
 	 * @return the titleOccId
 	 */
 	public Integer getTitleOccId() {
 		return titleOccId;
 	}
+	
 	/**
 	 * @param titleOccId the titleOccId to set
 	 */
 	public void setTitleOccId(Integer titleOccId) {
 		this.titleOccId = titleOccId;
 	}
+	
 	/**
 	 * @return the titleOcc
 	 */
 	public String getTitleOcc() {
 		return titleOcc;
 	}
+	
 	/**
 	 * @param titleOcc the titleOcc to set
 	 */
 	public void setTitleOcc(String titleOcc) {
 		this.titleOcc = titleOcc;
 	}
+	
 	/**
 	 * @return the roleCatMinorId
 	 */
 	public RoleCat getRoleCatMinorId() {
 		return roleCatMinorId;
 	}
+	
 	/**
 	 * @param roleCatMinorId the roleCatMinorId to set
 	 */
 	public void setRoleCatMinorId(RoleCat roleCatMinorId) {
 		this.roleCatMinorId = roleCatMinorId;
 	}
+	
 	/**
 	 * @return the titleVariants
 	 */
 	public String getTitleVariants() {
 		return titleVariants;
 	}
+	
 	/**
 	 * @param titleVariants the titleVariants to set
 	 */
 	public void setTitleVariants(String titleVariants) {
 		this.titleVariants = titleVariants;
 	}
-	
 }

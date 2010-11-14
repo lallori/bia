@@ -56,42 +56,48 @@ public class TopicList implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"topicId\"", length=10, nullable=false)
+	@Column (name="\"TOPICID\"", length=10, nullable=false)
 	private Integer topicId;
-	@Column (name="\"topicTitle\"", length=50)
+	@Column (name="\"TOPICTITLE\"", length=50)
 	private String topicTitle;
-	@Column (name="\"description\"", columnDefinition="LONGTEXT")
+	@Column (name="\"DESCRIPTION\"", columnDefinition="LONGTEXT")
 	private String description;
+
 	/**
 	 * @return the topicId
 	 */
 	public Integer getTopicId() {
 		return topicId;
 	}
+	
 	/**
 	 * @param topicId the topicId to set
 	 */
 	public void setTopicId(Integer topicId) {
 		this.topicId = topicId;
 	}
+	
 	/**
 	 * @return the topicTitle
 	 */
 	public String getTopicTitle() {
 		return topicTitle;
 	}
+	
 	/**
 	 * @param topicTitle the topicTitle to set
 	 */
 	public void setTopicTitle(String topicTitle) {
 		this.topicTitle = topicTitle;
 	}
+	
 	/**
 	 * @return the description
 	 */
 	public String getDescription() {
 		return description;
 	}
+	
 	/**
 	 * @param description the description to set
 	 */

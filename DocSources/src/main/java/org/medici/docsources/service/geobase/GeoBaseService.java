@@ -49,6 +49,14 @@ import org.medici.docsources.exception.ApplicationThrowable;
 public interface GeoBaseService {
 
 	/**
+	 * This method last entry {@link org.medici.docsources.domain.Place}.
+	 * 
+	 * @return Last entry {@link org.medici.docsources.domain.Place}
+	 * @throws ApplicationThrowable
+	 */
+	public Place findLastEntryPlace() throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @param peopleId
 	 * @return

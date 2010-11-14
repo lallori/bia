@@ -28,6 +28,7 @@
 package org.medici.docsources.dao.document;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
@@ -63,10 +64,24 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	private static final long serialVersionUID = 270290031716661534L;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Document findDocumentByVolumeId(Integer volumeId) throws PersistenceException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document findLastEntryDocument() throws PersistenceException {
+        Query query = getEntityManager().createQuery("FROM Document ORDER BY dateCreated DESC");
+        query.setMaxResults(1);
+
+        return (Document) query.getSingleResult();
 	}
 
 }

@@ -25,9 +25,8 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.common.ajax;
+package org.medici.docsources.common.pagination;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,36 +35,76 @@ import java.util.List;
  *
  */
 public class Page {
-	private int page;
-	private int pageSize;
+	private Integer firstRecordNumber;
+	private Integer lastRecordNumber;
+	private Integer pageSize;
 	private List<?> results;
-
+	private Long total;
+	
 	/**
 	 * 
 	 * @param inputListResult
 	 * @param page
 	 * @param pageSize
 	 */
-	public Page(List<?> list, int page, int pageSize) {
-		this.page = page;
-		this.pageSize = pageSize;
-		
-		if (list.size() < (page*pageSize))
-			results = new ArrayList();
-		else 
-			results = list.subList(page*pageSize-pageSize, page*pageSize);
+	public Page(List<?> list, Integer firstRecordNumber, Integer lastRecordNumber) {
+		this.setTotal(new Long(list.size()));
+		this.results = list;
+		this.firstRecordNumber = firstRecordNumber;
+		this.lastRecordNumber = lastRecordNumber;
+	}
+
+	/**
+	 * 
+	 * @param list
+	 * @param totalResult
+	 * @param page
+	 * @param pageSize
+	 */
+	public Page(List<?> list, Long totalResult, Integer firstRecordNumber, Integer lastRecordNumber) {
+		this.setTotal(totalResult);
+		this.results = list;
+		this.firstRecordNumber = firstRecordNumber;
+		this.lastRecordNumber = lastRecordNumber;
+	}
+	
+	public Page(PaginationFilter paginationFilter) {
+		if (paginationFilter == null) {
+			setTotal(null);
+			results = null;
+			firstRecordNumber = null;
+			lastRecordNumber = null;
+		} else {
+			setTotal(null);
+			results = null;
+			firstRecordNumber = paginationFilter.getFirstRecord();
+			lastRecordNumber = paginationFilter.getLength();
+		}
 	}
 
 	public List<?> getList() {
-		return isNextPage() ? results.subList(0, pageSize-1) : results;
+		return results;
+	}
+
+	/**
+	 * @return the total
+	 */
+	public Long getTotal() {
+		return total;
 	}
 
 	public boolean isNextPage() {
 		return results.size() > pageSize;
 	}
 
-	public boolean isPreviousPage() {
-		return page > 0;
+	public void setList(List<?> list) {
+		this.results = list;
 	}
 
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(Long total) {
+		this.total = total;
+	}
 }

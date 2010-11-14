@@ -28,6 +28,9 @@
 package org.medici.docsources.dao.volume;
 
 import javax.persistence.PersistenceException;
+
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Volume;
 
@@ -45,7 +48,26 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @param volNum
 	 * @param volLeText
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws PersistenceException
 	 */
 	public Volume findVolume(Integer volNum, String volLeText) throws PersistenceException;
+
+	/**
+	 * This method searches volumes which contains text input parameter in one of his fields
+	 * and return a result page.
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
+	 * This method returns last entry {@link org.medici.docsources.domain.Volume}created on database.
+	 * 
+	 * @return Last entry {@link org.medici.docsources.domain.Volume}
+	 * @throws PersistenceException
+	 */
+	public Volume findLastEntryVolume() throws PersistenceException;
 }

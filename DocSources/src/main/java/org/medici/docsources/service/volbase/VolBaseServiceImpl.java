@@ -27,9 +27,10 @@
  */
 package org.medici.docsources.service.volbase;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import org.apache.commons.beanutils.BeanUtils;
+
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
@@ -78,7 +79,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volume.setVolVetted(false);
 			volume.setBound(false);
 			volume.setFolsNumbrd(false);
-			volume.setOldalphaindex(false);
+			volume.setOldAlphaIndex(false);
 			volume.setItalian(false);
 			volume.setSpanish(false);
 			volume.setEnglish(false);
@@ -97,27 +98,123 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editVolume(Volume volume) throws ApplicationThrowable {
-		Volume vol = null;
+	public void editContextVolume(Volume volume) throws ApplicationThrowable {
+		Volume volumeToUpdate = null;
 		try {
-			vol = getVolumeDAO().find(volume.getSummaryId());
+			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 
+		volumeToUpdate.setCcontext(volume.getCcontext());
+		
 		try {
-			BeanUtils.copyProperties(vol, volume);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
+			getVolumeDAO().merge(volumeToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void editCorrespondentsVolume(Volume volume) throws ApplicationThrowable {
+		Volume volumeToUpdate = null;
+		try {
+			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
 		}
 
+		volumeToUpdate.setRecips(volume.getRecips());
+		volumeToUpdate.setSenders(volume.getSenders());
+		
 		try {
-			getVolumeDAO().merge(vol);
+			getVolumeDAO().merge(volumeToUpdate);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void editDescriptionVolume(Volume volume) throws ApplicationThrowable {
+		Volume volumeToUpdate = null;
+		try {
+			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		volumeToUpdate.setOrgNotes(volume.getOrgNotes());
+		volumeToUpdate.setCcondition(volume.getCcondition());
+		volumeToUpdate.setBound(volume.getBound());
+		volumeToUpdate.setFolsNumbrd(volume.getFolsNumbrd());
+		volumeToUpdate.setOldAlphaIndex(volume.getOldAlphaIndex());
+		volumeToUpdate.setItalian(volume.getItalian());
+		volumeToUpdate.setSpanish(volume.getSpanish());
+		volumeToUpdate.setEnglish(volume.getEnglish());
+		volumeToUpdate.setLatin(volume.getLatin());
+		volumeToUpdate.setGerman(volume.getGerman());
+		volumeToUpdate.setFrench(volume.getFrench());
+		volumeToUpdate.setOtherLang(volume.getOtherLang());
+		volumeToUpdate.setCipher(volume.getCipher());
+		volumeToUpdate.setCipherNotes(volume.getCipherNotes());
+		
+		try {
+			getVolumeDAO().merge(volumeToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void editDetailsVolume(Volume volume) throws ApplicationThrowable {
+		Volume volumeToUpdate = null;
+		try {
+			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		volumeToUpdate.setVolNum(volume.getVolNum());
+		volumeToUpdate.setVolLeText(volume.getVolLeText());
+		volumeToUpdate.setResearcher(volume.getResearcher());
+		volumeToUpdate.setDateCreated(volume.getDateCreated());
+		volumeToUpdate.setSerieList(volume.getSerieList());
+		volumeToUpdate.setStartYear(volume.getStartYear());
+		volumeToUpdate.setStartMonth(volume.getStartMonth());
+		volumeToUpdate.setStartDay(volume.getStartDay());
+		volumeToUpdate.setEndYear(volume.getEndYear());
+		volumeToUpdate.setEndMonth(volume.getEndMonth());
+		volumeToUpdate.setEndDay(volume.getEndDay());
+		volumeToUpdate.setDateNotes(volume.getDateNotes());
+		
+		try {
+			getVolumeDAO().merge(volumeToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Volume findLastEntryVolume() throws ApplicationThrowable {
+		try {
+			return getVolumeDAO().findLastEntryVolume();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -149,6 +246,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		return monthDAO;
 	}
 
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -175,18 +273,16 @@ public class VolBaseServiceImpl implements VolBaseService {
 		return volumeDAO;
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Volume> searchVolumes(String text) throws ApplicationThrowable {
+	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			getVolumeDAO().findVolume(1 ,null);
+			return getVolumeDAO().searchVolumes(text, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-		return null;
 	}
 
 	/**

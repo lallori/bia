@@ -56,15 +56,15 @@ public class BioRefLink implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"RefID\"", length=10, nullable=false)
+	@Column (name="\"REFID\"", length=10, nullable=false)
 	private Integer refID;
 	@ManyToOne
 	@JoinColumn(name="\"PERSONID\"")
 	private People personId;
 	@ManyToOne
-	@JoinColumn(name="\"BiblioID\"")
+	@JoinColumn(name="\"BIBLIOID\"")
 	private BiblioT biblioId;
-	@Column (name="\"Notes\"", length=255)
+	@Column (name="\"NOTES\"", length=255)
 	private String notes;
 	/**
 	 * @return the refID

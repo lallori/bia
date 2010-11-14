@@ -41,7 +41,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.naming.Name;
 
-import org.medici.docsources.common.ajax.Page;
+import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.util.LdapUtils;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;

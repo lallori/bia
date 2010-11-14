@@ -54,23 +54,23 @@ public class BiblioT implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"BiblioID\"", length=10, nullable=false)
+	@Column (name="\"BIBLIOID\"", length=10, nullable=false)
 	private Integer biblioId;
-	@Column (name="\"AuthorEditor\"", length=255)
+	@Column (name="\"AUTHOREDITOR\"", length=255)
 	private String authorEditor;
-	@Column (name="\"Title\"", length=255)
+	@Column (name="\"TITLE\"", length=255)
 	private String title;
-	@Column (name="\"Type\"", length=255)
+	@Column (name="\"TYPE\"", length=255)
 	private String type;
-	@Column (name="\"Periodical\"", length=255)
+	@Column (name="\"PERIODICAL\"", length=255)
 	private String periodical;
-	@Column (name="\"Publisher\"", length=255)
+	@Column (name="\"PUBLISHER\"", length=255)
 	private String publisher;
-	@Column (name="\"Dates\"", length=255)
+	@Column (name="\"DATES\"", length=255)
 	private String dates;
-	@Column (name="\"Notes\"", length=255)
+	@Column (name="\"NOTES\"", length=255)
 	private String notes;
-	@Column (name="\"ShelfNum\"", length=255)
+	@Column (name="\"SHELFNUM\"", length=255)
 	private String shelfNum;	
 
 	/**

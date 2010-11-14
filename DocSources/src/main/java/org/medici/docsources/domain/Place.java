@@ -107,9 +107,9 @@ public class Place implements Serializable {
 	private String placesMemo;
 	@Column (name="\"ADDLRES\"", length=1, columnDefinition="TINYINT", nullable=false)
 	private Boolean addlRes;
-	@Column (name="\"Term_Accent\"", length=50)
+	@Column (name="\"TERM_ACCENT\"", length=50)
 	private String termAccent;
-	@Column (name="\"Language\"", length=10)
+	@Column (name="\"LANGUAGE\"", length=10)
 	private Integer language;
 	@Column (name="\"OTHER_FLAGS\"", length=50)
 	private String otherFlags;

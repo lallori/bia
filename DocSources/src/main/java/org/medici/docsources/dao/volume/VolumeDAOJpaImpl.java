@@ -27,13 +27,22 @@
  */
 package org.medici.docsources.dao.volume;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
@@ -70,6 +79,17 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Volume findLastEntryVolume() throws PersistenceException {
+         Query query = getEntityManager().createQuery("FROM Volume ORDER BY dateCreated DESC");
+         query.setMaxResults(1);
+
+         return (Volume) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Volume findVolume(Integer volNum, String volLeText) {
 		// Create criteria objects
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
@@ -79,7 +99,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		// Define predicate's elements
 		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
 		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLeText") ? null : criteriaBuilder.parameter(String.class, "volLeText"); 
-		
+
 		criteriaQuery.where(
 			criteriaBuilder.and(
 				criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
@@ -96,6 +116,62 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 			typedQuery.setParameter("volLeText", volLeText);
 
 		return typedQuery.getSingleResult();
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public Page searchVolumes(String text, PaginationFilter paginationFilter) {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		Page page = new Page(paginationFilter);
+
+		if (paginationFilter.getTotal() == null) {
+			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+			Root<Volume> rootCount = criteriaQueryCount.from(Volume.class);
+			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+			List<Predicate> predicates = new ArrayList<Predicate>();
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("title"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("subTitle1"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("subTitle2"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("orgNotes"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("recips"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("researcher"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("senders"), "%" + text + "%" ));
+
+	        //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
+	        criteriaQueryCount.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
+
+			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
+		}
+
+		CriteriaQuery<Volume> criteriaQuery = criteriaBuilder.createQuery(Volume.class);
+		Root<Volume> root = criteriaQuery.from(Volume.class);
+	
+		//We need to duplicate predicates beacause they are link to Root element
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        //predicates.add(criteriaBuilder.like((Expression) root.get("condition"), "%" + text + "%" ));
+        //predicates.add(criteriaBuilder.like((Expression) root.get("context"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("title"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle1"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle2"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("orgNotes"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("recips"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("researcher"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("senders"), "%" + text + "%" ));
+
+        //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
+        criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
+
+		// Set values in predicate's elements  
+		TypedQuery<Volume> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setFirstResult(paginationFilter.getFirstRecord());
+		typedQuery.setMaxResults(paginationFilter.getLength());
+		page.setList(typedQuery.getResultList());
+
+		return page;
 	}
 
 }

@@ -27,16 +27,19 @@
  */
 package org.medici.docsources.dao.people;
 
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>PeopleDAOJpaImpl</b> is a default implementation of <b>PeopleDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * 
+ * @see org.medici.docsources.domain.People
  */
 @Repository
 public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleDAO {
@@ -59,5 +62,16 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = -2964902298903431093L;	
+	private static final long serialVersionUID = -2964902298903431093L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People findLastEntryPerson() throws PersistenceException {
+        Query query = getEntityManager().createQuery("FROM People ORDER BY dateCreated DESC");
+        query.setMaxResults(1);
+
+        return (People) query.getSingleResult();
+	}	
 }

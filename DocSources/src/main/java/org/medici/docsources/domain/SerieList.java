@@ -37,6 +37,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.envers.Audited;
 
 /**
@@ -56,91 +57,14 @@ public class SerieList implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"SeriesRefNum\"", length=10, nullable=false)
+	@Column (name="\"SERIESREFNUM\"", length=10, nullable=false)
 	private Integer seriesRefNum;
-	@Column (name="\"Title\"", length=100)
-	private String title;
-	@Column (name="\"SubTitle1\"", length=100)
+	@Column (name="\"SUBTITLE1\"", length=100)
 	private String subTitle1;
-	@Column (name="\"SubTitle2\"", length=100,nullable=true)
+	@Column (name="\"SUBTITLE2\"", length=100,nullable=true)
 	private String subTitle2;
-
-	/**
-	 * 
-	 * @param seriesRefNum
-	 */
-	public void setSeriesRefNum(Integer seriesRefNum) {
-		this.seriesRefNum = seriesRefNum;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Integer getSeriesRefNum() {
-		return seriesRefNum;
-	}
-	
-	/**
-	 * 
-	 * @param title
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getTitle() {
-		return title;
-	}
-	
-	/**
-	 * 
-	 * @param subTitle1
-	 */
-	public void setSubTitle1(String subTitle1) {
-		this.subTitle1 = subTitle1;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getSubTitle1() {
-		return subTitle1;
-	}
-	
-	/**
-	 * 
-	 * @param subTitle2
-	 */
-	public void setSubTitle2(String subTitle2) {
-		this.subTitle2 = subTitle2;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getSubTitle2() {
-		return subTitle2;
-	}
-
-	/**
-	 * Implementing this method is mandatory for caching object.
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((seriesRefNum == null) ? 0 : seriesRefNum.hashCode());
-		return result;
-	}
+	@Column (name="\"TITLE\"", length=100)
+	private String title;
 
 	/**
 	 * Implementing this method is mandatory for caching object.
@@ -162,5 +86,110 @@ public class SerieList implements Serializable{
 		} else if (!seriesRefNum.equals(other.seriesRefNum))
 			return false;
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getSeriesRefNum() {
+		return seriesRefNum;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getSubTitle1() {
+		return subTitle1;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getSubTitle2() {
+		return subTitle2;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getTitle() {
+		return title;
+	}
+	
+	/**
+	 * Implementing this method is mandatory for caching object.
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((seriesRefNum == null) ? 0 : seriesRefNum.hashCode());
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param seriesRefNum
+	 */
+	public void setSeriesRefNum(Integer seriesRefNum) {
+		this.seriesRefNum = seriesRefNum;
+	}
+	
+	/**
+	 * 
+	 * @param subTitle1
+	 */
+	public void setSubTitle1(String subTitle1) {
+		this.subTitle1 = subTitle1;
+	}
+
+	/**
+	 * 
+	 * @param subTitle2
+	 */
+	public void setSubTitle2(String subTitle2) {
+		this.subTitle2 = subTitle2;
+	}
+
+	/**
+	 * 
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * toString method.
+	 */
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer();
+		if (!StringUtils.isEmpty(getTitle())) {
+			stringBuffer.append(getTitle());
+		}
+		
+		if (!StringUtils.isEmpty(getSubTitle1())) {
+			if (stringBuffer.length() > 0) {
+				stringBuffer.append(" / ");
+			}
+			stringBuffer.append(getSubTitle1());
+		}
+
+		if (!StringUtils.isEmpty(getSubTitle2())) {
+			if (stringBuffer.length() > 0) {
+				stringBuffer.append(" / ");
+			}
+
+			stringBuffer.append(getSubTitle2());
+		}
+
+		return stringBuffer.toString();
 	}
 }
