@@ -125,6 +125,7 @@
 					<archive>
 						<manifestFile>WebContent/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+					<warName>DocSources</warName>
 				</configuration>
 			</plugin>
 			<plugin>
