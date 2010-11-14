@@ -1,5 +1,5 @@
 /*
- * CreateVolumeController.java
+ * ShowLastEntryPersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,64 +25,62 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.volbase;
+package org.medici.docsources.controller.peoplebase;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.domain.Volume;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Create Volume".
+ * Controller for action "Show last entry person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/volbase/CreateVolume")
-public class CreateVolumeController {
+@RequestMapping("/src/peoplebase/ShowLastEntryPerson")
+public class ShowLastEntryPersonController {
 	@Autowired
-	private VolBaseService volBaseService;
-
-	/**
-	 * @return the volBaseService
-	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
-	}
+	private PeopleBaseService peopleBaseService;
 
 	/**
 	 * 
-	 * @param command
+	 * @param volumeId
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
+	public ModelAndView setupForm(){
 		Map<String, Object> model = new HashMap<String, Object>();
+	
+		try {
+			People person = getPeopleBaseService().findLastEntryPerson();
+			model.put("person", person);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/ShowPerson", model);
+		}
 
-		Volume volume = new Volume();
-		volume.setSummaryId(0);
-		volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-		volume.setDateCreated(new Date());
-
-		model.put("volume", volume);
-		
-		return new ModelAndView("volbase/ShowVolume", model);
+		return new ModelAndView("peoplebase/ShowPerson", model);
 	}
 
 	/**
-	 * @param volBaseService
-	 *            the volBaseService to set
+	 * @param peopleBaseService the peopleBaseService to set
 	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
 	}
+
+	/**
+	 * @return the peopleBaseService
+	 */
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
+	}
+
 }

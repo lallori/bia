@@ -118,7 +118,7 @@ public class EditDetailsVolumeController {
 				if (command.getSummaryId().equals(0)) {
 					getVolBaseService().addNewVolume(volume);
 				} else {
-					getVolBaseService().editVolume(volume);
+					getVolBaseService().editDetailsVolume(volume);
 				}
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsVolume", model);
@@ -164,7 +164,7 @@ public class EditDetailsVolumeController {
 			command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
 			command.setSeriesRefDescription(volume.getSerieList().getTitle());
 		} else {
-			// On VOlume creation, the research is always the current user.
+			// On Volume creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			command.setVolNum(null);
 			command.setStartDay(null);

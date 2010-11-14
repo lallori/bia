@@ -27,12 +27,9 @@
  */
 package org.medici.docsources.controller.volbase;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.volbase.EditCorrespondentsVolumeCommand;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -93,15 +90,12 @@ public class EditCorrespondentsVolumeController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 			Volume volume = new Volume();
+			volume.setSummaryId(command.getSummaryId());
+			volume.setRecips(command.getRecips());
+			volume.setSenders(command.getSenders());
 
 			try {
-				BeanUtils.copyProperties(volume, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-
-			try {
-				getVolBaseService().editVolume(volume);
+				getVolBaseService().editCorrespondentsVolume(volume);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditCorrespondentsVolume", model);
 			}

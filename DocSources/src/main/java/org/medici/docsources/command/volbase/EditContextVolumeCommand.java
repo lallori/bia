@@ -28,7 +28,6 @@
 package org.medici.docsources.command.volbase;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * Command bean for action "Edit Context Volume".
@@ -40,10 +39,7 @@ import javax.validation.constraints.Size;
 public class EditContextVolumeCommand {
 	@NotNull
 	private Integer summaryId;
-	@NotNull
-	private Integer volNum;
-	@Size (max=1)
-	private String volLeText;
+	private String ccontext;
 
 	/**
 	 * @return the summaryId
@@ -58,28 +54,15 @@ public class EditContextVolumeCommand {
 		this.summaryId = summaryId;
 	}
 	/**
-	 * @return the volNum
+	 * @param ccontext the ccontext to set
 	 */
-	public Integer getVolNum() {
-		return volNum;
+	public void setCcontext(String ccontext) {
+		this.ccontext = ccontext;
 	}
 	/**
-	 * @param volNum the volNum to set
+	 * @return the ccontext
 	 */
-	public void setVolNum(Integer volNum) {
-		this.volNum = volNum;
+	public String getCcontext() {
+		return ccontext;
 	}
-	/**
-	 * @return the volLeText
-	 */
-	public String getVolLeText() {
-		return volLeText;
-	}
-	/**
-	 * @param volLeText the volLeText to set
-	 */
-	public void setVolLeText(String volLeText) {
-		this.volLeText = volLeText;
-	}
-	
 }

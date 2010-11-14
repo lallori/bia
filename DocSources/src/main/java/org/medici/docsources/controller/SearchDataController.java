@@ -34,7 +34,6 @@ import java.util.Map;
 import org.medici.docsources.command.SearchDataCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
-import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -58,13 +57,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class SearchDataController {
 	@Autowired
 	private DocBaseService docBaseService;
-	
 	@Autowired
 	private GeoBaseService geoBaseService;
-
 	@Autowired
 	private PeopleBaseService peopleBaseService;
-
 	@Autowired
 	private VolBaseService volBaseService;
 
@@ -105,7 +101,7 @@ public class SearchDataController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@ModelAttribute("command") SearchDataCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		if (command.getSearch().toLowerCase().trim().equals("documents")) {
+		if (command.getSearchType().toLowerCase().trim().equals("documents")) {
 			List<Document> searchResult = new ArrayList<Document>(0);
 			try {
 				searchResult = getDocBaseService().searchDocuments(command.getText());
@@ -115,10 +111,10 @@ public class SearchDataController {
 				e.printStackTrace();
 			}
 			
-			return new ModelAndView("docbase/SearchDocumentResult.do",model);
+			return new ModelAndView("docbase/SearchDocumentResult",model);
 		}
 		
-		if (command.getSearch().toLowerCase().trim().equals("people")) {
+		if (command.getSearchType().toLowerCase().trim().equals("people")) {
 			List<People> searchResult = new ArrayList<People>(0);
 			try {
 				searchResult = getPeopleBaseService().searchPeople(command.getText());
@@ -128,10 +124,10 @@ public class SearchDataController {
 				e.printStackTrace();
 			}
 			
-			return new ModelAndView("peoplebase/SearchPeopleResult.do",model);
+			return new ModelAndView("peoplebase/SearchResultPeople",model);
 		}
 		
-		if (command.getSearch().toLowerCase().trim().equals("places")) {
+		if (command.getSearchType().toLowerCase().trim().equals("places")) {
 			List<Document> searchResult = new ArrayList<Document>(0);
 			try {
 				searchResult = getGeoBaseService().searchPlaces(command.getText());
@@ -141,20 +137,12 @@ public class SearchDataController {
 				e.printStackTrace();
 			}
 			
-			return new ModelAndView("geobase/SearchPlaceResult.do",model);
+			return new ModelAndView("geobase/SearchResultPlace",model);
 		}
 		
-		if (command.getSearch().toLowerCase().trim().equals("volumes")) {
-			List<Volume> searchResult = new ArrayList<Volume>(0);
-			try {
-				searchResult = getVolBaseService().searchVolumes(command.getText());
-				model.put("volumes", searchResult);
-			} catch (ApplicationThrowable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return new ModelAndView("volbase/SearchVolumeResult.do",model);
+		if (command.getSearchType().toLowerCase().trim().equals("volumes")) {
+	
+			return new ModelAndView("volbase/SearchResultVolume",model);
 		}
 
 		return new ModelAndView("errorKO",model);

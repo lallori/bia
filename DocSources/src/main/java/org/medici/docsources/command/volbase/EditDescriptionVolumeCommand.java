@@ -28,7 +28,6 @@
 package org.medici.docsources.command.volbase;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * Command bean for action "Edit Description Volume".
@@ -40,10 +39,20 @@ import javax.validation.constraints.Size;
 public class EditDescriptionVolumeCommand {
 	@NotNull
 	private Integer summaryId;
-	@NotNull
-	private Integer volNum;
-	@Size (max=1)
-	private String volLeText;
+	private String orgNotes;
+	private String ccondition;
+	private Boolean bound;
+	private Boolean folsNumbrd;
+	private Boolean oldAlphaIndex;
+	private Boolean italian;
+	private Boolean spanish;
+	private Boolean english;
+	private Boolean latin;
+	private Boolean german;
+	private Boolean french;
+	private String otherLang;
+	private Boolean cipher;
+	private String cipherNotes;
 
 	/**
 	 * @return the summaryId
@@ -51,36 +60,207 @@ public class EditDescriptionVolumeCommand {
 	public Integer getSummaryId() {
 		return summaryId;
 	}
+	
 	/**
 	 * @param summaryId the summaryId to set
 	 */
 	public void setSummaryId(Integer summaryId) {
 		this.summaryId = summaryId;
 	}
+	
 	/**
-	 * @return the volNum
+	 * @return the orgNotes
 	 */
-	public Integer getVolNum() {
-		return volNum;
-	}
-	/**
-	 * @param volNum the volNum to set
-	 */
-	public void setVolNum(Integer volNum) {
-		this.volNum = volNum;
-	}
-	/**
-	 * @return the volLeText
-	 */
-	public String getVolLeText() {
-		return volLeText;
-	}
-	/**
-	 * @param volLeText the volLeText to set
-	 */
-	public void setVolLeText(String volLeText) {
-		this.volLeText = volLeText;
+	public String getOrgNotes() {
+		return orgNotes;
 	}
 	
-
+	/**
+	 * @param orgNotes the orgNotes to set
+	 */
+	public void setOrgNotes(String orgNotes) {
+		this.orgNotes = orgNotes;
+	}
+	
+	/**
+	 * @return the ccondition
+	 */
+	public String getCcondition() {
+		return ccondition;
+	}
+	
+	/**
+	 * @param ccondition the ccondition to set
+	 */
+	public void setCcondition(String ccondition) {
+		this.ccondition = ccondition;
+	}
+	
+	/**
+	 * @return the bound
+	 */
+	public Boolean getBound() {
+		return bound;
+	}
+	
+	/**
+	 * @param bound the bound to set
+	 */
+	public void setBound(Boolean bound) {
+		this.bound = bound;
+	}
+	
+	/**
+	 * @return the folsNumbrd
+	 */
+	public Boolean getFolsNumbrd() {
+		return folsNumbrd;
+	}
+	
+	/**
+	 * @param folsNumbrd the folsNumbrd to set
+	 */
+	public void setFolsNumbrd(Boolean folsNumbrd) {
+		this.folsNumbrd = folsNumbrd;
+	}
+	
+	/**
+	 * @return the oldAlphaIndex
+	 */
+	public Boolean getOldAlphaIndex() {
+		return oldAlphaIndex;
+	}
+	
+	/**
+	 * @param oldAlphaIndex the oldAlphaIndex to set
+	 */
+	public void setOldAlphaIndex(Boolean oldAlphaIndex) {
+		this.oldAlphaIndex = oldAlphaIndex;
+	}
+	
+	/**
+	 * @return the italian
+	 */
+	public Boolean getItalian() {
+		return italian;
+	}
+	
+	/**
+	 * @param italian the italian to set
+	 */
+	public void setItalian(Boolean italian) {
+		this.italian = italian;
+	}
+	
+	/**
+	 * @return the spanish
+	 */
+	public Boolean getSpanish() {
+		return spanish;
+	}
+	
+	/**
+	 * @param spanish the spanish to set
+	 */
+	public void setSpanish(Boolean spanish) {
+		this.spanish = spanish;
+	}
+	
+	/**
+	 * @return the english
+	 */
+	public Boolean getEnglish() {
+		return english;
+	}
+	
+	/**
+	 * @param english the english to set
+	 */
+	public void setEnglish(Boolean english) {
+		this.english = english;
+	}
+	
+	/**
+	 * @return the latin
+	 */
+	public Boolean getLatin() {
+		return latin;
+	}
+	
+	/**
+	 * @param latin the latin to set
+	 */
+	public void setLatin(Boolean latin) {
+		this.latin = latin;
+	}
+	
+	/**
+	 * @return the german
+	 */
+	public Boolean getGerman() {
+		return german;
+	}
+	
+	/**
+	 * @param german the german to set
+	 */
+	public void setGerman(Boolean german) {
+		this.german = german;
+	}
+	
+	/**
+	 * @return the french
+	 */
+	public Boolean getFrench() {
+		return french;
+	}
+	
+	/**
+	 * @param french the french to set
+	 */
+	public void setFrench(Boolean french) {
+		this.french = french;
+	}
+	
+	/**
+	 * @return the otherLang
+	 */
+	public String getOtherLang() {
+		return otherLang;
+	}
+	
+	/**
+	 * @param otherLang the otherLang to set
+	 */
+	public void setOtherLang(String otherLang) {
+		this.otherLang = otherLang;
+	}
+	
+	/**
+	 * @return the cipher
+	 */
+	public Boolean getCipher() {
+		return cipher;
+	}
+	
+	/**
+	 * @param cipher the cipher to set
+	 */
+	public void setCipher(Boolean cipher) {
+		this.cipher = cipher;
+	}
+	
+	/**
+	 * @return the cipherNotes
+	 */
+	public String getCipherNotes() {
+		return cipherNotes;
+	}
+	
+	/**
+	 * @param cipherNotes the cipherNotes to set
+	 */
+	public void setCipherNotes(String cipherNotes) {
+		this.cipherNotes = cipherNotes;
+	}
 }

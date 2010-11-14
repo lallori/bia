@@ -27,27 +27,29 @@
  */
 package org.medici.docsources.command;
 
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 public class SearchDataCommand {
-	private String search;
+	private String searchType;
 	private String text;
-	
+	private Integer pageNumber;
+
 	/**
-	 * @param search the search to set
+	 * @param searchType the search to setType
 	 */
-	public void setSearch(String search) {
-		this.search = search;
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
 	}
 	
 	/**
 	 * @return the search
 	 */
-	public String getSearch() {
-		return search;
+	public String getSearchType() {
+		return searchType;
 	}
 	
 	/**
@@ -62,5 +64,19 @@ public class SearchDataCommand {
 	 */
 	public String getText() {
 		return text;
+	}
+
+	/**
+	 * @param pageNumber the pageNumber to set
+	 */
+	public void setPageNumber(Integer pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
+	/**
+	 * @return the pageNumber
+	 */
+	public Integer getPageNumber() {
+		return pageNumber;
 	}
 }

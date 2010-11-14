@@ -28,8 +28,6 @@
 package org.medici.docsources.command.volbase;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 
 /**
  * Command bean for action "Edit Correspondents Volume".
@@ -39,13 +37,23 @@ import javax.validation.constraints.Size;
  * @see org.docsources.controller.volbase.EditCorrespondentsVolumeController
  */
 public class EditCorrespondentsVolumeCommand {
+	private String recips;
+	private String senders;
 	@NotNull
 	private Integer summaryId;
-	@NotNull
-	private Integer volNum;
-	@Size (max=1)
-	private String volLeText;
 
+	/**
+	 * @return the recips
+	 */
+	public String getRecips() {
+		return recips;
+	}
+	/**
+	 * @return the senders
+	 */
+	public String getSenders() {
+		return senders;
+	}
 	/**
 	 * @return the summaryId
 	 */
@@ -53,35 +61,21 @@ public class EditCorrespondentsVolumeCommand {
 		return summaryId;
 	}
 	/**
+	 * @param recips the recips to set
+	 */
+	public void setRecips(String recips) {
+		this.recips = recips;
+	}
+	/**
+	 * @param senders the senders to set
+	 */
+	public void setSenders(String senders) {
+		this.senders = senders;
+	}
+	/**
 	 * @param summaryId the summaryId to set
 	 */
 	public void setSummaryId(Integer summaryId) {
 		this.summaryId = summaryId;
 	}
-	/**
-	 * @return the volNum
-	 */
-	public Integer getVolNum() {
-		return volNum;
-	}
-	/**
-	 * @param volNum the volNum to set
-	 */
-	public void setVolNum(Integer volNum) {
-		this.volNum = volNum;
-	}
-	/**
-	 * @return the volLeText
-	 */
-	public String getVolLeText() {
-		return volLeText;
-	}
-	/**
-	 * @param volLeText the volLeText to set
-	 */
-	public void setVolLeText(String volLeText) {
-		this.volLeText = volLeText;
-	}
-	
-
 }

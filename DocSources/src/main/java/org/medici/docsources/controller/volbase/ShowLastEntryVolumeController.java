@@ -1,5 +1,5 @@
 /*
- * EditContextVolumeController.java
+ * ShowLastEntryVolumeController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,53 +27,32 @@
  */
 package org.medici.docsources.controller.volbase;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.Valid;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.medici.docsources.command.volbase.EditContextVolumeCommand;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Context Volume".
+ * Controller for action "Show last entry volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/volbase/EditContextVolume")
-public class EditContextVolumeController {
-	@Autowired(required = false)
-	@Qualifier("editContextVolumeValidator")
-	private Validator validator;
+@RequestMapping("/src/volbase/ShowLastEntryVolume")
+public class ShowLastEntryVolumeController {
 	@Autowired
 	private VolBaseService volBaseService;
 
 	/**
-	 * This method returns the Validator class used by Controller to make
-	 * business validation.
 	 * 
 	 * @return
-	 */
-	public Validator getValidator() {
-		return validator;
-	}
-
-	/**
-	 * @return the volBaseService
 	 */
 	public VolBaseService getVolBaseService() {
 		return volBaseService;
@@ -81,70 +60,26 @@ public class EditContextVolumeController {
 
 	/**
 	 * 
-	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditContextVolumeCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-			Volume volume = new Volume();
-			volume.setSummaryId(command.getSummaryId());
-			volume.setCcontext(command.getCcontext());
-
-			try {
-				getVolBaseService().editContextVolume(volume);
-			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowVolume", model);
-			}
-			
-			model.put("volume", volume);
-			return new ModelAndView("volbase/ShowVolume", model);
-		}
-
-	}
-
-	/**
-	 * 
-	 * @param command
+	 * @param volumeId
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditContextVolumeCommand command) {
+	public ModelAndView setupForm(){
 		Map<String, Object> model = new HashMap<String, Object>();
-		Volume volume = new Volume();
-
+	
 		try {
-			volume = getVolBaseService().findVolume(command.getSummaryId());
+			Volume volume = getVolBaseService().findLastEntryVolume();
+			model.put("volume", volume);
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/EditDetailsVolume", model);
+			return new ModelAndView("error/ShowVolume", model);
 		}
 
-		try {
-			BeanUtils.copyProperties(command, volume);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
-		}
-
-		return new ModelAndView("volbase/EditContextVolume", model);
+		return new ModelAndView("volbase/ShowVolume", model);
 	}
 
 	/**
 	 * 
-	 * @param validator
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
-
-	/**
 	 * @param volBaseService
-	 *            the volBaseService to set
 	 */
 	public void setVolBaseService(VolBaseService volBaseService) {
 		this.volBaseService = volBaseService;

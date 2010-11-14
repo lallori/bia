@@ -27,12 +27,9 @@
  */
 package org.medici.docsources.controller.volbase;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.volbase.EditDescriptionVolumeCommand;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -93,15 +90,24 @@ public class EditDescriptionVolumeController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 			Volume volume = new Volume();
+			volume.setSummaryId(command.getSummaryId());
+			volume.setOrgNotes(command.getOrgNotes());
+			volume.setCcondition(command.getCcondition());
+			volume.setBound(command.getBound());
+			volume.setFolsNumbrd(command.getFolsNumbrd());
+			volume.setOldAlphaIndex(command.getOldAlphaIndex());
+			volume.setItalian(command.getItalian());
+			volume.setSpanish(command.getSpanish());
+			volume.setEnglish(command.getEnglish());
+			volume.setLatin(command.getLatin());
+			volume.setGerman(command.getGerman());
+			volume.setFrench(command.getFrench());
+			volume.setOtherLang(command.getOtherLang());
+			volume.setCipher(command.getCipher());
+			volume.setCipherNotes(command.getCipherNotes());
 
 			try {
-				BeanUtils.copyProperties(volume, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-
-			try {
-				getVolBaseService().editVolume(volume);
+				getVolBaseService().editDescriptionVolume(volume);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
 			}
