@@ -1,7 +1,7 @@
 .titlepeople{ /* Series List */
 	padding-top:15px;
 	padding-bottom:15px;
-	font-size:150%;
+	font-size:14px;
 	font-style:italic;
 	color:#242e44;
 }
@@ -13,8 +13,15 @@ h3{ /* Series List */
 	padding-bottom:15px;
 }
 
+h4{ /* TGN, MAP, MapSite Title */
+	text-align:left;
+	font-size:13px;
+	font-style:italic;
+	
+}
+
 h5{ /* Titles */
-	font-size:100%;
+	font-size:11px;
 	display:inline;
 	color:#6d5c4d;
 }
@@ -32,12 +39,13 @@ h6{ /* Created by Text */
 	width:150px;
 }
 
-#body_left a{ /* Edit buttons */
+#body_left a, #body_right a{ /* Edit buttons */
 	text-decoration:underline;
 	font-weight:100;
-	font-size:95%;
+	font-size:11px;
 	color:#b99c84;
 }
+
 
 .edit_button {
 	font-size:90%;
@@ -83,6 +91,7 @@ input {
 	background-color: #fbf7f4;
 	color: #000000;
 }
+
 .button {
 	background-color: #e6d0c6;
 	border:none;
@@ -310,7 +319,7 @@ hr {
 }
 
 
-#EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv {
+#EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv {
 	width:450px;
 }
 
