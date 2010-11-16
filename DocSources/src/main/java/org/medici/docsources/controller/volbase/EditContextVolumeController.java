@@ -117,18 +117,22 @@ public class EditContextVolumeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditContextVolumeCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Volume volume = new Volume();
 
-		try {
-			volume = getVolBaseService().findVolume(command.getSummaryId());
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/EditDetailsVolume", model);
-		}
+		if ((command != null) && (command.getSummaryId() > 0)) {
+			Volume volume = new Volume();
 
-		try {
-			BeanUtils.copyProperties(command, volume);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
+			try {
+				volume = getVolBaseService().findVolume(command.getSummaryId());
+				model.put("volume", volume);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsVolume", model);
+			}
+
+			try {
+				BeanUtils.copyProperties(command, volume);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
 		}
 
 		return new ModelAndView("volbase/EditContextVolume", model);

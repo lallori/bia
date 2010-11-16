@@ -138,7 +138,6 @@ public class EditDetailsVolumeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsVolumeCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Volume volume = new Volume();
 
 		try {
 			List<Month> months = getVolBaseService().getMonths();
@@ -148,6 +147,8 @@ public class EditDetailsVolumeController {
 		}
 
 		if ((command != null) && (command.getSummaryId() > 0)) {
+			Volume volume = new Volume();
+
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
 				model.put("volume", volume);

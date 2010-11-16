@@ -27,9 +27,12 @@
  */
 package org.medici.docsources.controller.volbase;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.volbase.EditDescriptionVolumeCommand;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -126,6 +129,23 @@ public class EditDescriptionVolumeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDescriptionVolumeCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+
+		if ((command != null) && (command.getSummaryId() > 0)) {
+			Volume volume = new Volume();
+
+			try {
+				volume = getVolBaseService().findVolume(command.getSummaryId());
+				model.put("volume", volume);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsVolume", model);
+			}
+
+			try {
+				BeanUtils.copyProperties(command, volume);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
+		}
 
 		return new ModelAndView("volbase/EditDescriptionVolume", model);
 	}
