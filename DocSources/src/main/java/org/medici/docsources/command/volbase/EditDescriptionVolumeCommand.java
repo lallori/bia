@@ -43,6 +43,7 @@ public class EditDescriptionVolumeCommand {
 	private String ccondition;
 	private Boolean bound;
 	private Boolean folsNumbrd;
+	private String folioCount;
 	private Boolean oldAlphaIndex;
 	private Boolean italian;
 	private Boolean spanish;
@@ -122,6 +123,20 @@ public class EditDescriptionVolumeCommand {
 	 */
 	public void setFolsNumbrd(Boolean folsNumbrd) {
 		this.folsNumbrd = folsNumbrd;
+	}
+	
+	/**
+	 * @param folioCount the folioCount to set
+	 */
+	public void setFolioCount(String folioCount) {
+		this.folioCount = folioCount;
+	}
+
+	/**
+	 * @return the folioCount
+	 */
+	public String getFolioCount() {
+		return folioCount;
 	}
 	
 	/**
