@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="<c:url value="/styles/style_editform.css" />" type="text/css" media="screen, projection">
 
 	<div id="createdby"><h6>CREATED BY ${command.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${command.dateCreated}" /></h6></div>
-	<form:form id="EditDetailsVolumeForm" method="post" class="edit">
+	<form:form id="EditDetailsVolumeForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>VOLUME DETAILS</b></legend>
 			<div>

@@ -5,13 +5,11 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<link rel="stylesheet" href="<c:url value="/styles/style_editform.css" />" type="text/css" media="screen, projection">
-	<form:form id="EditContextVolumeForm" method="post">
+	<form:form id="EditContextVolumeForm" method="post" cssClass="edit">
 		<fieldset>
-			<legend><b>Volume CONTEXT</b></legend>
-			<div>				
-				<form:label id="ccontextLabel" for="ccontext" path="ccontext" cssErrorClass="error"><i>Context:</i></form:label>
-				<form:textarea id="ccontext" path="ccontext" cssClass="txtarea"/><form:errors path="ccontext" cssClass="inputerrors"/>
-			</div>
+			<legend><b>Context</b></legend>
+			<div style="margin:0"><form:textarea id="ccontext" path="ccontext" cssClass="txtarea"/><form:errors path="ccontext" cssClass="inputerrors"/></div>
+
 			<div style="margin-top:5px">
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" /><input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
 			</div>
