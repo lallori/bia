@@ -1,8 +1,13 @@
+html {
+	height: 100%;
+}
+
 body {
-	background-image:url(/DocSources/images/bg_image.jpg) no-repeat bottom center;
+	background-image:url(../images/bg_image.jpg) no-repeat bottom center;
 	background-color:#f6edec;
 	margin:0;
 	padding:0;
+	height: 100%;
 	font-size:small;
 	color:#6F6B69;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -12,10 +17,10 @@ body {
 
 #layout {
 	width:1000px;
-	height:750px;
-	margin:0px auto 0 auto;
-	padding:0px;
-	top:0px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin:0px auto -70px;
 	position:relative;
 }
 
@@ -53,15 +58,29 @@ body {
 
 #DocSourcesContent { /* Main content */
 	width:1000px;
+	height:auto;	
 	margin-top:185px;
 	position:absolute;
 }
 
-#footer {
-	width:1000px;
-	height:30px;
-	margin-top:620px;
-	position:absolute;
+.footer {
+	width:100%;
+	height:70px;
+	position:relative;
+	margin: 0 auto;
+	font-size:10px;
+	text-align:center;
+}
+
+.footer p {
+	position: absolute;
+	width: 1000px;
+	padding: 0;
+	text-align: center;
+}
+
+.push {
+	height: 100px; /* .push must be the same height as .footer */
 }
 
 
@@ -248,10 +267,9 @@ body {
 	width:47%;
 	height:auto;
 	padding-left:25px;
-	margin-top:10px;
+	margin-top:15px;
 	float:left;
 	position:absolute;
-	font-size:85%;
 	border-right: 1px solid #e6d0c6;
 	font-size:11px;
 
@@ -260,13 +278,14 @@ body {
 #body_right{
 	width:47%;
 	height:auto;
-	padding-left:10px;
+	padding-left:25px;
 	padding-right:25px;
-	margin-top:10px;
+	margin-top:15px;
 	float:right;
 	position:absolute;
-	margin-left:500px;
+	margin-left:495px;
 	font-size:11px;
+	border-left: 1px solid #e6d0c6;
 }
 
 

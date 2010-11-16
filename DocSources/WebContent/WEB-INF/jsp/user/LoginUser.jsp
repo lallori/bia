@@ -58,21 +58,13 @@
 			</c:if>
 			<script type="text/javascript">
 			$(document).ready( function(){
-				$("#login").submit(function (){$.blockUI();});
-				$("#RegisterUser").click(function (){$.blockUI();});
-				$("#loginAsGuest").click(function (){$.blockUI();});
-				$("#SendUserPasswordReset").click(function (){$.blockUI();});
-				$("#SendUserActivationCode").click(function (){$.blockUI();});
+				$("#login").submit(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$("#RegisterUser").click(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$("#loginAsGuest").click(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$("#SendUserPasswordReset").click(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$("#SendUserActivationCode").click(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
 				$(window).unload(function (){$.unblockUI();});
 			});
 			</script>
 
-			<style type="text/css">
-				.blockUI h1 {
-					font-family: 'trebuchet ms', verdana, arial;
-					font-size: 20px;
-					margin: 0;
-					padding: 10px;
-				}
-			</style>
-			
+			<img id="displayBox" src="<c:url value="/images/waiting.gif" />" style="display:none" />

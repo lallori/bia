@@ -328,12 +328,33 @@ select {
 	background-color: #fbf7f4;
 }
 
-#EditDetailsPersonDiv {
-	width:275px;
-}
-
 #EditPortraitPersonDiv {
 	float:right;
-	margin-right:30px;
-	margin-top:25px;
+	margin-top:50px;
+}
+
+div.fileinputs {
+	position: relative;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+
+input.file {
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+	width: 345px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 6px 5px 5px; /* top right bottom left */
 }
