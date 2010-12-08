@@ -18,8 +18,8 @@
 			</div>
 
 			<div>
-				<form:label id="volNumLabel" for="volNum" path="volNum" cssStyle="margin-left:78px" cssErrorClass="error" >Volume/Filza (MDP): </form:label><form:input id="volNum" path="volNum" cssClass="input_5c" maxlength="5"/><form:errors path="volNum" cssClass="inputerrors"/><form:label id="volLeTextLabel" for="volLeText" path="volLeText" cssErrorClass="error" cssStyle="margin-left:10px">Volume extension:</form:label>
-				<form:input id="volLeText" path="volLeText" size="1" maxlength="1" cssClass="input_1c"/><form:errors path="volLeText" cssClass="inputerrors"/>
+				<form:label id="volNumLabel" for="volNum" path="volNum" cssStyle="margin-left:78px" cssErrorClass="error" >Volume/Filza (MDP): </form:label><form:input id="volNum" path="volNum" cssClass="input_5c" maxlength="5"/><form:errors path="volNum" cssClass="inputerrors"/><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error" cssStyle="margin-left:10px">Volume extension:</form:label>
+				<form:input id="volLetExt" path="volLetExt" size="1" maxlength="1" cssClass="input_1c"/><form:errors path="volLetExt" cssClass="inputerrors"/>
 			</div>
 
 			<div>
@@ -77,7 +77,16 @@
 			    onSelect: function(value, data){ $('#seriesRefNum').val(data); }
 			  });
 
-	        $('#close').click(function() {
+			$("#EditDetailsVolume").volumeExplorer( {  
+				volNum      : "${volume.volNum}",
+				volLeText   : "${volume.volLetExt}",
+				checkVolumeURL : "${FindVolume}",
+				target : $("#body_right"), 
+				remoteUrl : "${ShowExplorerVolume}",
+				zIndex: 9999
+			});  
+
+			$('#close').click(function() {
 	        	$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
 					$("#body_left").html(html);
 	 			}}); 
@@ -90,7 +99,14 @@
 					if(html.match(/inputerrors/g)){
 						$("#EditDetailsVolumeDiv").html(html);
 					} else {
-						$("#body_left").html(html);
+						<c:choose> 
+							<c:when test="${command.summaryId == 0}" > 
+								$("#body_left").html(html);
+							</c:when> 
+							<c:otherwise> 
+								$("#EditDetailsVolumeDiv").html(html);
+							</c:otherwise> 
+						</c:choose> 
 					}
 				}});
 				return false;
