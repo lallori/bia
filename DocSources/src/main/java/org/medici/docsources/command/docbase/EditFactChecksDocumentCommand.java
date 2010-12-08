@@ -36,6 +36,7 @@ package org.medici.docsources.command.docbase;
  */
 public class EditFactChecksDocumentCommand {
 	private Integer entryId;
+	private String addLRes;
 
 	/**
 	 * This method returns entryId property.
@@ -53,5 +54,19 @@ public class EditFactChecksDocumentCommand {
 	 */
 	public void setEntryId(Integer entryId) {
 		this.entryId = entryId;
+	}
+
+	/**
+	 * @param addLRes the addLRes to set
+	 */
+	public void setAddLRes(String addLRes) {
+		this.addLRes = addLRes;
+	}
+
+	/**
+	 * @return the addLRes
+	 */
+	public String getAddLRes() {
+		return addLRes;
 	}
 }
