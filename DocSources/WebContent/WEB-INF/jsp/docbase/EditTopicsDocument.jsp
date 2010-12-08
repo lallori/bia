@@ -4,14 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post">
+	<form:form id="EditTopicsDocumentForm" method="post" cssClass="edit">
 	</form:form>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
+			$("#EditTopicsDocumentForm").submit(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
 						if(html.match(/inputerrors/g)){
-							$("#EditCorrespondentsOrPeopleDocumentDiv").html(html);
+							$("#EditTopicsDocumentDiv").html(html);
 						} else {
 							$("#body_left").html(html);
 						}

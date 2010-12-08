@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<form:form id="EditFactChecksDocumentForm" method="post">
+	<form:form id="EditFactChecksDocumentForm" method="post" cssClass="edit">
 	</form:form>
 	<script type="text/javascript">
 		$(document).ready(function() {
