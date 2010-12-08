@@ -104,7 +104,7 @@ public class EditContextVolumeController {
 			}
 			
 			model.put("volume", volume);
-			return new ModelAndView("volbase/ShowVolume", model);
+			return new ModelAndView("volbase/ShowContextVolume", model);
 		}
 
 	}

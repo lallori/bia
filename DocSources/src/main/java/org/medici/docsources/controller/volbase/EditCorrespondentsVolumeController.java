@@ -98,16 +98,13 @@ public class EditCorrespondentsVolumeController {
 			volume.setSenders(command.getSenders());
 
 			try {
-				getVolBaseService().editCorrespondentsVolume(volume);
+				volume = getVolBaseService().editCorrespondentsVolume(volume);
+				model.put("volume", volume);
+				return new ModelAndView("volbase/ShowCorrespondentsVolume", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditCorrespondentsVolume", model);
 			}
-			
-			model.put("volume", volume);
-
-			return new ModelAndView("volbase/ShowVolume", model);
 		}
-
 	}
 
 	/**

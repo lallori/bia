@@ -101,7 +101,7 @@ public class EditDetailsVolumeController {
 			Volume volume = new Volume();
 			volume.setSummaryId(command.getSummaryId());
 			volume.setVolNum(command.getVolNum());
-			volume.setVolLeText(command.getVolLeText());
+			volume.setVolLetExt(command.getVolLetExt());
 			volume.setResearcher(command.getResearcher());
 			volume.setDateCreated(command.getDateCreated());
 			volume.setSerieList(new SerieList());
@@ -116,18 +116,18 @@ public class EditDetailsVolumeController {
 
 			try {
 				if (command.getSummaryId().equals(0)) {
-					getVolBaseService().addNewVolume(volume);
+					volume = getVolBaseService().addNewVolume(volume);
+					model.put("volume", volume);
+					return new ModelAndView("volbase/ShowVolume", model);
 				} else {
-					getVolBaseService().editDetailsVolume(volume);
+					volume = getVolBaseService().editDetailsVolume(volume);
+					model.put("volume", volume);
+					return new ModelAndView("volbase/ShowDetailsVolume", model);
 				}
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsVolume", model);
 			}
-			
-			model.put("volume", volume);
-			return new ModelAndView("volbase/ShowVolume", model);
 		}
-
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class EditDetailsVolumeController {
 			}
 
 			command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
-			command.setSeriesRefDescription(volume.getSerieList().getTitle());
+			command.setSeriesRefDescription(volume.getSerieList().toString());
 		} else {
 			// On Volume creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());

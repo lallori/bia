@@ -110,13 +110,13 @@ public class EditDescriptionVolumeController {
 			volume.setCipherNotes(command.getCipherNotes());
 
 			try {
-				getVolBaseService().editDescriptionVolume(volume);
+				volume = getVolBaseService().editDescriptionVolume(volume);
+				model.put("volume", volume);
+				return new ModelAndView("volbase/ShowVolume", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
 			}
 			
-			model.put("volume", volume);
-			return new ModelAndView("volbase/ShowVolume", model);
 		}
 
 	}
