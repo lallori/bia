@@ -67,7 +67,7 @@ public class Volume implements Serializable {
 	@Column (name="\"VOLNUM\"", length=10)
 	private Integer volNum;
 	@Column (name="\"VOLLETEXT\"", length=1)
-	private String volLeText;
+	private String volLetExt;
 	@Column (name="\"RESID\"")
 	private String researcher;
 	@Column (name="\"DATECREATED\"")
@@ -193,15 +193,15 @@ public class Volume implements Serializable {
 	/**
 	 * @return the volLeText
 	 */
-	public String getVolLeText() {
-		return volLeText;
+	public String getVolLetExt() {
+		return volLetExt;
 	}
 	
 	/**
-	 * @param volLeText the volLeText to set
+	 * @param volLetExt the volLetExt to set
 	 */
-	public void setVolLeText(String volLeText) {
-		this.volLeText = volLeText;
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
 	}
 	
 	/**
