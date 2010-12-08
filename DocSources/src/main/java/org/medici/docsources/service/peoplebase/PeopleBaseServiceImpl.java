@@ -85,8 +85,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * @param peopleDAO the peopleDAO to set
 	 */
-	public void setPeopleDAO(PeopleDAO peopleDAO) {
+	public void setPeopleDAO(PeopleDAO peopleDAO) throws ApplicationThrowable {
 		this.peopleDAO = peopleDAO;
+	}
+
+	@Override
+	public List<People> findSenders(String query) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

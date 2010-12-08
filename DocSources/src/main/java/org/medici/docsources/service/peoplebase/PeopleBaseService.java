@@ -69,4 +69,12 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchPeople(String text) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> findSenders(String query) throws ApplicationThrowable;
 }
