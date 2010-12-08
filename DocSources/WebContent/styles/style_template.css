@@ -3,8 +3,11 @@ html {
 }
 
 body {
-	background-image:url(../images/bg_image.jpg) no-repeat bottom center;
+	background-image:url(/DocSources/images/bg_image.jpg);
+	background-position:bottom;
+	background-repeat:no-repeat;
 	background-color:#f6edec;
+	background-attachment:fixed;
 	margin:0;
 	padding:0;
 	height: 100%;
@@ -22,6 +25,7 @@ body {
 	height: 100%;
 	margin:0px auto -70px;
 	position:relative;
+	
 }
 
 #map { /* The Medici Archive Project image */
@@ -45,7 +49,7 @@ body {
 	margin-left:255px;
 	position:absolute;
 	z-index:2;
-	background-image:url(../images/top_middle_bg.png);
+	background-image:url(/DocSources/images/top_middle_bg.png);
 }
 
 #top_bottom { /* User Interface */
@@ -63,24 +67,19 @@ body {
 	position:absolute;
 }
 
-.footer {
+#footer {
+	position:absolute;
+	bottom:0;
 	width:100%;
-	height:70px;
-	position:relative;
-	margin: 0 auto;
-	font-size:10px;
-	text-align:center;
+	height:60px;			/* Height of the footer */
 }
 
-.footer p {
+.footer {
 	position: absolute;
-	width: 1000px;
+	width: 900px;
 	padding: 0;
 	text-align: center;
-}
-
-.push {
-	height: 100px; /* .push must be the same height as .footer */
+	font-size:10px;
 }
 
 
@@ -96,7 +95,7 @@ body {
 }
 
 .input_search { /* input text class */
-	background-image:url(../images/input_search_bg.png);
+	background-image:url(/DocSources/images/input_search_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -107,7 +106,7 @@ body {
 }
 
 .select{ /* dropdown menu class */
-	background-image:url(../images/select_bg.png);
+	background-image:url(/DocSources/images/select_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:25px;
@@ -166,19 +165,19 @@ body {
 /* top_bottom (User Interface) backgrounds */
 
 .docs {
-	background-image:url(../images/user_interface_docs.png);
+	background-image:url(/DocSources/images/user_interface_docs.png);
 }
 
 .person {
-	background-image:url(../images/user_interface_person.png);
+	background-image:url(/DocSources/images/user_interface_person.png);
 }
 
 .vol {
-	background-image:url(../images/user_interface_vol.png);
+	background-image:url(/DocSources/images/user_interface_vol.png);
 }
 
 .geo {
-	background-image:url(../images/user_interface_geo.png);
+	background-image:url(/DocSources/images/user_interface_geo.png);
 }
 
 
@@ -223,18 +222,19 @@ body {
 #welcome {
 	width:900px;
 	position:absolute;
+	margin-top:200px;
 }
 
-#welcome h1{
-	font-size:120%;
-	margin-top:40px;
-	margin-left:135px;
+.welcome{
+	font-size:16px;
+	margin-top:30px;
+	margin-left:50px;
 	position:absolute;
 }
 
 .welcome_list{
-	margin-left: 450px;
-	margin-top:100px;
+	margin-left: 10px;
+	margin-top:130px;
 	line-height:20px;
 	list-style-type:none;
 	position:absolute;
@@ -250,14 +250,14 @@ body {
 	margin-top:100px;
 	margin-left: 220px;	
 	position:absolute;
-	background-image:url(../images/stemma.png);
+	background-image:url(/DocSources/images/stemma.png);
 }
 
 #button_courses {
 	width:200px;
 	height:65px;
 	margin-top:20px;
-	margin-left:750px;
+	margin-left:250px;
 	position:absolute;
 }
 
@@ -312,12 +312,33 @@ a {
 	font-size:small;
 }
 
-
+/* INPUT */
 
 input { 
 	outline: 0px; 
 }
 
+/* Search Form */
 
+#create { /* Search button */
+	margin-left:125px;
+}
 
+#firstName {
+	margin-top:5px;
+}
 
+/* Volume Explorer FullScreen*/
+
+.flipDivFullScreen{
+	margin-top:10px;
+	border:1px solid #e6d0c6; 	
+	width:600px;
+	height:400px;
+	margin-left:200px;
+}
+
+#flipDiv {
+	position:relative;
+	z-index:2;
+}

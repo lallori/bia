@@ -3,7 +3,16 @@
 	padding-bottom:15px;
 	font-size:14px;
 	font-style:italic;
-	color:#242e44;
+	color:#006;
+}
+
+#body_left a:hover{
+	opacity:0.5;
+	text-decoration:underline;
+}
+
+#body_right a:hover{
+	opacity:0.5;
 }
 
 h3{ /* Series List */
@@ -17,7 +26,6 @@ h4{ /* TGN, MAP, MapSite Title */
 	text-align:left;
 	font-size:13px;
 	font-style:italic;
-	
 }
 
 h5{ /* Titles */
@@ -86,16 +94,44 @@ input {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-.checkbox{
-	border: 1px solid #e6d0c6;
-	background-color: #fbf7f4;
-	color: #000000;
+.checkbox1{
+	margin:0px 45px 0px 10px;
 }
+
+.checkbox2{
+	margin:0px 45px 0px 4px;
+}
+
+.checkbox3{
+	margin:0px 45px 0px 18px;
+}
+
+.checkboxDoc1{
+	margin:0px 15px 0px 7px;
+}
+
+.checkboxDoc2{
+	margin:0px 0px 0px 7px;
+}
+
+.checkboxDoc2{
+	margin:0px 0px 0px 7px;
+}
+
+.checkboxPers1{
+	margin:5px 50px 0px 5px;
+}
+
+.checkboxPers2{
+	margin:5px 0px 0px 5px;
+}
+
 
 .button {
 	background-color: #e6d0c6;
 	border:none;
 	display:inline;
+	color: #6d5c4d;
 }
 
 .input_1c { 
@@ -116,6 +152,16 @@ input {
 	margin: 5px 7px 5px 5px; /* top right bottom left */
 }
 
+.input_2c_disabled { 
+	width: 20px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+	opacity:0.3;
+}
+
 .input_3c { 
 	width: 25px;
 	border: 1px solid #e6d0c6;
@@ -134,6 +180,15 @@ input {
 	margin: 5px 7px 5px 5px; /* top right bottom left */
 }
 
+.input_4c_disabled { 
+	width: 30px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+	opacity:0.3;
+}
 
 .input_5c { 
 	width: 40px;
@@ -151,6 +206,16 @@ input {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_10c_disabled {  /* disabled input */
+	width: 87px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+	opacity: 0.3;
 }
 
 .input_14c { 
@@ -205,6 +270,16 @@ input {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 5px; /* top right bottom left */
+}
+
+.input_28c_disabled { 
+	width: 240px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+	opacity: 0.3;
 }
 
 .input_30c { 
@@ -264,6 +339,17 @@ input {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.selectform_disabled{ /* dropdown menu class */
+	width:80px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	opacity:0.3;
+}
+
 .selectform_short{ /* short dropdown menu class */
 	width:50px;
 	border: 1px solid #e6d0c6;
@@ -284,6 +370,17 @@ input {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.selectform_long_disabled{ /* dropdown menu class  disabled*/
+	width:100px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; /* top right bottom left */
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	opacity:0.4;
+}
+
 .txtarea { 
 	width: 372px;
 	height:40px;
@@ -292,7 +389,33 @@ input {
 	color: #000000;
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:90%;
-	padding-left:10px;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 0px; /* top right bottom left */
+}
+
+.txtarea_disabled { 
+	width: 372px;
+	height:40px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 0px; /* top right bottom left */
+	opacity:0.3;
+}
+
+
+.txtarea_big { 
+	width: 372px;
+	height:120px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
+	padding:5px 10px 5px 10px;
 	margin: 5px 7px 5px 0px; /* top right bottom left */
 }
 
@@ -304,12 +427,12 @@ input {
 	color: #000000;
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size:90%;
-	padding-left:10px;
+	padding:5px 10px 5px 10px;
 	margin: 5px 7px 5px 0px; /* top right bottom left */
 }
 
 hr {
-	margin:5px 0 5px 0;
+	margin:10px 0 10px 0;
 	padding:0;
 	width:383px;
 	color:#e6d0c6;
@@ -319,8 +442,13 @@ hr {
 }
 
 
-#EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv {
+#EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditRelationshipPersonDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv {
 	width:450px;
+}
+
+#EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #AdddChildPersonForm, #AddSpousePersonForm {
+	width:450px;
+	margin-top:10px;
 }
 
 select {
@@ -358,3 +486,604 @@ input.file {
 	padding-left:10px;
 	margin: 5px 6px 5px 5px; /* top right bottom left */
 }
+
+/* VOLUME */
+
+/* EditDetailsVolume */
+
+#volNumLabel {
+	margin-left:79px;
+}
+
+#volLeTextLabel {
+	margin-left:4px;
+}
+
+#startMonthLabel {
+	margin-left:18px;
+}
+
+#startDayLabel {
+	margin-left:17px;
+}
+
+#endYearLabel {
+	margin-left:5px;
+}
+
+#endMonthLabel {
+	margin-left:23px;
+}
+
+#endDayLabel {
+	margin-left:22px;
+}
+
+#dateNotesLabel {
+	margin:10px 0 0 0;
+}
+
+#close {
+	margin-top:5px;
+}
+
+#closeProfile {
+	margin-top:5px;
+}
+
+#save {
+	margin-left:300px;
+}
+
+#saveProfile {
+	margin-left:160px;
+}
+
+
+.errors {
+	color:#F00;
+	margin: 0 0 0 130px;
+}
+
+/* EditDescriptionVolume */
+
+#orgCriteriaDiv {
+	margin-top:5px;
+}
+
+#conditionLabel {
+	margin-left:6px;
+}
+
+#boundLabel {
+	margin-left:23px;
+}
+
+#foliosNumLabel {
+	margin-left:116px;
+}
+
+#alphaIndexLabel {
+	margin-left:59px;
+}
+
+#languagesDiv {
+	margin-bottom:15px;
+}
+
+#italianLabel, #spanishLabel {
+	margin-left:50px;
+}
+
+#frenchLabel, #germanLabel, #latinLabel, #englishLabel {
+	margin-left:5px;
+}
+
+
+/* Volume Explorer */
+
+#flipDiv iframe {
+	margin-top:10px;
+	border:1px solid #e6d0c6; 	
+	width:450px;
+	height:300px;
+}
+
+.iframeFlipVolume {
+	z-index:-1;
+	position:relative;
+}
+
+#prevNextButtons {
+	margin-top:10px;
+	margin-left:175px;
+	width: 100px;
+}
+
+#prevNextButtons #prevButton {
+	float:left;
+}
+
+#prevNextButtons #nextButton {
+	float:right;
+}
+
+#flipInFullScreen {
+	float:left;
+}
+
+#flipInFullScreen a {
+	font-weight:bold;
+	font-style:italic;
+}
+
+#help {
+	margin-left:430px;
+	width:30px;
+	position:absolute;
+	width:15px;
+	height:18px;
+}
+
+#refresh {
+	margin-left:400px;
+	width:30px;
+	position:absolute;
+}
+
+/* Volume Explorer FullScreen Fellows*/
+
+#contentFancy {
+	margin:0 auto 0 auto;
+	position:relative;
+	width: 100%;
+	height:100%;
+}
+
+
+#flipFullScreenFancyFel iframe{
+	width:100%;
+	height:90%;
+	border:1px solid #e6d0c6; 
+	margin: 10px 0 0 0;	
+}
+
+#contentFancy #prevNextButtons{
+	margin:-15px 0 0 88%;
+}
+
+#contentFancy h5{
+	float:left;
+	margin:5px 0 0 0;
+	top:0;
+}
+
+#contentFancy #refresh{
+	margin:0 0 0 35%;
+}
+
+
+#contentFancy #transcribeButton{
+	margin:0 0 0 35%;
+}
+
+#contentFancy a:hover{
+	opacity: 0.5;
+}
+
+.inactive {
+	
+}
+
+img{
+	border:none;
+}
+
+#flipFullScreenFancy iframe{
+	width: 600px;
+	height:400px;
+	border:1px solid #e6d0c6; 	
+	margin-left:100px;
+	margin-top:10px
+}
+
+#contentFancy a{
+	font-weight:bold;
+	font-style:italic;
+}
+
+/* Volume Explorer FullScreen Community*/
+
+#contentFancyCom {
+	margin:0 auto 0 auto;
+	position:relative;
+	width: 100%;
+	height:100%;
+}
+
+#flipFullScreenFancyFelCom iframe{
+	width:66%;
+	height:66%;
+	border:1px solid #e6d0c6; 
+	margin: 7% 15% 0 15%;
+	position:relative;	
+}
+
+#contentFancyCom #prevNextButtons{
+	margin:-15px 0 0 88%;
+}
+
+#contentFancyCom h5{
+	float:left;
+	margin:5px 0 0 0;
+	top:0;
+}
+
+#contentFancyCom #transcribeButton{
+	margin:0 0 0 35%;
+}
+
+#contentFancyCom a:hover{
+	opacity: 0.5;
+}
+
+/* DOCUMENTS */
+
+/* EditDetailsDocument */
+
+#DocumentImageDiv {
+	float:right;
+	margin-top:30px;
+	padding-left:30px;
+}
+
+#DocumentImageDiv a,  #DocumentImageDiv p{
+	text-align:right;
+	font-size:10px;
+}
+
+#volNumDocLabel {
+	margin-left:103px;
+}
+
+#docIdLabel {
+	margin-left:33px;
+}
+
+#folioNumLabel {
+	margin-left:10px;
+}
+
+
+#DocYearLabel {
+	margin-left:48px;
+}
+
+#undatedLabel {
+	margin-left:70px;
+}
+
+#discontdLabel {
+	margin-left:111px;
+}
+
+#insertNumLabel {
+	margin-left:7px;
+}
+
+#dateApproxLabel {
+	margin-left:7px;
+}
+
+
+/* EditCorrespondentsDocument */
+
+#fromLabel {
+	margin-left:37px;
+}
+
+#toLabel {
+	margin-left:23px;
+}
+
+#recipientLabel {
+	margin-left:15px;
+}
+
+
+/* PERSON */
+
+#lineSeparator {
+	margin:5px 0 5px 0;
+	padding:0;
+	width:450px;
+	color:#e6d0c6;
+	background-color:#e6d0c6;
+	height:1px;
+	border:0;
+}
+
+/* CreatePerson */
+
+#activeEnd {
+	width:275px;
+}
+
+
+/* EditDetailsPerson */
+
+#prefixPreIdLabel {
+	margin-left:17px;
+}
+
+#PreIdLabel {
+	margin-left:30px;
+}
+
+#lastnameLabel {
+	margin-left:11px;
+}
+
+#prefixPostIdLabel {
+	margin-left:14px;
+}
+
+#PostIdLabel {
+	margin-left:25px;
+}
+
+#genderLabel {
+	margin-left:48px;
+}
+
+#yearBirthLabel {
+	margin-left:24px;
+}
+
+#approxBirthLabel {
+	margin-left:50px;
+}
+
+#placeBirthLabel {
+	margin-left:56px;
+}
+
+#activeStartLabel {
+	margin-left:24px;
+}
+
+#yearDeathLabel {
+	margin-left:22px;
+}
+
+
+/* EditNamesPerson */
+
+#nameLabel {
+	margin-left:33px;
+}
+
+#givenLabel {
+	margin-left:7px;
+}
+
+form img{
+	margin: 0 10px 0 5px;
+	height: 13px;
+	width: 13px;
+	vertical-align:middle;
+}
+
+#AddNewValue {
+	margin-left:250px;
+}
+
+a#editValue {
+	font-size:10px;
+	
+}
+
+a#AddNamesPerson, a#AddChildPerson{
+	background-color: #e6d0c6;
+	padding:1px 5px 1px 5px;
+	border:none;
+	display:inline;
+	color: #6d5c4d;
+	font-size:10px;
+	text-decoration:none;
+	margin-left:260px;
+}
+
+a#AddSpousePerson {
+	background-color: #e6d0c6;
+	padding:1px 5px 1px 5px;
+	border:none;
+	display:inline;
+	color: #6d5c4d;
+	font-size:10px;
+	text-decoration:none;
+	margin-left:255px;
+}
+
+a#AddTitlesOccupationsPerson{
+	background-color: #e6d0c6;
+	padding:1px 5px 1px 5px;
+	border:none;
+	display:inline;
+	color: #6d5c4d;
+	font-size:10px;
+	text-decoration:none;
+	margin-left:200px;
+}
+
+
+/* EditTitleOccupationsPerson */
+
+#preferrefRoleLabel {
+	margin-left:11px;
+}
+
+#yearStartLabel {
+	margin-left:25px;
+}
+	
+#monthStartLabel {
+	margin-left:22px;
+}
+
+#dayStartLabel {
+	margin-left:45px;
+}
+
+#yearEndLabel {
+	margin-left:30px;
+}
+
+#monthEndLabel {
+	margin-left:22px;
+}
+
+#dayEndLabel {
+	margin-left:45px;
+}
+
+
+/* EditTitleOccupationsPerson */
+
+#fatherLabel {
+	margin-left:21px;
+}
+
+#motherLabel {
+	margin-left:20px;
+}
+
+#nameSpouseLabel {
+	margin-left:26px;
+}
+
+#startYearSpouseLabel {
+	margin-left:6px;
+}
+
+#endYearSpouseLabel {
+	margin-left:20px;
+}
+
+#reasonLabel {
+	margin-left:25px;
+}
+
+#nameChildsLabel {
+	margin-left:27px;
+}
+
+#bornLabel {
+	margin-left:33px;
+}
+
+#diedLabel {
+	margin-left:45px;
+}
+
+#ageDeathLabel {
+	margin-left:45px;
+}
+
+/* Relationships */
+/* Parents */
+
+a#linkSearch {
+	font-size:11px;
+	text-decoration:none;
+	color:#006;
+	margin: 0 0 0 10px;
+	display:inline;
+}
+
+#info{
+	opacity:0.6;
+	margin: 0 0 0 20px;
+	display:inline;
+	font-size:10px;
+	float:right;
+}
+
+/* PLACE */
+
+/* EdtitDetailsTgn, Map and MapSite */
+
+#placeIdDiv {
+	margin:5px 5px 5px 0px;
+}
+
+#tgnTermIDLabel {
+	margin-left:9px;
+}
+
+#nameNoAccentsLabel {
+	margin-left:70px;
+}
+
+#nameWithAccentsLabel {
+	margin-left:25px;
+}
+
+#placeParentLabel {
+	margin-left:62px;
+}
+
+
+/* EdtitNameTgn, Map and MapSite */
+
+
+#namePlaceLabel {
+	margin-left:34px;
+}
+
+#nameTypeLabel {
+	margin-left:10px;
+}
+
+#latitudeNameLabel {
+	margin-left:24px;
+}
+
+#longitudeNameLabel {
+	margin-left:47px;
+}
+
+#longitudeGeoLabel {
+	margin-left:71px;
+}
+
+
+/* MyProfile */
+
+.profile {
+	margin-left:150px;
+	list-style:none;
+	line-height:18px;
+	text-align:justify;
+}
+
+#imgProfile {
+	float:left;
+	margin-top:10px;
+	margin-left:20px;
+}
+
+#helpProfile {
+	margin-left:150px;
+}
+
+#coursesProfile {
+	margin: 50px 0 0 150px;
+}
+
+#EditTitleProfileDiv, #EditGroupProfileDiv, #EditOrgProfileDiv, #EditLocationProfileDiv, #EditInterestsProfileDiv, #EditResumeProfileDiv {
+	width:300px;
+	margin-left:150px;
+	margin-top:5px;
+}
+

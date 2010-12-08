@@ -1,5 +1,5 @@
 body {
-	background-image:url(../images/bg_image.jpg);
+	background-image:url(/DocSources/images/bg_image.jpg);
 	background-position:center;
 	background-repeat:no-repeat;
 	background-color:#f6edec;
@@ -44,7 +44,7 @@ body {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(../images/login_bg.png);
+	background-image:url(/DocSources/images/login_bg.png);
 }
 
 /*  Log in - Form */
@@ -76,7 +76,7 @@ input {
 }
 
 .input { /* input text class */
-	background-image:url(../images/input_bg.png);
+	background-image:url(/DocSources/images/input_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -119,7 +119,7 @@ input {
 	margin-top:190px;
 	margin-left: 75px;	
 	position:absolute;
-	background-image:url(../images/regist_bg.png);
+	background-image:url(/DocSources/images/regist_bg.png);
 	background-repeat:no-repeat;
 	z-index:1;
 }
@@ -195,7 +195,7 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(../images/recovery_bg.png);
+	background-image:url(/DocSources/images/recovery_bg.png);
 }
 
 .recovery { /*  Form class */
@@ -218,11 +218,11 @@ input {
 	margin-top:260px;
 	margin-left: 620px;	
 	position:absolute;
-	background-image:url(../images/stemma.png);
+	background-image:url(/DocSources/images/stemma.png);
 }
 
 .input_recovery { /* input text class */
-	background-image:url(../images/input_recovery_bg.png);
+	background-image:url(/DocSources/images/input_recovery_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -269,7 +269,7 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(../images/activationcode_bg.png);
+	background-image:url(/DocSources/images/activationcode_bg.png);
 }
 
 #activationcode p {
@@ -286,7 +286,7 @@ input {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(../images/success_bg.png);
+	background-image:url(/DocSources/images/success_bg.png);
 }
 
 .usersuccess {  /* p class */
@@ -319,7 +319,7 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(../images/reset_bg.png);
+	background-image:url(/DocSources/images/reset_bg.png);
 }
 
 .reset { /*  Form class */
