@@ -29,8 +29,6 @@ package org.medici.docsources.command.volbase;
 
 import java.util.Date;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -49,7 +47,7 @@ public class EditDetailsVolumeCommand {
 	@NotNull
 	private Integer volNum;
 	@Size (max=1)
-	private String volLeText;
+	private String volLetExt;
 	// researcher description
 	private String researcher;
 	@DateTimeFormat(pattern="MM/dd/yyyy hh:mm:ss")
@@ -58,19 +56,11 @@ public class EditDetailsVolumeCommand {
 	private Integer seriesRefNum;
 	// This is the concatenation of seriesRef Description (Title / SubTitle 1 /SubTitle 2)
 	private String seriesRefDescription;
-	@Min (value=1200)
-	@Max (value=1800)
 	private Integer startYear;
 	private String startMonth;
-	@Min (value=1)
-	@Max (value=31)
 	private Integer startDay;
-	@Min (value=1200)
-	@Max (value=1800)
 	private Integer endYear;
 	private String endMonth;
-	@Min (value=1)
-	@Max (value=31)
 	private Integer endDay;
 	private String dateNotes;
 	
@@ -102,17 +92,17 @@ public class EditDetailsVolumeCommand {
 	}
 	
 	/**
-	 * @return the volLeText
+	 * @return the volLetExt
 	 */
-	public String getVolLeText() {
-		return volLeText;
+	public String getVolLetExt() {
+		return volLetExt;
 	}
 	
 	/**
-	 * @param volLeText the volLeText to set
+	 * @param volLetExt the volLetExt to set
 	 */
-	public void setVolLeText(String volLeText) {
-		this.volLeText = volLeText;
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
 	}
 	
 	/**
