@@ -90,7 +90,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Volume findVolume(Integer volNum, String volLeText) {
+	public Volume findVolume(Integer volNum, String volLetExt) {
 		// Create criteria objects
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<Volume> criteriaQuery = criteriaBuilder.createQuery(Volume.class);
@@ -98,22 +98,22 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	
 		// Define predicate's elements
 		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLeText") ? null : criteriaBuilder.parameter(String.class, "volLeText"); 
+		ParameterExpression<String> parameterVolLetExt = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
 
 		criteriaQuery.where(
 			criteriaBuilder.and(
 				criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
-				StringUtils.isEmpty(volLeText) ? 
-					criteriaBuilder.isNull(root.get("volLeText")) : 
-					criteriaBuilder.equal(root.get("volLeText"), parameterVolLeText)
+				StringUtils.isEmpty(volLetExt) ? 
+					criteriaBuilder.isNull(root.get("volLetExt")) : 
+					criteriaBuilder.equal(root.get("volLetExt"), parameterVolLetExt)
 			)
 		);
 
 		// Set values in predicate's elements  
 		TypedQuery<Volume> typedQuery = getEntityManager().createQuery(criteriaQuery);
 		typedQuery.setParameter("volNum", volNum);
-		if (!StringUtils.isEmpty(volLeText))
-			typedQuery.setParameter("volLeText", volLeText);
+		if (!StringUtils.isEmpty(volLetExt))
+			typedQuery.setParameter("volLetExt", volLetExt);
 
 		return typedQuery.getSingleResult();
 	}

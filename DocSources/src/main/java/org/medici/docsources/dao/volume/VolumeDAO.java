@@ -46,11 +46,11 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * This method searches a single volume identified by is unique identifiers.
 	 * 
 	 * @param volNum
-	 * @param volLeText
+	 * @param volLetExt
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Volume findVolume(Integer volNum, String volLeText) throws PersistenceException;
+	public Volume findVolume(Integer volNum, String volLetExt) throws PersistenceException;
 
 	/**
 	 * This method searches volumes which contains text input parameter in one of his fields
