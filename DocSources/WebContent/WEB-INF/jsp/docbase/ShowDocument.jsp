@@ -6,16 +6,16 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditCorrespondentsDocument" value="/de/docbase/EditCorrespondentsDocument.do">
-			<c:param name="summaryId"   value="${document.summaryId}" />
+			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditDetailsDocument" value="/de/volbase/EditDetailsDocument.do">
-			<c:param name="summaryId"   value="${document.summaryId}" />
+			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditExtractOrSynopsisDocument" value="/de/volbase/EditExtractOrSynopsisDocument.do">
-			<c:param name="summaryId"   value="${document.summaryId}" />
+			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditFactChecksDocument" value="/de/volbase/EditFactChecksDocument.do">
-			<c:param name="summaryId"   value="${document.summaryId}" />
+			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
 	
@@ -23,7 +23,6 @@
 		<div id="createdby"><h6>CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></h6></div>
 		<h5>DOCUMENT DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsDocument" href="${EditDetailsDocument}">edit</a></security:authorize></h5>
 		
-	
 		<ul>
 			<li><b>Doc ID:</b> 9915</li>
 			<li><b>Volume (MDP):</b> 2949</li>
