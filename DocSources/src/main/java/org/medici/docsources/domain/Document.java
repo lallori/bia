@@ -115,7 +115,7 @@ public class Document implements Serializable{
 	@Column (name="\"SORTABLEDATE\"", length=50)
 	private String sortableDate;
 	@Column (name="\"YEARMODERN\"", length=15, precision=5)
-	private Double yearModern;
+	private Integer yearModern;
 	@Column (name="\"RECKONING\"", length=1, columnDefinition="tinyint", nullable=false)
 	private Boolean reckoning;
 	@Column (name="\"UNDATED\"", length=1, columnDefinition="tinyint", nullable=false)
@@ -440,13 +440,13 @@ public class Document implements Serializable{
 	/**
 	 * @return the yearModern
 	 */
-	public Double getYearModern() {
+	public Integer getYearModern() {
 		return yearModern;
 	}
 	/**
 	 * @param yearModern the yearModern to set
 	 */
-	public void setYearModern(Double yearModern) {
+	public void setYearModern(Integer yearModern) {
 		this.yearModern = yearModern;
 	}
 	/**
