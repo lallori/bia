@@ -1,0 +1,57 @@
+@charset "utf-8";
+/* CSS Document */
+
+#Chronology {
+	width:800px;
+	height:600px;
+	position:relative;
+	margin:0 auto 0 auto;
+}
+
+#DocsCronology{
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-top:20px;
+	color:#6F6B69;
+	padding:10px;
+}
+
+#PeopleCronology{
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-left:400px;
+	color:#6F6B69;
+	margin-top:20px;
+	padding:10px;
+}
+
+#VolumesCronology{
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-top:250px;
+	color:#6F6B69;
+	padding:10px;
+}
+
+#PlaceCronology{
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-top:250px;
+	margin-left:420px;
+	color:#6F6B69;
+	padding:10px;
+}
+
+#DocsCronology ul, #PeopleCronology ul, #VolumesCronology ul, #PlaceCronology ul{
+	list-style:none;
+}
+
+#DocsCronology a, #PeopleCronology a, #VolumesCronology a, #PlaceCronology a{
+	color:#6F6B69;
+	font-weight:bold;
+	font-size:11px;
+}

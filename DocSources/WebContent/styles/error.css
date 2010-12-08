@@ -1,0 +1,47 @@
+body {
+	background-image:url(/DocSources/images/bg_image.jpg);
+	background-position:center;
+	background-attachment:fixed;
+	background-position:bottom;
+	background-repeat:no-repeat;
+	background-color:#f6edec;
+	margin:0;
+	font-size:small;
+	color:#6F6B69;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+/* Structural Divs */
+
+#layout {
+	width:1000px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin:0px auto 0px;
+	position:relative;
+	
+}
+
+#map { /* The Medici Archive Project image */
+	width:270px;
+	height:175px;
+	margin-left:365px;
+	position: absolute;
+}
+
+
+#text_error {
+	width:450px;
+	height:295px;
+	margin-top:250px;
+	margin-left: 270px;	
+	position:absolute;
+	text-align:center;
+	line-height:20px;
+}
+
+#text_error h2{
+	font-size:22px;
+}
+

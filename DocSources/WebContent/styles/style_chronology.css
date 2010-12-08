@@ -1,0 +1,97 @@
+@charset "utf-8";
+
+/* General Chronology Window */
+
+#Chronology { /* Chronology Content Div */
+	width:800px;
+	height:500px;
+	position:relative;
+	margin:0 auto 0 auto;
+}
+
+#ChronologyTitle { /* Chronology */
+	margin-left:350px;
+	margin-top: 10px;
+	position:absolute;
+	color:#6d5c4d;
+	font-weight:bold;
+	font-size:12px;
+}
+
+#DocsCronology { /* Documents Chronology Div */
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-top:50px;
+	color:#6F6B69;
+	padding:10px;
+}
+
+#PeopleCronology { /* People Chronology Div */
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-left:420px;
+	color:#6F6B69;
+	margin-top:50px;
+	padding:10px;
+}
+
+#VolumesCronology { /* Volumes Chronology Div */
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-top:300px;
+	color:#6F6B69;
+	padding:10px;
+}
+
+#PlaceCronology { /* Place Chronology Div */
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-top:300px;
+	margin-left:420px;
+	color:#6F6B69;
+	padding:10px;
+}
+
+#DocsCronology ul, #PeopleCronology ul, #VolumesCronology ul, #PlaceCronology ul { /* Chronology's List */
+	list-style:none;
+	font-size:12px;
+	margin-left:50px
+}
+
+#DocsCronology a, #PeopleCronology a, #VolumesCronology a, #PlaceCronology a { /* Chronology's More Button */
+	color:#6F6B69;
+	font-weight:bold;
+	font-size:11px;
+	float:right;
+}
+
+
+/* Specific Chronology Window */
+
+#MoreDocsCronology, #MorePlaceCronology, #MoreVolCronology, #MorePeopleCronology { /* Specific Documents Chronology Div */
+	width:350px;
+	height:200px;
+	position:absolute;
+	margin-top:50px;
+	margin-left:225px;
+	color:#6F6B69;
+	padding:10px;
+}
+
+
+#MoreDocsCronology ul { /* Specific Chronology's List */
+	list-style:none;
+	font-size:12px;
+	margin-left:50px
+}
+
+#MoreDocsCronology a { /* Chronology's More Button */
+	color:#6F6B69;
+	font-weight:bold;
+	font-size:11px;
+	float:right;
+}
