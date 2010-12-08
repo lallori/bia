@@ -31,9 +31,11 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
@@ -55,6 +57,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
+	private ImageDAO imageDAO;
+	@Autowired
 	private MonthDAO monthDAO;
 	@Autowired
 	private SeriesListDAO seriesListDAO;
@@ -65,7 +69,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addNewVolume(Volume volume) throws ApplicationThrowable {
+	public Volume addNewVolume(Volume volume) throws ApplicationThrowable {
 		try {
 			// Setting primary key to null to permit persist operation, otherwise jpa will throw a Persistence Object Expcetion
 			volume.setSummaryId(null);
@@ -89,16 +93,17 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volume.setCipher(false);
 
 			getVolumeDAO().persist(volume);
+			
+			return volume;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editContextVolume(Volume volume) throws ApplicationThrowable {
+	public Volume editContextVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
 			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
@@ -113,13 +118,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+		return volumeToUpdate;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editCorrespondentsVolume(Volume volume) throws ApplicationThrowable {
+	public Volume editCorrespondentsVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
 			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
@@ -135,13 +141,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+
+		return volumeToUpdate;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editDescriptionVolume(Volume volume) throws ApplicationThrowable {
+	public Volume editDescriptionVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
 			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
@@ -169,13 +177,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+
+		return volumeToUpdate;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editDetailsVolume(Volume volume) throws ApplicationThrowable {
+	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
 			volumeToUpdate = getVolumeDAO().find(volume.getSummaryId());
@@ -184,7 +194,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 
 		volumeToUpdate.setVolNum(volume.getVolNum());
-		volumeToUpdate.setVolLeText(volume.getVolLeText());
+		volumeToUpdate.setVolLetExt(volume.getVolLetExt());
 		volumeToUpdate.setResearcher(volume.getResearcher());
 		volumeToUpdate.setDateCreated(volume.getDateCreated());
 		volumeToUpdate.setSerieList(volume.getSerieList());
@@ -201,8 +211,10 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
 
+		return volumeToUpdate;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -240,12 +252,56 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try {
+			return getVolumeDAO().findVolume(volNum, volLetExt);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable {
+		try {
+			Volume volume = getVolumeDAO().find(summaryId);
+			
+			return findVolumeImages(volume.getVolNum(), volume.getVolLetExt());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findImages(volNum, volLetExt);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
+
+	/**
 	 * @return the monthDAO
 	 */
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -283,6 +339,13 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
 	}
 
 	/**

@@ -34,6 +34,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -43,7 +44,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * With this service, you can :<br>
  * - add a new volume<br>
  * - modify an existing volume<br> 
- * - search a volume by is summaryId, volNum and volLeText (this last is optional ndr)<br>
+ * - search a volume by is summaryId, volNum and volLetExt (this last is optional ndr)<br>
  * - execute complex search on volumes<br>
  * ...<br>
  * 
@@ -57,7 +58,7 @@ public interface VolBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be added
 	 * @throws ApplicationThrowable
 	 */
-	public void addNewVolume(Volume volume) throws ApplicationThrowable;
+	public Volume addNewVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
 	 * This method modify context of an existing {@link org.medici.docsources.domain.Volume}.
@@ -65,7 +66,7 @@ public interface VolBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editContextVolume(Volume volume) throws ApplicationThrowable;
+	public Volume editContextVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
 	 * This method modify correspondents of an existing {@link org.medici.docsources.domain.Volume}.
@@ -73,7 +74,7 @@ public interface VolBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editCorrespondentsVolume(Volume volume) throws ApplicationThrowable;
+	public Volume editCorrespondentsVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
 	 * This method modify description of an existing {@link org.medici.docsources.domain.Volume}.
@@ -81,7 +82,7 @@ public interface VolBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editDescriptionVolume(Volume volume) throws ApplicationThrowable;
+	public Volume editDescriptionVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
 	 * This method modify details of an existing {@link org.medici.docsources.domain.Volume}.
@@ -89,7 +90,24 @@ public interface VolBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editDetailsVolume(Volume volume) throws ApplicationThrowable;
+	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable;
+
+	/**
+	 * This method last entry {@link org.medici.docsources.domain.Volume}.
+	 * 
+	 * @return Last entry {@link org.medici.docsources.domain.Volume}
+	 * @throws ApplicationThrowable
+	 */
+	public Volume findLastEntryVolume() throws ApplicationThrowable;
+
+	/**
+	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
+	 * 
+	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.SerieList}
+	 * @throws ApplicationThrowable
+	 */
+	public List<SerieList> findSeries(String alias) throws ApplicationThrowable;
 
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
@@ -101,13 +119,22 @@ public interface VolBaseService {
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable;
 
 	/**
-	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 
-	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.SerieList}
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<SerieList> findSeries(String alias) throws ApplicationThrowable;
+	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
+
+	/**
+	 * This method extracts all months available.
+	 *  
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Month}
+	 * object
+	 * @throws ApplicationThrowable
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable;
 
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.Volume}
@@ -125,19 +152,19 @@ public interface VolBaseService {
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
-	 * This method extracts all months available.
-	 *  
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Month}
-	 * object
+	 * 
+	 * @param summaryId
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Month> getMonths() throws ApplicationThrowable;
+	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable;
 
 	/**
-	 * This method last entry {@link org.medici.docsources.domain.Volume}.
 	 * 
-	 * @return Last entry {@link org.medici.docsources.domain.Volume}
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Volume findLastEntryVolume() throws ApplicationThrowable;
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable;
 }
