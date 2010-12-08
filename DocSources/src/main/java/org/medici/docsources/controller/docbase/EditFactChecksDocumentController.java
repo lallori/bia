@@ -50,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller for action "Edit Fact Checks Document".
+ * "Document Fact Checks" are stored in FactChecks entity.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
