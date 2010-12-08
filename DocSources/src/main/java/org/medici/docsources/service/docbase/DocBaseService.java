@@ -30,6 +30,7 @@ package org.medici.docsources.service.docbase;
 import java.util.List;
 
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -120,4 +121,11 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Document> searchDocuments(String text) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable;
 }

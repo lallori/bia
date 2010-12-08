@@ -30,7 +30,9 @@ package org.medici.docsources.service.docbase;
 import java.util.ArrayList;
 import java.util.List;
 import org.medici.docsources.dao.document.DocumentDAO;
+import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private DocumentDAO documentDAO;
 	
+	@Autowired
+	private MonthDAO monthDAO;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -205,5 +210,25 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setDocumentDAO(DocumentDAO documentDAO) {
 		this.documentDAO = documentDAO;
+	}
+
+	@Override
+	public List<Month> getMonths() throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @param monthDAO the monthDAO to set
+	 */
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @return the monthDAO
+	 */
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
 	}
 }
