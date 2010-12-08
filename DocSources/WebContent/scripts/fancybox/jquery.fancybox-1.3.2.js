@@ -1077,7 +1077,7 @@
 	$.fn.fancybox.defaults = {
 		padding : 10,
 		margin : 40,
-		opacity : false,
+		opacity : true,
 		modal : false,
 		cyclic : false,
 		scrolling : 'auto',	// 'auto', 'yes' or 'no'
@@ -1090,7 +1090,7 @@
 		centerOnScroll : false,
 
 		ajax : {},
-		swf : { wmode: 'transparent' },
+		swf : { wmode: 'opaque' },
 
 		hideOnOverlayClick : true,
 		hideOnContentClick : false,
