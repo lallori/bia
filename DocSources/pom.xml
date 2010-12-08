@@ -61,7 +61,7 @@
 		</repository>
 		<repository>
     		<id>spring-s3</id>
-    		<name>Springframework Maven SNAPSHOT Repository</name>
+    		<name>Spring Portfolio Snapshot Repository</name>
     		<url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
 		</repository>
 		<!-- Required for Hibernate dependencies -->
@@ -103,7 +103,7 @@
 		<jstl.version>1.1.2</jstl.version>
 		<mysql.version>5.1.6</mysql.version>
 		<recaptcha4j.version>0.0.7</recaptcha4j.version>
-		<spring.version>3.0.4.RELEASE</spring.version>
+		<spring.version>3.0.5.RELEASE</spring.version>
 		<springdao.version>2.0.8</springdao.version>
 		<springjmx.version>2.0.8</springjmx.version>
 		<springldap.version>1.3.1.CI-SNAPSHOT</springldap.version>
