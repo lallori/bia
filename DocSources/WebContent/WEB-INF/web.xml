@@ -9,6 +9,7 @@
             /WEB-INF/config/applicationCaptcha.xml,
             /WEB-INF/config/applicationDS.xml,
             /WEB-INF/config/applicationI18n.xml,
+            /WEB-INF/config/applicationIIPImage.xml,
             /WEB-INF/config/applicationMail.xml,
             /WEB-INF/config/applicationSecurity.xml,
             /WEB-INF/config/applicationServices.xml,
@@ -25,19 +26,23 @@
         <param-value>5000</param-value>
     </context-param>
 
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <listener>
-       <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-    </listener>
-    <listener>
-    	<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
-    </listener>
-    
+	<error-page>
+		<error-code>403</error-code>
+		<location>/WEB-INF/templates/403.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/templates/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/templates/500.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>503</error-code>
+		<location>/WEB-INF/templates/503.jsp</location>
+	</error-page>
+
     <!-- Enables Spring Security -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -65,6 +70,19 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+       <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+    <listener>
+    	<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+    
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -74,7 +92,6 @@
 		</init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>
@@ -93,7 +110,6 @@
             30
         </session-timeout>
     </session-config>
-
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
