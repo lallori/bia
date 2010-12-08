@@ -184,8 +184,8 @@ public class AjaxController {
 						subTitle.append(" / ").append(currentVolume.getSerieList().getSubTitle2());
 				}
 				subTitle.append(" MdP ").append(currentVolume.getVolNum());
-				if (StringUtils.isNotEmpty(currentVolume.getVolLeText())) {
-					subTitle.append(currentVolume.getVolLeText());
+				if (StringUtils.isNotEmpty(currentVolume.getVolLetExt())) {
+					subTitle.append(currentVolume.getVolLetExt());
 				}
 				singleRow.add(subTitle.toString());
 				resultList.add(singleRow);
