@@ -33,6 +33,7 @@ import java.util.Map;
 
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.SerieList;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.medici.docsources.service.volbase.VolBaseService;
@@ -55,6 +56,29 @@ public class AjaxController {
 	@Autowired
 	private VolBaseService volBaseService;
 
+	/**
+	 * This method returns the summaryId of the volume searched by is MDP. 
+	 *  
+	 * @param volNum Volume Id
+	 * @param volLeText Volume Filza
+	 * @return ModelAndView containing input params and summaryId.
+	 */
+	@RequestMapping(value = "/de/volbase/FindVolume", method = RequestMethod.GET)
+	public ModelAndView findSeriesList(@RequestParam("volNum") Integer volNum, @RequestParam("volLetExt") String volLetExt) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Volume volume = getVolBaseService().findVolume(volNum, volLetExt);
+			model.put("volNum", volNum);
+			model.put("volLetExt", volLetExt);
+			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId());
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
 	/**
 	 * This method returns a list of seriesList. 
 	 *  
