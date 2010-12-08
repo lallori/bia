@@ -28,7 +28,9 @@
 package org.medici.docsources.controller.docbase;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -36,10 +38,14 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -117,18 +123,46 @@ public class EditDetailsDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Document document = new Document();
 
 		try {
-			document = getDocBaseService().findDocument(command.getEntryId());
+			List<Month> months = getDocBaseService().getMonths();
+			model.put("months", months);
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/EditDetailsDocument", model);
+			return new ModelAndView("error/ShowVolume", model);
 		}
 
-		try {
-			BeanUtils.copyProperties(command, document);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
+		if ((command != null) && (command.getSummaryId() > 0)) {
+			Document document = new Document();
+
+			try {
+				document = getDocBaseService().findDocument(command.getSummaryId());
+				model.put("document", document);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsDocument", model);
+			}
+
+			try {
+				BeanUtils.copyProperties(command, document);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
+
+			//command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
+			//command.setSeriesRefDescription(volume.getSerieList().getTitle());
+		} else {
+			// On Document creation, the research is always the current user.
+			/*command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			command.setVolNum(null);
+			command.setStartDay(null);
+			command.setStartMonth(null);
+			command.setStartYear(null);
+			command.setEndDay(null);
+			command.setEndMonth(null);
+			command.setEndYear(null);
+			command.setDateCreated(new Date());
+			command.setSeriesRefDescription(null);
+			command.setSeriesRefNum(null);
+			*/
 		}
 
 		return new ModelAndView("docbase/EditDetailsDocument", model);
