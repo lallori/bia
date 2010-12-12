@@ -5,7 +5,16 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditContextVolume" value="/de/volbase/EditContextVolume.do">
+			<c:param name="summaryId"   value="${volume.summaryId}" />
+		</c:url>
+		<c:url var="EditCorrespondentsVolume" value="/de/volbase/EditCorrespondentsVolume.do">
+			<c:param name="summaryId"   value="${volume.summaryId}" />
+		</c:url>
 		<c:url var="EditDescriptionVolume" value="/de/volbase/EditDescriptionVolume.do">
+			<c:param name="summaryId"   value="${volume.summaryId}" />
+		</c:url>
+		<c:url var="EditDetailsVolume" value="/de/volbase/EditDetailsVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
 	</security:authorize>
@@ -36,7 +45,12 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$("#EditDescriptionVolume").click(function(){
+				 $("#EditContextVolume").attr('href', "${EditContextVolume}");
+				 $("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
+				 $("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
+				 $("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
+				 
+				 $("#EditDescriptionVolume").click(function(){
 					$("#EditDescriptionVolumeDiv").load($(this).attr("href"));
 					return false;
 				});

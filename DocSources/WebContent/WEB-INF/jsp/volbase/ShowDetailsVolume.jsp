@@ -4,21 +4,28 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-	<c:url var="EditDetailsVolume" value="/de/volbase/EditDetailsVolume.do">
-		<c:param name="summaryId"   value="${volume.summaryId}" />
-	</c:url>
-	<c:url var="FindVolume" value="/de/volbase/FindVolume.json">
-		<c:param name="volNum"   value="${volume.volNum}" />
-		<c:param name="volLetExt"   value="${volume.volLetExt}" />
-	</c:url>
-	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do">
-		<c:param name="flashVersion" value="true" />
-	</c:url>
-</security:authorize>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditContextVolume" value="/de/volbase/EditContextVolume.do">
+			<c:param name="summaryId"   value="${volume.summaryId}" />
+		</c:url>
+		<c:url var="EditCorrespondentsVolume" value="/de/volbase/EditCorrespondentsVolume.do">
+			<c:param name="summaryId"   value="${volume.summaryId}" />
+		</c:url>
+		<c:url var="EditDescriptionVolume" value="/de/volbase/EditDescriptionVolume.do">
+			<c:param name="summaryId"   value="${volume.summaryId}" />
+		</c:url>
+		<c:url var="EditDetailsVolume" value="/de/volbase/EditDetailsVolume.do">
+			<c:param name="summaryId"   value="${volume.summaryId}" />
+		</c:url>
+		<c:url var="FindVolume" value="/de/volbase/FindVolume.json">
+			<c:param name="volNum"   value="${volume.volNum}" />
+			<c:param name="volLetExt"   value="${volume.volLetExt}" />
+		</c:url>
+		<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do">
+			<c:param name="flashVersion" value="true" />
+		</c:url>
+	</security:authorize>
 	
-	<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
-
 	<div id="EditDetailsVolumeDiv">
 		<div id="EditPortraitPersonDiv">
 			<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
@@ -40,7 +47,12 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#EditDetailsVolume").volumeExplorer( {  
+			 $("#EditContextVolume").attr('href', "${EditContextVolume}");
+			 $("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
+			 $("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
+			 $("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
+
+			 $("#EditDetailsVolume").volumeExplorer( {  
 				volNum      : "${volume.volNum}",
 				volLetExt   : "${volume.volLetExt}",
 				checkVolumeURL : "${FindVolume}",
@@ -48,7 +60,10 @@
 				remoteUrl : "${ShowExplorerVolume}",
 				zIndex: 9999
 			});  
-			$("#EditDetailsVolume").click(function(){$("#EditDetailsVolumeDiv").load($(this).attr("href"));return false;});
+			$("#EditDetailsVolume").click(function(){
+				$("#EditDetailsVolumeDiv").load($(this).attr("href"));
+				return false;
+			});
 		});
 	</script>
 </security:authorize>

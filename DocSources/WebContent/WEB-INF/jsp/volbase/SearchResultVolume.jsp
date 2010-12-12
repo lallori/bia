@@ -10,13 +10,6 @@
 <c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
 <c:url var="searchUserPaginationUrlExample" value="/examples/ajax/pagination.txt"/>
 
-		<script type="text/javascript" language="javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
-		<script type="text/javascript" language="javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
-		<script type="text/javascript" language="javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
-		<script type="text/javascript" language="javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script>
-		
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/demo_table.css"/>" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/TableTools.css"/>" />
 		<script type="text/javascript" charset="utf-8">
 			TableToolsInit.sSwfPath = "${zeroClipboard}";
 

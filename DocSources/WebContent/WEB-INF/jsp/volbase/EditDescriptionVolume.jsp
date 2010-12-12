@@ -4,10 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<script type='text/javascript' src='<c:url value="/scripts/jquery.autocomplete.js"/>'></script>
-	<link rel="stylesheet" href="<c:url value="/styles/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
-	<link rel="stylesheet" href="<c:url value="/styles/style_editform.css" />" type="text/css" media="screen, projection">
-
 	<div>
 		<form:form id="EditDescriptionVolumeForm" method="post" cssClass="edit">
 			<fieldset>
@@ -21,16 +17,16 @@
 				</div>
 				<div>				
 					<form:label id="boundLabel" for="bound" path="bound" cssStyle="margin-left:23px" cssErrorClass="error">Bound: </form:label>
-					<form:select id="bound" path="bound" cssClass="selectform_short"><form:option value="${Boolean.True}">Yes</form:option><form:option value="${Boolean.False}">No</form:option></form:select><form:errors path="bound" cssClass="inputerrors"/>
+					<form:select id="bound" path="bound" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="bound" cssClass="inputerrors"/>
 					<form:label id="folsNumbrdLabel" for="folsNumbrd" path="folsNumbrd" cssStyle="margin-left:116px" cssErrorClass="error">Folios Numbered: </form:label>
-					<form:select id="folsNumbrd" path="folsNumbrd" cssClass="selectform_short"><form:option value="${Boolean.True}">Yes</form:option><form:option value="${Boolean.False}">No</form:option></form:select><form:errors path="folsNumbrd" cssClass="inputerrors"/>
+					<form:select id="folsNumbrd" path="folsNumbrd" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="folsNumbrd" cssClass="inputerrors"/>
 				</div>
 	
 				<div style="margin-bottom:5px">
 					<form:label id="folioCountLabel" for="folioCount" path="folioCount" cssErrorClass="error">Folio Count:</form:label>
 					<form:input id="folioCount" path="folioCount" cssClass="input_10c"/><form:errors path="ccondition" cssClass="inputerrors"/>
 					<form:label id="oldAlphaIndexLabel" for="oldAlphaIndex" path="oldAlphaIndex" cssStyle="margin-left:59px" cssErrorClass="error">Alphabetical Index: </form:label>
-					<form:select id="oldAlphaIndex" path="oldAlphaIndex" cssClass="selectform_short"><form:option value="${Boolean.True}">Yes</form:option><form:option value="${Boolean.False}">No</form:option></form:select><form:errors path="oldAlphaIndex" cssClass="inputerrors"/>
+					<form:select id="oldAlphaIndex" path="oldAlphaIndex" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="oldAlphaIndex" cssClass="inputerrors"/>
 				</div>
 	
 				<hr />
@@ -66,7 +62,7 @@
 	
 				<div>				
 					<form:label id="cipherLabel" for="cipher" path="cipher" cssErrorClass="error">Some Docs in Cipher : </form:label>
-					<form:select id="cipher" path="cipher" cssClass="selectform_short"><form:option value="${Boolean.True}">Yes</form:option><form:option value="${Boolean.False}">No</form:option></form:select><form:errors path="cipher" cssClass="inputerrors"/>
+					<form:select id="cipher" path="cipher" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="cipher" cssClass="inputerrors"/>
 				</div>
 			
 				<div style="margin-top:5px"><form:label id="cipherNotesLabel" for="cipherNotes" path="cipherNotes" cssErrorClass="error">Cipher Notes:</form:label></div>
@@ -86,22 +82,33 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-	        $('#close').click(function() {
-	        	$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
-	 			}}); 
+			$('#close').click(function() {
+	            $('#EditDescriptionVolumeDiv').block({ message: $('#question') }); 
 				return false;
 			});
+	        
+			$('#no').click(function() { 
+				$.unblockUI();$(".blockUI").fadeOut("slow");
+	            return false; 
+	        }); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+	 			}});
+				
+				return false; 
+	        }); 
 
 	        $("#EditDescriptionVolumeForm").submit(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					if(html.match(/inputerrors/g)){
-						$("#EditDescriptionVolumeDiv").html(html);
-					} else {
-						$("#body_left").html(html);
-					}
+					$("#EditDescriptionVolumeDiv").html(html);
 				}});
 				return false;
 			});
+
+			$("#EditContextVolume").removeAttr("href");
+	        $("#EditCorrespondentsVolume").removeAttr("href"); 
+			$("#EditDetailsVolume").removeAttr("href"); 
 		});
 	</script>

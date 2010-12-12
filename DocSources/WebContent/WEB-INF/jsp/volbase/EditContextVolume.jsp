@@ -4,7 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<link rel="stylesheet" href="<c:url value="/styles/style_editform.css" />" type="text/css" media="screen, projection">
 	<form:form id="EditContextVolumeForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>Context</b></legend>
@@ -23,22 +22,33 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-	        $('#close').click(function() {
-	        	$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
-	 			}}); 
+			$('#close').click(function() {
+	            $('#EditContextVolumeDiv').block({ message: $('#question') }); 
 				return false;
 			});
+	        
+			$('#no').click(function() { 
+				$.unblockUI();$(".blockUI").fadeOut("slow");
+	            return false; 
+	        }); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+	 			}});
+				
+				return false; 
+	        }); 
 
 			$("#EditContextVolumeForm").submit(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					if(html.match(/inputerrors/g)){
-						$("#EditContextVolumeDiv").html(html);
-					} else {
-						$("#body_left").html(html);
-					}
+					$("#EditContextVolumeDiv").html(html);
 				}});
 				return false;
 			});
+
+	        $("#EditCorrespondentsVolume").removeAttr("href"); 
+	        $("#EditDescriptionVolume").removeAttr("href"); 
+			$("#EditDetailsVolume").removeAttr("href"); 
 		});
 	</script>	
