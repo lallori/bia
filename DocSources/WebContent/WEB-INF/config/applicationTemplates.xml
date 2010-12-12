@@ -27,6 +27,9 @@
     <definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp">
     </definition>
 
+    <definition name="template.document" template="/WEB-INF/templates/document.jsp">
+    </definition>
+
     <definition name="template.volume" template="/WEB-INF/templates/volume.jsp">
     </definition>
 
@@ -139,8 +142,26 @@
 	<definition name="docbase/EditTopicsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicsDocument.jsp"/>
 	</definition>
-	<definition name="docbase/ShowDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDocument.jsp"/>
+	<definition name="docbase/ShowCorrespondentsOrPeopleDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
+	</definition>
+	<definition name="docbase/ShowDetailsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
+	</definition>
+	<definition name="docbase/ShowFactChecksDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowFactChecksDocument.jsp"/>
+	</definition>
+	<definition name="docbase/ShowExtractOrSynopsisDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
+	</definition>
+	<definition name="docbase/ShowDocument" extends="template.document">
+		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
+		<put-attribute name="factchecks" value="/WEB-INF/jsp/docbase/ShowFactChecksDocument.jsp"/>
+		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
+		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
 	</definition>
 	<!-- DocBase Module END -->
 
@@ -207,6 +228,9 @@
 	</definition>
 	<definition name="volbase/ShowExplorerVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolume.jsp"/>
+	</definition>
+	<definition name="volbase/ShowExplorerVolumeFancyBox" extends="template.completeDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeFancyBox.jsp"/>
 	</definition>
 	<definition name="volbase/ShowVolume" extends="template.volume">
 		<put-attribute name="details" value="/WEB-INF/jsp/volbase/ShowDetailsVolume.jsp"/>
