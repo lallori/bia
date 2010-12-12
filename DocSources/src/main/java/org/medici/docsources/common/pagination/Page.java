@@ -50,8 +50,6 @@ public class Page {
 	public Page(List<?> list, Integer firstRecordNumber, Integer lastRecordNumber) {
 		this.setTotal(new Long(list.size()));
 		this.results = list;
-		this.firstRecordNumber = firstRecordNumber;
-		this.lastRecordNumber = lastRecordNumber;
 	}
 
 	/**
@@ -67,7 +65,7 @@ public class Page {
 		this.firstRecordNumber = firstRecordNumber;
 		this.lastRecordNumber = lastRecordNumber;
 	}
-	
+
 	public Page(PaginationFilter paginationFilter) {
 		if (paginationFilter == null) {
 			setTotal(null);
@@ -75,17 +73,31 @@ public class Page {
 			firstRecordNumber = null;
 			lastRecordNumber = null;
 		} else {
-			setTotal(null);
+			setTotal(paginationFilter.getTotal());
 			results = null;
 			firstRecordNumber = paginationFilter.getFirstRecord();
 			lastRecordNumber = paginationFilter.getLength();
 		}
 	}
 
+	/**
+	 * @return the firstRecordNumber
+	 */
+	public Integer getFirstRecordNumber() {
+		return firstRecordNumber;
+	}
+
+	/**
+	 * @return the lastRecordNumber
+	 */
+	public Integer getLastRecordNumber() {
+		return lastRecordNumber;
+	}
+
 	public List<?> getList() {
 		return results;
 	}
-
+	
 	/**
 	 * @return the total
 	 */
@@ -95,6 +107,20 @@ public class Page {
 
 	public boolean isNextPage() {
 		return results.size() > pageSize;
+	}
+
+	/**
+	 * @param firstRecordNumber the firstRecordNumber to set
+	 */
+	public void setFirstRecordNumber(Integer firstRecordNumber) {
+		this.firstRecordNumber = firstRecordNumber;
+	}
+
+	/**
+	 * @param lastRecordNumber the lastRecordNumber to set
+	 */
+	public void setLastRecordNumber(Integer lastRecordNumber) {
+		this.lastRecordNumber = lastRecordNumber;
 	}
 
 	public void setList(List<?> list) {
