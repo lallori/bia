@@ -40,9 +40,12 @@ public class ShowExplorerVolumeRequestCommand {
 	private Integer summaryId;
 	private Integer volNum;
 	@Size (max=1)
-	private String volLeText;
-	private Boolean flashVersion;
+	private String volLetExt;
 	private String page;
+	private Integer firstRecord;
+	private Long total;
+	private Boolean flashVersion;
+	private Boolean fancyBox;
 
 	/**
 	 * @return the summaryId
@@ -68,40 +71,82 @@ public class ShowExplorerVolumeRequestCommand {
 	public void setVolNum(Integer volNum) {
 		this.volNum = volNum;
 	}
+	
 	/**
 	 * @return the volLeText
 	 */
-	public String getVolLeText() {
-		return volLeText;
+	public String getVolLetExt() {
+		return volLetExt;
 	}
+	
 	/**
-	 * @param volLeText the volLeText to set
+	 * @param volLeText the volLetExt to set
 	 */
-	public void setVolLeText(String volLeText) {
-		this.volLeText = volLeText;
+	public void setVolLeText(String volLetExt) {
+		this.volLetExt = volLetExt;
 	}
+	
 	/**
 	 * @param flashVersion the flashVersion to set
 	 */
 	public void setFlashVersion(Boolean flashVersion) {
 		this.flashVersion = flashVersion;
 	}
+	
 	/**
 	 * @return the flashVersion
 	 */
 	public Boolean getFlashVersion() {
 		return flashVersion;
 	}
+	
 	/**
 	 * @param page the page to set
 	 */
 	public void setPage(String page) {
 		this.page = page;
 	}
+	
 	/**
 	 * @return the page
 	 */
 	public String getPage() {
 		return page;
+	}
+	/**
+	 * @param firstRecord the firstRecord to set
+	 */
+	public void setFirstRecord(Integer firstRecord) {
+		this.firstRecord = firstRecord;
+	}
+	/**
+	 * @return the firstRecord
+	 */
+	public Integer getFirstRecord() {
+		return firstRecord;
+	}
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(Long total) {
+		this.total = total;
+	}
+	/**
+	 * @return the total
+	 */
+	public Long getTotal() {
+		return total;
+	}
+	/**
+	 * @param fancyBox the fancyBox to set
+	 */
+	public void setFancyBox(Boolean fancyBox) {
+		this.fancyBox = fancyBox;
+	}
+	/**
+	 * @return the fancyBox
+	 */
+	public Boolean getFancyBox() {
+		return fancyBox;
 	}
 }
