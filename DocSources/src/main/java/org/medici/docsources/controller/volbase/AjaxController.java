@@ -69,11 +69,13 @@ public class AjaxController {
 
 		try {
 			Volume volume = getVolBaseService().findVolume(volNum, volLetExt);
-			model.put("volNum", volNum);
-			model.put("volLetExt", volLetExt);
-			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId());
+			model.put("volNum", volNum.toString());
+			model.put("volLetExt", volLetExt.toString());
+			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
 		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
+			model.put("volNum", volNum.toString());
+			model.put("volLetExt", volLetExt.toString());
+			model.put("summaryId", "");
 		}
 
 		return new ModelAndView("responseOK", model);

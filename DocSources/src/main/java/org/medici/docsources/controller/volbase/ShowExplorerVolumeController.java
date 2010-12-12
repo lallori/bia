@@ -27,18 +27,21 @@
  */
 package org.medici.docsources.controller.volbase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.volbase.ShowExplorerVolumeRequestCommand;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -70,40 +73,35 @@ public class ShowExplorerVolumeController {
 	 * @param volumeId
 	 * @return
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowExplorerVolumeRequestCommand command, BindingResult result, HttpSession httpSession){
 		Map<String, Object> model = new HashMap<String, Object>();
 		
-		if (!ObjectUtils.toString(command.getVolNum()).equals("")) {
-			PagedListHolder volumeImages = null;
-			try {
-				if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
-					volumeImages = new PagedListHolder(getVolBaseService().findVolumeImages(command.getSummaryId()));
+		Page page = null;
+
+		PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), 1, command.getTotal());
+
+		try {
+			if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
+				page = getVolBaseService().findVolumeImages(command.getSummaryId(), paginationFilter);
+			} else {
+				if (!ObjectUtils.toString(command.getVolNum()).equals("")) {
+					page = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLetExt(), paginationFilter);
 				} else {
-					volumeImages = new PagedListHolder(getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLeText()));
+					page = new Page(new ArrayList<Image>(0), new Long(0), new Integer(0), new Integer(0));
 				}
-				
-				volumeImages.setPageSize(1);
-				httpSession.setAttribute("ShowExplorerVolume_volumeImages", volumeImages);
-				model.put("volumeImages", volumeImages);
-			} catch (ApplicationThrowable ath) {
 			}
-			
-		} else {
-			PagedListHolder volumeImages = (PagedListHolder) httpSession.getAttribute("ShowExplorerVolume_volumeImages");
-			if (volumeImages == null) {
-				throw new IllegalStateException("Cannot find pre-loaded volumeImages");
-			}
-			if (StringUtils.equals(command.getPage(), "next")) {
-				volumeImages.nextPage();
-			} else if (StringUtils.equals(command.getPage(), "previous")) {
-				volumeImages.previousPage();
-			}
-			model.put("volumeImages", volumeImages);
+
+			model.put("page", page);
+			model.put("paginationFilter", paginationFilter);
+		} catch (ApplicationThrowable ath) {
 		}
 
-		return new ModelAndView("volbase/ShowExplorerVolume", model);
+		if (BooleanUtils.isTrue(command.getFancyBox())) {
+			return new ModelAndView("volbase/ShowExplorerVolumeFancyBox", model);
+		} else {
+			return new ModelAndView("volbase/ShowExplorerVolume", model);
+		}
 	}
 
 	/**

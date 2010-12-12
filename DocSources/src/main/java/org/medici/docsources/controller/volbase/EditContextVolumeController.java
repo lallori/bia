@@ -98,15 +98,14 @@ public class EditContextVolumeController {
 			volume.setCcontext(command.getCcontext());
 
 			try {
-				getVolBaseService().editContextVolume(volume);
+				volume = getVolBaseService().editContextVolume(volume);
+
+				model.put("volume", volume);
+				return new ModelAndView("volbase/ShowContextVolume", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
 			}
-			
-			model.put("volume", volume);
-			return new ModelAndView("volbase/ShowContextVolume", model);
 		}
-
 	}
 
 	/**
