@@ -7,11 +7,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>the MEDICI ARCHIVE PROJECT</title>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="images/favicon_medici.jpg"/>" />
+
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/admmenu.css"/>" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/jquery.autocomplete2.css" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/mainmenu.css"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/actionsmenu.css"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/style_editform.css"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/style_template.css"/>" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/fancybox.css"/>"/>
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/demo_table.css"/>" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/TableTools.css"/>" />
 
 		<!--[if lte IE 7]>
 		<style type="text/css">
@@ -20,9 +25,19 @@
 		<![endif]-->
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.4.2.js"/>"></script>
+		<script type='text/javascript' src='<c:url value="/scripts/jquery.autocomplete.js"/>'></script>
+		<script type='text/javascript' src='<c:url value="/scripts/jquery.blockUI.js"/>'></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuADM.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuMAIN.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/fancybox/jquery.mousewheel-3.0.4.pack.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/fancybox/jquery.fancybox-1.3.2.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script>
+		
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$.ajaxSetup ({
