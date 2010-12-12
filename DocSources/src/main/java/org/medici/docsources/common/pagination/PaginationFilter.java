@@ -63,7 +63,7 @@ public class PaginationFilter {
     private Integer length;
 
 	private List<SortingCriteria> sortingCriterias;
-    private Integer total;
+    private Long total;
     
     public PaginationFilter(Integer firstRecord, Integer length) {
         this.firstRecord = firstRecord;
@@ -72,6 +72,14 @@ public class PaginationFilter {
         this.sortingCriterias = new ArrayList<SortingCriteria>();
     }
 
+    public PaginationFilter(Integer firstRecord, Integer length, Long total) {
+        this.firstRecord = (firstRecord == null) ? new Integer(0) : firstRecord;
+        this.length = length;
+        this.total = total;
+
+        this.sortingCriterias = new ArrayList<SortingCriteria>();
+    }
+    
     public PaginationFilter addSortingCriteria(String field, Order order) {
         this.sortingCriterias.add(new SortingCriteria(field, order));
         return this;
@@ -95,14 +103,14 @@ public class PaginationFilter {
 	/**
 	 * @return the total
 	 */
-	public Integer getTotal() {
+	public Long getTotal() {
 		return total;
 	}
 
 	/**
 	 * @param total the total to set
 	 */
-	public void setTotal(Integer total) {
+	public void setTotal(Long total) {
 		this.total = total;
 	}
 }
