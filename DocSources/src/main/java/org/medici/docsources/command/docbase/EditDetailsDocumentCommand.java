@@ -62,7 +62,7 @@ public class EditDetailsDocumentCommand {
 	// Date Uncertain or Approximate? 
 	private Boolean dateUns;
 	// Undated 
-	private Boolean undated;
+	private Boolean dateUndated;
 	//Date notes
 	private String dateNotes;
 
@@ -223,16 +223,16 @@ public class EditDetailsDocumentCommand {
 		this.dateUns = dateUns;
 	}
 	/**
-	 * @return the undated
+	 * @return the dateUndated
 	 */
-	public Boolean getUndated() {
-		return undated;
+	public Boolean getDateUndated() {
+		return dateUndated;
 	}
 	/**
-	 * @param undated the undated to set
+	 * @param dateUndated the dateUndated to set
 	 */
-	public void setUndated(Boolean undated) {
-		this.undated = undated;
+	public void setDateUndated(Boolean dateUndated) {
+		this.dateUndated = dateUndated;
 	}
 	/**
 	 * @return the dateNotes
@@ -246,5 +246,4 @@ public class EditDetailsDocumentCommand {
 	public void setDateNotes(String dateNotes) {
 		this.dateNotes = dateNotes;
 	}
-
 }
