@@ -442,11 +442,11 @@ hr {
 }
 
 
-#EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditRelationshipPersonDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv {
+#EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditRelationshipPersonDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #SpousesPersonForm {
 	width:450px;
 }
 
-#EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #AdddChildPersonForm, #AddSpousePersonForm {
+#EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #AdddChildPersonForm, #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm  {
 	width:450px;
 	margin-top:10px;
 }
@@ -459,6 +459,7 @@ select {
 #EditPortraitPersonDiv {
 	float:right;
 	margin-top:50px;
+	z-index:1;
 }
 
 div.fileinputs {
@@ -579,6 +580,12 @@ input.file {
 	margin-left:5px;
 }
 
+/* EditCorrespondentsVolume */
+
+#toCorrespLabel {
+	margin-left:13px;
+}
+
 
 /* Volume Explorer */
 
@@ -587,10 +594,11 @@ input.file {
 	border:1px solid #e6d0c6; 	
 	width:450px;
 	height:300px;
+	z-index:1;
 }
 
 .iframeFlipVolume {
-	z-index:-1;
+	z-index:1;
 	position:relative;
 }
 
@@ -778,17 +786,12 @@ img{
 
 /* EditCorrespondentsDocument */
 
-#fromLabel {
-	margin-left:37px;
-}
 
 #toLabel {
 	margin-left:23px;
 }
 
-#recipientLabel {
-	margin-left:15px;
-}
+
 
 
 /* PERSON */
@@ -801,6 +804,7 @@ img{
 	background-color:#e6d0c6;
 	height:1px;
 	border:0;
+	z-index:2;
 }
 
 /* CreatePerson */

@@ -48,8 +48,9 @@ body {
 	margin-top:95px;
 	margin-left:255px;
 	position:absolute;
-	z-index:2;
 	background-image:url(/DocSources/images/top_middle_bg.png);
+	z-index:3;
+
 }
 
 #top_bottom { /* User Interface */

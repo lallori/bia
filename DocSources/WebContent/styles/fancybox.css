@@ -66,6 +66,7 @@
 	z-index: 1104;
 	outline: none;
 	display: none;
+	z-index:9999;
 	
 }
 

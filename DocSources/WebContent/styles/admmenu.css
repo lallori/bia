@@ -1,5 +1,6 @@
 .menuadm {
 	padding-left: 15px; /*offset of tabs relative to browser left edge*/
+	z-index:9999;
 }
 
 .menuadm ul{
