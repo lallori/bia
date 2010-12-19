@@ -7,11 +7,11 @@
 	<form:form id="EditCorrespondentsVolumeForm" method="post" class="edit">
 		<fieldset>
 			<legend><b>Correspondents</b></legend>
-			<div style="margin-top:5px"><form:label id="recipsLabel" for="recips" path="recips" cssErrorClass="error">From:</form:label></div>
-			<div style="margin:0"><form:textarea id="recips" path="recips" cssClass="txtarea"/><form:errors path="recips" cssClass="inputerrors"/></div>
-
-			<div style="margin-top:5px"><form:label id="sendersLabel" for="senders" path="senders" cssErrorClass="error">To:</form:label></div>
+			<div style="margin-top:5px"><form:label id="sendersLabel" for="senders" path="senders" cssErrorClass="error">From:</form:label></div>
 			<div style="margin:0"><form:textarea id="senders" path="senders" cssClass="txtarea"/><form:errors path="senders" cssClass="inputerrors"/></div>
+
+			<div style="margin-top:5px"><form:label id="recipsLabel" for="recips" path="recips" cssErrorClass="error">To:</form:label></div>
+			<div style="margin:0"><form:textarea id="recips" path="recips" cssClass="txtarea"/><form:errors path="recips" cssClass="inputerrors"/></div>
 			<div style="margin-top:5px">
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" /><input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
 			</div>

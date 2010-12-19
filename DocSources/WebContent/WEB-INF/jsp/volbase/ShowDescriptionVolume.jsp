@@ -28,9 +28,12 @@
 			<li><b>Condition: </b> ${volume.ccondition}</li>
 			<li><b>Bound: </b>${volume.bound ? 'Yes' : 'No'}</li>
 			<li><b>Folios Numbered: </b>${volume.folsNumbrd ? 'Yes' : 'No'}</li>
+			<li><b>Folios Count: </b>${folioCount}</li>
 			<li><b>Alphabetical Index: </b>${volume.oldAlphaIndex ? 'Yes' : 'No'}</li>
+			<li><b>Printed material: </b>${volume.printedMaterial ? 'Yes' : 'No'}</li>
+			<li><b>Printed drawings: </b>${volume.printedDrawings ? 'Yes' : 'No'}</li>
 			<li><b>Languages: </b>  ${volume.italian ? 'Italian' : '' } 
-									${volume.spanish ? 'Italian' : ''}
+									${volume.spanish ? 'Spanish' : ''}
 									${volume.english ? 'English' : ''}
 									${volume.latin ? 'Latin' : ''}
 									${volume.german ? 'German' : ''}

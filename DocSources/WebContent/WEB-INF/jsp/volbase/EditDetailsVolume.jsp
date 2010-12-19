@@ -44,16 +44,16 @@
 				<form:textarea id="dateNotes" path="dateNotes" cssClass="txtarea"/>
 			</div>
 
-			<form:errors path="seriesRefDescription" cssClass="inputerrors"/>
-			<form:errors path="volNum" cssClass="inputerrors"/>
-			<form:errors path="volLetExt" cssClass="inputerrors"/>
-			<form:errors path="startYear" cssClass="inputerrors"/>
-			<form:errors path="startMonth" cssClass="inputerrors"/>
-			<form:errors path="startDay" cssClass="inputerrors"/>
-			<form:errors path="endYear" cssClass="inputerrors"/>
-			<form:errors path="endMonth" cssClass="inputerrors"/>
-			<form:errors path="endDay" cssClass="inputerrors"/>
-			<form:errors path="dateNotes" cssClass="inputerrors"/>
+			<form:errors path="seriesRefDescription" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="volNum" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="volLetExt" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="startYear" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="startMonth" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="startDay" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="endYear" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="endMonth" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="endDay" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="dateNotes" cssClass="inputerrors" htmlEscape="false"/>
 			
 			<form:hidden path="summaryId"/>
 			<form:hidden path="seriesRefNum"/>
@@ -78,15 +78,18 @@
 	        $("#EditDescriptionVolume").removeAttr("href"); 
 
 	        // We disable
-			<c:if test="${command.summaryId == 0}"> 
-				$("#volNum").attr('disabled','true');
-				$("#volLetExt").attr('disabled','true');
+			<c:if test="${command.summaryId != 0}"> 
+				$("#volNum").attr("disabled","true");
+				$("#volLetExt").attr("disabled","true");
 	        </c:if>
 
 			var showVolumeExplorer = function (){
 				$.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $("#volNum").val(), volLetExt: $("#volLetExt").val() },
 					function(data){
 						if (data.summaryId == "") {
+							if ($("#volExist").length > 0) {
+								$("#volExist").remove();
+							}
 							$("#save").removeAttr("disabled");
 							$.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { volNum: $("#volNum").val(), volLetExt: $("#volLetExt").val(), flashVersion : true },
 								function(data){
@@ -95,6 +98,9 @@
 								}
 							);
 						} else {
+							if ($("#volExist").length == 0) {
+								$("#close").before("<span class=\"inputerrors\" id=\"volExist\">Volume is already present, you cannot add again this volume. Save is disabled.<br></span>");
+							}
 							$("#save").attr("disabled","true");
 						}
 					}
@@ -134,7 +140,10 @@
 	        }); 
 
 			$("#EditDetailsVolumeForm").submit(function (){
-	 			$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
+				$("#volNum").removeAttr("disabled");
+				$("#volLetExt").removeAttr("disabled");
+
+				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
 					if(html.match(/inputerrors/g)){
 						$("#EditDetailsVolumeDiv").html(html);
 					} else {

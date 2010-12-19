@@ -22,6 +22,8 @@
 		<c:param name="fancyBox" value="true" />
 	</c:url>
 
+	<link rel="stylesheet" type="text/css" href="/DocSources/styles/style_editform.css" />
+
 	<div id="contentFancyCom">
 		<h5>VOLUME EXPLORER</h5>
 		

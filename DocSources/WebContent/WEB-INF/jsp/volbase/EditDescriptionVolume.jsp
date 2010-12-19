@@ -30,7 +30,16 @@
 				</div>
 	
 				<hr />
-	
+
+				<div>
+					<form:label id="printedMaterialLabel" for="printedMaterial" path="printedMaterial" cssErrorClass="error">Printed material</form:label>
+					<form:checkbox id="printedMaterial" path="printedMaterial" class="checkbox1"/><form:errors path="printedMaterial" cssClass="inputerrors"/>
+					<form:label id="printedDrawingsLabel" for="printedDrawings" path="printedDrawings"  cssErrorClass="error">Printed drawings</form:label>
+					<form:checkbox id="printedDrawings" path="printedDrawings" class="checkbox1"/><form:errors path="printedDrawings" cssClass="inputerrors"/>
+				</div>
+
+				<hr />
+				
 				<div style="margin-bottom:15px">
 					<label for="languages" id="languagesLabel" >Languages:</label>
 				</div>
