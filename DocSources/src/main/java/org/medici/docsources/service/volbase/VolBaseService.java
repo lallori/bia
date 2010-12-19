@@ -107,7 +107,7 @@ public interface VolBaseService {
 	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.SerieList}
 	 * @throws ApplicationThrowable
 	 */
-	public List<SerieList> findSeries(String alias) throws ApplicationThrowable;
+	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
 
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 

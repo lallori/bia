@@ -66,7 +66,7 @@
 		</fieldset>	
 	</form:form>
 
-	<c:url var="findSeriesUrl" value="/de/volbase/FindSeries.json"/>
+	<c:url var="findSeriesUrl" value="/de/volbase/SearchSeriesList.json"/>
 
 	<c:url var="ShowVolume" value="/src/volbase/ShowVolume.do">
 		<c:param name="summaryId"   value="${command.summaryId}" />

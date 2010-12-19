@@ -11,14 +11,14 @@
 		<fieldset>
 		<legend><b>CORRESPONDENTS/PEOPLE </b></legend>
 			<div>
-				<form:label id="senderPeopleLabel" for="senderPeople" path="senderPeople" cssErrorClass="error">Sender:</form:label>
-				<form:input id="senderPeopleAutoCompleter" path="senderPeople" cssClass="input_25c" />
+				<form:label id="senderPeopleLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender:</form:label>
+				<form:input id="senderPeopleAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
 				<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure" cssClass="checkboxPers2"/>
 			</div>
 			<div>	
-				<form:label id="senderPlaceLabel" for="senderPlace" path="senderPlace" cssErrorClass="error">From:</form:label>
-				<form:input id="senderPlaceAutoCompleter" path="senderPlace" cssClass="input_25c" />
+				<form:label id="senderPlaceLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From:</form:label>
+				<form:input id="senderPlaceAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" />
 				<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure" cssClass="checkboxPers2"/>
 			</div>
@@ -26,24 +26,29 @@
 			<hr />
 			
 			<div>
-				<form:label id="recipientPeopleLabel" for="recipientPeople" path="recipientPeople" cssErrorClass="error">Recipient:</form:label>
-				<form:input id="recipientPeopleAutoCompleter" path="recipientPeople" cssClass="input_25c"/>
+				<form:label id="recipientPeopleLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error">Recipient:</form:label>
+				<form:input id="recipientPeopleAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/>
 				<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure" cssClass="checkboxPers2"/>
 			</div>
 			<div>
-				<form:label id="recipientPlaceLabel" for="recipientPlace" path="recipientPlace" cssErrorClass="error">From:</form:label>
-				<form:input id="recipientPlaceAutoCompleter" name="recipientPlace" cssClass="input_25c" />
+				<form:label id="recipientPlaceLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">From:</form:label>
+				<form:input id="recipientPlaceAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" />
 				<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPlaceUnsure" path="recipientPlaceUnsure" cssClass="checkboxPers2"/>
 			</div>
+
+			<form:hidden path="senderPeopleId"/>
+			<form:hidden path="senderPlaceId"/>
+			<form:hidden path="recipientPeopleId"/>
+			<form:hidden path="recipientPlaceId"/>
 			
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>			
 		</fieldset>	
-	</form>
+	</form:form>
 		
 	<form id="PeopleCorrespondentsDocumentsForm" action="/DocSources/de/peoplebase/PeopleCorrespondentsDocuments.do?summaryId=0&amp;volNum=0&amp;volLeText=" method="post" class="edit">
 		<fieldset>	
@@ -84,7 +89,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var a = $('#senderPeopleAutoCompleter').autocomplete({ 
-		    serviceUrl:'/DocSources/de/peoplebase/FindPeople.json',
+		    serviceUrl:'/DocSources/de/peoplebase/SearchSenders.json',
 		    minChars:3, 
 		    delimiter: /(,|;)\s*/, // regex or character
 		    maxHeight:400,

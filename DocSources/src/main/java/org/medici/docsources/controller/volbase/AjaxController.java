@@ -119,12 +119,12 @@ public class AjaxController {
 	 * @param text Text to search in title, subTitle1 and subTitle2
 	 * @return ModelAndView containing seriesList.
 	 */
-	@RequestMapping(value = "/de/volbase/FindSeries", method = RequestMethod.GET)
-	public ModelAndView findSeriesList(@RequestParam("query") String query) {
+	@RequestMapping(value = "/de/volbase/SearchSeriesList", method = RequestMethod.GET)
+	public ModelAndView searchSeriesList(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			List<SerieList> series = getVolBaseService().findSeries(query);
+			List<SerieList> series = getVolBaseService().searchSeriesList(query);
 			model.put("query", query);
 			model.put("data", ListBeanUtils.transformList(series, "seriesRefNum"));
 			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(series, "title/subTitle1/subTitle2", "/", "/", Boolean.TRUE));

@@ -29,6 +29,7 @@ package org.medici.docsources.service.peoplebase;
 
 import java.util.List;
 
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -73,10 +74,11 @@ public interface PeopleBaseService {
 	/**
 	 * 
 	 * @param text
+	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<People> searchPeople(String text) throws ApplicationThrowable;
+	public List<People> searchPeople(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -84,5 +86,13 @@ public interface PeopleBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<People> findSenders(String query) throws ApplicationThrowable;
+	public List<People> searchRecipients(String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> searchSenders(String query) throws ApplicationThrowable;;
 }

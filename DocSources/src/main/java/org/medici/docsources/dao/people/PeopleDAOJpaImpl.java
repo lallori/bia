@@ -27,9 +27,12 @@
  */
 package org.medici.docsources.dao.people;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
 import org.springframework.stereotype.Repository;
@@ -73,5 +76,23 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
         query.setMaxResults(1);
 
         return (People) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchSenders(String query) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }

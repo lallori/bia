@@ -24,8 +24,8 @@
 		<ul>
 			<li><b>Sender:</b> ${document.senderPeople.last}, ${document.senderPeople.first}</li>
 			<li><b>From:</b> ${document.senderPlace.placeNameFull} </li>
-			<li><b>To:</b> ${document.receiverPlace.placeNameFull}</li>		
-			<li><b>Recipient:</b> ${document.receiverPeople.last}, ${document.receiverPeople.first}</li>
+			<li><b>To:</b> ${document.recipientPlace.placeNameFull}</li>		
+			<li><b>Recipient:</b> ${document.recipientPeople.last}, ${document.recipientPeople.first}</li>
 			<li><b>Ref:</b> ???? QUA CHE CI METTO ????</li>
 		</ul>
 	</div>

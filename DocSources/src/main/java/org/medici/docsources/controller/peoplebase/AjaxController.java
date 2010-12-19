@@ -58,14 +58,14 @@ public class AjaxController {
 	 * @param text Text to search in ...
 	 * @return ModelAndView containing senders.
 	 */
-	@RequestMapping(value = "/de/peoplebase/FindSenders", method = RequestMethod.GET)
-	public ModelAndView findSenders(@RequestParam("query") String query) {
+	@RequestMapping(value = "/de/peoplebase/SearchSenders", method = RequestMethod.GET)
+	public ModelAndView searchSenders(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
 			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
 
-			List<People> people = getPeopleBaseService().findSenders(query);
+			List<People> people = getPeopleBaseService().searchSenders(query);
 			model.put("query", query);
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
 			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
@@ -83,14 +83,14 @@ public class AjaxController {
 	 * @param text Text to search in ...
 	 * @return ModelAndView containing recipients.
 	 */
-	@RequestMapping(value = "/de/peoplebase/FindRecipients", method = RequestMethod.GET)
+	@RequestMapping(value = "/de/peoplebase/SearchRecipients", method = RequestMethod.GET)
 	public ModelAndView findRecipients(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
 			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
 
-			List<People> people = getPeopleBaseService().findSenders(query);
+			List<People> people = getPeopleBaseService().searchRecipients(query);
 			model.put("query", query);
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
 			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));

@@ -29,6 +29,7 @@ package org.medici.docsources.service.peoplebase;
 
 import java.util.List;
 
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.domain.Month;
@@ -75,15 +76,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<People> findSenders(String query) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
 	 * @return the monthDAO
 	 */
 	public MonthDAO getMonthDAO() {
@@ -113,8 +105,36 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<People> searchPeople(String text) throws ApplicationThrowable {
-		return null;
+	public List<People> searchPeople(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().searchPeople(text, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchRecipients(String query) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().searchSenders(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchSenders(String query) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().searchSenders(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

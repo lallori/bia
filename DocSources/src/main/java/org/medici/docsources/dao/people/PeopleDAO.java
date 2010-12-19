@@ -1,5 +1,5 @@
 /*
- * PersonDAO.java
+ * PeopleDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,8 +27,11 @@
  */
 package org.medici.docsources.dao.people;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.People;
 
@@ -49,4 +52,21 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public People findLastEntryPerson() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<People> searchSenders(String query) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<People> searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException;
 }

@@ -30,7 +30,6 @@ package org.medici.docsources.service.volbase;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.image.ImageDAO;
@@ -268,7 +267,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<SerieList> findSeries(String alias) throws ApplicationThrowable {
+	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable {
 		try {
 			return getSeriesListDAO().findSeries(alias);
 		} catch (Throwable th) {
