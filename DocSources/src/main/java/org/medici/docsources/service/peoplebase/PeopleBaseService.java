@@ -29,6 +29,7 @@ package org.medici.docsources.service.peoplebase;
 
 import java.util.List;
 
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -61,6 +62,13 @@ public interface PeopleBaseService {
 	 * @return
 	 */
 	public People findPeople(Integer peopleId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable;
 
 	/**
 	 * 

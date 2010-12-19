@@ -29,7 +29,9 @@ package org.medici.docsources.service.peoplebase;
 
 import java.util.List;
 
+import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +46,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired
+	private MonthDAO monthDAO;
+	@Autowired
 	private PeopleDAO peopleDAO;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public People findLastEntryPerson() throws ApplicationThrowable {
 		try {
@@ -68,6 +75,34 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> findSenders(String query) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @return the monthDAO
+	 */
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Month> getMonths() throws ApplicationThrowable {
+		try {
+			return getMonthDAO().getAllMonths();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
 	 * @return the peopleDAO
 	 */
 	public PeopleDAO getPeopleDAO() {
@@ -83,16 +118,17 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @param monthDAO the monthDAO to set
+	 */
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	/**
 	 * @param peopleDAO the peopleDAO to set
 	 */
 	public void setPeopleDAO(PeopleDAO peopleDAO) throws ApplicationThrowable {
 		this.peopleDAO = peopleDAO;
-	}
-
-	@Override
-	public List<People> findSenders(String query) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
