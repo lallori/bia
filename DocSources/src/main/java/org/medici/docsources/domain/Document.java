@@ -38,6 +38,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -75,7 +76,7 @@ public class Document implements Serializable{
 	@Column (name="\"LASTUPDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
-	@Column (name="\"DOCTOBEVETTED\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Column (name="\"DOCTOBEVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean docTobeVetted;
 	@Column (name="\"DOCTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -85,7 +86,7 @@ public class Document implements Serializable{
 	@Column (name="\"DOCVETBEGINS\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date docVetBegins;
-	@Column (name="\"DOCVETTED\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Column (name="\"DOCVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
 	private Boolean docVetted;
 	@Column (name="\"DOCVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -148,7 +149,8 @@ public class Document implements Serializable{
 	private String recipNotes;
 	@Column (name="\"GRAPHIC\"", length=1, columnDefinition="tinyint", nullable=false)
 	private Boolean graphic;
-
+	@OneToOne(mappedBy="entryId")
+	private FactChecks factChecks;
 	/**
 	 * @return the entryId
 	 */
@@ -640,5 +642,17 @@ public class Document implements Serializable{
 	 */
 	public void setGraphic(Boolean graphic) {
 		this.graphic = graphic;
+	}
+	/**
+	 * @param factChecks the factChecks to set
+	 */
+	public void setFactChecks(FactChecks factChecks) {
+		this.factChecks = factChecks;
+	}
+	/**
+	 * @return the factChecks
+	 */
+	public FactChecks getFactChecks() {
+		return factChecks;
 	}
 }

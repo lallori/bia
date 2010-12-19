@@ -28,6 +28,7 @@
 package org.medici.docsources.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -68,6 +71,9 @@ public class Image implements Serializable {
 	private String imageName;
 	@Column (name="\"storagePath\"", length=1, nullable=false)
 	private Integer storagePath;
+	@Column (name="\"dateCreated\"", length=1, nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateCreated;
 
 	/**
 	 * @return the imageId
@@ -156,6 +162,20 @@ public class Image implements Serializable {
 		}
 		
 		return stringBuffer.toString();
+	}
+
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	/**
+	 * @return the dateCreated
+	 */
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
 }

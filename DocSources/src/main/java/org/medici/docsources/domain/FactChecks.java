@@ -36,6 +36,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
@@ -59,8 +60,7 @@ public class FactChecks implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"VETID\"", length=10, nullable=false)
 	private Integer vetId;
-	@ManyToOne
-	@JoinColumn(name="\"ENTRYID\"")
+	@OneToOne 
 	private Document entryId;
 	@Column (name="\"PERSON\"", length=50)
 	private String person; 
