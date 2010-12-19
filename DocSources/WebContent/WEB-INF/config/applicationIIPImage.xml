@@ -12,7 +12,7 @@
 		<property name="properties">
 			<props>
 				<prop key="iipimage.protocol">http</prop>
-				<prop key="iipimage.host">192.168.1.200</prop>
+				<prop key="iipimage.host">iipimage.medici.org</prop>
 				<prop key="iipimage.port">80</prop>
 				<prop key="iipimage.fcgi.path">/fcgi-bin/iipsrv.fcgi</prop>
 				<prop key="iipimage.image.path">/data/tiled_mdp/</prop>
