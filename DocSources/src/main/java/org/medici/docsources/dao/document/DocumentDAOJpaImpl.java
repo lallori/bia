@@ -30,6 +30,8 @@ package org.medici.docsources.dao.document;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
 import org.springframework.stereotype.Repository;
@@ -82,6 +84,12 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
         query.setMaxResults(1);
 
         return (Document) query.getSingleResult();
+	}
+
+	@Override
+	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

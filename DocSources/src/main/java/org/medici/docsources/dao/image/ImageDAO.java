@@ -31,6 +31,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Image;
 
@@ -51,4 +53,14 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 */
 	public List<Image> findImages(Integer volNum, String volLetExt) throws PersistenceException;
 
+	/**
+	 * This method returns a Paged list of Images linked to a specific volume .
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException;
 }

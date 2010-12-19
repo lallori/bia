@@ -37,6 +37,8 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Image;
 import org.springframework.stereotype.Repository;
@@ -100,5 +102,68 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			typedQuery.setParameter("volLetExt", volLetExt);
 
 		return typedQuery.getResultList();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		Page page = new Page(paginationFilter);
+
+		if (paginationFilter.getTotal() == null) {
+			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+			Root<Image> rootCount = criteriaQueryCount.from(Image.class);
+			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+			// Define predicate's elements
+			ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+			ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+			criteriaQueryCount.where(
+				criteriaBuilder.and(
+					criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
+					StringUtils.isEmpty(volLetExt) ? 
+						criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
+						criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
+				)
+			);
+
+			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+			typedQueryCount.setParameter("volNum", volNum);
+			if (!StringUtils.isEmpty(volLetExt))
+				typedQueryCount.setParameter("volLetExt", volLetExt);
+			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
+		}
+
+		CriteriaQuery<Image> criteriaQuery = criteriaBuilder.createQuery(Image.class);
+		Root<Image> root = criteriaQuery.from(Image.class);
+	
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+		//We need to duplicate predicates beacause they are link to Root element
+		criteriaQuery.where(
+				criteriaBuilder.and(
+					criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
+					StringUtils.isEmpty(volLetExt) ? 
+						criteriaBuilder.isNull(root.get("volLetExt")) : 
+						criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText)
+				)
+			);
+
+		// Set values in predicate's elements  
+		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("volNum", volNum);
+		if (!StringUtils.isEmpty(volLetExt))
+			typedQuery.setParameter("volLetExt", volLetExt);
+		
+		typedQuery.setFirstResult(paginationFilter.getFirstRecord());
+		typedQuery.setMaxResults(paginationFilter.getLength());
+		page.setList(typedQuery.getResultList());
+
+		return page;
 	}
 }

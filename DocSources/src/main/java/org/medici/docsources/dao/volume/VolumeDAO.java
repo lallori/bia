@@ -43,6 +43,14 @@ import org.medici.docsources.domain.Volume;
 public interface VolumeDAO extends Dao<Integer, Volume> {
 
 	/**
+	 * This method returns last entry {@link org.medici.docsources.domain.Volume}created on database.
+	 * 
+	 * @return Last entry {@link org.medici.docsources.domain.Volume}
+	 * @throws PersistenceException
+	 */
+	public Volume findLastEntryVolume() throws PersistenceException;
+
+	/**
 	 * This method searches a single volume identified by is unique identifiers.
 	 * 
 	 * @param volNum
@@ -62,12 +70,4 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @throws PersistenceException
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
-
-	/**
-	 * This method returns last entry {@link org.medici.docsources.domain.Volume}created on database.
-	 * 
-	 * @return Last entry {@link org.medici.docsources.domain.Volume}
-	 * @throws PersistenceException
-	 */
-	public Volume findLastEntryVolume() throws PersistenceException;
 }

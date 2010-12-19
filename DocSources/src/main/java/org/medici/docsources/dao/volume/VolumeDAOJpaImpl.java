@@ -152,8 +152,6 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	
 		//We need to duplicate predicates beacause they are link to Root element
         List<Predicate> predicates = new ArrayList<Predicate>();
-        //predicates.add(criteriaBuilder.like((Expression) root.get("condition"), "%" + text + "%" ));
-        //predicates.add(criteriaBuilder.like((Expression) root.get("context"), "%" + text + "%" ));
         predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("title"), "%" + text + "%" ));
         predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle1"), "%" + text + "%" ));
         predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle2"), "%" + text + "%" ));
@@ -173,5 +171,4 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 
 		return page;
 	}
-
 }
