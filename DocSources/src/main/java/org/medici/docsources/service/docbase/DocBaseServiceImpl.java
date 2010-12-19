@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.factchecks.FactChecksDAO;
 import org.medici.docsources.dao.month.MonthDAO;
+import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Month;
@@ -58,6 +59,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private FactChecksDAO factChecksDAO;
 	@Autowired
 	private MonthDAO monthDAO;
+	@Autowired
+	private VolumeDAO volumeDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -67,6 +70,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			document.setEntryId(null);
 			
+			// We need to attach the correct volume istance by database extraction.
+			document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
 			//Setting fields that are defined as nullable = false
 			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			document.setDateCreated(new Date());
@@ -229,9 +234,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Document findDocument(Integer documentId) throws ApplicationThrowable { 
-		// TODO Auto-generated method stub
-		return new Document();
+	public Document findDocument(Integer entryId) throws ApplicationThrowable { 
+		try {
+			return getDocumentDAO().find(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -280,6 +288,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @return the volumeDAO
+	 */
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -310,5 +325,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
 	}
 }
