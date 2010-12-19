@@ -27,12 +27,14 @@
  */
 package org.medici.docsources.validator.docbase;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
+import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
@@ -44,6 +46,8 @@ import org.springframework.validation.Validator;
 public class EditDetailsDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private VolBaseService volBaseService;
 
 	/**
 	 * x
@@ -85,25 +89,51 @@ public class EditDetailsDocumentValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDetailsDocumentCommand editDetailsDocumentCommand = (EditDetailsDocumentCommand) object;
-		validateDocumentId(editDetailsDocumentCommand.getEntryId(), errors);
+		validateDocument(editDetailsDocumentCommand.getEntryId(), errors);
+		validateLinkedVolume(editDetailsDocumentCommand.getVolume(), errors);
+	}
+
+	private void validateLinkedVolume(String volume, Errors errors) {
+		if (!errors.hasErrors()) {
+			if (!StringUtils.isEmpty(volume)) {
+				try {
+					if (getVolBaseService().findVolume(VolumeUtils.extractVolNum(volume), VolumeUtils.extractVolLetExt(volume)) == null) {
+						errors.reject("volume", "error.volume.notfound");
+					}
+				} catch (ApplicationThrowable ath) {
+					errors.reject("volume", "error.volume.notfound");
+				}
+			}
+		}
+		
+	}
+
+	public void validateDocument(Integer entryId, Errors errors) {
+		if (!errors.hasErrors()) {
+			// entryId equals zero is 'New Document', it shouldn't be validated  
+			if (entryId > 0) {
+				try {
+					if (getDocBaseService().findDocument(entryId) == null) {
+						errors.reject("entryId", "error.document.notfound");
+					}
+				} catch (ApplicationThrowable ath) {
+					errors.reject("entryId", "error.document.notfound");
+				}
+			}
+		}
 	}
 
 	/**
-	 * 
-	 * @param documentId
-	 * @param errors
+	 * @param volBaseService the volBaseService to set
 	 */
-	public void validateDocumentId(Integer entryId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.documentId.null");
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
 
-		if (!errors.hasErrors()) {
-			try {
-				if (getDocBaseService().findDocument(entryId) == null) {
-					errors.reject("documentId", "error.entryId.notfound");
-				}
-			} catch (ApplicationThrowable ath) {
-				errors.reject("entryId", "error.entryId.notfound");
-			}
-		}
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
 	}
 }
