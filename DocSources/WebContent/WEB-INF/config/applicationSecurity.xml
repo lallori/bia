@@ -71,7 +71,7 @@
    	</bean> 
    	
    	<bean id="securityContextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
-   		<constructor-arg value="ldap://localhost:10389" />
+   		<constructor-arg value="ldap://ldap.medici.org:10389" />
    		<property name="authenticationSource" ref="authenticationSource"/>
    		<property name="baseEnvironmentProperties">
    			<map>
@@ -82,7 +82,7 @@
    	</bean>
    	
    	<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
-		<property name="url" value="ldap://localhost:10389" />
+		<property name="url" value="ldap://ldap.medici.org:10389" />
 		<property name="base" value="dc=docsources,dc=medici,dc=org" />
 		<property name="userDn" value="cn=Administrator,ou=Users,dc=docsources,dc=medici,dc=org" />
 		<property name="password" value="!admin" />
