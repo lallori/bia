@@ -7,10 +7,11 @@
 	<form:form id="EditContextVolumeForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>Context</b></legend>
-			<div style="margin:0"><form:textarea id="ccontext" path="ccontext" cssClass="txtarea"/><form:errors path="ccontext" cssClass="inputerrors"/></div>
+			<div><form:textarea id="ccontext" path="ccontext" cssClass="txtarea"/><form:errors path="ccontext" cssClass="inputerrors"/></div>
 
-			<div style="margin-top:5px">
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" /><input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+			<div>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
 			</div>
 			<form:hidden path="summaryId"/>
 		</fieldset>

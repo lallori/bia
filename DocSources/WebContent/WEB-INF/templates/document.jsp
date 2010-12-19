@@ -4,7 +4,7 @@
 
 <br />
 
-<tiles:insertAttribute name="factchecks"/>
+<tiles:insertAttribute name="factcheck"/>
 
 <br />
 

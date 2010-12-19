@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsDocument" value="/de/docbase/EditCorrespondentsDocument.do">
+		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
@@ -19,8 +19,8 @@
 		</c:url>
 	</security:authorize>
 		
-	<div id="EditExtSynDocumentDiv">
-		<h5>EXTRACT/SYNOPSIS <a id="EditExtSynDocument" href="/DocSources/de/docbase/EditExtSynDocument.html">edit</a></h5>
+	<div id="EditExtractOrSynopsisDocument">
+		<h5>EXTRACT/SYNOPSIS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a></security:authorize></h5>
 		<ul>
 			<li><b>Extract:</b></li>
 			<li>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
@@ -34,6 +34,6 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#EditExtSynDocument").click(function(){$("#EditExtSynDocumentDiv").load($(this).attr("href"));return false;});
+			$("#EditExtractOrSynopsisDocument").click(function(){$("#EditExtractOrSynopsisDocumentDiv").load($(this).attr("href"));return false;});
 		});
 	</script>

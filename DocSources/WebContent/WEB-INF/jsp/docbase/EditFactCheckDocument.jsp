@@ -5,7 +5,20 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<form:form id="EditFactChecksDocumentForm" method="post" cssClass="edit">
+		<fieldset>
+			<legend><b>FACT CHECK</b></legend>
+				
+			<div><form:textarea id="factCheck" path="factCheck" class="txtarea"></textarea></div>
+			
+			<div>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" class="button"/>
+			</div>
+
+			<form:hidden path="entryId"/>
+		</fieldset>	
 	</form:form>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#EditFactChecksDocumentForm").submit(function (){

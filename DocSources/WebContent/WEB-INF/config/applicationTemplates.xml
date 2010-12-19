@@ -136,8 +136,8 @@
 	<definition name="docbase/EditExtractOrSynopsisDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditExtractOrSynopsisDocument.jsp"/>
 	</definition>
-	<definition name="docbase/EditFactChecksDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditFactChecksDocument.jsp"/>
+	<definition name="docbase/EditFactCheckDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditFactCheckDocument.jsp"/>
 	</definition>
 	<definition name="docbase/EditTopicsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicsDocument.jsp"/>
@@ -148,8 +148,8 @@
 	<definition name="docbase/ShowDetailsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
 	</definition>
-	<definition name="docbase/ShowFactChecksDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowFactChecksDocument.jsp"/>
+	<definition name="docbase/ShowFactCheckDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
 	</definition>
 	<definition name="docbase/ShowExtractOrSynopsisDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
@@ -159,7 +159,7 @@
 	</definition>
 	<definition name="docbase/ShowDocument" extends="template.document">
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
-		<put-attribute name="factchecks" value="/WEB-INF/jsp/docbase/ShowFactChecksDocument.jsp"/>
+		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
 		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
 		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
 	</definition>

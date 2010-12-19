@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsDocument" value="/de/docbase/EditCorrespondentsDocument.do">
+		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
@@ -45,6 +45,11 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#EditDetailsDocument").click(function(){$("#EditDetailsDocumentDiv").load($(this).attr("href"));return false;});
+			 $("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
+			 $("#EditFactChecksDocument").attr('href', "${EditFactChecksDocument}");
+			 $("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
+			 $("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
+
+			 $("#EditDetailsDocument").click(function(){$("#EditDetailsDocumentDiv").load($(this).attr("href"));return false;});
 		});
 	</script>

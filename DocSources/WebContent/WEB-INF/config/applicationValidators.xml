@@ -17,8 +17,8 @@
         <description>Edit Extract Or Synopsis Document Validator.</description>
 	</bean>
 
-	<bean id="editFactChecksDocumentValidator" class="org.medici.docsources.validator.docbase.EditFactChecksDocumentValidator">
-        <description>Edit Fact Checks Document Validator.</description>
+	<bean id="editFactCheckDocumentValidator" class="org.medici.docsources.validator.docbase.EditFactCheckDocumentValidator">
+        <description>Edit Fact Check Document Validator.</description>
 	</bean>
 
 	<bean id="editTopicsDocumentValidator" class="org.medici.docsources.validator.docbase.EditTopicsDocumentValidator">

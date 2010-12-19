@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsDocument" value="/de/docbase/EditCorrespondentsDocument.do">
+		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
@@ -19,19 +19,24 @@
 		</c:url>
 	</security:authorize>
 	
-	<div id="EditCorrespondentsDocumentDiv">
-		<h5>CORRESPONDENTS/PEOPLE <a id="EditCorrespondentsDocument" href="/DocSources/de/docbase/EditCorrespondentsDocument.html">edit</a></h5>
+	<div id="EditCorrespondentsOrPeopleDocumentDiv">
+		<h5>CORRESPONDENTS/PEOPLE <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocument}">edit</a></security:authorize></h5>
 		<ul>
-			<li><b>Sender:</b> Tudor, Henry VII</li>
-			<li><b>From:</b> City of London / England</li>
-			<li><b>To:</b> Firenze / Toscan</li>		
-			<li><b>Recipient:</b> Medici, Francesco i de'</li>
-			<li><b>Ref:</b> Niccolini, Agnolo di Matte</li>
+			<li><b>Sender:</b> ${document.senderPeople.last}, ${document.senderPeople.first}</li>
+			<li><b>From:</b> ${document.senderPlace.placeNameFull} </li>
+			<li><b>To:</b> ${document.receiverPlace.placeNameFull}</li>		
+			<li><b>Recipient:</b> ${document.receiverPeople.last}, ${document.receiverPeople.first}</li>
+			<li><b>Ref:</b> ???? QUA CHE CI METTO ????</li>
 		</ul>
 	</div>
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#EditCorrespondentsDocument").click(function(){$("#EditCorrespondentsDocumentDiv").load($(this).attr("href"));return false;});
+			 $("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
+			 $("#EditFactChecksDocument").attr('href', "${EditFactChecksDocument}");
+			 $("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
+			 $("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
+
+			 $("#EditCorrespondentsOrPeopleDocument").click(function(){$("#EditCorrespondentsOrPeopleDocumentDiv").load($(this).attr("href"));return false;});
 		});
 	</script>

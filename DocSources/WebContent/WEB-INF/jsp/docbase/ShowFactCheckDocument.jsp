@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsDocument" value="/de/docbase/EditCorrespondentsDocument.do">
+		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
@@ -20,7 +20,7 @@
 	</security:authorize>
 	
 	<div id="EditFactChecksDocumentDiv">
-		<h5>FACT CHECK <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsDocument" href="${EditDetailsDocument}">edit</a></security:authorize></h5>
+		<h5>FACT CHECK <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditFactChecksDocument" href="${EditFactChecksDocument}">edit</a></security:authorize></h5>
 		<ul>
 			<li>YES</li>
 		</ul>
@@ -28,6 +28,11 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#EditFactChecksDocument").click(function(){$("#EditFactChecksDocumentDiv").load($(this).attr("href"));return false;});
+			 $("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
+			 $("#EditFactChecksDocument").attr('href', "${EditFactChecksDocument}");
+			 $("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
+			 $("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
+
+			 $("#EditFactChecksDocument").click(function(){$("#EditFactChecksDocumentDiv").load($(this).attr("href"));return false;});
 		});
 	</script>

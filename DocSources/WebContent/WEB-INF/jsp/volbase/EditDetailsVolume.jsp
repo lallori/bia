@@ -15,32 +15,32 @@
 			</div>
 
 			<div>
-				<form:label id="volNumLabel" for="volNum" path="volNum" cssStyle="margin-left:78px" cssErrorClass="error" >Volume/Filza (MDP): </form:label><form:input id="volNum" path="volNum" cssClass="input_5c" maxlength="5"/><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error" cssStyle="margin-left:10px">Volume extension:</form:label>
+				<form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error" >Volume/Filza (MDP): </form:label><form:input id="volNum" path="volNum" cssClass="input_5c" maxlength="5"/><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension:</form:label>
 				<form:input id="volLetExt" path="volLetExt" size="1" maxlength="1"  cssClass="input_1c"/>
 			</div>
 
 			<div>
 				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Start year: </form:label><form:input id="startYear" path="startYear" cssClass="input_4c" maxlength="4"/>
-				<form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssStyle="margin-left:19px" cssErrorClass="error">Start month: </form:label>
+				<form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error">Start month: </form:label>
 				<form:select id="startMonthNum" path="startMonthNum" cssClass="selectform"><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
-				<form:label id="startDayLabel" for="startDay" path="startDay" style="margin-left:19px" cssErrorClass="error">Start day: </form:label>
+				<form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Start day: </form:label>
 				<form:input id="startDay" path="startDay" cssClass="input_2c" maxlength="2"/>
 			</div>
 
 			<div>
-				<form:label id="endYearLabel" for="endYear" path="endYear" cssStyle="margin-left:4px" cssErrorClass="error">End year: </form:label>
+				<form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">End year: </form:label>
 				<form:input id="endYear" path="endYear" cssClass="input_4c" maxlength="4"/>
-				<form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssStyle="margin-left:23px" cssErrorClass="error">End month: </form:label>
+				<form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error">End month: </form:label>
 				<form:select id="endMonthNum" path="endMonthNum" cssClass="selectform"><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
-				<form:label id="endDayLabel" for="endDay" path="endDay" cssStyle="margin-left:24px" cssErrorClass="error">End day: </form:label>
+				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">End day: </form:label>
 				<form:input id="endDay" path="endDay" cssClass="input_2c" maxlength="2"/>
 			</div>
 
-			<div style="margin:5px 0 0 0">
+			<div>
 				<form:label id="dateNotesLabel" for="dateNotes" path="dateNotes" cssErrorClass="error">Date notes: </form:label>
 			</div>
 
-			<div style="margin:0">
+			<div>
 				<form:textarea id="dateNotes" path="dateNotes" cssClass="txtarea"/>
 			</div>
 
@@ -59,8 +59,9 @@
 			<form:hidden path="seriesRefNum"/>
 			<form:hidden path="dateCreated"/>
 
-			<div style="margin-top:5px">
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" /><input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+			<div>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
 			</div>
 		</fieldset>	
 	</form:form>

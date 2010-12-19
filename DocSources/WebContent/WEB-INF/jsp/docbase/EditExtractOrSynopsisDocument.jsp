@@ -4,7 +4,24 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">>
+	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
+		<fieldset>
+			<legend><b>EXTRACT/SYNOPSIS</b></legend>
+			
+			<div><form:label for="extract" id="extractLabel" path="extract" cssErrorClass="error">Extract:</label></div>
+			<div><form:textarea id="extract" path="extract" class="txtarea_big" /></div>
+			<div><form:label for="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis:</label></div>
+			<div><form:textarea id="synopsis" path="synopsis" class="txtarea_big" /></div>
+			
+			<div>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" class="button"/>
+			</div>
+			
+			<form:hidden path="entryId"/>
+		</fieldset>	
+	</form>
+
 	</form:form>
 	<script type="text/javascript">
 		$(document).ready(function() {
