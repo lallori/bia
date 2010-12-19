@@ -101,15 +101,22 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volume.setFrench(false);
 			volume.setCipher(false);
 
-			if (StringUtils.isEmpty(volume.getStartMonth())) {
+			if (volume.getStartMonthNum() != null) {
+				volume.setStartMonth(getMonthDAO().find(volume.getStartMonthNum()).getMonthName());;
+				volume.setStartMonthNum(volume.getStartMonthNum());
+			} else {
 				volume.setStartMonth(null);
 				volume.setStartMonthNum(null);
 			}
-				
-			if (StringUtils.isEmpty(volume.getEndMonth())) {
+
+			if (volume.getEndMonthNum() != null) {
+				volume.setEndMonth(getMonthDAO().find(volume.getEndMonthNum()).getMonthName());;
+				volume.setEndMonthNum(volume.getEndMonthNum());
+			} else {
 				volume.setEndMonth(null);
 				volume.setEndMonthNum(null);
 			}
+
 
 			getVolumeDAO().persist(volume);
 			
@@ -214,25 +221,23 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
-		//volumeToUpdate.setVolNum(volume.getVolNum());
-		//volumeToUpdate.setVolLetExt(volume.getVolLetExt());
-		//volumeToUpdate.setResearcher(volume.getResearcher());
-		//volumeToUpdate.setDateCreated(volume.getDateCreated());
 		volumeToUpdate.setSerieList(volume.getSerieList());
 		volumeToUpdate.setStartYear(volume.getStartYear());
-		if (StringUtils.isEmpty(volume.getStartMonth())) {
+		if (volume.getStartMonthNum() != null) {
+			volumeToUpdate.setStartMonth(getMonthDAO().find(volume.getStartMonthNum()).getMonthName());;
+			volumeToUpdate.setStartMonthNum(volume.getStartMonthNum());
+		} else {
 			volumeToUpdate.setStartMonth(null);
 			volumeToUpdate.setStartMonthNum(null);
-		} else {
-			volumeToUpdate.setStartMonth(volume.getStartMonth());
 		}
 		volumeToUpdate.setStartDay(volume.getStartDay());
 		volumeToUpdate.setEndYear(volume.getEndYear());
-		if (StringUtils.isEmpty(volume.getEndMonth())) {
-			volume.setEndMonth(null);
-			volume.setEndMonthNum(null);
+		if (volume.getEndMonthNum() != null) {
+			volumeToUpdate.setEndMonth(getMonthDAO().find(volume.getEndMonthNum()).getMonthName());;
+			volumeToUpdate.setEndMonthNum(volume.getEndMonthNum());
 		} else {
-			volumeToUpdate.setEndMonth(volume.getEndMonth());
+			volumeToUpdate.setEndMonth(null);
+			volumeToUpdate.setEndMonthNum(null);
 		}
 
 		volumeToUpdate.setEndDay(volume.getEndDay());

@@ -111,10 +111,10 @@ public class EditDetailsVolumeController {
 			}
 
 			volume.setStartYear(command.getStartYear());
-			volume.setStartMonth(command.getStartMonth());
+			volume.setStartMonthNum(command.getStartMonthNum());
 			volume.setStartDay(command.getStartDay());
 			volume.setEndYear(command.getEndYear());
-			volume.setEndMonth(command.getEndMonth());
+			volume.setEndMonthNum(command.getEndMonthNum());
 			volume.setEndDay(command.getEndDay());
 			volume.setDateNotes(command.getDateNotes());
 
@@ -142,9 +142,9 @@ public class EditDetailsVolumeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsVolumeCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-
+		List<Month> months = null;
 		try {
-			List<Month> months = getVolBaseService().getMonths();
+			months = getVolBaseService().getMonths();
 			model.put("months", months);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowVolume", model);
@@ -173,12 +173,14 @@ public class EditDetailsVolumeController {
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			command.setVolNum(null);
 			command.setVolLetExt(null);
-			command.setStartDay(null);
-			command.setStartMonth(null);
 			command.setStartYear(null);
-			command.setEndDay(null);
-			command.setEndMonth(null);
+			// Empty month is in last positizion
+			command.setStartMonthNum(months.get(months.size()-1).getMonthNum());
+			command.setStartDay(null);
 			command.setEndYear(null);
+			// Empty month is in last positizion
+			command.setEndMonthNum(months.get(months.size()-1).getMonthNum());
+			command.setEndDay(null);
 			command.setDateCreated(new Date());
 			command.setSeriesRefDescription(null);
 			command.setSeriesRefNum(null);

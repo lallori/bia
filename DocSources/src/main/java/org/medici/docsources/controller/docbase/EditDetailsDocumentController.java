@@ -157,9 +157,10 @@ public class EditDetailsDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		List<Month> months = null;
 
 		try {
-			List<Month> months = getDocBaseService().getMonths();
+			months = getDocBaseService().getMonths();
 			model.put("months", months);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowDocument", model);
@@ -182,13 +183,6 @@ public class EditDetailsDocumentController {
 			}
 
 		} else {
-			try {
-				List<Month> months = getDocBaseService().getMonths();
-				model.put("months", months);
-			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowVolume", model);
-			}
-
 			// On Document creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			command.setDateCreated(new Date());
@@ -203,7 +197,8 @@ public class EditDetailsDocumentController {
 			command.setContDisc(false);
 			// Date
 			command.setDocYear(null);
-			command.setDocMonthNum(null);
+			// Empty month is in last positizion
+			command.setDocMonthNum(months.get(months.size()-1).getMonthNum());
 			command.setDocDay(null);
 			//Modern Dating
 			command.setYearModern(null);

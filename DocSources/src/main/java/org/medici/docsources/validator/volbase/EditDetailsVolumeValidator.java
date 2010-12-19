@@ -84,8 +84,52 @@ public class EditDetailsVolumeValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDetailsVolumeCommand editDetailsVolumeCommand = (EditDetailsVolumeCommand) object;
 		validateVolume(editDetailsVolumeCommand.getSummaryId(), editDetailsVolumeCommand.getVolNum(), editDetailsVolumeCommand.getVolLetExt(), errors);
+		validateDates(editDetailsVolumeCommand.getStartYear(), editDetailsVolumeCommand.getStartMonthNum(), editDetailsVolumeCommand.getStartDay(), editDetailsVolumeCommand.getEndYear(), editDetailsVolumeCommand.getEndMonthNum(), editDetailsVolumeCommand.getEndDay(), errors);
 	}
 
+	private void validateDates(Integer startYear, Integer startMonthNum, Integer startDay, Integer endYear, Integer endMonthNum, Integer endDay, Errors errors) {
+		if (!errors.hasErrors()) {
+			if (startYear != null) {
+				if ((startYear < 1200) || (startYear > 1700)) {
+					errors.reject("startYear", "error.startYear.invalid");
+				}
+			}
+			if (startMonthNum != null) {
+				if ((startMonthNum <1) || (startMonthNum >13)) {
+					errors.reject("startMonthNum", "error.startMonthNum.invalid");
+				}
+			}
+			if (startDay != null) {
+				if ((startDay < 0) || (startDay > 31)) {
+					errors.reject("startDay", "error.startDay.invalid");
+				}
+			}
+
+			if (endYear != null) {
+				if ((endYear < 1200) || (endYear > 1700)) {
+					errors.reject("endYear", "error.endYear.invalid");
+				}
+			}
+			if (endMonthNum != null) {
+				if ((endMonthNum <1) || (endMonthNum >13)) {
+					errors.reject("endMonthNum", "error.endMonthNum.invalid");
+				}
+			}
+			if (endDay != null) {
+				if ((endDay < 0) || (endDay > 31)) {
+					errors.reject("endDay", "error.endDay.invalid");
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @param volNum
+	 * @param volLetExt
+	 * @param errors
+	 */
 	public void validateVolume(Integer summaryId, Integer volNum, String volLetExt, Errors errors) {
 		if (!errors.hasErrors()) {
 			// summary id equals zero is 'New Document', it shouldn't be validated  

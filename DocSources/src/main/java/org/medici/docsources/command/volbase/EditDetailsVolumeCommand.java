@@ -57,10 +57,10 @@ public class EditDetailsVolumeCommand {
 	// This is the concatenation of seriesRef Description (Title / SubTitle 1 /SubTitle 2)
 	private String seriesRefDescription;
 	private Integer startYear;
-	private String startMonth;
+	private Integer startMonthNum;
 	private Integer startDay;
 	private Integer endYear;
-	private String endMonth;
+	private Integer endMonthNum;
 	private Integer endDay;
 	private String dateNotes;
 	
@@ -162,20 +162,6 @@ public class EditDetailsVolumeCommand {
 	}
 	
 	/**
-	 * @return the startMonth
-	 */
-	public String getStartMonth() {
-		return startMonth;
-	}
-	
-	/**
-	 * @param startMonth the startMonth to set
-	 */
-	public void setStartMonth(String startMonth) {
-		this.startMonth = startMonth;
-	}
-	
-	/**
 	 * @return the startDay
 	 */
 	public Integer getStartDay() {
@@ -201,20 +187,6 @@ public class EditDetailsVolumeCommand {
 	 */
 	public void setEndYear(Integer endYear) {
 		this.endYear = endYear;
-	}
-	
-	/**
-	 * @return the endMonth
-	 */
-	public String getEndMonth() {
-		return endMonth;
-	}
-	
-	/**
-	 * @param endMonth the endMonth to set
-	 */
-	public void setEndMonth(String endMonth) {
-		this.endMonth = endMonth;
 	}
 	
 	/**
@@ -257,5 +229,33 @@ public class EditDetailsVolumeCommand {
 	 */
 	public String getResearcher() {
 		return researcher;
+	}
+
+	/**
+	 * @param startMonthNum the startMonthNum to set
+	 */
+	public void setStartMonthNum(Integer startMonthNum) {
+		this.startMonthNum = startMonthNum;
+	}
+
+	/**
+	 * @return the startMonthNum
+	 */
+	public Integer getStartMonthNum() {
+		return startMonthNum;
+	}
+
+	/**
+	 * @param endMonthNum the endMonthNum to set
+	 */
+	public void setEndMonthNum(Integer endMonthNum) {
+		this.endMonthNum = endMonthNum;
+	}
+
+	/**
+	 * @return the endMonthNum
+	 */
+	public Integer getEndMonthNum() {
+		return endMonthNum;
 	}
 }
