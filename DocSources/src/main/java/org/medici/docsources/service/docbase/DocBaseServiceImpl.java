@@ -81,10 +81,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setDocVetted(false);
 			document.setNewEntry(true);
 			document.setReckoning(false);
-			document.setSendUns(false);
-			document.setSendLocuns(false);
-			document.setRecipUns(false);
-			document.setRecipLocUns(false);
+			document.setSenderPeopleUnsure(false);
+			document.setSenderPlaceUnsure(false);
+			document.setRecipientPeopleUnsure(false);
+			document.setRecipientPlaceUnsure(false);
 			document.setGraphic(false);
 
 			if (document.getDocMonthNum().equals(0)) {
