@@ -167,4 +167,23 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable 
+	 */
+	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }
