@@ -33,8 +33,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -46,12 +48,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * AJAX Controller for User Actions.
+ * AJAX Main Controller. It drives simple search.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -120,6 +120,62 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if (searchType.toLowerCase().trim().equals("documents")) {
+			Page page = null;
+
+			PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+			try {
+				page = getDocBaseService().searchDocuments(alias, paginationFilter);
+			} catch (ApplicationThrowable aex) {
+			}
+
+			List resultList = new ArrayList();
+			for (Document currentDocument : (List<Document>)page.getList()) {
+				List singleRow = new ArrayList();
+				singleRow.toString();
+				/*				singleRow.add(currentDocument.getSerieList().getTitle());
+
+				String startDate = "";
+				if (currentVolume.getStartYear() != null) {
+					startDate += currentVolume.getStartYear();
+				}
+				if (StringUtils.isNotEmpty(currentVolume.getStartMonth())) {
+					startDate += (startDate.length() > 0 ) ? " " : "";
+					startDate += currentVolume.getStartMonth();
+				}
+				if (currentVolume.getStartDay() != null) {
+					startDate += (startDate.length() > 0 ) ? " " : "";
+					startDate += currentVolume.getStartDay();
+				}
+				singleRow.add(startDate);
+				
+				String endDate = "";
+				if (currentVolume.getEndYear() != null) {
+					endDate += currentVolume.getEndYear();
+				}
+				if (StringUtils.isNotEmpty(currentVolume.getEndMonth())) {
+					endDate += (endDate.length() > 0 ) ? " " : "";
+					endDate += currentVolume.getEndMonth();
+				}
+				if (currentVolume.getEndDay() != null) {
+					endDate += (endDate.length() > 0 ) ? " " : "";
+					endDate += currentVolume.getEndDay();
+				}
+				singleRow.add(endDate);
+				
+				StringBuffer subTitle = new StringBuffer(currentVolume.getSerieList().toString());
+				subTitle.append(" MdP ").append(currentVolume.getVolNum());
+				if (StringUtils.isNotEmpty(currentVolume.getVolLetExt())) {
+					subTitle.append(currentVolume.getVolLetExt());
+				}
+				singleRow.add(subTitle.toString());
+				
+				resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
+*/			}
+			model.put("iEcho", "" + 1);
+			model.put("iTotalDisplayRecords", page.getTotal());
+			model.put("iTotalRecords", page.getTotal());
+			model.put("aaData", resultList);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("people")) {
@@ -135,17 +191,11 @@ public class AjaxController {
 
 			try {
 				page = getVolBaseService().searchVolumes(alias, paginationFilter);
-				//searchResults = getVolBaseService().findUsers(user);
 			} catch (ApplicationThrowable aex) {
 			}
 
 			List resultList = new ArrayList();
 			for (Volume currentVolume : (List<Volume>)page.getList()) {
-				StringBuffer hrefBegin = new StringBuffer("<a href=\"");
-				hrefBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-				hrefBegin.append("/src/volbase/ShowDocument?summaryId=").append(currentVolume.getSummaryId());
-				hrefBegin.append("\">");
-				String hrefEnd = "</a>";
 				List singleRow = new ArrayList();
 				singleRow.add(currentVolume.getSerieList().getTitle());
 
@@ -177,18 +227,14 @@ public class AjaxController {
 				}
 				singleRow.add(endDate);
 				
-				StringBuffer subTitle = new StringBuffer("");
-				if (StringUtils.isNotEmpty(currentVolume.getSerieList().getSubTitle1())) {
-					subTitle.append(currentVolume.getSerieList().getSubTitle1());
-					if (StringUtils.isNotEmpty(currentVolume.getSerieList().getSubTitle2()))
-						subTitle.append(" / ").append(currentVolume.getSerieList().getSubTitle2());
-				}
+				StringBuffer subTitle = new StringBuffer(currentVolume.getSerieList().toString());
 				subTitle.append(" MdP ").append(currentVolume.getVolNum());
 				if (StringUtils.isNotEmpty(currentVolume.getVolLetExt())) {
 					subTitle.append(currentVolume.getVolLetExt());
 				}
 				singleRow.add(subTitle.toString());
-				resultList.add(singleRow);
+				
+				resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 			}
 			model.put("iEcho", "" + 1);
 			model.put("iTotalDisplayRecords", page.getTotal());

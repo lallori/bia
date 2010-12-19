@@ -104,8 +104,12 @@ public class EditDetailsVolumeController {
 			volume.setVolLetExt(command.getVolLetExt());
 			volume.setResearcher(command.getResearcher());
 			volume.setDateCreated(command.getDateCreated());
-			volume.setSerieList(new SerieList());
-			volume.getSerieList().setSeriesRefNum(command.getSeriesRefNum());
+			
+			if (command.getSeriesRefNum() != null) {
+				volume.setSerieList(new SerieList());
+				volume.getSerieList().setSeriesRefNum(command.getSeriesRefNum());
+			}
+
 			volume.setStartYear(command.getStartYear());
 			volume.setStartMonth(command.getStartMonth());
 			volume.setStartDay(command.getStartDay());
@@ -168,6 +172,7 @@ public class EditDetailsVolumeController {
 			// On Volume creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			command.setVolNum(null);
+			command.setVolLetExt(null);
 			command.setStartDay(null);
 			command.setStartMonth(null);
 			command.setStartYear(null);

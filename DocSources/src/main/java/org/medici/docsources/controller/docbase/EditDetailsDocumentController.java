@@ -60,7 +60,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/EditDetailsDocumentController")
+@RequestMapping("/de/docbase/EditDetailsDocument")
 public class EditDetailsDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
@@ -99,13 +99,47 @@ public class EditDetailsDocumentController {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-			
-			/** TODO : Implement invocation business logic */
-			getDocBaseService();
 
-			return new ModelAndView("docbase/ShowDetailsDocument", model);
+			Document document = new Document();
+			document.setResearcher(command.getResearcher());
+			document.setEntryId(command.getEntryId());
+			document.setVolume(new Volume(command.getVolume()));
+			// Insert/Part: 
+			document.setInsertNum(command.getInsertNum());
+			document.setInsertLet(command.getInsertLet());
+			// Folio Start:
+			document.setFolioNum(command.getFolioNum());
+			document.setFolioMod(command.getFolioMod().toString());
+			// Paginated
+			document.setUnpaged(command.getUnpaged());
+			//Disc. Cont'd
+			document.setContDisc(command.getContDisc());
+			// Date
+			document.setDocYear(command.getDocYear());
+			document.setDocMonthNum(command.getDocMonthNum());
+			document.setDocDay(command.getDocDay());
+			//Modern Dating
+			document.setYearModern(command.getYearModern());
+			// Date Uncertain or Approximate
+			document.setDateUns(command.getDateUns());
+			// Undated
+			document.setUndated(command.getDateUndated());
+			document.setDateNotes(command.getDateNotes());
+
+			try {
+				if (command.getEntryId().equals(0)) {
+					document = getDocBaseService().addNewDocument(document);
+					model.put("document", document);
+					return new ModelAndView("docbase/ShowDocument", model);
+				} else {
+					document = getDocBaseService().editDetailsDocument(document);
+					model.put("document", document);
+					return new ModelAndView("docbase/ShowDetailsDocument", model);
+				}
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsDocument", model);
+			}
 		}
-
 	}
 
 	/**
@@ -128,14 +162,14 @@ public class EditDetailsDocumentController {
 			List<Month> months = getDocBaseService().getMonths();
 			model.put("months", months);
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowVolume", model);
+			return new ModelAndView("error/ShowDocument", model);
 		}
 
-		if ((command != null) && (command.getSummaryId() > 0)) {
+		if ((command != null) && (command.getEntryId() > 0)) {
 			Document document = new Document();
 
 			try {
-				document = getDocBaseService().findDocument(command.getSummaryId());
+				document = getDocBaseService().findDocument(command.getEntryId());
 				model.put("document", document);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
@@ -147,22 +181,37 @@ public class EditDetailsDocumentController {
 			} catch (InvocationTargetException itex) {
 			}
 
-			//command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
-			//command.setSeriesRefDescription(volume.getSerieList().getTitle());
 		} else {
+			try {
+				List<Month> months = getDocBaseService().getMonths();
+				model.put("months", months);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowVolume", model);
+			}
+
 			// On Document creation, the research is always the current user.
-			/*command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-			command.setVolNum(null);
-			command.setStartDay(null);
-			command.setStartMonth(null);
-			command.setStartYear(null);
-			command.setEndDay(null);
-			command.setEndMonth(null);
-			command.setEndYear(null);
+			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			command.setDateCreated(new Date());
-			command.setSeriesRefDescription(null);
-			command.setSeriesRefNum(null);
-			*/
+			command.setEntryId(null);
+			command.setInsertNum(null);
+			command.setInsertLet(null);
+			command.setFolioNum(null);
+			command.setFolioMod(null);
+			// Paginated
+			command.setUnpaged(false);
+			//Disc. Cont'd
+			command.setContDisc(false);
+			// Date
+			command.setDocYear(null);
+			command.setDocMonthNum(null);
+			command.setDocDay(null);
+			//Modern Dating
+			command.setYearModern(null);
+			// Date Uncertain or Approximate?
+			command.setDateUns(false);
+			// Undated 
+			command.setDateUndated(false);
+			command.setDateNotes(null);
 		}
 
 		return new ModelAndView("docbase/EditDetailsDocument", model);

@@ -36,6 +36,7 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.docbase.EditFactChecksDocumentCommand;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,13 +95,20 @@ public class EditFactChecksDocumentController {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-			
-			/** TODO : Implement invocation business logic */
-			getDocBaseService();
+			Document document = new Document();
+			document.setEntryId(command.getEntryId());
+			document.setFactChecks(new FactChecks());
+			document.getFactChecks().setAddLRes(command.getAddLRes());
 
-			return new ModelAndView("docbase/ShowFactChecksDocument", model);
+			try {
+				document = getDocBaseService().editFactChecksDocument(document);
+
+				model.put("document", document);
+				return new ModelAndView("docbase/ShowDocument", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowVolume", model);
+			}
 		}
-
 	}
 
 	/**

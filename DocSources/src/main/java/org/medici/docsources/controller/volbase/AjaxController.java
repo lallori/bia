@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.common.util.ListBeanUtils;
+import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -57,14 +58,24 @@ public class AjaxController {
 	private VolBaseService volBaseService;
 
 	/**
-	 * This method returns the summaryId of the volume searched by is MDP. 
+	 * This method can act  
 	 *  
 	 * @param volNum Volume Id
 	 * @param volLeText Volume Filza
 	 * @return ModelAndView containing input params and summaryId.
 	 */
 	@RequestMapping(value = "/de/volbase/FindVolume", method = RequestMethod.GET)
-	public ModelAndView findSeriesList(@RequestParam("volNum") Integer volNum, @RequestParam("volLetExt") String volLetExt) {
+	public ModelAndView findVolume(@RequestParam(value="volume", required=false) String volume,
+								   @RequestParam(value="volNum", required=false) Integer volNum, 
+								   @RequestParam(value="volLetExt", required=false) String volLetExt) {
+ 		if (volNum != null) {
+			return findVolume(volNum, volLetExt);
+		}
+		
+		return findVolume(volume);
+	}
+	
+	private ModelAndView findVolume(Integer volNum, String volLetExt) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
@@ -73,14 +84,35 @@ public class AjaxController {
 			model.put("volLetExt", volLetExt.toString());
 			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
 		} catch (ApplicationThrowable aex) {
-			model.put("volNum", volNum.toString());
-			model.put("volLetExt", volLetExt.toString());
+			model.put("volNum", (volNum != null) ? volNum.toString() : "");
+			model.put("volLetExt", (volLetExt != null) ? volLetExt.toString() : "");
 			model.put("summaryId", "");
 		}
 
 		return new ModelAndView("responseOK", model);
 	}
 	
+	/**
+	 * This method returns the summaryId of the volume searched by is MDP. 
+	 *  
+	 * @param inputVolume String containing volNum and VolLetExt
+	 * @return ModelAndView containing input params and summaryId.
+	 */
+	private ModelAndView findVolume(String inputVolume) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Volume volume = getVolBaseService().findVolume(VolumeUtils.extractVolNum(inputVolume), VolumeUtils.extractVolLetExt(inputVolume));
+			model.put("volume", volume);
+			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
+		} catch (ApplicationThrowable aex) {
+			model.put("volume", (inputVolume != null) ? inputVolume : "");
+			model.put("summaryId", "");
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
 	/**
 	 * This method returns a list of seriesList. 
 	 *  

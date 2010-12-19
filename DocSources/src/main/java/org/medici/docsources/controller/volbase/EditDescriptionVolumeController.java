@@ -99,6 +99,8 @@ public class EditDescriptionVolumeController {
 			volume.setBound(command.getBound());
 			volume.setFolsNumbrd(command.getFolsNumbrd());
 			volume.setOldAlphaIndex(command.getOldAlphaIndex());
+			volume.setPrintedMaterial(command.getPrintedMaterial());
+			volume.setPrintedDrawings(command.getPrintedDrawings());
 			volume.setItalian(command.getItalian());
 			volume.setSpanish(command.getSpanish());
 			volume.setEnglish(command.getEnglish());

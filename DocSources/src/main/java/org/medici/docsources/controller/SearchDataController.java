@@ -27,14 +27,9 @@
  */
 package org.medici.docsources.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.medici.docsources.command.SearchDataCommand;
-import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.People;
-import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -93,7 +88,8 @@ public class SearchDataController {
 	}
 
 	/**
-	 * 
+	 * This controller act as a dispatcher for result view.
+	 *  
 	 * @param command
 	 * @param result
 	 * @return
@@ -102,49 +98,26 @@ public class SearchDataController {
 	public ModelAndView processSubmit(@ModelAttribute("command") SearchDataCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		if (command.getSearchType().toLowerCase().trim().equals("documents")) {
-			List<Document> searchResult = new ArrayList<Document>(0);
-			try {
-				searchResult = getDocBaseService().searchDocuments(command.getText());
-				model.put("documents", searchResult);
-			} catch (ApplicationThrowable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return new ModelAndView("docbase/SearchDocumentResult",model);
+			// Search operation is made by View with a jquery plugin to contextualized AjaxController
+			return new ModelAndView("docbase/SearchResultDocument",model);
 		}
 		
 		if (command.getSearchType().toLowerCase().trim().equals("people")) {
-			List<People> searchResult = new ArrayList<People>(0);
-			try {
-				searchResult = getPeopleBaseService().searchPeople(command.getText());
-				model.put("people", searchResult);
-			} catch (ApplicationThrowable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			// Search operation is made by View with a jquery plugin to contextualized AjaxController
 			return new ModelAndView("peoplebase/SearchResultPeople",model);
 		}
 		
 		if (command.getSearchType().toLowerCase().trim().equals("places")) {
-			List<Document> searchResult = new ArrayList<Document>(0);
-			try {
-				searchResult = getGeoBaseService().searchPlaces(command.getText());
-				model.put("places", searchResult);
-			} catch (ApplicationThrowable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			// Search operation is made by View with a jquery plugin to contextualized AjaxController
 			return new ModelAndView("geobase/SearchResultPlace",model);
 		}
 		
 		if (command.getSearchType().toLowerCase().trim().equals("volumes")) {
-	
+			// Search operation is made by View with a jquery plugin to contextualized AjaxController
 			return new ModelAndView("volbase/SearchResultVolume",model);
 		}
 
+		// Wee should never arrive at this point.
 		return new ModelAndView("errorKO",model);
 	}
 
