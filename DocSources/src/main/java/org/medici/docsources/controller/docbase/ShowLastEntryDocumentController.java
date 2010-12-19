@@ -63,7 +63,7 @@ public class ShowLastEntryDocumentController {
 			Document document = getDocBaseService().findLastEntryDocument();
 			model.put("document", document);
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowDocument", model);
+			return new ModelAndView("error/ShowLastEntryDocument", model);
 		}
 
 		return new ModelAndView("docbase/ShowDocument", model);

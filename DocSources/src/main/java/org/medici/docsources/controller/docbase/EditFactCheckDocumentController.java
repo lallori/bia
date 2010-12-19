@@ -1,5 +1,5 @@
 /*
- * EditFactChecksDocumentController.java
+ * EditFactCheckDocumentController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -34,7 +34,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.medici.docsources.command.docbase.EditFactChecksDocumentCommand;
+import org.medici.docsources.command.docbase.EditFactCheckDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -56,12 +56,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/EditFactChecksDocument")
-public class EditFactChecksDocumentController {
+@RequestMapping("/de/docbase/EditFactCheckDocument")
+public class EditFactCheckDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editFactChecksDocumentValidator")
+	@Qualifier("editFactCheckDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -88,7 +88,7 @@ public class EditFactChecksDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditFactChecksDocumentCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditFactCheckDocumentCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
@@ -124,14 +124,14 @@ public class EditFactChecksDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditFactChecksDocumentCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditFactCheckDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Document document = new Document();
 
 		try {
 			document = getDocBaseService().findDocument(command.getEntryId());
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/EditFactChecksDocument", model);
+			return new ModelAndView("error/EditFactCheckDocument", model);
 		}
 
 		try {
@@ -140,7 +140,7 @@ public class EditFactChecksDocumentController {
 		} catch (InvocationTargetException itex) {
 		}
 
-		return new ModelAndView("docbase/EditFactChecksDocument", model);
+		return new ModelAndView("docbase/EditFactCheckDocument", model);
 	}
 
 	/**

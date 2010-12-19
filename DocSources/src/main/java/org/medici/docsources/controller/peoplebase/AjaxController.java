@@ -33,11 +33,8 @@ import java.util.Map;
 
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.People;
-import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
-import org.medici.docsources.service.user.UserService;
-import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +59,7 @@ public class AjaxController {
 	 * @return ModelAndView containing senders.
 	 */
 	@RequestMapping(value = "/de/peoplebase/FindSenders", method = RequestMethod.GET)
-	public ModelAndView findSeriesList(@RequestParam("query") String query) {
+	public ModelAndView findSenders(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
@@ -70,8 +67,33 @@ public class AjaxController {
 
 			List<People> people = getPeopleBaseService().findSenders(query);
 			model.put("query", query);
-			//model.put("data", ListBeanUtils.transformList(series, "seriesRefNum"));
-			//model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(series, "title/subTitle1/subTitle2", "/", "/", Boolean.TRUE));
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * This method returns a list of ipotetical recipients. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing recipients.
+	 */
+	@RequestMapping(value = "/de/peoplebase/FindRecipients", method = RequestMethod.GET)
+	public ModelAndView findRecipients(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
+
+			List<People> people = getPeopleBaseService().findSenders(query);
+			model.put("query", query);
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

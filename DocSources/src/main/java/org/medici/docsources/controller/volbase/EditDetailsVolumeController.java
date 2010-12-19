@@ -104,10 +104,10 @@ public class EditDetailsVolumeController {
 			volume.setVolLetExt(command.getVolLetExt());
 			volume.setResearcher(command.getResearcher());
 			volume.setDateCreated(command.getDateCreated());
-			
-			if (command.getSeriesRefNum() != null) {
-				volume.setSerieList(new SerieList());
-				volume.getSerieList().setSeriesRefNum(command.getSeriesRefNum());
+
+			// We consider null series if the user clean description field
+			if (command.getSeriesRefNum() != null && command.getSeriesRefDescription() != null) {
+				volume.setSerieList(new SerieList(command.getSeriesRefNum()));
 			}
 
 			volume.setStartYear(command.getStartYear());
