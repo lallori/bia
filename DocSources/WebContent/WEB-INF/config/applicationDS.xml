@@ -10,7 +10,7 @@
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/docsources?autoReconnect=true" />
+        <property name="jdbcUrl" value="jdbc:mysql://mysql.medici.org:3306/docsources?autoReconnect=true" />
         <property name="user" value="docsources" />
         <property name="password" value="docsources" />
         <property name="initialPoolSize" value="2" />
