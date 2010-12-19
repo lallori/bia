@@ -21,8 +21,8 @@
 
 			<div>
 				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Start year: </form:label><form:input id="startYear" path="startYear" cssClass="input_4c" maxlength="4"/>
-				<form:label id="startMonthLabel" for="startMonth" path="startMonth" cssStyle="margin-left:19px" cssErrorClass="error">Start month: </form:label>
-				<form:select id="startMonth" path="startMonth" cssClass="selectform"><form:options items="${months}" itemValue="monthName" itemLabel="monthName"/></form:select>
+				<form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssStyle="margin-left:19px" cssErrorClass="error">Start month: </form:label>
+				<form:select id="startMonthNum" path="startMonthNum" cssClass="selectform"><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
 				<form:label id="startDayLabel" for="startDay" path="startDay" style="margin-left:19px" cssErrorClass="error">Start day: </form:label>
 				<form:input id="startDay" path="startDay" cssClass="input_2c" maxlength="2"/>
 			</div>
@@ -30,8 +30,8 @@
 			<div>
 				<form:label id="endYearLabel" for="endYear" path="endYear" cssStyle="margin-left:4px" cssErrorClass="error">End year: </form:label>
 				<form:input id="endYear" path="endYear" cssClass="input_4c" maxlength="4"/>
-				<form:label id="endMonthLabel" for="endMonth" path="endMonth" cssStyle="margin-left:23px" cssErrorClass="error">End month: </form:label>
-				<form:select id="endMonth" path="endMonth" cssClass="selectform"><form:options items="${months}" itemValue="monthName" itemLabel="monthName"/></form:select>
+				<form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssStyle="margin-left:23px" cssErrorClass="error">End month: </form:label>
+				<form:select id="endMonthNum" path="endMonthNum" cssClass="selectform"><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
 				<form:label id="endDayLabel" for="endDay" path="endDay" cssStyle="margin-left:24px" cssErrorClass="error">End day: </form:label>
 				<form:input id="endDay" path="endDay" cssClass="input_2c" maxlength="2"/>
 			</div>
@@ -48,10 +48,10 @@
 			<form:errors path="volNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="volLetExt" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="startYear" cssClass="inputerrors" htmlEscape="false"/>
-			<form:errors path="startMonth" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="startMonthNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="startDay" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="endYear" cssClass="inputerrors" htmlEscape="false"/>
-			<form:errors path="endMonth" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="endMonthNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="endDay" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="dateNotes" cssClass="inputerrors" htmlEscape="false"/>
 			

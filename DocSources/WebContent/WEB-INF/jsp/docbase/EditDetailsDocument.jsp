@@ -45,7 +45,7 @@
 				<form:label id="DocYearLabel" for="docYear" path="docYear">Year:</form:label>
 				<form:input id="docYear" path="docYear" class="input_4c" value="" maxlength="4"/>
 				<form:label id="docMonthNumLabel" for="docMonthNum" path="docMonthNum">Month:</form:label>
-				<form:select id="docMonthNum" path="docMonthNum" cssClass="selectform"><form:options items="${months}" itemValue="monthName" itemLabel="monthName"/></form:select>
+				<form:select id="docMonthNum" path="docMonthNum" cssClass="selectform"><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
 				<form:label  for="docDay" id="docDayLabel" path="docDay">Day:</form:label>
 				<form:input id="docDay" path="docDay" class="input_2c" maxlength="2"/>
 			</div>
