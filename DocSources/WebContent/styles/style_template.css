@@ -69,16 +69,15 @@ body {
 }
 
 #footer {
-	position:absolute;
-	bottom:0;
 	width:100%;
-	height:60px;			/* Height of the footer */
+	height:150px;
+	text-align: center;
+	font-size:10px;
 }
 
-.footer {
-	position: absolute;
-	width: 900px;
-	padding: 0;
+#footer p{
+	width:100%;
+	height:150px;
 	text-align: center;
 	font-size:10px;
 }
@@ -287,6 +286,19 @@ body {
 	margin-left:495px;
 	font-size:11px;
 	border-left: 1px solid #e6d0c6;
+}
+
+
+/* Full Screen */
+
+#body_central{
+	width:100%;
+	height:auto;
+	padding-left:25px;
+	padding-right:25px;
+	margin-top:15px;
+	position:absolute;
+	font-size:11px;
 }
 
 
