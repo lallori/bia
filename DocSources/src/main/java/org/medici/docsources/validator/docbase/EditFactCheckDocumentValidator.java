@@ -27,7 +27,7 @@
  */
 package org.medici.docsources.validator.docbase;
 
-import org.medici.docsources.command.docbase.EditFactChecksDocumentCommand;
+import org.medici.docsources.command.docbase.EditFactCheckDocumentCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ import org.springframework.validation.Validator;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class EditFactChecksDocumentValidator implements Validator {
+public class EditFactCheckDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
 
@@ -71,7 +71,7 @@ public class EditFactChecksDocumentValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(EditFactChecksDocumentCommand.class);
+		return givenClass.equals(EditFactCheckDocumentCommand.class);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class EditFactChecksDocumentValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditFactChecksDocumentCommand editFactChecksDocument = (EditFactChecksDocumentCommand) object;
+		EditFactCheckDocumentCommand editFactChecksDocument = (EditFactCheckDocumentCommand) object;
 		validateDocumentId(editFactChecksDocument.getEntryId(), errors);
 	}
 
