@@ -41,6 +41,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.Audited;
+
 /**
  * EplToLink entity.
  * 
@@ -48,6 +50,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
+@Audited
 @Table ( name = "\"tblEPLTOLink\"" ) 
 public class EplToLink implements Serializable{
 	/**

@@ -32,6 +32,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,6 +64,7 @@ public class People implements Serializable {
 	@Column (name="\"MAPNameLF\"", length=150)
 	private String mapNameLf;
 	@Column (name="\"GENDER\"", length=1)
+	@Enumerated(EnumType.STRING) 
 	private Gender gender;
 	@Column (name="\"ACTIVESTART\"", length=50)
 	private String activeStart;
@@ -745,7 +748,7 @@ public class People implements Serializable {
 	}
 
 	public static enum Gender {
-		MALE("M"), FEMALE("F"), UNKNOWN("X");
+		MALE("M"), FEMALE("F"), X("X");
 		
 		private final String gender;
 

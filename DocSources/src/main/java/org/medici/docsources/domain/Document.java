@@ -29,7 +29,9 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,6 +40,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -127,30 +130,38 @@ public class Document implements Serializable{
 	private String dateApprox;
 	@Column (name="\"DATENOTES\"", length=255)
 	private String dateNotes;
-	@Column (name="\"SENDID\"", length=10)
-	private Integer sendId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "SENDID")
+	private People senderPeople;
 	@Column (name="\"SENDUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	private Boolean sendUns;
-	@Column (name="\"SENDLOCPLALL\"", length=10)
-	private Integer sendLocPlAll;
+	private Boolean senderPeopleUnsure;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="\"SENDLOCPLALL\"")
+	private Place senderPlace;
 	@Column (name="\"SENDLOCUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	private Boolean sendLocuns;
+	private Boolean senderPlaceUnsure;
 	@Column (name="\"SENDNOTES\"", length=250)
 	private String sendNotes;
-	@Column (name="\"RECIPID\"", length=10)
-	private Integer recipId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "\"RECIPID\"")
+	private People recipientPeople;
 	@Column (name="\"RECIPUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	private Boolean recipUns;
-	@Column (name="\"RECIPLOCPLALL\"", length=10)
-	private Integer recipLocPlAll;
+	private Boolean recipientPeopleUnsure;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "\"RECIPLOCPLALL\"")
+	private Place recipientPlace;
 	@Column (name="\"RECIPLOCUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	private Boolean recipLocUns;
+	private Boolean recipientPlaceUnsure;
 	@Column (name="\"RECIPNOTES\"", length=250)
 	private String recipNotes;
 	@Column (name="\"GRAPHIC\"", length=1, columnDefinition="tinyint", nullable=false)
 	private Boolean graphic;
 	@OneToOne(mappedBy="entryId")
 	private FactChecks factChecks;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entryId")
+	private Set<EplToLink> eplToLink;
+
 	/**
 	 * @return the entryId
 	 */
@@ -283,376 +294,449 @@ public class Document implements Serializable{
 	public void setDocVetted(Boolean docVetted) {
 		this.docVetted = docVetted;
 	}
+	
 	/**
 	 * @return the docVettedDate
 	 */
 	public Date getDocVettedDate() {
 		return docVettedDate;
 	}
+	
 	/**
 	 * @param docVettedDate the docVettedDate to set
 	 */
 	public void setDocVettedDate(Date docVettedDate) {
 		this.docVettedDate = docVettedDate;
 	}
+	
 	/**
 	 * @return the docStatBox
 	 */
 	public String getDocStatBox() {
 		return docStatBox;
 	}
+	
 	/**
 	 * @param docStatBox the docStatBox to set
 	 */
 	public void setDocStatBox(String docStatBox) {
 		this.docStatBox = docStatBox;
 	}
+	
 	/**
 	 * @return the newEntry
 	 */
 	public Boolean getNewEntry() {
 		return newEntry;
 	}
+	
 	/**
 	 * @param newEntry the newEntry to set
 	 */
 	public void setNewEntry(Boolean newEntry) {
 		this.newEntry = newEntry;
 	}
+	
 	/**
 	 * @return the insertNum
 	 */
 	public String getInsertNum() {
 		return insertNum;
 	}
+	
 	/**
 	 * @param insertNum the insertNum to set
 	 */
 	public void setInsertNum(String insertNum) {
 		this.insertNum = insertNum;
 	}
+	
 	/**
 	 * @return the insertLet
 	 */
 	public String getInsertLet() {
 		return insertLet;
 	}
+	
 	/**
 	 * @param insertLet the insertLet to set
 	 */
 	public void setInsertLet(String insertLet) {
 		this.insertLet = insertLet;
 	}
+	
 	/**
 	 * @return the folioNum
 	 */
 	public Integer getFolioNum() {
 		return folioNum;
 	}
+	
 	/**
 	 * @param folioNum the folioNum to set
 	 */
 	public void setFolioNum(Integer folioNum) {
 		this.folioNum = folioNum;
 	}
+	
 	/**
 	 * @return the folioMod
 	 */
 	public String getFolioMod() {
 		return folioMod;
 	}
+	
 	/**
 	 * @param folioMod the folioMod to set
 	 */
 	public void setFolioMod(String folioMod) {
 		this.folioMod = folioMod;
 	}
+	
 	/**
 	 * @return the contDisc
 	 */
 	public Boolean getContDisc() {
 		return contDisc;
 	}
+	
 	/**
 	 * @param contDisc the contDisc to set
 	 */
 	public void setContDisc(Boolean contDisc) {
 		this.contDisc = contDisc;
 	}
+	
 	/**
 	 * @return the unpaged
 	 */
 	public Boolean getUnpaged() {
 		return unpaged;
 	}
+	
 	/**
 	 * @param unpaged the unpaged to set
 	 */
 	public void setUnpaged(Boolean unpaged) {
 		this.unpaged = unpaged;
 	}
+	
 	/**
 	 * @return the docDay
 	 */
 	public Integer getDocDay() {
 		return docDay;
 	}
+	
 	/**
 	 * @param docDay the docDay to set
 	 */
 	public void setDocDay(Integer docDay) {
 		this.docDay = docDay;
 	}
+	
 	/**
 	 * @return the docMonthNum
 	 */
 	public Integer getDocMonthNum() {
 		return docMonthNum;
 	}
+	
 	/**
 	 * @param docMonthNum the docMonthNum to set
 	 */
 	public void setDocMonthNum(Integer docMonthNum) {
 		this.docMonthNum = docMonthNum;
 	}
+	
 	/**
 	 * @return the docYear
 	 */
 	public Integer getDocYear() {
 		return docYear;
 	}
+	
 	/**
 	 * @param docYear the docYear to set
 	 */
 	public void setDocYear(Integer docYear) {
 		this.docYear = docYear;
 	}
+	
 	/**
 	 * @return the sortableDate
 	 */
 	public String getSortableDate() {
 		return sortableDate;
 	}
+	
 	/**
 	 * @param sortableDate the sortableDate to set
 	 */
 	public void setSortableDate(String sortableDate) {
 		this.sortableDate = sortableDate;
 	}
+	
 	/**
 	 * @return the yearModern
 	 */
 	public Integer getYearModern() {
 		return yearModern;
 	}
+	
 	/**
 	 * @param yearModern the yearModern to set
 	 */
 	public void setYearModern(Integer yearModern) {
 		this.yearModern = yearModern;
 	}
+	
 	/**
 	 * @return the reckoning
 	 */
 	public Boolean getReckoning() {
 		return reckoning;
 	}
+	
 	/**
 	 * @param reckoning the reckoning to set
 	 */
 	public void setReckoning(Boolean reckoning) {
 		this.reckoning = reckoning;
 	}
+	
 	/**
 	 * @return the undated
 	 */
 	public Boolean getUndated() {
 		return undated;
 	}
+	
 	/**
 	 * @param undated the undated to set
 	 */
 	public void setUndated(Boolean undated) {
 		this.undated = undated;
 	}
+	
 	/**
 	 * @return the dateUns
 	 */
 	public Boolean getDateUns() {
 		return dateUns;
 	}
+	
 	/**
 	 * @param dateUns the dateUns to set
 	 */
 	public void setDateUns(Boolean dateUns) {
 		this.dateUns = dateUns;
 	}
+	
 	/**
 	 * @return the dateApprox
 	 */
 	public String getDateApprox() {
 		return dateApprox;
 	}
+	
 	/**
 	 * @param dateApprox the dateApprox to set
 	 */
 	public void setDateApprox(String dateApprox) {
 		this.dateApprox = dateApprox;
 	}
+	
 	/**
 	 * @return the dateNotes
 	 */
 	public String getDateNotes() {
 		return dateNotes;
 	}
+	
 	/**
 	 * @param dateNotes the dateNotes to set
 	 */
 	public void setDateNotes(String dateNotes) {
 		this.dateNotes = dateNotes;
 	}
+	
 	/**
-	 * @return the sendId
+	 * @return the senderPeople
 	 */
-	public Integer getSendId() {
-		return sendId;
+	public People getSenderPeople() {
+		return senderPeople;
+	}
+	
+	/**
+	 * @param senderPeople the senderPeople to set
+	 */
+	public void setSenderPeople(People senderPeople) {
+		this.senderPeople = senderPeople;
 	}
 	/**
-	 * @param sendId the sendId to set
+	 * @return the senderPeopleUnsure
 	 */
-	public void setSendId(Integer sendId) {
-		this.sendId = sendId;
+	public Boolean getSenderPeopleUnsure() {
+		return senderPeopleUnsure;
 	}
 	/**
-	 * @return the sendUns
+	 * @param senderPeopleUnsure the senderPeopleUnsure to set
 	 */
-	public Boolean getSendUns() {
-		return sendUns;
+	public void setSenderPeopleUnsure(Boolean senderPeopleUnsure) {
+		this.senderPeopleUnsure = senderPeopleUnsure;
 	}
 	/**
-	 * @param sendUns the sendUns to set
+	 * @return the senderPlace
 	 */
-	public void setSendUns(Boolean sendUns) {
-		this.sendUns = sendUns;
+	public Place getSenderPlace() {
+		return senderPlace;
 	}
+	
 	/**
-	 * @return the sendLocPlAll
+	 * @param senderPlace the senderPlace to set
 	 */
-	public Integer getSendLocPlAll() {
-		return sendLocPlAll;
+	public void setSenderPlace(Place senderPlace) {
+		this.senderPlace = senderPlace;
 	}
+
 	/**
-	 * @param sendLocPlAll the sendLocPlAll to set
+	 * @return the senderPlaceUnsure
 	 */
-	public void setSendLocPlAll(Integer sendLocPlAll) {
-		this.sendLocPlAll = sendLocPlAll;
+	public Boolean getSendLocUns() {
+		return senderPlaceUnsure;
 	}
+	
 	/**
-	 * @return the sendLocuns
+	 * @param senderPlaceUnsure the senderPlaceUnsure to set
 	 */
-	public Boolean getSendLocuns() {
-		return sendLocuns;
+	public void setSenderPlaceUnsure(Boolean senderPlaceUnsure) {
+		this.senderPlaceUnsure = senderPlaceUnsure;
 	}
-	/**
-	 * @param sendLocuns the sendLocuns to set
-	 */
-	public void setSendLocuns(Boolean sendLocuns) {
-		this.sendLocuns = sendLocuns;
-	}
+	
 	/**
 	 * @return the sendNotes
 	 */
 	public String getSendNotes() {
 		return sendNotes;
 	}
+	
 	/**
 	 * @param sendNotes the sendNotes to set
 	 */
 	public void setSendNotes(String sendNotes) {
 		this.sendNotes = sendNotes;
 	}
+	
 	/**
-	 * @return the recipId
+	 * @return the recipientPeople
 	 */
-	public Integer getRecipId() {
-		return recipId;
+	public People getRecipientPeople() {
+		return recipientPeople;
 	}
+	
 	/**
-	 * @param recipId the recipId to set
+	 * @param recipientPeople the recipientPeople to set
 	 */
-	public void setRecipId(Integer recipId) {
-		this.recipId = recipId;
+	public void setRecipientPeople(People recipientPeople) {
+		this.recipientPeople = recipientPeople;
 	}
+	
 	/**
-	 * @return the recipUns
+	 * @return the recipientPeopleUnsure
 	 */
-	public Boolean getRecipUns() {
-		return recipUns;
+	public Boolean getRecipientPeopleUnsure() {
+		return recipientPeopleUnsure;
 	}
+	
 	/**
-	 * @param recipUns the recipUns to set
+	 * @param recipientPeopleUnsure the recipientPeopleUnsure to set
 	 */
-	public void setRecipUns(Boolean recipUns) {
-		this.recipUns = recipUns;
+	public void setRecipientPeopleUnsure(Boolean recipientPeopleUnsure) {
+		this.recipientPeopleUnsure = recipientPeopleUnsure;
 	}
+
 	/**
-	 * @return the recipLocPlAll
+	 * @return the recipientPlace
 	 */
-	public Integer getRecipLocPlAll() {
-		return recipLocPlAll;
+	public Place getRecipientPlace() {
+		return recipientPlace;
 	}
+	
 	/**
-	 * @param recipLocPlAll the recipLocPlAll to set
+	 * @param recipientPlace the recipientPlace to set
 	 */
-	public void setRecipLocPlAll(Integer recipLocPlAll) {
-		this.recipLocPlAll = recipLocPlAll;
+	public void setRecipientPlace(Place recipientPlace) {
+		this.recipientPlace = recipientPlace;
 	}
+	
 	/**
-	 * @return the recipLocUns
+	 * @return the recipientPlaceUnsure
 	 */
-	public Boolean getRecipLocUns() {
-		return recipLocUns;
+	public Boolean getRecipientPlaceUnsure() {
+		return recipientPlaceUnsure;
 	}
+	
 	/**
-	 * @param recipLocUns the recipLocUns to set
+	 * @param recipientPlaceUnsure the recipientPlaceUnsure to set
 	 */
-	public void setRecipLocUns(Boolean recipLocUns) {
-		this.recipLocUns = recipLocUns;
+	public void setRecipientPlaceUnsure(Boolean recipientPlaceUnsure) {
+		this.recipientPlaceUnsure = recipientPlaceUnsure;
 	}
+	
 	/**
 	 * @return the recipNotes
 	 */
 	public String getRecipNotes() {
 		return recipNotes;
 	}
+	
 	/**
 	 * @param recipNotes the recipNotes to set
 	 */
 	public void setRecipNotes(String recipNotes) {
 		this.recipNotes = recipNotes;
 	}
+	
 	/**
 	 * @return the graphic
 	 */
 	public Boolean getGraphic() {
 		return graphic;
 	}
+	
 	/**
 	 * @param graphic the graphic to set
 	 */
 	public void setGraphic(Boolean graphic) {
 		this.graphic = graphic;
 	}
+	
 	/**
 	 * @param factChecks the factChecks to set
 	 */
 	public void setFactChecks(FactChecks factChecks) {
 		this.factChecks = factChecks;
 	}
+	
 	/**
 	 * @return the factChecks
 	 */
 	public FactChecks getFactChecks() {
 		return factChecks;
+	}
+	
+	/**
+	 * @param eplToLink the eplToLink to set
+	 */
+	public void setEplToLink(Set<EplToLink> eplToLink) {
+		this.eplToLink = eplToLink;
+	}
+	
+	/**
+	 * @return the eplToLink
+	 */
+	public Set<EplToLink> getEplToLink() {
+		return eplToLink;
 	}
 }

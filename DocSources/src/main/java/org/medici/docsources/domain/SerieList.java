@@ -67,6 +67,21 @@ public class SerieList implements Serializable{
 	private String title;
 
 	/**
+	 * Default constructor
+	 */
+	public SerieList() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param seriesRefNum
+	 */
+	public SerieList(Integer seriesRefNum) {
+		this.seriesRefNum = seriesRefNum;
+	}
+	
+	/**
 	 * Implementing this method is mandatory for caching object.
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -132,7 +147,7 @@ public class SerieList implements Serializable{
 		result = prime * result + ((seriesRefNum == null) ? 0 : seriesRefNum.hashCode());
 		return result;
 	}
-	
+
 	/**
 	 * 
 	 * @param seriesRefNum
@@ -140,7 +155,7 @@ public class SerieList implements Serializable{
 	public void setSeriesRefNum(Integer seriesRefNum) {
 		this.seriesRefNum = seriesRefNum;
 	}
-	
+
 	/**
 	 * 
 	 * @param subTitle1
@@ -156,7 +171,8 @@ public class SerieList implements Serializable{
 	public void setSubTitle2(String subTitle2) {
 		this.subTitle2 = subTitle2;
 	}
-
+	
+	
 	/**
 	 * 
 	 * @param title
@@ -165,6 +181,7 @@ public class SerieList implements Serializable{
 		this.title = title;
 	}
 
+	
 	/**
 	 * toString method.
 	 */
