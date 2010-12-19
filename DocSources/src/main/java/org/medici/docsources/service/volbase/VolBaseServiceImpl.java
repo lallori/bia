@@ -27,8 +27,10 @@
  */
 package org.medici.docsources.service.volbase;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.image.ImageDAO;
@@ -40,7 +42,9 @@ import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -79,11 +83,16 @@ public class VolBaseServiceImpl implements VolBaseService {
 				volume.setSerieList(getSeriesListDAO().find(volume.getSerieList().getSeriesRefNum()));
 			
 			//Setting fields that are defined as nullable = false
+			volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			volume.setDateCreated(new Date());
 			volume.setVolTobeVetted(true);
+			volume.setVolTobeVettedDate(new Date());
 			volume.setVolVetted(false);
 			volume.setBound(false);
 			volume.setFolsNumbrd(false);
 			volume.setOldAlphaIndex(false);
+			volume.setPrintedDrawings(false);
+			volume.setPrintedMaterial(false);
 			volume.setItalian(false);
 			volume.setSpanish(false);
 			volume.setEnglish(false);
@@ -91,6 +100,16 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volume.setGerman(false);
 			volume.setFrench(false);
 			volume.setCipher(false);
+
+			if (StringUtils.isEmpty(volume.getStartMonth())) {
+				volume.setStartMonth(null);
+				volume.setStartMonthNum(null);
+			}
+				
+			if (StringUtils.isEmpty(volume.getEndMonth())) {
+				volume.setEndMonth(null);
+				volume.setEndMonthNum(null);
+			}
 
 			getVolumeDAO().persist(volume);
 			
@@ -162,6 +181,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 		volumeToUpdate.setBound(volume.getBound());
 		volumeToUpdate.setFolsNumbrd(volume.getFolsNumbrd());
 		volumeToUpdate.setOldAlphaIndex(volume.getOldAlphaIndex());
+		volumeToUpdate.setPrintedMaterial(volume.getPrintedMaterial());
+		volumeToUpdate.setPrintedDrawings(volume.getPrintedDrawings());
 		volumeToUpdate.setItalian(volume.getItalian());
 		volumeToUpdate.setSpanish(volume.getSpanish());
 		volumeToUpdate.setEnglish(volume.getEnglish());
@@ -171,7 +192,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		volumeToUpdate.setOtherLang(volume.getOtherLang());
 		volumeToUpdate.setCipher(volume.getCipher());
 		volumeToUpdate.setCipherNotes(volume.getCipherNotes());
-		
+
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 		} catch (Throwable th) {
@@ -193,16 +214,27 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
-		volumeToUpdate.setVolNum(volume.getVolNum());
-		volumeToUpdate.setVolLetExt(volume.getVolLetExt());
-		volumeToUpdate.setResearcher(volume.getResearcher());
-		volumeToUpdate.setDateCreated(volume.getDateCreated());
+		//volumeToUpdate.setVolNum(volume.getVolNum());
+		//volumeToUpdate.setVolLetExt(volume.getVolLetExt());
+		//volumeToUpdate.setResearcher(volume.getResearcher());
+		//volumeToUpdate.setDateCreated(volume.getDateCreated());
 		volumeToUpdate.setSerieList(volume.getSerieList());
 		volumeToUpdate.setStartYear(volume.getStartYear());
-		volumeToUpdate.setStartMonth(volume.getStartMonth());
+		if (StringUtils.isEmpty(volume.getStartMonth())) {
+			volumeToUpdate.setStartMonth(null);
+			volumeToUpdate.setStartMonthNum(null);
+		} else {
+			volumeToUpdate.setStartMonth(volume.getStartMonth());
+		}
 		volumeToUpdate.setStartDay(volume.getStartDay());
 		volumeToUpdate.setEndYear(volume.getEndYear());
-		volumeToUpdate.setEndMonth(volume.getEndMonth());
+		if (StringUtils.isEmpty(volume.getEndMonth())) {
+			volume.setEndMonth(null);
+			volume.setEndMonthNum(null);
+		} else {
+			volumeToUpdate.setEndMonth(volume.getEndMonth());
+		}
+
 		volumeToUpdate.setEndDay(volume.getEndDay());
 		volumeToUpdate.setDateNotes(volume.getDateNotes());
 		
@@ -281,9 +313,36 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			// We extract volume to obtains its volNum and VolLetExt so we can use only one method.
+			Volume volume = getVolumeDAO().find(summaryId);
+
+			return getImageDAO().findImages(volume.getVolNum(), volume.getVolLetExt(), paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable {
 		try {
 			return getImageDAO().findImages(volNum, volLetExt);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findImages(volNum, volLetExt, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -354,14 +413,12 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
-
 	/**
 	 * @param seriesListDAO the seriesListDAO to set
 	 */
 	public void setSeriesListDAO(SeriesListDAO seriesListDAO) {
 		this.seriesListDAO = seriesListDAO;
 	}
-
 	/**
 	 * @param volumeDAO the volumeDAO to set
 	 */

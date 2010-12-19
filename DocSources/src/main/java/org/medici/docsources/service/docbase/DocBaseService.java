@@ -29,6 +29,8 @@ package org.medici.docsources.service.docbase;
 
 import java.util.List;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -55,7 +57,7 @@ public interface DocBaseService {
 	 * @param document
 	 * @throws ApplicationThrowable
 	 */
-	public void addNewDocument(Document inputDocument) throws ApplicationThrowable;
+	public Document addNewDocument(Document inputDocument) throws ApplicationThrowable;
 
 	/**
 	 * This method modify correspondents or people of an existing {@link org.medici.docsources.domain.Document}.
@@ -63,7 +65,7 @@ public interface DocBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editCorrespondentsOrPeopleDocument(Document document) throws ApplicationThrowable;
+	public Document editCorrespondentsOrPeopleDocument(Document document) throws ApplicationThrowable;
 
 	/**
 	 * This method modify details of an existing {@link org.medici.docsources.domain.Document}.
@@ -71,7 +73,7 @@ public interface DocBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editDetailsDocument(Document document) throws ApplicationThrowable;
+	public Document editDetailsDocument(Document document) throws ApplicationThrowable;
 
 	/**
 	 * This method modify extract or Synopsis of an existing {@link org.medici.docsources.domain.Document}.
@@ -79,7 +81,7 @@ public interface DocBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editExtractOrSynopsisDocument(Document document) throws ApplicationThrowable;
+	public Document editExtractOrSynopsisDocument(Document document) throws ApplicationThrowable;
 
 	/**
 	 * This method modify fact checks of an existing {@link org.medici.docsources.domain.Document}.
@@ -87,7 +89,7 @@ public interface DocBaseService {
 	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public void editFactChecksDocument(Document document) throws ApplicationThrowable;
+	public Document editFactChecksDocument(Document document) throws ApplicationThrowable;
 
 	/**
 	 * This method modify topics of an existing {@link org.medici.docsources.domain.Document}.
@@ -95,7 +97,7 @@ public interface DocBaseService {
 	 * @param document
 	 * @throws ApplicationThrowable
 	 */
-	public void editTopicsDocument(Document document) throws ApplicationThrowable;
+	public Document editTopicsDocument(Document document) throws ApplicationThrowable;
 
 	/**
 	 * This method will search an existing document by his unique identifiers.
@@ -116,16 +118,17 @@ public interface DocBaseService {
 	
 	/**
 	 * 
-	 * @param text
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<Document> searchDocuments(String text) throws ApplicationThrowable;
-
-	/**
-	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

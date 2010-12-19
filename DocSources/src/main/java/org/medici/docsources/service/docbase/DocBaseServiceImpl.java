@@ -27,14 +27,21 @@
  */
 package org.medici.docsources.service.docbase;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.document.DocumentDAO;
+import org.medici.docsources.dao.factchecks.FactChecksDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -47,7 +54,8 @@ import org.springframework.stereotype.Service;
 public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private DocumentDAO documentDAO;
-	
+	@Autowired
+	private FactChecksDAO factChecksDAO;
 	@Autowired
 	private MonthDAO monthDAO;
 
@@ -55,9 +63,32 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addNewDocument(Document inputDocument) throws ApplicationThrowable {
+	public Document addNewDocument(Document document) throws ApplicationThrowable {
 		try {
-			getDocumentDAO().persist(inputDocument);
+			document.setEntryId(null);
+			
+			//Setting fields that are defined as nullable = false
+			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setDateCreated(new Date());
+			document.setLastUpdate(new Date());
+			document.setDocTobeVetted(true);
+			document.setDocToBeVettedDate(new Date());
+			document.setDocVetted(false);
+			document.setNewEntry(true);
+			document.setReckoning(false);
+			document.setSendUns(false);
+			document.setSendLocuns(false);
+			document.setRecipUns(false);
+			document.setRecipLocUns(false);
+			document.setGraphic(false);
+
+			if (document.getDocMonthNum().equals(0)) {
+				document.setDocMonthNum(null);
+			}
+
+			getDocumentDAO().persist(document);
+
+			return document;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -67,7 +98,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editCorrespondentsOrPeopleDocument(Document document) throws ApplicationThrowable {
+	public Document editCorrespondentsOrPeopleDocument(Document document) throws ApplicationThrowable {
 		Document documentToUpdate = null;
 		try {
 			documentToUpdate = getDocumentDAO().find(document.getEntryId());
@@ -76,9 +107,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 
 		//TODO : fill fields to update document section
+		documentToUpdate.setLastUpdate(new Date());
 		
 		try {
 			getDocumentDAO().merge(documentToUpdate);
+
+			return documentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -88,18 +122,22 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editDetailsDocument(Document document) throws ApplicationThrowable {
+	public Document editDetailsDocument(Document document) throws ApplicationThrowable {
 		Document documentToUpdate = null;
 		try {
 			documentToUpdate = getDocumentDAO().find(document.getEntryId());
+
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 
 		//TODO : fill fields to update document section
+		documentToUpdate.setLastUpdate(new Date());
 		
 		try {
 			getDocumentDAO().merge(documentToUpdate);
+
+			return documentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -109,7 +147,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editExtractOrSynopsisDocument(Document document) throws ApplicationThrowable {
+	public Document editExtractOrSynopsisDocument(Document document) throws ApplicationThrowable {
 		Document documentToUpdate = null;
 		try {
 			documentToUpdate = getDocumentDAO().find(document.getEntryId());
@@ -118,9 +156,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 
 		//TODO : fill fields to update document section
+		documentToUpdate.setLastUpdate(new Date());
 		
 		try {
 			getDocumentDAO().merge(documentToUpdate);
+
+			return documentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -130,7 +171,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editFactChecksDocument(Document document) throws ApplicationThrowable {
+	public Document editFactChecksDocument(Document document) throws ApplicationThrowable {
 		Document documentToUpdate = null;
 		try {
 			documentToUpdate = getDocumentDAO().find(document.getEntryId());
@@ -138,10 +179,23 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
-		//TODO : fill fields to update document section
-		
 		try {
-			getDocumentDAO().merge(documentToUpdate);
+			FactChecks factChecks = documentToUpdate.getFactChecks();
+			if (factChecks == null) {
+				factChecks = new FactChecks();
+				factChecks.setEntryId(document);
+			}
+			
+			factChecks.setAddLRes(document.getFactChecks().getAddLRes());
+			
+			if (documentToUpdate.getFactChecks() == null) {
+				getFactChecksDAO().persist(factChecks);
+			} else {
+				getFactChecksDAO().merge(factChecks);
+			}
+
+			documentToUpdate.setFactChecks(factChecks);
+			return documentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -151,7 +205,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editTopicsDocument(Document document) throws ApplicationThrowable {
+	public Document editTopicsDocument(Document document) throws ApplicationThrowable {
 		Document documentToUpdate = null;
 		try {
 			documentToUpdate = getDocumentDAO().find(document.getEntryId());
@@ -160,9 +214,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 
 		//TODO : fill fields to update document section
-		
+		documentToUpdate.setLastUpdate(new Date());
+
 		try {
 			getDocumentDAO().merge(documentToUpdate);
+
+			return documentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -197,12 +254,41 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @return the factChecksDAO
+	 */
+	public FactChecksDAO getFactChecksDAO() {
+		return factChecksDAO;
+	}
+
+	/**
+	 * @return the monthDAO
+	 */
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Document> searchDocuments(String text) throws ApplicationThrowable  {
-		// TODO Auto-generated method stub
-		return new ArrayList<Document>(0);
+	public List<Month> getMonths() throws ApplicationThrowable {
+		try {
+			return getMonthDAO().getAllMonths();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().searchDocuments(text, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -212,10 +298,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 		this.documentDAO = documentDAO;
 	}
 
-	@Override
-	public List<Month> getMonths() throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * @param factChecksDAO the factChecksDAO to set
+	 */
+	public void setFactChecksDAO(FactChecksDAO factChecksDAO) {
+		this.factChecksDAO = factChecksDAO;
 	}
 
 	/**
@@ -223,12 +310,5 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
-	}
-
-	/**
-	 * @return the monthDAO
-	 */
-	public MonthDAO getMonthDAO() {
-		return monthDAO;
 	}
 }
