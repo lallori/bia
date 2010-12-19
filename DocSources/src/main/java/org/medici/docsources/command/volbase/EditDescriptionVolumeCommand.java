@@ -45,6 +45,8 @@ public class EditDescriptionVolumeCommand {
 	private Boolean folsNumbrd;
 	private String folioCount;
 	private Boolean oldAlphaIndex;
+	private Boolean printedMaterial;
+	private Boolean printedDrawings;
 	private Boolean italian;
 	private Boolean spanish;
 	private Boolean english;
@@ -277,5 +279,33 @@ public class EditDescriptionVolumeCommand {
 	 */
 	public void setCipherNotes(String cipherNotes) {
 		this.cipherNotes = cipherNotes;
+	}
+
+	/**
+	 * @param printedMaterial the printedMaterial to set
+	 */
+	public void setPrintedMaterial(Boolean printedMaterial) {
+		this.printedMaterial = printedMaterial;
+	}
+
+	/**
+	 * @return the printedMaterial
+	 */
+	public Boolean getPrintedMaterial() {
+		return printedMaterial;
+	}
+
+	/**
+	 * @param printedDrawings the printedDrawings to set
+	 */
+	public void setPrintedDrawings(Boolean printedDrawings) {
+		this.printedDrawings = printedDrawings;
+	}
+
+	/**
+	 * @return the printedDrawings
+	 */
+	public Boolean getPrintedDrawings() {
+		return printedDrawings;
 	}
 }

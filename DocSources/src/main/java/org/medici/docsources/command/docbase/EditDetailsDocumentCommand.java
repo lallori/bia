@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.command.docbase;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 /**
  * Command bean for action "Edit Details Document".
@@ -38,19 +42,26 @@ package org.medici.docsources.command.docbase;
 public class EditDetailsDocumentCommand {
 	// Document Id
 	private Integer entryId;
+	// researcher description
+	private String researcher;
+	// date created
+	@DateTimeFormat(pattern="MM/dd/yyyy hh:mm:ss")
+	private Date dateCreated;
 	//Volume reference
-	private Integer summaryId;
+	private String volume;
 	//Insert
 	private String insertNum;
 	//Part
 	private String insertLet;
 	//Folio Start 
 	private Integer folioNum;
-	private Integer folioMod;
+	private String folioMod;
 	//Unpaginated
 	private Boolean unpaged;
 	//Disc. Cont'd
 	private Boolean contDisc;
+	//Document Tipology
+	private String docTypology;
 	//Date : year
 	private Integer docYear;
 	//Date : month num
@@ -79,16 +90,16 @@ public class EditDetailsDocumentCommand {
 		this.entryId = entryId;
 	}
 	/**
-	 * @return the summaryId
+	 * @return the volume
 	 */
-	public Integer getSummaryId() {
-		return summaryId;
+	public String getVolume() {
+		return volume;
 	}
 	/**
-	 * @param summaryId the summaryId to set
+	 * @param volume the volume to set
 	 */
-	public void setSummaryId(Integer summaryId) {
-		this.summaryId = summaryId;
+	public void setVolume(String volume) {
+		this.volume = volume;
 	}
 	/**
 	 * @return the insertNum
@@ -129,13 +140,13 @@ public class EditDetailsDocumentCommand {
 	/**
 	 * @return the folioMod
 	 */
-	public Integer getFolioMod() {
+	public String getFolioMod() {
 		return folioMod;
 	}
 	/**
 	 * @param folioMod the folioMod to set
 	 */
-	public void setFolioMod(Integer folioMod) {
+	public void setFolioMod(String folioMod) {
 		this.folioMod = folioMod;
 	}
 	/**
@@ -245,5 +256,41 @@ public class EditDetailsDocumentCommand {
 	 */
 	public void setDateNotes(String dateNotes) {
 		this.dateNotes = dateNotes;
+	}
+	/**
+	 * @param researcher the researcher to set
+	 */
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
+	}
+	/**
+	 * @return the researcher
+	 */
+	public String getResearcher() {
+		return researcher;
+	}
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	/**
+	 * @return the dateCreated
+	 */
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	/**
+	 * @param docTypology the docTypology to set
+	 */
+	public void setDocTypology(String docTypology) {
+		this.docTypology = docTypology;
+	}
+	/**
+	 * @return the docTypology
+	 */
+	public String getDocTypology() {
+		return docTypology;
 	}
 }
