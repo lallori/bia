@@ -229,7 +229,7 @@
 	<definition name="volbase/ShowExplorerVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolume.jsp"/>
 	</definition>
-	<definition name="volbase/ShowExplorerVolumeFancyBox" extends="template.completeDOM">
+	<definition name="volbase/ShowExplorerVolumeFancyBox" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeFancyBox.jsp"/>
 	</definition>
 	<definition name="volbase/ShowVolume" extends="template.volume">
