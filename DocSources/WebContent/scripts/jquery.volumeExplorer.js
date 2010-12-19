@@ -84,11 +84,12 @@
 				} else {
 					volLeText = options.volLetExt;
 				}
-				console.log("volLetExt : " + volLetExt);
 			} else if (typeof options.volLetExt == "object")
 				; //Qui bisogna gestire il prelevamento del valore tramite il reference al campo
 
-			methods['loadRemoteCall']($(target), (methods['buildRemoteCall'](options.remoteUrl, ['volNum', 'volLetExt'], [volNum, volLetExt])));
+			if (typeof options.volNum == "string") {
+				methods['loadRemoteCall']($(target), (methods['buildRemoteCall'](options.remoteUrl, ['volNum', 'volLetExt'], [volNum, volLetExt])));
+			}
 			return true;
 		});
 
