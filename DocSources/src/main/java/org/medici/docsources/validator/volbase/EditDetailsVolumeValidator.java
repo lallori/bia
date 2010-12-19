@@ -83,20 +83,27 @@ public class EditDetailsVolumeValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDetailsVolumeCommand editDetailsVolumeCommand = (EditDetailsVolumeCommand) object;
-		editDetailsVolumeCommand.toString();
-		validateVolume(editDetailsVolumeCommand.getSummaryId(), errors);
+		validateVolume(editDetailsVolumeCommand.getSummaryId(), editDetailsVolumeCommand.getVolNum(), editDetailsVolumeCommand.getVolLetExt(), errors);
 	}
 
-	public void validateVolume(Integer summaryId, Errors errors) {
+	public void validateVolume(Integer summaryId, Integer volNum, String volLetExt, Errors errors) {
 		if (!errors.hasErrors()) {
 			// summary id equals zero is 'New Document', it shouldn't be validated  
 			if (summaryId > 0) {
 				try {
 					if (getVolBaseService().findVolume(summaryId) == null) {
-						errors.reject("volumeId", "error.volume.notfound");
+						errors.reject("volNum", "error.volume.notfound");
 					}
 				} catch (ApplicationThrowable ath) {
-					errors.reject("volumeId", "error.volume.notfound");
+					errors.reject("volNum", "error.volume.notfound");
+				}
+			} else {
+				// In this case we are creating a new Volume
+				try {
+					if (getVolBaseService().findVolume(volNum, volLetExt) != null) {
+						errors.rejectValue("volNum", "error.volumeId.alreadypresent");
+					}
+				} catch (ApplicationThrowable ath) {
 				}
 			}
 		}
