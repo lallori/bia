@@ -43,6 +43,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
+import org.medici.docsources.common.util.VolumeUtils;
 
 /**
  * Volume entity.
@@ -147,6 +148,29 @@ public class Volume implements Serializable {
 	private String orgNotes;
 	@Column (name="\"STAFFMEMO\"", columnDefinition="LONGTEXT")
 	private String staffMemo;
+	@Column (name="\"PRINTEDMATERIAL\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	private Boolean printedMaterial;
+	@Column (name="\"PRINTEDDRAWINGS\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	private Boolean printedDrawings;
+
+	/**
+	 * Default constructor
+	 * 
+	 */
+	public Volume() {
+		super();
+	}
+
+	/**
+	 * Constructor with a string parameter rapresenting volNum and VolLetExt
+	 * 
+	 * @param volume VolNum + VolLextExt
+	 */
+	public Volume(String volume) {
+		super();
+		this.volNum = VolumeUtils.extractVolNum(volume);
+		this.volLetExt = VolumeUtils.extractVolLetExt(volume);
+	}
 
 	/**
 	 * @return the summaryId
@@ -718,6 +742,35 @@ public class Volume implements Serializable {
 		this.staffMemo = staffMemo;
 	}
 
+
+	/**
+	 * @param printedMaterial the printedMaterial to set
+	 */
+	public void setPrintedMaterial(Boolean printedMaterial) {
+		this.printedMaterial = printedMaterial;
+	}
+
+	/**
+	 * @return the printedMaterial
+	 */
+	public Boolean getPrintedMaterial() {
+		return printedMaterial;
+	}
+
+	/**
+	 * @param printedDrawings the printedDrawings to set
+	 */
+	public void setPrintedDrawings(Boolean printedDrawings) {
+		this.printedDrawings = printedDrawings;
+	}
+
+	/**
+	 * @return the printedDrawings
+	 */
+	public Boolean getPrintedDrawings() {
+		return printedDrawings;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -747,5 +800,18 @@ public class Volume implements Serializable {
 		} else if (!summaryId.equals(other.summaryId))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer();
+		if (volNum != null) {
+			stringBuffer.append(volNum);
+			if (volLetExt != null) {
+				stringBuffer.append(volLetExt);
+			}
+		}
+
+		return stringBuffer.toString();
 	}
 }
