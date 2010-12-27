@@ -28,15 +28,31 @@
 package org.medici.docsources.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * BiblioT entity.
@@ -44,6 +60,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="biblioTAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblBiblioT\"" ) 
 public class BiblioT implements Serializable{
@@ -55,24 +82,45 @@ public class BiblioT implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"BIBLIOID\"", length=10, nullable=false)
+	@DocumentId
 	private Integer biblioId;
+	
 	@Column (name="\"AUTHOREDITOR\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String authorEditor;
+	
 	@Column (name="\"TITLE\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String title;
+	
 	@Column (name="\"TYPE\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String type;
+	
 	@Column (name="\"PERIODICAL\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String periodical;
+	
 	@Column (name="\"PUBLISHER\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String publisher;
+	
 	@Column (name="\"DATES\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dates;
+	
 	@Column (name="\"NOTES\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String notes;
+	
 	@Column (name="\"SHELFNUM\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String shelfNum;	
-
+	
+	@OneToMany(mappedBy="biblioId")
+	@ContainedIn
+	private Set<BioRefLink> bioRefLink;
+	
 	/**
 	 * @return the biblioId
 	 */
@@ -180,5 +228,17 @@ public class BiblioT implements Serializable{
 	 */
 	public void setShelfNum(String shelfNum) {
 		this.shelfNum = shelfNum;
+	}
+	/**
+	 * @param bioRefLink the bioRefLink to set
+	 */
+	public void setBioRefLink(Set<BioRefLink> bioRefLink) {
+		this.bioRefLink = bioRefLink;
+	}
+	/**
+	 * @return the bioRefLink
+	 */
+	public Set<BioRefLink> getBioRefLink() {
+		return bioRefLink;
 	}
 }

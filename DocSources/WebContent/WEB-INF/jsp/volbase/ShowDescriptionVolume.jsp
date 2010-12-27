@@ -28,7 +28,7 @@
 			<li><b>Condition: </b> ${volume.ccondition}</li>
 			<li><b>Bound: </b>${volume.bound ? 'Yes' : 'No'}</li>
 			<li><b>Folios Numbered: </b>${volume.folsNumbrd ? 'Yes' : 'No'}</li>
-			<li><b>Folios Count: </b>${folioCount}</li>
+			<li><b>Folios Count: </b>${volume.folioCount}</li>
 			<li><b>Alphabetical Index: </b>${volume.oldAlphaIndex ? 'Yes' : 'No'}</li>
 			<li><b>Printed material: </b>${volume.printedMaterial ? 'Yes' : 'No'}</li>
 			<li><b>Printed drawings: </b>${volume.printedDrawings ? 'Yes' : 'No'}</li>
@@ -52,7 +52,7 @@
 				 $("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
 				 $("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
 				 $("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
-				 
+
 				 $("#EditDescriptionVolume").click(function(){
 					$("#EditDescriptionVolumeDiv").load($(this).attr("href"));
 					return false;

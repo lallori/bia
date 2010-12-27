@@ -29,7 +29,6 @@ package org.medici.docsources.service.geobase;
 
 import java.util.List;
 
-import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -69,5 +68,5 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Document> searchPlaces(String text) throws ApplicationThrowable;
+	public List<Place> searchPlaces(String text) throws ApplicationThrowable;
 }

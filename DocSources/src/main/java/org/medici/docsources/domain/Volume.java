@@ -41,8 +41,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+import org.hibernate.search.bridge.builtin.BooleanBridge;
 import org.medici.docsources.common.util.VolumeUtils;
 
 /**
@@ -51,6 +71,17 @@ import org.medici.docsources.common.util.VolumeUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="volumeAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblVolumes\"" ) 
 public class Volume implements Serializable {
@@ -59,98 +90,200 @@ public class Volume implements Serializable {
 	 */
 	private static final long serialVersionUID = 3127626344157278734L;
 	@Id
+	@DocumentId
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"SUMMARYID\"", length=10, nullable=false)
 	private Integer summaryId;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="\"SERIESREFNUM\"")
+	@IndexedEmbedded
 	private SerieList serieList;
+	
 	@Column (name="\"VOLNUM\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer volNum;
+	
 	@Column (name="\"VOLLETEXT\"", length=1)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String volLetExt;
+	
 	@Column (name="\"RESID\"")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
+	
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
+	
 	@Column (name="\"VOLTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date volTobeVettedDate;
+	
 	@Column (name="\"VOLTOBEVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean volTobeVetted;
+	
 	@Column (name="\"VOLVETID\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String volVetId;
+	
 	@Column (name="\"VOLVETBEGINS\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date volVetBegins;
+	
 	@Column (name="\"VOLVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean volVetted;
+	
 	@Column (name="\"VOLVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date volVettedDate;
+	
 	@Column (name="\"STATBOX\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String statBox;
+	
 	@Column (name="\"STARTYEAR\"", length=5)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer startYear;
+	
 	@Column (name="\"STARTMONTH\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String startMonth;
+	
 	@Column (name="\"STARTMONTHNUM\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer startMonthNum;
+	
 	@Column (name="\"STARTDAY\"", length=3, columnDefinition="TINYINT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer startDay;
+	
 	@Column (name="\"ENDYEAR\"", length=5)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer endYear;
+	
 	@Column (name="\"ENDMONTH\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String endMonth;
+	
 	@Column (name="\"ENDMONTHNUM\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer endMonthNum;
+	
 	@Column (name="\"ENDDAY\"", length=3, columnDefinition="TINYINT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer endDay;
+	
 	@Column (name="\"DATENOTES\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dateNotes;
+	
 	@Column (name="\"SENDERS\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String senders;
+	
 	@Column (name="\"RECIPS\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String recips;
+	
 	@Column (name="\"CCONTEXT\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String ccontext;
+	
 	@Column (name="\"FOLIOCOUNT\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String folioCount;
+	
 	@Column (name="\"BOUND\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bound;
+	
 	@Column (name="\"FOLSNUMBRD\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Boolean folsNumbrd;
+	
 	@Column (name="\"OLDALPHAINDEX\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean oldAlphaIndex;
+	
 	// Column condition renamed in ccondition beacause inital word is reserved on Mysql 
 	@Column (name="\"CCONDITION\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String ccondition;
+	
 	@Column (name="\"ITALIAN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean italian;
+	
 	@Column (name="\"SPANISH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean spanish;
+	
 	@Column (name="\"ENGLISH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean english;
+	
 	@Column (name="\"LATIN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean latin;
+	
 	@Column (name="\"GERMAN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean german;
+	
 	@Column (name="\"FRENCH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean french;
+	
 	@Column (name="\"OTHERLANG\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String otherLang;
+	
 	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean cipher;
+	
 	@Column (name="\"CIPHERNOTES\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String cipherNotes;
+	
 	@Column (name="\"ORGNOTES\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String orgNotes;
+	
 	@Column (name="\"STAFFMEMO\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String staffMemo;
+	
 	@Column (name="\"PRINTEDMATERIAL\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean printedMaterial;
+	
 	@Column (name="\"PRINTEDDRAWINGS\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean printedDrawings;
 
 	/**
@@ -228,6 +361,27 @@ public class Volume implements Serializable {
 		this.volLetExt = volLetExt;
 	}
 	
+	/**
+	 * This method return volume MDP information. It's a concatenation of volume
+	 * number and volume letter extension. It's a transient property 
+	 * (not stored on database ndr).
+	 *  
+	 * @return String rappresentation of volume identifiers.
+	 */
+	@Transient
+    public String getMDP() {
+		String returnValue = "";
+		
+		if (getVolNum() != null) {
+			returnValue += getVolNum();
+		}
+		if (StringUtils.isNotEmpty(getVolLetExt())) {
+			returnValue += getVolLetExt();
+		}
+		
+		return returnValue;
+    }
+
 	/**
 	 * @return the researcher
 	 */
@@ -397,6 +551,37 @@ public class Volume implements Serializable {
 	}
 	
 	/**
+	 * This method return a string rappresentation of start date. 
+	 * It's a concatenation of three fields : startYear + startMonth + startDay.
+	 * If one field is null or empty, it's not concatenated into return value.
+	 * It's a transient property (not stored on database ndr).
+	 *  
+	 * @return String rappresentation of volume identifiers.
+	 */
+	@Transient
+    public String getStartDate() {
+		StringBuffer returnValue = new StringBuffer("");
+		
+		if (getStartYear() != null) {
+			returnValue.append(getStartYear());
+		}
+		if (StringUtils.isNotEmpty(getStartMonth())) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append(" ");
+			}
+			returnValue.append(getStartMonth());
+		}
+		if (getStartDay() != null) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append(" ");
+			}
+			returnValue.append(getStartDay());
+		}
+		
+		return returnValue.toString();
+    }
+
+	/**
 	 * @return the startDay
 	 */
 	public Integer getStartDay() {
@@ -466,6 +651,37 @@ public class Volume implements Serializable {
 		this.endDay = endDay;
 	}
 	
+	/**
+	 * This method return a string rappresentation of end date. 
+	 * It's a concatenation of three fields : endYear + endMonth + endDay.
+	 * If one field is null or empty, it's not concatenated into return value.
+	 * It's a transient property (not stored on database ndr).
+	 *  
+	 * @return String rappresentation of volume identifiers.
+	 */
+	@Transient
+    public String getEndDate() {
+		StringBuffer returnValue = new StringBuffer("");
+		
+		if (getEndYear() != null) {
+			returnValue.append(getEndYear());
+		}
+		if (StringUtils.isNotEmpty(getEndMonth())) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append(" ");
+			}
+			returnValue.append(getEndMonth());
+		}
+		if (getEndDay() != null) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append(" ");
+			}
+			returnValue.append(getEndDay());
+		}
+		
+		return returnValue.toString();
+    }
+
 	/**
 	 * @return the dateNotes
 	 */

@@ -40,11 +40,38 @@ import javax.persistence.PersistenceException;
  * 
  */
 public interface Dao<K, E> extends Serializable {
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public E find(K id) throws PersistenceException;
 
+	/**
+	 * 
+	 * @throws PersistenceException
+	 */
+	public void generateIndex() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param entity
+	 * @throws PersistenceException
+	 */
 	public void merge(E entity) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param entity
+	 * @throws PersistenceException
+	 */
 	public void persist(E entity) throws PersistenceException;
 
-	public void remove(E entity) throws PersistenceException;
+	/**
+	 * 
+	 * @param entity
+	 * @throws PersistenceException
+	 */
+	public void remove(E entity) throws PersistenceException;	
 }

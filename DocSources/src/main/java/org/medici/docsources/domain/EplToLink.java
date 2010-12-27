@@ -41,7 +41,23 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * EplToLink entity.
@@ -50,6 +66,17 @@ import org.hibernate.envers.Audited;
  *
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="eplToLinkAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblEPLTOLink\"" ) 
 public class EplToLink implements Serializable{
@@ -61,18 +88,28 @@ public class EplToLink implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"EPLTOID\"",length=10, nullable=false)
+	@DocumentId
 	private Integer eplToId;
+	
 	@ManyToOne
 	@JoinColumn(name="\"ENTRYID\"", nullable=false)
+	@ContainedIn
 	private Document entryId;
+	
 	@ManyToOne
 	@JoinColumn(name="\"TOPICID\"", nullable=false)
+	@IndexedEmbedded
 	private TopicList topicId; 
+	
 	@ManyToOne
 	@JoinColumn(name="\"PLACESALLID\"", nullable=false)
+	@IndexedEmbedded
 	private Place placesAllId;
+	
 	@Column (name="\"DATECREATED\"", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 
 	/**

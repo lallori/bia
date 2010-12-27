@@ -75,6 +75,9 @@ public class ListBeanUtils {
 		return retValue;
 	}
 
+	public static ArrayList<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace) {
+		return toStringListWithConcatenationFields(beansList, concatenatedFields, fieldsSeparator, outputFieldsSeparator, addBlankSpace, Boolean.FALSE);
+	}
 	/**
 	 * Method to obtains a plain list of multiple fields contained in a bean input list.
 	 * The fields are marked by third parameter which is the separator.
@@ -84,10 +87,11 @@ public class ListBeanUtils {
 	 * @param concatenatedFields List of bean's fields we want to concatenate in outputlist
 	 * @param fieldsSeparator String Separator of previous parameter
 	 * @param outputFieldsSeparator Separator of fields in output list
-	 * @param addBlankSpace A boolean parameter to insert a blank space before and after every separatore of output fields 
+	 * @param addBlankSpace A boolean parameter to insert a blank space before and after every separatore of output fields
+	 * @param excludeZero If a field is numeric and his value is 0, the field is discarded from output. 
 	 * @return
 	 */
-	public static ArrayList<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace) {
+	public static ArrayList<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace, Boolean excludeZero) {
 		if ((beansList.size() == 0) || (StringUtils.isEmpty(fieldsSeparator)) || (StringUtils.isEmpty(outputFieldsSeparator)))
 			return new ArrayList<String>(0);
 
@@ -103,6 +107,13 @@ public class ListBeanUtils {
 				try {
 					Object fieldBeanValue =method.invoke(beansList.get(i), (Object[]) null);
 					if (fieldBeanValue != null) {
+						if (fieldBeanValue.getClass().equals(Integer.class)) {
+							if (excludeZero.equals(Boolean.TRUE)) {
+								if (fieldBeanValue.equals(0)) {
+									continue;
+								}
+							}
+						}
 						if (j>0) {
 							if (addBlankSpace) {
 								stringBuffer.append(" ");

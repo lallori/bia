@@ -41,7 +41,25 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 /**
  * EpLink entity.
@@ -49,6 +67,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="epLinkAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblEPLink\"" ) 
 public class EpLink implements Serializable{
@@ -59,21 +88,37 @@ public class EpLink implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"EPLINKID\"",length=10, nullable=false)
+	@DocumentId
 	private Integer epLinkId;
+	
 	@ManyToOne
 	@JoinColumn(name="\"ENTRYID\"")
+	@ContainedIn
 	private Document entryId;
+	
 	@ManyToOne
 	@JoinColumn(name="\"PERSONID\"")
+	@ContainedIn
 	private People personId;
+	
 	@Column (name="\"PORTRAIT\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean portrait;
+	
 	@Column (name="\"ASSIGNUNSURE\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean AssignUnsure;
+	
 	@Column (name="\"DOCROLE\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String DocRole;
+	
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 
 	/**

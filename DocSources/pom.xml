@@ -97,7 +97,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<properties>
-		<hibernate.version>3.5.6-Final</hibernate.version>
+		<hibernate.version>3.6.0.Final</hibernate.version>
+		<hibernatesearch.version>3.3.0.Final</hibernatesearch.version>
 		<hibernatevalidator.version>4.1.0.Final</hibernatevalidator.version>
 		<jpa.version>2.0-CR-1</jpa.version>
 		<jstl.version>1.1.2</jstl.version>
@@ -125,6 +126,8 @@
 					<archive>
 						<manifestFile>WebContent/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+					<warSourceDirectory>WebContent/</warSourceDirectory>
+					<containerConfigXML>WebContent/META-INF/context.xml</containerConfigXML>
 					<warName>DocSources</warName>
 				</configuration>
 			</plugin>
@@ -147,16 +150,8 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.0</version>
-				<configuration>
-					<warSourceDirectory>WebContent/</warSourceDirectory>
-					<containerConfigXML>WebContent/META-INF/context.xml</containerConfigXML>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<debuglevel>lines,vars,source</debuglevel>
 					<debug>true</debug>
@@ -438,17 +433,22 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<version>${hibernatesearch.version}</version>
+		</dependency>
+		<dependency>
+   			<groupId>org.hibernate</groupId> 
+   			<artifactId>hibernate-search-analyzers</artifactId>
+			<version>${hibernatesearch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-envers</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jbosscache</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jmx</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>

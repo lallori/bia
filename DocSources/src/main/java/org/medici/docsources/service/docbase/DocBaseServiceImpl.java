@@ -33,8 +33,11 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.document.DocumentDAO;
+import org.medici.docsources.dao.eplink.EpLinkDAO;
+import org.medici.docsources.dao.epltolink.EplToLinkDAO;
 import org.medici.docsources.dao.factchecks.FactChecksDAO;
 import org.medici.docsources.dao.month.MonthDAO;
+import org.medici.docsources.dao.synextract.SynExtractDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.FactChecks;
@@ -56,9 +59,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private DocumentDAO documentDAO;
 	@Autowired
+	private EpLinkDAO epLinkDAO;
+	@Autowired
+	private EplToLinkDAO eplToLinkDAO;
+	@Autowired
 	private FactChecksDAO factChecksDAO;
 	@Autowired
 	private MonthDAO monthDAO;
+	@Autowired
+	private SynExtractDAO synExtractDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
 
@@ -255,10 +264,84 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexDocument() throws ApplicationThrowable {
+		try {
+			getDocumentDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexEpLink() throws ApplicationThrowable {
+		try {
+			getEpLinkDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexEplToLink() throws ApplicationThrowable {
+		try {
+			getEplToLinkDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexFactChecks() throws ApplicationThrowable {
+		try {
+			getFactChecksDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexSynExtract() throws ApplicationThrowable {
+		try {
+			getSynExtractDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
 	 * @return the documentDAO
 	 */
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
+	}
+
+	/**
+	 * @return the epLinkDAO
+	 */
+	public EpLinkDAO getEpLinkDAO() {
+		return epLinkDAO;
+	}
+
+	/**
+	 * @return the eplToLinkDAO
+	 */
+	public EplToLinkDAO getEplToLinkDAO() {
+		return eplToLinkDAO;
 	}
 
 	/**
@@ -288,6 +371,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @return the synExtractDAO
+	 */
+	public SynExtractDAO getSynExtractDAO() {
+		return synExtractDAO;
+	}
+
+	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
@@ -314,6 +404,20 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @param epLinkDAO the epLinkDAO to set
+	 */
+	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
+		this.epLinkDAO = epLinkDAO;
+	}
+
+	/**
+	 * @param eplToLinkDAO the eplToLinkDAO to set
+	 */
+	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
+		this.eplToLinkDAO = eplToLinkDAO;
+	}
+
+	/**
 	 * @param factChecksDAO the factChecksDAO to set
 	 */
 	public void setFactChecksDAO(FactChecksDAO factChecksDAO) {
@@ -325,6 +429,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @param synExtractDAO the synExtractDAO to set
+	 */
+	public void setSynExtractDAO(SynExtractDAO synExtractDAO) {
+		this.synExtractDAO = synExtractDAO;
 	}
 
 	/**

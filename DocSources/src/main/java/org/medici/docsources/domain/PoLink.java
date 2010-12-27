@@ -32,6 +32,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +42,26 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 /**
  * PoLink entity.
@@ -49,6 +69,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="poLinkAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblPOLink\"" )
 public class PoLink implements Serializable {
@@ -60,67 +91,113 @@ public class PoLink implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"PRLINKID\"", length=10, nullable=false)
+	@DocumentId
 	private Integer prfLinkId;
-	@ManyToOne
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"PERSONID\"")
+	@ContainedIn
 	private People personId;
-	@Column (name="\"TITLEOCCID\"")
+	
+	@ManyToOne
+	@JoinColumn(name="\"TITLEOCCID\"")
+	@IndexedEmbedded
 	private TitleOccsList titleOccId;
+	
 	@Column (name="\"STARTYEAR\"", length=10)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer startYear;
+	
 	@Column (name="\"STARTMONTH\"", length=50)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String startMonth;
+	
 	@Column (name="\"STARTDAY\"", length=10)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer startDay;
+	
 	@Column (name="\"ENDYEAR\"", length=10)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer endYear;
+	
 	@Column (name="\"ENDMONTH\"", length=50)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String endMonth; 
+	
 	@Column (name="\"ENDDAY\"", length=10)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer endDay;
+	
 	@Column (name="\"PRTAG\"", length=10)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer prTag;
+	
 	@Column (name="\"PRLINKNOTES\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String prLinkNotes;
+	
 	@Column (name="\"STARTAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean startApprox;
+	
 	@Column (name="\"STARTUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean StartUns;
+	
 	@Column (name="\"ENDAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean endApprox;
+	
 	@Column (name="\"ENDUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean endUns;
+	
 	@Column (name="\"STARTMONTHNUM\"", length=10)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer startMonthNum;
+	
 	@Column (name="\"ENDMONTHNUM\"", length=10)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer endMonthNum;
+	
 	@Column (name="\"DATECREATED\"")
 	@Temporal (TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
+	
 	/**
 	 * @return the prfLinkId
 	 */
 	public Integer getPrfLinkId() {
 		return prfLinkId;
 	}
+	
 	/**
 	 * @param prfLinkId the prfLinkId to set
 	 */
 	public void setPrfLinkId(Integer prfLinkId) {
 		this.prfLinkId = prfLinkId;
 	}
+	
 	/**
 	 * @return the personId
 	 */
 	public People getPersonId() {
 		return personId;
 	}
+	
 	/**
 	 * @param personId the personId to set
 	 */
 	public void setPersonId(People personId) {
 		this.personId = personId;
 	}
+	
 	/**
 	 * @return the titleOccId
 	 */

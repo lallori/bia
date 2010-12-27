@@ -40,7 +40,23 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * SynExtract entity.
@@ -48,6 +64,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="synExtractAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblSynExtracts\"" ) 
 public class SynExtract implements Serializable{
@@ -60,20 +87,34 @@ public class SynExtract implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="\"SynExtrID\"", length=100, nullable=false)
+	@DocumentId
 	private Integer synExtrId;
+	
 	@ManyToOne
 	@JoinColumn(name="\"ENTRYID\"")
+	@ContainedIn
 	private Document entryId;
+	
 	@Column(name="\"DOCEXTRACT\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docExtract;
+	
 	@Column(name="\"SYNOPSIS\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String synopsis;
+	
 	@Column(name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
+	
 	@Column(name="\"LASTUPDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
+	
 	/**
 	 * @return the synExtrId
 	 */

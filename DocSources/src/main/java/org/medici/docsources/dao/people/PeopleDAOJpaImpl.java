@@ -1,5 +1,5 @@
 /*
- * PersonDAOJpaImpl.java
+ * PeopleDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -29,9 +29,27 @@ package org.medici.docsources.dao.people;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
+import org.apache.log4j.Logger;
+import org.hibernate.CacheMode;
+import org.hibernate.FlushMode;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.ejb.HibernateEntityManager;
+import org.hibernate.search.FullTextQuery;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
@@ -46,7 +64,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleDAO {
-
 	/**
 	 * 
 	 *  If a serializable class does not explicitly declare a serialVersionUID, 
@@ -67,6 +84,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	private static final long serialVersionUID = -2964902298903431093L;
 
+	private final Logger logger = Logger.getLogger(this.getClass());
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -79,12 +98,53 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * 
+	 * @throws PersistenceException
 	 */
-	@Override
-	public List<People> searchSenders(String query) throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
+	public void generateIndex() throws PersistenceException {
+		try {
+			EntityManager entityManager = getEntityManager();
+			Session session = ((HibernateEntityManager) entityManager).getSession();
+			session = session.getSessionFactory().openSession();
+			FullTextSession fullTextSession = Search.getFullTextSession(session);
+	
+			
+			fullTextSession.setFlushMode(FlushMode.MANUAL);
+			fullTextSession.setCacheMode(CacheMode.IGNORE);
+			Transaction transaction = fullTextSession.beginTransaction();
+			//Scrollable results will avoid loading too many objects in memory
+			List<People> peoples = session.createQuery("from People where personId = 114").list();
+			
+			System.out.println(peoples.size());
+		    int i=0;
+
+			for (People people : peoples) {
+				i++;
+			    fullTextSession.index(people);
+			    if (i % 100 == 0) {
+			        fullTextSession.flushToIndexes(); //apply changes to indexes
+			        fullTextSession.clear(); //free memory since the queue is processed
+			    }
+			}
+			transaction.commit();
+
+			/*fullTextSession.createIndexer( entityClass )
+			.batchSizeToLoadObjects( 2 )
+			.cacheMode( CacheMode.NORMAL )
+			.threadsToLoadObjects( 3 )
+			.threadsForSubsequentFetching( 4 )
+			.startAndWait();
+			*/
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+		}
+	}
+	
+	/**
+	 * @return the logger
+	 */
+	public Logger getLogger() {
+		return logger;
 	}
 
 	/**
@@ -94,5 +154,65 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	public List<People> searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException {
 		// TODO Auto-generated method stub
 		return null;
-	}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> searchRecipients(String alias) throws PersistenceException {
+		String[] searchFields = new String[]{"first", "last"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+
+		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, People.class);
+		List<People> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, People.class);
+
+		return listRecipients;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> searchSenders(String alias) throws PersistenceException {
+		String[] searchFields = new String[]{"first", "last"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+
+		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, People.class);
+		List<People> listSenders = executeFullTextQuery(fullTextQuery, outputFields, People.class);
+
+		return listSenders;
+	}
+
+	/**
+	 * This method search senders using jpa implementation.
+	 * 
+	 * @param alias
+	 * @return
+	 * @throws PersistenceException
+	 * @deprecated
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<People> searchSendersJpaImpl(String alias) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<People> criteriaQuery = criteriaBuilder.createQuery(People.class);
+		Root root = criteriaQuery.from(People.class);
+	
+		//Construct literal and predicates
+		Expression<String> literal = criteriaBuilder.upper(criteriaBuilder.literal("%" + alias + "%"));
+		Predicate predicateFirst = criteriaBuilder.like(criteriaBuilder.upper(root.get("first")), literal);
+		Predicate predicateLast = criteriaBuilder.like(criteriaBuilder.upper(root.get("last")), literal);
+		
+		//Add where clause
+		criteriaQuery.where(criteriaBuilder.or(predicateFirst,predicateLast)); 
+	
+		// create query using criteria   
+		TypedQuery<People> typedQuery = getEntityManager().createQuery(criteriaQuery);
+	
+		return typedQuery.getResultList();
+	}
+
 }

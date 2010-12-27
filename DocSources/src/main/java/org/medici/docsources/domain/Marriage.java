@@ -62,41 +62,58 @@ public class Marriage implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"MARRIAGEID\"", length=10, nullable=false)
 	private Integer marriageId;
+	
 	@ManyToOne
 	@JoinColumn(name="\"HUSBANDID\"")
 	private People husbandId;
+	
 	@ManyToOne
 	@JoinColumn(name="\"WIFEID\"")
 	private People wifeId;
+	
 	@Column (name="\"STARTDAY\"", length=10)
 	private Integer startDay;
+	
 	@Column (name="\"STARTMONTH\"", length=10)
 	private String startMonth;
+	
 	@Column (name="\"STARTYEAR\"", length=10)
 	private Integer startYear;
+	
 	@Column (name="\"STARTUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
 	private Boolean startUns;
+	
 	@Column (name="\"ENDDAY\"", length=10)
 	private Integer endDay;
+	
 	@Column (name="\"ENDMONTH\"", length=10)
 	private String endMonth;
+	
 	@Column (name="\"ENDYEAR\"", length=10)
 	private Integer endYear;
+	
 	@Column (name="\"ENDUNS\"", length=1, columnDefinition="tinyint", nullable=false)
 	private Boolean endUns;
+	
 	@Column (name="\"MARTERM\"", length=50)
 	private String marTerm;
+	
 	@Column (name="\"REFID\"", length=10)
 	private Integer refId;
+	
 	@Column (name="\"NOTES\"", columnDefinition="LONGTEXT")
 	private String notes;
+	
 	@Column (name="\"STARTMONTHNUM\"", length=10)
 	private Integer startMonthNum;
+	
 	@Column (name="\"ENDMONTHNUM\"", length=10)
 	private Integer endMonthNum;
+	
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+	
 	/**
 	 * @return the marriageId
 	 */

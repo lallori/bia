@@ -46,7 +46,25 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 /**
  * Document entity.
@@ -54,6 +72,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="documentAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblDocuments\"" ) 
 public class Document implements Serializable{
@@ -65,103 +94,204 @@ public class Document implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"ENTRYID\"", length=10, nullable=false)
+	@DocumentId
 	private Integer entryId;
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="\"SUMMARYID\"")
 	private Volume volume;
+	
 	@Column (name="\"SUBVOL\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String subVol;
+	
 	@Column (name="\"RESID\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
+	
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
+
 	@Column (name="\"LASTUPDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
+	
 	@Column (name="\"DOCTOBEVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean docTobeVetted;
+	
 	@Column (name="\"DOCTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date docToBeVettedDate;
+	
 	@Column (name="\"DOCVETID\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docVetId;
+	
 	@Column (name="\"DOCVETBEGINS\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date docVetBegins;
+	
 	@Column (name="\"DOCVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Boolean docVetted;
+	
 	@Column (name="\"DOCVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date docVettedDate;
+	
 	@Column (name="\"DOCSTATBOX\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docStatBox;
+	
 	@Column (name="\"NEWENTRY\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean newEntry;
+	
 	@Column (name="\"INSERTNUM\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String insertNum;
+	
 	@Column (name="\"INSERTLET\"", length=15)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String insertLet;
+	
 	@Column (name="\"FOLIONUM\"", length=10)
 	private Integer folioNum;
+	
 	@Column (name="\"FOLIOMOD\"", length=15)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String folioMod;
+	
 	@Column (name="\"CONTDISC\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean contDisc;
+	
 	@Column (name="\"UNPAGED\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean unpaged;
+	
 	@Column (name="\"DOCDAY\"", length=10)
 	private Integer docDay;
+	
 	@Column (name="\"DOCMONTHNUM\"", length=10)
 	private Integer docMonthNum;
+	
 	@Column (name="\"DOCYEAR\"", length=10)
 	private Integer docYear;
+	
 	@Column (name="\"SORTABLEDATE\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String sortableDate;
+	
 	@Column (name="\"YEARMODERN\"", length=15, precision=5)
 	private Integer yearModern;
+	
 	@Column (name="\"RECKONING\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean reckoning;
+	
 	@Column (name="\"UNDATED\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean undated;
+	
 	@Column (name="\"DATEUNS\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean dateUns;
+	
 	@Column (name="\"DATEAPPROX\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dateApprox;
+	
 	@Column (name="\"DATENOTES\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dateNotes;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SENDID")
 	private People senderPeople;
+	
 	@Column (name="\"SENDUNS\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean senderPeopleUnsure;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="\"SENDLOCPLALL\"")
 	private Place senderPlace;
+	
 	@Column (name="\"SENDLOCUNS\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean senderPlaceUnsure;
+	
 	@Column (name="\"SENDNOTES\"", length=250)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String sendNotes;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "\"RECIPID\"")
 	private People recipientPeople;
+	
 	@Column (name="\"RECIPUNS\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean recipientPeopleUnsure;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "\"RECIPLOCPLALL\"")
 	private Place recipientPlace;
+	
 	@Column (name="\"RECIPLOCUNS\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean recipientPlaceUnsure;
+	
 	@Column (name="\"RECIPNOTES\"", length=250)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String recipNotes;
+	
 	@Column (name="\"GRAPHIC\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean graphic;
+
+	//Linked fact Check
 	@OneToOne(mappedBy="entryId")
+	@IndexedEmbedded
 	private FactChecks factChecks;
 
+	//Association topic-place 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entryId")
 	private Set<EplToLink> eplToLink;
 
+	//Association people
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entryId")
+	private Set<EpLink> eplLink;
+	
+	//Association people
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entryId")
+	@IndexedEmbedded
+	private Set<SynExtract> synExtract;
+	
 	/**
 	 * @return the entryId
 	 */
@@ -738,5 +868,29 @@ public class Document implements Serializable{
 	 */
 	public Set<EplToLink> getEplToLink() {
 		return eplToLink;
+	}
+	/**
+	 * @param eplLink the eplLink to set
+	 */
+	public void setEplLink(Set<EpLink> eplLink) {
+		this.eplLink = eplLink;
+	}
+	/**
+	 * @return the eplLink
+	 */
+	public Set<EpLink> getEplLink() {
+		return eplLink;
+	}
+	/**
+	 * @param synExtract the synExtract to set
+	 */
+	public void setSynExtract(Set<SynExtract> synExtract) {
+		this.synExtract = synExtract;
+	}
+	/**
+	 * @return the synExtract
+	 */
+	public Set<SynExtract> getSynExtract() {
+		return synExtract;
 	}
 }

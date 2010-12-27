@@ -2,6 +2,12 @@ CREATE DATABASE `docsources` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 CREATE DATABASE `docsources_audit` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
+-- Gender types patch to allow correct use of numeration type Gender
+update tblpeople set gender = 'M' where gender = 'm';
+update tblpeople set gender = 'F' where gender = 'f';
+update tblpeople set gender = 'X' where gender = 'x';
+update tblpeople set gender = 'X' where gender = '';
+
 -- Table schema is based on ISO standard 3166 code lists 
 -- http://www.iso.org/iso/list-en1-semic-3.txt
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');

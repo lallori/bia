@@ -29,19 +29,41 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 /**
  * Person entity.
@@ -49,6 +71,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="peopleAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblPeople\"" ) 
 public class People implements Serializable {
@@ -58,88 +91,196 @@ public class People implements Serializable {
 	private static final long serialVersionUID = -6007789289980534157L;
 
 	@Id
+	@DocumentId
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"PERSONID\"", length=10, nullable=false)
 	private Integer personId;
+
 	@Column (name="\"MAPNameLF\"", length=150)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String mapNameLf;
+	
 	@Column (name="\"GENDER\"", length=1)
-	@Enumerated(EnumType.STRING) 
+	@Enumerated(EnumType.STRING)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Gender gender;
+	
 	@Column (name="\"ACTIVESTART\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String activeStart;
+	
 	@Column (name="\"ACTIVEEND\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String activeEnd;
+	
 	@Column (name="\"BMONTHNUM\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer bMonthNum;
+	
 	@Column (name="\"BDAY\"", length=3, columnDefinition="TINYINT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer bDay;
-	@Column (name="\"BYEAR\"", length=15)
+	
+	@Column (name="\"BYEAR\"", length=4)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer bYear;
+	
 	@Column (name="\"BPLACEID\"", length=10)
 	private Integer bPlaceId;
+	
 	@Column (name="\"BPLACE\"", length=50)
-	private Integer bPlace;
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private String bPlace;
+	
 	@Column (name="\"DMONTHNUM\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer dMonthNum;
+	
 	@Column (name="\"DDAY\"", length=3, columnDefinition="TINYINT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer dDay;
-	@Column (name="\"DYEAR\"", length=15)
+	
+	@Column (name="\"DYEAR\"", length=4)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer dYear;
+	
 	@Column (name="\"DPLACEID\"", length=10)
 	private Integer dPlaceId;
+	
 	@Column (name="\"DPLACE\"", length=50)
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dPlace;
+	
 	@Column (name="\"FIRST\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String first;
+	
 	@Column (name="\"SUCNUM\"", length=6)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String sucNum;
+	
 	@Column (name="\"MIDDLE\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String middle;
+	
 	@Column (name="\"MIDPREFIX\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String midPrefix;
+	
 	@Column (name="\"LAST\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String last;
+	
 	@Column (name="\"LASTPREFIX\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String lastPrefix;
+	
 	@Column (name="\"POSTLAST\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String postLast;
+	
 	@Column (name="\"POSTLASTPREFIX\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String postLastPrefix;
+	
 	@Column (name="\"BAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bApprox;
+	
 	@Column (name="\"BDATEBC\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bDateBc;
+	
 	@Column (name="\"BPLACEUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bPlaceUns;
+	
 	@Column (name="\"DAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean dApprox;
+	
 	@Column (name="\"DYEARBC\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean dYearBc;
+	
 	@Column (name="\"DPLACEUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean dPlaceUns;
+	
 	@Column (name="\"STATUS\"", length=15)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String status;
+	
 	@Column (name="\"BIONOTES\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String bioNotes;
+	
 	@Column (name="\"STAFFNOTES\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String staffNotes;
+	
 	@Column (name="\"PORTRAIT\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean portrait;
+	
 	@ManyToOne
 	@JoinColumn(name="\"FATHERID\"")
+	@IndexedEmbedded(depth=1)
 	private People fatherId;
+
 	@ManyToOne
 	@JoinColumn(name="\"MOTHERID\"")
+	@IndexedEmbedded(depth=1)
 	private People motherId;
-	@Column (name="\"RESID\"", length=50)
-	private String resId;
+	
+	@Column (name="\"RESID\"")
+	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private String researcher;
+	
 	@Column (name="\"DATECREATED\"")
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
+	
 	@Column (name="\"LASTUPDATE\"")
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
 
+	//Association alternative Names
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
+	//@IndexedEmbedded
+	private Set<AltName> AltName;
 	
+	//Association alternative Names
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
+	@IndexedEmbedded
+	private Set<BioRefLink> bioRefLink;
+
+/*	//Association alternative Names
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
+		//@IndexedEmbedded
+	private Set<EpLink> epLink;*/
+	
+	//Association alternative Names
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
+	@IndexedEmbedded
+	private Set<PoLink> poLink;
+	
+	/**
+	 * 
+	 */
+	public People() {
+		super();
+	}
+
 	/**
 	 * @return the personId
 	 */
@@ -287,7 +428,7 @@ public class People implements Serializable {
 	/**
 	 * @return the bPlace
 	 */
-	public Integer getbPlace() {
+	public String getbPlace() {
 		return bPlace;
 	}
 
@@ -295,7 +436,7 @@ public class People implements Serializable {
 	/**
 	 * @param bPlace the bPlace to set
 	 */
-	public void setbPlace(Integer bPlace) {
+	public void setbPlace(String bPlace) {
 		this.bPlace = bPlace;
 	}
 
@@ -701,18 +842,18 @@ public class People implements Serializable {
 
 
 	/**
-	 * @return the resId
+	 * @return the researcher 
 	 */
-	public String getResId() {
-		return resId;
+	public String getResearcher () {
+		return researcher;
 	}
 
 
 	/**
-	 * @param resId the resId to set
+	 * @param researcher the researcher to set
 	 */
-	public void setResId(String resId) {
-		this.resId = resId;
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
 	}
 
 
@@ -747,8 +888,62 @@ public class People implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
+	@Override
+	public String toString() {
+		return personId.toString();
+	}
+
+	/**
+	 * @param altName the altName to set
+	 */
+	public void setAltName(Set<AltName> altName) {
+		AltName = altName;
+	}
+
+	/**
+	 * @return the altName
+	 */
+	public Set<AltName> getAltName() {
+		return AltName;
+	}
+
+	/**
+	 * @param bioRefLink the bioRefLink to set
+	 */
+	public void setBioRefLink(Set<BioRefLink> bioRefLink) {
+		this.bioRefLink = bioRefLink;
+	}
+
+	/**
+	 * @return the bioRefLink
+	 */
+	public Set<BioRefLink> getBioRefLink() {
+		return bioRefLink;
+	}
+
+
+	/**
+	 * @param poLink the poLink to set
+	 */
+	public void setPoLink(Set<PoLink> poLink) {
+		this.poLink = poLink;
+	}
+
+	/**
+	 * @return the poLink
+	 */
+	public Set<PoLink> getPoLink() {
+		return poLink;
+	}
+
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
 	public static enum Gender {
-		MALE("M"), FEMALE("F"), X("X");
+		M("M"), F("F"), X("X");
 		
 		private final String gender;
 

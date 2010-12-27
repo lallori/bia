@@ -118,6 +118,36 @@ public interface DocBaseService {
 	
 	/**
 	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexDocument() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexEpLink() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexEplToLink() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexFactChecks() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexSynExtract() throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */

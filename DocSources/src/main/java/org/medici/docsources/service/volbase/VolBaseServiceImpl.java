@@ -267,18 +267,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable {
-		try {
-			return getSeriesListDAO().findSeries(alias);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable {
 		try {
 			return getVolumeDAO().find(summaryId);
@@ -353,6 +341,30 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexSerieList() throws ApplicationThrowable {
+		try {
+			getSeriesListDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexVolume() throws ApplicationThrowable {
+		try {
+			getVolumeDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
 	 * @return the imageDAO
 	 */
 	public ImageDAO getImageDAO() {
@@ -396,6 +408,18 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable {
+		try {
+			return getSeriesListDAO().findSeries(alias);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getVolumeDAO().searchVolumes(text, paginationFilter);
@@ -403,20 +427,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * @param imageDAO the imageDAO to set
 	 */
 	public void setImageDAO(ImageDAO imageDAO) {
 		this.imageDAO = imageDAO;
 	}
-
 	/**
 	 * @param monthDAO the monthDAO to set
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
+
 	/**
 	 * @param seriesListDAO the seriesListDAO to set
 	 */

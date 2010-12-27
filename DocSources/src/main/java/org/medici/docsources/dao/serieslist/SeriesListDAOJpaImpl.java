@@ -36,6 +36,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.hibernate.search.FullTextQuery;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.SerieList;
 import org.springframework.stereotype.Repository;
@@ -66,9 +68,27 @@ public class SeriesListDAOJpaImpl extends JpaDao<Integer, SerieList> implements 
 	 */
 	private static final long serialVersionUID = 1677483115463135112L;
 
-	@SuppressWarnings({"unchecked", "rawtypes" })
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<SerieList> findSeries(String alias) throws PersistenceException {
+		String[] searchFields = new String[]{"title", "subTitle1", "subTitle2"};
+		String[] outputFields = new String[]{"seriesRefNum", "title", "subTitle1", "subTitle2"};
+
+		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, SerieList.class);
+		List<SerieList> listSenders = executeFullTextQuery(fullTextQuery, outputFields, SerieList.class);
+
+		return listSenders;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings({"unchecked", "rawtypes" })
+	@Override
+	public List<SerieList> findSeriesJpaImpl(String alias) throws PersistenceException {
 		// Create criteria objects
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<SerieList> criteriaQuery = criteriaBuilder.createQuery(SerieList.class);

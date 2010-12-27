@@ -43,11 +43,22 @@ import org.medici.docsources.domain.SerieList;
 public interface SeriesListDAO extends Dao<Integer, SerieList> {
 
 	/**
-	 * This method extras all seriesList objects that contain alias string  
-	 * @param alias
-	 * @return
+	 * This method extras all seriesList objects that contain alias string.
+	 * This implementation uses HibernateSearch.
+	 *   
+	 * @param alias Text to search in title or subTitle1 or subTitle2
+	 * @return @return a List of serieList
 	 * @throws PersistenceException
 	 */
 	public List<SerieList> findSeries(String alias) throws PersistenceException;
+
+	/**
+	 * This is a jpa implementation for extraction directly from database.
+	 * 
+	 * @param alias Text to search in title or subTitle1 or subTitle2 
+	 * @return a List of serieList
+	 * @throws PersistenceException
+	 */
+	public List<SerieList> findSeriesJpaImpl(String alias) throws PersistenceException;
 
 }

@@ -16,9 +16,12 @@
 			<property name="org.hibernate.envers.default_schema" value="docsources_audit"/>
 
 			<!-- prints in log4j sql -->
-			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.show_sql" value="false" />
 			<!-- create-drop will generate database schema -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+			<property name="hibernate.search.default.directory_provider" value="filesystem"/> 
+			<property name="hibernate.search.default.indexBase" value="/data/indexes"/> 
 		</properties>
 	</persistence-unit>
 </persistence>

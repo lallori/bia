@@ -30,7 +30,6 @@ package org.medici.docsources.service.geobase;
 import java.util.List;
 
 import org.medici.docsources.dao.place.PlaceDAO;
-import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +77,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Document> searchPlaces(String text) throws ApplicationThrowable {
+	public List<Place> searchPlaces(String text) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		return null;
 	}

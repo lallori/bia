@@ -38,7 +38,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * SerieList entity.
@@ -46,6 +59,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="serieListAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Cacheable
 @Audited
 @Table ( name = "\"tblSeriesList\"" ) 
@@ -56,14 +80,21 @@ public class SerieList implements Serializable{
 	private static final long serialVersionUID = 135030362618173811L;
 	
 	@Id
+	@DocumentId
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"SERIESREFNUM\"", length=10, nullable=false)
 	private Integer seriesRefNum;
+	
 	@Column (name="\"SUBTITLE1\"", length=100)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String subTitle1;
+	
 	@Column (name="\"SUBTITLE2\"", length=100,nullable=true)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String subTitle2;
+	
 	@Column (name="\"TITLE\"", length=100)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String title;
 
 	/**

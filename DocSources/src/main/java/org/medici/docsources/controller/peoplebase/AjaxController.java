@@ -58,7 +58,7 @@ public class AjaxController {
 	 * @param text Text to search in ...
 	 * @return ModelAndView containing senders.
 	 */
-	@RequestMapping(value = "/de/peoplebase/SearchSenders", method = RequestMethod.GET)
+	@RequestMapping(value = "/de/peoplebase/SearchSenderPeople", method = RequestMethod.GET)
 	public ModelAndView searchSenders(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
@@ -83,17 +83,15 @@ public class AjaxController {
 	 * @param text Text to search in ...
 	 * @return ModelAndView containing recipients.
 	 */
-	@RequestMapping(value = "/de/peoplebase/SearchRecipients", method = RequestMethod.GET)
+	@RequestMapping(value = "/de/peoplebase/SearchRecipientPeople", method = RequestMethod.GET)
 	public ModelAndView findRecipients(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
-
 			List<People> people = getPeopleBaseService().searchRecipients(query);
 			model.put("query", query);
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE, Boolean.TRUE));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

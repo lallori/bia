@@ -30,8 +30,15 @@ package org.medici.docsources.service.peoplebase;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.dao.altname.AltNameDAO;
+import org.medici.docsources.dao.bibliot.BiblioTDAO;
+import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
+import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
+import org.medici.docsources.dao.polink.PoLinkDAO;
+import org.medici.docsources.dao.rolecat.RoleCatDAO;
+import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -47,9 +54,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired
+	private AltNameDAO altNameDAO;
+	
+	@Autowired
+	private BiblioTDAO biblioTDAO;
+	
+	@Autowired
+	private BioRefLinkDAO bioRefLinkDAO;
+	
+	@Autowired 
+	private EpLinkDAO epLinkDAO;
+	
+	@Autowired
 	private MonthDAO monthDAO;
+
 	@Autowired
 	private PeopleDAO peopleDAO;
+	
+	@Autowired
+	private PoLinkDAO poLinkDAO;
+	
+	@Autowired
+	private RoleCatDAO roleCatDAO;
+	
+	@Autowired 
+	private TitleOccsListDAO titleOccsListDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -73,6 +102,130 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexAltName() throws ApplicationThrowable {
+		try {
+			getAltNameDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexBiblioT() throws ApplicationThrowable {
+		try {
+			getBiblioTDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexBioRefLink() throws ApplicationThrowable {
+		try {
+			getBioRefLinkDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexEpLink() throws ApplicationThrowable {
+		try {
+			getEpLinkDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexPeople() throws ApplicationThrowable {
+		try {
+			getPeopleDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexPoLink() throws ApplicationThrowable {
+		try {
+			getPoLinkDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexRoleCat() throws ApplicationThrowable {
+		try {
+			getRoleCatDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexTitleOccsList() throws ApplicationThrowable {
+		try {
+			getTitleOccsListDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * @return the altNameDAO
+	 */
+	public AltNameDAO getAltNameDAO() {
+		return altNameDAO;
+	}
+
+	/**
+	 * @return the biblioTDAO
+	 */
+	public BiblioTDAO getBiblioTDAO() {
+		return biblioTDAO;
+	}
+
+	/**
+	 * @return the bioRefLinkDAO
+	 */
+	public BioRefLinkDAO getBioRefLinkDAO() {
+		return bioRefLinkDAO;
+	}
+
+	/**
+	 * @return the epLinkDAO
+	 */
+	public EpLinkDAO getEpLinkDAO() {
+		return epLinkDAO;
 	}
 
 	/**
@@ -102,6 +255,27 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @return the poLinkDAO
+	 */
+	public PoLinkDAO getPoLinkDAO() {
+		return poLinkDAO;
+	}
+
+	/**
+	 * @return the roleCatsDAO
+	 */
+	public RoleCatDAO getRoleCatDAO() {
+		return roleCatDAO;
+	}
+
+	/**
+	 * @return the titleOccsListDAO
+	 */
+	public TitleOccsListDAO getTitleOccsListDAO() {
+		return titleOccsListDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -119,7 +293,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public List<People> searchRecipients(String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchSenders(query);
+			return getPeopleDAO().searchRecipients(query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -138,6 +312,34 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @param altNameDAO the altNameDAO to set
+	 */
+	public void setAltNameDAO(AltNameDAO altNameDAO) {
+		this.altNameDAO = altNameDAO;
+	}
+
+	/**
+	 * @param biblioTDAO the biblioTDAO to set
+	 */
+	public void setBiblioTDAO(BiblioTDAO biblioTDAO) {
+		this.biblioTDAO = biblioTDAO;
+	}
+
+	/**
+	 * @param bioRefLinkDAO the bioRefLinkDAO to set
+	 */
+	public void setBioRefLinkDAO(BioRefLinkDAO bioRefLinkDAO) {
+		this.bioRefLinkDAO = bioRefLinkDAO;
+	}
+
+	/**
+	 * @param epLinkDAO the epLinkDAO to set
+	 */
+	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
+		this.epLinkDAO = epLinkDAO;
+	}
+
+	/**
 	 * @param monthDAO the monthDAO to set
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
@@ -149,6 +351,27 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setPeopleDAO(PeopleDAO peopleDAO) throws ApplicationThrowable {
 		this.peopleDAO = peopleDAO;
+	}
+
+	/**
+	 * @param poLinkDAO the poLinkDAO to set
+	 */
+	public void setPoLinkDAO(PoLinkDAO poLinkDAO) {
+		this.poLinkDAO = poLinkDAO;
+	}
+
+	/**
+	 * @param roleCatDAO the roleCatDAO to set
+	 */
+	public void setRoleCatDAO(RoleCatDAO roleCatDAO) {
+		this.roleCatDAO = roleCatDAO;
+	}
+
+	/**
+	 * @param titleOccsListDAO the titleOccsListDAO to set
+	 */
+	public void setTitleOccsListDAO(TitleOccsListDAO titleOccsListDAO) {
+		this.titleOccsListDAO = titleOccsListDAO;
 	}
 
 }

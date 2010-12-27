@@ -101,6 +101,19 @@ public interface VolBaseService {
 	public Volume findLastEntryVolume() throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexVolume() throws ApplicationThrowable;
+	
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexSerieList() throws ApplicationThrowable;
+
+	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 
 	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}

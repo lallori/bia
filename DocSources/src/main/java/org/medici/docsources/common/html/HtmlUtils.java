@@ -42,13 +42,19 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public class HtmlUtils {
 
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
 	public static List<String> showDocument(List<String> inputList, Integer entryId) {
 		if (inputList == null)
 			return null;
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a href=\"");
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/docbase/ShowDocument.do?entryId=");
 		anchorBegin.append(entryId);
@@ -68,13 +74,19 @@ public class HtmlUtils {
 		return retValue;
 	}
 
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
 	public static List<String> showPeople(List<String> inputList, Integer entryId) {
 		if (inputList == null)
 			return null;
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a href=\"");
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/peoplebase/ShowDocument.do?entryId=");
 		anchorBegin.append(entryId);
@@ -94,13 +106,19 @@ public class HtmlUtils {
 		return retValue;
 	}
 
+	/**
+	 * 
+	 * @param inputList
+	 * @param summaryId
+	 * @return
+	 */
 	public static List<String> showVolume(List<String> inputList, Integer summaryId) {
 		if (inputList == null)
 			return null;
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a href=\"");
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/volbase/ShowVolume.do?summaryId=");
 		anchorBegin.append(summaryId);

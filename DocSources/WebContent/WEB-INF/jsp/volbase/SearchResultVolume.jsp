@@ -31,8 +31,13 @@
 							fnCallback(json)
 						} );
 					}
-
 				} );
+
+				// result links have a specific class style on which we trigger load 
+				$('.searchResult').live('click', function() {
+					$("#body_left").load($(this).attr("href"));
+					return false;
+				}); 
 			} );
 		</script>
 

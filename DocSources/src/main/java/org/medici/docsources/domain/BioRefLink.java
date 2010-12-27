@@ -37,7 +37,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * BioRefLink entity.
@@ -45,6 +60,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="bioRefLinkAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblBioRefLink\"" ) 
 public class BioRefLink implements Serializable{
@@ -57,57 +83,72 @@ public class BioRefLink implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"REFID\"", length=10, nullable=false)
+	@DocumentId
 	private Integer refID;
+	
 	@ManyToOne
 	@JoinColumn(name="\"PERSONID\"")
+	@ContainedIn
 	private People personId;
+	
 	@ManyToOne
 	@JoinColumn(name="\"BIBLIOID\"")
+	@IndexedEmbedded
 	private BiblioT biblioId;
+	
 	@Column (name="\"NOTES\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String notes;
+	
 	/**
 	 * @return the refID
 	 */
 	public Integer getRefID() {
 		return refID;
 	}
+	
 	/**
 	 * @param refID the refID to set
 	 */
 	public void setRefID(Integer refID) {
 		this.refID = refID;
 	}
+	
 	/**
 	 * @return the personId
 	 */
 	public People getPersonId() {
 		return personId;
 	}
+	
 	/**
 	 * @param personId the personId to set
 	 */
 	public void setPersonId(People personId) {
 		this.personId = personId;
 	}
+	
 	/**
 	 * @return the biblioId
 	 */
 	public BiblioT getBiblioId() {
 		return biblioId;
 	}
+	
 	/**
 	 * @param biblioId the biblioId to set
 	 */
 	public void setBiblioId(BiblioT biblioId) {
 		this.biblioId = biblioId;
 	}
+	
 	/**
 	 * @return the notes
 	 */
 	public String getNotes() {
 		return notes;
 	}
+	
 	/**
 	 * @param notes the notes to set
 	 */

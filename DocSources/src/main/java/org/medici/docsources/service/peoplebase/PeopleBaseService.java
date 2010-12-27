@@ -66,6 +66,54 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexAltName() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexBiblioT() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexBioRefLink() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexEpLink() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexPeople() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexPoLink() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexRoleCat() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexTitleOccsList() throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
@@ -94,5 +142,5 @@ public interface PeopleBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<People> searchSenders(String query) throws ApplicationThrowable;;
+	public List<People> searchSenders(String query) throws ApplicationThrowable;
 }

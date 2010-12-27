@@ -198,40 +198,11 @@ public class AjaxController {
 			for (Volume currentVolume : (List<Volume>)page.getList()) {
 				List singleRow = new ArrayList();
 				singleRow.add(currentVolume.getSerieList().getTitle());
-
-				String startDate = "";
-				if (currentVolume.getStartYear() != null) {
-					startDate += currentVolume.getStartYear();
-				}
-				if (StringUtils.isNotEmpty(currentVolume.getStartMonth())) {
-					startDate += (startDate.length() > 0 ) ? " " : "";
-					startDate += currentVolume.getStartMonth();
-				}
-				if (currentVolume.getStartDay() != null) {
-					startDate += (startDate.length() > 0 ) ? " " : "";
-					startDate += currentVolume.getStartDay();
-				}
-				singleRow.add(startDate);
-				
-				String endDate = "";
-				if (currentVolume.getEndYear() != null) {
-					endDate += currentVolume.getEndYear();
-				}
-				if (StringUtils.isNotEmpty(currentVolume.getEndMonth())) {
-					endDate += (endDate.length() > 0 ) ? " " : "";
-					endDate += currentVolume.getEndMonth();
-				}
-				if (currentVolume.getEndDay() != null) {
-					endDate += (endDate.length() > 0 ) ? " " : "";
-					endDate += currentVolume.getEndDay();
-				}
-				singleRow.add(endDate);
+				singleRow.add(currentVolume.getStartDate());
+				singleRow.add(currentVolume.getEndDate());
 				
 				StringBuffer subTitle = new StringBuffer(currentVolume.getSerieList().toString());
-				subTitle.append(" MdP ").append(currentVolume.getVolNum());
-				if (StringUtils.isNotEmpty(currentVolume.getVolLetExt())) {
-					subTitle.append(currentVolume.getVolLetExt());
-				}
+				subTitle.append(" MdP ").append(currentVolume.getMDP());
 				singleRow.add(subTitle.toString());
 				
 				resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));

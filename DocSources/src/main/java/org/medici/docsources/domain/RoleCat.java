@@ -34,11 +34,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * RoleCat entity.
@@ -47,6 +58,17 @@ import org.hibernate.envers.Audited;
  *
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="roleCatsAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table (name="\"tblRoleCats\"")
 public class RoleCat implements Serializable {
@@ -59,75 +81,91 @@ public class RoleCat implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"ROLECATID\"", length=10, nullable=false)
+	@DocumentId
 	private Integer roleCatId;
+
 	@Column (name="\"ROLECATMINOR\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String roleCatMinor;
+	
 	@Column (name="\"ROLECATMAJOR\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String roleCatMajor;
-	@ManyToOne
-	@JoinColumn(name="\"ROLECATMAJORID\"")
-	private RoleCat roleCatMajorId;
+	
+	@Column(name="\"ROLECATMAJORID\"")
+	private Integer roleCatMajorId;
+	
 	@Column (name="\"SORTGROUS\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer sortGroups;
+	
 	/**
 	 * @return the roleCatId
 	 */
 	public Integer getRoleCatId() {
 		return roleCatId;
 	}
+	
 	/**
 	 * @param roleCatId the roleCatId to set
 	 */
 	public void setRoleCatId(Integer roleCatId) {
 		this.roleCatId = roleCatId;
 	}
+	
 	/**
 	 * @return the roleCatMinor
 	 */
 	public String getRoleCatMinor() {
 		return roleCatMinor;
 	}
+	
 	/**
 	 * @param roleCatMinor the roleCatMinor to set
 	 */
 	public void setRoleCatMinor(String roleCatMinor) {
 		this.roleCatMinor = roleCatMinor;
 	}
+	
 	/**
 	 * @return the roleCatMajor
 	 */
 	public String getRoleCatMajor() {
 		return roleCatMajor;
 	}
+	
 	/**
 	 * @param roleCatMajor the roleCatMajor to set
 	 */
 	public void setRoleCatMajor(String roleCatMajor) {
 		this.roleCatMajor = roleCatMajor;
 	}
+	
 	/**
 	 * @return the roleCatMajorId
 	 */
-	public RoleCat getRoleCatMajorId() {
+	public Integer getRoleCatMajorId() {
 		return roleCatMajorId;
 	}
+	
 	/**
 	 * @param roleCatMajorId the roleCatMajorId to set
 	 */
-	public void setRoleCatMajorId(RoleCat roleCatMajorId) {
+	public void setRoleCatMajorId(Integer roleCatMajorId) {
 		this.roleCatMajorId = roleCatMajorId;
 	}
+	
 	/**
 	 * @return the sortGroups
 	 */
 	public Integer getSortGroups() {
 		return sortGroups;
 	}
+	
 	/**
 	 * @param sortGroups the sortGroups to set
 	 */
 	public void setSortGroups(Integer sortGroups) {
 		this.sortGroups = sortGroups;
 	}
-	
 }
