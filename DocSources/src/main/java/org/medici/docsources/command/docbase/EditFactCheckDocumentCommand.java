@@ -32,11 +32,19 @@ package org.medici.docsources.command.docbase;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.EditDetailsDocumentController.docsources.controller.docbase.ModifyDocumentController
+ * @see org.medici.docsources.controller.docbase.EditFactCheckDocumentController
  */
 public class EditFactCheckDocumentCommand {
-	private Integer entryId;
 	private String addLRes;
+	private Integer entryId;
+	private Integer vetId;
+
+	/**
+	 * @return the addLRes
+	 */
+	public String getAddLRes() {
+		return addLRes;
+	}
 
 	/**
 	 * This method returns entryId property.
@@ -45,6 +53,20 @@ public class EditFactCheckDocumentCommand {
 	 */
 	public Integer getEntryId() {
 		return entryId;
+	}
+
+	/**
+	 * @return the vetId
+	 */
+	public Integer getVetId() {
+		return vetId;
+	}
+
+	/**
+	 * @param addLRes the addLRes to set
+	 */
+	public void setAddLRes(String addLRes) {
+		this.addLRes = addLRes;
 	}
 
 	/**
@@ -57,16 +79,9 @@ public class EditFactCheckDocumentCommand {
 	}
 
 	/**
-	 * @param addLRes the addLRes to set
+	 * @param vetId the vetId to set
 	 */
-	public void setAddLRes(String addLRes) {
-		this.addLRes = addLRes;
-	}
-
-	/**
-	 * @return the addLRes
-	 */
-	public String getAddLRes() {
-		return addLRes;
+	public void setVetId(Integer vetId) {
+		this.vetId = vetId;
 	}
 }

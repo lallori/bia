@@ -27,15 +27,20 @@
  */
 package org.medici.docsources.command.docbase;
 
+
 /**
  * Command bean for action "Edit Extract Or Synopsis Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.EditDetailsDocumentController.docsources.controller.docbase.ModifyDocumentController
+ * @see org.medici.docsources.controller.docbase.EditExtractOrSynopsisDocumentController
  */
 public class EditExtractOrSynopsisDocumentCommand {
+	private Integer synExtrId;
 	private Integer entryId;
+	private String docExtract;
+	private String synopsis;
+
 
 	/**
 	 * This method returns entryId property.
@@ -53,5 +58,47 @@ public class EditExtractOrSynopsisDocumentCommand {
 	 */
 	public void setEntryId(Integer entryId) {
 		this.entryId = entryId;
+	}
+
+	/**
+	 * @param docExtract the docExtract to set
+	 */
+	public void setDocExtract(String docExtract) {
+		this.docExtract = docExtract;
+	}
+
+	/**
+	 * @return the docExtract
+	 */
+	public String getDocExtract() {
+		return docExtract;
+	}
+
+	/**
+	 * @param synopsis the synopsis to set
+	 */
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
+	}
+
+	/**
+	 * @return the synopsis
+	 */
+	public String getSynopsis() {
+		return synopsis;
+	}
+
+	/**
+	 * @param synExtrId the synExtrId to set
+	 */
+	public void setSynExtrId(Integer synExtrId) {
+		this.synExtrId = synExtrId;
+	}
+
+	/**
+	 * @return the synExtrId
+	 */
+	public Integer getSynExtrId() {
+		return synExtrId;
 	}
 }

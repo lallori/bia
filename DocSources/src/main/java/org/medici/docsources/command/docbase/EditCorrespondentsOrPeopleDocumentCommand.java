@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.command.docbase;
 
+import org.medici.docsources.domain.Document;
+
 /**
  * Command bean for action "Edit Correspondents Or People Document".
  * 
@@ -48,6 +50,7 @@ public class EditCorrespondentsOrPeopleDocumentCommand {
 	private Integer recipientPlaceId;
 	private String recipientPlaceDescription;
 	private Boolean recipientPlaceUnsure;
+	private Document document;
 	
 	/**
 	 * @return the entryId
@@ -229,5 +232,19 @@ public class EditCorrespondentsOrPeopleDocumentCommand {
 	 */
 	public void setRecipientPlaceUnsure(Boolean recipientPlaceUnsure) {
 		this.recipientPlaceUnsure = recipientPlaceUnsure;
+	}
+
+	/**
+	 * @param document the document to set
+	 */
+	public void setDocument(Document document) {
+		this.document = document;
+	}
+
+	/**
+	 * @return the document
+	 */
+	public Document getDocument() {
+		return document;
 	}
 }

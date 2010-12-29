@@ -44,42 +44,46 @@ public class ShowVolumeRequestCommand {
 	private Integer volNum;
 	@Size (max=1)
 	private String volLeText;
+	
 	/**
 	 * @return the summaryId
 	 */
 	public Integer getSummaryId() {
 		return summaryId;
 	}
+	
 	/**
 	 * @param summaryId the summaryId to set
 	 */
 	public void setSummaryId(Integer summaryId) {
 		this.summaryId = summaryId;
 	}
+	
 	/**
 	 * @return the volNum
 	 */
 	public Integer getVolNum() {
 		return volNum;
 	}
+	
 	/**
 	 * @param volNum the volNum to set
 	 */
 	public void setVolNum(Integer volNum) {
 		this.volNum = volNum;
 	}
+	
 	/**
 	 * @return the volLeText
 	 */
 	public String getVolLeText() {
 		return volLeText;
 	}
+	
 	/**
 	 * @param volLeText the volLeText to set
 	 */
 	public void setVolLeText(String volLeText) {
 		this.volLeText = volLeText;
 	}
-
-
 }

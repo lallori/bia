@@ -30,8 +30,6 @@ package org.medici.docsources.common.html;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.html.dom.HTMLAnchorElementImpl;
-import org.apache.html.dom.HTMLDocumentImpl;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -60,9 +58,6 @@ public class HtmlUtils {
 		anchorBegin.append(entryId);
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
-		HTMLDocumentImpl htmlDocumentImpl = new HTMLDocumentImpl();
-		HTMLAnchorElementImpl htmlAnchorElementImpl = new HTMLAnchorElementImpl(htmlDocumentImpl, "showVolume");
-		htmlAnchorElementImpl.setHref(anchorBegin.toString());
 		
 		for (int i=0; i<inputList.size(); i++) {
 			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
@@ -92,9 +87,6 @@ public class HtmlUtils {
 		anchorBegin.append(entryId);
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
-		HTMLDocumentImpl htmlDocumentImpl = new HTMLDocumentImpl();
-		HTMLAnchorElementImpl htmlAnchorElementImpl = new HTMLAnchorElementImpl(htmlDocumentImpl, "showVolume");
-		htmlAnchorElementImpl.setHref(anchorBegin.toString());
 		
 		for (int i=0; i<inputList.size(); i++) {
 			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
@@ -124,9 +116,6 @@ public class HtmlUtils {
 		anchorBegin.append(summaryId);
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
-		HTMLDocumentImpl htmlDocumentImpl = new HTMLDocumentImpl();
-		HTMLAnchorElementImpl htmlAnchorElementImpl = new HTMLAnchorElementImpl(htmlDocumentImpl, "showVolume");
-		htmlAnchorElementImpl.setHref(anchorBegin.toString());
 		
 		for (int i=0; i<inputList.size(); i++) {
 			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());

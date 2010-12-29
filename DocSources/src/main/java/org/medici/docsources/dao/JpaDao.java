@@ -43,6 +43,7 @@ import org.hibernate.CacheMode;
 import org.hibernate.FlushMode;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
@@ -184,9 +185,11 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	public void generateIndex() throws PersistenceException {
 		try {
 			EntityManager entityManager = getEntityManager();
-			FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager) entityManager).getSession());
+			Session session = ((HibernateEntityManager) entityManager).getSession();
+			session = session.getSessionFactory().openSession();
+			FullTextSession fullTextSession = Search.getFullTextSession(session);
 	
-			fullTextSession.setFlushMode(FlushMode.MANUAL);
+			/*fullTextSession.setFlushMode(FlushMode.MANUAL);
 			fullTextSession.setCacheMode(CacheMode.IGNORE);
 			Transaction transaction = fullTextSession.beginTransaction();
 			//Scrollable results will avoid loading too many objects in memory
@@ -203,11 +206,11 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 			    }
 			}
 			transaction.commit();
-
+*/
 			fullTextSession.createIndexer( entityClass )
-			.batchSizeToLoadObjects( 2 )
+			.batchSizeToLoadObjects( 50 )
 			.cacheMode( CacheMode.NORMAL )
-			.threadsToLoadObjects( 3 )
+			.threadsToLoadObjects( 5 )
 			.threadsForSubsequentFetching( 4 )
 			.startAndWait();
 		} catch (Throwable throwable) {

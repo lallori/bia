@@ -37,7 +37,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.EditDetailsDocumentController.docsources.controller.docbase.ModifyDocumentController
+ * @see org.medici.docsources.controller.docbase.EditDetailsDocumentController
  */
 public class EditDetailsDocumentCommand {
 	// Document Id

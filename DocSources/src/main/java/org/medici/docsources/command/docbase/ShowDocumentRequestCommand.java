@@ -1,5 +1,5 @@
 /*
- * EditTopicsDocumentCommand.java
+ * ShowDocumentRequestCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,50 +27,28 @@
  */
 package org.medici.docsources.command.docbase;
 
-import java.util.List;
-
-import org.medici.docsources.domain.EplToLink;
+import javax.validation.constraints.NotNull;
 
 /**
- * Command bean for action "Edit Topics Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
- * @see org.EditDetailsDocumentController.docsources.controller.docbase.ModifyDocumentController
+ *
  */
-public class EditTopicsDocumentCommand {
+public class ShowDocumentRequestCommand {
+	@NotNull
 	private Integer entryId;
-	private List<EplToLink> eplToLink;
 
 	/**
-	 * This method returns entryId property.
-	 * 
-	 * @return the entryId
-	 */
-	public Integer getEntryId() {
-		return entryId;
-	}
-
-	/**
-	 * This method sets document unique id property.
-	 * 
-	 * @param the entryId to set
+	 * @param entryId the entryId to set
 	 */
 	public void setEntryId(Integer entryId) {
 		this.entryId = entryId;
 	}
 
 	/**
-	 * @param eplToLink the eplToLink to set
+	 * @return the entryId
 	 */
-	public void setEplToLink(List<EplToLink> eplToLink) {
-		this.eplToLink = eplToLink;
-	}
-
-	/**
-	 * @return the eplToLink
-	 */
-	public List<EplToLink> getEplToLink() {
-		return eplToLink;
+	public Integer getEntryId() {
+		return entryId;
 	}
 }

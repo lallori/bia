@@ -27,12 +27,8 @@
  */
 package org.medici.docsources.command.volbase;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Command bean for action "Edit Description Volume".
@@ -50,8 +46,6 @@ public class EditDetailsVolumeCommand {
 	private String volLetExt;
 	// researcher description
 	private String researcher;
-	@DateTimeFormat(pattern="MM/dd/yyyy hh:mm:ss")
-	private Date dateCreated;
 	// This is the linked "Carteggio" @see org.medici.docsources.domain.SerieList
 	private Integer seriesRefNum;
 	// This is the concatenation of seriesRef Description (Title / SubTitle 1 /SubTitle 2)
@@ -103,20 +97,6 @@ public class EditDetailsVolumeCommand {
 	 */
 	public void setVolLetExt(String volLetExt) {
 		this.volLetExt = volLetExt;
-	}
-	
-	/**
-	 * @return the dateCreated
-	 */
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-	
-	/**
-	 * @param dateCreated the dateCreated to set
-	 */
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
 	}
 	
 	/**

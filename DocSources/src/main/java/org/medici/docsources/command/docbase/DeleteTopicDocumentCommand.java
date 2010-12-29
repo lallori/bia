@@ -1,5 +1,5 @@
 /*
- * EditTopicsDocumentCommand.java
+ * DeleteTopicDocumentCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,20 +27,15 @@
  */
 package org.medici.docsources.command.docbase;
 
-import java.util.List;
-
-import org.medici.docsources.domain.EplToLink;
-
 /**
- * Command bean for action "Edit Topics Document".
+ * Command bean for action "Delete Topic Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.EditDetailsDocumentController.docsources.controller.docbase.ModifyDocumentController
+ * @see org.medici.docsources.controller.docbase.DeleteTopicDocumentController
  */
-public class EditTopicsDocumentCommand {
+public class DeleteTopicDocumentCommand {
 	private Integer entryId;
-	private List<EplToLink> eplToLink;
 
 	/**
 	 * This method returns entryId property.
@@ -58,19 +53,5 @@ public class EditTopicsDocumentCommand {
 	 */
 	public void setEntryId(Integer entryId) {
 		this.entryId = entryId;
-	}
-
-	/**
-	 * @param eplToLink the eplToLink to set
-	 */
-	public void setEplToLink(List<EplToLink> eplToLink) {
-		this.eplToLink = eplToLink;
-	}
-
-	/**
-	 * @return the eplToLink
-	 */
-	public List<EplToLink> getEplToLink() {
-		return eplToLink;
 	}
 }

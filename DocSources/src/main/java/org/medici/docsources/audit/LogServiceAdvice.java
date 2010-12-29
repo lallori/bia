@@ -112,9 +112,10 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 */
 	private void appendReturns(StringBuffer stringBuffer, Object returnValue) {
 		stringBuffer.append(" - ReturnValue : ");
-		if (returnValue != null)
-			stringBuffer.append(ClassUtils.toString(returnValue));
-		else
+		if (returnValue != null) {
+			// WE COMMENT THE COMPLETE OBJECT CONVERSION stringBuffer.append(ClassUtils.toString(returnValue));
+			stringBuffer.append(returnValue.toString());
+		} else
 			stringBuffer.append("void");
 	}
 
