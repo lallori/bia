@@ -132,46 +132,15 @@ public class AjaxController {
 			List resultList = new ArrayList();
 			for (Document currentDocument : (List<Document>)page.getList()) {
 				List singleRow = new ArrayList();
-				singleRow.toString();
-				/*				singleRow.add(currentDocument.getSerieList().getTitle());
-
-				String startDate = "";
-				if (currentVolume.getStartYear() != null) {
-					startDate += currentVolume.getStartYear();
-				}
-				if (StringUtils.isNotEmpty(currentVolume.getStartMonth())) {
-					startDate += (startDate.length() > 0 ) ? " " : "";
-					startDate += currentVolume.getStartMonth();
-				}
-				if (currentVolume.getStartDay() != null) {
-					startDate += (startDate.length() > 0 ) ? " " : "";
-					startDate += currentVolume.getStartDay();
-				}
-				singleRow.add(startDate);
-				
-				String endDate = "";
-				if (currentVolume.getEndYear() != null) {
-					endDate += currentVolume.getEndYear();
-				}
-				if (StringUtils.isNotEmpty(currentVolume.getEndMonth())) {
-					endDate += (endDate.length() > 0 ) ? " " : "";
-					endDate += currentVolume.getEndMonth();
-				}
-				if (currentVolume.getEndDay() != null) {
-					endDate += (endDate.length() > 0 ) ? " " : "";
-					endDate += currentVolume.getEndDay();
-				}
-				singleRow.add(endDate);
-				
-				StringBuffer subTitle = new StringBuffer(currentVolume.getSerieList().toString());
-				subTitle.append(" MdP ").append(currentVolume.getVolNum());
-				if (StringUtils.isNotEmpty(currentVolume.getVolLetExt())) {
-					subTitle.append(currentVolume.getVolLetExt());
-				}
-				singleRow.add(subTitle.toString());
-				
-				resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
-*/			}
+				singleRow.add((currentDocument.getSenderPeople() != null) ? currentDocument.getSenderPeople().getMapNameLf() : "");
+				singleRow.add((currentDocument.getRecipientPeople() != null) ? currentDocument.getRecipientPeople().getMapNameLf() : "");
+				singleRow.add((currentDocument.getDateApprox() != null) ? currentDocument.getDateApprox() : "");
+				singleRow.add((currentDocument.getSenderPlace() != null) ? currentDocument.getSenderPlace().getPlaceName() : "");
+				singleRow.add((currentDocument.getRecipientPlace() != null) ? currentDocument.getRecipientPlace().getPlaceName() : "");
+				singleRow.add((currentDocument.getVolume()!= null) ? currentDocument.getVolume().toString() : "");
+				singleRow.add((currentDocument.getFolioNum() != null) ? currentDocument.getFolioNum().toString() : "");
+				resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
+			}
 			model.put("iEcho", "" + 1);
 			model.put("iTotalDisplayRecords", page.getTotal());
 			model.put("iTotalRecords", page.getTotal());
