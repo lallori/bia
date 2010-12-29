@@ -11,14 +11,14 @@
 		<fieldset>
 		<legend><b>CORRESPONDENTS/PEOPLE </b></legend>
 			<div>
-				<form:label id="senderPeopleLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender:</form:label>
-				<form:input id="senderPeopleAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
+				<form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender:</form:label>
+				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
 				<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure" cssClass="checkboxPers2"/>
 			</div>
 			<div>	
-				<form:label id="senderPlaceLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From:</form:label>
-				<form:input id="senderPlaceAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" />
+				<form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From:</form:label>
+				<form:input id="senderPlaceDescriptionAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" />
 				<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure" cssClass="checkboxPers2"/>
 			</div>
@@ -26,54 +26,60 @@
 			<hr />
 			
 			<div>
-				<form:label id="recipientPeopleLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error">Recipient:</form:label>
-				<form:input id="recipientPeopleAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/>
+				<form:label id="recipientPeopleDescriptionLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error">Recipient:</form:label>
+				<form:input id="recipientPeopleDescriptionAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/>
 				<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure" cssClass="checkboxPers2"/>
 			</div>
 			<div>
-				<form:label id="recipientPlaceLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">From:</form:label>
-				<form:input id="recipientPlaceAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" />
+				<form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">From:</form:label>
+				<form:input id="recipientPlaceDescriptionAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" />
 				<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPlaceUnsure" path="recipientPlaceUnsure" cssClass="checkboxPers2"/>
 			</div>
-
+			
 			<form:hidden path="senderPeopleId"/>
 			<form:hidden path="senderPlaceId"/>
 			<form:hidden path="recipientPeopleId"/>
-			<form:hidden path="recipientPlaceId"/>
-			
+			<form:hidden path="recipientPlaceId"/>	
+
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>			
 		</fieldset>	
 	</form:form>
-		
-	<form id="PeopleCorrespondentsDocumentsForm" action="/DocSources/de/peoplebase/PeopleCorrespondentsDocuments.do?summaryId=0&amp;volNum=0&amp;volLeText=" method="post" class="edit">
+	
+	<form:form id="EditCorrespondentsDocumentForm" method="post" cssClass="edit">
 		<fieldset>	
 		
 			<div>
 				<label for="people" id="peopleLabel">People:</label>
 			</div>
-			<div>
-				<input id="people" name="people" class="input_28c_disabled" type="text" value="Niccolini, Agnolo di Matte" disabled="disabled"/>
-				<a href="#"><img src="/DocSources/images/button_cancel_form13.gif" alt="Cancel value" title="Delete this entry"/></a>
-				<a id="editValue" href="/DocSources/de/docbase/EditPersonCorrespondentsDocument.html">edit value</a>
-			</div>
-			
-			<div>
-				<input id="people" name="people" class="input_28c_disabled" type="text" value="Pippo, Agnolo di Matte" disabled="disabled"/>
-				<a href="#"><img src="/DocSources/images/button_cancel_form13.gif" alt="Cancel value" title="Delete this entry"/></a>
-				<a id="editValue" href="/DocSources/de/docbase/EditPersonCorrespondentsDocument.html">edit value</a>
-			</div>			
+			<c:forEach items="${command.epLink}" var="currentPeople">
+				<c:url var="EditPeopleDocument" value="/de/docbase/EditPeopleDocument.do">
+					<c:param name="entryId" value="${currentPeople.document.entryId}" />
+					<c:param name="epLinkId" value="${currentPeople.epLinkId}" />
+				</c:url>
+	
+				<c:url var="DeletePeopleDocument" value="/de/docbase/DeletePeopleDocument.do" >
+					<c:param name="entryId" value="${currentPeople.document.entryId}" />
+					<c:param name="epLinkId" value="${currentPeople.epLinkId}" />
+				</c:url>
+	
+				<div>
+					<input id="people_${currentPeople.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPeople.people.mapNameLf}" disabled="disabled"/>
+					<a id="deleteValue" href="${DeletePeopleDocument}"><img src="<c:url value="/images/button_cancel_form13.gif"/>" alt="Cancel value" title="Delete this entry"/></a>
+					<a id="editValue" href="${EditPeopleDocument}">edit value</a>
+				</div>
+			</c:forEach>
 
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 				<a id="AddPersonCorrespondentsDocument" href="/DocSources/de/docbase/AddPersonCorrespondentsDocument.html">Add new Person</a>
 			</div>	
 		</fieldset>
-	</form>
+	</form:form>
 		
 		<div id="AddPersonCorrespondentsDocumentDiv"></div>
 			
@@ -84,31 +90,71 @@
 			});
 		</script>	
 
+	<c:url var="searchSenderPeopleUrl" value="/de/peoplebase/SearchSenderPeople.json"/>
+	<c:url var="searchSenderPlaceUrl" value="/de/geobase/SearchSenderPlace.json"/>
+	<c:url var="searchRecipientPeopleUrl" value="/de/peoplebase/SearchRecipientPeople.json"/>
+	<c:url var="searchRecipientPlaceUrl" value="/de/geobase/SearchRecipientPlace.json"/>
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		var a = $('#senderPeopleAutoCompleter').autocomplete({ 
-		    serviceUrl:'/DocSources/de/peoplebase/SearchSenders.json',
-		    minChars:3, 
-		    delimiter: /(,|;)\s*/, // regex or character
-		    maxHeight:400,
-		    width:600,
-		    zIndex: 9999,
-		    deferRequestBy: 0, //miliseconds
-		    noCache: false, //default is false, set to true to disable caching
-		    onSelect: function(value, data){ $('#seriesRefNum').val(data); }
-		  });
-		
-		$("#EditDetailsVolume").submit(function (){
-			$.post($(this).attr("action"), $(this).serialize(), function() {
-				// In questa function si definisce la sostituzione del div dove visualizzare il risultato
-				// questa function rappresenta 
-				alert('done!');
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var senderPeople = $('#senderPeopleDescriptionAutoCompleter').autocomplete({ 
+			    serviceUrl:'${searchSenderPeopleUrl}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $('#senderPeopleId').val(data); }
+			  });
+
+			var senderPlace = $('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
+			    serviceUrl:'${searchSenderPlaceUrl}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $('#senderPlaceId').val(data); }
+			  });
+			
+			var recipientPeople = $('#recipientPeopleDescriptionAutoCompleter').autocomplete({ 
+			    serviceUrl:'${searchRecipientPeopleUrl}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $('#recipientPeopleId').val(data); }
+			  });
+
+			var recipientPlace = $('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
+			    serviceUrl:'${searchRecipientPlaceUrl}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $('#recipientPlaceId').val(data); }
+			  });
+
+			$("#EditDetailsVolume").submit(function (){
+				$.post($(this).attr("action"), $(this).serialize(), function() {
+					// In questa function si definisce la sostituzione del div dove visualizzare il risultato
+					// questa function rappresenta 
+					alert('done!');
+				});
 			});
 		});
-	});
-</script>
+	</script>
 
 
 <script type="text/javascript"> 
@@ -119,5 +165,5 @@
                 css: { border: '3px solid #a00' } 
             }); 
         }); 
-	s});					  
+	});					  
 </script>
