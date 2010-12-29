@@ -10,7 +10,7 @@
 		<fieldset>
 			<legend><b>VOLUME DETAILS</b></legend>
 			<div>
-				<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error"><i>Series List</i></form:label>
+				<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error"><i>Carteggio</i></form:label>
 				<form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_30c"/>
 			</div>
 
@@ -57,7 +57,6 @@
 			
 			<form:hidden path="summaryId"/>
 			<form:hidden path="seriesRefNum"/>
-			<form:hidden path="dateCreated"/>
 
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
@@ -66,7 +65,7 @@
 		</fieldset>	
 	</form:form>
 
-	<c:url var="findSeriesUrl" value="/de/volbase/SearchSeriesList.json"/>
+	<c:url var="searchSeriesListUrl" value="/de/volbase/SearchSeriesList.json"/>
 
 	<c:url var="ShowVolume" value="/src/volbase/ShowVolume.do">
 		<c:param name="summaryId"   value="${command.summaryId}" />
@@ -111,7 +110,7 @@
 			$("#volLetExt").change(showVolumeExplorer);	        	
 
 			var a = $('#seriesRefDescriptionAutoCompleter').autocomplete({ 
-			    serviceUrl:'${findSeriesUrl}',
+			    serviceUrl:'${searchSeriesListUrl}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
