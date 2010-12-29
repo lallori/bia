@@ -3,6 +3,7 @@ package org.medici.docsources.listener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.log4j.Logger;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -15,7 +16,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  *
  */
 public class IndexerListener implements ServletContextListener {
-	
+	Logger logger = Logger.getLogger(this.getClass());
+
     /**
      * Default constructor. 
      */
@@ -31,26 +33,33 @@ public class IndexerListener implements ServletContextListener {
     	PeopleBaseService peopleBaseService = (PeopleBaseService) ctx.getBean("peopleBaseService");
     	VolBaseService volBaseService = (VolBaseService) ctx.getBean("volBaseService");
     	DocBaseService docBaseService = (DocBaseService) ctx.getBean("docBaseService");
-    	try {
-    		//volBaseService.generateIndexVolume();
-    		//volBaseService.generateIndexSerieList();
-    		peopleBaseService.generateIndexPeople();
-    		/*peopleBaseService.generateIndexAltName();
-    		peopleBaseService.generateIndexPoLink();
-    		peopleBaseService.generateIndexTitleOccsList();
-    		peopleBaseService.generateIndexRoleCat();
+    	/*try {
+    		logger.info("Indexing document start");
+    		Long startTime = System.currentTimeMillis();
+    		volBaseService.generateIndexVolume();
+    		volBaseService.generateIndexSerieList();
+
+    		peopleBaseService.generateIndexAltName();
     		peopleBaseService.generateIndexBioRefLink();
-    		peopleBaseService.generateIndexEpLink();
     		peopleBaseService.generateIndexBiblioT();
-*/
-    		//docBaseService.generateIndexDocument();
-    		//docBaseService.generateIndexEpLink();
+    		peopleBaseService.generateIndexRoleCat();
+    		peopleBaseService.generateIndexTitleOccsList();
+    		peopleBaseService.generateIndexPoLink();
+    		peopleBaseService.generateIndexEpLink();
+    		peopleBaseService.generateIndexPeople();
+
+    		docBaseService.generateIndexDocument();
+    		docBaseService.generateIndexSynExtract();
+    		docBaseService.generateIndexEplToLink();
+    		docBaseService.generateIndexFactChecks();
+    		docBaseService.generateIndexTopicList();
+    		
     		//docBaseService.generateIndexEplToLink();
     		//docBaseService.generateIndexFactChecks();
-    		//docBaseService.generateIndexSynExtract();
+    		logger.info("Indexing document end (total index time " + (System.currentTimeMillis() - startTime) + ".");    		
 		} catch (ApplicationThrowable ath) {
 			//ath.printStackTrace();
-		}
+		}*/
     }
 
 	/**

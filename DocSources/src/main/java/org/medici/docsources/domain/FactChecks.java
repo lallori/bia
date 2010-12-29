@@ -31,9 +31,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -86,9 +88,10 @@ public class FactChecks implements Serializable{
 	@DocumentId
 	private Integer vetId;
 	
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "\"ENTRYID\"")
 	@ContainedIn
-	private Document entryId;
+	private Document document;
 	
 	@Column (name="\"PERSON\"", length=50)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -116,78 +119,91 @@ public class FactChecks implements Serializable{
 	public Integer getVetId() {
 		return vetId;
 	}
+	
 	/**
 	 * @param vetId the vetId to set
 	 */
 	public void setVetId(Integer vetId) {
 		this.vetId = vetId;
 	}
+	
 	/**
-	 * @return the entryId
+	 * @return the document
 	 */
-	public Document getEntryId() {
-		return entryId;
+	public Document getDocument() {
+		return document;
 	}
+	
 	/**
-	 * @param entryId the entryId to set
+	 * @param document the document to set
 	 */
-	public void setEntryId(Document entryId) {
-		this.entryId = entryId;
+	public void setDocument(Document document) {
+		this.document = document;
 	}
+	
 	/**
 	 * @return the person
 	 */
 	public String getPerson() {
 		return person;
 	}
+	
 	/**
 	 * @param person the person to set
 	 */
 	public void setPerson(String person) {
 		this.person = person;
 	}
+	
 	/**
 	 * @return the place
 	 */
 	public String getPlace() {
 		return place;
 	}
+	
 	/**
 	 * @param place the place to set
 	 */
 	public void setPlace(String place) {
 		this.place = place;
 	}
+	
 	/**
 	 * @return the dateInfo
 	 */
 	public String getDateInfo() {
 		return dateInfo;
 	}
+	
 	/**
 	 * @param dateInfo the dateInfo to set
 	 */
 	public void setDateInfo(String dateInfo) {
 		this.dateInfo = dateInfo;
 	}
+	
 	/**
 	 * @return the addLRes
 	 */
 	public String getAddLRes() {
 		return addLRes;
 	}
+	
 	/**
 	 * @param addLRes the addLRes to set
 	 */
 	public void setAddLRes(String addLRes) {
 		this.addLRes = addLRes;
 	}
+	
 	/**
 	 * @return the editComment
 	 */
 	public String getEditComment() {
 		return editComment;
 	}
+	
 	/**
 	 * @param editComment the editComment to set
 	 */

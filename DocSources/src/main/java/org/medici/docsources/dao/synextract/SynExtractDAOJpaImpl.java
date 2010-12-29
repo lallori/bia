@@ -27,6 +27,13 @@
  */
 package org.medici.docsources.dao.synextract;
 
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.SynExtract;
 import org.springframework.stereotype.Repository;
@@ -47,4 +54,22 @@ public class SynExtractDAOJpaImpl extends JpaDao<Integer, SynExtract> implements
 	 */
 	private static final long serialVersionUID = -7705355526671429408L;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public SynExtract findByEntryId(Integer entryId) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<SynExtract> criteriaQuery = criteriaBuilder.createQuery(SynExtract.class);
+		Root from = criteriaQuery.from(SynExtract.class);
+		Path<Object> path = from.join("document").get("entryId");
+		 
+		CriteriaQuery<SynExtract> select = criteriaQuery.select(from);
+		select.where(criteriaBuilder.equal(path, entryId));
+		 
+		TypedQuery<SynExtract> typedQuery = getEntityManager().createQuery(select);
+		return typedQuery.getSingleResult();
+	}
 }

@@ -32,6 +32,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +42,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
@@ -61,6 +63,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * EplToLink entity.
+ * This Entity contains information on a linked topic and his place.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
@@ -91,20 +94,20 @@ public class EplToLink implements Serializable{
 	@DocumentId
 	private Integer eplToId;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"ENTRYID\"", nullable=false)
 	@ContainedIn
-	private Document entryId;
+	private Document document;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"TOPICID\"", nullable=false)
 	@IndexedEmbedded
-	private TopicList topicId; 
+	private TopicList topic; 
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"PLACESALLID\"", nullable=false)
 	@IndexedEmbedded
-	private Place placesAllId;
+	private Place place;
 	
 	@Column (name="\"DATECREATED\"", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -118,58 +121,123 @@ public class EplToLink implements Serializable{
 	public Integer getEplToId() {
 		return eplToId;
 	}
+	
 	/**
 	 * @param eplToId the eplToId to set
 	 */
 	public void setEplToId(Integer eplToId) {
 		this.eplToId = eplToId;
 	}
+	
 	/**
-	 * @return the entryId
+	 * @return the document
 	 */
-	public Document getEntryId() {
-		return entryId;
+	public Document getDocument() {
+		return document;
 	}
+	
 	/**
-	 * @param entryId the entryId to set
+	 * @param document the document to set
 	 */
-	public void setEntryId(Document entryId) {
-		this.entryId = entryId;
+	public void setDocument(Document document) {
+		this.document = document;
 	}
+
 	/**
-	 * @return the topicId
+	 * @return the topic
 	 */
-	public TopicList getTopicId() {
-		return topicId;
+	public TopicList getTopic() {
+		return topic;
 	}
+	
 	/**
-	 * @param topicId the topicId to set
+	 * @param topic the topic to set
 	 */
-	public void setTopicId(TopicList topicId) {
-		this.topicId = topicId;
+	public void setTopic(TopicList topic) {
+		this.topic = topic;
 	}
+	
 	/**
-	 * @return the placesAllId
+	 * @return the place
 	 */
-	public Place getPlacesAllId() {
-		return placesAllId;
+	public Place getPlace() {
+		return place;
 	}
+	
 	/**
-	 * @param placesAllId the placesAllId to set
+	 * @param place the place to set
 	 */
-	public void setPlacesAllId(Place placesAllId) {
-		this.placesAllId = placesAllId;
+	public void setPlace(Place place) {
+		this.place = place;
 	}
+	
 	/**
 	 * @return the dateCreated
 	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+	
 	/**
 	 * @param dateCreated the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((eplToId == null) ? 0 : eplToId.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EplToLink other = (EplToLink) obj;
+		if (eplToId == null) {
+			if (other.eplToId != null)
+				return false;
+		} else if (!eplToId.equals(other.eplToId))
+			return false;
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer("");
+
+		if (!ObjectUtils.toString(getTopic()).equals("")) {
+			if (!ObjectUtils.toString(getTopic().getTopicTitle()).equals("")) {
+				stringBuffer.append(getTopic().getTopicTitle());
+			}
+		}
+		
+		if (!ObjectUtils.toString(getPlace()).equals("")) {
+			if (!ObjectUtils.toString(getPlace().getPlaceNameFull()).equals("")) {
+				if (stringBuffer.length() > 0) {
+					stringBuffer.append(" - ");
+				}
+				stringBuffer.append(getPlace().getPlaceNameFull());
+			}
+		}
+		
+		return stringBuffer.toString();
 	}
 }

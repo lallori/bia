@@ -31,11 +31,12 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -90,10 +91,10 @@ public class SynExtract implements Serializable{
 	@DocumentId
 	private Integer synExtrId;
 	
-	@ManyToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"ENTRYID\"")
 	@ContainedIn
-	private Document entryId;
+	private Document document;
 	
 	@Column(name="\"DOCEXTRACT\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -116,6 +117,22 @@ public class SynExtract implements Serializable{
 	private Date lastUpdate;
 	
 	/**
+	 * Default constructor.
+	 * 
+	 */
+	public SynExtract() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param synExtrId
+	 */
+	public SynExtract(Integer synExtrId) {
+		super();
+		setSynExtrId(synExtrId);
+	}
+	/**
 	 * @return the synExtrId
 	 */
 	public Integer getSynExtrId() {
@@ -128,16 +145,16 @@ public class SynExtract implements Serializable{
 		this.synExtrId = synExtrId;
 	}
 	/**
-	 * @return the entryId
+	 * @return the document
 	 */
-	public Document getEntryId() {
-		return entryId;
+	public Document getDocument() {
+		return document;
 	}
 	/**
-	 * @param entryId the entryId to set
+	 * @param document the document to set
 	 */
-	public void setEntryId(Document entryId) {
-		this.entryId = entryId;
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 	/**
 	 * @return the docExtract

@@ -38,10 +38,14 @@ import org.medici.docsources.dao.epltolink.EplToLinkDAO;
 import org.medici.docsources.dao.factchecks.FactChecksDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.synextract.SynExtractDAO;
+import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +73,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private SynExtractDAO synExtractDAO;
 	@Autowired
+	private TopicsListDAO topicsListDAO;
+	@Autowired
 	private VolumeDAO volumeDAO;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document addNewCorrespondentsOrPeopleDocument(EpLink epLink) throws ApplicationThrowable {
+		try {
+			epLink.setEpLinkId(null);
+			epLink.setDateCreated(new Date());
+
+			getEpLinkDAO().persist(epLink);
+
+			return epLink.getDocument();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -107,6 +130,40 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document addNewExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
+		try {
+			synExtract.setSynExtrId(null);
+			synExtract.setDateCreated(new Date());
+			synExtract.setLastUpdate(new Date());
+
+			getSynExtractDAO().persist(synExtract);
+
+			return synExtract.getDocument();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
+		try {
+			eplToLink.setEplToId(null);
+			eplToLink.setDateCreated(new Date());
+
+			getEplToLinkDAO().persist(eplToLink);
+
+			return eplToLink.getDocument();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	}
 
 	/**
 	 * {@inheritDoc}
@@ -161,21 +218,23 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Document editExtractOrSynopsisDocument(Document document) throws ApplicationThrowable {
-		Document documentToUpdate = null;
+	public Document editExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
+		SynExtract synExtractToUpdate = null;
 		try {
-			documentToUpdate = getDocumentDAO().find(document.getEntryId());
+			synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 
-		//TODO : fill fields to update document section
-		documentToUpdate.setLastUpdate(new Date());
+		// fill fields to update document section
+		synExtractToUpdate.setLastUpdate(new Date());
+		synExtractToUpdate.setDocExtract(synExtract.getDocExtract());
+		synExtractToUpdate.setSynopsis(synExtract.getSynopsis());
 		
 		try {
-			getDocumentDAO().merge(documentToUpdate);
+			getSynExtractDAO().merge(synExtractToUpdate);
 
-			return documentToUpdate;
+			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -185,31 +244,48 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Document editFactChecksDocument(Document document) throws ApplicationThrowable {
-		Document documentToUpdate = null;
+	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
+		FactChecks factChecksToUpdate = null;
 		try {
-			documentToUpdate = getDocumentDAO().find(document.getEntryId());
+			factChecksToUpdate = getFactChecksDAO().find(factChecks.getVetId());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 
-		try {
-			FactChecks factChecks = documentToUpdate.getFactChecks();
-			if (factChecks == null) {
-				factChecks = new FactChecks();
-				factChecks.setEntryId(document);
-			}
-			
-			factChecks.setAddLRes(document.getFactChecks().getAddLRes());
-			
-			if (documentToUpdate.getFactChecks() == null) {
-				getFactChecksDAO().persist(factChecks);
-			} else {
-				getFactChecksDAO().merge(factChecks);
-			}
+		// fill fields to update document section
+		factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
 
-			documentToUpdate.setFactChecks(factChecks);
-			return documentToUpdate;
+		try {
+			getFactChecksDAO().merge(factChecksToUpdate);
+
+			return factChecksToUpdate.getDocument();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("null")
+	@Override
+	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
+		EplToLink eplToLinkToUpdate = null;
+		try {
+			eplToLink = getEplToLinkDAO().find(eplToLink.getEplToId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		// fill fields to update document section
+		eplToLinkToUpdate.setTopic(eplToLink.getTopic());
+		eplToLinkToUpdate.setPlace(eplToLink.getPlace());
+
+
+		try {
+			getEplToLinkDAO().merge(eplToLinkToUpdate);
+
+			return eplToLinkToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -219,21 +295,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Document editTopicsDocument(Document document) throws ApplicationThrowable {
-		Document documentToUpdate = null;
+	public List<EpLink> findCorrespondentsPeopleDocument(Integer entryId) throws ApplicationThrowable {
 		try {
-			documentToUpdate = getDocumentDAO().find(document.getEntryId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-
-		//TODO : fill fields to update document section
-		documentToUpdate.setLastUpdate(new Date());
-
-		try {
-			getDocumentDAO().merge(documentToUpdate);
-
-			return documentToUpdate;
+			return getEpLinkDAO().findByEntryId(entryId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -255,9 +319,57 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public FactChecks findFactChecksDocument(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getFactChecksDAO().findByEntryId(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Document findLastEntryDocument() throws ApplicationThrowable {
 		try {
 			return getDocumentDAO().findLastEntryDocument();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SynExtract findSynExtractDocument(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getSynExtractDAO().findByEntryId(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public EplToLink findTopicDocument(Integer entryId, Integer eplToLinkId) throws ApplicationThrowable {
+		try {
+			return getEplToLinkDAO().find(entryId, eplToLinkId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<EplToLink> findTopicsDocument(Integer entryId) throws ApplicationThrowable {
+		try {
+			return getEplToLinkDAO().findByEntryId(entryId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -324,6 +436,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexTopicList() throws ApplicationThrowable {
+		try {
+			getTopicsListDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
 	 * @return the documentDAO
 	 */
 	public DocumentDAO getDocumentDAO() {
@@ -375,6 +499,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public SynExtractDAO getSynExtractDAO() {
 		return synExtractDAO;
+	}
+
+	/**
+	 * @return the topicsListDAO
+	 */
+	public TopicsListDAO getTopicsListDAO() {
+		return topicsListDAO;
 	}
 
 	/**
@@ -436,6 +567,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setSynExtractDAO(SynExtractDAO synExtractDAO) {
 		this.synExtractDAO = synExtractDAO;
+	}
+
+	/**
+	 * @param topicsListDAO the topicsListDAO to set
+	 */
+	public void setTopicsListDAO(TopicsListDAO topicsListDAO) {
+		this.topicsListDAO = topicsListDAO;
 	}
 
 	/**

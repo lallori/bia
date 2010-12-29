@@ -118,6 +118,9 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		return typedQuery.getSingleResult();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) {

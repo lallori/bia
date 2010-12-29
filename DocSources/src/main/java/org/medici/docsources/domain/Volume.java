@@ -301,8 +301,18 @@ public class Volume implements Serializable {
 	 */
 	public Volume(String volume) {
 		super();
-		this.volNum = VolumeUtils.extractVolNum(volume);
-		this.volLetExt = VolumeUtils.extractVolLetExt(volume);
+		setVolNum(VolumeUtils.extractVolNum(volume));
+		setVolLetExt(VolumeUtils.extractVolLetExt(volume));
+	}
+
+	/**
+	 * Constructor with an integer parameter rapresenting unique identifier.
+	 * 
+	 * @param summaryId Volume unique identifier
+	 */
+	public Volume(Integer summaryId) {
+		super();
+		setSummaryId(summaryId);
 	}
 
 	/**

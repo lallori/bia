@@ -29,7 +29,6 @@ package org.medici.docsources.dao.people;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -40,16 +39,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
-import org.hibernate.CacheMode;
-import org.hibernate.FlushMode;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
@@ -95,49 +85,6 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
         query.setMaxResults(1);
 
         return (People) query.getSingleResult();
-	}
-
-	/**
-	 * 
-	 * @throws PersistenceException
-	 */
-	public void generateIndex() throws PersistenceException {
-		try {
-			EntityManager entityManager = getEntityManager();
-			Session session = ((HibernateEntityManager) entityManager).getSession();
-			session = session.getSessionFactory().openSession();
-			FullTextSession fullTextSession = Search.getFullTextSession(session);
-	
-			
-			fullTextSession.setFlushMode(FlushMode.MANUAL);
-			fullTextSession.setCacheMode(CacheMode.IGNORE);
-			Transaction transaction = fullTextSession.beginTransaction();
-			//Scrollable results will avoid loading too many objects in memory
-			List<People> peoples = session.createQuery("from People where personId = 114").list();
-			
-			System.out.println(peoples.size());
-		    int i=0;
-
-			for (People people : peoples) {
-				i++;
-			    fullTextSession.index(people);
-			    if (i % 100 == 0) {
-			        fullTextSession.flushToIndexes(); //apply changes to indexes
-			        fullTextSession.clear(); //free memory since the queue is processed
-			    }
-			}
-			transaction.commit();
-
-			/*fullTextSession.createIndexer( entityClass )
-			.batchSizeToLoadObjects( 2 )
-			.cacheMode( CacheMode.NORMAL )
-			.threadsToLoadObjects( 3 )
-			.threadsForSubsequentFetching( 4 )
-			.startAndWait();
-			*/
-		} catch (Throwable throwable) {
-			logger.error(throwable);
-		}
 	}
 	
 	/**

@@ -32,24 +32,37 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.EplToLink;
+import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
- * This interface is designed to work on {@link org.medici.docsources.domain.Document} 
- * object.<br>
- * It defines every business methods needed to work on documents.
- * With this service, you can :<br>
+ * This interface is designed to work on
+ * {@link org.medici.docsources.domain.Document} object.<br>
+ * It defines every business methods needed to work on documents. With this
+ * service, you can :<br>
  * - add a new document<br>
- * - modify an existing document<br> 
+ * - modify an existing document<br>
  * - search a document by is unique id<br>
  * - execute complex search on volumes<br>
  * ...<br>
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
 public interface DocBaseService {
+
+	/**
+	 * 
+	 * @param epLink
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document addNewCorrespondentsOrPeopleDocument(EpLink epLink) throws ApplicationThrowable;
 
 	/**
 	 * This method add a new {@link org.medici.docsources.domain.Document}.
@@ -60,44 +73,75 @@ public interface DocBaseService {
 	public Document addNewDocument(Document inputDocument) throws ApplicationThrowable;
 
 	/**
-	 * This method modify correspondents or people of an existing {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
+	 * @param synExtract
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document addNewExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param eplToLink
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
+	
+	/**
+	 * This method modify correspondents or people of an existing
+	 * {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param document
+	 *            {@link org.medici.docsources.domain.Document} to be modified
 	 * @throws ApplicationThrowable
 	 */
 	public Document editCorrespondentsOrPeopleDocument(Document document) throws ApplicationThrowable;
 
 	/**
-	 * This method modify details of an existing {@link org.medici.docsources.domain.Document}.
+	 * This method modify details of an existing
+	 * {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
+	 * @param document
+	 *            {@link org.medici.docsources.domain.Document} to be modified
 	 * @throws ApplicationThrowable
 	 */
 	public Document editDetailsDocument(Document document) throws ApplicationThrowable;
 
 	/**
-	 * This method modify extract or Synopsis of an existing {@link org.medici.docsources.domain.Document}.
+	 * This method modify extract or Synopsis of an existing
+	 * {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
+	 * @param volume
+	 *            {@link org.medici.docsources.domain.Document} to be modified
 	 * @throws ApplicationThrowable
 	 */
-	public Document editExtractOrSynopsisDocument(Document document) throws ApplicationThrowable;
+	public Document editExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
 
 	/**
-	 * This method modify fact checks of an existing {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param volume {@link org.medici.docsources.domain.Document} to be modified
+	 * @param factChecks
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Document editFactChecksDocument(Document document) throws ApplicationThrowable;
+	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable;
 
 	/**
-	 * This method modify topics of an existing {@link org.medici.docsources.domain.Document}.
+	 * This method modify topics of an existing
+	 * {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param eplToLink
+	 * @throws ApplicationThrowable
+	 */
+	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
+
+	/**
 	 * 
 	 * @param document
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Document editTopicsDocument(Document document) throws ApplicationThrowable;
+	public List<EpLink> findCorrespondentsPeopleDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * This method will search an existing document by his unique identifiers.
@@ -109,13 +153,46 @@ public interface DocBaseService {
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public FactChecks findFactChecksDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
 	 * This method last entry {@link org.medici.docsources.domain.Document}.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.Document}
 	 * @throws ApplicationThrowable
 	 */
 	public Document findLastEntryDocument() throws ApplicationThrowable;
-	
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public SynExtract findSynExtractDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @param eplToLinkId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public EplToLink findTopicDocument(Integer entryId, Integer eplToLinkId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<EplToLink> findTopicsDocument(Integer entryId) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @throws ApplicationThrowable
@@ -145,7 +222,13 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexSynExtract() throws ApplicationThrowable;
-	
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexTopicList() throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @return

@@ -27,6 +27,16 @@
  */
 package org.medici.docsources.dao.epltolink;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.EplToLink;
 import org.springframework.stereotype.Repository;
@@ -61,4 +71,45 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 1576142793715132865L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings({ "unchecked" })
+	@Override
+	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from EplToLink where document.entryId=:entryId");
+		query.setParameter("entryId", entryId);
+		
+		return query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings({ "rawtypes" })
+	@Override
+	public EplToLink find(Integer entryId, Integer eplToId) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<EplToLink> criteriaQuery = criteriaBuilder.createQuery(EplToLink.class);
+		Root root = criteriaQuery.from(EplToLink.class);
+	
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterEntryId = criteriaBuilder.parameter(Integer.class, "entryId");
+		ParameterExpression<Integer> parameterEplToLinkId = criteriaBuilder.parameter(Integer.class, "eplToId"); 
+
+		criteriaQuery.where(
+			criteriaBuilder.and(
+				criteriaBuilder.equal(root.get("entryId"), parameterEntryId),
+				criteriaBuilder.equal(root.get("eplToId"), parameterEplToLinkId)
+			)
+		);
+		
+		TypedQuery<EplToLink> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("entryId", entryId);
+		typedQuery.setParameter("eplToId", eplToId);
+
+		return typedQuery.getSingleResult();	
+	}
 }

@@ -60,59 +60,86 @@ public class Place implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"PLACEALLID\"", length=10, nullable=false)
 	private Integer placeAllId;
+	
 	@Column (name="\"PLACENAMEID\"", length=10)
 	private Integer placeNameId;
+	
 	@Column (name="\"GEOGKEY\"", length=10)
 	private Integer geogKey;
+	
 	@Column (name="\"PLACENAME\"", length=255)
 	private String placeName;
+	
 	@Column (name="\"PLACENAMEFULL\"", length=255)
 	private String placeNameFull;
+	
 	@Column (name="\"PLNAMEFULL_PLTYPE\"", length=255)
 	private String plNameFullPlType;
+	
 	@Column (name="\"PLTYPE\"", length=255)
 	private String plType;
+	
 	@Column (name="\"PREFFLAG\"", length=5)
 	private String prefFlag;
+	
 	@Column (name="\"PLSOURCE\"", length=50)
 	private String plSource;
+	
 	@Column (name="\"PLPARENT\"", length=255)
 	private String plParent;
+	
 	@Column (name="\"PARENTTYPE\"", length=255)
 	private String parentType;
+	
 	@Column (name="\"PLPARENT_TERM_ID\"", length=10)
 	private Integer plParentTermId;
+	
 	@Column (name="\"PLPARENT_SUBJECT_ID\"", length=10)
 	private Integer plParentSubjectId;
+	
 	@Column (name="\"PLPARENT_PLACEALLID\"", length=10)
 	private Integer plParentPlaceAllId;
+	
 	@Column (name="\"GPARENT\"", length=255)
 	private String gParent;
+	
 	@Column (name="\"GPTYPE\"", length=255)
 	private String gpType;
+	
 	@Column (name="\"GGP\"", length=255)
 	private String ggp;
+	
 	@Column (name="\"GGPTYPE\"", length=255)
 	private String ggpTypeGGPTYPE;
+	
 	@Column (name="\"GP2\"", length=255)
 	private String gp2;
+	
 	@Column (name="\"GP2TYPE\"", length=255)
 	private String gp2Ttype;
+	
 	@Column (name="\"RESID\"", length=50)
 	private String resId;
+	
 	@Column (name="\"DATEENTERED\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateEntered;
+	
 	@Column (name="\"PLACESMEMO\"", columnDefinition="LONGTEXT")
 	private String placesMemo;
+	
 	@Column (name="\"ADDLRES\"", length=1, columnDefinition="TINYINT", nullable=false)
 	private Boolean addlRes;
+	
 	@Column (name="\"TERM_ACCENT\"", length=50)
 	private String termAccent;
+	
 	@Column (name="\"LANGUAGE\"", length=10)
 	private Integer language;
+	
 	@Column (name="\"OTHER_FLAGS\"", length=50)
 	private String otherFlags;
+	
 	@Column (name="\"GEOGKEY_CHILDREN\"", columnDefinition="LONGTEXT")
 	private String geogkeyChildren;
 	

@@ -99,7 +99,7 @@ public class PoLink implements Serializable {
 	@ContainedIn
 	private People personId;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"TITLEOCCID\"")
 	@IndexedEmbedded
 	private TitleOccsList titleOccId;

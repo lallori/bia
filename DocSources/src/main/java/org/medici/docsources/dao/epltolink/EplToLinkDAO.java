@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.epltolink;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.EplToLink;
 
@@ -36,5 +40,22 @@ import org.medici.docsources.domain.EplToLink;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
+
+	/**
+	 * 
+	 * @param entryId
+	 * @param eplToId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public EplToLink find(Integer entryId, Integer eplToId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException;
 
 }

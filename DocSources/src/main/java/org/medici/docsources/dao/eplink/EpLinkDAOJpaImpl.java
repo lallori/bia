@@ -27,6 +27,11 @@
  */
 package org.medici.docsources.dao.eplink;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.EpLink;
 import org.springframework.stereotype.Repository;
@@ -60,5 +65,17 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 2580073517266183139L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings({ "unchecked" })
+	@Override
+	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from EpLink where document.entryId=:entryId");
+		query.setParameter("entryId", entryId);
+		
+		return query.getResultList();
+	}
 
 }

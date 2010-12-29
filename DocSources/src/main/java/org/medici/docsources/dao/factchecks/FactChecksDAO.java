@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.factchecks;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.FactChecks;
 
@@ -36,5 +38,13 @@ import org.medici.docsources.domain.FactChecks;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface FactChecksDAO extends Dao<Integer, FactChecks> {
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public FactChecks findByEntryId(Integer entryId) throws PersistenceException;
 
 }

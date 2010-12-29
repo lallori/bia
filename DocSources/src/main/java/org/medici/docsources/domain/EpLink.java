@@ -32,6 +32,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -91,15 +92,15 @@ public class EpLink implements Serializable{
 	@DocumentId
 	private Integer epLinkId;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"ENTRYID\"")
 	@ContainedIn
-	private Document entryId;
+	private Document document;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"PERSONID\"")
 	@ContainedIn
-	private People personId;
+	private People people;
 	
 	@Column (name="\"PORTRAIT\"", length=1, columnDefinition="tinyint", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -127,35 +128,40 @@ public class EpLink implements Serializable{
 	public Integer getEpLinkId() {
 		return epLinkId;
 	}
+	
 	/**
 	 * @param epLinkId the epLinkId to set
 	 */
 	public void setEpLinkId(Integer epLinkId) {
 		this.epLinkId = epLinkId;
 	}
+	
 	/**
-	 * @return the entryId
+	 * @return the document
 	 */
-	public Document getEntryId() {
-		return entryId;
+	public Document getDocument() {
+		return document;
 	}
+
 	/**
-	 * @param entryId the entryId to set
+	 * @param document the document to set
 	 */
-	public void setEntryId(Document entryId) {
-		this.entryId = entryId;
+	public void setDocument(Document document) {
+		this.document = document;
 	}
+	
 	/**
-	 * @return the personId
+	 * @return the people
 	 */
-	public People getPersonId() {
-		return personId;
+	public People getPeople() {
+		return people;
 	}
+	
 	/**
-	 * @param personId the personId to set
+	 * @param people the people to set
 	 */
-	public void setPersonId(People personId) {
-		this.personId = personId;
+	public void setPeople(People people) {
+		this.people = people;
 	}
 	/**
 	 * @return the portrait
@@ -175,30 +181,35 @@ public class EpLink implements Serializable{
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+	
 	/**
 	 * @param dateCreated the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+	
 	/**
 	 * @return the assignUnsure
 	 */
 	public Boolean getAssignUnsure() {
 		return AssignUnsure;
 	}
+	
 	/**
 	 * @param assignUnsure the assignUnsure to set
 	 */
 	public void setAssignUnsure(Boolean assignUnsure) {
 		AssignUnsure = assignUnsure;
 	}
+	
 	/**
 	 * @return the docRole
 	 */
 	public String getDocRole() {
 		return DocRole;
 	}
+	
 	/**
 	 * @param docRole the docRole to set
 	 */

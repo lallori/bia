@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.eplink;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.EpLink;
 
@@ -37,5 +41,12 @@ import org.medici.docsources.domain.EpLink;
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface EpLinkDAO extends Dao<Integer, EpLink> {
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 */
+	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException;
 
 }

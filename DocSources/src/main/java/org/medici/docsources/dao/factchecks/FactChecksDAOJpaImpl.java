@@ -27,6 +27,11 @@
  */
 package org.medici.docsources.dao.factchecks;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.FactChecks;
 import org.springframework.stereotype.Repository;
@@ -62,4 +67,21 @@ public class FactChecksDAOJpaImpl extends JpaDao<Integer, FactChecks> implements
 	 */
 	private static final long serialVersionUID = 6582775378596836952L;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public FactChecks findByEntryId(Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from FactChecks where document.entryId=:entryId");
+		query.setParameter("entryId", entryId);
+		
+		List<FactChecks> result = query.getResultList();
+		
+		if (result.size() == 0) {
+			return new FactChecks();
+		} else {
+			return result.get(0);
+		}
+	}
 }

@@ -58,7 +58,6 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
@@ -225,7 +224,7 @@ public class Document implements Serializable{
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dateNotes;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SENDID")
 	private People senderPeople;
 	
@@ -234,7 +233,7 @@ public class Document implements Serializable{
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean senderPeopleUnsure;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"SENDLOCPLALL\"")
 	private Place senderPlace;
 	
@@ -247,7 +246,7 @@ public class Document implements Serializable{
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String sendNotes;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"RECIPID\"")
 	private People recipientPeople;
 	
@@ -256,7 +255,7 @@ public class Document implements Serializable{
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean recipientPeopleUnsure;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"RECIPLOCPLALL\"")
 	private Place recipientPlace;
 	
@@ -275,23 +274,42 @@ public class Document implements Serializable{
 	private Boolean graphic;
 
 	//Linked fact Check
-	@OneToOne(mappedBy="entryId")
-	@IndexedEmbedded
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="document")
+	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
+	//@IndexedEmbedded
 	private FactChecks factChecks;
 
 	//Association topic-place 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entryId")
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="document")
+	//@IndexedEmbedded
 	private Set<EplToLink> eplToLink;
 
 	//Association people
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entryId")
-	private Set<EpLink> eplLink;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "document")
+	//@IndexedEmbedded
+	private Set<EpLink> epLink;
 	
 	//Association people
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entryId")
-	@IndexedEmbedded
-	private Set<SynExtract> synExtract;
-	
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="document")
+	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
+	//@IndexedEmbedded
+	private SynExtract synExtract;
+
+	/**
+	 * Default constructor.
+	 */
+	public Document() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param entryId
+	 */
+	public Document(Integer entryId) {
+		setEntryId(entryId);
+	}
+
 	/**
 	 * @return the entryId
 	 */
@@ -733,7 +751,7 @@ public class Document implements Serializable{
 	/**
 	 * @return the senderPlaceUnsure
 	 */
-	public Boolean getSendLocUns() {
+	public Boolean getSenderPlaceUnsure() {
 		return senderPlaceUnsure;
 	}
 	
@@ -841,56 +859,68 @@ public class Document implements Serializable{
 	public void setGraphic(Boolean graphic) {
 		this.graphic = graphic;
 	}
-	
+
 	/**
 	 * @param factChecks the factChecks to set
 	 */
 	public void setFactChecks(FactChecks factChecks) {
 		this.factChecks = factChecks;
 	}
-	
+
 	/**
 	 * @return the factChecks
 	 */
 	public FactChecks getFactChecks() {
 		return factChecks;
 	}
-	
+
 	/**
 	 * @param eplToLink the eplToLink to set
 	 */
 	public void setEplToLink(Set<EplToLink> eplToLink) {
 		this.eplToLink = eplToLink;
 	}
-	
+
 	/**
 	 * @return the eplToLink
 	 */
 	public Set<EplToLink> getEplToLink() {
 		return eplToLink;
 	}
-	/**
-	 * @param eplLink the eplLink to set
-	 */
-	public void setEplLink(Set<EpLink> eplLink) {
-		this.eplLink = eplLink;
+
+	@Override
+	public String toString() {
+		if (getEntryId() == null)
+			return "";
+
+		return getEntryId().toString();
 	}
+
+	/**
+	 * @param epLink the epLink to set
+	 */
+	public void setEpLink(Set<EpLink> epLink) {
+		this.epLink = epLink;
+	}
+
 	/**
 	 * @return the eplLink
 	 */
-	public Set<EpLink> getEplLink() {
-		return eplLink;
+	public Set<EpLink> getEpLink() {
+		return epLink;
 	}
+
 	/**
 	 * @param synExtract the synExtract to set
 	 */
-	public void setSynExtract(Set<SynExtract> synExtract) {
+	public void setSynExtract(SynExtract synExtract) {
 		this.synExtract = synExtract;
 	}
+
 	/**
 	 * @return the synExtract
 	 */
-	public Set<SynExtract> getSynExtract() {
+	public SynExtract getSynExtract() {
 		return synExtract;
 	}
 }

@@ -29,20 +29,15 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
@@ -255,7 +250,7 @@ public class People implements Serializable {
 	private Date lastUpdate;
 
 	//Association alternative Names
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
+	/*	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
 	//@IndexedEmbedded
 	private Set<AltName> AltName;
 	
@@ -264,16 +259,16 @@ public class People implements Serializable {
 	@IndexedEmbedded
 	private Set<BioRefLink> bioRefLink;
 
-/*	//Association alternative Names
+	//Association alternative Names
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
 		//@IndexedEmbedded
-	private Set<EpLink> epLink;*/
+	private Set<EpLink> epLink;
 	
 	//Association alternative Names
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
 	@IndexedEmbedded
 	private Set<PoLink> poLink;
-	
+*/	
 	/**
 	 * 
 	 */
@@ -892,50 +887,6 @@ public class People implements Serializable {
 	public String toString() {
 		return personId.toString();
 	}
-
-	/**
-	 * @param altName the altName to set
-	 */
-	public void setAltName(Set<AltName> altName) {
-		AltName = altName;
-	}
-
-	/**
-	 * @return the altName
-	 */
-	public Set<AltName> getAltName() {
-		return AltName;
-	}
-
-	/**
-	 * @param bioRefLink the bioRefLink to set
-	 */
-	public void setBioRefLink(Set<BioRefLink> bioRefLink) {
-		this.bioRefLink = bioRefLink;
-	}
-
-	/**
-	 * @return the bioRefLink
-	 */
-	public Set<BioRefLink> getBioRefLink() {
-		return bioRefLink;
-	}
-
-
-	/**
-	 * @param poLink the poLink to set
-	 */
-	public void setPoLink(Set<PoLink> poLink) {
-		this.poLink = poLink;
-	}
-
-	/**
-	 * @return the poLink
-	 */
-	public Set<PoLink> getPoLink() {
-		return poLink;
-	}
-
 
 	/**
 	 * 

@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.synextract;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.SynExtract;
 
@@ -36,5 +38,13 @@ import org.medici.docsources.domain.SynExtract;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface SynExtractDAO extends Dao<Integer, SynExtract> {
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public SynExtract findByEntryId(Integer entryId) throws PersistenceException;
 
 }
