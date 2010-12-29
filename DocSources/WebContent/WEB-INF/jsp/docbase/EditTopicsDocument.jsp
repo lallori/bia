@@ -7,64 +7,41 @@
 	<form:form id="EditTopicsDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>TOPICS</b></legend>
+		<c:forEach items="${command.document.eplToLink}" var="currentTopicAndPlace">
+			<c:url var="EditTopicDocument" value="/de/docbase/EditTopicDocument.do">
+				<c:param name="entryId" value="${command.document.entryId}" />
+				<c:param name="eplToId" value="${currentTopicAndPlace.eplToId}" />
+			</c:url>
+
+			<c:url var="DeleteTopicDocument" value="/de/docbase/DeleteTopicDocument.do" >
+				<c:param name="entryId" value="${command.document.entryId}" />
+				<c:param name="eplToId" value="${currentTopicAndPlace.eplToId}" />
+			</c:url>
+
 			<div>
-				<input id="firstTopic" name="firstTopic" class="input_28c_disabled" type="text" value="SCULPTURE - City of London / England" disabled="disabled" />
-				<a href="#"><img src="/DocSources/images/button_cancel_form13.gif" alt="Cancel value" title="Delete this entry"/></a>
-				<a id="editValue" href="/DocSources/de/docbase/EditTopicDocument.html">edit value</a>
+      			<input id="topic_${currentTopicAndPlace.eplToId}" name="topic_${currentTopicAndPlace.eplToId}" class="input_28c_disabled" type="text" value="${currentTopicAndPlace}" disabled="disabled" />
+				<a id="editValue" href="${DeleteTopicDocument}"><img src="<c:url value="/images/button_cancel_form13.gif"/>" alt="Cancel value" title="Delete this entry"/></a>
+				<a id="editValue" href="${EditTopicDocument}">edit value</a>
 			</div>
+		</c:forEach>
 			
+			<c:url var="EditTopicDocument" value="/de/docbase/EditTopicDocument.do">
+				<c:param name="entryId" value="${currentTopicAndPlace.document.entryId}" />
+				<c:param name="eplToId" value="0" />
+			</c:url>
+
 			<div>
-				<input id="firstTopic" name="firstTopic" class="input_28c_disabled" type="text" value="LUXURY TEXTILES - Firenze / Toscana / Italia" disabled="disabled" />
-				<a href="#"><img src="/DocSources/images/button_cancel_form13.gif" alt="Cancel value" title="Delete this entry"/></a>
-				<a id="editValue" href="/DocSources/de/docbase/EditTopicDocument.html">edit value</a>
-			</div>
-			
-				
-			<input id="summaryId" name="summaryId" type="hidden" value="0"/>
-			<input id="resIdNo" name="resIdNo" type="hidden" value=""/>
-			<input id="seriesRefNum" name="seriesRefNum" type="hidden" value=""/>
-			<input id="dateCreated" name="dateCreated" type="hidden" value="11/03/2010 11:51:57"/>
-			
-			<div>
-			<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-			<a id="AddTopicDocument" href="/DocSources/de/docbase/AddTopicsDocument.html">Add new Topic</a>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<a id="AddTopicDocument" href="${EditTopicDocument}">Add new Topic</a>
 			</div>
 			
 		</fieldset>	
-	</form>
-
-	<div id="AddTopicDocumentDiv"></div>
-
-<script type="text/javascript">
-							$(document).ready(function() {
-								$("#AddTopicDocument").click(function(){$("#AddTopicDocumentDiv").load($(this).attr("href"));return false;});
-								$("#editValue").click(function(){$("#EditTopicsDocumentDiv").load($(this).attr("href"));return false;});
-							});
-</script>
-
-<script type="text/javascript"> 
-    $(document).ready(function() { 
-		$('#close').click(function() { 
-            $('#EditDetailsVolumeDiv').block({ 
-                message: '<h1>Discard changes and close window?</h1>', 
-                css: { border: '3px solid #a00' } 
-            }); 
-        }); 
-	s});					  
-</script>
-	</form:form>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#EditTopicsDocumentForm").submit(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-						if(html.match(/inputerrors/g)){
-							$("#EditTopicsDocumentDiv").html(html);
-						} else {
-							$("#body_left").html(html);
-						}
-					} 
-				});
-				return false;
+		<div id="AddTopicDocumentDiv"></div>
+	
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#AddTopicDocument").click(function(){$("#AddTopicDocumentDiv").load($(this).attr("href"));return false;});
+				$("#editValue").click(function(){$("#EditTopicsDocumentDiv").load($(this).attr("href"));return false;});
 			});
-		});
-	</script>
+		</script>
+	</form:form>

@@ -11,28 +11,32 @@
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditExtractOrSynopsisDocument" value="/de/volbase/EditExtractOrSynopsisDocument.do">
+		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditFactChecksDocument" value="/de/volbase/EditFactChecksDocument.do">
+		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
+		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
-	
-	<div id="EditFactChecksDocumentDiv">
-		<h5>FACT CHECK <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditFactChecksDocument" href="${EditFactChecksDocument}">edit</a></security:authorize></h5>
+
+	<div id="EditFactCheckDocumentDiv">
+		<h5>FACT CHECK <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditFactCheckDocument" href="${EditFactCheckDocument}">edit</a></security:authorize></h5>
 		<ul>
-			<li>YES</li>
+			<li>${document.factChecks.addLRes}</li>
 		</ul>
 	</div>
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
 			 $("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
-			 $("#EditFactChecksDocument").attr('href', "${EditFactChecksDocument}");
+			 $("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
 			 $("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
+			 $("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
 			 $("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 
-			 $("#EditFactChecksDocument").click(function(){$("#EditFactChecksDocumentDiv").load($(this).attr("href"));return false;});
+			 $("#EditFactCheckDocument").click(function(){$("#EditFactCheckDocumentDiv").load($(this).attr("href"));return false;});
 		});
 	</script>

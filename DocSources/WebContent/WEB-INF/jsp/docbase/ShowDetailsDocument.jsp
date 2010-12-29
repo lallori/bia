@@ -11,10 +11,13 @@
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditExtractOrSynopsisDocument" value="/de/volbase/EditExtractOrSynopsisDocument.do">
+		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditFactChecksDocument" value="/de/volbase/EditFactChecksDocument.do">
+		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
+		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
@@ -46,8 +49,9 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			 $("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
-			 $("#EditFactChecksDocument").attr('href', "${EditFactChecksDocument}");
+			 $("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
 			 $("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
+			 $("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
 			 $("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 
 			 $("#EditDetailsDocument").click(function(){$("#EditDetailsDocumentDiv").load($(this).attr("href"));return false;});
