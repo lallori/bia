@@ -65,8 +65,11 @@ public class ShowVolumeController {
 	}
 
 	/**
-	 * 
-	 * @param volumeId
+ 	 * This method extracts volume identified by param command.summaryId,
+ 	 * and invoke view ShowVolume to render Volume information on client.
+ 	 * 
+	 * @param command Object containing input parameters
+	 * @param result
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)

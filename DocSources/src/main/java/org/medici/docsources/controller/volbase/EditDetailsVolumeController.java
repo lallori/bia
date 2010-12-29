@@ -28,7 +28,6 @@
 package org.medici.docsources.controller.volbase;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,12 +97,10 @@ public class EditDetailsVolumeController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			Volume volume = new Volume();
-			volume.setSummaryId(command.getSummaryId());
+			Volume volume = new Volume(command.getSummaryId());
 			volume.setVolNum(command.getVolNum());
 			volume.setVolLetExt(command.getVolLetExt());
 			volume.setResearcher(command.getResearcher());
-			volume.setDateCreated(command.getDateCreated());
 
 			// We consider null series if the user clean description field
 			if (command.getSeriesRefNum() != null && command.getSeriesRefDescription() != null) {
@@ -181,7 +178,6 @@ public class EditDetailsVolumeController {
 			// Empty month is in last positizion
 			command.setEndMonthNum(months.get(months.size()-1).getMonthNum());
 			command.setEndDay(null);
-			command.setDateCreated(new Date());
 			command.setSeriesRefDescription(null);
 			command.setSeriesRefNum(null);
 		}
