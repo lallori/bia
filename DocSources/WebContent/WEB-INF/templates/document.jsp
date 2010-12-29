@@ -12,4 +12,8 @@
 
 <br />
 
+<tiles:insertAttribute name="topics"/>
+
+<br />
+
 <tiles:insertAttribute name="extract"/>
