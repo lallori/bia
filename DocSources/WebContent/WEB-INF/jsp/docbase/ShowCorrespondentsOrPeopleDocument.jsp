@@ -11,10 +11,13 @@
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditExtractOrSynopsisDocument" value="/de/volbase/EditExtractOrSynopsisDocument.do">
+		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditFactChecksDocument" value="/de/volbase/EditFactChecksDocument.do">
+		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
+		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
@@ -22,19 +25,28 @@
 	<div id="EditCorrespondentsOrPeopleDocumentDiv">
 		<h5>CORRESPONDENTS/PEOPLE <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocument}">edit</a></security:authorize></h5>
 		<ul>
-			<li><b>Sender:</b> ${document.senderPeople.last}, ${document.senderPeople.first}</li>
+			<li><b>Sender:</b> ${document.senderPeople.mapNameLf}</li>
 			<li><b>From:</b> ${document.senderPlace.placeNameFull} </li>
 			<li><b>To:</b> ${document.recipientPlace.placeNameFull}</li>		
-			<li><b>Recipient:</b> ${document.recipientPeople.last}, ${document.recipientPeople.first}</li>
-			<li><b>Ref:</b> ???? QUA CHE CI METTO ????</li>
+			<li><b>Recipient:</b> ${document.recipientPeople.mapNameLf}</li>
+			<li>
+				<b>People:</b>
+				<ul>
+				<c:forEach items="${document.epLink}" var="currentPeople">
+					<li>${currentPeople.people.mapNameLf}</li>
+					<br/>
+				</c:forEach>
+				</ul>
+			</li>
 		</ul>
 	</div>
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
 			 $("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
-			 $("#EditFactChecksDocument").attr('href', "${EditFactChecksDocument}");
+			 $("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
 			 $("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
+			 $("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
 			 $("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 
 			 $("#EditCorrespondentsOrPeopleDocument").click(function(){$("#EditCorrespondentsOrPeopleDocumentDiv").load($(this).attr("href"));return false;});
