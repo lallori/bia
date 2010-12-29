@@ -15,6 +15,13 @@
 	<mvc:annotation-driven/>
 	
 	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean id ="openSessionInViewInterceptor" name="openSessionInViewInterceptor" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
+				<property name="entityManagerFactory" ref="entityManagerFactory" />
+			</bean>
+		</mvc:interceptor>
+	
 		<!-- <bean id ="openSessionInViewInterceptor" name="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
     		<property name="sessionFactory">
         		<ref bean="sessionFactory" />

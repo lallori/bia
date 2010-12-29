@@ -26,11 +26,11 @@
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="find*" read-only="true"/>
-            <tx:method name="search*" read-only="true"/>
+            <tx:method name="get*" propagation="REQUIRED"/>
+            <tx:method name="find*" propagation="REQUIRED"/>
+            <tx:method name="search*" propagation="REQUIRED"/>
             <tx:method name="activate*"/>
-            <tx:method name="add*" />
+            <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="edit*" />
             <tx:method name="merge*" />
             <tx:method name="index*" />

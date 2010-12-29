@@ -142,6 +142,12 @@
 	<definition name="docbase/EditTopicsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicsDocument.jsp"/>
 	</definition>
+	<definition name="docbase/EditTopicDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicDocument.jsp"/>	
+	</definition>
+	<definition name="docbase/SearchResultDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/SearchResultDocument.jsp"/>	
+	</definition>
 	<definition name="docbase/ShowCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
 	</definition>
@@ -161,6 +167,7 @@
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
 		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
 		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
+		<put-attribute name="topics" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
 		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
 	</definition>
 	<!-- DocBase Module END -->
