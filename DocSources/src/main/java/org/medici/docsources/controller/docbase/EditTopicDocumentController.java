@@ -1,5 +1,5 @@
 /*
- * EditFactCheckDocumentController.java
+ * EditTopicDocumentController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,14 +27,15 @@
  */
 package org.medici.docsources.controller.docbase;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.docbase.EditFactCheckDocumentCommand;
-import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.FactChecks;
+import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.command.docbase.EditTopicDocumentCommand;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,18 +49,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Fact Checks Document".
- * "Document Fact Checks" are stored in FactChecks entity.
+ * Controller for action "Edit Topic Document". This controller manage editing
+ * of a single topic linked to a document.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/EditFactCheckDocument")
-public class EditFactCheckDocumentController {
+@RequestMapping("/de/docbase/EditTopicDocument")
+public class EditTopicDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editFactCheckDocumentValidator")
+	@Qualifier("editTopicsDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -86,26 +87,20 @@ public class EditFactCheckDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditFactCheckDocumentCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditTopicDocumentCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
+			
+			/** TODO : Implement invocation business logic */
+			getDocBaseService();
 
-			FactChecks factChecks = new FactChecks();
-			factChecks.setAddLRes(command.getAddLRes());
-
-			try {
-				Document document = getDocBaseService().editFactChecksDocument(factChecks);
-
-				model.put("document", document);
-				return new ModelAndView("docbase/ShowDocument", model);
-			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowVolume", model);
-			}
+			return new ModelAndView("docbase/ShowTopicsDocument", model);
 		}
+
 	}
 
 	/**
@@ -121,26 +116,41 @@ public class EditFactCheckDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditFactCheckDocumentCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditTopicDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		if ((command != null) && (command.getEntryId() > 0)) {
-			FactChecks factChecks = new FactChecks();
+
+		if ((command != null) && (command.getEplToLinkId() > 0)) {
+			//Linked topic and place
+			EplToLink eplToLink = new EplToLink();
 
 			try {
-				factChecks = getDocBaseService().findFactChecksDocument(command.getEntryId());
+				eplToLink = getDocBaseService().findTopicDocument(command.getEntryId(), command.getEplToLinkId());
+				model.put("eplToLink", eplToLink);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}
 
-			command.setAddLRes(factChecks.getAddLRes());
-			command.setVetId(factChecks.getVetId());
+			command.setEplToLinkId(eplToLink.getEplToId());
+			command.setDateCreated(eplToLink.getDateCreated());
+			command.setTopicDescription(eplToLink.getTopic().getDescription());
+			command.setTopicId(eplToLink.getTopic().getTopicId());
+			command.setPlaceDescription(eplToLink.getPlace().getPlaceNameFull());
+			command.setPlaceId(eplToLink.getPlace().getPlaceAllId());
 		} else {
 			// On Document creation, the research is always the current user.
-			command.setVetId(null);
-			command.setAddLRes(null);
+			//command.setEntryId();
+			if (ObjectUtils.toString(command).equals("")) {
+				command = new EditTopicDocumentCommand();
+			}
+			command.setEplToLinkId(null);
+			command.setDateCreated(new Date());
+			command.setTopicDescription(null);
+			command.setTopicId(null);
+			command.setPlaceDescription(null);
+			command.setPlaceId(null);
 		}
 
-		return new ModelAndView("docbase/EditFactCheckDocument", model);
+		return new ModelAndView("docbase/EditTopicDocument", model);
 	}
 
 	/**

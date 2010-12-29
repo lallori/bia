@@ -28,9 +28,14 @@
 package org.medici.docsources.controller.docbase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.EplToLink;
+import org.medici.docsources.domain.FactChecks;
+import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +67,23 @@ public class ShowLastEntryDocumentController {
 		try {
 			Document document = getDocBaseService().findLastEntryDocument();
 			model.put("document", document);
+/*
+			// Fact Checks
+			FactChecks factChecks = getDocBaseService().findFactChecks(document);
+			model.put("factChecks", factChecks);
+			
+			// Correspondents People
+			List<EpLink> epLink = getDocBaseService().findCorrespondentsPeople(document);
+			model.put("epLink", epLink);
+			
+			// Linked Topics
+			List<EplToLink> eplToLink = getDocBaseService().findTopics(document);
+			model.put("eplToLink", eplToLink);
+
+			// Synopsys and Extract
+			SynExtract synExtract = getDocBaseService().findSynExtract(document);
+			model.put("synExtract", synExtract);
+*/			
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowLastEntryDocument", model);
 		}

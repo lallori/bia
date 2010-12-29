@@ -27,21 +27,19 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.docbase.EditTopicsDocumentCommand;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,29 +78,6 @@ public class EditTopicsDocumentController {
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditTopicsDocumentCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-			
-			/** TODO : Implement invocation business logic */
-			getDocBaseService();
-
-			return new ModelAndView("docbase/ShowTopicsDocument", model);
-		}
-
-	}
-
-	/**
 	 * @param docBaseService the docBaseService to set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
@@ -117,18 +92,19 @@ public class EditTopicsDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTopicsDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Document document = new Document();
+		if ((command != null) && (command.getEntryId() > 0)) {
+			List<EplToLink> eplToLink = new ArrayList<EplToLink>(0);
 
-		try {
-			document = getDocBaseService().findDocument(command.getEntryId());
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/EditTopicsDocument", model);
-		}
+			try {
+				eplToLink = getDocBaseService().findTopicsDocument(command.getEntryId());
+				command.setEplToLink(eplToLink);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsDocument", model);
+			}
 
-		try {
-			BeanUtils.copyProperties(command, document);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
+		} else {
+			// On Document creation, the research is always the current user.
+			command.setEplToLink(new ArrayList<EplToLink>());
 		}
 
 		return new ModelAndView("docbase/EditTopicsDocument", model);

@@ -27,16 +27,17 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-
+import java.util.Set;
 import javax.validation.Valid;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.Volume;
+import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,16 +133,53 @@ public class EditCorrespondentsOrPeopleDocumentController {
 
 			try {
 				document = getDocBaseService().findDocument(command.getEntryId());
-				model.put("document", document);
+				command.setDocument(document);
+				
+				// We set sender people in command object
+				command.setSenderPeopleId(document.getSenderPeople().getPersonId());
+				command.setSenderPeopleDescription(document.getSenderPeople().getMapNameLf());
+				command.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
+				
+				// We set sender place in command object
+				command.setSenderPlaceId(document.getSenderPlace().getPlaceAllId());
+				command.setSenderPlaceDescription(document.getSenderPlace().getPlaceNameFull());
+				command.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
+
+				// We set recipient people in command object
+				command.setRecipientPeopleId(document.getRecipientPeople().getPersonId());
+				command.setRecipientPeopleDescription(document.getRecipientPeople().getMapNameLf());
+				command.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
+				
+				// We set recipient place in command object
+				command.setRecipientPlaceId(document.getRecipientPlace().getPlaceAllId());
+				command.setRecipientPlaceDescription(document.getRecipientPlace().getPlaceNameFull());
+				command.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
+
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);
 			}
 
-			try {
-				BeanUtils.copyProperties(command, document);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
+		} else {
+			// On Document creation, sender is empty
+			command.setSenderPeopleId(null);
+			command.setSenderPeopleDescription("");
+			command.setSenderPeopleUnsure(false);
+			command.setSenderPlaceId(null);
+			command.setSenderPlaceDescription("");
+			command.setSenderPlaceUnsure(false);
+
+			// On Document creation, recipient is empty
+			command.setRecipientPeopleId(null);
+			command.setRecipientPeopleDescription("");
+			command.setRecipientPeopleUnsure(false);
+			command.setRecipientPlaceId(null);
+			command.setRecipientPlaceDescription("");
+			command.setRecipientPlaceUnsure(false);
+
+			// On Document creation, linked peoples to document are empty
+			Document document = new Document(command.getEntryId());
+			document.setEpLink(new HashSet<EpLink>());
+			command.setDocument(document);
 		}
 
 		return new ModelAndView("docbase/EditCorrespondentsOrPeopleDocument", model);

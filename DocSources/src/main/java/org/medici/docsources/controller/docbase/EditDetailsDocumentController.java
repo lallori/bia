@@ -100,9 +100,8 @@ public class EditDetailsDocumentController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			Document document = new Document();
+			Document document = new Document(command.getEntryId());
 			document.setResearcher(command.getResearcher());
-			document.setEntryId(command.getEntryId());
 			document.setVolume(new Volume(command.getVolume()));
 			// Insert/Part: 
 			document.setInsertNum(command.getInsertNum());
@@ -129,13 +128,12 @@ public class EditDetailsDocumentController {
 			try {
 				if (command.getEntryId().equals(0)) {
 					document = getDocBaseService().addNewDocument(document);
-					model.put("document", document);
-					return new ModelAndView("docbase/ShowDocument", model);
 				} else {
 					document = getDocBaseService().editDetailsDocument(document);
-					model.put("document", document);
-					return new ModelAndView("docbase/ShowDetailsDocument", model);
 				}
+
+				model.put("document", document);
+				return new ModelAndView("docbase/ShowDocument", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}
@@ -171,9 +169,10 @@ public class EditDetailsDocumentController {
 
 			try {
 				document = getDocBaseService().findDocument(command.getEntryId());
-				model.put("document", document);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
+			} finally {
+				model.put("document", document);
 			}
 
 			try {
