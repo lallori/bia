@@ -123,6 +123,22 @@ public class EpLink implements Serializable{
 	private Date dateCreated;
 
 	/**
+	 * 
+	 */
+	public EpLink(){
+		super();
+	}
+
+	/**
+	 * 
+	 * @param epLinkId
+	 */
+	public EpLink(Integer epLinkId) {
+		super();
+		setEpLinkId(epLinkId);
+	}
+
+	/**
 	 * @return the epLinkId
 	 */
 	public Integer getEpLinkId() {

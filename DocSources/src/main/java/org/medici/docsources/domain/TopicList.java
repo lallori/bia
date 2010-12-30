@@ -86,6 +86,22 @@ public class TopicList implements Serializable {
 	private String description;
 
 	/**
+	 * 
+	 */
+	public TopicList() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param topicId
+	 */
+	public TopicList(Integer topicId) {
+		super();
+		setTopicId(topicId);
+	}
+
+	/**
 	 * @return the topicId
 	 */
 	public Integer getTopicId() {

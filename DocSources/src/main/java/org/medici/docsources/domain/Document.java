@@ -96,7 +96,7 @@ public class Document implements Serializable{
 	@DocumentId
 	private Integer entryId;
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"SUMMARYID\"")
 	private Volume volume;
 	
@@ -284,12 +284,12 @@ public class Document implements Serializable{
 	//@IndexedEmbedded
 	private Set<EplToLink> eplToLink;
 
-	//Association people
+	//Association people (attention recipient and sender are not here, they are defined up!)
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "document")
 	//@IndexedEmbedded
 	private Set<EpLink> epLink;
 	
-	//Association people
+	//Association Synopsys and Extract
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="document")
 	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
 	//@IndexedEmbedded

@@ -116,6 +116,22 @@ public class EplToLink implements Serializable{
 	private Date dateCreated;
 
 	/**
+	 * 
+	 */
+	public EplToLink() {
+		super();
+	}
+	/**
+	 * 
+	 * @param eplToId
+	 */
+	public EplToLink(Integer eplToId) {
+		super();
+		
+		setEplToId(eplToId);
+	}
+
+	/**
 	 * @return the eplToId
 	 */
 	public Integer getEplToId() {

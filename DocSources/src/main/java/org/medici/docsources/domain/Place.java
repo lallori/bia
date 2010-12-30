@@ -142,6 +142,24 @@ public class Place implements Serializable {
 	
 	@Column (name="\"GEOGKEY_CHILDREN\"", columnDefinition="LONGTEXT")
 	private String geogkeyChildren;
+
+	/**
+	 * Default constructor.
+	 * 
+	 */
+	public Place(){
+		super();
+	}
+	
+	/**
+	 * 
+	 * @param placeId
+	 */
+	public Place(Integer placeId) {
+		super();
+		
+		setPlaceAllId(placeId);
+	}
 	
 	/**
 	 * @return the placeAllId
@@ -149,126 +167,147 @@ public class Place implements Serializable {
 	public Integer getPlaceAllId() {
 		return placeAllId;
 	}
+	
 	/**
 	 * @param placeAllId the placeAllId to set
 	 */
 	public void setPlaceAllId(Integer placeAllId) {
 		this.placeAllId = placeAllId;
 	}
+	
 	/**
 	 * @return the placeNameId
 	 */
 	public Integer getPlaceNameId() {
 		return placeNameId;
 	}
+	
 	/**
 	 * @param placeNameId the placeNameId to set
 	 */
 	public void setPlaceNameId(Integer placeNameId) {
 		this.placeNameId = placeNameId;
 	}
+	
 	/**
 	 * @return the geogKey
 	 */
 	public Integer getGeogKey() {
 		return geogKey;
 	}
+	
 	/**
 	 * @param geogKey the geogKey to set
 	 */
 	public void setGeogKey(Integer geogKey) {
 		this.geogKey = geogKey;
 	}
+	
 	/**
 	 * @return the placeName
 	 */
 	public String getPlaceName() {
 		return placeName;
 	}
+	
 	/**
 	 * @param placeName the placeName to set
 	 */
 	public void setPlaceName(String placeName) {
 		this.placeName = placeName;
 	}
+	
 	/**
 	 * @return the placeNameFull
 	 */
 	public String getPlaceNameFull() {
 		return placeNameFull;
 	}
+	
 	/**
 	 * @param placeNameFull the placeNameFull to set
 	 */
 	public void setPlaceNameFull(String placeNameFull) {
 		this.placeNameFull = placeNameFull;
 	}
+	
 	/**
 	 * @return the plNameFullPlType
 	 */
 	public String getPlNameFullPlType() {
 		return plNameFullPlType;
 	}
+	
 	/**
 	 * @param plNameFullPlType the plNameFullPlType to set
 	 */
 	public void setPlNameFullPlType(String plNameFullPlType) {
 		this.plNameFullPlType = plNameFullPlType;
 	}
+	
 	/**
 	 * @return the plType
 	 */
 	public String getPlType() {
 		return plType;
 	}
+	
 	/**
 	 * @param plType the plType to set
 	 */
 	public void setPlType(String plType) {
 		this.plType = plType;
 	}
+	
 	/**
 	 * @return the prefFlag
 	 */
 	public String getPrefFlag() {
 		return prefFlag;
 	}
+	
 	/**
 	 * @param prefFlag the prefFlag to set
 	 */
 	public void setPrefFlag(String prefFlag) {
 		this.prefFlag = prefFlag;
 	}
+	
 	/**
 	 * @return the plSource
 	 */
 	public String getPlSource() {
 		return plSource;
 	}
+	
 	/**
 	 * @param plSource the plSource to set
 	 */
 	public void setPlSource(String plSource) {
 		this.plSource = plSource;
 	}
+	
 	/**
 	 * @return the plParent
 	 */
 	public String getPlParent() {
 		return plParent;
 	}
+	
 	/**
 	 * @param plParent the plParent to set
 	 */
 	public void setPlParent(String plParent) {
 		this.plParent = plParent;
 	}
+	
 	/**
 	 * @return the parentType
 	 */
 	public String getParentType() {
 		return parentType;
 	}
+	
 	/**
 	 * @param parentType the parentType to set
 	 */
@@ -293,126 +332,147 @@ public class Place implements Serializable {
 	public Integer getPlParentSubjectId() {
 		return plParentSubjectId;
 	}
+	
 	/**
 	 * @param plParentSubjectId the plParentSubjectId to set
 	 */
 	public void setPlParentSubjectId(Integer plParentSubjectId) {
 		this.plParentSubjectId = plParentSubjectId;
 	}
+	
 	/**
 	 * @return the plParentPlaceAllId
 	 */
 	public Integer getPlParentPlaceAllId() {
 		return plParentPlaceAllId;
 	}
+	
 	/**
 	 * @param plParentPlaceAllId the plParentPlaceAllId to set
 	 */
 	public void setPlParentPlaceAllId(Integer plParentPlaceAllId) {
 		this.plParentPlaceAllId = plParentPlaceAllId;
 	}
+	
 	/**
 	 * @return the gParent
 	 */
 	public String getgParent() {
 		return gParent;
 	}
+	
 	/**
 	 * @param gParent the gParent to set
 	 */
 	public void setgParent(String gParent) {
 		this.gParent = gParent;
 	}
+	
 	/**
 	 * @return the gpType
 	 */
 	public String getGpType() {
 		return gpType;
 	}
+	
 	/**
 	 * @param gpType the gpType to set
 	 */
 	public void setGpType(String gpType) {
 		this.gpType = gpType;
 	}
+	
 	/**
 	 * @return the ggp
 	 */
 	public String getGgp() {
 		return ggp;
 	}
+	
 	/**
 	 * @param ggp the ggp to set
 	 */
 	public void setGgp(String ggp) {
 		this.ggp = ggp;
 	}
+	
 	/**
 	 * @return the ggpTypeGGPTYPE
 	 */
 	public String getGgpTypeGGPTYPE() {
 		return ggpTypeGGPTYPE;
 	}
+	
 	/**
 	 * @param ggpTypeGGPTYPE the ggpTypeGGPTYPE to set
 	 */
 	public void setGgpTypeGGPTYPE(String ggpTypeGGPTYPE) {
 		this.ggpTypeGGPTYPE = ggpTypeGGPTYPE;
 	}
+	
 	/**
 	 * @return the gp2
 	 */
 	public String getGp2() {
 		return gp2;
 	}
+	
 	/**
 	 * @param gp2 the gp2 to set
 	 */
 	public void setGp2(String gp2) {
 		this.gp2 = gp2;
 	}
+	
 	/**
 	 * @return the gp2Ttype
 	 */
 	public String getGp2Ttype() {
 		return gp2Ttype;
 	}
+	
 	/**
 	 * @param gp2Ttype the gp2Ttype to set
 	 */
 	public void setGp2Ttype(String gp2Ttype) {
 		this.gp2Ttype = gp2Ttype;
 	}
+	
 	/**
 	 * @return the resId
 	 */
 	public String getResId() {
 		return resId;
 	}
+	
 	/**
 	 * @param resId the resId to set
 	 */
 	public void setResId(String resId) {
 		this.resId = resId;
 	}
+	
 	/**
 	 * @return the dateEntered
 	 */
 	public Date getDateEntered() {
 		return dateEntered;
 	}
+	
 	/**
 	 * @param dateEntered the dateEntered to set
 	 */
 	public void setDateEntered(Date dateEntered) {
 		this.dateEntered = dateEntered;
 	}
+	
 	/**
 	 * @return the placesMemo
 	 */
 	public String getPlacesMemo() {
 		return placesMemo;
 	}
+	
 	/**
 	 * @param placesMemo the placesMemo to set
 	 */
@@ -425,59 +485,67 @@ public class Place implements Serializable {
 	public Boolean getAddlRes() {
 		return addlRes;
 	}
+	
 	/**
 	 * @param addlRes the addlRes to set
 	 */
 	public void setAddlRes(Boolean addlRes) {
 		this.addlRes = addlRes;
 	}
+	
 	/**
 	 * @return the termAccent
 	 */
 	public String getTermAccent() {
 		return termAccent;
 	}
+	
 	/**
 	 * @param termAccent the termAccent to set
 	 */
 	public void setTermAccent(String termAccent) {
 		this.termAccent = termAccent;
 	}
+	
 	/**
 	 * @return the language
 	 */
 	public Integer getLanguage() {
 		return language;
 	}
+	
 	/**
 	 * @param language the language to set
 	 */
 	public void setLanguage(Integer language) {
 		this.language = language;
 	}
+	
 	/**
 	 * @return the otherFlags
 	 */
 	public String getOtherFlags() {
 		return otherFlags;
 	}
+	
 	/**
 	 * @param otherFlags the otherFlags to set
 	 */
 	public void setOtherFlags(String otherFlags) {
 		this.otherFlags = otherFlags;
 	}
+	
 	/**
 	 * @return the geogkeyChildren
 	 */
 	public String getGeogkeyChildren() {
 		return geogkeyChildren;
 	}
+	
 	/**
 	 * @param geogkeyChildren the geogkeyChildren to set
 	 */
 	public void setGeogkeyChildren(String geogkeyChildren) {
 		this.geogkeyChildren = geogkeyChildren;
 	}
-
 }

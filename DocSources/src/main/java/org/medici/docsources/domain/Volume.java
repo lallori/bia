@@ -95,7 +95,7 @@ public class Volume implements Serializable {
 	@Column (name="\"SUMMARYID\"", length=10, nullable=false)
 	private Integer summaryId;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"SERIESREFNUM\"")
 	@IndexedEmbedded
 	private SerieList serieList;
