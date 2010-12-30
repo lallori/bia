@@ -22,8 +22,9 @@
 		</c:url>
 	</security:authorize>
 		
-	<div id="EditExtractOrSynopsisDocument">
+	<div id="EditExtractOrSynopsisDocumentDiv">
 		<h5>EXTRACT/SYNOPSIS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a></security:authorize></h5>
+		<hr id="lineSeparator"/>
 		<ul>
 			<li><b>Extract:</b></li>
 			<li>${document.synExtract.docExtract}</li>

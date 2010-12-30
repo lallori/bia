@@ -8,9 +8,9 @@
 		<fieldset>
 			<legend><b>EXTRACT/SYNOPSIS</b></legend>
 			
-			<div><form:label for="extract" id="extractLabel" path="extract" cssErrorClass="error">Extract:</label></div>
-			<div><form:textarea id="extract" path="extract" class="txtarea_big" /></div>
-			<div><form:label for="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis:</label></div>
+			<div><form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Extract:</form:label></div>
+			<div><form:textarea id="docExtract" path="docExtract" class="txtarea_big" /></div>
+			<div><form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis:</form:label></div>
 			<div><form:textarea id="synopsis" path="synopsis" class="txtarea_big" /></div>
 			
 			<div>
@@ -20,8 +20,6 @@
 			
 			<form:hidden path="entryId"/>
 		</fieldset>	
-	</form>
-
 	</form:form>
 	<script type="text/javascript">
 		$(document).ready(function() {

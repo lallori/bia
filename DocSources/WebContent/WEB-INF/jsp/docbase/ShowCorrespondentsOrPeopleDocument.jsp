@@ -24,6 +24,7 @@
 	
 	<div id="EditCorrespondentsOrPeopleDocumentDiv">
 		<h5>CORRESPONDENTS/PEOPLE <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocument}">edit</a></security:authorize></h5>
+		<hr id="lineSeparator"/>
 		<ul>
 			<li><b>Sender:</b> ${document.senderPeople.mapNameLf}</li>
 			<li><b>From:</b> ${document.senderPlace.placeNameFull} </li>

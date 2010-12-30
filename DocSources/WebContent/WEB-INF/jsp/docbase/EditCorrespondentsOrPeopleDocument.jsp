@@ -56,7 +56,7 @@
 			<div>
 				<label for="people" id="peopleLabel">People:</label>
 			</div>
-			<c:forEach items="${command.epLink}" var="currentPeople">
+			<c:forEach items="${command.document.epLink}" var="currentPeople">
 				<c:url var="EditPeopleDocument" value="/de/docbase/EditPeopleDocument.do">
 					<c:param name="entryId" value="${currentPeople.document.entryId}" />
 					<c:param name="epLinkId" value="${currentPeople.epLinkId}" />

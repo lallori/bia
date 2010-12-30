@@ -23,7 +23,7 @@
 	</security:authorize>
 	
 	<div id="EditTopicsDocumentDiv">
-		<h5>TOPICS<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditTopicsDocument" href="${EditTopicsDocument}">edit</a></security:authorize></h5>
+		<h5>TOPICS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditTopicsDocument" href="${EditTopicsDocument}">edit</a></security:authorize></h5>
 		<hr id="lineSeparator"/>
 		<ul>
 			<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">

@@ -8,7 +8,7 @@
 		<fieldset>
 			<legend><b>FACT CHECK</b></legend>
 				
-			<div><form:textarea id="factCheck" path="factCheck" class="txtarea"></textarea></div>
+			<div><form:textarea id="addLRes" path="addLRes" class="txtarea" /></div>
 			
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
