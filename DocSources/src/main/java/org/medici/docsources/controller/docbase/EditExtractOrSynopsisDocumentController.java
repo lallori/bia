@@ -109,9 +109,9 @@ public class EditExtractOrSynopsisDocumentController {
 				}
 
 				model.put("document", document);
-				return new ModelAndView("docbase/EditExtractOrSynopsis", model);
+				return new ModelAndView("docbase/EditExtractOrSynopsisDocument", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/EditExtractOrSynopsis", model);
+				return new ModelAndView("error/EditExtractOrSynopsisDocument", model);
 			}
 		}
 	}
@@ -157,7 +157,7 @@ public class EditExtractOrSynopsisDocumentController {
 			command.setSynopsis(null);
 		}
 
-		return new ModelAndView("docbase/EditExtractOrSynopsis", model);
+		return new ModelAndView("docbase/EditExtractOrSynopsisDocument", model);
 	}
 
 	/**

@@ -27,20 +27,15 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.docbase.EditTopicsDocumentCommand;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,9 +51,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class EditTopicsDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
-	@Autowired(required = false)
-	@Qualifier("editTopicsDocumentValidator")
-	private Validator validator;
 
 	/**
 	 * @return the docBaseService
@@ -68,16 +60,7 @@ public class EditTopicsDocumentController {
 	}
 
 	/**
-	 * This method returns the Validator class used by Controller to make
-	 * business validation.
 	 * 
-	 * @return
-	 */
-	public Validator getValidator() {
-		return validator;
-	}
-
-	/**
 	 * @param docBaseService the docBaseService to set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
@@ -93,28 +76,19 @@ public class EditTopicsDocumentController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditTopicsDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		if ((command != null) && (command.getEntryId() > 0)) {
-			List<EplToLink> eplToLink = new ArrayList<EplToLink>(0);
-
 			try {
-				eplToLink = getDocBaseService().findTopicsDocument(command.getEntryId());
-				command.setEplToLink(eplToLink);
+				Document document = getDocBaseService().findDocument(command.getEntryId());
+				command.setDocument(document);
+
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}
 
 		} else {
 			// On Document creation, the research is always the current user.
-			command.setEplToLink(new ArrayList<EplToLink>());
+			command.setDocument(new Document(command.getEntryId()));
 		}
 
 		return new ModelAndView("docbase/EditTopicsDocument", model);
-	}
-
-	/**
-	 * 
-	 * @param validator
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
 	}
 }

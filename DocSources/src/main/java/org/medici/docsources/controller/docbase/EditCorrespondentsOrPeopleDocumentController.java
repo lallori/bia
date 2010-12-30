@@ -27,17 +27,14 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
-import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +95,6 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			
 			Document document = new Document();
 			document.setEntryId(command.getEntryId());
-			//document.setSeCcontext(command.getCcontext());
 
 			try {
 				getDocBaseService().editCorrespondentsOrPeopleDocument(document);

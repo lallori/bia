@@ -35,7 +35,10 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.docbase.EditTopicDocumentCommand;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EplToLink;
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +63,7 @@ public class EditTopicDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editTopicsDocumentValidator")
+	@Qualifier("editTopicDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -94,11 +97,20 @@ public class EditTopicDocumentController {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-			
-			/** TODO : Implement invocation business logic */
-			getDocBaseService();
 
-			return new ModelAndView("docbase/ShowTopicsDocument", model);
+			EplToLink eplToLink = new EplToLink();
+			eplToLink.setDocument(new Document(command.getEntryId()));
+			eplToLink.setPlace(new Place(command.getPlaceId()));
+			eplToLink.setTopic(new TopicList(command.getTopicId()));
+
+			try {
+				Document document = getDocBaseService().editTopicDocument(eplToLink);
+
+				model.put("document", document);
+				return new ModelAndView("docbase/ShowDocument", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowVolume", model);
+			}
 		}
 
 	}

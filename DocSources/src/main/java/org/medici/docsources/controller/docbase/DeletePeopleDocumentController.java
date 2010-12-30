@@ -27,15 +27,13 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.docbase.DeletePeopleDocumentCommand;
-import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +58,7 @@ public class DeletePeopleDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editTopicsDocumentValidator")
+	@Qualifier("deletePeopleDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -93,23 +91,24 @@ public class DeletePeopleDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit(@ModelAttribute("command") DeletePeopleDocumentCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
-		Document document = new Document();
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeletePeopleDocumentCommand command, BindingResult result) {
+		getValidator().validate(command, result);
 
-		try {
-			document = getDocBaseService().findDocument(command.getEntryId());
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/EditTopicsDocument", model);
+		if (result.hasErrors()) {
+			return new ModelAndView("error/DeletePeopleDocument");
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+
+			EpLink epLink = new EpLink(command.getEpLinkId());
+
+			try {
+				getDocBaseService().deletePeopleDocument(epLink);
+
+				return new ModelAndView("docbase/ShowDocument", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowVolume", model);
+			}
 		}
-
-		try {
-			BeanUtils.copyProperties(command, document);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
-		}
-
-		return new ModelAndView("docbase/EditTopicsDocument", model);
 	}
 
 	/**

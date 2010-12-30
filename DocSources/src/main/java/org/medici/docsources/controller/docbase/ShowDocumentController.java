@@ -27,17 +27,11 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.docbase.ShowDocumentRequestCommand;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.EpLink;
-import org.medici.docsources.domain.EplToLink;
-import org.medici.docsources.domain.FactChecks;
-import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,25 +71,19 @@ public class ShowDocumentController {
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowDocumentRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		Document document = new Document();
-		FactChecks factChecks = new FactChecks();
-		List<EpLink> epLink = new ArrayList<EpLink>(0);
-		List<EplToLink> eplToLink = new ArrayList<EplToLink>(0);
-		SynExtract synExtract = new SynExtract();
-
 		try {
 			// Details
-			document = getDocBaseService().findDocument(command.getEntryId());
+			Document document = getDocBaseService().findDocument(command.getEntryId());
 			model.put("document", document);
-			
-/*			// Fact Checks
+
+			/*			// Fact Checks
 			factChecks = getDocBaseService().findFactChecks(document);
 			model.put("factChecks", factChecks);
-			
+
 			// Correspondents People
 			epLink = getDocBaseService().findCorrespondentsPeople(document);
 			model.put("epLink", epLink);
-			
+
 			// Linked Topics
 			eplToLink = getDocBaseService().findTopics(document);
 			model.put("eplToLink", eplToLink);
@@ -103,11 +91,11 @@ public class ShowDocumentController {
 			// Synopsys and Extract
 			synExtract = getDocBaseService().findSynExtract(document);
 			model.put("synExtract", synExtract);
-	*/		
+			 */		
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowDocument", model);
 		}
-		
+
 		return new ModelAndView("docbase/ShowDocument", model);
 	}
 

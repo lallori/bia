@@ -34,10 +34,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
 import org.medici.docsources.command.docbase.EditPeopleDocumentCommand;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +62,7 @@ public class EditPeopleDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editCorrespondentsOrPeopleDocumentValidator")
+	@Qualifier("editPeopleDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -98,7 +96,7 @@ public class EditPeopleDocumentController {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-			
+
 			Document document = new Document();
 			document.setEntryId(command.getEntryId());
 			//document.setSeCcontext(command.getCcontext());
@@ -108,7 +106,7 @@ public class EditPeopleDocumentController {
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowDocument", model);
 			}
-			
+
 			model.put("document", document);
 
 			return new ModelAndView("docbase/ShowDocument", model);
