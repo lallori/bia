@@ -27,8 +27,12 @@
  */
 package org.medici.docsources.command.volbase;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Command bean for action "Edit Description Volume".
@@ -40,6 +44,8 @@ import javax.validation.constraints.Size;
 public class EditDetailsVolumeCommand {
 	@NotNull
 	private Integer summaryId;
+	@DateTimeFormat(pattern="MM/dd/yyyy hh:mm:ss")
+	private Date dateCreated;
 	@NotNull
 	private Integer volNum;
 	@Size (max=1)
@@ -72,6 +78,20 @@ public class EditDetailsVolumeCommand {
 		this.summaryId = summaryId;
 	}
 	
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	/**
+	 * @return the dateCreated
+	 */
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
 	/**
 	 * @return the volNum
 	 */
