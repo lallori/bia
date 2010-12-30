@@ -89,6 +89,30 @@ public interface DocBaseService {
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
 	
 	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteDocument(Document document) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param epLink
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public void deletePeopleDocument(EpLink epLink) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param eplToLink
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
+
+	/**
 	 * This method modify correspondents or people of an existing
 	 * {@link org.medici.docsources.domain.Document}.
 	 * 

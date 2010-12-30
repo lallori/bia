@@ -163,7 +163,44 @@ public class DocBaseServiceImpl implements DocBaseService {
 			return eplToLink.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
-		}	}
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteDocument(Document document) throws ApplicationThrowable {
+		try {
+			getDocumentDAO().remove(document);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deletePeopleDocument(EpLink epLink) throws ApplicationThrowable {
+		try {
+			getEpLinkDAO().remove(epLink);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
+		try {
+			getEplToLinkDAO().remove(eplToLink);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -204,6 +241,27 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 		//TODO : fill fields to update document section
 		documentToUpdate.setLastUpdate(new Date());
+		//Setting fields that are defined as nullable = false
+		document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		// We need to attach the correct volume istance by database extraction.
+		document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
+		document.setDateCreated(new Date());
+		document.setLastUpdate(new Date());
+		document.setDocTobeVetted(true);
+		document.setDocToBeVettedDate(new Date());
+		document.setDocVetted(false);
+		document.setNewEntry(true);
+		document.setReckoning(false);
+		document.setSenderPeopleUnsure(false);
+		document.setSenderPlaceUnsure(false);
+		document.setRecipientPeopleUnsure(false);
+		document.setRecipientPlaceUnsure(false);
+		document.setGraphic(false);
+
+		if (document.getDocMonthNum().equals(0)) {
+			document.setDocMonthNum(null);
+		}
+
 		
 		try {
 			getDocumentDAO().merge(documentToUpdate);
