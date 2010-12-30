@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.volbase;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,6 +169,8 @@ public class EditDetailsVolumeController {
 		} else {
 			// On Volume creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			// We need to expose dateCreated field because it must be rendered on view
+			command.setDateCreated(new Date());
 			command.setVolNum(null);
 			command.setVolLetExt(null);
 			command.setStartYear(null);
