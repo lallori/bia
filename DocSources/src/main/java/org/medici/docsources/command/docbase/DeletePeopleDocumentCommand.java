@@ -35,6 +35,7 @@ package org.medici.docsources.command.docbase;
  * @see org.medici.docsources.controller.docbase.DeleteTopicDocumentController
  */
 public class DeletePeopleDocumentCommand {
+	private Integer epLinkId;
 	private Integer entryId;
 
 	/**
@@ -53,5 +54,19 @@ public class DeletePeopleDocumentCommand {
 	 */
 	public void setEntryId(Integer entryId) {
 		this.entryId = entryId;
+	}
+
+	/**
+	 * @param epLinkId the epLinkId to set
+	 */
+	public void setEpLinkId(Integer epLinkId) {
+		this.epLinkId = epLinkId;
+	}
+
+	/**
+	 * @return the epLinkId
+	 */
+	public Integer getEpLinkId() {
+		return epLinkId;
 	}
 }

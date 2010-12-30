@@ -27,9 +27,7 @@
  */
 package org.medici.docsources.command.docbase;
 
-import java.util.List;
-
-import org.medici.docsources.domain.EplToLink;
+import org.medici.docsources.domain.Document;
 
 /**
  * Command bean for action "Edit Topics Document".
@@ -40,7 +38,7 @@ import org.medici.docsources.domain.EplToLink;
  */
 public class EditTopicsDocumentCommand {
 	private Integer entryId;
-	private List<EplToLink> eplToLink;
+	private Document document;
 
 	/**
 	 * This method returns entryId property.
@@ -61,16 +59,16 @@ public class EditTopicsDocumentCommand {
 	}
 
 	/**
-	 * @param eplToLink the eplToLink to set
+	 * @param document the document to set
 	 */
-	public void setEplToLink(List<EplToLink> eplToLink) {
-		this.eplToLink = eplToLink;
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 
 	/**
-	 * @return the eplToLink
+	 * @return the document
 	 */
-	public List<EplToLink> getEplToLink() {
-		return eplToLink;
+	public Document getDocument() {
+		return document;
 	}
 }
