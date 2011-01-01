@@ -1,5 +1,5 @@
 /*
- * EditPeopleDocumentController.java
+ * EditPersonDocumentController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -34,8 +34,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.medici.docsources.command.docbase.EditPeopleDocumentCommand;
+import org.medici.docsources.command.docbase.EditPersonDocumentCommand;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +59,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/EditPeopleDocument")
-public class EditPeopleDocumentController {
+@RequestMapping("/de/docbase/EditPersonDocument")
+public class EditPersonDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editPeopleDocumentValidator")
+	@Qualifier("editPersonDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -89,7 +91,7 @@ public class EditPeopleDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditPeopleDocumentCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditPersonDocumentCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
@@ -97,17 +99,26 @@ public class EditPeopleDocumentController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			Document document = new Document();
-			document.setEntryId(command.getEntryId());
-			//document.setSeCcontext(command.getCcontext());
+			EpLink epLink = new EpLink();
+			epLink.setAssignUnsure(command.getAssignUnsure());
+			epLink.setPortrait(command.getPortrait());
+			epLink.setPeople(new People(command.getPersonId()));
 
 			try {
-				getDocBaseService().editCorrespondentsOrPeopleDocument(document);
+				Document document = null;
+
+				if (command.getEpLinkId().equals(0)) {
+					getDocBaseService().addNewPersonDocument(epLink);
+					document = getDocBaseService().findDocument(command.getEntryId());
+					model.put("document", document);
+				} else {
+					getDocBaseService().editPersonDocument(epLink);
+					document = getDocBaseService().findDocument(command.getEntryId());
+					model.put("document", document);
+				}
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowDocument", model);
 			}
-
-			model.put("document", document);
 
 			return new ModelAndView("docbase/ShowDocument", model);
 		}
@@ -126,27 +137,33 @@ public class EditPeopleDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditPeopleDocumentCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditPersonDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if ((command != null) && (command.getEntryId() > 0)) {
-			Document document = new Document();
 
-			try {
-				document = getDocBaseService().findDocument(command.getEntryId());
-				model.put("document", document);
-			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);
+			if (command.getEpLinkId().equals(0)) {
+				command.setPersonId(null);
+				command.setPersonDescription("");
+				command.setPortrait(false);
+				command.setAssignUnsure(false);
+			} else {
+				try {
+					EpLink epLink = getDocBaseService().findPersonDocument(command.getEntryId(), command.getEpLinkId());
+					
+					command.setPersonId(epLink.getPeople().getPersonId());
+					command.setPersonDescription(epLink.getPeople().getMapNameLf());
+					command.setAssignUnsure(epLink.getAssignUnsure());
+					command.setPortrait(epLink.getPortrait());
+				} catch (ApplicationThrowable applicationThrowable) {
+					return new ModelAndView("error/EditPersonDocument", model);
+				}
 			}
 
-			try {
-				BeanUtils.copyProperties(command, document);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
+			return new ModelAndView("docbase/EditPersonDocument", model);
 		}
 
-		return new ModelAndView("docbase/EditCorrespondentsOrPeopleDocument", model);
+		return new ModelAndView("docbase/EditPersonDocument", model);
 	}
 
 	/**

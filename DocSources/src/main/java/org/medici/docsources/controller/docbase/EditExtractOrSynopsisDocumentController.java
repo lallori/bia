@@ -58,7 +58,7 @@ public class EditExtractOrSynopsisDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editDetailsDocumentValidator")
+	@Qualifier("editExtractOrSynopsisDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -93,8 +93,6 @@ public class EditExtractOrSynopsisDocumentController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			Document document = new Document(command.getEntryId());
-			
 			SynExtract synExtract = new SynExtract(command.getSynExtrId());
 			synExtract.setDocument(new Document(command.getEntryId()));
 			synExtract.setSynopsis(command.getSynopsis());
@@ -102,6 +100,8 @@ public class EditExtractOrSynopsisDocumentController {
 			synExtract.setSynopsis(command.getSynopsis());
 
 			try {
+				Document document = null;
+				
 				if (command.getSynExtrId().equals(0)) {
 					document = getDocBaseService().addNewExtractOrSynopsisDocument(synExtract);
 				} else {

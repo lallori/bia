@@ -33,6 +33,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.docbase.DeleteTopicDocumentCommand;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -95,7 +96,7 @@ public class DeleteTopicDocumentController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/DeletePeopleDocument");
+			return new ModelAndView("error/DeleteTopicDocument");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
@@ -104,7 +105,10 @@ public class DeleteTopicDocumentController {
 			try {
 				getDocBaseService().deleteTopicDocument(eplToLink);
 
-				return new ModelAndView("docbase/ShowDocument", model);
+				Document document = getDocBaseService().findDocument(command.getEntryId());
+				model.put("document", document);
+
+				return new ModelAndView("docbase/EditCorrespondentsOrPeopleDocument", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
 			}

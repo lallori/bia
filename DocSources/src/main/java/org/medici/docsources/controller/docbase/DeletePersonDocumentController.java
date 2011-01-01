@@ -1,5 +1,5 @@
 /*
- * DeletePeopleDocumentController.java
+ * DeletePersonDocumentController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,7 +32,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.docbase.DeletePeopleDocumentCommand;
+import org.medici.docsources.command.docbase.DeletePersonDocumentCommand;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -47,18 +48,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Delete People Document". This controller deletes
+ * Controller for action "Delete Person Document". This controller deletes
  * link between a person and the specific document.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/DeletePeopleDocument")
-public class DeletePeopleDocumentController {
+@RequestMapping("/de/docbase/DeletePersonDocument")
+public class DeletePersonDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("deletePeopleDocumentValidator")
+	@Qualifier("deletePersonDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -91,20 +92,22 @@ public class DeletePeopleDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeletePeopleDocumentCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeletePersonDocumentCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/DeletePeopleDocument");
+			return new ModelAndView("error/DeletePersonDocument");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			EpLink epLink = new EpLink(command.getEpLinkId());
+			EpLink epLink = new EpLink(command.getEpLinkId(), command.getEntryId());
 
 			try {
-				getDocBaseService().deletePeopleDocument(epLink);
+				getDocBaseService().deletePersonDocument(epLink);
+				Document document = getDocBaseService().findDocument(command.getEntryId());
+				model.put("document", document);
 
-				return new ModelAndView("docbase/ShowDocument", model);
+				return new ModelAndView("docbase/EditCorrespondentsOrPeopleDocument", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
 			}

@@ -35,6 +35,8 @@ import javax.validation.Valid;
 import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,16 +97,25 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			
 			Document document = new Document();
 			document.setEntryId(command.getEntryId());
+			document.setSenderPeople(new People(command.getSenderPeopleId()));
+			document.setSenderPeopleUnsure(command.getSenderPeopleUnsure());
+			document.setSenderPlace(new Place(command.getSenderPlaceId()));
+			document.setSenderPlaceUnsure(command.getSenderPlaceUnsure());
+
+			document.setRecipientPeople(new People(command.getRecipientPeopleId()));
+			document.setRecipientPeopleUnsure(command.getRecipientPeopleUnsure());
+			document.setRecipientPlace(new Place(command.getRecipientPlaceId()));
+			document.setRecipientPlaceUnsure(command.getRecipientPlaceUnsure());
 
 			try {
-				getDocBaseService().editCorrespondentsOrPeopleDocument(document);
+				document = getDocBaseService().editCorrespondentsDocument(document);
+
+				model.put("document", document);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowDocument", model);
+				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);
 			}
 			
-			model.put("document", document);
-
-			return new ModelAndView("docbase/ShowDocument", model);
+			return new ModelAndView("docbase/ShowCorrespondentsOrPeopleDocument", model);
 		}
 	}
 
