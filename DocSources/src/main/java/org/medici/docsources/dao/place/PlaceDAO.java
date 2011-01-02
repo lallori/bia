@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.place;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.dao.Dao;
@@ -45,5 +47,21 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * @throws PersistenceException
 	 */
 	public Place findLastEntryPlace() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Place> searchRecipientsPlace(String alias) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Place> searchSendersPlace(String alias) throws PersistenceException;
 
 }

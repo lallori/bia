@@ -27,9 +27,12 @@
  */
 package org.medici.docsources.dao.place;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.hibernate.search.FullTextQuery;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Place;
 import org.springframework.stereotype.Repository;
@@ -71,6 +74,36 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         query.setMaxResults(1);
 
         return (Place) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Place> searchRecipientsPlace(String alias) throws PersistenceException {
+		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+		String[] outputFields = new String[]{"placeAllId", "placeName"};
+
+		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
+		List<Place> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
+
+		return listRecipients;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Place> searchSendersPlace(String alias) throws PersistenceException {
+		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+		String[] outputFields = new String[]{"placeAllId", "placeName"};
+
+		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
+		List<Place> listSenders = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
+
+		return listSenders;
 	}
 
 }

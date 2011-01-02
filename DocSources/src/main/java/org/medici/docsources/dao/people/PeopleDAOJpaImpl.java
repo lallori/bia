@@ -39,7 +39,17 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.WildcardQuery;
+import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
@@ -108,14 +118,25 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchRecipients(String alias) throws PersistenceException {
-		String[] searchFields = new String[]{"first", "last"};
+	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String alias) throws PersistenceException {
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		
+		BooleanQuery booleanQuery = new BooleanQuery();
+		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("first", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("last", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+		
+		for (int i=0; i<peopleIdList.size(); i++) {
+			booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
+		}
 
-		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, People.class);
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
+		fullTextQuery.setProjection(outputFields);
+
 		List<People> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, People.class);
 
-		return listRecipients;
+		return listRecipients; 
+
 	}
 
 	/**
@@ -123,14 +144,14 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchSenders(String alias) throws PersistenceException {
+	public List<People> searchRecipientsPeople(String alias) throws PersistenceException {
 		String[] searchFields = new String[]{"first", "last"};
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
 
 		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, People.class);
-		List<People> listSenders = executeFullTextQuery(fullTextQuery, outputFields, People.class);
+		List<People> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, People.class);
 
-		return listSenders;
+		return listRecipients;
 	}
 
 	/**
@@ -160,6 +181,21 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		TypedQuery<People> typedQuery = getEntityManager().createQuery(criteriaQuery);
 	
 		return typedQuery.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> searchSendersPeople(String alias) throws PersistenceException {
+		String[] searchFields = new String[]{"first", "last"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+
+		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, People.class);
+		List<People> listSenders = executeFullTextQuery(fullTextQuery, outputFields, People.class);
+
+		return listSenders;
 	}
 
 }

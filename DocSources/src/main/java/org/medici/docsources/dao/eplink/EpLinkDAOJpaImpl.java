@@ -78,4 +78,22 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 		return query.getResultList();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public EpLink find(Integer epLinkId, Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from EpLink where epLinkId=:epLinkId and document.entryId=:entryId");
+		query.setParameter("epLinkId", epLinkId);
+		query.setParameter("entryId", entryId);
+		
+		List<EpLink> result = query.getResultList();
+		if (result.size() == 0) {
+			return null;
+		} else {
+			return result.get(0);
+		}
+	}
+
 }
