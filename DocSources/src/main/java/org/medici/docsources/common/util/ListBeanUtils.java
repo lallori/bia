@@ -75,9 +75,19 @@ public class ListBeanUtils {
 		return retValue;
 	}
 
+	/**
+	 * 
+	 * @param beansList
+	 * @param concatenatedFields
+	 * @param fieldsSeparator
+	 * @param outputFieldsSeparator
+	 * @param addBlankSpace
+	 * @return
+	 */
 	public static ArrayList<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace) {
 		return toStringListWithConcatenationFields(beansList, concatenatedFields, fieldsSeparator, outputFieldsSeparator, addBlankSpace, Boolean.FALSE);
 	}
+
 	/**
 	 * Method to obtains a plain list of multiple fields contained in a bean input list.
 	 * The fields are marked by third parameter which is the separator.
