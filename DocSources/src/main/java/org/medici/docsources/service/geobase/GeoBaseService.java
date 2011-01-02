@@ -64,9 +64,31 @@ public interface GeoBaseService {
 
 	/**
 	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexPlace() throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param text
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchPlaces(String text) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Place> searchRecipientsPlace(String query)throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Place> searchSendersPlace(String query)throws ApplicationThrowable;
 }

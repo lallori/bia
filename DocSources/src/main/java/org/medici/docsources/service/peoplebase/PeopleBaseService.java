@@ -134,7 +134,7 @@ public interface PeopleBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<People> searchRecipients(String query) throws ApplicationThrowable;
+	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -142,5 +142,5 @@ public interface PeopleBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<People> searchSenders(String query) throws ApplicationThrowable;
+	public List<People> searchSendersPeople(String query) throws ApplicationThrowable;
 }

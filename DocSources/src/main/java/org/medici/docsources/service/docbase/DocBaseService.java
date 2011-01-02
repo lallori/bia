@@ -36,6 +36,7 @@ import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -57,14 +58,6 @@ import org.medici.docsources.exception.ApplicationThrowable;
 public interface DocBaseService {
 
 	/**
-	 * 
-	 * @param epLink
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Document addNewCorrespondentsOrPeopleDocument(EpLink epLink) throws ApplicationThrowable;
-
-	/**
 	 * This method add a new {@link org.medici.docsources.domain.Document}.
 	 * 
 	 * @param document
@@ -79,6 +72,14 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Document addNewExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param epLink
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document addNewPersonDocument(EpLink epLink) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -102,7 +103,7 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public void deletePeopleDocument(EpLink epLink) throws ApplicationThrowable;
+	public void deletePersonDocument(EpLink epLink) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -113,14 +114,12 @@ public interface DocBaseService {
 	public void deleteTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
 
 	/**
-	 * This method modify correspondents or people of an existing
-	 * {@link org.medici.docsources.domain.Document}.
 	 * 
 	 * @param document
-	 *            {@link org.medici.docsources.domain.Document} to be modified
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Document editCorrespondentsOrPeopleDocument(Document document) throws ApplicationThrowable;
+	public Document editCorrespondentsDocument(Document document) throws ApplicationThrowable;
 
 	/**
 	 * This method modify details of an existing
@@ -149,6 +148,16 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable;
+
+	/**
+	 * This method modify people of an existing
+	 * {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param document
+	 *            {@link org.medici.docsources.domain.Document} to be modified
+	 * @throws ApplicationThrowable
+	 */
+	public Document editPersonDocument(EpLink epLink) throws ApplicationThrowable;
 
 	/**
 	 * This method modify topics of an existing
@@ -191,6 +200,14 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Document findLastEntryDocument() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @param epLinkId
+	 * @throws ApplicationThrowable
+	 */
+	public EpLink findPersonDocument(Integer entryId, Integer epLinkId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -268,4 +285,13 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> searchPersonLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
 }

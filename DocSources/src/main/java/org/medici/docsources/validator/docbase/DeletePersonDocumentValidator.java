@@ -1,5 +1,5 @@
 /*
- * EditPeopleDocumentValidator.java
+ * DeletePersonDocumentValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,7 +27,11 @@
  */
 package org.medici.docsources.validator.docbase;
 
-import org.medici.docsources.command.docbase.EditPeopleDocumentCommand;
+import java.util.Set;
+
+import org.medici.docsources.command.docbase.DeletePersonDocumentCommand;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +40,12 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Edit People Document".
+ * Validator bean for action "Delete Person Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class EditPeopleDocumentValidator implements Validator {
+public class DeletePersonDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
 
@@ -71,7 +75,7 @@ public class EditPeopleDocumentValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(EditPeopleDocumentCommand.class);
+		return givenClass.equals(DeletePersonDocumentCommand.class);
 	}
 
 	/**
@@ -84,8 +88,8 @@ public class EditPeopleDocumentValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditPeopleDocumentCommand editPeopleDocumentCommand = (EditPeopleDocumentCommand) object;
-		validateDocumentId(editPeopleDocumentCommand.getEntryId(), errors);
+		DeletePersonDocumentCommand deletePersonDocumentCommand = (DeletePersonDocumentCommand) object;
+		validateEpLink(deletePersonDocumentCommand.getEpLinkId(), deletePersonDocumentCommand.getEntryId(), errors);
 	}
 
 	/**
@@ -93,13 +97,25 @@ public class EditPeopleDocumentValidator implements Validator {
 	 * @param documentId
 	 * @param errors
 	 */
-	public void validateDocumentId(Integer entryId, Errors errors) {
+	public void validateEpLink(Integer epLinkId, Integer entryId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "epLinkId", "error.epLinkId.null");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				if (getDocBaseService().findDocument(entryId) == null) {
+				Document document = getDocBaseService().findDocument(entryId); 
+				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
+				} else {
+					Set<EpLink> linkedPeople = document.getEpLink();
+					
+					if (linkedPeople == null) {
+						errors.reject("epLinkId", "error.epLinkId.notfound");
+					}
+
+					if (!linkedPeople.contains(new EpLink(epLinkId))) {
+						errors.reject("epLinkId", "error.epLinkId.notfound");
+					}
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");

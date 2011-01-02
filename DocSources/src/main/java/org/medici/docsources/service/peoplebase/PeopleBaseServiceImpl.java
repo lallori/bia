@@ -291,9 +291,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<People> searchRecipients(String query) throws ApplicationThrowable {
+	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchRecipients(query);
+			return getPeopleDAO().searchRecipientsPeople(query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -303,9 +303,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<People> searchSenders(String query) throws ApplicationThrowable {
+	public List<People> searchSendersPeople(String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchSenders(query);
+			return getPeopleDAO().searchSendersPeople(query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
