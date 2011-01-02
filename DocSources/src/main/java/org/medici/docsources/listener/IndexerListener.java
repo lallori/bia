@@ -6,6 +6,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.context.ApplicationContext;
@@ -31,11 +32,14 @@ public class IndexerListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
     	ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(sce.getServletContext());
     	PeopleBaseService peopleBaseService = (PeopleBaseService) ctx.getBean("peopleBaseService");
-    	VolBaseService volBaseService = (VolBaseService) ctx.getBean("volBaseService");
     	DocBaseService docBaseService = (DocBaseService) ctx.getBean("docBaseService");
-    	/*try {
+    	GeoBaseService geoBaseService = (GeoBaseService) ctx.getBean("geoBaseService");
+    	VolBaseService volBaseService = (VolBaseService) ctx.getBean("volBaseService");
+    	/*
+       	try {
     		logger.info("Indexing document start");
     		Long startTime = System.currentTimeMillis();
+
     		volBaseService.generateIndexVolume();
     		volBaseService.generateIndexSerieList();
 
@@ -53,13 +57,13 @@ public class IndexerListener implements ServletContextListener {
     		docBaseService.generateIndexEplToLink();
     		docBaseService.generateIndexFactChecks();
     		docBaseService.generateIndexTopicList();
-    		
-    		//docBaseService.generateIndexEplToLink();
-    		//docBaseService.generateIndexFactChecks();
+    		docBaseService.generateIndexFactChecks();
+    		geoBaseService.generateIndexPlace();
     		logger.info("Indexing document end (total index time " + (System.currentTimeMillis() - startTime) + ".");    		
 		} catch (ApplicationThrowable ath) {
 			//ath.printStackTrace();
-		}*/
+		}
+   		*/
     }
 
 	/**

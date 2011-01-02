@@ -65,7 +65,7 @@ public class AjaxController {
 		try {
 			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
 
-			List<People> people = getPeopleBaseService().searchSenders(query);
+			List<People> people = getPeopleBaseService().searchSendersPeople(query);
 			model.put("query", query);
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
 			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
@@ -88,7 +88,7 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			List<People> people = getPeopleBaseService().searchRecipients(query);
+			List<People> people = getPeopleBaseService().searchRecipientsPeople(query);
 			model.put("query", query);
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
 			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE, Boolean.TRUE));

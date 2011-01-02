@@ -53,7 +53,7 @@ public class AjaxController {
 	private GeoBaseService geoBaseService;
 
 	/**
-	 * This method returns a list of ipotetical senders. 
+	 * This method returns a list of ipotetical senders places. 
 	 *  
 	 * @param text Text to search in ...
 	 * @return ModelAndView containing senders.
@@ -63,13 +63,10 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
-
-			List<Place> places = getGeoBaseService().searchPlaces(query);
+			List<Place> places = getGeoBaseService().searchSendersPlace(query);
 			model.put("query", query);
-			model.put("data", ListBeanUtils.transformList(places, "personId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
-
+			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeName", " ", " ", Boolean.TRUE));
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}
@@ -78,22 +75,20 @@ public class AjaxController {
 	}
 
 	/**
-	 * This method returns a list of ipotetical recipients. 
+	 * This method returns a list of ipotetical recipients places. 
 	 *  
 	 * @param text Text to search in ...
 	 * @return ModelAndView containing recipients.
 	 */
-	@RequestMapping(value = "/de/peoplebase/SearchRecipientPlace", method = RequestMethod.GET)
-	public ModelAndView findRecipients(@RequestParam("query") String query) {
+	@RequestMapping(value = "/de/geobase/SearchRecipientPlace", method = RequestMethod.GET)
+	public ModelAndView searchRecipients(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
-
-			List<Place> places = getGeoBaseService().searchPlaces(query);
+			List<Place> places = getGeoBaseService().searchRecipientsPlace(query);
 			model.put("query", query);
-			model.put("data", ListBeanUtils.transformList(places, "personId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
+			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeName", " ", " ", Boolean.TRUE));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
