@@ -5,7 +5,7 @@
        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
 	<!-- Document base Validator -->
-	<bean id="deletePeopleDocumentValidator" class="org.medici.docsources.validator.docbase.DeletePeopleDocumentValidator">
+	<bean id="deletePersonDocumentValidator" class="org.medici.docsources.validator.docbase.DeletePersonDocumentValidator">
         <description>Delete Linked People to a Document Validator.</description>
 	</bean>
 
@@ -29,7 +29,7 @@
         <description>Edit Fact Check Document Validator.</description>
 	</bean>
 
-	<bean id="editPeopleDocumentValidator" class="org.medici.docsources.validator.docbase.EditPeopleDocumentValidator">
+	<bean id="editPersonDocumentValidator" class="org.medici.docsources.validator.docbase.EditPersonDocumentValidator">
         <description>Edit People Document Validator.</description>
 	</bean>
 
