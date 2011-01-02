@@ -27,13 +27,11 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.docbase.EditPersonDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
@@ -51,7 +49,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit People Document". This Controller permits
+ * Controller for action "Edit Person Document". This Controller permits
  * link a person to document (section Edit Correspondets Or People). 
  * Attention : this not manage Sender or Recipient Person, they
  * are manage directly by org.medici.docsources.controller.docbase.EditCorrespondetsOrPeopleDocumentController  
@@ -99,23 +97,19 @@ public class EditPersonDocumentController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			EpLink epLink = new EpLink();
+			EpLink epLink = new EpLink(command.getEpLinkId());
 			epLink.setAssignUnsure(command.getAssignUnsure());
 			epLink.setPortrait(command.getPortrait());
 			epLink.setPeople(new People(command.getPersonId()));
+			epLink.setDocument(new Document(command.getEntryId()));
 
 			try {
-				Document document = null;
-
 				if (command.getEpLinkId().equals(0)) {
 					getDocBaseService().addNewPersonDocument(epLink);
-					document = getDocBaseService().findDocument(command.getEntryId());
-					model.put("document", document);
 				} else {
 					getDocBaseService().editPersonDocument(epLink);
-					document = getDocBaseService().findDocument(command.getEntryId());
-					model.put("document", document);
 				}
+
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowDocument", model);
 			}

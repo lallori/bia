@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.Map;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
@@ -97,15 +98,35 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			
 			Document document = new Document();
 			document.setEntryId(command.getEntryId());
-			document.setSenderPeople(new People(command.getSenderPeopleId()));
-			document.setSenderPeopleUnsure(command.getSenderPeopleUnsure());
-			document.setSenderPlace(new Place(command.getSenderPlaceId()));
-			document.setSenderPlaceUnsure(command.getSenderPlaceUnsure());
-
-			document.setRecipientPeople(new People(command.getRecipientPeopleId()));
-			document.setRecipientPeopleUnsure(command.getRecipientPeopleUnsure());
-			document.setRecipientPlace(new Place(command.getRecipientPlaceId()));
-			document.setRecipientPlaceUnsure(command.getRecipientPlaceUnsure());
+			// If desccription is empty we construct an emptyPeople so in service method it will be set to null
+			if (ObjectUtils.toString(command.getSenderPeopleDescription()).equals("")) {
+				document.setSenderPeople(new People(0));
+				document.setSenderPeopleUnsure(false);
+			} else {
+				document.setSenderPeople(new People(command.getSenderPeopleId()));
+				document.setSenderPeopleUnsure(command.getSenderPeopleUnsure());
+			}
+			if (ObjectUtils.toString(command.getSenderPlaceDescription()).equals("")) {
+				document.setSenderPlace(new Place(0));
+				document.setSenderPlaceUnsure(false);
+			} else {
+				document.setSenderPlace(new Place(command.getSenderPlaceId()));
+				document.setSenderPlaceUnsure(command.getSenderPlaceUnsure());
+			}
+			if (ObjectUtils.toString(command.getRecipientPeopleDescription()).equals("")) {
+				document.setRecipientPeople(new People(0));
+				document.setRecipientPeopleUnsure(false);
+			} else {
+				document.setRecipientPeople(new People(command.getRecipientPeopleId()));
+				document.setRecipientPeopleUnsure(command.getRecipientPeopleUnsure());
+			}
+			if (ObjectUtils.toString(command.getRecipientPlaceDescription()).equals("")) {
+				document.setRecipientPlace(new Place(0));
+				document.setRecipientPlaceUnsure(false);
+			} else {
+				document.setRecipientPlace(new Place(command.getRecipientPlaceId()));
+				document.setRecipientPlaceUnsure(command.getRecipientPlaceUnsure());
+			}
 
 			try {
 				document = getDocBaseService().editCorrespondentsDocument(document);

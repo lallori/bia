@@ -98,19 +98,31 @@ public class EditTopicDocumentController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			EplToLink eplToLink = new EplToLink();
+			EplToLink eplToLink = new EplToLink(command.getEplToLinkId());
 			eplToLink.setDocument(new Document(command.getEntryId()));
-			eplToLink.setPlace(new Place(command.getPlaceId()));
-			eplToLink.setTopic(new TopicList(command.getTopicId()));
+			if (command.getTopicDescription() == null) {
+				eplToLink.setTopic(new TopicList(0));
+			} else {
+				eplToLink.setTopic(new TopicList(command.getTopicId()));
+			}
+			if (command.getPlaceDescription() == null) {
+				eplToLink.setPlace(new Place(0)); 
+			} else {
+				eplToLink.setPlace(new Place(command.getPlaceId())); 
+			}
 
 			try {
-				Document document = getDocBaseService().editTopicDocument(eplToLink);
+				if (command.getEplToLinkId().equals(0)) {
+					getDocBaseService().addNewTopicDocument(eplToLink);
+				} else {
+					getDocBaseService().editTopicDocument(eplToLink);
+				}
 
-				model.put("document", document);
-				return new ModelAndView("docbase/ShowDocument", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowVolume", model);
+				return new ModelAndView("error/ShowDocument", model);
 			}
+
+			return new ModelAndView("docbase/ShowDocument", model);
 		}
 
 	}
@@ -131,23 +143,39 @@ public class EditTopicDocumentController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditTopicDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if ((command != null) && (command.getEplToLinkId() > 0)) {
-			//Linked topic and place
-			EplToLink eplToLink = new EplToLink();
 
-			try {
-				eplToLink = getDocBaseService().findTopicDocument(command.getEntryId(), command.getEplToLinkId());
-				model.put("eplToLink", eplToLink);
-			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/EditDetailsDocument", model);
+		if ((command != null) && (command.getEntryId() > 0)) {
+
+			if (command.getEplToLinkId().equals(0)) {
+				command.setPlaceDescription(null);
+				command.setPlaceId(null);
+				command.setTopicDescription(null);
+				command.setTopicId(null);
+			} else {
+				try {
+					EplToLink eplToLink = getDocBaseService().findTopicDocument(command.getEntryId(), command.getEplToLinkId());
+
+					if (eplToLink.getPlace() != null) {
+						command.setPlaceDescription(eplToLink.getPlace().getPlaceNameFull());
+						command.setPlaceId(eplToLink.getPlace().getPlaceAllId());
+					} else {
+						command.setPlaceDescription(null);
+						command.setPlaceId(null);
+					}
+
+					if (eplToLink.getTopic() != null) {
+						command.setTopicDescription(eplToLink.getTopic().getTopicTitle());
+						command.setTopicId(eplToLink.getTopic().getTopicId());
+					}else {
+						command.setTopicDescription(null);
+						command.setTopicId(null);
+					}
+					return new ModelAndView("docbase/EditTopicDocument", model);
+				} catch (ApplicationThrowable applicationThrowable) {
+					return new ModelAndView("error/EditTopicDocument", model);
+				}
 			}
 
-			command.setEplToLinkId(eplToLink.getEplToId());
-			command.setDateCreated(eplToLink.getDateCreated());
-			command.setTopicDescription(eplToLink.getTopic().getDescription());
-			command.setTopicId(eplToLink.getTopic().getTopicId());
-			command.setPlaceDescription(eplToLink.getPlace().getPlaceNameFull());
-			command.setPlaceId(eplToLink.getPlace().getPlaceAllId());
 		} else {
 			// On Document creation, the research is always the current user.
 			//command.setEntryId();

@@ -33,7 +33,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.docbase.DeleteTopicDocumentCommand;
-import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -105,12 +104,9 @@ public class DeleteTopicDocumentController {
 			try {
 				getDocBaseService().deleteTopicDocument(eplToLink);
 
-				Document document = getDocBaseService().findDocument(command.getEntryId());
-				model.put("document", document);
-
-				return new ModelAndView("docbase/EditCorrespondentsOrPeopleDocument", model);
+				return new ModelAndView("response/OK", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowVolume", model);
+				return new ModelAndView("response/KO", model);
 			}
 		}
 	}

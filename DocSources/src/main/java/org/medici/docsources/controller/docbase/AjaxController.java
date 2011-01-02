@@ -27,9 +27,20 @@
  */
 package org.medici.docsources.controller.docbase;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.medici.docsources.common.util.ListBeanUtils;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * AJAX Controller for DocBase.
@@ -42,17 +53,43 @@ public class AjaxController {
 	private DocBaseService docBaseService;
 
 	/**
-	 * @param docBaseService the docBaseService to set
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
-
-	/**
 	 * @return the docBaseService
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
+	}
+
+	/**
+	 * This method returns a list of person to add to document. Result does not
+	 * contains person already linked to document. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing senders.
+	 */
+	@RequestMapping(value = "/de/docbase/SearchPersonLinkableToDocument", method = RequestMethod.GET)
+	public ModelAndView searchPersonLinkableToDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
+
+			List<People> people = getDocBaseService().searchPersonLinkableToDocument(entryId, query);
+			model.put("query", query);
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
 	}
 
 }
