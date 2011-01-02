@@ -59,7 +59,7 @@ public interface Dao<K, E> extends Serializable {
 	 * @param entity
 	 * @throws PersistenceException
 	 */
-	public void merge(E entity) throws PersistenceException;
+	public E merge(E entity) throws PersistenceException;
 
 	/**
 	 * 
@@ -74,4 +74,11 @@ public interface Dao<K, E> extends Serializable {
 	 * @throws PersistenceException
 	 */
 	public void remove(E entity) throws PersistenceException;	
+
+	/**
+	 * 
+	 * @param entity
+	 * @throws PersistenceException
+	 */
+	public void refresh(E entity) throws PersistenceException;	
 }

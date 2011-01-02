@@ -40,11 +40,7 @@ import javax.persistence.PersistenceException;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.CacheMode;
-import org.hibernate.FlushMode;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
@@ -89,8 +85,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		return entityManager;
 	}
 
-	public void merge(E entity) throws PersistenceException {
-		getEntityManager().merge(entity);
+	public E merge(E entity) throws PersistenceException {
+		return getEntityManager().merge(entity);
 	}
 
 	public void persist(E entity) throws PersistenceException {
@@ -99,6 +95,10 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 
 	public void remove(E entity) throws PersistenceException {
 		getEntityManager().remove(entity);
+	}
+
+	public void refresh(E entity) throws PersistenceException {
+		getEntityManager().refresh(entity);
 	}
 
 	public void setEntityManager(EntityManager entityManager) {
@@ -137,7 +137,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	}
 
 	/**
-	 * 
+	 * This method extract a projection of a fullTextQuery.
 	 * @param fullTextQuery
 	 * @param outputFields
 	 * @param searchedEntity
@@ -210,8 +210,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 			fullTextSession.createIndexer( entityClass )
 			.batchSizeToLoadObjects( 50 )
 			.cacheMode( CacheMode.NORMAL )
-			.threadsToLoadObjects( 5 )
-			.threadsForSubsequentFetching( 4 )
+			.threadsToLoadObjects( 8 )
+			.threadsForSubsequentFetching( 5 )
 			.startAndWait();
 		} catch (Throwable throwable) {
 			logger.error(throwable);
