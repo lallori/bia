@@ -4,6 +4,19 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
+			<c:param name="entryId"   value="${command.document.entryId}" />
+		</c:url>
+		<c:url var="AddTopicUrl" value="/de/docbase/EditTopicDocument.do">
+			<c:param name="entryId"   value="${command.document.entryId}" />
+			<c:param name="epLinkId"  value="0" />
+		</c:url>
+		<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+			<c:param name="entryId"   value="${command.document.entryId}" />
+		</c:url>
+	</security:authorize>
+
 	<form:form id="EditTopicsDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>TOPICS</b></legend>
@@ -20,8 +33,8 @@
 
 			<div>
       			<input id="topic_${currentTopicAndPlace.eplToId}" name="topic_${currentTopicAndPlace.eplToId}" class="input_28c_disabled" type="text" value="${currentTopicAndPlace}" disabled="disabled" />
-				<a id="editValue" href="${DeleteTopicDocument}"><img src="<c:url value="/images/button_cancel_form13.gif"/>" alt="Cancel value" title="Delete this entry"/></a>
-				<a id="editValue" href="${EditTopicDocument}">edit value</a>
+				<a class="deleteValue" id="deleteValue" href="${DeleteTopicDocument}"><img src="<c:url value="/images/button_cancel_form13.gif"/>" alt="Cancel value" title="Delete this entry"/></a>
+				<a class="editValue" id="editValue" href="${EditTopicDocument}">edit value</a>
 			</div>
 		</c:forEach>
 			
@@ -36,12 +49,30 @@
 			</div>
 			
 		</fieldset>	
-		<div id="AddTopicDocumentDiv"></div>
+		<div id="EditTopicDocumentDiv"></div>
 	
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$("#AddTopicDocument").click(function(){$("#AddTopicDocumentDiv").load($(this).attr("href"));return false;});
-				$("#editValue").click(function(){$("#EditTopicsDocumentDiv").load($(this).attr("href"));return false;});
+				$(".deleteValue").click(function() {
+					$.get(this.href, function(data) {
+						if(data.match(/KO/g)){
+				            var resp = $('<div></div>').append(data); // wrap response
+						} else {
+							$("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocument}');
+						}
+			        });
+					return false;
+				});
+
+				$(".editValue").click(function() {
+					$("#EditTopicDocumentDiv").load($(this).attr("href"));
+					return false;
+				});
+
+				$("#AddTopicDocument").click(function(){
+					$("#EditTopicDocumentDiv").load($(this).attr("href"));
+					return false;
+				});
 			});
 		</script>
 	</form:form>

@@ -57,9 +57,9 @@
 			
 			<div>
 				<form:label  id="dateUnsLabel" for="dateUns" path="dateUns">Date Uncertain or Approximate?</form:label>
-				<form:checkbox path="dateUns" class="checkboxDoc2"/>
+				<form:checkbox id="dateUns" path="dateUns" class="checkboxDoc2"/>
 				<form:label  id="dateUndatedLabel" for="dateUndated" path="dateUndated">Undated</form:label>
-				<form:checkbox path="dateUndated" class="checkboxDoc2"/>
+				<form:checkbox  id="dateUndated" path="dateUndated" class="checkboxDoc2"/>
 			</div>
 			
 			<hr />

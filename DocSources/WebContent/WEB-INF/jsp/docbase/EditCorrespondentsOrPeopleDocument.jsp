@@ -4,9 +4,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<!-- The class assigned to href is the default of jqModal -->
-	
-	<form:form id="EditCorrespondentsDocumentForm" method="post" cssClass="edit">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
+			<c:param name="entryId"   value="${command.document.entryId}" />
+		</c:url>
+		<c:url var="AddPersonUrl" value="/de/docbase/EditPersonDocument.do">
+			<c:param name="entryId"   value="${command.document.entryId}" />
+			<c:param name="epLinkId"  value="0" />
+		</c:url>
+		<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+			<c:param name="entryId"   value="${command.document.entryId}" />
+		</c:url>
+	</security:authorize>
+
+	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post" cssClass="edit">
 
 		<fieldset>
 		<legend><b>CORRESPONDENTS/PEOPLE </b></legend>
@@ -50,46 +61,38 @@
 		</fieldset>	
 	</form:form>
 	
-	<form:form id="EditCorrespondentsDocumentForm" method="post" cssClass="edit">
+	<form:form id="EditPeopleDocumentForm" method="post" cssClass="edit">
 		<fieldset>	
 		
 			<div>
 				<label for="people" id="peopleLabel">People:</label>
 			</div>
-			<c:forEach items="${command.document.epLink}" var="currentPeople">
-				<c:url var="EditPeopleDocument" value="/de/docbase/EditPeopleDocument.do">
-					<c:param name="entryId" value="${currentPeople.document.entryId}" />
-					<c:param name="epLinkId" value="${currentPeople.epLinkId}" />
+			<c:forEach items="${command.document.epLink}" var="currentPerson">
+				<c:url var="EditPersonDocumentUrl" value="/de/docbase/EditPersonDocument.do">
+					<c:param name="entryId" value="${currentPerson.document.entryId}" />
+					<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
 				</c:url>
 	
-				<c:url var="DeletePeopleDocument" value="/de/docbase/DeletePeopleDocument.do" >
-					<c:param name="entryId" value="${currentPeople.document.entryId}" />
-					<c:param name="epLinkId" value="${currentPeople.epLinkId}" />
+				<c:url var="DeletePersonDocumentUrl" value="/de/docbase/DeletePersonDocument.do" >
+					<c:param name="entryId" value="${currentPerson.document.entryId}" />
+					<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
 				</c:url>
 	
 				<div>
-					<input id="people_${currentPeople.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPeople.people.mapNameLf}" disabled="disabled"/>
-					<a id="deleteValue" href="${DeletePeopleDocument}"><img src="<c:url value="/images/button_cancel_form13.gif"/>" alt="Cancel value" title="Delete this entry"/></a>
-					<a id="editValue" href="${EditPeopleDocument}">edit value</a>
+					<input id="people_${currentPerson.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPerson.people.mapNameLf}" disabled="disabled"/>
+					<a class="deleteValue" id="deleteValue" href="${DeletePersonDocumentUrl}"><img src="<c:url value="/images/button_cancel_form13.gif"/>" alt="Cancel value" title="Delete this entry"/></a>
+					<a class="editValue" id="editValue" href="${EditPersonDocumentUrl}">edit value</a>
 				</div>
 			</c:forEach>
 
 			<div>
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<a id="AddPersonCorrespondentsDocument" href="/DocSources/de/docbase/AddPersonCorrespondentsDocument.html">Add new Person</a>
+				<a id="AddPersonDocument" href="${AddPersonUrl}">Add new Person</a>
 			</div>	
 		</fieldset>
 	</form:form>
 		
-		<div id="AddPersonCorrespondentsDocumentDiv"></div>
+	<div id="EditPersonDocumentDiv"></div>
 			
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$("#AddPersonCorrespondentsDocument").click(function(){$("#AddPersonCorrespondentsDocumentDiv").load($(this).attr("href"));return false;});
-				$("#editValue").click(function(){$("#EditCorrespondentsDocumentDiv").load($(this).attr("href"));return false;});
-			});
-		</script>	
-
 	<c:url var="searchSenderPeopleUrl" value="/de/peoplebase/SearchSenderPeople.json"/>
 	<c:url var="searchSenderPlaceUrl" value="/de/geobase/SearchSenderPlace.json"/>
 	<c:url var="searchRecipientPeopleUrl" value="/de/peoplebase/SearchRecipientPeople.json"/>
@@ -112,10 +115,10 @@
 
 			var senderPlace = $('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchSenderPlaceUrl}',
-			    minChars:3, 
+			    minChars:5, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
-			    width:600,
+			    width:400,
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
@@ -136,34 +139,56 @@
 
 			var recipientPlace = $('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchRecipientPlaceUrl}',
-			    minChars:3, 
+			    minChars:5, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
-			    width:600,
+			    width:400,
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ $('#recipientPlaceId').val(data); }
 			  });
 
-			$("#EditDetailsVolume").submit(function (){
-				$.post($(this).attr("action"), $(this).serialize(), function() {
-					// In questa function si definisce la sostituzione del div dove visualizzare il risultato
-					// questa function rappresenta 
-					alert('done!');
-				});
+			$('#close').click(function() {
+	            $('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $('#question') }); 
+				return false;
 			});
+	        
+			$('#no').click(function() { 
+				$.unblockUI();$(".blockUI").fadeOut("slow");
+	            return false; 
+	        }); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+	 			}});
+				
+				return false; 
+	        }); 
+
+			$("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
+	 			$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
+					$("#EditCorrespondentsOrPeopleDocumentDiv").html(html);
+				}});
+			});
+
+			$("#AddPersonDocument").click(function(){$("#EditPersonDocumentDiv").load($(this).attr("href"));return false;});
+
+			$(".deleteValue").click(function() {
+				$.get(this.href, function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $('<div></div>').append(data); // wrap response
+					} else {
+						$("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocument}');
+					}
+		        });
+				return false;
+			});
+
+			$(".editValue").click(function() {
+				$("#EditPersonDocumentDiv").load($(this).attr("href"));return false;
+			});
+
 		});
 	</script>
-
-
-<script type="text/javascript"> 
-    $(document).ready(function() { 
-		$('#close').click(function() { 
-            $('#EditDetailsVolumeDiv').block({ 
-                message: '<h1>Discard changes and close window?</h1>', 
-                css: { border: '3px solid #a00' } 
-            }); 
-        }); 
-	});					  
-</script>
