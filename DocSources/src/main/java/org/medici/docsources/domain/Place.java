@@ -32,14 +32,35 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
+import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 /**
  * Place entity.
@@ -47,6 +68,17 @@ import org.hibernate.envers.Audited;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Entity
+@Indexed
+@AnalyzerDef(name="placeAnalyzer",
+		  charFilters = {
+		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+		    })
+		  },
+		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		  filters = {
+		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    })
 @Audited
 @Table ( name = "\"tblPlaces\"" ) 
 public class Place implements Serializable {
@@ -57,90 +89,121 @@ public class Place implements Serializable {
 	private static final long serialVersionUID = 1161692568465916123L;
 
 	@Id
+	@DocumentId
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"PLACEALLID\"", length=10, nullable=false)
 	private Integer placeAllId;
 	
 	@Column (name="\"PLACENAMEID\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer placeNameId;
 	
 	@Column (name="\"GEOGKEY\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer geogKey;
 	
 	@Column (name="\"PLACENAME\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String placeName;
 	
 	@Column (name="\"PLACENAMEFULL\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String placeNameFull;
 	
 	@Column (name="\"PLNAMEFULL_PLTYPE\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String plNameFullPlType;
 	
 	@Column (name="\"PLTYPE\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String plType;
 	
 	@Column (name="\"PREFFLAG\"", length=5)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String prefFlag;
 	
 	@Column (name="\"PLSOURCE\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String plSource;
 	
 	@Column (name="\"PLPARENT\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String plParent;
 	
 	@Column (name="\"PARENTTYPE\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String parentType;
 	
 	@Column (name="\"PLPARENT_TERM_ID\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer plParentTermId;
 	
 	@Column (name="\"PLPARENT_SUBJECT_ID\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer plParentSubjectId;
 	
-	@Column (name="\"PLPARENT_PLACEALLID\"", length=10)
-	private Integer plParentPlaceAllId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"PLPARENT_PLACEALLID\"")
+	@IndexedEmbedded(depth=1)
+	private Place parentPlace;
 	
 	@Column (name="\"GPARENT\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String gParent;
 	
 	@Column (name="\"GPTYPE\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String gpType;
 	
 	@Column (name="\"GGP\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String ggp;
 	
 	@Column (name="\"GGPTYPE\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String ggpTypeGGPTYPE;
 	
 	@Column (name="\"GP2\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String gp2;
 	
 	@Column (name="\"GP2TYPE\"", length=255)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String gp2Ttype;
 	
 	@Column (name="\"RESID\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String resId;
 	
 	@Column (name="\"DATEENTERED\"")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateEntered;
 	
 	@Column (name="\"PLACESMEMO\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String placesMemo;
 	
 	@Column (name="\"ADDLRES\"", length=1, columnDefinition="TINYINT", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean addlRes;
 	
 	@Column (name="\"TERM_ACCENT\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String termAccent;
 	
 	@Column (name="\"LANGUAGE\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer language;
 	
 	@Column (name="\"OTHER_FLAGS\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String otherFlags;
 	
 	@Column (name="\"GEOGKEY_CHILDREN\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String geogkeyChildren;
 
 	/**
@@ -314,18 +377,21 @@ public class Place implements Serializable {
 	public void setParentType(String parentType) {
 		this.parentType = parentType;
 	}
+	
 	/**
 	 * @return the plParentTermId
 	 */
 	public Integer getPlParentTermId() {
 		return plParentTermId;
 	}
+	
 	/**
 	 * @param plParentTermId the plParentTermId to set
 	 */
 	public void setPlParentTermId(Integer plParentTermId) {
 		this.plParentTermId = plParentTermId;
 	}
+	
 	/**
 	 * @return the plParentSubjectId
 	 */
@@ -341,17 +407,17 @@ public class Place implements Serializable {
 	}
 	
 	/**
-	 * @return the plParentPlaceAllId
+	 * @return the parentPlace
 	 */
-	public Integer getPlParentPlaceAllId() {
-		return plParentPlaceAllId;
+	public Place getParentPlace() {
+		return parentPlace;
 	}
 	
 	/**
-	 * @param plParentPlaceAllId the plParentPlaceAllId to set
+	 * @param parentPlace the parentPlace to set
 	 */
-	public void setPlParentPlaceAllId(Integer plParentPlaceAllId) {
-		this.plParentPlaceAllId = plParentPlaceAllId;
+	public void setParentPlace(Place parentPlace) {
+		this.parentPlace = parentPlace;
 	}
 	
 	/**
@@ -479,6 +545,7 @@ public class Place implements Serializable {
 	public void setPlacesMemo(String placesMemo) {
 		this.placesMemo = placesMemo;
 	}
+
 	/**
 	 * @return the addlRes
 	 */

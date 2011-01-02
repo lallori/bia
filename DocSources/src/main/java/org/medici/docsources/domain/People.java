@@ -270,10 +270,19 @@ public class People implements Serializable {
 	private Set<PoLink> poLink;
 */	
 	/**
-	 * 
+	 * Default Constructor 
 	 */
 	public People() {
 		super();
+	}
+
+	/**
+	 * 
+	 * @param senderPeopleId
+	 */
+	public People(Integer senderPeopleId) {
+		super();
+		setPersonId(senderPeopleId);
 	}
 
 	/**
@@ -883,9 +892,47 @@ public class People implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public String toString() {
-		return personId.toString();
+		if (getPersonId() == null) {
+			return null;
+		}
+		
+		return getPersonId().toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((personId == null) ? 0 : personId.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		People other = (People) obj;
+		if (personId == null) {
+			if (other.personId != null)
+				return false;
+		} else if (!personId.equals(other.personId))
+			return false;
+		return true;
 	}
 
 	/**

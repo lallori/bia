@@ -139,6 +139,17 @@ public class EpLink implements Serializable{
 	}
 
 	/**
+	 * 
+	 * @param epLinkId
+	 * @param entryId
+	 */
+	public EpLink(Integer epLinkId, Integer entryId) {
+		super(); 
+		setEpLinkId(epLinkId);
+		setDocument(new Document(entryId));
+	}
+
+	/**
 	 * @return the epLinkId
 	 */
 	public Integer getEpLinkId() {
@@ -231,6 +242,37 @@ public class EpLink implements Serializable{
 	 */
 	public void setDocRole(String docRole) {
 		DocRole = docRole;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((epLinkId == null) ? 0 : epLinkId.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EpLink other = (EpLink) obj;
+		if (epLinkId == null) {
+			if (other.epLinkId != null)
+				return false;
+		} else if (!epLinkId.equals(other.epLinkId))
+			return false;
+		return true;
 	}
 	
 }

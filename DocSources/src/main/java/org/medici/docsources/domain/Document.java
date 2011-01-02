@@ -280,12 +280,12 @@ public class Document implements Serializable{
 	private FactChecks factChecks;
 
 	//Association topic-place 
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="document")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="document")
 	//@IndexedEmbedded
 	private Set<EplToLink> eplToLink;
 
 	//Association people (attention recipient and sender are not here, they are defined up!)
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "document")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "document")
 	//@IndexedEmbedded
 	private Set<EpLink> epLink;
 	
