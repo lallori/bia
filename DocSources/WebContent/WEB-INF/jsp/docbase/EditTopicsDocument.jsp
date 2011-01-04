@@ -10,7 +10,7 @@
 		</c:url>
 		<c:url var="AddTopicUrl" value="/de/docbase/EditTopicDocument.do">
 			<c:param name="entryId"   value="${command.document.entryId}" />
-			<c:param name="epLinkId"  value="0" />
+			<c:param name="eplToId"  value="0" />
 		</c:url>
 		<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId"   value="${command.document.entryId}" />
@@ -38,14 +38,9 @@
 			</div>
 		</c:forEach>
 			
-			<c:url var="EditTopicDocument" value="/de/docbase/EditTopicDocument.do">
-				<c:param name="entryId" value="${currentTopicAndPlace.document.entryId}" />
-				<c:param name="eplToId" value="0" />
-			</c:url>
-
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<a id="AddTopicDocument" href="${EditTopicDocument}">Add new Topic</a>
+				<a id="AddTopicDocument" href="${AddTopicUrl}">Add new Topic</a>
 			</div>
 			
 		</fieldset>	
@@ -58,7 +53,7 @@
 						if(data.match(/KO/g)){
 				            var resp = $('<div></div>').append(data); // wrap response
 						} else {
-							$("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocument}');
+							$("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
 						}
 			        });
 					return false;

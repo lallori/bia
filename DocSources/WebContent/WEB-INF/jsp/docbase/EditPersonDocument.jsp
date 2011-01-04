@@ -47,7 +47,7 @@
 
 	<script type="text/javascript"> 
 	    $(document).ready(function() { 
-			var senderPeople = $('#personDescriptionAutoCompleter').autocomplete({ 
+			var peopleDescription = $('#personDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchPersonLinkableToDocumentUrl}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -60,7 +60,7 @@
 			  });
 
 			$('#close').click(function() { 
-	            $('#EditDetailsVolumeDiv').block({ 
+	            $('#EditPersonDocumentDiv').block({ 
 	                message: '<h1>Discard changes and close window?</h1>', 
 	                css: { border: '3px solid #a00' } 
 	            })

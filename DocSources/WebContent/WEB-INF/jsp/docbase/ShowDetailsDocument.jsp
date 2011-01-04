@@ -37,7 +37,7 @@
 			<li><b>Volume (MDP):</b> ${document.volume.volNum}</li>
 			<li><b>Insert/Part:</b> ${document.insertNum} / ${document.insertLet}</li>
 			<li><b>Folio Start:</b> ${document.folioNum} / ${document.folioMod}</li>
-			<li><b>Paginated:</b> ${document.folioNum}</li>
+			<li><b>Paginated:</b> ${document.unpaged}</li>
 			<li><b>Modern Date:</b> ${document.yearModern}</li>
 			<li><b>Recorded year:</b> ${document.docYear} ${document.docMonthNum} ${document.docDay}</li>
 			<li><b>Date Notes:</b> ${document.dateNotes}</li>
