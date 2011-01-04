@@ -27,10 +27,14 @@
  */
 package org.medici.docsources.validator.docbase;
 
-import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
+import java.util.Set;
+
 import org.medici.docsources.command.docbase.EditTopicDocumentCommand;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -45,6 +49,8 @@ import org.springframework.validation.Validator;
 public class EditTopicDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private GeoBaseService geoBaseService;
 
 	/**
 	 * x
@@ -86,7 +92,57 @@ public class EditTopicDocumentValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditTopicDocumentCommand editTopicDocumentCommand = (EditTopicDocumentCommand) object;
-		validateDocumentId(editTopicDocumentCommand.getEntryId(), errors);
+		validateTopic(	editTopicDocumentCommand.getEntryId(), 
+						editTopicDocumentCommand.getEplToId(),
+						editTopicDocumentCommand.getTopicId(),
+						editTopicDocumentCommand.getTopicDescription(),
+						editTopicDocumentCommand.getPlaceId(),
+						editTopicDocumentCommand.getPlaceDescription(),
+						errors);
+	}
+
+	private void validateTopic(Integer entryId, Integer eplToId, Integer topicId, String topicDescription, Integer placeId, String placeDescription, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "eplToId", "error.epLinkId.null");
+
+		if (!errors.hasErrors()) {
+			try {
+				Document document = getDocBaseService().findDocument(entryId);
+				if (document == null) {
+					errors.reject("entryId", "error.entryId.notfound");
+				} else {
+					// We cannot insert a link with empty topic and placeId
+					if (eplToId.equals(0) && topicId.equals(0) && placeId.equals(0)) {
+						errors.reject("eplToLinkId", "error.topicandplace.notfound");
+					}
+
+					//retrieving actual linked topics
+					Set<EplToLink> linkedTopics = document.getEplToLink();
+					
+					//Check if linkedTopics is empty and user is trying to modify an existing link
+					if (linkedTopics == null && (!eplToId.equals(0))) {
+						errors.reject("eplToId", "error.eplToId.invalid");
+					} else {
+						// if topic is specify, we check if it exists
+						if (!topicId.equals(0)) {
+							if (getDocBaseService().findTopic(topicId) == null) {
+								errors.reject("topic", "error.topicId.invalid");
+							}
+						}
+
+						// if place is specify, we check if it exists
+						if (!placeId.equals(0)) {
+							if (getGeoBaseService().findPlace(placeId) == null) {
+								errors.reject("topic", "error.placeId.invalid");
+							}
+						}
+					}
+				}
+
+			} catch (ApplicationThrowable ath) {
+				errors.reject("entryId", "error.entryId.notfound");
+			}
+		}
 	}
 
 	/**
@@ -96,15 +152,38 @@ public class EditTopicDocumentValidator implements Validator {
 	 */
 	public void validateDocumentId(Integer entryId, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "epLinkId", "error.epLinkId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
+
+		Document document = null;
 
 		if (!errors.hasErrors()) {
 			try {
-				if (getDocBaseService().findDocument(entryId) == null) {
+				document = getDocBaseService().findDocument(entryId);
+				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");
 			}
 		}
+
+		if (!errors.hasErrors()) {
+			
+		}
+	}
+
+	/**
+	 * @param geoBaseService the geoBaseService to set
+	 */
+	public void setGeoBaseService(GeoBaseService geoBaseService) {
+		this.geoBaseService = geoBaseService;
+	}
+
+	/**
+	 * @return the geoBaseService
+	 */
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
 }

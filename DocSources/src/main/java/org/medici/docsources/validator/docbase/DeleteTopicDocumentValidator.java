@@ -27,7 +27,11 @@
  */
 package org.medici.docsources.validator.docbase;
 
+import java.util.Set;
+
 import org.medici.docsources.command.docbase.DeleteTopicDocumentCommand;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,8 +103,19 @@ public class DeleteTopicDocumentValidator implements Validator {
 
 		if (!errors.hasErrors()) {
 			try {
-				if (getDocBaseService().findDocument(entryId) == null) {
+				Document document = getDocBaseService().findDocument(entryId);
+				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
+				} else {
+					Set<EplToLink> linkedTopics = document.getEplToLink();
+					
+					if (linkedTopics == null) {
+						errors.reject("eplToId", "error.eplToId.notfound");
+					}
+
+					if (!linkedTopics.contains(new EplToLink(eplToId))) {
+						errors.reject("eplToId", "error.eplToId.notfound");
+					}
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");

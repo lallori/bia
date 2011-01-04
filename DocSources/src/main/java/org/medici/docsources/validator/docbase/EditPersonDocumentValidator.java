@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.validator.docbase;
 
-import java.util.Iterator;
 import java.util.Set;
 
 import org.medici.docsources.command.docbase.EditPersonDocumentCommand;
@@ -35,6 +34,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -49,6 +49,8 @@ import org.springframework.validation.Validator;
 public class EditPersonDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private PeopleBaseService peopleBaseService;
 
 	/**
 	 * x
@@ -60,11 +62,25 @@ public class EditPersonDocumentValidator implements Validator {
 	}
 
 	/**
+	 * @return the peopleBaseService
+	 */
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
+	}
+
+	/**
 	 * 
 	 * @param docBaseService
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @param peopleBaseService the peopleBaseService to set
+	 */
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
 	}
 
 	/**
@@ -93,6 +109,14 @@ public class EditPersonDocumentValidator implements Validator {
 		validatePerson(editPersonDocumentCommand.getEntryId(), editPersonDocumentCommand.getEpLinkId(), editPersonDocumentCommand.getPersonId(), errors);
 	}
 
+	/**
+	 * 
+	 * @param documentId
+	 * @param errors
+	 */
+	public void validateDocumentId(Integer entryId, Errors errors) {
+	}
+
 	private void validatePerson(Integer entryId, Integer epLinkId, Integer personId, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "epLinkId", "error.epLinkId.null");
@@ -105,6 +129,15 @@ public class EditPersonDocumentValidator implements Validator {
 				document = getDocBaseService().findDocument(entryId);
 				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
+				} else {
+					// if we are editing or creating, we check that user didn't specify an already linked person
+					Set<EpLink> peopleLinked = document.getEpLink();
+					
+				    for (EpLink currentPerson : peopleLinked) {
+				    	if (currentPerson.getPeople().getPersonId().equals(personId)) {
+							errors.reject("personId", "error.personId.alreadyPresent");
+				    	}
+				    }
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");
@@ -112,24 +145,16 @@ public class EditPersonDocumentValidator implements Validator {
 		}
 
 		if (!errors.hasErrors()) {
-			if (epLinkId.equals(0)) {
-				Set<EpLink> peopleLinked = document.getEpLink();
-				
-			    for (EpLink currentPerson : peopleLinked) {
-			    	if (currentPerson.getPeople().getPersonId().equals(personId)) {
-						errors.reject("entryId", "error.peopleId.alreadyPresent");
-			    	}
-			    }
+			try {
+				// if place is specify, we check if it exists
+				if (!personId.equals(0)) {
+					if (getPeopleBaseService().findPeople(personId) == null) {
+						errors.reject("topic", "error.personId.notfound");
+					}
+				}			
+			} catch (ApplicationThrowable ath) {
+				errors.reject("entryId", "error.personId.notfound");
 			}
-			
 		}
-	}
-
-	/**
-	 * 
-	 * @param documentId
-	 * @param errors
-	 */
-	public void validateDocumentId(Integer entryId, Errors errors) {
 	}
 }
