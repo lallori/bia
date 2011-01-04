@@ -29,7 +29,7 @@ package org.medici.docsources.command.docbase;
 
 
 /**
- * Command bean for action "Edit Person Document" and Add New PeopleDocument
+ * Command bean for action "Edit Person Document" and "Add New Person" Document
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 

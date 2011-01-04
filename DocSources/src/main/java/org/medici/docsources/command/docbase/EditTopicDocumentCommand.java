@@ -39,7 +39,7 @@ import java.util.Date;
 public class EditTopicDocumentCommand {
 	private Date dateCreated;
 	private Integer entryId;
-	private Integer eplToLinkId;
+	private Integer eplToId;
 	private String placeDescription;
 	private Integer placeId;
 	private String topicDescription;
@@ -62,10 +62,10 @@ public class EditTopicDocumentCommand {
 	}
 
 	/**
-	 * @return the eplToLinkId
+	 * @return the eplToId
 	 */
-	public Integer getEplToLinkId() {
-		return eplToLinkId;
+	public Integer getEplToId() {
+		return eplToId;
 	}
 
 	/**
@@ -113,10 +113,10 @@ public class EditTopicDocumentCommand {
 	}
 
 	/**
-	 * @param eplToLinkId the eplToLinkId to set
+	 * @param eplToId the eplToId to set
 	 */
-	public void setEplToLinkId(Integer eplToLinkId) {
-		this.eplToLinkId = eplToLinkId;
+	public void setEplToId(Integer eplToId) {
+		this.eplToId = eplToId;
 	}
 
 	/**
