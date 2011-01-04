@@ -37,7 +37,9 @@ import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
+import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -219,6 +221,14 @@ public interface DocBaseService {
 
 	/**
 	 * 
+	 * @param topicId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public TopicList findTopic(Integer topicId) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param entryId
 	 * @param eplToLinkId
 	 * @return
@@ -294,4 +304,22 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchPersonLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Place> searchPlaceLinkableToTopicDocument(Integer entryId, String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
 }

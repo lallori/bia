@@ -27,12 +27,14 @@
  */
 package org.medici.docsources.service.docbase;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.EpLinkUtils;
+import org.medici.docsources.common.util.EplToLinkUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
@@ -49,7 +51,9 @@ import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
+import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,6 +170,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 			eplToLink.setEplToId(null);
 			eplToLink.setDateCreated(new Date());
 
+			// fill fields to update document section
+			if (eplToLink.getTopic() != null) {
+				eplToLink.setTopic(getTopicsListDAO().find(eplToLink.getTopic().getTopicId()));				
+			} else {
+				eplToLink.setTopic(null);
+			}
+			if (eplToLink.getPlace() != null) {
+				eplToLink.setPlace(getPlaceDAO().find(eplToLink.getPlace().getPlaceAllId()));
+			} else {
+				eplToLink.setPlace(null);
+			}
+
 			getEplToLinkDAO().persist(eplToLink);
 
 			return eplToLink.getDocument();
@@ -205,7 +221,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public void deleteTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
 		try {
-			EplToLink eplToLinkToDelete = getEplToLinkDAO().find(eplToLink.getEplToId(), eplToLink.getDocument().getEntryId());
+			EplToLink eplToLinkToDelete = getEplToLinkDAO().find(eplToLink.getDocument().getEntryId(), eplToLink.getEplToId());
 			getEplToLinkDAO().remove(eplToLinkToDelete);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -217,37 +233,31 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Document editCorrespondentsDocument(Document document) throws ApplicationThrowable {
-		Document documentToUpdate = null;
 		try {
-			documentToUpdate = getDocumentDAO().find(document.getEntryId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
 
-		//TODO : fill fields to update document section
-		documentToUpdate.setLastUpdate(new Date());
-		if (document.getSenderPeople().getPersonId() > 0)
-			documentToUpdate.setSenderPeople(getPeopleDAO().find(document.getSenderPeople().getPersonId()));
-		else
-			documentToUpdate.setSenderPeople(null);
-		documentToUpdate.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
-		if (document.getSenderPlace().getPlaceAllId() > 0)
-			documentToUpdate.setSenderPlace(getPlaceDAO().find(document.getSenderPlace().getPlaceAllId()));
-		else
-			documentToUpdate.setSenderPlace(null);
-		documentToUpdate.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
-		if (document.getRecipientPeople().getPersonId() > 0)
-			documentToUpdate.setRecipientPeople(getPeopleDAO().find(document.getRecipientPeople().getPersonId()));
-		else
-			documentToUpdate.setRecipientPeople(null);
-		documentToUpdate.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
-		if (document.getSenderPlace().getPlaceAllId() > 0)
-			documentToUpdate.setRecipientPlace(getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId()));
-		else
-			documentToUpdate.setRecipientPlace(null);
-		documentToUpdate.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
-		
-		try {
+			//TODO : fill fields of correspondents section
+			documentToUpdate.setLastUpdate(new Date());
+			if (document.getSenderPeople().getPersonId() > 0)
+				documentToUpdate.setSenderPeople(getPeopleDAO().find(document.getSenderPeople().getPersonId()));
+			else
+				documentToUpdate.setSenderPeople(null);
+			documentToUpdate.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
+			if (document.getSenderPlace().getPlaceAllId() > 0)
+				documentToUpdate.setSenderPlace(getPlaceDAO().find(document.getSenderPlace().getPlaceAllId()));
+			else
+				documentToUpdate.setSenderPlace(null);
+			documentToUpdate.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
+			if (document.getRecipientPeople().getPersonId() > 0)
+				documentToUpdate.setRecipientPeople(getPeopleDAO().find(document.getRecipientPeople().getPersonId()));
+			else
+				documentToUpdate.setRecipientPeople(null);
+			documentToUpdate.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
+			if (document.getSenderPlace().getPlaceAllId() > 0)
+				documentToUpdate.setRecipientPlace(getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId()));
+			else
+				documentToUpdate.setRecipientPlace(null);
+			documentToUpdate.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
 		
 			return getDocumentDAO().merge(documentToUpdate);
 		} catch (Throwable th) {
@@ -260,42 +270,33 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Document editDetailsDocument(Document document) throws ApplicationThrowable {
-		Document documentToUpdate = null;
 		try {
-			documentToUpdate = getDocumentDAO().find(document.getEntryId());
+			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
 
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+			//TODO : fill fields to update document section
+			documentToUpdate.setLastUpdate(new Date());
+			//Setting fields that are defined as nullable = false
+			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			// We need to attach the correct volume istance by database extraction.
+			document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
+			document.setDateCreated(new Date());
+			document.setLastUpdate(new Date());
+			document.setDocTobeVetted(true);
+			document.setDocToBeVettedDate(new Date());
+			document.setDocVetted(false);
+			document.setNewEntry(true);
+			document.setReckoning(false);
+			document.setSenderPeopleUnsure(false);
+			document.setSenderPlaceUnsure(false);
+			document.setRecipientPeopleUnsure(false);
+			document.setRecipientPlaceUnsure(false);
+			document.setGraphic(false);
+	
+			if (document.getDocMonthNum().equals(0)) {
+				document.setDocMonthNum(null);
+			}
 
-		//TODO : fill fields to update document section
-		documentToUpdate.setLastUpdate(new Date());
-		//Setting fields that are defined as nullable = false
-		document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-		// We need to attach the correct volume istance by database extraction.
-		document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
-		document.setDateCreated(new Date());
-		document.setLastUpdate(new Date());
-		document.setDocTobeVetted(true);
-		document.setDocToBeVettedDate(new Date());
-		document.setDocVetted(false);
-		document.setNewEntry(true);
-		document.setReckoning(false);
-		document.setSenderPeopleUnsure(false);
-		document.setSenderPlaceUnsure(false);
-		document.setRecipientPeopleUnsure(false);
-		document.setRecipientPlaceUnsure(false);
-		document.setGraphic(false);
-
-		if (document.getDocMonthNum().equals(0)) {
-			document.setDocMonthNum(null);
-		}
-
-		
-		try {
-			documentToUpdate = getDocumentDAO().merge(documentToUpdate);
-
-			return documentToUpdate;
+			return getDocumentDAO().merge(documentToUpdate);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -306,19 +307,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Document editExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
-		SynExtract synExtractToUpdate = null;
 		try {
-			synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
 
-		// fill fields to update document section
-		synExtractToUpdate.setLastUpdate(new Date());
-		synExtractToUpdate.setDocExtract(synExtract.getDocExtract());
-		synExtractToUpdate.setSynopsis(synExtract.getSynopsis());
+			// fill fields to update document section
+			synExtractToUpdate.setLastUpdate(new Date());
+			synExtractToUpdate.setDocExtract(synExtract.getDocExtract());
+			synExtractToUpdate.setSynopsis(synExtract.getSynopsis());
 		
-		try {
 			getSynExtractDAO().merge(synExtractToUpdate);
 
 			return synExtractToUpdate.getDocument();
@@ -332,17 +328,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
-		FactChecks factChecksToUpdate = null;
 		try {
-			factChecksToUpdate = getFactChecksDAO().find(factChecks.getVetId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+			FactChecks factChecksToUpdate = getFactChecksDAO().find(factChecks.getVetId());
+			// fill fields to update fact check section
+			factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
 
-		// fill fields to update fact check section
-		factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
-
-		try {
 			getFactChecksDAO().merge(factChecksToUpdate);
 
 			return factChecksToUpdate.getDocument();
@@ -356,19 +346,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	@Override
 	public Document editPersonDocument(EpLink epLink) throws ApplicationThrowable {
-		EpLink epLinkToUpdate = null;
 		try {
-			epLinkToUpdate = getEpLinkDAO().find(epLink.getEpLinkId(), epLink.getDocument().getEntryId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+			EpLink epLinkToUpdate = getEpLinkDAO().find(epLink.getEpLinkId(), epLink.getDocument().getEntryId());
 
-		// fill fields to update document section
-		epLinkToUpdate.setAssignUnsure(epLink.getAssignUnsure());
-		epLinkToUpdate.setPortrait(epLink.getPortrait());
-		epLinkToUpdate.setPeople(epLink.getPeople());
+			// fill fields to update document section
+			epLinkToUpdate.setAssignUnsure(epLink.getAssignUnsure());
+			epLinkToUpdate.setPortrait(epLink.getPortrait());
+			epLinkToUpdate.setPeople(epLink.getPeople());
 
-		try {
 			getEpLinkDAO().merge(epLinkToUpdate);
 
 			return epLinkToUpdate.getDocument();
@@ -380,22 +365,23 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("null")
 	@Override
 	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
-		EplToLink eplToLinkToUpdate = null;
 		try {
-			eplToLink = getEplToLinkDAO().find(eplToLink.getEplToId());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+			EplToLink eplToLinkToUpdate = getEplToLinkDAO().find(eplToLink.getEplToId());
 
-		// fill fields to update document section
-		eplToLinkToUpdate.setTopic(eplToLink.getTopic());
-		eplToLinkToUpdate.setPlace(eplToLink.getPlace());
+			// fill fields to update document section
+			if (eplToLink.getTopic() != null) {
+				eplToLinkToUpdate.setTopic(getTopicsListDAO().find(eplToLink.getTopic().getTopicId()));				
+			} else {
+				eplToLinkToUpdate.setTopic(null);
+			}
+			if (eplToLink.getPlace() != null) {
+				eplToLinkToUpdate.setPlace(getPlaceDAO().find(eplToLink.getPlace().getPlaceAllId()));
+			} else {
+				eplToLinkToUpdate.setPlace(null);
+			}
 
-
-		try {
 			getEplToLinkDAO().merge(eplToLinkToUpdate);
 
 			return eplToLinkToUpdate.getDocument();
@@ -471,6 +457,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public SynExtract findSynExtractDocument(Integer entryId) throws ApplicationThrowable {
 		try {
 			return getSynExtractDAO().findByEntryId(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public TopicList findTopic(Integer topicId) throws ApplicationThrowable {
+		try {
+			return getTopicsListDAO().find(topicId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -666,12 +661,42 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<People> searchPersonLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable {
 		try {
 			List<EpLink> epLinkList = getEpLinkDAO().findByEntryId(entryId);
 			
 			return getPeopleDAO().searchPersonLinkableToDocument(EpLinkUtils.getPeopleIdList(epLinkList), query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Place> searchPlaceLinkableToTopicDocument(Integer entryId, String query) throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().searchPlaceLinkableToTopicDocument(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable {
+		try {
+			// TODO: Can we have a topic defined multiple times? List<EplToLink> eplToLinkList = getEplToLinkDAO().findByEntryId(entryId);
+			List<EplToLink> eplToLinkList = new ArrayList<EplToLink>(0);
+			
+			return getTopicsListDAO().searchTopicLinkableToDocument(EplToLinkUtils.getTopicIdList(eplToLinkList), query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

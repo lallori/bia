@@ -17,17 +17,11 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
-			<bean id ="openSessionInViewInterceptor" name="openSessionInViewInterceptor" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
+			<bean id ="openEntityManagerInViewInterceptor" name="openEntityManagerInViewInterceptor" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
 				<property name="entityManagerFactory" ref="entityManagerFactory" />
 			</bean>
 		</mvc:interceptor>
-	
-		<!-- <bean id ="openSessionInViewInterceptor" name="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
-    		<property name="sessionFactory">
-        		<ref bean="sessionFactory" />
-    		</property>
-		</bean>
-	     -->
+
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 	       	<bean id="historyLogAction" class="org.medici.docsources.audit.HistoryLogAction">
@@ -35,6 +29,7 @@
 		        <property name="historyLogService" ref="historyLogService" />
 	       	</bean>
 		</mvc:interceptor>
+
 	    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 	        <description>Interceptor per la modifica del locale su singola richiesta.</description>
 	        <property name="paramName" value="locale"/>
