@@ -27,6 +27,18 @@
  */
 package org.medici.docsources.dao.topicslist;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.WildcardQuery;
+import org.hibernate.ejb.HibernateEntityManager;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.TopicList;
 import org.springframework.stereotype.Repository;
@@ -62,5 +74,29 @@ TopicsListDAO {
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 2651694660170054610L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException {
+		String[] outputFields = new String[]{"topicId", "topicTitle"};
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		
+		BooleanQuery booleanQuery = new BooleanQuery();
+		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+		
+		for (int i=0; i<topicIdList.size(); i++) {
+			booleanQuery.add(new BooleanClause(new TermQuery(new Term("topicId", topicIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
+		}
+
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, TopicList.class);
+		fullTextQuery.setProjection(outputFields);
+
+		List<TopicList> listTopics = executeFullTextQuery(fullTextQuery, outputFields, TopicList.class);
+
+		return listTopics; 
+	}
 
 }

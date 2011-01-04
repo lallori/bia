@@ -62,8 +62,12 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Place findPlace(Integer peopleId) throws ApplicationThrowable {
-		return null;
+	public Place findPlace(Integer placeId) throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().find(placeId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

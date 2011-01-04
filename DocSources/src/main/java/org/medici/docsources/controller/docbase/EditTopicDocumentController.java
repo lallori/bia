@@ -98,21 +98,21 @@ public class EditTopicDocumentController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			EplToLink eplToLink = new EplToLink(command.getEplToLinkId());
+			EplToLink eplToLink = new EplToLink(command.getEplToId());
 			eplToLink.setDocument(new Document(command.getEntryId()));
-			if (command.getTopicDescription() == null) {
-				eplToLink.setTopic(new TopicList(0));
-			} else {
+			if (!ObjectUtils.toString(command.getTopicDescription()).equals("")) {
 				eplToLink.setTopic(new TopicList(command.getTopicId()));
-			}
-			if (command.getPlaceDescription() == null) {
-				eplToLink.setPlace(new Place(0)); 
 			} else {
+				eplToLink.setTopic(null);
+			}
+			if (!ObjectUtils.toString(command.getPlaceDescription()).equals("")) {
 				eplToLink.setPlace(new Place(command.getPlaceId())); 
+			} else {
+				eplToLink.setPlace(null); 
 			}
 
 			try {
-				if (command.getEplToLinkId().equals(0)) {
+				if (command.getEplToId().equals(0)) {
 					getDocBaseService().addNewTopicDocument(eplToLink);
 				} else {
 					getDocBaseService().editTopicDocument(eplToLink);
@@ -146,14 +146,14 @@ public class EditTopicDocumentController {
 
 		if ((command != null) && (command.getEntryId() > 0)) {
 
-			if (command.getEplToLinkId().equals(0)) {
+			if (command.getEplToId().equals(0)) {
 				command.setPlaceDescription(null);
 				command.setPlaceId(null);
 				command.setTopicDescription(null);
 				command.setTopicId(null);
 			} else {
 				try {
-					EplToLink eplToLink = getDocBaseService().findTopicDocument(command.getEntryId(), command.getEplToLinkId());
+					EplToLink eplToLink = getDocBaseService().findTopicDocument(command.getEntryId(), command.getEplToId());
 
 					if (eplToLink.getPlace() != null) {
 						command.setPlaceDescription(eplToLink.getPlace().getPlaceNameFull());
@@ -182,7 +182,7 @@ public class EditTopicDocumentController {
 			if (ObjectUtils.toString(command).equals("")) {
 				command = new EditTopicDocumentCommand();
 			}
-			command.setEplToLinkId(null);
+			command.setEplToId(null);
 			command.setDateCreated(new Date());
 			command.setTopicDescription(null);
 			command.setTopicId(null);

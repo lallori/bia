@@ -50,7 +50,7 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 
 	/**
 	 * 
-	 * @param query
+	 * @param alias
 	 * @return
 	 * @throws PersistenceException
 	 */
@@ -58,10 +58,18 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 
 	/**
 	 * 
-	 * @param query
+	 * @param alias
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchSendersPlace(String alias) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param alias
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Place> searchPlaceLinkableToTopicDocument(String alias) throws PersistenceException;
 
 }

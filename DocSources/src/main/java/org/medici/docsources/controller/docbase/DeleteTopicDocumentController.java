@@ -99,7 +99,7 @@ public class DeleteTopicDocumentController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			EplToLink eplToLink = new EplToLink(command.getEplToId());
+			EplToLink eplToLink = new EplToLink(command.getEplToId(), command.getEntryId());
 
 			try {
 				getDocBaseService().deleteTopicDocument(eplToLink);

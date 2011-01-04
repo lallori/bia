@@ -81,6 +81,21 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Place> searchPlaceLinkableToTopicDocument(String alias) throws PersistenceException {
+		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+		String[] outputFields = new String[]{"placeAllId", "placeName"};
+
+		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
+		List<Place> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
+
+		return listRecipients;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Place> searchRecipientsPlace(String alias) throws PersistenceException {
 		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
 		String[] outputFields = new String[]{"placeAllId", "placeName"};

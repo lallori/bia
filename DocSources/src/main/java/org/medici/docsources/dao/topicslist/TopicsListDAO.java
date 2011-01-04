@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.topicslist;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.TopicList;
 
@@ -37,5 +41,14 @@ import org.medici.docsources.domain.TopicList;
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface TopicsListDAO extends Dao<Integer, TopicList> {
+
+	/**
+	 * 
+	 * @param topicIdList
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException;
 
 }

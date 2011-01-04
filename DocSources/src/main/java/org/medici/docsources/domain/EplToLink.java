@@ -132,6 +132,18 @@ public class EplToLink implements Serializable{
 	}
 
 	/**
+	 * 
+	 * @param eplToId2
+	 * @param entryId
+	 */
+	public EplToLink(Integer eplToId, Integer entryId) {
+		super();
+		
+		setEplToId(eplToId);
+		setDocument(new Document(entryId));
+	}
+
+	/**
 	 * @return the eplToId
 	 */
 	public Integer getEplToId() {

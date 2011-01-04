@@ -33,6 +33,8 @@ import java.util.Map;
 
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +64,10 @@ public class AjaxController {
 	/**
 	 * This method returns a list of person to add to document. Result does not
 	 * contains person already linked to document. 
-	 *  
+	 * 
+	 * @param entryId Unique document identifier
 	 * @param text Text to search in ...
-	 * @return ModelAndView containing senders.
+	 * @return ModelAndView containing linkable people.
 	 */
 	@RequestMapping(value = "/de/docbase/SearchPersonLinkableToDocument", method = RequestMethod.GET)
 	public ModelAndView searchPersonLinkableToDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
@@ -85,6 +88,58 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
+	/**
+	 * This method returns a list of topics linkable to document. Result does not
+	 * contains topics already linked to document. 
+	 *  
+	 * @param entryId Unique document identifier
+	 * @param query Search string filled by user
+	 * 
+	 * @return ModelAndView containing linkable topics.
+	 */
+	@RequestMapping(value = "/de/docbase/SearchPlaceLinkableToTopicDocument", method = RequestMethod.GET)
+	public ModelAndView searchPlaceLinkableToTopicDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<Place> places = getDocBaseService().searchPlaceLinkableToTopicDocument(entryId, query);
+			model.put("query", query);
+			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeName", " ", " ", Boolean.TRUE));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns a list of topics linkable to document. Result does not
+	 * contains topics already linked to document. 
+	 *  
+	 * @param entryId Unique document identifier
+	 * @param query Search string filled by user
+	 * 
+	 * @return ModelAndView containing linkable topics.
+	 */
+	@RequestMapping(value = "/de/docbase/SearchTopicLinkableToDocument", method = RequestMethod.GET)
+	public ModelAndView searchTopicLinkableToDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<TopicList> topics = getDocBaseService().searchTopicLinkableToDocument(entryId, query);
+			model.put("query", query);
+			model.put("data", ListBeanUtils.transformList(topics, "topicId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(topics, "topicTitle", " ", " ", Boolean.TRUE));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
 	/**
 	 * @param docBaseService the docBaseService to set
 	 */

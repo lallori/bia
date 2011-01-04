@@ -48,8 +48,6 @@ import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.hibernate.search.query.dsl.BooleanJunction;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
@@ -133,10 +131,9 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
 		fullTextQuery.setProjection(outputFields);
 
-		List<People> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, People.class);
+		List<People> listPeopleLinkable = executeFullTextQuery(fullTextQuery, outputFields, People.class);
 
-		return listRecipients; 
-
+		return listPeopleLinkable; 
 	}
 
 	/**

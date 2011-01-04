@@ -60,7 +60,7 @@ public interface GeoBaseService {
 	 * @param peopleId
 	 * @return
 	 */
-	public Place findPlace(Integer peopleId) throws ApplicationThrowable;
+	public Place findPlace(Integer placeId) throws ApplicationThrowable;
 
 	/**
 	 * 

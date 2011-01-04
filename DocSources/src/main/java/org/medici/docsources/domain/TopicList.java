@@ -43,8 +43,12 @@ import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 
@@ -77,12 +81,15 @@ public class TopicList implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"TOPICID\"", length=10, nullable=false)
+	@DocumentId
 	private Integer topicId;
 	
 	@Column (name="\"TOPICTITLE\"", length=50)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String topicTitle;
 	
 	@Column (name="\"DESCRIPTION\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String description;
 
 	/**
