@@ -28,7 +28,6 @@
 package org.medici.docsources.controller.manuscriptviewer;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +63,6 @@ public class ProxyIIPImageController {
 	 * @param volumeId
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
 	public void proxyIIPImage(HttpServletRequest httpServletRequest, HttpServletResponse response) {
 		// Create an instance of HttpClient.
@@ -79,27 +77,43 @@ public class ProxyIIPImageController {
 		stringBuffer.append(properties.getProperty("iipimage.fcgi.path"));
 		stringBuffer.append("?");
 
-		Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&obj=IIP,1.0&obj=Max-size&obj=Tile-size&obj=Resolution-number& HTTP/1.1" 200 69
+		// "GET /fcgi-bin/iipsrv.fcgi?WID=75&FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&CVT=JPEG& HTTP/1.1" 200 1329
+		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
 		
-		while (parameterNames.hasMoreElements()) {
-			String parameterName = parameterNames.nextElement();
-			if (parameterName.equals("FIF")) {
-				stringBuffer.append(parameterName);
+		if (httpServletRequest.getParameter("obj") != null) {
+			// This get image tile informations
+			stringBuffer.append("FIF=");
+			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(httpServletRequest.getParameter("FIF"));
+			stringBuffer.append("&");
+			String[] values = httpServletRequest.getParameterValues("obj");
+			for (int i=0; i<values.length;i++) {
+				stringBuffer.append("obj");
 				stringBuffer.append("=");
-				stringBuffer.append(properties.getProperty("iipimage.image.path"));
-				stringBuffer.append(httpServletRequest.getParameter("FIF"));
+				stringBuffer.append(values[i]);
 				stringBuffer.append("&");
-			} else {
-				String[] values = httpServletRequest.getParameterValues(parameterName);
-				for (int i=0; i<values.length;i++) {
-					stringBuffer.append(parameterName);
-					stringBuffer.append("=");
-					stringBuffer.append(values[i]);
-					stringBuffer.append("&");
-				}
 			}
+		} else if (httpServletRequest.getParameter("WID") != null) {
+			// This get image preview
+			stringBuffer.append("WID=");
+			stringBuffer.append(httpServletRequest.getParameter("WID"));
+			stringBuffer.append("&FIF=");
+			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(httpServletRequest.getParameter("FIF"));
+			stringBuffer.append("&CVT=");
+			stringBuffer.append(httpServletRequest.getParameter("CVT"));
+			stringBuffer.append("&");
+		} else if (httpServletRequest.getParameter("jtl") != null) {
+			// This get tiff section image.
+			stringBuffer.append("&FIF=");
+			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(httpServletRequest.getParameter("FIF"));
+			stringBuffer.append("&jtl=");
+			stringBuffer.append(httpServletRequest.getParameter("jtl"));
+			stringBuffer.append("&");
 		}
-		
+
 		// Create a method instance.
 		GetMethod method = new GetMethod(stringBuffer.toString());
 
