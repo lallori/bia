@@ -4,6 +4,41 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<div>
-ShowPerson
-</div>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
+		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
+		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
+		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
+		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
+	</security:authorize>
+
+	<div id="EditDetailsPersonDiv">
+		<div id="createdby"><h6>CREATED BY KH 11/28/1996</h6></div>
+		<h5>PERSON DETAILS <a id="EditDetailsPerson" href="/DocSources/de/peoplebase/EditDetailsPerson.html">edit</a></h5>
+		<hr id="lineSeparator"/>
+		<div id="EditPortraitPersonDiv">
+			<img src="/DocSources/images/default_user.jpg" alt="default image" />
+			<p><b>Portrait</b> <a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></p>
+		</div>
+		<h2 class="titlepeople">Tudor, Henry VIII</h2>
+		<ul id="activeEnd">
+			<li><b>Gender:</b> M</li>
+			<li><b>Date of Birth:</b> 1491</li>
+			<li><b>Birth Place:</b><a href="#" id="linkSearch">Firenze / Toscana / Italia</a></li>
+			<li><b>Active Start:</b> 24</li>
+			<li><b>Date of Death:</b> 1547 Jan 1</li>
+			<li><b>Modern Date:</b> 1577</li>
+			<li><b>Death Place:</b> <a href="#" id="linkSearch">Firenze / Toscana / Italia</a></li>
+			<li><b>Active End:</b> Undated document but inserted between documents dated 1577</li>
+		</ul>
+	</div>
