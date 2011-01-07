@@ -32,7 +32,7 @@ package org.medici.docsources.command.peoplebase;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.EditDetailsPersonController.docsources.controller.peoplebase.EditNamesPersonController
+ * @see org.medici.docsources.controller.peoplebase.EditNamesPersonController
  */
 public class EditNamesPersonCommand {
 	private Integer personId;
