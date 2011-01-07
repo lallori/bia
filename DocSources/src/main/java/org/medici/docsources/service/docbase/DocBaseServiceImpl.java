@@ -279,18 +279,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			// We need to attach the correct volume istance by database extraction.
 			document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
-			document.setDateCreated(new Date());
-			document.setLastUpdate(new Date());
 			document.setDocTobeVetted(true);
 			document.setDocToBeVettedDate(new Date());
 			document.setDocVetted(false);
-			document.setNewEntry(true);
+			document.setNewEntry(false);
 			document.setReckoning(false);
-			document.setSenderPeopleUnsure(false);
-			document.setSenderPlaceUnsure(false);
-			document.setRecipientPeopleUnsure(false);
-			document.setRecipientPlaceUnsure(false);
-			document.setGraphic(false);
 	
 			if (document.getDocMonthNum().equals(0)) {
 				document.setDocMonthNum(null);
