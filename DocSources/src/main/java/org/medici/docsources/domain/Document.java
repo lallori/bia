@@ -31,7 +31,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -272,6 +271,10 @@ public class Document implements Serializable{
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean graphic;
+
+	@Column (name="\"DOCTYPOLOGY\"", length=250)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private String docTypology;
 
 	//Linked fact Check
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="document")
@@ -922,5 +925,19 @@ public class Document implements Serializable{
 	 */
 	public SynExtract getSynExtract() {
 		return synExtract;
+	}
+
+	/**
+	 * @param docTypology the docTypology to set
+	 */
+	public void setDocTypology(String docTypology) {
+		this.docTypology = docTypology;
+	}
+
+	/**
+	 * @return the docTypology
+	 */
+	public String getDocTypology() {
+		return docTypology;
 	}
 }
