@@ -113,6 +113,8 @@ public class EditDetailsDocumentController {
 			document.setUnpaged(command.getUnpaged());
 			//Disc. Cont'd
 			document.setContDisc(command.getContDisc());
+			//Document Typology
+			document.setDocTypology(command.getDocTypology());
 			// Date
 			document.setDocYear(command.getDocYear());
 			document.setDocMonthNum(command.getDocMonthNum());
