@@ -31,7 +31,11 @@
 			});
 	        
 			$('#no').click(function() { 
-				$.unblockUI();$(".blockUI").fadeOut("slow");
+				$.unblockUI();
+				$(".blockUI").fadeOut("slow");
+				$('#question').hide();
+				$('#EditCorrespondentsVolumeDiv').append($("#question"));
+				$(".blockUI").remove();
 	            return false; 
 	        }); 
 	        
@@ -45,7 +49,7 @@
 
 			$("#EditCorrespondentsVolumeForm").submit(function (){
 	 			$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					$("#EditCorrespondentsVolumeDiv").html(html);
+					$("#EditCorrespondentsVolumeDiv").replaceWith(html);
 				}});
 
 				return false;

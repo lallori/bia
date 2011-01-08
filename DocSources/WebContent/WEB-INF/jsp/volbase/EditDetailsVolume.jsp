@@ -11,7 +11,7 @@
 			<legend><b>VOLUME DETAILS</b></legend>
 			<div>
 				<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error"><i>Carteggio</i></form:label>
-				<form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_30c"/>
+				<form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_30c" />
 			</div>
 
 			<div>
@@ -127,7 +127,11 @@
 			});
 	        
 			$('#no').click(function() { 
-				$.unblockUI();$(".blockUI").fadeOut("slow");
+				$.unblockUI();
+				$(".blockUI").fadeOut("slow");
+				$('#question').hide();
+				$('#EditDetailsVolumeDiv').append($("#question"));
+				$(".blockUI").remove();
 	            return false; 
 	        }); 
 	        

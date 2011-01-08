@@ -29,7 +29,11 @@
 			});
 	        
 			$('#no').click(function() { 
-				$.unblockUI();$(".blockUI").fadeOut("slow");
+				$.unblockUI();
+				$(".blockUI").fadeOut("slow");
+				$('#question').hide();
+				$('#EditContextVolumeDiv').append($("#question"));
+				$(".blockUI").remove();
 	            return false; 
 	        }); 
 	        
@@ -43,7 +47,7 @@
 
 			$("#EditContextVolumeForm").submit(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					$("#EditContextVolumeDiv").html(html);
+					$("#EditContextVolumeDiv").replaceWith(html);
 				}});
 				return false;
 			});
