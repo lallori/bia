@@ -46,8 +46,20 @@
 		</fieldset>	
 		<div id="EditTopicDocumentDiv"></div>
 	
+	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId"   value="${command.entryId}" />
+	</c:url>
+
 		<script type="text/javascript">
 			$(document).ready(function() {
+				$('#close').click(function() { 
+					$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+						$("#body_left").html(html);
+					}});
+						
+					return false; 
+				}); 
+
 				$(".deleteValue").click(function() {
 					$.get(this.href, function(data) {
 						if(data.match(/KO/g)){

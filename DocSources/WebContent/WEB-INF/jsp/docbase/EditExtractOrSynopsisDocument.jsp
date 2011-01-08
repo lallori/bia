@@ -21,8 +21,35 @@
 			<form:hidden path="entryId"/>
 		</fieldset>	
 	</form:form>
+
+	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId"   value="${command.entryId}" />
+	</c:url>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('#close').click(function() {
+				$('#EditExtractOrSynopsisDocumentDiv').block({ message: $('#question') }); 
+				return false;
+			});
+      
+			$('#no').click(function() { 
+				$.unblockUI();
+				$(".blockUI").fadeOut("slow");
+				$('#question').hide();
+				$('#EditExtractOrSynopsisDocumentDiv').append($("#question"));
+				$(".blockUI").remove();
+	            return false; 
+	        }); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+				}});
+					
+				return false; 
+			}); 
+
 			$("#EditExtractOrSynopsisDocumentForm").submit(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
 						if(html.match(/inputerrors/g)){

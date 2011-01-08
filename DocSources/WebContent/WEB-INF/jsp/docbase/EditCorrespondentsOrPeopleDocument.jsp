@@ -101,6 +101,24 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('#close').click(function() {
+				$('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $('#question') }); 
+				return false;
+			});
+      
+			$('#no').click(function() { 
+				$.unblockUI();$(".blockUI").fadeOut("slow");
+				return false; 
+			}); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+				}});
+					
+				return false; 
+			}); 
+
 			var senderPeople = $('#senderPeopleDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchSenderPeopleUrl}',
 			    minChars:3, 

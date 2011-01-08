@@ -18,7 +18,7 @@
 				<form:label id="insertNumLabel" for="insertNum" path="insertNum" cssErrorClass="error">Insert/Part:</form:label>
 				<form:input id="insertNum" path="insertNum" class="input_5c" />
 				<form:input id="insertLet" path="insertLet" class="input_5c" />
-				<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error">Folio Start:</form:label>
+				<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error">Document starts at folio :</form:label>
 				<form:input id="folioNum" path="folioNum" class="input_5c" />
 				<form:input id="folioMod" path="folioMod" class="input_5c" />
 			</div>
@@ -74,12 +74,36 @@
 			<input id="dateCreated" name="dateCreated" type="hidden" value="11/03/2010 11:51:57"/>
 			
 			<div style="margin-top:5px">
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" /><input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
 			</div>
 		</fieldset>	
 	</form:form>
+
+	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId"   value="${command.entryId}" />
+	</c:url>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('#close').click(function() {
+				$('#EditDetailsDocumentDiv').block({ message: $('#question') }); 
+				return false;
+			});
+      
+			$('#no').click(function() { 
+				$.unblockUI();$(".blockUI").fadeOut("slow");
+				return false; 
+			}); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+				}});
+					
+				return false; 
+			}); 
+
 			var showVolumeExplorer = function (){
 				$.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $("#volume").val() },
 					function(data){

@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<form:form id="EditFactChecksDocumentForm" method="post" cssClass="edit">
+	<form:form id="EditFactCheckDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>FACT CHECK</b></legend>
 				
@@ -19,9 +19,31 @@
 		</fieldset>	
 	</form:form>
 
+	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId"   value="${command.entryId}" />
+	</c:url>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#EditFactChecksDocumentForm").submit(function (){
+			$('#close').click(function() {
+				$('#EditFactCheckDocumentDiv').block({ message: $('#question') }); 
+				return false;
+			});
+      
+			$('#no').click(function() { 
+				$.unblockUI();$(".blockUI").fadeOut("slow");
+				return false; 
+			}); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+				}});
+					
+				return false; 
+			}); 
+
+			$("#EditFactCheckDocumentForm").submit(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
 						if(html.match(/inputerrors/g)){
 							$("#EditFactChecksDocumentDiv").html(html);
