@@ -1,12 +1,55 @@
 CREATE DATABASE `docsources` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-CREATE DATABASE `docsources_audit` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE `docsources_audit` ;
+drop table docsources_audit.tblAltNames_AUD;
+drop table docsources_audit.tblBiblioT_AUD;
+drop table docsources_audit.tblBioRefLink_AUD;
+drop table docsources_audit.tblCatalog_AUD;
+drop table docsources_audit.tblCountries_AUD;
+drop table docsources_audit.tblDocuments_AUD;
+drop table docsources_audit.tblEPLTOLink_AUD;
+drop table docsources_audit.tblEPLink_AUD;
+drop table docsources_audit.tblFactChecks_AUD;
+drop table docsources_audit.tblImages_AUD;
+drop table docsources_audit.tblMarriages_AUD;
+drop table docsources_audit.tblPOLink_AUD;
+drop table docsources_audit.tblPeople_AUD;
+drop table docsources_audit.tblPlaces_AUD;
+drop table docsources_audit.tblPrcLink_AUD;
+drop table docsources_audit.tblRoleCats_AUD;
+drop table docsources_audit.tblSeriesList_AUD;
+drop table docsources_audit.tblSynExtracts_AUD;
+drop table docsources_audit.tblTitleOccsList_AUD;
+drop table docsources_audit.tblTopicsList_AUD;
+drop table docsources_audit.tblVolumes_AUD;
+
+create table docsources_audit.tblAltNames_AUD (NAMEID integer not null, REV integer not null, REVTYPE tinyint, ALTNAME varchar(255), NAMEPREFIX varchar(50), NAMETYPE varchar(50), NOTES LONGTEXT, PERSONID integer, primary key (NAMEID, REV));
+create table docsources_audit.tblBiblioT_AUD (BIBLIOID integer not null, REV integer not null, REVTYPE tinyint, AUTHOREDITOR varchar(255), DATES varchar(255), NOTES varchar(255), PERIODICAL varchar(255), PUBLISHER varchar(255), SHELFNUM varchar(255), TITLE varchar(255), TYPE varchar(255), primary key (BIBLIOID, REV));
+create table docsources_audit.tblBioRefLink_AUD (REFID integer not null, REV integer not null, REVTYPE tinyint, NOTES varchar(255), BIBLIOID integer, PERSONID integer, primary key (REFID, REV));
+create table docsources_audit.tblCatalog_AUD (ID integer not null, REV integer not null, REVTYPE tinyint, CARTE_BIANCHE varchar(50), CARTE_MANCANTI varchar(50), CARTULAZIONE varchar(50), COMPRESSIONE varchar(50), DATA_RIPRESA datetime, DATE_ESTREME varchar(50), DESCRIZIONE_CONTENUTO varchar(50), DIM_MEDIA_IMMAGINI bigint, DIM_TOTALE_IMMAGINI bigint, DIMENSIONI_ALTEZZA integer, DIMENSIONI_BASE varchar(50), FONDO varchar(50), FORMATO varchar(50), ISTITUTO varchar(50), LEGATURA varchar(50), N_UNITA integer, NOME_FILES varchar(50), NOTE_ALLA_CARTULAZIONE varchar(50), NUMERO_TOTALE_IMMAGINI integer, OEPRATORE varchar(50), PROFONDITA_COLORE varchar(50), RESPONSABILE_FOTORIPRODUZIONE varchar(50), RISOLUZIONE varchar(50), SERIE varchar(50), SISTEMA_DI_SCANSIONE varchar(50), SUPPORTO varchar(50), TITOLO varchar(50), primary key (ID, REV));
+create table docsources_audit.tblCountries_AUD (CODE varchar(2) not null, REV integer not null, REVTYPE tinyint, NAME varchar(50), primary key (CODE, REV));
+create table docsources_audit.tblDocuments_AUD (ENTRYID integer not null, REV integer not null, REVTYPE tinyint, CONTDISC tinyint, DATEAPPROX varchar(50), DATECREATED datetime, DATENOTES varchar(255), DATEUNS tinyint, DOCDAY integer, DOCMONTHNUM integer, DOCSTATBOX varchar(50), DOCTOBEVETTEDDATE datetime, DOCTOBEVETTED TINYINT default '-1', DOCVETBEGINS datetime, DOCVETID varchar(50), DOCVETTED TINYINT default '-1', DOCVETTEDDATE datetime, DOCYEAR integer, FOLIOMOD varchar(15), FOLIONUM integer, GRAPHIC tinyint, INSERTLET varchar(15), INSERTNUM varchar(50), LASTUPDATE datetime, NEWENTRY tinyint, RECIPNOTES varchar(250), RECIPUNS tinyint, RECIPLOCUNS tinyint, RECKONING tinyint, RESID varchar(50), SENDNOTES varchar(250), SENDUNS tinyint, SENDLOCUNS tinyint, SORTABLEDATE varchar(50), SUBVOL varchar(50), UNDATED tinyint, UNPAGED tinyint, YEARMODERN integer, RECIPID integer, RECIPLOCPLALL integer, SENDID integer, SENDLOCPLALL integer, SUMMARYID integer, primary key (ENTRYID, REV));
+create table docsources_audit.tblEPLTOLink_AUD (EPLTOID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, ENTRYID integer, PLACESALLID integer, TOPICID integer, primary key (EPLTOID, REV));
+create table docsources_audit.tblEPLink_AUD (EPLINKID integer not null, REV integer not null, REVTYPE tinyint, ASSIGNUNSURE tinyint, DOCROLE varchar(50), DATECREATED datetime, PORTRAIT tinyint, ENTRYID integer, PERSONID integer, primary key (EPLINKID, REV));
+create table docsources_audit.tblFactChecks_AUD (VETID integer not null, REV integer not null, REVTYPE tinyint, ADDLRES LONGTEXT, DATEINFO varchar(50), EDITCOMMENT LONGTEXT, PERSON varchar(50), PLACE varchar(50), ENTRYID integer, primary key (VETID, REV));
+create table docsources_audit.tblImages_AUD (imageId integer not null, REV integer not null, REVTYPE tinyint, dateCreated datetime, imageName varchar(45), storagePath integer, volLetExt varchar(1), volNum integer, primary key (imageId, REV));
+create table docsources_audit.tblMarriages_AUD (MARRIAGEID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, ENDDAY integer, ENDMONTH varchar(10), ENDMONTHNUM integer, ENDUNS tinyint, ENDYEAR integer, MARTERM varchar(50), NOTES LONGTEXT, REFID integer, STARTDAY integer, STARTMONTH varchar(10), STARTMONTHNUM integer, STARTUNS TINYINT, STARTYEAR integer, HUSBANDID integer, WIFEID integer, primary key (MARRIAGEID, REV));
+create table docsources_audit.tblPOLink_AUD (PRLINKID integer not null, REV integer not null, REVTYPE tinyint, STARTUNS TINYINT, DATECREATED datetime, ENDAPPROX TINYINT, ENDDAY integer, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDUNS TINYINT, ENDYEAR integer, PRLINKNOTES LONGTEXT, PRTAG integer, STARTAPPROX TINYINT, STARTDAY integer, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, PERSONID integer, TITLEOCCID integer, primary key (PRLINKID, REV));
+create table docsources_audit.tblPeople_AUD (PERSONID integer not null, REV integer not null, REVTYPE tinyint, ACTIVEEND varchar(50), ACTIVESTART varchar(50), BAPPROX TINYINT, BDATEBC TINYINT, BDAY TINYINT, BMONTHNUM integer, BPLACE varchar(50), BPLACEID integer, BPLACEUNS TINYINT, BYEAR integer, BIONOTES LONGTEXT, DAPPROX TINYINT, DDAY TINYINT, DMONTHNUM integer, DPLACE varchar(50), DPLACEID integer, DPLACEUNS TINYINT, DYEAR integer, DYEARBC TINYINT, DATECREATED datetime, FIRST varchar(50), GENDER varchar(1), LAST varchar(50), LASTPREFIX varchar(50), LASTUPDATE datetime, MAPNameLF varchar(150), MIDPREFIX varchar(50), MIDDLE varchar(50), PORTRAIT TINYINT, POSTLAST varchar(50), POSTLASTPREFIX varchar(50), RESID varchar(255), STAFFNOTES LONGTEXT, STATUS varchar(15), SUCNUM varchar(6), FATHERID integer, MOTHERID integer, primary key (PERSONID, REV));
+create table docsources_audit.tblPlaces_AUD (PLACEALLID integer not null, REV integer not null, REVTYPE tinyint, ADDLRES TINYINT, DATEENTERED datetime, GPARENT varchar(255), GEOGKEY integer, GEOGKEY_CHILDREN LONGTEXT, GGP varchar(255), GGPTYPE varchar(255), GP2 varchar(255), GP2TYPE varchar(255), GPTYPE varchar(255), LANGUAGE integer, OTHER_FLAGS varchar(50), PARENTTYPE varchar(255), PLNAMEFULL_PLTYPE varchar(255), PLPARENT varchar(255), PLPARENT_SUBJECT_ID integer, PLPARENT_TERM_ID integer, PLSOURCE varchar(50), PLTYPE varchar(255), PLACENAME varchar(255), PLACENAMEFULL varchar(255), PLACENAMEID integer, PLACESMEMO LONGTEXT, PREFFLAG varchar(5), RESID varchar(50), TERM_ACCENT varchar(50), PLPARENT_PLACEALLID integer, primary key (PLACEALLID, REV));
+create table docsources_audit.tblPrcLink_AUD (PRCLINKID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, PERSONID integer, ROLECATID integer, primary key (PRCLINKID, REV));
+create table docsources_audit.tblRoleCats_AUD (ROLECATID integer not null, REV integer not null, REVTYPE tinyint, ROLECATMAJOR varchar(255), ROLECATMAJORID integer, ROLECATMINOR varchar(255), SORTGROUS integer, primary key (ROLECATID, REV));
+create table docsources_audit.tblSeriesList_AUD (SERIESREFNUM integer not null, REV integer not null, REVTYPE tinyint, SUBTITLE1 varchar(100), SUBTITLE2 varchar(100), TITLE varchar(100), primary key (SERIESREFNUM, REV));
+create table docsources_audit.tblSynExtracts_AUD (SynExtrID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, DOCEXTRACT LONGTEXT, LASTUPDATE datetime, SYNOPSIS LONGTEXT, ENTRYID integer, primary key (SynExtrID, REV));
+create table docsources_audit.tblTitleOccsList_AUD (TITLEOCCID integer not null, REV integer not null, REVTYPE tinyint, TITLEOCC varchar(255), TITLEVARIANTS LONGTEXT, ROLECATMINORID integer, primary key (TITLEOCCID, REV));
+create table docsources_audit.tblTopicsList_AUD (TOPICID integer not null, REV integer not null, REVTYPE tinyint, DESCRIPTION LONGTEXT, TOPICTITLE varchar(50), primary key (TOPICID, REV));
+create table docsources_audit.tblVolumes_AUD (SUMMARYID integer not null, REV integer not null, REVTYPE tinyint, BOUND TINYINT default '-1', CCONDITION LONGTEXT, CCONTEXT LONGTEXT, CIPHER TINYINT default '-1', CIPHERNOTES varchar(255), DATECREATED datetime, DATENOTES LONGTEXT, ENDDAY TINYINT, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDYEAR integer, ENGLISH TINYINT default '-1', FOLIOCOUNT varchar(50), FOLSNUMBRD TINYINT default '-1', FRENCH TINYINT default '-1', GERMAN TINYINT default '-1', ITALIAN TINYINT default '-1', LATIN TINYINT default '-1', OLDALPHAINDEX TINYINT default '-1', ORGNOTES LONGTEXT, OTHERLANG varchar(50), PRINTEDDRAWINGS TINYINT default '-1', PRINTEDMATERIAL TINYINT default '-1', RECIPS LONGTEXT, RESID varchar(255), SENDERS LONGTEXT, SPANISH TINYINT default '-1', STAFFMEMO LONGTEXT, STARTDAY TINYINT, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, STATBOX varchar(50), VOLLETEXT varchar(1), VOLNUM integer, VOLTOBEVETTED TINYINT default '-1', VOLTOBEVETTEDDATE datetime, VOLVETBEGINS datetime, VOLVETID varchar(50), VOLVETTED TINYINT default '-1', VOLVETTEDDATE datetime, SERIESREFNUM integer, primary key (SUMMARYID, REV));
 
 -- Gender types patch to allow correct use of numeration type Gender
-update tblpeople set gender = 'M' where gender = 'm';
-update tblpeople set gender = 'F' where gender = 'f';
-update tblpeople set gender = 'X' where gender = 'x';
-update tblpeople set gender = 'X' where gender = '';
+update tblPeople set gender = 'M' where gender = 'm';
+update tblPeople set gender = 'F' where gender = 'f';
+update tblPeople set gender = 'X' where gender = 'x';
+update tblPeople set gender = 'X' where gender = '';
 
 -- Table schema is based on ISO standard 3166 code lists 
 -- http://www.iso.org/iso/list-en1-semic-3.txt
@@ -260,3 +303,8 @@ INSERT INTO tblCountries (NAME, CODE) VALUES ('ZIMBABWE', 'ZW');
 -- Mysql database patch
 ALTER TABLE `docsources`.`tblvolumes` CHANGE COLUMN `CONTEXT` `CCONTEXT` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
  CHANGE COLUMN `CONDITION` `CCONDITION` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
+
+ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `DOCTYPOLOGY` VARCHAR(250) AFTER `GRAPHIC`;
+
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN PRINTEDDRAWINGS TINYINT(1) AFTER `STAFFMEMO`;
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN PRINTEDMATERIAL TINYINT(1) AFTER `PRINTEDDRAWINGS`;
