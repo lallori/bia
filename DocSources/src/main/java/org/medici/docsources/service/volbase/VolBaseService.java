@@ -101,6 +101,7 @@ public interface VolBaseService {
 	public Volume findLastEntryVolume() throws ApplicationThrowable;
 
 	/**
+	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @throws ApplicationThrowable
 	 */
@@ -108,6 +109,7 @@ public interface VolBaseService {
 	
 
 	/**
+	 * This method generates lucene index for entity {@link org.medici.docsources.domain.SerieList}.
 	 * 
 	 * @throws ApplicationThrowable
 	 */
@@ -165,6 +167,10 @@ public interface VolBaseService {
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
+	 * This method searches for existing {@link org.medici.docsources.domain.Image}
+	 * which  
+	 * {@link org.medici.docsources.common.pagination.Page} of complete reulst 
+	 * base on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
 	 * 
 	 * @param summaryId
 	 * @return
