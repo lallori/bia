@@ -66,7 +66,7 @@ public class AjaxController {
 			List<Place> places = getGeoBaseService().searchSendersPlace(query);
 			model.put("query", query);
 			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeName", " ", " ", Boolean.TRUE));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeNameFull", " ", " ", Boolean.TRUE));
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}
