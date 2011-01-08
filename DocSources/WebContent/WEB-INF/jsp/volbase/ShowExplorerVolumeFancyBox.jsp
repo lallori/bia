@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="next" value="/src/volbase/ShowExplorerVolume.do">
+	<c:url var="nextPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 		<c:param name="total" value="${page.total}" />
@@ -13,7 +13,7 @@
 		<c:param name="fancyBox" value="true" />
 	</c:url>
 
-	<c:url var="previous" value="/src/volbase/ShowExplorerVolume.do">
+	<c:url var="previousPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 		<c:param name="total" value="${page.total}" />
@@ -26,10 +26,7 @@
 
 	<div id="contentFancyCom">
 		<h5>VOLUME EXPLORER</h5>
-		
-		<div id="transcribeButton">
-			<a href="#"><img src="/DocSources/images/button_transcribe.png" alt="Transcribe and contextualize it"/></a>
-		</div>
+		<hr>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="explorerVolume" value="/src/volbase/ShowExplorerVolume.do">
@@ -51,7 +48,7 @@
 				<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
 			</c:if>
 			<c:if test="${page.firstRecordNumber != 0}">
-				<a id="previous" href="${previous}"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
+				<a id="previousPage" class="previousPage" href="${previous}"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
 			</c:if>
 			</div>
 			<div id="nextButton">
@@ -59,23 +56,62 @@
 				<img src="<c:url value="/images/button_next.png" />" alt="next" />
 			</c:if>
 			<c:if test="${page.firstRecordNumber != (page.total-1)}">
-				<a id="next" href="${next}"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
+				<a id="nextPage" class="nextPage" href="${next}"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
 			</c:if>
 			</div>
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$("#previous").click(function(){$("#contentFancyCom").load($(this).attr("href"));return false;});					
-					$("#next").click(function(){$("#contentFancyCom").load($(this).attr("href"));return false;});
-				});
-			</script>
 		</div>
-
-		<div id="refresh">
-			<a href="#">Refresh</a>
-		</div>	
 
 		<div id="flipFullScreenFancyFelCom">
 			<iframe scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}"></iframe>
 		</div>	
+
+		<div>
+			<div id="prevNextButtons">
+				<div id="prevButton">
+				<c:if test="${page.firstRecordNumber == 0}">
+					<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
+				</c:if>
+				<c:if test="${page.firstRecordNumber != 0}">
+					<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
+				</c:if>
+				</div>
+				<div id="nextButton">
+				<c:if test="${page.firstRecordNumber == (page.total-1) }">
+					<img src="<c:url value="/images/button_next.png" />" alt="next" />
+				</c:if>
+				<c:if test="${page.firstRecordNumber != (page.total-1)}">
+					<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
+				</c:if>
+				</div>
+			</div>
+		</div>
+
+		<br/>
+
+		<div id="folioMoveFancyCom">
+			<form id="folioCountForm" action="/DocSources/de/volbase/folioCount.do" method="post" class="edit">
+				<b>Folio Count:</b>
+					<label for="folioCount" id="folioCount">${page.total}</label>
+			</form>
 		
+			<form id="moveToFolioForm" action="/DocSources/de/volbase/moveToFolio.do" method="post" class="edit">
+				<label for="moveTo" id="moveToLabel">Move to folio</label>
+				<input id="moveTo" name="moveTo" class="input_4c" type="text" value="" />
+				<input id="go" type="image" src="/DocSources/images/button_go.png" alt="Go"/>
+			</form>
+		</div>
+
+		<div id="transcribeRefresh">
+			<a id="transcribeButton" href="#"><img src="/DocSources/images/button_transcribe.png" alt="Transcribe and contextualize it"/></a>
+			
+			<a id="refreshVolumeExplorer" href="<c:url value="${currentPage}" />"><img src="<c:url value="/images/button_refresh.png" />" alt="Refresh" /></a>
+		</div>	
 	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".previousPage").click(function(){$("#contentFancyCom").load($(this).attr("href"));return false;});					
+			$(".nextPage").click(function(){$("#contentFancyCom").load($(this).attr("href"));return false;});
+			$("#refreshVolumeExplorer").click(function(){$("#contentFancyCom").load($(this).attr("href"));return false;});
+		});
+	</script>
