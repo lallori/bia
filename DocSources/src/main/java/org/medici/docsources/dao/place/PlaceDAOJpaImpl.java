@@ -98,7 +98,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchRecipientsPlace(String alias) throws PersistenceException {
 		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeName"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull"};
 
 		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
 		List<Place> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
@@ -113,7 +113,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchSendersPlace(String alias) throws PersistenceException {
 		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeName"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull"};
 
 		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
 		List<Place> listSenders = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
