@@ -21,6 +21,8 @@
 		</c:url>
 	</security:authorize>
 	
+	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
+	
 	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
@@ -50,18 +52,18 @@
 		
 		<div  id="prevNextButtons">
 				<div id="prevButton">
-				<c:if test="${page.firstRecordNumber == 0}">
+				<c:if test="${page.firstRecordNumber == 1}">
 					<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
 				</c:if>
-				<c:if test="${page.firstRecordNumber != 0}">
+				<c:if test="${page.firstRecordNumber > 1}">
 					<a id="previousPage" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
 				</c:if>
 				</div>
 				<div id="nextButton">
-				<c:if test="${page.firstRecordNumber == (page.total-1) }">
+				<c:if test="${page.firstRecordNumber == page.total }">
 					<img src="<c:url value="/images/button_next.png" />" alt="next" />
 				</c:if>
-				<c:if test="${page.firstRecordNumber != (page.total-1)}">
+				<c:if test="${page.firstRecordNumber < page.total }">
 					<a id="nextPage" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
 				</c:if>
 				</div>
@@ -75,18 +77,18 @@
 		<div>
 			<div id="prevNextButtons">
 				<div id="prevButton">
-				<c:if test="${page.firstRecordNumber == 0}">
+				<c:if test="${page.firstRecordNumber == 1}">
 					<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
 				</c:if>
-				<c:if test="${page.firstRecordNumber != 0}">
+				<c:if test="${page.firstRecordNumber > 1}">
 					<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
 				</c:if>
 				</div>
 				<div id="nextButton">
-				<c:if test="${page.firstRecordNumber == (page.total-1) }">
+				<c:if test="${page.firstRecordNumber == page.total }">
 					<img src="<c:url value="/images/button_next.png" />" alt="next" />
 				</c:if>
-				<c:if test="${page.firstRecordNumber != (page.total-1)}">
+				<c:if test="${page.firstRecordNumber < page.total }">
 					<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
 				</c:if>
 				</div>
@@ -97,16 +99,17 @@
 		<br/>
 				
 		<div>
-			<form id="folioCountForm" action="/DocSources/de/volbase/folioCount.do" method="post" class="edit">
-				<b>Folio Count:</b>
-					<label for="folioCount" id="folioCount">${page.total}</label>
-			</form>
+			<b>Digitized images in this volume:</b> <label for="folioCount" id="folioCount">${page.total}</label>
 		
-			<form id="moveToFolioForm" action="/DocSources/de/volbase/moveToFolio.do" method="post" class="edit">
-				<label for="moveTo" id="moveToLabel">Move to folio</label>
-				<input id="moveTo" name="moveTo" class="input_4c" type="text" value="" />
-				<input id="go" type="image" src="/DocSources/images/button_go.png" alt="Go"/>
-			</form>
+			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" commandName="requestCommand" method="get" cssClass="edit">
+				<label for="firstRecord" id="firstRecordLabel">Move to folio</label>
+				<input id="firstRecord" name="firstRecord" class="input_4c" type="text" value="" />
+				<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+				<form:hidden path="volNum" />
+				<form:hidden path="volLetExt" value="${requestCommand.volLetExt}" />
+				<form:hidden path="total" value="${page.total}" />
+				<form:hidden path="flashVersion" value="true" />
+			</form:form>
 		</div>
 
 		<br />
@@ -116,7 +119,7 @@
 			<a id="flipItInFullScreen" href="${explorerVolumeFancyBox}" style="z-index:5"><img src="<c:url value="/images/fullscreenMode.png" />" alt="Fullscreen Mode" /></a>
 		</c:if>
 
-			<a id="refreshVolumeExplorer" href="<c:url value="${currentPage}" />"><img src="<c:url value="/images/button_refresh.png" />" alt="Refresh" /></a>
+			<a id="refreshVolumeExplorer" href="${currentPage}"><img src="<c:url value="/images/button_refresh.png" />" alt="Refresh" /></a>
 		</div>
 
 		<script type="text/javascript">
@@ -135,6 +138,13 @@
 				$(".previousPage").click(function(){$("#body_right").load($(this).attr("href"));return false;});					
 				$(".nextPage").click(function(){$("#body_right").load($(this).attr("href"));return false;});
 				$("#refreshVolumeExplorer").click(function(){$("#body_right").load($(this).attr("href"));return false;});
+				
+		        $("#moveToFolioForm").submit(function (){
+					$.ajax({ type:"GET", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
+						$("#body_right").html(html);
+					}});
+					return false;
+				});
 			});
 		</script>
 		
