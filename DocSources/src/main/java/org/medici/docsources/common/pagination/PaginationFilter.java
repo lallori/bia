@@ -65,6 +65,11 @@ public class PaginationFilter {
 	private List<SortingCriteria> sortingCriterias;
     private Long total;
     
+    /**
+     * 
+     * @param firstRecord
+     * @param length
+     */
     public PaginationFilter(Integer firstRecord, Integer length) {
         this.firstRecord = firstRecord;
         this.length = length;
@@ -72,14 +77,26 @@ public class PaginationFilter {
         this.sortingCriterias = new ArrayList<SortingCriteria>();
     }
 
+    /**
+     * 
+     * @param firstRecord
+     * @param length
+     * @param total
+     */
     public PaginationFilter(Integer firstRecord, Integer length, Long total) {
-        this.firstRecord = (firstRecord == null) ? new Integer(0) : firstRecord;
+        this.firstRecord = (firstRecord == null) ? new Integer(1) : firstRecord;
         this.length = length;
         this.total = total;
 
         this.sortingCriterias = new ArrayList<SortingCriteria>();
     }
-    
+
+    /**
+     * 
+     * @param field
+     * @param order
+     * @return
+     */
     public PaginationFilter addSortingCriteria(String field, Order order) {
         this.sortingCriterias.add(new SortingCriteria(field, order));
         return this;
