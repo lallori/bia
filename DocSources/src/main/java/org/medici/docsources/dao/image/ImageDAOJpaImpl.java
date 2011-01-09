@@ -75,6 +75,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 */
 	private static final long serialVersionUID = -8769762056162920397L;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Image> findImages(Integer volNum, String volLetExt) throws PersistenceException {
 		// Create criteria objects
@@ -104,6 +107,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return typedQuery.getResultList();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException {
@@ -159,8 +165,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		typedQuery.setParameter("volNum", volNum);
 		if (!StringUtils.isEmpty(volLetExt))
 			typedQuery.setParameter("volLetExt", volLetExt);
-		
-		typedQuery.setFirstResult(paginationFilter.getFirstRecord());
+
+		//Pagination will work with index [1 ... total] and not [0 ... total1-] 
+		typedQuery.setFirstResult(paginationFilter.getFirstRecord()-1);
 		typedQuery.setMaxResults(paginationFilter.getLength());
 		page.setList(typedQuery.getResultList());
 
