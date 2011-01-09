@@ -102,7 +102,7 @@
 		<hibernatevalidator.version>4.1.0.Final</hibernatevalidator.version>
 		<jpa.version>2.0-CR-1</jpa.version>
 		<jstl.version>1.1.2</jstl.version>
-		<mysql.version>5.1.6</mysql.version>
+		<mysql.version>5.1.8</mysql.version>
 		<recaptcha4j.version>0.0.7</recaptcha4j.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<springdao.version>2.0.8</springdao.version>
@@ -232,6 +232,7 @@
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
+					<include>**/*.properties</include>
 					<include>**/*.xml</include>
 				</includes>
 			</resource>
