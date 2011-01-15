@@ -26,6 +26,7 @@
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.4.2.js"/>"></script>
 		<script type='text/javascript' src='<c:url value="/scripts/jquery.autocomplete.js"/>'></script>
+		<script type='text/javascript' src='<c:url value="/scripts/jquery.autocomplete.person.js"/>'></script>
 		<script type='text/javascript' src='<c:url value="/scripts/jquery.blockUI.js"/>'></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuADM.js"/>"></script>
