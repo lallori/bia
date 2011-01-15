@@ -108,6 +108,7 @@ public class AjaxController {
 		try {
 			List<Place> places = getDocBaseService().searchPlaceLinkableToTopicDocument(entryId, query);
 			model.put("query", query);
+			model.put("count", places.size());
 			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
 			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeName", " ", " ", Boolean.TRUE));
 
@@ -134,6 +135,7 @@ public class AjaxController {
 		try {
 			List<TopicList> topics = getDocBaseService().searchTopicLinkableToDocument(entryId, query);
 			model.put("query", query);
+			model.put("count", topics.size());
 			model.put("data", ListBeanUtils.transformList(topics, "topicId"));
 			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(topics, "topicTitle", " ", " ", Boolean.TRUE));
 
