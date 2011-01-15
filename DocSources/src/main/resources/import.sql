@@ -32,7 +32,7 @@ create table docsources_audit.tblDocuments_AUD (ENTRYID integer not null, REV in
 create table docsources_audit.tblEPLTOLink_AUD (EPLTOID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, ENTRYID integer, PLACESALLID integer, TOPICID integer, primary key (EPLTOID, REV));
 create table docsources_audit.tblEPLink_AUD (EPLINKID integer not null, REV integer not null, REVTYPE tinyint, ASSIGNUNSURE tinyint, DOCROLE varchar(50), DATECREATED datetime, PORTRAIT tinyint, ENTRYID integer, PERSONID integer, primary key (EPLINKID, REV));
 create table docsources_audit.tblFactChecks_AUD (VETID integer not null, REV integer not null, REVTYPE tinyint, ADDLRES LONGTEXT, DATEINFO varchar(50), EDITCOMMENT LONGTEXT, PERSON varchar(50), PLACE varchar(50), ENTRYID integer, primary key (VETID, REV));
-create table docsources_audit.tblImages_AUD (imageId integer not null, REV integer not null, REVTYPE tinyint, dateCreated datetime, imageName varchar(45), storagePath integer, volLetExt varchar(1), volNum integer, primary key (imageId, REV));
+create table docsources_audit.tblImages_AUD (imageId integer not null, REV integer not null, REVTYPE tinyint, dateCreated datetime, imageName varchar(45), imageType varchar(1), storagePath integer, volLetExt varchar(1), volNum integer, primary key (imageId, REV));
 create table docsources_audit.tblMarriages_AUD (MARRIAGEID integer not null, REV integer not null, REVTYPE tinyint, DATECREATED datetime, ENDDAY integer, ENDMONTH varchar(10), ENDMONTHNUM integer, ENDUNS tinyint, ENDYEAR integer, MARTERM varchar(50), NOTES LONGTEXT, REFID integer, STARTDAY integer, STARTMONTH varchar(10), STARTMONTHNUM integer, STARTUNS TINYINT, STARTYEAR integer, HUSBANDID integer, WIFEID integer, primary key (MARRIAGEID, REV));
 create table docsources_audit.tblPOLink_AUD (PRLINKID integer not null, REV integer not null, REVTYPE tinyint, STARTUNS TINYINT, DATECREATED datetime, ENDAPPROX TINYINT, ENDDAY integer, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDUNS TINYINT, ENDYEAR integer, PRLINKNOTES LONGTEXT, PRTAG integer, STARTAPPROX TINYINT, STARTDAY integer, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, PERSONID integer, TITLEOCCID integer, primary key (PRLINKID, REV));
 create table docsources_audit.tblPeople_AUD (PERSONID integer not null, REV integer not null, REVTYPE tinyint, ACTIVEEND varchar(50), ACTIVESTART varchar(50), BAPPROX TINYINT, BDATEBC TINYINT, BDAY TINYINT, BMONTHNUM integer, BPLACE varchar(50), BPLACEID integer, BPLACEUNS TINYINT, BYEAR integer, BIONOTES LONGTEXT, DAPPROX TINYINT, DDAY TINYINT, DMONTHNUM integer, DPLACE varchar(50), DPLACEID integer, DPLACEUNS TINYINT, DYEAR integer, DYEARBC TINYINT, DATECREATED datetime, FIRST varchar(50), GENDER varchar(1), LAST varchar(50), LASTPREFIX varchar(50), LASTUPDATE datetime, MAPNameLF varchar(150), MIDPREFIX varchar(50), MIDDLE varchar(50), PORTRAIT TINYINT, POSTLAST varchar(50), POSTLASTPREFIX varchar(50), RESID varchar(255), STAFFNOTES LONGTEXT, STATUS varchar(15), SUCNUM varchar(6), FATHERID integer, MOTHERID integer, primary key (PERSONID, REV));
@@ -50,6 +50,9 @@ update tblPeople set gender = 'M' where gender = 'm';
 update tblPeople set gender = 'F' where gender = 'f';
 update tblPeople set gender = 'X' where gender = 'x';
 update tblPeople set gender = 'X' where gender = '';
+
+-- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
+update tblimages set imageType = substr(imageName, 6,1);
 
 -- Table schema is based on ISO standard 3166 code lists 
 -- http://www.iso.org/iso/list-en1-semic-3.txt
