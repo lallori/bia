@@ -119,7 +119,7 @@
 				return false; 
 			}); 
 
-			var senderPeople = $('#senderPeopleDescriptionAutoCompleter').autocomplete({ 
+			var senderPeople = $('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchSenderPeopleUrl}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -128,7 +128,9 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#senderPeopleId').val(data); }
+			    onSelect: function(value, data){ 
+			    	$('#senderPeopleId').val(data); 
+			    	}
 			  });
 
 			var senderPlace = $('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
@@ -143,7 +145,7 @@
 			    onSelect: function(value, data){ $('#senderPlaceId').val(data); }
 			  });
 			
-			var recipientPeople = $('#recipientPeopleDescriptionAutoCompleter').autocomplete({ 
+			var recipientPeople = $('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchRecipientPeopleUrl}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
