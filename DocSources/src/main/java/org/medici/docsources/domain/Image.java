@@ -67,6 +67,8 @@ public class Image implements Serializable {
 	private Integer volNum;
 	@Column (name="\"volLetExt\"", length=1)
 	private String volLetExt;
+	@Column (name="\"imageType\"", length=45, nullable=false)
+	private ImageType imageType;
 	@Column (name="\"imageName\"", length=45, nullable=false)
 	private String imageName;
 	@Column (name="\"storagePath\"", length=1, nullable=false)
@@ -132,6 +134,20 @@ public class Image implements Serializable {
 	}
 	
 	/**
+	 * @param imageType the imageType to set
+	 */
+	public void setImageType(ImageType imageType) {
+		this.imageType = imageType;
+	}
+
+	/**
+	 * @return the imageType
+	 */
+	public ImageType getImageType() {
+		return imageType;
+	}
+
+	/**
 	 * @param storageDisk the storageDisk to set
 	 */
 	public void setStoragePath(Integer storagePath) {
@@ -178,4 +194,23 @@ public class Image implements Serializable {
 		return dateCreated;
 	}
 
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum ImageType {
+		R("R"), C("C");
+		
+		private final String imageType;
+
+	    private ImageType(String value) {
+	    	imageType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return imageType;
+	    }
+	}	
 }
