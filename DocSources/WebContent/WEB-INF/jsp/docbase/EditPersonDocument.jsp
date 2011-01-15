@@ -47,7 +47,7 @@
 
 	<script type="text/javascript"> 
 	    $(document).ready(function() { 
-			var peopleDescription = $('#personDescriptionAutoCompleter').autocomplete({ 
+			var peopleDescription = $('#personDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchPersonLinkableToDocumentUrl}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
