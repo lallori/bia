@@ -78,8 +78,12 @@ public class AjaxController {
 
 			List<People> people = getDocBaseService().searchPersonLinkableToDocument(entryId, query);
 			model.put("query", query);
+			model.put("count", people.size());
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(people, "mapNameLf activeStart bYear dYear", " ", " ", Boolean.TRUE));
+			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("bYears", ListBeanUtils.transformList(people, "bYear"));
+			model.put("dYears", ListBeanUtils.transformList(people, "dYear"));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
