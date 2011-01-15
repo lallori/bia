@@ -30,6 +30,9 @@
     <definition name="template.document" template="/WEB-INF/templates/document.jsp">
     </definition>
 
+    <definition name="template.person" template="/WEB-INF/templates/person.jsp">
+    </definition>
+
     <definition name="template.volume" template="/WEB-INF/templates/volume.jsp">
     </definition>
 
@@ -65,6 +68,7 @@
 	<definition name="user/ResetUserPassword" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPassword.jsp"/>
     </definition>
+    
     <definition name="user/ResetUserPasswordSuccess" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPasswordSuccess.jsp"/>
     </definition>
@@ -130,42 +134,55 @@
 	<definition name="docbase/EditCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditCorrespondentsOrPeopleDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/EditDetailsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditDetailsDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/EditExtractOrSynopsisDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditExtractOrSynopsisDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/EditFactCheckDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditFactCheckDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/EditPersonDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditPersonDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/EditTopicsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicsDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/EditTopicDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicDocument.jsp"/>	
 	</definition>
+	
 	<definition name="docbase/SearchResultDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/SearchResultDocument.jsp"/>	
 	</definition>
+	
 	<definition name="docbase/ShowCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/ShowDetailsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/ShowFactCheckDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/ShowExtractOrSynopsisDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/ShowDocument" extends="template.document">
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
 		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
@@ -173,6 +190,7 @@
 		<put-attribute name="topics" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
 		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
 	</definition>
+	
 	<definition name="docbase/TranscribeAndContextualizeDocument" extends="template.document">
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/EditDetailsDocument.jsp"/>
 		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
@@ -201,18 +219,33 @@
 	<definition name="peoplebase/EditDetailsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditDetailsPerson.jsp"/>
 	</definition>
+
+	<definition name="peoplebase/EditDetailsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditDetailsPerson.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/EditNamesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditNamesPerson.jsp"/>
 	</definition>
+
 	<definition name="peoplebase/EditRelationships" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditRelationshipsPerson.jsp"/>
 	</definition>
+
 	<definition name="peoplebase/EditTitlesOrOccupationsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitlesOrOccupationsPerson.jsp"/>
 	</definition>
-	<definition name="peoplebase/ShowPerson" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowPerson.jsp"/>
+
+	<definition name="peoplebase/ShowPerson" extends="template.person">
+		<put-attribute name="details" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
+		<put-attribute name="names" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
+		<put-attribute name="titlesoroccupations" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
+		<put-attribute name="parents" value="/WEB-INF/jsp/peoplebase/ShowParentsPerson.jsp"/>
+		<put-attribute name="children" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
+		<put-attribute name="spouses" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
+		<put-attribute name="researchnotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
 	</definition>
+
 	<!-- PeopleBase Module END -->
 
 	<!-- VolBase Module START -->
