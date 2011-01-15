@@ -34,6 +34,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 
@@ -65,6 +66,9 @@ public class ListBeanUtils {
 		for (int i = 0; i < inputList.size(); i++) {
 			try {
 				retValue.add(i, method.invoke(inputList.get(i), (Object[]) null));
+				if (ObjectUtils.toString(retValue.get(i)).equals("0")) {
+					retValue.set(i, "");
+				}
 			} catch (IllegalAccessException iaex) {
 				retValue.set(i, null);
 			} catch (InvocationTargetException itex) {
