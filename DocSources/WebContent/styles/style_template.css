@@ -1,3 +1,16 @@
+/*
+ * The Medici Archive Project
+ * http://documents.medici.org/
+ * 
+ * Copyright (c) 2011 MAP
+ *
+ *
+ * This style sheet contains all classes, id and tag from the MAIN INTERFACE elements
+ */
+
+
+/* ------------------------------------------------- TAG ------------------------------------------------- */ 
+
 html {
 	height: 100%;
 }
@@ -8,41 +21,63 @@ body {
 	background-repeat:no-repeat;
 	background-color:#f6edec;
 	background-attachment:fixed;
-	margin:0;
-	padding:0;
+	margin:0 !important; 
+	padding:0 !important; 
 	height: 100%;
 	font-size:small;
 	color:#6F6B69;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-/* Structural Divs */
-
-#layout {
-	width:1000px;
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin:0px auto -70px;
-	position:relative;
-	
+h1 {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:110%;
+	color:#6F6B69;
 }
 
-#map { /* The Medici Archive Project image */
+a img {
+   border:0px;
+}
+
+a:focus { 
+	outline: 0px; 
+}
+
+a {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	text-decoration:none;
+	color:#6F6B69;
+	font-size:small;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ------------------------------------------ STRUCTURAL DIVS -------------------------------------------- */ 
+
+#layout { /* Website Container*/
+	width:1000px;
+	min-height: 100% !important;
+	height: 100%; 
+	margin:0 auto 0 auto !important; 
+	position:relative; 
+}
+
+#map { /* THE MEDICI ARCHIVE PROJECT top left image Container */
 	width:270px;
 	height:165px;
 	position:absolute;
-	z-index:2;
+	z-index:2 !important;
 }
 
-#top_top { /* Menu top */
+#top_top { /* SEARCH FORM and LAST ENTRY MENU Container */
 	width:750px;
 	height:95px;
 	margin-left:250px;
 	position:absolute;
 }
 
-#top_middle { /* Menu middle */
+#top_middle { /* MAIN MENU: Entry Menu - Vet Menu - Advanced Search - Chronology - My Profile - Messages - Log out */
 	width:745px;
 	height:60px;
 	margin-top:95px;
@@ -50,51 +85,95 @@ body {
 	position:absolute;
 	background-image:url(/DocSources/images/top_middle_bg.png);
 	z-index:3;
-
 }
 
-#top_bottom { /* User Interface */
+#top_bottom { /* USER INTERFACE MENU Container*/
 	width:1000px;
 	height:25px;
 	margin-top:158px;
 	position:absolute;
-	z-index:1;
+	z-index:1 !important; 
 }
 
-#DocSourcesContent { /* Main content */
+#DocSourcesContent { /* MAIN Website Container */
 	width:1000px;
 	height:auto;	
 	margin-top:185px;
 	position:absolute;
 }
 
-#footer {
+#footer { /* FOOTER Container */
 	width:100%;
 	height:150px;
 	text-align: center;
 	font-size:10px;
+	z-index:1;
+	bottom:0;
+	margin-top:100%;
 }
 
-#footer p{
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* --------------------------------------------- SPLIT SCREEN -------------------------------------------- */
+
+
+#body_left{ /* LEFT-hand side of the SCREEN */
+	width:47%;
+	height:auto;
+	padding-left:25px;
+	margin-top:15px;
+	float:left;
+	position:absolute;
+	border-right: 1px solid #e6d0c6;
+	font-size:11px;
+	z-index:2;
+
+}
+	
+#body_right{ /* RIGHT-hand side of the SCREEN */
+	width:47%;
+	height:auto;
+	padding-left:25px;
+	padding-right:25px;
+	margin-top:15px;
+	float:right;
+	position:absolute;
+	margin-left:495px;
+	font-size:11px;
+	border-left: 1px solid #e6d0c6;
+	z-index:2;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* -------------------------------------------- SINGLE SCREEN -------------------------------------------- */
+
+#body_central{ /* Container used in the WELCOME page, MY PROFILE (Main Menu) */
 	width:100%;
-	height:150px;
-	text-align: center;
-	font-size:10px;
+	height:auto;
+	padding-left:25px;
+	padding-right:25px;
+	margin-top:15px;
+	position:absolute;
+	font-size:11px;
 }
 
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ---------------------------------------- SEARCH FORM (#top_top) --------------------------------------- */
 
-/* top_top (Search form) */
-
-#searchForm {
+#searchForm { /* Search Form Container */
 	width:240px;
 	height:80px;
 	margin-left:40px;
-	margin-top:2px;
 	position:absolute;
 	font-size:85%;
 }
 
-.input_search { /* input text class */
+.input_search { /* Input Text class */
 	background-image:url(/DocSources/images/input_search_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
@@ -105,7 +184,7 @@ body {
 	margin-top:0px;
 }
 
-.select{ /* dropdown menu class */
+.select{ /* Dropdown Menu: Documents, Volumes, People, Locations and community Comments  */
 	background-image:url(/DocSources/images/select_bg.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
@@ -122,12 +201,29 @@ body {
 
 .select option{
 	background-color: transparent;
-	
 }
 
-/* top_top (Last Entry) */
+input { 
+	outline: 0px; 
+}
 
-#lastentry {
+#search { /* Search button */
+	margin-left:125px;
+	border:none;
+	background-color:transparent;
+	margin-top:-3px;
+}
+
+#firstName {
+	margin-top:5px;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* --------------------------------------- SHORTCUT MENU (#top_top) --------------------------------------- */
+
+#lastentry { /* Shortcut Menu Container */
 	width:480px;
 	height:90px;
 	margin-left:240px;
@@ -136,54 +232,65 @@ body {
 	float:left;
 }
 
-#menulastentry {
+#menulastentry { /* Shortcut Menu <ul> list */
 	width:480px;
 	height:90px;
 	list-style:none;
 	float:left;
 }
 
-#menulastentry li{
+#menulastentry li{ /* Shortcut Menu <ul> list <li> elements */
 	float:left;
 }
 
-#menulastentry a{
+#menulastentry a{ /* Shortcut Menu <ul> list <li> elements <a> ancors */
 	float:left;
 	display:block;
 	text-decoration:none;
 	padding-left:10px;
 }
 
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ---------------------------------------- MAIN MENU (#top_middle) -------------------------------------- */
 
-/* top_middle (Main Menu) */
 
 .menumain {
 	margin-left:0px;
 	z-index:2;
 }
 
-/* top_bottom (User Interface) backgrounds */
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
 
-.docs {
+
+/* BAR BACKGROUNDS */
+
+.docs { /* brown for DOCUMENTS */
 	background-image:url(/DocSources/images/user_interface_docs.png);
 }
 
-.person {
+.person { /* violet for PERSON */
 	background-image:url(/DocSources/images/user_interface_person.png);
 }
 
-.vol {
+.vol { /* yellow for VOLUME */
 	background-image:url(/DocSources/images/user_interface_vol.png);
 }
 
-.geo {
+.geo { /* GREEN for PLACE */
 	background-image:url(/DocSources/images/user_interface_geo.png);
 }
 
+/* -------------- */
+/* 
+/* 
+/* ACTIONS MENU */
 
-/* top_bottom (Who I am? Text) */
-
-#top_bottom p{
+#top_bottom p{ /* top_bottom (Who am I?) */
 	color:#FFF;
 	margin-top:5px;
 	float:right;
@@ -191,23 +298,25 @@ body {
 	font-size:80%;
 }
 
-
-/* top_bottom (Administrator Menu) */
+/* -------------- */
+/*
+/*
+/* ADMINISTRATOR MENU */
 
 #adm_menu {
 	float:left;
 	height:25px;
 	width: 500px;
 	font-size: 80%;
-
 }
 
 #adm_menu a{
 	color:#fff;
 }
 
-
-/* top_bottom (Actions Menu) */
+/* ------------------- */
+/* 
+/* ACTIONS MENU */
 
 #menu_actions {
 	height:25px;
@@ -216,10 +325,14 @@ body {
 	font-size: 80%;
 }
 
+/* ------------- */
+/*
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ---------------------------------------------- WELCOME PAGE ------------------------------------------- */
 
-/* Welcome Page */
-
-#welcome {
+#welcome {  /* Page Container */
 	width:900px;
 	position:absolute;
 	margin-top:200px;
@@ -261,104 +374,36 @@ body {
 	position:absolute;
 }
 
-/* Slipt Screen */
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ------------------------------------------------- ANCORS ---------------------------------------------- */
 
-#body_left{
-	width:47%;
-	height:auto;
-	padding-left:25px;
-	margin-top:15px;
-	float:left;
-	position:absolute;
-	border-right: 1px solid #e6d0c6;
+#body_left a, #body_right a, #body_central a{ /* Edit buttons */
+	text-decoration:underline;
+	font-weight:100;
 	font-size:11px;
-
-}
-	
-#body_right{
-	width:47%;
-	height:auto;
-	padding-left:25px;
-	padding-right:25px;
-	margin-top:15px;
-	float:right;
-	position:absolute;
-	margin-left:495px;
-	font-size:11px;
-	border-left: 1px solid #e6d0c6;
+	color:#b99c84;
 }
 
-
-/* Full Screen */
-
-#body_central{
-	width:100%;
-	height:auto;
-	padding-left:25px;
-	padding-right:25px;
-	margin-top:15px;
-	position:absolute;
-	font-size:11px;
+#body_left a:hover, #body_right a:hover, #body_central a:hover { /* All ancors */
+	opacity:0.5;
 }
 
+/* ------------------------------------------------------------------------------------------------------- */
+/*
+/*
+/* --------------------------------------------- jQUERY CLASSES ------------------------------------------ */
 
-/* Tag */
-
-h1 {
-	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:110%;
-	color:#6F6B69;
-}
-
-a img {
-   border:0px;
-}
-
-a:focus { 
-	outline: 0px; 
-}
-
-a {
-	font-family: Georgia, "Times New Roman", Times, serif;
-	text-decoration:none;
-	color:#6F6B69;
-	font-size:small;
-}
-
-/* INPUT */
-
-input { 
-	outline: 0px; 
-}
-
-/* Search Form */
-
-#create { /* Search button */
-	margin-left:125px;
-}
-
-#firstName {
-	margin-top:5px;
-}
-
-/* Volume Explorer FullScreen*/
-
-.flipDivFullScreen{
-	margin-top:10px;
-	border:1px solid #e6d0c6; 	
-	width:600px;
-	height:400px;
-	margin-left:200px;
-}
-
-#flipDiv {
-	position:relative;
-	z-index:2;
-}
 
 /* Search Result */
 .searchResult {
 }
+
+$('.searchResult').live('click', function() {
+	$("#body_left").load($(this).attr("href"));
+	return false;
+});
 
 /* Edit Value */
 .editValue {
@@ -367,3 +412,13 @@ input {
 /* Delete Value */
 .deleteValue {
 }
+
+.previousPage {
+}
+
+.nextPage {
+}
+
+/* ------------------------------------------------------------------------------------------------------- */
+/*
+/*
