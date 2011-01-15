@@ -116,11 +116,11 @@ public class People implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer bDay;
 	
-	@Column (name="\"BYEAR\"", length=4)
+	@Column (name="\"BYEAR\"", length=4, nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer bYear;
 	
-	@Column (name="\"BPLACEID\"", length=10)
+	@Column (name="\"BPLACEID\"", length=6)
 	private Integer bPlaceId;
 	
 	@Column (name="\"BPLACE\"", length=50)
@@ -135,7 +135,7 @@ public class People implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer dDay;
 	
-	@Column (name="\"DYEAR\"", length=4)
+	@Column (name="\"DYEAR\"", length=4, nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer dYear;
 	
