@@ -13,8 +13,9 @@
 										<option value="places">Places</option>
 								</select>
 						<br/>
-							for <input id="text" name="text" type="text" value="" class="input_search" style="margin-top:5px"/>
-						<br/><input id="create" type="image" src="<c:url value="/images/button_search.png"/>" alt="submit" title="submit form" style="margin-left:125px"/>
+						for <input id="text" name="text" type="text" value="" class="input_search" style="margin-top:5px"/>
+						<br/>
+						<input id="search" type="image" src="<c:url value="/images/button_search.png"/>" alt="submit" title="submit form"/>
 					</form>
 				</div>
 				<script type="text/javascript">
