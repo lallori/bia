@@ -88,7 +88,7 @@ public class AjaxController {
 	 * @return ModelAndView containing recipients.
 	 */
 	@RequestMapping(value = "/de/peoplebase/SearchRecipientPeople", method = RequestMethod.GET)
-	public ModelAndView findRecipients(@RequestParam("query") String query) {
+	public ModelAndView searchRecipients(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
