@@ -27,10 +27,15 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.medici.docsources.domain.People;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,15 +68,17 @@ public class CreatePersonController {
 
 	/**
 	 * 
-	 * @param command
-	 * @param request
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		return new ModelAndView("peoplebase/CreatePerson", model);
-	}
+		People people = new People(0);
+		people.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		people.setDateCreated(new Date());
+
+		model.put("people", people);
+
+		return new ModelAndView("peoplebase/ShowPerson", model);	}
 }
