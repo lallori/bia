@@ -23,22 +23,22 @@
 	</security:authorize>
 
 	<div id="EditDetailsPersonDiv">
-		<div id="createdby"><h6>CREATED BY KH 11/28/1996</h6></div>
+		<div id="createdby"><h6>CREATED BY ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></h6></div>
 		<h5>PERSON DETAILS <a id="EditDetailsPerson" href="/DocSources/de/peoplebase/EditDetailsPerson.html">edit</a></h5>
 		<hr id="lineSeparator"/>
 		<div id="EditPortraitPersonDiv">
 			<img src="/DocSources/images/default_user.jpg" alt="default image" />
 			<p><b>Portrait</b> <a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></p>
 		</div>
-		<h2 class="titlepeople">Tudor, Henry VIII</h2>
+		<h2 class="titlepeople">${person.mapNameLf}</h2>
 		<ul id="activeEnd">
-			<li><b>Gender:</b> M</li>
-			<li><b>Date of Birth:</b> 1491</li>
+			<li><b>Gender:</b> ${person.gender}</li>
+			<li><b>Date of Birth:</b> ${person.bornDate}</li>
 			<li><b>Birth Place:</b><a href="#" id="linkSearch">Firenze / Toscana / Italia</a></li>
-			<li><b>Active Start:</b> 24</li>
-			<li><b>Date of Death:</b> 1547 Jan 1</li>
+			<li><b>Active Start:</b> ${person.activeStart}</li>
+			<li><b>Date of Death:</b> ${person.deathDate}</li>
 			<li><b>Modern Date:</b> 1577</li>
 			<li><b>Death Place:</b> <a href="#" id="linkSearch">Firenze / Toscana / Italia</a></li>
-			<li><b>Active End:</b> Undated document but inserted between documents dated 1577</li>
+			<li><b>Active End:</b> ${person.activeEnd}</li>
 		</ul>
 	</div>
