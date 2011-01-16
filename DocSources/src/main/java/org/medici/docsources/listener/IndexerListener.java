@@ -40,30 +40,30 @@ public class IndexerListener implements ServletContextListener {
     		logger.info("Indexing document start");
     		Long startTime = System.currentTimeMillis();
 
-    		volBaseService.generateIndexVolume();
-    		volBaseService.generateIndexSerieList();
+    		// volBaseService.generateIndexVolume();
+    		// volBaseService.generateIndexSerieList();
 
-    		peopleBaseService.generateIndexAltName();
-    		peopleBaseService.generateIndexBioRefLink();
-    		peopleBaseService.generateIndexBiblioT();
-    		peopleBaseService.generateIndexRoleCat();
-    		peopleBaseService.generateIndexTitleOccsList();
-    		peopleBaseService.generateIndexPoLink();
-    		peopleBaseService.generateIndexEpLink();
-    		peopleBaseService.generateIndexPeople();
+    		// peopleBaseService.generateIndexAltName();
+    		// peopleBaseService.generateIndexBioRefLink();
+    		// peopleBaseService.generateIndexBiblioT();
+    		// peopleBaseService.generateIndexRoleCat();
+    		// peopleBaseService.generateIndexTitleOccsList();
+    		// peopleBaseService.generateIndexPoLink();
+    		// peopleBaseService.generateIndexEpLink();
+    		// peopleBaseService.generateIndexPeople();
 
-    		docBaseService.generateIndexDocument();
-    		docBaseService.generateIndexSynExtract();
-    		docBaseService.generateIndexEplToLink();
-    		docBaseService.generateIndexFactChecks();
-    		docBaseService.generateIndexTopicList();
-    		docBaseService.generateIndexFactChecks();
-    		geoBaseService.generateIndexPlace();
+    		// docBaseService.generateIndexDocument();
+    		// docBaseService.generateIndexSynExtract();
+    		// docBaseService.generateIndexEplToLink();
+    		// docBaseService.generateIndexFactChecks();
+    		// docBaseService.generateIndexTopicList();
+    		// docBaseService.generateIndexFactChecks();
+    		// geoBaseService.generateIndexPlace();
     		logger.info("Indexing document end (total index time " + (System.currentTimeMillis() - startTime) + ".");    		
 		} catch (ApplicationThrowable ath) {
 			//ath.printStackTrace();
-		}
-   		*/
+		}*/
+   		
     }
 
 	/**

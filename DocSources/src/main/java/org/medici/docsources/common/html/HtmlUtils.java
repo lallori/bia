@@ -75,7 +75,7 @@ public class HtmlUtils {
 	 * @param entryId
 	 * @return
 	 */
-	public static List<String> showPeople(List<String> inputList, Integer entryId) {
+	public static List<String> showPeople(List<String> inputList, Integer personId) {
 		if (inputList == null)
 			return null;
 
@@ -83,8 +83,8 @@ public class HtmlUtils {
 		
 		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		anchorBegin.append("/src/peoplebase/ShowDocument.do?entryId=");
-		anchorBegin.append(entryId);
+		anchorBegin.append("/src/peoplebase/ShowPerson.do?personId=");
+		anchorBegin.append(personId);
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
 		

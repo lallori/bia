@@ -30,15 +30,16 @@ package org.medici.docsources.controller.peoplebase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.command.peoplebase.ShowPersonRequestCommand;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -75,12 +76,12 @@ public class ShowPersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@RequestParam("peopleId") Integer peopleId, BindingResult result){
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowPersonRequestCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			People people = getPeopleBaseService().findPeople(peopleId);
-			model.put("people", people);
+			People person = getPeopleBaseService().findPeople(command.getPersonId());
+			model.put("person", person);
 		} catch (ApplicationThrowable ath) {
 			new ModelAndView("error/ShowPerson", model);
 		}

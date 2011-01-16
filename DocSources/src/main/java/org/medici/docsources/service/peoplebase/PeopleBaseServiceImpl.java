@@ -29,6 +29,7 @@ package org.medici.docsources.service.peoplebase;
 
 import java.util.List;
 
+import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
@@ -279,7 +280,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<People> searchPeople(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public Page searchPeople(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getPeopleDAO().searchPeople(text, paginationFilter);
 		} catch (Throwable th) {

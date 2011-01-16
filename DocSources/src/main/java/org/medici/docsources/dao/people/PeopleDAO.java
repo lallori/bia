@@ -31,6 +31,7 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.People;
@@ -67,7 +68,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException;
+	public Page searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 

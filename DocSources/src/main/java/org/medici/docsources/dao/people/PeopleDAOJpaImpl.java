@@ -48,6 +48,7 @@ import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
@@ -105,10 +106,58 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings({ "rawtypes", "unused" })
 	@Override
-	public List<People> searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
+	public Page searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		Page page = new Page(paginationFilter);
+
+		if (paginationFilter.getTotal() == null) {
+			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+			Root<People> rootCount = criteriaQueryCount.from(People.class);
+			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+/*			List<Predicate> predicates = new ArrayList<Predicate>();
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("title"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("subTitle1"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("subTitle2"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("orgNotes"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("recips"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("researcher"), "%" + text + "%" ));
+	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("senders"), "%" + text + "%" ));
+
+	        //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
+	        criteriaQueryCount.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
+*/
+			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
+		}
+
+		CriteriaQuery<People> criteriaQuery = criteriaBuilder.createQuery(People.class);
+		Root<People> root = criteriaQuery.from(People.class);
+	
+/*		//We need to duplicate predicates beacause they are link to Root element
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("title"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle1"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle2"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("orgNotes"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("recips"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("researcher"), "%" + text + "%" ));
+        predicates.add(criteriaBuilder.like((Expression) root.get("senders"), "%" + text + "%" ));
+
+        //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
+        criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
+*/
+		// Set values in predicate's elements  
+		TypedQuery<People> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setFirstResult(paginationFilter.getFirstRecord());
+		typedQuery.setMaxResults(paginationFilter.getLength());
+		page.setList(typedQuery.getResultList());
+		
+		return page;
 	}
 
 	/**

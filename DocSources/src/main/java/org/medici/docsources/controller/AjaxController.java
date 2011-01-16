@@ -32,11 +32,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -141,13 +141,36 @@ public class AjaxController {
 				singleRow.add((currentDocument.getFolioNum() != null) ? currentDocument.getFolioNum().toString() : "");
 				resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
 			}
-			model.put("iEcho", "" + 1);
+			model.put("iEcho", "1");
 			model.put("iTotalDisplayRecords", page.getTotal());
 			model.put("iTotalRecords", page.getTotal());
 			model.put("aaData", resultList);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("people")) {
+			Page page = null;
+
+			PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+			try {
+				page = getPeopleBaseService().searchPeople(alias, paginationFilter);
+			} catch (ApplicationThrowable aex) {
+			}
+
+			List resultList = new ArrayList();
+			for (People currentPerson : (List<People>)page.getList()) {
+				List singleRow = new ArrayList();
+				singleRow.add(currentPerson.getMapNameLf());
+				singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
+				singleRow.add(currentPerson.getBornDate());
+				singleRow.add(currentPerson.getDeathDate());
+				singleRow.add("" + currentPerson.getPoLink().size());
+				resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
+			}
+			model.put("iEcho", "" + 1);
+			model.put("iTotalDisplayRecords", page.getTotal());
+			model.put("iTotalRecords", page.getTotal());
+			model.put("aaData", resultList);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("places")) {
@@ -176,7 +199,7 @@ public class AjaxController {
 				
 				resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 			}
-			model.put("iEcho", "" + 1);
+			model.put("iEcho", "1");
 			model.put("iTotalDisplayRecords", page.getTotal());
 			model.put("iTotalRecords", page.getTotal());
 			model.put("aaData", resultList);
@@ -184,25 +207,27 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
+	
 	/**
 	 * @param docBaseService the docBaseService to set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
 	}
+	
 	/**
 	 * @param geoBaseService the geoBaseService to set
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
 	}
+
 	/**
 	 * @param peopleBaseService the peopleBaseService to set
 	 */
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
 		this.peopleBaseService = peopleBaseService;
 	}
-
 
 	/**
 	 * @param volBaseService the volBaseService to set

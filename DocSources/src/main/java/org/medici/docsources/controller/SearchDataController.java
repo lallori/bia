@@ -104,7 +104,7 @@ public class SearchDataController {
 		
 		if (command.getSearchType().toLowerCase().trim().equals("people")) {
 			// Search operation is made by View with a jquery plugin to contextualized AjaxController
-			return new ModelAndView("peoplebase/SearchResultPeople",model);
+			return new ModelAndView("peoplebase/SearchResultPerson",model);
 		}
 		
 		if (command.getSearchType().toLowerCase().trim().equals("places")) {
