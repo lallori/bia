@@ -41,7 +41,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
@@ -64,7 +66,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
 
 /**
- * PoLink entity.
+ * PoLink entity. This entity links a Person with his correspondents TitleOccList
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -102,7 +104,7 @@ public class PoLink implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"TITLEOCCID\"")
 	@IndexedEmbedded
-	private TitleOccsList titleOccId;
+	private TitleOccsList titleOccList;
 	
 	@Column (name="\"STARTYEAR\"", length=10)
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -199,196 +201,288 @@ public class PoLink implements Serializable {
 	}
 	
 	/**
-	 * @return the titleOccId
+	 * @return the titleOccList
 	 */
-	public TitleOccsList getTitleOccId() {
-		return titleOccId;
+	public TitleOccsList getTitleOccList() {
+		return titleOccList;
 	}
+	
 	/**
-	 * @param titleOccId the titleOccId to set
+	 * @param titleOccList the titleOccList to set
 	 */
-	public void setTitleOccId(TitleOccsList titleOccId) {
-		this.titleOccId = titleOccId;
+	public void setTitleOcc(TitleOccsList titleOccList) {
+		this.titleOccList = titleOccList;
 	}
-	/**
-	 * @return the startYear
-	 */
-	public Integer getStartYear() {
-		return startYear;
-	}
-	/**
-	 * @param startYear the startYear to set
-	 */
-	public void setStartYear(Integer startYear) {
-		this.startYear = startYear;
-	}
-	/**
-	 * @return the startMonth
-	 */
-	public String getStartMonth() {
-		return startMonth;
-	}
-	/**
-	 * @param startMonth the startMonth to set
-	 */
-	public void setStartMonth(String startMonth) {
-		this.startMonth = startMonth;
-	}
+	
 	/**
 	 * @return the startDay
 	 */
 	public Integer getStartDay() {
 		return startDay;
 	}
+	
 	/**
 	 * @param startDay the startDay to set
 	 */
 	public void setStartDay(Integer startDay) {
 		this.startDay = startDay;
 	}
+	
 	/**
-	 * @return the endYear
+	 * @return the startMonth
 	 */
-	public Integer getEndYear() {
-		return endYear;
+	public String getStartMonth() {
+		return startMonth;
 	}
+	
 	/**
-	 * @param endYear the endYear to set
+	 * @param startMonth the startMonth to set
 	 */
-	public void setEndYear(Integer endYear) {
-		this.endYear = endYear;
+	public void setStartMonth(String startMonth) {
+		this.startMonth = startMonth;
 	}
+	
 	/**
-	 * @return the endMonth
+	 * @return the startYear
 	 */
-	public String getEndMonth() {
-		return endMonth;
+	public Integer getStartYear() {
+		return startYear;
 	}
+	
 	/**
-	 * @param endMonth the endMonth to set
+	 * @param startYear the startYear to set
 	 */
-	public void setEndMonth(String endMonth) {
-		this.endMonth = endMonth;
+	public void setStartYear(Integer startYear) {
+		this.startYear = startYear;
 	}
+
+	/**
+	 * This method returns start date. It's a concatenation of three fields,
+	 * startDay, startMonth, and startYear. It's a transient property 
+	 * (not stored on database ndr).
+	 *  
+	 * @return String rappresentation of volume identifiers.
+	 */
+	@Transient
+	public String getStartDate() {
+		StringBuffer stringBuffer = new StringBuffer();
+		if (startDay != null) {
+			stringBuffer.append(startDay);
+		}
+		
+		if (!ObjectUtils.toString(startMonth).equals("")) {
+			if (stringBuffer.length() > 0 ) {
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(startMonth.toString());
+		}
+
+		if (startYear != null) {
+			if (stringBuffer.length() > 0 ) {
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(startYear);
+		}
+
+		return stringBuffer.toString();
+	}	
+
 	/**
 	 * @return the endDay
 	 */
 	public Integer getEndDay() {
 		return endDay;
 	}
+	
 	/**
 	 * @param endDay the endDay to set
 	 */
 	public void setEndDay(Integer endDay) {
 		this.endDay = endDay;
 	}
+	
+	/**
+	 * @return the endMonth
+	 */
+	public String getEndMonth() {
+		return endMonth;
+	}
+
+	/**
+	 * @param endMonth the endMonth to set
+	 */
+	public void setEndMonth(String endMonth) {
+		this.endMonth = endMonth;
+	}
+
+	/**
+	 * @return the endYear
+	 */
+	public Integer getEndYear() {
+		return endYear;
+	}
+	
+	/**
+	 * @param endYear the endYear to set
+	 */
+	public void setEndYear(Integer endYear) {
+		this.endYear = endYear;
+	}
+
+	/**
+	 * This method returns start date. It's a concatenation of three fields,
+	 * startDay, startMonth, and startYear. It's a transient property 
+	 * (not stored on database ndr).
+	 *  
+	 * @return String rappresentation of volume identifiers.
+	 */
+	@Transient
+	public String getEndDate() {
+		StringBuffer stringBuffer = new StringBuffer();
+		if (endDay != null) {
+			stringBuffer.append(endDay);
+		}
+		
+		if (!ObjectUtils.toString(endMonth).equals("")) {
+			if (stringBuffer.length() > 0 ) {
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(endMonth.toString());
+		}
+
+		if (endYear != null) {
+			if (stringBuffer.length() > 0 ) {
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(endYear);
+		}
+
+		return stringBuffer.toString();
+	}	
+
 	/**
 	 * @return the prTag
 	 */
 	public Integer getPrTag() {
 		return prTag;
 	}
+	
 	/**
 	 * @param prTag the prTag to set
 	 */
 	public void setPrTag(Integer prTag) {
 		this.prTag = prTag;
 	}
+	
 	/**
 	 * @return the prLinkNotes
 	 */
 	public String getPrLinkNotes() {
 		return prLinkNotes;
 	}
+	
 	/**
 	 * @param prLinkNotes the prLinkNotes to set
 	 */
 	public void setPrLinkNotes(String prLinkNotes) {
 		this.prLinkNotes = prLinkNotes;
 	}
+	
 	/**
 	 * @return the startApprox
 	 */
 	public Boolean getStartApprox() {
 		return startApprox;
 	}
+	
 	/**
 	 * @param startApprox the startApprox to set
 	 */
 	public void setStartApprox(Boolean startApprox) {
 		this.startApprox = startApprox;
 	}
+	
 	/**
 	 * @return the startUns
 	 */
 	public Boolean getStartUns() {
 		return StartUns;
 	}
+
 	/**
 	 * @param startUns the startUns to set
 	 */
 	public void setStartUns(Boolean startUns) {
 		StartUns = startUns;
 	}
+
 	/**
 	 * @return the endApprox
 	 */
 	public Boolean getEndApprox() {
 		return endApprox;
 	}
+
 	/**
 	 * @param endApprox the endApprox to set
 	 */
 	public void setEndApprox(Boolean endApprox) {
 		this.endApprox = endApprox;
 	}
+	
 	/**
 	 * @return the endUns
 	 */
 	public Boolean getEndUns() {
 		return endUns;
 	}
+	
 	/**
 	 * @param endUns the endUns to set
 	 */
 	public void setEndUns(Boolean endUns) {
 		this.endUns = endUns;
 	}
+	
 	/**
 	 * @return the startMonthNum
 	 */
 	public Integer getStartMonthNum() {
 		return startMonthNum;
 	}
+	
 	/**
 	 * @param startMonthNum the startMonthNum to set
 	 */
 	public void setStartMonthNum(Integer startMonthNum) {
 		this.startMonthNum = startMonthNum;
 	}
+	
 	/**
 	 * @return the endMonthNum
 	 */
 	public Integer getEndMonthNum() {
 		return endMonthNum;
 	}
+	
 	/**
 	 * @param endMonthNum the endMonthNum to set
 	 */
 	public void setEndMonthNum(Integer endMonthNum) {
 		this.endMonthNum = endMonthNum;
 	}
+	
 	/**
 	 * @return the dateCreated
 	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+	
 	/**
 	 * @param dateCreated the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
 }

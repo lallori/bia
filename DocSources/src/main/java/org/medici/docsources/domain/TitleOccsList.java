@@ -93,7 +93,7 @@ public class TitleOccsList implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="\"ROLECATMINORID\"")
 	@IndexedEmbedded
-	private RoleCat roleCatMinorId;
+	private RoleCat roleCat;
 	
 	@Column (name="\"TITLEVARIANTS\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -128,17 +128,17 @@ public class TitleOccsList implements Serializable {
 	}
 	
 	/**
-	 * @return the roleCatMinorId
+	 * @return the roleCat
 	 */
-	public RoleCat getRoleCatMinorId() {
-		return roleCatMinorId;
+	public RoleCat getRoleCat() {
+		return roleCat;
 	}
 	
 	/**
-	 * @param roleCatMinorId the roleCatMinorId to set
+	 * @param roleCat the roleCat to set
 	 */
-	public void setRoleCatMinorId(RoleCat roleCatMinorId) {
-		this.roleCatMinorId = roleCatMinorId;
+	public void setRoleCat(RoleCat roleCat) {
+		this.roleCat = roleCat;
 	}
 	
 	/**

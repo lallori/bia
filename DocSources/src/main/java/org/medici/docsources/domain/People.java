@@ -29,17 +29,23 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
@@ -59,6 +65,7 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
+import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
 
 /**
  * Person entity.
@@ -108,9 +115,11 @@ public class People implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String activeEnd;
 	
-	@Column (name="\"BMONTHNUM\"", length=10)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"BMONTHNUM\"")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer bMonthNum;
+	@FieldBridge(impl=MonthBridge.class)
+	private Month bMonth;
 	
 	@Column (name="\"BDAY\"", length=3, columnDefinition="TINYINT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -120,16 +129,19 @@ public class People implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer bYear;
 	
-	@Column (name="\"BPLACEID\"", length=6)
-	private Integer bPlaceId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"BPLACEID\"")
+	private Place bornPlace;
 	
 	@Column (name="\"BPLACE\"", length=50)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String bPlace;
 	
-	@Column (name="\"DMONTHNUM\"", length=10)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"DMONTHNUM\"")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer dMonthNum;
+	@FieldBridge(impl=MonthBridge.class)
+	private Month dMonth;
 	
 	@Column (name="\"DDAY\"", length=3, columnDefinition="TINYINT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -139,8 +151,9 @@ public class People implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer dYear;
 	
-	@Column (name="\"DPLACEID\"", length=10)
-	private Integer dPlaceId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"DPLACEID\"")
+	private Place deathPlace;
 	
 	@Column (name="\"DPLACE\"", length=50)
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -228,12 +241,12 @@ public class People implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="\"FATHERID\"")
 	@IndexedEmbedded(depth=1)
-	private People fatherId;
+	private People father;
 
 	@ManyToOne
 	@JoinColumn(name="\"MOTHERID\"")
 	@IndexedEmbedded(depth=1)
-	private People motherId;
+	private People mother;
 	
 	@Column (name="\"RESID\"")
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -250,25 +263,21 @@ public class People implements Serializable {
 	private Date lastUpdate;
 
 	//Association alternative Names
-	/*	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
-	//@IndexedEmbedded
-	private Set<AltName> AltName;
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	private Set<AltName> altName;
 	
-	//Association alternative Names
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
-	@IndexedEmbedded
+	//Association Biographic
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
 	private Set<BioRefLink> bioRefLink;
 
-	//Association alternative Names
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
-		//@IndexedEmbedded
+	//Association Linked Document
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="people")
 	private Set<EpLink> epLink;
 	
 	//Association alternative Names
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "personId")
-	@IndexedEmbedded
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
 	private Set<PoLink> poLink;
-*/	
+	
 	/**
 	 * Default Constructor 
 	 */
@@ -366,20 +375,19 @@ public class People implements Serializable {
 
 
 	/**
-	 * @return the bMonthNum
+	 * @return the bMonth
 	 */
-	public Integer getbMonthNum() {
-		return bMonthNum;
+	public Month getbMonth() {
+		return bMonth;
 	}
 
 
 	/**
-	 * @param bMonthNum the bMonthNum to set
+	 * @param bMonth the bMonth to set
 	 */
-	public void setbMonthNum(Integer bMonthNum) {
-		this.bMonthNum = bMonthNum;
+	public void setbMonth(Month bMonth) {
+		this.bMonth = bMonth;
 	}
-
 
 	/**
 	 * @return the bDay
@@ -388,14 +396,12 @@ public class People implements Serializable {
 		return bDay;
 	}
 
-
 	/**
 	 * @param bDay the bDay to set
 	 */
 	public void setbDay(Integer bDay) {
 		this.bDay = bDay;
 	}
-
 
 	/**
 	 * @return the bYear
@@ -404,7 +410,6 @@ public class People implements Serializable {
 		return bYear;
 	}
 
-
 	/**
 	 * @param bYear the bYear to set
 	 */
@@ -412,20 +417,50 @@ public class People implements Serializable {
 		this.bYear = bYear;
 	}
 
+	/**
+	 * This method return born date. It's a concatenation of three fields,
+	 * born day, born month, and bornYear. It's a transient property 
+	 * (not stored on database ndr).
+	 *  
+	 * @return String rappresentation of volume identifiers.
+	 */
+	@Transient
+	public String getBornDate() {
+		StringBuffer stringBuffer = new StringBuffer();
+		if (bDay != null) {
+			stringBuffer.append(bDay);
+		}
+		
+		if (!ObjectUtils.toString(bMonth).equals("")) {
+			if (stringBuffer.length() > 0 ) {
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(bMonth.toString());
+		}
+
+		if (bYear != null) {
+			if (stringBuffer.length() > 0 ) {
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(bYear);
+		}
+
+		return stringBuffer.toString();
+	}	
 
 	/**
-	 * @return the bPlaceId
+	 * @return the bornPlace
 	 */
-	public Integer getbPlaceId() {
-		return bPlaceId;
+	public Place getBornPlace() {
+		return bornPlace;
 	}
 
 
 	/**
-	 * @param bPlaceId the bPlaceId to set
+	 * @param bornPlace the bornPlace to set
 	 */
-	public void setbPlaceId(Integer bPlaceId) {
-		this.bPlaceId = bPlaceId;
+	public void setBornPlace(Place bornPlace) {
+		this.bornPlace = bornPlace;
 	}
 
 
@@ -446,18 +481,18 @@ public class People implements Serializable {
 
 
 	/**
-	 * @return the dMonthNum
+	 * @return the dMonth
 	 */
-	public Integer getdMonthNum() {
-		return dMonthNum;
+	public Month getdMonth() {
+		return dMonth;
 	}
 
 
 	/**
 	 * @param dMonthNum the dMonthNum to set
 	 */
-	public void setdMonthNum(Integer dMonthNum) {
-		this.dMonthNum = dMonthNum;
+	public void setdMonth(Month dMonth) {
+		this.dMonth = dMonth;
 	}
 
 
@@ -492,20 +527,50 @@ public class People implements Serializable {
 		this.dYear = dYear;
 	}
 
+	/**
+	 * This method return death date. It's a concatenation of three fields,
+	 * born day, born month, and bornYear. It's a transient property 
+	 * (not stored on database ndr).
+	 *  
+	 * @return String rappresentation of volume identifiers.
+	 */
+	@Transient
+	public String getDeathDate() {
+		StringBuffer stringBuffer = new StringBuffer();
+		if (dDay != null) {
+			stringBuffer.append(dDay);
+		}
+		
+		if (!ObjectUtils.toString(dMonth).equals("")) {
+			if (stringBuffer.length() > 0 ) {
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(dMonth.toString());
+		}
+
+		if (dYear != null) {
+			if (stringBuffer.length() > 0 ) {
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(dYear);
+		}
+
+		return stringBuffer.toString();
+	}	
 
 	/**
-	 * @return the dPlaceId
+	 * @return the deathPlace
 	 */
-	public Integer getdPlaceId() {
-		return dPlaceId;
+	public Place getDeathPlace() {
+		return deathPlace;
 	}
 
 
 	/**
-	 * @param dPlaceId the dPlaceId to set
+	 * @param deathPlace the deathPlace to set
 	 */
-	public void setdPlaceId(Integer dPlaceId) {
-		this.dPlaceId = dPlaceId;
+	public void setDeathPlace(Place deathPlace) {
+		this.deathPlace = deathPlace;
 	}
 
 
@@ -814,34 +879,34 @@ public class People implements Serializable {
 
 
 	/**
-	 * @return the fatherId
+	 * @return the father
 	 */
-	public People getFatherId() {
-		return fatherId;
+	public People getFather() {
+		return father;
 	}
 
 
 	/**
-	 * @param fatherId the fatherId to set
+	 * @param father the father to set
 	 */
-	public void setFatherId(People fatherId) {
-		this.fatherId = fatherId;
+	public void setFather(People father) {
+		this.father = father;
 	}
 
 
 	/**
-	 * @return the motherId
+	 * @return the mother
 	 */
-	public People getMotherId() {
-		return motherId;
+	public People getMother() {
+		return mother;
 	}
 
 
 	/**
-	 * @param motherId the motherId to set
+	 * @param mother the mother to set
 	 */
-	public void setMotherId(People motherId) {
-		this.motherId = motherId;
+	public void setMother(People mother) {
+		this.mother = mother;
 	}
 
 
@@ -890,6 +955,62 @@ public class People implements Serializable {
 	 */
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	/**
+	 * @param altName the altName to set
+	 */
+	public void setAltName(Set<AltName> altName) {
+		this.altName = altName;
+	}
+
+	/**
+	 * @return the altName
+	 */
+	public Set<AltName> getAltName() {
+		return altName;
+	}
+
+	/**
+	 * @param bioRefLink the bioRefLink to set
+	 */
+	public void setBioRefLink(Set<BioRefLink> bioRefLink) {
+		this.bioRefLink = bioRefLink;
+	}
+
+	/**
+	 * @return the bioRefLink
+	 */
+	public Set<BioRefLink> getBioRefLink() {
+		return bioRefLink;
+	}
+
+	/**
+	 * @param epLink the epLink to set
+	 */
+	public void setEpLink(Set<EpLink> epLink) {
+		this.epLink = epLink;
+	}
+
+	/**
+	 * @return the epLink
+	 */
+	public Set<EpLink> getEpLink() {
+		return epLink;
+	}
+
+	/**
+	 * @param poLink the poLink to set
+	 */
+	public void setPoLink(Set<PoLink> poLink) {
+		this.poLink = poLink;
+	}
+
+	/**
+	 * @return the poLink
+	 */
+	public Set<PoLink> getPoLink() {
+		return poLink;
 	}
 
 	/**
@@ -953,6 +1074,6 @@ public class People implements Serializable {
 	    public String toString(){
 	        return gender;
 	    }
-	}	
+	}
 }
 
