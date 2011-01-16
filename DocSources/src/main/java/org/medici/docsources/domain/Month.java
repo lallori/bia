@@ -37,6 +37,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 /**
  * Month entity.
  *
@@ -44,6 +46,7 @@ import javax.persistence.Table;
  */
 @Cacheable
 @Entity
+@Audited
 @Table ( name = "\"tblMonths\"" ) 
 public class Month implements Serializable {
 	/**
@@ -57,7 +60,23 @@ public class Month implements Serializable {
 	private Integer monthNum;
 	@Column (name="\"MONTHNAME\"", length=50)
 	private String monthName;
-	
+
+	/**
+	 * Default constructor. 
+	 */
+	public Month() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param monthNum
+	 */
+	public Month(Integer monthNum) {
+		setMonthNum(monthNum);
+	}
+
+
 	/**
 	 * @return the monthNum
 	 */
@@ -115,5 +134,10 @@ public class Month implements Serializable {
 		} else if (!monthNum.equals(other.monthNum))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return monthName;
 	}
 }
