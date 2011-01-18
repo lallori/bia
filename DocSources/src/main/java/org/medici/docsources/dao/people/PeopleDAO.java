@@ -77,15 +77,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String query) throws PersistenceException;
+	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String[] queries) throws PersistenceException;
 
 	/**
 	 * 
-	 * @param query
+	 * @param queries
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchRecipientsPeople(String alias) throws PersistenceException;
+	public List<People> searchRecipientsPeople(String[] queries) throws PersistenceException;
 
 	/**
 	 * 
@@ -93,5 +93,5 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchSendersPeople(String alias) throws PersistenceException;
+	public List<People> searchSendersPeople(String[] queries) throws PersistenceException;
 }

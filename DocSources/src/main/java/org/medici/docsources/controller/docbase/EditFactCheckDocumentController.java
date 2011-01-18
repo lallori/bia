@@ -95,6 +95,7 @@ public class EditFactCheckDocumentController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			FactChecks factChecks = new FactChecks();
+			factChecks.setDocument(new Document(command.getEntryId()));
 			factChecks.setAddLRes(command.getAddLRes());
 
 			try {

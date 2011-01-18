@@ -45,7 +45,6 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.WildcardQuery;
 import org.hibernate.ejb.HibernateEntityManager;
-import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.medici.docsources.common.pagination.Page;
@@ -165,19 +164,52 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String alias) throws PersistenceException {
+	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String[] queries) throws PersistenceException {
+		String[] searchFields = new String[]{"first", "last"};
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-		
-		BooleanQuery booleanQuery = new BooleanQuery();
+		org.hibernate.search.FullTextQuery fullTextQuery = null;
+
+/*		BooleanQuery booleanQuery = new BooleanQuery();
 		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("first", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
 		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("last", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
 		
 		for (int i=0; i<peopleIdList.size(); i++) {
 			booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
 		}
+*/
+		if (queries.length == 1) {
+			
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+			
+			for (int i=0; i<peopleIdList.size(); i++) {
+				booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
+			}
+			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
+		} else if (queries.length == 2) {
+			// Condition is : (first:query[0]* AND last:query[1]*) OR (first:query[1]* AND last:query[0]*)
+			BooleanQuery booleanQuery1 = new BooleanQuery();
+			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			
+			BooleanQuery booleanQuery2 = new BooleanQuery();
+			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
 
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(booleanQuery1, BooleanClause.Occur.SHOULD);
+			booleanQuery.add(booleanQuery2, BooleanClause.Occur.SHOULD);
+			for (int i=0; i<peopleIdList.size(); i++) {
+				booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
+			}
+			
+			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
+		} else {
+			fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, queries, outputFields, People.class);
+		}
+
 		fullTextQuery.setProjection(outputFields);
 
 		List<People> listPeopleLinkable = executeFullTextQuery(fullTextQuery, outputFields, People.class);
@@ -190,11 +222,40 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchRecipientsPeople(String alias) throws PersistenceException {
+	public List<People> searchRecipientsPeople(String[] queries) throws PersistenceException {
 		String[] searchFields = new String[]{"first", "last"};
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
 
-		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, People.class);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		org.hibernate.search.FullTextQuery fullTextQuery = null;
+
+		if (queries.length == 1) {
+			
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+			
+			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
+		} else if (queries.length == 2) {
+			// Condition is : (first:query[0]* AND last:query[1]*) OR (first:query[1]* AND last:query[0]*)
+			BooleanQuery booleanQuery1 = new BooleanQuery();
+			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			
+			BooleanQuery booleanQuery2 = new BooleanQuery();
+			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(booleanQuery1, BooleanClause.Occur.SHOULD);
+			booleanQuery.add(booleanQuery2, BooleanClause.Occur.SHOULD);
+			
+			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
+		} else {
+			fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, queries, outputFields, People.class);
+		}
+
+		fullTextQuery.setProjection(outputFields);
 		List<People> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, People.class);
 
 		return listRecipients;
@@ -234,11 +295,39 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchSendersPeople(String alias) throws PersistenceException {
+	public List<People> searchSendersPeople(String[] queries) throws PersistenceException {
 		String[] searchFields = new String[]{"first", "last"};
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		org.hibernate.search.FullTextQuery fullTextQuery = null;
 
-		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, People.class);
+		// If user specify only one term, we search it on first and last
+		if (queries.length == 1) {
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+			
+			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
+		} else if (queries.length == 2) {
+			// Condition is : (first:query[0]* AND last:query[1]*) OR (first:query[1]* AND last:query[0]*)
+			BooleanQuery booleanQuery1 = new BooleanQuery();
+			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			
+			BooleanQuery booleanQuery2 = new BooleanQuery();
+			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(booleanQuery1, BooleanClause.Occur.SHOULD);
+			booleanQuery.add(booleanQuery2, BooleanClause.Occur.SHOULD);
+			
+			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
+		} else {
+			fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, queries, outputFields, People.class);
+		}
+
+		fullTextQuery.setProjection(outputFields);
 		List<People> listSenders = executeFullTextQuery(fullTextQuery, outputFields, People.class);
 
 		return listSenders;

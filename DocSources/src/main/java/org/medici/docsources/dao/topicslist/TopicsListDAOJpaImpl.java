@@ -27,10 +27,13 @@
  */
 package org.medici.docsources.dao.topicslist;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
@@ -78,7 +81,7 @@ TopicsListDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException {
 		String[] outputFields = new String[]{"topicId", "topicTitle"};
@@ -95,6 +98,9 @@ TopicsListDAO {
 		fullTextQuery.setProjection(outputFields);
 
 		List<TopicList> listTopics = executeFullTextQuery(fullTextQuery, outputFields, TopicList.class);
+		
+		Comparator fieldCompare = new BeanComparator( "topicTitle" );
+		Collections.sort(listTopics, fieldCompare );
 
 		return listTopics; 
 	}

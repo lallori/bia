@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.EpLinkUtils;
 import org.medici.docsources.common.util.EplToLinkUtils;
+import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
@@ -322,7 +323,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
 		try {
-			FactChecks factChecksToUpdate = getFactChecksDAO().find(factChecks.getVetId());
+			FactChecks factChecksToUpdate = getFactChecksDAO().findByEntryId(factChecks.getDocument().getEntryId());
 			// fill fields to update fact check section
 			factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
 
@@ -662,7 +663,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			List<EpLink> epLinkList = getEpLinkDAO().findByEntryId(entryId);
 			
-			return getPeopleDAO().searchPersonLinkableToDocument(EpLinkUtils.getPeopleIdList(epLinkList), query);
+			return getPeopleDAO().searchPersonLinkableToDocument(EpLinkUtils.getPeopleIdList(epLinkList), RegExUtils.splitPunctuationChars(query));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

@@ -177,12 +177,22 @@ public class EditDetailsDocumentController {
 				model.put("document", document);
 			}
 
-			try {
-				BeanUtils.copyProperties(command, document);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-
+			command.setResearcher(document.getResearcher());
+			command.setDateCreated(document.getDateCreated());
+			command.setEntryId(document.getEntryId());
+			command.setInsertNum(document.getInsertNum());
+			command.setInsertLet(document.getInsertLet());
+			command.setFolioNum(document.getFolioNum());
+			command.setFolioMod(document.getFolioMod());
+			command.setUnpaged(document.getUnpaged());
+			command.setContDisc(document.getContDisc());
+			command.setDocYear(document.getDocYear());
+			command.setDocMonthNum(document.getDocMonthNum());
+			command.setDocDay(document.getDocDay());
+			command.setYearModern(document.getYearModern());
+			command.setDateUns(document.getDateUns());
+			//command.setDateUndated(document.getDa);
+			command.setDateNotes(document.getDateNotes());
 		} else {
 			// On Document creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());

@@ -29,6 +29,8 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -42,6 +44,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -261,6 +264,14 @@ public class People implements Serializable {
 	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "FATHERID")
+	private List<People> childrenFather = new LinkedList<People>(); 
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "MOTHERID")
+	private List<People> childrenMother = new LinkedList<People>(); 
 
 	//Association alternative Names
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
@@ -955,6 +966,46 @@ public class People implements Serializable {
 	 */
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	/**
+	 * @param childrenFather the childrenFather to set
+	 */
+	public void setChildrenFather(List<People> childrenFather) {
+		this.childrenFather = childrenFather;
+	}
+
+	/**
+	 * @return the childrenFather
+	 */
+	public List<People> getChildrenFather() {
+		return childrenFather;
+	}
+
+	/**
+	 * @param childrenMother the childrenMother to set
+	 */
+	public void setChildrenMother(List<People> childrenMother) {
+		this.childrenMother = childrenMother;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	@Transient
+	public List<People> getChildren() {
+		if (getChildrenFather().size() > 0)
+			return getChildrenFather();
+		
+		return getChildrenMother();
+	}
+
+	/**
+	 * @return the childrenMother
+	 */
+	public List<People> getChildrenMother() {
+		return childrenMother;
 	}
 
 	/**

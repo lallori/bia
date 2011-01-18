@@ -56,10 +56,36 @@ public class RegExUtils {
 	 * This method returns the input string without any not unicode letters.
 	 * 
 	 * @param inputString The input string to be clean.
-	 * @return The input string with only unico deletters.
+	 * @return The input string with only unicode letters.
 	 */
 	public static String trimNonAlphaChars(String inputString) {
 		return inputString.replaceAll("[^a-zA-Z]", "");
+	}
+
+	/**
+	 * This method returns string array splitted by any punctuation chars and blank space.
+	 * 
+	 * @param inputString The input string to be clean.
+	 * @return The input string without punctuation.
+	 */
+	public static String[] splitPunctuationAndSpaceChars(String inputString) {
+		//return inputString.split("[\\p{P},\\s]");
+		String[] retValue = inputString.split("([.,!?:;'\"-]|\\s)+");
+		
+		return retValue;
+	}
+	
+	/**
+	 * This method returns string array splitted by any punctuation chars.
+	 * 
+	 * @param inputString The input string to be clean.
+	 * @return The input string without punctuation.
+	 */
+	public static String[] splitPunctuationChars(String inputString) {
+		//return inputString.split("[\\p{P},\\s]");
+		String[] retValue = inputString.split("([.,!?:;'\"-])+");
+		
+		return retValue;
 	}
 
 	/**

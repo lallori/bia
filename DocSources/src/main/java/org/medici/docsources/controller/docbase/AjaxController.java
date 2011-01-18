@@ -110,7 +110,7 @@ public class AjaxController {
 			model.put("query", query);
 			model.put("count", places.size());
 			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeName", " ", " ", Boolean.TRUE));
+			model.put("suggestions", ListBeanUtils.transformList(places, "placeName"));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

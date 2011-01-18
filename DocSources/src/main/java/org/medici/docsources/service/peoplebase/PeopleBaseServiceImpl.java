@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
@@ -294,7 +295,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchRecipientsPeople(query);
+			return getPeopleDAO().searchRecipientsPeople(RegExUtils.splitPunctuationChars(query));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -306,7 +307,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public List<People> searchSendersPeople(String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchSendersPeople(query);
+			return getPeopleDAO().searchSendersPeople(RegExUtils.splitPunctuationChars(query));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

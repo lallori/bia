@@ -137,6 +137,39 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	}
 
 	/**
+	 * This method construct an hibernate search FullTextQuery.
+	 * 
+	 * @param entityManager The Entity Manager getted from persistent context. It's used to construct FullTextSession
+	 * @param searchFields List of entity bean's properties where to search alias
+	 * @param alias Text to search in searchFields
+	 * @param outputFields List of entity bean's properties where to search alias
+	 * @param searchedEntity Entity to search
+	 * @return
+	 * @throws PersistenceException
+	 */
+	@SuppressWarnings("rawtypes")
+	protected org.hibernate.search.FullTextQuery buildFullTextQuery(EntityManager entityManager, String[] searchFields, String[] queries, String[] outputFields, Class<?> searchedEntity) throws PersistenceException { 
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)entityManager).getSession());
+
+		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity( searchedEntity ).get();
+		BooleanJunction booleanJunction = queryBuilder.bool();
+		org.apache.lucene.search.Query luceneQuery = null;
+		
+	    for (int i=0; i<searchFields.length; i++) {
+	    	for (int j=0; j<queries.length; j++) {
+	    		booleanJunction.should(queryBuilder.keyword().wildcard().onField(searchFields[i]).matching(queries[j].trim().toLowerCase() + "*").createQuery());
+	    	}
+	    }
+	    
+	    luceneQuery = booleanJunction.createQuery();
+	    
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, searchedEntity);
+		fullTextQuery.setProjection(outputFields);
+
+		return fullTextQuery; 
+	}
+	
+	/**
 	 * This method extract a projection of a fullTextQuery.
 	 * @param fullTextQuery
 	 * @param outputFields
