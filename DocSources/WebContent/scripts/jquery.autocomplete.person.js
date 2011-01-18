@@ -195,13 +195,16 @@
     onValueChange: function() {
       clearInterval(this.onChangeInterval);
       this.currentValue = this.el.val();
+      //console.log("onValueChange : " +this.el.val());
       var q = this.getQuery(this.currentValue);
+      //console.log("getQuery : " + q);
       this.selectedIndex = -1;
       if (this.ignoreValueChange) {
         this.ignoreValueChange = false;
         return;
       }
       if (q === '' || q.length < this.options.minChars) {
+    	// console.log("Hiding");
         this.hide();
       } else {
         this.getSuggestions(q);
@@ -209,22 +212,23 @@
     },
 
     getQuery: function(val) {
-      var d, arr;
+      var d, stringSplitted;
       d = this.options.delimiter;
       if (!d) { return $.trim(val); }
-      arr = val.split(d);
-      return $.trim(arr[arr.length - 1]);
+      stringSplitted = val.split(d);
+      console.log("splitting input string" + stringSplitted);
+      return $.trim(stringSplitted[stringSplitted.length - 1]);
     },
 
-    getSuggestionsLocal: function(q) {
+    getSuggestionsLocal: function(textFieldValue) {
       var ret, arr, len, val, i;
       arr = this.options.lookup;
       len = arr.suggestions.length;
       ret = { suggestions:[], data:[], activeStarts:[], bYears:[], dYears:[]};
-      q = q.toLowerCase();
+      textFieldValue = textFieldValue.toLowerCase();
       for(i=0; i< len; i++){
         val = arr.suggestions[i];
-        if(val.toLowerCase().indexOf(q) === 0){
+        if(val.toLowerCase().indexOf(textFieldValue) === 0){
           ret.suggestions.push(val);
           ret.data.push(arr.data[i]);
         }
@@ -278,7 +282,7 @@
     	  message = 'No person found.';
     	  this.container.append(message);
       } else {
-	      table = '<tr><td width="50%">FullName</td><td>Active Starts</td><td>Born Year</td><td>Dead Year</td></tr>';
+	      table = '<tr><td width="50%"><b>FullName</b></td><td><b>Active Starts</b></td><td><b>Born Year</b></td><td><b>Dead Year</b></td></tr>';
 	      this.container.append(table);
 	
 	      for (i = 0; i < len; i++) {
