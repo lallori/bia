@@ -51,6 +51,11 @@ update tblPeople set gender = 'F' where gender = 'f';
 update tblPeople set gender = 'X' where gender = 'x';
 update tblPeople set gender = 'X' where gender = '';
 
+-- Birth month num cannot be 0
+update docsources.tblpeople set bmonthnum = null where bmonthnum = 0;
+-- Death month num cannot be 0
+update docsources.tblpeople set dmonthnum = null where dmonthnum = 0;
+
 -- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
 update tblimages set imageType = substr(imageName, 6,1);
 
