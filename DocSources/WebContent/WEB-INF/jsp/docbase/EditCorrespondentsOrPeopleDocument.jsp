@@ -101,28 +101,15 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#close').click(function() {
-				$('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $('#question') }); 
-				return false;
-			});
-      
-			$('#no').click(function() { 
-				$.unblockUI();$(".blockUI").fadeOut("slow");
-				return false; 
-			}); 
-	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
-				}});
-					
-				return false; 
-			}); 
+	        $("#EditDetailsDocument").removeAttr("href"); 
+	        $("#EditExtractOrSynopsisDocument").removeAttr("href"); 
+	        $("#EditFactCheckDocument").removeAttr("href");
+	        $("#EditTopicsDocument").removeAttr("href");
 
 			var senderPeople = $('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchSenderPeopleUrl}',
 			    minChars:3, 
-			    delimiter: /(,|;)\s*/, // regex or character
+			    delimiter: null, // regex or character
 			    maxHeight:400,
 			    width:600,
 			    zIndex: 9999,
@@ -136,7 +123,7 @@
 			var senderPlace = $('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchSenderPlaceUrl}',
 			    minChars:5, 
-			    delimiter: /(,|;)\s*/, // regex or character
+			    delimiter: null, // regex or character
 			    maxHeight:400,
 			    width:400,
 			    zIndex: 9999,
@@ -148,7 +135,7 @@
 			var recipientPeople = $('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchRecipientPeopleUrl}',
 			    minChars:3, 
-			    delimiter: /(,|;)\s*/, // regex or character
+			    delimiter: null, // regex or character
 			    maxHeight:400,
 			    width:600,
 			    zIndex: 9999,
@@ -160,7 +147,7 @@
 			var recipientPlace = $('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchRecipientPlaceUrl}',
 			    minChars:5, 
-			    delimiter: /(,|;)\s*/, // regex or character
+			    delimiter: null, // regex or character
 			    maxHeight:400,
 			    width:400,
 			    zIndex: 9999,
@@ -168,24 +155,6 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ $('#recipientPlaceId').val(data); }
 			  });
-
-			$('#close').click(function() {
-	            $('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $('#question') }); 
-				return false;
-			});
-	        
-			$('#no').click(function() { 
-				$.unblockUI();$(".blockUI").fadeOut("slow");
-	            return false; 
-	        }); 
-	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
-	 			}});
-				
-				return false; 
-	        }); 
 
 			$("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
 	 			$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
@@ -209,6 +178,28 @@
 			$(".editValue").click(function() {
 				$("#EditPersonDocumentDiv").load($(this).attr("href"));return false;
 			});
+
+			$('#close').click(function() {
+				$('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $('#question') }); 
+				return false;
+			});
+      
+			$('#no').click(function() { 
+				$.unblockUI();
+				$(".blockUI").fadeOut("slow");
+				$('#question').hide();
+				$('#EditCorrespondentsOrPeopleDocumentDiv').append($("#question"));
+				$(".blockUI").remove();
+				return false; 
+			}); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+				}});
+					
+				return false; 
+			}); 
 
 		});
 	</script>

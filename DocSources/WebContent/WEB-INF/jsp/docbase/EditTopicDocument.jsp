@@ -46,10 +46,10 @@
 		$(document).ready(function() {
 			var topicDescription = $('#topicDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchTopicLinkableToDocumentUrl}',
-			    minChars:3, 
+			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
-			    width:600,
+			    width:250,
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching

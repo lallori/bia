@@ -25,13 +25,23 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#close').click(function() {
+	        $("#EditDetailsDocument").removeAttr("href"); 
+	        $("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
+	        $("#EditExtractOrSynopsisDocument").removeAttr("href"); 
+	        $("#EditFactCheckDocument").removeAttr("href");
+	        $("#EditTopicsDocument").removeAttr("href");
+
+	        $('#close').click(function() {
 				$('#EditFactCheckDocumentDiv').block({ message: $('#question') }); 
 				return false;
 			});
       
 			$('#no').click(function() { 
-				$.unblockUI();$(".blockUI").fadeOut("slow");
+				$.unblockUI();
+				$(".blockUI").fadeOut("slow");
+				$('#question').hide();
+				$('#EditFactCheckDocumentDiv').append($("#question"));
+				$(".blockUI").remove();
 				return false; 
 			}); 
 	        

@@ -19,6 +19,7 @@
 			</div>
 			
 			<form:hidden path="entryId"/>
+			<form:hidden path="synExtrId"/>
 		</fieldset>	
 	</form:form>
 
@@ -28,7 +29,12 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#close').click(function() {
+	        $("#EditDetailsDocument").removeAttr("href"); 
+	        $("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
+	        $("#EditFactCheckDocument").removeAttr("href");
+	        $("#EditTopicsDocument").removeAttr("href");
+
+	        $('#close').click(function() {
 				$('#EditExtractOrSynopsisDocumentDiv').block({ message: $('#question') }); 
 				return false;
 			});

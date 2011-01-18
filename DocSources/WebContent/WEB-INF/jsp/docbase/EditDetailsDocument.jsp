@@ -86,24 +86,11 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#close').click(function() {
-				$('#EditDetailsDocumentDiv').block({ message: $('#question') }); 
-				return false;
-			});
-      
-			$('#no').click(function() { 
-				$.unblockUI();$(".blockUI").fadeOut("slow");
-				return false; 
-			}); 
+	        $("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
+	        $("#EditExtractOrSynopsisDocument").removeAttr("href"); 
+	        $("#EditFactCheckDocument").removeAttr("href");
+	        $("#EditTopicsDocument").removeAttr("href");
 	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
-				}});
-					
-				return false; 
-			}); 
-
 			var showVolumeExplorer = function (){
 				$.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $("#volume").val() },
 					function(data){
@@ -135,5 +122,27 @@
 				}});
 				return false;
 			});
+
+	        $('#close').click(function() {
+				$('#EditDetailsDocumentDiv').block({ message: $('#question') }); 
+				return false;
+			});
+      
+			$('#no').click(function() { 
+				$.unblockUI();
+				$(".blockUI").fadeOut("slow");
+				$('#question').hide();
+				$('#EditDetailsDocumentDiv').append($("#question"));
+				$(".blockUI").remove();
+				return false; 
+			}); 
+	        
+			$('#yes').click(function() { 
+				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$("#body_left").html(html);
+				}});
+					
+				return false; 
+			}); 
 		});
 	</script>

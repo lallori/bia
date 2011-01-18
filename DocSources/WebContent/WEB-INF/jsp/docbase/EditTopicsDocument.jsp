@@ -46,19 +46,39 @@
 		</fieldset>	
 		<div id="EditTopicDocumentDiv"></div>
 	
-	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
-		<c:param name="entryId"   value="${command.entryId}" />
-	</c:url>
+		<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+			<c:param name="entryId"   value="${command.entryId}" />
+		</c:url>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$('#close').click(function() { 
+		        $("#EditDetailsDocument").removeAttr("href"); 
+		        $("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
+		        $("#EditExtractOrSynopsisDocument").removeAttr("href"); 
+		        $("#EditFactCheckDocument").removeAttr("href");
+		        
+		        $('#close').click(function() {
+					$('#EditTopicsDocumentDiv').block({ message: $('#question') }); 
+					return false;
+				});
+	      
+				$('#no').click(function() { 
+					$.unblockUI();
+					$(".blockUI").fadeOut("slow");
+					$('#question').hide();
+					$('#EditFactCheckDocumentDiv').append($("#question"));
+					$(".blockUI").remove();
+					return false; 
+				}); 
+		        
+				$('#yes').click(function() { 
 					$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
 						$("#body_left").html(html);
 					}});
 						
 					return false; 
 				}); 
+
 
 				$(".deleteValue").click(function() {
 					$.get(this.href, function(data) {
