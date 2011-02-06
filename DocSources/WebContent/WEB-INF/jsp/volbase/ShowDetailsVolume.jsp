@@ -46,22 +46,22 @@
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
-		$(document).ready(function() {
-			 $("#EditContextVolume").attr('href', "${EditContextVolume}");
-			 $("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
-			 $("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
-			 $("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
+		$j(document).ready(function() {
+			 $j("#EditContextVolume").attr('href', "${EditContextVolume}");
+			 $j("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
+			 $j("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
+			 $j("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
 
-			 $("#EditDetailsVolume").volumeExplorer( {  
+			 $j("#EditDetailsVolume").volumeExplorer( {  
 				volNum      : "${volume.volNum}",
 				volLetExt   : "${volume.volLetExt}",
 				checkVolumeURL : "${FindVolume}",
-				target : $("#body_right"), 
+				target : $j("#body_right"), 
 				remoteUrl : "${ShowExplorerVolume}",
 				zIndex: 9999
 			});  
-			$("#EditDetailsVolume").click(function(){
-				$("#EditDetailsVolumeDiv").load($(this).attr("href"));
+			$j("#EditDetailsVolume").click(function(){
+				$j("#EditDetailsVolumeDiv").load($j(this).attr("href"));
 				return false;
 			});
 		});

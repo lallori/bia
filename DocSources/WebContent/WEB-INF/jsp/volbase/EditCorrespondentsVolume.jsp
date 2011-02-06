@@ -24,39 +24,39 @@
 	</c:url>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#close').click(function() {
-	            $('#EditCorrespondentsVolumeDiv').block({ message: $('#question') }); 
+		$j(document).ready(function() {
+			$j('#close').click(function() {
+	            $j('#EditCorrespondentsVolumeDiv').block({ message: $j('#question') }); 
 				return false;
 			});
 	        
-			$('#no').click(function() { 
-				$.unblockUI();
-				$(".blockUI").fadeOut("slow");
-				$('#question').hide();
-				$('#EditCorrespondentsVolumeDiv').append($("#question"));
-				$(".blockUI").remove();
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j('#question').hide();
+				$j('#EditCorrespondentsVolumeDiv').append($j("#question"));
+				$j(".blockUI").remove();
 	            return false; 
 	        }); 
 	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
 	 			}});
 				
 				return false; 
 	        }); 
 
-			$("#EditCorrespondentsVolumeForm").submit(function (){
-	 			$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					$("#EditCorrespondentsVolumeDiv").replaceWith(html);
+			$j("#EditCorrespondentsVolumeForm").submit(function (){
+	 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					$j("#EditCorrespondentsVolumeDiv").replaceWith(html);
 				}});
 
 				return false;
 			});
 
-			$("#EditContextVolume").removeAttr("href"); 
-	        $("#EditDescriptionVolume").removeAttr("href"); 
-			$("#EditDetailsVolume").removeAttr("href"); 
+			$j("#EditContextVolume").removeAttr("href"); 
+	        $j("#EditDescriptionVolume").removeAttr("href"); 
+			$j("#EditDetailsVolume").removeAttr("href"); 
 		});
 	</script>

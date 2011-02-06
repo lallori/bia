@@ -47,14 +47,14 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<script type="text/javascript">
-			$(document).ready(function() {
-				 $("#EditContextVolume").attr('href', "${EditContextVolume}");
-				 $("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
-				 $("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
-				 $("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
+			$j(document).ready(function() {
+				 $j("#EditContextVolume").attr('href', "${EditContextVolume}");
+				 $j("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
+				 $j("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
+				 $j("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
 
-				 $("#EditDescriptionVolume").click(function(){
-					$("#EditDescriptionVolumeDiv").load($(this).attr("href"));
+				 $j("#EditDescriptionVolume").click(function(){
+					$j("#EditDescriptionVolumeDiv").load($j(this).attr("href"));
 					return false;
 				});
 			});

@@ -22,38 +22,38 @@
 	</c:url>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#close').click(function() {
-	            $('#EditContextVolumeDiv').block({ message: $('#question') }); 
+		$j(document).ready(function() {
+			$j('#close').click(function() {
+	            $j('#EditContextVolumeDiv').block({ message: $j('#question') }); 
 				return false;
 			});
 	        
-			$('#no').click(function() { 
-				$.unblockUI();
-				$(".blockUI").fadeOut("slow");
-				$('#question').hide();
-				$('#EditContextVolumeDiv').append($("#question"));
-				$(".blockUI").remove();
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j('#question').hide();
+				$j('#EditContextVolumeDiv').append($j("#question"));
+				$j(".blockUI").remove();
 	            return false; 
 	        }); 
 	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
 	 			}});
 				
 				return false; 
 	        }); 
 
-			$("#EditContextVolumeForm").submit(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					$("#EditContextVolumeDiv").replaceWith(html);
+			$j("#EditContextVolumeForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					$j("#EditContextVolumeDiv").replaceWith(html);
 				}});
 				return false;
 			});
 
-	        $("#EditCorrespondentsVolume").removeAttr("href"); 
-	        $("#EditDescriptionVolume").removeAttr("href"); 
-			$("#EditDetailsVolume").removeAttr("href"); 
+	        $j("#EditCorrespondentsVolume").removeAttr("href"); 
+	        $j("#EditDescriptionVolume").removeAttr("href"); 
+			$j("#EditDetailsVolume").removeAttr("href"); 
 		});
 	</script>	

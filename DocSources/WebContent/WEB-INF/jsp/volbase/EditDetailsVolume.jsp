@@ -72,44 +72,44 @@
 	</c:url>
 	
 	<script type="text/javascript">
-		$(document).ready(function() {
-	        $("#EditContextVolume").removeAttr("href"); 
-	        $("#EditCorrespondentsVolume").removeAttr("href"); 
-	        $("#EditDescriptionVolume").removeAttr("href"); 
+		$j(document).ready(function() {
+	        $j("#EditContextVolume").removeAttr("href"); 
+	        $j("#EditCorrespondentsVolume").removeAttr("href"); 
+	        $j("#EditDescriptionVolume").removeAttr("href"); 
 
 	        // We disable
 			<c:if test="${command.summaryId != 0}"> 
-				$("#volNum").attr("disabled","true");
-				$("#volLetExt").attr("disabled","true");
+				$j("#volNum").attr("disabled","true");
+				$j("#volLetExt").attr("disabled","true");
 	        </c:if>
 
 			var showVolumeExplorer = function (){
-				$.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $("#volNum").val(), volLetExt: $("#volLetExt").val() },
+				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val() },
 					function(data){
 						if (data.summaryId == "") {
-							if ($("#volExist").length > 0) {
-								$("#volExist").remove();
+							if ($j("#volExist").length > 0) {
+								$j("#volExist").remove();
 							}
-							$("#save").removeAttr("disabled");
-							$.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { volNum: $("#volNum").val(), volLetExt: $("#volLetExt").val(), flashVersion : true },
+							$j("#save").removeAttr("disabled");
+							$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val(), flashVersion : true },
 								function(data){
-									$("#body_right").html(data);
+									$j("#body_right").html(data);
 									return true;
 								}
 							);
 						} else {
-							if ($("#volExist").length == 0) {
-								$("#close").before("<span class=\"inputerrors\" id=\"volExist\">Volume is already present, you cannot add again this volume. Save is disabled.<br></span>");
+							if ($j("#volExist").length == 0) {
+								$j("#close").before("<span class=\"inputerrors\" id=\"volExist\">Volume is already present, you cannot add again this volume. Save is disabled.<br></span>");
 							}
-							$("#save").attr("disabled","true");
+							$j("#save").attr("disabled","true");
 						}
 					}
 				);
 	 		}
-			$("#volNum").change(showVolumeExplorer);
-			$("#volLetExt").change(showVolumeExplorer);	        	
+			$j("#volNum").change(showVolumeExplorer);
+			$j("#volLetExt").change(showVolumeExplorer);	        	
 
-			var a = $('#seriesRefDescriptionAutoCompleter').autocomplete({ 
+			var a = $j('#seriesRefDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchSeriesListUrl}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -118,45 +118,45 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#seriesRefNum').val(data); }
+			    onSelect: function(value, data){ $j('#seriesRefNum').val(data); }
 			});
 
-			$('#close').click(function() {
-	            $('#EditDetailsVolumeDiv').block({ message: $('#question') }); 
+			$j('#close').click(function() {
+	            $j('#EditDetailsVolumeDiv').block({ message: $j('#question') }); 
 				return false;
 			});
 	        
-			$('#no').click(function() { 
-				$.unblockUI();
-				$(".blockUI").fadeOut("slow");
-				$('#question').hide();
-				$('#EditDetailsVolumeDiv').append($("#question"));
-				$(".blockUI").remove();
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j('#question').hide();
+				$j('#EditDetailsVolumeDiv').append($j("#question"));
+				$j(".blockUI").remove();
 	            return false; 
 	        }); 
 	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
 	 			}});
 				
 				return false; 
 	        }); 
 
-			$("#EditDetailsVolumeForm").submit(function (){
-				$("#volNum").removeAttr("disabled");
-				$("#volLetExt").removeAttr("disabled");
+			$j("#EditDetailsVolumeForm").submit(function (){
+				$j("#volNum").removeAttr("disabled");
+				$j("#volLetExt").removeAttr("disabled");
 
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					if(html.match(/inputerrors/g)){
-						$("#EditDetailsVolumeDiv").html(html);
+						$j("#EditDetailsVolumeDiv").html(html);
 					} else {
 						<c:choose> 
 							<c:when test="${command.summaryId == 0}"> 
-								$("#body_left").html(html);
+								$j("#body_left").html(html);
 							</c:when> 
 							<c:otherwise> 
-								$("#EditDetailsVolumeDiv").html(html);
+								$j("#EditDetailsVolumeDiv").html(html);
 							</c:otherwise> 
 						</c:choose> 
 					}

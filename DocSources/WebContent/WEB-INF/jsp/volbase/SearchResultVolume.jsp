@@ -13,8 +13,8 @@
 		<script type="text/javascript" charset="utf-8">
 			TableToolsInit.sSwfPath = "${zeroClipboard}";
 
-			$(document).ready(function() {
-				$('#result').dataTable( {
+			$j(document).ready(function() {
+				$j('#result').dataTable( {
 					"bProcessing": true,
 					"bServerSide": true,
 					"sPaginationType": "full_numbers",
@@ -26,7 +26,7 @@
 					"fnServerData": function ( sSource, aoData, fnCallback ) {
 						/* Add some extra data to the sender */
 						aoData.push( { "name": "more_data", "value": "xxx" } );
-						$.getJSON( sSource, aoData, function (json) { 
+						$j.getJSON( sSource, aoData, function (json) { 
 							/* Do whatever additional processing you want on the callback, then tell DataTables */
 							fnCallback(json)
 						} );
@@ -34,8 +34,8 @@
 				} );
 
 				// result links have a specific class style on which we trigger load 
-				$('.searchResult').live('click', function() {
-					$("#body_left").load($(this).attr("href"));
+				$j('.searchResult').live('click', function() {
+					$j("#body_left").load($j(this).attr("href"));
 					return false;
 				}); 
 			} );
