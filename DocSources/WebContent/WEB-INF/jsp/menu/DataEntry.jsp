@@ -21,11 +21,11 @@
 							</ul>
 						</li>
 						<script type="text/javascript">
-							$(document).ready(function() {
-								$("#AddNewDocument").click(function(){$("#body_left").load($(this).attr("href"));return false;});
-								$("#AddNewPerson").click(function(){$("#body_left").load($(this).attr("href"));return false;});
-								$("#AddNewPlace").click(function(){$("#body_left").load($(this).attr("href"));return false;});
-								$("#AddNewVolume").click(function(){$("#body_left").load($(this).attr("href"));return false;});
+							$j(document).ready(function() {
+								$j("#AddNewDocument").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
+								$j("#AddNewPerson").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
+								$j("#AddNewPlace").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
+								$j("#AddNewVolume").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
 							});
 						</script>
 					</security:authorize>

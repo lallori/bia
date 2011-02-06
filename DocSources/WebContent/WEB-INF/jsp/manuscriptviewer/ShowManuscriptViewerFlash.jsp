@@ -26,7 +26,8 @@
 				scale: "noscale",
 				bgcolor: "#000000",
 				allowfullscreen: "true",
-				allowscriptaccess: "always"
+				allowscriptaccess: "always",
+				wmode: "transparent" 
 			}
 			swfobject.embedSWF("${iipZoom}", "container", "100%", "100%", "9.0.0","${expressInstall}", flashvars, params);
 		</script>

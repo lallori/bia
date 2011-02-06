@@ -13,11 +13,11 @@
 					</ul>
 				</div>
 				<script type="text/javascript">
-					$(document).ready(function() {
-						$("#ShowLastEntryDocument").click(function(){$("#body_left").load($(this).attr("href"));return false;});
-						$("#ShowLastEntryVolume").click(function(){$("#body_left").load($(this).attr("href"));return false;});
-						$("#ShowLastEntryPerson").click(function(){$("#body_left").load($(this).attr("href"));return false;});
-						$("#ShowLastEntryPlace").click(function(){$("#body_left").load($(this).attr("href"));return false;});
+					$j(document).ready(function() {
+						$j("#ShowLastEntryDocument").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
+						$j("#ShowLastEntryVolume").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
+						$j("#ShowLastEntryPerson").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
+						$j("#ShowLastEntryPlace").click(function(){$j("#body_left").load($j(this).attr("href"));return false;});
 					});
 				</script>
 		

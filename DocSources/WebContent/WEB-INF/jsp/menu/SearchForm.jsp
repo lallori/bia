@@ -19,10 +19,10 @@
 					</form>
 				</div>
 				<script type="text/javascript">
-					$(document).ready(function() {
-						$("#SearchForm").submit(function() {
-							$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) {
-									$("#body_right").html(html);
+					$j(document).ready(function() {
+						$j("#SearchForm").submit(function() {
+							$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+									$j("#body_right").html(html);
 								}
 							});
 						return false;});
