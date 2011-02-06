@@ -49,7 +49,7 @@ create table docsources_audit.tblVolumes_AUD (SUMMARYID integer not null, REV in
 update tblPeople set gender = 'M' where gender = 'm';
 update tblPeople set gender = 'F' where gender = 'f';
 update tblPeople set gender = 'X' where gender = 'x';
-update tblPeople set gender = 'X' where gender = '';
+update tblPeople set gender = null where gender = '';
 
 -- Birth month num cannot be 0
 update docsources.tblpeople set bmonthnum = null where bmonthnum = 0;
