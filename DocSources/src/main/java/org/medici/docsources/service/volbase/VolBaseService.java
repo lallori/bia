@@ -101,30 +101,6 @@ public interface VolBaseService {
 	public Volume findLastEntryVolume() throws ApplicationThrowable;
 
 	/**
-	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Volume}.
-	 * 
-	 * @throws ApplicationThrowable
-	 */
-	public void generateIndexVolume() throws ApplicationThrowable;
-	
-
-	/**
-	 * This method generates lucene index for entity {@link org.medici.docsources.domain.SerieList}.
-	 * 
-	 * @throws ApplicationThrowable
-	 */
-	public void generateIndexSerieList() throws ApplicationThrowable;
-
-	/**
-	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
-	 * 
-	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.SerieList}
-	 * @throws ApplicationThrowable
-	 */
-	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
-
-	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
 	 * by his unique identifier.
 	 * 
@@ -132,6 +108,7 @@ public interface VolBaseService {
 	 * @return {@link org.medici.docsources.domain.Volume}
 	 */
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable;
+	
 
 	/**
 	 * 
@@ -141,30 +118,6 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
-
-	/**
-	 * This method extracts all months available.
-	 *  
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Month}
-	 * object
-	 * @throws ApplicationThrowable
-	 */
-	public List<Month> getMonths() throws ApplicationThrowable;
-
-	/**
-	 * This method searches for existing {@link org.medici.docsources.domain.Volume}
-	 * containing input text and return a specific 
-	 * {@link org.medici.docsources.common.pagination.Page} of complete reulst 
-	 * base on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
-	 * 
-	 * @param text Text to search inside {@link org.medici.docsources.domain.Volume}
-	 * @param paginationFilter Object that contains information for filtering on
-	 * pagination 
-	 * @return {@link org.medici.docsources.common.pagination.Page} containing 
-	 * partial result
-	 * @throws ApplicationThrowable
-	 */
-	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.Image}
@@ -177,6 +130,15 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -198,11 +160,49 @@ public interface VolBaseService {
 	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
+	 * This method generates lucene index for entity {@link org.medici.docsources.domain.SerieList}.
 	 * 
-	 * @param summaryId
-	 * @param paginationFilter
-	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public void generateIndexSerieList() throws ApplicationThrowable;
+
+	/**
+	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Volume}.
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexVolume() throws ApplicationThrowable;
+
+	/**
+	 * This method extracts all months available.
+	 *  
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Month}
+	 * object
+	 * @throws ApplicationThrowable
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable;
+
+	/**
+	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
+	 * 
+	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.SerieList}
+	 * @throws ApplicationThrowable
+	 */
+	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
+
+	/**
+	 * This method searches for existing {@link org.medici.docsources.domain.Volume}
+	 * containing input text and return a specific 
+	 * {@link org.medici.docsources.common.pagination.Page} of complete reulst 
+	 * base on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
+	 * 
+	 * @param text Text to search inside {@link org.medici.docsources.domain.Volume}
+	 * @param paginationFilter Object that contains information for filtering on
+	 * pagination 
+	 * @return {@link org.medici.docsources.common.pagination.Page} containing 
+	 * partial result
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }
