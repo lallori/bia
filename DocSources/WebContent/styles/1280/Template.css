@@ -1,0 +1,424 @@
+/*
+ * The Medici Archive Project
+ * http://documents.medici.org/
+ * 
+ * Copyright (c) 2011 MAP
+ *
+ *
+ * This style sheet contains all classes, id and tag from the MAIN INTERFACE elements
+ */
+
+
+/* ------------------------------------------------- TAG ------------------------------------------------- */ 
+
+html {
+	height: 100%;
+}
+
+body {
+	background-image:url(/DocSources/images/bg_image.jpg);
+	background-position:bottom;
+	background-repeat:no-repeat;
+	background-color:#f6edec;
+	background-attachment:fixed;
+	margin:0 !important; 
+	padding:0 !important; 
+	height: 100%;
+	font-size:12px;
+	color:#6F6B69;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+h1 {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:13px;
+	color:#6F6B69;
+}
+
+a img {
+   border:0px;
+}
+
+a:focus { 
+	outline: 0px; 
+}
+
+a {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	text-decoration:none;
+	color:#6F6B69;
+	font-size:12px;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ------------------------------------------ STRUCTURAL DIVS -------------------------------------------- */ 
+
+#layout { /* Website Container*/
+	width:1240px;
+	min-height: 100% !important;
+	height: 100%; 
+	margin:0 auto 0 auto !important; 
+	position:relative;
+	background-color:#FC9;
+}
+
+#map { /* THE MEDICI ARCHIVE PROJECT top left image Container */
+	width:270px;
+	height:165px;
+	position:absolute;
+	z-index:2 !important;
+}
+
+#top_top { /* SEARCH FORM and LAST ENTRY MENU Container */
+	width:750px;
+	height:95px;
+	margin-left:250px;
+	position:absolute;
+}
+
+#top_middle { /* MAIN MENU: Entry Menu - Vet Menu - Advanced Search - Chronology - My Profile - Messages - Log out */
+	width:745px;
+	height:60px;
+	margin-top:95px;
+	margin-left:255px;
+	position:absolute;
+	background-image:url(/DocSources/images/top_middle_bg.png);
+	z-index:3;
+}
+
+#top_bottom { /* USER INTERFACE MENU Container*/
+	width:1240px;
+	height:25px;
+	margin-top:158px;
+	position:absolute;
+	z-index:1 !important;
+	background-color:#930;
+}
+
+#DocSourcesContent { /* MAIN Website Container */
+	width:1000px;
+	height:auto;	
+	margin-top:185px;
+	position:absolute;
+}
+
+#footer { /* FOOTER Container */
+	width:100%;
+	height:150px;
+	text-align: center;
+	font-size:10px;
+	z-index:1;
+	bottom:0;
+	margin-top:100%;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* --------------------------------------------- SPLIT SCREEN -------------------------------------------- */
+
+
+#body_left{ /* LEFT-hand side of the SCREEN */
+	width:47%;
+	height:auto;
+	padding-left:25px;
+	margin-top:15px;
+	float:left;
+	position:absolute;
+	border-right: 1px solid #e6d0c6;
+	font-size:12px;
+	z-index:2;
+
+}
+	
+#body_right{ /* RIGHT-hand side of the SCREEN */
+	width:47%;
+	height:auto;
+	padding-left:25px;
+	padding-right:25px;
+	margin-top:15px;
+	float:right;
+	position:absolute;
+	margin-left:495px;
+	font-size:12px;
+	border-left: 1px solid #e6d0c6;
+	z-index:2;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* -------------------------------------------- SINGLE SCREEN -------------------------------------------- */
+
+#body_central{ /* Container used in the WELCOME page, MY PROFILE (Main Menu) */
+	width:100%;
+	height:auto;
+	padding-left:25px;
+	padding-right:25px;
+	margin-top:15px;
+	position:absolute;
+	font-size:12px;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ---------------------------------------- SEARCH FORM (#top_top) --------------------------------------- */
+
+#searchForm { /* Search Form Container */
+	width:240px;
+	height:80px;
+	margin-left:40px;
+	position:absolute;
+}
+
+.input_search { /* Input Text class */
+	background-image:url(/DocSources/images/input_search_bg.png);
+	background-color: transparent;
+	background-repeat:no-repeat;
+	height:30px;
+	border:none;
+	width:150px;
+	padding-left:10px;
+	margin-top:0px;
+}
+
+.select{ /* Dropdown Menu: Documents, Volumes, People, Locations and community Comments  */
+	background-image:url(/DocSources/images/select_bg.png);
+	background-color: transparent;
+	background-repeat:no-repeat;
+	height:25px;
+	border:none;
+	width:100px;
+	padding-left:10px;
+	padding-top:7px;
+	margin-top:10px;
+	font-size:103%;
+	color:#6F6B69;
+	outline:0px; 
+}
+
+.select option{
+	background-color: transparent;
+}
+
+input { 
+	outline: 0px; 
+}
+
+#search { /* Search button */
+	margin-left:125px;
+	border:none;
+	background-color:transparent;
+	margin-top:-3px;
+}
+
+#firstName {
+	margin-top:5px;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* --------------------------------------- SHORTCUT MENU (#top_top) --------------------------------------- */
+
+#lastentry { /* Shortcut Menu Container */
+	width:480px;
+	height:90px;
+	margin-left:240px;
+	position:absolute;
+	list-style:none;
+	float:left;
+}
+
+#menulastentry { /* Shortcut Menu <ul> list */
+	width:480px;
+	height:90px;
+	list-style:none;
+	float:left;
+}
+
+#menulastentry li{ /* Shortcut Menu <ul> list <li> elements */
+	float:left;
+}
+
+#menulastentry a{ /* Shortcut Menu <ul> list <li> elements <a> ancors */
+	float:left;
+	display:block;
+	text-decoration:none;
+	padding-left:10px;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ---------------------------------------- MAIN MENU (#top_middle) -------------------------------------- */
+
+
+.menumain {
+	margin-left:0px;
+	z-index:2;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
+
+
+/* BAR BACKGROUNDS */
+
+.docs { /* brown for DOCUMENTS */
+	background-image:url(/DocSources/images/user_interface_docs.png);
+	background-repeat:no-repeat;
+}
+
+.person { /* violet for PERSON */
+	background-image:url(/DocSources/images/user_interface_person.png);
+}
+
+.vol { /* yellow for VOLUME */
+	background-image:url(/DocSources/images/user_interface_vol.png);
+}
+
+.geo { /* GREEN for PLACE */
+	background-image:url(/DocSources/images/user_interface_geo.png);
+}
+
+/* -------------- */
+/* 
+/* 
+/* ACTIONS MENU */
+
+#top_bottom p{ /* top_bottom (Who am I?) */
+	color:#FFF;
+	margin-top:5px;
+	float:right;
+	padding-right:30px;
+	font-size:80%;
+}
+
+/* -------------- */
+/*
+/*
+/* ADMINISTRATION MENU */
+
+#adm_menu {
+	float:left;
+	height:25px;
+	width: 500px;
+}
+
+#adm_menu a{
+	color:#fff;
+}
+
+/* ------------------- */
+/* 
+/* ACTIONS MENU */
+
+#menu_actions {
+	height:25px;
+	width: 100px;
+	margin-left: 520px;
+}
+
+/* ------------- */
+/*
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ---------------------------------------------- WELCOME PAGE ------------------------------------------- */
+
+#welcome {  /* Page Container */
+	width:900px;
+	position:absolute;
+	margin-top:200px;
+}
+
+.welcome{
+	font-size:16px;
+	margin-top:30px;
+	margin-left:50px;
+	position:absolute;
+}
+
+.welcome_list{
+	margin-left: 10px;
+	margin-top:130px;
+	line-height:20px;
+	list-style-type:none;
+	position:absolute;
+}
+
+.welcome_list ul li{
+	list-style-type:none;
+}
+
+#colte_of_arms { /*  Medici symbol */
+	width:180px;
+	height:220px;
+	margin-top:100px;
+	margin-left: 220px;	
+	position:absolute;
+	background-image:url(/DocSources/images/stemma.png);
+}
+
+#button_courses {
+	width:200px;
+	height:65px;
+	margin-top:20px;
+	margin-left:250px;
+	position:absolute;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ------------------------------------------------- ANCORS ---------------------------------------------- */
+
+#body_left a, #body_right a, #body_central a{ /* Edit buttons */
+	text-decoration:underline;
+	font-weight:100;
+	font-size:12px;
+	color:#b99c84;
+}
+
+#body_left a:hover, #body_right a:hover, #body_central a:hover { /* All ancors */
+	opacity:0.5;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */
+/*
+/*
+/* --------------------------------------------- jQUERY CLASSES ------------------------------------------ */
+
+
+/* Search Result */
+.searchResult {
+}
+
+$('.searchResult').live('click', function() {
+	$("#body_left").load($(this).attr("href"));
+	return false;
+});
+
+/* Edit Value */
+.editValue {
+}
+
+/* Delete Value */
+.deleteValue {
+}
+
+.previousPage {
+}
+
+.nextPage {
+}
+
+/* ------------------------------------------------------------------------------------------------------- */
+/*
+/*
