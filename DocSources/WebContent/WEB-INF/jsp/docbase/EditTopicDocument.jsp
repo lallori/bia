@@ -43,8 +43,8 @@
 	</c:url>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			var topicDescription = $('#topicDescriptionAutoCompleter').autocomplete({ 
+		$j(document).ready(function() {
+			var topicDescription = $j('#topicDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchTopicLinkableToDocumentUrl}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -53,10 +53,10 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#topicId').val(data); }
+			    onSelect: function(value, data){ $j('#topicId').val(data); }
 			  });
 
-			var placeDescription = $('#placeDescriptionAutoCompleter').autocomplete({ 
+			var placeDescription = $j('#placeDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchPlaceLinkableToTopicDocumentUrl}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -65,22 +65,22 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#placeId').val(data); }
+			    onSelect: function(value, data){ $j('#placeId').val(data); }
 			  });
 
-			$('#close').click(function() { 
-	            $('#EditTopicDocumentDiv').block({ 
+			$j('#close').click(function() { 
+	            $j('#EditTopicDocumentDiv').block({ 
 	                message: '<h1>Discard changes and close window?</h1>', 
 	                css: { border: '3px solid #a00' } 
 	            })
 			});
 
-			$("#EditTopicDocumentForm").submit(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
+			$j("#EditTopicDocumentForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 						if(html.match(/inputerrors/g)){
-							$("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
+							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
 						} else {
-							$("#EditTopicDocumentDiv").html(html);
+							$j("#EditTopicDocumentDiv").html(html);
 						}
 					} 
 				});

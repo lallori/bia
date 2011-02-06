@@ -46,8 +46,8 @@
 	</c:url>
 
 	<script type="text/javascript"> 
-	    $(document).ready(function() { 
-			var peopleDescription = $('#personDescriptionAutoCompleter').autocompletePerson({ 
+	    $j(document).ready(function() { 
+			var peopleDescription = $j('#personDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchPersonLinkableToDocumentUrl}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -56,19 +56,19 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#personId').val(data); }
+			    onSelect: function(value, data){ $j('#personId').val(data); }
 			  });
 
-			$('#close').click(function() { 
-	            $('#EditPersonDocumentDiv').block({ 
+			$j('#close').click(function() { 
+	            $j('#EditPersonDocumentDiv').block({ 
 	                message: '<h1>Discard changes and close window?</h1>', 
 	                css: { border: '3px solid #a00' } 
 	            })
 			});
 
-			$("#EditPersonDocumentForm").submit(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) {
-					$("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocument}');
+			$j("#EditPersonDocumentForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocument}');
 				}})
 				return false;
 			});

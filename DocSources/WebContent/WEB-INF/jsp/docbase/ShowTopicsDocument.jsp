@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsDocument" value="/de/docbase/EditCorrespondentsDocument.do">
+		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
@@ -35,13 +35,13 @@
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			 $("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
-			 $("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
-			 $("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
-			 $("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
-			 $("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
+		$j(document).ready(function() {
+			 $j("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
+			 $j("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
+			 $j("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
+			 $j("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
+			 $j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 			 
-			 $("#EditTopicsDocument").click(function(){$("#EditTopicsDocumentDiv").load($(this).attr("href"));return false;});
+			 $j("#EditTopicsDocument").click(function(){$j("#EditTopicsDocumentDiv").load($j(this).attr("href"));return false;});
 		});
 	</script>

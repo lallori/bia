@@ -28,40 +28,40 @@
 	</c:url>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-	        $("#EditDetailsDocument").removeAttr("href"); 
-	        $("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
-	        $("#EditFactCheckDocument").removeAttr("href");
-	        $("#EditTopicsDocument").removeAttr("href");
+		$j(document).ready(function() {
+	        $j("#EditDetailsDocument").removeAttr("href"); 
+	        $j("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
+	        $j("#EditFactCheckDocument").removeAttr("href");
+	        $j("#EditTopicsDocument").removeAttr("href");
 
-	        $('#close').click(function() {
-				$('#EditExtractOrSynopsisDocumentDiv').block({ message: $('#question') }); 
+	        $j('#close').click(function() {
+				$j('#EditExtractOrSynopsisDocumentDiv').block({ message: $j('#question') }); 
 				return false;
 			});
       
-			$('#no').click(function() { 
-				$.unblockUI();
-				$(".blockUI").fadeOut("slow");
-				$('#question').hide();
-				$('#EditExtractOrSynopsisDocumentDiv').append($("#question"));
-				$(".blockUI").remove();
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j('#question').hide();
+				$j('#EditExtractOrSynopsisDocumentDiv').append($j("#question"));
+				$j(".blockUI").remove();
 	            return false; 
 	        }); 
 	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
 				}});
 					
 				return false; 
 			}); 
 
-			$("#EditExtractOrSynopsisDocumentForm").submit(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
+			$j("#EditExtractOrSynopsisDocumentForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 						if(html.match(/inputerrors/g)){
-							$("#EditExtractOrSynopsisDocumentDiv").html(html);
+							$j("#EditExtractOrSynopsisDocumentDiv").html(html);
 						} else {
-							$("#body_left").html(html);
+							$j("#body_left").html(html);
 						}
 					} 
 				});

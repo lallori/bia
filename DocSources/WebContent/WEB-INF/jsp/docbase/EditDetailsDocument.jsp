@@ -85,28 +85,28 @@
 	</c:url>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-	        $("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
-	        $("#EditExtractOrSynopsisDocument").removeAttr("href"); 
-	        $("#EditFactCheckDocument").removeAttr("href");
-	        $("#EditTopicsDocument").removeAttr("href");
+		$j(document).ready(function() {
+	        $j("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
+	        $j("#EditExtractOrSynopsisDocument").removeAttr("href"); 
+	        $j("#EditFactCheckDocument").removeAttr("href");
+	        $j("#EditTopicsDocument").removeAttr("href");
 	        
 			var showVolumeExplorer = function (){
-				$.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $("#volume").val() },
+				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },
 					function(data){
 						if (data.summaryId == "") {
-							if ($("#volNotExist").length == 0) {
-								$("#close").before("<span class=\"inputerrors\" id=\"volNotExist\">Volume is not present, you cannot create this document. Save is disabled.<br></span>");
+							if ($j("#volNotExist").length == 0) {
+								$j("#close").before("<span class=\"inputerrors\" id=\"volNotExist\">Volume is not present, you cannot create this document. Save is disabled.<br></span>");
 							}
-							$("#save").attr("disabled","true");
+							$j("#save").attr("disabled","true");
 						} else {
-							if ($("#volNotExist").length > 0) {
-								$("#volNotExist").remove();
+							if ($j("#volNotExist").length > 0) {
+								$j("#volNotExist").remove();
 							}
-							$("#save").removeAttr("disabled");
-							$.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : true },
+							$j("#save").removeAttr("disabled");
+							$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : true },
 								function(data){
-									$("#body_right").html(data);
+									$j("#body_right").html(data);
 									return true;
 								}
 							);
@@ -114,32 +114,32 @@
 					}
 				);
 	 		}
-			$("#volume").change(showVolumeExplorer);
+			$j("#volume").change(showVolumeExplorer);
 
-			$("#EditDetailsDocumentForm").submit(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					$("#EditDetailsDocumentDiv").html(html);
+			$j("#EditDetailsDocumentForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					$j("#EditDetailsDocumentDiv").html(html);
 				}});
 				return false;
 			});
 
-	        $('#close').click(function() {
-				$('#EditDetailsDocumentDiv').block({ message: $('#question') }); 
+	        $j('#close').click(function() {
+				$j('#EditDetailsDocumentDiv').block({ message: $j('#question') }); 
 				return false;
 			});
       
-			$('#no').click(function() { 
-				$.unblockUI();
-				$(".blockUI").fadeOut("slow");
-				$('#question').hide();
-				$('#EditDetailsDocumentDiv').append($("#question"));
-				$(".blockUI").remove();
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j('#question').hide();
+				$j('#EditDetailsDocumentDiv').append($j("#question"));
+				$j(".blockUI").remove();
 				return false; 
 			}); 
 	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
 				}});
 					
 				return false; 

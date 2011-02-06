@@ -100,13 +100,13 @@
 
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-	        $("#EditDetailsDocument").removeAttr("href"); 
-	        $("#EditExtractOrSynopsisDocument").removeAttr("href"); 
-	        $("#EditFactCheckDocument").removeAttr("href");
-	        $("#EditTopicsDocument").removeAttr("href");
+		$j(document).ready(function() {
+	        $j("#EditDetailsDocument").removeAttr("href"); 
+	        $j("#EditExtractOrSynopsisDocument").removeAttr("href"); 
+	        $j("#EditFactCheckDocument").removeAttr("href");
+	        $j("#EditTopicsDocument").removeAttr("href");
 
-			var senderPeople = $('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
+			var senderPeople = $j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchSenderPeopleUrl}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
@@ -116,11 +116,11 @@
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
-			    	$('#senderPeopleId').val(data); 
+			    	$j('#senderPeopleId').val(data); 
 			    	}
 			  });
 
-			var senderPlace = $('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
+			var senderPlace = $j('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchSenderPlaceUrl}',
 			    minChars:5, 
 			    delimiter: null, // regex or character
@@ -129,10 +129,10 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#senderPlaceId').val(data); }
+			    onSelect: function(value, data){ $j('#senderPlaceId').val(data); }
 			  });
 			
-			var recipientPeople = $('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
+			var recipientPeople = $j('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchRecipientPeopleUrl}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
@@ -141,10 +141,10 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#recipientPeopleId').val(data); }
+			    onSelect: function(value, data){ $j('#recipientPeopleId').val(data); }
 			  });
 
-			var recipientPlace = $('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
+			var recipientPlace = $j('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchRecipientPlaceUrl}',
 			    minChars:5, 
 			    delimiter: null, // regex or character
@@ -153,49 +153,49 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $('#recipientPlaceId').val(data); }
+			    onSelect: function(value, data){ $j('#recipientPlaceId').val(data); }
 			  });
 
-			$("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
-	 			$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					$("#EditCorrespondentsOrPeopleDocumentDiv").html(html);
+			$j("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
+	 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					$j("#EditCorrespondentsOrPeopleDocumentDiv").html(html);
 				}});
 			});
 
-			$("#AddPersonDocument").click(function(){$("#EditPersonDocumentDiv").load($(this).attr("href"));return false;});
+			$j("#AddPersonDocument").click(function(){$j("#EditPersonDocumentDiv").load($j(this).attr("href"));return false;});
 
-			$(".deleteValue").click(function() {
-				$.get(this.href, function(data) {
+			$j(".deleteValue").click(function() {
+				$j.get(this.href, function(data) {
 					if(data.match(/KO/g)){
-			            var resp = $('<div></div>').append(data); // wrap response
+			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
-						$("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocument}');
+						$j("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocument}');
 					}
 		        });
 				return false;
 			});
 
-			$(".editValue").click(function() {
-				$("#EditPersonDocumentDiv").load($(this).attr("href"));return false;
+			$j(".editValue").click(function() {
+				$j("#EditPersonDocumentDiv").load($j(this).attr("href"));return false;
 			});
 
-			$('#close').click(function() {
-				$('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $('#question') }); 
+			$j('#close').click(function() {
+				$j('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $j('#question') }); 
 				return false;
 			});
       
-			$('#no').click(function() { 
-				$.unblockUI();
-				$(".blockUI").fadeOut("slow");
-				$('#question').hide();
-				$('#EditCorrespondentsOrPeopleDocumentDiv').append($("#question"));
-				$(".blockUI").remove();
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j('#question').hide();
+				$j('#EditCorrespondentsOrPeopleDocumentDiv').append($j("#question"));
+				$j(".blockUI").remove();
 				return false; 
 			}); 
 	        
-			$('#yes').click(function() { 
-				$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$("#body_left").html(html);
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
 				}});
 					
 				return false; 

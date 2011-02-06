@@ -37,13 +37,13 @@
 	
 	
 	<script type="text/javascript">
-		$(document).ready(function() {
-			 $("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
-			 $("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
-			 $("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
-			 $("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
-			 $("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
+		$j(document).ready(function() {
+			 $j("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
+			 $j("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
+			 $j("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
+			 $j("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
+			 $j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 
-			 $("#EditExtractOrSynopsisDocument").click(function(){$("#EditExtractOrSynopsisDocumentDiv").load($(this).attr("href"));return false;});
+			 $j("#EditExtractOrSynopsisDocument").click(function(){$j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));return false;});
 		});
 	</script>

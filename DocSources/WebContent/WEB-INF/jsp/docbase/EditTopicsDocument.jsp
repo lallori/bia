@@ -51,53 +51,53 @@
 		</c:url>
 
 		<script type="text/javascript">
-			$(document).ready(function() {
-		        $("#EditDetailsDocument").removeAttr("href"); 
-		        $("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
-		        $("#EditExtractOrSynopsisDocument").removeAttr("href"); 
-		        $("#EditFactCheckDocument").removeAttr("href");
+			$j(document).ready(function() {
+		        $j("#EditDetailsDocument").removeAttr("href"); 
+		        $j("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
+		        $j("#EditExtractOrSynopsisDocument").removeAttr("href"); 
+		        $j("#EditFactCheckDocument").removeAttr("href");
 		        
-		        $('#close').click(function() {
-					$('#EditTopicsDocumentDiv').block({ message: $('#question') }); 
+		        $j('#close').click(function() {
+					$j('#EditTopicsDocumentDiv').block({ message: $j('#question') }); 
 					return false;
 				});
 	      
-				$('#no').click(function() { 
-					$.unblockUI();
-					$(".blockUI").fadeOut("slow");
-					$('#question').hide();
-					$('#EditFactCheckDocumentDiv').append($("#question"));
-					$(".blockUI").remove();
+				$j('#no').click(function() { 
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j('#question').hide();
+					$j('#EditFactCheckDocumentDiv').append($j("#question"));
+					$j(".blockUI").remove();
 					return false; 
 				}); 
 		        
-				$('#yes').click(function() { 
-					$.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-						$("#body_left").html(html);
+				$j('#yes').click(function() { 
+					$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+						$j("#body_left").html(html);
 					}});
 						
 					return false; 
 				}); 
 
 
-				$(".deleteValue").click(function() {
-					$.get(this.href, function(data) {
+				$j(".deleteValue").click(function() {
+					$j.get(this.href, function(data) {
 						if(data.match(/KO/g)){
-				            var resp = $('<div></div>').append(data); // wrap response
+				            var resp = $j('<div></div>').append(data); // wrap response
 						} else {
-							$("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
+							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
 						}
 			        });
 					return false;
 				});
 
-				$(".editValue").click(function() {
-					$("#EditTopicDocumentDiv").load($(this).attr("href"));
+				$j(".editValue").click(function() {
+					$j("#EditTopicDocumentDiv").load($j(this).attr("href"));
 					return false;
 				});
 
-				$("#AddTopicDocument").click(function(){
-					$("#EditTopicDocumentDiv").load($(this).attr("href"));
+				$j("#AddTopicDocument").click(function(){
+					$j("#EditTopicDocumentDiv").load($j(this).attr("href"));
 					return false;
 				});
 			});
