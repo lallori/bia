@@ -117,6 +117,10 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUser.jsp"/>
     </definition>
 
+   	<definition name="user/ShowUserProfile" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowUserProfile.jsp"/>
+    </definition>
+
     <definition name="user/UpdateUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/UpdateUser.jsp"/>
     </definition>
@@ -131,6 +135,9 @@
 	<!-- Administration Module END -->
 
 	<!-- DocBase Module START -->
+	<definition name="docbase/ChoiceStartFolioModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ChoiceStartFolioModalWindow.jsp"/>
+	</definition>
 	<definition name="docbase/EditCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditCorrespondentsOrPeopleDocument.jsp"/>
 	</definition>
@@ -283,8 +290,8 @@
 	<definition name="volbase/ShowExplorerVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolume.jsp"/>
 	</definition>
-	<definition name="volbase/ShowExplorerVolumeFancyBox" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeFancyBox.jsp"/>
+	<definition name="volbase/ShowExplorerVolumeModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeModalWindow.jsp"/>
 	</definition>
 	<definition name="volbase/ShowVolume" extends="template.volume">
 		<put-attribute name="details" value="/WEB-INF/jsp/volbase/ShowDetailsVolume.jsp"/>
