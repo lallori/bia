@@ -44,8 +44,12 @@ public class ShowExplorerVolumeRequestCommand {
 	private String page;
 	private Integer firstRecord;
 	private Long total;
+	private Long totalFolio;
+	private Long totalRubricario;
 	private Boolean flashVersion;
-	private Boolean fancyBox;
+	private Boolean modalWindow;
+	// This parameter is used to identify first request on modalWindow, so we can set style in div osx-modal-data
+	private Boolean firstPage;
 
 	/**
 	 * @return the summaryId
@@ -79,7 +83,7 @@ public class ShowExplorerVolumeRequestCommand {
 		return volLetExt;
 	}
 	
-	/**
+	/**	
 	 * @param volLeText the volLetExt to set
 	 */
 	public void setVolLeText(String volLetExt) {
@@ -113,40 +117,82 @@ public class ShowExplorerVolumeRequestCommand {
 	public String getPage() {
 		return page;
 	}
+	
 	/**
 	 * @param firstRecord the firstRecord to set
 	 */
 	public void setFirstRecord(Integer firstRecord) {
 		this.firstRecord = firstRecord;
 	}
+	
 	/**
 	 * @return the firstRecord
 	 */
 	public Integer getFirstRecord() {
 		return firstRecord;
 	}
+	
 	/**
 	 * @param total the total to set
 	 */
 	public void setTotal(Long total) {
 		this.total = total;
 	}
+	
 	/**
 	 * @return the total
 	 */
 	public Long getTotal() {
 		return total;
 	}
+	
 	/**
-	 * @param fancyBox the fancyBox to set
+	 * @param totalFolio the totalFolio to set
 	 */
-	public void setFancyBox(Boolean fancyBox) {
-		this.fancyBox = fancyBox;
+	public void setTotalFolio(Long totalFolio) {
+		this.totalFolio = totalFolio;
 	}
 	/**
-	 * @return the fancyBox
+	 * @return the totalFolio
 	 */
-	public Boolean getFancyBox() {
-		return fancyBox;
+	public Long getTotalFolio() {
+		return totalFolio;
+	}
+	/**
+	 * @param totalRubricario the totalRubricario to set
+	 */
+	public void setTotalRubricario(Long totalRubricario) {
+		this.totalRubricario = totalRubricario;
+	}
+	/**
+	 * @return the totalRubricario
+	 */
+	public Long getTotalRubricario() {
+		return totalRubricario;
+	}
+	/**
+	 * @param modalWindow the modalWindow to set
+	 */
+	public void setModalWindow(Boolean modalWindow) {
+		this.modalWindow = modalWindow;
+	}
+	
+	/**
+	 * @return the modalWindow
+	 */
+	public Boolean getModalWindow() {
+		return modalWindow;
+	}
+	/**
+	 * @param firstPage the firstPage to set
+	 */
+	public void setFirstPage(Boolean firstPage) {
+		this.firstPage = firstPage;
+	}
+	/**
+	 * @return the firstPage
+	 */
+	public Boolean getFirstPage() {
+		return firstPage;
 	}
 }
