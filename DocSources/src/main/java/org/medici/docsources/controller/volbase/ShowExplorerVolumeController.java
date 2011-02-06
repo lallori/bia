@@ -40,6 +40,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShowExplorerVolumeController {
 	@Autowired
 	private VolBaseService volBaseService;
+	@Autowired
+	private DocBaseService docBaseService;
 
 	/**
 	 * 
@@ -92,13 +95,14 @@ public class ShowExplorerVolumeController {
 				}
 			}
 
+			//getDocBaseService().findDocument(page.getList().get(0));
 			model.put("page", page);
 			model.put("paginationFilter", paginationFilter);
 		} catch (ApplicationThrowable ath) {
 		}
 
-		if (BooleanUtils.isTrue(command.getFancyBox())) {
-			return new ModelAndView("volbase/ShowExplorerVolumeFancyBox", model);
+		if (BooleanUtils.isTrue(command.getModalWindow())) {
+			return new ModelAndView("volbase/ShowExplorerVolumeModalWindow", model);
 		} else {
 			return new ModelAndView("volbase/ShowExplorerVolume", model);
 		}
@@ -110,5 +114,19 @@ public class ShowExplorerVolumeController {
 	 */
 	public void setVolBaseService(VolBaseService volBaseService) {
 		this.volBaseService = volBaseService;
+	}
+
+	/**
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
 	}
 }
