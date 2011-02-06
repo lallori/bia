@@ -13,6 +13,7 @@
 		<script>
 		 	$(document).ready(function () {
 		        if ($("#site").length > 0) {
+		        	alert('a');
 		            window.location = "<c:url value="/"/>";
 		        }
 		    });

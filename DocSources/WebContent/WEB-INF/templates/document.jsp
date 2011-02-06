@@ -12,11 +12,11 @@
 
 <br />
 
-<tiles:insertAttribute name="topics"/>
+<tiles:insertAttribute name="extract"/>
 
 <br />
 
-<tiles:insertAttribute name="extract"/>
+<tiles:insertAttribute name="topics"/>
 
 <div id="question" style="display:none; cursor: default"> 
 	<h1>discard changes?</h1> 
