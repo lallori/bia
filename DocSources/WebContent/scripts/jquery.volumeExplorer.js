@@ -28,7 +28,8 @@
  * Last Review: 11/26/2010
 */
 (function($) {
-	
+	$(function() {
+
 	var methods = {
 		buildRemoteCall : function(remoteUrl, parametersName, parametersValue) {
 			//console.log("constructing remote call");
@@ -94,4 +95,7 @@
 		});
 
 	};
+
+	});
+
 })( jQuery );
