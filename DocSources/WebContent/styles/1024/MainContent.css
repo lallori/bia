@@ -1,0 +1,1275 @@
+/*
+ * The Medici Archive Project
+ * http://documents.medici.org/
+ * 
+ * Copyright (c) 2011 MAP
+ *
+ *
+ * This style sheet contains all classes, id and tag from the ENTRY MENU elements
+ */
+
+
+/* ------------------------------------------------- TITLES ------------------------------------------------- */ 
+
+h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
+	padding-top:15px;
+	padding-bottom:15px;
+	font-size:14px;
+	font-style:italic;
+	color:#006;
+}
+
+h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
+	text-align:left;
+	font-size:13px;
+	font-style:italic;
+}
+
+h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
+	font-size:11px;
+	display:inline;
+	color:#6d5c4d;
+}
+
+#createdby h6{ /* "Created by ..." Title in ADD NEW DOCUMENT, ADD NEW PERSON, ADD NEW VOLUME */
+	font-size:85%;
+	text-align:right;
+	font-weight:normal;
+}
+
+#createdby { /* "Created by ..." Content DIV */
+	position:absolute;
+	margin-left:300px;
+	margin-top:-40px;
+	width:150px;
+	
+}
+
+#loading {
+	width:16px;
+	height:11px;
+	display:inline;
+	margin:25px 0 auto 25px;
+
+}
+
+/* ---------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* ------------------------------------------------ DISPLAY ------------------------------------------------- */
+
+ul li{ /* Lists */
+	list-style:none;
+	line-height:18px;
+	text-align:justify;
+}
+
+/* --------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* -------------------------------------------------- EDIT ------------------------------------------------- */
+/* Common elements in Edit Forms */
+
+
+.edit { /* Edit FORM class */
+	font-size:10px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+fieldset {  /* FORM BACKGROUND */
+	border: 1px solid #e6d0c6;
+	background-color:#f3e7e2;
+	padding-left:30px;	
+}
+
+legend { /* FORM TITLE */
+	font-size:11px;
+	color:#6d5c4d;
+	background-color:#e6d0c6;
+}
+
+input { /* INPUT text */
+	font-size:10px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px;
+}
+
+.button { /* CLOSE / SAVE / ... button */
+	background-color: #e6d0c6;
+	border:none;
+	display:inline; !important
+	color: #6d5c4d;
+}
+
+form img{ /* Red Cross used to "Delete this entry"  */
+	margin: 0 10px 0 5px;
+	height: 13px;
+	width: 13px;
+	vertical-align:middle;
+}
+
+
+/* ----------------- CHECKBOXES --------------------- */
+
+.checkbox1{ /* used in EditDescriptionVolume.html */
+	margin:0px 45px 0px 10px;
+}
+
+.checkbox2{ /* used in EditDescriptionVolume.html */
+	margin:0px 45px 0px 4px;
+}
+
+.checkbox3{ /* used in EditDescriptionVolume.html */
+	margin:0px 45px 0px 18px;
+}
+
+.checkboxDoc2{ /* used in EditDetailsDocument.html */
+	margin:0px 0px 0px 7px;
+}
+
+.checkboxPers1{ /* used in EditDetailsDocument.html, EditDetailsPerson.html */
+	margin:5px 50px 0px 5px;
+}
+
+.checkboxPers2{ /* used in AddPersonCorrespondentsDocument.html, EditCorrespondentsDocument.html, EditDetailsDocument.html, EditTitlesOccupationsPerson.html, EditDetailsPerson.html */
+	margin:5px 0px 0px 5px;
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
+/* ------------------- INPUT TEXT --------------------- */
+/* c = character */ 
+
+.input_1c { /* input for 1 character */ 
+	width: 13px; !important
+}
+
+.input_2c { /* input for 2 characters */ 
+	width: 20px; 
+}
+
+.input_3c { /* input for 3 characters */ 
+	width: 25px; 
+}
+
+.input_4c { /* input for 4 characters */ 
+	width: 30px;
+}
+
+.input_5c { /* input for 5 characters */ 
+	width: 40px;
+}
+
+.input_10c { /* input for 10 characters approx. */ 
+	width: 87px;
+}
+
+.input_14c { /* input for 14 characters approx. */ 
+	width: 110px;
+}
+
+.input_15c { /* input for 15 characters approx. */ 
+	width: 120px;
+}
+
+.input_20c { /* input for 20 characters approx. */ 
+	width: 160px;
+}
+
+.input_23c { /* input for 23 characters approx. */ 
+	width: 180px;
+}
+
+.input_25c { /* input for 25 characters approx. */ 
+	width: 220px;
+}
+
+.input_28c { /* input for 28 characters approx. */ 
+	width: 240px;
+}
+
+.input_30c { /* input for 30 characters approx. */ 
+	width: 250px;
+	margin: 5px 6px 5px 5px; 
+}
+
+.input_33c { /* input for 33 characters approx. */ 
+	width: 280px;
+	margin: 5px 6px 5px 5px; 
+}
+
+.input_35c { /* input for 35 characters approx. */ 
+	width: 308px;
+	margin: 5px 6px 5px 5px; 
+}
+
+.input_39c { /* input for 35 characters approx. */ 
+	width: 320px;
+	margin: 5px 6px 5px 5px; 
+}
+
+.input_40c { /* input for 40 characters approx. */ 
+	width: 345px;
+	margin: 5px 6px 5px 5px; 
+}
+
+.input_45c { /* input for 45 characters approx. */ 
+	width: 370px;
+	margin: 5px 6px 5px 0px; 
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
+/* -------------- INACTIVE INPUT TEXT ----------------- */
+/* c = character */ 
+
+.input_2c_disabled { /* input for 2 characters */ 
+	width: 20px; !important
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; 
+	opacity:0.3; !important
+	cursor:default; !important
+}
+
+.input_4c_disabled { /* input for 4 characters */ 
+	width: 30px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; 
+	opacity:0.3; 
+	cursor:default; 
+}
+
+.input_10c_disabled {  /* input for 10 characters */ 
+	width: 87px; 
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; 
+	opacity: 0.3; 
+	cursor:default; 
+}
+
+.input_28c_disabled { /* input for 10 characters */ 
+	width: 240px; 
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; 
+	opacity: 0.3;
+	cursor:default;
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
+/* ----------------- DROPDOWN MENU -------------------- */
+
+.selectform{ /* dropdown menu class */
+	width:80px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; 
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.selectform_short{ /* short dropdown menu class */
+	width:50px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; 
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.selectform_long{ /* dropdown menu class */
+	width:100px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; 
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.selectform_Xlong{ /* dropdown menu class */
+	width:190px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; 
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
+/* ------------- INACTIVE DROPDOWN MENU --------------- */
+
+.selectform_disabled{ /* dropdown menu class */
+	width:80px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; 
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	opacity:0.3;
+}
+
+.selectform_long_disabled{ /* dropdown menu class  disabled*/
+	width:100px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; 
+	font-size:100%;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	opacity:0.4;
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
+/* ------------------- TEXTAREAS ---------------------- */
+
+.txtarea { 
+	width: 372px;
+	height:40px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 0px; 
+}
+
+.txtarea_disabled { 
+	width: 372px;
+	height:40px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 0px; /* top right bottom left */
+	opacity:0.3;
+}
+
+.txtarea_big { 
+	width: 372px;
+	height:120px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 0px; /* top right bottom left */
+}
+
+.txtarea_small { 
+	width: 372px;
+	height:30px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:90%;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 0px; /* top right bottom left */
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
+/* -------------------- HR Lines ---------------------- */
+
+#lineSeparator { /* Horizontal Line used adove the Titles  */
+	margin:5px 0 5px 0;
+	padding:0;
+	width:450px;
+	color:#e6d0c6;
+	background-color:#e6d0c6;
+	height:1px;
+	border:0;
+	z-index:2;
+}
+
+hr { /* Horizontal Line used to separate areas inside the Edit Forms */
+	margin:10px 0 10px 0;
+	padding:0;
+	width:383px;
+	color:#e6d0c6;
+	background-color:#e6d0c6;
+	height:1px;
+	border:0;
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
+/* ---------------- EDIT FORMS WIDTH ------------------ */
+
+
+#EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditRelationshipPersonDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #SpousesPersonForm, #TopicsDocumentForm, #EditTopicsDocumentForm {
+	width:450px;
+}
+
+#EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #AdddChildPersonForm, #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm {
+	width:450px;
+	margin-top:10px;
+}
+
+#EditPortraitPersonDiv {
+	float:right;
+	margin-top:50px;
+	z-index:1;
+}
+
+/* ---------------------------------------------------- */ 
+/*
+/*
+/* ------------------- TEXTAREAS ---------------------- */
+
+select {
+	color: #6d5c4d;
+	background-color: #fbf7f4;
+}
+
+div.fileinputs {
+	position: relative;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+
+input.file {
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+	width: 345px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 6px 5px 5px; /* top right bottom left */
+}
+
+/* --------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* --------------------------------------- ENTRY MENU - Edit Forms Elements --------------------------------- */
+/* Id positions 
+/*
+/*
+/* ------------------- ADD NEW DOCUMENT ---------------------- */
+/*
+/*
+/* ------------ EditDetailsDocument ------------ */
+
+#DocumentImageDiv {
+	float:right;
+	margin-top:30px;
+	padding-left:30px;
+}
+
+#DocumentImageDiv a,  #DocumentImageDiv p{
+	text-align:right;
+	font-size:10px;
+}
+
+#volumeLabel{
+	margin-left:103px;
+}
+
+#entryIdLabel{
+	margin-left:33px;
+}
+
+#folioNumLabel {
+	margin-left:10px;
+}
+
+#DocYearLabel {
+	margin-left:48px;
+}
+
+#dateUndatedLabel {
+	margin-left:70px;
+}
+
+#contDiscLabel {
+	margin-left:111px;
+}
+
+#insertNumLabel {
+	margin-left:7px;
+}
+
+#dateUnsLabel {
+	margin-left:7px;
+}
+
+/* -------------------------------------- */
+/*
+/* ----- EditCorrespondentsDocument ----- */
+
+#toLabel {
+	margin-left:23px;
+}
+
+#senderPlaceDescriptionLabel  {
+	margin-left:19px;
+}
+
+#senderPeopleDescriptionLabel {
+	margin-left:11px;
+}
+
+#recipientPlaceDescriptionLabel {
+	margin-left:22px;
+}
+
+#unsureLabel, #portraitLabel {
+	margin-left:20px;
+}
+
+#personIcon {
+	margin:0 auto 0 15px;
+}
+
+#people, #firstTopic {
+	margin-left:22px;
+}
+
+/* -------------------------------------- */
+/*
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* ---------------------------- ADD NEW PERSON ------------------------------ */
+/*
+/* ------------ CreatePerson ------------ */
+
+#activeEnd {
+	width:275px;
+}
+
+/* -------------------------------------- */
+/*
+/* --------- EditDetailsPerson ---------- */
+
+#prefixPreIdLabel {
+	margin-left:17px;
+}
+
+#PreIdLabel {
+	margin-left:30px;
+}
+
+#lastnameLabel {
+	margin-left:11px;
+}
+
+#prefixPostIdLabel {
+	margin-left:14px;
+}
+
+#PostIdLabel {
+	margin-left:25px;
+}
+
+#genderLabel {
+	margin-left:48px;
+}
+
+#yearBirthLabel {
+	margin-left:24px;
+}
+
+#approxBirthLabel {
+	margin-left:50px;
+}
+
+#placeBirthLabel {
+	margin-left:56px;
+}
+
+#activeStartLabel {
+	margin-left:24px;
+}
+
+#yearDeathLabel {
+	margin-left:22px;
+}
+
+/* -------------------------------------- */
+/*
+/* ---------- EditNamesPerson ----------- */
+
+#nameLabel {
+	margin-left:33px;
+}
+
+#givenLabel {
+	margin-left:7px;
+}
+
+#AddNewValue { /* "Add New Value" Button */
+	margin-left:250px;
+}
+
+a#editValue { /* "Edit Value" Button */
+	font-size:10px;
+	
+}
+
+a#AddNamesPerson, a#AddChildPerson, a#AddTopicDocument, a#AddExtLinkTgnPlace, a#AddExtLinkMapPlace, a#AddExtLinkMapSitePlace, a#AddNameMapSitePlace, a#AddNameMapPlace, a#AddNameTgnPlace { /* "Add New ..." Button */
+	background-color: #e6d0c6;
+	padding:1px 5px 1px 5px;
+	border:none;
+	display:inline;
+	color: #6d5c4d;
+	font-size:10px;
+	text-decoration:none;
+	margin-left:260px;
+}
+
+a#AddSpousePerson, a#EditPerson { /* "Add New ..." Button */
+	background-color: #e6d0c6;
+	padding:1px 5px 1px 5px;
+	border:none;
+	display:inline;
+	color: #6d5c4d;
+	font-size:10px;
+	text-decoration:none;
+	margin-left:255px;
+}
+
+a#AddTitlesOccupationsPerson { /* "Add New ..." Button */
+	background-color: #e6d0c6;
+	padding:1px 5px 1px 5px;
+	border:none;
+	display:inline;
+	color: #6d5c4d;
+	font-size:10px;
+	text-decoration:none;
+	margin-left:200px;
+}
+
+/* -------------------------------------- */
+/*
+/* ----- EditTitleOccupationsPerson ----- */
+
+#preferrefRoleLabel {
+	margin-left:11px;
+}
+
+#yearStartLabel {
+	margin-left:25px;
+}
+	
+#monthStartLabel {
+	margin-left:22px;
+}
+
+#dayStartLabel {
+	margin-left:45px;
+}
+
+#yearEndLabel {
+	margin-left:30px;
+}
+
+#monthEndLabel {
+	margin-left:22px;
+}
+
+#dayEndLabel {
+	margin-left:45px;
+}
+
+/* -------------------------------------- */
+/*
+/* ----- EditTitleOccupationsPerson ----- */
+
+#fatherLabel {
+	margin-left:21px;
+}
+
+#motherLabel {
+	margin-left:20px;
+}
+
+#nameSpouseLabel {
+	margin-left:26px;
+}
+
+#startYearSpouseLabel {
+	margin-left:6px;
+}
+
+#endYearSpouseLabel {
+	margin-left:20px;
+}
+
+#reasonLabel {
+	margin-left:25px;
+}
+
+#nameChildsLabel {
+	margin-left:27px;
+}
+
+#bornLabel {
+	margin-left:33px;
+}
+
+#diedLabel {
+	margin-left:45px;
+}
+
+#ageDeathLabel {
+	margin-left:45px;
+}
+
+/* -------------------------------------- */
+/*
+/* ------------ Relationships ----------- */
+/*
+/* Parents */
+
+a#linkSearch {
+	font-size:11px;
+	text-decoration:none;
+	color:#006;
+	margin: 0 0 0 10px;
+	display:inline;
+}
+
+#info{
+	opacity:0.6;
+	margin: 0 0 0 20px;
+	display:inline;
+	font-size:10px;
+	float:right;
+}
+
+/* -------------------------------------- */
+/*
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* -------------------------- ADD NEW VOLUME -------------------------------- */
+/*
+/* --------------- EditDetailsVolume --------------- */
+
+#volNumLabel {
+	margin-left:79px;
+}
+
+#volLeTextLabel {
+	margin-left:4px;
+}
+
+#startMonthLabel {
+	margin-left:18px;
+}
+
+#startDayLabel {
+	margin-left:17px;
+}
+
+#endYearLabel {
+	margin-left:5px;
+}
+
+#endMonthLabel {
+	margin-left:23px;
+}
+
+#endDayLabel {
+	margin-left:22px;
+}
+
+#dateNotesLabel {
+	margin:10px 0 0 0;
+}
+
+#close {
+	margin-top:5px;
+	cursor:pointer;
+}
+
+#closeProfile {
+	margin-top:5px;
+}
+
+#save {
+	margin-left:300px;
+	cursor:pointer;
+}
+
+#saveProfile {
+	margin-left:160px;
+}
+
+
+.errors {
+	color:#F00;
+	margin: 0 0 0 130px;
+}
+
+
+/* ------------------------------------------------- */ 
+/*
+/* ------------- EditDescriptionVolume ------------- */
+
+#orgCriteriaDiv {
+	margin-top:5px;
+}
+
+#conditionLabel {
+	margin-left:6px;
+}
+
+#boundLabel {
+	margin-left:23px;
+}
+
+#foliosNumLabel {
+	margin-left:116px;
+}
+
+#alphaIndexLabel {
+	margin-left:59px;
+}
+
+#printedDrawingsLabel {
+	margin-left:70px;
+}
+
+#languagesDiv {
+	margin-bottom:15px;
+}
+
+#italianLabel, #spanishLabel {
+	margin-left:50px;
+}
+
+#frenchLabel, #germanLabel, #latinLabel, #englishLabel {
+	margin-left:5px;
+}
+
+/* ------------------------------------------------- */ 
+/*
+/* ----------- EditCorrespondentsVolume ------------ */
+
+
+#toCorrespLabel {
+	margin-left:13px;
+}
+
+/* ------------------------------------------------- */ 
+/*
+/* ---------------- Volume Explorer ---------------- */
+/*
+/* -------- iFrame -------- */
+
+iframe{ /* Common for all iFrame */
+	margin-top:10px;
+	border:1px solid #e6d0c6; 	
+	z-index:-1;
+}
+
+.iframeFlipVolume { /* used in Add New Volume - #body_right */
+	z-index:-1;
+	width:450px;
+	height:300px;
+}
+
+/* ---------------------------- */
+/*
+/* --- iFrame in Fullscreen --- */
+
+.iframeFlipVolumeFullCom { /* used for the Community */
+	width:595px;
+	height:400px;
+	margin: 10px auto 0 50px;
+}
+
+.iframeFlipVolumeFullFellows { /* used for Fellows */
+	width:920px;
+	height:430px;
+	margin: 10px auto 0 3px;
+}
+
+/* ---------------------------- */
+/*
+/* ---------- Buttons --------- */
+/*
+/* Previous / Next */
+
+#prevNextButtons {
+	margin:10px 0 10px 175px;
+	width: 100px;
+	z-index:2;
+}
+
+#prevNextButtons #previousPage {
+	float:left;
+}
+
+#prevNextButtons #nextPage {
+	float:right;
+}
+
+/* ---------------- */
+/*
+/* -- Rubricario -- */
+
+#rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
+	width:450px;
+}
+
+#rubricarioCountForm { /* "Rubricario Count" FORM */
+	display:inline;
+	color:#6d5c4d;
+	margin-top:10px;
+	font-size:10px;
+}
+
+#moveToRubricarioForm { /* "Move to Rubricario" FORM */
+	width:150px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+	margin:0;
+}
+
+#secondRecordLabel { /* "Move to rubricario" <label> ID  */
+	font-size:10px;
+	margin:0 0 0 -28px;
+	position:absolute;
+	color:#6d5c4d;
+}
+
+#secondRecord { /* "Move to rubricario" <input> ID  */
+	margin:-3px 0 0 80px;
+	position:absolute;
+}
+
+#goR { /* "Move to rubricario" <input> GO button ID  */
+	margin:-5px 0 0 128px;
+	border:none;
+	background-color:transparent;
+}
+
+/* ---------------- */
+/*
+/* ---- Folio ----- */
+
+#folioMoveTo { /* Contains "Folio Count" and "Move to folio" */
+	width:450px;
+}
+
+#folioCountForm { /* "Folio Count" FORM */
+	display:inline;
+	color:#6d5c4d;
+	margin-top:10px;
+	position:relative;
+	font-size:10px;
+}
+
+#moveToFolioForm { /* Move to folio FORM */
+	width:150px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+}
+
+#firstRecordLabel { /* "Move to folio" <label> ID  */
+	font-size:10px;
+	margin:0;
+	position:absolute;
+	color:#6d5c4d;
+}
+
+#firstRecord { /* "Move to folio" <input> ID  */
+	margin:-3px 0 0 80px;
+	position:absolute;
+}
+
+#go { /* "Move to folio" <input> GO button ID  */
+	margin:-5px 0 0 127px;
+	border:none;
+	background-color:transparent;
+}
+
+/* ---------------- */
+/*
+/*  Fullscreen Mode */
+
+#flipItInFullScreen { /* "Move to folio" <input> GO button ID  */
+	margin-top: 25px;
+	display:inline;
+}
+
+/* ---------------- */
+/*
+/* ---- Refresh --- */
+
+#refreshVolumeExplorer {
+	margin: 0 0 0 312px;
+	position:absolute;
+	display:inline;
+}
+
+/* ---------------- */
+/*
+/* -- modalBox - */
+/* When the user clicks on Fullscreen Mode this window comes out */
+
+#modalBox {
+	margin:0 auto 0 auto;
+	width:700px;
+}
+
+#modalBox #prevNextButtons {
+	margin:10px 0 10px 290px;
+	width: 100px;
+	z-index:2;
+}
+
+#modalWindow_950pxFellows #prevNextButtons {
+	margin:10px 0 10px 415px;
+	width: 100px;
+	z-index:2;
+}
+
+#modalBox #rubricarioMoveTo, #modalBox #folioMoveTo {
+	width:450px;
+	margin-left:50px;
+	
+}
+
+#modalBox #moveToRubricarioForm { 
+	width:150px;
+	display:inline;
+	color:#6d5c4d;
+	margin-left:270px;
+	position:absolute;
+}
+
+#modalBox #moveToFolioForm { 
+	width:150px;
+	display:inline;
+	color:#6d5c4d;
+	position:absolute;
+	margin-left:302px;
+}
+
+#modalWindow_950pxFellows #rubricarioMoveTo, #modalWindow_950pxFellows #folioMoveTo {
+	width:450px;
+	margin-left:350px;
+}
+
+#transcribe {
+	margin:30px auto 0 50px;
+	position:absolute;
+	display:inline;
+}
+
+#CloseButtonRight {
+	margin:0 0 10px 545px;
+}
+
+#CloseButton {
+	margin:0 0 15px 290px;
+}
+
+#chooseGoBack {
+	margin:0 0 0 50px;
+}
+
+#buttonGoBack{
+	margin-left:278px;
+}
+
+
+
+/* --------------------------------------- */ 
+/*
+/*
+/*  This Volume has not been digitized yet */
+
+
+#notDigitizedYetDiv {
+	margin-top:10px;
+	border:1px solid #e6d0c6; 	
+	width:450px;
+	height:300px;
+	z-index:1;
+}
+
+#notDigitizedYetDiv p{
+	text-align:center;
+	width:450px;
+	height:70px;
+	margin-top:140px;
+	color:#900;
+	position:absolute;
+}
+
+/* -------------------------------------- */
+/*
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* -------------------------- ADD NEW PLACE --------------------------------- */
+/*
+/* -- EdtitDetailsTgn, Map and MapSite -- */
+
+#placeIdDiv {
+	margin:5px 5px 5px 0px;
+}
+
+#tgnTermIDLabel {
+	margin-left:9px;
+}
+
+#nameNoAccentsLabel {
+	margin-left:70px;
+}
+
+#nameWithAccentsLabel {
+	margin-left:25px;
+}
+
+#placeParentLabel {
+	margin-left:62px;
+}
+
+/* -------------------------------------- */
+/*
+/* ---- EdtitNameTgn, Map and MapSite --- */
+
+#namePlaceLabel {
+	margin-left:34px;
+}
+
+#nameTypeLabel {
+	margin-left:10px;
+}
+
+#latitudeNameLabel {
+	margin-left:24px;
+}
+
+#longitudeNameLabel {
+	margin-left:47px;
+}
+
+#longitudeGeoLabel {
+	margin-left:71px;
+}
+
+/* -------------------------------------- */
+/*
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* ---------------------------- MY PROFILE ---------------------------------- */
+
+#myProfle{
+	width:750px;
+	hight:auto;
+	font-size:11px;
+}
+
+h3 #myProfle {
+	margin-top: 3px; 
+	margin-bottom: 3px;
+	padding:0;
+}
+
+#userProfile{ /* My Profile Div Container */
+	margin:30px 0 0 50px;
+	font-size:11px;
+	position:absolute;
+}
+
+#userProfile a{
+	text-decoration:underline;
+	font-size:11px;
+	color:#b99c84;
+}
+
+#imgProfile { /* User image profile */
+	float:left;
+	margin-top:10px;
+	margin-left:20px;
+}
+
+#helpProfile { /* Help Div Container */
+	margin-left:550px;
+	margin-top:30px;
+	font-size:11px;
+	position:absolute;
+}
+
+#helpProfile a{	/* Help ancors (User Manual, Download Manual, Help Videos) */
+	font-size:11px;
+	line-height:18px;
+	text-decoration:none;
+	color:#6F6B69;
+}
+
+#helpProfile a:hover{ /* Help ancors rollover */
+	text-decoration:underline;
+}
+
+#coursesProfile { /* MAP Courses button */
+	margin:190px 0 0 590px;
+	position:absolute;
+}
+
+#modalBoxCloseDivProfile {
+	margin:400px 0 0 400px;
+	position:relative;
+}
+
+/* Edit Forms Div Containers */
+#EditTitleProfileDiv, #EditGroupProfileDiv, #EditOrgProfileDiv, #EditLocationProfileDiv, #EditInterestsProfileDiv, #EditResumeProfileDiv {
+	width:300px;
+	margin-left:150px;
+	margin-top:5px;
+}
+
