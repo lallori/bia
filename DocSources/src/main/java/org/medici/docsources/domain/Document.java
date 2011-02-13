@@ -174,6 +174,13 @@ public class Document implements Serializable{
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String folioMod;
 	
+	@Column (name="\"TRANSCRIBEFOLIONUM\"", length=10)
+	private Integer transcribeFolioNum;
+
+	@Column (name="\"TRANSCRIBEFOLIOMOD\"", length=15)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private String transcribeFolioMod;
+	
 	@Column (name="\"CONTDISC\"", length=1, columnDefinition="tinyint", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
@@ -292,6 +299,12 @@ public class Document implements Serializable{
 	//@IndexedEmbedded
 	private Set<EpLink> epLink;
 	
+	//Association image 
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "document")
+	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
+	//@IndexedEmbedded
+	private EiLink eiLink;
+
 	//Association Synopsys and Extract
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="document")
 	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
@@ -544,6 +557,34 @@ public class Document implements Serializable{
 		this.folioMod = folioMod;
 	}
 	
+	/**
+	 * @param transcribeFolioNum the transcribeFolioNum to set
+	 */
+	public void setTranscribeFolioNum(Integer transcribeFolioNum) {
+		this.transcribeFolioNum = transcribeFolioNum;
+	}
+
+	/**
+	 * @return the transcribeFolioNum
+	 */
+	public Integer getTranscribeFolioNum() {
+		return transcribeFolioNum;
+	}
+
+	/**
+	 * @param transcribeFolioMod the transcribeFolioMod to set
+	 */
+	public void setTranscribeFolioMod(String transcribeFolioMod) {
+		this.transcribeFolioMod = transcribeFolioMod;
+	}
+
+	/**
+	 * @return the transcribeFolioMod
+	 */
+	public String getTranscribeFolioMod() {
+		return transcribeFolioMod;
+	}
+
 	/**
 	 * @return the contDisc
 	 */
@@ -939,5 +980,19 @@ public class Document implements Serializable{
 	 */
 	public String getDocTypology() {
 		return docTypology;
+	}
+
+	/**
+	 * @param eiLink the eiLink to set
+	 */
+	public void setEiLink(EiLink eiLink) {
+		this.eiLink = eiLink;
+	}
+
+	/**
+	 * @return the eiLink
+	 */
+	public EiLink getEiLink() {
+		return eiLink;
 	}
 }

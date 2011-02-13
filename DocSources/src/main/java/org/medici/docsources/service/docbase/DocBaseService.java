@@ -35,6 +35,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
@@ -91,6 +92,16 @@ public interface DocBaseService {
 	 */
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
 	
+	/**
+	 * This method will return a new Document constructed in runtime (no stored on database), from which, user
+	 * can follow to editing new document.
+	 * 
+	 * @param imageDocumentToCreate
+	 * @param imageDocumentFolioStart
+	 * @return
+	 */
+	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param document
@@ -186,6 +197,14 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Image findDocumentImage(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * 

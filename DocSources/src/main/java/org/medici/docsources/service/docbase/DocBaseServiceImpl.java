@@ -35,11 +35,13 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.EpLinkUtils;
 import org.medici.docsources.common.util.EplToLinkUtils;
+import org.medici.docsources.common.util.ImageUtils;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
 import org.medici.docsources.dao.factchecks.FactChecksDAO;
+import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
@@ -50,11 +52,13 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.domain.TopicList;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +81,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private EplToLinkDAO eplToLinkDAO;
 	@Autowired
 	private FactChecksDAO factChecksDAO;
+	@Autowired
+	private ImageDAO imageDAO;
 	@Autowired
 	private MonthDAO monthDAO;
 	@Autowired
@@ -189,6 +195,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
+	}
+
+	@Override
+	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable {
+		try {
+			Document document = new Document();
+			Image documentToCreateImage = getImageDAO().find(imageDocumentToCreate);
+			Image documentFolioStartImage = getImageDAO().find(imageDocumentFolioStart);
+			document.setVolume(new Volume(documentToCreateImage.getVolNum().toString()));
+			document.setSubVol(documentToCreateImage.getVolLetExt());
+			document.setFolioNum(ImageUtils.extractFolioNumber(documentFolioStartImage.getImageName()));
+			document.setFolioMod(ImageUtils.extractFolioExtension(documentFolioStartImage.getImageName()));
+
+			document.setTranscribeFolioNum(ImageUtils.extractFolioNumber(documentToCreateImage.getImageName()));
+			document.setTranscribeFolioMod(ImageUtils.extractFolioExtension(documentToCreateImage.getImageName()));
+			//document.setFolioNum(documen);
+			return document;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -408,6 +434,25 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 	}
 
+	@Override
+	public Image findDocumentImage(Integer entryId) throws ApplicationThrowable {
+		try {
+			Document document = getDocumentDAO().find(entryId);
+			
+			if (document != null) {
+				// eilink not null is image linked to document
+				if (document.getEiLink() != null) {
+					
+				} else {
+					return getImageDAO().findDocumentImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
+				}
+			}
+			return getImageDAO().find(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -590,6 +635,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
+
+	/**
 	 * @return the monthDAO
 	 */
 	public MonthDAO getMonthDAO() {
@@ -722,6 +774,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setFactChecksDAO(FactChecksDAO factChecksDAO) {
 		this.factChecksDAO = factChecksDAO;
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
 	}
 
 	/**
