@@ -77,7 +77,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
 		    })
 @Audited
-@Table ( name = "\"tblEiLink\"" ) 
+@Table ( name = "\"tblEILink\"" ) 
 public class EiLink implements Serializable{
 	/**
 	 * 
