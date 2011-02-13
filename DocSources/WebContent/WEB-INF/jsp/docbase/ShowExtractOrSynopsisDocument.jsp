@@ -14,7 +14,7 @@
 		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditExtractOrSynopsisInManuscriptViewer" value="/mview/EditExtractOrSynopsisInManuscriptViewer.do">
+		<c:url var="EditExtractOrSynopsisInManuscriptViewer" value="/de/mview/EditExtractOrSynopsisInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
