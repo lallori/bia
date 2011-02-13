@@ -4,9 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-			<script type='text/javascript' src='<c:url value="/scripts/jquery-1.4.2.js"/>'></script>
-			<script type='text/javascript' src='<c:url value="/scripts/jquery.blockUI.js"/>'></script>
-
 			<div id="login">
 	  			<form name="login" action="<c:url value="/loginProcess" />" method="post">
 					<table class="loginform">
