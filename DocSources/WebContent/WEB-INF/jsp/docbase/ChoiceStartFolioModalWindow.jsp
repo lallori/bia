@@ -20,6 +20,28 @@
 			<c:param name="imageName"   value="${page.list[0]}" />
 			<c:param name="flashVersion"   value="true" />
 		</c:url>
+
+		<c:url var="TranscribeAndContextualizeDocument" value="/de/docbase/TranscribeAndContextualizeDocument.do">
+			<c:param name="summaryId" value="${requestCommand.summaryId}"/>
+			<c:param name="volNum" value="${requestCommand.volNum}" />
+			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
+			<c:param name="flashVersion" value="${requestCommand.flashVersion}"/>
+			<c:param name="total" value="${page.total}" />
+			<c:param name="firstRecord" value="${page.firstRecordNumber}" />
+			<c:param name="imageDocumentToCreate" value="${requestCommand.imageDocumentToCreate}" />
+			<c:param name="imageDocumentFolioStart" value="${page.list[0].imageId}" />
+			<c:param name="modalWindow" value="true"/>
+		</c:url>
+
+		<c:url var="ExplorerVolumeModal" value="/src/volbase/ShowExplorerVolume.do">
+			<c:param name="summaryId" value="${requestCommand.summaryId}"/>
+			<c:param name="volNum" value="${requestCommand.volNum}" />
+			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
+			<c:param name="flashVersion" value="${requestCommand.flashVersion}"/>
+			<c:param name="total" value="${page.total}" />
+			<c:param name="firstRecord" value="${page.firstRecordNumber}" />
+			<c:param name="modalWindow" value="true"/>
+		</c:url>
 	</security:authorize>
 	
 	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
@@ -101,9 +123,9 @@
 		<br />
 			
 		<div id="chooseGoBack">
-			<a href="#"><img src="/DocSources/images/button_choose.png" alt="next" /></a>
+			<a id="transcribeAndContextualizeDocument" href="${TranscribeAndContextualizeDocument}"><img src="/DocSources/images/button_choose.png" alt="next" /></a>
 			
-			<a href="/DocSources/de/volbase/ShowVolumeExplorerFullScreenCom.html" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"><img src="/DocSources/images/button_goBack.png" alt="Go back to Volume Explorer" id="buttonGoBack"/></a>
+			<a href="${ExplorerVolumeModal}" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"><img src="/DocSources/images/button_goBack.png" alt="Go back to Volume Explorer" id="buttonGoBack"/></a>
 		
 		</div>
 			
@@ -114,8 +136,9 @@
 			$j(".nextPage").click(function(){$j("#modalBox").load($j(this).attr("href"));return false;});
 			$j(".previousPage").click(function(){$j("#modalBox").load($j(this).attr("href"));return false;});					
 			$j(".simplemodal-close").click( function(e) {$j.modal.close();});
-			$j("#transcribeDocument").click(function() { 
-				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
+			$j("#transcribeAndContextualizeDocument").click(function(){
+				$j("#body_left").load($j(this).attr("href"));
+				$j.modal.close();
 				return false;
 			});
 		});

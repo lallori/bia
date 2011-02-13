@@ -14,6 +14,9 @@
 		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
+		<c:url var="EditExtractOrSynopsisInManuscriptViewer" value="/mview/EditExtractOrSynopsisInManuscriptViewer.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+		</c:url>
 		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
@@ -23,7 +26,14 @@
 	</security:authorize>
 		
 	<div id="EditExtractOrSynopsisDocumentDiv">
-		<h5>EXTRACT/SYNOPSIS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a></security:authorize></h5>
+		<h5>EXTRACT/SYNOPSIS
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a>
+		/
+		<a onclick="Modalbox.show(this.href, {title: this.title, width: 850}); return false;" href="/DocSources/de/docbase/EditExtractOrSynopsisDocumentFullscreen.html" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
+		/
+		<a id="EditInManuscriptViewer" href="${EditExtractOrSynopsisInManuscriptViewer}" >edit with manuscript viewer</a>
+		</security:authorize></h5>
 		<hr id="lineSeparator"/>
 		<ul>
 			<li><b>Extract:</b></li>
@@ -45,5 +55,8 @@
 			 $j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 
 			 $j("#EditExtractOrSynopsisDocument").click(function(){$j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));return false;});
+			 $j("#EditExtractOrSynopsisInManuscriptViewer").click(function(){
+				 $j(this).open({width: 400, height: 300, scrollbars: false});
+			 });
 		});
 	</script>
