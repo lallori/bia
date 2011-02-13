@@ -27,20 +27,16 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
 import org.medici.docsources.command.docbase.TranscribeAndContextualizeDocumentCommand;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,7 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/docbase/TranscribeAndContextualize")
+@RequestMapping("/de/docbase/TranscribeAndContextualizeDocument")
 public class TranscribeAndContextualizeDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
@@ -94,48 +90,18 @@ public class TranscribeAndContextualizeDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") TranscribeAndContextualizeDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<Month> months = null;
+		Document document = new Document();
 
 		try {
-			months = getDocBaseService().getMonths();
-			model.put("months", months);
+			document = getDocBaseService().constructDocumentToTranscribe(command.getImageDocumentToCreate(), command.getImageDocumentFolioStart());
+
+			model.put("document", document);
+			model.put("command", new EditDetailsDocumentCommand());
+			return new ModelAndView("docbase/TranscribeAndContextualizeDocument", model);
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowDocument", model);
+			return new ModelAndView("error/EditDetailsDocument", model);
 		}
 
-		if ((command != null) && (command.getEntryId() > 0)) {
-			Document document = new Document();
-			document.setEntryId(0);
-			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-			document.setDateCreated(new Date());
-		} else {
-			// On Document creation, the research is always the current user.
-			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-			command.setDateCreated(new Date());
-			command.setEntryId(null);
-			command.setInsertNum(null);
-			command.setInsertLet(null);
-			command.setFolioNum(null);
-			command.setFolioMod(null);
-			// Paginated
-			command.setUnpaged(false);
-			//Disc. Cont'd
-			command.setContDisc(false);
-			// Date
-			command.setDocYear(null);
-			// Empty month is in last positizion
-			command.setDocMonthNum(months.get(months.size()-1).getMonthNum());
-			command.setDocDay(null);
-			//Modern Dating
-			command.setYearModern(null);
-			// Date Uncertain or Approximate?
-			command.setDateUns(false);
-			// Undated 
-			command.setDateUndated(false);
-			command.setDateNotes(null);
-		}
-
-		return new ModelAndView("docbase/TranscribeAndContextualizeDocument", model);
 	}
 
 	/**
