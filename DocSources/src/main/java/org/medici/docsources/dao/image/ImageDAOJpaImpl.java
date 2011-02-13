@@ -43,7 +43,6 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.ImageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.People;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -87,7 +86,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	stringBuffer.append(" is null");
     	stringBuffer.append(" and imageName like '%_C_");
     	stringBuffer.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
-    	stringBuffer.append("_V.tif'");
+    	stringBuffer.append("_R.tif'");
     	
         Query query = getEntityManager().createQuery(stringBuffer.toString());
 
