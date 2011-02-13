@@ -4,11 +4,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDialog" >
-		<c:param name="entryId" value="${command.entryId}" />
+	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" >
+		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
-	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDialog" >
-		<c:param name="entryId" value="${command.entryId}" />
+	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" >
+		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
 	 
 		<script type="text/javascript">
