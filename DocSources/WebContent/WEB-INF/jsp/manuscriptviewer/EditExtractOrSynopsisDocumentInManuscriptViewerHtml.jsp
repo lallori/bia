@@ -10,7 +10,9 @@
 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" >
 		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
-	 
+	<c:url var="PageTunerDialogUrl" value="/de/mview/PageTunerDialog.do" >
+		<c:param name="entryId" value="${requestCommand.entryId}" />
+	</c:url>
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
@@ -69,7 +71,7 @@
 					closeOnEscape: false,
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide(); 
-                		$(this).load('pageTurner.html');
+                		$(this).load('${PageTunerDialogUrl}');
                },
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}

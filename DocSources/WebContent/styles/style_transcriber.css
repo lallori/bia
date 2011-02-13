@@ -1,0 +1,277 @@
+/* 
+
+Manuscript Viewer css
+html version
+*/
+
+
+body {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:11px
+}
+
+textarea {
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:11px;
+	color: #000000;
+	padding:3px;
+	margin-left:5px;
+	width:330px;
+}
+
+/* ---------- Buttons --------- */
+/*
+/* Previous / Next */
+
+#prevNextButtons {
+	width:190px;
+	margin-top:15px;
+	position:absolute;
+}
+
+#prevNextButtons #prevButton a{
+	float:left;
+}
+
+#prevNextButtons #prevButton a:hover{
+	float:left;
+	opacity:0.5;
+}
+
+#prevNextButtons #nextButton a{
+	float:right;
+}
+
+#prevNextButtons #nextButton a:hover{
+	float:right;
+	opacity:0.5;
+}
+
+/* ---------------- */
+/*
+/* -- Rubricario -- */
+
+#rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
+	width:170px;
+	position:absolute;
+	margin:15px 0 0 250px;
+}
+
+#rubricarioCountForm { /* "Rubricario Count" FORM */
+	display:inline;
+	color:#6d5c4d;
+	margin-top:10px;
+	font-size:10px;
+}
+
+#moveToRubricarioForm { /* "Move to Rubricario" FORM */
+	width:150px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+	margin:0;
+}
+
+#secondRecordLabel { /* "Move to rubricario" <label> ID  */
+	font-size:11px;
+	margin:0 0 0 -57px;
+	position:absolute;
+	color:#6d5c4d;
+}
+
+#secondRecord { /* "Move to rubricario" <input> ID  */
+	margin:-2px 0 0 97px;
+	position:absolute;
+}
+
+#goR { /* "Move to rubricario" <input> GO button ID  */
+	margin:-5px 0 0 135px;
+	border:none;
+	background-color:transparent;
+}
+
+#goR:hover {
+	opacity:0.5;
+}
+
+/* ---------------- */
+/*
+/* ---- Folio ----- */
+
+.input_4c { 
+	width: 30px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;#6d5c4d
+	padding-left:5px;
+	margin: -5px 5px 5px 8px; /* top right bottom left */
+}
+
+#folioMoveTo { /* Contains "Folio Count" and "Move to folio" */
+	width:160px;
+	position:absolute;
+	margin:50px 0 0 240px;
+}
+
+#folioCountForm { /* "Folio Count" FORM */
+	display:inline;
+	color:#6d5c4d;
+	margin-top:10px;
+	position:relative;
+	font-size:10px;
+}
+
+#moveToFolioForm { /* Move to folio FORM */
+	width:150px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+}
+
+#firstRecordLabel { /* "Move to folio" <label> ID  */
+	font-size:11px;
+	position:absolute;
+	color:#6d5c4d;
+}
+
+#firstRecord { /* "Move to folio" <input> ID  */
+	margin:-2px 0 0 117px;
+	position:absolute;
+}
+
+#go { /* "Move to folio" <input> GO button ID  */
+	margin:-5px 0 0 155px;
+	border:none;
+	background-color:transparent;
+}
+
+#go:hover {
+	opacity:0.5;
+}
+
+/* ---------------- */
+/*
+/* ---- Personal Notes ----- */
+
+#personalNotes a{
+	margin:10px 0 0 455px;
+	position:absolute;
+}
+
+#personalNotes a:hover{
+	opacity:0.5;
+}
+
+/* ---------------- */
+/*
+/* ---- Exit ----- */
+
+#exit a{
+	margin:45px 0 0 455px;
+	position:absolute;
+}
+
+#exit a:hover{
+	opacity:0.5;
+}
+
+/* ---------------- */
+/*
+/* ---- Lines ----- */
+
+#line {
+	width:1px;
+	height:65px;
+	background-color:#E6D0C6;
+	margin:8px 0 0 200px;
+	position:absolute;
+}
+
+#line2 {
+	width:1px;
+	height:65px;
+	background-color:#E6D0C6;
+	margin:8px 0 0 441px;
+	position:absolute;
+}
+
+/* ---------------- */
+/*
+/* ---- Edit Extract ----- */
+
+#saveExtract {
+	float:left;
+	display:inline;
+}
+
+#saveExtract:hover {
+	opacity:0.5;
+}
+
+#saveAndEditSynopsis {
+	float:right;	
+	display:inline;
+}
+
+#saveAndEditSynopsis:hover {
+	opacity:0.5;
+}
+
+/* ---------------- */
+/*
+/* ---- Edit Synopsis ----- */
+
+#saveSynopsis {
+	float:left;
+	display:inline;
+
+}
+
+#saveSynopsis:hover {
+	opacity:0.5;
+}
+
+#saveSynopsisExit {
+	float:right;	
+	display:inline;
+	
+}
+
+#saveSynopsisExit:hover {
+	opacity:0.5;
+}
+
+
+/* Modified elements from the original jquery-ui-1.8.9.custos.css */
+
+/* Component containers
+----------------------------------*/
+
+.ui-widget { font-family:Georgia, "Times New Roman", Times, serif; font-size:11px; }
+.ui-widget .ui-widget { font-size: 11px; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family:Georgia, "Times New Roman", Times, serif; font-size: 11px; }
+.ui-button-text {
+	background-image:url(images/saveExtract.png);
+}
+.ui-widget-content { border: 1px solid #e6d0c6; background: #f3e7e2 ; color: #000000; }
+
+
+/* Interaction states
+----------------------------------*/
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #f3e7e2; background: #E6D0C6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #6d5c4d; }
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #6d5c4d; text-decoration: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #f3e7e2; background: #f3e7e2 url(images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
+
+
+/* jQuery UI Dialog 1.8.9 */
+
+.ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative; background-color: #e6d0c6; border: none;}
+.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; color:#6d5c4d; } 
+.ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background-color: #f3e7e2; overflow: auto; zoom: 1; }
+.ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-color: #f3e7e2; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; background-color: #f3e7e2; }
+.ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; background-color: #e6d0c6;}
+

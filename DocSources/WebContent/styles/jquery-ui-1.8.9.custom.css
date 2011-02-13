@@ -56,19 +56,19 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em; }
-.ui-widget .ui-widget { font-size: 1em; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee ; color: #333333; }
+.ui-widget { font-family:Georgia, "Times New Roman", Times, serif; font-size:11px; }
+.ui-widget .ui-widget { font-size: 11px; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family:Georgia, "Times New Roman", Times, serif; font-size: 11px; }
+.ui-widget-content { border: 1px solid #e6d0c6; background: #f3e7e2 ; color: #000000; }
 .ui-widget-content a { color: #333333; }
 .ui-widget-header { border: 1px solid #e78f08; background: #f6a828 url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
 .ui-widget-header a { color: #ffffff; }
 
 /* Interaction states
 ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #cccccc; background: #f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #1c94c4; }
-.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #1c94c4; text-decoration: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #fbcb09; background: #fdf5ce url(images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #f3e7e2; background: ##E6D0C6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #6d5c4d; }
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #6d5c4d; text-decoration: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #f3e7e2; background: #f3e7e2 url(images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
 .ui-state-hover a, .ui-state-hover a:hover { color: #c77405; text-decoration: none; }
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #fbd850; background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #eb8f00; }
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; text-decoration: none; }
@@ -441,15 +441,15 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  * http://docs.jquery.com/UI/Dialog#theming
  */
 .ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
-.ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative;  }
-.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; } 
+.ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative; background-color: #e6d0c6; border: none;}
+.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; color:#6d5c4d; } 
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
 .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
-.ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
-.ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
-.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; }
-.ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
+.ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background-color: #f3e7e2; overflow: auto; zoom: 1; }
+.ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-color: #f3e7e2; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; background-color: #f3e7e2; }
+.ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; background-color: #e6d0c6;}
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
 /*
