@@ -1,5 +1,5 @@
 /*
- * VolumeUtils.java
+ * LdapUtils.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -28,36 +28,42 @@
 package org.medici.docsources.common.util;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class VolumeUtils {
+public class ImageUtils {
+	private static Logger logger = Logger.getLogger(ImageUtils.class);
 
 	/**
-	 * This method extract volNum from a complete volume string.
-	 * @param volume
+	 * 
+	 * @param ldapConfiguration
+	 * @param account
 	 * @return
 	 */
-	public static Integer extractVolNum(String volume) {
-		String volumeToExtract = volume.trim();
-		if (StringUtils.isEmpty(volumeToExtract)) {
+	public static Integer extractFolioNumber(String fileName) {
+		String folioNumber = fileName.trim();
+		if (StringUtils.isEmpty(folioNumber)) {
 			return null;
 		}
 		
-		if (StringUtils.isNumeric(volumeToExtract)){
+		folioNumber = StringUtils.substringBetween(folioNumber, "_C_", "_");
+		if (StringUtils.isNumeric(folioNumber)){
 			try {
-				return new Integer(volumeToExtract);
+				return new Integer(folioNumber);
 			} catch (NumberFormatException nfx){
+				logger.error("Unable to convert folio number. Image file " + fileName);
 				return null;
 			}
 		} else {
-			if (StringUtils.isAlphanumeric(volumeToExtract)) {
+			if (StringUtils.isAlphanumeric(folioNumber)) {
 				try {
-					return new Integer(volumeToExtract.substring(0, volumeToExtract.length()-1));
+					return new Integer(folioNumber.substring(0, folioNumber.length()-1));
 				} catch (NumberFormatException nfx){
+					logger.error("Unable to convert folio number. Image file " + fileName);
 					return null;
 				}
 			}
@@ -66,7 +72,12 @@ public class VolumeUtils {
 		}
 	}
 
-	public static String extractVolLetExt(String volume) {
+	/**
+	 * 
+	 * @param volume
+	 * @return
+	 */
+	public static String extractFolioExtension(String volume) {
 		String volumeToExtract = volume.trim();
 		if (StringUtils.isEmpty(volumeToExtract)) {
 			return null;
@@ -81,5 +92,17 @@ public class VolumeUtils {
 			
 			return null;
 		}
+	}
+
+	/**
+	 * This method will format an input id for document identifier.
+	 * 
+	 * @param entryId
+	 * @return
+	 */
+	public static Object formatFolioNumber(Integer folioNum, String folioMod) {
+		String value = "00" + folioNum.toString();
+		
+		return value.substring(value.length()-3);
 	}
 }

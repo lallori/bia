@@ -1,5 +1,5 @@
 /*
- * EditExtractDocumentDialogController.java
+ * PageTunerDialogController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,13 +27,19 @@
  */
 package org.medici.docsources.controller.manuscriptviewer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.manuscriptviewer.EditExtractDocumentDialogCommand;
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.command.manuscriptviewer.EditSynopsisDocumentDialogCommand;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -48,13 +54,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Extract Document Dialog".
+ * Controller for action "Edit Synopsis Document Dialog".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/mview/EditExtractDocumentDialog")
-public class EditExtractDocumentDialogController {
+@RequestMapping("/de/mview/PageTunerDialog")
+public class PageTunerDialogController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
@@ -79,42 +85,6 @@ public class EditExtractDocumentDialogController {
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditExtractDocumentDialogCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-
-			SynExtract synExtract = new SynExtract(command.getSynExtrId());
-			synExtract.setDocument(new Document(command.getEntryId()));
-			synExtract.setDocExtract(command.getDocExtract());
-
-			try {
-				Document document = null;
-
-				if (command.getSynExtrId().equals(0)) {
-					document = getDocBaseService().addNewExtractOrSynopsisDocument(synExtract);
-				} else {
-					document = getDocBaseService().editExtractDocument(synExtract);
-				}
-
-				model.put("document", document);
-				return new ModelAndView("docbase/ShowDocument", model);
-			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/EditExtractOrSynopsisDocument", model);
-			}
-		}
-	}
-
-	/**
 	 * @param docBaseService the docBaseService to set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
@@ -127,32 +97,31 @@ public class EditExtractDocumentDialogController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditExtractDocumentDialogCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditSynopsisDocumentDialogCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
 
-		if ((command != null) && (command.getEntryId() > 0)) {
-			SynExtract synExtract = new SynExtract();
+/*		PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), 1, command.getTotal());
 
-			try {
-				synExtract = getDocBaseService().findSynExtractDocument(command.getEntryId());
-				
-				if (synExtract != null) {
-					command.setSynExtrId(synExtract.getSynExtrId());
-					command.setDocExtract(synExtract.getDocExtract());
+		try {
+			if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
+				page = getVolBaseService().findVolumeImages(command.getSummaryId(), paginationFilter);
+			} else {
+				if (!ObjectUtils.toString(command.getVolNum()).equals("")) {
+					page = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLetExt(), paginationFilter);
 				} else {
-					command.setSynExtrId(null);
-					command.setDocExtract(null);
+					page = new Page(new ArrayList<Image>(0), new Long(0), new Integer(0), new Integer(0));
 				}
-			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/EditExtractDocumentDialog", model);
 			}
-		} else {
-			// On Document creation, the research is always the current user.
-			command.setSynExtrId(null);
-			command.setDocExtract(null);
-		}
 
-		return new ModelAndView("manuscriptviewer/EditExtractDocumentDialog", model);
+			//getDocBaseService().findDocument(page.getList().get(0));
+			model.put("page", page);
+			model.put("paginationFilter", paginationFilter);
+		} catch (ApplicationThrowable ath) {
+		}
+*/
+		return new ModelAndView("manuscriptviewer/PageTunerDialog", model);
 	}
 
 	/**
