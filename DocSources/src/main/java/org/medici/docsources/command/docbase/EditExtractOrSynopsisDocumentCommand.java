@@ -41,7 +41,6 @@ public class EditExtractOrSynopsisDocumentCommand {
 	private String docExtract;
 	private String synopsis;
 
-
 	/**
 	 * This method returns entryId property.
 	 * 
