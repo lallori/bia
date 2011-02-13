@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +34,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Month;

@@ -72,22 +72,6 @@ public class ChoiceStartFolioDocumentController {
 	/**
 	 * 
 	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ChoiceStartFolioDocumentCommand command, BindingResult result) {
-		if (result.hasErrors()) {
-			return null;//setupForm(command);
-		} else {
-
-			return new ModelAndView("docbase/ShowDocument");
-		}
-	}
-
-	/**
-	 * 
-	 * @param command
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)

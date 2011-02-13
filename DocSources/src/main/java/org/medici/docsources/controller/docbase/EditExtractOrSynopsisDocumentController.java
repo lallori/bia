@@ -101,7 +101,7 @@ public class EditExtractOrSynopsisDocumentController {
 
 			try {
 				Document document = null;
-				
+
 				if (command.getSynExtrId().equals(0)) {
 					document = getDocBaseService().addNewExtractOrSynopsisDocument(synExtract);
 				} else {
