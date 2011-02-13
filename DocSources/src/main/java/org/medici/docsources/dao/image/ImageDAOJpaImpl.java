@@ -30,6 +30,7 @@ package org.medici.docsources.dao.image;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -39,8 +40,10 @@ import javax.persistence.criteria.Root;
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.ImageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.People;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -74,6 +77,33 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -8769762056162920397L;
+
+	@Override
+	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
+        StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
+        if (volLetExt != null)
+        	stringBuffer.append(" = :volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" and imageName like '%_C_");
+    	stringBuffer.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
+    	stringBuffer.append("_V.tif'");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+
+        query.setParameter("volNum", volNum);
+        if (volLetExt != null)
+        	query.setParameter("volLetExt", volLetExt);
+
+		List<Image> result = query.getResultList();
+		
+		if (result.size() >0) {
+			return result.get(0);
+		}
+		
+		return null;
+
+	}
 
 	/**
 	 * {@inheritDoc}

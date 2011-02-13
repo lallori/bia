@@ -44,6 +44,17 @@ import org.medici.docsources.domain.Image;
 public interface ImageDAO extends Dao<Integer, Image> {
 
 	/**
+	 *  
+	 * @param volNum MDP
+	 * @param volLetExt MDP Extension
+	 * @param folioNum
+	 * @param folioMod
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
+
+	/**
 	 * This method returns a list of Images linked to a specific volume.
 	 * 
 	 * @param volNum MDP
