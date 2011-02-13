@@ -36,6 +36,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.manuscriptviewer.EditSynopsisDocumentDialogCommand;
+import org.medici.docsources.command.manuscriptviewer.PageTunerCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
@@ -97,16 +98,20 @@ public class PageTunerDialogController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditSynopsisDocumentDialogCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") PageTunerCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		Page page = null;
 
-/*		PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), 1, command.getTotal());
-
+		PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), 1, command.getTotal());
+		
+		if (command.getTotal() == null) {
+			//getVolBaseService().findVolumeImagesByDocumentId(command.getSummaryId(), paginationFilter);
+		}
+/*
 		try {
 			if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
-				page = getVolBaseService().findVolumeImages(command.getSummaryId(), paginationFilter);
+				page = getVolBaseService().findVolumeImagesByDocumentId(command.getSummaryId(), paginationFilter);
 			} else {
 				if (!ObjectUtils.toString(command.getVolNum()).equals("")) {
 					page = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLetExt(), paginationFilter);
