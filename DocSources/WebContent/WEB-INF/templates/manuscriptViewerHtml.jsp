@@ -29,7 +29,7 @@ Joana Amill <joana.amill@gmail.com>
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/iip.compressed.css"/>" />
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/style_transcriber.css"/>" />                                                                                
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/jquery-ui-1.8.9.custom.css"/>" /> 
-		<link rel="shortcut icon" href="./images/iip-favicon.png" />
+		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 		
 		<title>DocSourcesV5 Manuscript Viewer</title>
 			
