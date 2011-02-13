@@ -8,36 +8,36 @@
     <security:global-method-security secured-annotations="enabled" />
 
     <security:http auto-config="true">
-        <security:intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/LoginUser" filters="none" />
-        <security:intercept-url pattern="/LogoutUser" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/css/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/scripts/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/swf/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/ActivateUser.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/RegisterUser.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/ResetUserPassword.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/SendUserActivationCode.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/SendUserPasswordReset.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/user/ajax/**.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/login*" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/LoginUser" 						filters="none" />
+        <security:intercept-url pattern="/LogoutUser" 						access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/css/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/images/**" 						access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/scripts/**" 						access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/swf/**" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ActivateUser.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/RegisterUser.do" 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ResetUserPassword.do" 		access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/SendUserActivationCode.do" 	access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/SendUserPasswordReset.do" 	access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/user/ajax/**.do"					access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
-        <security:intercept-url pattern="/adm/**"   access="ROLE_ADMINISTRATORS" />
-        <security:intercept-url pattern="/de/**"    access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS" />
-        <security:intercept-url pattern="/dev/**"   access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS" />
-        <security:intercept-url pattern="/devd/**"  access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS" />
-        <security:intercept-url pattern="/src/**"   access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/mview/**" access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
-        <security:intercept-url pattern="/cm/**"    access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
-        <security:intercept-url pattern="/hl/**"    access="ROLE_ADMINISTRATORS" />
-        <security:intercept-url pattern="/dig/**"   access="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_USERS" />
-        <security:intercept-url pattern="/**.do"                 access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/**.json"               access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/**.**"                 access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
-        <security:intercept-url pattern="/user/UpdateUser.do"    access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
-        <security:intercept-url pattern="/user/ShowUserPhoto.do" access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
+        <security:intercept-url pattern="/adm/**"   				access="ROLE_ADMINISTRATORS" />
+        <security:intercept-url pattern="/de/**"    				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS" />
+        <security:intercept-url pattern="/dev/**"   				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS" />
+        <security:intercept-url pattern="/devd/**"  				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS" />
+        <security:intercept-url pattern="/src/**"   				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/mview/**" 				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
+        <security:intercept-url pattern="/cm/**"    				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
+        <security:intercept-url pattern="/hl/**"    				access="ROLE_ADMINISTRATORS" />
+        <security:intercept-url pattern="/dig/**"   				access="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_USERS" />
+        <security:intercept-url pattern="/**.do"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/**.json"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/**.**"					access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
+        <security:intercept-url pattern="/user/UpdateUser.do"		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
+        <security:intercept-url pattern="/user/ShowUserPhoto.do"	access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
 
-		<security:intercept-url pattern="/user/**.do" access="ROLE_ADMINISTRATORS" />
+		<security:intercept-url pattern="/user/**.do" 			access="ROLE_ADMINISTRATORS" />
 
         <security:form-login always-use-default-target="true"
         			login-page="/LoginUser.do"
