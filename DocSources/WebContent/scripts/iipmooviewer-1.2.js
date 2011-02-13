@@ -848,7 +848,7 @@ var IIP = new Class({
     // Create our nav buttons
     var navbuttons = new Element('div', {
 	id: 'navbuttons',
-	html: '<img id="shiftLeft" src="/DocSources/images/left.png"/><img id="shiftUp" src="/DocSources/images/up.png"/><img id="shiftRight" src="/DocSources/images/right.png"/><br/><img id="shiftDown" src="/DocSources/images/down.png"/><br/><img id="zoomIn" src="/DocSources/images/zoomIn.png"/><img id="zoomOut" src="images/zoomOut.png"/><img id="reset" src="/DocSources/images/reset.png"/>'
+	html: '<img id="shiftLeft" src="/DocSources/images/left.png"/><img id="shiftUp" src="/DocSources/images/up.png"/><img id="shiftRight" src="/DocSources/images/right.png"/><br/><img id="shiftDown" src="/DocSources/images/down.png"/><br/><img id="zoomIn" src="/DocSources/images/zoomIn.png"/><img id="zoomOut" src="/DocSources/images/zoomOut.png"/><img id="reset" src="/DocSources/images/reset.png"/>'
     });
     navbuttons.injectInside(navcontainer);
     navbuttons.set('slide', {duration: 300, transition: Fx.Transitions.Quad.easeInOut, mode:'vertical'});
