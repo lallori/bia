@@ -145,6 +145,14 @@ public interface DocBaseService {
 	public Document editDetailsDocument(Document document) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param synExtract
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document editExtractDocument(SynExtract synExtract) throws ApplicationThrowable;
+
+	/**
 	 * This method modify extract or Synopsis of an existing
 	 * {@link org.medici.docsources.domain.Document}.
 	 * 
@@ -341,4 +349,12 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param synExtract
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
 }

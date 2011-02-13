@@ -197,6 +197,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}	
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable {
 		try {
@@ -326,6 +329,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Document editExtractDocument(SynExtract synExtract) throws ApplicationThrowable {
+		try {
+			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
+
+			// fill fields to update document section
+			synExtractToUpdate.setLastUpdate(new Date());
+			synExtractToUpdate.setDocExtract(synExtract.getDocExtract());
+		
+			getSynExtractDAO().merge(synExtractToUpdate);
+
+			return synExtractToUpdate.getDocument();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Document editExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
 			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
@@ -386,6 +409,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
+		try {
+			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
+
+			// fill fields to update document section
+			synExtractToUpdate.setLastUpdate(new Date());
+			synExtractToUpdate.setSynopsis(synExtract.getSynopsis());
+		
+			getSynExtractDAO().merge(synExtractToUpdate);
+
+			return synExtractToUpdate.getDocument();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
 		try {
 			EplToLink eplToLinkToUpdate = getEplToLinkDAO().find(eplToLink.getEplToId());
@@ -434,6 +477,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Image findDocumentImage(Integer entryId) throws ApplicationThrowable {
 		try {
@@ -501,6 +547,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public TopicList findTopic(Integer topicId) throws ApplicationThrowable {
 		try {
