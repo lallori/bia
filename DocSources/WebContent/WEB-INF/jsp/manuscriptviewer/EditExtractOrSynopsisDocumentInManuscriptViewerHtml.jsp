@@ -67,7 +67,7 @@
 					minWidth: 575,
 					minHeight: 110,                                                                                                                                                         
 					title: 'Page Turner',
-					position: ['left','bottom'],                                                                                                                                                       
+					position: ['right','bottom'],                                                                                                                                                       
 					closeOnEscape: false,
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide(); 
