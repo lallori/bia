@@ -1,5 +1,5 @@
 /*
- * PageTunerDialogController.java
+ * PageTurnerDialogController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -36,7 +36,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.manuscriptviewer.EditSynopsisDocumentDialogCommand;
-import org.medici.docsources.command.manuscriptviewer.PageTunerCommand;
+import org.medici.docsources.command.manuscriptviewer.PageTurnerCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
@@ -60,8 +60,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/mview/PageTunerDialog")
-public class PageTunerDialogController {
+@RequestMapping("/de/mview/PageTurnerDialog")
+public class PageTurnerDialogController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
@@ -98,7 +98,7 @@ public class PageTunerDialogController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") PageTunerCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") PageTurnerCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		Page page = null;
@@ -126,7 +126,7 @@ public class PageTunerDialogController {
 		} catch (ApplicationThrowable ath) {
 		}
 */
-		return new ModelAndView("manuscriptviewer/PageTunerDialog", model);
+		return new ModelAndView("manuscriptviewer/PageTurnerDialog", model);
 	}
 
 	/**
