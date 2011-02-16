@@ -40,9 +40,11 @@ import javax.persistence.criteria.Root;
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.ImageUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.Image.ImageType;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -201,5 +203,106 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		page.setList(typedQuery.getResultList());
 
 		return page;
+	}
+
+	@Override
+	public VolumeExplorer findImages(VolumeExplorer volumeExplorer) throws PersistenceException {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		
+		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
+		if (volumeExplorer.getTotal() == null) {
+			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+			Root<Image> rootCount = criteriaQueryCount.from(Image.class);
+			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+			// Define predicate's elements
+			ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+			ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+			criteriaQueryCount.where(
+				criteriaBuilder.and(
+					criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
+					StringUtils.isEmpty(volumeExplorer.getVolLetExt()) ? 
+						criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
+						criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
+				)
+			);
+
+			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+			typedQueryCount.setParameter("volNum", volumeExplorer.getVolNum());
+			if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
+				typedQueryCount.setParameter("volLetExt", volumeExplorer.getVolLetExt());
+			volumeExplorer.setTotal((Long)typedQueryCount.getSingleResult());
+
+	        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
+	        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
+	        	stringBuffer.append(" = :volLetExt");
+	        else
+	        	stringBuffer.append(" is null");
+	    	stringBuffer.append(" group by imageType");
+	    	
+	        Query query = getEntityManager().createQuery(stringBuffer.toString());
+	        query.setParameter("volNum", volumeExplorer.getVolNum());
+	        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
+	        	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
+	        }
+
+			List result = query.getResultList();
+
+			// We init every partial-total
+			volumeExplorer.setTotalRubricario(new Long(0));
+			volumeExplorer.setTotalCarta(new Long(0));
+			
+			// We set new partial-total values 
+			for (int i=0; i<result.size(); i++) {
+				// This is an array defined as [ImageType, Count by ImageType]
+				Object[] singleGroup = (Object[])result.get(i);
+
+				if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
+					volumeExplorer.setTotalRubricario(new Long(singleGroup[1].toString()));
+				} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
+					volumeExplorer.setTotalCarta(new Long(singleGroup[1].toString()));
+				}
+			}
+		} 
+
+		volumeExplorer.setPage(new Page(volumeExplorer.getPaginationFilter()));
+		CriteriaQuery<Image> criteriaQuery = criteriaBuilder.createQuery(Image.class);
+		Root<Image> root = criteriaQuery.from(Image.class);
+	
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+		//We need to duplicate predicates beacause they are link to Root element
+		criteriaQuery.where(
+				criteriaBuilder.and(
+					criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
+					StringUtils.isEmpty(volumeExplorer.getVolLetExt()) ? 
+						criteriaBuilder.isNull(root.get("volLetExt")) : 
+						criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText)
+				)
+			);
+
+		// Set values in predicate's elements  
+		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("volNum", volumeExplorer.getVolNum());
+		if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
+			typedQuery.setParameter("volLetExt", volumeExplorer.getVolLetExt());
+		}
+
+		//Pagination will work with index [1 ... total] and not [0 ... total1-]
+		if ((volumeExplorer.getImageType() == null) || (volumeExplorer.getImageType().equals(ImageType.R))) {
+			typedQuery.setFirstResult(volumeExplorer.getPaginationFilter().getFirstRecord()-1);
+			typedQuery.setMaxResults(volumeExplorer.getPaginationFilter().getLength());
+			volumeExplorer.getPage().setList(typedQuery.getResultList());
+		} else if (volumeExplorer.getImageType().equals(ImageType.C)) {
+			typedQuery.setFirstResult(volumeExplorer.getTotalRubricario().intValue() + volumeExplorer.getPaginationFilter().getFirstRecord()-1);
+			typedQuery.setMaxResults(volumeExplorer.getPaginationFilter().getLength());
+			volumeExplorer.getPage().setFirstRecordNumber(volumeExplorer.getTotalRubricario().intValue() + volumeExplorer.getPaginationFilter().getFirstRecord());
+			volumeExplorer.getPage().setList(typedQuery.getResultList());
+		}
+
+		return volumeExplorer;
 	}
 }
