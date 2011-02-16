@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
@@ -403,7 +404,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
-
+	@Override
+	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findImages(volumeExplorer);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -439,7 +447,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
-
 	/**
 	 * @param seriesListDAO the seriesListDAO to set
 	 */

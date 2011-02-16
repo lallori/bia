@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
@@ -182,6 +183,14 @@ public interface VolBaseService {
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param volumeExplorer
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable;
+	
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 
