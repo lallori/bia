@@ -27,18 +27,15 @@
  */
 package org.medici.docsources.controller.volbase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.volbase.ShowExplorerVolumeRequestCommand;
-import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.domain.Image;
+import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
@@ -80,24 +77,17 @@ public class ShowExplorerVolumeController {
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowExplorerVolumeRequestCommand command, BindingResult result, HttpSession httpSession){
 		Map<String, Object> model = new HashMap<String, Object>();
 		
-		Page page = null;
-
-		PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), 1, command.getTotal());
+		VolumeExplorer volumeExplorer = new VolumeExplorer(command.getVolNum(), command.getVolLetExt());
+		volumeExplorer.setImageType(command.getImageType());
+		volumeExplorer.setPaginationFilter(new PaginationFilter(command.getFirstRecord(), 1, command.getTotal()));
+		volumeExplorer.setTotal(command.getTotal());
+		volumeExplorer.setTotalRubricario(command.getTotalRubricario());
+		volumeExplorer.setTotalCarta(command.getTotalCarta());
 
 		try {
-			if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
-				page = getVolBaseService().findVolumeImages(command.getSummaryId(), paginationFilter);
-			} else {
-				if (!ObjectUtils.toString(command.getVolNum()).equals("")) {
-					page = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLetExt(), paginationFilter);
-				} else {
-					page = new Page(new ArrayList<Image>(0), new Long(0), new Integer(0), new Integer(0));
-				}
-			}
+			volumeExplorer = getVolBaseService().getVolumeExplorer(volumeExplorer);
 
-			//getDocBaseService().findDocument(page.getList().get(0));
-			model.put("page", page);
-			model.put("paginationFilter", paginationFilter);
+			model.put("volumeExplorer", volumeExplorer);
 		} catch (ApplicationThrowable ath) {
 		}
 
