@@ -29,6 +29,8 @@ package org.medici.docsources.command.volbase;
 
 import javax.validation.constraints.Size;
 
+import org.medici.docsources.domain.Image.ImageType;
+
 /**
  * Command bean for action "Request Show Volume".
  * 
@@ -44,8 +46,13 @@ public class ShowExplorerVolumeRequestCommand {
 	private String page;
 	private Integer firstRecord;
 	private Long total;
-	private Long totalFolio;
+	// This parameter is used to count rubricario total 
 	private Long totalRubricario;
+	// This parameter is used to count folio total 
+	private Long totalCarta;
+	// This parameter is used to manage rubricario and folio forms
+	private ImageType imageType;
+	// This parameter is used to select flash version Volume Explorer
 	private Boolean flashVersion;
 	private Boolean modalWindow;
 	// This parameter is used to identify first request on modalWindow, so we can set style in div osx-modal-data
@@ -57,18 +64,21 @@ public class ShowExplorerVolumeRequestCommand {
 	public Integer getSummaryId() {
 		return summaryId;
 	}
+	
 	/**
 	 * @param summaryId the summaryId to set
 	 */
 	public void setSummaryId(Integer summaryId) {
 		this.summaryId = summaryId;
 	}
+	
 	/**
 	 * @return the volNum
 	 */
 	public Integer getVolNum() {
 		return volNum;
 	}
+	
 	/**
 	 * @param volNum the volNum to set
 	 */
@@ -84,9 +94,9 @@ public class ShowExplorerVolumeRequestCommand {
 	}
 	
 	/**	
-	 * @param volLeText the volLetExt to set
+	 * @param LetExt the volLetExt to set
 	 */
-	public void setVolLeText(String volLetExt) {
+	public void setVolLetExt(String volLetExt) {
 		this.volLetExt = volLetExt;
 	}
 	
@@ -147,29 +157,47 @@ public class ShowExplorerVolumeRequestCommand {
 	}
 	
 	/**
-	 * @param totalFolio the totalFolio to set
+	 * @return the totalRubricario
 	 */
-	public void setTotalFolio(Long totalFolio) {
-		this.totalFolio = totalFolio;
+	public Long getTotalRubricario() {
+		return totalRubricario;
 	}
-	/**
-	 * @return the totalFolio
-	 */
-	public Long getTotalFolio() {
-		return totalFolio;
-	}
+	
 	/**
 	 * @param totalRubricario the totalRubricario to set
 	 */
 	public void setTotalRubricario(Long totalRubricario) {
 		this.totalRubricario = totalRubricario;
 	}
+
 	/**
-	 * @return the totalRubricario
+	 * @return the totalCarta
 	 */
-	public Long getTotalRubricario() {
-		return totalRubricario;
+	public Long getTotalCarta() {
+		return totalCarta;
 	}
+	
+	/**
+	 * @param totalCarta the totalCarta to set
+	 */
+	public void setTotalCarta(Long totalCarta) {
+		this.totalCarta = totalCarta;
+	}
+	
+	/**
+	 * @param imageType the imageType to set
+	 */
+	public void setImageType(ImageType imageType) {
+		this.imageType = imageType;
+	}
+	
+	/**
+	 * @return the imageType
+	 */
+	public ImageType getImageType() {
+		return imageType;
+	}
+
 	/**
 	 * @param modalWindow the modalWindow to set
 	 */
@@ -183,12 +211,14 @@ public class ShowExplorerVolumeRequestCommand {
 	public Boolean getModalWindow() {
 		return modalWindow;
 	}
+	
 	/**
 	 * @param firstPage the firstPage to set
 	 */
 	public void setFirstPage(Boolean firstPage) {
 		this.firstPage = firstPage;
 	}
+	
 	/**
 	 * @return the firstPage
 	 */
