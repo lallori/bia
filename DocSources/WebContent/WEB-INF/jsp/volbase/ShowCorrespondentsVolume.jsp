@@ -24,8 +24,8 @@
 		<hr id="lineSeparator"/>
 		
 		<ul>
-			<li><b>From:</b>${volume.senders}</li>
-			<li><b>To:</b>${volume.recips}</li>
+			<li><b>From: </b>${volume.senders}</li>
+			<li><b>To: </b>${volume.recips}</li>
 		</ul>
 	</div>
 
