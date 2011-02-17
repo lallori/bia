@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="explorerVolumeModal" value="/src/volbase/ShowExplorerVolume.do">
+		<c:url var="explorerVolumeModalWindow" value="/src/volbase/ShowExplorerVolume.do">
 			<c:param name="summaryId" value="${requestCommand.summaryId}"/>
 			<c:param name="volNum" value="${requestCommand.volNum}" />
 			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
@@ -38,7 +38,7 @@
 	
 	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
 	
-	<c:url var="currentvolumeExplorer.page" value="/src/volbase/ShowExplorerVolume.do">
+	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
@@ -49,7 +49,7 @@
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 
-	<c:url var="nextvolumeExplorer.page" value="/src/volbase/ShowExplorerVolume.do">
+	<c:url var="nextPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
@@ -60,7 +60,7 @@
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 
-	<c:url var="previousvolumeExplorer.page" value="/src/volbase/ShowExplorerVolume.do">
+	<c:url var="previousPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
