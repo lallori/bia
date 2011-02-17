@@ -30,6 +30,8 @@
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
+		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
 		<c:param name="firstRecord" value="${volumeExplorer.page.firstRecordNumber}" />
 		<c:param name="flashVersion" value="true" />
 	</c:url>
