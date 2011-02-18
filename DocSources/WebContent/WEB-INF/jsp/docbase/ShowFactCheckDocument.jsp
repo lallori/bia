@@ -39,31 +39,10 @@
 			 $j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 
 			 $j("#EditFactCheckDocument").click(function(){$j("#EditFactCheckDocumentDiv").load($j(this).attr("href"));return false;});
-			 
-			// Loading image on editlink js funct
-				$j("#EditDetailsDocument").click(function(){
-					$j(this).append('<span id=loading><img src="images/loading.gif"></span>');
-					 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
-					return false;
-				});
+				
 				$j("#EditFactCheckDocument").click(function(){
 					$j(this).append('<span id=loading><img src="images/loading.gif"></span>');
 					 $j("#EditFactCheckDocument").load($j(this).attr("href"));
-					return false;
-				});
-				$j("#EditCorrespondentsOrPeopleDocument").click(function(){
-					$j(this).append('<span id=loading><img src="images/loading.gif"></span>');
-					 $j("#EditCorrespondentsOrPeopleDocument").load($j(this).attr("href"));
-					return false;
-				});
-				$j("#EditTopicsDocument").click(function(){
-					$j(this).append('<span id=loading><img src="images/loading.gif"></span>');
-					 $j("#EditTopicsDocument").load($j(this).attr("href"));
-					return false;
-				});
-				$j("#EditExtractOrSynopsisDocument").click(function(){
-					$j(this).append('<span id=loading><img src="images/loading.gif"></span>');
-					 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
 					return false;
 				});
 			 
