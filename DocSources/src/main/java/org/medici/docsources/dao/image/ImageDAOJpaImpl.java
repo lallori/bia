@@ -29,6 +29,7 @@ package org.medici.docsources.dao.image;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -311,9 +312,13 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         } else {
 			query.setFirstResult(0);
 			query.setMaxResults(1);
-			volumeExplorer.setImage((Image) query.getSingleResult());
+			try {
+				volumeExplorer.setImage((Image) query.getSingleResult());
+			} catch (NoResultException noResultExcepion) {
+			}
         }
-		return volumeExplorer;
+
+        return volumeExplorer;
 	}
 
 	@Override
