@@ -280,11 +280,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	stringBuffer.append("=:volLetExt");
         else
         	stringBuffer.append(" is null");
-        if (volumeExplorer.getImage().getImageOrder() != null) {
-        	stringBuffer.append(" and imageOrder=:imageOrder");
-        } else if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
+        if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
         	stringBuffer.append(" and imageType=:imageType");
         	stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+        } else if (volumeExplorer.getImage().getImageOrder() != null) {
+        	stringBuffer.append(" and imageOrder=:imageOrder");
         } else {
         	stringBuffer.append(" and imageOrder = 1");
         }

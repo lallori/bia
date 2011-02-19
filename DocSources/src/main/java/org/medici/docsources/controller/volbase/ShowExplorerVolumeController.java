@@ -90,6 +90,9 @@ public class ShowExplorerVolumeController {
 			volumeExplorer.setTotal(command.getTotal());
 			volumeExplorer.setTotalRubricario(command.getTotalRubricario());
 			volumeExplorer.setTotalCarta(command.getTotalCarta());
+			volumeExplorer.setTotalAppendix(command.getTotalAppendix());
+			volumeExplorer.setTotalOther(command.getTotalOther());
+			volumeExplorer.setTotalG(command.getTotalG());
 	
 			try {
 				volumeExplorer = getVolBaseService().getVolumeExplorer(volumeExplorer);
@@ -123,6 +126,9 @@ public class ShowExplorerVolumeController {
 		volumeExplorer.setTotal(command.getTotal());
 		volumeExplorer.setTotalRubricario(command.getTotalRubricario());
 		volumeExplorer.setTotalCarta(command.getTotalCarta());
+		volumeExplorer.setTotalAppendix(command.getTotalAppendix());
+		volumeExplorer.setTotalOther(command.getTotalOther());
+		volumeExplorer.setTotalG(command.getTotalG());
 
 		try {
 			volumeExplorer = getVolBaseService().getVolumeExplorer(volumeExplorer);

@@ -87,7 +87,7 @@ public class ShowExplorerVolumeValidator implements Validator {
 		if (showExplorerVolumeRequestCommand.getImageProgTypeNum() != null) {
 			try {
 				if (getVolBaseService().findVolumeImage(showExplorerVolumeRequestCommand.getVolNum(), showExplorerVolumeRequestCommand.getVolLetExt(), showExplorerVolumeRequestCommand.getImageType(), showExplorerVolumeRequestCommand.getImageProgTypeNum()) == null) {
-					errors.rejectValue("imageProgTypeNum", "error.folio.notfound");
+					errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerVolumeRequestCommand.getImageProgTypeNum()}, null);
 				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				
