@@ -5,8 +5,8 @@
 	<artifactId>DocumentarySources</artifactId>
 	<packaging>war</packaging>
 	<name>DocSources</name>
-	<version>0.0.6-alpha</version>
-	<url>https://docsources.dev.java.net/issues/</url>
+	<version>0.0.7-alpha</version>
+	<url>http://java.net/jira/browse/DOCSOURCES</url>
 	<issueManagement>
 		<system>JIRA</system>
 		<url>https://docsources.dev.java.net/issues/</url>
