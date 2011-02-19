@@ -14,7 +14,7 @@
 		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditExtractOrSynopsisInManuscriptViewer" value="/de/mview/EditExtractOrSynopsisInManuscriptViewer.do">
+		<c:url var="EditDocumentInManuscriptViewer" value="/de/mview/EditDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
@@ -32,7 +32,7 @@
 		/
 		<a onclick="Modalbox.show(this.href, {title: this.title, width: 850}); return false;" href="/DocSources/de/docbase/EditExtractOrSynopsisDocumentFullscreen.html" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
 		/
-		<a id="EditInManuscriptViewer" href="${EditExtractOrSynopsisInManuscriptViewer}" >edit with manuscript viewer</a>
+		<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewer}" >edit with manuscript viewer</a>
 		</security:authorize></h5>
 		<hr id="lineSeparator"/>
 		<ul>
@@ -55,14 +55,9 @@
 			 $j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 
 			 $j("#EditExtractOrSynopsisDocument").click(function(){$j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));return false;});
-			 $j("#EditExtractOrSynopsisInManuscriptViewer").click(function(){
-				 $j(this).open({width: 400, height: 300, scrollbars: false});
+			 $j("#EditDocumentInManuscriptViewer").click(function(){
+				 $j(this).open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
+				 return false;
 			 });
-			 
-				$j("#EditExtractOrSynopsisDocument").click(function(){
-					$j(this).append('<span id=loading><img src="images/loading.gif"></span>');
-					 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
-					return false;
-				});
 		});
 	</script>
