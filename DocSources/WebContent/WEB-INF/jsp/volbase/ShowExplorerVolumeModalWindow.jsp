@@ -89,6 +89,7 @@
 	
 	<div id="modalBox">
 		<div id="prevNextButtons">
+		<c:if test="${volumeExplorer.total > 0}">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
 				<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
@@ -105,6 +106,7 @@
 				<a id="nextPage" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
 			</c:if>
 			</div>
+		</c:if>
 		</div>
 		
 		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:100"></iframe>
@@ -169,7 +171,7 @@
 			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" commandName="command" method="get" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
-				<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+				<input class="openmodalbox" id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="C"/>

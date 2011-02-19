@@ -130,6 +130,7 @@
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
+				<form:hidden path="imageOrder" />
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
