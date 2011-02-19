@@ -1,5 +1,5 @@
 /*
- * PageTunerCommand.java
+ * EditExtractOrSynopsisDocumentCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -31,12 +31,15 @@ import javax.validation.constraints.Size;
 
 import org.medici.docsources.domain.Image.ImageType;
 
+
 /**
+ * Command bean for action "Edit Extract Or Synopsis Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- *
+ * 
+ * @see org.medici.docsources.controller.docbase.EditExtractOrSynopsisDocumentController
  */
-public class PageTurnerCommand {
+public class EditDocumentInManuscriptViewerCommand {
 	private Integer entryId;
 	private Integer summaryId;
 	private Integer volNum;
@@ -215,5 +218,4 @@ public class PageTurnerCommand {
 	public void setTotalAppendix(Long totalAppendix) {
 		this.totalAppendix = totalAppendix;
 	}
-
 }
