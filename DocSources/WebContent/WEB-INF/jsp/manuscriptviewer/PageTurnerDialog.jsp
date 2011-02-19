@@ -8,10 +8,10 @@
 	<div style="text-align:center; color:#6D5C4D">Flip throught</div>
 	<br />
     <div id="prevButton">
-    	<a href="#"><img src="images/button_prev.png" alt="prev" /></a>
+    	<a href="#"><img src="<c:url value="/images/button_prev.png" />" alt="prev" /></a>
 	</div>
 	<div id="nextButton">
-		<a href="#"><img src="images/button_next.png" alt="next" /></a>
+		<a href="#"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
 	</div>
 </div>
 
@@ -21,7 +21,7 @@
 	<form id="moveToRubricarioForm" action="/DocSources/de/volbase/moveToRubricario.do" method="post" class="edit">
 		<label id="secondRecordLabel" for="secondRecord" >Move to rubricario (page)</label>
 		<input id="secondRecord" name="secondRecord" class="input_4c" type="text" value="" />
-		<input id="goR" type="image" src="images/go.png" alt="Go"/>
+		<input id="goR" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
 	</form>
 </div>
 
@@ -29,16 +29,16 @@
 	<form id="moveToFolioForm" action="/DocSources/de/volbase/moveToFolio.do" method="post" class="edit">
 		<label id="firstRecordLabel" for="firstRecord" >Move to folio (page)</label>
 		<input id="firstRecord" name="firstRecord" class="input_4c" type="text" value="" />
-		<input id="go" type="image" src="images/go.png" alt="Go"/>
+		<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
 	</form>
 </div>
 
 <div id="line2"></div>
 
 <div id="personalNotes">
-	<a href="#"><img src="images/button_perosnalNotes.png" alt="Personal Notes" /></a>
+	<a href="#"><img src="<c:url value="/images/button_personalNotes.png" />" alt="Personal Notes" /></a>
 </div>
 
 <div id="exit">
-	<a href="#"><img src="images/button_exit.png" alt="Exit" /></a>
+	<a href="#"><img src="<c:url value="/images/button_exit.png" />" alt="Exit" /></a>
 </div>
