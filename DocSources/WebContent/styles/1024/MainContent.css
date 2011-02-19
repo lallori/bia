@@ -945,8 +945,8 @@ iframe{ /* Common for all iFrame */
 /* Previous / Next */
 
 #prevNextButtons {
-	margin:10px 0 10px 175px;
-	width: 100px;
+	margin:10px 0 10px 155px;
+	width: 200px;
 	z-index:2;
 }
 
