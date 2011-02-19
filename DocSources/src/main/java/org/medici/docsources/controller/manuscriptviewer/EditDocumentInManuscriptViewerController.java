@@ -1,5 +1,5 @@
 /*
- * EditExtractOrSynopsisInManuscriptViewerController.java
+ * EditDocumentInManuscriptViewerController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,7 +30,9 @@ package org.medici.docsources.controller.manuscriptviewer;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.medici.docsources.command.manuscriptviewer.EditExtractDocumentDialogCommand;
+
+import org.medici.docsources.command.manuscriptviewer.EditDocumentInManuscriptViewerCommand;
+import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -48,8 +50,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/mview/EditExtractOrSynopsisInManuscriptViewer")
-public class EditExtractOrSynopsisDocumentInManuscriptViewerController {
+@RequestMapping("/de/mview/EditDocumentInManuscriptViewer")
+public class EditDocumentInManuscriptViewerController {
 	@Autowired
 	private DocBaseService docBaseService;
 
@@ -59,24 +61,29 @@ public class EditExtractOrSynopsisDocumentInManuscriptViewerController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupPage(@ModelAttribute("requestCommand") EditExtractDocumentDialogCommand command, BindingResult result){
+	public ModelAndView setupPage(@ModelAttribute("requestCommand") EditDocumentInManuscriptViewerCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
-		Image documentImage = new Image();
-		
+
+		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
+		documentExplorer.setImage(new Image());
+		documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+		documentExplorer.getImage().setImageOrder(command.getImageOrder());
+		documentExplorer.getImage().setImageType(command.getImageType());
+		documentExplorer.setTotal(command.getTotal());
+		documentExplorer.setTotalRubricario(command.getTotalRubricario());
+		documentExplorer.setTotalCarta(command.getTotalCarta());
+		documentExplorer.setTotalAppendix(command.getTotalAppendix());
+		documentExplorer.setTotalOther(command.getTotalOther());
+		documentExplorer.setTotalG(command.getTotalG());
+
 		try {
-			// we set default image as empty string, so we need only to update the record.
-			//model.put("image", "");
+			documentExplorer = getDocBaseService().getDocumentExplorer(documentExplorer);
 
-			//If the request is made with imageName, we don't need to query database
-			if (command.getEntryId() != null) {
-				documentImage = getDocBaseService().findDocumentImage(command.getEntryId());
-
-				model.put("image", documentImage);
-			}
+			model.put("documentExplorer", documentExplorer);
 		} catch (ApplicationThrowable ath) {
 		}
 
-		return new ModelAndView("manuscriptviewer/EditExtractOrSynopsisDocumentInManuscriptViewerHtml", model);
+		return new ModelAndView("manuscriptviewer/EditDocumentInManuscriptViewerHtml", model);
 	}
 
 	/**

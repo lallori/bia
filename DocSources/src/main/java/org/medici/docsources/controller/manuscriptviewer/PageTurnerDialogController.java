@@ -27,27 +27,17 @@
  */
 package org.medici.docsources.controller.manuscriptviewer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.Valid;
-
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.command.manuscriptviewer.EditSynopsisDocumentDialogCommand;
 import org.medici.docsources.command.manuscriptviewer.PageTurnerCommand;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.domain.Document;
+import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,32 +90,7 @@ public class PageTurnerDialogController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") PageTurnerCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
-		Page page = null;
 
-		PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), 1, command.getTotal());
-		
-		if (command.getTotal() == null) {
-			//getVolBaseService().findVolumeImagesByDocumentId(command.getSummaryId(), paginationFilter);
-		}
-/*
-		try {
-			if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
-				page = getVolBaseService().findVolumeImagesByDocumentId(command.getSummaryId(), paginationFilter);
-			} else {
-				if (!ObjectUtils.toString(command.getVolNum()).equals("")) {
-					page = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLetExt(), paginationFilter);
-				} else {
-					page = new Page(new ArrayList<Image>(0), new Long(0), new Integer(0), new Integer(0));
-				}
-			}
-
-			//getDocBaseService().findDocument(page.getList().get(0));
-			model.put("page", page);
-			model.put("paginationFilter", paginationFilter);
-		} catch (ApplicationThrowable ath) {
-		}
-*/
 		return new ModelAndView("manuscriptviewer/PageTurnerDialog", model);
 	}
 
