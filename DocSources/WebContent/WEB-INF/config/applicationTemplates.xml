@@ -232,8 +232,8 @@
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/manuscriptviewer/EditExtractOrSynopsisDocumentInManuscriptViewerHtml.jsp"/>
 	</definition>
 
-	<definition name="manuscriptviewer/PageTunerDialog" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/PageTunerDialog.jsp"/>
+	<definition name="manuscriptviewer/PageTurnerDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/PageTurnerDialog.jsp"/>
 	</definition>
 
 	<definition name="manuscriptviewer/ShowManuscriptViewerFlash" extends="template.manuscriptViewerFlash">
