@@ -40,6 +40,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.ImageUtils;
@@ -204,6 +205,121 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		page.setList(typedQuery.getResultList());
 
 		return page;
+	}
+
+	@Override
+	public DocumentExplorer findImages(DocumentExplorer pageTurner) throws PersistenceException {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		
+		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
+		if (pageTurner.getTotal() == null) {
+			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+			Root<Image> rootCount = criteriaQueryCount.from(Image.class);
+			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+			// Define predicate's elements
+			ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+			ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+			criteriaQueryCount.where(
+				criteriaBuilder.and(
+					criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
+					StringUtils.isEmpty(pageTurner.getVolLetExt()) ? 
+						criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
+						criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
+				)
+			);
+
+			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+			typedQueryCount.setParameter("volNum", pageTurner.getVolNum());
+			if (!StringUtils.isEmpty(pageTurner.getVolLetExt()))
+				typedQueryCount.setParameter("volLetExt", pageTurner.getVolLetExt());
+			pageTurner.setTotal((Long)typedQueryCount.getSingleResult());
+
+	        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
+	        if (!StringUtils.isEmpty(pageTurner.getVolLetExt()))
+	        	stringBuffer.append(" = :volLetExt");
+	        else
+	        	stringBuffer.append(" is null");
+	    	stringBuffer.append(" group by imageType");
+	    	
+	        Query query = getEntityManager().createQuery(stringBuffer.toString());
+	        query.setParameter("volNum", pageTurner.getVolNum());
+	        if (!StringUtils.isEmpty(pageTurner.getVolLetExt())) {
+	        	query.setParameter("volLetExt", pageTurner.getVolLetExt());
+	        }
+
+			List<Object[]> result = (List<Object[]>)query.getResultList();
+
+			// We init every partial-total
+			pageTurner.setTotalRubricario(new Long(0));
+			pageTurner.setTotalCarta(new Long(0));
+			pageTurner.setTotalAppendix(new Long(0));
+			pageTurner.setTotalOther(new Long(0));
+			pageTurner.setTotalG(new Long(0));
+			
+			// We set new partial-total values 
+			for (int i=0; i<result.size(); i++) {
+				// This is an array defined as [ImageType, Count by ImageType]
+				Object[] singleGroup = result.get(i);
+
+				if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
+					pageTurner.setTotalRubricario(new Long(singleGroup[1].toString()));
+				} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
+					pageTurner.setTotalCarta(new Long(singleGroup[1].toString()));
+				} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
+					pageTurner.setTotalAppendix(new Long(singleGroup[1].toString()));
+				} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
+					pageTurner.setTotalOther(new Long(singleGroup[1].toString()));
+				} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
+					pageTurner.setTotalG(new Long(singleGroup[1].toString()));
+				}
+			}
+		} 
+
+        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(pageTurner.getVolLetExt()))
+        	stringBuffer.append("=:volLetExt");
+        else
+        	stringBuffer.append(" is null");
+        if (pageTurner.getImage().getImageProgTypeNum() != null) {
+        	stringBuffer.append(" and imageType=:imageType");
+        	stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+        } else if (pageTurner.getImage().getImageOrder() != null) {
+        	stringBuffer.append(" and imageOrder=:imageOrder");
+        } else {
+        	stringBuffer.append(" and imageOrder = 1");
+        }
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", pageTurner.getVolNum());
+        if (!StringUtils.isEmpty(pageTurner.getVolLetExt())) {
+        	query.setParameter("volLetExt", pageTurner.getVolLetExt());
+        }
+
+        if (pageTurner.getImage().getImageProgTypeNum() != null) {
+        	query.setParameter("imageType", pageTurner.getImage().getImageType());
+        	query.setParameter("imageProgTypeNum", pageTurner.getImage().getImageProgTypeNum());
+			List<Image> result = (List<Image>) query.getResultList();
+			
+			if (result.size() > 0) {
+				pageTurner.setImage(result.get(0));
+			}
+        } else if (pageTurner.getImage().getImageOrder() != null) {
+        	query.setParameter("imageOrder", pageTurner.getImage().getImageOrder());
+			query.setFirstResult(0);
+			query.setMaxResults(1);
+			pageTurner.setImage((Image) query.getSingleResult());
+        } else {
+			query.setFirstResult(0);
+			query.setMaxResults(1);
+			try {
+				pageTurner.setImage((Image) query.getSingleResult());
+			} catch (NoResultException noResultExcepion) {
+			}
+        }
+
+        return pageTurner;
 	}
 
 	@Override

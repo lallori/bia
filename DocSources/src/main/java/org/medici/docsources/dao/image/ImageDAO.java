@@ -32,6 +32,7 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.dao.Dao;
@@ -76,6 +77,14 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	public Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param pageTurner
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public DocumentExplorer findImages(DocumentExplorer pageTurner) throws PersistenceException;
 
 	/**
 	 * 
