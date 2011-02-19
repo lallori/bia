@@ -247,7 +247,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	        	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
 	        }
 
-			List result = query.getResultList();
+			List<Object[]> result = (List<Object[]>)query.getResultList();
 
 			// We init every partial-total
 			volumeExplorer.setTotalRubricario(new Long(0));
@@ -256,7 +256,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			// We set new partial-total values 
 			for (int i=0; i<result.size(); i++) {
 				// This is an array defined as [ImageType, Count by ImageType]
-				Object[] singleGroup = (Object[])result.get(i);
+				Object[] singleGroup = result.get(i);
 
 				if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
 					volumeExplorer.setTotalRubricario(new Long(singleGroup[1].toString()));
@@ -266,43 +266,69 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			}
 		} 
 
-		volumeExplorer.setPage(new Page(volumeExplorer.getPaginationFilter()));
-		CriteriaQuery<Image> criteriaQuery = criteriaBuilder.createQuery(Image.class);
-		Root<Image> root = criteriaQuery.from(Image.class);
-	
-		// Define predicate's elements
-		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
+        	stringBuffer.append("=:volLetExt");
+        else
+        	stringBuffer.append(" is null");
+        if (volumeExplorer.getImage().getImageOrder() != null) {
+        	stringBuffer.append(" and imageOrder=:imageOrder");
+        } else if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
+        	stringBuffer.append(" and imageType=:imageType");
+        	stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+        } else {
+        	stringBuffer.append(" and imageOrder = 1");
+        }
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volumeExplorer.getVolNum());
+        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
+        	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
+        }
 
-		//We need to duplicate predicates beacause they are link to Root element
-		criteriaQuery.where(
-				criteriaBuilder.and(
-					criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
-					StringUtils.isEmpty(volumeExplorer.getVolLetExt()) ? 
-						criteriaBuilder.isNull(root.get("volLetExt")) : 
-						criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText)
-				)
-			);
-
-		// Set values in predicate's elements  
-		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
-		typedQuery.setParameter("volNum", volumeExplorer.getVolNum());
-		if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
-			typedQuery.setParameter("volLetExt", volumeExplorer.getVolLetExt());
-		}
-
-		//Pagination will work with index [1 ... total] and not [0 ... total1-]
-		if ((volumeExplorer.getImageType() == null) || (volumeExplorer.getImageType().equals(ImageType.R))) {
-			typedQuery.setFirstResult(volumeExplorer.getPaginationFilter().getFirstRecord()-1);
-			typedQuery.setMaxResults(volumeExplorer.getPaginationFilter().getLength());
-			volumeExplorer.getPage().setList(typedQuery.getResultList());
-		} else if (volumeExplorer.getImageType().equals(ImageType.C)) {
-			typedQuery.setFirstResult(volumeExplorer.getTotalRubricario().intValue() + volumeExplorer.getPaginationFilter().getFirstRecord()-1);
-			typedQuery.setMaxResults(volumeExplorer.getPaginationFilter().getLength());
-			volumeExplorer.getPage().setFirstRecordNumber(volumeExplorer.getTotalRubricario().intValue() + volumeExplorer.getPaginationFilter().getFirstRecord());
-			volumeExplorer.getPage().setList(typedQuery.getResultList());
-		}
-
+        if (volumeExplorer.getImage().getImageProgTypeNum() != null) {
+        	query.setParameter("imageType", volumeExplorer.getImage().getImageType());
+        	query.setParameter("imageProgTypeNum", volumeExplorer.getImage().getImageProgTypeNum());
+			List<Image> result = (List<Image>) query.getResultList();
+			
+			if (result.size() > 0) {
+				volumeExplorer.setImage(result.get(0));
+			}
+        } else if (volumeExplorer.getImage().getImageOrder() != null) {
+        	query.setParameter("imageOrder", volumeExplorer.getImage().getImageOrder());
+			query.setFirstResult(0);
+			query.setMaxResults(1);
+			volumeExplorer.setImage((Image) query.getSingleResult());
+        } else {
+			query.setFirstResult(0);
+			query.setMaxResults(1);
+			volumeExplorer.setImage((Image) query.getSingleResult());
+        }
 		return volumeExplorer;
+	}
+
+	@Override
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws PersistenceException {
+        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volLetExt))
+        	stringBuffer.append("=:volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" and imageType=:imageType");
+    	stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volNum);
+        if (!StringUtils.isEmpty(volLetExt)) {
+        	query.setParameter("volLetExt", volLetExt);
+        }
+    	query.setParameter("imageType", imageType);
+    	query.setParameter("imageProgTypeNum", imageProgTypeNum);
+		List<Image> result = (List<Image>) query.getResultList();
+
+		if (result.isEmpty())
+			return null;
+		
+		return result;
 	}
 }

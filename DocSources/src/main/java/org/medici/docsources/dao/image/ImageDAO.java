@@ -84,4 +84,15 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	public VolumeExplorer findImages(VolumeExplorer volumeExplorer) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param imageType
+	 * @param imageProgTypeNum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws PersistenceException;
 }
