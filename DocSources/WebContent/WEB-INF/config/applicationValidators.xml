@@ -68,6 +68,10 @@
         <description>Edit Details Volume Validator.</description> 
 	</bean>
 
+	<bean id="showExplorerVolumeValidator" class="org.medici.docsources.validator.volbase.ShowExplorerVolumeValidator">
+        <description>Show Volume Explorer Validator.</description> 
+	</bean>
+	
 	<!-- User's Validators-->
     <bean id="activateUserRequestValidator" class="org.medici.docsources.validator.user.ActivateUserRequestValidator">
         <description>Validator for action "Activate user.".</description>
