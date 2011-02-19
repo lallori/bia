@@ -22,7 +22,7 @@
 
 		<c:url var="manuscriptViewer" value="/mview/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${volumeExplorer.image}" />
-			<c:param name="flashVersion"   value="true" />
+			<c:param name="flashVersion"   value="${command.flashVersion}" />
 		</c:url>
 	</security:authorize>
 	
@@ -171,10 +171,12 @@
 			
 		<div>
 			<a id="fullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER"><img src="/DocSources/images/fullscreenMode.png" alt="Fullscreen Mode" /></a>
-
 			<a id="refreshVolumeExplorer" href="${currentPage}"><img src="<c:url value="/images/button_refresh.png" />" alt="Refresh" /></a>
 		</div>
 
+		<div align="center">
+			<form:form><form:errors path="imageProgTypeNum" cssStyle="error"/></form:form>
+		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j("#fullScreen").click(function(){
