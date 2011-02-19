@@ -43,20 +43,28 @@ public class ShowExplorerVolumeCommand {
 	private Integer volNum;
 	@Size (max=1)
 	private String volLetExt;
+	/** This parameter is used to manage rubricario and folio forms */
 	private Integer imageOrder;
+	/** This parameter is used to manage image type (Rubricario, Carta...) */
+	private ImageType imageType;
+	/** This parameter is used to folio identifier ) */
 	private Integer imageProgTypeNum;
 	private Long total;
-	// This parameter is used to count rubricario total 
+	/** This parameter is used to count Rubricario total */ 
 	private Long totalRubricario;
-	// This parameter is used to count folio total 
+	/** This parameter is used to count Carta total */
 	private Long totalCarta;
-	// This parameter is used to manage rubricario and folio forms
-	private ImageType imageType;
-	// This parameter is used to select flash version Volume Explorer
+	/** This parameter is used to count Other total */
+	private Long totalOther;
+	/** This parameter is used to count G (??) total */
+	private Long totalG;
+	/** This parameter is used to count appendix total */
+	private Long totalAppendix;
+
+	/** This parameter is used to select flash version Volume Explorer */
 	private Boolean flashVersion;
+	/** This parameter is used to select modal Window mode */
 	private Boolean modalWindow;
-	// This parameter is used to identify first request on modalWindow, so we can set style in div osx-modal-data
-	private Boolean firstPage;
 
 	/**
 	 * @return the summaryId
@@ -99,7 +107,21 @@ public class ShowExplorerVolumeCommand {
 	public void setVolLetExt(String volLetExt) {
 		this.volLetExt = volLetExt;
 	}
+
+	/**
+	 * @param imageType the imageType to set
+	 */
+	public void setImageType(ImageType imageType) {
+		this.imageType = imageType;
+	}
 	
+	/**
+	 * @return the imageType
+	 */
+	public ImageType getImageType() {
+		return imageType;
+	}
+
 	/**
 	 * @param imageOrder the imageOrder to set
 	 */
@@ -126,20 +148,6 @@ public class ShowExplorerVolumeCommand {
 	 */
 	public Integer getImageProgTypeNum() {
 		return imageProgTypeNum;
-	}
-
-	/**
-	 * @param flashVersion the flashVersion to set
-	 */
-	public void setFlashVersion(Boolean flashVersion) {
-		this.flashVersion = flashVersion;
-	}
-	
-	/**
-	 * @return the flashVersion
-	 */
-	public Boolean getFlashVersion() {
-		return flashVersion;
 	}
 	
 	/**
@@ -183,19 +191,47 @@ public class ShowExplorerVolumeCommand {
 	public void setTotalCarta(Long totalCarta) {
 		this.totalCarta = totalCarta;
 	}
-	
+
 	/**
-	 * @param imageType the imageType to set
+	 * @param totalOther the totalOther to set
 	 */
-	public void setImageType(ImageType imageType) {
-		this.imageType = imageType;
+	public void setTotalOther(Long totalOther) {
+		this.totalOther = totalOther;
 	}
-	
+
 	/**
-	 * @return the imageType
+	 * @return the totalOther
 	 */
-	public ImageType getImageType() {
-		return imageType;
+	public Long getTotalOther() {
+		return totalOther;
+	}
+
+	/**
+	 * @param totalG the totalG to set
+	 */
+	public void setTotalG(Long totalG) {
+		this.totalG = totalG;
+	}
+
+	/**
+	 * @return the totalG
+	 */
+	public Long getTotalG() {
+		return totalG;
+	}
+
+	/**
+	 * @param totalAppendix the totalAppendix to set
+	 */
+	public void setTotalAppendix(Long totalAppendix) {
+		this.totalAppendix = totalAppendix;
+	}
+
+	/**
+	 * @return the totalAppendix
+	 */
+	public Long getTotalAppendix() {
+		return totalAppendix;
 	}
 
 	/**
@@ -213,16 +249,16 @@ public class ShowExplorerVolumeCommand {
 	}
 	
 	/**
-	 * @param firstPage the firstPage to set
+	 * @param flashVersion the flashVersion to set
 	 */
-	public void setFirstPage(Boolean firstPage) {
-		this.firstPage = firstPage;
+	public void setFlashVersion(Boolean flashVersion) {
+		this.flashVersion = flashVersion;
 	}
 	
 	/**
-	 * @return the firstPage
+	 * @return the flashVersion
 	 */
-	public Boolean getFirstPage() {
-		return firstPage;
+	public Boolean getFlashVersion() {
+		return flashVersion;
 	}
 }
