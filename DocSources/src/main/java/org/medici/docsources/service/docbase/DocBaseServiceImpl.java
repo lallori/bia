@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.EpLinkUtils;
 import org.medici.docsources.common.util.EplToLinkUtils;
@@ -704,6 +705,22 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public List<Month> getMonths() throws ApplicationThrowable {
 		try {
 			return getMonthDAO().getAllMonths();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable {
+		try {
+			if (pageTurner.getVolNum() == null) {
+				Document document = getDocumentDAO().find(pageTurner.getEntryId());
+				
+				pageTurner.setVolNum(document.getVolume().getVolNum());
+				pageTurner.setVolLetExt(document.getVolume().getVolLetExt());
+			}
+
+			return getImageDAO().findImages(pageTurner);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

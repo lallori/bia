@@ -30,6 +30,7 @@ package org.medici.docsources.service.docbase;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
@@ -181,6 +182,14 @@ public interface DocBaseService {
 	public Document editPersonDocument(EpLink epLink) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param synExtract
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
+
+	/**
 	 * This method modify topics of an existing
 	 * {@link org.medici.docsources.domain.Document}.
 	 * 
@@ -316,6 +325,14 @@ public interface DocBaseService {
 
 	/**
 	 * 
+	 * @param pageTurner
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param text
 	 * @param paginationFilter
 	 * @return
@@ -349,12 +366,4 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param synExtract
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
 }
