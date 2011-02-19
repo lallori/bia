@@ -30,18 +30,19 @@ package org.medici.docsources.controller.volbase;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.lang.BooleanUtils;
-import org.medici.docsources.command.volbase.ShowExplorerVolumeRequestCommand;
-import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.command.volbase.ShowExplorerVolumeCommand;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,10 +56,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/src/volbase/ShowExplorerVolume")
 public class ShowExplorerVolumeController {
+	@Autowired(required = false)
+	@Qualifier("showExplorerVolumeValidator")
+	private Validator validator;
 	@Autowired
 	private VolBaseService volBaseService;
-	@Autowired
-	private DocBaseService docBaseService;
 
 	/**
 	 * 
@@ -68,18 +70,56 @@ public class ShowExplorerVolumeController {
 		return volBaseService;
 	}
 
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView searchCarta(@Valid @ModelAttribute("command") ShowExplorerVolumeCommand command, BindingResult result){
+		getValidator().validate(command, result);
+
+		if (result.hasErrors()) {
+			// in case of errors we need to remove imageType and imageProgTypeNum, so we return imageOrder which is previous image.
+			command.setImageType(null);
+			command.setImageProgTypeNum(null);
+			return setupForm(command, result);
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+			
+			VolumeExplorer volumeExplorer = new VolumeExplorer(command.getVolNum(), command.getVolLetExt());
+			volumeExplorer.setImage(new Image());
+			volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+			volumeExplorer.getImage().setImageOrder(command.getImageOrder());
+			volumeExplorer.getImage().setImageType(command.getImageType());
+			volumeExplorer.setTotal(command.getTotal());
+			volumeExplorer.setTotalRubricario(command.getTotalRubricario());
+			volumeExplorer.setTotalCarta(command.getTotalCarta());
+	
+			try {
+				volumeExplorer = getVolBaseService().getVolumeExplorer(volumeExplorer);
+	
+				model.put("volumeExplorer", volumeExplorer);
+			} catch (ApplicationThrowable ath) {
+			}
+	
+			if (BooleanUtils.isTrue(command.getModalWindow())) {
+				return new ModelAndView("volbase/ShowExplorerVolumeModalWindow", model);
+			} else {
+				return new ModelAndView("volbase/ShowExplorerVolume", model);
+			}
+		}
+	}
+
 	/**
 	 * 
 	 * @param volumeId
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowExplorerVolumeRequestCommand command, BindingResult result, HttpSession httpSession){
+	public ModelAndView setupForm(@ModelAttribute("command") ShowExplorerVolumeCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		VolumeExplorer volumeExplorer = new VolumeExplorer(command.getVolNum(), command.getVolLetExt());
-		volumeExplorer.setImageType(command.getImageType());
-		volumeExplorer.setPaginationFilter(new PaginationFilter(command.getFirstRecord(), 1, command.getTotal()));
+		volumeExplorer.setImage(new Image());
+		volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+		volumeExplorer.getImage().setImageOrder(command.getImageOrder());
+		volumeExplorer.getImage().setImageType(command.getImageType());
 		volumeExplorer.setTotal(command.getTotal());
 		volumeExplorer.setTotalRubricario(command.getTotalRubricario());
 		volumeExplorer.setTotalCarta(command.getTotalCarta());
@@ -107,16 +147,16 @@ public class ShowExplorerVolumeController {
 	}
 
 	/**
-	 * @param docBaseService the docBaseService to set
+	 * @param validator the validator to set
 	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 
 	/**
-	 * @return the docBaseService
+	 * @return the validator
 	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
+	public Validator getValidator() {
+		return validator;
 	}
 }
