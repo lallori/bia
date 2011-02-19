@@ -74,7 +74,7 @@ public class EditDocumentInManuscriptViewerController {
 		documentExplorer.setTotalCarta(command.getTotalCarta());
 		documentExplorer.setTotalAppendix(command.getTotalAppendix());
 		documentExplorer.setTotalOther(command.getTotalOther());
-		documentExplorer.setTotalG(command.getTotalG());
+		documentExplorer.setTotalGuardia(command.getTotalGuardia());
 
 		try {
 			documentExplorer = getDocBaseService().getDocumentExplorer(documentExplorer);

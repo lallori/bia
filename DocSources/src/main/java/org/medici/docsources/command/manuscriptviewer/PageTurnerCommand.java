@@ -55,8 +55,8 @@ public class PageTurnerCommand {
 	private Long totalCarta;
 	/** This parameter is used to count Other total */
 	private Long totalOther;
-	/** This parameter is used to count G (??) total */
-	private Long totalG;
+	/** This parameter is used to count Guardia total */
+	private Long totalGuardia;
 	/** This parameter is used to count appendix total */
 	private Long totalAppendix;
 	/**
@@ -192,16 +192,16 @@ public class PageTurnerCommand {
 		this.totalOther = totalOther;
 	}
 	/**
-	 * @return the totalG
+	 * @return the totalGuardia
 	 */
-	public Long getTotalG() {
-		return totalG;
+	public Long getTotalGuardia() {
+		return totalGuardia;
 	}
 	/**
-	 * @param totalG the totalG to set
+	 * @param totalGuardia the totalGuardia to set
 	 */
-	public void setTotalG(Long totalG) {
-		this.totalG = totalG;
+	public void setTotalGuardia(Long totalGuardia) {
+		this.totalGuardia = totalGuardia;
 	}
 	/**
 	 * @return the totalAppendix

@@ -11,16 +11,16 @@
 		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
 	<c:url var="PageTurnerDialogUrl" value="/de/mview/PageTurnerDialog.do" >
-		<c:param name="entryId" value="${documentImage.entryId}" />
-		<c:param name="volNum" value="${documentImage.volNum}" />
-		<c:param name="volLetExt" value="${documentImage.volLetExt}" />
-		<c:param name="imageOrder" value="${documentImage.image.imageOrder}" />
-		<c:param name="total" value="${documentImage.total}" />
-		<c:param name="totalRubricario" value="${documentImage.totalRubricario}" />
-		<c:param name="totalCarta" value="${documentImage.totalCarta}" />
-		<c:param name="totalAppendix" value="${documentImage.totalAppendix}" />
-		<c:param name="totalOther" value="${documentImage.totalOther}" />
-		<c:param name="totalG" value="${documentImage.totalG}" />
+		<c:param name="entryId" value="${documentExplorer.entryId}" />
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+		<c:param name="total" value="${documentExplorer.total}" />
+		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
 	</c:url>
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
@@ -95,7 +95,7 @@
 
 			iip = new IIP( "targetframe", {
 				server: '/DocSources/mview/ProxyIIPImage.do',
-				image: '${documentImage.image}',
+				image: '${documentExplorer.image}',
 				credit: '&copy; copyright or information message', 
 				zoom: 1,
 				showNavButtons: true,

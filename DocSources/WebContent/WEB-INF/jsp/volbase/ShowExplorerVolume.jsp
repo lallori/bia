@@ -15,7 +15,7 @@
 			<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
 			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-			<c:param name="totalG" value="${volumeExplorer.totalG}" />
+			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 			<c:param name="flashVersion" value="${command.flashVersion}"/>
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
@@ -37,7 +37,7 @@
 		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-		<c:param name="totalG" value="${volumeExplorer.totalG}" />
+		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 
@@ -50,7 +50,7 @@
 		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-		<c:param name="totalG" value="${volumeExplorer.totalG}" />
+		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 
@@ -63,7 +63,7 @@
 		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-		<c:param name="totalG" value="${volumeExplorer.totalG}" />
+		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 	
@@ -136,7 +136,7 @@
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
 				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
-				<form:hidden path="totalG" value="${volumeExplorer.totalG}" />
+				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 				<form:hidden path="flashVersion" value="true" />
 			</form:form>
 		</div>
@@ -163,7 +163,7 @@
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
 				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
-				<form:hidden path="totalG" value="${volumeExplorer.totalG}" />
+				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 				<form:hidden path="flashVersion" value="true" />
 			</form:form>
 		</div>

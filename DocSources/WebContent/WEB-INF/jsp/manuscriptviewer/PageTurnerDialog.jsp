@@ -15,7 +15,7 @@
 			<c:param name="totalCarta" value="${command.totalCarta}" />
 			<c:param name="totalAppendix" value="${command.totalAppendix}" />
 			<c:param name="totalOther" value="${command.totalOther}" />
-			<c:param name="totalG" value="${command.totalG}" />
+			<c:param name="totalGuardia" value="${command.totalGuardia}" />
 		</c:url>
 	
 		<c:url var="nextPage" value="/de/mview/EditDocumentInManuscriptViewer.do">
@@ -28,7 +28,7 @@
 			<c:param name="totalCarta" value="${command.totalCarta}" />
 			<c:param name="totalAppendix" value="${command.totalAppendix}" />
 			<c:param name="totalOther" value="${command.totalOther}" />
-			<c:param name="totalG" value="${command.totalG}" />
+			<c:param name="totalGuardia" value="${command.totalGuardia}" />
 		</c:url>
 	
 		<c:url var="previousPage" value="/de/mview/EditDocumentInManuscriptViewer.do">
@@ -41,7 +41,7 @@
 			<c:param name="totalCarta" value="${command.totalCarta}" />
 			<c:param name="totalAppendix" value="${command.totalAppendix}" />
 			<c:param name="totalOther" value="${command.totalOther}" />
-			<c:param name="totalG" value="${command.totalG}" />
+			<c:param name="totalGuardia" value="${command.totalGuardia}" />
 			<c:param name="flashVersion" value="true" />
 		</c:url>
 	</security:authorize>

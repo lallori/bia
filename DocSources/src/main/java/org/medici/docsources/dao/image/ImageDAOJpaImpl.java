@@ -256,7 +256,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			pageTurner.setTotalCarta(new Long(0));
 			pageTurner.setTotalAppendix(new Long(0));
 			pageTurner.setTotalOther(new Long(0));
-			pageTurner.setTotalG(new Long(0));
+			pageTurner.setTotalGuardia(new Long(0));
 			
 			// We set new partial-total values 
 			for (int i=0; i<result.size(); i++) {
@@ -272,7 +272,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
 					pageTurner.setTotalOther(new Long(singleGroup[1].toString()));
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
-					pageTurner.setTotalG(new Long(singleGroup[1].toString()));
+					pageTurner.setTotalGuardia(new Long(singleGroup[1].toString()));
 				}
 			}
 		} 
@@ -371,7 +371,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			volumeExplorer.setTotalCarta(new Long(0));
 			volumeExplorer.setTotalAppendix(new Long(0));
 			volumeExplorer.setTotalOther(new Long(0));
-			volumeExplorer.setTotalG(new Long(0));
+			volumeExplorer.setTotalGuardia(new Long(0));
 			
 			// We set new partial-total values 
 			for (int i=0; i<result.size(); i++) {
@@ -387,7 +387,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
 					volumeExplorer.setTotalOther(new Long(singleGroup[1].toString()));
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
-					volumeExplorer.setTotalG(new Long(singleGroup[1].toString()));
+					volumeExplorer.setTotalGuardia(new Long(singleGroup[1].toString()));
 				}
 			}
 		} 

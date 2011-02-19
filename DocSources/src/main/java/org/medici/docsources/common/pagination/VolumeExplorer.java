@@ -42,7 +42,7 @@ public class VolumeExplorer {
 	protected Long totalRubricario;
 	protected Long totalCarta;
 	protected Long totalOther;
-	protected Long totalG;
+	protected Long totalGuardia;
 	protected Long totalAppendix;
 	
 	public VolumeExplorer(Integer volNum, String volLetExt) {
@@ -52,7 +52,7 @@ public class VolumeExplorer {
 		totalRubricario  = new Long(0);
 		totalCarta = new Long(0);
 		totalAppendix = new Long(0);
-		totalG = new Long(0);
+		totalGuardia = new Long(0);
 		totalOther = new Long(0);
 	}
 
@@ -155,17 +155,17 @@ public class VolumeExplorer {
 	}
 
 	/**
-	 * @param totalG the totalG to set
+	 * @param totalGuardia the totalGuardia to set
 	 */
-	public void setTotalG(Long totalG) {
-		this.totalG = totalG;
+	public void setTotalGuardia(Long totalGuardia) {
+		this.totalGuardia = totalGuardia;
 	}
 
 	/**
-	 * @return the totalG
+	 * @return the totalGuardia
 	 */
-	public Long getTotalG() {
-		return totalG;
+	public Long getTotalGuardia() {
+		return totalGuardia;
 	}
 
 	/**
