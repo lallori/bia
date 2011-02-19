@@ -10,7 +10,7 @@
 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" >
 		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
-	<c:url var="PageTunerDialogUrl" value="/de/mview/PageTunerDialog.do" >
+	<c:url var="PageTurnerDialogUrl" value="/de/mview/PageTurnerDialog.do" >
 		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
 		<script type="text/javascript">
@@ -30,6 +30,7 @@
 					title: 'Edit Extract',
 					position: ['left','top'],                                                                                                                                                       
 					closeOnEscape: false,
+					maximized:false,
 					
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide(); 
@@ -38,7 +39,7 @@
 					//drag: function(event, ui) {$j(this).append(ui.position.left);},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);}, 
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-				});                                                                                                                                                                         
+				}).dialogExtend({"minimize" : true});                                                                                                                                                                         
 
 				var $dialogSynopsis = $j('<div></div>')
 				.dialog({                                                                                                                                                                   
@@ -49,6 +50,7 @@
 					title: 'Edit Synopsis',
 					position: ['left','bottom'],                                                                                                                                       
 					closeOnEscape: false,
+					maximized:false,
 					
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide(); 
@@ -69,10 +71,12 @@
 					title: 'Page Turner',
 					position: ['right','bottom'],                                                                                                                                                       
 					closeOnEscape: false,
+					maximized:false,
+					
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide(); 
-                		$(this).load('${PageTunerDialogUrl}');
-               },
+                		$(this).load('${PageTurnerDialogUrl}');
+               		},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
 				});
