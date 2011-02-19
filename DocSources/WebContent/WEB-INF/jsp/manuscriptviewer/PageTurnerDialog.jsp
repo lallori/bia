@@ -57,6 +57,9 @@
 			<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
 		</c:if>
 		</div>
+		<div id="folio" title="Warning!" style="display:none"> 
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You need to save your Extract / Synopsis text before using the page turner.</p> 
+		</div> 
 		<div id="nextButton">
 		<c:if test="${command.imageOrder == command.total}">
 			<img src="<c:url value="/images/button_next.png" />" alt="next" />
@@ -91,6 +94,40 @@
 		<a href="#"><img src="<c:url value="/images/button_personalNotes.png" />" alt="Personal Notes" /></a>
 	</div>
 	
-	<div id="exit">
-		<a href="#"><img src="<c:url value="/images/button_exit.png" />" alt="Exit" /></a>
+	<div id="exitButton">
+		<a id="exitButton2" href="#" onClick="$j('#exit').dialog('open');"><img src="<c:url value="/images/button_exit.png" />" alt="Exit" /></a>
 	</div>
+
+	<div id="exit" title="Alert" style="display:none"> 
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are your sure you do want to Exit without saving your Extract / Synopsis text?</p> 
+	</div>
+
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#exit").dialog({
+				resizable: false,
+				height:140,
+				modal: true,
+				autoOpen : false,
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				buttons: {
+					YES : function() {
+						$j(this).dialog('close');
+						window.close();
+					},
+					NO: function() {
+						$j(this).dialog('close');
+					}
+					
+				}
+			});
+
+			$j('#exitButton2').click(function() {
+				$j('#exit').dialog('open'); 
+			});
+	        
+		});
+	</script>
