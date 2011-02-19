@@ -10,6 +10,7 @@
 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" >
 		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
+	
 	<c:url var="PageTurnerDialogUrl" value="/de/mview/PageTurnerDialog.do" >
 		<c:param name="entryId" value="${documentExplorer.entryId}" />
 		<c:param name="volNum" value="${documentExplorer.volNum}" />
@@ -21,7 +22,9 @@
 		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
+		<c:param name="modeEdit" value="true" />
 	</c:url>
+		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {

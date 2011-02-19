@@ -236,6 +236,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/PageTurnerDialog.jsp"/>
 	</definition>
 
+	<definition name="manuscriptviewer/ShowDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/manuscriptviewer/ShowDocumentInManuscriptViewerHtml.jsp"/>
+	</definition>
+
 	<definition name="manuscriptviewer/ShowManuscriptViewerFlash" extends="template.manuscriptViewerFlash">
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/manuscriptviewer/ShowManuscriptViewerFlash.jsp"/>
 	</definition>

@@ -20,7 +20,7 @@
 		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="ShowDocumentInManuscriptViewer" value="/mview/ShowManuscriptViewer.do">
+		<c:url var="ShowDocumentInManuscriptViewer" value="/src/mview/ShowDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 			<c:param name="flashVersion"   value="false" />
 		</c:url>

@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="currentPage" value="/de/mview/EditDocumentInManuscriptViewer.do">
+		<c:url var="currentPage" value="${caller}">
 			<c:param name="entryId" value="${command.entryId}" />
 			<c:param name="volNum" value="${command.volNum}" />
 			<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -18,7 +18,7 @@
 			<c:param name="totalGuardia" value="${command.totalGuardia}" />
 		</c:url>
 	
-		<c:url var="nextPage" value="/de/mview/EditDocumentInManuscriptViewer.do">
+		<c:url var="nextPage" value="${caller}">
 			<c:param name="entryId" value="${command.entryId}" />
 			<c:param name="volNum" value="${command.volNum}" />
 			<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -31,7 +31,7 @@
 			<c:param name="totalGuardia" value="${command.totalGuardia}" />
 		</c:url>
 	
-		<c:url var="previousPage" value="/de/mview/EditDocumentInManuscriptViewer.do">
+		<c:url var="previousPage" value="${caller}">
 			<c:param name="entryId" value="${command.entryId}" />
 			<c:param name="volNum" value="${command.volNum}" />
 			<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -98,8 +98,13 @@
 		<a id="exitButton2" href="#" onClick="$j('#exit').dialog('open');"><img src="<c:url value="/images/button_exit.png" />" alt="Exit" /></a>
 	</div>
 
-	<div id="exit" title="Alert" style="display:none"> 
-			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are your sure you do want to Exit without saving your Extract / Synopsis text?</p> 
+	<div id="exit" title="Alert" style="display:none">
+		<c:if test="${command.modeEdit == true}">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are your sure you do want to Exit without saving your Extract / Synopsis text?</p>
+		</c:if> 
+		<c:if test="${command.modeEdit == false}">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are your sure you do want to Exit ?</p>
+		</c:if> 
 	</div>
 
 	<script type="text/javascript">
