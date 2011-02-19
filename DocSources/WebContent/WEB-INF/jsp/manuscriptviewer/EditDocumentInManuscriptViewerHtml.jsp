@@ -11,7 +11,16 @@
 		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
 	<c:url var="PageTurnerDialogUrl" value="/de/mview/PageTurnerDialog.do" >
-		<c:param name="entryId" value="${requestCommand.entryId}" />
+		<c:param name="entryId" value="${documentImage.entryId}" />
+		<c:param name="volNum" value="${documentImage.volNum}" />
+		<c:param name="volLetExt" value="${documentImage.volLetExt}" />
+		<c:param name="imageOrder" value="${documentImage.image.imageOrder}" />
+		<c:param name="total" value="${documentImage.total}" />
+		<c:param name="totalRubricario" value="${documentImage.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentImage.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentImage.totalAppendix}" />
+		<c:param name="totalOther" value="${documentImage.totalOther}" />
+		<c:param name="totalG" value="${documentImage.totalG}" />
 	</c:url>
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
@@ -86,7 +95,7 @@
 
 			iip = new IIP( "targetframe", {
 				server: '/DocSources/mview/ProxyIIPImage.do',
-				image: '${image}',
+				image: '${documentImage.image}',
 				credit: '&copy; copyright or information message', 
 				zoom: 1,
 				showNavButtons: true,
