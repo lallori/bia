@@ -38,13 +38,13 @@ import org.medici.docsources.domain.Image.ImageType;
  * 
  * @see org.docsources.controller.volbase.EditDetailsVolumeController
  */
-public class ShowExplorerVolumeRequestCommand {
+public class ShowExplorerVolumeCommand {
 	private Integer summaryId;
 	private Integer volNum;
 	@Size (max=1)
 	private String volLetExt;
-	private String page;
-	private Integer firstRecord;
+	private Integer imageOrder;
+	private Integer imageProgTypeNum;
 	private Long total;
 	// This parameter is used to count rubricario total 
 	private Long totalRubricario;
@@ -101,6 +101,34 @@ public class ShowExplorerVolumeRequestCommand {
 	}
 	
 	/**
+	 * @param imageOrder the imageOrder to set
+	 */
+	public void setImageOrder(Integer imageOrder) {
+		this.imageOrder = imageOrder;
+	}
+
+	/**
+	 * @return the imageOrder
+	 */
+	public Integer getImageOrder() {
+		return imageOrder;
+	}
+
+	/**
+	 * @param imageProgTypeNum the imageProgTypeNum to set
+	 */
+	public void setImageProgTypeNum(Integer imageProgTypeNum) {
+		this.imageProgTypeNum = imageProgTypeNum;
+	}
+
+	/**
+	 * @return the imageProgTypeNum
+	 */
+	public Integer getImageProgTypeNum() {
+		return imageProgTypeNum;
+	}
+
+	/**
 	 * @param flashVersion the flashVersion to set
 	 */
 	public void setFlashVersion(Boolean flashVersion) {
@@ -112,34 +140,6 @@ public class ShowExplorerVolumeRequestCommand {
 	 */
 	public Boolean getFlashVersion() {
 		return flashVersion;
-	}
-	
-	/**
-	 * @param page the page to set
-	 */
-	public void setPage(String page) {
-		this.page = page;
-	}
-	
-	/**
-	 * @return the page
-	 */
-	public String getPage() {
-		return page;
-	}
-	
-	/**
-	 * @param firstRecord the firstRecord to set
-	 */
-	public void setFirstRecord(Integer firstRecord) {
-		this.firstRecord = firstRecord;
-	}
-	
-	/**
-	 * @return the firstRecord
-	 */
-	public Integer getFirstRecord() {
-		return firstRecord;
 	}
 	
 	/**
