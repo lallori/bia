@@ -41,6 +41,9 @@ public class VolumeExplorer {
 	private Long total;
 	private Long totalRubricario;
 	private Long totalCarta;
+	private Long totalOther;
+	private Long totalG;
+	private Long totalAppendix;
 	
 	public VolumeExplorer(Integer volNum, String volLetExt) {
 		this.volNum = volNum;
@@ -132,5 +135,47 @@ public class VolumeExplorer {
 	 */
 	public void setTotalCarta(Long totalCarta) {
 		this.totalCarta = totalCarta;
+	}
+
+	/**
+	 * @param totalOther the totalOther to set
+	 */
+	public void setTotalOther(Long totalOther) {
+		this.totalOther = totalOther;
+	}
+
+	/**
+	 * @return the totalOther
+	 */
+	public Long getTotalOther() {
+		return totalOther;
+	}
+
+	/**
+	 * @param totalG the totalG to set
+	 */
+	public void setTotalG(Long totalG) {
+		this.totalG = totalG;
+	}
+
+	/**
+	 * @return the totalG
+	 */
+	public Long getTotalG() {
+		return totalG;
+	}
+
+	/**
+	 * @param totalAppendix the totalAppendix to set
+	 */
+	public void setTotalAppendix(Long totalAppendix) {
+		this.totalAppendix = totalAppendix;
+	}
+
+	/**
+	 * @return the totalAppendix
+	 */
+	public Long getTotalAppendix() {
+		return totalAppendix;
 	}
 }
