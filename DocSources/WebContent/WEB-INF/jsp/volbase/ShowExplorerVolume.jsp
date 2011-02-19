@@ -13,9 +13,11 @@
 			<c:param name="total" value="${volumeExplorer.total}" />
 			<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 			<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+			<c:param name="totalG" value="${volumeExplorer.totalG}" />
 			<c:param name="flashVersion" value="${command.flashVersion}"/>
 			<c:param name="modalWindow" value="true"/>
-			<c:param name="firstPage" value="true"/>
 		</c:url>
 
 		<c:url var="manuscriptViewer" value="/mview/ShowManuscriptViewer.do">
@@ -33,6 +35,9 @@
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+		<c:param name="totalG" value="${volumeExplorer.totalG}" />
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 
@@ -43,6 +48,9 @@
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+		<c:param name="totalG" value="${volumeExplorer.totalG}" />
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 
@@ -53,6 +61,9 @@
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+		<c:param name="totalG" value="${volumeExplorer.totalG}" />
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 	
@@ -122,6 +133,9 @@
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
+				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
+				<form:hidden path="totalG" value="${volumeExplorer.totalG}" />
 				<form:hidden path="flashVersion" value="true" />
 			</form:form>
 		</div>
@@ -146,6 +160,9 @@
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
+				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
+				<form:hidden path="totalG" value="${volumeExplorer.totalG}" />
 				<form:hidden path="flashVersion" value="true" />
 			</form:form>
 		</div>
