@@ -26,9 +26,9 @@ Joana Amill <joana.amill@gmail.com>
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 		<meta name="description" content="IIPImage: High Resolution Remote Image Streaming Viewing"/>
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/iip.compressed.css"/>" />
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/style_transcriber.css"/>" />                                                                                
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/jquery-ui-1.8.9.custom.css"/>" /> 
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/ManuscriptViewer.css"/>" />                                                                                
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/iip.compressed.css"/>" />
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui-1.8.9.custom.css"/>" /> 
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 		
 		<title>DocSourcesV5 Manuscript Viewer</title>
