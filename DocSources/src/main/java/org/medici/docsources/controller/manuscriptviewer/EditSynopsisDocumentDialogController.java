@@ -58,7 +58,7 @@ public class EditSynopsisDocumentDialogController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired(required = false)
-	@Qualifier("editExtractOrSynopsisDocumentValidator")
+	@Qualifier("editSynopsisDocumentDialogValidator")
 	private Validator validator;
 
 	/**
@@ -106,8 +106,9 @@ public class EditSynopsisDocumentDialogController {
 					document = getDocBaseService().editSynopsisDocument(synExtract);
 				}
 
-				model.put("document", document);
-				return new ModelAndView("docbase/ShowDocument", model);
+				command.setSynExtrId(document.getSynExtract().getSynExtrId());
+				command.setSynopsis(document.getSynExtract().getSynopsis());
+				return new ModelAndView("manuscriptviewer/EditSynopsisDocumentDialog", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditExtractOrSynopsisDocument", model);
 			}

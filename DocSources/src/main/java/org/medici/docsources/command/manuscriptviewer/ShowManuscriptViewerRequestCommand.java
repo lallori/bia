@@ -30,13 +30,14 @@ package org.medici.docsources.command.manuscriptviewer;
 import javax.validation.constraints.Size;
 
 /**
- * Command bean for action "Request Show Volume".
+ * Command bean for action "Show Manuscript Viewer".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  * @see org.docsources.controller.volbase.EditDetailsVolumeController
  */
 public class ShowManuscriptViewerRequestCommand {
+	private Integer entryId;
 	private Integer summaryId;
 	private Integer volNum;
 	@Size (max=1)
@@ -44,6 +45,18 @@ public class ShowManuscriptViewerRequestCommand {
 	private Integer imageId;
 	private String imageName;
 	private Boolean flashVersion;
+	/**
+	 * @param entryId the entryId to set
+	 */
+	public void setEntryId(Integer entryId) {
+		this.entryId = entryId;
+	}
+	/**
+	 * @return the entryId
+	 */
+	public Integer getEntryId() {
+		return entryId;
+	}
 	/**
 	 * @return the summaryId
 	 */

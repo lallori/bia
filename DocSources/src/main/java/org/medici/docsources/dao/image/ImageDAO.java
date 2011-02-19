@@ -58,6 +58,25 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
 
 	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param folioNum
+	 * @param folioMod
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Image> findDocumentImages(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param pageTurner
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public DocumentExplorer findImages(DocumentExplorer pageTurner) throws PersistenceException;
+
+	/**
 	 * This method returns a list of Images linked to a specific volume.
 	 * 
 	 * @param volNum MDP
@@ -77,14 +96,6 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	public Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param pageTurner
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public DocumentExplorer findImages(DocumentExplorer pageTurner) throws PersistenceException;
 
 	/**
 	 * 

@@ -500,6 +500,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 	}
 
+	@Override
+	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable {
+		try {
+			Document document = getDocumentDAO().find(entryId);
+			
+			if (document != null) {
+				// eilink not null is image linked to document
+				if (document.getEiLink() != null) {
+					return new ArrayList<Image>(0);
+				} else {
+					return getImageDAO().findDocumentImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
+				}
+			} else {
+				return new ArrayList<Image>(0);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -663,6 +683,22 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return documentDAO;
 	}
 
+	@Override
+	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable {
+		try {
+			if (pageTurner.getVolNum() == null) {
+				Document document = getDocumentDAO().find(pageTurner.getEntryId());
+				
+				pageTurner.setVolNum(document.getVolume().getVolNum());
+				pageTurner.setVolLetExt(document.getVolume().getVolLetExt());
+			}
+
+			return getImageDAO().findImages(pageTurner);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * @return the epLinkDAO
 	 */
@@ -705,22 +741,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public List<Month> getMonths() throws ApplicationThrowable {
 		try {
 			return getMonthDAO().getAllMonths();
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	@Override
-	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable {
-		try {
-			if (pageTurner.getVolNum() == null) {
-				Document document = getDocumentDAO().find(pageTurner.getEntryId());
-				
-				pageTurner.setVolNum(document.getVolume().getVolNum());
-				pageTurner.setVolLetExt(document.getVolume().getVolLetExt());
-			}
-
-			return getImageDAO().findImages(pageTurner);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

@@ -35,6 +35,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.manuscriptviewer.ShowManuscriptViewerRequestCommand;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +54,16 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/mview/ShowManuscriptViewer")
 public class ShowManuscriptViewerController {
 	@Autowired
+	private DocBaseService docBaseService;
+	@Autowired
 	private VolBaseService volBaseService;
+
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
+	}
 
 	/**
 	 * 
@@ -64,6 +74,13 @@ public class ShowManuscriptViewerController {
 	}
 
 	/**
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+
+	/**
 	 * 
 	 * @param volumeId
 	 * @return
@@ -71,7 +88,7 @@ public class ShowManuscriptViewerController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowManuscriptViewerRequestCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<Image> volumeImages = new ArrayList<Image>();
+		List<Image> images = new ArrayList<Image>();
 		
 		try {
 			// we set default image as empty string, so we need only to update the record.
@@ -81,14 +98,16 @@ public class ShowManuscriptViewerController {
 			if (command.getImageName() != null) {
 				model.put("image", command.getImageName());
 			} else  {
-				if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
-					volumeImages = getVolBaseService().findVolumeImages(command.getSummaryId());
+				if (!ObjectUtils.toString(command.getEntryId()).equals("")) {
+					images = getDocBaseService().findDocumentImages(command.getEntryId());
+				} else if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
+					images = getVolBaseService().findVolumeImages(command.getSummaryId());
 				} else {
-					volumeImages = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLeText());
+					images = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLeText());
 				}
 
-				if ((volumeImages != null) && (volumeImages.size() >0)) {
-					model.put("image", volumeImages.get(0).toString());
+				if ((images != null) && (images.size() >0)) {
+					model.put("image", images.get(0).toString());
 				}
 			}
 		} catch (ApplicationThrowable ath) {

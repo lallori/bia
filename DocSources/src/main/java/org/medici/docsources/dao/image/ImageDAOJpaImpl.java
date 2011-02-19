@@ -108,103 +108,26 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public List<Image> findImages(Integer volNum, String volLetExt) throws PersistenceException {
-		// Create criteria objects
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<Image> criteriaQuery = criteriaBuilder.createQuery(Image.class);
-		Root<Image> root = criteriaQuery.from(Image.class);
-	
-		// Define predicate's elements
-		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+	public List<Image> findDocumentImages(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
+        StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
+        if (volLetExt != null)
+        	stringBuffer.append(" = :volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" and imageName like '%_C_");
+    	stringBuffer.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
+    	stringBuffer.append("_%.tif'");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
 
-		criteriaQuery.where(
-			criteriaBuilder.and(
-				criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
-				StringUtils.isEmpty(volLetExt) ? 
-					criteriaBuilder.isNull(root.get("volLetExt")) : 
-					criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText)
-			)
-		);
+        query.setParameter("volNum", volNum);
+        if (volLetExt != null)
+        	query.setParameter("volLetExt", volLetExt);
 
-		// Set values in predicate's elements  
-		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
-		typedQuery.setParameter("volNum", volNum);
-		if (!StringUtils.isEmpty(volLetExt))
-			typedQuery.setParameter("volLetExt", volLetExt);
-
-		return typedQuery.getResultList();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("rawtypes")
-	@Override
-	public Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException {
-		// Create criteria objects
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-
-		Page page = new Page(paginationFilter);
-
-		if (paginationFilter.getTotal() == null) {
-			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
-			Root<Image> rootCount = criteriaQueryCount.from(Image.class);
-			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
-
-			// Define predicate's elements
-			ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-			ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
-
-			criteriaQueryCount.where(
-				criteriaBuilder.and(
-					criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
-					StringUtils.isEmpty(volLetExt) ? 
-						criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
-						criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
-				)
-			);
-
-			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-			typedQueryCount.setParameter("volNum", volNum);
-			if (!StringUtils.isEmpty(volLetExt))
-				typedQueryCount.setParameter("volLetExt", volLetExt);
-			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
-		}
-
-		CriteriaQuery<Image> criteriaQuery = criteriaBuilder.createQuery(Image.class);
-		Root<Image> root = criteriaQuery.from(Image.class);
-	
-		// Define predicate's elements
-		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
-
-		//We need to duplicate predicates beacause they are link to Root element
-		criteriaQuery.where(
-				criteriaBuilder.and(
-					criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
-					StringUtils.isEmpty(volLetExt) ? 
-						criteriaBuilder.isNull(root.get("volLetExt")) : 
-						criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText)
-				)
-			);
-
-		// Set values in predicate's elements  
-		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
-		typedQuery.setParameter("volNum", volNum);
-		if (!StringUtils.isEmpty(volLetExt))
-			typedQuery.setParameter("volLetExt", volLetExt);
-
-		//Pagination will work with index [1 ... total] and not [0 ... total1-] 
-		typedQuery.setFirstResult(paginationFilter.getFirstRecord()-1);
-		typedQuery.setMaxResults(paginationFilter.getLength());
-		page.setList(typedQuery.getResultList());
-
-		return page;
+		List<Image> result = query.getResultList();
+		
+		return result;
 	}
 
 	@Override
@@ -320,6 +243,105 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         }
 
         return pageTurner;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Image> findImages(Integer volNum, String volLetExt) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Image> criteriaQuery = criteriaBuilder.createQuery(Image.class);
+		Root<Image> root = criteriaQuery.from(Image.class);
+	
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+		criteriaQuery.where(
+			criteriaBuilder.and(
+				criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
+				StringUtils.isEmpty(volLetExt) ? 
+					criteriaBuilder.isNull(root.get("volLetExt")) : 
+					criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText)
+			)
+		);
+
+		// Set values in predicate's elements  
+		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("volNum", volNum);
+		if (!StringUtils.isEmpty(volLetExt))
+			typedQuery.setParameter("volLetExt", volLetExt);
+
+		return typedQuery.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException {
+		// Create criteria objects
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		Page page = new Page(paginationFilter);
+
+		if (paginationFilter.getTotal() == null) {
+			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+			Root<Image> rootCount = criteriaQueryCount.from(Image.class);
+			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+			// Define predicate's elements
+			ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+			ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+			criteriaQueryCount.where(
+				criteriaBuilder.and(
+					criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
+					StringUtils.isEmpty(volLetExt) ? 
+						criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
+						criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
+				)
+			);
+
+			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+			typedQueryCount.setParameter("volNum", volNum);
+			if (!StringUtils.isEmpty(volLetExt))
+				typedQueryCount.setParameter("volLetExt", volLetExt);
+			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
+		}
+
+		CriteriaQuery<Image> criteriaQuery = criteriaBuilder.createQuery(Image.class);
+		Root<Image> root = criteriaQuery.from(Image.class);
+	
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+		//We need to duplicate predicates beacause they are link to Root element
+		criteriaQuery.where(
+				criteriaBuilder.and(
+					criteriaBuilder.equal(root.get("volNum"), parameterVolNum),
+					StringUtils.isEmpty(volLetExt) ? 
+						criteriaBuilder.isNull(root.get("volLetExt")) : 
+						criteriaBuilder.equal(root.get("volLetExt"), parameterVolLeText)
+				)
+			);
+
+		// Set values in predicate's elements  
+		TypedQuery<Image> typedQuery = getEntityManager().createQuery(criteriaQuery);
+		typedQuery.setParameter("volNum", volNum);
+		if (!StringUtils.isEmpty(volLetExt))
+			typedQuery.setParameter("volLetExt", volLetExt);
+
+		//Pagination will work with index [1 ... total] and not [0 ... total1-] 
+		typedQuery.setFirstResult(paginationFilter.getFirstRecord()-1);
+		typedQuery.setMaxResults(paginationFilter.getLength());
+		page.setList(typedQuery.getResultList());
+
+		return page;
 	}
 
 	@Override

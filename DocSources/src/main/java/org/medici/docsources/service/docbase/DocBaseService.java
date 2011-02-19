@@ -229,6 +229,14 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public FactChecks findFactChecksDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
@@ -318,18 +326,18 @@ public interface DocBaseService {
 
 	/**
 	 * 
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<Month> getMonths() throws ApplicationThrowable;
-
-	/**
-	 * 
 	 * @param pageTurner
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable;
 
 	/**
 	 * 
