@@ -20,6 +20,10 @@
 		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
+		<c:url var="ShowDocumentInManuscriptViewer" value="/mview/ShowManuscriptViewer.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+			<c:param name="flashVersion"   value="false" />
+		</c:url>
 	</security:authorize>
 	
 	<div id="EditDetailsDocumentDiv">
@@ -28,7 +32,7 @@
 		<hr id="lineSeparator"/>
 		<div id="DocumentImageDiv">
 			<img src="<c:url value="/images/image_document.png"/>" alt="document image" />
-			<p><a href="#">Show in manuscript viewer</a></p>
+			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewer}">Show in manuscript viewer</a></p>
 			<p><a href="#">Attach folios</a>
 		</div>
 		
@@ -60,6 +64,9 @@
 				 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
-			
+			 $j("#ShowDocumentInManuscriptViewer").click(function(){
+				 $j(this).open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
+				 return false;
+			 });
 		});
 	</script>
