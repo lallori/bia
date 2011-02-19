@@ -32,6 +32,7 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
@@ -121,6 +122,17 @@ public interface VolBaseService {
 	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param imageType
+	 * @param imageProgTypeNum
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Image> findVolumeImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
+
+	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.Image}
 	 * which  
 	 * {@link org.medici.docsources.common.pagination.Page} of complete reulst 
@@ -182,7 +194,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param volumeExplorer
@@ -190,7 +202,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 

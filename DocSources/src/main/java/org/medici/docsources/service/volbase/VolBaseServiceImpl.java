@@ -38,6 +38,7 @@ import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
@@ -288,6 +289,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
+	@Override
+	public List<Image> findVolumeImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -397,7 +407,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public SeriesListDAO getSeriesListDAO() {
 		return seriesListDAO;
 	}
-
 	/**
 	 * @return the volumeDAO
 	 */
@@ -412,6 +421,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -423,7 +433,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
