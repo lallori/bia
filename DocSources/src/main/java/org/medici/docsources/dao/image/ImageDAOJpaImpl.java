@@ -252,6 +252,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			// We init every partial-total
 			volumeExplorer.setTotalRubricario(new Long(0));
 			volumeExplorer.setTotalCarta(new Long(0));
+			volumeExplorer.setTotalAppendix(new Long(0));
+			volumeExplorer.setTotalOther(new Long(0));
+			volumeExplorer.setTotalG(new Long(0));
 			
 			// We set new partial-total values 
 			for (int i=0; i<result.size(); i++) {
@@ -262,6 +265,12 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 					volumeExplorer.setTotalRubricario(new Long(singleGroup[1].toString()));
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
 					volumeExplorer.setTotalCarta(new Long(singleGroup[1].toString()));
+				} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
+					volumeExplorer.setTotalAppendix(new Long(singleGroup[1].toString()));
+				} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
+					volumeExplorer.setTotalOther(new Long(singleGroup[1].toString()));
+				} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
+					volumeExplorer.setTotalG(new Long(singleGroup[1].toString()));
 				}
 			}
 		} 
