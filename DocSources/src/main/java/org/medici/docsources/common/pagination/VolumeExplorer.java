@@ -35,15 +35,15 @@ import org.medici.docsources.domain.Image;
  *
  */
 public class VolumeExplorer {
-	private Integer volNum;
-	private String volLetExt;
-	private Image image;
-	private Long total;
-	private Long totalRubricario;
-	private Long totalCarta;
-	private Long totalOther;
-	private Long totalG;
-	private Long totalAppendix;
+	protected Integer volNum;
+	protected String volLetExt;
+	protected Image image;
+	protected Long total;
+	protected Long totalRubricario;
+	protected Long totalCarta;
+	protected Long totalOther;
+	protected Long totalG;
+	protected Long totalAppendix;
 	
 	public VolumeExplorer(Integer volNum, String volLetExt) {
 		this.volNum = volNum;
@@ -51,6 +51,9 @@ public class VolumeExplorer {
 		total  = new Long(0);
 		totalRubricario  = new Long(0);
 		totalCarta = new Long(0);
+		totalAppendix = new Long(0);
+		totalG = new Long(0);
+		totalOther = new Long(0);
 	}
 
 	/**
