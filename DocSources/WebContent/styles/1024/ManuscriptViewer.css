@@ -31,17 +31,18 @@ textarea {
 /* Previous / Next */
 
 #prevNextButtons {
-	width:190px;
+	width:200px;
 	margin-top:15px;
 	position:absolute;
 }
 
-#prevButton img{
+#prevButton #nextButton img{
 	border:none;
 }
 
 #prevNextButtons #prevButton a{
 	float:left;
+	border:none;
 }
 
 #prevNextButtons #prevButton a:hover{
@@ -51,6 +52,7 @@ textarea {
 
 #prevNextButtons #nextButton a{
 	float:right;
+	border:none;
 }
 
 #prevNextButtons #nextButton a:hover{
