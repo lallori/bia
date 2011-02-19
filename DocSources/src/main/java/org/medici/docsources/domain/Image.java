@@ -32,6 +32,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,10 +69,15 @@ public class Image implements Serializable {
 	private Integer volNum;
 	@Column (name="\"volLetExt\"", length=1)
 	private String volLetExt;
-	@Column (name="\"imageType\"", length=45, nullable=false)
-	private ImageType imageType;
 	@Column (name="\"imageName\"", length=45, nullable=false)
 	private String imageName;
+	@Enumerated(EnumType.STRING) 
+	@Column (name="\"imageType\"", length=45, nullable=false)
+	private ImageType imageType;
+	@Column (name="\"imageOrder\"", length=5, nullable=false)
+	private Integer imageOrder;
+	@Column (name="\"imageProgTypeNum\"", length=5, nullable=false)
+	private Integer imageProgTypeNum;
 	@Column (name="\"storagePath\"", length=1, nullable=false)
 	private Integer storagePath;
 	@Column (name="\"dateCreated\"", length=1, nullable=false)
@@ -148,6 +155,34 @@ public class Image implements Serializable {
 	}
 
 	/**
+	 * @param imageOrder the imageOrder to set
+	 */
+	public void setImageOrder(Integer imageOrder) {
+		this.imageOrder = imageOrder;
+	}
+
+	/**
+	 * @return the imageOrder
+	 */
+	public Integer getImageOrder() {
+		return imageOrder;
+	}
+
+	/**
+	 * @param imageProgTypeNum the imageProgTypeNum to set
+	 */
+	public void setImageProgTypeNum(Integer imageProgTypeNum) {
+		this.imageProgTypeNum = imageProgTypeNum;
+	}
+
+	/**
+	 * @return the imageProgTypeNum
+	 */
+	public Integer getImageProgTypeNum() {
+		return imageProgTypeNum;
+	}
+
+	/**
 	 * @param storageDisk the storageDisk to set
 	 */
 	public void setStoragePath(Integer storagePath) {
@@ -200,7 +235,7 @@ public class Image implements Serializable {
 	 *
 	 */
 	public static enum ImageType {
-		R("R"), C("C");
+		R("R"), C("C"), G("G"), A("A"), O("O");
 		
 		private final String imageType;
 
