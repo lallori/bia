@@ -1,5 +1,5 @@
 /*
- * PageTunerCommand.java
+ * ShowExtractOrSynopsisDocumentCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -31,12 +31,15 @@ import javax.validation.constraints.Size;
 
 import org.medici.docsources.domain.Image.ImageType;
 
+
 /**
+ * Command bean for action "Show Extract Or Synopsis Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- *
+ * 
+ * @see org.medici.docsources.controller.docbase.EditExtractOrSynopsisDocumentController
  */
-public class PageTurnerCommand {
+public class ShowDocumentInManuscriptViewerCommand {
 	private Integer entryId;
 	private Integer summaryId;
 	private Integer volNum;
@@ -59,8 +62,6 @@ public class PageTurnerCommand {
 	private Long totalGuardia;
 	/** This parameter is used to count appendix total */
 	private Long totalAppendix;
-	/** This parameter is used to manage urls of caller controller */
-	private Boolean modeEdit;
 	
 	/**
 	 * @return the entryId
@@ -96,145 +97,151 @@ public class PageTurnerCommand {
 	public Integer getVolNum() {
 		return volNum;
 	}
+	
 	/**
 	 * @param volNum the volNum to set
 	 */
 	public void setVolNum(Integer volNum) {
 		this.volNum = volNum;
 	}
+	
 	/**
 	 * @return the volLetExt
 	 */
 	public String getVolLetExt() {
 		return volLetExt;
 	}
+	
 	/**
 	 * @param volLetExt the volLetExt to set
 	 */
 	public void setVolLetExt(String volLetExt) {
 		this.volLetExt = volLetExt;
 	}
+	
 	/**
 	 * @return the imageOrder
 	 */
 	public Integer getImageOrder() {
 		return imageOrder;
 	}
+	
 	/**
 	 * @param imageOrder the imageOrder to set
 	 */
 	public void setImageOrder(Integer imageOrder) {
 		this.imageOrder = imageOrder;
 	}
+	
 	/**
 	 * @return the imageType
 	 */
 	public ImageType getImageType() {
 		return imageType;
 	}
+	
 	/**
 	 * @param imageType the imageType to set
 	 */
 	public void setImageType(ImageType imageType) {
 		this.imageType = imageType;
 	}
+	
 	/**
 	 * @return the imageProgTypeNum
 	 */
 	public Integer getImageProgTypeNum() {
 		return imageProgTypeNum;
 	}
+	
 	/**
 	 * @param imageProgTypeNum the imageProgTypeNum to set
 	 */
 	public void setImageProgTypeNum(Integer imageProgTypeNum) {
 		this.imageProgTypeNum = imageProgTypeNum;
 	}
+	
 	/**
 	 * @return the total
 	 */
 	public Long getTotal() {
 		return total;
 	}
+	
 	/**
 	 * @param total the total to set
 	 */
 	public void setTotal(Long total) {
 		this.total = total;
 	}
+	
 	/**
 	 * @return the totalRubricario
 	 */
 	public Long getTotalRubricario() {
 		return totalRubricario;
 	}
+	
 	/**
 	 * @param totalRubricario the totalRubricario to set
 	 */
 	public void setTotalRubricario(Long totalRubricario) {
 		this.totalRubricario = totalRubricario;
 	}
+	
 	/**
 	 * @return the totalCarta
 	 */
 	public Long getTotalCarta() {
 		return totalCarta;
 	}
+	
 	/**
 	 * @param totalCarta the totalCarta to set
 	 */
 	public void setTotalCarta(Long totalCarta) {
 		this.totalCarta = totalCarta;
 	}
+	
 	/**
 	 * @return the totalOther
 	 */
 	public Long getTotalOther() {
 		return totalOther;
 	}
+	
 	/**
 	 * @param totalOther the totalOther to set
 	 */
 	public void setTotalOther(Long totalOther) {
 		this.totalOther = totalOther;
 	}
+	
 	/**
 	 * @return the totalGuardia
 	 */
 	public Long getTotalGuardia() {
 		return totalGuardia;
 	}
+	
 	/**
 	 * @param totalGuardia the totalGuardia to set
 	 */
 	public void setTotalGuardia(Long totalGuardia) {
 		this.totalGuardia = totalGuardia;
 	}
+	
 	/**
 	 * @return the totalAppendix
 	 */
 	public Long getTotalAppendix() {
 		return totalAppendix;
 	}
+	
 	/**
 	 * @param totalAppendix the totalAppendix to set
 	 */
 	public void setTotalAppendix(Long totalAppendix) {
 		this.totalAppendix = totalAppendix;
 	}
-
-	/**
-	 * @param modeEdit the modeEdit to set
-	 */
-	public void setModeEdit(Boolean modeEdit) {
-		this.modeEdit = modeEdit;
-	}
-
-	/**
-	 * @return the modeEdit
-	 */
-	public Boolean getModeEdit() {
-		return modeEdit;
-	}
-
 }

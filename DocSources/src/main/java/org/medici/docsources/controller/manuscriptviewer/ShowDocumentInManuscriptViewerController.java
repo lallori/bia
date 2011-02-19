@@ -1,5 +1,5 @@
 /*
- * PageTurnerDialogController.java
+ * ShowDocumentInManuscriptViewerController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -24,39 +24,66 @@
  * resulting executable to be covered by the GNU General Public License.
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
+ * 
  */
 package org.medici.docsources.controller.manuscriptviewer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.manuscriptviewer.PageTurnerCommand;
+import org.medici.docsources.command.manuscriptviewer.ShowDocumentInManuscriptViewerCommand;
+import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.domain.Image;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Validator;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Page Turner Document Dialog".
+ * Controller for action "Show Document In Manuscript Viewer".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping(value={"/src/mview/PageTurnerDialog", "/de/mview/PageTurnerDialog"})
-public class PageTurnerDialogController {
+@RequestMapping("/src/mview/ShowDocumentInManuscriptViewer")
+public class ShowDocumentInManuscriptViewerController {
 	@Autowired
 	private DocBaseService docBaseService;
 
 	/**
-	 * @return the docBaseService
+	 * 
+	 * @param volumeId
+	 * @return
 	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupPage(@ModelAttribute("requestCommand") ShowDocumentInManuscriptViewerCommand command, BindingResult result){
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		DocumentExplorer documentExplorer = new DocumentExplorer(command.getEntryId(), command.getVolNum(), command.getVolLetExt());
+		documentExplorer.setImage(new Image());
+		documentExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+		documentExplorer.getImage().setImageOrder(command.getImageOrder());
+		documentExplorer.getImage().setImageType(command.getImageType());
+		documentExplorer.setTotal(command.getTotal());
+		documentExplorer.setTotalRubricario(command.getTotalRubricario());
+		documentExplorer.setTotalCarta(command.getTotalCarta());
+		documentExplorer.setTotalAppendix(command.getTotalAppendix());
+		documentExplorer.setTotalOther(command.getTotalOther());
+		documentExplorer.setTotalGuardia(command.getTotalGuardia());
+
+		try {
+			documentExplorer = getDocBaseService().getDocumentExplorer(documentExplorer);
+
+			model.put("documentExplorer", documentExplorer);
+		} catch (ApplicationThrowable ath) {
+		}
+		
+		return new ModelAndView("manuscriptviewer/ShowDocumentInManuscriptViewerHtml", model);
 	}
 
 	/**
@@ -67,20 +94,10 @@ public class PageTurnerDialogController {
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @return
+	 * @return the docBaseService
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") PageTurnerCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		if (command.getModeEdit()) {
-			model.put("caller", "/de/mview/EditDocumentInManuscriptViewer.do");
-		} else {
-			model.put("caller", "/src/mview/ShowDocumentInManuscriptViewer.do");
-		}
-		
-		return new ModelAndView("manuscriptviewer/PageTurnerDialog", model);
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
 	}
+
 }

@@ -83,6 +83,7 @@ public class EditDocumentInManuscriptViewerController {
 		} catch (ApplicationThrowable ath) {
 		}
 
+		
 		return new ModelAndView("manuscriptviewer/EditDocumentInManuscriptViewerHtml", model);
 	}
 
