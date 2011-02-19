@@ -27,7 +27,7 @@
  */
 package org.medici.docsources.common.pagination;
 
-import org.medici.docsources.domain.Image.ImageType;
+import org.medici.docsources.domain.Image;
 
 /**
  * 
@@ -37,9 +37,7 @@ import org.medici.docsources.domain.Image.ImageType;
 public class VolumeExplorer {
 	private Integer volNum;
 	private String volLetExt;
-	private ImageType imageType;
-	private Page page;
-	private PaginationFilter paginationFilter;
+	private Image image;
 	private Long total;
 	private Long totalRubricario;
 	private Long totalCarta;
@@ -47,6 +45,7 @@ public class VolumeExplorer {
 	public VolumeExplorer(Integer volNum, String volLetExt) {
 		this.volNum = volNum;
 		this.volLetExt = volLetExt;
+		total  = new Long(0);
 		totalRubricario  = new Long(0);
 		totalCarta = new Long(0);
 	}
@@ -80,47 +79,19 @@ public class VolumeExplorer {
 	}
 
 	/**
-	 * @param imageType the imageType to set
+	 * @param image the image to set
 	 */
-	public void setImageType(ImageType imageType) {
-		this.imageType = imageType;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	/**
-	 * @return the imageType
+	 * @return the image
 	 */
-	public ImageType getImageType() {
-		return imageType;
+	public Image getImage() {
+		return image;
 	}
 
-	/**
-	 * @return the page
-	 */
-	public Page getPage() {
-		return page;
-	}
-	
-	/**
-	 * @param page the page to set
-	 */
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	/**
-	 * @return the paginationFilter
-	 */
-	public PaginationFilter getPaginationFilter() {
-		return paginationFilter;
-	}
-	
-	/**
-	 * @param paginationFilter the paginationFilter to set
-	 */
-	public void setPaginationFilter(PaginationFilter paginationFilter) {
-		this.paginationFilter = paginationFilter;
-	}
-	
 	/**
 	 * @return the total
 	 */
