@@ -48,7 +48,7 @@
 
 /* Sub level menu links style */
 .menuadm ul li ul li a{
-	width: 160px; /*width of sub menus*/
+	width: 125px; /*width of sub menus*/
 	background-color: #BEA088;
 	color: white;
 	padding:0px 5px 3px 5px;

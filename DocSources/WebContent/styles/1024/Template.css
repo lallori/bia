@@ -93,6 +93,7 @@ a {
 	margin-top:158px;
 	position:absolute;
 	z-index:1 !important; 
+	background-image:url(/DocSources/images/user_interface_docs.png);
 }
 
 #DocSourcesContent { /* MAIN Website Container */
@@ -266,28 +267,6 @@ input {
 /*
 /* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
 
-
-/* BAR BACKGROUNDS */
-
-.docs { /* brown for DOCUMENTS */
-	background-image:url(/DocSources/images/user_interface_docs.png);
-}
-
-.person { /* violet for PERSON */
-	background-image:url(/DocSources/images/user_interface_person.png);
-}
-
-.vol { /* yellow for VOLUME */
-	background-image:url(/DocSources/images/user_interface_vol.png);
-}
-
-.geo { /* GREEN for PLACE */
-	background-image:url(/DocSources/images/user_interface_geo.png);
-}
-
-/* -------------- */
-/* 
-/* 
 /* ACTIONS MENU */
 
 #top_bottom p{ /* top_bottom (Who am I?) */
@@ -295,7 +274,7 @@ input {
 	margin-top:5px;
 	float:right;
 	padding-right:30px;
-	font-size:80%;
+	font-size:10px;
 }
 
 /* -------------- */

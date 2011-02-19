@@ -14,7 +14,7 @@
 	position: relative;
 	display: inline;
 	float: left;
-	width:100px;
+	width:127px;
 }
 
 /*Top level menu link items style*/
@@ -23,13 +23,12 @@
 	padding: 0;
 	color: #6F6B69;
 	text-decoration: none;
-	font-size:85%;
-
-	
+	font-size:13px;
 }
 
 .menumain ul li a:hover{
-	background-image: url(/DocSources/images/mainmenu_rollover.png);  /*tab link background during hover state*/
+	background-image: url(/DocSources/images/mainmenu_rollover1280.png);  /*tab link background during hover state*/
+	width:125px;
 }
 	
 /*1st sub level menu*/
@@ -53,7 +52,7 @@
 
 /* Sub level menu links style --> Add new...*/
 .menumain ul li ul li a{
-	width: 140px; /*width of sub menus*/
+	width: 150px; /*width of sub menus*/
 	background-color: #f9f4ed;
 	color: #6F6B69;
 	margin-left: 0;
@@ -68,7 +67,7 @@
 	width: 150px; /*width of sub menus*/
 	background-color: #f9f4ed;
 	color: #6F6B69;
-	margin-left: 45px;
+	margin-left: 27px;
 	padding-left:5px;
 	padding-top:5px;
 	z-index:1999;
@@ -78,6 +77,7 @@
 .menumain ul li ul li a:hover{ /*sub menus hover style*/
 	background: #e6d0c6;
 	color: #6F6B69;
+	width: 150px;
 }
 
 

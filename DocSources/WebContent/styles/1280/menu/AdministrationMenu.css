@@ -22,7 +22,7 @@
 	padding: 4px 7px 4px 7px;
 	color: #FFFDF5;
 	text-decoration: none;
-	font-size:95%;
+	font-size:11px;
 }
 
 	
@@ -43,15 +43,15 @@
 
 /*All subsequent sub menu levels vertical offset after 1st level sub menu */
 .menuadm ul li ul li ul{
-	top: 3px;
+	top: 5px;
 }
 
 /* Sub level menu links style */
 .menuadm ul li ul li a{
-	width: 160px; /*width of sub menus*/
+	width: 150px; /*width of sub menus*/
 	background-color: #BEA088;
 	color: white;
-	padding:0px 5px 3px 5px;
+	padding:2px 5px 3px 5px;
 	
 }
 

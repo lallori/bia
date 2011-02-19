@@ -571,6 +571,13 @@ input.file {
 
 /* -------------------------------------- */
 /*
+/* ----- EditExtractOrSynopsisDocumentFullscreen ----- */
+
+#EditExtractOrSynopsisDocumentFullscreenForm #docExtractLabel{
+}
+
+/* -------------------------------------- */
+/*
 /* -------------------------------------------------------------------------- */
 /*
 /*
@@ -974,14 +981,14 @@ iframe{ /* Common for all iFrame */
 	margin:0;
 }
 
-#secondRecordLabel { /* "Move to rubricario" <label> ID  */
+#imageProgTypeNumLabel { /* "Move to rubricario" <label> ID  */
 	font-size:10px;
 	margin:0 0 0 -28px;
 	position:absolute;
 	color:#6d5c4d;
 }
 
-#secondRecord { /* "Move to rubricario" <input> ID  */
+#imageProgTypeNum { /* "Move to rubricario" <input> ID  */
 	margin:-3px 0 0 80px;
 	position:absolute;
 }
@@ -1214,10 +1221,9 @@ iframe{ /* Common for all iFrame */
 	font-size:11px;
 }
 
-h3 #myProfle {
-	margin-top: 3px; 
-	margin-bottom: 3px;
-	padding:0;
+#userProfile h3{
+	font-size:14px;
+	margin:0 0 5px 0;	
 }
 
 #userProfile{ /* My Profile Div Container */
@@ -1234,8 +1240,7 @@ h3 #myProfle {
 
 #imgProfile { /* User image profile */
 	float:left;
-	margin-top:10px;
-	margin-left:20px;
+	margin-top:5px;
 }
 
 #helpProfile { /* Help Div Container */
@@ -1267,9 +1272,9 @@ h3 #myProfle {
 }
 
 /* Edit Forms Div Containers */
-#EditTitleProfileDiv, #EditGroupProfileDiv, #EditOrgProfileDiv, #EditLocationProfileDiv, #EditInterestsProfileDiv, #EditResumeProfileDiv {
+#EditTitleProfileDiv, #EditGroupProfileDiv, #EditOrgProfileDiv, #EditLocationProfileDiv, #EditInterestsProfileDiv, #EditResumeProfileDiv, #EditEmailProfileDiv, #EditAdressProfileDiv, #EditCountryProfileDiv {
 	width:300px;
 	margin-left:150px;
-	margin-top:5px;
+	margin-bottom:6px;
 }
 

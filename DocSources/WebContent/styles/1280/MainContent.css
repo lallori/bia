@@ -26,20 +26,20 @@ h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 }
 
 h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
-	font-size:11px;
+	font-size:12px;
 	display:inline;
 	color:#6d5c4d;
 }
 
 #createdby h6{ /* "Created by ..." Title in ADD NEW DOCUMENT, ADD NEW PERSON, ADD NEW VOLUME */
-	font-size:85%;
+	font-size:10px;
 	text-align:right;
 	font-weight:normal;
 }
 
 #createdby { /* "Created by ..." Content DIV */
 	position:absolute;
-	margin-left:300px;
+	margin-left:420px;
 	margin-top:-40px;
 	width:150px;
 	
@@ -60,8 +60,9 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 
 ul li{ /* Lists */
 	list-style:none;
-	line-height:18px;
+	line-height:20px;
 	text-align:justify;
+	font-size
 }
 
 /* --------------------------------------------------------------------------------------------------------- */ 
@@ -72,7 +73,7 @@ ul li{ /* Lists */
 
 
 .edit { /* Edit FORM class */
-	font-size:10px;
+	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -407,7 +408,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 #lineSeparator { /* Horizontal Line used adove the Titles  */
 	margin:5px 0 5px 0;
 	padding:0;
-	width:450px;
+	width:570px;
 	color:#e6d0c6;
 	background-color:#e6d0c6;
 	height:1px;
@@ -418,7 +419,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	margin:10px 0 10px 0;
 	padding:0;
-	width:383px;
+	width:540px;
 	color:#e6d0c6;
 	background-color:#e6d0c6;
 	height:1px;
@@ -432,11 +433,11 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 
 #EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditRelationshipPersonDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #SpousesPersonForm, #TopicsDocumentForm, #EditTopicsDocumentForm {
-	width:450px;
+	width:570px;
 }
 
 #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #AdddChildPersonForm, #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm {
-	width:450px;
+	width:570px;
 	margin-top:10px;
 }
 
