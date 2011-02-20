@@ -409,60 +409,35 @@ var IIP = new Class({
 
 
 
-  /* Allow us to navigate within the image via the keyboard arrow buttons
-   */
+  /**
+   * Allow us to navigate within the image via the keyboard arrow buttons.
+   * Medici Archive Project customization : navigation is disabled, we insert
+   * comment on every function. If you want to enable navigate uncomment
+   * every functions.
+   **/
   key: function(e){
     var d = 100;
     switch( e.code ){
-    case as: // left
-      this.scrollTo(-d,0);
-      break;
-    case as: // up
-      this.scrollTo(0,-d);
-      break;
-    case as: // right
-      this.scrollTo(d,0);
-      break;
-    case as: // down
-      this.scrollTo(0,d);
-      break;
-    case as: // plus
-      if(!e.control) this.zoomIn();
-      break;
-    case as: // minus
-      if(!e.control) this.zoomOut();
-      break;
+      case 37: // left
+        /** this.scrollTo(-d,0); */
+        break;
+      case 38: // up
+        /** this.scrollTo(0,-d); */
+        break;
+      case 39: // right
+        /** this.scrollTo(d,0); */
+        break;
+      case 40: // down
+        /** this.scrollTo(0,d); */
+        break;
+      case 107: // plus
+        /** if(!e.control) this.zoomIn(); */
+        break;
+      case 109: // minus
+        /** if(!e.control) this.zoomOut(); */
+        break;
     }
   },
-  
-/* (Original version commented out)
- Allow us to navigate within the image via the keyboard arrow buttons
-   
-  key: function(e){
-    var d = 100;
-    switch( e.code ){
-    case 37: // left
-      this.scrollTo(-d,0);
-      break;
-   case 38: // up
-      this.scrollTo(0,-d);
-      break;
-    case 39: // right
-      this.scrollTo(d,0);
-      break;
-    case 40: // down
-      this.scrollTo(0,d);
-      break;
-    case 107: // plus
-      if(!e.control) this.zoomIn();
-      break;
-    case 109: // minus
-      if(!e.control) this.zoomOut();
-      break;
-    }
-  },
-*/
-
 
   /* Scroll resulting from a drag of the navigation window
    */
