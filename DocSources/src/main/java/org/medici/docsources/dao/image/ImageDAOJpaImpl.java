@@ -131,11 +131,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	}
 
 	@Override
-	public DocumentExplorer findImages(DocumentExplorer pageTurner) throws PersistenceException {
+	public DocumentExplorer findImages(DocumentExplorer documentExplorer) throws PersistenceException {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		
 		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
-		if (pageTurner.getTotal() == null) {
+		if (documentExplorer.getTotal() == null) {
 			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
 			Root<Image> rootCount = criteriaQueryCount.from(Image.class);
 			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
@@ -147,39 +147,39 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			criteriaQueryCount.where(
 				criteriaBuilder.and(
 					criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
-					StringUtils.isEmpty(pageTurner.getVolLetExt()) ? 
+					StringUtils.isEmpty(documentExplorer.getVolLetExt()) ? 
 						criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
 						criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
 				)
 			);
 
 			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-			typedQueryCount.setParameter("volNum", pageTurner.getVolNum());
-			if (!StringUtils.isEmpty(pageTurner.getVolLetExt()))
-				typedQueryCount.setParameter("volLetExt", pageTurner.getVolLetExt());
-			pageTurner.setTotal((Long)typedQueryCount.getSingleResult());
+			typedQueryCount.setParameter("volNum", documentExplorer.getVolNum());
+			if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
+				typedQueryCount.setParameter("volLetExt", documentExplorer.getVolLetExt());
+			documentExplorer.setTotal((Long)typedQueryCount.getSingleResult());
 
 	        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
-	        if (!StringUtils.isEmpty(pageTurner.getVolLetExt()))
+	        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
 	        	stringBuffer.append(" = :volLetExt");
 	        else
 	        	stringBuffer.append(" is null");
 	    	stringBuffer.append(" group by imageType");
 	    	
 	        Query query = getEntityManager().createQuery(stringBuffer.toString());
-	        query.setParameter("volNum", pageTurner.getVolNum());
-	        if (!StringUtils.isEmpty(pageTurner.getVolLetExt())) {
-	        	query.setParameter("volLetExt", pageTurner.getVolLetExt());
+	        query.setParameter("volNum", documentExplorer.getVolNum());
+	        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
+	        	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
 	        }
 
 			List<Object[]> result = (List<Object[]>)query.getResultList();
 
 			// We init every partial-total
-			pageTurner.setTotalRubricario(new Long(0));
-			pageTurner.setTotalCarta(new Long(0));
-			pageTurner.setTotalAppendix(new Long(0));
-			pageTurner.setTotalOther(new Long(0));
-			pageTurner.setTotalGuardia(new Long(0));
+			documentExplorer.setTotalRubricario(new Long(0));
+			documentExplorer.setTotalCarta(new Long(0));
+			documentExplorer.setTotalAppendix(new Long(0));
+			documentExplorer.setTotalOther(new Long(0));
+			documentExplorer.setTotalGuardia(new Long(0));
 			
 			// We set new partial-total values 
 			for (int i=0; i<result.size(); i++) {
@@ -187,62 +187,62 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				Object[] singleGroup = result.get(i);
 
 				if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
-					pageTurner.setTotalRubricario(new Long(singleGroup[1].toString()));
+					documentExplorer.setTotalRubricario(new Long(singleGroup[1].toString()));
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
-					pageTurner.setTotalCarta(new Long(singleGroup[1].toString()));
+					documentExplorer.setTotalCarta(new Long(singleGroup[1].toString()));
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
-					pageTurner.setTotalAppendix(new Long(singleGroup[1].toString()));
+					documentExplorer.setTotalAppendix(new Long(singleGroup[1].toString()));
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
-					pageTurner.setTotalOther(new Long(singleGroup[1].toString()));
+					documentExplorer.setTotalOther(new Long(singleGroup[1].toString()));
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
-					pageTurner.setTotalGuardia(new Long(singleGroup[1].toString()));
+					documentExplorer.setTotalGuardia(new Long(singleGroup[1].toString()));
 				}
 			}
 		} 
 
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
-        if (!StringUtils.isEmpty(pageTurner.getVolLetExt()))
+        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
         	stringBuffer.append("=:volLetExt");
         else
         	stringBuffer.append(" is null");
-        if (pageTurner.getImage().getImageProgTypeNum() != null) {
+        if (documentExplorer.getImage().getImageProgTypeNum() != null) {
         	stringBuffer.append(" and imageType=:imageType");
         	stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
-        } else if (pageTurner.getImage().getImageOrder() != null) {
+        } else if (documentExplorer.getImage().getImageOrder() != null) {
         	stringBuffer.append(" and imageOrder=:imageOrder");
         } else {
         	stringBuffer.append(" and imageOrder = 1");
         }
     	
         Query query = getEntityManager().createQuery(stringBuffer.toString());
-        query.setParameter("volNum", pageTurner.getVolNum());
-        if (!StringUtils.isEmpty(pageTurner.getVolLetExt())) {
-        	query.setParameter("volLetExt", pageTurner.getVolLetExt());
+        query.setParameter("volNum", documentExplorer.getVolNum());
+        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
+        	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
         }
 
-        if (pageTurner.getImage().getImageProgTypeNum() != null) {
-        	query.setParameter("imageType", pageTurner.getImage().getImageType());
-        	query.setParameter("imageProgTypeNum", pageTurner.getImage().getImageProgTypeNum());
+        if (documentExplorer.getImage().getImageProgTypeNum() != null) {
+        	query.setParameter("imageType", documentExplorer.getImage().getImageType());
+        	query.setParameter("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
 			List<Image> result = (List<Image>) query.getResultList();
 			
 			if (result.size() > 0) {
-				pageTurner.setImage(result.get(0));
+				documentExplorer.setImage(result.get(0));
 			}
-        } else if (pageTurner.getImage().getImageOrder() != null) {
-        	query.setParameter("imageOrder", pageTurner.getImage().getImageOrder());
+        } else if (documentExplorer.getImage().getImageOrder() != null) {
+        	query.setParameter("imageOrder", documentExplorer.getImage().getImageOrder());
 			query.setFirstResult(0);
 			query.setMaxResults(1);
-			pageTurner.setImage((Image) query.getSingleResult());
+			documentExplorer.setImage((Image) query.getSingleResult());
         } else {
 			query.setFirstResult(0);
 			query.setMaxResults(1);
 			try {
-				pageTurner.setImage((Image) query.getSingleResult());
+				documentExplorer.setImage((Image) query.getSingleResult());
 			} catch (NoResultException noResultExcepion) {
 			}
         }
 
-        return pageTurner;
+        return documentExplorer;
 	}
 
 	/**

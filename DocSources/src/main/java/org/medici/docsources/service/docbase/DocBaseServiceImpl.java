@@ -684,16 +684,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	@Override
-	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable {
+	public DocumentExplorer getDocumentExplorer(DocumentExplorer documentExplorer) throws ApplicationThrowable {
 		try {
-			if (pageTurner.getVolNum() == null) {
-				Document document = getDocumentDAO().find(pageTurner.getEntryId());
+			if (documentExplorer.getVolNum() == null) {
+				Document document = getDocumentDAO().find(documentExplorer.getEntryId());
 				
-				pageTurner.setVolNum(document.getVolume().getVolNum());
-				pageTurner.setVolLetExt(document.getVolume().getVolLetExt());
+				documentExplorer.setVolNum(document.getVolume().getVolNum());
+				documentExplorer.setVolLetExt(document.getVolume().getVolLetExt());
 			}
 
-			return getImageDAO().findImages(pageTurner);
+			return getImageDAO().findImages(documentExplorer);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

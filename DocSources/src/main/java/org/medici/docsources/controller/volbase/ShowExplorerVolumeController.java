@@ -70,6 +70,12 @@ public class ShowExplorerVolumeController {
 		return volBaseService;
 	}
 
+	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView searchCarta(@Valid @ModelAttribute("command") ShowExplorerVolumeCommand command, BindingResult result){
 		getValidator().validate(command, result);

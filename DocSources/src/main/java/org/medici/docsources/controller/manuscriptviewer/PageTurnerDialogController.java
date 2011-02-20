@@ -35,6 +35,7 @@ import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,7 +73,7 @@ public class PageTurnerDialogController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") PageTurnerCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") PageTurnerCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if (command.getModeEdit()) {
