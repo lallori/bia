@@ -22,6 +22,8 @@
 		</c:url>
 		<c:url var="ShowDocumentInManuscriptViewer" value="/src/mview/ShowDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
+			<c:param name="imageType" value="C" />
+			<c:param name="imageProgTypeNum"   value="${document.folioNum}" />
 			<c:param name="flashVersion"   value="false" />
 		</c:url>
 	</security:authorize>
@@ -64,9 +66,7 @@
 				 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
-			 $j("#ShowDocumentInManuscriptViewer").click(function(){
-				 $j(this).open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
-				 return false;
-			 });
+			
+			$j("#ShowDocumentInManuscriptViewer").open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
 		});
 	</script>

@@ -55,9 +55,6 @@
 			 $j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
 
 			 $j("#EditExtractOrSynopsisDocument").click(function(){$j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));return false;});
-			 $j("#EditDocumentInManuscriptViewer").click(function(){
-				 $j(this).open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
-				 return false;
-			 });
+			 $j("#EditDocumentInManuscriptViewer").open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
 		});
 	</script>
