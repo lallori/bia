@@ -47,7 +47,7 @@ a {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	text-decoration:none;
 	color:#6F6B69;
-	font-size:12px;
+	font-size:13px;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 
@@ -215,7 +215,11 @@ input {
 	margin-left:125px;
 	border:none;
 	background-color:transparent;
-	margin-top:-3px;
+	margin-top:-10px;
+}
+
+#search:hover {
+	opacity:0.5;
 }
 
 #firstName {
@@ -294,6 +298,7 @@ input {
 	float:left;
 	height:25px;
 	width: 500px;
+	z-index:999;
 }
 
 #adm_menu a{
@@ -308,6 +313,7 @@ input {
 	height:25px;
 	width: 100px;
 	margin-left: 520px;
+	z-index:999;
 }
 
 /* ------------- */
@@ -367,7 +373,7 @@ input {
 #body_left a, #body_right a, #body_central a{ /* Edit buttons */
 	text-decoration:underline;
 	font-weight:100;
-	font-size:12px;
+	font-size:13px;
 	color:#b99c84;
 }
 

@@ -24,7 +24,7 @@
 	position: relative;
 	display: inline;
 	float: left;
-	z-index:3;
+	z-index:1;
 }
 
 /*Top level menu link items style*/
@@ -33,7 +33,8 @@
 	padding: 3px 7px 4px 7px;
 	color: #FFFDF5;
 	text-decoration: none;
-	font-size:95%;
+	font-size:11px;
+	z-index:1;
 }
 	
 /*1st sub level menu*/
@@ -42,18 +43,21 @@
 	left: 0;
 	display: block;
 	visibility: hidden;
-	margin-top:-3px;
+	margin-top:5px;
+	z-index:1;
 }
 
 /*Sub level menu list items (undo style from Top level List Items)*/
 .actionsmenu ul li ul li{
 	display: list-item;
 	float: none;
+	z-index:1;
 }
 
 /*All subsequent sub menu levels vertical offset after 1st level sub menu */
 .actionsmenu ul li ul li ul{
 	top: 0;
+	z-index:1;
 }
 
 /* Sub level menu links style */
@@ -62,6 +66,7 @@
 	background-color: #BEA088;
 	color: white;
 	padding: 0px 5px;
+	z-index:1;
 }
 
 .actionsmenu ul li ul li a:hover{ /*sub menus hover style*/

@@ -70,7 +70,7 @@
 					},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-				});
+				}).dialogExtend({"minimize" : true});;
 				
 				
 				var $dialogExplorer = $j('<div></div>')
@@ -91,7 +91,7 @@
                		},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-				});
+				}).dialogExtend({"minimize" : true});
 			
 	
 			});

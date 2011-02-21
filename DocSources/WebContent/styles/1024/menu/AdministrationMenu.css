@@ -1,6 +1,6 @@
 .menuadm {
 	padding-left: 15px; /*offset of tabs relative to browser left edge*/
-	z-index:9999;
+	z-index:999;
 }
 
 .menuadm ul{
@@ -22,7 +22,8 @@
 	padding: 4px 7px 4px 7px;
 	color: #FFFDF5;
 	text-decoration: none;
-	font-size:95%;
+	font-size:10px;
+	
 }
 
 	
@@ -33,17 +34,20 @@
 	display: block;
 	visibility: hidden;
 	margin-top:-3px;
+	z-index:999;
 }
 
 /*Sub level menu list items (undo style from Top level List Items)*/
 .menuadm ul li ul li{
 	display: list-item;
 	float: none;
+	z-index:999;
 }
 
 /*All subsequent sub menu levels vertical offset after 1st level sub menu */
 .menuadm ul li ul li ul{
 	top: 3px;
+	z-index:999;
 }
 
 /* Sub level menu links style */
@@ -52,12 +56,14 @@
 	background-color: #BEA088;
 	color: white;
 	padding:0px 5px 3px 5px;
+	z-index:999;
 	
 }
 
 .menuadm ul li ul li a:hover{ /*sub menus hover style*/
 	background: #85705E;
 	color: white;
+	z-index:999;
 }
 
 /* ######### CSS classes applied to down and right arrow images  ######### */

@@ -51,7 +51,7 @@
 		<br />
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
-	    	<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
+	    	<a id="previous" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="prev" /></a>
 		</c:if>
 		<c:if test="${command.imageOrder > 1}">
 			<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
@@ -62,7 +62,7 @@
 		</div> 
 		<div id="nextButton">
 		<c:if test="${command.imageOrder == command.total}">
-			<img src="<c:url value="/images/button_next.png" />" alt="next" />
+			<a id="next" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
 		</c:if>
 		<c:if test="${command.imageOrder < command.total}">
 			<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
@@ -74,9 +74,9 @@
 	
 	<div id="rubricarioMoveTo">
 		<form:form id="moveToRubricarioForm" method="post" class="edit">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to rubricario</label>
-			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
-			<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+			<label for="imageProgTypeNum" id="imageProgTypeNumRubricario">Move to rubricario(page)</label>
+			<input id="secondRecord" name="imageProgTypeNum" class="input_4c" type="text" value="" />
+			<input id="goR" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
 			<form:hidden path="entryId" />
 			<form:hidden path="volNum" />
 			<form:hidden path="volLetExt" />
@@ -93,8 +93,8 @@
 	
 	<div id="folioMoveTo">
 		<form:form id="moveToFolioForm" method="post" class="edit">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to folio</label>
-			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
+			<label id="imageProgTypeNum" for="imageProgTypeNumLabel" >Move to folio (page)</label>
+			<input id="firstRecord" name="firstRecord" class="input_4c" type="text" value="" />
 			<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
 			<form:hidden path="entryId" />
 			<form:hidden path="volNum" />
@@ -116,8 +116,8 @@
 		<a href="#"><img src="<c:url value="/images/button_personalNotes.png" />" alt="Personal Notes" /></a>
 	</div>
 	
-	<div id="exitButton">
-		<a id="exitButton2" href="#" onClick="$j('#exit').dialog('open');"><img src="<c:url value="/images/button_exit.png" />" alt="Exit" /></a>
+	<div id="exitDiv">
+		<a id="exitButton" href="#" onClick="$j('#exit').dialog('open');"><img src="<c:url value="/images/button_exit.png" />" alt="Exit" /></a>
 	</div>
 
 	<div id="exit" title="Alert" style="display:none">
@@ -155,7 +155,7 @@
 				}
 			});
 
-			$j('#exitButton2').click(function() {
+			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open'); 
 			});
 	        

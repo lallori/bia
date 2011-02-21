@@ -19,7 +19,7 @@
 /*Top level menu link items style*/
 .menuadm ul li a{
 	display: block;
-	padding: 4px 7px 4px 7px;
+	padding: 3px 7px 4px 7px;
 	color: #FFFDF5;
 	text-decoration: none;
 	font-size:11px;
@@ -32,7 +32,7 @@
 	left: 0;
 	display: block;
 	visibility: hidden;
-	margin-top:-3px;
+	margin-top:-4px;
 }
 
 /*Sub level menu list items (undo style from Top level List Items)*/
@@ -43,7 +43,7 @@
 
 /*All subsequent sub menu levels vertical offset after 1st level sub menu */
 .menuadm ul li ul li ul{
-	top: 5px;
+	top: 1px;
 }
 
 /* Sub level menu links style */
@@ -51,7 +51,7 @@
 	width: 150px; /*width of sub menus*/
 	background-color: #BEA088;
 	color: white;
-	padding:2px 5px 3px 5px;
+	padding:3px 5px 3px 5px;
 	
 }
 

@@ -14,14 +14,14 @@
 h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
 	padding-top:15px;
 	padding-bottom:15px;
-	font-size:14px;
+	font-size:16px;
 	font-style:italic;
 	color:#006;
 }
 
 h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	text-align:left;
-	font-size:13px;
+	font-size:16px;
 	font-style:italic;
 }
 
@@ -60,9 +60,9 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 
 ul li{ /* Lists */
 	list-style:none;
-	line-height:20px;
+	line-height:22px;
 	text-align:justify;
-	font-size
+	font-size:13px;
 }
 
 /* --------------------------------------------------------------------------------------------------------- */ 
@@ -73,30 +73,33 @@ ul li{ /* Lists */
 
 
 .edit { /* Edit FORM class */
-	font-size:11px;
+	font-size:12px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 fieldset {  /* FORM BACKGROUND */
 	border: 1px solid #e6d0c6;
 	background-color:#f3e7e2;
+	width:505px;
 	padding-left:30px;	
+	padding-right:30px;
 }
 
 legend { /* FORM TITLE */
-	font-size:11px;
+	font-size:12px;
 	color:#6d5c4d;
 	background-color:#e6d0c6;
+	padding:2px 3px 2px 3px;
 }
 
 input { /* INPUT text */
-	font-size:10px;
+	font-size:12px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
-	padding-left:3px;
-	margin: 5px 7px 5px 5px;
+	padding:3px;
+	margin: 4px 7px 5px 5px;
 }
 
 .button { /* CLOSE / SAVE / ... button */
@@ -129,7 +132,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 }
 
 .checkboxDoc2{ /* used in EditDetailsDocument.html */
-	margin:0px 0px 0px 7px;
+	margin:0px 0px 0px 5px;
 }
 
 .checkboxPers1{ /* used in EditDetailsDocument.html, EditDetailsPerson.html */
@@ -147,81 +150,81 @@ form img{ /* Red Cross used to "Delete this entry"  */
 /* c = character */ 
 
 .input_1c { /* input for 1 character */ 
-	width: 13px; !important
+	width: 15px; !important
 }
 
 .input_2c { /* input for 2 characters */ 
-	width: 20px; 
+	width: 23px; 
 }
 
 .input_3c { /* input for 3 characters */ 
-	width: 25px; 
+	width: 28px; 
 }
 
 .input_4c { /* input for 4 characters */ 
-	width: 30px;
+	width: 35px;
 }
 
 .input_5c { /* input for 5 characters */ 
-	width: 40px;
+	width: 43px;
 }
 
 .input_10c { /* input for 10 characters approx. */ 
-	width: 87px;
+	width: 90px;
 }
 
 .input_14c { /* input for 14 characters approx. */ 
-	width: 110px;
+	width: 113px;
 }
 
 .input_15c { /* input for 15 characters approx. */ 
-	width: 120px;
+	width: 123px;
 }
 
 .input_20c { /* input for 20 characters approx. */ 
-	width: 160px;
+	width: 163px;
 }
 
 .input_23c { /* input for 23 characters approx. */ 
-	width: 180px;
+	width: 183px;
 }
 
 .input_25c { /* input for 25 characters approx. */ 
-	width: 220px;
+	width: 320px;
 }
 
 .input_28c { /* input for 28 characters approx. */ 
-	width: 240px;
+	width: 243px;
 }
 
 .input_30c { /* input for 30 characters approx. */ 
-	width: 250px;
-	margin: 5px 6px 5px 5px; 
+	width: 253px;
+	margin: 7px 6px 5px 5px; 
 }
 
 .input_33c { /* input for 33 characters approx. */ 
-	width: 280px;
-	margin: 5px 6px 5px 5px; 
+	width: 283px;
+	margin: 7px 6px 5px 5px; 
 }
 
 .input_35c { /* input for 35 characters approx. */ 
-	width: 308px;
-	margin: 5px 6px 5px 5px; 
+	width: 311px;
+	margin: 7px 6px 5px 5px; 
 }
 
 .input_39c { /* input for 35 characters approx. */ 
-	width: 320px;
-	margin: 5px 6px 5px 5px; 
+	width: 323px;
+	margin: 7px 6px 5px 5px; 
 }
 
 .input_40c { /* input for 40 characters approx. */ 
-	width: 345px;
-	margin: 5px 6px 5px 5px; 
+	width: 348px;
+	margin: 7px 6px 5px 5px; 
 }
 
 .input_45c { /* input for 45 characters approx. */ 
-	width: 370px;
-	margin: 5px 6px 5px 0px; 
+	width: 492px;
+	margin: 7px 6px 5px 0px; 
 }
 
 /* ---------------------------------------------------- */ 
@@ -264,7 +267,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 }
 
 .input_28c_disabled { /* input for 10 characters */ 
-	width: 240px; 
+	width: 335px; 
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
@@ -280,10 +283,10 @@ form img{ /* Red Cross used to "Delete this entry"  */
 /* ----------------- DROPDOWN MENU -------------------- */
 
 .selectform{ /* dropdown menu class */
-	width:80px;
+	width:100px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
-	padding-left:3px;
+	padding:3px;
 	margin: 5px 7px 5px 5px; 
 	font-size:100%;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -352,7 +355,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 /* ------------------- TEXTAREAS ---------------------- */
 
 .txtarea { 
-	width: 372px;
+	width: 480px;
 	height:40px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
@@ -377,7 +380,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 }
 
 .txtarea_big { 
-	width: 372px;
+	width: 480px;
 	height:120px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
@@ -419,7 +422,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	margin:10px 0 10px 0;
 	padding:0;
-	width:540px;
+	width:500px;
 	color:#e6d0c6;
 	background-color:#e6d0c6;
 	height:1px;
@@ -433,12 +436,13 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 
 #EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDetailsVolumeDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditRelationshipPersonDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #SpousesPersonForm, #TopicsDocumentForm, #EditTopicsDocumentForm {
-	width:570px;
+	width:540px;
 }
 
 #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #AdddChildPersonForm, #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm {
-	width:570px;
+	width:540px;
 	margin-top:10px;
+	font-size:12px;
 }
 
 #EditPortraitPersonDiv {
@@ -507,35 +511,39 @@ input.file {
 }
 
 #volumeLabel{
-	margin-left:103px;
+	margin-left:187px;
 }
 
 #entryIdLabel{
-	margin-left:33px;
+	margin-left:35px;
 }
 
 #folioNumLabel {
-	margin-left:10px;
+	margin-left:18px;
 }
 
 #DocYearLabel {
-	margin-left:48px;
+	margin-left:58px;
+}
+
+#docMonthNumLabel {
+	margin-left:20px;
+}
+
+#docDayLabel{
+	margin-left:20px;
 }
 
 #dateUndatedLabel {
-	margin-left:70px;
+	margin-left:115px;
 }
 
 #contDiscLabel {
-	margin-left:111px;
+	margin-left:200px;
 }
 
 #insertNumLabel {
-	margin-left:7px;
-}
-
-#dateUnsLabel {
-	margin-left:7px;
+	margin-left:9px;
 }
 
 /* -------------------------------------- */
@@ -558,8 +566,8 @@ input.file {
 	margin-left:22px;
 }
 
-#unsureLabel, #portraitLabel {
-	margin-left:20px;
+#portraitLabel {
+	margin-left:407px;
 }
 
 #personIcon {
@@ -570,6 +578,17 @@ input.file {
 	margin-left:22px;
 }
 
+#AddPersonCorrespondentsDocument {
+	margin:5px auto auto 380px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+#AddPersonCorrespondentsDocument:hover {
+opacity:0.5;
+}
 /* -------------------------------------- */
 /*
 /* -------------------------------------------------------------------------- */
@@ -648,34 +667,33 @@ input.file {
 }
 
 a#editValue { /* "Edit Value" Button */
-	font-size:10px;
+	font-size:13px;
 	
 }
 
 a#AddNamesPerson, a#AddChildPerson, a#AddTopicDocument, a#AddExtLinkTgnPlace, a#AddExtLinkMapPlace, a#AddExtLinkMapSitePlace, a#AddNameMapSitePlace, a#AddNameMapPlace, a#AddNameTgnPlace { /* "Add New ..." Button */
-	background-color: #e6d0c6;
+	background-image: url(/DocSources/images/button_addNew.png);
 	padding:1px 5px 1px 5px;
 	border:none;
 	display:inline;
 	color: #6d5c4d;
-	font-size:10px;
+	font-size:13px;
 	text-decoration:none;
 	margin-left:260px;
+	width:67px;
 }
 
 a#AddSpousePerson, a#EditPerson { /* "Add New ..." Button */
-	background-color: #e6d0c6;
-	padding:1px 5px 1px 5px;
 	border:none;
 	display:inline;
-	color: #6d5c4d;
-	font-size:10px;
-	text-decoration:none;
 	margin-left:255px;
+	width:67px;
+	height:25px;
+
 }
 
 a#AddTitlesOccupationsPerson { /* "Add New ..." Button */
-	background-color: #e6d0c6;
+	background-image: url(/DocSources/images/button_addNew.png);
 	padding:1px 5px 1px 5px;
 	border:none;
 	display:inline;
@@ -683,6 +701,7 @@ a#AddTitlesOccupationsPerson { /* "Add New ..." Button */
 	font-size:10px;
 	text-decoration:none;
 	margin-left:200px;
+	width:67px;
 }
 
 /* -------------------------------------- */
@@ -768,7 +787,7 @@ a#AddTitlesOccupationsPerson { /* "Add New ..." Button */
 /* Parents */
 
 a#linkSearch {
-	font-size:11px;
+	font-size:13px;
 	text-decoration:none;
 	color:#006;
 	margin: 0 0 0 10px;
@@ -779,7 +798,7 @@ a#linkSearch {
 	opacity:0.6;
 	margin: 0 0 0 20px;
 	display:inline;
-	font-size:10px;
+	font-size:13px;
 	float:right;
 }
 
@@ -825,8 +844,15 @@ a#linkSearch {
 }
 
 #close {
-	margin-top:5px;
+	margin:5px auto auto 0px;
+	padding:0;
 	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+#close:hover {
+	opacity:0.5;
 }
 
 #closeProfile {
@@ -834,8 +860,15 @@ a#linkSearch {
 }
 
 #save {
-	margin-left:300px;
+	margin:5px auto auto 395px;
+	padding:0;
 	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+#save:hover {
+	opacity:0.5;
 }
 
 #saveProfile {
@@ -848,6 +881,13 @@ a#linkSearch {
 	margin: 0 0 0 130px;
 }
 
+.inputerrors { /* Error Span messages */
+	color:#900;
+	font-size:11px;
+	position:absolute;
+	margin:5px 0 0 120px;
+	visibility:hidden;
+}
 
 /* ------------------------------------------------- */ 
 /*
@@ -912,8 +952,8 @@ iframe{ /* Common for all iFrame */
 
 .iframeFlipVolume { /* used in Add New Volume - #body_right */
 	z-index:-1;
-	width:450px;
-	height:300px;
+	width:570px;
+	height:400px;
 }
 
 /* ---------------------------- */
@@ -939,8 +979,8 @@ iframe{ /* Common for all iFrame */
 /* Previous / Next */
 
 #prevNextButtons {
-	margin:10px 0 10px 175px;
-	width: 100px;
+	margin:15px 0 12px 190px;
+	width: 190px;
 	z-index:2;
 }
 
@@ -957,7 +997,8 @@ iframe{ /* Common for all iFrame */
 /* -- Rubricario -- */
 
 #rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
-	width:450px;
+	width:570px;
+	margin-top:10px;
 }
 
 #rubricarioCountForm { /* "Rubricario Count" FORM */
@@ -965,7 +1006,7 @@ iframe{ /* Common for all iFrame */
 	color:#6d5c4d;
 	margin-top:10px;
 	position:relative;
-	font-size:10px;
+	font-size:12px;
 }
 
 #moveToRubricarioForm { /* "Move to Rubricario" FORM */
@@ -977,13 +1018,13 @@ iframe{ /* Common for all iFrame */
 }
 
 #secondRecordLabel { /* "Move to rubricario" <label> ID  */
-	font-size:10px;
-	margin:0 0 0 -28px;
+	font-size:12px;
+	margin:0 0 0 -35px;
 	position:absolute;
 	color:#6d5c4d;
 }
 
-#secondRecord { /* "Move to rubricario" <input> ID  */
+#imageProgTypeNum { /* "Move to rubricario" <input> ID  */
 	margin:-3px 0 0 80px;
 	position:absolute;
 }
@@ -999,7 +1040,7 @@ iframe{ /* Common for all iFrame */
 /* ---- Folio ----- */
 
 #folioMoveTo { /* Contains "Folio Count" and "Move to folio" */
-	width:450px;
+	width:570px;
 }
 
 #folioCountForm { /* "Folio Count" FORM */
@@ -1007,7 +1048,7 @@ iframe{ /* Common for all iFrame */
 	color:#6d5c4d;
 	margin-top:10px;
 	position:relative;
-	font-size:10px;
+	font-size:12px;
 }
 
 #moveToFolioForm { /* Move to folio FORM */
@@ -1018,7 +1059,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #firstRecordLabel { /* "Move to folio" <label> ID  */
-	font-size:10px;
+	font-size:12px;
 	margin:0;
 	position:absolute;
 	color:#6d5c4d;
@@ -1030,7 +1071,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #go { /* "Move to folio" <input> GO button ID  */
-	margin:-5px 0 0 127px;
+	margin:-5px 0 0 128px;
 	border:none;
 	background-color:transparent;
 }
@@ -1050,7 +1091,7 @@ iframe{ /* Common for all iFrame */
 /* ---- Refresh --- */
 
 #refreshVolumeExplorer {
-	margin: 0 0 0 312px;
+	margin: 0 0 0 360px;
 	position:absolute;
 	display:inline;
 }
@@ -1062,7 +1103,7 @@ iframe{ /* Common for all iFrame */
 
 #modalWindow #prevNextButtons {
 	margin:10px 0 10px 290px;
-	width: 100px;
+	width: 150px;
 	z-index:2;
 }
 

@@ -100,7 +100,7 @@
 					<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
 				</c:if>
 				<c:if test="${volumeExplorer.image.imageOrder > 1}">
-					<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
+					<a id="previousPage" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
 				</c:if>
 				</div>
 				<div id="nextPage">
@@ -108,7 +108,7 @@
 					<img src="<c:url value="/images/button_next.png" />" alt="next" />
 				</c:if>
 				<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-					<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
+					<a id="nextPage" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
 				</c:if>
 				</div>
 			</div>

@@ -128,8 +128,7 @@ a {
 	position:absolute;
 	border-right: 1px solid #e6d0c6;
 	font-size:11px;
-	z-index:2;
-
+	z-index:1;
 }
 	
 #body_right{ /* RIGHT-hand side of the SCREEN */
@@ -143,7 +142,7 @@ a {
 	margin-left:495px;
 	font-size:11px;
 	border-left: 1px solid #e6d0c6;
-	z-index:2;
+	z-index:1;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 

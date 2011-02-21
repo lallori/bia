@@ -33,7 +33,7 @@
 					height: 110,
 					minWidth: 575,
 					minHeight: 110,                                                                                                                                                         
-					title: 'Page Turner',
+					title: 'PAGE TURNER',
 					position: ['right','bottom'],                                                                                                                                                       
 					closeOnEscape: false,
 					maximized:false,
@@ -44,9 +44,8 @@
                		},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-				});
-			
-	
+				}).dialogExtend({"minimize" : true});
+
 			});
 
 			iip = new IIP( "targetframe", {

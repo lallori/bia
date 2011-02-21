@@ -351,38 +351,50 @@ form img{ /* Red Cross used to "Delete this entry"  */
 /* ------------------- TEXTAREAS ---------------------- */
 
 .txtarea { 
-	width: 372px;
+	width: 363px;
 	height:40px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:90%;
+	font-size:10px;
 	padding:5px 10px 5px 10px;
 	margin: 5px 7px 5px 0px; 
 }
 
 .txtarea_disabled { 
-	width: 372px;
+	width: 363px;
 	height:40px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:90%;
+	font-size:10px;
 	padding:5px 10px 5px 10px;
 	margin: 5px 7px 5px 0px; /* top right bottom left */
 	opacity:0.3;
 }
 
+.txtarea_medium { 
+	width: 363px;
+	height:80px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:10px;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 0px; /* top right bottom left */
+}
+
 .txtarea_big { 
-	width: 372px;
+	width: 363px;
 	height:120px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:90%;
+	font-size:10px;
 	padding:5px 10px 5px 10px;
 	margin: 5px 7px 5px 0px; /* top right bottom left */
 }
@@ -394,9 +406,21 @@ form img{ /* Red Cross used to "Delete this entry"  */
 	background-color: #fbf7f4;
 	color: #000000;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:90%;
+	font-size:10px;
 	padding:5px 10px 5px 10px;
 	margin: 5px 7px 5px 0px; /* top right bottom left */
+}
+
+.txtarea_fullscreen { 
+	width: 375px;
+	height:450px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:11px;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 10px; /* top right bottom left */
 }
 
 /* ---------------------------------------------------- */ 
@@ -573,8 +597,35 @@ input.file {
 /*
 /* ----- EditExtractOrSynopsisDocumentFullscreen ----- */
 
-#EditExtractOrSynopsisDocumentFullscreenForm #docExtractLabel{
+#EditExtractOrSynopsisDocumentFullscreenForm #docExtractLabel, #EditExtractOrSynopsisDocumentFullscreenForm #synopsisLabel{
+	margin:10px 0 0 10px;
 }
+
+#closeSaveButtonsFullscreen {
+	margin:475px 0 0 350px;
+	width:131px;
+	height:25px;
+	position:absolute;
+}
+
+#closeSaveButtonsFullscreen input{
+	border:none;
+	background-color:#F6EDEC;
+}
+
+#closeSaveButtonsFullscreen #close{
+	float:left;
+	display:inline;
+	margin:0;
+}
+
+#closeSaveButtonsFullscreen #save{
+	float:right;
+	display:inline;
+	margin:0;
+}
+
+
 
 /* -------------------------------------- */
 /*
@@ -831,8 +882,15 @@ a#linkSearch {
 }
 
 #close {
-	margin-top:5px;
+	margin:5px auto auto 0px;
+	padding:0;
 	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+#close:hover {
+	opacity:0.5;
 }
 
 #closeProfile {
@@ -840,8 +898,15 @@ a#linkSearch {
 }
 
 #save {
-	margin-left:300px;
+	margin:5px auto auto 280px;
+	padding:0;
 	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+#save:hover {
+	opacity:0.5;
 }
 
 #saveProfile {
@@ -852,6 +917,14 @@ a#linkSearch {
 .errors {
 	color:#F00;
 	margin: 0 0 0 130px;
+}
+
+.inputerrors { /* Error Span messages */
+	color:#900;
+	font-size:11px;
+	position:absolute;
+	margin:5px 0 0 120px;
+	visibility:hidden;
 }
 
 
@@ -945,8 +1018,8 @@ iframe{ /* Common for all iFrame */
 /* Previous / Next */
 
 #prevNextButtons {
-	margin:10px 0 10px 155px;
-	width: 200px;
+	margin:15px 0 10px 130px;
+	width: 190px;
 	z-index:2;
 }
 
@@ -964,6 +1037,7 @@ iframe{ /* Common for all iFrame */
 
 #rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
 	width:450px;
+	margin-top:10px;
 }
 
 #rubricarioCountForm { /* "Rubricario Count" FORM */
@@ -981,7 +1055,7 @@ iframe{ /* Common for all iFrame */
 	margin:0;
 }
 
-#imageProgTypeNumLabel { /* "Move to rubricario" <label> ID  */
+#secondRecordLabel { /* "Move to rubricario" <label> ID  */
 	font-size:10px;
 	margin:0 0 0 -28px;
 	position:absolute;
@@ -1054,7 +1128,7 @@ iframe{ /* Common for all iFrame */
 /* ---- Refresh --- */
 
 #refreshVolumeExplorer {
-	margin: 0 0 0 312px;
+	margin: 0 0 0 240px;
 	position:absolute;
 	display:inline;
 }
@@ -1070,14 +1144,14 @@ iframe{ /* Common for all iFrame */
 }
 
 #modalBox #prevNextButtons {
-	margin:10px 0 10px 290px;
-	width: 100px;
+	margin:10px 0 10px 245px;
+	width: 190px;
 	z-index:2;
 }
 
 #modalWindow_950pxFellows #prevNextButtons {
-	margin:10px 0 10px 415px;
-	width: 100px;
+	margin:10px 0 10px 250px;
+	width: 190px;
 	z-index:2;
 }
 
@@ -1088,7 +1162,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #modalBox #moveToRubricarioForm { 
-	width:150px;
+	width:170px;
 	display:inline;
 	color:#6d5c4d;
 	margin-left:270px;

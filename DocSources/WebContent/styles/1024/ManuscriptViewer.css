@@ -31,18 +31,17 @@ textarea {
 /* Previous / Next */
 
 #prevNextButtons {
-	width:200px;
+	width:190px;
 	margin-top:15px;
 	position:absolute;
 }
 
-#prevButton #nextButton img{
+#prevButton img, #nextButton img, #personalNotes img, #exitDiv img{
 	border:none;
 }
 
 #prevNextButtons #prevButton a{
 	float:left;
-	border:none;
 }
 
 #prevNextButtons #prevButton a:hover{
@@ -52,7 +51,6 @@ textarea {
 
 #prevNextButtons #nextButton a{
 	float:right;
-	border:none;
 }
 
 #prevNextButtons #nextButton a:hover{
@@ -85,7 +83,7 @@ textarea {
 	margin:0;
 }
 
-#secondRecordLabel { /* "Move to rubricario" <label> ID  */
+#imageProgTypeNumRubricario { /* "Move to rubricario" <label> ID  */
 	font-size:11px;
 	margin:0 0 0 -57px;
 	position:absolute;
@@ -141,7 +139,7 @@ textarea {
 	float:right;
 }
 
-#firstRecordLabel { /* "Move to folio" <label> ID  */
+#imageProgTypeNum { /* "Move to folio" <label> ID  */
 	font-size:11px;
 	position:absolute;
 	color:#6d5c4d;
@@ -179,12 +177,12 @@ textarea {
 /*
 /* ---- Exit ----- */
 
-#exitButton a{
+#exitDiv a{
 	margin:45px 0 0 455px;
 	position:absolute;
 }
 
-#exitButton a:hover{
+#exitDiv a:hover{
 	opacity:0.5;
 }
 
@@ -285,5 +283,3 @@ textarea {
 .ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-color: #f3e7e2; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; background-color: #f3e7e2; }
 .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; background-color: #e6d0c6;}
-
-
