@@ -35,7 +35,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -64,10 +63,9 @@ public class HistoryLog implements Serializable {
 	private String username;
 	@Column (name="\"fullName\"", length=50)
 	private String fullName;
-	@Column (name="\"action\"", length=255, nullable=false)
+	@Column (name="\"action\"", length=1000, nullable=false)
 	private String action;
-	@Column (name="\"informations\"", length=255)
-	@Lob
+	@Column (name="\"informations\"", length=3000)
 	private String informations;
 	@Column (name="\"executionTime\"", length=15, nullable=false)
 	private Long executionTime;
