@@ -39,6 +39,7 @@
             <tx:method name="register*" propagation="REQUIRED"/>
             <tx:method name="save*" />
             <tx:method name="send*" />
+            <tx:method name="trace*" propagation="REQUIRED"/>
             <tx:method name="update*" />
         </tx:attributes>
     </tx:advice>
