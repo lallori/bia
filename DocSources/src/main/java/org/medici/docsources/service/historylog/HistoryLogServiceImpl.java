@@ -63,7 +63,6 @@ public class HistoryLogServiceImpl implements HistoryLogService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-		System.out.println("idLog : " + historyLog.getIdHistoryLog());
 	}
 
 }
