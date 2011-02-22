@@ -68,18 +68,21 @@ public class AjaxController {
 
 	/**
 	 * 
-	 * @param entryId
-	 * @param volNum
-	 * @param volLetExt
-	 * @param imageType
+	 * @param entryId Document identifier
+	 * @param volNum Volume Number
+	 * @param volLetExt Volume Letter Extension
+	 * @param imageType 
 	 * @param imageProgTypeNum
-	 * @param imageOrder
-	 * @param total
-	 * @param totalRubricario
-	 * @param totalCarta
-	 * @param totalAppendix
+	 * @param firstRecord This is input parameter for Carta Form
+	 * @param secondRecord This is input parameter for Rubricario Form
+	 * @param imageOrder Unique id identifier inside volume.
+	 * @param total Global total of volume.
+	 * @param totalRubricario Total count page in rubricario section.
+	 * @param totalCarta Total count page in carta section.
+	 * @param totalAppendix Total count page in appendix section.
 	 * @param totalOther
 	 * @param totalGuardia
+	 * @param modeEdit
 	 * @return
 	 */
 	@RequestMapping(value = {"/src/mview/SearchCarta", "/de/mview/SearchCarta"}, method = RequestMethod.GET)
@@ -88,6 +91,8 @@ public class AjaxController {
 			@RequestParam(value="volLetExt", required=false) String volLetExt,
 			@RequestParam(value="imageType", required=false) String imageType,
 			@RequestParam(value="imageProgTypeNum", required=false) Integer imageProgTypeNum,
+			@RequestParam(value="firstRecord", required=false) Integer firstRecord,
+			@RequestParam(value="secondRecord", required=false) Integer secondRecord,
 			@RequestParam(value="imageOrder", required=false) Integer imageOrder,
 			@RequestParam(value="total", required=false) Long total,
 			@RequestParam(value="totalRubricario", required=false) Long totalRubricario,
@@ -101,9 +106,15 @@ public class AjaxController {
 
 		DocumentExplorer documentExplorer = new DocumentExplorer(entryId, volNum, volLetExt);
 		documentExplorer.setImage(new Image());
-		documentExplorer.getImage().setImageProgTypeNum(imageProgTypeNum);
 		documentExplorer.getImage().setImageOrder(imageOrder);
 		documentExplorer.getImage().setImageType(ImageType.valueOf(imageType));
+		if (documentExplorer.getImage().getImageType().equals(ImageType.C)) {
+			documentExplorer.getImage().setImageProgTypeNum(firstRecord);
+		} else if (documentExplorer.getImage().getImageType().equals(ImageType.R)) {
+			documentExplorer.getImage().setImageProgTypeNum(secondRecord);
+		} else {
+			documentExplorer.getImage().setImageProgTypeNum(imageProgTypeNum);
+		}
 		documentExplorer.setTotal(total);
 		documentExplorer.setTotalRubricario(totalRubricario);
 		documentExplorer.setTotalCarta(totalCarta);
