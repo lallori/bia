@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -96,6 +97,15 @@ public interface UserService {
 	public void deleteUser(User user) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param account
+	 * @param personalNotes
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public PersonalNotes editPersonalNotes(String account, PersonalNotes personalNotes) throws ApplicationThrowable;
+
+	/**
 	 * This method will find an activation user entity.
 	 * 
 	 * @param uuid the unique identify of activation process
@@ -150,6 +160,14 @@ public interface UserService {
 	public List<PasswordChangeRequest> findPasswordResetRequests() throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param username
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public PersonalNotes findPersonalNotes(String username) throws ApplicationThrowable;
+
+	/**
 	 * Given in input user account, this method returns the user object.
 	 * 
 	 * @param account the {@link java.lang.String} user account that we are searching 
@@ -165,6 +183,7 @@ public interface UserService {
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public User findUser(User user) throws ApplicationThrowable;
+
 
 	/**
 	 * Given in input an user containing search fields conditions, this method
@@ -188,7 +207,6 @@ public interface UserService {
 	 */
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable;
 
-
 	/**
 	 * 
 	 * @param account
@@ -196,7 +214,7 @@ public interface UserService {
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Boolean isAccountAvailable(String account) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param user
@@ -215,7 +233,7 @@ public interface UserService {
 	 *          - 3, password contains alphabetic chars and letters;
 	 */
 	public Integer ratePassword(String password);
-	
+
 	/**
 	 * This method implements business logic for register a new user.<br>
 	 * The input user must be completed, with following informations :<br>

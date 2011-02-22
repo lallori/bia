@@ -42,10 +42,12 @@ import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.activationuser.ActivationUserDAO;
 import org.medici.docsources.dao.country.CountryDAO;
 import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
+import org.medici.docsources.dao.personalnotes.PersonalNotesDAO;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
+import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -73,7 +75,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private CountryDAO countryDao;
 	@Autowired
-	private PasswordChangeRequestDAO passwordChangeRequestDAO; 
+	private PasswordChangeRequestDAO passwordChangeRequestDAO;
+	@Autowired
+	private PersonalNotesDAO personalNotesDAO;
 	@Autowired
 	private UserDAO userDAO; 
 
@@ -151,6 +155,30 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	@Override
+	public PersonalNotes editPersonalNotes(String account, PersonalNotes personalNotes) throws ApplicationThrowable {
+		PersonalNotes personalNotesToUpdate = null;
+		
+		try {
+			personalNotesToUpdate = getPersonalNotesDAO().find(account);
+			
+			if (personalNotesToUpdate == null) {
+				personalNotesToUpdate = new PersonalNotes(personalNotes.getPersonalNotes());
+				personalNotesToUpdate.setAccount(account);
+				personalNotesToUpdate.setLastUpdate(new Date());
+				getPersonalNotesDAO().persist(personalNotesToUpdate);
+			} else {
+				personalNotesToUpdate.setPersonalNotes(personalNotes.getPersonalNotes());
+				personalNotesToUpdate.setLastUpdate(new Date());
+				getPersonalNotesDAO().merge(personalNotesToUpdate);
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		return personalNotesToUpdate;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -229,6 +257,15 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public PersonalNotes findPersonalNotes(String account) throws ApplicationThrowable {
+		try {
+			return getPersonalNotesDAO().find(account);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -270,7 +307,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -318,7 +355,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * This method will generate the user inital. The format of the returned string is :
 	 * - First Letter of field First Name;
@@ -382,6 +419,13 @@ public class UserServiceImpl implements UserService {
 	 */
 	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
 		return passwordChangeRequestDAO;
+	}
+
+	/**
+	 * @return the personalNotesDAO
+	 */
+	public PersonalNotesDAO getPersonalNotesDAO() {
+		return personalNotesDAO;
 	}
 
 	/**
@@ -508,6 +552,13 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void setPasswordChangeRequestDAO(PasswordChangeRequestDAO passwordChangeRequestDAO) {
 		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
+	}
+
+	/**
+	 * @param personalNotesDAO the personalNotesDAO to set
+	 */
+	public void setPersonalNotesDAO(PersonalNotesDAO personalNotesDAO) {
+		this.personalNotesDAO = personalNotesDAO;
 	}
 
 	/**
