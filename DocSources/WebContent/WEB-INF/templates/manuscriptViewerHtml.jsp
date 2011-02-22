@@ -47,6 +47,14 @@ Joana Amill <joana.amill@gmail.com>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dialogextend.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.pageTurnerForm.js"/>"/></script>
 		
+		<script type="text/javascript">
+			$j(document).ready(function() {
+				$j.ajaxSetup ({
+					// Disable caching of AJAX responses
+					cache: false
+				});
+			});
+		</script>
 		<tiles:insertAttribute name="manuscriptviewer" />
 	</head>
 

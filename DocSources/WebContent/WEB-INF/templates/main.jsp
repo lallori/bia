@@ -49,7 +49,7 @@
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
 				$j.ajaxSetup ({
-					// Disable caching of AJAX responses */
+					// Disable caching of AJAX responses
 					cache: false
 				});
 			});
