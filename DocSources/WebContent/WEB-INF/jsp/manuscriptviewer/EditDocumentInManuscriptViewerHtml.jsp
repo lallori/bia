@@ -24,15 +24,12 @@
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
 		<c:param name="modeEdit" value="true" />
 	</c:url>
+	
+	<c:set var="autoOpenSynopsisDialog" value="${document.synExtract ? 'true' : 'false'}"/> 
 		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
-				$j.ajaxSetup ({
-					// Disable caching of AJAX responses */
-					cache: false
-				});
-
 				var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>')
 				.dialog({                                                                                                                                                                   
 					autoOpen: true,
@@ -55,7 +52,7 @@
 
 				var $dialogSynopsis = $j('<div id="EditSynopsisDocumentDiv"></div>')
 				.dialog({                                                                                                                                                                   
-					autoOpen: true,
+					autoOpen: ${autoOpenSynopsisDialog},
 					width: 352,
 					minWidth: 350,
 					minHeight: 200,                                                                                                                                                         
