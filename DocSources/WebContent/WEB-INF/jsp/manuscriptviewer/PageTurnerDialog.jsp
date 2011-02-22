@@ -82,12 +82,13 @@
 			<form:hidden path="volLetExt" />
 			<form:hidden path="imageType" value="R"/>
 			<form:hidden path="imageOrder" />
-			<form:hidden path="total" value="${volumeExplorer.total}" />
-			<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-			<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
-			<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-			<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
-			<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+			<form:hidden path="total" value="${command.total}" />
+			<form:hidden path="totalRubricario" value="${command.totalRubricario}" />
+			<form:hidden path="totalCarta" value="${command.totalCarta}" />
+			<form:hidden path="totalAppendix" value="${command.totalAppendix}" />
+			<form:hidden path="totalOther" value="${command.totalOther}" />
+			<form:hidden path="totalGuardia" value="${command.totalGuardia}" />
+			<form:hidden path="modeEdit" value="${command.modeEdit}" />
 		</form:form>
 	</div>
 	
@@ -107,6 +108,7 @@
 			<form:hidden path="totalAppendix" value="${command.totalAppendix}" />
 			<form:hidden path="totalOther" value="${command.totalOther}" />
 			<form:hidden path="totalGuardia" value="${command.totalGuardia}" />
+			<form:hidden path="modeEdit" value="${command.modeEdit}" />
 		</form:form>
 	</div>
 	
