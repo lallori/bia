@@ -5,6 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="searchAjaxUrl" value="/src/mview/SearchCarta.json"/>
+	<c:url var="PersonalNotesDialogUrl" value="/src/mview/EditPersonalNotesDialog.do"/>
 
 	<c:url var="currentPage" value="${caller}">
 		<c:param name="entryId" value="${command.entryId}" />
@@ -114,8 +115,8 @@
 	
 	<div id="line2"></div>
 	
-	<div id="personalNotes">
-		<a href="#"><img src="<c:url value="/images/button_personalNotes.png" />" alt="Personal Notes" /></a>
+	<div id="personalNotesDiv">
+		<a id="personalNotes" href="#"><img src="<c:url value="/images/button_personalNotes.png" />" alt="Personal Notes" /></a>
 	</div>
 	
 	<div id="exitDiv">
@@ -135,6 +136,24 @@
 		$j(document).ready(function() {
 			$j("#moveToFolioForm").pageTurnerForm();
 			$j("#rubricarioMoveTo").pageTurnerForm();
+
+			var $dialogPersonalNotes = $j('<div id="EditPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
+				autoOpen: false,
+				width: 352,
+				minWidth: 350,
+				minHeight: 200,                                                                                                                                                         
+				title: 'Edit Extract',
+				position: ['right','top'],                                                                                                                                                      
+				title: 'PERSONAL NOTES',
+				position: ['right','bottom'],                                                                                                                                                       
+				closeOnEscape: false,
+				maximized:false,
+				open: function(event, ui) { 
+            		$(this).load('${PersonalNotesDialogUrl}');
+           		},
+				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+			}).dialogExtend({"minimize" : true});
 
 			$j("#exit").dialog({
 				resizable: false,
@@ -160,6 +179,15 @@
 			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open'); 
 			});
-	        
+			
+			$j('#personalNotes').click(function() {
+				if ($dialogPersonalNotes.dialog("isOpen")) {
+					$dialogPersonalNotes.dialog("close");
+					return false;
+				} else {
+					$dialogPersonalNotes.dialog("open")
+					return false;
+				}
+			});
 		});
 	</script>

@@ -33,7 +33,7 @@
 					cache: false
 				});
 
-				var $dialogExtract = $j('<div></div>')
+				var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>></div>')
 				.dialog({                                                                                                                                                                   
 					autoOpen: true,
 					width: 352,
@@ -53,7 +53,7 @@
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
 				}).dialogExtend({"minimize" : true});                                                                                                                                                                         
 
-				var $dialogSynopsis = $j('<div></div>')
+				var $dialogSynopsis = $j('<div id="EditSynopsisDocumentDiv"></div>')
 				.dialog({                                                                                                                                                                   
 					autoOpen: true,
 					width: 352,
@@ -73,8 +73,8 @@
 				}).dialogExtend({"minimize" : true});;
 				
 				
-				var $dialogExplorer = $j('<div></div>')
-				.dialog({                                                                                                                                                                   
+				var $pageTurner = $j('<div id="PageTurnerDiv"></div>')
+				.dialog({
 					autoOpen: true,
 					width: 575,
 					height: 110,

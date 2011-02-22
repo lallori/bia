@@ -223,6 +223,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/EditExtractDocumentDialog.jsp"/>
 	</definition>
 
+	<definition name="manuscriptviewer/EditPersonalNotesDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/EditPersonalNotesDialog.jsp"/>
+	</definition>
+
 	<definition name="manuscriptviewer/EditSynopsisDocumentDialog" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/EditSynopsisDocumentDialog.jsp"/>
 	</definition>
