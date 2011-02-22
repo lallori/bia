@@ -92,7 +92,7 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 			historyLog.setDateAndTime(new Date(System.currentTimeMillis()));
 			historyLog.setIpAddress(((WebAuthenticationDetails) userNamePasswordAuthenticationToken.getDetails()).getRemoteAddress());
 			historyLog.setAction("/loginProcess");
-			historyLog.setInformations(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
+			historyLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
 
 			try {
 				getHistoryLogService().traceAction(historyLog);
@@ -152,7 +152,7 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 			} else if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("UsernamePasswordAuthenticationToken")) {
 				UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 				historyLog.setUsername(userNamePasswordAuthenticationToken.getName());
-				historyLog.setInformations(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
+				historyLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
 			}
 		} else {
 			historyLog.setUsername("");
