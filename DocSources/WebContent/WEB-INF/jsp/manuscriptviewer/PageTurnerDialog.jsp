@@ -145,7 +145,7 @@
 				title: 'Edit Extract',
 				position: ['right','top'],                                                                                                                                                      
 				title: 'PERSONAL NOTES',
-				position: ['right','bottom'],                                                                                                                                                       
+				position: ['right','top'],                                                                                                                                                       
 				closeOnEscape: false,
 				maximized:false,
 				open: function(event, ui) { 

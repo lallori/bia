@@ -9,19 +9,20 @@
 		<input id="saveExtract" type="image" src="<c:url value="/images/saveExtract.png"/>" alt="Save Extract"/>
 		<input id="saveAndEditSynopsis" type="image" src="<c:url value="/images/saveAndEditSynopsis.png"/>" alt="Save and edit Synopsis"/>
 		<form:hidden path="entryId"/>
+		<form:hidden path="synExtrId" />
 	</form:form>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditExtractDocumentForm").click(function (){
-				$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+			$j("#saveExtract").click(function (){
+				$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
 						$j("#EditExtractDocumentDiv").html(html);
 					} 
 				});
 				return false;
 			});
 			$j("#saveAndEditSynopsis").click(function (){
-				$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+				$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
 						$j("#EditExtractDocumentDiv").html(html);
 					} 
 				});

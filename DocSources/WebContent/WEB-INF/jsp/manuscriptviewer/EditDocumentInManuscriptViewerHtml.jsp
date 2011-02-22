@@ -33,7 +33,7 @@
 					cache: false
 				});
 
-				var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>></div>')
+				var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>')
 				.dialog({                                                                                                                                                                   
 					autoOpen: true,
 					width: 352,
@@ -46,7 +46,7 @@
 					
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide(); 
-                		$(this).load('${EditExtractDialogUrl}');
+						$(this).load('${EditExtractDialogUrl}');
 					},
 					//drag: function(event, ui) {$j(this).append(ui.position.left);},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);}, 
@@ -66,7 +66,7 @@
 					
 					open: function(event, ui) { 
 						$j(".ui-dialog-titlebar-close").hide(); 
-                		$(this).load('${EditSynopsisDialogUrl}');
+						$(this).load('${EditSynopsisDialogUrl}');
 					},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
