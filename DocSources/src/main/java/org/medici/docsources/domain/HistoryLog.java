@@ -61,8 +61,8 @@ public class HistoryLog implements Serializable {
 	private String ipAddress;
 	@Column (name="\"username\"", length=50, nullable=false)
 	private String username;
-	@Column (name="\"fullName\"", length=50)
-	private String fullName;
+	@Column (name="\"authorities\"", length=50)
+	private String authorities;
 	@Column (name="\"action\"", length=1000, nullable=false)
 	private String action;
 	@Column (name="\"informations\"", length=3000)
@@ -76,78 +76,91 @@ public class HistoryLog implements Serializable {
 	public Integer getIdHistoryLog() {
 		return idHistoryLog;
 	}
+	
 	/**
 	 * @param idHistoryLog the idHistoryLog to set
 	 */
 	public void setIdHistoryLog(Integer idHistoryLog) {
 		this.idHistoryLog = idHistoryLog;
 	}
+	
 	/**
 	 * @return the dateAndTime
 	 */
 	public Date getDateAndTime() {
 		return dateAndTime;
 	}
+	
 	/**
 	 * @param dateAndTime the dateAndTime to set
 	 */
 	public void setDateAndTime(Date dateAndTime) {
 		this.dateAndTime = dateAndTime;
 	}
+	
 	/**
 	 * @return the ipAddress
 	 */
 	public String getIpAddress() {
 		return ipAddress;
 	}
+	
 	/**
 	 * @param ipAddress the ipAddress to set
 	 */
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
+	
 	/**
 	 * @return the username
 	 */
 	public String getUsername() {
 		return username;
 	}
+	
 	/**
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	/**
-	 * @return the fullName
+	 * @return the authorities
 	 */
-	public String getFullName() {
-		return fullName;
+	public String getAuthorities() {
+		return authorities;
 	}
+	
 	/**
-	 * @param fullName the fullName to set
+	 * @param authorities the authorities to set
 	 */
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setAuthorities(String authorities) {
+		this.authorities = authorities;
 	}
+	
 	/**
 	 * @return the action
 	 */
 	public String getAction() {
 		return action;
 	}
+	
 	/**
 	 * @param action the action to set
 	 */
 	public void setAction(String action) {
 		this.action = action;
 	}
+	
 	/**
 	 * @return the informations
 	 */
 	public String getInformations() {
 		return informations;
 	}
+	
 	/**
 	 * @param informations the informations to set
 	 */
@@ -164,7 +177,7 @@ public class HistoryLog implements Serializable {
 		stringBuffer.append(" - ");
 		stringBuffer.append(getUsername());
 		stringBuffer.append(" - ");
-		stringBuffer.append(getFullName());
+		stringBuffer.append(getAuthorities());
 		stringBuffer.append(" - ");
 		stringBuffer.append(getAction());
 		stringBuffer.append(" - ");
