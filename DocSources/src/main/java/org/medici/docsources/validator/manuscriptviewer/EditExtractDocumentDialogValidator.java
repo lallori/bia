@@ -104,9 +104,11 @@ public class EditExtractDocumentDialogValidator implements Validator {
 				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
 				} else {
-					if (synExtrId > 0) {
-						if (document.getSynExtract().getSynExtrId() != synExtrId) {
-							errors.reject("synExtrId", "error.synExtrId.notfound");
+					if (synExtrId != null) {
+						if (synExtrId > 0) {
+							if (document.getSynExtract().getSynExtrId() != synExtrId) {
+								errors.reject("synExtrId", "error.synExtrId.notfound");
+							}
 						}
 					}
 				}

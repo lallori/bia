@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.synextract;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -70,6 +72,12 @@ public class SynExtractDAOJpaImpl extends JpaDao<Integer, SynExtract> implements
 		select.where(criteriaBuilder.equal(path, entryId));
 		 
 		TypedQuery<SynExtract> typedQuery = getEntityManager().createQuery(select);
-		return typedQuery.getSingleResult();
+		List<SynExtract> result = typedQuery.getResultList();
+		
+		if (result.size() == 1) {
+			return result.get(0);
+		}
+
+		return null;
 	}
 }
