@@ -23,7 +23,6 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <description>Adattatore Jpa per il motore Hibernate. L'oggetto è configurato per colloquiare con un database Oracle 10g.</description>
-                <property name="showSql" value="true" />
                 <property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
             </bean>
         </property>
