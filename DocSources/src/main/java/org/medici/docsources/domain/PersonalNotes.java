@@ -28,6 +28,8 @@
 package org.medici.docsources.domain;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -56,11 +58,23 @@ public class PersonalNotes implements Serializable {
 	@Column (name="\"personalNotes\"", columnDefinition="LONGTEXT")
 	private String personalNotes;
 	
+	@Column (name="\"lastUpdate\"")
+	private Date lastUpdate;
+
 	/**
 	 * Default Constructor 
 	 */
 	public PersonalNotes() {
 		super();
+	}
+
+	/**
+	 * 
+	 * @param personalNotes
+	 */
+	public PersonalNotes(String personalNotes) {
+		super();
+		setPersonalNotes(personalNotes);
 	}
 
 	/**
@@ -132,6 +146,20 @@ public class PersonalNotes implements Serializable {
 		} else if (!account.equals(other.account))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @param lastUpdate the lastUpdate to set
+	 */
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	/**
+	 * @return the lastUpdate
+	 */
+	public Date getLastUpdate() {
+		return lastUpdate;
 	}
 }
 

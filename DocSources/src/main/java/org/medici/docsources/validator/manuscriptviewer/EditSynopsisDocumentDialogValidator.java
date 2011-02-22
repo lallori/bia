@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.manuscriptviewer;
 
 import org.medici.docsources.command.manuscriptviewer.EditSynopsisDocumentDialogCommand;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class EditSynopsisDocumentDialogValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditSynopsisDocumentDialogCommand editSynopsisDocumentDialogCommand = (EditSynopsisDocumentDialogCommand) object;
-		validateDocumentId(editSynopsisDocumentDialogCommand.getEntryId(), errors);
+		validateSynopsis(editSynopsisDocumentDialogCommand.getEntryId(), editSynopsisDocumentDialogCommand.getSynExtrId(), errors);
 	}
 
 	/**
@@ -94,13 +95,20 @@ public class EditSynopsisDocumentDialogValidator implements Validator {
 	 * @param documentId
 	 * @param errors
 	 */
-	public void validateDocumentId(Integer entryId, Errors errors) {
+	public void validateSynopsis(Integer entryId, Integer synExtrId, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				if (getDocBaseService().findDocument(entryId) == null) {
+				Document document = getDocBaseService().findDocument(entryId);
+				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
+				} else {
+					if (synExtrId > 0) {
+						if (document.getSynExtract().getSynExtrId() != synExtrId) {
+							errors.reject("synExtrId", "error.synExtrId.notfound");
+						}
+					}
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");

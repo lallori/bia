@@ -332,7 +332,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document editExtractDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
-			SynExtract synExtractToUpdate = getSynExtractDAO().find(synExtract.getSynExtrId());
+			Document document = getDocumentDAO().find(synExtract.getDocument().getEntryId());
+
+			SynExtract synExtractToUpdate = document.getSynExtract();
 
 			// fill fields to update document section
 			synExtractToUpdate.setLastUpdate(new Date());
