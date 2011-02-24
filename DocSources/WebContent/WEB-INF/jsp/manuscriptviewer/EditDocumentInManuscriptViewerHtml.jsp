@@ -25,10 +25,18 @@
 		<c:param name="modeEdit" value="true" />
 	</c:url>
 	
-	<c:set var="autoOpenSynopsisDialog" value="${document.synExtract ? 'true' : 'false'}"/> 
+	<c:set var="autoOpenSynopsisDialog" value="${document.synExtract != null ? 'true' : 'false'}"/> 
 		
 		<script type="text/javascript">
-			var $j = jQuery.noConflict();
+			iip = new IIP( "targetframe", {
+				server: '/DocSources/mview/ProxyIIPImage.do',
+				image: '${documentExplorer.image}',
+				credit: '&copy; copyright or information message', 
+				zoom: 1,
+				showNavButtons: true,
+				render: 'random'
+			});
+			
 			$j(document).ready(function() {
 				var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>')
 				.dialog({                                                                                                                                                                   
@@ -91,15 +99,6 @@
 				}).dialogExtend({"minimize" : true});
 			
 	
-			});
-
-			iip = new IIP( "targetframe", {
-				server: '/DocSources/mview/ProxyIIPImage.do',
-				image: '${documentExplorer.image}',
-				credit: '&copy; copyright or information message', 
-				zoom: 1,
-				showNavButtons: true,
-				render: 'random'
 			});
 
 		</script>
