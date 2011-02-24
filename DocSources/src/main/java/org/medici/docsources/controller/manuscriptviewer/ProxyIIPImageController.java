@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -122,9 +123,11 @@ public class ProxyIIPImageController {
 			client.executeMethod(method);
 			logger.debug("Proxying IIPImage Url : " + stringBuffer.toString() + " (Status Line" + method.getStatusLine() + ")");
 
-			// Redirecting proxed output to client 
+			// Set content type 
 			response.setContentType(method.getResponseHeader("Content-Type").getValue());
-			response.getOutputStream().write(method.getResponseBody());
+			//response.getOutputStream().write(method.getResponseBody());
+			// Redirecting proxed output to client
+			IOUtils.copy(method.getResponseBodyAsStream(),response.getOutputStream());  
 
 			// Flushing request
 			response.getOutputStream().flush();
