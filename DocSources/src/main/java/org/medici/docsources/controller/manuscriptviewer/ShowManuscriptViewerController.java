@@ -51,7 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/mview/ShowManuscriptViewer")
+@RequestMapping("/src/ShowManuscriptViewer")
 public class ShowManuscriptViewerController {
 	@Autowired
 	private DocBaseService docBaseService;

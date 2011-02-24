@@ -112,7 +112,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/ajax/PaginationSearchData.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/PaginationSearchData.json", method = RequestMethod.GET)
 	public ModelAndView searchPagination(@RequestParam("searchType") String searchType, 
 								   		 @RequestParam("sSearch") String alias, 
 								   		 @RequestParam("iDisplayStart") Integer firstRecord,
