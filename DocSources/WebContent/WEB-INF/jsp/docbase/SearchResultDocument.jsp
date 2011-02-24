@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="searchDocumentPaginationUrl" value="/ajax/PaginationSearchData.json">
+<c:url var="searchDocumentPaginationUrl" value="/src/PaginationSearchData.json">
 	<c:param name="searchType" value="documents" />
 </c:url>
 <c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>

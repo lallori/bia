@@ -20,7 +20,7 @@
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
-		<c:url var="manuscriptViewer" value="/mview/ShowManuscriptViewer.do">
+		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${volumeExplorer.image}" />
 			<c:param name="flashVersion"   value="${command.flashVersion}" />
 		</c:url>
