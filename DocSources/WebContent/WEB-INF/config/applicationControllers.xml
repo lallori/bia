@@ -23,10 +23,74 @@
 		</mvc:interceptor>
 
 		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
-	       	<bean id="historyLogAction" class="org.medici.docsources.audit.HistoryLogAction">
-		        <description>Modulo history log.</description>
-		        <property name="historyLogService" ref="historyLogService" />
+			<mvc:mapping path="/Home**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/Indexer**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/LoginUser**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/SearchData**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/catalog/**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/common/**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/de/**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/src/**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
+	       	</bean>
+		</mvc:interceptor>
+			
+		<mvc:interceptor>
+			<mvc:mapping path="/user/**"/>
+	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
+				<description>Modulo history log.</description>
+				<property name="historyLogService" ref="historyLogService" />
 	       	</bean>
 		</mvc:interceptor>
 
