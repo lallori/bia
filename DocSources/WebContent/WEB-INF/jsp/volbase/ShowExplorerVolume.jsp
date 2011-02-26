@@ -31,7 +31,7 @@
 	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
-		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder + 1}" />
+		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
