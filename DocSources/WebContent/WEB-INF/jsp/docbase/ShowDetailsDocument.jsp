@@ -22,8 +22,6 @@
 		</c:url>
 		<c:url var="ShowDocumentInManuscriptViewer" value="/src/mview/ShowDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
-			<c:param name="imageType" value="C" />
-			<c:param name="imageProgTypeNum"   value="${document.folioNum}" />
 			<c:param name="flashVersion"   value="false" />
 		</c:url>
 	</security:authorize>
@@ -33,9 +31,13 @@
 		<div id="createdby"><h6>CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></h6></div>
 		<hr id="lineSeparator"/>
 		<div id="DocumentImageDiv">
-			<img src="<c:url value="/images/image_document.png"/>" alt="document image" />
+			<c:if test="${not empty image}">
+			<img src="<c:url value="/mview/ProxyIIPImageThumbnail.do?imageName=${image}"/>">
 			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewer}">Show in manuscript viewer</a></p>
-			<p><a href="#">Attach folios</a>
+			</c:if>
+			<c:if test="${empty image}">
+			<img src="<c:url value="/images/image_document.png"/>" alt="document image" />
+			</c:if>
 		</div>
 		
 		<ul>

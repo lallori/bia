@@ -14,9 +14,13 @@
 			$j("#EditPersonalNotesForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j("#EditPersonalNotesForm").attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 						$j("#EditPersonalNotesDiv").html(html);
+						personalNotesChanged=false;
 					} 
 				});
 				return false;
+			});
+			$j("#extract").change(function(){
+				personalNotesChanged=true;
 			});
 		});
 	</script>

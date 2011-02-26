@@ -15,19 +15,28 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#saveExtract").click(function (){
-				$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
-						$j("#EditExtractDocumentDiv").html(html);
-					} 
-				});
+				if (extractChanged) {
+					$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
+							$j("#EditExtractDocumentDiv").html(html);
+							extractChanged=false;
+						} 
+					});
+				}
 				return false;
 			});
 			$j("#saveAndEditSynopsis").click(function (){
-				$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
-					$j("#synopsis").focus();
-					$j("#EditExtractDocumentDiv").html(html);
-					} 
-				});
+				if (extractChanged) {
+						$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
+							$j("#synopsis").focus();
+							$j("#EditExtractDocumentDiv").html(html);
+							extractChanged=false;
+							} 
+						});
+				}
 				return false;
+			});
+			$j("#extract").change(function(){
+				extractChanged=true;
 			});
 		});
 	</script>

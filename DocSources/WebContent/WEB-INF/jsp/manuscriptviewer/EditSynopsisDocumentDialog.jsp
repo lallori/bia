@@ -17,23 +17,37 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#saveSynopsis").click(function (){
-				$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
-						$j("#EditSynopsisDocumentDiv").html(html);
-					} 
-				});
+				if (synopsisChanged) {
+					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
+							$j("#EditSynopsisDocumentDiv").html(html);
+							synopsisChanged=false;
+						} 
+					});
+				}
 				return false;
 			});
 			$j("#saveSynopsisExit").click(function (){
-				$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
-					if(html.match(/inputerrors/g)){
-						$j("#EditSynopsisDocumentDiv").html(html);
-					} else {
-						$j("#EditSynopsisDocumentDiv").html(html);
-						window.close();
+				if (synopsisChanged) {
+					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
+						if(html.match(/inputerrors/g)){
+							$j("#EditSynopsisDocumentDiv").html(html);
+							synopsisChanged=false;
+						} else {
+							$j("#EditSynopsisDocumentDiv").html(html);
+							synopsisChanged=false;
+							window.close();
+						}
 					}
-					}
-				});
+					});
+				} else {
+					window.close();
+				}
+				
 				return false;
+			});
+			
+			$j("#synopsis").change(function(){
+				synopsisChanged=true;
 			});
 		});
 	</script>

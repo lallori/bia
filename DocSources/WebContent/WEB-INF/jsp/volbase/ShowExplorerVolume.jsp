@@ -73,18 +73,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
+				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<img src="<c:url value="/images/button_next.png" />" alt="next" />
+				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
@@ -93,27 +93,25 @@
 			<iframe class="iframeFlipVolume" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:0"></iframe>
 		</div>	
 		
-		<div>
-			<div id="prevNextButtons">
-				<div id="previousPage">
-				<c:if test="${volumeExplorer.image.imageOrder == 1}">
-					<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
-				</c:if>
-				<c:if test="${volumeExplorer.image.imageOrder > 1}">
-					<a id="previousPage" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
-				</c:if>
-				</div>
-				<div id="nextPage">
-				<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-					<img src="<c:url value="/images/button_next.png" />" alt="next" />
-				</c:if>
-				<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-					<a id="nextPage" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
-				</c:if>
-				</div>
+		<div id="prevNextButtons">
+			<div id="previousPage">
+			<c:if test="${volumeExplorer.image.imageOrder == 1}">
+				<a id="previousPage"></a>
+			</c:if>
+			<c:if test="${volumeExplorer.image.imageOrder > 1}">
+				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+			</c:if>
+			</div>
+			<div id="nextPage">
+			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
+				<a id="nextPage"></a>
+			</c:if>
+			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
+				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+			</c:if>
 			</div>
 		</div>
-
+		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
 	<c:if test="${volumeExplorer.totalRubricario > 0}">
 		<br/>
 		<br/>
@@ -124,9 +122,9 @@
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to rubricario</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
-				<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
+				<input id="goR" type="image" alt="Go" src="<c:url value="/images/trasparent_account.png" />"/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
@@ -151,9 +149,9 @@
 			</div>
 		
 			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to folio</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="imageProgTypeNumLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
-				<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+				<input id="go" type="image" src="<c:url value="/images/trasparent_account.png" />" alt="Go"/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
@@ -171,16 +169,16 @@
 		<br />
 			
 		<div>
-			<a id="fullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER"><img src="/DocSources/images/fullscreenMode.png" alt="Fullscreen Mode" /></a>
-			<a id="refreshVolumeExplorer" href="${currentPage}"><img src="<c:url value="/images/button_refresh.png" />" alt="Refresh" /></a>
+			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER"></a>
+			<a id="refreshVolumeExplorer" href="${currentPage}"></a>
 		</div>
 
 		<div align="center">
-			<form:form><form:errors path="imageProgTypeNum" cssStyle="error"/></form:form>
+			
 		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				$j("#fullScreen").click(function(){
+				$j("#flipItInFullScreen").click(function(){
 					Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
 					return false;
 				});

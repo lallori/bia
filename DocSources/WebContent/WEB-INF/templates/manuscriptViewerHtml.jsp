@@ -56,6 +56,10 @@ Joana Amill <joana.amill@gmail.com>
 					cache: false
 				});
 			});
+			
+			var extractChanged=false;
+			var synopsisChanged=false;
+			var personalNotesChanged=false;
 		</script>
 		<tiles:insertAttribute name="manuscriptviewer" />
 	</head>
