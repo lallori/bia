@@ -27,25 +27,18 @@
  */
 package org.medici.docsources.controller.docbase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.command.docbase.ChoiceStartFolioDocumentCommand;
 import org.medici.docsources.command.docbase.ChoiceStartFolioDocumentRequestCommand;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -78,23 +71,22 @@ public class ChoiceStartFolioDocumentController {
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ChoiceStartFolioDocumentRequestCommand command, BindingResult result, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
-		Page page = null;
-
-		PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), 1, command.getTotal());
+		VolumeExplorer volumeExplorer = new VolumeExplorer(command.getVolNum(), command.getVolLetExt());
+		volumeExplorer.setImage(new Image());
+		volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
+		volumeExplorer.getImage().setImageOrder(command.getImageOrder());
+		volumeExplorer.getImage().setImageType(command.getImageType());
+		volumeExplorer.setTotal(command.getTotal());
+		volumeExplorer.setTotalRubricario(command.getTotalRubricario());
+		volumeExplorer.setTotalCarta(command.getTotalCarta());
+		volumeExplorer.setTotalAppendix(command.getTotalAppendix());
+		volumeExplorer.setTotalOther(command.getTotalOther());
+		volumeExplorer.setTotalGuardia(command.getTotalGuardia());
 
 		try {
-			if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
-				page = getVolBaseService().findVolumeImages(command.getSummaryId(), paginationFilter);
-			} else {
-				if (!ObjectUtils.toString(command.getVolNum()).equals("")) {
-					page = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLetExt(), paginationFilter);
-				} else {
-					page = new Page(new ArrayList<Image>(0), new Long(0), new Integer(0), new Integer(0));
-				}
-			}
+			volumeExplorer = getVolBaseService().getVolumeExplorer(volumeExplorer);
 
-			model.put("page", page);
-			model.put("paginationFilter", paginationFilter);
+			model.put("volumeExplorer", volumeExplorer);
 		} catch (ApplicationThrowable ath) {
 		}
 
