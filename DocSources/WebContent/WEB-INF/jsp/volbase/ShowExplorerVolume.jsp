@@ -68,7 +68,7 @@
 	</c:url>
 	
 		<h5>VOLUME EXPLORER</h5>
-		<hr />
+		<hr id="lineSeparator"/>
 		
 		<div id="prevNextButtons">
 			<div id="previousPage">
