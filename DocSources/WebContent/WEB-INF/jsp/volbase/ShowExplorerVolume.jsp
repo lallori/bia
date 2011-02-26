@@ -118,13 +118,13 @@
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
-				<b>Rubricario Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
+				<b>Rubricario Count:</b> <label for="rubricarioCount" id="rubricarioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
-				<input id="goR" type="image" alt="Go" src="<c:url value="/images/trasparent_account.png" />"/>
+				<input id="goR" type="image" alt="Go" src="<c:url value="/images/transparent_account.png" />"/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
@@ -149,9 +149,9 @@
 			</div>
 		
 			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="imageProgTypeNumLabel">Move to folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
-				<input id="go" type="image" src="<c:url value="/images/trasparent_account.png" />" alt="Go"/>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
+				<input id="go" type="image" alt="Go" src="<c:url value="/images/transparent_account.png" />"/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
