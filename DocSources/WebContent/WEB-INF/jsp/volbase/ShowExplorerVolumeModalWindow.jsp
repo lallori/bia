@@ -37,7 +37,7 @@
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
-		<c:url var="manuscriptViewer" value="/mview/ShowManuscriptViewer.do">
+		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${volumeExplorer.image}" />
 			<c:param name="flashVersion"   value="true" />
 		</c:url>
@@ -92,18 +92,18 @@
 		<c:if test="${volumeExplorer.total > 0}">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
+				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<img src="<c:url value="/images/button_next.png" />" alt="next" />
+				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</c:if>
@@ -111,27 +111,26 @@
 		
 		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:100"></iframe>
 		
-		<div>
-			<div id="prevNextButtons">
-				<div id="previousPage">
-				<c:if test="${volumeExplorer.image.imageOrder == 1}">
-					<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
-				</c:if>
-				<c:if test="${volumeExplorer.image.imageOrder > 1}">
-					<a id="previousPage" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
-				</c:if>
-				</div>
-				<div id="nextPage">
-				<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-					<img src="<c:url value="/images/button_next.png" />" alt="next" />
-				</c:if>
-				<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-					<a id="nextPage" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
-				</c:if>
-				</div>
+		<div id="prevNextButtons">
+			<div id="previousPage">
+			<c:if test="${volumeExplorer.image.imageOrder == 1}">
+				<a id="previousPage"></a>
+			</c:if>
+			<c:if test="${volumeExplorer.image.imageOrder > 1}">
+				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+			</c:if>
+			</div>
+			<div id="nextPage">
+			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
+				<a id="nextPage"></a>
+			</c:if>
+			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
+				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+			</c:if>
 			</div>
 		</div>
-		
+
+		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
 	<c:if test="${volumeExplorer.totalRubricario > 0}">
 		<br/>
 		<br/>
@@ -141,13 +140,14 @@
 				<b>Rubricario Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" commandName="command" method="get" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to rubricario</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
-				<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricario" type="text" value="" />
+				<input id="goR" type="image" alt="Go" src="<c:url value="/images/transparent_account.png" />" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="R"/>
+				<form:hidden path="imageOrder" />
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
@@ -155,6 +155,7 @@
 				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>
 	</c:if>
@@ -168,13 +169,14 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 
-			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" commandName="command" method="get" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4c" type="text" value="" />
-				<input class="openmodalbox" id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
+				<input class="openmodalbox" id="go" type="image" src="<c:url value="/images/transparent_account.png" />" alt="Go"/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="C"/>
+				<form:hidden path="imageOrder" />
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
@@ -182,6 +184,7 @@
 				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>
 			
@@ -194,25 +197,38 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j(".simplemodal-close").click(function(){$j.modal.close(); return false;});
-			$j(".previousPage").click(function(){$j("#modalBox").load($j(this).attr("href"));return false;});					
-			$j(".nextPage").click(function(){$j("#modalBox").load($j(this).attr("href"));return false;});
-			$j("#transcribeDocument").click(function() { 
-				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
-				return false;
-			});
 	        $j("#moveToRubricarioForm").submit(function (){
 				$j.ajax({ type:"GET", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#modalBox").html(html);
+                	$j("#modalBox").html(html);
 				}});
 				return false;
 			});
+
 	        $j("#moveToFolioForm").submit(function (){
 				$j.ajax({ type:"GET", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					$j("#modalBox").html(html);
 				}});
 				return false;
 			});
+
+	        $j(".previousPage").click(function(){
+				$j("#modalBox").load($j(this).attr("href"));
+				return false;
+			});					
+			
+			$j(".nextPage").click(function(){
+				$j("#modalBox").load($j(this).attr("href"));
+				return false;
+			});
+
+			$j(".simplemodal-close").click(function() {
+				$j.modal.close(); 
+				return false;
+			});
+			
+			$j("#transcribeDocument").click(function() { 
+				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
+				return false;
+			});
 		});
 	</script>
-	
