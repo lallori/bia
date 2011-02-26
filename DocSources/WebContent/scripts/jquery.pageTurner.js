@@ -64,7 +64,7 @@
 							showNavButtons: true,
 							render: 'random'
 						});
-						console.log($(this).find("#imageProgTypeNum").val());
+
 						if (data.previousPage == '') {
 							$("#previous").removeAttr('href');
 						} else {
