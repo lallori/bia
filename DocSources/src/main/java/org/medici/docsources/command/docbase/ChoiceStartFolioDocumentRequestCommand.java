@@ -29,6 +29,8 @@ package org.medici.docsources.command.docbase;
 
 import javax.validation.constraints.Size;
 
+import org.medici.docsources.domain.Image.ImageType;
+
 /**
  * Command bean for action "Choice Start Folio Document Creation".
  * 
@@ -41,15 +43,28 @@ public class ChoiceStartFolioDocumentRequestCommand {
 	private Integer volNum;
 	@Size (max=1)
 	private String volLetExt;
-	private String page;
-	private Integer firstRecord;
+	/** This parameter is used to manage rubricario and folio forms */
+	private Integer imageOrder;
+	/** This parameter is used to manage image type (Rubricario, Carta...) */
+	private ImageType imageType;
+	/** This parameter is used to folio identifier ) */
+	private Integer imageProgTypeNum;
 	private Long total;
-	private Long imageDocumentToCreate;
+	/** This parameter is used to count Rubricario total */ 
+	private Long totalRubricario;
+	/** This parameter is used to count Carta total */
+	private Long totalCarta;
+	/** This parameter is used to count Other total */
+	private Long totalOther;
+	/** This parameter is used to count Guardia total */
+	private Long totalGuardia;
+	/** This parameter is used to count appendix total */
+	private Long totalAppendix;
+	/** This parameter is used to select flash version Volume Explorer */
 	private Boolean flashVersion;
-	private Boolean modalWindow;
 	// This parameter is used to identify first request on modalWindow, so we can set style in div osx-modal-data
 	private Boolean firstPage;
-
+	private Integer imageDocumentToCreate;
 	/**
 	 * @return the summaryId
 	 */
@@ -74,116 +89,161 @@ public class ChoiceStartFolioDocumentRequestCommand {
 	public void setVolNum(Integer volNum) {
 		this.volNum = volNum;
 	}
-	
 	/**
-	 * @return the volLeText
+	 * @return the volLetExt
 	 */
 	public String getVolLetExt() {
 		return volLetExt;
 	}
-	
-	/**	
-	 * @param volLeText the volLetExt to set
+	/**
+	 * @param volLetExt the volLetExt to set
 	 */
-	public void setVolLeText(String volLetExt) {
+	public void setVolLetExt(String volLetExt) {
 		this.volLetExt = volLetExt;
 	}
-	
 	/**
-	 * @param flashVersion the flashVersion to set
+	 * @return the imageOrder
 	 */
-	public void setFlashVersion(Boolean flashVersion) {
-		this.flashVersion = flashVersion;
+	public Integer getImageOrder() {
+		return imageOrder;
 	}
-	
 	/**
-	 * @return the flashVersion
+	 * @param imageOrder the imageOrder to set
 	 */
-	public Boolean getFlashVersion() {
-		return flashVersion;
+	public void setImageOrder(Integer imageOrder) {
+		this.imageOrder = imageOrder;
 	}
-	
 	/**
-	 * @param page the page to set
+	 * @return the imageType
 	 */
-	public void setPage(String page) {
-		this.page = page;
+	public ImageType getImageType() {
+		return imageType;
 	}
-	
 	/**
-	 * @return the page
+	 * @param imageType the imageType to set
 	 */
-	public String getPage() {
-		return page;
+	public void setImageType(ImageType imageType) {
+		this.imageType = imageType;
 	}
-	
 	/**
-	 * @param firstRecord the firstRecord to set
+	 * @return the imageProgTypeNum
 	 */
-	public void setFirstRecord(Integer firstRecord) {
-		this.firstRecord = firstRecord;
+	public Integer getImageProgTypeNum() {
+		return imageProgTypeNum;
 	}
-	
 	/**
-	 * @return the firstRecord
+	 * @param imageProgTypeNum the imageProgTypeNum to set
 	 */
-	public Integer getFirstRecord() {
-		return firstRecord;
+	public void setImageProgTypeNum(Integer imageProgTypeNum) {
+		this.imageProgTypeNum = imageProgTypeNum;
 	}
-	
-	/**
-	 * @param total the total to set
-	 */
-	public void setTotal(Long total) {
-		this.total = total;
-	}
-	
 	/**
 	 * @return the total
 	 */
 	public Long getTotal() {
 		return total;
 	}
-	
 	/**
-	 * @param modalWindow the modalWindow to set
+	 * @param total the total to set
 	 */
-	public void setModalWindow(Boolean modalWindow) {
-		this.modalWindow = modalWindow;
+	public void setTotal(Long total) {
+		this.total = total;
 	}
-	
 	/**
-	 * @return the modalWindow
+	 * @return the totalRubricario
 	 */
-	public Boolean getModalWindow() {
-		return modalWindow;
+	public Long getTotalRubricario() {
+		return totalRubricario;
 	}
-	
 	/**
-	 * @param firstPage the firstPage to set
+	 * @param totalRubricario the totalRubricario to set
 	 */
-	public void setFirstPage(Boolean firstPage) {
-		this.firstPage = firstPage;
+	public void setTotalRubricario(Long totalRubricario) {
+		this.totalRubricario = totalRubricario;
 	}
-	
+	/**
+	 * @return the totalCarta
+	 */
+	public Long getTotalCarta() {
+		return totalCarta;
+	}
+	/**
+	 * @param totalCarta the totalCarta to set
+	 */
+	public void setTotalCarta(Long totalCarta) {
+		this.totalCarta = totalCarta;
+	}
+	/**
+	 * @return the totalOther
+	 */
+	public Long getTotalOther() {
+		return totalOther;
+	}
+	/**
+	 * @param totalOther the totalOther to set
+	 */
+	public void setTotalOther(Long totalOther) {
+		this.totalOther = totalOther;
+	}
+	/**
+	 * @return the totalGuardia
+	 */
+	public Long getTotalGuardia() {
+		return totalGuardia;
+	}
+	/**
+	 * @param totalGuardia the totalGuardia to set
+	 */
+	public void setTotalGuardia(Long totalGuardia) {
+		this.totalGuardia = totalGuardia;
+	}
+	/**
+	 * @return the totalAppendix
+	 */
+	public Long getTotalAppendix() {
+		return totalAppendix;
+	}
+	/**
+	 * @param totalAppendix the totalAppendix to set
+	 */
+	public void setTotalAppendix(Long totalAppendix) {
+		this.totalAppendix = totalAppendix;
+	}
+	/**
+	 * @return the flashVersion
+	 */
+	public Boolean getFlashVersion() {
+		return flashVersion;
+	}
+	/**
+	 * @param flashVersion the flashVersion to set
+	 */
+	public void setFlashVersion(Boolean flashVersion) {
+		this.flashVersion = flashVersion;
+	}
 	/**
 	 * @return the firstPage
 	 */
 	public Boolean getFirstPage() {
 		return firstPage;
 	}
-	
+	/**
+	 * @param firstPage the firstPage to set
+	 */
+	public void setFirstPage(Boolean firstPage) {
+		this.firstPage = firstPage;
+	}
 	/**
 	 * @param imageDocumentToCreate the imageDocumentToCreate to set
 	 */
-	public void setImageDocumentToCreate(Long imageDocumentToCreate) {
+	public void setImageDocumentToCreate(Integer imageDocumentToCreate) {
 		this.imageDocumentToCreate = imageDocumentToCreate;
 	}
-	
 	/**
 	 * @return the imageDocumentToCreate
 	 */
-	public Long getImageDocumentToCreate() {
+	public Integer getImageDocumentToCreate() {
 		return imageDocumentToCreate;
 	}
+
 }
