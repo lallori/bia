@@ -485,19 +485,17 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image findDocumentImage(Integer entryId) throws ApplicationThrowable {
+	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable {
 		try {
-			Document document = getDocumentDAO().find(entryId);
-			
 			if (document != null) {
-				// eilink not null is image linked to document
-				if (document.getEiLink() != null) {
-					
+				if ((document.getFolioNum() != null) && (document.getFolioNum() > 0)) {
+					return getImageDAO().findImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), ImageType.C, document.getFolioNum());
 				} else {
-					return getImageDAO().findDocumentImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
+					return getImageDAO().findVolumeFirstImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
 				}
 			}
-			return getImageDAO().find(entryId);
+			
+			return null;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

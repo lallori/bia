@@ -214,15 +214,7 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param entryId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Image findDocumentImage(Integer entryId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param entryId
@@ -230,6 +222,14 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable;
 
 	/**
 	 * 
