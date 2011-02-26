@@ -16,7 +16,7 @@
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
-		<c:url var="manuscriptViewer" value="/mview/ShowManuscriptViewer.do">
+		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${page.list[0]}" />
 			<c:param name="flashVersion"   value="true" />
 		</c:url>
@@ -80,18 +80,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${page.firstRecordNumber == 1}">
-				<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
+				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${page.firstRecordNumber > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${page.firstRecordNumber == page.total }">
-				<img src="<c:url value="/images/button_next.png" />" alt="next" />
+				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${page.firstRecordNumber < page.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
@@ -102,7 +102,7 @@
 			<div id="prevNextButtons">
 				<div id="previousPage">
 				<c:if test="${page.firstRecordNumber == 1}">
-					<img src="<c:url value="/images/button_prev.png" />" alt="prev" />
+					<a id="previousPage"></a>
 				</c:if>
 				<c:if test="${page.firstRecordNumber > 1}">
 					<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
@@ -110,7 +110,7 @@
 				</div>
 				<div id="nextPage">
 				<c:if test="${page.firstRecordNumber == page.total }">
-					<img src="<c:url value="/images/button_next.png" />" alt="next" />
+					<a id="nextPage"></a>
 				</c:if>
 				<c:if test="${page.firstRecordNumber < page.total }">
 					<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
@@ -133,9 +133,20 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j(".nextPage").click(function(){$j("#modalBox").load($j(this).attr("href"));return false;});
-			$j(".previousPage").click(function(){$j("#modalBox").load($j(this).attr("href"));return false;});					
-			$j(".simplemodal-close").click( function(e) {$j.modal.close();});
+			$j(".nextPage").click(function(){
+				$j("#modalBox").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j(".previousPage").click(function(){
+				$j("#modalBox").load($j(this).attr("href"));
+				return false;
+			});					
+			
+			$j(".simplemodal-close").click( function(e) {
+				$j.modal.close();
+			});
+			
 			$j("#transcribeAndContextualizeDocument").click(function(){
 				$j("#body_left").load($j(this).attr("href"));
 				$j.modal.close();
