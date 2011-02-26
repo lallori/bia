@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.medici.docsources.command.docbase.ShowDocumentRequestCommand;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,23 +76,9 @@ public class ShowDocumentController {
 			// Details
 			Document document = getDocBaseService().findDocument(command.getEntryId());
 			model.put("document", document);
-
-			/*			// Fact Checks
-			factChecks = getDocBaseService().findFactChecks(document);
-			model.put("factChecks", factChecks);
-
-			// Correspondents People
-			epLink = getDocBaseService().findCorrespondentsPeople(document);
-			model.put("epLink", epLink);
-
-			// Linked Topics
-			eplToLink = getDocBaseService().findTopics(document);
-			model.put("eplToLink", eplToLink);
-
-			// Synopsys and Extract
-			synExtract = getDocBaseService().findSynExtract(document);
-			model.put("synExtract", synExtract);
-			 */		
+	
+			Image image = getDocBaseService().findDocumentImageThumbnail(document);
+			model.put("image", image);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowDocument", model);
 		}
