@@ -23,7 +23,8 @@
 			});
 			$j("#saveAndEditSynopsis").click(function (){
 				$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
-						$j("#EditExtractDocumentDiv").html(html);
+					$j("#synopsis").focus();
+					$j("#EditExtractDocumentDiv").html(html);
 					} 
 				});
 				return false;

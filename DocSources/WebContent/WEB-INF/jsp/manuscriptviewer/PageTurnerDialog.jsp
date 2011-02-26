@@ -5,6 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="searchAjaxUrl" value="/src/mview/SearchCarta.json"/>
+	<c:url var="ProxyIIPImage" value="/mview/ProxyIIPImage.do"/>
 	<c:url var="PersonalNotesDialogUrl" value="/src/mview/EditPersonalNotesDialog.do"/>
 
 	<c:url var="currentPage" value="${caller}">
@@ -20,7 +21,7 @@
 		<c:param name="totalGuardia" value="${command.totalGuardia}" />
 	</c:url>
 
-	<c:url var="nextPage" value="${caller}">
+	<c:url var="nextPage" value="/src/mview/SearchCarta.json">
 		<c:param name="entryId" value="${command.entryId}" />
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -31,6 +32,7 @@
 		<c:param name="totalAppendix" value="${command.totalAppendix}" />
 		<c:param name="totalOther" value="${command.totalOther}" />
 		<c:param name="totalGuardia" value="${command.totalGuardia}" />
+		<c:param name="nextPage" value="true" />
 	</c:url>
 
 	<c:url var="previousPage" value="${caller}">
@@ -44,7 +46,7 @@
 		<c:param name="totalAppendix" value="${command.totalAppendix}" />
 		<c:param name="totalOther" value="${command.totalOther}" />
 		<c:param name="totalGuardia" value="${command.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="previousPage" value="true" />
 	</c:url>
 
 	<div id="prevNextButtons">
@@ -75,8 +77,8 @@
 	
 	<div id="rubricarioMoveTo">
 		<form:form id="moveToRubricarioForm" method="post" class="edit">
-			<label for="imageProgTypeNum" id="imageProgTypeNumRubricario">Move to rubricario(page)</label>
-			<input id="secondRecord" name="imageProgTypeNum" class="input_4c" type="text" value="" />
+			<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to rubricario(page)</label>
+			<input id="imageProgTypeNum" name="imageProgTypeNum" class="imageProgTypeNum" type="text" value="" />
 			<input id="goR" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
 			<form:hidden path="entryId" />
 			<form:hidden path="volNum" />
@@ -95,8 +97,8 @@
 	
 	<div id="folioMoveTo">
 		<form:form id="moveToFolioForm" method="post" class="edit">
-			<label id="imageProgTypeNum" for="imageProgTypeNumLabel" >Move to folio (page)</label>
-			<input id="firstRecord" name="firstRecord" class="input_4c" type="text" value="" />
+			<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to folio (page)</label>
+			<input id="imageProgTypeNum" name="imageProgTypeNum" class="imageProgTypeNumFolio" type="text" value="" />
 			<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
 			<form:hidden path="entryId" />
 			<form:hidden path="volNum" />
@@ -134,9 +136,11 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#moveToFolioForm").pageTurnerForm();
-			$j("#rubricarioMoveTo").pageTurnerForm();
-
+			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ProxyIIPImage}'});
+			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ProxyIIPImage}'});
+			$j("#previous").pageTurnerPreviousPage({proxyIIPImage: '${ProxyIIPImage}'});
+			$j("#next").pageTurnerNextPage({proxyIIPImage: '${ProxyIIPImage}'});
+			
 			var $dialogPersonalNotes = $j('<div id="EditPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
 				autoOpen: false,
 				width: 352,

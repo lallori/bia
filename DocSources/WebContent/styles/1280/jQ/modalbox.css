@@ -73,14 +73,14 @@
 }
 
 .modalBox-close{
-	background-color: #e6d0c6;
+	background-color: transparent;
 	border:none;
 	display:inline;
-	color: #6d5c4d;
-	font-size:12px;
-	padding:3px 4px 3px 5px;
-	margin:20px auto 5px 33px;
+	margin:0 auto 0 auto;
 	cursor:pointer;
+	background-image:url(/DocSources/images/button_close.png);
+	width:52px;
+	height:24px;
 }
 
 #modalBoxCloseDiv{

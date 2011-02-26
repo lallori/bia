@@ -83,17 +83,27 @@ textarea {
 	margin:0;
 }
 
-#imageProgTypeNumRubricario { /* "Move to rubricario" <label> ID  */
+#imageProgTypeNumLabel { /* "Move to folio" <label> ID  */
 	font-size:11px;
-	margin:0 0 0 -57px;
+	margin:-2px 0 0 127px;
+	color:#6d5c4d;
+}
+
+#imageProgTypeNumRubricario { /* "Move to rubricario" <input> ID  */
+	font-size:11px;
+	width: 30px;
+	margin:-2px 0 0 117px;
 	position:absolute;
 	color:#6d5c4d;
 }
 
-#secondRecord { /* "Move to rubricario" <input> ID  */
+#imageProgTypeNumFolio input { /* "Move to rubricario" <input> ID  */
+	font-size:11px;
 	margin:-2px 0 0 97px;
 	position:absolute;
+	color:#6d5c4d;
 }
+
 
 #goR { /* "Move to rubricario" <input> GO button ID  */
 	margin:-5px 0 0 135px;
@@ -139,16 +149,6 @@ textarea {
 	float:right;
 }
 
-#imageProgTypeNum { /* "Move to folio" <label> ID  */
-	font-size:11px;
-	position:absolute;
-	color:#6d5c4d;
-}
-
-#firstRecord { /* "Move to folio" <input> ID  */
-	margin:-2px 0 0 117px;
-	position:absolute;
-}
 
 #go { /* "Move to folio" <input> GO button ID  */
 	margin:-5px 0 0 155px;

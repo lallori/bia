@@ -593,6 +593,17 @@ input.file {
 	margin-left:22px;
 }
 
+#AddPersonCorrespondentsDocument {
+	margin:5px auto auto 280px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/button_addNew1024.png);
+	width:59px;
+	height:23px;
+	border:none;
+}
+
 /* -------------------------------------- */
 /*
 /* ----- EditExtractOrSynopsisDocumentFullscreen ----- */
@@ -625,7 +636,37 @@ input.file {
 	margin:0;
 }
 
+/* -------------------------------------- */
+/*
+/* --------------- TOPICS --------------- */
 
+#topicDescription { /* "Show Topic Description" Button */
+	background-image:url(/DocSources/images/topic.png);
+	width:12px;
+	height:12px;
+	background-repeat:no-repeat;
+	margin-left:7px;
+}
+
+#AddTopicDocument { /* "Add New ..." Button */
+	background-image: url(/DocSources/images/button_addNew1024.png);
+	border:none;
+	display:inline;
+	margin:0 0 0 285px;
+	width:59px;
+	height:23px;
+	border:none;
+	padding:0;
+	background-color:transparent;
+}
+
+#AddTopicDocument:hover {
+	opacity:0.5;
+}
+
+#topicLabel {
+	margin-left:28px;
+}
 
 /* -------------------------------------- */
 /*
@@ -709,15 +750,13 @@ a#editValue { /* "Edit Value" Button */
 	
 }
 
-a#AddNamesPerson, a#AddChildPerson, a#AddTopicDocument, a#AddExtLinkTgnPlace, a#AddExtLinkMapPlace, a#AddExtLinkMapSitePlace, a#AddNameMapSitePlace, a#AddNameMapPlace, a#AddNameTgnPlace { /* "Add New ..." Button */
-	background-color: #e6d0c6;
-	padding:1px 5px 1px 5px;
+a#AddNamesPerson, a#AddChildPerson, a#AddExtLinkTgnPlace, a#AddExtLinkMapPlace, a#AddExtLinkMapSitePlace, a#AddNameMapSitePlace, a#AddNameMapPlace, a#AddNameTgnPlace { /* "Add New ..." Button */
+	background-image: url(/DocSources/images/button_addNew1024.png);
 	border:none;
 	display:inline;
-	color: #6d5c4d;
-	font-size:10px;
-	text-decoration:none;
 	margin-left:260px;
+	width:59px;
+	height:23px;
 }
 
 a#AddSpousePerson, a#EditPerson { /* "Add New ..." Button */
@@ -886,6 +925,9 @@ a#linkSearch {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
+	background-image:url(/DocSources/images/button_close1024.png);
+	width:45px;
+	height:22px;
 	border:none;
 }
 
@@ -898,10 +940,13 @@ a#linkSearch {
 }
 
 #save {
-	margin:5px auto auto 280px;
+	margin:5px auto auto 295px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
+	background-image:url(/DocSources/images/button_save1024.png);
+	width:45px;
+	height:22px;
 	border:none;
 }
 
@@ -921,10 +966,14 @@ a#linkSearch {
 
 .inputerrors { /* Error Span messages */
 	color:#900;
-	font-size:11px;
+	font-size:10px;
 	position:absolute;
-	margin:5px 0 0 120px;
-	visibility:hidden;
+	margin:28px 0 0 65px;
+	width:160px;
+	position:absolute;
+	float: right;
+	text-align:center;
+	border:1px solid #900;
 }
 
 
@@ -1018,17 +1067,23 @@ iframe{ /* Common for all iFrame */
 /* Previous / Next */
 
 #prevNextButtons {
-	margin:15px 0 10px 130px;
-	width: 190px;
+	margin:10px 0 10px 140px;
+	width: 170px;
 	z-index:2;
 }
 
-#prevNextButtons #previousPage {
+#prevNextButtons #previousPage a{
 	float:left;
+	background-image:url(/DocSources/images/button_prev1024.png);
+	width:83px;
+	height:23px;
 }
 
-#prevNextButtons #nextPage {
+#prevNextButtons #nextPage a{
 	float:right;
+	background-image:url(/DocSources/images/button_next1024.png);
+	width:83px;
+	height:23px;
 }
 
 /* ---------------- */
@@ -1036,8 +1091,8 @@ iframe{ /* Common for all iFrame */
 /* -- Rubricario -- */
 
 #rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
-	width:450px;
-	margin-top:10px;
+	width:458px;
+	margin-top:30px;
 }
 
 #rubricarioCountForm { /* "Rubricario Count" FORM */
@@ -1055,30 +1110,40 @@ iframe{ /* Common for all iFrame */
 	margin:0;
 }
 
-#secondRecordLabel { /* "Move to rubricario" <label> ID  */
+.rubricarioLabel { /* "Move to rubricario" <label> class  */
 	font-size:10px;
 	margin:0 0 0 -28px;
 	position:absolute;
 	color:#6d5c4d;
 }
 
-#imageProgTypeNum { /* "Move to rubricario" <input> ID  */
-	margin:-3px 0 0 80px;
+.input_4cRucricario { /* "Move to rubricario" <input> ID  */
+	margin:-3px 0 0 70px;
 	position:absolute;
+	width: 30px;
 }
 
 #goR { /* "Move to rubricario" <input> GO button ID  */
-	margin:-5px 0 0 128px;
-	border:none;
+	margin:-4px 0 0 120px;
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/button_go.png);
+	background-repeat:no-repeat;
 	background-color:transparent;
+	border:none;
 }
+
+#goR:hover {
+	opacity:0.5;
+}
+
 
 /* ---------------- */
 /*
 /* ---- Folio ----- */
 
 #folioMoveTo { /* Contains "Folio Count" and "Move to folio" */
-	width:450px;
+	width:458px;
 }
 
 #folioCountForm { /* "Folio Count" FORM */
@@ -1096,22 +1161,27 @@ iframe{ /* Common for all iFrame */
 	float:right;
 }
 
-#firstRecordLabel { /* "Move to folio" <label> ID  */
+.folioLabel { /* "Move to folio" <label> ID  */
 	font-size:10px;
 	margin:0;
 	position:absolute;
 	color:#6d5c4d;
 }
 
-#firstRecord { /* "Move to folio" <input> ID  */
-	margin:-3px 0 0 80px;
+.input_4cFolio { /* "Move to folio" <input> ID  */
+	margin:-3px 0 0 70px;
 	position:absolute;
+	width: 30px;
 }
 
-#go { /* "Move to folio" <input> GO button ID  */
-	margin:-5px 0 0 127px;
-	border:none;
+#go { /* "Move to rubricario" <input> GO button ID  */
+	margin:-4px 0 0 120px;
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/button_go.png);
+	background-repeat:no-repeat;
 	background-color:transparent;
+	border:none;
 }
 
 /* ---------------- */
@@ -1119,8 +1189,11 @@ iframe{ /* Common for all iFrame */
 /*  Fullscreen Mode */
 
 #flipItInFullScreen { /* "Move to folio" <input> GO button ID  */
-	margin-top: 25px;
+	width:95px;
+	height:22px;
+	position:absolute;
 	display:inline;
+	background-image:url(/DocSources/images/button_fullscreenMode1024.png);
 }
 
 /* ---------------- */
@@ -1128,9 +1201,12 @@ iframe{ /* Common for all iFrame */
 /* ---- Refresh --- */
 
 #refreshVolumeExplorer {
-	margin: 0 0 0 240px;
+	margin: 0 0 0 357px;
 	position:absolute;
+	width:95px;
+	height:22px;
 	display:inline;
+	background-image:url(/DocSources/images/button_refresh1024.png);
 }
 
 /* ---------------- */
@@ -1192,10 +1268,6 @@ iframe{ /* Common for all iFrame */
 	margin:0 0 10px 545px;
 }
 
-#CloseButton {
-	margin:0 0 15px 290px;
-}
-
 #chooseGoBack {
 	margin:0 0 0 50px;
 }
@@ -1235,6 +1307,126 @@ iframe{ /* Common for all iFrame */
 /*
 /*
 /* -------------------------- ADD NEW PLACE --------------------------------- */
+/*
+/* -- modal Window -- */
+
+#createPlace{
+	width:700px;
+	margin-left:-10px;
+}
+
+#createPlace h1{
+	text-align:center;
+	font-size:11px;
+	font-weight:normal;
+}
+
+#createPlace #CloseButton{
+	margin:400px 0 0 320px;
+	position:absolute;
+}
+
+#createPlace #CloseButton #close{
+	margin:0 0 5px 25px;
+}
+
+#createPlace a:hover{
+	text-decoration:underline;
+}
+
+#createPlace #tgnPlace{
+	width:220px;
+	height:250px;
+	border: 1px solid #e6d0c6;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position:absolute;
+	margin:20px 0 0 30px;
+}
+
+#createPlace #mapPlace{
+	width:220px;
+	height:250px;
+	border: 1px solid #e6d0c6;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position:absolute;
+	margin:20px 0 0 265px;
+}
+
+#createPlace #mapSite{
+	width:220px;
+	height:250px;
+	border: 1px solid #e6d0c6;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position:absolute;
+	margin:20px 0 0 500px;
+}
+
+#createPlace #tgnPlace #AddNewTgnPlace {
+	background-image:url(/DocSources/images/button_tgnPlace.png);
+    top: 0; left: 0; /* top-left corner of logo */
+	margin: 20px 0 5px 50px;
+	position:absolute;
+	width:114px;
+	height:25px;
+}
+
+#createPlace #tgnPlace p, #createPlace #mapSite p, #createPlace #mapPlace p {
+	font-size:11px;
+	color: #6d5c4d;
+	width: 170px;
+	text-align:justify;
+	line-height: 18px;
+	margin: 80px 0 0 25px;
+	position:absolute;	
+}
+
+#createPlace #mapPlace #AddNewMapPlace {
+	background-image:url(/DocSources/images/button_mapPlace.png);
+    top: 0; left: 0; /* top-left corner of logo */
+	margin: 20px 0 5px 50px;
+	position:absolute;
+	width:114px;
+	height:25px;
+}
+
+#createPlace #mapSite #AddNewMapSite {
+	background-image:url(/DocSources/images/button_mapSite.png);
+    top: 0; left: 0; /* top-left corner of logo */
+	margin: 20px 0 5px 50px;
+	position:absolute;
+	width:114px;
+	height:25px;
+}
+
+
+#createPlace #tgnPlace #AddNewTgnPlace:hover, #createPlace #mapPlace #AddNewMapPlace:hover, #createPlace #mapSite #AddNewMapSite:hover {
+	opacity:0.5;
+}
+
+#notes {
+	position:absolute;
+	margin:290px 0 0 130px;
+}
+
+#notes p{
+	font-size:11px;
+	color: #6d5c4d;
+	text-align:center;
+	line-height: 18px;
+}
+
+#notes a{
+	font-size:11px;
+	color: #6d5c4d;
+}
+
+
+
+/* ------------------ */
+/*
 /*
 /* -- EdtitDetailsTgn, Map and MapSite -- */
 
@@ -1318,26 +1510,28 @@ iframe{ /* Common for all iFrame */
 }
 
 #helpProfile { /* Help Div Container */
-	margin-left:550px;
+	margin-left:600px;
 	margin-top:30px;
 	font-size:11px;
 	position:absolute;
 }
 
-#helpProfile a{	/* Help ancors (User Manual, Download Manual, Help Videos) */
+#helpProfile a, #aboutmapProfile a{	/* Help ancors (User Manual, Download Manual, Help Videos) */
 	font-size:11px;
 	line-height:18px;
 	text-decoration:none;
 	color:#6F6B69;
 }
 
-#helpProfile a:hover{ /* Help ancors rollover */
-	text-decoration:underline;
+#aboutmapProfile { /* Help Div Container */
+	margin-left:600px;
+	margin-top:180px;
+	font-size:11px;
+	position:absolute;
 }
 
-#coursesProfile { /* MAP Courses button */
-	margin:190px 0 0 590px;
-	position:absolute;
+#aboutmapProfile a:hover, #helpProfile a:hover{ /* Help ancors rollover */
+	text-decoration:underline;
 }
 
 #modalBoxCloseDivProfile {
@@ -1352,3 +1546,132 @@ iframe{ /* Common for all iFrame */
 	margin-bottom:6px;
 }
 
+#myProfile #CloseButton {
+	margin:410px 0 0 400px;
+	position:absolute;
+}
+
+#myProfile #CloseButton #close{
+	margin:0 0 5px 25px;
+}
+
+
+#PersonalNotes {
+	margin:250px 0 0 53px;
+	padding:0;
+	position:absolute;
+}
+
+#PersonalNotes:hover {
+	opacity:0.5;
+}
+
+#modalBox P{
+	line-height:20px;
+	text-align:justify;
+	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	padding:15px;
+}
+
+#TopicsDescriptionWindow h1{
+	text-align:center;
+}
+
+#modalBox #editCleanClose{
+	margin:65px 0 0 220px;
+	position:absolute;
+	width:270px;
+}
+
+#modalBox #editCleanClose #edit {
+	margin:2px auto auto 0px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/button_edit1024.png);
+	width:44px;
+	height:23px;
+	border:none;
+}
+
+#modalBox #editCleanClose #cleanAll {
+	margin:2px auto auto 15px;
+	position:absolute;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/button_cleanAll1024.png);
+	width:56px;
+	height:23px;
+	border:none;
+}
+
+#modalBox #editCleanClose #close {
+	margin:1px auto auto 90px;
+	position:absolute;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/button_close1024.png);
+	width:45px;
+	height:22px;
+	border:none;
+}
+
+#modalBox #editCleanClose #goBack {
+	margin:2px auto auto 150px;
+	position:absolute;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/button_goback1024.png);
+	width:50px;
+	height:23px;
+	border:none;
+}
+
+
+#cleanAll:hover, #edit:hover, #goBack:hover {
+	opacity:0.5;
+}
+
+.txtarea_personalNotes {
+	width:600px;
+	height:400px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	text-align:justify;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:10px;
+	padding:5px 10px 5px 10px;
+	margin: 5px 7px 5px 40px; /* top right bottom left */
+}
+
+#closesavePersonalNotes {
+	margin:5px 0 0 260px;
+	width:250px;
+	position:absolute;
+}
+
+#closesavePersonalNotes #save{
+	position:absolute;
+	margin:1px 0 0 70px;
+}
+
+#closesavePersonalNotes #close{
+	position:absolute;
+	margin:0 0 0 135px;
+}
+
+#closesavePersonalNotes #goBack{
+	position:absolute;
+	margin:1px 0 0 0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/button_goback1024.png);
+	width:50px;
+	height:23px;
+	border:none;
+}

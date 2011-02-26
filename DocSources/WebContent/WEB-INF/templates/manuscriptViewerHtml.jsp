@@ -45,9 +45,11 @@ Joana Amill <joana.amill@gmail.com>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.5.min.js"/>"/></script>                                                                                                
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.9.custom.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dialogextend.min.js"/>"/></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.pageTurnerForm.js"/>"/></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.pageTurner.js"/>"/></script>
 		
 		<script type="text/javascript">
+			var $j = jQuery.noConflict();
+
 			$j(document).ready(function() {
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses

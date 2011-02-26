@@ -194,7 +194,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 }
 
 .input_28c { /* input for 28 characters approx. */ 
-	width: 243px;
+	width: 330px;
 }
 
 .input_30c { /* input for 30 characters approx. */ 
@@ -313,7 +313,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 }
 
 .selectform_Xlong{ /* dropdown menu class */
-	width:190px;
+	width:220px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	padding-left:3px;
@@ -589,10 +589,87 @@ input.file {
 #AddPersonCorrespondentsDocument:hover {
 opacity:0.5;
 }
+
+
+/* -------------------------------------- */
+/*
+/* ----- EditExtractOrSynopsisDocumentFullscreen ----- */
+
+#EditExtractOrSynopsisDocumentFullscreenForm #docExtractLabel, #EditExtractOrSynopsisDocumentFullscreenForm #synopsisLabel{
+	margin:10px 0 0 10px;
+}
+
+#closeSaveButtonsFullscreen {
+	margin:475px 0 0 350px;
+	width:131px;
+	height:25px;
+	position:absolute;
+}
+
+#closeSaveButtonsFullscreen input{
+	border:none;
+	background-color:#F6EDEC;
+}
+
+#closeSaveButtonsFullscreen #close{
+	float:left;
+	display:inline;
+	margin:0;
+}
+
+#closeSaveButtonsFullscreen #save{
+	float:right;
+	display:inline;
+	margin:0;
+}
+
+/* -------------------------------------- */
+/*
+/* --------------- TOPICS --------------- */
+
+#topicDescription { /* "Show Topic Description" Button */
+	background-image:url(/DocSources/images/topic1280.png);
+	width:16px;
+	height:16px;
+	background-repeat:no-repeat;
+	margin-left:3px;
+}
+
+#AddTopicDocument { /* "Add New ..." Button */
+	background-image: url(/DocSources/images/button_addNew.png);
+	border:none;
+	display:inline;
+	margin:0 0 0 375px;
+	width:67px;
+	height:25px;
+	border:none;
+	padding:0;
+	background-color:transparent;
+}
+
+#AddTopicDocument:hover {
+	opacity:0.5;
+}
+
+#topicLabel {
+	margin-left:32px;
+}
+
+#TopicsDescriptionWindow p{
+	line-height:22px;
+	text-align:justify;
+	font-size:13px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	padding:15px;
+}
+
+#TopicsDescriptionWindow h1{
+	text-align:center;
+}
+
 /* -------------------------------------- */
 /*
 /* -------------------------------------------------------------------------- */
-/*
 /*
 /* ---------------------------- ADD NEW PERSON ------------------------------ */
 /*
@@ -689,7 +766,6 @@ a#AddSpousePerson, a#EditPerson { /* "Add New ..." Button */
 	margin-left:255px;
 	width:67px;
 	height:25px;
-
 }
 
 a#AddTitlesOccupationsPerson { /* "Add New ..." Button */
@@ -848,6 +924,9 @@ a#linkSearch {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
+	background-image:url(/DocSources/images/button_close.png);
+	width:52px;
+	height:24px;
 	border:none;
 }
 
@@ -860,10 +939,13 @@ a#linkSearch {
 }
 
 #save {
-	margin:5px auto auto 395px;
+	margin:5px 0 0 395px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
+	background-image:url(/DocSources/images/button_save.png);
+	width:52px;
+	height:24px;
 	border:none;
 }
 
@@ -884,9 +966,14 @@ a#linkSearch {
 .inputerrors { /* Error Span messages */
 	color:#900;
 	font-size:11px;
+	margin:28px 0 0 103px;
+	padding:2px;
+	width:180px;
 	position:absolute;
-	margin:5px 0 0 120px;
-	visibility:hidden;
+	float: right;
+	text-align:center;
+	border:1px solid #900;
+	
 }
 
 /* ------------------------------------------------- */ 
@@ -979,26 +1066,31 @@ iframe{ /* Common for all iFrame */
 /* Previous / Next */
 
 #prevNextButtons {
-	margin:15px 0 12px 190px;
+	margin:10px 0 12px 190px;
 	width: 190px;
 	z-index:2;
 }
 
-#prevNextButtons #previousPage {
+#prevNextButtons #previousPage a{
 	float:left;
+	background-image:url(/DocSources/images/button_prev.png);
+	width:93px;
+	height:25px;
 }
 
-#prevNextButtons #nextPage {
+#prevNextButtons #nextPage a{
 	float:right;
+	background-image:url(/DocSources/images/button_next.png);
+	width:93px;
+	height:25px;
 }
-
 /* ---------------- */
 /*
 /* -- Rubricario -- */
 
 #rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
 	width:570px;
-	margin-top:10px;
+	margin-top:30px;
 }
 
 #rubricarioCountForm { /* "Rubricario Count" FORM */
@@ -1017,23 +1109,33 @@ iframe{ /* Common for all iFrame */
 	margin:0;
 }
 
-#secondRecordLabel { /* "Move to rubricario" <label> ID  */
+.rubricarioLabel { /* "Move to rubricario" <label> class  */
 	font-size:12px;
-	margin:0 0 0 -35px;
+	margin:0 0 0 -28px;
 	position:absolute;
 	color:#6d5c4d;
 }
 
-#imageProgTypeNum { /* "Move to rubricario" <input> ID  */
-	margin:-3px 0 0 80px;
+.input_4cRucricario { /* "Move to rubricario" <input> ID  */
+	margin:-3px 0 0 87px;
 	position:absolute;
+	width: 30px;
 }
 
 #goR { /* "Move to rubricario" <input> GO button ID  */
-	margin:-5px 0 0 128px;
-	border:none;
+	margin:-4px 0 0 128px;
+	width:25px;
+	height:25px;
+	background-image:url(/DocSources/images/button_go1280.png);
+	background-repeat:no-repeat;
 	background-color:transparent;
+	border:none;
 }
+
+#goR:hover {
+	opacity:0.5;
+}
+
 
 /* ---------------- */
 /*
@@ -1058,22 +1160,27 @@ iframe{ /* Common for all iFrame */
 	float:right;
 }
 
-#firstRecordLabel { /* "Move to folio" <label> ID  */
+.folioLabel { /* "Move to folio" <label> ID  */
 	font-size:12px;
-	margin:0;
+	margin:0 0 0 7px;
 	position:absolute;
 	color:#6d5c4d;
 }
 
-#firstRecord { /* "Move to folio" <input> ID  */
-	margin:-3px 0 0 80px;
+.input_4cFolio { /* "Move to folio" <input> ID  */
+	margin:-3px 0 0 87px;
 	position:absolute;
+	width: 30px;
 }
 
 #go { /* "Move to folio" <input> GO button ID  */
-	margin:-5px 0 0 128px;
-	border:none;
+	margin:-4px 0 0 128px;
+	width:25px;
+	height:25px;
+	background-image:url(/DocSources/images/button_go1280.png);
+	background-repeat:no-repeat;
 	background-color:transparent;
+	border:none;
 }
 
 /* ---------------- */
@@ -1081,9 +1188,11 @@ iframe{ /* Common for all iFrame */
 /*  Fullscreen Mode */
 
 #flipItInFullScreen { /* "Move to folio" <input> GO button ID  */
-	margin-top: 25px;
+	width:105px;
+	height:25px;
 	position:absolute;
 	display:inline;
+	background-image:url(/DocSources/images/fullscreenMode.png);
 }
 
 /* ---------------- */
@@ -1091,9 +1200,13 @@ iframe{ /* Common for all iFrame */
 /* ---- Refresh --- */
 
 #refreshVolumeExplorer {
-	margin: 0 0 0 360px;
+	margin: 0 0 0 468px;
 	position:absolute;
 	display:inline;
+	width:105px;
+	height:25px;
+	display:inline;
+	background-image:url(/DocSources/images/button_refresh.png);
 }
 
 /* ---------------- */
@@ -1248,3 +1361,7 @@ iframe{ /* Common for all iFrame */
 	margin-top:5px;
 }
 
+#PersonalNotes {
+	background-image:url(/DocSources/images/button_perosnalNotes.png);
+	margin:200px 0 0 150px;
+}

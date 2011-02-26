@@ -18,20 +18,19 @@
 		$j(document).ready(function() {
 			$j("#saveSynopsis").click(function (){
 				$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
-						$j("#EditExtractDocumentDiv").html(html);
+						$j("#EditSynopsisDocumentDiv").html(html);
 					} 
 				});
 				return false;
 			});
-			$j("#saveAndEditSynopsis").click(function (){
+			$j("#saveSynopsisExit").click(function (){
 				$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
-					$j("#EditExtractDocumentDiv").html(html);
-						if(html.match(/inputerrors/g)){
-							$j("#EditSynopsisDocumentDiv").html(html);
-						} else {
-							$j("#EditSynopsisDocumentDiv").html(html);
-							window.close();
-						}
+					if(html.match(/inputerrors/g)){
+						$j("#EditSynopsisDocumentDiv").html(html);
+					} else {
+						$j("#EditSynopsisDocumentDiv").html(html);
+						window.close();
+					}
 					}
 				});
 				return false;
