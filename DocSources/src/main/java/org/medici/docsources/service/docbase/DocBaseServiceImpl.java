@@ -54,6 +54,7 @@ import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
@@ -690,9 +691,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			if (documentExplorer.getVolNum() == null) {
 				Document document = getDocumentDAO().find(documentExplorer.getEntryId());
-				
 				documentExplorer.setVolNum(document.getVolume().getVolNum());
 				documentExplorer.setVolLetExt(document.getVolume().getVolLetExt());
+				if ((documentExplorer.getImage().getImageOrder()==null) && (documentExplorer.getImage().getImageProgTypeNum()==null) && (documentExplorer.getImage().getImageName() ==null)) {
+					if (document.getFolioNum() != null) {
+						if (document.getFolioNum() > 0) {
+							documentExplorer.getImage().setImageProgTypeNum(document.getFolioNum());
+							documentExplorer.getImage().setImageType(ImageType.C);
+						}
+					}
+				}
 			}
 
 			return getImageDAO().findImages(documentExplorer);

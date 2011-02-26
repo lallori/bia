@@ -30,6 +30,10 @@ package org.medici.docsources.controller.manuscriptviewer;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
@@ -85,14 +89,12 @@ public class AjaxController {
 	 * @param modeEdit
 	 * @return
 	 */
-	@RequestMapping(value = {"/src/mview/SearchCarta", "/de/mview/SearchCarta"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/src/mview/SearchCarta.json", "/de/mview/SearchCarta.json"}, method = RequestMethod.GET)
 	public ModelAndView searchCarta(@RequestParam(value="entryId", required=false) Integer entryId,
 			@RequestParam(value="volNum", required=false) Integer volNum,
 			@RequestParam(value="volLetExt", required=false) String volLetExt,
 			@RequestParam(value="imageType", required=false) String imageType,
 			@RequestParam(value="imageProgTypeNum", required=false) Integer imageProgTypeNum,
-			@RequestParam(value="firstRecord", required=false) Integer firstRecord,
-			@RequestParam(value="secondRecord", required=false) Integer secondRecord,
 			@RequestParam(value="imageOrder", required=false) Integer imageOrder,
 			@RequestParam(value="total", required=false) Long total,
 			@RequestParam(value="totalRubricario", required=false) Long totalRubricario,
@@ -100,19 +102,16 @@ public class AjaxController {
 			@RequestParam(value="totalAppendix", required=false) Long totalAppendix,
 			@RequestParam(value="totalOther", required=false) Long totalOther,
 			@RequestParam(value="totalGuardia", required=false) Long totalGuardia,
-			@RequestParam(value="modeEdit", required=false) Boolean modeEdit){
+			@RequestParam(value="modeEdit", required=false) Boolean modeEdit, 
+			HttpServletRequest request){
 
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		DocumentExplorer documentExplorer = new DocumentExplorer(entryId, volNum, volLetExt);
 		documentExplorer.setImage(new Image());
 		documentExplorer.getImage().setImageOrder(imageOrder);
-		documentExplorer.getImage().setImageType(ImageType.valueOf(imageType));
-		if (documentExplorer.getImage().getImageType().equals(ImageType.C)) {
-			documentExplorer.getImage().setImageProgTypeNum(firstRecord);
-		} else if (documentExplorer.getImage().getImageType().equals(ImageType.R)) {
-			documentExplorer.getImage().setImageProgTypeNum(secondRecord);
-		} else {
+        if (!StringUtils.isEmpty(imageType)) {
+			documentExplorer.getImage().setImageType(ImageType.valueOf(imageType));
 			documentExplorer.getImage().setImageProgTypeNum(imageProgTypeNum);
 		}
 		documentExplorer.setTotal(total);
@@ -124,12 +123,14 @@ public class AjaxController {
 
 		try {
 			documentExplorer = getDocBaseService().getDocumentExplorer(documentExplorer);
+			
 			if (documentExplorer.getImage().getImageName() != null) {
 				model.put("entryId", documentExplorer.getEntryId());
 				model.put("volNum", documentExplorer.getVolNum());
 				model.put("volLetExt", documentExplorer.getVolLetExt());
 				model.put("imageType", documentExplorer.getImage().getImageType());
-				model.put("imageName", documentExplorer.getImage().getImageType());
+				model.put("imageName", documentExplorer.getImage().getImageName());
+				model.put("imageCompleteName", documentExplorer.getImage().toString());
 				model.put("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
 				model.put("imageOrder", documentExplorer.getImage().getImageOrder());
 				model.put("total", documentExplorer.getTotal());
@@ -138,6 +139,8 @@ public class AjaxController {
 				model.put("totalAppendix", documentExplorer.getTotalAppendix());
 				model.put("totalOther", documentExplorer.getTotalOther());
 				model.put("totalGuardia", documentExplorer.getTotalGuardia());
+				model.put("previousPage", HtmlUtils.getDocumentExplorerPreviousPageUrl(documentExplorer));
+				model.put("nextPage", HtmlUtils.getDocumentExplorerNextPageUrl(documentExplorer));
 				if (modeEdit != null && modeEdit.equals(Boolean.TRUE)) {
 					model.put("redirectUri", "/de/mview/EditDocumentInManuscriptViewer.do");
 				} else {
