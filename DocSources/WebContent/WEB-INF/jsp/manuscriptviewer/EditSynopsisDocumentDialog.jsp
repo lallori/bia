@@ -4,6 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ShowDocumentUrl" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId" value="${command.entryId}"></c:param>
+	</c:url>
+
 	<form:form id="EditSynopsisDocumentForm" method="post" cssClass="edit">
 		<form:textarea id="synopsis" path="synopsis" cssClass="txtarea" rows="20" style="width: 96%; height: 96%;"/>
 		<div>
@@ -32,9 +36,11 @@
 						if(html.match(/inputerrors/g)){
 							$j("#EditSynopsisDocumentDiv").html(html);
 							synopsisChanged=false;
+							window.opener.$j("#body_left").load('${ShowDocumentUrl}');
 						} else {
 							$j("#EditSynopsisDocumentDiv").html(html);
 							synopsisChanged=false;
+							window.opener.$j("#body_left").load('${ShowDocumentUrl}');
 							window.close();
 						}
 					}
