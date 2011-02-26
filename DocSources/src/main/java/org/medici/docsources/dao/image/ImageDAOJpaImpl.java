@@ -55,8 +55,6 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.HistoryLog
- * @see org.medici.docsources.audit.HistoryLogAction
  */
 @Repository
 public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO {
@@ -128,6 +126,36 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		List<Image> result = query.getResultList();
 		
 		return result;
+	}
+
+	@Override
+	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException {
+        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volLetExt))
+        	stringBuffer.append("=:volLetExt");
+        else
+        	stringBuffer.append(" is null");
+
+        stringBuffer.append(" and imageType=:imageType");
+        stringBuffer.append(" and imageProgTypeNum=:imageProgTypeNum");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volNum);
+        if (!StringUtils.isEmpty(volLetExt)) {
+        	query.setParameter("volLetExt", volLetExt);
+        }
+
+    	query.setParameter("imageType", imageType);
+    	
+    	
+    	query.setParameter("imageProgTypeNum", folioNum);
+		List<Image> result = (List<Image>) query.getResultList();
+			
+		if (result.size() > 0) {
+			return result.get(0);
+		}
+        
+		return null;
 	}
 
 	@Override
@@ -457,6 +485,33 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         }
 
         return volumeExplorer;
+	}
+
+	@Override
+	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException {
+        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volLetExt))
+        	stringBuffer.append("=:volLetExt");
+        else
+        	stringBuffer.append(" is null");
+
+        stringBuffer.append(" and imageOrder=:imageOrder");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volNum);
+        if (!StringUtils.isEmpty(volLetExt)) {
+        	query.setParameter("volLetExt", volLetExt);
+        }
+
+    	query.setParameter("imageOrder", 1);
+    	
+		List<Image> result = (List<Image>) query.getResultList();
+			
+		if (result.size() > 0) {
+			return result.get(0);
+		}
+        
+		return null;
 	}
 
 	@Override

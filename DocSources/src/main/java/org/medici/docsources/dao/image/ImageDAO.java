@@ -70,6 +70,17 @@ public interface ImageDAO extends Dao<Integer, Image> {
 
 	/**
 	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param imageType
+	 * @param folioNum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param pageTurner
 	 * @return
 	 * @throws PersistenceException
@@ -104,6 +115,15 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	public VolumeExplorer findImages(VolumeExplorer volumeExplorer) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException;
 
 	/**
 	 * 
