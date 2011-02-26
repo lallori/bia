@@ -32,7 +32,7 @@
 		<hr id="lineSeparator"/>
 		<div id="DocumentImageDiv">
 			<c:if test="${not empty image}">
-			<img src="<c:url value="/mview/ProxyIIPImageThumbnail.do?imageName=${image}"/>">
+			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
 			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewer}">Show in manuscript viewer</a></p>
 			</c:if>
 			<c:if test="${empty image}">

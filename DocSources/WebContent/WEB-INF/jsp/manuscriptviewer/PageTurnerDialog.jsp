@@ -5,7 +5,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="searchAjaxUrl" value="/src/mview/SearchCarta.json"/>
-	<c:url var="ProxyIIPImage" value="/mview/ProxyIIPImage.do"/>
+	
+	<c:url var="ProxyIIPImage" value="/mview/ReverseProxyIIPImage.do"/>
+	
 	<c:url var="PersonalNotesDialogUrl" value="/src/mview/EditPersonalNotesDialog.do"/>
 
 	<c:url var="currentPage" value="${caller}">

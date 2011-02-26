@@ -49,7 +49,7 @@
 			});
 
 			iip = new IIP( "targetframe", {
-				server: '/DocSources/mview/ProxyIIPImage.do',
+				server: '/DocSources/mview/ReverseProxyIIPImage.do',
 				image: '${documentExplorer.image}',
 				credit: '&copy; copyright or information message', 
 				zoom: 1,

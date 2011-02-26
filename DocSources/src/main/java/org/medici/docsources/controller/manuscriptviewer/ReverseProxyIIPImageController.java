@@ -1,5 +1,5 @@
 /*
- * ProxyIIPImageThumbnailController.java
+ * ReverseProxyIIPImageController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -44,15 +44,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * This controller is a proxy to IIPImage Server for thumbnail service. It's used to not expose 
+ * This controller is a proxy to IIPImage Server. It's used to not expose 
  * IIPImage server.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
 @Controller
-@RequestMapping("/mview/ProxyIIPImageThumbnail")
-public class ProxyIIPImageThumbnailController {
+@RequestMapping("/mview/ReverseProxyIIPImage")
+public class ReverseProxyIIPImageController {
 	private Logger logger = Logger.getLogger(this.getClass());
 	@Autowired(required = false)
 	@Qualifier("iipImageConfiguration")
@@ -78,12 +78,42 @@ public class ProxyIIPImageThumbnailController {
 		stringBuffer.append(properties.getProperty("iipimage.fcgi.path"));
 		stringBuffer.append("?");
 
-		stringBuffer.append("WID=120&");
-		stringBuffer.append("FIF=");
-		stringBuffer.append(properties.getProperty("iipimage.image.path"));
-		stringBuffer.append(httpServletRequest.getParameter("imageName"));
-		stringBuffer.append("&");
-		stringBuffer.append("CVT=JPEG");
+		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&obj=IIP,1.0&obj=Max-size&obj=Tile-size&obj=Resolution-number& HTTP/1.1" 200 69
+		// "GET /fcgi-bin/iipsrv.fcgi?WID=75&FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&CVT=JPEG& HTTP/1.1" 200 1329
+		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
+		
+		if (httpServletRequest.getParameter("obj") != null) {
+			// This get image tile informations
+			stringBuffer.append("FIF=");
+			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(httpServletRequest.getParameter("FIF"));
+			stringBuffer.append("&");
+			String[] values = httpServletRequest.getParameterValues("obj");
+			for (int i=0; i<values.length;i++) {
+				stringBuffer.append("obj");
+				stringBuffer.append("=");
+				stringBuffer.append(values[i]);
+				stringBuffer.append("&");
+			}
+		} else if (httpServletRequest.getParameter("WID") != null) {
+			// This get image preview
+			stringBuffer.append("WID=");
+			stringBuffer.append(httpServletRequest.getParameter("WID"));
+			stringBuffer.append("&FIF=");
+			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(httpServletRequest.getParameter("FIF"));
+			stringBuffer.append("&CVT=");
+			stringBuffer.append(httpServletRequest.getParameter("CVT"));
+			stringBuffer.append("&");
+		} else if (httpServletRequest.getParameter("jtl") != null) {
+			// This get tiff section image.
+			stringBuffer.append("&FIF=");
+			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(httpServletRequest.getParameter("FIF"));
+			stringBuffer.append("&jtl=");
+			stringBuffer.append(httpServletRequest.getParameter("jtl"));
+			stringBuffer.append("&");
+		}
 
 		// Create a method instance.
 		GetMethod method = new GetMethod(stringBuffer.toString());
@@ -91,10 +121,12 @@ public class ProxyIIPImageThumbnailController {
 		try {
 			// Execute the method.
 			client.executeMethod(method);
-			logger.debug("Proxying IIPImageThumbnail Url : " + stringBuffer.toString() + " (Status Line" + method.getStatusLine() + ")");
+			logger.debug("Proxying IIPImage Url : " + stringBuffer.toString() + " (Status Line" + method.getStatusLine() + ")");
 
 			// Set content type 
 			response.setContentType(method.getResponseHeader("Content-Type").getValue());
+			//response.getOutputStream().write(method.getResponseBody());
+			// Redirecting proxed output to client
 			IOUtils.copy(method.getResponseBodyAsStream(),response.getOutputStream());  
 
 			// Flushing request

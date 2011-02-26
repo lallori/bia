@@ -33,7 +33,7 @@
 
     $.pageTurnerForm.defaultParams = {
         "searchUrl":  "",   // Show scrollbars?
-        "proxyIIPImage": "/mview/ProxyIIPImage.do",
+        "proxyIIPImage": "/mview/ReverseProxyIIPImage.do",
         "status":      "no"     // Show the status bar?
     };
 

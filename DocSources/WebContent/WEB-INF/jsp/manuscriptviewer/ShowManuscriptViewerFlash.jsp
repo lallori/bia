@@ -8,7 +8,7 @@
 	<c:url var="expressInstall" value="/swf/expressInstall.swf" />
 
 		<script type="text/javascript">
-			var server = "/DocSources/mview/ProxyIIPImage.do";
+			var server = "/DocSources/mview/ReverseProxyIIPImage.do";
 			var image = "${image}";
 			var credit = "${image}";
 			var flashvars = {
