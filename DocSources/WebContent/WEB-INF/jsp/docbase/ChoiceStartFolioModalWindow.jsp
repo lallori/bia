@@ -94,24 +94,22 @@
 		
 		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:100"></iframe>
 		
-		<div>
-			<div id="prevNextButtons">
-				<div id="previousPage">
-				<c:if test="${volumeExplorer.image.imageOrder == 1}">
-					<a id="previousPage"></a>
-				</c:if>
-				<c:if test="${volumeExplorer.image.imageOrder > 1}">
-					<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
-				</c:if>
-				</div>
-				<div id="nextPage">
-				<c:if test="${volumeExplorer.image.imageOrder == imageToCreate.imageOrder }">
-					<a id="nextPage"></a>
-				</c:if>
-				<c:if test="${volumeExplorer.image.imageOrder < imageToCreate.imageOrder }">
-					<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
-				</c:if>
-				</div>
+		<div id="prevNextButtons">
+			<div id="previousPage">
+			<c:if test="${volumeExplorer.image.imageOrder == 1}">
+				<a id="previousPage"></a>
+			</c:if>
+			<c:if test="${volumeExplorer.image.imageOrder > 1}">
+				<a id="previous" href="${previousPage}" class="previousPage"></a>
+			</c:if>
+			</div>
+			<div id="nextPage">
+			<c:if test="${volumeExplorer.image.imageOrder == imageToCreate.imageOrder }">
+				<a id="nextPage"></a>
+			</c:if>
+			<c:if test="${volumeExplorer.image.imageOrder < imageToCreate.imageOrder }">
+				<a id="next" href="${nextPage}" class="nextPage"></a>
+			</c:if>
 			</div>
 		</div>
 		

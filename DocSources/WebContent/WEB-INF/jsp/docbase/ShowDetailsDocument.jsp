@@ -26,6 +26,17 @@
 		</c:url>
 	</security:authorize>
 	
+	<c:url var="ShowDocumentExplorer" value="/src/docbase/ShowExplorerDocument.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+		<c:param name="volNum"   value="${document.volume.volNum}" />
+		<c:param name="volLetExt"   value="${document.volume.volLetExt}" />
+		<c:param name="folioNum"   value="${document.folioNum}" />
+		<c:param name="folioMod"   value="${document.folioMod}" />
+		<c:param name="imageType"   value="C" />
+		<c:param name="imageProgTypeNum"   value="${document.folioNum}" />
+		<c:param name="flashVersion"   value="true" />
+	</c:url>
+
 	<div id="EditDetailsDocumentDiv">
 		<h5>DOCUMENT DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsDocument" href="${EditDetailsDocument}">edit</a></security:authorize></h5>
 		<div id="createdby"><h6>CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></h6></div>
@@ -68,7 +79,11 @@
 				 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
-			
+			$j("#EditDetailsDocumentDiv").documentExplorer( {  
+				showExplorerDocumentUrl     : "${ShowDocumentExplorer}",
+				target                      : $j("#body_right")
+			});  
+
 			$j("#ShowDocumentInManuscriptViewer").open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
 		});
 	</script>

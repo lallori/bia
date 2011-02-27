@@ -1,5 +1,5 @@
 /*
- * ShowExplorerVolumeValidator.java
+ * ShowExplorerDocumentValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,39 +25,30 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.validator.volbase;
+package org.medici.docsources.validator.docbase;
 
-import org.medici.docsources.command.volbase.ShowExplorerVolumeCommand;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.docsources.command.docbase.ShowExplorerDocumentCommand;
+import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Show Volume Explorer".
+ * Validator bean for action "Show Document Explorer".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class ShowExplorerVolumeValidator implements Validator {
+public class ShowExplorerDocumentValidator implements Validator {
 	@Autowired
-	private VolBaseService volBaseService;
+	private DocBaseService docBaseService;
 
-	/**
-	 * 
-	 * @return
-	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
 	}
 
-	/**
-	 * 
-	 * @param volBaseService
-	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
 	}
 
 	/**
@@ -69,7 +60,7 @@ public class ShowExplorerVolumeValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(ShowExplorerVolumeCommand.class);
+		return givenClass.equals(ShowExplorerDocumentCommand.class);
 	}
 
 	/**
@@ -82,16 +73,16 @@ public class ShowExplorerVolumeValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		ShowExplorerVolumeCommand showExplorerVolumeCommand = (ShowExplorerVolumeCommand) object;
+		ShowExplorerDocumentCommand showExplorerDocumentCommand = (ShowExplorerDocumentCommand) object;
 		
-		if (showExplorerVolumeCommand.getImageProgTypeNum() != null) {
-			try {
-				if (getVolBaseService().findVolumeImage(showExplorerVolumeCommand.getVolNum(), showExplorerVolumeCommand.getVolLetExt(), showExplorerVolumeCommand.getImageType(), showExplorerVolumeCommand.getImageProgTypeNum()) == null) {
-					errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerVolumeCommand.getImageProgTypeNum()}, null);
+		if (showExplorerDocumentCommand.getImageProgTypeNum() != null) {
+			/*try {
+				if (getDocBaseService().findVolumeImage(showExplorerVolumeRequestCommand.getVolNum(), showExplorerVolumeRequestCommand.getVolLetExt(), showExplorerVolumeRequestCommand.getImageType(), showExplorerVolumeRequestCommand.getImageProgTypeNum()) == null) {
+					errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerVolumeRequestCommand.getImageProgTypeNum()}, null);
 				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				
-			}
+			}*/
 		}
 	}
 }

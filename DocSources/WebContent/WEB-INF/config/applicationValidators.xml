@@ -41,6 +41,10 @@
         <description>Search Document Validator.</description>
 	</bean>
 
+	<bean id="showExplorerDocumentValidator" class="org.medici.docsources.validator.docbase.ShowExplorerDocumentValidator">
+        <description>Show Document Explorer Validator.</description> 
+	</bean>
+	
 	<!-- Manuscript Viewer Validators -->
 	<bean id="editExtractDocumentDialogValidator" class="org.medici.docsources.validator.manuscriptviewer.EditExtractDocumentDialogValidator">
         <description>Edit Extract Document Dialog Validator.</description>

@@ -35,6 +35,7 @@ import org.medici.docsources.domain.Image;
  *
  */
 public class VolumeExplorer {
+	protected Integer summaryId;
 	protected Integer volNum;
 	protected String volLetExt;
 	protected Image image;
@@ -44,10 +45,16 @@ public class VolumeExplorer {
 	protected Long totalOther;
 	protected Long totalGuardia;
 	protected Long totalAppendix;
-	
+
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 */
 	public VolumeExplorer(Integer volNum, String volLetExt) {
 		this.volNum = volNum;
 		this.volLetExt = volLetExt;
+		this.summaryId = new Integer(0);
 		total  = new Long(0);
 		totalRubricario  = new Long(0);
 		totalCarta = new Long(0);
@@ -56,6 +63,36 @@ public class VolumeExplorer {
 		totalOther = new Long(0);
 	}
 
+	/**
+	 * 
+	 * @param summaryId
+	 */
+	public VolumeExplorer(Integer summaryId) {
+		this.summaryId = summaryId;
+		this.volNum = new Integer(0);
+		this.volLetExt = "";
+		total  = new Long(0);
+		totalRubricario  = new Long(0);
+		totalCarta = new Long(0);
+		totalAppendix = new Long(0);
+		totalGuardia = new Long(0);
+		totalOther = new Long(0);
+	}
+	
+	/**
+	 * @return the summaryId
+	 */
+	public Integer getSummaryId() {
+		return summaryId;
+	}
+
+	/**
+	 * @param summaryId the summaryId to set
+	 */
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
+	}
+	
 	/**
 	 * @param volNum the volNum to set
 	 */

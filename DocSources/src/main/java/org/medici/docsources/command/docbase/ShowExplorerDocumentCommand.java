@@ -1,5 +1,5 @@
 /*
- * TranscribeAndContextualizeDocumentCommand.java
+ * ShowExplorerDocumentCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,46 +27,27 @@
  */
 package org.medici.docsources.command.docbase;
 
+import org.medici.docsources.command.volbase.ShowExplorerVolumeCommand;
+
 /**
- * Command bean for action "Transcribe And Contextualize Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
- * @see org.medici.docsources.command.docbase.EditDetailsDocumentCommand
- * @see org.medici.docsources.controller.docbase.TranscribeAndContextualizeDocumentController
+ *
  */
-public class TranscribeAndContextualizeDocumentCommand extends EditDetailsDocumentCommand {
-	/** This is the correspondents transcribeFolioNum */
-	private Integer imageDocumentToCreate;
-	/** This is the correspondents folioNum */
-	private Integer imageDocumentFolioStart;
+public class ShowExplorerDocumentCommand extends ShowExplorerVolumeCommand {
+	private Integer entryId;
 
 	/**
-	 * @return the imageDocumentToCreate
+	 * @param entryId the entryId to set
 	 */
-	public Integer getImageDocumentToCreate() {
-		return imageDocumentToCreate;
+	public void setEntryId(Integer entryId) {
+		this.entryId = entryId;
 	}
 
 	/**
-	 * @param imageDocumentToCreate the imageDocumentToCreate to set
+	 * @return the entryId
 	 */
-	public void setImageDocumentToCreate(Integer imageDocumentToCreate) {
-		this.imageDocumentToCreate = imageDocumentToCreate;
+	public Integer getEntryId() {
+		return entryId;
 	}
-	
-	/**
-	 * @return the imageDocumentFolioStart
-	 */
-	public Integer getImageDocumentFolioStart() {
-		return imageDocumentFolioStart;
-	}
-	
-	/**
-	 * @param imageDocumentFolioStart the imageDocumentFolioStart to set
-	 */
-	public void setImageDocumentFolioStart(Integer imageDocumentFolioStart) {
-		this.imageDocumentFolioStart = imageDocumentFolioStart;
-	}
-	
 }

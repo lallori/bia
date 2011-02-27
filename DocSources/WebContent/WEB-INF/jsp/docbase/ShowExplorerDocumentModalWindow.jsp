@@ -5,89 +5,72 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="ChoiceStartFolioDocument" value="/de/docbase/ChoiceStartFolioDocument.do">
-			<c:param name="summaryId" value="${command.summaryId}"/>
-			<c:param name="volNum" value="${command.volNum}" />
-			<c:param name="volLetExt" value="${command.volLetExt}" />
-			<c:param name="flashVersion" value="${command.flashVersion}"/>
-			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
-			<c:param name="imageDocumentToCreate" value="${volumeExplorer.image.imageId}" />
-			<c:param name="total" value="${volumeExplorer.total}" />
-			<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-			<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
-			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="${command.flashVersion}"/>
-			<c:param name="modalWindow" value="true"/>
-		</c:url>
-
 		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
-			<c:param name="imageName"   value="${volumeExplorer.image}" />
+			<c:param name="imageName"   value="${documentExplorer.image}" />
 			<c:param name="flashVersion"   value="true" />
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
+	<c:url var="ShowExplorerVolume" value="/src/docbase/ShowExplorerDocument.do" />
 	
-	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
+	<c:url var="currentPage" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
-		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
-		<c:param name="total" value="${volumeExplorer.total}" />
-		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
-		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+		<c:param name="total" value="${documentExplorer.total}" />
+		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="true" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 
-	<c:url var="nextPage" value="/src/volbase/ShowExplorerVolume.do">
+	<c:url var="nextPage" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
-		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder + 1}" />
-		<c:param name="total" value="${volumeExplorer.total}" />
-		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
-		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder + 1}" />
+		<c:param name="total" value="${documentExplorer.total}" />
+		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="true" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 
-	<c:url var="previousPage" value="/src/volbase/ShowExplorerVolume.do">
+	<c:url var="previousPage" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
-		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder - 1}" />
-		<c:param name="total" value="${volumeExplorer.total}" />
-		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
-		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder - 1}" />
+		<c:param name="total" value="${documentExplorer.total}" />
+		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="true" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 	
 	<div id="modalBox">
 		<div id="prevNextButtons">
-		<c:if test="${volumeExplorer.total > 0}">
+		<c:if test="${documentExplorer.total > 0}">
 			<div id="previousPage">
-			<c:if test="${volumeExplorer.image.imageOrder == 1}">
+			<c:if test="${documentExplorer.image.imageOrder == 1}">
 				<a id="previousPage"></a>
 			</c:if>
-			<c:if test="${volumeExplorer.image.imageOrder > 1}">
+			<c:if test="${documentExplorer.image.imageOrder > 1}">
 				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
-			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
+			<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total }">
 				<a id="nextPage"></a>
 			</c:if>
-			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
+			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
 				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
 			</c:if>
 			</div>
@@ -98,31 +81,31 @@
 		
 		<div id="prevNextButtons">
 			<div id="previousPage">
-			<c:if test="${volumeExplorer.image.imageOrder == 1}">
+			<c:if test="${documentExplorer.image.imageOrder == 1}">
 				<a id="previousPage"></a>
 			</c:if>
-			<c:if test="${volumeExplorer.image.imageOrder > 1}">
+			<c:if test="${documentExplorer.image.imageOrder > 1}">
 				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
-			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
+			<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total }">
 				<a id="nextPage"></a>
 			</c:if>
-			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
+			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
 				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
 
 		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
-	<c:if test="${volumeExplorer.totalRubricario > 0}">
+	<c:if test="${documentExplorer.totalRubricario > 0}">
 		<br/>
 		<br/>
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
-				<b>Rubricario Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
+				<b>Rubricario Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
@@ -133,12 +116,12 @@
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="R"/>
 				<form:hidden path="imageOrder" />
-				<form:hidden path="total" value="${volumeExplorer.total}" />
-				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
-				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
-				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+				<form:hidden path="total" value="${documentExplorer.total}" />
+				<form:hidden path="totalRubricario" value="${documentExplorer.totalRubricario}" />
+				<form:hidden path="totalCarta" value="${documentExplorer.totalCarta}" />
+				<form:hidden path="totalAppendix" value="${documentExplorer.totalAppendix}" />
+				<form:hidden path="totalOther" value="${documentExplorer.totalOther}" />
+				<form:hidden path="totalGuardia" value="${documentExplorer.totalGuardia}" />
 				<form:hidden path="flashVersion" value="true" />
 				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
@@ -151,7 +134,7 @@
 		<div id="folioMoveTo">
 
 			<div id="folioCountForm"> 
-				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
+				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 
 			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
@@ -162,20 +145,17 @@
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="C"/>
 				<form:hidden path="imageOrder" />
-				<form:hidden path="total" value="${volumeExplorer.total}" />
-				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
-				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
-				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+				<form:hidden path="total" value="${documentExplorer.total}" />
+				<form:hidden path="totalRubricario" value="${documentExplorer.totalRubricario}" />
+				<form:hidden path="totalCarta" value="${documentExplorer.totalCarta}" />
+				<form:hidden path="totalAppendix" value="${documentExplorer.totalAppendix}" />
+				<form:hidden path="totalOther" value="${documentExplorer.totalOther}" />
+				<form:hidden path="totalGuardia" value="${documentExplorer.totalGuardia}" />
 				<form:hidden path="flashVersion" value="true" />
 				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>
 			
-		<div id="transcribe">
-			<a id="transcribeDocument" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"><img src="/DocSources/images/button_transcribe.png" alt="Transcribe this document" /></a>
-		</div>
 		<form:errors path="imageProgTypeNum" />
 		<div id="CloseButtonRight"><input value="Close" class="modalBox-close" onClick="Modalbox.hide(); return false;" type="submit"><br /><span>(or click the overlay)</span></div>
 	</div>
@@ -208,11 +188,6 @@
 
 			$j(".simplemodal-close").click(function() {
 				$j.modal.close(); 
-				return false;
-			});
-			
-			$j("#transcribeDocument").click(function() { 
-				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
 				return false;
 			});
 		});

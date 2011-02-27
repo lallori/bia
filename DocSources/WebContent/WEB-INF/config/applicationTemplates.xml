@@ -203,6 +203,14 @@
 		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
 	</definition>
 	
+	<definition name="docbase/ShowExplorerDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExplorerDocument.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowExplorerDocumentModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExplorerDocumentModalWindow.jsp"/>
+	</definition>
+
 	<definition name="docbase/TranscribeAndContextualizeDocument" extends="template.document">
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/EditDetailsDocument.jsp"/>
 		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
@@ -293,36 +301,47 @@
 	<definition name="volbase/EditContextVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditContextVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/EditCorrespondentsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditCorrespondentsVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/EditDescriptionVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDescriptionVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/EditDetailsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDetailsVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/SearchResultVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/SearchResultVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/ShowContextVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowContextVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/ShowCorrespondentsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowCorrespondentsVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/ShowDescriptionVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowDescriptionVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/ShowDetailsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowDetailsVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/ShowExplorerVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolume.jsp"/>
 	</definition>
+
 	<definition name="volbase/ShowExplorerVolumeModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeModalWindow.jsp"/>
 	</definition>
+
 	<definition name="volbase/ShowVolume" extends="template.volume">
 		<put-attribute name="details" value="/WEB-INF/jsp/volbase/ShowDetailsVolume.jsp"/>
 		<put-attribute name="description" value="/WEB-INF/jsp/volbase/ShowDescriptionVolume.jsp"/>

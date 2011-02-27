@@ -84,16 +84,16 @@
         return $;
     };
 
-    $.pageTurnerNextPage = {};
+    $.pageTurnerPage = {};
 
-    $.pageTurnerNextPage.defaultParams = {
+    $.pageTurnerPage.defaultParams = {
     	"targetFrame":  "targetframe",
     	"proxyIIPImage": "/mview/ProxyIIPImage.do"
     		
     };
 
-    $.fn.pageTurnerNextPage = function (params) {
-        var functionParams = $.extend($.pageTurnerNextPage.defaultParams, params);
+    $.fn.pageTurnerPage = function (params) {
+        var functionParams = $.extend($.pageTurnerPage.defaultParams, params);
         
         // Loop over all matching elements
         this.each(function (){
@@ -103,83 +103,32 @@
                 // Prevent the browser's default onClick handler
                 event.preventDefault();
                 
-                if ($(this).attr('href')) {
-					$.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
-						$("#targetframe").html('');
-						iip = new IIP( "targetframe", {
-							server: functionParams["proxyIIPImage"],
-							image: data.imageCompleteName,
-							credit: '&copy; copyright or information message', 
-							zoom: 1,
-							showNavButtons: true,
-							render: 'random'
-						});
-						if (data.previousPage == '') {
-							$("#previous").removeAttr('href');
-						} else {
-							$("#previous").attr('href', data.previousPage);
-						}
-						if (data.nextPage == '') {
-							$("#next").removeAttr('href');
-						} else {
-							$("#next").attr('href', data.nextPage);
-						}
-						}
+				$.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
+					$("#targetframe").html('');
+					iip = new IIP( "targetframe", {
+						server: functionParams["proxyIIPImage"],
+						image: data.imageCompleteName,
+						credit: '&copy; copyright or information message', 
+						zoom: 1,
+						showNavButtons: true,
+						render: 'random'
 					});
-                }
+					if (data.previousPage == '') {
+						$("#previous").removeAttr('href');
+					} else {
+						$("#previous").attr('href', data.previousPage);
+					}
+					if (data.nextPage == '') {
+						$("#next").removeAttr('href');
+					} else {
+						$("#next").attr('href', data.nextPage);
+					}
+					}
+				});
             });
         });
 
         return $;
     };
 
-
-    $.pageTurnerPreviousPage = {};
-
-    $.pageTurnerPreviousPage.defaultParams = {
-    	"targetFrame":  "targetframe",
-    	"proxyIIPImage": "/mview/ProxyIIPImage.do"
-    		
-    };
-
-    $.fn.pageTurnerPreviousPage = function (params) {
-        var functionParams = $.extend($.pageTurnerPreviousPage.defaultParams, params);
-        
-        // Loop over all matching elements
-        this.each(function (){
-
-            // Add an onClick behavior to this element
-            $(this).click(function (event) {
-                // Prevent the browser's default onClick handler
-                event.preventDefault();
-                
-                if ($(this).attr('href')) {
-					$.ajax({ type:"GET", url:$(this).attr("href"), async:false, success:function(data) {
-						$("#targetframe").html('');
-						iip = new IIP( "targetframe", {
-							server: functionParams["proxyIIPImage"],
-							image: data.imageCompleteName,
-							credit: '&copy; copyright or information message', 
-							zoom: 1,
-							showNavButtons: true,
-							render: 'random'
-						});
-						if (data.previousPage == '') {
-							$("#previous").removeAttr('href');
-						} else {
-							$("#previous").attr('href', data.previousPage);
-						}
-						if (data.nextPage == '') {
-							$("#next").removeAttr('href');
-						} else {
-							$("#next").attr('href', data.nextPage);
-						}
-						}
-					});
-                }
-            });
-        });
-
-        return $;
-    };
 })(jQuery);

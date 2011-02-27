@@ -140,8 +140,8 @@
 		$j(document).ready(function() {
 			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ProxyIIPImage}'});
 			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ProxyIIPImage}'});
-			$j("#previous").pageTurnerPreviousPage({proxyIIPImage: '${ProxyIIPImage}'});
-			$j("#next").pageTurnerNextPage({proxyIIPImage: '${ProxyIIPImage}'});
+			$j("#previous").pageTurnerPage({proxyIIPImage: '${ProxyIIPImage}'});
+			$j("#next").pageTurnerPage({proxyIIPImage: '${ProxyIIPImage}'});
 			
 			var $dialogPersonalNotes = $j('<div id="EditPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
 				autoOpen: false,
