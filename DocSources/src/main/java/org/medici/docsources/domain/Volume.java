@@ -306,6 +306,17 @@ public class Volume implements Serializable {
 	}
 
 	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 */
+	public Volume(Integer volNum, String volLetExt) {
+		super();
+		setVolNum(volNum);
+		setVolLetExt(volLetExt);
+	}
+	
+	/**
 	 * Constructor with an integer parameter rapresenting unique identifier.
 	 * 
 	 * @param summaryId Volume unique identifier

@@ -56,6 +56,9 @@ public class EditDetailsDocumentCommand {
 	//Folio Start 
 	private Integer folioNum;
 	private String folioMod;
+	//Transcribe Folio
+	private Integer transcribeFolioNum;
+	private String transcribeFolioMod;
 	//Unpaginated
 	private Boolean unpaged;
 	//Disc. Cont'd
@@ -148,6 +151,30 @@ public class EditDetailsDocumentCommand {
 	 */
 	public void setFolioMod(String folioMod) {
 		this.folioMod = folioMod;
+	}
+	/**
+	 * @return the transcribeFolioNum
+	 */
+	public Integer getTranscribeFolioNum() {
+		return transcribeFolioNum;
+	}
+	/**
+	 * @param transcribeFolioNum the transcribeFolioNum to set
+	 */
+	public void setTranscribeFolioNum(Integer transcribeFolioNum) {
+		this.transcribeFolioNum = transcribeFolioNum;
+	}
+	/**
+	 * @return the transcribeFolioMod
+	 */
+	public String getTranscribeFolioMod() {
+		return transcribeFolioMod;
+	}
+	/**
+	 * @param transcribeFolioMod the transcribeFolioMod to set
+	 */
+	public void setTranscribeFolioMod(String transcribeFolioMod) {
+		this.transcribeFolioMod = transcribeFolioMod;
 	}
 	/**
 	 * @return the unpaged

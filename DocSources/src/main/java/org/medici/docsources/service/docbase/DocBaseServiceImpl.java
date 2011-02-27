@@ -206,9 +206,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable {
 		try {
 			Document document = new Document();
+			// New Document must have entryId set to zero
+			document.setEntryId(0);
+			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setDateCreated(new Date());
 			Image documentToCreateImage = getImageDAO().find(imageDocumentToCreate);
 			Image documentFolioStartImage = getImageDAO().find(imageDocumentFolioStart);
-			document.setVolume(new Volume(documentToCreateImage.getVolNum().toString()));
+			document.setVolume(new Volume(documentToCreateImage.getVolNum(), documentToCreateImage.getVolLetExt()));
 			document.setSubVol(documentToCreateImage.getVolLetExt());
 			document.setFolioNum(ImageUtils.extractFolioNumber(documentFolioStartImage.getImageName()));
 			document.setFolioMod(ImageUtils.extractFolioExtension(documentFolioStartImage.getImageName()));
@@ -485,23 +489,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable {
-		try {
-			if (document != null) {
-				if ((document.getFolioNum() != null) && (document.getFolioNum() > 0)) {
-					return getImageDAO().findImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), ImageType.C, document.getFolioNum());
-				} else {
-					return getImageDAO().findVolumeFirstImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
-				}
-			}
-			
-			return null;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	@Override
 	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable {
 		try {
 			Document document = getDocumentDAO().find(entryId);
@@ -525,9 +512,41 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable {
+		try {
+			if (document != null) {
+				if ((document.getFolioNum() != null) && (document.getFolioNum() > 0)) {
+					return getImageDAO().findImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), ImageType.C, document.getFolioNum());
+				} else {
+					return getImageDAO().findVolumeFirstImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
+				}
+			}
+			
+			return null;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public FactChecks findFactChecksDocument(Integer entryId) throws ApplicationThrowable {
 		try {
 			return getFactChecksDAO().findByEntryId(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image findImage(Integer imageId) throws ApplicationThrowable {
+		try {
+			return getImageDAO().find(imageId);			
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -684,6 +703,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return documentDAO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public DocumentExplorer getDocumentExplorer(DocumentExplorer documentExplorer) throws ApplicationThrowable {
 		try {

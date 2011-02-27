@@ -62,44 +62,55 @@ import org.medici.docsources.exception.ApplicationThrowable;
 public interface DocBaseService {
 
 	/**
-	 * This method add a new {@link org.medici.docsources.domain.Document}.
+	 * Adds a new {@link org.medici.docsources.domain.Document} entry.
 	 * 
-	 * @param document
-	 * @throws ApplicationThrowable
+	 * @param inputDocument the {@link org.medici.docsources.domain.Document} to be added.
+	 * @return {@link org.medici.docsources.domain.Document} entity.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Document addNewDocument(Document inputDocument) throws ApplicationThrowable;
 
 	/**
+	 * Adds a new {@link org.medici.docsources.domain.SynExtract} entry.
 	 * 
-	 * @param synExtract
-	 * @return
-	 * @throws ApplicationThrowable
+	 * @param synExtract the {@link org.medici.docsources.domain.SynExtract} to be added.
+	 * @return {@link org.medici.docsources.domain.SynExtract} entity.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document addNewExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
 
 	/**
+	 * Links a {@link org.medici.docsources.domain.Person} entry to an existing 
+	 * {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param epLink
-	 * @return
-	 * @throws ApplicationThrowable
+	 * @param epLink the {@link org.medici.docsources.domain.EpLink} to be linked.
+	 * @return {@link org.medici.docsources.domain.Document} entity. 
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document addNewPersonDocument(EpLink epLink) throws ApplicationThrowable;
 
 	/**
+	 * Links a {@link org.medici.docsources.domain.Topic} entry and a {@link org.medici.docsources.domain.Place} 
+	 * to an existing {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param eplToLink
-	 * @return
-	 * @throws ApplicationThrowable
+	 * @param eplToLink the {@link org.medici.docsources.domain.EpLink} to be linked.
+	 * @return {@link org.medici.docsources.domain.Document} entity. 
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
 	
 	/**
-	 * This method will return a new Document constructed in runtime (no stored on database), from which, user
-	 * can follow to editing new document.
+	 * This method will return a new {@link org.medici.docsources.domain.Document} constructed 
+	 * in runtime, from which, user can follow to editing new document.
 	 * 
 	 * @param imageDocumentToCreate
 	 * @param imageDocumentFolioStart
 	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable;
 
@@ -107,7 +118,8 @@ public interface DocBaseService {
 	 * 
 	 * @param document
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void deleteDocument(Document document) throws ApplicationThrowable;
 
@@ -115,7 +127,8 @@ public interface DocBaseService {
 	 * 
 	 * @param epLink
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void deletePersonDocument(EpLink epLink) throws ApplicationThrowable;
 
@@ -123,7 +136,8 @@ public interface DocBaseService {
 	 * 
 	 * @param eplToLink
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void deleteTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
 
@@ -131,17 +145,17 @@ public interface DocBaseService {
 	 * 
 	 * @param document
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document editCorrespondentsDocument(Document document) throws ApplicationThrowable;
 
 	/**
-	 * This method modify details of an existing
-	 * {@link org.medici.docsources.domain.Document}.
+	 * This method modify details of an existing {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param document
-	 *            {@link org.medici.docsources.domain.Document} to be modified
-	 * @throws ApplicationThrowable
+	 * @param document {@link org.medici.docsources.domain.Document} to be modified
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document editDetailsDocument(Document document) throws ApplicationThrowable;
 
@@ -149,7 +163,8 @@ public interface DocBaseService {
 	 * 
 	 * @param synExtract
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document editExtractDocument(SynExtract synExtract) throws ApplicationThrowable;
 
@@ -157,9 +172,10 @@ public interface DocBaseService {
 	 * This method modify extract or Synopsis of an existing
 	 * {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param volume
-	 *            {@link org.medici.docsources.domain.Document} to be modified
-	 * @throws ApplicationThrowable
+	 * @param synExtract
+	 *            {@link org.medici.docsources.domain.SynExtract} to be modified
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document editExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
 
@@ -167,7 +183,8 @@ public interface DocBaseService {
 	 * 
 	 * @param factChecks
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable;
 
@@ -175,9 +192,9 @@ public interface DocBaseService {
 	 * This method modify people of an existing
 	 * {@link org.medici.docsources.domain.Document}.
 	 * 
-	 * @param document
-	 *            {@link org.medici.docsources.domain.Document} to be modified
-	 * @throws ApplicationThrowable
+	 * @param document {@link org.medici.docsources.domain.Document} to be modified
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document editPersonDocument(EpLink epLink) throws ApplicationThrowable;
 
@@ -185,7 +202,8 @@ public interface DocBaseService {
 	 * 
 	 * @param synExtract
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
 
@@ -194,32 +212,37 @@ public interface DocBaseService {
 	 * {@link org.medici.docsources.domain.Document}.
 	 * 
 	 * @param eplToLink
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @param document
+	 * @param entryId
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<EpLink> findCorrespondentsPeopleDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
-	 * This method will search an existing document by his unique identifiers.
+	 * This method searches an existing document by his unique identifiers.
 	 * 
 	 * @param entryId
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
 	
 	/**
+	 * This method searches document's images linked to a specific document.
 	 * 
-	 * @param entryId
+	 * @param entryId Document
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable;
 
@@ -227,7 +250,8 @@ public interface DocBaseService {
 	 * 
 	 * @param document
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable;
 
@@ -235,15 +259,26 @@ public interface DocBaseService {
 	 * 
 	 * @param entryId
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public FactChecks findFactChecksDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
-	 * This method last entry {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param imageId
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public Image findImage(Integer imageId) throws ApplicationThrowable;
+
+	/**
+	 * This method returns last entry {@link org.medici.docsources.domain.Document}.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.Document}
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Document findLastEntryDocument() throws ApplicationThrowable;
 
@@ -252,6 +287,7 @@ public interface DocBaseService {
 	 * @param entryId
 	 * @param epLinkId
 	 * @throws ApplicationThrowable
+	 * 
 	 */
 	public EpLink findPersonDocument(Integer entryId, Integer epLinkId) throws ApplicationThrowable;
 
@@ -259,7 +295,8 @@ public interface DocBaseService {
 	 * 
 	 * @param entryId
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public SynExtract findSynExtractDocument(Integer entryId) throws ApplicationThrowable;
 
@@ -267,7 +304,8 @@ public interface DocBaseService {
 	 * 
 	 * @param topicId
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public TopicList findTopic(Integer topicId) throws ApplicationThrowable;
 
@@ -276,7 +314,8 @@ public interface DocBaseService {
 	 * @param entryId
 	 * @param eplToLinkId
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public EplToLink findTopicDocument(Integer entryId, Integer eplToLinkId) throws ApplicationThrowable;
 
@@ -284,43 +323,49 @@ public interface DocBaseService {
 	 * 
 	 * @param document
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<EplToLink> findTopicsDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void generateIndexDocument() throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void generateIndexEpLink() throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void generateIndexEplToLink() throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public void generateIndexFactChecks() throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void generateIndexSynExtract() throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void generateIndexTopicList() throws ApplicationThrowable;
 
@@ -328,14 +373,18 @@ public interface DocBaseService {
 	 * 
 	 * @param pageTurner
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable;
 
 	/**
+	 * Extracts all months available.
+	 *  
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Month}
+	 * object
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
-	 * @return
-	 * @throws ApplicationThrowable
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
 
@@ -344,7 +393,8 @@ public interface DocBaseService {
 	 * @param text
 	 * @param paginationFilter
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
@@ -353,7 +403,8 @@ public interface DocBaseService {
 	 * @param entryId
 	 * @param query
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<People> searchPersonLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
 
@@ -362,7 +413,8 @@ public interface DocBaseService {
 	 * @param entryId
 	 * @param query
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<Place> searchPlaceLinkableToTopicDocument(Integer entryId, String query) throws ApplicationThrowable;
 
@@ -371,7 +423,8 @@ public interface DocBaseService {
 	 * @param entryId
 	 * @param query
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
 }

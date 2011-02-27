@@ -4,8 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="editDetailsDocumentForm" value="/de/docbase/EditDetailsDocument.do"/>
+	
 	<div id="createdby"><h6>CREATED BY ${command.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${command.dateCreated}" /></h6></div>
-	<form:form id="EditDetailsDocumentForm" method="post" cssClass="edit">
+	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentForm}" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>DOCUMENT DETAILS</b></legend>
 			<div>
@@ -71,7 +73,10 @@
 				<form:textarea id="dateNotes" path="dateNotes" class="txtarea"/>
 			</div>
 			
-			<input id="dateCreated" name="dateCreated" type="hidden" value="11/03/2010 11:51:57"/>
+			<form:hidden id="transcribeFolioNum" path="transcribeFolioNum" />
+			<form:hidden id="transcribeFolioMod" path="transcribeFolioMod" />
+			<form:hidden id="dateCreated" path="dateCreated" />
+			<form:hidden id="entryId" path="entryId" />
 			
 			<div style="margin-top:5px">
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />

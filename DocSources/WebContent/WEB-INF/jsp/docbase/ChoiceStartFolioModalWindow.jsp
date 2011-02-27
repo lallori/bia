@@ -5,21 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="ChoiceStartFolioDocument" value="/de/docbase/ChoiceStartFolioDocument.do">
-			<c:param name="summaryId" value="${requestCommand.summaryId}"/>
-			<c:param name="volNum" value="${requestCommand.volNum}" />
-			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
-			<c:param name="imageOrder" value="${requestCommand.imageProgTypeNum}" />
-			<c:param name="total" value="${requestCommand.total}" />
-			<c:param name="totalRubricario" value="${requestCommand.totalRubricario}" />
-			<c:param name="totalCarta" value="${requestCommand.totalCarta}" />
-			<c:param name="totalAppendix" value="${requestCommand.totalAppendix}" />
-			<c:param name="totalOther" value="${requestCommand.totalOther}" />
-			<c:param name="totalGuardia" value="${requestCommand.totalGuardia}" />
-			<c:param name="imageDocumentToCreate" value="${requestCommand.imageDocumentToCreate}" />
-			<c:param name="modalWindow" value="true"/>
-		</c:url>
-
 		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${volumeExplorer.image}" />
 			<c:param name="flashVersion"   value="true" />
@@ -37,6 +22,7 @@
 			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 			<c:param name="flashVersion" value="true" />
 			<c:param name="imageDocumentToCreate" value="${requestCommand.imageDocumentToCreate}" />
+			<c:param name="imageDocumentFolioStart" value="${volumeExplorer.image.imageId}" />
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
@@ -54,8 +40,6 @@
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 	</security:authorize>
-	
-	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
 	
 	<c:url var="nextPage" value="/de/docbase/ChoiceStartFolioDocument.do">
 		<c:param name="volNum" value="${requestCommand.volNum}" />
@@ -99,10 +83,10 @@
 			</c:if>
 			</div>
 			<div id="nextPage">
-			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
+			<c:if test="${volumeExplorer.image.imageOrder == imageToCreate.imageOrder }">
 				<a id="nextPage"></a>
 			</c:if>
-			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
+			<c:if test="${volumeExplorer.image.imageOrder < imageToCreate.imageOrder }">
 				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
 			</c:if>
 			</div>
@@ -121,10 +105,10 @@
 				</c:if>
 				</div>
 				<div id="nextPage">
-				<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
+				<c:if test="${volumeExplorer.image.imageOrder == imageToCreate.imageOrder }">
 					<a id="nextPage"></a>
 				</c:if>
-				<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
+				<c:if test="${volumeExplorer.image.imageOrder < imageToCreate.imageOrder }">
 					<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
 				</c:if>
 				</div>
@@ -135,10 +119,11 @@
 		<br />
 			
 		<div id="chooseGoBack">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<a id="transcribeAndContextualizeDocument" href="${TranscribeAndContextualizeDocument}"><img src="/DocSources/images/button_choose.png" alt="next" /></a>
-			
+		</security:authorize>
+
 			<a href="${ExplorerVolumeModal}" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"><img src="/DocSources/images/button_goBack.png" alt="Go back to Volume Explorer" id="buttonGoBack"/></a>
-		
 		</div>
 			
 	</div>
@@ -154,14 +139,11 @@
 				$j("#modalBox").load($j(this).attr("href"));
 				return false;
 			});					
-			
-			$j(".simplemodal-close").click( function(e) {
-				$j.modal.close();
-			});
-			
-			$j("#transcribeAndContextualizeDocument").click(function(){
+						
+			$j("#transcribeAndContextualizeDocument").click(function(e) {
+				e.preventDefault();
 				$j("#body_left").load($j(this).attr("href"));
-				$j.modal.close();
+				Modalbox.hide(); 
 				return false;
 			});
 		});

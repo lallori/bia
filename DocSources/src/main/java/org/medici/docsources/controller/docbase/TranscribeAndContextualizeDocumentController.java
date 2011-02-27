@@ -30,7 +30,6 @@ package org.medici.docsources.controller.docbase;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
 import org.medici.docsources.command.docbase.TranscribeAndContextualizeDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -95,8 +94,28 @@ public class TranscribeAndContextualizeDocumentController {
 		try {
 			document = getDocBaseService().constructDocumentToTranscribe(command.getImageDocumentToCreate(), command.getImageDocumentFolioStart());
 
+			command.setResearcher(document.getResearcher());
+			command.setDateCreated(document.getDateCreated());
+			command.setEntryId(document.getEntryId());
+			command.setVolume(document.getVolume().toString());
+			command.setInsertNum(document.getInsertNum());
+			command.setInsertLet(document.getInsertLet());
+			command.setFolioNum(document.getFolioNum());
+			command.setFolioMod(document.getFolioMod());
+			command.setTranscribeFolioNum(document.getTranscribeFolioNum());
+			command.setTranscribeFolioMod(document.getTranscribeFolioMod());
+			command.setUnpaged(document.getUnpaged());
+			command.setContDisc(document.getContDisc());
+			command.setDocYear(document.getDocYear());
+			command.setDocMonthNum(document.getDocMonthNum());
+			command.setDocDay(document.getDocDay());
+			command.setYearModern(document.getYearModern());
+			command.setDateUns(document.getDateUns());
+			//command.setDateUndated(document.getDa);
+			command.setDateNotes(document.getDateNotes());
+
 			model.put("document", document);
-			model.put("command", new EditDetailsDocumentCommand());
+
 			return new ModelAndView("docbase/TranscribeAndContextualizeDocument", model);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/EditDetailsDocument", model);

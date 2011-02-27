@@ -103,7 +103,8 @@ public class AjaxController {
 
 		try {
 			Volume volume = getVolBaseService().findVolume(VolumeUtils.extractVolNum(inputVolume), VolumeUtils.extractVolLetExt(inputVolume));
-			model.put("volume", volume);
+			model.put("volNum", volume.getVolNum().toString());
+			model.put("volLetExt", (volume.getVolLetExt()!= null) ? volume.getVolLetExt().toString() : "");
 			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
 		} catch (ApplicationThrowable aex) {
 			model.put("volume", (inputVolume != null) ? inputVolume : "");

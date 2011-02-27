@@ -58,7 +58,8 @@ public interface VolBaseService {
 	 * This method add a new {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be added
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Volume addNewVolume(Volume volume) throws ApplicationThrowable;
 
@@ -66,7 +67,8 @@ public interface VolBaseService {
 	 * This method modify context of an existing {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Volume editContextVolume(Volume volume) throws ApplicationThrowable;
 
@@ -74,7 +76,8 @@ public interface VolBaseService {
 	 * This method modify correspondents of an existing {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Volume editCorrespondentsVolume(Volume volume) throws ApplicationThrowable;
 
@@ -82,7 +85,8 @@ public interface VolBaseService {
 	 * This method modify description of an existing {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Volume editDescriptionVolume(Volume volume) throws ApplicationThrowable;
 
@@ -90,7 +94,8 @@ public interface VolBaseService {
 	 * This method modify details of an existing {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable;
 
@@ -98,7 +103,8 @@ public interface VolBaseService {
 	 * This method last entry {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.Volume}
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Volume findLastEntryVolume() throws ApplicationThrowable;
 
@@ -108,6 +114,8 @@ public interface VolBaseService {
 	 * 
 	 * @param summaryId Volume Identifier}
 	 * @return {@link org.medici.docsources.domain.Volume}
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable;
 	
@@ -117,7 +125,8 @@ public interface VolBaseService {
 	 * @param volNum
 	 * @param volLetExt
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
@@ -128,7 +137,8 @@ public interface VolBaseService {
 	 * @param imageType
 	 * @param imageProgTypeNum
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<Image> findVolumeImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
 
@@ -140,7 +150,8 @@ public interface VolBaseService {
 	 * 
 	 * @param summaryId
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable;
 
@@ -149,7 +160,8 @@ public interface VolBaseService {
 	 * @param summaryId
 	 * @param paginationFilter
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
@@ -158,7 +170,8 @@ public interface VolBaseService {
 	 * @param volNum
 	 * @param volLetExt
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
@@ -168,21 +181,24 @@ public interface VolBaseService {
 	 * @param volLetExt
 	 * @param paginationFilter
 	 * @return
-	 * @throws ApplicationThrowable 
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.SerieList}.
 	 * 
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void generateIndexSerieList() throws ApplicationThrowable;
 
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Volume}.
 	 * 
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public void generateIndexVolume() throws ApplicationThrowable;
 
@@ -191,7 +207,8 @@ public interface VolBaseService {
 	 *  
 	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Month}
 	 * object
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
 	
@@ -199,7 +216,8 @@ public interface VolBaseService {
 	 * 
 	 * @param volumeExplorer
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable;
 
@@ -208,7 +226,7 @@ public interface VolBaseService {
 	 * 
 	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}
 	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.SerieList}
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
 
@@ -223,7 +241,7 @@ public interface VolBaseService {
 	 * pagination 
 	 * @return {@link org.medici.docsources.common.pagination.Page} containing 
 	 * partial result
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

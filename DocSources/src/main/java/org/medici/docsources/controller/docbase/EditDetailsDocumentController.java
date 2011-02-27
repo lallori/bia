@@ -107,6 +107,9 @@ public class EditDetailsDocumentController {
 			// Folio Start:
 			document.setFolioNum(command.getFolioNum());
 			document.setFolioMod(command.getFolioMod().toString());
+			// Transcribe Folio Start:
+			document.setTranscribeFolioNum(command.getTranscribeFolioNum());
+			document.setTranscribeFolioMod(command.getTranscribeFolioMod().toString());
 			// Paginated
 			document.setUnpaged(command.getUnpaged());
 			//Disc. Cont'd
@@ -178,10 +181,13 @@ public class EditDetailsDocumentController {
 			command.setResearcher(document.getResearcher());
 			command.setDateCreated(document.getDateCreated());
 			command.setEntryId(document.getEntryId());
+			command.setVolume(document.getVolume().toString());
 			command.setInsertNum(document.getInsertNum());
 			command.setInsertLet(document.getInsertLet());
 			command.setFolioNum(document.getFolioNum());
 			command.setFolioMod(document.getFolioMod());
+			command.setTranscribeFolioNum(document.getTranscribeFolioNum());
+			command.setTranscribeFolioMod(document.getTranscribeFolioMod());
 			command.setUnpaged(document.getUnpaged());
 			command.setContDisc(document.getContDisc());
 			command.setDocYear(document.getDocYear());
@@ -195,7 +201,7 @@ public class EditDetailsDocumentController {
 			// On Document creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			command.setDateCreated(new Date());
-			command.setEntryId(null);
+			command.setEntryId(0);
 			command.setInsertNum(null);
 			command.setInsertLet(null);
 			command.setFolioNum(null);
