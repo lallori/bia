@@ -14,11 +14,11 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
 
 		<script>
-		 	$(document).ready(function () {
-		        if ($("#site").length > 0) {
-		        	alert('a');
-		            window.location = "<c:url value="/"/>";
-		        }
+			var $j = jQuery.noConflict();
+			$j(document).ready(function() {
+				if (location.pathname != "<c:url value="/LoginUser.do"/>" ) {
+					window.location = "<c:url value="/"/>";
+				}
 		    });
 			var RecaptchaOptions = {
 			   theme : 'clean'
