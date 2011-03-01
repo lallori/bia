@@ -27,17 +27,18 @@
 	</security:authorize>
 	
 	<div id="EditDetailsVolumeDiv">
+		<h5>VOLUME DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a></security:authorize></h5>
+		<div id="createdby"><h6>CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></h6></div>
+		<hr id="lineSeparator"/>
+
 		<div id="EditPortraitPersonDiv">
 			<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
 			<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></security:authorize></p>
 		</div>
-		<div id="createdby"><h6>CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></h6></div>
-		<h5>VOLUME DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a></security:authorize></h5>
-		<hr id="lineSeparator"/>
 
-		<h2 class="titlepeople">${volume.serieList}</h2>
+		<h3>${volume.serieList}</h3>
 		<ul>
-			<li><b>Volume/Filsa (MDP): </b> ${volume.volNum}${volume.volLetExt}</li>
+			<li><b>Volume/Filza (MDP): </b> ${volume.volNum}${volume.volLetExt}</li>
 			<li><b>Start Date: </b> ${volume.startYear} ${volume.startMonth} ${volume.startDay}</li>
 			<li><b>End Date: </b> ${volume.endYear} ${volume.endMonth} ${volume.endDay}</li>
 			<li><b>Date Notes: </b> ${volume.dateNotes}</li>
