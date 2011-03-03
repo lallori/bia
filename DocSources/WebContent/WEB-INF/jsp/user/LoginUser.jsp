@@ -53,7 +53,7 @@
 			</c:if>
 			<script type="text/javascript">
 			$j(document).ready( function(){
-				$j("#login").submit(function (){$j.blockUI({message: $('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$j("#login").submit(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
 				$j("#RegisterUser").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
 				$j("#loginAsGuest").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
 				$j("#SendUserPasswordReset").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
@@ -62,4 +62,4 @@
 			});
 			</script>
 
-			<img id="displayBox" src="<c:url value="/images/waiting.gif" />" style="display:none" />
+			<img id="displayBox" src="<c:url value="/images/1024/img_waiting.gif" />" style="display:none" />

@@ -10,7 +10,7 @@
 			<div id="colte_of_arms"></div>
 		</div>	
 		<div id="body_right">
-			<div id="button_courses"><a href="#"><img src="/DocSources/images/button_courses.jpg" alt="MAP courses"/></a></div>
+			<div id="button_courses"><a id="button_courses" href="#"></a></div>
 			<ul class="welcome_list">
 				<li><h5>Welcome back <security:authentication property="principal.firstName"/>. <br />From your last log on:</h5>
 					<ul>

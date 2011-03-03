@@ -15,9 +15,9 @@
 		<script>
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
-				if (location.pathname != "<c:url value="/LoginUser.do"/>" ) {
+				/*if (location.pathname != "<c:url value="/LoginUser.do"/>" ) {
 					window.location = "<c:url value="/"/>";
-				}
+				}*/
 		    });
 			var RecaptchaOptions = {
 			   theme : 'clean'
