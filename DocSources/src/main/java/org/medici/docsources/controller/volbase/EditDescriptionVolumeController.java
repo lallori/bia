@@ -97,6 +97,7 @@ public class EditDescriptionVolumeController {
 			volume.setOrgNotes(command.getOrgNotes());
 			volume.setCcondition(command.getCcondition());
 			volume.setBound(command.getBound());
+			volume.setFolioCount(command.getFolioCount());
 			volume.setFolsNumbrd(command.getFolsNumbrd());
 			volume.setOldAlphaIndex(command.getOldAlphaIndex());
 			volume.setPrintedMaterial(command.getPrintedMaterial());

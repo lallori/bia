@@ -96,6 +96,7 @@ public class EditContextVolumeController {
 			Volume volume = new Volume();
 			volume.setSummaryId(command.getSummaryId());
 			volume.setCcontext(command.getCcontext());
+			volume.setInventarioSommarioDescription(command.getInventarioSommarioDescription());
 
 			try {
 				volume = getVolBaseService().editContextVolume(volume);
