@@ -139,6 +139,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 
 		volumeToUpdate.setCcontext(volume.getCcontext());
+		volumeToUpdate.setInventarioSommarioDescription(volume.getInventarioSommarioDescription());
 		
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
@@ -187,6 +188,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		volumeToUpdate.setOrgNotes(volume.getOrgNotes());
 		volumeToUpdate.setCcondition(volume.getCcondition());
 		volumeToUpdate.setBound(volume.getBound());
+		volumeToUpdate.setFolioCount(volume.getFolioCount());
 		volumeToUpdate.setFolsNumbrd(volume.getFolsNumbrd());
 		volumeToUpdate.setOldAlphaIndex(volume.getOldAlphaIndex());
 		volumeToUpdate.setPrintedMaterial(volume.getPrintedMaterial());

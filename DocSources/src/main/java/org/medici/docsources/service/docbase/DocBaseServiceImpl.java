@@ -157,6 +157,25 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Document addNewFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
+		try {
+			factChecks.setVetId(null);
+			factChecks.setDateInfo((new Date()).toString());
+			factChecks.setDocument(getDocumentDAO().find(factChecks.getDocument().getEntryId()));
+
+			getFactChecksDAO().persist(factChecks);
+
+			// We need to recall documentDAO to refresh entity.
+			return getDocumentDAO().find(factChecks.getDocument().getEntryId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Document addNewPersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
 			epLink.setEpLinkId(null);

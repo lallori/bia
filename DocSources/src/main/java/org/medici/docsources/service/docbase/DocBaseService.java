@@ -81,6 +81,17 @@ public interface DocBaseService {
 	public Document addNewExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
 
 	/**
+	 * Links a {@link org.medici.docsources.domain.FactChecks} entry to an existing 
+	 * {@link org.medici.docsources.domain.Document}.
+	 * 
+	 * @param factChecks the {@link org.medici.docsources.domain.FactChecks} to be linked.
+	 * @return {@link org.medici.docsources.domain.Document} entity. 
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	 public Document addNewFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable;
+	
+	/**
 	 * Links a {@link org.medici.docsources.domain.Person} entry to an existing 
 	 * {@link org.medici.docsources.domain.Document}.
 	 * 
@@ -427,4 +438,5 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
+
 }
