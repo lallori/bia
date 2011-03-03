@@ -202,6 +202,10 @@ public class Volume implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String ccontext;
 	
+	@Column (name="\"INVSOMDESC\"", columnDefinition="LONGTEXT")
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private String inventarioSommarioDescription;
+
 	@Column (name="\"FOLIOCOUNT\"", length=50)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String folioCount;
@@ -759,6 +763,14 @@ public class Volume implements Serializable {
 		this.ccontext = ccontext;
 	}
 	
+	public void setInventarioSommarioDescription(String inventarioSommarioDescription) {
+		this.inventarioSommarioDescription = inventarioSommarioDescription;
+	}
+
+	public String getInventarioSommarioDescription() {
+		return inventarioSommarioDescription;
+	}
+
 	/**
 	 * @return the folioCount
 	 */
