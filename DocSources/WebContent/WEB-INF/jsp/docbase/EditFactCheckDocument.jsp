@@ -16,6 +16,7 @@
 			</div>
 
 			<form:hidden path="entryId"/>
+			<form:hidden path="vetId"/>
 		</fieldset>	
 	</form:form>
 

@@ -33,11 +33,5 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			 $j("#EditFactCheckDocument").click(function(){$j("#EditFactCheckDocumentDiv").load($j(this).attr("href"));return false;});
-				
-				$j("#EditFactCheckDocument").click(function(){
-					$j("#EditFactCheckDocument").load($j(this).attr("href"));
-					return false;
-				});
-			 
 		});
 	</script>
