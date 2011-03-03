@@ -16,7 +16,7 @@ html {
 }
 
 body {
-	background-image:url(/DocSources/images/bg_image.jpg);
+	background-image:url(/DocSources/images/1024/bg.jpg);
 	background-position:bottom;
 	background-repeat:no-repeat;
 	background-color:#f6edec;
@@ -68,6 +68,7 @@ a {
 	height:165px;
 	position:absolute;
 	z-index:2 !important;
+	background-image:url(/DocSources/images/1024/img_map.png);
 }
 
 #top_top { /* SEARCH FORM and LAST ENTRY MENU Container */
@@ -83,7 +84,7 @@ a {
 	margin-top:95px;
 	margin-left:255px;
 	position:absolute;
-	background-image:url(/DocSources/images/top_middle_bg.png);
+	background-image:url(/DocSources/images/1024/bg_mainmenu.png);
 	z-index:3;
 }
 
@@ -93,7 +94,7 @@ a {
 	margin-top:158px;
 	position:absolute;
 	z-index:1 !important; 
-	background-image:url(/DocSources/images/user_interface_docs.png);
+	background-image:url(/DocSources/images/1024/bg_userinterface.png);
 }
 
 #DocSourcesContent { /* MAIN Website Container */
@@ -174,7 +175,7 @@ a {
 }
 
 .input_search { /* Input Text class */
-	background-image:url(/DocSources/images/input_search_bg.png);
+	background-image:url(/DocSources/images/1024/bg_input_search.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -185,7 +186,7 @@ a {
 }
 
 .select{ /* Dropdown Menu: Documents, Volumes, People, Locations and community Comments  */
-	background-image:url(/DocSources/images/select_bg.png);
+	background-image:url(/DocSources/images/1024/bg_input_select.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:25px;
@@ -212,6 +213,10 @@ input {
 	border:none;
 	background-color:transparent;
 	margin-top:-3px;
+	background-image:url(/DocSources/images/1024/button_search.png);
+	width:50px;
+	height:13px;
+	cursor:pointer;
 }
 
 #firstName {
@@ -243,12 +248,54 @@ input {
 	float:left;
 }
 
-#menulastentry a{ /* Shortcut Menu <ul> list <li> elements <a> ancors */
+#menulastentry a:hover{
+	opacity:0.5;
+}
+
+#menulastentry #last_doc a {
+	background-image:url(/DocSources/images/1024/button_lastdocumententry.png);
+	background-repeat:no-repeat;
 	float:left;
 	display:block;
 	text-decoration:none;
+	width:100px;
+	height:85px;
 	padding-left:10px;
 }
+
+#menulastentry #last_vol a {
+	background-image:url(/DocSources/images/1024/button_lastvolumeentry.png);
+	background-repeat:no-repeat;
+	float:left;
+	display:block;
+	text-decoration:none;
+	width:100px;
+	height:85px;
+	padding-left:10px;
+}
+
+#menulastentry #last_pers a {
+	background-image:url(/DocSources/images/1024/button_lastpersonentry.png);
+	background-repeat:no-repeat;
+	float:left;
+	display:block;
+	text-decoration:none;
+	width:100px;
+	height:85px;
+	padding-left:10px;
+}
+
+#menulastentry #last_pla a {
+	background-image:url(/DocSources/images/1024/button_lastplaceentry.png);
+	background-repeat:no-repeat;
+	float:left;
+	display:block;
+	text-decoration:none;
+	width:100px;
+	height:85px;
+	padding-left:10px;
+}
+
 
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
@@ -260,6 +307,7 @@ input {
 	margin-left:0px;
 	z-index:2;
 }
+
 
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
@@ -341,7 +389,7 @@ input {
 	margin-top:100px;
 	margin-left: 220px;	
 	position:absolute;
-	background-image:url(/DocSources/images/stemma.png);
+	background-image:url(/DocSources/images/1024/img_coatofarms.png);
 }
 
 #button_courses {
@@ -363,7 +411,7 @@ input {
 	color:#b99c84;
 }
 
-#body_left a:hover, #body_right a:hover, #body_central a:hover { /* All ancors */
+#body_left a:hover, #body_right a:hover, #body_central a:hover { 
 	opacity:0.5;
 }
 

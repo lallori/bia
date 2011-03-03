@@ -1,5 +1,5 @@
 body {
-	background-image:url(/DocSources/images/bg_image.jpg);
+	background-image:url(/DocSources/images/1024/bg.jpg);
 	background-position:center;
 	background-repeat:no-repeat;
 	background-color:#f6edec;
@@ -26,6 +26,7 @@ body {
 	height:175px;
 	margin-left:365px;
 	position:absolute;
+	background-image:url(/DocSources/images/1024/img_map.png);
 }
 
 #footer {
@@ -44,7 +45,7 @@ body {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(/DocSources/images/login_bg.png);
+	background-image:url(/DocSources/images/1024/bg_login.png);
 }
 
 /*  Log in - Form */
@@ -56,6 +57,10 @@ body {
 	margin-left:55px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.button_login {
+	background-image:url(/DocSources/images/1024/button_login.jpg);
 }
 
 .fyp { /* Forgot your password class */
@@ -76,8 +81,8 @@ input {
 }
 
 .input { /* input text class */
-	background-image:url(/DocSources/images/input_bg.png);
-	background-color: transparent;
+	background-image:url(/DocSources/images/1024/bg_input.png);
+	background-color:transparent;
 	background-repeat:no-repeat;
 	height:30px;
 	border:none;
@@ -97,14 +102,21 @@ input {
 	margin-top:220px;
 	margin-left:585px;
 	position:absolute;
+	background-image:url(/DocSources/images/1024/button_registerhere.jpg);
+	width:228px;
+	height:65px;
 }
 
 #guest {
-	width:230px;
-	height:65px;
 	margin-top:300px;
 	margin-left:585px;
 	position:absolute;
+}
+
+#register {
+	background-image:url(/DocSources/images/1024/button_guest.jpg);
+	width:228px;
+	height:65px;
 }
 
 .guest {
@@ -119,7 +131,7 @@ input {
 	margin-top:190px;
 	margin-left: 75px;	
 	position:absolute;
-	background-image:url(/DocSources/images/regist_bg.png);
+	background-image:url(/DocSources/images/1024/bg_registration.png);
 	background-repeat:no-repeat;
 	z-index:1;
 }
@@ -195,7 +207,7 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/recovery_bg.png);
+	background-image:url(/DocSources/images/1024/bg_recovery.png);
 }
 
 .recovery { /*  Form class */
@@ -216,14 +228,14 @@ input {
 	width:180px;
 	height:220px;
 	margin-top:260px;
-	margin-left: 620px;	
+	margin-left:620px;	
 	position:absolute;
-	background-image:url(/DocSources/images/stemma.png);
+	background-image:url(/DocSources/images/1024/img_coatofarms.png);
 }
 
 .input_recovery { /* input text class */
-	background-image:url(/DocSources/images/input_recovery_bg.png);
-	background-color: transparent;
+	background-image:url(/DocSources/images/1024/bg_input_recovery.png);
+	background-color:transparent;
 	background-repeat:no-repeat;
 	height:30px;
 	border:none;
@@ -267,9 +279,9 @@ input {
 	width:480px;
 	height:380px;
 	margin-top:200px;
-	margin-left: 265px;	
+	margin-left:265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/activationcode_bg.png);
+	background-image:url(/DocSources/images/1024/bg_activationcode.png);
 }
 
 #activationcode p {
@@ -286,7 +298,7 @@ input {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(/DocSources/images/success_bg.png);
+	background-image:url(/DocSources/images/1024/bg_thankyou.png);
 }
 
 .usersuccess {  /* p class */
@@ -319,7 +331,7 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/reset_bg.png);
+	background-image:url(/DocSources/images/1024/bg_reset.png);
 }
 
 .reset { /*  Form class */

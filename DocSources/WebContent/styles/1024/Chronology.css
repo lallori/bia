@@ -58,6 +58,12 @@
 	padding:10px;
 }
 
+#DocsImg, #PeopleImg, #VolumesImg, #PlaceImg {
+	background-image:url(/DocSources/images/1024/img_chronology.jpg);
+	width:280px;
+	height:50px;
+}
+
 #DocsChronology ul, #PeopleChronology ul, #VolumesChronology ul, #PlaceChronology ul, #MoreDocsCronology ul { /* Chronology's List */
 	list-style:none;
 	font-size:12px;

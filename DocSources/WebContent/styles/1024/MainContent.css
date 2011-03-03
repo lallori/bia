@@ -49,7 +49,9 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	width:16px;
 	height:11px;
 	display:inline;
-	margin:25px 0 auto 25px;
+	margin:3px 0 auto 25px;
+	background-image:url(/DocSources/images/1024/img_loading.gif);
+	position:absolute;
 
 }
 
@@ -110,6 +112,14 @@ form img{ /* Red Cross used to "Delete this entry"  */
 	height: 13px;
 	width: 13px;
 	vertical-align:middle;
+}
+
+input[type="submit"]:hover { 
+	opacity:0.5;
+}
+
+:hover input.submit { 
+	opacity:0.5;
 }
 
 
@@ -267,7 +277,7 @@ form img{ /* Red Cross used to "Delete this entry"  */
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
-	padding-left:7px;
+	padding-left:10px;
 	margin: 5px 7px 5px 5px; 
 	opacity: 0.3;
 	cursor:default;
@@ -570,11 +580,11 @@ input.file {
 }
 
 #senderPlaceDescriptionLabel  {
-	margin-left:19px;
+	margin-left:22px;
 }
 
 #senderPeopleDescriptionLabel {
-	margin-left:11px;
+	margin-left:14px;
 }
 
 #recipientPlaceDescriptionLabel {
@@ -586,19 +596,46 @@ input.file {
 }
 
 #personIcon {
-	margin:0 auto 0 15px;
+	width:14px;
+	height:14px;
+	display:inline;
+	margin-left:15px;
+	background-image:url(/DocSources/images/1024/button_person.gif);
+	cursor:pointer;
+	background-color:transparent;
+	border:none;
 }
 
-#people, #firstTopic {
-	margin-left:22px;
+#placeIcon {
+	width:15px;
+	height:14px;
+	display:inline;
+	margin-left:15px;
+	background-image:url(/DocSources/images/1024/button_flag.png);
+	background-repeat:no-repeat;
+	cursor:pointer;
+	background-color:transparent;
+	border:none;
 }
+
+#deleteIcon {
+	width:13px;
+	height:13px;
+	display:inline;
+	background-image:url(/DocSources/images/1024/button_delete.gif);
+	background-repeat:no-repeat;
+	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
 
 #AddPersonCorrespondentsDocument {
 	margin:5px auto auto 280px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/button_addNew1024.png);
+	background-image:url(/DocSources/images/1024/button_addnew.png);
 	width:59px;
 	height:23px;
 	border:none;
@@ -613,15 +650,10 @@ input.file {
 }
 
 #closeSaveButtonsFullscreen {
-	margin:475px 0 0 350px;
-	width:131px;
+	margin:475px 0 0 363px;
+	width:110px;
 	height:25px;
 	position:absolute;
-}
-
-#closeSaveButtonsFullscreen input{
-	border:none;
-	background-color:#F6EDEC;
 }
 
 #closeSaveButtonsFullscreen #close{
@@ -641,18 +673,18 @@ input.file {
 /* --------------- TOPICS --------------- */
 
 #topicDescription { /* "Show Topic Description" Button */
-	background-image:url(/DocSources/images/topic.png);
+	background-image:url(/DocSources/images/1024/button_topic.png);
 	width:12px;
 	height:12px;
+	position:absolute;
 	background-repeat:no-repeat;
-	margin-left:7px;
+	margin:5px 0 0 10px;
 }
 
 #AddTopicDocument { /* "Add New ..." Button */
-	background-image: url(/DocSources/images/button_addNew1024.png);
+	background-image: url(/DocSources/images/1024/button_addnew.png);
 	border:none;
-	display:inline;
-	margin:0 0 0 285px;
+	margin:5px auto auto 280px;
 	width:59px;
 	height:23px;
 	border:none;
@@ -741,17 +773,15 @@ input.file {
 	margin-left:7px;
 }
 
-#AddNewValue { /* "Add New Value" Button */
-	margin-left:250px;
-}
+
 
 a#editValue { /* "Edit Value" Button */
 	font-size:10px;
 	
 }
 
-a#AddNamesPerson, a#AddChildPerson, a#AddExtLinkTgnPlace, a#AddExtLinkMapPlace, a#AddExtLinkMapSitePlace, a#AddNameMapSitePlace, a#AddNameMapPlace, a#AddNameTgnPlace { /* "Add New ..." Button */
-	background-image: url(/DocSources/images/button_addNew1024.png);
+#AddNamesPerson, #AddChildPerson, #AddExtLinkTgnPlace, #AddExtLinkMapPlace, #AddExtLinkMapSitePlace, #AddNameMapSitePlace, #AddNameMapPlace, #AddNameTgnPlace { /* "Add New ..." Button */
+	background-image: url(/DocSources/images/1024/button_addnew.png);
 	border:none;
 	display:inline;
 	margin-left:260px;
@@ -759,8 +789,9 @@ a#AddNamesPerson, a#AddChildPerson, a#AddExtLinkTgnPlace, a#AddExtLinkMapPlace, 
 	height:23px;
 }
 
-a#AddSpousePerson, a#EditPerson { /* "Add New ..." Button */
-	background-color: #e6d0c6;
+#AddSpousePerson, #EditPerson { /* "Add New ..." Button */
+	background-color:transparent;
+	background-image: url(/DocSources/images/1024/button_addnew.png);
 	padding:1px 5px 1px 5px;
 	border:none;
 	display:inline;
@@ -768,9 +799,12 @@ a#AddSpousePerson, a#EditPerson { /* "Add New ..." Button */
 	font-size:10px;
 	text-decoration:none;
 	margin-left:255px;
+	width:59px;
+	height:23px;
+	cursor:pointer;
 }
 
-a#AddTitlesOccupationsPerson { /* "Add New ..." Button */
+#AddTitlesOccupationsPerson { /* "Add New ..." Button */
 	background-color: #e6d0c6;
 	padding:1px 5px 1px 5px;
 	border:none;
@@ -925,14 +959,10 @@ a#linkSearch {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/button_close1024.png);
+	background-image:url(/DocSources/images/1024/button_close.png);
 	width:45px;
 	height:22px;
 	border:none;
-}
-
-#close:hover {
-	opacity:0.5;
 }
 
 #closeProfile {
@@ -944,18 +974,25 @@ a#linkSearch {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/button_save1024.png);
+	background-image:url(/DocSources/images/1024/button_save.png);
 	width:45px;
 	height:22px;
 	border:none;
 }
 
-#save:hover {
-	opacity:0.5;
-}
-
 #saveProfile {
 	margin-left:160px;
+}
+
+#AddNewValue { /* "Add New Value" Button */
+	margin:5px auto auto 280px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_addnew.png);
+	width:59px;
+	height:23px;
+	border:none;
 }
 
 
@@ -1019,15 +1056,6 @@ a#linkSearch {
 
 /* ------------------------------------------------- */ 
 /*
-/* ----------- EditCorrespondentsVolume ------------ */
-
-
-#toCorrespLabel {
-	margin-left:13px;
-}
-
-/* ------------------------------------------------- */ 
-/*
 /* ---------------- Volume Explorer ---------------- */
 /*
 /* -------- iFrame -------- */
@@ -1074,14 +1102,14 @@ iframe{ /* Common for all iFrame */
 
 #prevNextButtons #previousPage a{
 	float:left;
-	background-image:url(/DocSources/images/button_prev1024.png);
+	background-image:url(/DocSources/images/1024/button_prevfolio.png);
 	width:83px;
 	height:23px;
 }
 
 #prevNextButtons #nextPage a{
 	float:right;
-	background-image:url(/DocSources/images/button_next1024.png);
+	background-image:url(/DocSources/images/1024/button_nextfolio.png);
 	width:83px;
 	height:23px;
 }
@@ -1127,14 +1155,11 @@ iframe{ /* Common for all iFrame */
 	margin:-4px 0 0 120px;
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/button_go.png);
+	background-image:url(/DocSources/images/1024/button_go.png);
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
-}
-
-#goR:hover {
-	opacity:0.5;
+	cursor:pointer;
 }
 
 
@@ -1178,10 +1203,11 @@ iframe{ /* Common for all iFrame */
 	margin:-4px 0 0 120px;
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/button_go.png);
+	background-image:url(/DocSources/images/1024/button_go.png);
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
+	cursor:pointer;
 }
 
 /* ---------------- */
@@ -1193,7 +1219,7 @@ iframe{ /* Common for all iFrame */
 	height:22px;
 	position:absolute;
 	display:inline;
-	background-image:url(/DocSources/images/button_fullscreenMode1024.png);
+	background-image:url(/DocSources/images/1024/button_fullscreenmode.png);
 }
 
 /* ---------------- */
@@ -1206,7 +1232,7 @@ iframe{ /* Common for all iFrame */
 	width:95px;
 	height:22px;
 	display:inline;
-	background-image:url(/DocSources/images/button_refresh1024.png);
+	background-image:url(/DocSources/images/1024/button_refresh.png);
 }
 
 /* ---------------- */
@@ -1365,7 +1391,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #createPlace #tgnPlace #AddNewTgnPlace {
-	background-image:url(/DocSources/images/button_tgnPlace.png);
+	background-image:url(/DocSources/images/1024/button_tgnplace.png);
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
@@ -1384,7 +1410,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #createPlace #mapPlace #AddNewMapPlace {
-	background-image:url(/DocSources/images/button_mapPlace.png);
+	background-image:url(/DocSources/images/1024/button_mapplace.png);
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
@@ -1392,8 +1418,8 @@ iframe{ /* Common for all iFrame */
 	height:25px;
 }
 
-#createPlace #mapSite #AddNewMapSite {
-	background-image:url(/DocSources/images/button_mapSite.png);
+#createPlace #mapSite #AddNewMapSitePlace {
+	background-image:url(/DocSources/images/1024/button_mapsite.png);
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
@@ -1504,9 +1530,13 @@ iframe{ /* Common for all iFrame */
 	color:#b99c84;
 }
 
-#imgProfile { /* User image profile */
-	float:left;
-	margin-top:5px;
+#imgUserProfile { /* User image profile */
+	margin:8px 0 0 0;
+	position:absolute;
+	background-image:url(/DocSources/images/1024/img_user.jpg);
+	width:100px;
+	height:100px;
+	background-color:#000;
 }
 
 #helpProfile { /* Help Div Container */
@@ -1560,6 +1590,9 @@ iframe{ /* Common for all iFrame */
 	margin:250px 0 0 53px;
 	padding:0;
 	position:absolute;
+	background-image:url(/DocSources/images/1024/button_personalnotes.png);
+	width:93px;
+	height:23px;
 }
 
 #PersonalNotes:hover {
@@ -1589,7 +1622,7 @@ iframe{ /* Common for all iFrame */
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/button_edit1024.png);
+	background-image:url(/DocSources/images/1024/1024/button_edit.png);
 	width:44px;
 	height:23px;
 	border:none;
@@ -1601,7 +1634,7 @@ iframe{ /* Common for all iFrame */
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/button_cleanAll1024.png);
+	background-image:url(/DocSources/images/1024/button_deleteall.png);
 	width:56px;
 	height:23px;
 	border:none;
@@ -1613,7 +1646,7 @@ iframe{ /* Common for all iFrame */
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/button_close1024.png);
+	background-image:url(/DocSources/images/1024/button_close.png);
 	width:45px;
 	height:22px;
 	border:none;
@@ -1625,7 +1658,7 @@ iframe{ /* Common for all iFrame */
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/button_goback1024.png);
+	background-image:url(/DocSources/images/1024/button_goback.png);
 	width:50px;
 	height:23px;
 	border:none;
@@ -1670,7 +1703,7 @@ iframe{ /* Common for all iFrame */
 	margin:1px 0 0 0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/button_goback1024.png);
+	background-image:url(/DocSources/images/1024/button_goback.png);
 	width:50px;
 	height:23px;
 	border:none;
