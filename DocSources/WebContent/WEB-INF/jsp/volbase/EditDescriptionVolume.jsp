@@ -78,7 +78,8 @@
 				<div><form:textarea id="cipherNotes" path="cipherNotes" cssClass="txtarea"/><form:errors path="cipherNotes" cssClass="inputerrors"/></div>
 	
 				<div>
-					<input id="close" type="submit" value="Close" title="do not save changes" class="button" /><input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+					<input id="close" type="submit" value="" title="do not save changes" class="button" />
+					<input id="save" type="submit" value="" style="margin-left:300px" class="button"/>
 				</div>
 				<form:hidden path="summaryId"/>
 			</fieldset>
@@ -91,6 +92,10 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#EditContextVolume").css('visibility', 'hidden');
+	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden'); 
+			$j("#EditDetailsVolume").css('visibility', 'hidden');
+
 			$j('#close').click(function() {
 	            $j('#EditDescriptionVolumeDiv').block({ message: $j('#question') }); 
 				return false;
@@ -119,9 +124,5 @@
 				}});
 				return false;
 			});
-
-			$j("#EditContextVolume").removeAttr("href");
-	        $j("#EditCorrespondentsVolume").removeAttr("href"); 
-			$j("#EditDetailsVolume").removeAttr("href"); 
 		});
 	</script>

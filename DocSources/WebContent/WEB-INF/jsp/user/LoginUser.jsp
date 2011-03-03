@@ -22,7 +22,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td align="right"><input name="Login" type="image" src="<c:url value="/images/button_login.jpg"/>" alt="Log_in" title="send the module" style="margin-left:35px"/>
+							<td align="right"><input name="Login" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="Log_in" title="send the module" style="margin-left:35px" class="button_login"/>
 							</td>
 						</tr>
 						<tr>
@@ -38,12 +38,10 @@
 				</form>  
 			</div>
       
-			<div id="register_here">
-				<a id="RegisterUser" href="<c:url value="/user/RegisterUser.do"/>"><img src="<c:url value="/images/button_register.jpg"/>" alt="register_here" /></a>
-			</div>
+			<a id="register_here" href="<c:url value="/user/RegisterUser.do"/>"></a>
   
 			<div id="guest">
-				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="loginAsGuest" type="image" src="<c:url value="/images/button_guest.jpg"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form>
+				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="register" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form>
 			</div>
 
 			<c:if test="${not empty param.login_error}">
@@ -54,13 +52,13 @@
 				</c:if>
 			</c:if>
 			<script type="text/javascript">
-			$(document).ready( function(){
-				$("#login").submit(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$("#RegisterUser").click(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$("#loginAsGuest").click(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$("#SendUserPasswordReset").click(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$("#SendUserActivationCode").click(function (){$.blockUI({message: $('img#displayBox'), css: { top:  ($(window).height() - 300) /2 + 'px', left: ($(window).width() - 170) /2 + 'px', width: '300px'}});});
-				$(window).unload(function (){$.unblockUI();});
+			$j(document).ready( function(){
+				$j("#login").submit(function (){$j.blockUI({message: $('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$j("#RegisterUser").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$j("#loginAsGuest").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$j("#SendUserPasswordReset").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$j("#SendUserActivationCode").click(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});
+				$j(window).unload(function (){$j.unblockUI();});
 			});
 			</script>
 

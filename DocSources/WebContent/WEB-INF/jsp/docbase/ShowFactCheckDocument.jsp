@@ -32,17 +32,10 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			 $j("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
-			 $j("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
-			 $j("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
-			 $j("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
-			 $j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
-
 			 $j("#EditFactCheckDocument").click(function(){$j("#EditFactCheckDocumentDiv").load($j(this).attr("href"));return false;});
 				
 				$j("#EditFactCheckDocument").click(function(){
-					$j(this).append('<span id=loading><img src="images/loading.gif"></span>');
-					 $j("#EditFactCheckDocument").load($j(this).attr("href"));
+					$j("#EditFactCheckDocument").load($j(this).attr("href"));
 					return false;
 				});
 			 

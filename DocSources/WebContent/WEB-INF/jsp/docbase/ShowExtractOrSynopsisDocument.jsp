@@ -30,7 +30,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a>
 		/
-		<a onclick="Modalbox.show(this.href, {title: this.title, width: 850}); return false;" href="/DocSources/de/docbase/EditExtractOrSynopsisDocumentFullscreen.html" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
+		<a id="EditDocumentInModal" onclick="Modalbox.show(this.href, {title: this.title, width: 850}); return false;" href="/DocSources/de/docbase/EditExtractOrSynopsisDocumentFullscreen.html" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
 		/
 		<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewer}" >edit with manuscript viewer</a>
 		</security:authorize></h5>
@@ -48,13 +48,10 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			 $j("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
-			 $j("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
-			 $j("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
-			 $j("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
-			 $j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
-
-			 $j("#EditExtractOrSynopsisDocument").click(function(){$j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));return false;});
+			 $j("#EditExtractOrSynopsisDocument").click(function(){
+				 $j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));
+				 return false;
+			});
 			 $j("#EditDocumentInManuscriptViewer").open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
 		});
 	</script>

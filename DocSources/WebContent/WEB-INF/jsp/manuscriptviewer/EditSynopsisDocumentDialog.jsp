@@ -9,7 +9,7 @@
 	</c:url>
 
 	<form:form id="EditSynopsisDocumentForm" method="post" cssClass="edit">
-		<form:textarea id="synopsis" path="synopsis" cssClass="txtarea" rows="20" style="width: 96%; height: 96%;"/>
+		<form:textarea id="synopsis" path="synopsis" rows="22"/>
 		<div>
 			<input id="saveSynopsis" type="image" src="<c:url value="/images/saveSynopsis.png" />" alt="Save Synopsis"/>
 			<input id="saveSynopsisExit" type="image" src="<c:url value="/images/saveSynopsisExit.png" />" alt="Save Synopsis and Exit"/>

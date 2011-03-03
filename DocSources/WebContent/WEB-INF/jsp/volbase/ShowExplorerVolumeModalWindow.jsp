@@ -128,7 +128,7 @@
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricario" type="text" value="" />
-				<input id="goR" type="image" alt="Go" src="<c:url value="/images/transparent_account.png" />" />
+				<input id="goR" type="submit" value="" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="R"/>
@@ -157,7 +157,7 @@
 			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
-				<input class="openmodalbox" id="go" type="image" src="<c:url value="/images/transparent_account.png" />" alt="Go"/>
+				<input class="openmodalbox" id="go" type="submit" value=""/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="C"/>

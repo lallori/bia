@@ -31,10 +31,9 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				 $j("#EditContextVolume").attr('href', "${EditContextVolume}");
-				 $j("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
-				 $j("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
-				 $j("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
+		        $j("#EditCorrespondentsVolume").css('visibility', 'visible'); 
+		        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
+				$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
 				$j("#EditContextVolume").click(function(){
 					$j("#EditContextVolumeDiv").load($j(this).attr("href"));

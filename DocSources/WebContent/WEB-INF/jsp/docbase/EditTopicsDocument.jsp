@@ -52,10 +52,10 @@
 
 		<script type="text/javascript">
 			$j(document).ready(function() {
-		        $j("#EditDetailsDocument").removeAttr("href"); 
-		        $j("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
-		        $j("#EditExtractOrSynopsisDocument").removeAttr("href"); 
-		        $j("#EditFactCheckDocument").removeAttr("href");
+		        $j("#EditDetailsDocument").css('visibility', 'hidden');
+		        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden'); 
+		        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
+		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 		        
 		        $j('#close').click(function() {
 					$j('#EditTopicsDocumentDiv').block({ message: $j('#question') }); 

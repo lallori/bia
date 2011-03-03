@@ -79,8 +79,8 @@
 			<form:hidden id="entryId" path="entryId" />
 			
 			<div style="margin-top:5px">
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="" style="margin-left:300px" class="button"/>
 			</div>
 		</fieldset>	
 	</form:form>
@@ -91,10 +91,12 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-	        $j("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
-	        $j("#EditExtractOrSynopsisDocument").removeAttr("href"); 
-	        $j("#EditFactCheckDocument").removeAttr("href");
-	        $j("#EditTopicsDocument").removeAttr("href");
+	        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden');
+	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
+	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
+	        $j("#EditDocumentInModal").css('visibility', 'hidden');
+	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
+	        $j("#EditTopicsDocument").css('visibility', 'hidden');
 	        
 			var showVolumeExplorer = function (){
 				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },

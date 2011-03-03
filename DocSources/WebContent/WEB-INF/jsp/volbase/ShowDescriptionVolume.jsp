@@ -38,7 +38,7 @@
 									${volume.latin ? 'Latin' : ''}
 									${volume.german ? 'German' : ''}
 									${volume.french ? 'French' : ''}
-									${otherLang}
+									${volume.otherLang}
 			</li>
 			<li><b>Some Documents in Cipher: </b>${volume.cipher ? 'Yes' : 'No'}</li>
 			<li><b>Cipher Notes: </b>${volume.cipherNotes}</li>

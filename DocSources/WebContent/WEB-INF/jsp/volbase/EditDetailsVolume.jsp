@@ -59,8 +59,8 @@
 			<form:hidden path="seriesRefNum"/>
 
 			<div>
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="" style="margin-left:300px" class="button"/>
 			</div>
 		</fieldset>	
 	</form:form>
@@ -73,9 +73,9 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-	        $j("#EditContextVolume").removeAttr("href"); 
-	        $j("#EditCorrespondentsVolume").removeAttr("href"); 
-	        $j("#EditDescriptionVolume").removeAttr("href"); 
+	        $j("#EditContextVolume").css('visibility', 'hidden'); 
+	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden');
+	        $j("#EditDescriptionVolume").css('visibility', 'hidden');
 
 	        // We disable
 			<c:if test="${command.summaryId != 0}"> 

@@ -11,8 +11,8 @@
 			<div><form:textarea id="addLRes" path="addLRes" class="txtarea" /></div>
 			
 			<div>
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save" class="button"/>
+				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="" class="button"/>
 			</div>
 
 			<form:hidden path="entryId"/>
@@ -25,11 +25,13 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-	        $j("#EditDetailsDocument").removeAttr("href"); 
-	        $j("#EditCorrespondentsOrPeopleDocument").removeAttr("href"); 
-	        $j("#EditExtractOrSynopsisDocument").removeAttr("href"); 
-	        $j("#EditFactCheckDocument").removeAttr("href");
-	        $j("#EditTopicsDocument").removeAttr("href");
+	        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
+	        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden'); 
+	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
+	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
+	        $j("#EditDocumentInModal").css('visibility', 'hidden');
+	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
+	        $j("#EditTopicsDocument").css('visibility', 'hidden');
 
 	        $j('#close').click(function() {
 				$j('#EditFactCheckDocumentDiv').block({ message: $j('#question') }); 

@@ -6,10 +6,10 @@
 		<base href="${pageContext.request.contextPath}"></base>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>the MEDICI ARCHIVE PROJECT</title>
-		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
-
+		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/1024/favicon_medici.jpg"/>" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
+
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />" />
@@ -25,9 +25,9 @@
 		</style>
 		<![endif]-->
 		
-		<script type="text/javascript" src="<c:url value="/scripts/mootools-core-1.3-full-compat-compressed.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mootools-more-1.3-full-compat-compressed.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/iipmooviewer-1.1-compressed.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.3-full-compat-compressed.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.3-full-compat-compressed.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-1.2.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.5.min.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
@@ -40,9 +40,9 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuADM.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuMAIN.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js" />"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js" />"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js" />"></script>
+		<script type="text/javascript" src="/DocSources/scripts/ModalBox/prototype.js"></script>
+		<script type="text/javascript" src="/DocSources/scripts/ModalBox/scriptaculous.js?load=effects"></script>
+		<script type="text/javascript" src="/DocSources/scripts/ModalBox/modalbox.js"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script>
 		
@@ -51,7 +51,21 @@
 			$j(document).ready(function() {
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses
-					cache: false
+					cache: false,
+					success: function(data) {
+						var found = $j(data).find("#login");
+						if (found.length > 0) {
+							window.location = "<c:url value="/"/>";
+							return;
+						}
+					},
+					error: function(xhr, status, err) {
+						console.log(err);
+				    },
+				    statusCode: {302: function(data) {
+				    	console.log('moved!');
+				      }
+				    }
 				});
 			});
 		</script>
@@ -60,7 +74,7 @@
 	<body>
 		<div id="layout">
 
-			<div id="map"><img src="<c:url value="/images/map.png"/>" alt="the MEDICI ARCHIVE PROJECT" /></div>
+			<div id="map"></div>
 			<div id="top_top">
 <tiles:insertAttribute name="searchForm"/>
 <tiles:insertAttribute name="lastEntryMenu" />
