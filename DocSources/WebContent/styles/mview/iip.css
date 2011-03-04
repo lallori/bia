@@ -18,9 +18,14 @@ div#navcontainer {
   background: transparent;
 }
 div#navcontainer div#toolbar {
-  height: 10px;
+  height: 23px;
   background: url( "/DocSources/images/mview/toolbar.png" ) repeat-x;
   cursor: move;
+ -moz-border-radius: 6px;
+border-top-left-radius:6px;
+border-top-right-radius:6px;
+border-bottom-left-radius:0px;
+border-bottom-right-radius:0px;
 }
 div#navwin {
   font-size: 90%;

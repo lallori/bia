@@ -122,6 +122,65 @@ input[type="submit"]:hover {
 	opacity:0.5;
 }
 
+#close { /* Close button on bottom left  */
+	margin:5px auto auto 0px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_close.png);
+	width:45px;
+	height:22px;
+	border:none;
+}
+
+#closeProfile {
+	margin-top:5px;
+}
+
+#save { /* Save button on bottom right  */
+	margin:5px auto auto 295px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_save.png);
+	width:45px;
+	height:22px;
+	border:none;
+}
+
+#saveProfile { /* Save button on bottom right  */
+	margin-left:160px;
+}
+
+#AddNewValue { /* "Add New Value" Button */
+	margin:5px auto auto 280px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_addnew.png);
+	width:59px;
+	height:23px;
+	border:none;
+}
+
+.errors {
+	color:#F00;
+	margin: 0 0 0 130px;
+}
+
+.inputerrors { /* Error Span messages */
+	color:#900;
+	font-size:10px;
+	position:absolute;
+	margin:28px 0 0 65px;
+	width:160px;
+	position:absolute;
+	float: right;
+	text-align:center;
+	border:1px solid #900;
+}
+
+
 
 /* ----------------- CHECKBOXES --------------------- */
 
@@ -476,7 +535,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #EditPortraitPersonDiv {
 	float:right;
-	margin-top:50px;
+	margin-top:30px;
 	z-index:1;
 }
 
@@ -954,65 +1013,6 @@ a#linkSearch {
 	margin:10px 0 0 0;
 }
 
-#close {
-	margin:5px auto auto 0px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_close.png);
-	width:45px;
-	height:22px;
-	border:none;
-}
-
-#closeProfile {
-	margin-top:5px;
-}
-
-#save {
-	margin:5px auto auto 295px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_save.png);
-	width:45px;
-	height:22px;
-	border:none;
-}
-
-#saveProfile {
-	margin-left:160px;
-}
-
-#AddNewValue { /* "Add New Value" Button */
-	margin:5px auto auto 280px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_addnew.png);
-	width:59px;
-	height:23px;
-	border:none;
-}
-
-
-.errors {
-	color:#F00;
-	margin: 0 0 0 130px;
-}
-
-.inputerrors { /* Error Span messages */
-	color:#900;
-	font-size:10px;
-	position:absolute;
-	margin:28px 0 0 65px;
-	width:160px;
-	position:absolute;
-	float: right;
-	text-align:center;
-	border:1px solid #900;
-}
-
 
 /* ------------------------------------------------- */ 
 /*
@@ -1237,71 +1237,130 @@ iframe{ /* Common for all iFrame */
 
 /* ---------------- */
 /*
-/* -- modalBox - */
-/* When the user clicks on Fullscreen Mode this window comes out */
+/* -- modalBox VOLUME EXPLORER - When the user clicks on Fullscreen Mode this window comes out */
 
 #modalBox {
 	margin:0 auto 0 auto;
 	width:700px;
 }
 
+#modalBox a:hover{
+	opacity:0.5;
+}
+
+/* modalBox Previous / Next Folio */
+
 #modalBox #prevNextButtons {
-	margin:10px 0 10px 245px;
-	width: 190px;
+	margin:10px 0 10px 255px;
+	width: 170px;
 	z-index:2;
 }
 
-#modalWindow_950pxFellows #prevNextButtons {
-	margin:10px 0 10px 250px;
-	width: 190px;
-	z-index:2;
+/* ---------------- */
+/*
+/* -- modalBox Rubricario -- */
+
+#modalBox #rubricarioMoveTo {
+	width:600px;
+	margin-left:55px;
 }
 
-#modalBox #rubricarioMoveTo, #modalBox #folioMoveTo {
-	width:450px;
-	margin-left:50px;
-	
+#modalBox #folioMoveTo{
+	width:625px;
+	margin-left:55px;
 }
 
-#modalBox #moveToRubricarioForm { 
+#modalBox #rubricarioMoveTo #moveToRubricarioForm { /* "Move to Rubricario" FORM */
+	width:145px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+}
+
+#modalBox #goR { /* "Move to rubricario" <input> GO button ID  */
+	margin:-5px 0 0 116px;
+	position:absolute;
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/1024/button_go.png);
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+}
+
+#modalBox #moveToFolioForm { /* Move to folio FORM */
 	width:170px;
 	display:inline;
 	color:#6d5c4d;
-	margin-left:270px;
-	position:absolute;
+	float:right;
 }
 
-#modalBox #moveToFolioForm { 
-	width:150px;
-	display:inline;
-	color:#6d5c4d;
+#modalBox #go { /* "Move to folio" <input> GO button ID  */
+	margin:-5px 0 0 116px;
 	position:absolute;
-	margin-left:302px;
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/1024/button_go.png);
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
 }
 
-#modalWindow_950pxFellows #rubricarioMoveTo, #modalWindow_950pxFellows #folioMoveTo {
-	width:450px;
-	margin-left:350px;
-}
-
-#transcribe {
-	margin:30px auto 0 50px;
+#modalBox #transcribe {
+	margin:20px 0 0 50px;
 	position:absolute;
-	display:inline;
+	background-image:url(/DocSources/images/1024/button_transcribe.png);
+	width:141px;
+	height:23px;
 }
 
 #CloseButtonRight {
-	margin:0 0 10px 545px;
+	margin:20px 0 10px 545px;
 }
 
-#chooseGoBack {
+#CloseButtonRight #close{
+	margin:0 0 5px 60px;
+}
+
+#modalBox #closeModal {
+	margin:25px 0 0 295px;
+	position:absolute;
+	width:150px;
+}
+
+#modalBox #closeModal #closeModalBox {
+	margin-left:25px;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_close.png);
+	width:45px;
+	height:22px;
+	border:none;
+}
+
+#choose {
 	margin:0 0 0 50px;
+	position:absolute;
+	background-image:url(/DocSources/images/1024/button_choose.png);
+	width:189px;
+	height:23px;
 }
 
-#buttonGoBack{
-	margin-left:278px;
+#modalBox #gobackvolume{
+	margin-left:495px;
+	position:absolute;
+	background-image:url(/DocSources/images/1024/button_gobackvolume.png);
+	width:150px;
+	height:23px;
 }
 
+#modalBox .inputerrors { /* Error Span messages */
+	color:#900;
+	position:absolute;
+	margin:28px 0 0 485px;
+}
 
 
 /* --------------------------------------- */ 
@@ -1428,7 +1487,7 @@ iframe{ /* Common for all iFrame */
 }
 
 
-#createPlace #tgnPlace #AddNewTgnPlace:hover, #createPlace #mapPlace #AddNewMapPlace:hover, #createPlace #mapSite #AddNewMapSite:hover {
+#createPlace #tgnPlace #AddNewTgnPlace:hover, #createPlace #mapPlace #AddNewMapPlace:hover, #createPlace #mapSite #AddNewMapSitePlace:hover {
 	opacity:0.5;
 }
 

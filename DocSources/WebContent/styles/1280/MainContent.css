@@ -116,6 +116,103 @@ form img{ /* Red Cross used to "Delete this entry"  */
 	vertical-align:middle;
 }
 
+#save {
+	margin:5px 0 0 395px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1280/button_save.png);
+	width:52px;
+	height:24px;
+	border:none;
+}
+
+#close {
+	margin:5px auto auto 0px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1280/button_close.png);
+	width:52px;
+	height:24px;
+	border:none;
+}
+
+#AddNewValue { /* "Add New Value" Button */
+	margin:5px auto auto 380px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1280/button_addnew.png);
+	width:67px;
+	height:25px;
+	border:none;
+}
+
+a#editValue { /* "Edit Value" Button */
+	font-size:13px;
+}
+
+.errors {
+	color:#F00;
+	margin: 0 0 0 130px;
+}
+
+.inputerrors { /* Error Span messages */
+	color:#900;
+	font-size:11px;
+	margin:28px 0 0 103px;
+	padding:2px;
+	width:180px;
+	position:absolute;
+	float: right;
+	text-align:center;
+	border:1px solid #900;
+}
+
+#personIcon {
+	width:14px;
+	height:14px;
+	display:inline;
+	margin-left:15px;
+	background-image:url(/DocSources/images/1280/button_person.gif);
+	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+#placeIcon {
+	width:15px;
+	height:14px;
+	display:inline;
+	margin-left:15px;
+	background-image:url(/DocSources/images/1280/button_flag.png);
+	background-repeat:no-repeat;
+	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+#deleteIcon {
+	width:13px;
+	height:13px;
+	bottom:0px;
+	margin-bottom:0;
+	background-image:url(/DocSources/images/1280/button_delete.gif);
+	background-repeat:no-repeat;
+	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+input[type="submit"]:hover { 
+	opacity:0.5;
+}
+
+:hover input.submit { 
+	opacity:0.5;
+}
+
 
 /* ----------------- CHECKBOXES --------------------- */
 
@@ -447,8 +544,12 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #EditPortraitPersonDiv {
 	float:right;
-	margin-top:50px;
+	margin-top:30px;
 	z-index:1;
+}
+
+#EditDetailsPersonDiv {
+	width:570px;
 }
 
 /* ---------------------------------------------------- */ 
@@ -628,27 +729,12 @@ opacity:0.5;
 /* --------------- TOPICS --------------- */
 
 #topicDescription { /* "Show Topic Description" Button */
-	background-image:url(/DocSources/images/topic1280.png);
+	background-image:url(/DocSources/images/1280/button_topic.png);
 	width:16px;
 	height:16px;
+	position:absolute;
 	background-repeat:no-repeat;
-	margin-left:3px;
-}
-
-#AddTopicDocument { /* "Add New ..." Button */
-	background-image: url(/DocSources/images/button_addNew.png);
-	border:none;
-	display:inline;
-	margin:0 0 0 375px;
-	width:67px;
-	height:25px;
-	border:none;
-	padding:0;
-	background-color:transparent;
-}
-
-#AddTopicDocument:hover {
-	opacity:0.5;
+	margin:10px 0 0 10px;
 }
 
 #topicLabel {
@@ -739,45 +825,12 @@ opacity:0.5;
 	margin-left:7px;
 }
 
-#AddNewValue { /* "Add New Value" Button */
-	margin-left:250px;
-}
-
-a#editValue { /* "Edit Value" Button */
-	font-size:13px;
-	
-}
-
-a#AddNamesPerson, a#AddChildPerson, a#AddTopicDocument, a#AddExtLinkTgnPlace, a#AddExtLinkMapPlace, a#AddExtLinkMapSitePlace, a#AddNameMapSitePlace, a#AddNameMapPlace, a#AddNameTgnPlace { /* "Add New ..." Button */
-	background-image: url(/DocSources/images/button_addNew.png);
-	padding:1px 5px 1px 5px;
-	border:none;
-	display:inline;
-	color: #6d5c4d;
-	font-size:13px;
-	text-decoration:none;
-	margin-left:260px;
-	width:67px;
-}
-
 a#AddSpousePerson, a#EditPerson { /* "Add New ..." Button */
 	border:none;
 	display:inline;
 	margin-left:255px;
 	width:67px;
 	height:25px;
-}
-
-a#AddTitlesOccupationsPerson { /* "Add New ..." Button */
-	background-image: url(/DocSources/images/button_addNew.png);
-	padding:1px 5px 1px 5px;
-	border:none;
-	display:inline;
-	color: #6d5c4d;
-	font-size:10px;
-	text-decoration:none;
-	margin-left:200px;
-	width:67px;
 }
 
 /* -------------------------------------- */
@@ -919,63 +972,6 @@ a#linkSearch {
 	margin:10px 0 0 0;
 }
 
-#close {
-	margin:5px auto auto 0px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/button_close.png);
-	width:52px;
-	height:24px;
-	border:none;
-}
-
-#close:hover {
-	opacity:0.5;
-}
-
-#closeProfile {
-	margin-top:5px;
-}
-
-#save {
-	margin:5px 0 0 395px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/button_save.png);
-	width:52px;
-	height:24px;
-	border:none;
-}
-
-#save:hover {
-	opacity:0.5;
-}
-
-#saveProfile {
-	margin-left:160px;
-}
-
-
-.errors {
-	color:#F00;
-	margin: 0 0 0 130px;
-}
-
-.inputerrors { /* Error Span messages */
-	color:#900;
-	font-size:11px;
-	margin:28px 0 0 103px;
-	padding:2px;
-	width:180px;
-	position:absolute;
-	float: right;
-	text-align:center;
-	border:1px solid #900;
-	
-}
-
 /* ------------------------------------------------- */ 
 /*
 /* ------------- EditDescriptionVolume ------------- */
@@ -1050,7 +1046,7 @@ iframe{ /* Common for all iFrame */
 .iframeFlipVolumeFullCom { /* used for the Community */
 	width:595px;
 	height:400px;
-	margin: 10px auto 0 40px;
+	margin: 10px auto 0 50px;
 }
 
 .iframeFlipVolumeFullFellows { /* used for Fellows */
@@ -1073,14 +1069,14 @@ iframe{ /* Common for all iFrame */
 
 #prevNextButtons #previousPage a{
 	float:left;
-	background-image:url(/DocSources/images/button_prev.png);
+	background-image:url(/DocSources/images/1280/button_prevfolio.png);
 	width:93px;
 	height:25px;
 }
 
 #prevNextButtons #nextPage a{
 	float:right;
-	background-image:url(/DocSources/images/button_next.png);
+	background-image:url(/DocSources/images/1280/button_nextfolio.png);
 	width:93px;
 	height:25px;
 }
@@ -1126,15 +1122,13 @@ iframe{ /* Common for all iFrame */
 	margin:-4px 0 0 128px;
 	width:25px;
 	height:25px;
-	background-image:url(/DocSources/images/button_go1280.png);
+	background-image:url(/DocSources/images/1280/button_go.png);
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
+	cursor:pointer;
 }
 
-#goR:hover {
-	opacity:0.5;
-}
 
 
 /* ---------------- */
@@ -1177,10 +1171,11 @@ iframe{ /* Common for all iFrame */
 	margin:-4px 0 0 128px;
 	width:25px;
 	height:25px;
-	background-image:url(/DocSources/images/button_go1280.png);
+	background-image:url(/DocSources/images/1280/button_go.png);
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
+	cursor:pointer;
 }
 
 /* ---------------- */
@@ -1192,7 +1187,7 @@ iframe{ /* Common for all iFrame */
 	height:25px;
 	position:absolute;
 	display:inline;
-	background-image:url(/DocSources/images/fullscreenMode.png);
+	background-image:url(/DocSources/images/1280/button_fullscreenmode.png);
 }
 
 /* ---------------- */
@@ -1206,7 +1201,7 @@ iframe{ /* Common for all iFrame */
 	width:105px;
 	height:25px;
 	display:inline;
-	background-image:url(/DocSources/images/button_refresh.png);
+	background-image:url(/DocSources/images/1280/button_refresh.png);
 }
 
 /* ---------------- */
@@ -1214,32 +1209,131 @@ iframe{ /* Common for all iFrame */
 /* -- modalWindow - */
 /* When the user clicks on Fullscreen Mode this window comes out */
 
-#modalWindow #prevNextButtons {
-	margin:10px 0 10px 290px;
-	width: 150px;
-	z-index:2;
-}
-
-#modalWindow_950pxFellows #prevNextButtons {
-	margin:10px 0 10px 415px;
-	width: 100px;
-	z-index:2;
-}
-
-#modalWindow #rubricarioMoveTo, #modalWindow #folioMoveTo {
-	width:450px;
-	margin-left:120px;
-}
-
-#modalWindow_950pxFellows #rubricarioMoveTo, #modalWindow_950pxFellows #folioMoveTo {
-	width:450px;
-	margin-left:240px;
-}
-
-#modalWindow {
+#modalBox {
 	margin:0 auto 0 auto;
 	width:700px;
 }
+
+#modalBox a:hover{
+	opacity:0.5;
+}
+
+
+/* modalBox Previous / Next Folio */
+
+#modalBox #prevNextButtons {
+	margin:10px 0 10px 245px;
+	width: 190px;
+	z-index:2;
+}
+
+
+/* ---------------- */
+/*
+/* -- modalBox Rubricario -- */
+
+#modalBox #rubricarioMoveTo {
+	width:600px;
+	margin-left:55px;
+}
+
+#modalBox #folioMoveTo{
+	width:625px;
+	margin-left:55px;
+}
+
+#modalBox #rubricarioMoveTo #moveToRubricarioForm { /* "Move to Rubricario" FORM */
+	width:162px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+}
+
+#modalBox #goR { /* "Move to rubricario" <input> GO button ID  */
+	margin:-5px 0 0 130px;
+	position:absolute;
+	width:25px;
+	height:25px;
+	background-image:url(/DocSources/images/1280/button_go.png);
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+}
+
+#modalBox #moveToFolioForm { /* Move to folio FORM */
+	width:187px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+}
+
+#modalBox #go { /* "Move to folio" <input> GO button ID  */
+	margin:-5px 0 0 130px;
+	position:absolute;
+	width:25px;
+	height:25px;
+	background-image:url(/DocSources/images/1280/button_go.png);
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+}
+
+#modalBox #transcribe {
+	margin:20px 0 0 50px;
+	position:absolute;
+	background-image:url(/DocSources/images/1280/button_transcribe.png);
+	width:149px;
+	height:25px;
+}
+
+#CloseButtonRight {
+	margin:20px 0 10px 545px;
+}
+
+#CloseButtonRight #close{
+	margin:0 0 5px 50px;
+}
+
+#modalBox #closeModal {
+	margin:25px 0 0 295px;
+	position:absolute;
+	width:150px;
+}
+
+#modalBox #closeModal #closeModalBox {
+	margin-left:25px;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1280/button_close.png);
+	width:52px;
+	height:24px;
+	border:none;
+}
+
+#choose {
+	margin:5px 0 0 50px;
+	position:absolute;
+	background-image:url(/DocSources/images/1280/button_choose.png);
+	width:210px;
+	height:25px;
+}
+
+#modalBox #gobackvolume{
+	margin:5px 0 0 500px;
+	position:absolute;
+	background-image:url(/DocSources/images/1280/button_gobackvolume.png);
+	width:150px;
+	height:25px;
+}
+
+#modalBox .inputerrors { /* Error Span messages */
+	color:#900;
+	position:absolute;
+	margin:28px 0 0 460px;
+}
+
 
 /* --------------------------------------- */ 
 /*
@@ -1268,9 +1362,129 @@ iframe{ /* Common for all iFrame */
 /*
 /* -------------------------------------------------------------------------- */
 /*
-/*
 /* -------------------------- ADD NEW PLACE --------------------------------- */
 /*
+/* -- modal Window -- */
+
+#createPlace{
+	width:700px;
+	margin-left:-10px;
+}
+
+#createPlace h1{
+	text-align:center;
+	font-size:12px;
+	font-weight:normal;
+}
+
+#createPlace #CloseButton{
+	margin:400px 0 0 320px;
+	position:absolute;
+}
+
+#createPlace #CloseButton #close{
+	margin:0 0 5px 25px;
+}
+
+#createPlace a:hover{
+	text-decoration:underline;
+}
+
+#createPlace #tgnPlace{
+	width:220px;
+	height:250px;
+	border: 1px solid #e6d0c6;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position:absolute;
+	margin:20px 0 0 30px;
+}
+
+#createPlace #mapPlace{
+	width:220px;
+	height:250px;
+	border: 1px solid #e6d0c6;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position:absolute;
+	margin:20px 0 0 265px;
+}
+
+#createPlace #mapSite{
+	width:220px;
+	height:250px;
+	border: 1px solid #e6d0c6;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position:absolute;
+	margin:20px 0 0 500px;
+}
+
+#createPlace #tgnPlace #AddNewTgnPlace {
+	background-image:url(/DocSources/images/1280/button_tgnplace.png);
+    top: 0; left: 0; /* top-left corner of logo */
+	margin: 20px 0 5px 50px;
+	position:absolute;
+	width:125px;
+	height:28px;
+}
+
+#createPlace #tgnPlace p, #createPlace #mapSite p, #createPlace #mapPlace p {
+	font-size:12px;
+	color: #6d5c4d;
+	width: 170px;
+	text-align:justify;
+	line-height: 18px;
+	margin: 80px 0 0 25px;
+	position:absolute;	
+}
+
+#createPlace #mapPlace #AddNewMapPlace {
+	background-image:url(/DocSources/images/1280/button_mapplace.png);
+    top: 0; left: 0; /* top-left corner of logo */
+	margin: 20px 0 5px 50px;
+	position:absolute;
+	width:125px;
+	height:28px;
+}
+
+#createPlace #mapSite #AddNewMapSitePlace {
+	background-image:url(/DocSources/images/1280/button_mapsite.png);
+    top: 0; left: 0; /* top-left corner of logo */
+	margin: 20px 0 5px 50px;
+	position:absolute;
+	width:125px;
+	height:28px;
+}
+
+
+#createPlace #tgnPlace #AddNewTgnPlace:hover, #createPlace #mapPlace #AddNewMapPlace:hover, #createPlace #mapSite #AddNewMapSitePlace:hover {
+	opacity:0.5;
+}
+
+#notes {
+	position:absolute;
+	margin:290px 0 0 130px;
+}
+
+#notes p{
+	font-size:12px;
+	color: #6d5c4d;
+	text-align:center;
+	line-height: 18px;
+}
+
+#notes a{
+	font-size:11px;
+	color: #6d5c4d;
+}
+
+
+
+/* ------------------ */
+/*
+/*
+
 /* -- EdtitDetailsTgn, Map and MapSite -- */
 
 #placeIdDiv {
@@ -1362,6 +1576,14 @@ iframe{ /* Common for all iFrame */
 }
 
 #PersonalNotes {
-	background-image:url(/DocSources/images/button_perosnalNotes.png);
+	background-image:url(/DocSources/images/1280/button_perosnalNotes.png);
 	margin:200px 0 0 150px;
+}
+
+#closeProfile {
+	margin-top:5px;
+}
+
+#saveProfile {
+	margin-left:160px;
 }

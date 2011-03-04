@@ -26,11 +26,71 @@
 	font-size:13px;
 }
 
-.menumain ul li a:hover{
-	background-image: url(/DocSources/images/mainmenu_rollover1280.png);  /*tab link background during hover state*/
+#entryMenu{
+	background-image:url(/DocSources/images/1280/button_entrymenu.png);
+	background-repeat:no-repeat;
+	display:block;
 	width:125px;
+	height:85px;
+	padding: 0;
 }
-	
+
+
+#vetMenu{
+	background-image:url(/DocSources/images/1280/button_vetmenu.png);
+	background-repeat:no-repeat;
+	display:block;
+	width:125px;
+	height:85px;
+	padding: 0;
+}
+
+#advsearchMenu{
+	background-image:url(/DocSources/images/1280/button_advsearch.png);
+	background-repeat:no-repeat;
+	display:block;
+	width:125px;
+	height:85px;
+	padding: 0;
+}
+
+#chronologyMenu{
+	background-image:url(/DocSources/images/1280/button_chronology.png);
+	background-repeat:no-repeat;
+	display:block;
+	width:125px;
+	height:85px;
+	padding: 0;
+}
+
+#myprofileMenu{
+	background-image:url(/DocSources/images/1280/button_myprofile.png);
+	background-repeat:no-repeat;
+	display:block;
+	width:125px;
+	height:85px;
+	padding: 0;
+}
+
+#messagesMenu{
+	background-image:url(/DocSources/images/1280/button_messages.png);
+	background-repeat:no-repeat;
+	display:block;
+	width:125px;
+	height:85px;
+	padding: 0;
+}
+
+#logoutMenu{
+	background-image:url(/DocSources/images/1280/button_logout.png);
+	background-repeat:no-repeat;
+	display:block;
+	width:125px;
+	height:85px;
+	padding: 0;
+}
+
+
 /*1st sub level menu*/
 .menumain ul li ul{
 	position: absolute;

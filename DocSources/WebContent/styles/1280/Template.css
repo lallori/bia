@@ -16,7 +16,7 @@ html {
 }
 
 body {
-	background-image:url(/DocSources/images/bg_pergamino1280.jpg);
+	background-image:url(/DocSources/images/1280/bg.jpg);
 	background-position:bottom;
 	background-repeat:no-repeat;
 	background-attachment:fixed;
@@ -68,6 +68,8 @@ a {
 	height:213px;
 	position:absolute;
 	z-index:2 !important;
+	background-image:url(/DocSources/images/1280/img_map.png);
+
 }
 
 #top_top { /* SEARCH FORM and LAST ENTRY MENU Container */
@@ -83,7 +85,7 @@ a {
 	margin-top:115px;
 	margin-left:307px;
 	position:absolute;
-	background-image:url(/DocSources/images/top_middle_bg1280.png);
+	background-image:url(/DocSources/images/1280/bg_mainmenu.png);
 	background-repeat:no-repeat;
 	z-index:3;
 }
@@ -94,7 +96,7 @@ a {
 	margin-top:200px;
 	position:absolute;
 	z-index:1 !important;
-	background-image:url(/DocSources/images/user_interface1280.png);
+	background-image:url(/DocSources/images/1280/bg_userinterface.png);
 }
 
 #DocSourcesContent { /* MAIN Website Container */
@@ -177,7 +179,7 @@ a {
 }
 
 .input_search { /* Input Text class */
-	background-image:url(/DocSources/images/input_search_bg1280.png);
+	background-image:url(/DocSources/images/1280/bg_input_search.png);
 	background-color:transparent;
 	background-repeat:no-repeat;
 	height:35px;
@@ -189,7 +191,7 @@ a {
 }
 
 .select{ /* Dropdown Menu: Documents, Volumes, People, Locations and community Comments  */
-	background-image:url(/DocSources/images/select_bg1280.png);
+	background-image:url(/DocSources/images/1280/bg_input_select.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -216,6 +218,10 @@ input {
 	border:none;
 	background-color:transparent;
 	margin-top:-10px;
+	background-image:url(/DocSources/images/1280/button_search.png);
+	width:63px;
+	height:23px;
+	cursor:pointer;
 }
 
 #search:hover {
@@ -251,16 +257,54 @@ input {
 	float:left;
 }
 
-#menulastentry a{ /* Shortcut Menu <ul> list <li> elements <a> ancors */
-	float:left;
-	display:block;
-	text-decoration:none;
-	padding-left:10px;
-}
-
 #menulastentry a:hover{
 	opacity:0.5;
 }
+
+#menulastentry #last_doc a {
+	background-image:url(/DocSources/images/1280/button_lastdocumententry.png);
+	background-repeat:no-repeat;
+	float:left;
+	display:block;
+	text-decoration:none;
+	width:129px;
+	height:105px;
+	padding-left:10px;
+}
+
+#menulastentry #last_vol a {
+	background-image:url(/DocSources/images/1280/button_lastvolumeentry.png);
+	background-repeat:no-repeat;
+	float:left;
+	display:block;
+	text-decoration:none;
+	width:129px;
+	height:105px;
+	padding-left:10px;
+}
+
+#menulastentry #last_pers a {
+	background-image:url(/DocSources/images/1280/button_lastpersonentry.png);
+	background-repeat:no-repeat;
+	float:left;
+	display:block;
+	text-decoration:none;
+	width:129px;
+	height:105px;
+	padding-left:10px;
+}
+
+#menulastentry #last_pla a {
+	background-image:url(/DocSources/images/1280/button_lastplaceentry.png);
+	background-repeat:no-repeat;
+	float:left;
+	display:block;
+	text-decoration:none;
+	width:129px;
+	height:105px;
+	padding-left:10px;
+}
+
 
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
@@ -354,7 +398,7 @@ input {
 	margin-top:100px;
 	margin-left: 220px;	
 	position:absolute;
-	background-image:url(/DocSources/images/stemma.png);
+	background-image:url(/DocSources/images/1280/stemma.png);
 }
 
 #button_courses {

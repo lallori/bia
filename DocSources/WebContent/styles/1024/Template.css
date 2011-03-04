@@ -50,6 +50,7 @@ a {
 	font-size:small;
 }
 
+
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
 /*
@@ -296,7 +297,6 @@ input {
 	padding-left:10px;
 }
 
-
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
 /*
@@ -371,9 +371,17 @@ input {
 	position:absolute;
 }
 
+.mapcourses { /* Button MAP Courses */
+	background-image:url(/DocSources/images/1024/button_courses.jpg);
+	width:200px;
+	height:65px;
+	position:absolute;
+	margin:10px 0 0 380px;
+}
+
 .welcome_list{
-	margin-left: 10px;
-	margin-top:130px;
+	margin-left: 550px;
+	margin-top:150px;
 	line-height:20px;
 	list-style-type:none;
 	position:absolute;
@@ -387,7 +395,7 @@ input {
 	width:180px;
 	height:220px;
 	margin-top:100px;
-	margin-left: 220px;	
+	margin-left: 180px;	
 	position:absolute;
 	background-image:url(/DocSources/images/1024/img_coatofarms.png);
 }
