@@ -62,6 +62,10 @@ update docsources.tblpeople set dmonthnum = null where dmonthnum = 0;
 -- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
 update tblimages set imageType = substr(imageName, 6,1);
 
+-- Recto Verso : 
+update tblImages set imageRectoVerso = substring(SUBSTRING_INDEX(imageName, '_', -1),1,1); 
+
+
 -- Table schema is based on ISO standard 3166 code lists 
 -- http://www.iso.org/iso/list-en1-semic-3.txt
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');
