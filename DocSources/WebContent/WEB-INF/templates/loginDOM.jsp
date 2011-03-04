@@ -28,7 +28,7 @@
 	<body>
 
 		<div id="layout">
-			<div id="map" />
+			<div id="map"></div>
 <tiles:insertAttribute name="main"/>
 <tiles:insertAttribute name="footer"/>
 		</div>
