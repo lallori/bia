@@ -39,7 +39,7 @@
 		</c:forEach>
 			
 			<div>
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="close" type="submit" value="" title="do not save changes" class="button" />
 				<a id="AddTopicDocument" href="${AddTopicUrl}">Add new Topic</a>
 			</div>
 			
@@ -52,9 +52,11 @@
 
 		<script type="text/javascript">
 			$j(document).ready(function() {
-		        $j("#EditDetailsDocument").css('visibility', 'hidden');
+		        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
 		        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden'); 
 		        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
+		        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
+		        $j("#EditDocumentInModal").css('visibility', 'hidden');
 		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 		        
 		        $j('#close').click(function() {

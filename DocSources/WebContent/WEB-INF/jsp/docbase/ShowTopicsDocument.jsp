@@ -37,13 +37,9 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {			 
-			 $j("#EditTopicsDocument").click(function(){$j("#EditTopicsDocumentDiv").load($j(this).attr("href"));return false;});
-			 
-				$j("#EditTopicsDocument").click(function(){
-					$j(this).append('<span id=loading><img src="images/loading.gif"></span>');
-					 $j("#EditTopicsDocument").load($j(this).attr("href"));
-					return false;
-				});
-
+			 $j("#EditTopicsDocument").click(function(){
+				 $j("#EditTopicsDocumentDiv").load($j(this).attr("href"));
+				 return false;
+			});
 		});
 	</script>
