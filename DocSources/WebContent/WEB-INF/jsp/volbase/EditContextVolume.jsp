@@ -7,10 +7,11 @@
 	<form:form id="EditContextVolumeForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>Context</b></legend>
+			<div><fomr:label for="ccontext" id="ccontextLabel">Context:</fomr:label></div>
 			<div><form:textarea id="ccontext" path="ccontext" cssClass="txtarea"/><form:errors path="ccontext" cssClass="inputerrors"/></div>
 			<br />
-			<div><fomr:label for="inventarioSommarioDescription" id="inventarioSommarioDescriptionLabel">Inventario Sommario Description:</</fomr:label></div>
-			<div><form:textarea id="inventarioSommarioDescription" path="inventarioSommarioDescription" class="txtarea_medium"></textarea></div>
+			<div><fomr:label for="inventarioSommarioDescription" id="inventarioSommarioDescriptionLabel">Inventario Sommario Description:</fomr:label></div>
+			<div><form:textarea id="inventarioSommarioDescription" path="inventarioSommarioDescription" class="txtarea_medium"/></div>
 
 			<div>
 				<input id="close" type="submit" value="" title="do not save changes" class="button" />

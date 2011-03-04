@@ -24,7 +24,8 @@
 		<hr id="lineSeparator"/>
 
 		<ul>
-			<li>${volume.ccontext}</li>
+			<li><b>Context: </b>${volume.ccontext}</li>
+			<li><b>Inventario Sommario Description: </b>${volume.inventarioSommarioDescription}</li>
 		</ul>
 	</div>
 
