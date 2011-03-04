@@ -112,7 +112,7 @@ public interface VolBaseService {
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
 	 * by his unique identifier.
 	 * 
-	 * @param summaryId Volume Identifier}
+	 * @param summaryId Unique Volume Identifier
 	 * @return {@link org.medici.docsources.domain.Volume}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
@@ -121,61 +121,76 @@ public interface VolBaseService {
 	
 
 	/**
+	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
+	 * by his volNum and volLetExt identifier.
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @return
+	 * @param volNum Volume number identifier
+	 * @param volLetExt Volume letter extension identifier.
+	 * @return {@link org.medici.docsources.domain.Volume}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
 	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
 	/**
+	 * This method will search every {@link org.medici.docsources.domain.Image} 
+	 * with specific image type and folio number linked to a 
+	 * {@link org.medici.docsources.domain.Volume} identified by his volume
+	 * number and his letter extension.
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @param imageType
-	 * @param imageProgTypeNum
-	 * @return
+	 * @param volNum Volume number identifier
+	 * @param volLetExt Volume letter extension identifier.
+	 * @param imageType {@link org.medici.docsources.domain.Image$ImageType} identifier
+	 * @param imageProgTypeNum Folio number
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
 	public List<Image> findVolumeImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
 
 	/**
-	 * This method searches for existing {@link org.medici.docsources.domain.Image}
-	 * which  
-	 * {@link org.medici.docsources.common.pagination.Page} of complete reulst 
-	 * base on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
+	 * This method will search every {@link org.medici.docsources.domain.Image} 
+	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
+	 * unique identifier
 	 * 
-	 * @param summaryId
-	 * @return
+	 * @param summaryId Unique Volume Identifier
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
 	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable;
 
 	/**
+	 * This method searches for existing {@link org.medici.docsources.domain.Image}
+	 * using a {@link org.medici.docsources.common.pagination.Page} object result
+	 * based on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
 	 * 
-	 * @param summaryId
-	 * @param paginationFilter
-	 * @return
+	 * @param summaryId Unique Volume Identifier
+	 * @param paginationFilter {@link org.medici.docsources.common.pagination.PaginationFilter} 
+	 *        with search parameters
+	 * @return {@link org.medici.docsources.common.pagination.Page}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
 	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
+	 * This method will search every {@link org.medici.docsources.domain.Image} 
+	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
+	 * volume number and his letter extension.
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @return
+	 * @param volNum Volume number identifier
+	 * @param volLetExt Volume letter extension identifier.
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
 	/**
+	 * This method will search every {@link org.medici.docsources.domain.Image} 
+	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
+	 * volume number and his letter extension.
 	 * 
 	 * @param volNum
 	 * @param volLetExt
