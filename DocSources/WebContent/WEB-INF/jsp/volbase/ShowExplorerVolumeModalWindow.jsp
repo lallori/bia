@@ -126,8 +126,8 @@
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricario" type="text" value="" />
+				<label for="imageProgTypeNum" id="rubricarioLabel" class="rubricarioLabel">Move to rubricario</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario MB_focusable" type="text" value="" />
 				<input id="goR" type="submit" value="" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
@@ -156,7 +156,7 @@
 
 			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio MB_focusable" type="text" value="" />
 				<input class="openmodalbox" id="go" type="submit" value=""/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
@@ -173,13 +173,11 @@
 			</form:form>
 		</div>
 			
-		<div id="transcribe">
-			<c:if test="${volumeExplorer.imageType == ImageType.C}"> 
-			<a id="transcribeDocument" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"><img src="/DocSources/images/button_transcribe.png" alt="Transcribe this document" /></a>
-			</c:if>
-		</div>
+		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
+			<a id="transcribe" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"/>
+		</c:if>
 		<form:errors path="imageProgTypeNum" />
-		<div id="CloseButtonRight"><input value="Close" class="modalBox-close" onClick="Modalbox.hide(); return false;" type="submit"><br /><span>(or click the overlay)</span></div>
+		<div id="CloseButtonRight"><input id="close" class="MB_focusable" type="submit" value="" onClick="Modalbox.hide(); return false;"><br /><span>(or click the overlay)</span></div>
 	</div>
 
 	<script type="text/javascript">
@@ -213,7 +211,7 @@
 				return false;
 			});
 			
-			$j("#transcribeDocument").click(function() { 
+			$j("#transcribe").click(function() { 
 				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
 				return false;
 			});
