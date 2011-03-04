@@ -94,12 +94,17 @@ public class EditFactCheckDocumentController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			FactChecks factChecks = new FactChecks();
+			FactChecks factChecks = new FactChecks(command.getVetId());
 			factChecks.setDocument(new Document(command.getEntryId()));
 			factChecks.setAddLRes(command.getAddLRes());
 
 			try {
-				Document document = getDocBaseService().editFactChecksDocument(factChecks);
+				Document document = null;
+				if (factChecks.getVetId() == null) {
+					document = getDocBaseService().addNewFactChecksDocument(factChecks);
+				} else {
+					document = getDocBaseService().editFactChecksDocument(factChecks);
+				}
 
 				model.put("document", document);
 				return new ModelAndView("docbase/ShowDocument", model);

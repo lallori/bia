@@ -29,6 +29,7 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -88,7 +89,7 @@ public class FactChecks implements Serializable{
 	@DocumentId
 	private Integer vetId;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name = "\"ENTRYID\"")
 	@ContainedIn
 	private Document document;
@@ -112,6 +113,21 @@ public class FactChecks implements Serializable{
 	@Column (name="\"EDITCOMMENT\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String editComment;
+
+	/**
+	 * 
+	 * @param vetId2
+	 */
+	public FactChecks(Integer vetId) {
+		setVetId(vetId);
+	}
+
+	/**
+	 * Default constructor
+	 */
+	public FactChecks() {
+		super();
+	}
 
 	/**
 	 * @return the vetId

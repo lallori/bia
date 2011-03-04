@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -284,18 +285,18 @@ public class Document implements Serializable{
 	private String docTypology;
 
 	//Linked fact Check
-	@OneToOne(fetch=FetchType.LAZY,mappedBy="document")
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="document", cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
 	//@IndexedEmbedded
 	private FactChecks factChecks;
 
 	//Association topic-place 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="document")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="document", cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	//@IndexedEmbedded
 	private Set<EplToLink> eplToLink;
 
 	//Association people (attention recipient and sender are not here, they are defined up!)
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "document")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "document", cascade=CascadeType.ALL)
 	//@IndexedEmbedded
 	private Set<EpLink> epLink;
 	

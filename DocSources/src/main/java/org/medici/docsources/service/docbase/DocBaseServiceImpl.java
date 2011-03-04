@@ -144,8 +144,11 @@ public class DocBaseServiceImpl implements DocBaseService {
 			synExtract.setSynExtrId(null);
 			synExtract.setDateCreated(new Date());
 			synExtract.setLastUpdate(new Date());
-
+			synExtract.setDocument(getDocumentDAO().find(synExtract.getDocument().getEntryId()));
 			getSynExtractDAO().persist(synExtract);
+
+			// We need to refresh linked document entity state, otherwise synExtract property will be null
+			getDocumentDAO().refresh(synExtract.getDocument());
 
 			return synExtract.getDocument();
 		} catch (Throwable th) {
@@ -162,11 +165,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 			factChecks.setVetId(null);
 			factChecks.setDateInfo((new Date()).toString());
 			factChecks.setDocument(getDocumentDAO().find(factChecks.getDocument().getEntryId()));
-
 			getFactChecksDAO().persist(factChecks);
 
-			// We need to recall documentDAO to refresh entity.
-			return getDocumentDAO().find(factChecks.getDocument().getEntryId());
+			// We need to refresh linked document entity state, otherwise factChecks property will be null
+			getDocumentDAO().refresh(factChecks.getDocument());
+			
+			return factChecks.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -197,6 +201,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			eplToLink.setEplToId(null);
 			eplToLink.setDateCreated(new Date());
+			eplToLink.setDocument(getDocumentDAO().find(eplToLink.getDocument().getEntryId()));
 
 			// fill fields to update document section
 			if (eplToLink.getTopic() != null) {
@@ -211,6 +216,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 
 			getEplToLinkDAO().persist(eplToLink);
+
+			// We need to refresh linked document entity state, otherwise eplToLink property will be null
+			getDocumentDAO().refresh(eplToLink.getDocument());
 
 			return eplToLink.getDocument();
 		} catch (Throwable th) {
@@ -366,6 +374,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		
 			getSynExtractDAO().merge(synExtractToUpdate);
 
+			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
+			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
+
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -387,6 +398,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		
 			getSynExtractDAO().merge(synExtractToUpdate);
 
+			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
+			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
+
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -402,9 +416,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 			FactChecks factChecksToUpdate = getFactChecksDAO().findByEntryId(factChecks.getDocument().getEntryId());
 			// fill fields to update fact check section
 			factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
-
 			getFactChecksDAO().merge(factChecksToUpdate);
-
+			
 			return factChecksToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -446,6 +459,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		
 			getSynExtractDAO().merge(synExtractToUpdate);
 
+			// We need to refresh linked document to refresh entity state, otherwise synExtract property will be null
+			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
+
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -474,6 +490,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getEplToLinkDAO().merge(eplToLinkToUpdate);
 
+			// We need to refresh linked document to refresh entity state, otherwise eplToLink property will be null
+			getDocumentDAO().refresh(eplToLinkToUpdate.getDocument());
+			
 			return eplToLinkToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

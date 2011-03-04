@@ -40,6 +40,7 @@ public class EditContextVolumeCommand {
 	@NotNull
 	private Integer summaryId;
 	private String ccontext;
+	private String inventarioSommarioDescription;
 
 	/**
 	 * @return the summaryId
@@ -53,16 +54,34 @@ public class EditContextVolumeCommand {
 	public void setSummaryId(Integer summaryId) {
 		this.summaryId = summaryId;
 	}
+	
 	/**
 	 * @param ccontext the ccontext to set
 	 */
 	public void setCcontext(String ccontext) {
 		this.ccontext = ccontext;
 	}
+	
 	/**
 	 * @return the ccontext
 	 */
 	public String getCcontext() {
 		return ccontext;
+	}
+	
+	/**
+	 * 
+	 * @param inventarioSommarioDescription the inventarioSommarioDescription to set 
+	 */
+	public void setInventarioSommarioDescription(String inventarioSommarioDescription) {
+		this.inventarioSommarioDescription = inventarioSommarioDescription;
+	}
+	
+	/**
+	 * 
+	 * @return the inventarioSommarioDescription
+	 */
+	public String getInventarioSommarioDescription() {
+		return inventarioSommarioDescription;
 	}
 }

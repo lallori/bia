@@ -72,8 +72,11 @@ public class Image implements Serializable {
 	@Column (name="\"imageName\"", length=45, nullable=false)
 	private String imageName;
 	@Enumerated(EnumType.STRING) 
-	@Column (name="\"imageType\"", length=45, nullable=false)
+	@Column (name="\"imageType\"", length=1, nullable=false)
 	private ImageType imageType;
+	@Enumerated(EnumType.STRING)
+	@Column (name="\"imageRectoVerso\"", length=1, nullable=false)
+	private ImageRectoVerso imageRectoVerso;
 	@Column (name="\"imageOrder\"", length=5, nullable=false)
 	private Integer imageOrder;
 	@Column (name="\"imageProgTypeNum\"", length=5, nullable=false)
@@ -152,6 +155,22 @@ public class Image implements Serializable {
 	 */
 	public ImageType getImageType() {
 		return imageType;
+	}
+
+	/**
+	 * 
+	 * @param imageRectoVerso
+	 */
+	public void setImageRectoVerso(ImageRectoVerso imageRectoVerso) {
+		this.imageRectoVerso = imageRectoVerso;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public ImageRectoVerso getImageRectoVerso() {
+		return imageRectoVerso;
 	}
 
 	/**
@@ -246,6 +265,26 @@ public class Image implements Serializable {
 	    @Override
 	    public String toString(){
 	        return imageType;
+	    }
+	}	
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum ImageRectoVerso {
+		R("R"), V("V");
+		
+		private final String imageRectoVerso;
+
+	    private ImageRectoVerso(String value) {
+	    	imageRectoVerso = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return imageRectoVerso;
 	    }
 	}	
 }

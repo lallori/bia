@@ -401,12 +401,12 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				typedQueryCount.setParameter("volLetExt", volumeExplorer.getVolLetExt());
 			volumeExplorer.setTotal((Long)typedQueryCount.getSingleResult());
 
-	        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
+	        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
 	        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
 	        	stringBuffer.append(" = :volLetExt");
 	        else
 	        	stringBuffer.append(" is null");
-	    	stringBuffer.append(" group by imageType");
+	    	stringBuffer.append(" group by imageType, imageRectoVerso");
 	    	
 	        Query query = getEntityManager().createQuery(stringBuffer.toString());
 	        query.setParameter("volNum", volumeExplorer.getVolNum());
@@ -429,15 +429,25 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				Object[] singleGroup = result.get(i);
 
 				if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
-					volumeExplorer.setTotalRubricario(new Long(singleGroup[1].toString()));
+					if (volumeExplorer.getTotalRubricario() < new Long(singleGroup[2].toString())) {
+						volumeExplorer.setTotalRubricario(new Long(singleGroup[2].toString()));
+					}
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
-					volumeExplorer.setTotalCarta(new Long(singleGroup[1].toString()));
+					if (volumeExplorer.getTotalCarta() < new Long(singleGroup[2].toString())) {
+						volumeExplorer.setTotalCarta(new Long(singleGroup[2].toString()));
+					}
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
-					volumeExplorer.setTotalAppendix(new Long(singleGroup[1].toString()));
+					if (volumeExplorer.getTotalAppendix() < new Long(singleGroup[2].toString())) {
+						volumeExplorer.setTotalAppendix(new Long(singleGroup[2].toString()));
+					}
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
-					volumeExplorer.setTotalOther(new Long(singleGroup[1].toString()));
+					if (volumeExplorer.getTotalOther() < new Long(singleGroup[2].toString())) {
+						volumeExplorer.setTotalOther(new Long(singleGroup[2].toString()));
+					}
 				} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
-					volumeExplorer.setTotalGuardia(new Long(singleGroup[1].toString()));
+					if (volumeExplorer.getTotalGuardia() < new Long(singleGroup[2].toString())) {
+						volumeExplorer.setTotalGuardia(new Long(singleGroup[2].toString()));
+					}
 				}
 			}
 		} 

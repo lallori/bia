@@ -165,6 +165,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 
         //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("summaryId")));
 
 		// Set values in predicate's elements  
 		TypedQuery<Volume> typedQuery = getEntityManager().createQuery(criteriaQuery);
