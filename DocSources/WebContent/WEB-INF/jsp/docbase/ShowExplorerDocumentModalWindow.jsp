@@ -105,15 +105,15 @@
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
-				<b>Rubricario Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalRubricario}</label>
+				<b>Rubricario Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricario" type="text" value="" />
-				<input id="goR" type="image" alt="Go" src="<c:url value="/images/transparent_account.png" />" />
+				<input id="goR" type="submit" value="" />
 				<form:hidden path="volNum" />
-				<form:hidden path="volLetExt" value="${command.volLetExt}" />
+				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
 				<form:hidden path="imageOrder" />
 				<form:hidden path="total" value="${documentExplorer.total}" />

@@ -116,13 +116,11 @@
 		<br />	
 		<br />
 			
-		<div id="chooseGoBack">
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-			<a id="transcribeAndContextualizeDocument" href="${TranscribeAndContextualizeDocument}"><img src="/DocSources/images/button_choose.png" alt="next" /></a>
+			<a id="choose" href="${TranscribeAndContextualizeDocument}"></a>
 		</security:authorize>
 
-			<a href="${ExplorerVolumeModal}" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"><img src="/DocSources/images/button_goBack.png" alt="Go back to Volume Explorer" id="buttonGoBack"/></a>
-		</div>
+		<a id="gobackvolume" href="${ExplorerVolumeModal}" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"></a>
 			
 	</div>
 
@@ -138,7 +136,7 @@
 				return false;
 			});					
 						
-			$j("#transcribeAndContextualizeDocument").click(function(e) {
+			$j("#choose").click(function(e) {
 				e.preventDefault();
 				$j("#body_left").load($j(this).attr("href"));
 				Modalbox.hide(); 

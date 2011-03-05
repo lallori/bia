@@ -56,10 +56,10 @@
 		<br />
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
-	    	<a id="previous" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="prev" /></a>
+	    	<a class="previousPage"><img src="<c:url value="/images/mview/button_prev.png" />" alt="prev" /></a>
 		</c:if>
 		<c:if test="${command.imageOrder > 1}">
-			<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/button_prev.png" />" alt="previous" /></a>
+			<a id="previous" href="${previousPage}" class="previousPage"><img src="<c:url value="/images/mview/button_prev.png" />" alt="previous" /></a>
 		</c:if>
 		</div>
 		<div id="folio" title="Warning!" style="display:none"> 
@@ -67,10 +67,10 @@
 		</div> 
 		<div id="nextButton">
 		<c:if test="${command.imageOrder == command.total}">
-			<a id="next" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
+			<a id="next" class="nextPage"><img src="<c:url value="/images/mview/button_next.png" />" alt="next" /></a>
 		</c:if>
 		<c:if test="${command.imageOrder < command.total}">
-			<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/button_next.png" />" alt="next" /></a>
+			<a id="next" href="${nextPage}" class="nextPage"><img src="<c:url value="/images/mview/button_next.png" />" alt="next" /></a>
 		</c:if>
 		</div>
 	</div>
@@ -79,9 +79,9 @@
 	
 	<div id="rubricarioMoveTo">
 		<form:form id="moveToRubricarioForm" method="post" class="edit">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to rubricario(page)</label>
-			<input id="imageProgTypeNum" name="imageProgTypeNum" class="imageProgTypeNum" type="text" value="" />
-			<input id="goR" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+			<label id="imageProgTypeNumLabel" class="rubricarioLabel" for="imageProgTypeNum">Move to rubricario(page)</label>
+			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
+			<input id="goR" type="image" src="<c:url value="/images/mview/go.png" />" alt="Go"/>
 			<form:hidden path="entryId" />
 			<form:hidden path="volNum" />
 			<form:hidden path="volLetExt" />
@@ -120,11 +120,11 @@
 	<div id="line2"></div>
 	
 	<div id="personalNotesDiv">
-		<a id="personalNotes" href="#"><img src="<c:url value="/images/button_personalNotes.png" />" alt="Personal Notes" /></a>
+		<a id="personalNotes" href="#"><img src="<c:url value="/images/mview/button_personalNotes.png" />" alt="Personal Notes" /></a>
 	</div>
 	
 	<div id="exitDiv">
-		<a id="exitButton" href="#" onClick="$j('#exit').dialog('open');"><img src="<c:url value="/images/button_exit.png" />" alt="Exit" /></a>
+		<a id="exitButton" href="#" onClick="$j('#exit').dialog('open');"><img src="<c:url value="/images/mview/button_exit.png" />" alt="Exit" /></a>
 	</div>
 
 	<div id="exit" title="Alert" style="display:none">

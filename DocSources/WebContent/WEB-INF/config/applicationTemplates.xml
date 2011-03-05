@@ -155,6 +155,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditExtractOrSynopsisDocument.jsp"/>
 	</definition>
 	
+	<definition name="docbase/EditExtractOrSynopsisDocumentModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditExtractOrSynopsisDocumentModalWindow.jsp"/>
+	</definition>
+	
 	<definition name="docbase/EditFactCheckDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditFactCheckDocument.jsp"/>
 	</definition>

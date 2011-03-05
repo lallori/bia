@@ -10,15 +10,19 @@
 			<div id="colte_of_arms"></div>
 		</div>	
 		<div id="body_right">
-			<div id="button_courses"><a id="button_courses" href="#"></a></div>
+			<div id="button_courses">
+				<a href="http://courses.medici.org/" target="_blank" class="mapcourses"></a>
+			</div>
 			<ul class="welcome_list">
-				<li><h5>Welcome back <security:authentication property="principal.firstName"/>. <br />From your last log on:</h5>
+				<li><h5>Welcome back Lisa. <br />From your last log on:</h5>
 					<ul>
 						<li>you have <b>23</b> new messages</li>
+			
 						<li><b>1</b> new digitized volume has been uploaded</li>
 						<li><b>12</b> new documents have been entered</li>
 						<li><b>13</b> documents have been vetted</li>
 						<li><b>15</b> new people have been entered</li>
+			
 						<li><b>5</b> new places and/or locations have been entered</li>
 					</ul>
 				</li>

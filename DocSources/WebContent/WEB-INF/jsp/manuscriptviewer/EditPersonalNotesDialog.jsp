@@ -6,7 +6,7 @@
 
 	<form:form id="EditPersonalNotesForm" method="post" cssClass="edit">
 		<form:textarea id="personalNotes" path="personalNotes" cssClass="txtarea" rows="20" style="width: 96%; height: 96%;"/>
-		<input id="save" type="image" src="<c:url value="/images/saveExtract.png"/>" alt="Save Extract"/>
+		<input id="save" type="image" src="<c:url value="/images/mview/saveExtract.png"/>" alt="Save Extract"/>
 	</form:form>
 
 	<script type="text/javascript">

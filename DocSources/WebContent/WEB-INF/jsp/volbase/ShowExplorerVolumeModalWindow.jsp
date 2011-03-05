@@ -6,25 +6,25 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="ChoiceStartFolioDocument" value="/de/docbase/ChoiceStartFolioDocument.do">
-			<c:param name="summaryId" value="${command.summaryId}"/>
-			<c:param name="volNum" value="${command.volNum}" />
-			<c:param name="volLetExt" value="${command.volLetExt}" />
-			<c:param name="flashVersion" value="${command.flashVersion}"/>
-			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
-			<c:param name="imageDocumentToCreate" value="${volumeExplorer.image.imageId}" />
-			<c:param name="total" value="${volumeExplorer.total}" />
-			<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-			<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
-			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="${command.flashVersion}"/>
-			<c:param name="modalWindow" value="true"/>
+			<c:param name="summaryId" 				value="${command.summaryId}"/>
+			<c:param name="volNum" 					value="${command.volNum}" />
+			<c:param name="volLetExt" 				value="${command.volLetExt}" />
+			<c:param name="flashVersion" 			value="${command.flashVersion}"/>
+			<c:param name="imageOrder" 				value="${volumeExplorer.image.imageOrder}" />
+			<c:param name="imageDocumentToCreate" 	value="${volumeExplorer.image.imageId}" />
+			<c:param name="total" 					value="${volumeExplorer.total}" />
+			<c:param name="totalRubricario" 		value="${volumeExplorer.totalRubricario}" />
+			<c:param name="totalCarta" 				value="${volumeExplorer.totalCarta}" />
+			<c:param name="totalAppendix" 			value="${volumeExplorer.totalAppendix}" />
+			<c:param name="totalOther" 				value="${volumeExplorer.totalOther}" />
+			<c:param name="totalGuardia" 			value="${volumeExplorer.totalGuardia}" />
+			<c:param name="flashVersion" 			value="${command.flashVersion}"/>
+			<c:param name="modalWindow"  			value="true"/>
 		</c:url>
 
 		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
-			<c:param name="imageName"   value="${volumeExplorer.image}" />
-			<c:param name="flashVersion"   value="true" />
+			<c:param name="imageName"    value="${volumeExplorer.image}" />
+			<c:param name="flashVersion" value="${command.flashVersion}" />
 		</c:url>
 	</security:authorize>
 	
@@ -125,12 +125,12 @@
 				<b>Rubricario Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
-				<label for="imageProgTypeNum" id="rubricarioLabel" class="rubricarioLabel">Move to rubricario</label>
+			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario MB_focusable" type="text" value="" />
 				<input id="goR" type="submit" value="" />
 				<form:hidden path="volNum" />
-				<form:hidden path="volLetExt" value="${command.volLetExt}" />
+				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
 				<form:hidden path="imageOrder" />
 				<form:hidden path="total" value="${volumeExplorer.total}" />
@@ -139,7 +139,7 @@
 				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="flashVersion"  value="${command.flashVersion}" />
 				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>
@@ -154,12 +154,12 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 
-			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
+			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio MB_focusable" type="text" value="" />
 				<input class="openmodalbox" id="go" type="submit" value=""/>
 				<form:hidden path="volNum" />
-				<form:hidden path="volLetExt" value="${command.volLetExt}" />
+				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
 				<form:hidden path="imageOrder" />
 				<form:hidden path="total" value="${volumeExplorer.total}" />
@@ -168,7 +168,7 @@
 				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="flashVersion"  value="${command.flashVersion}" />
 				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>
@@ -183,14 +183,14 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 	        $j("#moveToRubricarioForm").submit(function (){
-				$j.ajax({ type:"GET", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
                 	$j("#modalBox").html(html);
 				}});
 				return false;
 			});
 
 	        $j("#moveToFolioForm").submit(function (){
-				$j.ajax({ type:"GET", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					$j("#modalBox").html(html);
 				}});
 				return false;

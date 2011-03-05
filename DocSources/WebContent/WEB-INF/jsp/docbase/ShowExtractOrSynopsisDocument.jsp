@@ -14,6 +14,10 @@
 		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
+		<c:url var="EditExtractOrSynopsisDocumentModalWindow" value="/de/docbase/EditExtractOrSynopsisDocument.do">
+			<c:param name="entryId"   value="${document.entryId}" />
+			<c:param name="modalWindow"   value="true" />
+		</c:url>
 		<c:url var="EditDocumentInManuscriptViewer" value="/de/mview/EditDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
@@ -30,7 +34,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a>
 		/
-		<a id="EditDocumentInModal" onclick="Modalbox.show(this.href, {title: this.title, width: 850}); return false;" href="/DocSources/de/docbase/EditExtractOrSynopsisDocumentFullscreen.html" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
+		<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindow}" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
 		/
 		<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewer}" >edit with manuscript viewer</a>
 		</security:authorize></h5>
@@ -52,6 +56,13 @@
 				 $j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));
 				 return false;
 			});
-			 $j("#EditDocumentInManuscriptViewer").open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
+			
+			$j("#EditDocumentInManuscriptViewer").open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
+			
+			$j("#EditDocumentInModal").click(function(){
+				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 850, height:550}); 
+				return false;
+			});
+
 		});
 	</script>
