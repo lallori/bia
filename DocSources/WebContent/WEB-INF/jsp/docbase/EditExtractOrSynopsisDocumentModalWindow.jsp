@@ -31,7 +31,7 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 	        $j('#close').click(function() {
-				$j('#EditExtractOrSynopsisDocumentDiv').block({ message: $j('#question') }); 
+				$j('#MB_frame').block({ message: $j('#question') }); 
 				return false;
 			});
       
@@ -44,11 +44,13 @@
 	            return false; 
 	        }); 
 	        
-			$j('#yes').click(function() { 
-				$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$j("#body_left").html(html);
-				}});
-					
+			$j('#yes').click(function() {
+				Modalbox.hide();
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j('#question').hide();
+				$j('#EditExtractOrSynopsisDocumentDiv').append($j("#question"));
+				$j(".blockUI").remove();
 				return false; 
 			}); 
 
