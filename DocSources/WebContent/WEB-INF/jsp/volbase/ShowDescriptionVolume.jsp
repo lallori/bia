@@ -20,7 +20,7 @@
 	</security:authorize>
 
 	<div id="EditDescriptionVolumeDiv">
-		<h5>Description <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDescriptionVolume" href="${EditDescriptionVolume}">edit</a></security:authorize></h5>
+		<h5>Description <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDescriptionVolume" href="${EditDescriptionVolume}">edit</a><span id="loading"></security:authorize></h5>
 		<hr id="lineSeparator"/>
 		
 		<ul>
@@ -54,6 +54,7 @@
 				 $j("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
 
 				 $j("#EditDescriptionVolume").click(function(){
+					$j(this).next().css('visibility', 'visible');
 					$j("#EditDescriptionVolumeDiv").load($j(this).attr("href"));
 					return false;
 				});

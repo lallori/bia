@@ -20,7 +20,7 @@
 	</security:authorize>
 
 	<div id="EditContextVolumeDiv">
-		<h5>Context <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditContextVolume" href="${EditContextVolume}">edit</a></security:authorize></h5>
+		<h5>Context <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditContextVolume" href="${EditContextVolume}">edit</a><span id="loading"></security:authorize></h5>
 		<hr id="lineSeparator"/>
 
 		<ul>
@@ -37,6 +37,7 @@
 				$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
 				$j("#EditContextVolume").click(function(){
+					$j(this).next().css('visibility', 'visible');
 					$j("#EditContextVolumeDiv").load($j(this).attr("href"));
 					return false;
 				});

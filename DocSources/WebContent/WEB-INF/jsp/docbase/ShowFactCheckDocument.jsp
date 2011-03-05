@@ -23,7 +23,7 @@
 	</security:authorize>
 
 	<div id="EditFactCheckDocumentDiv">
-		<h5>FACT CHECK <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditFactCheckDocument" href="${EditFactCheckDocument}">edit</a></security:authorize></h5>
+		<h5>FACT CHECK <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditFactCheckDocument" href="${EditFactCheckDocument}">edit</a><span id="loading"></security:authorize></h5>
 		<hr id="lineSeparator"/>
 		<ul>
 			<li>${document.factChecks.addLRes}</li>
@@ -32,6 +32,10 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			 $j("#EditFactCheckDocument").click(function(){$j("#EditFactCheckDocumentDiv").load($j(this).attr("href"));return false;});
+			$j("#EditFactCheckDocument").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditFactCheckDocumentDiv").load($j(this).attr("href"));
+				return false;
+			});
 		});
 	</script>

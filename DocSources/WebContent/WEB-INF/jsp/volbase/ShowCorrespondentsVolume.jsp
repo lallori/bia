@@ -20,7 +20,7 @@
 	</security:authorize>
 	
 	<div id="EditCorrespondentsVolumeDiv">
-		<h5>Correspondents <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolume}">edit</a></security:authorize></h5>
+		<h5>Correspondents <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolume}">edit</a><span id="loading"></security:authorize></h5>
 		<hr id="lineSeparator"/>
 		
 		<ul>
@@ -32,14 +32,15 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				 $j("#EditContextVolume").attr('href', "${EditContextVolume}");
-				 $j("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
-				 $j("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
-				 $j("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
+				$j("#EditContextVolume").attr('href', "${EditContextVolume}");
+				$j("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
+				$j("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
+				$j("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
 
-				 $j("#EditCorrespondentsVolume").click(function(){
-					 $j("#EditCorrespondentsVolumeDiv").load($j(this).attr("href"));
-					 return false;
+				$j("#EditCorrespondentsVolume").click(function(){
+					$j(this).next().css('visibility', 'visible');
+					$j("#EditCorrespondentsVolumeDiv").load($j(this).attr("href"));
+					return false;
 				});
 			});
 		</script>

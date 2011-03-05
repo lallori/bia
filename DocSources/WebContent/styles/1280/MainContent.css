@@ -49,8 +49,10 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	width:16px;
 	height:11px;
 	display:inline;
-	margin:25px 0 auto 25px;
-
+	margin:3px 0 auto 25px;
+	background-image:url(/DocSources/images/1280/img_loading.gif);
+	position:absolute;
+	visibility: hidden;
 }
 
 /* ---------------------------------------------------------------------------------------------------------- */ 

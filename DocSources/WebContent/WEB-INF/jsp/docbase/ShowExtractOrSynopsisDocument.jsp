@@ -32,7 +32,7 @@
 	<div id="EditExtractOrSynopsisDocumentDiv">
 		<h5>EXTRACT/SYNOPSIS
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a>
+		<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a><span id="loading">
 		/
 		<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindow}" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
 		/
@@ -52,9 +52,10 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			 $j("#EditExtractOrSynopsisDocument").click(function(){
-				 $j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));
-				 return false;
+			$j("#EditExtractOrSynopsisDocument").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditExtractOrSynopsisDocumentDiv").load($j(this).attr("href"));
+				return false;
 			});
 			
 			$j("#EditDocumentInManuscriptViewer").open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});

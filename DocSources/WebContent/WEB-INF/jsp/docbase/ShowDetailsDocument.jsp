@@ -38,7 +38,7 @@
 	</c:url>
 
 	<div id="EditDetailsDocumentDiv">
-		<h5>DOCUMENT DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsDocument" href="${EditDetailsDocument}">edit</a></security:authorize></h5>
+		<h5>DOCUMENT DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsDocument" href="${EditDetailsDocument}">edit</a><span id="loading"></span></security:authorize></h5>
 		<div id="createdby"><h6>CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></h6></div>
 		<hr id="lineSeparator"/>
 		<div id="DocumentImageDiv">
@@ -69,9 +69,11 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsDocument").click(function(){
+				$j(this).next().css('visibility', 'visible');
 				 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
+
 			$j("#EditDetailsDocumentDiv").documentExplorer( {  
 				showExplorerDocumentUrl     : "${ShowDocumentExplorer}",
 				target                      : $j("#body_right")

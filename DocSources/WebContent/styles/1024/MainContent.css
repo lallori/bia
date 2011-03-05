@@ -52,7 +52,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin:3px 0 auto 25px;
 	background-image:url(/DocSources/images/1024/img_loading.gif);
 	position:absolute;
-
+	visibility: hidden;
 }
 
 /* ---------------------------------------------------------------------------------------------------------- */ 

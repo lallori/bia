@@ -27,7 +27,7 @@
 	</security:authorize>
 	
 	<div id="EditDetailsVolumeDiv">
-		<h5>VOLUME DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a></security:authorize></h5>
+		<h5>VOLUME DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a><span id="loading"></security:authorize></h5>
 		<div id="createdby"><h6>CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></h6></div>
 		<hr id="lineSeparator"/>
 
@@ -62,6 +62,7 @@
 				zIndex: 9999
 			});  
 			$j("#EditDetailsVolume").click(function(){
+				$j(this).next().css('visibility', 'visible');
 				$j("#EditDetailsVolumeDiv").load($j(this).attr("href"));
 				return false;
 			});

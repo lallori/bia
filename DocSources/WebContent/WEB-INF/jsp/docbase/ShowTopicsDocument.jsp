@@ -23,7 +23,7 @@
 	</security:authorize>
 	
 	<div id="EditTopicsDocumentDiv">
-		<h5>TOPICS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditTopicsDocument" href="${EditTopicsDocument}">edit</a></security:authorize></h5>
+		<h5>TOPICS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditTopicsDocument" href="${EditTopicsDocument}">edit</a><span id="loading"></security:authorize></h5>
 		<hr id="lineSeparator"/>
 		<ul>
 			<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
@@ -37,9 +37,10 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {			 
-			 $j("#EditTopicsDocument").click(function(){
-				 $j("#EditTopicsDocumentDiv").load($j(this).attr("href"));
-				 return false;
+			$j("#EditTopicsDocument").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditTopicsDocumentDiv").load($j(this).attr("href"));
+				return false;
 			});
 		});
 	</script>
