@@ -108,9 +108,9 @@
 				<b>Rubricario Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
+			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricario" type="text" value="" />
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario MB_focusable" type="text" value="" />
 				<input id="goR" type="submit" value="" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
@@ -137,10 +137,10 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 
-			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" method="get" cssClass="edit">
+			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
-				<input class="openmodalbox" id="go" type="image" src="<c:url value="/images/transparent_account.png" />" alt="Go"/>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio MB_focusable" type="text" value="" />
+				<input class="openmodalbox" id="go" type="submit" value=""/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="C"/>
@@ -163,14 +163,14 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 	        $j("#moveToRubricarioForm").submit(function (){
-				$j.ajax({ type:"GET", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
                 	$j("#modalBox").html(html);
 				}});
 				return false;
 			});
 
 	        $j("#moveToFolioForm").submit(function (){
-				$j.ajax({ type:"GET", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					$j("#modalBox").html(html);
 				}});
 				return false;
