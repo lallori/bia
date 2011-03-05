@@ -40,6 +40,7 @@ public class EditExtractOrSynopsisDocumentCommand {
 	private Integer entryId;
 	private String docExtract;
 	private String synopsis;
+	private Boolean modalWindow;
 
 	/**
 	 * This method returns entryId property.
@@ -99,5 +100,21 @@ public class EditExtractOrSynopsisDocumentCommand {
 	 */
 	public Integer getSynExtrId() {
 		return synExtrId;
+	}
+
+	/**
+	 * 
+	 * @param modalWindow the modal window to set
+	 */
+	public void setModalWindow(Boolean modalWindow) {
+		this.modalWindow = modalWindow;
+	}
+
+	/**
+	 * 
+	 * @return the modalWindow
+	 */
+	public Boolean getModalWindow() {
+		return modalWindow;
 	}
 }

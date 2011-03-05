@@ -550,6 +550,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Image> findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable {
 		try {
 			if (document != null) {

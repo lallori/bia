@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.volbase;
 
 import org.medici.docsources.command.volbase.ShowExplorerVolumeCommand;
+import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +88,12 @@ public class ShowExplorerVolumeValidator implements Validator {
 		if (showExplorerVolumeCommand.getImageProgTypeNum() != null) {
 			try {
 				if (getVolBaseService().findVolumeImage(showExplorerVolumeCommand.getVolNum(), showExplorerVolumeCommand.getVolLetExt(), showExplorerVolumeCommand.getImageType(), showExplorerVolumeCommand.getImageProgTypeNum()) == null) {
-					errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerVolumeCommand.getImageProgTypeNum()}, null);
+					if (showExplorerVolumeCommand.getImageType().equals(ImageType.R)) {
+						errors.rejectValue("imageProgTypeNum", "error.rubricario.notfound", new Object[]{showExplorerVolumeCommand.getImageProgTypeNum()}, null);
+					}
+					else if (showExplorerVolumeCommand.getImageType().equals(ImageType.C)) {
+						errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerVolumeCommand.getImageProgTypeNum()}, null);
+					}
 				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				

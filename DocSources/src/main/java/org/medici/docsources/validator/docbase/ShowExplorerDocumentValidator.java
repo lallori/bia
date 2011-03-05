@@ -28,6 +28,8 @@
 package org.medici.docsources.validator.docbase;
 
 import org.medici.docsources.command.docbase.ShowExplorerDocumentCommand;
+import org.medici.docsources.domain.Image.ImageType;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -76,13 +78,18 @@ public class ShowExplorerDocumentValidator implements Validator {
 		ShowExplorerDocumentCommand showExplorerDocumentCommand = (ShowExplorerDocumentCommand) object;
 		
 		if (showExplorerDocumentCommand.getImageProgTypeNum() != null) {
-			/*try {
-				if (getDocBaseService().findVolumeImage(showExplorerVolumeRequestCommand.getVolNum(), showExplorerVolumeRequestCommand.getVolLetExt(), showExplorerVolumeRequestCommand.getImageType(), showExplorerVolumeRequestCommand.getImageProgTypeNum()) == null) {
-					errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerVolumeRequestCommand.getImageProgTypeNum()}, null);
+			try {
+				if (getDocBaseService().findDocumentImage(showExplorerDocumentCommand.getVolNum(), showExplorerDocumentCommand.getVolLetExt(), showExplorerDocumentCommand.getImageType(), showExplorerDocumentCommand.getImageProgTypeNum()) == null) {
+					if (showExplorerDocumentCommand.getImageType().equals(ImageType.R)) {
+						errors.rejectValue("imageProgTypeNum", "error.rubricario.notfound", new Object[]{showExplorerDocumentCommand.getImageProgTypeNum()}, null);
+					}
+					else if (showExplorerDocumentCommand.getImageType().equals(ImageType.C)) {
+						errors.rejectValue("imageProgTypeNum", "error.folio.notfound", new Object[]{showExplorerDocumentCommand.getImageProgTypeNum()}, null);
+					}
 				}
 			} catch (ApplicationThrowable applicationThrowable) {
 				
-			}*/
+			}
 		}
 	}
 }

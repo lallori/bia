@@ -42,6 +42,7 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.domain.TopicList;
+import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -256,6 +257,22 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * This method will search every {@link org.medici.docsources.domain.Image} 
+	 * with specific image type and folio number linked to a 
+	 * {@link org.medici.docsources.domain.Volume} identified by his volume
+	 * number and his letter extension.
+	 * 
+	 * @param volNum Volume number identifier
+	 * @param volLetExt Volume letter extension identifier.
+	 * @param imageType {@link org.medici.docsources.domain.Image$ImageType} identifier
+	 * @param imageProgTypeNum Folio number
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public List<Image> findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
 
 	/**
 	 * 

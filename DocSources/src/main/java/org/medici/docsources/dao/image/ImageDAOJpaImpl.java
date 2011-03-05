@@ -79,6 +79,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 */
 	private static final long serialVersionUID = -8769762056162920397L;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
@@ -106,6 +109,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Image> findDocumentImages(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
@@ -128,6 +134,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
@@ -158,74 +167,14 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public DocumentExplorer findImages(DocumentExplorer documentExplorer) throws PersistenceException {
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		
 		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
 		if (documentExplorer.getTotal() == null) {
-			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
-			Root<Image> rootCount = criteriaQueryCount.from(Image.class);
-			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
-
-			// Define predicate's elements
-			ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-			ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
-
-			criteriaQueryCount.where(
-				criteriaBuilder.and(
-					criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
-					StringUtils.isEmpty(documentExplorer.getVolLetExt()) ? 
-						criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
-						criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
-				)
-			);
-
-			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-			typedQueryCount.setParameter("volNum", documentExplorer.getVolNum());
-			if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
-				typedQueryCount.setParameter("volLetExt", documentExplorer.getVolLetExt());
-			documentExplorer.setTotal((Long)typedQueryCount.getSingleResult());
-
-	        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
-	        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
-	        	stringBuffer.append(" = :volLetExt");
-	        else
-	        	stringBuffer.append(" is null");
-	    	stringBuffer.append(" group by imageType");
-	    	
-	        Query query = getEntityManager().createQuery(stringBuffer.toString());
-	        query.setParameter("volNum", documentExplorer.getVolNum());
-	        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
-	        	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
-	        }
-
-			List<Object[]> result = (List<Object[]>)query.getResultList();
-
-			// We init every partial-total
-			documentExplorer.setTotalRubricario(new Long(0));
-			documentExplorer.setTotalCarta(new Long(0));
-			documentExplorer.setTotalAppendix(new Long(0));
-			documentExplorer.setTotalOther(new Long(0));
-			documentExplorer.setTotalGuardia(new Long(0));
-			
-			// We set new partial-total values 
-			for (int i=0; i<result.size(); i++) {
-				// This is an array defined as [ImageType, Count by ImageType]
-				Object[] singleGroup = result.get(i);
-
-				if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
-					documentExplorer.setTotalRubricario(new Long(singleGroup[1].toString()));
-				} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
-					documentExplorer.setTotalCarta(new Long(singleGroup[1].toString()));
-				} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
-					documentExplorer.setTotalAppendix(new Long(singleGroup[1].toString()));
-				} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
-					documentExplorer.setTotalOther(new Long(singleGroup[1].toString()));
-				} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
-					documentExplorer.setTotalGuardia(new Long(singleGroup[1].toString()));
-				}
-			}
+			this.updateDocumentExplorerTotals(documentExplorer);
 		} 
 
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
@@ -372,84 +321,16 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return page;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public VolumeExplorer findImages(VolumeExplorer volumeExplorer) throws PersistenceException {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		
 		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
 		if (volumeExplorer.getTotal() == null) {
-			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
-			Root<Image> rootCount = criteriaQueryCount.from(Image.class);
-			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
-
-			// Define predicate's elements
-			ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
-			ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
-
-			criteriaQueryCount.where(
-				criteriaBuilder.and(
-					criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
-					StringUtils.isEmpty(volumeExplorer.getVolLetExt()) ? 
-						criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
-						criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
-				)
-			);
-
-			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-			typedQueryCount.setParameter("volNum", volumeExplorer.getVolNum());
-			if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
-				typedQueryCount.setParameter("volLetExt", volumeExplorer.getVolLetExt());
-			volumeExplorer.setTotal((Long)typedQueryCount.getSingleResult());
-
-	        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
-	        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
-	        	stringBuffer.append(" = :volLetExt");
-	        else
-	        	stringBuffer.append(" is null");
-	    	stringBuffer.append(" group by imageType, imageRectoVerso");
-	    	
-	        Query query = getEntityManager().createQuery(stringBuffer.toString());
-	        query.setParameter("volNum", volumeExplorer.getVolNum());
-	        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
-	        	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
-	        }
-
-			List<Object[]> result = (List<Object[]>)query.getResultList();
-
-			// We init every partial-total
-			volumeExplorer.setTotalRubricario(new Long(0));
-			volumeExplorer.setTotalCarta(new Long(0));
-			volumeExplorer.setTotalAppendix(new Long(0));
-			volumeExplorer.setTotalOther(new Long(0));
-			volumeExplorer.setTotalGuardia(new Long(0));
-			
-			// We set new partial-total values 
-			for (int i=0; i<result.size(); i++) {
-				// This is an array defined as [ImageType, Count by ImageType]
-				Object[] singleGroup = result.get(i);
-
-				if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
-					if (volumeExplorer.getTotalRubricario() < new Long(singleGroup[2].toString())) {
-						volumeExplorer.setTotalRubricario(new Long(singleGroup[2].toString()));
-					}
-				} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
-					if (volumeExplorer.getTotalCarta() < new Long(singleGroup[2].toString())) {
-						volumeExplorer.setTotalCarta(new Long(singleGroup[2].toString()));
-					}
-				} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
-					if (volumeExplorer.getTotalAppendix() < new Long(singleGroup[2].toString())) {
-						volumeExplorer.setTotalAppendix(new Long(singleGroup[2].toString()));
-					}
-				} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
-					if (volumeExplorer.getTotalOther() < new Long(singleGroup[2].toString())) {
-						volumeExplorer.setTotalOther(new Long(singleGroup[2].toString()));
-					}
-				} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
-					if (volumeExplorer.getTotalGuardia() < new Long(singleGroup[2].toString())) {
-						volumeExplorer.setTotalGuardia(new Long(singleGroup[2].toString()));
-					}
-				}
-			}
+			this.updateVolumeExplorerTotals(volumeExplorer);
 		} 
 
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
@@ -497,6 +378,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         return volumeExplorer;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
@@ -524,6 +408,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
@@ -547,5 +434,171 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			return null;
 		
 		return result;
+	}
+
+	/**
+	 * This method updates every totals in input 
+	 * {@link org.medici.docsources.common.pagination.DocumentExplorer}.
+	 * 
+	 * @param documentExplorer DocumentExplorer input object to be update.
+	 */
+	private void updateDocumentExplorerTotals(DocumentExplorer documentExplorer) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+		Root<Image> rootCount = criteriaQueryCount.from(Image.class);
+		criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+		criteriaQueryCount.where(
+			criteriaBuilder.and(
+				criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
+				StringUtils.isEmpty(documentExplorer.getVolLetExt()) ? 
+					criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
+					criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
+			)
+		);
+
+		TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+		typedQueryCount.setParameter("volNum", documentExplorer.getVolNum());
+		if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
+			typedQueryCount.setParameter("volLetExt", documentExplorer.getVolLetExt());
+		documentExplorer.setTotal((Long)typedQueryCount.getSingleResult());
+
+        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
+        	stringBuffer.append(" = :volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" group by imageType, imageRectoVerso");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", documentExplorer.getVolNum());
+        if (!StringUtils.isEmpty(documentExplorer.getVolLetExt())) {
+        	query.setParameter("volLetExt", documentExplorer.getVolLetExt());
+        }
+
+		List<Object[]> result = (List<Object[]>)query.getResultList();
+
+		// We init every partial-total
+		documentExplorer.setTotalRubricario(new Long(0));
+		documentExplorer.setTotalCarta(new Long(0));
+		documentExplorer.setTotalAppendix(new Long(0));
+		documentExplorer.setTotalOther(new Long(0));
+		documentExplorer.setTotalGuardia(new Long(0));
+		
+		// We set new partial-total values 
+		for (int i=0; i<result.size(); i++) {
+			// This is an array defined as [ImageType, Count by ImageType]
+			Object[] singleGroup = result.get(i);
+
+			if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
+				if (documentExplorer.getTotalRubricario() < new Long(singleGroup[2].toString())) {
+					documentExplorer.setTotalRubricario(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
+				if (documentExplorer.getTotalCarta() < new Long(singleGroup[2].toString())) {
+					documentExplorer.setTotalCarta(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
+				if (documentExplorer.getTotalAppendix() < new Long(singleGroup[2].toString())) {
+					documentExplorer.setTotalAppendix(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
+				if (documentExplorer.getTotalOther() < new Long(singleGroup[2].toString())) {
+					documentExplorer.setTotalOther(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
+				if (documentExplorer.getTotalGuardia() < new Long(singleGroup[2].toString())) {
+					documentExplorer.setTotalGuardia(new Long(singleGroup[2].toString()));
+				}
+			}
+		}
+	}
+
+	/**
+	 * This method updates every totals in input 
+	 * {@link org.medici.docsources.common.pagination.VolumeExplorer}.
+	 * 
+	 * @param volumeExplorer VolumeExplorer input object to be update.
+	 */
+	private void updateVolumeExplorerTotals(VolumeExplorer volumeExplorer) {
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+		Root<Image> rootCount = criteriaQueryCount.from(Image.class);
+		criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+		criteriaQueryCount.where(
+			criteriaBuilder.and(
+				criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
+				StringUtils.isEmpty(volumeExplorer.getVolLetExt()) ? 
+					criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
+					criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
+			)
+		);
+
+		TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+		typedQueryCount.setParameter("volNum", volumeExplorer.getVolNum());
+		if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
+			typedQueryCount.setParameter("volLetExt", volumeExplorer.getVolLetExt());
+		volumeExplorer.setTotal((Long)typedQueryCount.getSingleResult());
+
+        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
+        	stringBuffer.append(" = :volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" group by imageType, imageRectoVerso");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volumeExplorer.getVolNum());
+        if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt())) {
+        	query.setParameter("volLetExt", volumeExplorer.getVolLetExt());
+        }
+
+		List<Object[]> result = (List<Object[]>)query.getResultList();
+
+		// We init every partial-total
+		volumeExplorer.setTotalRubricario(new Long(0));
+		volumeExplorer.setTotalCarta(new Long(0));
+		volumeExplorer.setTotalAppendix(new Long(0));
+		volumeExplorer.setTotalOther(new Long(0));
+		volumeExplorer.setTotalGuardia(new Long(0));
+		
+		// We set new partial-total values 
+		for (int i=0; i<result.size(); i++) {
+			// This is an array defined as [ImageType, Count by ImageType]
+			Object[] singleGroup = result.get(i);
+
+			if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
+				if (volumeExplorer.getTotalRubricario() < new Long(singleGroup[2].toString())) {
+					volumeExplorer.setTotalRubricario(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
+				if (volumeExplorer.getTotalCarta() < new Long(singleGroup[2].toString())) {
+					volumeExplorer.setTotalCarta(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
+				if (volumeExplorer.getTotalAppendix() < new Long(singleGroup[2].toString())) {
+					volumeExplorer.setTotalAppendix(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
+				if (volumeExplorer.getTotalOther() < new Long(singleGroup[2].toString())) {
+					volumeExplorer.setTotalOther(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
+				if (volumeExplorer.getTotalGuardia() < new Long(singleGroup[2].toString())) {
+					volumeExplorer.setTotalGuardia(new Long(singleGroup[2].toString()));
+				}
+			}
+		}
 	}
 }

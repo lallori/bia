@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.medici.docsources.command.docbase.EditExtractOrSynopsisDocumentCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.SynExtract;
@@ -157,7 +158,11 @@ public class EditExtractOrSynopsisDocumentController {
 			command.setSynopsis(null);
 		}
 
-		return new ModelAndView("docbase/EditExtractOrSynopsisDocument", model);
+		if (BooleanUtils.isTrue(command.getModalWindow())) {
+			return new ModelAndView("docbase/EditExtractOrSynopsisDocumentModalWindow", model);
+		} else {
+			return new ModelAndView("docbase/EditExtractOrSynopsisDocument", model);
+		}
 	}
 
 	/**

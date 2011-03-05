@@ -291,6 +291,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Image> findVolumeImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
 		try {
