@@ -55,11 +55,18 @@
 				$.get(functionParams["searchUrl"], parameters,
 					function(data){
 						$("#targetframe").html('');
+						var credit = 'Folio n. ' + data.imageProgTypeNum;
 						
+						if (data.imageRectoVerso == 'R') {
+							credit += ' Recto';
+						} else {
+							credit += ' Verso';
+						}
+
 						iip = new IIP( "targetframe", {
 							server: functionParams["proxyIIPImage"],
 							image: data.imageCompleteName,
-							credit: '&copy; copyright or information message', 
+							credit: credit, 
 							zoom: 1,
 							showNavButtons: true,
 							render: 'random'
@@ -105,10 +112,17 @@
                 
 				$.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
 					$("#targetframe").html('');
+					var credit = 'Folio n. ' + data.imageProgTypeNum;
+					if (data.imageRectoVerso == 'R') {
+						credit += ' Recto';
+					} else {
+						credit += ' Verso';
+					}
+					
 					iip = new IIP( "targetframe", {
 						server: functionParams["proxyIIPImage"],
 						image: data.imageCompleteName,
-						credit: '&copy; copyright or information message', 
+						credit: credit, 
 						zoom: 1,
 						showNavButtons: true,
 						render: 'random'
