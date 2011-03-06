@@ -54,7 +54,7 @@
 
 			$j("#EditCorrespondentsVolumeForm").submit(function (){
 	 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#EditCorrespondentsVolumeDiv").replaceWith(html);
+					$j("#EditCorrespondentsVolumeDiv").html(html);
 				}});
 
 				return false;

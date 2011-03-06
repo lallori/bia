@@ -5,15 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditContextVolume" value="/de/volbase/EditContextVolume.do">
-			<c:param name="summaryId"   value="${volume.summaryId}" />
-		</c:url>
-		<c:url var="EditCorrespondentsVolume" value="/de/volbase/EditCorrespondentsVolume.do">
-			<c:param name="summaryId"   value="${volume.summaryId}" />
-		</c:url>
-		<c:url var="EditDescriptionVolume" value="/de/volbase/EditDescriptionVolume.do">
-			<c:param name="summaryId"   value="${volume.summaryId}" />
-		</c:url>
 		<c:url var="EditDetailsVolume" value="/de/volbase/EditDetailsVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
@@ -27,7 +18,10 @@
 	</security:authorize>
 	
 	<div id="EditDetailsVolumeDiv">
-		<h5>VOLUME DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a><span id="loading"/></security:authorize></h5>
+		<h5>VOLUME DETAILS </h5>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="EditDetailsVolume" href="${EditDetailsVolume}">edit</a><span id="loading"/>
+	</security:authorize>
 		<div id="createdby"><h6>CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></h6></div>
 		<hr id="lineSeparator"/>
 
@@ -48,10 +42,9 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			 $j("#EditContextVolume").attr('href', "${EditContextVolume}");
-			 $j("#EditCorrespondentsVolume").attr('href', "${EditCorrespondentsVolume}");
-			 $j("#EditDescriptionVolume").attr('href', "${EditDescriptionVolume}");
-			 $j("#EditDetailsVolume").attr('href', "${EditDetailsVolume}");
+			$j("#EditContextVolume").css('visibility', 'visible');
+	        $j("#EditCorrespondentsVolume").css('visibility', 'visible'); 
+	        $j("#EditDescriptionVolume").css('visibility', 'visible');
 
 			 $j("#EditDetailsVolume").volumeExplorer( {  
 				volNum      : "${volume.volNum}",

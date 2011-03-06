@@ -8,19 +8,13 @@
 		<c:url var="EditContextVolume" value="/de/volbase/EditContextVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
-		<c:url var="EditCorrespondentsVolume" value="/de/volbase/EditCorrespondentsVolume.do">
-			<c:param name="summaryId"   value="${volume.summaryId}" />
-		</c:url>
-		<c:url var="EditDescriptionVolume" value="/de/volbase/EditDescriptionVolume.do">
-			<c:param name="summaryId"   value="${volume.summaryId}" />
-		</c:url>
-		<c:url var="EditDetailsVolume" value="/de/volbase/EditDetailsVolume.do">
-			<c:param name="summaryId"   value="${volume.summaryId}" />
-		</c:url>
 	</security:authorize>
 
 	<div id="EditContextVolumeDiv">
-		<h5>Context <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditContextVolume" href="${EditContextVolume}">edit</a><span id="loading"/></security:authorize></h5>
+		<h5>Context </h5>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="EditContextVolume" href="${EditContextVolume}">edit</a><span id="loading"/>
+	</security:authorize>
 		<hr id="lineSeparator"/>
 
 		<ul>

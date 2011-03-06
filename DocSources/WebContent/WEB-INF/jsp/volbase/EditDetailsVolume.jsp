@@ -148,17 +148,17 @@
 				$j("#volLetExt").removeAttr("disabled");
 
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					if(html.match(/inputerrors/g)){
+					if ($j(html).find(".inputerrors").length > 0){
 						$j("#EditDetailsVolumeDiv").html(html);
 					} else {
-						<c:choose> 
-							<c:when test="${command.summaryId == 0}"> 
-								$j("#body_left").html(html);
-							</c:when> 
-							<c:otherwise> 
-								$j("#EditDetailsVolumeDiv").html(html);
-							</c:otherwise> 
-						</c:choose> 
+					<c:choose> 
+						<c:when test="${command.summaryId == 0}"> 
+							$j("#body_left").html(html);
+						</c:when> 
+						<c:otherwise> 
+							$j("#EditDetailsVolumeDiv").html(html);
+						</c:otherwise> 
+					</c:choose> 
 					}
 				}});
 				return false;

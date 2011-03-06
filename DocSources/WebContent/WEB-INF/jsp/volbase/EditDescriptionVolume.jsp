@@ -120,7 +120,7 @@
 
 	        $j("#EditDescriptionVolumeForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#EditDescriptionVolumeDiv").replaceWith(html);
+					$j("#EditDescriptionVolumeDiv").html(html);
 				}});
 				return false;
 			});

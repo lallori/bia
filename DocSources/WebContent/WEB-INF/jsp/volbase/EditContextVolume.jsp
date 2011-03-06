@@ -55,7 +55,7 @@
 
 			$j("#EditContextVolumeForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#EditContextVolumeDiv").replaceWith(html);
+					$j("#EditContextVolumeDiv").html(html);
 				}});
 				return false;
 			});
