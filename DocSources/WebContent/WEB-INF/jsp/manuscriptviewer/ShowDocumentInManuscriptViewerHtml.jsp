@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ReverseProxyIIPImage" value="/mview/ReverseProxyIIPImage.do"/>
+
 	<c:url var="PageTurnerDialogUrl" value="/src/mview/PageTurnerDialog.do" >
 		<c:param name="entryId" value="${documentExplorer.entryId}" />
 		<c:param name="volNum" value="${documentExplorer.volNum}" />
@@ -24,6 +26,15 @@
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses */
 					cache: false
+				});
+
+				iip = new IIP( "targetframe", {
+					server: '${ReverseProxyIIPImage}',
+					image: '${documentExplorer.image}',
+					credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
+					zoom: 1,
+					showNavButtons: true,
+					render: 'random'
 				});
 
 				var $dialogExplorer = $j('<div></div>')
@@ -47,14 +58,4 @@
 				}).dialogExtend({"minimize" : true});
 
 			});
-
-			iip = new IIP( "targetframe", {
-				server: '/DocSources/mview/ReverseProxyIIPImage.do',
-				image: '${documentExplorer.image}',
-				credit: '&copy; copyright or information message', 
-				zoom: 1,
-				showNavButtons: true,
-				render: 'random'
-			});
-
 		</script>

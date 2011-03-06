@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ReverseProxyIIPImage" value="/mview/ReverseProxyIIPImage.do"/>
+
 	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" >
 		<c:param name="entryId" value="${requestCommand.entryId}" />
 	</c:url>
@@ -29,7 +31,7 @@
 		
 		<script type="text/javascript">
 			iip = new IIP( "targetframe", {
-				server: '/DocSources/mview/ReverseProxyIIPImage.do',
+				server: '${ReverseProxyIIPImage}',
 				image: '${documentExplorer.image}',
 				credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
 				zoom: 1,
