@@ -80,9 +80,10 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volume.setSummaryId(null);
 			
 			// Retrieves every object references
-			if (volume.getSerieList() != null)
+			if (volume.getSerieList() != null) {
 				volume.setSerieList(getSeriesListDAO().find(volume.getSerieList().getSeriesRefNum()));
-			
+			}
+
 			//Setting fields that are defined as nullable = false
 			volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			volume.setDateCreated(new Date());
@@ -224,7 +225,10 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
-		volumeToUpdate.setSerieList(volume.getSerieList());
+		if (volume.getSerieList() != null) {
+			volumeToUpdate.setSerieList(getSeriesListDAO().find(volume.getSerieList().getSeriesRefNum()));
+		}
+
 		volumeToUpdate.setStartYear(volume.getStartYear());
 		if (volume.getStartMonthNum() != null) {
 			volumeToUpdate.setStartMonth(getMonthDAO().find(volume.getStartMonthNum()).getMonthName());;
