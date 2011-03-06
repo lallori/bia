@@ -31,7 +31,7 @@
 			iip = new IIP( "targetframe", {
 				server: '/DocSources/mview/ReverseProxyIIPImage.do',
 				image: '${documentExplorer.image}',
-				credit: '&copy; copyright or information message', 
+				credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
 				zoom: 1,
 				showNavButtons: true,
 				render: 'random'
