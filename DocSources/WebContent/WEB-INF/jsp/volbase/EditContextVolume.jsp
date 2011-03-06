@@ -27,6 +27,7 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#EditContextVolume").css('visibility', 'hidden'); 
 	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden'); 
 	        $j("#EditDescriptionVolume").css('visibility', 'hidden'); 
 			$j("#EditDetailsVolume").css('visibility', 'hidden'); 

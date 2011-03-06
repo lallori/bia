@@ -44,7 +44,8 @@
 		$j(document).ready(function() {
 			$j("#EditContextVolume").css('visibility', 'visible');
 	        $j("#EditCorrespondentsVolume").css('visibility', 'visible'); 
-	        $j("#EditDescriptionVolume").css('visibility', 'visible');
+	        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
+			$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
 			 $j("#EditDetailsVolume").volumeExplorer( {  
 				volNum      : "${volume.volNum}",

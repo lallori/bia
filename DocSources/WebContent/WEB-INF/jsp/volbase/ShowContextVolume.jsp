@@ -26,6 +26,7 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<script type="text/javascript">
 			$j(document).ready(function() {
+				$j("#EditContextVolume").css('visibility', 'visible');
 		        $j("#EditCorrespondentsVolume").css('visibility', 'visible'); 
 		        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
 				$j("#EditDetailsVolume").css('visibility', 'visible'); 

@@ -41,7 +41,8 @@
 			$j(document).ready(function() {
 				$j("#EditContextVolume").css('visibility', 'visible');
 		        $j("#EditCorrespondentsVolume").css('visibility', 'visible'); 
-				$j("#EditDetailsVolume").css('visibility', 'visible');
+		        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
+				$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
 				 $j("#EditDescriptionVolume").click(function(){
 					$j(this).next().css('visibility', 'visible');

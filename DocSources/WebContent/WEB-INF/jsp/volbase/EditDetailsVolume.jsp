@@ -73,9 +73,10 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-	        $j("#EditContextVolume").css('visibility', 'hidden'); 
-	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden');
-	        $j("#EditDescriptionVolume").css('visibility', 'hidden');
+			$j("#EditContextVolume").css('visibility', 'hidden'); 
+	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden'); 
+	        $j("#EditDescriptionVolume").css('visibility', 'hidden'); 
+			$j("#EditDetailsVolume").css('visibility', 'hidden'); 
 
 	        // We disable
 			<c:if test="${command.summaryId != 0}"> 
