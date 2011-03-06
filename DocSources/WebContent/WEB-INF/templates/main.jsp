@@ -7,17 +7,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>the MEDICI ARCHIVE PROJECT</title>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/1024/favicon_medici.jpg"/>" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
-
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Chronology.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/modalbox.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/TableTools.css"/>" />
 
 		<!--[if lte IE 7]>
 		<style type="text/css">
@@ -32,6 +21,7 @@
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.cssLoader.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
@@ -40,15 +30,31 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuADM.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuMAIN.js"/>"></script>
-		<script type="text/javascript" src="/DocSources/scripts/ModalBox/prototype.js"></script>
-		<script type="text/javascript" src="/DocSources/scripts/ModalBox/scriptaculous.js?load=effects"></script>
-		<script type="text/javascript" src="/DocSources/scripts/ModalBox/modalbox.js"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/scriptaculous.js?load=effects"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script>
 		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
+				$j(document).cssLoader({
+					contextPath : "<c:url value="/"/>",
+					forceResolution : 1024,
+					stylePath : "styles/",
+					styleSheets : [
+						"menu/AdministrationMenu.css",
+				        "menu/MainMenu.css",
+				        "menu/ActionsMenu.css",
+				        "MainContent.css",
+				        "Template.css",
+				        "Chronology.css",
+				        "js/modalbox.css",
+				        "js/jquery.autocomplete2.css",
+				        "js/demo_table.css",
+				        "js/TableTools.css"]});
+
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses
 					cache: false,

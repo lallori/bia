@@ -4,17 +4,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		
+		<meta name="author" content="Lorenzo Allori &lt;lorenzo.allori@gmail.com&gt;"/>
+		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
+		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
+
 		<title>the MEDICI ARCHIVE PROJECT</title>
-		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/1024/favicon_medici.jpg"/>" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/LoginUser.css"/>" />
+		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.5.min.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.cssLoader.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
 
 		<script>
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
+				$j(document).cssLoader({
+					contextPath : "<c:url value="/"/>",
+					forceResolution : 1024,
+					stylePath : "styles/",
+					styleSheets : ["LoginUser.css"]});
 				/*if (location.pathname != "<c:url value="/LoginUser.do"/>" ) {
 					window.location = "<c:url value="/"/>";
 				}*/
