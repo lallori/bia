@@ -8,22 +8,13 @@
 		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
 	</security:authorize>
 	
 	<div id="EditCorrespondentsOrPeopleDocumentDiv">
-		<h5>CORRESPONDENTS/PEOPLE <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocument}">edit</a></security:authorize></h5>
+		<h5>CORRESPONDENTS/PEOPLE </h5>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocument}">edit</a>
+	</security:authorize>
 		<hr id="lineSeparator"/>
 		<ul>
 			<li><b>Sender:</b> ${document.senderPeople.mapNameLf}</li>
@@ -44,11 +35,13 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditDetailsDocument").attr('href', "${EditDetailsDocument}");
-			$j("#EditFactCheckDocument").attr('href', "${EditFactCheckDocument}");
-			$j("#EditCorrespondentsOrPeopleDocument").attr('href', "${EditCorrespondentsOrPeopleDocument}");
-			$j("#EditTopicsDocument").attr('href', "${EditTopicsDocument}");
-			$j("#EditExtractOrSynopsisDocument").attr('href', "${EditExtractOrSynopsisDocument}");
+	        $j("#EditDetailsDocument").css('visibility', 'visible'); 
+	        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'visible');
+	        $j("#EditFactCheckDocument").css('visibility', 'visible');
+	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'visible');
+	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'visible');
+	        $j("#EditDocumentInModal").css('visibility', 'visible');
+	        $j("#EditTopicsDocument").css('visibility', 'visible');
 
 			$j("#EditCorrespondentsOrPeopleDocument").click(function(){$j("#EditCorrespondentsOrPeopleDocumentDiv").load($j(this).attr("href"));return false;});
 			 

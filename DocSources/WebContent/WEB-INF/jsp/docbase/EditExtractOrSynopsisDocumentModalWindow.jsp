@@ -4,6 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId" value="${command.entryId}" />
+	</c:url>
+
 	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
 
 		<div style="float:left"><form:label for="docExtract" id="docExtractLabel" path="docExtract">Extract:</form:label>
@@ -56,11 +60,13 @@
 
 			$j("#EditExtractOrSynopsisDocumentForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						if(html.match(/inputerrors/g)){
+						if ($j(html).find(".inputerrors").length > 0){
 							$j("#modalBox").html(html);
 						} else {
-							$j("#body_left").html(html);
+							$j("#body_left").load('${ShowVolume}');
+							$j.modal.close(); 
 						}
+						return false;
 					} 
 				});
 				return false;

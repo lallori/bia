@@ -58,11 +58,7 @@
 
 			$j("#EditFactCheckDocumentForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						if(html.match(/inputerrors/g)){
-							$j("#EditFactChecksDocumentDiv").html(html);
-						} else {
-							$j("#body_left").html(html);
-						}
+						$j("#EditFactCheckDocumentDiv").html(html);
 					} 
 				});
 				return false;

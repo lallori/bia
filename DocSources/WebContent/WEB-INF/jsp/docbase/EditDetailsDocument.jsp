@@ -97,7 +97,7 @@
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
-	        
+
 			var showVolumeExplorer = function (){
 				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },
 					function(data){
@@ -125,7 +125,18 @@
 
 			$j("#EditDetailsDocumentForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#EditDetailsDocumentDiv").html(html);
+					if ($j(html).find(".inputerrors").length > 0){
+						$j("#EditDetailsDocumentDiv").html(html);
+					} else {
+				<c:choose> 
+					<c:when test="${command.entryId == 0}"> 
+						$j("#body_left").html(html);
+					</c:when> 
+					<c:otherwise> 
+						$j("#EditDetailsDocumentDiv").html(html);
+					</c:otherwise> 
+				</c:choose> 
+					}
 				}});
 				return false;
 			});

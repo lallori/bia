@@ -5,21 +5,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
 		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
+
 		<c:url var="ShowDocumentInManuscriptViewer" value="/src/mview/ShowDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 			<c:param name="flashVersion"   value="false" />
@@ -38,7 +27,10 @@
 	</c:url>
 
 	<div id="EditDetailsDocumentDiv">
-		<h5>DOCUMENT DETAILS <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditDetailsDocument" href="${EditDetailsDocument}">edit</a><span id="loading"/></security:authorize></h5>
+		<h5>DOCUMENT DETAILS </h5>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="EditDetailsDocument" href="${EditDetailsDocument}">edit</a><span id="loading"/>
+	</security:authorize>
 		<div id="createdby"><h6>CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></h6></div>
 		<hr id="lineSeparator"/>
 		<div id="DocumentImageDiv">
@@ -68,7 +60,15 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditDetailsDocument").click(function(){
+	        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'visible');
+	        $j("#EditDetailsDocument").css('visibility', 'visible'); 
+	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'visible');
+	        $j("#EditFactCheckDocument").css('visibility', 'visible');
+	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'visible');
+	        $j("#EditDocumentInModal").css('visibility', 'visible');
+	        $j("#EditTopicsDocument").css('visibility', 'visible');
+
+	        $j("#EditDetailsDocument").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
 				return false;

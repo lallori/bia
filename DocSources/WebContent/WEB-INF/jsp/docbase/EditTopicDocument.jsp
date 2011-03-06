@@ -77,7 +77,7 @@
 
 			$j("#EditTopicDocumentForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						if(html.match(/inputerrors/g)){
+						if ($j(html).find(".inputerrors").length > 0){
 							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
 						} else {
 							$j("#EditTopicDocumentDiv").html(html);
