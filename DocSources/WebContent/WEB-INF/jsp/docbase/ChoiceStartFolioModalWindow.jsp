@@ -112,16 +112,16 @@
 			</c:if>
 			</div>
 		</div>
-		
 		<br />	
 		<br />
-			
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-			<a id="choose" href="${TranscribeAndContextualizeDocument}"></a>
-		</security:authorize>
-
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="choose" href="${TranscribeAndContextualizeDocument}"></a>
+	</security:authorize>
 		<a id="gobackvolume" href="${ExplorerVolumeModal}" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"></a>
-			
+		<div id="closeModal">
+			<input value="" onClick="Modalbox.hide(); return false;" type="submit" id="closeModalBox"><br /><span>(or click the overlay)</span>
+		</div>
+		
 	</div>
 
 	<script type="text/javascript">
