@@ -28,5 +28,6 @@
 				</li>
 			</ul>
 		</div>
+		<div id="body_central"></div>
 	</div>
 	
