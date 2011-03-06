@@ -8,6 +8,7 @@
 		<c:param name="entryId" value="${command.entryId}"></c:param>
 	</c:url>
 
+	<div id="EditExtractDocumentDiv">
 	<form:form id="EditExtractDocumentForm" method="post" cssClass="edit">
 		<form:textarea id="extract" path="docExtract" rows="22"/>
 		<input id="saveExtract" type="image" src="<c:url value="/images/mview/saveExtract.png"/>" alt="Save Extract"/>
@@ -15,6 +16,7 @@
 		<form:hidden path="entryId"/>
 		<form:hidden path="synExtrId" />
 	</form:form>
+	</div>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
