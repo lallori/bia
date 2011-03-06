@@ -63,8 +63,8 @@
 						if ($j(html).find(".inputerrors").length > 0){
 							$j("#modalBox").html(html);
 						} else {
-							$j("#body_left").load('${ShowVolume}');
-							$j.modal.close(); 
+							$j("#body_left").load('${ShowDocument}');
+							Modalbox.hide(); 
 						}
 						return false;
 					} 
