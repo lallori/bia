@@ -6,7 +6,7 @@
 
 	<c:url var="searchAjaxUrl" value="/src/mview/SearchCarta.json"/>
 	
-	<c:url var="ProxyIIPImage" value="/mview/ReverseProxyIIPImage.do"/>
+	<c:url var="ReverseProxyIIPImage" value="/mview/ReverseProxyIIPImage.do"/>
 	
 	<c:url var="PersonalNotesDialogUrl" value="/src/mview/EditPersonalNotesDialog.do"/>
 
@@ -51,6 +51,7 @@
 		<c:param name="previousPage" value="true" />
 	</c:url>
 
+<div id="EditPersonalNotesDiv">
 	<div id="prevNextButtons">
 		<div style="text-align:center; color:#6D5C4D">Flip throught</div>
 		<br />
@@ -96,12 +97,11 @@
 			<form:hidden path="modeEdit" value="${command.modeEdit}" />
 		</form:form>
 	</div>
-	
 	<div id="folioMoveTo">
 		<form:form id="moveToFolioForm" method="post" class="edit">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel">Move to folio (page)</label>
-			<input id="imageProgTypeNum" name="imageProgTypeNum" class="imageProgTypeNumFolio" type="text" value="" />
-			<input id="go" type="image" src="<c:url value="/images/button_go.png" />" alt="Go"/>
+			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio (page)</label>
+			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
+			<input id="go" type="image" src="<c:url value="/images/mview/go.png" />" alt="Go"/>
 			<form:hidden path="entryId" />
 			<form:hidden path="volNum" />
 			<form:hidden path="volLetExt" />
@@ -126,6 +126,7 @@
 	<div id="exitDiv">
 		<a id="exitButton" href="#" onClick="$j('#exit').dialog('open');"><img src="<c:url value="/images/mview/button_exit.png" />" alt="Exit" /></a>
 	</div>
+</div>
 
 	<div id="exit" title="Alert" style="display:none">
 		<c:if test="${command.modeEdit == true}">
@@ -138,18 +139,16 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ProxyIIPImage}'});
-			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ProxyIIPImage}'});
-			$j("#previous").pageTurnerPage({proxyIIPImage: '${ProxyIIPImage}'});
-			$j("#next").pageTurnerPage({proxyIIPImage: '${ProxyIIPImage}'});
+			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ReverseProxyIIPImage}'});
+			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ReverseProxyIIPImage}'});
+			$j("#previous").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImage}'});
+			$j("#next").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImage}'});
 			
-			var $dialogPersonalNotes = $j('<div id="EditPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
+			var $dialogPersonalNotes = $j('<div id="DialogPersonalNotes"></div>').dialog({                                                                                                                                                                   
 				autoOpen: false,
 				width: 352,
 				minWidth: 350,
 				minHeight: 200,                                                                                                                                                         
-				title: 'Edit Extract',
-				position: ['right','top'],                                                                                                                                                      
 				title: 'PERSONAL NOTES',
 				position: ['right','top'],                                                                                                                                                       
 				closeOnEscape: false,

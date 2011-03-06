@@ -13,13 +13,13 @@
 		$j(document).ready(function() {
 			$j("#EditPersonalNotesForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j("#EditPersonalNotesForm").attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						$j("#EditPersonalNotesDiv").html(html);
+						$j("#DialogPersonalNotes").html(html);
 						personalNotesChanged=false;
 					} 
 				});
 				return false;
 			});
-			$j("#extract").change(function(){
+			$j("#personalNotes").change(function(){
 				personalNotesChanged=true;
 			});
 		});
