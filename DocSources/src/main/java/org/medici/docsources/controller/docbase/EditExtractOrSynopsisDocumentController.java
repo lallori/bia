@@ -110,7 +110,7 @@ public class EditExtractOrSynopsisDocumentController {
 				}
 
 				model.put("document", document);
-				return new ModelAndView("docbase/ShowDocument", model);
+				return new ModelAndView("docbase/ShowExtractOrSynopsisDocument", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditExtractOrSynopsisDocument", model);
 			}

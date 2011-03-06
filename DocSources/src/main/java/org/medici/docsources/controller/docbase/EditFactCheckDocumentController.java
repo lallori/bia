@@ -107,7 +107,7 @@ public class EditFactCheckDocumentController {
 				}
 
 				model.put("document", document);
-				return new ModelAndView("docbase/ShowDocument", model);
+				return new ModelAndView("docbase/ShowFactCheckDocument", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
 			}

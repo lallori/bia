@@ -131,12 +131,15 @@ public class EditDetailsDocumentController {
 			try {
 				if (command.getEntryId().equals(0)) {
 					document = getDocBaseService().addNewDocument(document);
+					
+					model.put("document", document);
+					return new ModelAndView("docbase/ShowDocument", model);
 				} else {
 					document = getDocBaseService().editDetailsDocument(document);
-				}
 
-				model.put("document", document);
-				return new ModelAndView("docbase/ShowDocument", model);
+					model.put("document", document);
+					return new ModelAndView("docbase/ShowDetailsDocument", model);
+				}
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}
