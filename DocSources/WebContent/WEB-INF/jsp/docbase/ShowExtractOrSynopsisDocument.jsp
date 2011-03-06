@@ -32,11 +32,11 @@
 	<div id="EditExtractOrSynopsisDocumentDiv">
 		<h5>EXTRACT/SYNOPSIS
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a><span id="loading">
+		<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a>
 		/
 		<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindow}" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
 		/
-		<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewer}" >edit with manuscript viewer</a>
+		<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewer}" >edit with manuscript viewer</a><span id="loading"/>
 		</security:authorize></h5>
 		<hr id="lineSeparator"/>
 		<ul>
