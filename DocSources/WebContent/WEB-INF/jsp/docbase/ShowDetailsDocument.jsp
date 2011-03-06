@@ -79,6 +79,6 @@
 				target                      : $j("#body_right")
 			});  
 
-			$j("#ShowDocumentInManuscriptViewer").open({width: $j(window).width(), height: $j(window).height(), scrollbars: false});
+			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 		});
 	</script>
