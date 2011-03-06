@@ -21,12 +21,17 @@ Joana Amill <joana.amill@gmail.com>
 --> 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
 	<head>
+		<meta name="author" content="Ruven Pillay &lt;ruven@users.sourceforge.netm&gt;"/>
 		<meta name="author" content="Lorenzo Allori &lt;lorenzo.allori@gmail.com&gt;"/>
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 		<meta name="description" content="IIPImage: High Resolution Remote Image Streaming Viewing"/>
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip.compressed.css"/>" />
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip.css"/>" />
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/mview.css"/>" />                                                                                
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/jquery-ui-1.8.9.custom.css"/>" /> 
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
-
+		
 		<title>DocSourcesV5 Manuscript Viewer</title>
 
 		<!-- mootools -->
@@ -39,7 +44,6 @@ Joana Amill <joana.amill@gmail.com>
 		
 		<!-- jquery dialog -->
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery-1.5.min.js"/>"/></script>                                                                                                
-		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.cssLoader.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery-ui-1.8.9.custom.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.dialogextend.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.pageTurner.js"/>"/></script>
@@ -48,16 +52,6 @@ Joana Amill <joana.amill@gmail.com>
 			var $j = jQuery.noConflict();
 
 			$j(document).ready(function() {
-				$j(document).cssLoader({
-					contextPath : "<c:url value="/"/>",
-					forceResolution : 1024,
-					stylePath : "styles/",
-					styleSheets : [
-						"mview/iip.compressed.css",
-				        "mview/iip.css",
-				        "mview/mview.css",
-				        "mview/jquery-ui-1.8.9.custom.css"]});
-				
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses
 					cache: false
