@@ -169,7 +169,7 @@
 		<br />
 			
 		<div>
-			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER"></a>
+			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" onclick="Modalbox.show(this.href, {title: this.title, width: 750}); return false;" title="VOLUME EXPLORER"></a>
 			<a id="refreshVolumeExplorer" href="${currentPage}"></a>
 		</div>
 
@@ -178,10 +178,6 @@
 		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				$j("#flipItInFullScreen").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
-					return false;
-				});
 
 				$j(".previousPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});					
 				$j(".nextPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});

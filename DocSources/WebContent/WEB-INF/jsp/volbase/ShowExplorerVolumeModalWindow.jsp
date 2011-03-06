@@ -95,23 +95,25 @@
 		</div>
 		
 		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:100"></iframe>
-		
-		<div id="prevNextButtons">
-			<div id="previousPage">
-			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage"></a>
-			</c:if>
-			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
-			</c:if>
-			</div>
-			<div id="nextPage">
-			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<a id="nextPage"></a>
-			</c:if>
-			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
-			</c:if>
+
+		<div>
+			<div id="prevNextButtons">
+				<div id="previousPage">
+				<c:if test="${volumeExplorer.image.imageOrder == 1}">
+					<a id="previousPage"></a>
+				</c:if>
+				<c:if test="${volumeExplorer.image.imageOrder > 1}">
+					<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				</c:if>
+				</div>
+				<div id="nextPage">
+				<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
+					<a id="nextPage"></a>
+				</c:if>
+				<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
+					<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				</c:if>
+				</div>
 			</div>
 		</div>
 
@@ -172,12 +174,16 @@
 				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>
-			
+
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
-			<a id="transcribe" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"/>
+			<a id="transcribe" class="MB_focusable" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO" onclick="Modalbox.show(this.href, {title: this.title, width: 750, height: 600}); return false;"></a>
 		</c:if>
-		<form:errors path="imageProgTypeNum" />
-		<div id="CloseButtonRight"><input id="close" class="MB_focusable" type="submit" value="" onClick="Modalbox.hide(); return false;"><br /><span>(or click the overlay)</span></div>
+
+		<div id="CloseButtonRight">
+			<input id="close" class="closeModal" type="submit" value="" onClick="Modalbox.hide(); return false;">
+			<br />
+			<span>(or click the overlay)</span>
+		</div>
 	</div>
 
 	<script type="text/javascript">
@@ -203,11 +209,6 @@
 			
 			$j(".nextPage").click(function(){
 				$j("#modalBox").load($j(this).attr("href"));
-				return false;
-			});
-
-			$j(".simplemodal-close").click(function() {
-				$j.modal.close(); 
 				return false;
 			});
 			
