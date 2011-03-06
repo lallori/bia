@@ -132,6 +132,7 @@ public class AjaxController {
 				model.put("imageName", documentExplorer.getImage().getImageName());
 				model.put("imageCompleteName", documentExplorer.getImage().toString());
 				model.put("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
+				model.put("imageRectoVerso", documentExplorer.getImage().getImageRectoVerso());
 				model.put("imageOrder", documentExplorer.getImage().getImageOrder());
 				model.put("total", documentExplorer.getTotal());
 				model.put("totalRubricario", documentExplorer.getTotalRubricario());
