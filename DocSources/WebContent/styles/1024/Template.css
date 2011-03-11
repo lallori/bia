@@ -124,8 +124,8 @@ a {
 #body_left{ /* LEFT-hand side of the SCREEN */
 	width:47%;
 	height:auto;
-	padding-left:25px;
-	margin-top:15px;
+	padding-left:15px;
+	margin-top:5px;
 	float:left;
 	position:absolute;
 	border-right: 1px solid #e6d0c6;
@@ -136,12 +136,12 @@ a {
 #body_right{ /* RIGHT-hand side of the SCREEN */
 	width:47%;
 	height:auto;
-	padding-left:25px;
+	padding-left:15px;
 	padding-right:25px;
-	margin-top:15px;
+	margin-top:5px;
 	float:right;
 	position:absolute;
-	margin-left:495px;
+	margin-left:485px;
 	font-size:11px;
 	border-left: 1px solid #e6d0c6;
 	z-index:1;
@@ -172,7 +172,7 @@ a {
 	height:80px;
 	margin-left:40px;
 	position:absolute;
-	font-size:85%;
+	font-size:11px;
 }
 
 .input_search { /* Input Text class */
@@ -300,21 +300,17 @@ input {
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
 /*
-/* ---------------------------------------- MAIN MENU (#top_middle) -------------------------------------- */
-
-
-.menumain {
-	margin-left:0px;
-	z-index:2;
-}
-
-
-/* ------------------------------------------------------------------------------------------------------- */ 
-/*
-/*
 /* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
 
 /* ACTIONS MENU */
+
+
+#menu_actions {
+	height:25px;
+	width: 100px;
+	margin-left: 520px;
+	font-size: 80%;
+}
 
 #top_bottom p{ /* top_bottom (Who am I?) */
 	color:#FFF;
@@ -322,33 +318,6 @@ input {
 	float:right;
 	padding-right:30px;
 	font-size:10px;
-}
-
-/* -------------- */
-/*
-/*
-/* ADMINISTRATION MENU */
-
-#adm_menu {
-	float:left;
-	height:25px;
-	width: 500px;
-	font-size: 80%;
-}
-
-#adm_menu a{
-	color:#fff;
-}
-
-/* ------------------- */
-/* 
-/* ACTIONS MENU */
-
-#menu_actions {
-	height:25px;
-	width: 100px;
-	margin-left: 520px;
-	font-size: 80%;
 }
 
 /* ------------- */
@@ -419,7 +388,7 @@ input {
 	color:#b99c84;
 }
 
-#body_left a:hover, #body_right a:hover, #body_central a:hover { 
+#body_left a:hover, #body_right a:hover, #body_central a:hover{ 
 	opacity:0.5;
 }
 

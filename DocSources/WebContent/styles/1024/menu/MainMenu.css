@@ -140,4 +140,105 @@
 }
 
 
+/* ENTRY MENU - MODAL WINDOW */
 
+#EntryMenuDiv h1, #VetMenuDiv h1{
+	text-align:center;
+	font-size:11px;
+	font-weight:normal;
+}
+
+#EntryMenuDiv #close{
+	margin:70px 0 0 340px;
+	position:absolute;
+}
+
+
+#EntryMenuDiv #AddNewDocument{
+	background-image:url(/DocSources/images/1024/button_addnewdocument.png);
+	margin: 20px 0 5px 50px;
+	position:absolute;
+	width:120px;
+	height:25px;
+}
+
+#EntryMenuDiv #AddNewPerson{
+	background-image:url(/DocSources/images/1024/button_addnewperson.png);
+	margin: 20px 0 5px 175px;
+	position:absolute;
+	width:120px;
+	height:25px;
+}
+
+#EntryMenuDiv #AddNewVolume{
+	background-image:url(/DocSources/images/1024/button_addnewvolume.png);
+	margin: 20px 0 5px 300px;
+	position:absolute;
+	width:120px;
+	height:25px;
+}
+
+#EntryMenuDiv #AddNewPlace{
+	background-image:url(/DocSources/images/1024/button_addnewplace.png);
+	margin: 20px 0 5px 425px;
+	position:absolute;
+	width:120px;
+	height:25px;
+}
+
+#EntryMenuDiv #DeleteThisItem{
+	background-image:url(/DocSources/images/1024/button_deletethisitem.png);
+	margin: 20px 0 5px 550px;
+	position:absolute;
+	width:120px;
+	height:25px;
+}
+
+#EntryMenuDiv a:hover, #VetMenuDiv a:hover{
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=0); /* IE */
+}
+
+
+/* VET MENU - MODAL WINDOW */
+
+
+#VetMenuDiv #close{
+	margin:420px 0 0 340px;
+	position:absolute;
+}
+
+
+#VetMenuDiv #SetReadtToBeVet{
+	background-image:url(/DocSources/images/1024/button_set.png);
+	margin: 380px 0 5px 150px;
+	position:absolute;
+	width:135px;
+	height:25px;
+}
+
+#VetMenuDiv #VetThisDoc{
+	background-image:url(/DocSources/images/1024/button_vet.png);
+	margin: 380px 0 5px 300px;
+	position:absolute;
+	width:135px;
+	height:25px;
+}
+
+#VetMenuDiv #UnvetThisDoc{
+	background-image:url(/DocSources/images/1024/button_unvet.png);
+	margin: 380px 0 5px 450px;
+	position:absolute;
+	width:135px;
+	height:25px;
+}
+
+#VetMenuDiv #img_vetmenu {
+	background-image:url(/DocSources/images/1024/img_vetmenu.png);
+	background-repeat:no-repeat;
+	margin: 15px 0 0 120px;
+	position:absolute;
+	width:498px;
+	height:520px;
+}

@@ -42,7 +42,3 @@ buildmenu:function(menuid, arrowsvar){
 		$mainmenu.find("ul").css({display:'none', visibility:'visible'})
 	}) //end document.ready
 }
-}
-
-//build menu with ID="myjquerymenu" on page:
-jquerycssmenu.buildmenu("admmenu", arrowimages)

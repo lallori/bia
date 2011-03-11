@@ -4,7 +4,7 @@ Manuscript Viewer css
 html version
 */
 
-#EditExtractDocumentDiv textarea, #EditSynopsisDocumentDiv textarea {
+#EditExtractDocumentDiv #EditExtractDocumentForm textarea, #EditSynopsisDocumentDiv #EditSynopsisDocumentForm textarea,  #notes #DialogPersonalNotesDiv #EditPersonalNotesForm  textarea{
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -14,7 +14,7 @@ html version
 	height:90%;
 }
 
-#EditSynopsisDocumentDiv, #EditExtractDocumentDiv, #EditPersonalNotesDiv {
+#EditSynopsisDocumentDiv, #EditExtractDocumentDiv, #EditPersonalNotesDiv, #EditExtractDocumentForm, #EditSynopsisDocumentForm, #DialogPersonalNotesDiv, #EditPersonalNotesForm {
 	position:relative;
 	margin:0 auto 0 auto;
 	height:97%;
@@ -45,11 +45,11 @@ html version
 	opacity:0.5;
 }
 
-#EditPersonalNotesDiv #prevNextButtons #nextButton a{
+#EditPersonalNotesDiv #prevNextButtons #nextButton a, #cleanNotes{
 	float:right;
 }
 
-#EditPersonalNotesDiv #prevNextButtons #nextButton a:hover{
+#EditPersonalNotesDiv #prevNextButtons #nextButton a:hover, #cleanNotes:hover{
 	float:right;
 	opacity:0.5;
 }

@@ -43,6 +43,3 @@ buildmenu:function(menuid, arrowsvar){
 	}) //end document.ready
 }
 }
-
-//build menu with ID="myjquerymenu" on page:
-jquerycssmenu.buildmenu("mainmenu", arrowimages)
