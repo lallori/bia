@@ -82,6 +82,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
@@ -112,6 +113,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findDocumentImages(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
@@ -137,6 +139,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
@@ -170,6 +173,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public DocumentExplorer findImages(DocumentExplorer documentExplorer) throws PersistenceException {
 		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
@@ -324,10 +328,9 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public VolumeExplorer findImages(VolumeExplorer volumeExplorer) throws PersistenceException {
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		
 		// If total is null we need to obtain total and partial total by type (rubricario and folio)...
 		if (volumeExplorer.getTotal() == null) {
 			this.updateVolumeExplorerTotals(volumeExplorer);
@@ -381,6 +384,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
@@ -411,6 +415,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
@@ -442,6 +447,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 * 
 	 * @param documentExplorer DocumentExplorer input object to be update.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updateDocumentExplorerTotals(DocumentExplorer documentExplorer) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 
@@ -525,6 +531,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 * 
 	 * @param volumeExplorer VolumeExplorer input object to be update.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updateVolumeExplorerTotals(VolumeExplorer volumeExplorer) {
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 

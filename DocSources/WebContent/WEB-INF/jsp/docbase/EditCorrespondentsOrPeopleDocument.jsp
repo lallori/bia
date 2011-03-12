@@ -26,12 +26,14 @@
 				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
 				<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure" cssClass="checkboxPers2"/>
+				<a title="Show this person record" id="personIcon" href="#"></a>
 			</div>
 			<div>	
 				<form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From:</form:label>
 				<form:input id="senderPlaceDescriptionAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" />
 				<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure" cssClass="checkboxPers2"/>
+				<a title="Show this place record" id="placeIcon" href="#"></a>
 			</div>
 
 			<hr />
@@ -41,12 +43,14 @@
 				<form:input id="recipientPeopleDescriptionAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/>
 				<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure" cssClass="checkboxPers2"/>
+				<a title="Show this person record" id="personIcon" href="#"></a>
 			</div>
 			<div>
 				<form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">From:</form:label>
 				<form:input id="recipientPlaceDescriptionAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" />
 				<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPlaceUnsure" path="recipientPlaceUnsure" cssClass="checkboxPers2"/>
+				<a title="Show this place record" id="placeIcon" href="#"></a>
 			</div>
 			
 			<form:hidden path="senderPeopleId"/>
@@ -67,26 +71,28 @@
 			<div>
 				<label for="people" id="peopleLabel">People:</label>
 			</div>
-			<c:forEach items="${command.document.epLink}" var="currentPerson">
-				<c:url var="EditPersonDocumentUrl" value="/de/docbase/EditPersonDocument.do">
-					<c:param name="entryId" value="${currentPerson.document.entryId}" />
-					<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
-				</c:url>
-	
-				<c:url var="DeletePersonDocumentUrl" value="/de/docbase/DeletePersonDocument.do" >
-					<c:param name="entryId" value="${currentPerson.document.entryId}" />
-					<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
-				</c:url>
-	
-				<div>
-					<input id="people_${currentPerson.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPerson.people.mapNameLf}" disabled="disabled"/>
-					<a class="deleteValue" id="deleteValue" href="${DeletePersonDocumentUrl}"><img src="<c:url value="/images/button_cancel_form13.gif"/>" alt="Cancel value" title="Delete this entry"/></a>
-					<a class="editValue" id="editValue" href="${EditPersonDocumentUrl}">edit value</a>
-				</div>
-			</c:forEach>
+		<c:forEach items="${command.document.epLink}" var="currentPerson">
+			<c:url var="EditPersonDocumentUrl" value="/de/docbase/EditPersonDocument.do">
+				<c:param name="entryId" value="${currentPerson.document.entryId}" />
+				<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
+			</c:url>
+
+			<c:url var="DeletePersonDocumentUrl" value="/de/docbase/DeletePersonDocument.do" >
+				<c:param name="entryId" value="${currentPerson.document.entryId}" />
+				<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
+			</c:url>
 
 			<div>
-				<a id="AddPersonDocument" href="${AddPersonUrl}">Add new Person</a>
+				<input id="people_${currentPerson.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPerson.people.mapNameLf}" disabled="disabled"/>
+				<a id="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentUrl}"></a>
+				<a class="editValue" id="editValue" href="${EditPersonDocumentUrl}">edit value</a>
+				<a title="Show this person record" id="personIcon" href="#"></a>
+			</div>
+		</c:forEach>
+			<br>			
+			<div>
+				<a id="close" href=""></a>
+				<a id="AddNewValue" href="${AddPersonUrl}"></a>
 			</div>	
 		</fieldset>
 	</form:form>
@@ -158,13 +164,16 @@
 			    onSelect: function(value, data){ $j('#recipientPlaceId').val(data); }
 			  });
 
-			$j("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
-	 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+			$j("#save").click(function (){
+	 			$j.ajax({ type:"POST", url:$j(this).closest('form').attr("action"), data:$j(this).closest('form').serialize(), async:false, success:function(html) { 
 					$j("#EditCorrespondentsOrPeopleDocumentDiv").html(html);
 				}});
 			});
-
-			$j("#AddPersonDocument").click(function(){$j("#EditPersonDocumentDiv").load($j(this).attr("href"));return false;});
+			
+			$j("#AddPersonDocument").click(function(){
+				$j("#EditPersonDocumentDiv").load('${AddPersonUrl}');
+				return false;
+			});
 
 			$j(".deleteValue").click(function() {
 				$j.get(this.href, function(data) {

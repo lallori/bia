@@ -296,7 +296,7 @@ public class Document implements Serializable{
 	private Set<EplToLink> eplToLink;
 
 	//Association people (attention recipient and sender are not here, they are defined up!)
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "document", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "document", cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	//@IndexedEmbedded
 	private Set<EpLink> epLink;
 	

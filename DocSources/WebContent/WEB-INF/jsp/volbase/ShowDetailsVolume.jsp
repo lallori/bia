@@ -25,10 +25,13 @@
 		<div id="createdby"><h6>CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></h6></div>
 		<hr id="lineSeparator"/>
 
-		<div id="EditPortraitPersonDiv">
+		<div id="SpineVolumeDiv">
+			<p><b>Volume Spine</b></p>
+		</div>
+		<!-- <div id="SpineVolumeDiv">
 			<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
 			<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></security:authorize></p>
-		</div>
+		</div> -->
 
 		<h3>${volume.serieList}</h3>
 		<ul>
@@ -38,7 +41,7 @@
 			<li><b>Date Notes: </b> ${volume.dateNotes}</li>
 		</ul>
 	</div>
-
+	<br>
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -47,6 +50,7 @@
 	        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
 			$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
+	        <c:if test="${volume.summaryId > 0}">
 			 $j("#EditDetailsVolume").volumeExplorer( {  
 				volNum      : "${volume.volNum}",
 				volLetExt   : "${volume.volLetExt}",
@@ -55,6 +59,7 @@
 				remoteUrl : "${ShowExplorerVolume}",
 				zIndex: 9999
 			});  
+			</c:if>
 			$j("#EditDetailsVolume").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditDetailsVolumeDiv").load($j(this).attr("href"));

@@ -32,12 +32,9 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.ClassPathResource;
 
 /**
  * 
@@ -52,7 +49,6 @@ public class IndexesCreator {
 	    try {
 	        String configurationFile = "config/applicationMassiveIndexer.xml";
 	        ApplicationContext context =new ClassPathXmlApplicationContext(configurationFile);
-	        //BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource(configurationFile));
 			
 	    	PeopleBaseService peopleBaseService = (PeopleBaseService) context.getBean("peopleBaseService");
 	    	VolBaseService volBaseService = (VolBaseService) context.getBean("volBaseService");

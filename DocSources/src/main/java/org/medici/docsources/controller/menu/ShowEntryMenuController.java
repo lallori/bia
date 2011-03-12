@@ -1,5 +1,5 @@
 /*
- * HomeController.java
+ * ShowEntryMenuController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -24,49 +24,31 @@
  * resulting executable to be covered by the GNU General Public License.
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
+ * 
  */
-package org.medici.docsources.controller;
+package org.medici.docsources.controller.menu;
 
-import org.medici.docsources.service.peoplebase.PeopleBaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Home". 
- * This is the entry point after login.
- *  
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * Controller for action "Show Entry Menu".
  * 
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/Indexer")
-public class IndexerController {
-	@Autowired
-	private PeopleBaseService peopleBaseService;
-	
+@RequestMapping("/de/ShowEntryMenu")
+public class ShowEntryMenuController {
 	/**
 	 * 
+	 * @param volumeId
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
-		return new ModelAndView("Home");
+	public ModelAndView setupPage(){
+		return new ModelAndView("menu/ShowEntryMenuModalWindow");
 	}
 
-	/**
-	 * @param peopleBaseService the peopleBaseService to set
-	 */
-	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
-		this.peopleBaseService = peopleBaseService;
-	}
-
-	/**
-	 * @return the peopleBaseService
-	 */
-	public PeopleBaseService getPeopleBaseService() {
-		return peopleBaseService;
-	}
 }

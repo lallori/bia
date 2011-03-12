@@ -21,6 +21,7 @@
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuMAIN.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.cssLoader.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
@@ -28,8 +29,6 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.documentExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuADM.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuMAIN.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/scriptaculous.js?load=effects"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
@@ -67,12 +66,13 @@
 					},
 					error: function(xhr, status, err) {
 						console.log(err);
-				    },
-				    statusCode: {302: function(data) {
-				    	console.log('moved!');
-				      }
 				    }
 				});
+
+				//build menu with ID="myjquerymenu" on page:
+				jquerycssmenu.buildmenu("mainmenu", arrowimages);
+				//build menu with ID="myjquerymenu" on page:
+				jquerycssmenu.buildmenu("admmenu", arrowimages);
 			});
 		</script>
 	</head>

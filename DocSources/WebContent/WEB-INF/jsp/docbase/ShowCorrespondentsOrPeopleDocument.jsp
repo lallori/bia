@@ -43,12 +43,10 @@
 	        $j("#EditDocumentInModal").css('visibility', 'visible');
 	        $j("#EditTopicsDocument").css('visibility', 'visible');
 
-			$j("#EditCorrespondentsOrPeopleDocument").click(function(){$j("#EditCorrespondentsOrPeopleDocumentDiv").load($j(this).attr("href"));return false;});
-			 
 			$j("#EditCorrespondentsOrPeopleDocument").click(function(){
-				$j("#EditCorrespondentsOrPeopleDocument").load($j(this).attr("href"));
+				$j("#EditCorrespondentsOrPeopleDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
-				
+			 
 		});
 	</script>

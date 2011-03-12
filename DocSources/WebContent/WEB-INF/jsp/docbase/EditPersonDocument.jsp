@@ -9,15 +9,15 @@
 			<c:param name="entryId" value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
-
+	<br>
 	<form:form id="EditPersonDocumentForm" cssClass="edit">
 		<fieldset>
 			<legend>
 			<c:if test="${command.personId == 0}"> 
 				<b>ADD NEW PERSON</b>
 			</c:if>
-			<c:if test="${command.personId == 0}">
-				<br>
+			<c:if test="${command.personId > 0}">
+				<b>Edit PERSON</b
 			</c:if> 
 			</legend>
 			<div>
@@ -31,8 +31,8 @@
 				<form:checkbox id="portrait" path="portrait" class="checkboxPers2"/>
 			</div>
 			<div>
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save" class="button"/>
+				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="" class="button"/>
 			</div>
 		</fieldset>	
 
@@ -59,11 +59,13 @@
 			    onSelect: function(value, data){ $j('#personId').val(data); }
 			  });
 
-			$j('#close').click(function() { 
+			$j('#closeEditPerson').click(function(e) {
+				e.preventDefault();
 	            $j('#EditPersonDocumentDiv').block({ 
 	                message: '<h1>Discard changes and close window?</h1>', 
 	                css: { border: '3px solid #a00' } 
 	            })
+	            return false;
 			});
 
 			$j("#EditPersonDocumentForm").submit(function (){

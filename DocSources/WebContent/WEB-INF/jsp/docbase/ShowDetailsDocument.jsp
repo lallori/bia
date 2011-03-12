@@ -49,7 +49,7 @@
 			<li><b>Insert/Part:</b> ${document.insertNum} / ${document.insertLet}</li>
 			<li><b>Document starts at folio :</b> ${document.folioNum} / ${document.folioMod}</li>
 			<li><b>Paginated:</b> ${document.unpaged}</li>
-			<li><b>Document Typology (other than letter):</b> ${document.unpaged}</li>
+			<li><b>Document Typology (other than letter):</b> ${document.docTypology}</li>
 			<li><b>Modern Date:</b> ${document.yearModern}</li>
 			<li><b>Recorded year:</b> ${document.docYear} ${document.docMonthNum} ${document.docDay}</li>
 			<li><b>Date Notes:</b> ${document.dateNotes}</li>
@@ -70,15 +70,16 @@
 
 	        $j("#EditDetailsDocument").click(function(){
 				$j(this).next().css('visibility', 'visible');
-				 $j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
+				$j("#EditDetailsDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
 
+	        <c:if test="${document.entryId > 0}">
 			$j("#EditDetailsDocumentDiv").documentExplorer( {  
 				showExplorerDocumentUrl     : "${ShowDocumentExplorer}",
 				target                      : $j("#body_right")
 			});  
-
+			</c:if>
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 		});
 	</script>

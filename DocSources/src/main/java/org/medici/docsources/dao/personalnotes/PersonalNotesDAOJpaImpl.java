@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.dao.personalnotes;
 
-import org.apache.log4j.Logger;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.PersonalNotes;
 import org.springframework.stereotype.Repository;

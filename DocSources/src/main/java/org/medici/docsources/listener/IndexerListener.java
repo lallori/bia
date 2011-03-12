@@ -4,7 +4,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
-import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -35,8 +34,11 @@ public class IndexerListener implements ServletContextListener {
     	DocBaseService docBaseService = (DocBaseService) ctx.getBean("docBaseService");
     	GeoBaseService geoBaseService = (GeoBaseService) ctx.getBean("geoBaseService");
     	VolBaseService volBaseService = (VolBaseService) ctx.getBean("volBaseService");
-    	/*
-       	try {
+    	docBaseService.toString();
+    	geoBaseService.toString();
+    	peopleBaseService.toString();
+    	volBaseService.toString();
+       	/*try {
     		logger.info("Indexing document start");
     		Long startTime = System.currentTimeMillis();
 

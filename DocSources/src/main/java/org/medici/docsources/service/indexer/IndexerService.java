@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.service.indexer;
 
-import org.medici.docsources.domain.HistoryLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**

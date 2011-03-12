@@ -299,7 +299,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
 
-			//TODO : fill fields of correspondents section
+			// fill fields of correspondents section
 			documentToUpdate.setLastUpdate(new Date());
 			if (document.getSenderPeople().getPersonId() > 0)
 				documentToUpdate.setSenderPeople(getPeopleDAO().find(document.getSenderPeople().getPersonId()));
@@ -336,22 +336,42 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document documentToUpdate = getDocumentDAO().find(document.getEntryId());
 
-			//TODO : fill fields to update document section
+			//fill fields to update document section
 			documentToUpdate.setLastUpdate(new Date());
-			//Setting fields that are defined as nullable = false
-			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			// We need to attach the correct volume istance by database extraction.
-			document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
-			document.setDocTobeVetted(true);
-			document.setDocToBeVettedDate(new Date());
-			document.setDocVetted(false);
-			document.setNewEntry(false);
-			document.setReckoning(false);
-	
+			documentToUpdate.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
+			// Insert/Part: 
+			documentToUpdate.setInsertNum(document.getInsertNum());
+			documentToUpdate.setInsertLet(document.getInsertLet());
+			// Folio Start:
+			documentToUpdate.setFolioNum(document.getFolioNum());
+			documentToUpdate.setFolioMod(document.getFolioMod().toString());
+			// Transcribe Folio Start:
+			documentToUpdate.setTranscribeFolioNum(document.getTranscribeFolioNum());
+			documentToUpdate.setTranscribeFolioMod(document.getTranscribeFolioMod().toString());
+			// Paginated
+			documentToUpdate.setUnpaged(document.getUnpaged());
+			//Disc. Cont'd
+			documentToUpdate.setContDisc(document.getContDisc());
+			//Document Typology
+			documentToUpdate.setDocTypology(document.getDocTypology());
+			// Date
+			documentToUpdate.setDocYear(document.getDocYear());
 			if (document.getDocMonthNum().equals(0)) {
-				document.setDocMonthNum(null);
+				documentToUpdate.setDocMonthNum(null);
+			} else {
+				documentToUpdate.setDocMonthNum(document.getDocMonthNum());
 			}
+			documentToUpdate.setDocDay(document.getDocDay());
+			//Modern Dating
+			documentToUpdate.setYearModern(document.getYearModern());
+			// Date Uncertain or Approximate
+			documentToUpdate.setDateUns(document.getDateUns());
+			// Undated
+			documentToUpdate.setUndated(document.getUndated());
+			documentToUpdate.setDateNotes(document.getDateNotes());
 
+	
 			return getDocumentDAO().merge(documentToUpdate);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

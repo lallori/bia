@@ -36,6 +36,7 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -136,8 +137,11 @@ public class EditDetailsDocumentController {
 					return new ModelAndView("docbase/ShowDocument", model);
 				} else {
 					document = getDocBaseService().editDetailsDocument(document);
-
 					model.put("document", document);
+
+					Image image = getDocBaseService().findDocumentImageThumbnail(document);
+					model.put("image", image);
+					
 					return new ModelAndView("docbase/ShowDetailsDocument", model);
 				}
 			} catch (ApplicationThrowable ath) {
@@ -193,6 +197,7 @@ public class EditDetailsDocumentController {
 			command.setTranscribeFolioMod(document.getTranscribeFolioMod());
 			command.setUnpaged(document.getUnpaged());
 			command.setContDisc(document.getContDisc());
+			command.setDocTypology(document.getDocTypology());
 			command.setDocYear(document.getDocYear());
 			command.setDocMonthNum(document.getDocMonthNum());
 			command.setDocDay(document.getDocDay());

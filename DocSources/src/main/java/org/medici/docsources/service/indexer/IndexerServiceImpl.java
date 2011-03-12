@@ -28,7 +28,6 @@
 package org.medici.docsources.service.indexer;
 
 import org.medici.docsources.dao.historylog.HistoryLogDAO;
-import org.medici.docsources.domain.HistoryLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
