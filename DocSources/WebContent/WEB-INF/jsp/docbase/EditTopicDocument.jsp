@@ -9,10 +9,15 @@
 			<c:param name="entryId" value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
-
+	<br>
 	<form:form id="EditTopicDocumentForm" cssClass="edit">
 		<fieldset>
-			<legend><b>ADD NEW TOPIC</b></legend>
+			<c:if test="${command.eplToId == 0}">  
+				<b>ADD NEW TOPIC</b>
+			</c:if>
+			<c:if test="${command.eplToId > 0}">
+				<b>EDIT TOPIC</b
+			</c:if> 
 			<div>
 				<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic:</form:label>
 				<form:input id="topicDescriptionAutoCompleter" path="topicDescription" class="input_25c" />
@@ -24,7 +29,7 @@
 			
 			<div>
 				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save" class="button"/>
+				<input id="save" type="submit" value="" class="button"/>
 			</div>		
 		</fieldset>	
 
@@ -76,14 +81,9 @@
 			});
 
 			$j("#EditTopicDocumentForm").submit(function (){
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						if ($j(html).find(".inputerrors").length > 0){
-							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
-						} else {
-							$j("#EditTopicDocumentDiv").html(html);
-						}
-					} 
-				});
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
+				}})
 				return false;
 			});
 		});

@@ -9,11 +9,11 @@
 			
 			<a id="AddNewDocument" href="<c:url value="/de/docbase/CreateDocument.do"/>"></a>
 		
-			<a id="AddNewPerson" href="<c:url value="/de/docbase/CreatePerson.do"/>"></a>
+			<a id="AddNewPerson" href="<c:url value="/de/peoplebase/CreatePerson.do"/>"></a>
 				
-			<a id="AddNewVolume" href="<c:url value="/de/docbase/CreateVolume.do"/>"></a>
+			<a id="AddNewVolume" href="<c:url value="/de/volbase/CreateVolume.do"/>"></a>
 			
-			<a id="AddNewPlace" href="<c:url value="/de/docbase/CreatePlace.do"/>"></a>
+			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlace.do"/>"></a>
 			
 			<a id="DeleteThisItem" href="#"></a>
 		
@@ -28,23 +28,22 @@
 					Modalbox.hide(); 
 					return false;
 				});
-				$j("#AddNewPerson").click(
-					function(){
-						$j("#body_left").load($j(this).attr("href"));
-						$j("#menu_actions").load("/DocSources/de/peoplebase/menuActionsPeople.html");
-						Modalbox.hide(); return false;}
-						 );
-				$j("#AddNewVolume").click(
-					function(){
-						$j("#body_left").load($j(this).attr("href"));
-						$j("#body_right").load("/DocSources/de/volbase/ShowVolumeExplorer.html");
-						$j("#menu_actions").load("/DocSources/de/volbase/menuActionsVolumes.html");
-						Modalbox.hide(); return false;}
-						);
-				$j("#AddNewPlace").click(
-					function(){
-							Modalbox.show($j(this).attr("href"), {title: "ADD NEW PLACE", width: 750, height: 450});return false;
-								});
+				$j("#AddNewPerson").click(function(){
+					$j("#body_left").load($j(this).attr("href"));
+					$j("#menu_actions").load("/DocSources/de/peoplebase/menuActionsPeople.html");
+					Modalbox.hide();
+					return false;
+				});
+				$j("#AddNewVolume").click(function(){
+					$j("#body_left").load($j(this).attr("href"));
+					$j("#menu_actions").load("/DocSources/de/volbase/menuActionsVolumes.html");
+					Modalbox.hide();
+					return false;
+				});
+				$j("#AddNewPlace").click(function(){
+					Modalbox.show($j(this).attr("href"), {title: "ADD NEW PLACE", width: 750, height: 450})
+					;return false;
+				});
 			});
 		</script>
 	</security:authorize>

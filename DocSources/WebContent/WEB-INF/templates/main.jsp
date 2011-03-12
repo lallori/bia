@@ -21,7 +21,6 @@
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquerycssmenuMAIN.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.cssLoader.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
@@ -69,10 +68,6 @@
 				    }
 				});
 
-				//build menu with ID="myjquerymenu" on page:
-				jquerycssmenu.buildmenu("mainmenu", arrowimages);
-				//build menu with ID="myjquerymenu" on page:
-				jquerycssmenu.buildmenu("admmenu", arrowimages);
 			});
 		</script>
 	</head>

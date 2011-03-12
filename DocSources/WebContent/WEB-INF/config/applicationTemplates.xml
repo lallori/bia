@@ -41,7 +41,6 @@
     <definition name="template.volume" template="/WEB-INF/templates/volume.jsp">
     </definition>
 
-	<!-- Authentication Module BEGIN -->
 	<definition name="error/ActivateUser" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
     </definition>
@@ -50,6 +49,19 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/error/ResetUserPassword"/>
 	</definition>
 
+    <definition name="menu/ShowEntryMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowEntryMenuModalWindow.jsp"/>
+	</definition>
+
+    <definition name="menu/ShowVetMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowVetMenuModalWindow.jsp"/>
+	</definition>
+
+    <definition name="menu/ShowAdvancedSearchMenuModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowAdvancedSearchMenuModalWindow.jsp"/>
+	</definition>
+
+	<!-- Authentication Module BEGIN -->
     <definition name="LoginUser" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/LoginUser.jsp"/>
     </definition>
@@ -197,6 +209,10 @@
 	
 	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowTopicDescriptionModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicDescriptionModalWindow.jsp"/>
 	</definition>
 	
 	<definition name="docbase/ShowDocument" extends="template.document">

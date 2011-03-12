@@ -85,14 +85,14 @@
 			<div>
 				<input id="people_${currentPerson.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPerson.people.mapNameLf}" disabled="disabled"/>
 				<a id="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentUrl}"></a>
-				<a class="editValue" id="editValue" href="${EditPersonDocumentUrl}">edit value</a>
+				<a class="editValue" href="${EditPersonDocumentUrl}">edit value</a>
 				<a title="Show this person record" id="personIcon" href="#"></a>
 			</div>
 		</c:forEach>
 			<br>			
 			<div>
 				<a id="close" href=""></a>
-				<a id="AddNewValue" href="${AddPersonUrl}"></a>
+				<a id="AddNewValue" title="Add new person" href="${AddPersonUrl}"></a>
 			</div>	
 		</fieldset>
 	</form:form>
@@ -114,7 +114,7 @@
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
 
-			var senderPeople = $j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
+			$j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchSenderPeopleUrl}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
@@ -128,7 +128,7 @@
 			    	}
 			  });
 
-			var senderPlace = $j('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
+			$j('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchSenderPlaceUrl}',
 			    minChars:5, 
 			    delimiter: null, // regex or character
@@ -140,7 +140,7 @@
 			    onSelect: function(value, data){ $j('#senderPlaceId').val(data); }
 			  });
 			
-			var recipientPeople = $j('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
+			$j('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchRecipientPeopleUrl}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
@@ -152,7 +152,7 @@
 			    onSelect: function(value, data){ $j('#recipientPeopleId').val(data); }
 			  });
 
-			var recipientPlace = $j('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
+			$j('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
 			    serviceUrl:'${searchRecipientPlaceUrl}',
 			    minChars:5, 
 			    delimiter: null, // regex or character
@@ -170,13 +170,13 @@
 				}});
 			});
 			
-			$j("#AddPersonDocument").click(function(){
-				$j("#EditPersonDocumentDiv").load('${AddPersonUrl}');
+			$j("#AddNewValue").click(function(){
+				$j("#EditPersonDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
 
 			$j(".deleteValue").click(function() {
-				$j.get(this.href, function(data) {
+				$j.get($j(this).attr("href"), function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
@@ -187,30 +187,38 @@
 			});
 
 			$j(".editValue").click(function() {
-				$j("#EditPersonDocumentDiv").load($j(this).attr("href"));return false;
+				$j("#EditPersonDocumentDiv").load($j(this).attr("href"));
+				return false;
 			});
 
 			$j('#close').click(function() {
 				$j('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $j('#question') }); 
 				return false;
 			});
-      
-			$j('#no').click(function() { 
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j('#question').hide();
-				$j('#EditCorrespondentsOrPeopleDocumentDiv').append($j("#question"));
-				$j(".blockUI").remove();
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
-				$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$j("#body_left").html(html);
-				}});
-					
-				return false; 
-			}); 
-
 		});
 	</script>
+
+<div id="question" style="display:none; cursor: default"> 
+	<h1>discard changes?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
+</div>
+
+<script type="text/javascript">
+	$j(document).ready(function() {
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
+			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+				$j("#body_left").html(html);
+			}});
+				
+			return false; 
+		}); 
+     
+	});
+</script>

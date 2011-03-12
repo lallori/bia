@@ -146,21 +146,30 @@
 				return false;
 			});
       
-			$j('#no').click(function() { 
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j('#question').hide();
-				$j('#EditDetailsDocumentDiv').append($j("#question"));
-				$j(".blockUI").remove();
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
-				$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-					$j("#body_left").html(html);
-				}});
-					
-				return false; 
-			}); 
 		});
 	</script>
+
+<div id="question" style="display:none; cursor: default"> 
+	<h1>discard changes?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
+</div>
+
+<script type="text/javascript">
+	$j(document).ready(function() {
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
+			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+				$j("#body_left").html(html);
+			}});
+				
+			return false; 
+		}); 
+     
+	});
+</script>

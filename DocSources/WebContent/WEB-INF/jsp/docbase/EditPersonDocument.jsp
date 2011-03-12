@@ -13,7 +13,7 @@
 	<form:form id="EditPersonDocumentForm" cssClass="edit">
 		<fieldset>
 			<legend>
-			<c:if test="${command.personId == 0}"> 
+			<c:if test="${empty command.personId}"> 
 				<b>ADD NEW PERSON</b>
 			</c:if>
 			<c:if test="${command.personId > 0}">
@@ -31,7 +31,7 @@
 				<form:checkbox id="portrait" path="portrait" class="checkboxPers2"/>
 			</div>
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="closePerson" type="submit" value="" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="" class="button"/>
 			</div>
 		</fieldset>	
@@ -59,12 +59,8 @@
 			    onSelect: function(value, data){ $j('#personId').val(data); }
 			  });
 
-			$j('#closeEditPerson').click(function(e) {
-				e.preventDefault();
-	            $j('#EditPersonDocumentDiv').block({ 
-	                message: '<h1>Discard changes and close window?</h1>', 
-	                css: { border: '3px solid #a00' } 
-	            })
+			$j('#closePerson').click(function(e) {
+				$j('#EditPersonDocumentDiv').block({ message: $j('#question') }); 
 	            return false;
 			});
 
@@ -76,3 +72,26 @@
 			});
 		});					  
 	</script>
+
+<div id="question" style="display:none; cursor: default"> 
+	<h1>discard changes?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
+</div>
+
+<script type="text/javascript">
+	$j(document).ready(function() {
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
+			$j("#EditPersonDocumentDiv").html('');				
+				
+			return false; 
+		}); 
+     
+	});
+</script>

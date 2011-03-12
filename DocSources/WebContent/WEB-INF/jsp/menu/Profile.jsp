@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-				<li><a id="advsearchMenu" href="#"></a></li>
+				<li><a id="advsearchMenu" href="<c:url value="/src/ShowAdvancedSearchMenu.do"/>"></a></li>
 			<security:authorize ifNotGranted="ROLE_GUESTS">
 				<li><a id="chronologyMenu" href="#"></a></li>
 				<li><a id="myprofileMenu" href="<c:url value="/user/ShowUserProfile.do"/>" title="MY PROFILE"></a></li>
@@ -13,9 +13,17 @@
 				<li><a id="logoutMenu" href="<c:url value="/LogoutUser.do"/>"></a></li>
 				<script type="text/javascript">
 					$j(document).ready(function() {
-						$j("#profile").click(function() {
-							Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 900, height: 500});
-							return false;
-						});
+						$j("#advsearchMenu").click(function() {															
+							Modalbox.show($j(this).attr("href"), {title: "ADVANCED SEARCH", width: 750, height: 380});return false;
+						});							   	
+						$j("#chronologyMenu").click(function() {															
+							Modalbox.show($j(this).attr("href"), {title: "CHRONOLOGY", width: 750, height: 650});return false;
+						});	
+						$j("#myprofileMenu").click(function() {
+							Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 750, height: 400});return false;}																	
+						);	
+						$j("#messagesMenu").click(function() {															
+							Modalbox.show($j(this).attr("href"), {title: "MESSAGES", width: 750, height: 350});return false;}
+						);
 					});
 				</script>						

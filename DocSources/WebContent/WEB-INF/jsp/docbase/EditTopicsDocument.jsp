@@ -31,16 +31,22 @@
 				<c:param name="eplToId" value="${currentTopicAndPlace.eplToId}" />
 			</c:url>
 
+			<c:url var="ShowTopicDescription" value="/src/docbase/ShowTopicDescription.do">
+				<c:param name="topicId" value="${currentTopicAndPlace.topic.topicId}" />
+			</c:url>
 			<div>
       			<input id="topic_${currentTopicAndPlace.eplToId}" name="topic_${currentTopicAndPlace.eplToId}" class="input_28c_disabled" type="text" value="${currentTopicAndPlace}" disabled="disabled" />
-				<a class="deleteValue" id="deleteValue" href="${DeleteTopicDocument}"><img src="<c:url value="/images/button_cancel_form13.gif"/>" alt="Cancel value" title="Delete this entry"/></a>
-				<a class="editValue" id="editValue" href="${EditTopicDocument}">edit value</a>
+				<a id="deleteIcon" title="Delete this entry" href="${DeleteTopicDocument}"></a>
+				<a id="editValue" class="editValue" href="${EditTopicDocument}">edit value</a>
+				<c:if test="${not empty currentTopicAndPlace.topic}">
+				<a id="topicDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
+				</c:if>
 			</div>
 		</c:forEach>
 			
 			<div>
 				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<a id="AddTopicDocument" href="${AddTopicUrl}">Add new Topic</a>
+				<a id="AddNewValue" title="Add new Topic" href="${AddTopicUrl}"></a>
 			</div>
 			
 		</fieldset>	
@@ -63,26 +69,8 @@
 					$j('#EditTopicsDocumentDiv').block({ message: $j('#question') }); 
 					return false;
 				});
-	      
-				$j('#no').click(function() { 
-					$j.unblockUI();
-					$j(".blockUI").fadeOut("slow");
-					$j('#question').hide();
-					$j('#EditFactCheckDocumentDiv').append($j("#question"));
-					$j(".blockUI").remove();
-					return false; 
-				}); 
-		        
-				$j('#yes').click(function() { 
-					$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
-						$j("#body_left").html(html);
-					}});
-						
-					return false; 
-				}); 
 
-
-				$j(".deleteValue").click(function() {
+		        $j(".deleteValue").click(function() {
 					$j.get(this.href, function(data) {
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
@@ -98,10 +86,40 @@
 					return false;
 				});
 
-				$j("#AddTopicDocument").click(function(){
+				$j("#topicDescription").click(function() {
+					Modalbox.show(this.href, {title: this.title, width: 750});
+					return false;
+				});
+
+				$j("#AddNewValue").click(function(){
 					$j("#EditTopicDocumentDiv").load($j(this).attr("href"));
 					return false;
 				});
 			});
 		</script>
 	</form:form>
+
+<div id="question" style="display:none; cursor: default"> 
+	<h1>discard changes?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
+</div>
+
+<script type="text/javascript">
+	$j(document).ready(function() {
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
+			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+				$j("#body_left").html(html);
+			}});
+				
+			return false; 
+		}); 
+     
+	});
+</script>

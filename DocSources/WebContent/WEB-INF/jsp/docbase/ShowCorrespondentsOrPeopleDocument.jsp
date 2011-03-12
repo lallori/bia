@@ -13,7 +13,7 @@
 	<div id="EditCorrespondentsOrPeopleDocumentDiv">
 		<h5>CORRESPONDENTS/PEOPLE </h5>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocument}">edit</a>
+		<a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocument}">edit</a><span id="loading"/>
 	</security:authorize>
 		<hr id="lineSeparator"/>
 		<ul>
@@ -44,6 +44,7 @@
 	        $j("#EditTopicsDocument").css('visibility', 'visible');
 
 			$j("#EditCorrespondentsOrPeopleDocument").click(function(){
+				$j(this).next().css('visibility', 'visible');
 				$j("#EditCorrespondentsOrPeopleDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
