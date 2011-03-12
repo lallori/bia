@@ -120,6 +120,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		}
 
 		CriteriaQuery<Document> criteriaQuery = criteriaBuilder.createQuery(Document.class);
+		Root<Document> rootCount = criteriaQuery.from(Document.class);
 	
 /*		//We need to duplicate predicates beacause they are link to Root element
         List<Predicate> predicates = new ArrayList<Predicate>();
