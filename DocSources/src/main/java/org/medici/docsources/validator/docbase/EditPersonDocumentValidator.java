@@ -130,14 +130,16 @@ public class EditPersonDocumentValidator implements Validator {
 				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
 				} else {
-					// if we are editing or creating, we check that user didn't specify an already linked person
-					Set<EpLink> peopleLinked = document.getEpLink();
-					
-				    for (EpLink currentPerson : peopleLinked) {
-				    	if (currentPerson.getPeople().getPersonId().equals(personId)) {
-							errors.reject("personId", "error.personId.alreadyPresent");
-				    	}
-				    }
+					if ((epLinkId != null) && (epLinkId == 0)) {
+						// if we are editing or creating, we check that user didn't specify an already linked person
+						Set<EpLink> peopleLinked = document.getEpLink();
+						
+					    for (EpLink currentPerson : peopleLinked) {
+					    	if (currentPerson.getPeople().getPersonId().equals(personId)) {
+								errors.reject("personId", "error.personId.alreadyPresent");
+					    	}
+					    }
+					}
 				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");
