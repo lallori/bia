@@ -299,12 +299,6 @@ public class Document implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "document", cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	//@IndexedEmbedded
 	private Set<EpLink> epLink;
-	
-	//Association image 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "document")
-	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
-	//@IndexedEmbedded
-	private EiLink eiLink;
 
 	//Association Synopsys and Extract
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="document")
@@ -981,19 +975,5 @@ public class Document implements Serializable{
 	 */
 	public String getDocTypology() {
 		return docTypology;
-	}
-
-	/**
-	 * @param eiLink the eiLink to set
-	 */
-	public void setEiLink(EiLink eiLink) {
-		this.eiLink = eiLink;
-	}
-
-	/**
-	 * @return the eiLink
-	 */
-	public EiLink getEiLink() {
-		return eiLink;
 	}
 }

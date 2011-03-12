@@ -553,11 +553,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 			
 			if (document != null) {
 				// eilink not null is image linked to document
-				if (document.getEiLink() != null) {
+				/*if (document.getEiLink() != null) {
 					return new ArrayList<Image>(0);
 				} else {
 					return getImageDAO().findDocumentImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
-				}
+				}*/
+				return getImageDAO().findDocumentImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), document.getFolioNum(), document.getFolioMod());
 			} else {
 				return new ArrayList<Image>(0);
 			}
