@@ -168,6 +168,7 @@
 	 			$j.ajax({ type:"POST", url:$j(this).closest('form').attr("action"), data:$j(this).closest('form').serialize(), async:false, success:function(html) { 
 					$j("#EditCorrespondentsOrPeopleDocumentDiv").html(html);
 				}});
+	 			return false;
 			});
 			
 			$j("#AddNewValue").click(function(){
