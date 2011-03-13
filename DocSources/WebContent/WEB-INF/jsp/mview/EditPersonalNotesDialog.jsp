@@ -24,7 +24,7 @@
 			});
 			
 			$j("#cleanNotes").click(function (){
-				$j("#personalNotes").val('');
+				$j("#personalNotes").text("");
 				$j.ajax({ type:"POST", url:$j("#EditPersonalNotesForm").attr("action"), data:$j("#EditPersonalNotesForm").serialize(), async:false, success:function(html) { 
 						$j("#DialogPersonalNotes").html(html);
 						personalNotesChanged=false;

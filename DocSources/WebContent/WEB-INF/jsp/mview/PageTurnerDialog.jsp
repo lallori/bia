@@ -120,7 +120,7 @@
 	<div id="line2"></div>
 	
 	<div id="personalNotesDiv">
-		<a id="personalNotes" href="#"><img src="<c:url value="/images/mview/button_personalNotes.png" />" alt="Personal Notes" /></a>
+		<a id="personalNotesButton" href="#"><img src="<c:url value="/images/mview/button_personalNotes.png" />" alt="Personal Notes" /></a>
 	</div>
 	
 	<div id="exitDiv">
