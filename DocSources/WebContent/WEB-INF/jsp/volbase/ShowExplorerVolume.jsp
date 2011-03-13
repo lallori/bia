@@ -7,8 +7,8 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="explorerVolumeModalWindow" value="/src/volbase/ShowExplorerVolume.do">
 			<c:param name="summaryId" value="${command.summaryId}"/>
-			<c:param name="volNum" value="${command.volNum}" />
-			<c:param name="volLetExt" value="${command.volLetExt}" />
+			<c:param name="volNum" value="${volumeExplorer.volNum}" />
+			<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 			<c:param name="total" value="${volumeExplorer.total}" />
 			<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
@@ -29,8 +29,9 @@
 	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
 	
 	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="summaryId" value="${command.summaryId}"/>
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
@@ -42,8 +43,9 @@
 	</c:url>
 
 	<c:url var="nextPage" value="/src/volbase/ShowExplorerVolume.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="summaryId" value="${command.summaryId}"/>
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder + 1}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
@@ -55,8 +57,9 @@
 	</c:url>
 
 	<c:url var="previousPage" value="/src/volbase/ShowExplorerVolume.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="summaryId" value="${command.summaryId}"/>
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder - 1}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
@@ -125,8 +128,9 @@
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 				<input id="goR" type="submit" value="" />
-				<form:hidden path="volNum" />
-				<form:hidden path="volLetExt" />
+				<form:hidden path="summaryId" />
+				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
+				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
 				<form:hidden path="imageType" value="R"/>
 				<form:hidden path="imageOrder" />
 				<form:hidden path="total" value="${volumeExplorer.total}" />
@@ -152,8 +156,9 @@
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
 				<input id="go" type="submit" value="" />
-				<form:hidden path="volNum" />
-				<form:hidden path="volLetExt" />
+				<form:hidden path="summaryId" />
+				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
+				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
 				<form:hidden path="imageType" value="C"/>
 				<form:hidden path="imageOrder" />
 				<form:hidden path="total" value="${volumeExplorer.total}" />

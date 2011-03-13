@@ -4,16 +4,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="checkVolumeDigitizedUrl" value="/src/volbase/CheckVolumeDigitized.json">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
+	</c:url>
+
+	<c:url var="ShowExplorerVolumeUrl" value="/src/volbase/ShowExplorerVolume.do">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
+		<c:param name="flashVersion" value="true" />
+	</c:url>
+
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditDetailsVolume" value="/de/volbase/EditDetailsVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
-		</c:url>
-		<c:url var="FindVolume" value="/de/volbase/FindVolume.json">
-			<c:param name="volNum"   value="${volume.volNum}" />
-			<c:param name="volLetExt"   value="${volume.volLetExt}" />
-		</c:url>
-		<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do">
-			<c:param name="flashVersion" value="true" />
 		</c:url>
 	</security:authorize>
 	
@@ -50,16 +52,13 @@
 	        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
 			$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
-	        <c:if test="${volume.summaryId > 0}">
-			 $j("#EditDetailsVolume").volumeExplorer( {  
-				volNum      : "${volume.volNum}",
-				volLetExt   : "${volume.volLetExt}",
-				checkVolumeURL : "${FindVolume}",
-				target : $j("#body_right"), 
-				remoteUrl : "${ShowExplorerVolume}",
-				zIndex: 9999
+			$j("#EditDetailsVolume").volumeExplorer( {
+				summaryId      			: "${volume.summaryId}",
+				checkVolumeDigitizedURL	: "${checkVolumeDigitizedUrl}",
+				showExplorerVolumeURL	: "${ShowExplorerVolumeUrl}",
+				target 					: $j("#body_right") 
 			});  
-			</c:if>
+
 			$j("#EditDetailsVolume").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditDetailsVolumeDiv").load($j(this).attr("href"));
