@@ -16,7 +16,7 @@
 				<b>ADD NEW TOPIC</b>
 			</c:if>
 			<c:if test="${command.eplToId > 0}">
-				<b>EDIT TOPIC</b
+				<b>EDIT TOPIC</b>
 			</c:if> 
 			<div>
 				<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic:</form:label>
