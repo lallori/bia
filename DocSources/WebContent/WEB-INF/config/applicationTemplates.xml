@@ -247,36 +247,36 @@
 	<!-- GeoBase Module END -->
 	
 	<!--  Manuscript Viewer START -->
-	<definition name="manuscriptviewer/EditExtractDocumentDialog" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/EditExtractDocumentDialog.jsp"/>
+	<definition name="mview/EditExtractDocumentDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/EditExtractDocumentDialog.jsp"/>
 	</definition>
 
-	<definition name="manuscriptviewer/EditPersonalNotesDialog" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/EditPersonalNotesDialog.jsp"/>
+	<definition name="mview/EditPersonalNotesDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/EditPersonalNotesDialog.jsp"/>
 	</definition>
 
-	<definition name="manuscriptviewer/EditSynopsisDocumentDialog" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/EditSynopsisDocumentDialog.jsp"/>
+	<definition name="mview/EditSynopsisDocumentDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/EditSynopsisDocumentDialog.jsp"/>
 	</definition>
 
-	<definition name="manuscriptviewer/EditDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
-		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/manuscriptviewer/EditDocumentInManuscriptViewerHtml.jsp"/>
+	<definition name="mview/EditDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/EditDocumentInManuscriptViewerHtml.jsp"/>
 	</definition>
 
-	<definition name="manuscriptviewer/PageTurnerDialog" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/manuscriptviewer/PageTurnerDialog.jsp"/>
+	<definition name="mview/PageTurnerDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/PageTurnerDialog.jsp"/>
 	</definition>
 
-	<definition name="manuscriptviewer/ShowDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
-		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/manuscriptviewer/ShowDocumentInManuscriptViewerHtml.jsp"/>
+	<definition name="mview/ShowDocumentInManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowDocumentInManuscriptViewerHtml.jsp"/>
 	</definition>
 
-	<definition name="manuscriptviewer/ShowManuscriptViewerFlash" extends="template.manuscriptViewerFlash">
-		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/manuscriptviewer/ShowManuscriptViewerFlash.jsp"/>
+	<definition name="mview/ShowManuscriptViewerFlash" extends="template.manuscriptViewerFlash">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerFlash.jsp"/>
 	</definition>
 
-	<definition name="manuscriptviewer/ShowManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
-		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/manuscriptviewer/ShowManuscriptViewerHtml.jsp"/>
+	<definition name="mview/ShowManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
+		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerHtml.jsp"/>
 	</definition>
 	<!--  Manuscript Viewer END -->
 
