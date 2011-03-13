@@ -17,7 +17,7 @@
 				<b>ADD NEW PERSON</b>
 			</c:if>
 			<c:if test="${command.personId > 0}">
-				<b>Edit PERSON</b
+				<b>Edit PERSON</b>
 			</c:if> 
 			</legend>
 			<div>
