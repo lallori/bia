@@ -8,6 +8,18 @@
 		<title>the MEDICI ARCHIVE PROJECT</title>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
+
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Chronology.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/modalbox.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/TableTools.css"/>" />
+
 		<!--[if lte IE 7]>
 		<style type="text/css">
 		html .jquerycssmenu{height: 1%;} /*Holly Hack for IE7 and below*/
@@ -29,7 +41,7 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.documentExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/scriptaculous.js?load=effects"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script>
@@ -39,7 +51,7 @@
 			$j(document).ready(function() {
 				$j(document).cssLoader({
 					contextPath : "<c:url value="/"/>",
-					forceResolution : 1024,
+					forceResolution : 0,
 					stylePath : "styles/",
 					styleSheets : [
 						"menu/AdministrationMenu.css",
