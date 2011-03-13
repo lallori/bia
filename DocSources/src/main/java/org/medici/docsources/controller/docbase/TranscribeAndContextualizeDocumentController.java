@@ -28,10 +28,12 @@
 package org.medici.docsources.controller.docbase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.docbase.TranscribeAndContextualizeDocumentCommand;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +91,15 @@ public class TranscribeAndContextualizeDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") TranscribeAndContextualizeDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		List<Month> months = null;
+
+		try {
+			months = getDocBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/ShowDocument", model);
+		}
+
 		Document document = new Document();
 
 		try {
@@ -107,7 +118,7 @@ public class TranscribeAndContextualizeDocumentController {
 			command.setUnpaged(document.getUnpaged());
 			command.setContDisc(document.getContDisc());
 			command.setDocYear(document.getDocYear());
-			command.setDocMonthNum(document.getDocMonthNum());
+			command.setDocMonthNum(months.get(months.size()-1).getMonthNum());
 			command.setDocDay(document.getDocDay());
 			command.setYearModern(document.getYearModern());
 			command.setDateUns(document.getDateUns());
