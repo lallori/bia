@@ -58,6 +58,36 @@ public class AjaxController {
 	private VolBaseService volBaseService;
 
 	/**
+	 * 
+	 */
+	@RequestMapping(value = "/src/volbase/CheckVolumeDigitized", method = RequestMethod.GET)
+	public ModelAndView checkVolumeDigitized(	@RequestParam(value="summaryId", required=false) Integer summaryId,
+												@RequestParam(value="volNum", required=false) Integer volNum, 
+												@RequestParam(value="volLetExt", required=false) String volLetExt) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		if (summaryId != null) {
+			try {
+				Boolean digitized = getVolBaseService().checkVolumeDigitized(summaryId);
+				
+				model.put("summaryId", summaryId.toString());
+				model.put("digitized", digitized.toString());
+			} catch (ApplicationThrowable aex) {
+				model.put("summaryId", summaryId.toString());
+				model.put("digitized", "false");
+				model.put("error", aex.getApplicationError().toString());
+			}
+		} else {
+			model.put("volNum", volNum.toString());
+			model.put("volLetExt", volLetExt.toString());
+			model.put("digitized", "false");
+			model.put("error", "method with volNum is not yet implemented");
+		}
+		
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
 	 * This method can act  
 	 *  
 	 * @param volNum Volume Id
@@ -65,9 +95,9 @@ public class AjaxController {
 	 * @return ModelAndView containing input params and summaryId.
 	 */
 	@RequestMapping(value = "/de/volbase/FindVolume", method = RequestMethod.GET)
-	public ModelAndView findVolume(@RequestParam(value="volume", required=false) String volume,
-								   @RequestParam(value="volNum", required=false) Integer volNum, 
-								   @RequestParam(value="volLetExt", required=false) String volLetExt) {
+	public ModelAndView findVolume(	@RequestParam(value="volume", required=false) String volume,
+									@RequestParam(value="volNum", required=false) Integer volNum, 
+									@RequestParam(value="volLetExt", required=false) String volLetExt) {
  		if (volNum != null) {
 			return findVolume(volNum, volLetExt);
 		}
@@ -75,6 +105,12 @@ public class AjaxController {
 		return findVolume(volume);
 	}
 	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 */
 	private ModelAndView findVolume(Integer volNum, String volLetExt) {
 		Map<String, Object> model = new HashMap<String, Object>();
 

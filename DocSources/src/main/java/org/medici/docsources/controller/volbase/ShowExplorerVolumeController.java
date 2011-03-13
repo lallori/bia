@@ -88,7 +88,7 @@ public class ShowExplorerVolumeController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 			
-			VolumeExplorer volumeExplorer = new VolumeExplorer(command.getVolNum(), command.getVolLetExt());
+			VolumeExplorer volumeExplorer = new VolumeExplorer(command.getSummaryId(), command.getVolNum(), command.getVolLetExt());
 			volumeExplorer.setImage(new Image());
 			volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 			volumeExplorer.getImage().setImageOrder(command.getImageOrder());
@@ -124,7 +124,7 @@ public class ShowExplorerVolumeController {
 	public ModelAndView setupForm(@ModelAttribute("command") ShowExplorerVolumeCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
 		
-		VolumeExplorer volumeExplorer = new VolumeExplorer(command.getVolNum(), command.getVolLetExt());
+		VolumeExplorer volumeExplorer = new VolumeExplorer(command.getSummaryId(), command.getVolNum(), command.getVolLetExt());
 		volumeExplorer.setImage(new Image());
 		volumeExplorer.getImage().setImageProgTypeNum(command.getImageProgTypeNum());
 		volumeExplorer.getImage().setImageOrder(command.getImageOrder());

@@ -127,6 +127,26 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean checkVolumeDigitized(Integer summaryId) throws ApplicationThrowable {
+		Boolean digitized = Boolean.FALSE;
+		try {
+			Volume volume = getVolumeDAO().find(summaryId);
+			Image firstImage = getImageDAO().findVolumeFirstImage(volume.getVolNum(), volume.getVolLetExt());
+			if (firstImage != null) {
+				digitized = Boolean.TRUE;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return digitized;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -212,7 +232,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		return volumeToUpdate;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -258,7 +278,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		return volumeToUpdate;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -409,28 +429,39 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * @return the seriesListDAO
 	 */
 	public SeriesListDAO getSeriesListDAO() {
 		return seriesListDAO;
 	}
+	
 	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable {
 		try {
+			if (volumeExplorer.getSummaryId() != null) {
+				if (volumeExplorer.getSummaryId() >0) {
+					Volume volume = getVolumeDAO().find(volumeExplorer.getSummaryId());
+					volumeExplorer.setVolNum(volume.getVolNum());
+					volumeExplorer.setVolLetExt(volume.getVolLetExt());
+				}
+			}
 			return getImageDAO().findImages(volumeExplorer);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -442,6 +473,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */

@@ -64,6 +64,14 @@ public interface VolBaseService {
 	public Volume addNewVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean checkVolumeDigitized(Integer summaryId) throws ApplicationThrowable;
+
+	/**
 	 * This method modify context of an existing {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
@@ -107,6 +115,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume findLastEntryVolume() throws ApplicationThrowable;
+	
 
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
@@ -118,7 +127,6 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable;
-	
 
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
@@ -216,7 +224,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public void generateIndexVolume() throws ApplicationThrowable;
-
+	
 	/**
 	 * This method extracts all months available.
 	 *  
@@ -226,7 +234,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param volumeExplorer

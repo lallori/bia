@@ -79,6 +79,18 @@ public class VolumeExplorer {
 		totalOther = new Long(0);
 	}
 	
+	public VolumeExplorer(Integer summaryId, Integer volNum, String volLetExt) {
+		this.summaryId = summaryId;
+		this.volNum = volNum;
+		this.volLetExt = volLetExt;
+		total  = new Long(0);
+		totalRubricario  = new Long(0);
+		totalCarta = new Long(0);
+		totalAppendix = new Long(0);
+		totalGuardia = new Long(0);
+		totalOther = new Long(0);
+	}
+
 	/**
 	 * @return the summaryId
 	 */
