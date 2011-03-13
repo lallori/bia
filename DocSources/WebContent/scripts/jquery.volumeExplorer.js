@@ -27,75 +27,39 @@
  * 
  * Last Review: 02/18/2011
 */
-(function($) {
-	$(function() {
+(function ($) {
 
-	var methods = {
-		buildRemoteCall : function(remoteUrl, parametersName, parametersValue) {
-			//console.log("constructing remote call");
-			var retValue = remoteUrl + "&";
-			for (i=0; i<parametersName.length; i++) {
-				retValue+=parametersName[i];
-				retValue+="=";
-				if (i<parametersValue.length)
-					retValue+=parametersValue[i];
-				else
-					retValue+="";
-				retValue+="&";
-			}
+    $.volumeExplorer = {};
 
-			//console.log("remote call : " + retValue);
-			return retValue;
-		},
+    $.volumeExplorer.defaults = {
+    	"summaryId" : 0,
+		"volNum" : 0,
+		"volLetExt" : "",
+		"checkVolumeDigitizedURL" : "",
+		"showExplorerVolumeURL" : "",
+		"target" : "" 
+    };
 
-		loadRemoteCall : function(target, urlToLoad) {
-			//console.log("invoking " + urlToLoad);
-			$(target).load(urlToLoad, "",
-				function(responseText, textStatus, XMLHttpRequest) {
-					//console.log("response on remoteCall" + urlToLoad + ": " + textStatus);
-					$(target).html(responseText);
-		        }
-			);
-			return true;
-		}
-	};
+    $.fn.volumeExplorer = function (options) {
+    	var options = $.extend($.volumeExplorer.defaults, options);
 
-	$.fn.volumeExplorer = function( options ) {  
-		var defaults = {
-			volNum      : "",
-			volLetExt   : "",
-			checkVolumeURL : "",
-			target : null, 
-			remoteUrl : null,
-			zIndex: 9999
-		};
-		var options = $.extend(defaults, options);
-		
-		return this.each(function() {
-			var volNum  = "";
-			var volLetExt = "";
-			var target=$(options.target);
-			if (typeof options.volNum == "string")
-				volNum = options.volNum;
-			else if (typeof options.volNum == "object")
-				; //Qui bisogna gestire il prelevamento del valore tramite il reference al campo
-			if (typeof options.volLetExt == "string") {
-				if (options.volLetExt == "") {
-					volLeText = "";
-				} else {
-					volLeText = options.volLetExt;
-				}
-			} else if (typeof options.volLetExt == "object")
-				; //Qui bisogna gestire il prelevamento del valore tramite il reference al campo
+        // Loop over all matching elements
+        this.each(function (){
+        	var volumeDigitized = false;
+        	if ((options["summaryId"] >0) || (options["volNum"] >0)) {
+            	$.ajax({ type:"GET", url:options["checkVolumeDigitizedURL"], async:false, success:function(data) {
+            		if (data.digitized == "true") {
+            			volumeDigitized = true;
+            		}
+            	}
+    			});
+        	}
 
-			if (typeof options.volNum == "string") {
-				methods['loadRemoteCall']($(target), (methods['buildRemoteCall'](options.remoteUrl, ['volNum', 'volLetExt'], [volNum, volLetExt])));
-			}
-			return true;
-		});
+        	if (volumeDigitized == true) {
+        		$(options["target"]).load(options["showExplorerVolumeURL"]);
+        	}
+        });
 
-	};
-
-	});
-
-})( jQuery );
+        return $;
+    };
+})(jQuery);

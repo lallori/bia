@@ -77,11 +77,22 @@ public class AjaxController {
 				model.put("digitized", "false");
 				model.put("error", aex.getApplicationError().toString());
 			}
+		} else if (volNum != null){
+			try {
+				Boolean digitized = getVolBaseService().checkVolumeDigitized(volNum, volLetExt);
+				
+				model.put("volNum", volNum.toString());
+				model.put("volLetExt", volLetExt.toString());
+				model.put("digitized", digitized.toString());
+			} catch (ApplicationThrowable aex) {
+				model.put("volNum", volNum.toString());
+				model.put("volLetExt", volLetExt.toString());
+				model.put("digitized", "false");
+				model.put("error", aex.getApplicationError().toString());
+			}
 		} else {
-			model.put("volNum", volNum.toString());
-			model.put("volLetExt", volLetExt.toString());
 			model.put("digitized", "false");
-			model.put("error", "method with volNum is not yet implemented");
+			model.put("error", "incorrect call");
 		}
 		
 		return new ModelAndView("responseOK", model);

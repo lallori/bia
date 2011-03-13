@@ -5,7 +5,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="checkVolumeDigitizedUrl" value="/src/volbase/CheckVolumeDigitized.json">
-		<c:param name="summaryId"   value="${volume.summaryId}" />
+		<c:param name="volNum"   value="${volume.volNum}" />
+		<c:param name="volLetExt"   value="${volume.volLetExt}" />
 	</c:url>
 
 	<c:url var="ShowExplorerVolumeUrl" value="/src/volbase/ShowExplorerVolume.do">
@@ -53,7 +54,8 @@
 			$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
 			$j("#EditDetailsVolume").volumeExplorer( {
-				summaryId      			: "${volume.summaryId}",
+				volNum					: "${volume.volNum}",
+				volLetExt				: "${volume.volLetExt}",
 				checkVolumeDigitizedURL	: "${checkVolumeDigitizedUrl}",
 				showExplorerVolumeURL	: "${ShowExplorerVolumeUrl}",
 				target 					: $j("#body_right") 

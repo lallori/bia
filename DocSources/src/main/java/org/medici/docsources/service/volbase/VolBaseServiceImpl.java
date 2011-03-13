@@ -151,6 +151,24 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Boolean checkVolumeDigitized(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		Boolean digitized = Boolean.FALSE;
+		try {
+			Image firstImage = getImageDAO().findVolumeFirstImage(volNum, volLetExt);
+			if (firstImage != null) {
+				digitized = Boolean.TRUE;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return digitized;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Volume editContextVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
@@ -193,7 +211,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		return volumeToUpdate;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -232,7 +250,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		return volumeToUpdate;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -417,7 +435,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -429,20 +446,21 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
 	/**
 	 * @return the seriesListDAO
 	 */
 	public SeriesListDAO getSeriesListDAO() {
 		return seriesListDAO;
 	}
-	
+
 	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -461,7 +479,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -473,7 +491,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -503,6 +520,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public void setSeriesListDAO(SeriesListDAO seriesListDAO) {
 		this.seriesListDAO = seriesListDAO;
 	}
+
 	/**
 	 * @param volumeDAO the volumeDAO to set
 	 */

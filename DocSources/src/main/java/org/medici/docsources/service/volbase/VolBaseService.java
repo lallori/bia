@@ -64,12 +64,29 @@ public interface VolBaseService {
 	public Volume addNewVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
+	 * This method checks if {@link org.medici.docsources.domain.Volume} identified 
+	 * by his summaryId has been digitized. Control is implemented by searching  
+	 * {@link org.medici.docsources.domain.Image} entity.
 	 * 
-	 * @param summaryId
-	 * @return
-	 * @throws ApplicationThrowable
+	 * @param summaryId Unique Volume Identifier
+	 * @return Boolean, true if volume is digitized, otherwise false.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
 	public Boolean checkVolumeDigitized(Integer summaryId) throws ApplicationThrowable;
+
+	/**
+	 * This method checks if {@link org.medici.docsources.domain.Volume} identified 
+	 * by his volNum and volLetExt has been digitized. Control is implemented by searching  
+	 * {@link org.medici.docsources.domain.Image} entity.
+	 * 
+	 * @param volNum Volume Number
+	 * @param volLetExt Volume Letter Extension
+	 * @return Boolean, true if volume is digitized, otherwise false.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public Boolean checkVolumeDigitized(Integer volNum, String volLetExt) throws ApplicationThrowable; 
 
 	/**
 	 * This method modify context of an existing {@link org.medici.docsources.domain.Volume}.
@@ -106,6 +123,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable;
+	
 
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.Volume}.
@@ -115,7 +133,6 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume findLastEntryVolume() throws ApplicationThrowable;
-	
 
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
@@ -216,7 +233,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public void generateIndexSerieList() throws ApplicationThrowable;
-
+	
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Volume}.
 	 * 
@@ -224,7 +241,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public void generateIndexVolume() throws ApplicationThrowable;
-	
+
 	/**
 	 * This method extracts all months available.
 	 *  
