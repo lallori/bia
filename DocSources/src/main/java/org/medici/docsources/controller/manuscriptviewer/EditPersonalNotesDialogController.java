@@ -73,7 +73,7 @@ public class EditPersonalNotesDialogController {
 			personalNotes = getUserService().editPersonalNotes(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), personalNotes);
 
 			command.setPersonalNotes(personalNotes.getPersonalNotes());
-			return new ModelAndView("manuscriptviewer/EditPersonalNotesDialog", model);
+			return new ModelAndView("mview/EditPersonalNotesDialog", model);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/EditPersonalNotesDialog", model);
 		}
@@ -102,7 +102,7 @@ public class EditPersonalNotesDialogController {
 			return new ModelAndView("error/EditPersonalNotesDialog", model);
 		}
 
-		return new ModelAndView("manuscriptviewer/EditPersonalNotesDialog", model);
+		return new ModelAndView("mview/EditPersonalNotesDialog", model);
 	}
 
 	/**

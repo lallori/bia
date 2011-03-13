@@ -108,7 +108,7 @@ public class EditExtractDocumentDialogController {
 
 				command.setSynExtrId(document.getSynExtract().getSynExtrId());
 				command.setDocExtract(document.getSynExtract().getDocExtract());
-				return new ModelAndView("manuscriptviewer/EditExtractDocumentDialog", model);
+				return new ModelAndView("mview/EditExtractDocumentDialog", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditExtractOrSynopsisDocument", model);
 			}
@@ -153,7 +153,7 @@ public class EditExtractDocumentDialogController {
 			command.setDocExtract(null);
 		}
 
-		return new ModelAndView("manuscriptviewer/EditExtractDocumentDialog", model);
+		return new ModelAndView("mview/EditExtractDocumentDialog", model);
 	}
 
 	/**

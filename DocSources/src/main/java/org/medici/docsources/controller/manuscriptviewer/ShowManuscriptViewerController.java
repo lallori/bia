@@ -114,9 +114,9 @@ public class ShowManuscriptViewerController {
 		}
 
 		if (command.getFlashVersion())
-			return new ModelAndView("manuscriptviewer/ShowManuscriptViewerFlash", model);
+			return new ModelAndView("mview/ShowManuscriptViewerFlash", model);
 		else
-			return new ModelAndView("manuscriptviewer/ShowManuscriptViewerHtml", model);
+			return new ModelAndView("mview/ShowManuscriptViewerHtml", model);
 	}
 
 	/**

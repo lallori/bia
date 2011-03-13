@@ -80,6 +80,6 @@ public class PageTurnerDialogController {
 			model.put("caller", "/src/mview/ShowDocumentInManuscriptViewer.do");
 		}
 		
-		return new ModelAndView("manuscriptviewer/PageTurnerDialog", model);
+		return new ModelAndView("mview/PageTurnerDialog", model);
 	}
 }

@@ -87,7 +87,7 @@ public class EditDocumentInManuscriptViewerController {
 		}
 
 		
-		return new ModelAndView("manuscriptviewer/EditDocumentInManuscriptViewerHtml", model);
+		return new ModelAndView("mview/EditDocumentInManuscriptViewerHtml", model);
 	}
 
 	/**

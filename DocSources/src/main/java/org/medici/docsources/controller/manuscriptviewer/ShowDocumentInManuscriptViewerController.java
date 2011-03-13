@@ -83,7 +83,7 @@ public class ShowDocumentInManuscriptViewerController {
 		} catch (ApplicationThrowable ath) {
 		}
 		
-		return new ModelAndView("manuscriptviewer/ShowDocumentInManuscriptViewerHtml", model);
+		return new ModelAndView("mview/ShowDocumentInManuscriptViewerHtml", model);
 	}
 
 	/**
