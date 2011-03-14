@@ -8,18 +8,39 @@
 		<title>the MEDICI ARCHIVE PROJECT</title>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/MainContent.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/Template.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/Chronology.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/modalbox.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/TableTools.css"/>" />
+<!-- 
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/MainContent.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/Template.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/Chronology.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/js/modalbox.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/js/TableTools.css"/>" />
 
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Chronology.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/modalbox.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/TableTools.css"/>" />
-
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/menu/AdministrationMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/menu/MainMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/menu/ActionsMenu.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/MainContent.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/Template.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/Chronology.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/js/modalbox.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/js/jquery.autocomplete2.css" />"/>
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/js/demo_table.css"/>" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/js/TableTools.css"/>" />
+ -->
 		<!--[if lte IE 7]>
 		<style type="text/css">
 		html .jquerycssmenu{height: 1%;} /*Holly Hack for IE7 and below*/
@@ -33,7 +54,7 @@
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.cssLoader.js"/>"></script>
+		<!-- <script type="text/javascript" src="<c:url value="/scripts/jquery.cssLoader.js"/>"></script> -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
@@ -49,7 +70,7 @@
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
-				$j(document).cssLoader({
+				/*$j(document).cssLoader({
 					contextPath : "<c:url value="/"/>",
 					forceResolution : 0,
 					stylePath : "styles/",
@@ -64,7 +85,7 @@
 				        "js/jquery.autocomplete2.css",
 				        "js/demo_table.css",
 				        "js/TableTools.css"]});
-
+				*/
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses
 					cache: false,
@@ -102,7 +123,7 @@
 				</div>
 			</div>
 			<div id="top_bottom" class="docs">
-<tiles:insertAttribute name="administratorMenu"/>
+<!-- tiles:insertAttribute name="administratorMenu"/> -->
 <tiles:insertAttribute name="whoAmIMenu"/>
 			</div>
 <tiles:insertAttribute name="main"/>
