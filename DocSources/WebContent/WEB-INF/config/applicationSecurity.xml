@@ -43,7 +43,9 @@
         			login-page="/LoginUser.do"
                     login-processing-url="/loginProcess" 
                     default-target-url="/Home.do"
-                    authentication-failure-url="/LoginUser.do?login_error=1" />
+                    authentication-success-handler-ref=""
+                    authentication-failure-url="/LoginUser.do?login_error=1" 
+                    />
   
         <security:logout invalidate-session="true" logout-url="/LogoutUser.do" logout-success-url="/LoginUser.do" />
 		<security:session-management session-fixation-protection="newSession">

@@ -10,9 +10,7 @@
 			<div id="colte_of_arms"></div>
 		</div>	
 		<div id="body_right">
-			<div id="button_courses">
-				<a href="http://courses.medici.org/" target="_blank" class="mapcourses"></a>
-			</div>
+			<a id="mapcourses" href="http://courses.medici.org/" target="_blank"></a>
 			<ul class="welcome_list">
 				<li><h5>Welcome back Lisa. <br />From your last log on:</h5>
 					<ul>

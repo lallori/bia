@@ -118,7 +118,7 @@
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
-				<b>Rubricario Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
+				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerDocument}" cssClass="edit">

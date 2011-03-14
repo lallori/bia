@@ -121,7 +121,7 @@
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
-				<b>Rubricario Count:</b> <label for="rubricarioCount" id="rubricarioCount">${volumeExplorer.totalRubricario}</label>
+				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
