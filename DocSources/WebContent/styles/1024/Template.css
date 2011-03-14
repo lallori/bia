@@ -340,16 +340,16 @@ input {
 	position:absolute;
 }
 
-.mapcourses { /* Button MAP Courses */
+#mapcourses { /* Button MAP Courses */
 	background-image:url(/DocSources/images/1024/button_courses.jpg);
 	width:200px;
 	height:65px;
 	position:absolute;
-	margin:10px 0 0 380px;
+	margin:40px 0 0 90px;
 }
 
 .welcome_list{
-	margin-left: 550px;
+	margin-left: 50px;
 	margin-top:150px;
 	line-height:20px;
 	list-style-type:none;

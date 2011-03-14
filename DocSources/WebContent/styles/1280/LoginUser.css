@@ -1,11 +1,11 @@
 body {
-	background-image:url(/DocSources/images/bg_image.jpg);
+	background-image:url(/DocSources/images/1280/bg.jpg);
 	background-position:center;
 	background-repeat:no-repeat;
 	background-color:#f6edec;
 	margin:0;
 	padding:0;
-	font-size:small;
+	font-size:12px;
 	color:#6F6B69;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
@@ -22,35 +22,28 @@ body {
 }
 
 #map { /* The Medici Archive Project image */
-	width:270px;
-	height:175px;
+	width:315px;
+	height:213px;
 	margin-left:365px;
 	position:absolute;
-}
-
-#footer {
-	width:100%;
-	height: 130px;
-	margin-top:620px;
-	position:absolute;
-
+	background-image:url(/DocSources/images/1280/img_map.png);
 }
 
 /* DIV Log in */
 
 #login {
-	width:305px;
-	height:295px;
-	margin-top:220px;
-	margin-left: 210px;	
+	width:400px;
+	height:350px;
+	margin-top:250px;
+	margin-left: 150px;	
 	position:absolute;
-	background-image:url(/DocSources/images/login_bg.png);
+	background-image:url(/DocSources/images/1280/bg_login.png);
 }
 
 /*  Log in - Form */
 
 .loginform{ /*  Form class */
-	width:200px;
+	width:250px;
 	height:220px;
 	margin-top: 60px;
 	margin-left:55px;
@@ -58,13 +51,19 @@ body {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.button_login {
+	background-image:url(/DocSources/images/1280/button_login.jpg);
+	width:130px;
+	height:25px;
+}
+
 .fyp { /* Forgot your password class */
-	font-size: 80%;
+	font-size: 12px;
 	line-height:17px;
 }
 
 .fyp a {
-	font-size:90%;
+	font-size:12px;
 }
 
 input {
@@ -76,27 +75,30 @@ input {
 }
 
 .input { /* input text class */
-	background-image:url(/DocSources/images/input_bg.png);
+	background-image:url(/DocSources/images/1280/bg_input.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
 	border:none;
-	width:150px;
+	width:190px;
 	padding-left:10px;
 	margin-top:0px;
 }
 
 .remember { /* Remember me class */
-	font-size: 80%;
+	font-size: 12px;
 	margin-left: 70px;
 }
 
 /* buttonons */
 
 #register_here{
-	margin-top:220px;
-	margin-left:585px;
+	margin-top:250px;
+	margin-left:620px;
 	position:absolute;
+	background-image:url(/DocSources/images/1280/button_registerhere.jpg);
+	width:235px;
+	height:65px;
 }
 
 #guest {
@@ -104,6 +106,15 @@ input {
 	height:65px;
 	margin-top:300px;
 	margin-left:585px;
+	position:absolute;
+}
+
+#register {
+	background-image:url(/DocSources/images/1280/button_guest.jpg);
+	width:235px;
+	height:70px;
+	margin-top:50px;
+	margin-left:34px;
 	position:absolute;
 }
 
@@ -119,7 +130,7 @@ input {
 	margin-top:190px;
 	margin-left: 75px;	
 	position:absolute;
-	background-image:url(/DocSources/images/regist_bg.png);
+	background-image:url(/DocSources/images/1280/button_registerhere.jpg);
 	background-repeat:no-repeat;
 	z-index:1;
 }
@@ -131,7 +142,7 @@ input {
 	margin-left:20px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:90%;
+	font-size:12px;
 }
 
 .registrationFormKO { /*  Form class */
@@ -141,7 +152,7 @@ input {
 	margin-left:20px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:90%;
+	font-size:12px;
 }
 
 
@@ -153,12 +164,12 @@ input {
 
 .readThis { /* read this text class */
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size: 90%;
+	font-size: 12px;
 	margin:10px 0px 0px 240px;
 }
 
 .readThis a {
-	font-size:95%;
+	font-size:12px;
 }
 
 #submitbutton { /* submit button class */
@@ -171,19 +182,19 @@ input {
 .already { /* Already have an account? */
 	font-family:Georgia, "Times New Roman", Times, serif;
 	color:#886863;
-	font-size: 95%;
+	font-size: 12px;
 	margin:0px 0px 0px 670px;
 }
 
 .already a { /* Already have an account? Links */
 	font-family:Georgia, "Times New Roman", Times, serif;
 	color:#642221;
-	font-size: 95%;
+	font-size: 12px;
 }
 
 .inputerrors { /* Error Span messages */
 	color:#900;
-	font-size:85%;
+	font-size:12px;
 	float:left;
 }
 
@@ -257,7 +268,7 @@ input {
 
 .inputerrors_recovery { /* Error Span messages */
 	color:#900;
-	font-size:85%;
+	font-size:12px;
 	margin-left:60px;
 }
 
@@ -297,7 +308,7 @@ input {
 	position:absolute;
 	text-align:center;
 	line-height:20px;
-	font-size:90%;
+	font-size:12px;
 }
 
 .activsuccess {  /* p class */
@@ -358,7 +369,7 @@ input {
 
 .inputerrors_reset { /* Error Span messages */
 	color:#900;
-	font-size:85%;
+	font-size:12px;
 	margin-left:5px;
 }
 

@@ -241,6 +241,20 @@ input[type="submit"]:hover {
 	outline:none;
 }
 
+.AddNewValue { /* "Add New Value" Button */
+	margin:5px auto auto 280px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_addnew.png);
+	background-repeat:no-repeat;
+	width:59px;
+	height:23px;
+	position:absolute;
+	border:none;
+	outline:none;
+}
+
 img.transparent {
 	background-color:transparent;
 	background-image:url(/DocSources/images/1024/img_transparent.png);
@@ -625,7 +639,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #EditCorrespondentsDocumentForm, #EditExtSynDocumentDiv, #EditDetailsDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv, #EditDetailsVolumeDiv, #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv, #EditDetailsPersonForm, #EditDetailsPlaceDiv, #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditRelationshipPersonDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #SpousesPersonForm, #TopicsDocumentForm, #EditTopicsDocumentForm, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #AdddChildPersonForm, #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm {
 	width:450px;
-	margin:10px 0 0 10px;
+	margin:10px 0 0 0;
 }
 
 #EditCorrespondentsDocumentForm a, #EditExtSynDocumentDiv a, #EditDetailsDocumentDiv a, #EditFactCheckDocumentDiv a, #EditCorrespondentsDocumentDiv a, #EditExtractOrSynopsisDocumentDiv a, #EditDescriptionVolumeDiv a, #EditCorrespondentsVolumeDiv a, #EditContextVolumeDiv a, #EditDetailsPersonDiv a, #EditNamesPersonDiv a, #EditCorrespondentsDocumentDiv a, #EditExtSynDocumentDiv a, #EditDetailsVolumeDiv a, #EditNamesPersonDiv a, #EditTitleOccupationsPersDiv a, #EditRelationshipPersDiv a, #EditDetailsPersonForm a, #EditDetailsPlaceDiv a, #EditNamePlaceDiv a, #EditExtLinkPlaceDiv a, #EditGeoCoorPlaceDiv a, #EditFactChecksDocumentDiv a, #EditRelationshipPersonDiv a, #EditTitlesOccupationsPersonDiv a, #EditResearchNotesPersonDiv a, #SpousesPersonForm a, #TopicsDocumentForm a, #EditTopicsDocumentForm a, #EditParentsPersonDiv a, #EditChildrenPersonDiv a, #EditSpousesPersonDiv a, #AdddChildPersonForm a, #AddSpousePersonForm a, #AddNamesPersonForm a, #AddTitlesOccupationsPersonForm a, #AddPersonCorrespondentsDocumentForm a, #AddTopicsDocumentForm a, #AddExtLinkTgnPlaceForm a, #AddExtLinkMapPlaceForm a, #AddExtLinkMapSitePlaceForm a, #AddNameTgnPlaceForm a, #AddNameMapPlaceForm a, #AddNameMapSitePlaceForm a{
@@ -1484,7 +1498,7 @@ iframe{ /* Common for all iFrame */
 #modalBox .inputerrors { /* Error Span messages */
 	color:#900;
 	position:absolute;
-	margin:35px 0 0 144px;
+	margin:55px 0 0 260px;
 }
 
 
@@ -2120,7 +2134,7 @@ iframe{ /* Common for all iFrame */
 	margin-left:20px;
 }
 
-#outbox {
+#outboxDiv {
 	background-image:url(/DocSources/images/1024/button_outbox.png);
 	margin: 20px 0 10px 0;
 	width:56px;
@@ -2128,9 +2142,17 @@ iframe{ /* Common for all iFrame */
 	cursor:pointer;
 }
 
-#compose {
+#inboxDiv {
+	background-image:url(/DocSources/images/1024/button_inbox.png);
+	margin: 20px 0 10px 0;
+	width:56px;
+	height:23px;
+	cursor:pointer;
+}
+
+#composeDiv {
 	background-image:url(/DocSources/images/1024/button_compose.png);
-	margin: -31px 0 10px 70px;
+	margin: -33px 0 10px 70px;
 	width:56px;
 	height:23px;
 	cursor:pointer;
@@ -2152,11 +2174,41 @@ iframe{ /* Common for all iFrame */
 }
 
 #userMessages table td{
-	width: 220px;
+	width: 210px;
 }
 
 #userMessages #close {
 	margin:25px 0 0 320px;
+}
+
+#userMessages #checkbox {
+	position:absolute;
+	margin:2px 0 0 -25px;
+}
+
+.txtarea_composeUserMessage { 
+	width: 600px;
+	height:180px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:11px;
+	padding:5px 10px 5px 10px;
+	margin: 5px 0 5px 59px; /* top right bottom left */
+}
+
+#recipientComposeLabel {
+	margin-left:37px;
+}
+
+#subjectComposeLabel {
+	margin-left:12px;
+}
+
+#messageComposeLabel {
+	margin:3px 0 0 8px;
+	position:absolute;
 }
 
 
