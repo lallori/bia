@@ -68,7 +68,6 @@ a {
 	width:270px;
 	height:165px;
 	position:absolute;
-	z-index:2 !important;
 	background-image:url(/DocSources/images/1024/img_map.png);
 }
 
@@ -94,7 +93,7 @@ a {
 	height:25px;
 	margin-top:158px;
 	position:absolute;
-	z-index:1 !important; 
+	z-index:-1 !important; 
 	background-image:url(/DocSources/images/1024/bg_userinterface.png);
 }
 
@@ -122,44 +121,29 @@ a {
 
 
 #body_left{ /* LEFT-hand side of the SCREEN */
-	width:47%;
+	width:495px;
 	height:auto;
-	padding-left:15px;
-	margin-top:5px;
+	margin-top:15px;
+	padding-left:5px;
 	float:left;
 	position:absolute;
-	border-right: 1px solid #e6d0c6;
+	border-right: 2px solid #e6d0c6;
 	font-size:11px;
 	z-index:1;
 }
 	
 #body_right{ /* RIGHT-hand side of the SCREEN */
-	width:47%;
+	width:495px;
 	height:auto;
-	padding-left:15px;
 	padding-right:25px;
-	margin-top:5px;
+	margin-top:25px;
 	float:right;
 	position:absolute;
-	margin-left:485px;
+	padding-left:5px;
+	margin-left:500px;
 	font-size:11px;
-	border-left: 1px solid #e6d0c6;
+	border-left: 2px solid #e6d0c6;
 	z-index:1;
-}
-
-/* ------------------------------------------------------------------------------------------------------- */ 
-/*
-/*
-/* -------------------------------------------- SINGLE SCREEN -------------------------------------------- */
-
-#body_central{ /* Container used in the WELCOME page, MY PROFILE (Main Menu) */
-	width:100%;
-	height:auto;
-	padding-left:25px;
-	padding-right:25px;
-	margin-top:15px;
-	position:absolute;
-	font-size:11px;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 
@@ -382,13 +366,13 @@ input {
 /*
 /* ------------------------------------------------- ANCORS ---------------------------------------------- */
 
-#body_left a, #body_right a, #body_central a{ /* Edit buttons */
+#body_left a{ /* Edit buttons */
 	text-decoration:underline;
 	font-size:11px;
 	color:#b99c84;
 }
 
-#body_left a:hover, #body_right a:hover, #body_central a:hover{ 
+#body_left a:hover, #body_right a:hover{ 
 	opacity:0.5;
 }
 
