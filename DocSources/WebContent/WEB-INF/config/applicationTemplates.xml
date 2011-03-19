@@ -38,6 +38,9 @@
     <definition name="template.person" template="/WEB-INF/templates/person.jsp">
     </definition>
 
+    <definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp">
+    </definition>
+    
     <definition name="template.volume" template="/WEB-INF/templates/volume.jsp">
     </definition>
 
@@ -317,7 +320,36 @@
 
 	<!-- PeopleBase Module END -->
 
+	<!-- Search Module START -->
+	<definition name="search/ChoiceAdvancedSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/ChoiceAdvancedSearchModalWindow.jsp"/>
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchDocuments" extends="template.advancedSearchForm">
+		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchDocuments.jsp"/>	
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+	</definition>
+	
+	<definition name="search/AdvancedSearchPeople" extends="template.advancedSearchForm">
+		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPeople.jsp"/>	
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchPlaces" extends="template.advancedSearchForm">
+		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPlaces.jsp"/>	
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchVolumes" extends="template.advancedSearchForm">
+		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchVolumes.jsp"/>
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+	</definition>
+
+	<!-- Search Module END -->
+
 	<!-- VolBase Module START -->
+
 	<definition name="volbase/EditContextVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditContextVolume.jsp"/>
 	</definition>
@@ -378,6 +410,7 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/KO.jsp"/>
 	</definition>
 	<!-- Generic Response END -->
+
 	<!-- Errors START -->
     <definition name="403" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/error/403.jsp"/>

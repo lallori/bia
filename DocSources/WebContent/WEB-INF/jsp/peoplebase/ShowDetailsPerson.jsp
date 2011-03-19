@@ -24,7 +24,7 @@
 
 	<div id="EditDetailsPersonDiv">
 		<div id="createdby"><h6>CREATED BY ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></h6></div>
-		<h5>PERSON DETAILS <a id="EditDetailsPerson" href="/DocSources/de/peoplebase/EditDetailsPerson.html">edit</a></h5>
+		<h5>PERSON DETAILS <a id="EditDetailsPerson" href="/DocSources/de/peoplebase/EditDetailsPerson.do">edit</a></h5>
 		<hr id="lineSeparator"/>
 		<div id="EditPortraitPersonDiv">
 			<img src="/DocSources/images/default_user.jpg" alt="default image" />

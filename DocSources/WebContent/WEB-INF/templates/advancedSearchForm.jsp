@@ -47,26 +47,10 @@
 		</style>
 		<![endif]-->
 		
-		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.3-full-compat-compressed.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.3-full-compat-compressed.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-1.2.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
-		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
-		<!-- <script type="text/javascript" src="<c:url value="/scripts/jquery.cssLoader.js"/>"></script> -->
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.documentExplorer.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.shareButton.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script>
 		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
@@ -91,27 +75,18 @@
 	</head>
 	
 	<body>
-		<div id="layout">
-
-			<div id="map"></div>
-			<div id="top_top">
-<tiles:insertAttribute name="searchForm"/>
-<tiles:insertAttribute name="lastEntryMenu" />
-
+		<div id="advancedSearch">
+			<div id="advancedSearch_top">
+				<h1>ADVANCED SEARCH on PLACES</h1>
 			</div>
-			<div id="top_middle">
-				<div id="mainmenu" class="menumain">
-					<ul>
-<tiles:insertAttribute name="dataEntryMenu" />
-<tiles:insertAttribute name="profileMenu" />
-					</ul>
-				</div>
+			<div id="body_left">
+				<tiles:insertAttribute name="advancedSearchForm"/>
 			</div>
-			<div id="top_bottom" class="docs">
-<!-- tiles:insertAttribute name="administratorMenu"/> -->
-<tiles:insertAttribute name="whoAmIMenu"/>
+			
+			<div id="body_right">
+				<tiles:insertAttribute name="advancedSearchFilter"/>
 			</div>
-<tiles:insertAttribute name="main"/>
+		</div>
 		</div>
 	</body>
 </html>

@@ -27,8 +27,6 @@
 		<c:param name="modeEdit" value="true" />
 	</c:url>
 	
-	<c:set var="autoOpenSynopsisDialog" value="${document.synExtract != null ? 'true' : 'false'}"/> 
-		
 		<script type="text/javascript">
 			iip = new IIP( "targetframe", {
 				server: '${ReverseProxyIIPImage}',
@@ -62,7 +60,7 @@
 
 				var $dialogSynopsis = $j('<div id="EditSynopsisDocumentDiv"></div>')
 				.dialog({                                                                                                                                                                   
-					autoOpen: ${autoOpenSynopsisDialog},
+					autoOpen: false,
 					width: 352,
 					minWidth: 350,
 					minHeight: 200,                                                                                                                                                         

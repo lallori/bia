@@ -12,7 +12,7 @@
 		<div id="body_right">
 			<a id="mapcourses" href="http://courses.medici.org/" target="_blank"></a>
 			<ul class="welcome_list">
-				<li><h5>Welcome back Lisa. <br />From your last log on:</h5>
+				<li><h5>Welcome back <security:authentication property="principal.firstName"/>. <br />From your last log on:</h5>
 					<ul>
 						<li>you have <b>23</b> new messages</li>
 			

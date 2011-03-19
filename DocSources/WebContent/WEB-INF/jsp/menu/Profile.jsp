@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-				<li><a id="advsearchMenu" href="<c:url value="/src/ShowAdvancedSearchMenu.do"/>"></a></li>
+				<li><a id="advsearchMenu" href="<c:url value="/src/ChoiceAdvancedSearch.do"/>"></a></li>
 			<security:authorize ifNotGranted="ROLE_GUESTS">
 				<li><a id="chronologyMenu" href="#"></a></li>
 				<li><a id="myprofileMenu" href="<c:url value="/user/ShowUserProfile.do"/>" title="MY PROFILE"></a></li>

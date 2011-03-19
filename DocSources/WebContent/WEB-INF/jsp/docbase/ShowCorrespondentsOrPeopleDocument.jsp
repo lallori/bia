@@ -17,15 +17,18 @@
 	</security:authorize>
 		<hr id="lineSeparator"/>
 		<ul>
-			<li><b>Sender:</b> ${document.senderPeople.mapNameLf}</li>
-			<li><b>From:</b> ${document.senderPlace.placeNameFull} </li>
-			<li><b>To:</b> ${document.recipientPlace.placeNameFull}</li>		
-			<li><b>Recipient:</b> ${document.recipientPeople.mapNameLf}</li>
+			<li><b>Sender:</b> <a class="linkSearch" href="">${document.senderPeople.mapNameLf}</a></li>
+			<li><b>From:</b> <a class="linkSearch" href="">${document.senderPlace.placeNameFull} </a></li>
+			<li><b>To:</b> <a class="linkSearch" href="">${document.recipientPlace.placeNameFull}</a></li>		
+			<li><b>Recipient:</b> <a class="linkSearch" href="">${document.recipientPeople.mapNameLf}</a></li>
 			<li>
 				<b>People:</b>
 				<ul>
 				<c:forEach items="${document.epLink}" var="currentPeople">
-					<li>${currentPeople.people.mapNameLf}</li>
+					<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+						<c:param name="personId"   value="${currentPeople.people.personId}" />
+					</c:url>
+					<li><a class="linkSearch" href="${ShowPersonURL}">${currentPeople.people.mapNameLf}</a></li>
 					<br/>
 				</c:forEach>
 				</ul>
@@ -46,6 +49,11 @@
 			$j("#EditCorrespondentsOrPeopleDocument").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditCorrespondentsOrPeopleDocumentDiv").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j(".linkSearch").click(function() {
+				$j("#body_right").load($j(this).attr("href"));
 				return false;
 			});
 			 

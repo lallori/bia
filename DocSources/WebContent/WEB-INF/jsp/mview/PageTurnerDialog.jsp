@@ -144,7 +144,7 @@
 			$j("#previous").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImage}'});
 			$j("#next").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImage}'});
 			
-			var $dialogPersonalNotes = $j('<div id="DialogPersonalNotes"></div>').dialog({                                                                                                                                                                   
+			var $dialogPersonalNotes = $j('<div id="DialogPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
 				autoOpen: false,
 				width: 352,
 				minWidth: 350,
@@ -185,7 +185,7 @@
 				$j('#exit').dialog('open'); 
 			});
 			
-			$j('#personalNotes').click(function() {
+			$j('#personalNotesButton').click(function() {
 				if ($dialogPersonalNotes.dialog("isOpen")) {
 					$dialogPersonalNotes.dialog("close");
 					return false;

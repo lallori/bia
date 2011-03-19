@@ -43,7 +43,7 @@ Joana Amill <joana.amill@gmail.com>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-1.2.js"/>"/></script>
 		
 		<!-- jquery dialog -->
-		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery-1.5.min.js"/>"/></script>                                                                                                
+		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.min.js"/>"/></script>                                                                                                
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery-ui-1.8.9.custom.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.dialogextend.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.pageTurner.js"/>"/></script>

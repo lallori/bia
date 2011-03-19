@@ -65,7 +65,7 @@
 		</fieldset>	
 	</form:form>
 	
-	<form:form id="EditPeopleDocumentForm" method="post" cssClass="edit">
+	<form:form id="PeopleCorrespondentsDocumentsForm" method="post" cssClass="edit">
 		<fieldset>	
 		
 			<div>
@@ -84,16 +84,18 @@
 
 			<div>
 				<input id="people_${currentPerson.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPerson.people.mapNameLf}" disabled="disabled"/>
-				<a id="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentUrl}"></a>
+				<a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentUrl}"></a>
 				<a class="editValue" href="${EditPersonDocumentUrl}">edit value</a>
 				<a title="Show this person record" id="personIcon" href="#"></a>
 			</div>
 		</c:forEach>
 			<br>			
 			<div>
-				<a id="close" href=""></a>
 				<a id="AddNewValue" title="Add new person" href="${AddPersonUrl}"></a>
-			</div>	
+			</div>
+			<img src="/DocSources/images/1024/img_transparent.png">
+			<br>
+			<br>
 		</fieldset>
 	</form:form>
 		

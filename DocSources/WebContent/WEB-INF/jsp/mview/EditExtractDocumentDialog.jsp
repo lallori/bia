@@ -41,6 +41,8 @@
 							} 
 						});
 				}
+				$j("#EditSynopsisDocumentDiv").dialog( "open" );
+
 				return false;
 			});
 
