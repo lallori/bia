@@ -4,8 +4,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditNamesPersonURL" value="/de/peoplebase/EditNamesPerson.do">
+			<c:param name="personId"   value="${person.personId}" />
+		</c:url>
+	</security:authorize>
+
 <div id="EditNamesPersonDiv">
-	<h5>NAMES <a id="EditNamesPerson" href="/DocSources/de/peoplebase/NamesPerson.html">edit</a></h5>
+	<h5>NAMES </h5>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="EditNamesPerson" href="${EditNamesPersonURL}">edit</a><span id="loading"/>
+	</security:authorize>
+
 	<hr id="lineSeparator"/>
 
 	<ul>
@@ -15,3 +25,21 @@
 	</ul>
 </div>
 
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#EditDetailsPerson").css('visibility', 'visible');
+	        $j("#EditTitlesOccupationsPerson").css('visibility', 'visible'); 
+			$j("#EditParentsPerson").css('visibility', 'visible');
+			$j("#EditChildrenPerson").css('visibility', 'visible');
+			$j("#EditSpousesPerson").css('visibility', 'visible');
+	        $j("#EditResearchNotesPerson").css('visibility', 'visible'); 
+
+			$j("#EditNamesPerson").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditNamesPersonDiv").load($j(this).attr("href"));
+				return false;
+			});
+		});
+	</script>
+</security:authorize>

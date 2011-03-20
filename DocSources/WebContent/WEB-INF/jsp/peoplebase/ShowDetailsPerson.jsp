@@ -5,26 +5,24 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
-		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
+		<c:url var="EditDetailsPersonURL" value="/de/peoplebase/EditDetailsPerson.do">
+			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
 	</security:authorize>
 
 	<div id="EditDetailsPersonDiv">
-		<div id="createdby"><h6>CREATED BY ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></h6></div>
-		<h5>PERSON DETAILS <a id="EditDetailsPerson" href="/DocSources/de/peoplebase/EditDetailsPerson.do">edit</a></h5>
+		<h5>PERSON DETAILS</h5>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="EditDetailsPerson" href="${EditDetailsPersonURL}">edit</a><span id="loading"/>
+	</security:authorize>
+		<div id="CreatedSharePrintDiv">
+			<div id="createdby">CREATED BY ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
+			<a title="Print this record" href="#" id="buttonPrint"></a>
+			<div id="buttonShareLink">
+				<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
+				<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
+			</div>
+		</div>
 		<hr id="lineSeparator"/>
 		<div id="EditPortraitPersonDiv">
 			<img src="/DocSources/images/default_user.jpg" alt="default image" />
@@ -42,3 +40,22 @@
 			<li><b>Active End:</b> ${person.activeEnd}</li>
 		</ul>
 	</div>
+
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#EditNamesPerson").css('visibility', 'visible');
+	        $j("#EditTitlesOccupationsPerson").css('visibility', 'visible'); 
+			$j("#EditParentsPerson").css('visibility', 'visible');
+			$j("#EditChildrenPerson").css('visibility', 'visible');
+			$j("#EditSpousesPerson").css('visibility', 'visible');
+	        $j("#EditResearchNotesPerson").css('visibility', 'visible'); 
+
+			$j("#EditDetailsPerson").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditDetailsPersonDiv").load($j(this).attr("href"));
+				return false;
+			});
+		});
+	</script>
+</security:authorize>

@@ -4,10 +4,38 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditParentsPersonURL" value="/de/peoplebase/EditParentsPerson.do">
+			<c:param name="personId"   value="${person.personId}" />
+		</c:url>
+	</security:authorize>
+
 <div id="EditParentsPersonDiv">	
-	<b>Parents:</b> <a id="EditParentsPerson" href="/DocSources/de/peoplebase/ParentsPerson.html">edit</a>
+	<b>Parents:</b>
+ 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<a id="EditParentsPerson" href="${EditParentsPersonURL}">edit</a><span id="loading"/>
+	</security:authorize>
 	<ul>
 		<li>Father: <a href="#" id="linkSearch">${person.father.last}, ${person.father.first} ${person.father.sucNum}</a> <p id="info"><u>Birth:</u> ${person.father.bYear} | <u>Death:</u> ${person.father.dYear}</p></li>
 		<li>Mother: <a href="#" id="linkSearch">${person.mother.last}, ${person.mother.first} ${person.mother.sucNum}</a> <p id="info"><u>Birth:</u> ${person.mother.bYear} | <u>Death:</u> ${person.mother.dYear}</p></li>
 	</ul>
 </div>
+
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#EditDetailsPerson").css('visibility', 'visible');
+			$j("#EditNamesPerson").css('visibility', 'visible');
+	        $j("#EditTitlesOccupationsPerson").css('visibility', 'visible'); 
+			$j("#EditChildrenPerson").css('visibility', 'visible');
+			$j("#EditSpousesPerson").css('visibility', 'visible');
+	        $j("#EditResearchNotesPerson").css('visibility', 'visible'); 
+
+			$j("#EditParentsPerson").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditParentsPersonDiv").load($j(this).attr("href"));
+				return false;
+			});
+		});
+	</script>
+</security:authorize>
