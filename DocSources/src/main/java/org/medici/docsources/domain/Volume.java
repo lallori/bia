@@ -63,6 +63,7 @@ import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
+import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
 import org.medici.docsources.common.util.VolumeUtils;
 
 /**
@@ -162,9 +163,11 @@ public class Volume implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String startMonth;
 	
-	@Column (name="\"STARTMONTHNUM\"", length=10)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"STARTMONTHNUM\"", nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer startMonthNum;
+	@FieldBridge(impl=MonthBridge.class)
+	private Month startMonthNum;
 	
 	@Column (name="\"STARTDAY\"", length=3, columnDefinition="TINYINT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -178,9 +181,11 @@ public class Volume implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String endMonth;
 	
-	@Column (name="\"ENDMONTHNUM\"", length=10)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"ENDMONTHNUM\"", nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer endMonthNum;
+	@FieldBridge(impl=MonthBridge.class)
+	private Month endMonthNum;
 	
 	@Column (name="\"ENDDAY\"", length=3, columnDefinition="TINYINT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -564,14 +569,14 @@ public class Volume implements Serializable {
 	/**
 	 * @return the startMonthNum
 	 */
-	public Integer getStartMonthNum() {
+	public Month getStartMonthNum() {
 		return startMonthNum;
 	}
 	
 	/**
 	 * @param startMonthNum the startMonthNum to set
 	 */
-	public void setStartMonthNum(Integer startMonthNum) {
+	public void setStartMonthNum(Month startMonthNum) {
 		this.startMonthNum = startMonthNum;
 	}
 	
@@ -651,14 +656,14 @@ public class Volume implements Serializable {
 	/**
 	 * @return the endMonthNum
 	 */
-	public Integer getEndMonthNum() {
+	public Month getEndMonthNum() {
 		return endMonthNum;
 	}
 	
 	/**
 	 * @param endMonthNum the endMonthNum to set
 	 */
-	public void setEndMonthNum(Integer endMonthNum) {
+	public void setEndMonthNum(Month endMonthNum) {
 		this.endMonthNum = endMonthNum;
 	}
 	
