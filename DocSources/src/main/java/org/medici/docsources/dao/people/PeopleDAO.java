@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.People.Gender;
 
 /**
  * Person Dao.
@@ -42,6 +43,15 @@ import org.medici.docsources.domain.People;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface PeopleDAO extends Dao<Integer, People> {
+
+	/**
+	 * 
+	 * @param personId
+	 * @param gender
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<People> findChildren(Integer personId, Gender gender) throws PersistenceException;
 
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.People} 
@@ -53,14 +63,14 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public People findLastEntryPerson() throws PersistenceException;
-
+	
 	/**
 	 * This method generate Hibernate search index.
 	 * 
 	 * @throws PersistenceException
 	 */
 	public void generateIndex() throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param text

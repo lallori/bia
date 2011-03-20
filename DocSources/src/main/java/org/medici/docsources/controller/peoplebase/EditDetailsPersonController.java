@@ -121,7 +121,7 @@ public class EditDetailsPersonController {
 		People people = new People();
 
 		try {
-			people = getPeopleBaseService().findPeople(command.getPersonId());
+			people = getPeopleBaseService().findPerson(command.getPersonId());
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/EditDetailsPerson", model);
 		}

@@ -27,14 +27,18 @@
  */
 package org.medici.docsources.dao.marriage;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Marriage;
+import org.medici.docsources.domain.People.Gender;
 import org.springframework.stereotype.Repository;
 
 /**
- * Implementazione di esempio di un dao applicativo. La classe deve estendere il
- * jpaDao che fornisce i servizi piu' comuni (persit, findById e delete) JPA
- * DAO.
+ * <b>MarriageDAOJpaImpl</b> is a default implementation of <b>MarriageDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -60,5 +64,36 @@ public class MarriageDAOJpaImpl extends JpaDao<Integer, Marriage> implements Mar
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 1983037420201461403L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Marriage> findPersonMarriages(Integer personId, Gender gender) throws PersistenceException {
+        String queryJPQL = "FROM Marriage WHERE ";
+        if ((gender == null) || (gender.equals(Gender.X))) {
+        	queryJPQL += "husband.personId = :husbandId or wife.personId = :wifeId ";
+        } else if (gender.equals(Gender.M)) {
+        	queryJPQL += "husband.personId = :husbandId";
+        } else if (gender.equals(Gender.F)) {
+        	queryJPQL += "wife.personId = :wifeId";
+        }
+    	
+        Query query = getEntityManager().createQuery(queryJPQL);
+
+        if ((gender == null) || (gender.equals(Gender.X))) {
+	        query.setParameter("husbandId", personId);
+	        query.setParameter("wifeId", personId);
+        } else if (gender.equals(Gender.M)) {
+	        query.setParameter("husbandId", personId);
+        } else if (gender.equals(Gender.F)) {
+	        query.setParameter("wifeId", personId);
+        }
+
+		List<Marriage> result = query.getResultList();
+		
+		return result;
+	}
 
 }

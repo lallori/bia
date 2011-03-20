@@ -65,11 +65,11 @@ public class Marriage implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="\"HUSBANDID\"")
-	private People husbandId;
+	private People husband;
 	
 	@ManyToOne
 	@JoinColumn(name="\"WIFEID\"")
-	private People wifeId;
+	private People wife;
 	
 	@Column (name="\"STARTDAY\"", length=10)
 	private Integer startDay;
@@ -120,36 +120,42 @@ public class Marriage implements Serializable {
 	public Integer getMarriageId() {
 		return marriageId;
 	}
+	
 	/**
 	 * @param marriageId the marriageId to set
 	 */
 	public void setMarriageId(Integer marriageId) {
 		this.marriageId = marriageId;
 	}
+	
 	/**
-	 * @return the husbandId
+	 * @return the husband
 	 */
-	public People getHusbandId() {
-		return husbandId;
+	public People getHusband() {
+		return husband;
 	}
+	
 	/**
-	 * @param husbandId the husbandId to set
+	 * @param husband the husband to set
 	 */
-	public void setHusbandId(People husbandId) {
-		this.husbandId = husbandId;
+	public void setHusband(People husband) {
+		this.husband = husband;
 	}
+	
 	/**
-	 * @return the wifeId
+	 * @return the wife
 	 */
-	public People getWifeId() {
-		return wifeId;
+	public People getWife() {
+		return wife;
 	}
+	
 	/**
-	 * @param wifeId the wifeId to set
+	 * @param wife the wife to set
 	 */
-	public void setWifeId(People wifeId) {
-		this.wifeId = wifeId;
+	public void setWife(People wife) {
+		this.wife = wife;
 	}
+	
 	/**
 	 * @return the startDay
 	 */

@@ -31,8 +31,10 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -51,6 +53,15 @@ import org.medici.docsources.exception.ApplicationThrowable;
 public interface PeopleBaseService {
 
 	/**
+	 * 
+	 * @param personId
+	 * @param gender
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> findChildren(Integer personId, Gender gender) throws ApplicationThrowable;
+
+	/**
 	 * This method last entry {@link org.medici.docsources.domain.People}.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.People}
@@ -60,10 +71,19 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param peopleId
+	 * @param personId
 	 * @return
 	 */
-	public People findPeople(Integer peopleId) throws ApplicationThrowable;
+	public People findPerson(Integer personId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @param gender
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Marriage> findPersonMarriages(Integer personId, Gender gender) throws ApplicationThrowable;
 
 	/**
 	 * 

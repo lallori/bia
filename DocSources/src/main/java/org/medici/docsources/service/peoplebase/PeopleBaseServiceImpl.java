@@ -36,13 +36,16 @@ import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
+import org.medici.docsources.dao.marriage.MarriageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.polink.PoLinkDAO;
 import org.medici.docsources.dao.rolecat.RoleCatDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
+import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,6 +71,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	private EpLinkDAO epLinkDAO;
 	
 	@Autowired
+	private MarriageDAO marriageDAO;
+
+	@Autowired
 	private MonthDAO monthDAO;
 
 	@Autowired
@@ -86,6 +92,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<People> findChildren(Integer personId, Gender gender) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().findChildren(personId, gender);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public People findLastEntryPerson() throws ApplicationThrowable {
 		try {
 			return getPeopleDAO().findLastEntryPerson();
@@ -98,12 +116,24 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public People findPeople(Integer peopleId)  throws ApplicationThrowable {
+	public People findPerson(Integer personId)  throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().find(peopleId);
+			return getPeopleDAO().find(personId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Marriage> findPersonMarriages(Integer personId, Gender gender) throws ApplicationThrowable {
+		try {
+			return getMarriageDAO().findPersonMarriages(personId, gender);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
 	}
 
 	/**
@@ -230,6 +260,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		return epLinkDAO;
 	}
 
+	public MarriageDAO getMarriageDAO() {
+		return marriageDAO;
+	}
+
 	/**
 	 * @return the monthDAO
 	 */
@@ -339,6 +373,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
 		this.epLinkDAO = epLinkDAO;
+	}
+
+	public void setMarriageDAO(MarriageDAO marriageDAO) {
+		this.marriageDAO = marriageDAO;
 	}
 
 	/**

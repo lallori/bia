@@ -51,6 +51,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.People.Gender;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -87,6 +88,35 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> findChildren(Integer personId, Gender gender) throws PersistenceException {
+        String queryJPQL = "FROM People WHERE ";
+        if ((gender == null) || (gender.equals(Gender.X))) {
+        	queryJPQL += "father.personId = :fatherId or mother.personId = :motherId ";
+        } else if (gender.equals(Gender.M)) {
+        	queryJPQL += "father.personId = :fatherId";
+        } else if (gender.equals(Gender.F)) {
+        	queryJPQL += "mother.personId = :motherId";
+        }
+    	
+        Query query = getEntityManager().createQuery(queryJPQL);
+
+        if ((gender == null) || (gender.equals(Gender.X))) {
+	        query.setParameter("fatherId", personId);
+	        query.setParameter("motherId", personId);
+        } else if (gender.equals(Gender.M)) {
+	        query.setParameter("fatherId", personId);
+        } else if (gender.equals(Gender.F)) {
+	        query.setParameter("motherId", personId);
+        }
+
+		return query.getResultList();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public People findLastEntryPerson() throws PersistenceException {
         Query query = getEntityManager().createQuery("FROM People ORDER BY dateCreated DESC");
@@ -94,7 +124,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
         return (People) query.getSingleResult();
 	}
-	
+
 	/**
 	 * @return the logger
 	 */

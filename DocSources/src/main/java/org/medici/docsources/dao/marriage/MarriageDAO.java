@@ -27,8 +27,13 @@
  */
 package org.medici.docsources.dao.marriage;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Marriage;
+import org.medici.docsources.domain.People.Gender;
 
 /**
  * Marriage Dao.
@@ -36,5 +41,14 @@ import org.medici.docsources.domain.Marriage;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface MarriageDAO extends Dao<Integer, Marriage> {
+
+	/**
+	 * 
+	 * @param personId
+	 * @param gender
+	 * @return
+	 * @throws PersistenceException
+	 */
+	List<Marriage> findPersonMarriages(Integer personId, Gender gender) throws PersistenceException;
 
 }
