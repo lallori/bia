@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
+		<c:url var="EditTopicsDocumentURL" value="/de/docbase/EditTopicsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
@@ -13,7 +13,7 @@
 	<div id="EditTopicsDocumentDiv">
 		<h5>TOPICS </h5>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditTopicsDocument" href="${EditTopicsDocument}">edit</a><span id="loading"/>
+		<a id="EditTopicsDocument" href="${EditTopicsDocumentURL}">edit</a><span id="loading"/>
 	</security:authorize>
 		<hr id="lineSeparator"/>
 		<ul>

@@ -4,22 +4,22 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShareDocument" value="/de/docbase/ShowDocumentShared.do">
+	<c:url var="ShareDocumentURL" value="/de/docbase/ShowDocumentShared.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
 	
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditDetailsDocument" value="/de/docbase/EditDetailsDocument.do">
+		<c:url var="EditDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 
-		<c:url var="ShowDocumentInManuscriptViewer" value="/src/mview/ShowDocumentInManuscriptViewer.do">
+		<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 			<c:param name="flashVersion"   value="false" />
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="ShowDocumentExplorer" value="/src/docbase/ShowExplorerDocument.do">
+	<c:url var="ShowDocumentExplorerURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 		<c:param name="volNum"   value="${document.volume.volNum}" />
 		<c:param name="volLetExt"   value="${document.volume.volLetExt}" />
@@ -33,7 +33,7 @@
 	<div id="EditDetailsDocumentDiv">
 		<h5>DOCUMENT DETAILS </h5>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditDetailsDocument" href="${EditDetailsDocument}">edit</a><span id="loading"/>
+		<a id="EditDetailsDocument" href="${EditDetailsDocumentURL}">edit</a><span id="loading"/>
 	</security:authorize>
 		<div id="CreatedSharePrintDiv">
 			<div id="createdby">CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
@@ -47,7 +47,7 @@
 		<div id="DocumentImageDiv">
 			<c:if test="${not empty image}">
 			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
-			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewer}">Show in manuscript viewer</a></p>
+			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a></p>
 			</c:if>
 			<c:if test="${empty image}">
 			<img src="<c:url value="/images/image_document.png"/>" alt="document image" />
@@ -86,7 +86,7 @@
 			});
 
 			$j("#EditDetailsDocumentDiv").documentExplorer( {  
-				showExplorerDocumentUrl     : "${ShowDocumentExplorer}",
+				showExplorerDocumentUrl     : "${ShowDocumentExplorerURL}",
 				target                      : $j("#body_right")
 			});  
 

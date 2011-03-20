@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditFactCheckDocument" value="/de/docbase/EditFactCheckDocument.do">
+		<c:url var="EditFactCheckDocumentURL" value="/de/docbase/EditFactCheckDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
@@ -13,7 +13,7 @@
 	<div id="EditFactCheckDocumentDiv">
 		<h5>FACT CHECK </h5>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditFactCheckDocument" href="${EditFactCheckDocument}">edit</a><span id="loading"/>
+		<a id="EditFactCheckDocument" href="${EditFactCheckDocumentURL}">edit</a><span id="loading"/>
 	</security:authorize>
 		<hr id="lineSeparator"/>
 		<ul>

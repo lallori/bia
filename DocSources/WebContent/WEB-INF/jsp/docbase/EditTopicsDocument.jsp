@@ -36,8 +36,8 @@
 			</c:url>
 			<div>
       			<input id="topic_${currentTopicAndPlace.eplToId}" name="topic_${currentTopicAndPlace.eplToId}" class="input_28c_disabled" type="text" value="${currentTopicAndPlace}" disabled="disabled" />
-				<a id="deleteIcon" title="Delete this entry" href="${DeleteTopicDocument}"></a>
-				<a id="editValue" class="editValue" href="${EditTopicDocument}">edit value</a>
+				<a class="deleteIcon" title="Delete this entry" href="${DeleteTopicDocument}"></a>
+				<a class="editValue" class="editValue" href="${EditTopicDocument}">edit value</a>
 				<c:if test="${not empty currentTopicAndPlace.topic}">
 				<a id="topicDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
 				</c:if>
