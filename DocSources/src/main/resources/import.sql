@@ -54,10 +54,27 @@ update tblPeople set gender = 'F' where gender = 'f';
 update tblPeople set gender = 'X' where gender = 'x';
 update tblPeople set gender = null where gender = '';
 
--- Birth month num cannot be 0
-update docsources.tblpeople set bmonthnum = null where bmonthnum = 0;
--- Death month num cannot be 0
-update docsources.tblpeople set dmonthnum = null where dmonthnum = 0;
+-- Months: month 13 is invalid
+delete from tblMonths where monthNum = 13;
+
+-- Documents : docMonthNum 0 or 13 must be setted to null
+update docsources.tblDocuments set docMonthNum = null where docMonthNum = 0;
+update docsources.tblDocuments set docMonthNum = null where docMonthNum = 13;
+
+-- People : Birth month num 0 or 13 must be setted to null
+update docsources.tblPeople set bMonthNum = null where bMonthNum = 0;
+update docsources.tblPeople set bMonthNum = null where bMonthNum = 13;
+-- People : Death month num 0 or 13 must be setted to null
+update docsources.tblPeople set dMonthNum = null where dMonthNum = 0;
+update docsources.tblPeople set dMonthNum = null where dMonthNum = 13;
+
+-- Volumes : start Document Month num 0 or 13 must be setted to null
+update docsources.tblVolumes set startMonthNum = null where startMonthNum = 0;
+update docsources.tblVolumes set startMonthNum = null where startMonthNum = 13;
+
+-- Volumes : end Document Month num 0 or 13 must be setted to null
+update docsources.tblVolumes set endMonthNum = null where endMonthNum = 0;
+update docsources.tblVolumes set endMonthNum = null where endMonthNum = 13;
 
 -- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
 update tblimages set imageType = substr(imageName, 6,1);
