@@ -3,10 +3,19 @@
 
 <tiles-definitions>
 
+    <definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp">
+    </definition>
+    
+    <definition name="template.compare" template="/WEB-INF/templates/compare.jsp">
+    </definition>
+
     <definition name="template.completeDOM" template="/WEB-INF/templates/completeDOM.jsp">
         <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp"/>
     </definition>
         
+    <definition name="template.document" template="/WEB-INF/templates/document.jsp">
+    </definition>
+
     <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp">
     </definition>
 
@@ -32,15 +41,9 @@
 	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp">
     </definition>
 
-    <definition name="template.document" template="/WEB-INF/templates/document.jsp">
-    </definition>
-
     <definition name="template.person" template="/WEB-INF/templates/person.jsp">
     </definition>
 
-    <definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp">
-    </definition>
-    
     <definition name="template.volume" template="/WEB-INF/templates/volume.jsp">
     </definition>
 
@@ -158,6 +161,11 @@
 	<definition name="docbase/ChoiceStartFolioModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ChoiceStartFolioModalWindow.jsp"/>
 	</definition>
+
+	<definition name="docbase/CompareDocument" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/CompareDocument.jsp"/>
+	</definition>
+
 	<definition name="docbase/EditCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditCorrespondentsOrPeopleDocument.jsp"/>
 	</definition>
@@ -244,6 +252,10 @@
 	<!-- DocBase Module END -->
 
 	<!-- GeoBase Module START -->
+	<definition name="geobase/ComparePlace" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ComparePlace.jsp"/>
+	</definition>
+
 	<definition name="geobase/ShowPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowPlace.jsp"/>
 	</definition>
@@ -284,6 +296,10 @@
 	<!--  Manuscript Viewer END -->
 
 	<!-- PeopleBase Module START -->
+	<definition name="peoplebase/ComparePerson" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ComparePerson.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/EditDetailsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditDetailsPerson.jsp"/>
 	</definition>
@@ -349,6 +365,9 @@
 	<!-- Search Module END -->
 
 	<!-- VolBase Module START -->
+	<definition name="volbase/CompareVolume" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/CompareVolume.jsp"/>
+	</definition>
 
 	<definition name="volbase/EditContextVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditContextVolume.jsp"/>
