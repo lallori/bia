@@ -12,7 +12,7 @@
 		<label for="wordSearch" id="wordSearchLabel">Word Search: <a href="#" class="helpLink">?</a></label> 
 		<input id="wordSearch" name="wordSearch" class="input_15c" type="text" value=""/>
 		in 
-		<select id="fromDateMonthSearch" name="fromDateMonthSearch" class="selectform_MXlong">
+		<select id="wordSearchIn" name="fromDateMonthSearch" class="selectform_MXlong">
 			<option value="Synopsis and Extract" selected="selected">Synopsis and Extract</option>
 			<option value="Document Synopsis">Document Synopsis</option>
 			<option value="Document Extract">Document Extract</option>
@@ -25,7 +25,7 @@
 	<form id="volumeSearchForm" method="post" class="edit">
 		<label for="volumeSearch" id="volumeSearchLabel">Volume:  <a href="#" class="helpLink">?</a></label> 
 		<input id="volumeSearch" name="volumeSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#" id="addSearchFilter">Add</a>
+		<a href="#" id="AddVolumeSearch">Add</a>
 	</form>
 </div>
 
@@ -154,14 +154,99 @@
 		<a href="#">Add</a>
 	</form>
 </div>
-
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#wordSearchForm").advancedSearch( {  
-				target : $j("#body_right")
-			});  
+			$j("#AddWordSearch").click(function(){
+				var searchElement = "				<div class=\"searchFilterDiv\">																		   " +
+				"					<span class=\"categorySearch\">Word Search</span>                                                  " +
+				"					in                                                                                                 " +
+				"					<span class=\"categorySearch\">" + $j("#wordSearchIn").val()+ "</span>                                        " +
+				"					<span class=\"wordSearch\">" + $j("#wordSearch").val() + "</span>                                                            " +
+				"					<a class=\"remove\" href=\"#\">(remove)</a>                                                        " +
+				"				</div>                                                                                                 " +
+				"				                                                                                                       " +
+				"				<div class=\"andOrNotAdvancedSearchDiv\">                                                              " +
+				"					<select id=\"andOrNotAdvancedSearch\" name=\"andOrNotAdvancedSearch\" class=\"selectform_medium\"> " +
+				"						<option value=\"\" selected=\"selected\"></option>                                             " +
+				"						<option value=\"And\">And</option>                                                             " +
+				"						<option value=\"Or\">Or</option>                                                               " +
+				"						<option value=\"Not\">Not</option>                                                             " +
+				"						<option value=\"And (\">And (</option>                                                         " +
+				"						<option value=\"Or (\">Or (</option>                                                           " +
+				"						<option value=\")\">)</option>                                                                 " +
+				"					</select>                                                                                          " +
+				"				</div>                                                                                                 " +
+				"			                                                                                                           ";
 
-			$j("#buttonShareLink").click(function() {
-				window.open('/DocSources/de/peoplebase/CreatePerson.html','ADD NEW PERSON','width=490,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+				if ($j("#wordSearchDiv").length ==0) {
+					$j("#customSearchFilterForm").append("<div id=\"wordSearchDiv\">" +
+					"				<hr>" +
+					"</div>" +
+					"	<div class=\"andOrNotAdvancedSearchDiv\"> " +
+					"		<select class=\"selectform_medium\" name=\"andOrNotAdvancedSearch\" id=\"andOrNotAdvancedSearch\"> " +
+					"			<option selected=\"selected\" value=\"And\">And</option> " +
+					"			<option value=\"Or\">Or</option> " +
+					"			<option value=\"Not\">Not</option> " +
+					"		</select> " +
+					"	</div> " +
+					"	<hr>"
+					);
+				} 
+
+				if ($j("#wordSearchDiv").children(".searchFilterDiv").length == 0) {
+					$j("#wordSearchDiv").prepend(searchElement);
+				} else {
+					$j("#wordSearchDiv hr:last").before(searchElement);
+				}
+				return false;
 			});
-</script>
+				
+			$j("#AddVolumeSearch").click(function(){
+				var searchElement = "				<div class=\"searchFilterDiv\">" +
+				"					<span class=\"categorySearch\">Volume Search</span> " +
+				"					in                                                                                                 " +
+				"					<span class=\"categorySearch\">Volume: </span>                                        " +
+				"					<span class=\"wordSearch\">" + $j("#volumeSearch").val() + "</span>                                                            " +
+				"					<a class=\"remove\" href=\"#\">(remove)</a>                                                        " +
+				"				</div>                                                                                                 " +
+				"				                                                                                                       " +
+				"				<div class=\"andOrNotAdvancedSearchDiv\">                                                              " +
+				"					<select id=\"andOrNotAdvancedSearch\" name=\"andOrNotAdvancedSearch\" class=\"selectform_medium\"> " +
+				"						<option value=\"\" selected=\"selected\"></option>                                             " +
+				"						<option value=\"And\">And</option>                                                             " +
+				"						<option value=\"Or\">Or</option>                                                               " +
+				"						<option value=\"Not\">Not</option>                                                             " +
+				"						<option value=\"And (\">And (</option>                                                         " +
+				"						<option value=\"Or (\">Or (</option>                                                           " +
+				"						<option value=\")\">)</option>                                                                 " +
+				"					</select>                                                                                          " +
+				"				</div>                                                                                                 " +
+				"			                                                                                                           ";
+
+				if ($j("#volumeSearchDiv").length ==0) {
+					$j("#customSearchFilterForm").append("<div id=\"volumeSearchDiv\">" +
+					"				<hr>" +
+					"</div>" +
+					"	<div class=\"andOrNotAdvancedSearchDiv\"> " +
+					"		<select class=\"selectform_medium\" name=\"andOrNotAdvancedSearch\" id=\"andOrNotAdvancedSearch\"> " +
+					"			<option selected=\"selected\" value=\"And\">And</option> " +
+					"			<option value=\"Or\">Or</option> " +
+					"			<option value=\"Not\">Not</option> " +
+					"		</select> " +
+					"	</div> " +
+					"	<hr>"
+					);
+				} 
+
+				if ($j("#volumeSearchDiv").children(".searchFilterDiv").length == 0) {
+					$j("#volumeSearchDiv").prepend(searchElement);
+				} else {
+					$j("#volumeSearchDiv hr:last").before(searchElement);
+					return false;
+				}
+
+				$j("#volumeSearchDiv").prepend(searchElement);
+			});			
+		});
+
+	</script>

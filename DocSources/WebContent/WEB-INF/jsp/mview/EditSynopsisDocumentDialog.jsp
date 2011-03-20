@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowDocumentUrl" value="/src/docbase/ShowDocument.do">
+	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 		<c:param name="entryId" value="${command.entryId}"></c:param>
 	</c:url>
 
@@ -25,6 +25,7 @@
 					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
 							$j("#EditSynopsisDocumentDiv").html(html);
 							synopsisChanged=false;
+							window.opener.$j("#body_left").load('${ShowDocumentURL}');
 						} 
 					});
 				}
@@ -36,11 +37,11 @@
 						if(html.match(/inputerrors/g)){
 							$j("#EditSynopsisDocumentDiv").html(html);
 							synopsisChanged=false;
-							window.opener.$j("#body_left").load('${ShowDocumentUrl}');
+							window.opener.$j("#body_left").load('${ShowDocumentURL}');
 						} else {
 							$j("#EditSynopsisDocumentDiv").html(html);
 							synopsisChanged=false;
-							window.opener.$j("#body_left").load('${ShowDocumentUrl}');
+							window.opener.$j("#body_left").load('${ShowDocumentURL}');
 							window.close();
 						}
 					}

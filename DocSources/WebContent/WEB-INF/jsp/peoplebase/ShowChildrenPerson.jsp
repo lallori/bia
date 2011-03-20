@@ -7,7 +7,8 @@
 <div id="EditChildrenPersonDiv">
 	<b>Children:</b> <a id="EditChildrenPerson" href="/DocSources/de/peoplebase/ChildrenPerson.html">edit</a>
 	<ul>
-		<li><a href="#" id="linkSearch">Tudor, Mary.</a> <p id="info"><u>Birth:</u> 1516 | <u>Death:</u> 1558</p> </li>
-		<li><a href="#" id="linkSearch">Tudor, Elizabeth.</a> <p id="info"><u>Birth:</u> 1516 | <u>Death:</u> 1558</p> </li>
+	<c:forEach items="${children}" var="currentChildren">
+		<li><a href="#" id="linkSearch">${currentChildren.last}, ${currentChildren.first} ${currentChildren.sucNum}</a> <p id="info"><u>Birth:</u> ${currentChildren.bYear} | <u>Death:</u> ${currentChildren.dYear}</p> </li>
+	</c:forEach>
 	</ul>
 </div>

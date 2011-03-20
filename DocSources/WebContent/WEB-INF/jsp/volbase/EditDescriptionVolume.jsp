@@ -102,23 +102,6 @@
 				return false;
 			});
 	        
-			$j('#no').click(function() { 
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j('#question').hide();
-				$j('#EditDescriptionVolumeDiv').append($j("#question"));
-				$j(".blockUI").remove();
-	            return false; 
-	        }); 
-	        
-			$j('#yes').click(function() { 
-				$j.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
-					$j("#body_left").html(html);
-	 			}});
-				
-				return false; 
-	        }); 
-
 	        $j("#EditDescriptionVolumeForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					$j("#EditDescriptionVolumeDiv").html(html);
@@ -127,3 +110,28 @@
 			});
 		});
 	</script>
+
+<div id="question" style="display:none; cursor: default"> 
+	<h1>discard changes?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
+</div>
+
+<script type="text/javascript">
+	$j(document).ready(function() {
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
+			$j.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
+				$j("#body_left").html(html);
+			}});
+				
+			return false; 
+		}); 
+     
+	});
+</script>

@@ -9,9 +9,9 @@
 	<hr id="lineSeparator"/>
 
 	<ul>
-		<c:forEach items="${person.altName}" var="currentName">
-			<li>${currentName.nameType}: <a href="#" id="linkSearch">${currentName.altName}</a></li>
-		</c:forEach>
+	<c:forEach items="${person.altName}" var="currentName">
+		<li>${currentName.nameType}: <a href="#" id="linkSearch">${currentName.namePrefix} ${currentName.altName}</a></li>
+	</c:forEach>
 	</ul>
 </div>
 

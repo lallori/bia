@@ -34,11 +34,11 @@
 		<ul id="activeEnd">
 			<li><b>Gender:</b> ${person.gender}</li>
 			<li><b>Date of Birth:</b> ${person.bornDate}</li>
-			<li><b>Birth Place:</b><a href="#" id="linkSearch">Firenze / Toscana / Italia</a></li>
+			<li><b>Birth Place:</b><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></li>
 			<li><b>Active Start:</b> ${person.activeStart}</li>
 			<li><b>Date of Death:</b> ${person.deathDate}</li>
 			<li><b>Modern Date:</b> 1577</li>
-			<li><b>Death Place:</b> <a href="#" id="linkSearch">Firenze / Toscana / Italia</a></li>
+			<li><b>Death Place:</b> <a href="#" id="linkSearch">${person.deathPlace.placeNameFull}</a></li>
 			<li><b>Active End:</b> ${person.activeEnd}</li>
 		</ul>
 	</div>

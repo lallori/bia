@@ -94,6 +94,21 @@
 				window.open('/DocSources/de/peoplebase/CreatePerson.html','ADD NEW PERSON','width=490,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
 			});
 
+			$j("#buttonShareLink").hover(function(){
+				var iconName = $j(this).find("img").attr("src");
+				var origen =  $j(this).find("img").attr("src");
+				$j(this).find("img").attr("src");
+				$j(this).find("span").attr({"style": 'display:inline'});
+				$j(this).find("span").animate({opacity: 1, top: "-60"}, {queue:false, duration:400});
+			}, function(){
+				var iconName = $j(this).find("img").attr("src");
+				var origen =  $j(this).find("img").attr("src");
+				$j(this).find("img").attr("src");
+				$j(this).find("span").animate({opacity: 0, top: "-50"}, {queue:false, duration:400, complete: function(){
+					$j(this).attr({"style": 'display:none'});
+				}});
+			});
+
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 		});
 	</script>

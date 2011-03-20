@@ -7,8 +7,8 @@
 <div id="EditSpousesPersonDiv">
 	<b>Spouses:</b> <a id="EditSpousesPerson" href="/DocSources/de/peoplebase/SpousesPerson.html">edit</a>
 	<ul>
-		<li><a href="#" id="linkSearch">Aragon, Caterina de</a> <p id="info"><u>Marriage:</u> 1509 - 1533 | <u>Death:</u> 1536</p></li>
-		<li><a href="#" id="linkSearch">Boleyn, Anne</a> <p id="info"><u>Marriage:</u> 1509 - 1533 | <u>Death:</u> 1536</p></li>
-		<li><a href="#" id="linkSearch">Seymour, Jane</a> <p id="info"><u>Marriage:</u> 1509 - 1533 | <u>Death:</u> 1536</p></li>
+	<c:forEach items="${marriages}" var="currentMarriage">
+		<li><a href="#" id="linkSearch">${currentMarriage.wife.last}, ${currentMarriage.wife.first} ${currentMarriage.wife.sucNum}</a> <p id="info"><u>Marriage:</u> ${currentMarriage.startYear} - ${currentMarriage.endYear} | <u>Death:</u> ${currentMarriage.wife.dYear}</p></li>
+	</c:forEach>
 	</ul>
 </div>
