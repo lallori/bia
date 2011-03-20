@@ -284,7 +284,7 @@ public class People implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="people")
 	private Set<EpLink> epLink;
 	
-	//Association alternative Names
+	//Association titles and occupations
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
 	private Set<PoLink> poLink;
 	

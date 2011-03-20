@@ -1,5 +1,5 @@
 /*
- * ShowShowAdvancedSearchMenuController.java
+ * ChoiceAdvancedSearchController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -26,7 +26,7 @@
  * executable file might be covered by the GNU General Public License.
  * 
  */
-package org.medici.docsources.controller.menu;
+package org.medici.docsources.controller.search;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +34,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show Vet Menu".
+ * Controller for action "Choice Advanced Search".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/ShowAdvancedSearchMenu")
-public class ShowAdvancedSearchMenuController {
+@RequestMapping("/src/ChoiceAdvancedSearch")
+public class ChoiceAdvancedSearchController {
 	/**
 	 * 
 	 * @param volumeId
@@ -48,7 +48,7 @@ public class ShowAdvancedSearchMenuController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(){
-		return new ModelAndView("menu/ShowAdvancedSearchModalWindow");
+		return new ModelAndView("search/ChoiceAdvancedSearch");
 	}
 
 }

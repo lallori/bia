@@ -269,12 +269,15 @@ public class Image implements Serializable {
 	}	
 
 	/**
-	 * 
+	 * This enumeration manages recto verso information on folio.
+	 *  
 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
 	 *
 	 */
 	public static enum ImageRectoVerso {
-		R("R"), V("V");
+		R("R"), // Recto 
+		V("V"), // Verso
+		N("N"); // For digitized items without recto or verso.
 		
 		private final String imageRectoVerso;
 
