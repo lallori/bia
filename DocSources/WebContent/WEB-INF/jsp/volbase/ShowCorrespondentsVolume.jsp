@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsVolume" value="/de/volbase/EditCorrespondentsVolume.do">
+		<c:url var="EditCorrespondentsVolumeURL" value="/de/volbase/EditCorrespondentsVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
 	</security:authorize>
@@ -13,7 +13,7 @@
 	<div id="EditCorrespondentsVolumeDiv">
 		<h5>Correspondents </h5>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolume}">edit</a><span id="loading"/>
+		<a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolumeURL}">edit</a><span id="loading"/>
 	</security:authorize>
 		<hr id="lineSeparator"/>
 		
