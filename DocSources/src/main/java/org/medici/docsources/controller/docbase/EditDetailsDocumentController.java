@@ -119,7 +119,7 @@ public class EditDetailsDocumentController {
 			document.setDocTypology(command.getDocTypology());
 			// Date
 			document.setDocYear(command.getDocYear());
-			document.setDocMonthNum(command.getDocMonthNum());
+			document.setDocMonthNum((command.getDocMonthNum() != null) ? new Month(command.getDocMonthNum()) : null);
 			document.setDocDay(command.getDocDay());
 			//Modern Dating
 			document.setYearModern(command.getYearModern());
@@ -132,8 +132,11 @@ public class EditDetailsDocumentController {
 			try {
 				if (command.getEntryId().equals(0)) {
 					document = getDocBaseService().addNewDocument(document);
-					
 					model.put("document", document);
+
+					Image image = getDocBaseService().findDocumentImageThumbnail(document);
+					model.put("image", image);
+
 					return new ModelAndView("docbase/ShowDocument", model);
 				} else {
 					document = getDocBaseService().editDetailsDocument(document);
@@ -199,7 +202,7 @@ public class EditDetailsDocumentController {
 			command.setContDisc(document.getContDisc());
 			command.setDocTypology(document.getDocTypology());
 			command.setDocYear(document.getDocYear());
-			command.setDocMonthNum(document.getDocMonthNum());
+			command.setDocMonthNum((document.getDocMonthNum() != null) ? document.getDocMonthNum().getMonthNum(): null);
 			command.setDocDay(document.getDocDay());
 			command.setYearModern(document.getYearModern());
 			command.setDateUns(document.getDateUns());
@@ -221,7 +224,7 @@ public class EditDetailsDocumentController {
 			// Date
 			command.setDocYear(null);
 			// Empty month is in last positizion
-			command.setDocMonthNum(months.get(months.size()-1).getMonthNum());
+			command.setDocMonthNum(null);
 			command.setDocDay(null);
 			//Modern Dating
 			command.setYearModern(null);

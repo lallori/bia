@@ -28,8 +28,10 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -62,6 +64,12 @@ public class ShowLastEntryPersonController {
 		try {
 			People person = getPeopleBaseService().findLastEntryPerson();
 			model.put("person", person);
+
+			List<People> children = getPeopleBaseService().findChildren(person.getPersonId(), person.getGender());
+			model.put("children", children);
+			
+			List<Marriage> marriages = getPeopleBaseService().findPersonMarriages(person.getPersonId(), person.getGender());
+			model.put("marriages", marriages);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowPerson", model);
 		}

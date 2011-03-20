@@ -109,10 +109,10 @@ public class EditDetailsVolumeController {
 			}
 
 			volume.setStartYear(command.getStartYear());
-			volume.setStartMonthNum(command.getStartMonthNum());
+			volume.setStartMonthNum((command.getStartMonthNum() != null) ? new Month(command.getStartMonthNum()) : null);
 			volume.setStartDay(command.getStartDay());
 			volume.setEndYear(command.getEndYear());
-			volume.setEndMonthNum(command.getEndMonthNum());
+			volume.setEndMonthNum((command.getEndMonthNum() != null) ? new Month(command.getEndMonthNum()) : null);
 			volume.setEndDay(command.getEndDay());
 			volume.setDateNotes(command.getDateNotes());
 
@@ -175,11 +175,11 @@ public class EditDetailsVolumeController {
 			command.setVolLetExt(null);
 			command.setStartYear(null);
 			// Empty month is in last positizion
-			command.setStartMonthNum(months.get(months.size()-1).getMonthNum());
+			command.setStartMonthNum(null);
 			command.setStartDay(null);
 			command.setEndYear(null);
 			// Empty month is in last positizion
-			command.setEndMonthNum(months.get(months.size()-1).getMonthNum());
+			command.setEndMonthNum(null);
 			command.setEndDay(null);
 			command.setSeriesRefDescription(null);
 			command.setSeriesRefNum(null);

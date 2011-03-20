@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,9 +38,11 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -118,18 +121,26 @@ public class EditDetailsPersonController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		People people = new People();
 
-		try {
-			people = getPeopleBaseService().findPerson(command.getPersonId());
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/EditDetailsPerson", model);
-		}
-
-		try {
-			BeanUtils.copyProperties(command, people);
-		} catch (IllegalAccessException iaex) {
-		} catch (InvocationTargetException itex) {
+		if ((command != null) && (command.getPersonId() > 0)) {
+			People people = new People();
+	
+			try {
+				people = getPeopleBaseService().findPerson(command.getPersonId());
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsPerson", model);
+			}
+	
+			try {
+				BeanUtils.copyProperties(command, people);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
+		} else {
+			// On Volume creation, the research is always the current user.
+			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			// We need to expose dateCreated field because it must be rendered on view
+			command.setDateCreated(new Date());
 		}
 
 		return new ModelAndView("peoplebase/EditDetailsPerson", model);

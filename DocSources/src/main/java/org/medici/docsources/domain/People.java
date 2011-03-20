@@ -118,7 +118,7 @@ public class People implements Serializable {
 	private String activeEnd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="\"BMONTHNUM\"")
+	@JoinColumn(name="\"BMONTHNUM\"", nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=MonthBridge.class)
 	private Month bMonth;
@@ -140,7 +140,7 @@ public class People implements Serializable {
 	private String bPlace;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="\"DMONTHNUM\"")
+	@JoinColumn(name="\"DMONTHNUM\"", nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=MonthBridge.class)
 	private Month dMonth;

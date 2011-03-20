@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,9 @@ public class ShowLastEntryDocumentController {
 		try {
 			Document document = getDocBaseService().findLastEntryDocument();
 			model.put("document", document);
+
+			Image image = getDocBaseService().findDocumentImageThumbnail(document);
+			model.put("image", image);
 			/*
 			// Fact Checks
 			FactChecks factChecks = getDocBaseService().findFactChecks(document);

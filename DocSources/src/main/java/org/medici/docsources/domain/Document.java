@@ -64,6 +64,7 @@ import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
+import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
 
 /**
  * Document entity.
@@ -195,8 +196,11 @@ public class Document implements Serializable{
 	@Column (name="\"DOCDAY\"", length=10)
 	private Integer docDay;
 	
-	@Column (name="\"DOCMONTHNUM\"", length=10)
-	private Integer docMonthNum;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"DOCMONTHNUM\"", nullable=true)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=MonthBridge.class)
+	private Month docMonthNum;
 	
 	@Column (name="\"DOCYEAR\"", length=10)
 	private Integer docYear;
@@ -625,14 +629,14 @@ public class Document implements Serializable{
 	/**
 	 * @return the docMonthNum
 	 */
-	public Integer getDocMonthNum() {
+	public Month getDocMonthNum() {
 		return docMonthNum;
 	}
 	
 	/**
 	 * @param docMonthNum the docMonthNum to set
 	 */
-	public void setDocMonthNum(Integer docMonthNum) {
+	public void setDocMonthNum(Month docMonthNum) {
 		this.docMonthNum = docMonthNum;
 	}
 	

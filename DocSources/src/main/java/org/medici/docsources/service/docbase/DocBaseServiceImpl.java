@@ -123,10 +123,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setRecipientPlaceUnsure(false);
 			document.setGraphic(false);
 
-			if (document.getDocMonthNum().equals(0)) {
-				document.setDocMonthNum(null);
-			}
-
 			getDocumentDAO().persist(document);
 
 			return document;
@@ -357,11 +353,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			documentToUpdate.setDocTypology(document.getDocTypology());
 			// Date
 			documentToUpdate.setDocYear(document.getDocYear());
-			if (document.getDocMonthNum().equals(0)) {
-				documentToUpdate.setDocMonthNum(null);
-			} else {
-				documentToUpdate.setDocMonthNum(document.getDocMonthNum());
-			}
+			documentToUpdate.setDocMonthNum(document.getDocMonthNum());
 			documentToUpdate.setDocDay(document.getDocDay());
 			//Modern Dating
 			documentToUpdate.setYearModern(document.getYearModern());
