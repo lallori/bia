@@ -150,7 +150,7 @@ public class EditPersonDocumentValidator implements Validator {
 			try {
 				// if place is specify, we check if it exists
 				if (!personId.equals(0)) {
-					if (getPeopleBaseService().findPeople(personId) == null) {
+					if (getPeopleBaseService().findPerson(personId) == null) {
 						errors.reject("topic", "error.personId.notfound");
 					}
 				}			

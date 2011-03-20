@@ -95,7 +95,7 @@ public class EditTitlesOrOccupationsPersonValidator implements Validator {
 	public void validatePersonId(Integer personId, Errors errors) {
 		if (!errors.hasErrors()) {
 			try {
-				if (getPeopleBaseService().findPeople(personId) == null) {
+				if (getPeopleBaseService().findPerson(personId) == null) {
 					errors.reject("personId", "error.personId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {

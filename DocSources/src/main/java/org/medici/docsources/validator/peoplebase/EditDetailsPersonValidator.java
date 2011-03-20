@@ -98,7 +98,7 @@ public class EditDetailsPersonValidator implements Validator {
 
 		if (!errors.hasErrors()) {
 			try {
-				if (getPeopleBaseService().findPeople(personId) == null) {
+				if (getPeopleBaseService().findPerson(personId) == null) {
 					errors.reject("peopleId", "error.peopleId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
