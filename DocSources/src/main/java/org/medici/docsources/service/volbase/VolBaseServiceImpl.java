@@ -30,6 +30,7 @@ package org.medici.docsources.service.volbase;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
@@ -79,6 +80,10 @@ public class VolBaseServiceImpl implements VolBaseService {
 			// Setting primary key to null to permit persist operation, otherwise jpa will throw a Persistence Object Expcetion
 			volume.setSummaryId(null);
 			
+			if (StringUtils.isEmpty(volume.getVolLetExt())) {
+				volume.setVolLetExt(null);
+			}
+
 			// Retrieves every object references
 			if (volume.getSerieList() != null) {
 				volume.setSerieList(getSeriesListDAO().find(volume.getSerieList().getSeriesRefNum()));
@@ -104,7 +109,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volume.setCipher(false);
 
 			if (volume.getStartMonthNum() != null) {
-				volume.setStartMonth(getMonthDAO().find(volume.getStartMonthNum()).getMonthName());;
+				volume.setStartMonth(volume.getStartMonthNum().getMonthName());
 				volume.setStartMonthNum(volume.getStartMonthNum());
 			} else {
 				volume.setStartMonth(null);
@@ -112,7 +117,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			}
 
 			if (volume.getEndMonthNum() != null) {
-				volume.setEndMonth(getMonthDAO().find(volume.getEndMonthNum()).getMonthName());;
+				volume.setEndMonth(volume.getEndMonthNum().getMonthName());
 				volume.setEndMonthNum(volume.getEndMonthNum());
 			} else {
 				volume.setEndMonth(null);
@@ -269,7 +274,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		volumeToUpdate.setStartYear(volume.getStartYear());
 		if (volume.getStartMonthNum() != null) {
-			volumeToUpdate.setStartMonth(getMonthDAO().find(volume.getStartMonthNum()).getMonthName());;
+			volumeToUpdate.setStartMonth(volume.getStartMonthNum().getMonthName());
 			volumeToUpdate.setStartMonthNum(volume.getStartMonthNum());
 		} else {
 			volumeToUpdate.setStartMonth(null);
@@ -278,7 +283,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		volumeToUpdate.setStartDay(volume.getStartDay());
 		volumeToUpdate.setEndYear(volume.getEndYear());
 		if (volume.getEndMonthNum() != null) {
-			volumeToUpdate.setEndMonth(getMonthDAO().find(volume.getEndMonthNum()).getMonthName());;
+			volumeToUpdate.setEndMonth(volume.getEndMonthNum().getMonthName());
 			volumeToUpdate.setEndMonthNum(volume.getEndMonthNum());
 		} else {
 			volumeToUpdate.setEndMonth(null);
@@ -491,6 +496,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -502,18 +508,21 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
 	/**
 	 * @param imageDAO the imageDAO to set
 	 */
 	public void setImageDAO(ImageDAO imageDAO) {
 		this.imageDAO = imageDAO;
 	}
+	
 	/**
 	 * @param monthDAO the monthDAO to set
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
+
 	/**
 	 * @param seriesListDAO the seriesListDAO to set
 	 */
