@@ -4,6 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ShareVolumeURL" value="/src/volbase/ShowVolume.do">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
+	</c:url>
+
 	<c:url var="checkVolumeDigitizedURL" value="/src/volbase/CheckVolumeDigitized.json">
 		<c:param name="volNum"   value="${volume.volNum}" />
 		<c:param name="volLetExt"   value="${volume.volLetExt}" />
@@ -20,20 +24,20 @@
 		</c:url>
 	</security:authorize>
 	
+	<div id="CreatedSharePrintDiv">
+		<div id="createdby">CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
+		<a title="Print this record" href="#" id="buttonPrint"></a>
+		<div id="buttonShareLink">
+			<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
+			<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
+		</div>
+	</div>
+		
 	<div id="EditDetailsVolumeDiv">
 		<h5>VOLUME DETAILS </h5>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="EditDetailsVolume" href="${EditDetailsVolumeURL}">edit</a><span id="loading"/>
 	</security:authorize>
-		<div id="CreatedSharePrintDiv">
-		<div id="createdby">CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
-			<a title="Print this record" href="#" id="buttonPrint"></a>
-			<div id="buttonShareLink">
-				<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
-				<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
-			</div>
-		</div>
-		
 		<hr id="lineSeparator"/>
 
 		<div id="SpineVolumeDiv">
@@ -68,6 +72,25 @@
 				showExplorerVolumeURL	: "${ShowExplorerVolumeURL}",
 				target 					: $j("#body_right") 
 			});  
+
+			$j("#buttonShareLink").click(function() {
+				window.open('${ShareVolumeURL}','ADD NEW PERSON','width=490,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+			});
+
+			$j("#buttonShareLink").hover(function(){
+				var iconName = $j(this).find("img").attr("src");
+				var origen =  $j(this).find("img").attr("src");
+				$j(this).find("img").attr("src");
+				$j(this).find("span").attr({"style": 'display:inline'});
+				$j(this).find("span").animate({opacity: 1, top: "-60"}, {queue:false, duration:400});
+			}, function(){
+				var iconName = $j(this).find("img").attr("src");
+				var origen =  $j(this).find("img").attr("src");
+				$j(this).find("img").attr("src");
+				$j(this).find("span").animate({opacity: 0, top: "-50"}, {queue:false, duration:400, complete: function(){
+					$j(this).attr({"style": 'display:none'});
+				}});
+			});
 
 			$j("#EditDetailsVolume").click(function(){
 				$j(this).next().css('visibility', 'visible');
