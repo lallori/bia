@@ -49,27 +49,6 @@
 	</head>
 	
 	<body>
-		<div id="layout">
-
-			<div id="map"></div>
-			<div id="top_top">
-<tiles:insertAttribute name="searchForm"/>
-<tiles:insertAttribute name="lastEntryMenu" />
-
-			</div>
-			<div id="top_middle">
-				<div id="mainmenu" class="menumain">
-					<ul>
-<tiles:insertAttribute name="dataEntryMenu" />
-<tiles:insertAttribute name="profileMenu" />
-					</ul>
-				</div>
-			</div>
-			<div id="top_bottom" class="docs">
-<!-- tiles:insertAttribute name="administratorMenu"/> -->
-<tiles:insertAttribute name="whoAmIMenu"/>
-			</div>
-<tiles:insertAttribute name="main"/>
-		</div>
+		<tiles:insertAttribute name="main"/>
 	</body>
 </html>
