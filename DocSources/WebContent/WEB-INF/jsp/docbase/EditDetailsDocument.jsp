@@ -77,12 +77,13 @@
 			<form:hidden id="transcribeFolioMod" path="transcribeFolioMod" />
 			<form:hidden id="dateCreated" path="dateCreated" />
 			<form:hidden id="entryId" path="entryId" />
-			
+
 			<div style="margin-top:5px">
 				<input id="close" type="submit" value="" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="" style="margin-left:300px" class="button"/>
 			</div>
 		</fieldset>	
+		<input type="hidden" name="summaryId" value="${document.volume.summaryId}"
 	</form:form>
 
 	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
@@ -122,6 +123,16 @@
 				);
 	 		}
 			$j("#volume").change(showVolumeExplorer);
+
+			if ($j("#transcribeFolioNum").val().length>0) {
+				$j("#EditDetailsDocument").volumeExplorer( {
+					summaryId				: "${document.volume.summaryId}",
+					transcribeFolioNum		: "${command.transcribeFolioNum}",
+					checkVolumeDigitizedURL	: "${checkVolumeDigitizedURL}",
+					showExplorerVolumeURL	: "${ShowExplorerVolumeURL}",
+					target 					: $j("#body_right") 
+				});  
+			}
 
 			$j("#EditDetailsDocumentForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 

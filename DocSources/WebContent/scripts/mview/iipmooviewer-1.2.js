@@ -722,7 +722,7 @@ var IIP = new Class({
 	  onShow: function(t){ t.setStyle('opacity',0); t.fade(0.7); },
 	  onHide: function(t){ t.fade(0); }
     });
-    $('info').store('tip:text', '<h2><img src="/DocSources/images/mview/help.32x32.png"/>DocSources - Manuscript Viewer</h2>HINT: Press F11 to show the manuscript in Full Screen<ul>	<li>To navigate within image:		<ul>			<li>drag image within main window or</li>			<li>drag zone within the navigation window</li>			<li>click an area within navigation window</li>		</ul>			<li>To zoom in:				<ul>					<li>double click with the mouse or</li>					<li>use the mouse scroll wheel or</li>					<li>or simply press the "+" key</li>				</ul>			<li>To zoom out:				<ul>					<li>shift double click with the mouse or</li>					<li>use the mouse wheel or</li>					<li>press the "-" key</li>				</ul>			</li>			<li>To move the navigation window:				<ul>					<li>drag navigation window toolbar</li>				</ul>			<li>To show / hide navigation buttons:</li>				<ul>					<li>double click navigation window toolbar</li>				</ul></ul>Based on IIPMooViewer written by Ruven Pillay<br/>For more information visit http://iipimage.sf.net');
+    $('info').store('tip:text', '<h2>DocSources - Manuscript Viewer</h2>HINT: Press F11 to show the manuscript in Full Screen<ul>	<li>To navigate within image:		<ul>			<li>drag image within main window or</li>			<li>drag zone within the navigation window</li>			<li>click an area within navigation window</li>		</ul>			<li>To zoom in:				<ul>					<li>double click with the mouse or</li>					<li>use the mouse scroll wheel or</li>					<li>or simply press the "+" key</li>				</ul>			<li>To zoom out:				<ul>					<li>shift double click with the mouse or</li>					<li>use the mouse wheel or</li>					<li>press the "-" key</li>				</ul>			</li>			<li>To move the navigation window:				<ul>					<li>drag navigation window toolbar</li>				</ul>			<li>To show / hide navigation buttons:</li>				<ul>					<li>double click navigation window toolbar</li>				</ul></ul>Based on IIPMooViewer written by Ruven Pillay<br/>For more information visit http://iipimage.sf.net <img src="/DocSources/images/mview/logo.png"/>');
  
     // Add some info
     if( this.credit ){
@@ -757,8 +757,11 @@ var IIP = new Class({
       }
     });
 
+/* More visible toolbar (The Medici Archive Project add)
+*/
     var toolbar = new Element( 'div', {
       id: 'toolbar',
+	  html: '<span style="font-family:Georgia, Times New Roman, Times, serif; color:#6d5c4d; font-size:11px; font-weight:bold; margin-top:5px;">NAVIGATION TOOLBAR</span>',
       styles: {
         width: this.min_x
       },
@@ -991,4 +994,5 @@ var IIP = new Class({
 
 
 });
+
 

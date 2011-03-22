@@ -34,16 +34,10 @@
 			$j("#saveSynopsisExit").click(function (){
 				if (synopsisChanged) {
 					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
-						if(html.match(/inputerrors/g)){
-							$j("#EditSynopsisDocumentDiv").html(html);
-							synopsisChanged=false;
-							window.opener.$j("#body_left").load('${ShowDocumentURL}');
-						} else {
-							$j("#EditSynopsisDocumentDiv").html(html);
-							synopsisChanged=false;
-							window.opener.$j("#body_left").load('${ShowDocumentURL}');
-							window.close();
-						}
+						$j("#EditSynopsisDocumentDiv").html(html);
+						synopsisChanged=false;
+						window.opener.$j("#body_left").load('${ShowDocumentURL}');
+						window.close();
 					}
 					});
 				} else {

@@ -25,9 +25,10 @@
 		<hr id="lineSeparator"/>
 		<ul>
 			<li><b>Sender:</b> <a class="linkSearch" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></li>
-			<li><b>From:</b> <a class="linkSearch" href="">${document.senderPlace.placeNameFull} </a></li>
-			<li><b>To:</b> <a class="linkSearch" href="">${document.recipientPlace.placeNameFull}</a></li>		
+			<li><b>From:</b> <a class="linkSearch" href="">${document.senderPlace.placeNameFull} </a></li>	
 			<li><b>Recipient:</b> <a class="linkSearch" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></li>
+			<li><b>To:</b> <a class="linkSearch" href="">${document.recipientPlace.placeNameFull}</a></li>	
+			<br>
 			<li>
 				<b>People:</b>
 				<ul>

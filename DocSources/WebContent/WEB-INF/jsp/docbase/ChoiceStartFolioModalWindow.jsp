@@ -5,12 +5,28 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
+		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${volumeExplorer.image}" />
 			<c:param name="flashVersion"   value="true" />
 		</c:url>
 
-		<c:url var="TranscribeAndContextualizeDocument" value="/de/docbase/TranscribeAndContextualizeDocument.do">
+		<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do">
+			<c:param name="volNum" value="${requestCommand.volNum}" />
+			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
+			<c:param name="imageOrder" value="${imageToCreate.imageOrder}" />
+			<c:param name="total" value="${volumeExplorer.total}" />
+			<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
+			<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+			<c:param name="flashVersion" value="true" />
+			<c:param name="imageDocumentToCreate" value="${requestCommand.imageDocumentToCreate}" />
+			<c:param name="imageDocumentFolioStart" value="${volumeExplorer.image.imageId}" />
+			<c:param name="modalWindow" value="false"/>
+		</c:url>
+
+		<c:url var="TranscribeAndContextualizeDocumentURL" value="/de/docbase/TranscribeAndContextualizeDocument.do">
 			<c:param name="volNum" value="${requestCommand.volNum}" />
 			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
@@ -26,7 +42,7 @@
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
-		<c:url var="ExplorerVolumeModal" value="/src/volbase/ShowExplorerVolume.do">
+		<c:url var="ExplorerVolumeModalURL" value="/src/volbase/ShowExplorerVolume.do">
 			<c:param name="volNum" value="${requestCommand.volNum}" />
 			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
@@ -92,7 +108,7 @@
 			</div>
 		</div>
 		
-		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:100"></iframe>
+		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 		
 		<div id="prevNextButtons">
 			<div id="previousPage">
@@ -115,9 +131,9 @@
 		<br />	
 		<br />
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="choose" href="${TranscribeAndContextualizeDocument}"></a>
+		<a id="choose" href="${TranscribeAndContextualizeDocumentURL}"></a>
 	</security:authorize>
-		<a id="gobackvolume" href="${ExplorerVolumeModal}" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"></a>
+		<a id="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"></a>
 		<div id="closeModal">
 			<input value="" onClick="Modalbox.hide(); return false;" type="submit" id="closeModalBox"><br /><span>(or click the overlay)</span>
 		</div>
@@ -139,6 +155,7 @@
 			$j("#choose").click(function(e) {
 				e.preventDefault();
 				$j("#body_left").load($j(this).attr("href"));
+				$j("#body_right").load("${ShowExplorerVolumeURL}");
 				Modalbox.hide(); 
 				return false;
 			});

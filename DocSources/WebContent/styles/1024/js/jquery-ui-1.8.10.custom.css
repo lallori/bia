@@ -332,8 +332,8 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: "Georgia", Times New Roman, Times, serif;/*{ffDefault}*/ font-size: 11px/*{fsDefault}*/; }
-.ui-widget .ui-widget { font-size: 11px; }
+.ui-widget { font-family: "Georgia", Times New Roman, Times, serif;/*{ffDefault}*/ font-size: 10px/*{fsDefault}*/; }
+.ui-widget .ui-widget { font-size: 10px; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: "Georgia", Times New Roman, Times, serif; font-size:11px;/*{ffDefault}*/;  }
 .ui-widget-content { border: none;/*{borderColorContent}*/ background: transparent; color: #222222/*{fcContent}*/; top:-15px; }
 .ui-widget-content a { color: #222222/*{fcContent}*/; }
@@ -345,7 +345,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 /* Interaction states
 ----------------------------------*/
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #e6d0c6/*{borderColorDefault}*/; background: #e6d0c6; font-weight: normal/*{fwDefault}*/; color: #6d5c4d/*{fcDefault}*/; text-decoration:none; }
-.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #6d5c4d/*{fcDefault}*/; text-decoration: none; font-size:11px; }
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #6d5c4d/*{fcDefault}*/; text-decoration: none; font-size:10px; }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #e6d0c6/*{borderColorHover}*/; background: #EEE6DF/*{bgColorHover}*/ font-weight: normal/*{fwDefault}*/; color: #6d5c4d/*{fcHover}*/; }
 .ui-state-hover a, .ui-state-hover a:hover { color: #212121/*{fcHover}*/; text-decoration: none; }
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #e6d0c6/*{borderColorActive}*/; background: #FCF9F4/*{bgColorActive}*/ url(images/ui-bg_glass_65_ffffff_1x400.png)/*{bgImgUrlActive}*/ 50%/*{bgActiveXPos}*/ 50%/*{bgActiveYPos}*/ repeat-x/*{bgActiveRepeat}*/; font-weight: normal/*{fwDefault}*/; color: #212121/*{fcActive}*/; }

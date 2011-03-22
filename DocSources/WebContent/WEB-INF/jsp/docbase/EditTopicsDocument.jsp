@@ -39,7 +39,7 @@
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteTopicDocument}"></a>
 				<a class="editValue" class="editValue" href="${EditTopicDocument}">edit value</a>
 				<c:if test="${not empty currentTopicAndPlace.topic}">
-				<a id="topicDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
+				<a class="topicDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
 				</c:if>
 			</div>
 		</c:forEach>

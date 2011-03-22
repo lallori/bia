@@ -165,17 +165,7 @@
 				"					<a class=\"remove\" href=\"#\">(remove)</a>                                                        " +
 				"				</div>                                                                                                 " +
 				"				                                                                                                       " +
-				"				<div class=\"andOrNotAdvancedSearchDiv\">                                                              " +
-				"					<select id=\"andOrNotAdvancedSearch\" name=\"andOrNotAdvancedSearch\" class=\"selectform_medium\"> " +
-				"						<option value=\"\" selected=\"selected\"></option>                                             " +
-				"						<option value=\"And\">And</option>                                                             " +
-				"						<option value=\"Or\">Or</option>                                                               " +
-				"						<option value=\"Not\">Not</option>                                                             " +
-				"						<option value=\"And (\">And (</option>                                                         " +
-				"						<option value=\"Or (\">Or (</option>                                                           " +
-				"						<option value=\")\">)</option>                                                                 " +
-				"					</select>                                                                                          " +
-				"				</div>                                                                                                 " +
+				"				<p class=\"andOrNotAdvancedSearch\">And</p>   " +
 				"			                                                                                                           ";
 
 				if ($j("#wordSearchDiv").length ==0) {
@@ -209,18 +199,7 @@
 				"					<span class=\"wordSearch\">" + $j("#volumeSearch").val() + "</span>                                                            " +
 				"					<a class=\"remove\" href=\"#\">(remove)</a>                                                        " +
 				"				</div>                                                                                                 " +
-				"				                                                                                                       " +
-				"				<div class=\"andOrNotAdvancedSearchDiv\">                                                              " +
-				"					<select id=\"andOrNotAdvancedSearch\" name=\"andOrNotAdvancedSearch\" class=\"selectform_medium\"> " +
-				"						<option value=\"\" selected=\"selected\"></option>                                             " +
-				"						<option value=\"And\">And</option>                                                             " +
-				"						<option value=\"Or\">Or</option>                                                               " +
-				"						<option value=\"Not\">Not</option>                                                             " +
-				"						<option value=\"And (\">And (</option>                                                         " +
-				"						<option value=\"Or (\">Or (</option>                                                           " +
-				"						<option value=\")\">)</option>                                                                 " +
-				"					</select>                                                                                          " +
-				"				</div>                                                                                                 " +
+				"				<p class=\"andOrNotAdvancedSearch\">And</p>   " +
 				"			                                                                                                           ";
 
 				if ($j("#volumeSearchDiv").length ==0) {
