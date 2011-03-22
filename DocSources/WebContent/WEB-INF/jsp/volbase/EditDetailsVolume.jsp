@@ -4,8 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-
-	<div id="createdby"><h6>CREATED BY ${command.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${command.dateCreated}" /></h6></div>
 	<form:form id="EditDetailsVolumeForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>VOLUME DETAILS</b></legend>

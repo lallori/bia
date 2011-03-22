@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShareDocumentURL" value="/de/docbase/ShowDocumentShared.do">
+	<c:url var="ShareDocumentURL" value="/src/docbase/ShowDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
 	
@@ -30,19 +30,20 @@
 		<c:param name="flashVersion"   value="true" />
 	</c:url>
 
+	<div id="CreatedSharePrintDiv">
+		<div id="createdby">CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
+		<a title="Print this record" href="#" id="buttonPrint"></a>
+		<div id="buttonShareLink">
+			<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
+			<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
+		</div>
+	</div>
+
 	<div id="EditDetailsDocumentDiv">
 		<h5>DOCUMENT DETAILS </h5>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="EditDetailsDocument" href="${EditDetailsDocumentURL}">edit</a><span id="loading"/>
 	</security:authorize>
-		<div id="CreatedSharePrintDiv">
-			<div id="createdby">CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
-			<a title="Print this record" href="#" id="buttonPrint"></a>
-			<div id="buttonShareLink">
-				<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
-				<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
-			</div>
-		</div>
 		<hr id="lineSeparator"/>
 		<div id="DocumentImageDiv">
 			<c:if test="${not empty image}">
@@ -91,7 +92,7 @@
 			});  
 
 			$j("#buttonShareLink").click(function() {
-				window.open('/DocSources/de/peoplebase/CreatePerson.html','ADD NEW PERSON','width=490,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+				window.open('${ShareDocumentURL}','ADD NEW PERSON','width=490,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
 			});
 
 			$j("#buttonShareLink").hover(function(){

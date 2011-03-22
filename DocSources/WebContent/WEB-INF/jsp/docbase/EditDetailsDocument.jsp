@@ -6,7 +6,6 @@
 
 	<c:url var="editDetailsDocumentForm" value="/de/docbase/EditDetailsDocument.do"/>
 	
-	<div id="createdby"><h6>CREATED BY ${command.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${command.dateCreated}" /></h6></div>
 	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentForm}" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>DOCUMENT DETAILS</b></legend>
