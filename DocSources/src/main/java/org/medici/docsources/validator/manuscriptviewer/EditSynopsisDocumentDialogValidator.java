@@ -105,7 +105,7 @@ public class EditSynopsisDocumentDialogValidator implements Validator {
 					errors.reject("entryId", "error.entryId.notfound");
 				} else {
 					if (synExtrId > 0) {
-						if (document.getSynExtract().getSynExtrId() != synExtrId) {
+						if (!document.getSynExtract().getSynExtrId().equals(synExtrId)) {
 							errors.reject("synExtrId", "error.synExtrId.notfound");
 						}
 					}

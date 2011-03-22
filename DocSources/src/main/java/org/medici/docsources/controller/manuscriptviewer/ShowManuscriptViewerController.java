@@ -107,7 +107,7 @@ public class ShowManuscriptViewerController {
 				}
 
 				if ((images != null) && (images.size() >0)) {
-					model.put("image", images.get(0).toString());
+					model.put("image", images.get(0));
 				}
 			}
 		} catch (ApplicationThrowable ath) {

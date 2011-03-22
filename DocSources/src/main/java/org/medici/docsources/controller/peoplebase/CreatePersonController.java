@@ -78,7 +78,7 @@ public class CreatePersonController {
 		people.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		people.setDateCreated(new Date());
 
-		model.put("people", people);
+		model.put("person", people);
 
 		return new ModelAndView("peoplebase/ShowPerson", model);	}
 }

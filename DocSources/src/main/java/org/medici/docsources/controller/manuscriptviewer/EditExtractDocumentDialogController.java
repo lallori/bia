@@ -141,7 +141,7 @@ public class EditExtractDocumentDialogController {
 					command.setSynExtrId(synExtract.getSynExtrId());
 					command.setDocExtract(synExtract.getDocExtract());
 				} else {
-					command.setSynExtrId(null);
+					command.setSynExtrId(0);
 					command.setDocExtract(null);
 				}
 			} catch (ApplicationThrowable ath) {
@@ -149,7 +149,7 @@ public class EditExtractDocumentDialogController {
 			}
 		} else {
 			// On Document creation, the research is always the current user.
-			command.setSynExtrId(null);
+			command.setSynExtrId(0);
 			command.setDocExtract(null);
 		}
 

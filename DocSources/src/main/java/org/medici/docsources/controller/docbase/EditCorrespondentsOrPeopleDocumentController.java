@@ -164,23 +164,31 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				command.setDocument(document);
 				
 				// We set sender people in command object
-				command.setSenderPeopleId(document.getSenderPeople().getPersonId());
-				command.setSenderPeopleDescription(document.getSenderPeople().getMapNameLf());
+				if (document.getSenderPeople() != null) {
+					command.setSenderPeopleId(document.getSenderPeople().getPersonId());
+					command.setSenderPeopleDescription(document.getSenderPeople().getMapNameLf());
+				}
 				command.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
 				
 				// We set sender place in command object
-				command.setSenderPlaceId(document.getSenderPlace().getPlaceAllId());
-				command.setSenderPlaceDescription(document.getSenderPlace().getPlaceNameFull());
+				if (document.getSenderPlace() != null) {
+					command.setSenderPlaceId(document.getSenderPlace().getPlaceAllId());
+					command.setSenderPlaceDescription(document.getSenderPlace().getPlaceNameFull());
+				}
 				command.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
 
 				// We set recipient people in command object
-				command.setRecipientPeopleId(document.getRecipientPeople().getPersonId());
-				command.setRecipientPeopleDescription(document.getRecipientPeople().getMapNameLf());
+				if (document.getRecipientPeople() != null) {
+					command.setRecipientPeopleId(document.getRecipientPeople().getPersonId());
+					command.setRecipientPeopleDescription(document.getRecipientPeople().getMapNameLf());
+				}
 				command.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
 				
 				// We set recipient place in command object
-				command.setRecipientPlaceId(document.getRecipientPlace().getPlaceAllId());
-				command.setRecipientPlaceDescription(document.getRecipientPlace().getPlaceNameFull());
+				if (document.getRecipientPlace() != null) {
+					command.setRecipientPlaceId(document.getRecipientPlace().getPlaceAllId());
+					command.setRecipientPlaceDescription(document.getRecipientPlace().getPlaceNameFull());
+				}
 				command.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
 
 			} catch (ApplicationThrowable ath) {

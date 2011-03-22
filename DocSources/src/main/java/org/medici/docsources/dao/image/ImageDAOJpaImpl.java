@@ -474,7 +474,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			typedQueryCount.setParameter("volLetExt", documentExplorer.getVolLetExt());
 		documentExplorer.setTotal((Long)typedQueryCount.getSingleResult());
 
-        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(documentExplorer.getVolLetExt()))
         	stringBuffer.append(" = :volLetExt");
         else
@@ -558,7 +558,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			typedQueryCount.setParameter("volLetExt", volumeExplorer.getVolLetExt());
 		volumeExplorer.setTotal((Long)typedQueryCount.getSingleResult());
 
-        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, count(imageId) FROM Image WHERE volNum=:volNum and volLetExt ");
+        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volumeExplorer.getVolLetExt()))
         	stringBuffer.append(" = :volLetExt");
         else

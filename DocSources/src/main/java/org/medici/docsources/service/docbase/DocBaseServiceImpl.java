@@ -235,7 +235,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setDateCreated(new Date());
 			Image documentToCreateImage = getImageDAO().find(imageDocumentToCreate);
 			Image documentFolioStartImage = getImageDAO().find(imageDocumentFolioStart);
-			document.setVolume(new Volume(documentToCreateImage.getVolNum(), documentToCreateImage.getVolLetExt()));
+			document.setVolume(getVolumeDAO().findVolume(documentToCreateImage.getVolNum(), documentToCreateImage.getVolLetExt()));
 			document.setSubVol(documentToCreateImage.getVolLetExt());
 			document.setFolioNum(ImageUtils.extractFolioNumber(documentFolioStartImage.getImageName()));
 			document.setFolioMod(ImageUtils.extractFolioExtension(documentFolioStartImage.getImageName()));
