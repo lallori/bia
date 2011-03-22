@@ -11,7 +11,7 @@
 					<div id="captcha_recovery">
 						<c:out value="${reCaptchaHTML}" escapeXml="false"/>
 					</div>
-					<input name="submit" type="image" src="<c:url value="/images/button_submit.jpg"/>" alt="submit" title="submit" style="margin:10px 0px 0px 170px"/>
+					<input name="submit" type="image" src="<c:url value="/images/1024/button_submit.jpg"/>" alt="submit" title="submit" style="margin:10px 0px 0px 170px"/>
 				</form:form>  
 			</div>
 			

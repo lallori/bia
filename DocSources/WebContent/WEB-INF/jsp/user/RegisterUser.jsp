@@ -46,7 +46,7 @@
 							<td colspan="3"><form:checkbox path="agree" cssStyle="margin:10px 0px 0px 220px"/><p class="readThis">I have read and agree to the <b><a href="#">Terms of Use</a></b>.<font color="#990000">*</font></p></td>
 						</tr>
 						<tr>
-							<td colspan="6"><input id="register" type="image" src="<c:url value="/images/button_regist.jpg"/>" alt="submit" title="submit form" style="margin:12px 0px 0px 670px"/></td>
+							<td colspan="6"><input id="create" type="image" src="<c:url value="/images/1024/button_register.jpg"/>" alt="submit" title="submit form" style="margin:12px 0px 0px 670px"/></td>
 						</tr>
 						<tr>
 							<td colspan="6"><p class="already">Already registered? <b><a href="<c:url value="/"/>">Log in</a></b></p></td>
