@@ -1,5 +1,5 @@
 /*
- * CompareDocumentController.java
+ * CheckDocumentController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,7 +30,7 @@ package org.medici.docsources.controller.docbase;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.docbase.CompareDocumentRequestCommand;
+import org.medici.docsources.command.docbase.CheckDocumentRequestCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -44,13 +44,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Compare Document".
+ * Controller for action "Check Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/docbase/CompareDocument")
-public class CompareDocumentController {
+@RequestMapping("/src/docbase/CheckDocument")
+public class CheckDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
 
@@ -69,7 +69,7 @@ public class CompareDocumentController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit(@ModelAttribute("requestCommand") CompareDocumentRequestCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@ModelAttribute("requestCommand") CheckDocumentRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
@@ -83,7 +83,7 @@ public class CompareDocumentController {
 			return new ModelAndView("error/ShowDocument", model);
 		}
 
-		return new ModelAndView("docbase/CompareDocument", model);
+		return new ModelAndView("docbase/CheckDocument", model);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * ComparePersonController.java
+ * CheckPersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.command.peoplebase.ComparePersonRequestCommand;
+import org.medici.docsources.command.peoplebase.CheckPersonRequestCommand;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -45,13 +45,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Compare Person".
+ * Controller for action "Check Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/peoplebase/ComparePerson")
-public class ComparePersonController {
+@RequestMapping("/src/peoplebase/CheckPerson")
+public class CheckPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
@@ -78,7 +78,7 @@ public class ComparePersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ComparePersonRequestCommand command, BindingResult result){
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") CheckPersonRequestCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
@@ -95,6 +95,6 @@ public class ComparePersonController {
 			new ModelAndView("error/ShowPerson", model);
 		}
 
-		return new ModelAndView("peoplebase/ComparePerson", model);
+		return new ModelAndView("peoplebase/CheckPerson", model);
 	}
 }

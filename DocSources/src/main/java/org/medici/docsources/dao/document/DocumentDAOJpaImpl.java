@@ -152,8 +152,13 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			"recipientPeople.poLink.titleOccList.titleOcc",
 			"recipientPeople.altName.altName",
 			"recipientPlace.placeName", 
-			"recipientPlace.placeNameFull"
-		).matching(text + "*").createQuery();
+			"recipientPlace.placeNameFull",
+			"synExtract.docExtract",
+			"synExtract.synopsis",
+			"factChecks.addLRes",
+			"eplToLink.place.placeName",
+			"eplToLink.place.placeNameFull"
+		).matching(text).createQuery();
 
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Document.class );
 		if (paginationFilter.getTotal() == null) {

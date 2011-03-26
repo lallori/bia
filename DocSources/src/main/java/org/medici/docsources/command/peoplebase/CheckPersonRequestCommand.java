@@ -1,5 +1,5 @@
 /*
- * CompareDocumentRequestCommand.java
+ * CheckPersonRequestCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,30 +25,33 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.docbase;
+package org.medici.docsources.command.peoplebase;
 
 import javax.validation.constraints.NotNull;
 
 /**
+ * Command bean for action "Check Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- *
+ * 
+ * @see org.docsources.controller.peoplebase.ShowPersonController
  */
-public class CompareDocumentRequestCommand {
+public class CheckPersonRequestCommand {
 	@NotNull
-	private Integer entryId;
+	private Integer personId;
 
 	/**
-	 * @param entryId the entryId to set
+	 * @param personId the personId to set
 	 */
-	public void setEntryId(Integer entryId) {
-		this.entryId = entryId;
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
 	}
 
 	/**
-	 * @return the entryId
+	 * @return the personId
 	 */
-	public Integer getEntryId() {
-		return entryId;
+	public Integer getPersonId() {
+		return personId;
 	}
+	
 }

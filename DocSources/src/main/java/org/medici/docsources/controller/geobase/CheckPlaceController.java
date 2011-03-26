@@ -1,5 +1,5 @@
 /*
- * ComparePlaceController.java
+ * CheckPlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -42,13 +42,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Compare place".
+ * Controller for action "Check place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/geobase/ComparePlace")
-public class ComparePlaceController {
+@RequestMapping("/src/geobase/CheckPlace")
+public class CheckPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 

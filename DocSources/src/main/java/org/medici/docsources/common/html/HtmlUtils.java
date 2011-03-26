@@ -53,18 +53,15 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
-		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		anchorBegin.append("/src/docbase/ShowDocument.do?entryId=");
-		anchorBegin.append(entryId);
-		anchorBegin.append("\">");
+		String anchorBegin = "<a class=\"searchResult\" href=\"";
+		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		anchorBegin += "/src/docbase/ShowDocument.do?entryId=";
+		anchorBegin += entryId;
+		anchorBegin += "\">";
 		String hrefEnd = "</a>";
 		
 		for (int i=0; i<inputList.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-			stringBuffer.append(inputList.get(i));
-			stringBuffer.append(hrefEnd);
-			retValue.add(stringBuffer.toString());
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
 		}
 		
 		return retValue;

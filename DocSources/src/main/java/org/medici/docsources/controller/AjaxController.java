@@ -125,20 +125,48 @@ public class AjaxController {
 			PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
 
 			try {
-				page = getDocBaseService().searchDocuments(alias, paginationFilter);
+				page = getDocBaseService().simpleSearchDocuments(alias, paginationFilter);
 			} catch (ApplicationThrowable aex) {
 			}
 
 			List resultList = new ArrayList();
 			for (Document currentDocument : (List<Document>)page.getList()) {
 				List singleRow = new ArrayList();
-				singleRow.add((currentDocument.getSenderPeople() != null) ? currentDocument.getSenderPeople().getMapNameLf() : "");
-				singleRow.add((currentDocument.getRecipientPeople() != null) ? currentDocument.getRecipientPeople().getMapNameLf() : "");
-				singleRow.add((currentDocument.getDateApprox() != null) ? currentDocument.getDateApprox() : "");
-				singleRow.add((currentDocument.getSenderPlace() != null) ? currentDocument.getSenderPlace().getPlaceName() : "");
-				singleRow.add((currentDocument.getRecipientPlace() != null) ? currentDocument.getRecipientPlace().getPlaceName() : "");
-				singleRow.add((currentDocument.getVolume()!= null) ? currentDocument.getVolume().toString() : "");
-				singleRow.add((currentDocument.getFolioNum() != null) ? currentDocument.getFolioNum().toString() : "");
+				if (currentDocument.getSenderPeople() != null)
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("");
+				
+				if (currentDocument.getRecipientPeople() != null)
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("");
+				
+				if (currentDocument.getDateApprox() != null)
+					singleRow.add(currentDocument.getDateApprox());
+				else
+					singleRow.add("");
+				
+				if (currentDocument.getSenderPlace() != null)
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("");
+				
+				if (currentDocument.getRecipientPlace() != null)
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("");
+				
+				if (currentDocument.getVolume()!= null)
+					singleRow.add(currentDocument.getVolume().toString());
+				else
+					singleRow.add("");
+				
+				if (currentDocument.getFolioNum() != null)
+					singleRow.add(currentDocument.getFolioNum().toString());
+				else
+					singleRow.add("");
+				
 				resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
 			}
 			model.put("iEcho", "1");
