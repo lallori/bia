@@ -252,8 +252,8 @@
 	<!-- DocBase Module END -->
 
 	<!-- GeoBase Module START -->
-	<definition name="geobase/ComparePlace" extends="template.compare">
-		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ComparePlace.jsp"/>
+	<definition name="geobase/CheckPlace" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CheckPlace.jsp"/>
 	</definition>
 
 	<definition name="geobase/ShowPlace" extends="template.partialDOM">
@@ -296,8 +296,8 @@
 	<!--  Manuscript Viewer END -->
 
 	<!-- PeopleBase Module START -->
-	<definition name="peoplebase/ComparePerson" extends="template.compare">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ComparePerson.jsp"/>
+	<definition name="peoplebase/CheckPerson" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CheckPerson.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/EditDetailsPerson" extends="template.partialDOM">

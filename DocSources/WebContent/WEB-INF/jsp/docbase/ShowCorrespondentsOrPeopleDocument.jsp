@@ -10,10 +10,10 @@
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
+	<c:url var="CheckSenderURL" value="/src/peoplebase/CheckPerson.do">
 		<c:param name="personId"   value="${document.senderPeople.personId}" />
 	</c:url>
-	<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
+	<c:url var="CheckRecipientURL" value="/src/peoplebase/CheckPerson.do">
 		<c:param name="personId"   value="${document.recipientPeople.personId}" />
 	</c:url>
 	<div id="EditCorrespondentsOrPeopleDocumentDiv">
@@ -24,19 +24,19 @@
 	</security:authorize>
 		<hr id="lineSeparator"/>
 		<ul>
-			<li><b>Sender:</b> <a class="linkSearch" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></li>
+			<li><b>Sender:</b> <a class="linkSearch" href="${CheckSenderURL}">${document.senderPeople.mapNameLf}</a></li>
 			<li><b>From:</b> <a class="linkSearch" href="">${document.senderPlace.placeNameFull} </a></li>	
-			<li><b>Recipient:</b> <a class="linkSearch" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></li>
+			<li><b>Recipient:</b> <a class="linkSearch" href="${CheckRecipientURL}">${document.recipientPeople.mapNameLf}</a></li>
 			<li><b>To:</b> <a class="linkSearch" href="">${document.recipientPlace.placeNameFull}</a></li>	
 			<br>
 			<li>
 				<b>People:</b>
 				<ul>
 				<c:forEach items="${document.epLink}" var="currentPeople">
-					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+					<c:url var="CheckPersonURL" value="/src/peoplebase/CheckPerson.do">
 						<c:param name="personId"   value="${currentPeople.people.personId}" />
 					</c:url>
-					<li><a class="linkSearch" href="${ComparePersonURL}">${currentPeople.people.mapNameLf}</a></li>
+					<li><a class="linkSearch" href="${CheckPersonURL}">${currentPeople.people.mapNameLf}</a></li>
 					<br/>
 				</c:forEach>
 				</ul>
