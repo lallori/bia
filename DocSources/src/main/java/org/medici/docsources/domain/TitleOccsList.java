@@ -29,13 +29,17 @@
 package org.medici.docsources.domain;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
@@ -44,6 +48,7 @@ import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -99,6 +104,10 @@ public class TitleOccsList implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String titleVariants;
 
+    @OneToMany(mappedBy="titleOccList", fetch=FetchType.LAZY)
+	@ContainedIn
+    private Set<PoLink> poLinks;
+	
 	/**
 	 * @return the titleOccId
 	 */
@@ -153,5 +162,13 @@ public class TitleOccsList implements Serializable {
 	 */
 	public void setTitleVariants(String titleVariants) {
 		this.titleVariants = titleVariants;
+	}
+
+	public void setPoLinks(Set<PoLink> poLinks) {
+		this.poLinks = poLinks;
+	}
+
+	public Set<PoLink> getPoLinks() {
+		return poLinks;
 	}
 }

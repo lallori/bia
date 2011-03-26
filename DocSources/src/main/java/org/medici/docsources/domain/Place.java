@@ -29,6 +29,7 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +39,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +50,7 @@ import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -206,7 +209,27 @@ public class Place implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String geogkeyChildren;
 
-	/**
+    @OneToMany(mappedBy="senderPlace", fetch=FetchType.LAZY)
+	@ContainedIn
+    private Set<Document> senderDocuments;
+    
+    @OneToMany(mappedBy="recipientPlace", fetch=FetchType.LAZY)
+	@ContainedIn
+    private Set<Document> recipientDocuments;
+
+    @OneToMany(mappedBy="bornPlace", fetch=FetchType.LAZY)
+	@ContainedIn
+    private Set<People> bornedPeople;
+    
+    @OneToMany(mappedBy="deathPlace", fetch=FetchType.LAZY)
+	@ContainedIn
+    private Set<People> deathPeople;
+
+    @OneToMany(mappedBy="place", fetch=FetchType.LAZY)
+	@ContainedIn
+    private Set<EplToLink> eplToLinks;
+    
+    /**
 	 * Default constructor.
 	 * 
 	 */
@@ -614,5 +637,75 @@ public class Place implements Serializable {
 	 */
 	public void setGeogkeyChildren(String geogkeyChildren) {
 		this.geogkeyChildren = geogkeyChildren;
+	}
+
+	/**
+	 * @param senderDocuments the senderDocuments to set
+	 */
+	public void setSenderDocuments(Set<Document> senderDocuments) {
+		this.senderDocuments = senderDocuments;
+	}
+
+	/**
+	 * @return the senderDocuments
+	 */
+	public Set<Document> getSenderDocuments() {
+		return senderDocuments;
+	}
+
+	/**
+	 * @param recipientDocuments the recipientDocuments to set
+	 */
+	public void setRecipientDocuments(Set<Document> recipientDocuments) {
+		this.recipientDocuments = recipientDocuments;
+	}
+
+	/**
+	 * @return the recipientDocuments
+	 */
+	public Set<Document> getRecipientDocuments() {
+		return recipientDocuments;
+	}
+
+	/**
+	 * @param bornedPeople the bornedPeople to set
+	 */
+	public void setBornedPeople(Set<People> bornedPeople) {
+		this.bornedPeople = bornedPeople;
+	}
+
+	/**
+	 * @return the bornedPeople
+	 */
+	public Set<People> getBornedPeople() {
+		return bornedPeople;
+	}
+
+	/**
+	 * @param deathPeople the deathPeople to set
+	 */
+	public void setDeathPeople(Set<People> deathPeople) {
+		this.deathPeople = deathPeople;
+	}
+
+	/**
+	 * @return the deathPeople
+	 */
+	public Set<People> getDeathPeople() {
+		return deathPeople;
+	}
+
+	/**
+	 * @param eplToLinks the eplToLinks to set
+	 */
+	public void setEplToLinks(Set<EplToLink> eplToLinks) {
+		this.eplToLinks = eplToLinks;
+	}
+
+	/**
+	 * @return the eplToLinks
+	 */
+	public Set<EplToLink> getEplToLinks() {
+		return eplToLinks;
 	}
 }

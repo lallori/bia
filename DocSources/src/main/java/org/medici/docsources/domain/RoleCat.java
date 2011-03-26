@@ -28,12 +28,15 @@
 package org.medici.docsources.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
@@ -42,6 +45,7 @@ import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -99,6 +103,10 @@ public class RoleCat implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer sortGroups;
 	
+    @OneToMany(mappedBy="roleCatId", fetch=FetchType.LAZY)
+    @ContainedIn
+    private Set<PrcLink> prcLinks;
+    
 	/**
 	 * @return the roleCatId
 	 */
@@ -167,5 +175,19 @@ public class RoleCat implements Serializable {
 	 */
 	public void setSortGroups(Integer sortGroups) {
 		this.sortGroups = sortGroups;
+	}
+
+	/**
+	 * @param prcLinks the prcLinks to set
+	 */
+	public void setPrcLinks(Set<PrcLink> prcLinks) {
+		this.prcLinks = prcLinks;
+	}
+
+	/**
+	 * @return the prcLinks
+	 */
+	public Set<PrcLink> getPrcLinks() {
+		return prcLinks;
 	}
 }

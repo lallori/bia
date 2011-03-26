@@ -249,16 +249,6 @@ public interface DocBaseService {
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
 	
 	/**
-	 * This method searches document's images linked to a specific document.
-	 * 
-	 * @param entryId Document
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable;
-
-	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * with specific image type and folio number linked to a 
 	 * {@link org.medici.docsources.domain.Volume} identified by his volume
@@ -273,6 +263,16 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<Image> findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
+
+	/**
+	 * This method searches document's images linked to a specific document.
+	 * 
+	 * @param entryId Document
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -455,5 +455,15 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param alias
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public Page simpleSearchDocuments(String alias, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 }

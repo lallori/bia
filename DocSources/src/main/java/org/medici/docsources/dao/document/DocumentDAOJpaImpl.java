@@ -29,11 +29,10 @@ package org.medici.docsources.dao.document;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
+import org.hibernate.ejb.HibernateEntityManager;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
@@ -90,57 +89,81 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
         return (Document) query.getSingleResult();
 	}
 
-	@SuppressWarnings("rawtypes")
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException {
-		// Create criteria objects
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-
 		Page page = new Page(paginationFilter);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
 
+		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
+			"volume.serieList.title",
+			"volume.serieList.subTitle1", 
+			"volume.serieList.subTitle2",
+			"senderPeople.first", 
+			"senderPeople.last", 
+			"senderPeople.middle", 
+			"senderPeople.poLink.titleOccList.titleOcc",
+			"senderPeople.altName.altName", 
+			"senderPlace.placeName", 
+			"senderPlace.placeNameFull",
+			"recipientPeople.first", 
+			"recipientPeople.last", 
+			"recipientPeople.middle", 
+			"recipientPeople.poLink.titleOccList.titleOcc",
+			"recipientPeople.altName.altName",
+			"recipientPlace.placeName", 
+			"recipientPlace.placeNameFull"
+		).matching(text + "*").createQuery();
+
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Document.class );
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(fullTextQuery.list());
+		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
+
+		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
+			"volume.serieList.title",
+			"volume.serieList.subTitle1", 
+			"volume.serieList.subTitle2",
+			"senderPeople.first", 
+			"senderPeople.last", 
+			"senderPeople.middle", 
+			"senderPeople.poLink.titleOccList.titleOcc",
+			"senderPeople.altName.altName", 
+			"senderPlace.placeName", 
+			"senderPlace.placeNameFull",
+			"recipientPeople.first", 
+			"recipientPeople.last", 
+			"recipientPeople.middle", 
+			"recipientPeople.poLink.titleOccList.titleOcc",
+			"recipientPeople.altName.altName",
+			"recipientPlace.placeName", 
+			"recipientPlace.placeNameFull"
+		).matching(text + "*").createQuery();
+
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Document.class );
 		if (paginationFilter.getTotal() == null) {
-			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
-			Root<Document> rootCount = criteriaQueryCount.from(Document.class);
-			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
-
-/*			List<Predicate> predicates = new ArrayList<Predicate>();
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("title"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("subTitle1"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("subTitle2"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("orgNotes"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("recips"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("researcher"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("senders"), "%" + text + "%" ));
-
-	        //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
-	        criteriaQueryCount.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
-*/
-			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
 		}
 
-		CriteriaQuery<Document> criteriaQuery = criteriaBuilder.createQuery(Document.class);
-		Root<Document> rootCount = criteriaQuery.from(Document.class);
-	
-/*		//We need to duplicate predicates beacause they are link to Root element
-        List<Predicate> predicates = new ArrayList<Predicate>();
-        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("title"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle1"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle2"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("orgNotes"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("recips"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("researcher"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("senders"), "%" + text + "%" ));
-
-        //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
-        criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
-*/
-		// Set values in predicate's elements  
-		TypedQuery<Document> typedQuery = getEntityManager().createQuery(criteriaQuery);
-		typedQuery.setFirstResult(paginationFilter.getFirstRecord());
-		typedQuery.setMaxResults(paginationFilter.getLength());
-		page.setList(typedQuery.getResultList());
-
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+		page.setList(fullTextQuery.list());
+		
 		return page;
 	}
 

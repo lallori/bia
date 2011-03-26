@@ -42,6 +42,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * PrcLink entity.
@@ -62,12 +64,17 @@ public class PrcLink implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"PRCLINKID\"", nullable=false)
 	private Integer prcLinkId;
+
 	@ManyToOne
 	@JoinColumn(name="\"PERSONID\"")
+	@ContainedIn
 	private People personId;
+
 	@ManyToOne
 	@JoinColumn (name="\"ROLECATID\"")
+	@IndexedEmbedded
 	private RoleCat roleCatId;
+
 	@Column (name="\"DATECREATED\"")
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date dateCreated;

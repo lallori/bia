@@ -54,6 +54,7 @@ import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -133,6 +134,7 @@ public class People implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"BPLACEID\"")
+	@IndexedEmbedded(depth=1)
 	private Place bornPlace;
 	
 	@Column (name="\"BPLACE\"", length=50)
@@ -155,6 +157,7 @@ public class People implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"DPLACEID\"")
+	@IndexedEmbedded(depth=1)
 	private Place deathPlace;
 	
 	@Column (name="\"DPLACE\"", length=50)
@@ -266,28 +269,54 @@ public class People implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "FATHERID")
+	//@IndexedEmbedded
 	private List<People> childrenFather = new LinkedList<People>(); 
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MOTHERID")
+	//@IndexedEmbedded(depth=1)
 	private List<People> childrenMother = new LinkedList<People>(); 
 
 	//Association alternative Names
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	@IndexedEmbedded(depth=1)
 	private Set<AltName> altName;
 	
 	//Association Biographic
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	@IndexedEmbedded(depth=1)
 	private Set<BioRefLink> bioRefLink;
 
 	//Association Linked Document
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="people")
+	@IndexedEmbedded(depth=1)
 	private Set<EpLink> epLink;
 	
 	//Association titles and occupations
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	@IndexedEmbedded
 	private Set<PoLink> poLink;
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	@IndexedEmbedded
+	private Set<PrcLink> prcLink;
 	
+	@OneToMany(mappedBy="senderPeople", fetch=FetchType.LAZY)
+	@ContainedIn
+    private Set<Document> senderDocuments;
+
+    @OneToMany(mappedBy="recipientPeople", fetch=FetchType.LAZY)
+	@ContainedIn
+    private Set<Document> recipientDocuments;
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="husband")
+	@IndexedEmbedded(depth=1)
+	private Set<Marriage> marriagesAsHusband;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="wife")
+	@IndexedEmbedded(depth=1)
+	private Set<Marriage> marriagesAsWife;
+
 	/**
 	 * Default Constructor 
 	 */
@@ -1061,6 +1090,78 @@ public class People implements Serializable {
 	 */
 	public Set<PoLink> getPoLink() {
 		return poLink;
+	}
+
+	/**
+	 * @param prcLink the prcLink to set
+	 */
+	public void setPrcLink(Set<PrcLink> prcLink) {
+		this.prcLink = prcLink;
+	}
+
+	/**
+	 * @return the prcLink
+	 */
+	public Set<PrcLink> getPrcLink() {
+		return prcLink;
+	}
+
+	/**
+	 * 
+	 * @param senderDocuments
+	 */
+	public void setSenderDocuments(Set<Document> senderDocuments) {
+		this.senderDocuments = senderDocuments;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Set<Document> getSenderDocuments() {
+		return senderDocuments;
+	}
+
+	/**
+	 * @param recipientDocuments the recipientDocuments to set
+	 */
+	public void setRecipientDocuments(Set<Document> recipientDocuments) {
+		this.recipientDocuments = recipientDocuments;
+	}
+
+	/**
+	 * @return the recipientDocuments
+	 */
+	public Set<Document> getRecipientDocuments() {
+		return recipientDocuments;
+	}
+
+	/**
+	 * @param marriagesAsHusband the marriagesAsHusband to set
+	 */
+	public void setMarriagesAsHusband(Set<Marriage> marriagesAsHusband) {
+		this.marriagesAsHusband = marriagesAsHusband;
+	}
+
+	/**
+	 * @return the marriagesAsHusband
+	 */
+	public Set<Marriage> getMarriagesAsHusband() {
+		return marriagesAsHusband;
+	}
+
+	/**
+	 * @param marriagesAsWife the marriagesAsWife to set
+	 */
+	public void setMarriagesAsWife(Set<Marriage> marriagesAsWife) {
+		this.marriagesAsWife = marriagesAsWife;
+	}
+
+	/**
+	 * @return the marriagesAsWife
+	 */
+	public Set<Marriage> getMarriagesAsWife() {
+		return marriagesAsWife;
 	}
 
 	/**

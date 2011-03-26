@@ -60,7 +60,6 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.domain.TopicList;
-import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -539,6 +538,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Image> findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable {
 		try {
 			Document document = getDocumentDAO().find(entryId);
@@ -554,18 +565,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 			} else {
 				return new ArrayList<Image>(0);
 			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Image> findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
-		try {
-			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -922,6 +921,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 			List<EplToLink> eplToLinkList = new ArrayList<EplToLink>(0);
 			
 			return getTopicsListDAO().searchTopicLinkableToDocument(EplToLinkUtils.getTopicIdList(eplToLinkList), query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().simpleSearchDocuments(text, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

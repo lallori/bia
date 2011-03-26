@@ -58,6 +58,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
@@ -99,6 +100,7 @@ public class Document implements Serializable{
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"SUMMARYID\"")
+	@IndexedEmbedded
 	private Volume volume;
 	
 	@Column (name="\"SUBVOL\"", length=50)
@@ -170,6 +172,7 @@ public class Document implements Serializable{
 	private String insertLet;
 	
 	@Column (name="\"FOLIONUM\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer folioNum;
 	
 	@Column (name="\"FOLIOMOD\"", length=15)
@@ -177,6 +180,7 @@ public class Document implements Serializable{
 	private String folioMod;
 	
 	@Column (name="\"TRANSCRIBEFOLIONUM\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer transcribeFolioNum;
 
 	@Column (name="\"TRANSCRIBEFOLIOMOD\"", length=15)
@@ -237,6 +241,7 @@ public class Document implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SENDID")
+	@IndexedEmbedded
 	private People senderPeople;
 	
 	@Column (name="\"SENDUNS\"", length=1, columnDefinition="tinyint", nullable=false)
@@ -246,6 +251,7 @@ public class Document implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"SENDLOCPLALL\"")
+	@IndexedEmbedded
 	private Place senderPlace;
 	
 	@Column (name="\"SENDLOCUNS\"", length=1, columnDefinition="tinyint", nullable=false)
@@ -259,6 +265,7 @@ public class Document implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"RECIPID\"")
+	@IndexedEmbedded
 	private People recipientPeople;
 	
 	@Column (name="\"RECIPUNS\"", length=1, columnDefinition="tinyint", nullable=false)
@@ -268,6 +275,7 @@ public class Document implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"RECIPLOCPLALL\"")
+	@IndexedEmbedded
 	private Place recipientPlace;
 	
 	@Column (name="\"RECIPLOCUNS\"", length=1, columnDefinition="tinyint", nullable=false)
@@ -291,23 +299,23 @@ public class Document implements Serializable{
 	//Linked fact Check
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="document", cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	private FactChecks factChecks;
 
 	//Association topic-place 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="document", cascade={CascadeType.PERSIST, CascadeType.MERGE})
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	private Set<EplToLink> eplToLink;
 
 	//Association people (attention recipient and sender are not here, they are defined up!)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "document", cascade={CascadeType.PERSIST, CascadeType.MERGE})
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	private Set<EpLink> epLink;
 
 	//Association Synopsys and Extract
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="document")
 	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
-	//@IndexedEmbedded
+	@IndexedEmbedded
 	private SynExtract synExtract;
 
 	/**

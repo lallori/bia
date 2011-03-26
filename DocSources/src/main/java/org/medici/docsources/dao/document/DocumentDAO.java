@@ -67,4 +67,13 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @return
 	 */
 	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException;
 }

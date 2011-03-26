@@ -29,6 +29,7 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +39,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,6 +52,7 @@ import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.CharFilterDef;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -295,7 +298,11 @@ public class Volume implements Serializable {
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean printedDrawings;
 
-	/**
+    @OneToMany(mappedBy="volume", fetch=FetchType.LAZY)
+    @ContainedIn
+    private Set<Document> documents;
+    
+    /**
 	 * Default constructor
 	 * 
 	 */
@@ -1023,6 +1030,20 @@ public class Volume implements Serializable {
 	 */
 	public Boolean getPrintedDrawings() {
 		return printedDrawings;
+	}
+
+	/**
+	 * @param documents the documents to set
+	 */
+	public void setDocuments(Set<Document> documents) {
+		this.documents = documents;
+	}
+
+	/**
+	 * @return the documents
+	 */
+	public Set<Document> getDocuments() {
+		return documents;
 	}
 
 	/* (non-Javadoc)
