@@ -284,4 +284,13 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page simpleSearchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

@@ -41,6 +41,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.ejb.HibernateEntityManager;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
@@ -123,7 +127,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public Page searchVolumes(String text, PaginationFilter paginationFilter) {
+	public Page searchVolumes(String text, PaginationFilter paginationFilter)  throws PersistenceException {
 		// Create criteria objects
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 
@@ -174,5 +178,43 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		page.setList(typedQuery.getResultList());
 
 		return page;
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page simpleSearchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Volume.class).get();
+
+		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
+			"ccondition",
+			"ccontext", 
+			"orgNotes",
+			"recips", 
+			"senders", 
+			"serieList.title", 
+			"serieList.subTitle1",
+			"serieList.subTitle2", 
+			"startYear",
+			"startMonth", 
+			"startDay",
+			"endYear",
+			"endMonth", 
+			"endDay"
+		).matching(text).createQuery();
+
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Volume.class );
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		}
+
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+		page.setList(fullTextQuery.list());
+		
+		return page;
+
 	}
 }

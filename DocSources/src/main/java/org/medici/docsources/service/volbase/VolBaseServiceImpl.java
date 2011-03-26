@@ -485,6 +485,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -522,7 +523,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
-
+	
 	/**
 	 * @param seriesListDAO the seriesListDAO to set
 	 */
@@ -537,4 +538,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.volumeDAO = volumeDAO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page simpleSearchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getVolumeDAO().simpleSearchVolumes(text, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	}
 }

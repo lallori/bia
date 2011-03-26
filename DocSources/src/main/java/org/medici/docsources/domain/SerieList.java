@@ -174,6 +174,10 @@ public class SerieList implements Serializable{
 		return title;
 	}
 	
+	public Set<Volume> getVolumes() {
+		return volumes;
+	}
+
 	/**
 	 * Implementing this method is mandatory for caching object.
 	 * 
@@ -202,7 +206,8 @@ public class SerieList implements Serializable{
 	public void setSubTitle1(String subTitle1) {
 		this.subTitle1 = subTitle1;
 	}
-
+	
+	
 	/**
 	 * 
 	 * @param subTitle2
@@ -210,7 +215,7 @@ public class SerieList implements Serializable{
 	public void setSubTitle2(String subTitle2) {
 		this.subTitle2 = subTitle2;
 	}
-	
+
 	
 	/**
 	 * 
@@ -220,13 +225,8 @@ public class SerieList implements Serializable{
 		this.title = title;
 	}
 
-	
 	public void setVolumes(Set<Volume> volumes) {
 		this.volumes = volumes;
-	}
-
-	public Set<Volume> getVolumes() {
-		return volumes;
 	}
 
 	/**

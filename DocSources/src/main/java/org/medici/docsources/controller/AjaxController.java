@@ -111,7 +111,6 @@ public class AjaxController {
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/PaginationSearchData.json", method = RequestMethod.GET)
 	public ModelAndView searchPagination(@RequestParam("searchType") String searchType, 
 								   		 @RequestParam("sSearch") String alias, 
@@ -120,135 +119,45 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if (searchType.toLowerCase().trim().equals("documents")) {
-			Page page = null;
-
-			PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
-
-			try {
-				page = getDocBaseService().simpleSearchDocuments(alias, paginationFilter);
-			} catch (ApplicationThrowable aex) {
-			}
-
-			List resultList = new ArrayList();
-			for (Document currentDocument : (List<Document>)page.getList()) {
-				List singleRow = new ArrayList();
-				if (currentDocument.getSenderPeople() != null)
-					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
-				else
-					singleRow.add("");
-				
-				if (currentDocument.getRecipientPeople() != null)
-					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
-				else
-					singleRow.add("");
-				
-				if (currentDocument.getDateApprox() != null)
-					singleRow.add(currentDocument.getDateApprox());
-				else
-					singleRow.add("");
-				
-				if (currentDocument.getSenderPlace() != null)
-					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
-				else
-					singleRow.add("");
-				
-				if (currentDocument.getRecipientPlace() != null)
-					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
-				else
-					singleRow.add("");
-				
-				if (currentDocument.getVolume()!= null)
-					singleRow.add(currentDocument.getVolume().toString());
-				else
-					singleRow.add("");
-				
-				if (currentDocument.getFolioNum() != null)
-					singleRow.add(currentDocument.getFolioNum().toString());
-				else
-					singleRow.add("");
-				
-				resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
-			}
-			model.put("iEcho", "1");
-			model.put("iTotalDisplayRecords", page.getTotal());
-			model.put("iTotalRecords", page.getTotal());
-			model.put("aaData", resultList);
+			simpleSearchDocuments(model, alias, firstRecord, length);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("people")) {
-			Page page = null;
-
-			PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
-
-			try {
-				page = getPeopleBaseService().searchPeople(alias, paginationFilter);
-			} catch (ApplicationThrowable aex) {
-			}
-
-			List resultList = new ArrayList();
-			for (People currentPerson : (List<People>)page.getList()) {
-				List singleRow = new ArrayList();
-				singleRow.add(currentPerson.getMapNameLf());
-				singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
-				singleRow.add(currentPerson.getBornDate());
-				singleRow.add(currentPerson.getDeathDate());
-				singleRow.add("" + currentPerson.getPoLink().size());
-				resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
-			}
-			model.put("iEcho", "" + 1);
-			model.put("iTotalDisplayRecords", page.getTotal());
-			model.put("iTotalRecords", page.getTotal());
-			model.put("aaData", resultList);
+			simpleSearchPeople(model, alias, firstRecord, length);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("places")) {
+			simpleSearchPlaces(model, alias, firstRecord, length);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("volumes")) {
-			Page page = null;
-
-			PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
-
-			try {
-				page = getVolBaseService().searchVolumes(alias, paginationFilter);
-			} catch (ApplicationThrowable aex) {
-			}
-
-			List resultList = new ArrayList();
-			for (Volume currentVolume : (List<Volume>)page.getList()) {
-				List singleRow = new ArrayList();
-				singleRow.add(currentVolume.getSerieList().getTitle());
-				singleRow.add(currentVolume.getStartDate());
-				singleRow.add(currentVolume.getEndDate());
-				
-				StringBuffer subTitle = new StringBuffer(currentVolume.getSerieList().toString());
-				subTitle.append(" MdP ").append(currentVolume.getMDP());
-				singleRow.add(subTitle.toString());
-				
-				resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
-			}
-			model.put("iEcho", "1");
-			model.put("iTotalDisplayRecords", page.getTotal());
-			model.put("iTotalRecords", page.getTotal());
-			model.put("aaData", resultList);
+			simpleSearchVolumes(model, alias, firstRecord, length);
 		}
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
+	private void simpleSearchPlaces(Map<String, Object> model, String alias, Integer firstRecord, Integer length) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	/**
 	 * @param docBaseService the docBaseService to set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
 	}
-	
+
+
 	/**
 	 * @param geoBaseService the geoBaseService to set
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
 	}
+
 
 	/**
 	 * @param peopleBaseService the peopleBaseService to set
@@ -257,10 +166,146 @@ public class AjaxController {
 		this.peopleBaseService = peopleBaseService;
 	}
 
+
 	/**
 	 * @param volBaseService the volBaseService to set
 	 */
 	public void setVolBaseService(VolBaseService volBaseService) {
 		this.volBaseService = volBaseService;
+	}
+	
+	/**
+	 * 
+	 * @param model
+	 * @param alias
+	 * @param firstRecord
+	 * @param length
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	private void simpleSearchDocuments(Map<String, Object> model, String alias, Integer firstRecord, Integer length) {
+		Page page = null;
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		try {
+			page = getDocBaseService().simpleSearchDocuments(alias, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null)
+				singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null)
+				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getDateApprox() != null)
+				singleRow.add(currentDocument.getDateApprox());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getSenderPlace() != null)
+				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null)
+				singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getVolume()!= null)
+				singleRow.add(currentDocument.getVolume().toString());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getFolioNum() != null)
+				singleRow.add(currentDocument.getFolioNum().toString());
+			else
+				singleRow.add("");
+			
+			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
+		}
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @param alias
+	 * @param firstRecord
+	 * @param length
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	private void simpleSearchPeople(Map<String, Object> model, String alias, Integer firstRecord, Integer length) {
+		Page page = null;
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		try {
+			page = getPeopleBaseService().searchPeople(alias, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (People currentPerson : (List<People>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentPerson.getMapNameLf());
+			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
+			singleRow.add(currentPerson.getBornDate());
+			singleRow.add(currentPerson.getDeathDate());
+			singleRow.add("" + currentPerson.getPoLink().size());
+			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
+		}
+		model.put("iEcho", "" + 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @param alias
+	 * @param firstRecord
+	 * @param length
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	private void simpleSearchVolumes(Map<String, Object> model, String alias, Integer firstRecord, Integer length) {
+		Page page = null;
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		try {
+			page = getVolBaseService().simpleSearchVolumes(alias, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (Volume currentVolume : (List<Volume>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentVolume.getSerieList().getTitle());
+			singleRow.add(currentVolume.getStartDate());
+			singleRow.add(currentVolume.getEndDate());
+			
+			StringBuffer subTitle = new StringBuffer(currentVolume.getSerieList().toString());
+			subTitle.append(" MdP ").append(currentVolume.getMDP());
+			singleRow.add(subTitle.toString());
+			
+			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
+		}
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
 	}
 }
