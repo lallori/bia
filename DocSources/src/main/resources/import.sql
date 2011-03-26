@@ -75,13 +75,29 @@ update docsources.tblVolumes set startMonthNum = null where startMonthNum = 13;
 -- Volumes : end Document Month num 0 or 13 must be setted to null
 update docsources.tblVolumes set endMonthNum = null where endMonthNum = 0;
 update docsources.tblVolumes set endMonthNum = null where endMonthNum = 13;
-
 -- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
 update tblimages set imageType = substr(imageName, 6,1);
-
 -- Recto Verso : 
 update tblImages set imageRectoVerso = substring(SUBSTRING_INDEX(imageName, '_', -1),1,1); 
 
+-- Tables foreign keys checks :
+-- Sender people linked to invalid people
+update tblDocuments set sendID = null where sendID not in (select personId from tblPeople);
+-- Recipient people linked to invalid people
+update tblDocuments set recipID = null where recipID not in (select personId from tblPeople);
+-- Sender place linked to invalid place
+update tblDocuments set sendLocplall = null where sendLocplall not in (select placeAllId from tblPlaces);
+-- Recipient place linked to invalid place
+update tblDocuments set recipLocplall = null where recipLocplall not in (select placeAllId from tblPlaces);
+
+-- Born place linked to invalid place
+update tblPeople set bPlaceId = null where (bPlaceId not in (select placeAllId from tblPlaces));
+-- Death place linked to invalid place
+update tblPeople set dPlaceId = null where (dPlaceId not in (select placeAllId from tblPlaces));
+-- Marriages linked to invalid people
+delete from tblMarriages where (husbandId not in (select personId from tblPeople) ) or ( wifeId not in (select personId from tblPeople));
+-- PrcLink linked to invalid RoleCat
+delete from tblPrcLink where RoleCatId not in (select roleCatID from tblRoleCats);
 
 -- Table schema is based on ISO standard 3166 code lists 
 -- http://www.iso.org/iso/list-en1-semic-3.txt
