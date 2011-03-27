@@ -121,11 +121,11 @@
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
-				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${volumeExplorer.totalRubricario}</label>
+				<b>Index of Names folio count:</b> <label for="rubricarioCount" id="rubricarioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 				<input id="goR" type="submit" value="" />
 				<form:hidden path="summaryId" />

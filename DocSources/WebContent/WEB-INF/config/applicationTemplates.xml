@@ -324,6 +324,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/SearchResultPerson.jsp"/>	
 	</definition>
 
+	<definition name="peoplebase/EditResearchNotesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditResearchNotesPerson.jsp"/>	
+	</definition>
+
 	<definition name="peoplebase/ShowPerson" extends="template.person">
 		<put-attribute name="details" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
 		<put-attribute name="names" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
