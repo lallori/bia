@@ -7,26 +7,11 @@
 	<div id="advancedSearchModal">
 		<h1>Click the button below to search in one of the following categories:</h1>
 		
-		<div id="documentSearchDiv">
-			<a id="documentSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
-		</div>
-
-		<div id="personSearchDiv">
-			<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPeople.do"/>"></a>
-		</div>
-			
-		<div id="volumeSearchDiv">
-			<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchVolumes.do"/>"></a>
-		</div>
-		
-		<div id="placeSearchDiv">
-			<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPlaces.do"/>"></a>
-	
-		</div>
-		
-		<div id="objectSearchDiv">
-			<a id="objectSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
-		</div>
+		<a id="documentSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
+		<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPeople.do"/>"></a>
+		<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchVolumes.do"/>"></a>
+		<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPlaces.do"/>"></a>
+		<a id="savedFilters" class="advSearchButton" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
 	
 		<div id="CloseButton">
 			<input id="close" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value=""/>
