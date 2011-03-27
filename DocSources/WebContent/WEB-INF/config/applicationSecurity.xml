@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.4.xsd">
 
-    <security:global-method-security secured-annotations="enabled" />
+    <security:global-method-security secured-annotations="enabled"/>
 
     <security:http auto-config="true">
         <security:intercept-url pattern="/login*" 							access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -51,10 +51,33 @@
 		<security:session-management session-fixation-protection="newSession">
 		 	<security:concurrency-control max-sessions="1"/>
 		</security:session-management>
-		<security:remember-me key="docSources" user-service-ref="ldapUserDetailsService"/>
+		<!-- <security:remember-me key="docSources" user-service-ref="ldapUserDetailsService"/>-->
+		<security:remember-me key="_spring_security_remember_me" token-validity-seconds="864000" token-repository-ref="tokenRepository" />
+
     </security:http>
 
-	<security:authentication-manager>
+	<bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+      <property name="createTableOnStartup" value="false" />
+      <property name="dataSource" ref="dataSource"/>
+   </bean>
+
+	<bean id="rememberMeFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+	  <property name="rememberMeServices" ref="rememberMeServices"/>
+	  <property name="authenticationManager" ref="docSourcesAuthenticationManager" />
+	</bean>
+	
+	<bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+	  <property name="userDetailsService" ref="ldapUserDetailsService"/>
+	  <property name="key" value="springRocks"/>
+	</bean>
+	
+	<bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+	  <property name="key" value="springRocks"/>
+	</bean> 
+
+	<security:authentication-manager alias="docSourcesAuthenticationManager">
+		<security:authentication-provider ref="rememberMeAuthenticationProvider" />
+
 		<security:authentication-provider ref="ldapAuthenticationProvider" >
 			<security:password-encoder ref="passwordLdapShaEncoder"/>
 		</security:authentication-provider>

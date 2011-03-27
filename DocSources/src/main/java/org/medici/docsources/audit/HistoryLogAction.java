@@ -40,6 +40,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.historylog.HistoryLogService;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.security.access.event.AuthorizationFailureEvent;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -153,6 +154,10 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 				UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 				historyLog.setUsername(userNamePasswordAuthenticationToken.getName());
 				historyLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
+			} else if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("RememberMeAuthenticationToken")) {
+				RememberMeAuthenticationToken rememberMeAuthenticationToken = (RememberMeAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+				historyLog.setUsername(rememberMeAuthenticationToken.getName());
+				historyLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) rememberMeAuthenticationToken.getPrincipal()).getAuthorities()));
 			}
 		} else {
 			historyLog.setUsername("");

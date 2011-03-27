@@ -26,7 +26,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="_spring _security_remember_me" style="margin:11px 0px 0px 50px"/><p class="remember">Remember me</p>
+							<td><input type="checkbox" name="_spring_security_remember_me" value="yes" style="margin:11px 0px 0px 50px"/><p class="remember">Remember me</p>
 							</td>
 						</tr>
 						<tr>
