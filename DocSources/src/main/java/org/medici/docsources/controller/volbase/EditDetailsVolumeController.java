@@ -164,8 +164,10 @@ public class EditDetailsVolumeController {
 			} catch (InvocationTargetException itex) {
 			}
 
-			command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
-			command.setSeriesRefDescription(volume.getSerieList().toString());
+			if (volume.getSerieList() != null) {
+				command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
+				command.setSeriesRefDescription(volume.getSerieList().toString());
+			}
 		} else {
 			// On Volume creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());

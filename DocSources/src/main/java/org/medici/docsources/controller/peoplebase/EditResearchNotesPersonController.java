@@ -33,6 +33,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditResearchNotesPersonCommand;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -113,7 +115,21 @@ public class EditResearchNotesPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditResearchNotesPersonCommand command) {
-		return new ModelAndView("peoplebase/modifyperson");
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		if ((command != null) && (command.getPersonId() > 0)) {
+			People person = new People();
+
+			try {
+				person = getPeopleBaseService().findPerson(command.getPersonId());
+				
+				command.setBioNotes(person.getBioNotes());
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditResearchNotesPerson", model);
+			}
+		}
+
+		return new ModelAndView("peoplebase/EditResearchNotesPerson", model);
 	}
 
 	/**

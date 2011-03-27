@@ -36,6 +36,7 @@ package org.medici.docsources.command.peoplebase;
  */
 public class EditResearchNotesPersonCommand {
 	private Integer personId;
+	private String bioNotes;
 
 	/**
 	 * This method returns personId property.
@@ -54,5 +55,19 @@ public class EditResearchNotesPersonCommand {
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+
+	/**
+	 * @param bioNotes the bioNotes to set
+	 */
+	public void setBioNotes(String bioNotes) {
+		this.bioNotes = bioNotes;
+	}
+
+	/**
+	 * @return the bioNotes
+	 */
+	public String getBioNotes() {
+		return bioNotes;
 	}
 }
