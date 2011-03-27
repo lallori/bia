@@ -10,19 +10,20 @@
 		</c:url>
 	</security:authorize>
 
+	<div id="CreatedSharePrintDiv">
+		<div id="createdby">CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
+		<a title="Print this record" href="#" id="buttonPrint"></a>
+		<div id="buttonShareLink">
+			<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
+			<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
+		</div>
+	</div>
+		
 	<div id="EditDetailsPersonDiv">
 		<h5>PERSON DETAILS</h5>
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="EditDetailsPerson" href="${EditDetailsPersonURL}">edit</a><span id="loading"/>
 	</security:authorize>
-		<div id="CreatedSharePrintDiv">
-			<div id="createdby">CREATED BY ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
-			<a title="Print this record" href="#" id="buttonPrint"></a>
-			<div id="buttonShareLink">
-				<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
-				<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
-			</div>
-		</div>
 		<hr id="lineSeparator"/>
 		<div id="EditPortraitPersonDiv">
 			<img src="/DocSources/images/default_user.jpg" alt="default image" />

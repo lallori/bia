@@ -4,9 +4,15 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="editDetailsDocumentForm" value="/de/docbase/EditDetailsDocument.do"/>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+			<c:param name="entryId"   value="${command.entryId}" />
+		</c:url>
+	</security:authorize>
 	
-	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentForm}" method="post" cssClass="edit">
+	<c:url var="editDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do"/>
+	
+	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentURL}" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>DOCUMENT DETAILS</b></legend>
 			<div>
@@ -174,7 +180,7 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
 				

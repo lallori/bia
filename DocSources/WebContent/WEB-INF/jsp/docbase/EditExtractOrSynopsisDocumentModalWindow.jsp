@@ -10,13 +10,17 @@
 
 	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
 
-		<div style="float:left"><form:label for="docExtract" id="docExtractLabel" path="docExtract">Extract:</form:label>
-		<br />
-		<form:textarea id="docExtract" path="docExtract" cssClass="txtarea_fullscreen"/></div>
+		<div style="float:left">
+			<form:label for="docExtract" id="docExtractLabel" path="docExtract">Extract:</form:label>
+			<br />
+			<form:textarea id="docExtract" path="docExtract" cssClass="txtarea_fullscreen"/>
+		</div>
 
-		<div style="float:right"><form:label for="synopsis" id="synopsisLabel" path="synopsis">Synopsis:</form:label>
-		<br />
-		<form:textarea id="synopsis" path="synopsis" cssClass="txtarea_fullscreen"/></div>
+		<div style="float:right">
+			<form:label for="synopsis" id="synopsisLabel" path="synopsis">Synopsis:</form:label>
+			<br />
+			<form:textarea id="synopsis" path="synopsis" cssClass="txtarea_fullscreen"/>
+		</div>
 
 		<br />
 		<div id="closeSaveButtonsFullscreen">
@@ -70,7 +74,7 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
 				

@@ -36,6 +36,10 @@
 	padding: 0;
 }
 
+#entryMenu:hover{
+	background-image:url(/DocSources/images/1024/button_entrymenuRollover.png);
+}
+
 #vetMenu{
 	background-image:url(/DocSources/images/1024/button_vetmenu.png);
 	background-repeat:no-repeat;
@@ -43,6 +47,10 @@
 	width:99px;
 	height:63px;
 	padding: 0;
+}
+
+#vetMenu:hover{
+	background-image:url(/DocSources/images/1024/button_vetmenuRollover.png);
 }
 
 #advsearchMenu{
@@ -54,6 +62,10 @@
 	padding: 0;
 }
 
+#advsearchMenu:hover{
+	background-image:url(/DocSources/images/1024/button_advsearchRollover.png);
+}
+
 #chronologyMenu{
 	background-image:url(/DocSources/images/1024/button_chronology.png);
 	background-repeat:no-repeat;
@@ -61,6 +73,10 @@
 	width:99px;
 	height:63px;
 	padding: 0;
+}
+
+#chronologyMenu:hover{
+	background-image:url(/DocSources/images/1024/button_chronologyRollover.png);
 }
 
 #myprofileMenu{
@@ -72,6 +88,10 @@
 	padding: 0;
 }
 
+#myprofileMenu:hover{
+	background-image:url(/DocSources/images/1024/button_myprofileRollover.png);
+}
+
 #messagesMenu{
 	background-image:url(/DocSources/images/1024/button_messages.png);
 	background-repeat:no-repeat;
@@ -81,6 +101,10 @@
 	padding: 0;
 }
 
+#messagesMenu:hover{
+	background-image:url(/DocSources/images/1024/button_messagesRollover.png);
+}
+
 #logoutMenu{
 	background-image:url(/DocSources/images/1024/button_logout.png);
 	background-repeat:no-repeat;
@@ -88,6 +112,11 @@
 	width:99px;
 	height:63px;
 	padding: 0;
+}
+
+
+#logoutMenu:hover{
+	background-image:url(/DocSources/images/1024/button_logoutRollover.png);
 }
 
 

@@ -1972,113 +1972,63 @@ iframe{ /* Common for all iFrame */
 /*
 /* ------------------- modal window ------------------------ */
 
-#advancedSearchModal h1{
+#advancedSearchModal h1{ /* "Click the button below to search on one of the following categories" */
 	text-align:center;
 	font-size:11px;
 	font-weight:normal;
 }
 
-#advancedSearchModal #documentSearchDiv{
-	width:140px;
-	height:230px;
-	border: 1px solid #e6d0c6;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
+#advancedSearchModal #documentSearch{ /* Documents Advanced Search Button */
+	width:150px;
+	height:250px;
 	position:absolute;
-	margin:20px 0 0 10px;
+	margin:20px 0 0 5px;
+	background-image:url(/DocSources/images/1024/button_advsearchdoc.png);
+	background-repeat:no-repeat;
 }
 
-#advancedSearchModal #documentSearchDiv #documentSearch {
-	background-image:url(/DocSources/images/1024/button_documentsearch.png);
-    top: 0; left: 0; /* top-left corner of logo */
-	margin: 20px 0 5px 10px;
+#advancedSearchModal #volumeSearch{ /* Volumes Advanced Search Button */
+	width:150px;
+	height:250px;
 	position:absolute;
-	width:114px;
-	height:25px;
+	margin:20px 0 0 155px;
+	background-image:url(/DocSources/images/1024/button_advsearchvol.png);
+	background-repeat:no-repeat;
 }
 
-#advancedSearchModal #personSearchDiv{
-	width:130px;
-	height:230px;
-	border: 1px solid #e6d0c6;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	position:absolute;
-	margin:20px 0 0 162px;
-}
-
-#advancedSearchModal #personSearchDiv #personSearch {
-	background-image:url(/DocSources/images/1024/button_personsearch.png);
-    top: 0; left: 0; /* top-left corner of logo */
-	margin: 20px 0 5px 10px;
-	position:absolute;
-	width:114px;
-	height:25px;
-}
-
-#advancedSearchModal #volumeSearchDiv{
-	width:130px;
-	height:230px;
-	border: 1px solid #e6d0c6;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
+#advancedSearchModal #personSearch{ /* People Advanced Search Button */
+	width:150px;
+	height:250px;
 	position:absolute;
 	margin:20px 0 0 305px;
+	background-image:url(/DocSources/images/1024/button_advsearchpeop.png);
+	background-repeat:no-repeat;
 }
 
-#advancedSearchModal #volumeSearchDiv #volumeSearch {
-	background-image:url(/DocSources/images/1024/button_volumesearch.png);
-    top: 0; left: 0; /* top-left corner of logo */
-	margin: 20px 0 5px 10px;
+#advancedSearchModal #placeSearch{ /* Place Advanced Search Button */
+	width:150px;
+	height:250px;
 	position:absolute;
-	width:114px;
-	height:25px;
+	margin:20px 0 0 455px;
+	background-image:url(/DocSources/images/1024/button_advsearchpla.png);
+	background-repeat:no-repeat;
 }
 
-#advancedSearchModal #placeSearchDiv{
-	width:130px;
-	height:230px;
-	border: 1px solid #e6d0c6;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	position:absolute;
-	margin:20px 0 0 448px;
-}
-
-#advancedSearchModal #placeSearchDiv #placeSearch {
-	background-image:url(/DocSources/images/1024/button_placesearch.png);
-    top: 0; left: 0; /* top-left corner of logo */
-	margin: 20px 0 5px 10px;
-	position:absolute;
-	width:114px;
-	height:25px;
-}
-
-#advancedSearchModal #objectSearchDiv{
-	width:130px;
-	height:230px;
-	border: 1px solid #e6d0c6;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
+#advancedSearchModal #savedFilters{ /* Saved Filters Advanced Search Button */
+	width:150px;
+	height:250px;
 	position:absolute;
 	margin:20px 0 0 590px;
+	background-image:url(/DocSources/images/1024/button_advsearchfilters.png);
+	background-repeat:no-repeat;
 }
 
-#advancedSearchModal #objectSearchDiv #objectSearch {
-	background-image:url(/DocSources/images/1024/button_objectsearch.png);
-    top: 0; left: 0; /* top-left corner of logo */
-	margin: 20px 0 5px 10px;
-	position:absolute;
-	width:114px;
-	height:25px;
-}
-
-#advancedSearchModal #CloseButton{
-	margin:275px 0 0 330px;
+#advancedSearchModal #CloseButton{ /* Close Advanced Search Button */
+	margin:285px 0 0 330px;
 	position:absolute;
 }
 
-#advancedSearchModal a:hover{
+#advancedSearchModal a:hover{ /* On Rollover transparency effect */
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=0); /* IE */
@@ -2249,6 +2199,104 @@ span.categorySearch {
 	height:22px;
 	border:none;
 }
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* ---------------------------- SAVED SEARCH FILTERS ------------------------- */
+
+#savedSearchFiltersDiv table { 
+	border-collapse: separate;
+	margin:10px auto 20px 0;
+}
+
+#savedSearchFiltersDiv td, th {
+	display: table-cell;
+	vertical-align: inherit;
+	font-size:11px;
+	padding:10px 7px 10px 7px;
+	text-align:center;
+}
+
+#savedSearchFiltersDiv a{
+	font-size:11px;
+}
+
+#savedSearchFiltersDiv .odd { /* Background color of the rows */
+	background-color: #EFDFDF;
+}
+
+#savedSearchFiltersDiv .sortingFilterName {  /* Filter Name cell proprieties */
+	width:215px;
+	font-size:11px;
+	color:#6D5C4D;
+	text-align:center;
+	font-weight:normal;
+}
+
+#savedSearchFiltersDiv .sortingResults, #savedSearchFiltersDiv .sortingDate { /* Results and Date cell proprieties */
+	width:135px; 
+	font-size:11px;
+	color:#6D5C4D;
+	text-align:center;
+	font-weight:normal;
+}
+
+#savedSearchFiltersDiv .sortingRecordTypes { /* Record Types cell proprieties */
+	width:230px;
+	font-size:11px;
+	color:#6D5C4D;
+	text-align:center;
+	font-weight:normal;
+}
+ 
+#savedSearchFiltersDiv .nameResult{  /* Filter Name Results color */
+	color:#2E3192; /* Blue */
+}
+
+#savedSearchFiltersDiv .numberResult{ /* Number Results color */
+	color:#C1272D; /* Red */
+}
+
+#savedSearchFiltersDiv .dateResult{ /* Filter Name Results color */
+	color:#888888; /* Grey */
+}
+
+/* Record Types  */
+#savedSearchFiltersDiv .peopleSearchResult{ /* People Search Results color */
+	color:#09C; /* Blue */
+}
+
+#savedSearchFiltersDiv .documentSearchResult{ /* People Search Results color - Record Types  */
+	color:#090; /* Green */
+}
+
+#savedSearchFiltersDiv .volumeSearchResult{ /* People Search Results color - Record Types  */
+	color:#F60; /* Orange */
+}
+
+#savedSearchFiltersDiv .placeSearchResult{ /* People Search Results color - Record Types  */
+	color:#909; /* Purple */
+}
+
+#savedSearchFiltersDiv a:hover{ /* On Rollover underline effect */
+	text-decoration:underline;
+}
+
+#savedSearchFiltersDiv #close { /* Close Button */
+	margin-left:340px;
+}
+
+#savedSearchFiltersDiv #goBack {  /* Go Back Button */
+	margin:0 0 0 5px;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_goback.png);
+	width:50px;
+	height:23px;
+}
+
+
 
 /* -------------------------------------------------------------------------- */
 /*
@@ -2490,4 +2538,10 @@ span.categorySearch {
 #replyCommentDiv {
 	padding:15px 5px 15px 50px;
 	margin:0;
+}
+
+#commentDiv a, #replyCommentDiv a{
+	text-decoration:underline;
+	font-size:11px;
+	color:#b99c84;
 }

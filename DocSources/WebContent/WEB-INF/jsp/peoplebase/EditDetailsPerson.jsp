@@ -3,18 +3,13 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-
-	</form:form>
-<!-- The class assigned to href is the default of jqModal -->
-	
-	<div id="createdby"><h6>CREATED BY KH 11/28/1996</h6></div>
 	
 	<div>
 	<form:form id="EditDetailsPersonForm" cssClass="edit" method="post">
 	<fieldset>
 	<legend><b>PERSON DETAILS</b></legend>
 		<div>
-			<form:label for="firstName" path="first" cssErrorClass="error"><b>First Name:</b></form:label>
+			<form:label for="firstName" path="firstName" cssErrorClass="error"><b>First Name:</b></form:label>
 			<input id="firstName" name="firstName" class="input_20c" type="text" value="" />
 			<form:label for="sucNum" path="sucNum" cssErrorClass="error">Succes. Number:</form:label>
 			<input id="successNumber" name="successNumber" class="input_5c" type="text" value="" maxlength="5"/>
@@ -75,7 +70,7 @@
 		</div>
 		
 		<div>
-			<form:label for="bActiveStart" path="bActiveStart" cssErrorClass="error">Active Start:</form:label>
+			<form:label for="activeStart" path="activeStart" cssErrorClass="error">Active Start:</form:label>
 			<input id="activeStartAutoCompleter" name="activeStart" class="input_10c" type="text" value=""/>
 
 			<form:label for="bUnsure" path="bUnsure" cssErrorClass="error">Unsure?</form:label>
@@ -84,7 +79,7 @@
 		
 		<div>
 			<b>Death:</b>
-			<form:label for="dYear" path="dYearb" cssErrorClass="error">Year</form:label>
+			<form:label for="dYear" path="dYear" cssErrorClass="error">Year</form:label>
 			<input id="yearDeath" name="yearDeath" class="input_4c" type="text" value="" maxlength="4"/>
 			<form:label for="dMonth" path="dMonth" cssErrorClass="error">Month</form:label>
 			<select id="monthDeath" name="monthDeath" class="selectform">
@@ -102,7 +97,7 @@
 		</div>
 		
 		</fieldset>	
-		</form>
+		</form:form>
 	</div>
 
 

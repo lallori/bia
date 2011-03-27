@@ -12,7 +12,7 @@
 			<c:param name="entryId"   value="${command.document.entryId}" />
 			<c:param name="eplToId"  value="0" />
 		</c:url>
-		<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId"   value="${command.document.entryId}" />
 		</c:url>
 	</security:authorize>
@@ -52,10 +52,6 @@
 		</fieldset>	
 		<div id="EditTopicDocumentDiv"></div>
 	
-		<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
-			<c:param name="entryId"   value="${command.entryId}" />
-		</c:url>
-
 		<script type="text/javascript">
 			$j(document).ready(function() {
 		        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
@@ -114,7 +110,7 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
 				

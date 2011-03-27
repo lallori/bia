@@ -51,7 +51,7 @@
 			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a></p>
 			</c:if>
 			<c:if test="${empty image}">
-			<img src="<c:url value="/images/image_document.png"/>" alt="document image" />
+			<img src="<c:url value="/images/1024/img_document.png"/>" alt="document image" />
 			</c:if>
 		</div>
 		

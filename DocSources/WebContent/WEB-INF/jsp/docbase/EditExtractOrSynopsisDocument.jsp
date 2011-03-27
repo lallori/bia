@@ -4,6 +4,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+			<c:param name="entryId"   value="${command.entryId}" />
+		</c:url>
+	</security:authorize>
+
 	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>EXTRACT/SYNOPSIS</b></legend>
@@ -66,7 +72,7 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
 				

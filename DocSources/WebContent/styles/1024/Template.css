@@ -16,7 +16,6 @@ html {
 }
 
 body {
-	background-image:url(/DocSources/images/1024/bg.jpg);
 	background-position:bottom;
 	background-repeat:no-repeat;
 	background-color:#f6edec;
@@ -130,6 +129,7 @@ a {
 	border-right: 2px solid #e6d0c6;
 	font-size:11px;
 	z-index:1;
+	margin-bottom:100px;
 }
 	
 #body_right{ /* RIGHT-hand side of the SCREEN */
@@ -144,6 +144,7 @@ a {
 	font-size:11px;
 	border-left: 2px solid #e6d0c6;
 	z-index:1;
+	margin-bottom:100px;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 
@@ -233,10 +234,6 @@ input {
 	float:left;
 }
 
-#menulastentry a:hover{
-	opacity:0.5;
-}
-
 #menulastentry #last_doc a {
 	background-image:url(/DocSources/images/1024/button_lastdocumententry.png);
 	background-repeat:no-repeat;
@@ -246,6 +243,10 @@ input {
 	width:100px;
 	height:85px;
 	padding-left:10px;
+}
+
+#menulastentry #last_doc a:hover {
+		background-image:url(/DocSources/images/1024/button_lastdocumententryRollover.png);
 }
 
 #menulastentry #last_vol a {
@@ -259,6 +260,10 @@ input {
 	padding-left:10px;
 }
 
+#menulastentry #last_vol a:hover {
+	background-image:url(/DocSources/images/1024/button_lastvolumeentryRollover.png);
+}
+
 #menulastentry #last_pers a {
 	background-image:url(/DocSources/images/1024/button_lastpersonentry.png);
 	background-repeat:no-repeat;
@@ -270,6 +275,10 @@ input {
 	padding-left:10px;
 }
 
+#menulastentry #last_pers a:hover {
+	background-image:url(/DocSources/images/1024/button_lastpersonentryRollover.png);
+}
+
 #menulastentry #last_pla a {
 	background-image:url(/DocSources/images/1024/button_lastplaceentry.png);
 	background-repeat:no-repeat;
@@ -279,6 +288,10 @@ input {
 	width:100px;
 	height:85px;
 	padding-left:10px;
+}
+
+#menulastentry #last_pla a:hover {
+	background-image:url(/DocSources/images/1024/button_lastplaceentryRollover.png);
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 

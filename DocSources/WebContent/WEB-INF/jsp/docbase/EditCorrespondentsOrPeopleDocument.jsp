@@ -5,14 +5,14 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditCorrespondentsOrPeopleDocument" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
+		<c:url var="EditCorrespondentsOrPeopleDocumentURL" value="/de/docbase/EditCorrespondentsOrPeopleDocument.do">
 			<c:param name="entryId"   value="${command.document.entryId}" />
 		</c:url>
-		<c:url var="AddPersonUrl" value="/de/docbase/EditPersonDocument.do">
+		<c:url var="AddPersonURL" value="/de/docbase/EditPersonDocument.do">
 			<c:param name="entryId"   value="${command.document.entryId}" />
 			<c:param name="epLinkId"  value="0" />
 		</c:url>
-		<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
+		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId"   value="${command.document.entryId}" />
 		</c:url>
 	</security:authorize>
@@ -72,26 +72,26 @@
 				<label for="people" id="peopleLabel">People:</label>
 			</div>
 		<c:forEach items="${command.document.epLink}" var="currentPerson">
-			<c:url var="EditPersonDocumentUrl" value="/de/docbase/EditPersonDocument.do">
+			<c:url var="EditPersonDocumentURL" value="/de/docbase/EditPersonDocument.do">
 				<c:param name="entryId" value="${currentPerson.document.entryId}" />
 				<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
 			</c:url>
 
-			<c:url var="DeletePersonDocumentUrl" value="/de/docbase/DeletePersonDocument.do" >
+			<c:url var="DeletePersonDocumentURL" value="/de/docbase/DeletePersonDocument.do" >
 				<c:param name="entryId" value="${currentPerson.document.entryId}" />
 				<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
 			</c:url>
 
 			<div>
 				<input id="people_${currentPerson.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPerson.people.mapNameLf}" disabled="disabled"/>
-				<a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentUrl}"></a>
-				<a class="editValue" href="${EditPersonDocumentUrl}">edit value</a>
+				<a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentURL}"></a>
+				<a class="editValue" href="${EditPersonDocumentURL}">edit value</a>
 				<a title="Show this person record" id="personIcon" href="#"></a>
 			</div>
 		</c:forEach>
 			<br>			
 			<div>
-				<a id="AddNewValue" title="Add new person" href="${AddPersonUrl}"></a>
+				<a id="AddNewValue" title="Add new person" href="${AddPersonURL}"></a>
 			</div>
 			<img src="/DocSources/images/1024/img_transparent.png">
 			<br>
@@ -101,10 +101,10 @@
 		
 	<div id="EditPersonDocumentDiv"></div>
 			
-	<c:url var="searchSenderPeopleUrl" value="/de/peoplebase/SearchSenderPeople.json"/>
-	<c:url var="searchSenderPlaceUrl" value="/de/geobase/SearchSenderPlace.json"/>
-	<c:url var="searchRecipientPeopleUrl" value="/de/peoplebase/SearchRecipientPeople.json"/>
-	<c:url var="searchRecipientPlaceUrl" value="/de/geobase/SearchRecipientPlace.json"/>
+	<c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json"/>
+	<c:url var="searchSenderPlaceURL" value="/de/geobase/SearchSenderPlace.json"/>
+	<c:url var="searchRecipientPeopleURL" value="/de/peoplebase/SearchRecipientPeople.json"/>
+	<c:url var="searchRecipientPlaceURL" value="/de/geobase/SearchRecipientPlace.json"/>
 
 
 	<script type="text/javascript">
@@ -117,7 +117,7 @@
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
 
 			$j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
-			    serviceUrl:'${searchSenderPeopleUrl}',
+			    serviceUrl:'${searchSenderPeopleURL}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
 			    maxHeight:400,
@@ -131,7 +131,7 @@
 			  });
 
 			$j('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
-			    serviceUrl:'${searchSenderPlaceUrl}',
+			    serviceUrl:'${searchSenderPlaceURL}',
 			    minChars:5, 
 			    delimiter: null, // regex or character
 			    maxHeight:400,
@@ -143,7 +143,7 @@
 			  });
 			
 			$j('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
-			    serviceUrl:'${searchRecipientPeopleUrl}',
+			    serviceUrl:'${searchRecipientPeopleURL}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
 			    maxHeight:400,
@@ -155,7 +155,7 @@
 			  });
 
 			$j('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
-			    serviceUrl:'${searchRecipientPlaceUrl}',
+			    serviceUrl:'${searchRecipientPlaceURL}',
 			    minChars:5, 
 			    delimiter: null, // regex or character
 			    maxHeight:400,
@@ -216,7 +216,7 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
 				
