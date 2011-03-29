@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+
+	<!-- Document base Validator -->
+	<bean id="deletePersonDocumentValidator" class="org.medici.docsources.validator.docbase.DeletePersonDocumentValidator">
+        <description>Delete Linked People to a Document Validator.</description>
+	</bean>
+
+	<bean id="deleteTopicDocumentValidator" class="org.medici.docsources.validator.docbase.DeleteTopicDocumentValidator">
+        <description>Delete Linked topic to a Document Validator.</description>
+	</bean>
+
+	<bean id="editCorrespondentsOrPeopleDocumentValidator" class="org.medici.docsources.validator.docbase.EditCorrespondentsOrPeopleDocumentValidator">
+        <description>Edit Correspondents Or People Document Validator.</description>
+	</bean>
+
+	<bean id="editDetailsDocumentValidator" class="org.medici.docsources.validator.docbase.EditDetailsDocumentValidator">
+        <description>Edit Details Document Validator.</description>
+	</bean>
+
+	<bean id="editExtractOrSynopsisDocumentValidator" class="org.medici.docsources.validator.docbase.EditExtractOrSynopsisDocumentValidator">
+        <description>Edit Extract Or Synopsis Document Validator.</description>
+	</bean>
+
+	<bean id="editFactCheckDocumentValidator" class="org.medici.docsources.validator.docbase.EditFactCheckDocumentValidator">
+        <description>Edit Fact Check Document Validator.</description>
+	</bean>
+
+	<bean id="editPersonDocumentValidator" class="org.medici.docsources.validator.docbase.EditPersonDocumentValidator">
+        <description>Edit People Document Validator.</description>
+	</bean>
+
+	<bean id="editTopicDocumentValidator" class="org.medici.docsources.validator.docbase.EditTopicDocumentValidator">
+        <description>Edit Topic Document Validator.</description>
+	</bean>
+	
+	<bean id="searchDocumentValidator" class="org.medici.docsources.validator.docbase.SearchDocumentValidator">
+        <description>Search Document Validator.</description>
+	</bean>
+
+	<bean id="showExplorerDocumentValidator" class="org.medici.docsources.validator.docbase.ShowExplorerDocumentValidator">
+        <description>Show Document Explorer Validator.</description> 
+	</bean>
+	
+	<!-- Manuscript Viewer Validators -->
+	<bean id="editExtractDocumentDialogValidator" class="org.medici.docsources.validator.manuscriptviewer.EditExtractDocumentDialogValidator">
+        <description>Edit Extract Document Dialog Validator.</description>
+	</bean>
+
+	<bean id="editSynopsisDocumentDialogValidator" class="org.medici.docsources.validator.manuscriptviewer.EditSynopsisDocumentDialogValidator">
+        <description>Edit Synopsis Validator.</description>
+	</bean>
+	
+	<!-- Person base Validators -->
+	<bean id="editDetailsPlaceValidator" class="org.medici.docsources.validator.geobase.EditDetailsPlaceValidator">
+        <description>Edit Details Place Validator.</description>
+	</bean>
+
+	<!-- People base validator -->
+	<bean id="editDetailsPersonValidator" class="org.medici.docsources.validator.peoplebase.EditDetailsPersonValidator">
+        <description>Edit Details Person Validator.</description>
+	</bean>
+
+	<!-- Volume base Validators-->
+	<bean id="editContextVolumeValidator" class="org.medici.docsources.validator.volbase.EditContextVolumeValidator">
+        <description>Edit Context Volume Validator.</description> 
+	</bean>
+
+	<bean id="editCorrespondentsVolumeValidator" class="org.medici.docsources.validator.volbase.EditCorrespondentsVolumeValidator">
+        <description>Edit Correspondents Volume Validator.</description> 
+	</bean>
+	
+	<bean id="editDescriptionVolumeValidator" class="org.medici.docsources.validator.volbase.EditDescriptionVolumeValidator">
+        <description>Edit Description Volume Validator.</description> 
+	</bean>
+
+	<bean id="editDetailsVolumeValidator" class="org.medici.docsources.validator.volbase.EditDetailsVolumeValidator">
+        <description>Edit Details Volume Validator.</description> 
+	</bean>
+
+	<bean id="showExplorerVolumeValidator" class="org.medici.docsources.validator.volbase.ShowExplorerVolumeValidator">
+        <description>Show Volume Explorer Validator.</description> 
+	</bean>
+	
+	<!-- User's Validators-->
+    <bean id="activateUserRequestValidator" class="org.medici.docsources.validator.user.ActivateUserRequestValidator">
+        <description>Validator for action "Activate user.".</description>
+    </bean>
+    
+    <bean id="advancedSearchUserValidator" class="org.medici.docsources.validator.user.AdvancedSearchUserValidator">
+        <description>Advanced search user validator.</description>
+    </bean>
+    
+    <bean id="createUserValidator" class="org.medici.docsources.validator.user.CreateUserValidator">
+        <description>User create validator (administration console component).</description>
+    </bean>
+
+    <bean id="lockUserValidator" class="org.medici.docsources.validator.user.LockUserValidator">
+        <description>User lock validator (administration console component).</description>
+    </bean>
+
+    <bean id="registerUserValidator" class="org.medici.docsources.validator.user.RegisterUserValidator">
+        <description>User registration validator.</description>
+    </bean>
+
+    <bean id="resetUserPasswordRequestValidator" class="org.medici.docsources.validator.user.ResetUserPasswordRequestValidator">
+        <description>User registration validator.</description>
+    </bean>
+    
+    <bean id="resetUserPasswordValidator" class="org.medici.docsources.validator.user.ResetUserPasswordValidator">
+        <description>User registration validator.</description>
+    </bean>
+
+    <bean id="sendUserActivationCodeValidator" class="org.medici.docsources.validator.user.SendUserActivationCodeValidator">
+        <description>Validator for action "Send user activation code by mail".</description>
+    </bean>
+
+    <bean id="sendUserPasswordResetValidator" class="org.medici.docsources.validator.user.SendUserPasswordResetValidator">
+        <description>Validator for action "Send user passowrd reset by mail".</description>
+    </bean>
+
+  	<bean id="showUserPhotoValidator" class="org.medici.docsources.validator.user.ShowUserPhotoValidator">
+        <description>User registration validator.</description>
+	</bean>
+    
+    <bean id="searchUserValidator" class="org.medici.docsources.validator.user.SearchUserValidator">
+        <description>User search validator.</description>
+    </bean>
+
+    <bean id="unregisterUserValidator" class="org.medici.docsources.validator.user.UnregisterUserValidator">
+        <description>User registration validator.</description>
+    </bean>
+
+    <bean id="updateUserValidator" class="org.medici.docsources.validator.user.UpdateUserValidator">
+        <description>User update validator.</description>
+    </bean>
+
+    <bean id="updateUserPasswordValidator" class="org.medici.docsources.validator.user.UpdateUserPasswordValidator">
+        <description>User password update validator.</description>
+    </bean>
+</beans>
