@@ -93,8 +93,8 @@ public class AjaxController {
 			model.put("count", places.size());
 			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
 			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
-			model.put("prefFlag", ListBeanUtils.transformList(places, "prefFlag"));
-			model.put("plType", ListBeanUtils.transformList(places, "plType"));
+			model.put("prefFlags", ListBeanUtils.transformList(places, "prefFlag"));
+			model.put("plTypes", ListBeanUtils.transformList(places, "plType"));
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}
