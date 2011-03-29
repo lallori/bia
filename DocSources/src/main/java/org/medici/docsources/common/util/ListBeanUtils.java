@@ -66,7 +66,7 @@ public class ListBeanUtils {
 		for (int i = 0; i < inputList.size(); i++) {
 			try {
 				retValue.add(i, method.invoke(inputList.get(i), (Object[]) null));
-				if (ObjectUtils.toString(retValue.get(i)).equals("0")) {
+				if ((ObjectUtils.toString(retValue.get(i)).equals("0")) || ((ObjectUtils.toString(retValue.get(i)).equals("")))) {
 					retValue.set(i, "");
 				}
 			} catch (IllegalAccessException iaex) {

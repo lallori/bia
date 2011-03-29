@@ -87,7 +87,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String[] queries) throws PersistenceException;
+	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String searchText) throws PersistenceException;
 
 	/**
 	 * 
@@ -95,7 +95,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchRecipientsPeople(String[] queries) throws PersistenceException;
+	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException;
 
 	/**
 	 * 
@@ -103,5 +103,5 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchSendersPeople(String[] queries) throws PersistenceException;
+	public List<People> searchSendersPeople(String searchText) throws PersistenceException;
 }

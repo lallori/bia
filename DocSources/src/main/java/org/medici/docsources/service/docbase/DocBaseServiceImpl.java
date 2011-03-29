@@ -37,7 +37,6 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.EpLinkUtils;
 import org.medici.docsources.common.util.EplToLinkUtils;
 import org.medici.docsources.common.util.ImageUtils;
-import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
@@ -893,7 +892,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			List<EpLink> epLinkList = getEpLinkDAO().findByEntryId(entryId);
 			
-			return getPeopleDAO().searchPersonLinkableToDocument(EpLinkUtils.getPeopleIdList(epLinkList), RegExUtils.splitPunctuationChars(query));
+			return getPeopleDAO().searchPersonLinkableToDocument(EpLinkUtils.getPeopleIdList(epLinkList), query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

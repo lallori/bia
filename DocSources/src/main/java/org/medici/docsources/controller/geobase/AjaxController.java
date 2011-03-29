@@ -65,8 +65,11 @@ public class AjaxController {
 		try {
 			List<Place> places = getGeoBaseService().searchSendersPlace(query);
 			model.put("query", query);
+			model.put("count", places.size());
 			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeNameFull", " ", " ", Boolean.TRUE));
+			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
+			model.put("prefFlags", ListBeanUtils.transformList(places, "prefFlag"));
+			model.put("plTypes", ListBeanUtils.transformList(places, "plType"));
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}
@@ -87,9 +90,11 @@ public class AjaxController {
 		try {
 			List<Place> places = getGeoBaseService().searchRecipientsPlace(query);
 			model.put("query", query);
+			model.put("count", places.size());
 			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(places, "placeNameFull", " ", " ", Boolean.TRUE));
-
+			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
+			model.put("prefFlag", ListBeanUtils.transformList(places, "prefFlag"));
+			model.put("plType", ListBeanUtils.transformList(places, "plType"));
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}

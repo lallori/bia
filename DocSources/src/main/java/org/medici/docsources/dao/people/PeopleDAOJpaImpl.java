@@ -40,15 +40,22 @@ import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.WildcardQuery;
+import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
+import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
+import org.hibernate.transform.Transformers;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
@@ -135,57 +142,33 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings({ "rawtypes", "unused" })
 	@Override
 	public Page searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException {
-		// Create criteria objects
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-
 		Page page = new Page(paginationFilter);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(People.class).get();
 
-		if (paginationFilter.getTotal() == null) {
-			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
-			Root<People> rootCount = criteriaQueryCount.from(People.class);
-			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
+			"volume.serieList.title",
+			"volume.serieList.subTitle1", 
+			"volume.serieList.subTitle2",
+			"senderPeople.mapNameLf", 
+			"senderPeople.poLink.titleOccList.titleOcc",
+			"senderPeople.altName.altName", 
+			"senderPlace.placeName", 
+			"senderPlace.placeNameFull",
+			"recipientPeople.mapNameLf", 
+			"recipientPeople.poLink.titleOccList.titleOcc",
+			"recipientPeople.altName.altName",
+			"recipientPlace.placeName", 
+			"recipientPlace.placeNameFull"
+		).matching(text + "*").createQuery();
 
-/*			List<Predicate> predicates = new ArrayList<Predicate>();
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("title"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("subTitle1"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("serieList").get("subTitle2"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("orgNotes"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("recips"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("researcher"), "%" + text + "%" ));
-	        predicates.add(criteriaBuilder.like((Expression) rootCount.get("senders"), "%" + text + "%" ));
-
-	        //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
-	        criteriaQueryCount.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
-*/
-			TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
-		}
-
-		CriteriaQuery<People> criteriaQuery = criteriaBuilder.createQuery(People.class);
-		Root<People> root = criteriaQuery.from(People.class);
-	
-/*		//We need to duplicate predicates beacause they are link to Root element
-        List<Predicate> predicates = new ArrayList<Predicate>();
-        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("title"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle1"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("serieList").get("subTitle2"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("orgNotes"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("recips"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("researcher"), "%" + text + "%" ));
-        predicates.add(criteriaBuilder.like((Expression) root.get("senders"), "%" + text + "%" ));
-
-        //If we omiss criteriaBuilder.or every predicate is in conjunction with others  
-        criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
-*/
-		// Set values in predicate's elements  
-		TypedQuery<People> typedQuery = getEntityManager().createQuery(criteriaQuery);
-		typedQuery.setFirstResult(paginationFilter.getFirstRecord());
-		typedQuery.setMaxResults(paginationFilter.getLength());
-		page.setList(typedQuery.getResultList());
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, People.class );
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
 		
+		page.setList(fullTextQuery.list());
 		return page;
 	}
 
@@ -194,57 +177,39 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String[] queries) throws PersistenceException {
-		String[] searchFields = new String[]{"first", "last"};
+	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String searchText) throws PersistenceException {
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-		org.hibernate.search.FullTextQuery fullTextQuery = null;
 
-/*		BooleanQuery booleanQuery = new BooleanQuery();
-		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("first", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
-		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("last", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
-		
-		for (int i=0; i<peopleIdList.size(); i++) {
-			booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
-		}
-*/
-		if (queries.length == 1) {
-			
+        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase());
+	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	queryAltName.add(new Term("altName.altName", singleWord));
+	        }
+
 			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
-			
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
 			for (int i=0; i<peopleIdList.size(); i++) {
 				booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
 			}
-			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
-		} else if (queries.length == 2) {
-			// Condition is : (first:query[0]* AND last:query[1]*) OR (first:query[1]* AND last:query[0]*)
-			BooleanQuery booleanQuery1 = new BooleanQuery();
-			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			
-			BooleanQuery booleanQuery2 = new BooleanQuery();
-			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+	
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
 
-			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(booleanQuery1, BooleanClause.Occur.SHOULD);
-			booleanQuery.add(booleanQuery2, BooleanClause.Occur.SHOULD);
-			for (int i=0; i<peopleIdList.size(); i++) {
-				booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
-			}
-			
-			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
-		} else {
-			fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, queries, outputFields, People.class);
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
 		}
-
-		fullTextQuery.setProjection(outputFields);
-
-		List<People> listPeopleLinkable = executeFullTextQuery(fullTextQuery, outputFields, People.class);
-
-		return listPeopleLinkable; 
 	}
 
 	/**
@@ -252,43 +217,37 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchRecipientsPeople(String[] queries) throws PersistenceException {
-		String[] searchFields = new String[]{"first", "last"};
+	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException {
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
 
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-		org.hibernate.search.FullTextQuery fullTextQuery = null;
 
-		if (queries.length == 1) {
-			
-			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
-			
-			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
-		} else if (queries.length == 2) {
-			// Condition is : (first:query[0]* AND last:query[1]*) OR (first:query[1]* AND last:query[0]*)
-			BooleanQuery booleanQuery1 = new BooleanQuery();
-			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			
-			BooleanQuery booleanQuery2 = new BooleanQuery();
-			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase());
+	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	queryAltName.add(new Term("altName.altName", singleWord));
+	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(booleanQuery1, BooleanClause.Occur.SHOULD);
-			booleanQuery.add(booleanQuery2, BooleanClause.Occur.SHOULD);
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
 			
-			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
-		} else {
-			fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, queries, outputFields, People.class);
+			
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
 		}
-
-		fullTextQuery.setProjection(outputFields);
-		List<People> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, People.class);
-
-		return listRecipients;
 	}
 
 	/**
@@ -325,42 +284,36 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchSendersPeople(String[] queries) throws PersistenceException {
-		String[] searchFields = new String[]{"first", "last"};
+	public List<People> searchSendersPeople(String searchText) throws PersistenceException {
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-		org.hibernate.search.FullTextQuery fullTextQuery = null;
 
-		// If user specify only one term, we search it on first and last
-		if (queries.length == 1) {
-			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
-			
-			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
-		} else if (queries.length == 2) {
-			// Condition is : (first:query[0]* AND last:query[1]*) OR (first:query[1]* AND last:query[0]*)
-			BooleanQuery booleanQuery1 = new BooleanQuery();
-			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			booleanQuery1.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			
-			BooleanQuery booleanQuery2 = new BooleanQuery();
-			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[0], queries[1].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
-			booleanQuery2.add(new BooleanClause(new WildcardQuery(new Term(searchFields[1], queries[0].trim().toLowerCase() + "*")), BooleanClause.Occur.MUST)); 
+        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+        
+        try  {
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase());
+	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	queryAltName.add(new Term("altName.altName", singleWord));
+	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(booleanQuery1, BooleanClause.Occur.SHOULD);
-			booleanQuery.add(booleanQuery2, BooleanClause.Occur.SHOULD);
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
 			
-			fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, People.class);
-		} else {
-			fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, queries, outputFields, People.class);
+			
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
 		}
-
-		fullTextQuery.setProjection(outputFields);
-		List<People> listSenders = executeFullTextQuery(fullTextQuery, outputFields, People.class);
-
-		return listSenders;
 	}
 
 }

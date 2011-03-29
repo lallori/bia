@@ -32,8 +32,17 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.util.Version;
+import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.transform.Transformers;
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.springframework.stereotype.Repository;
 
@@ -83,7 +92,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchPlaceLinkableToTopicDocument(String alias) throws PersistenceException {
 		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeName"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
 		List<Place> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
@@ -96,14 +105,28 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Place> searchRecipientsPlace(String alias) throws PersistenceException {
-		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull"};
+	public List<Place> searchRecipientsPlace(String searchText) throws PersistenceException {
+        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
-		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
-		List<Place> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		return listRecipients;
+        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
+
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
 	}
 
 	/**
@@ -111,14 +134,28 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Place> searchSendersPlace(String alias) throws PersistenceException {
-		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull"};
+	public List<Place> searchSendersPlace(String searchText) throws PersistenceException {
+        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
-		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
-		List<Place> listSenders = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		return listSenders;
+        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
+
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
 	}
 
 }

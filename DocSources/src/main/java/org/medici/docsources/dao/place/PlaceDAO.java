@@ -50,26 +50,26 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 
 	/**
 	 * 
-	 * @param alias
+	 * @param searchText
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Place> searchRecipientsPlace(String alias) throws PersistenceException;
+	public List<Place> searchRecipientsPlace(String searchText) throws PersistenceException;
 
 	/**
 	 * 
-	 * @param alias
+	 * @param searchText
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Place> searchSendersPlace(String alias) throws PersistenceException;
+	public List<Place> searchSendersPlace(String searchText) throws PersistenceException;
 
 	/**
 	 * 
-	 * @param alias
+	 * @param searchText
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Place> searchPlaceLinkableToTopicDocument(String alias) throws PersistenceException;
+	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException;
 
 }

@@ -221,25 +221,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 			Session session = ((HibernateEntityManager) entityManager).getSession();
 			session = session.getSessionFactory().openSession();
 			FullTextSession fullTextSession = Search.getFullTextSession(session);
-	
-			/*fullTextSession.setFlushMode(FlushMode.MANUAL);
-			fullTextSession.setCacheMode(CacheMode.IGNORE);
-			Transaction transaction = fullTextSession.beginTransaction();
-			//Scrollable results will avoid loading too many objects in memory
-			ScrollableResults results = fullTextSession.createCriteria( entityClass )
-			    .setFetchSize(100)
-			    .scroll( ScrollMode.FORWARD_ONLY );
-			int index = 0;
-			while( results.next() ) {
-			    index++;
-			    fullTextSession.index( results.get(0) ); //index each element
-			    if (index % 100 == 0) {
-			        fullTextSession.flushToIndexes(); //apply changes to indexes
-			        fullTextSession.clear(); //free memory since the queue is processed
-			    }
-			}
-			transaction.commit();
-*/
+
 			fullTextSession.createIndexer( entityClass )
 			.batchSizeToLoadObjects( 50 )
 			.cacheMode( CacheMode.NORMAL )

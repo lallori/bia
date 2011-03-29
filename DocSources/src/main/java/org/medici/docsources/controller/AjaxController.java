@@ -293,14 +293,11 @@ public class AjaxController {
 		List resultList = new ArrayList();
 		for (Volume currentVolume : (List<Volume>)page.getList()) {
 			List singleRow = new ArrayList();
-			singleRow.add(currentVolume.getSerieList().getTitle());
+			singleRow.add(currentVolume.getSerieList().toString());
+			singleRow.add(currentVolume.getMDP());
 			singleRow.add(currentVolume.getStartDate());
 			singleRow.add(currentVolume.getEndDate());
-			
-			StringBuffer subTitle = new StringBuffer(currentVolume.getSerieList().toString());
-			subTitle.append(" MdP ").append(currentVolume.getMDP());
-			singleRow.add(subTitle.toString());
-			
+
 			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 		}
 		model.put("iEcho", "1");
