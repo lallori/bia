@@ -130,7 +130,7 @@
 			    	}
 			  });
 
-			$j('#senderPlaceDescriptionAutoCompleter').autocomplete({ 
+			$j('#senderPlaceDescriptionAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchSenderPlaceURL}',
 			    minChars:5, 
 			    delimiter: null, // regex or character
@@ -154,7 +154,7 @@
 			    onSelect: function(value, data){ $j('#recipientPeopleId').val(data); }
 			  });
 
-			$j('#recipientPlaceDescriptionAutoCompleter').autocomplete({ 
+			$j('#recipientPlaceDescriptionAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchRecipientPlaceURL}',
 			    minChars:5, 
 			    delimiter: null, // regex or character

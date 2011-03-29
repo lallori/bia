@@ -46,10 +46,10 @@
 <table cellpadding="0" cellspacing="0" border="0" class="display"  id="result">
 	<thead>
 		<tr>
-			<th>Series Reference Title</th>
+			<th>Title</th>
+			<th>Filza N.(MDP)</th>
 			<th>Start Date</th>
 			<th>End Date</th>
-			<th>SubTitle</th>
 		</tr>
 	</thead>
 	<tbody>
