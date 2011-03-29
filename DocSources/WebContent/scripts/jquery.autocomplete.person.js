@@ -216,7 +216,6 @@
       d = this.options.delimiter;
       if (!d) { return $.trim(val); }
       stringSplitted = val.split(d);
-      console.log("splitting input string" + stringSplitted);
       return $.trim(stringSplitted[stringSplitted.length - 1]);
     },
 
