@@ -35,24 +35,94 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.EditChildPersonController
  */
 public class EditChildPersonCommand {
-	private Integer personId;
-
+	private Integer parentId;
+	private Integer childId;
+	private String childDescription;
+	private Integer bornYear;
+	private Integer deathYear;
+	private Integer ageAtDeath;
+	
 	/**
-	 * This method returns personId property.
-	 * 
-	 * @return the personId
+	 * @return the parentId
 	 */
-	public Integer getPersonId() {
-		return personId;
+	public Integer getParentId() {
+		return parentId;
+	}
+	
+	/**
+	 * @param parentId the parentId to set
+	 */
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+	
+	/**
+	 * @return the childId
+	 */
+	public Integer getChildId() {
+		return childId;
+	}
+	
+	/**
+	 * @param childId the childId to set
+	 */
+	public void setChildId(Integer childId) {
+		this.childId = childId;
+	}
+	
+	/**
+	 * @return the childDescription
+	 */
+	public String getChildDescription() {
+		return childDescription;
+	}
+	
+	/**
+	 * @param childDescription the childDescription to set
+	 */
+	public void setChildDescription(String childDescription) {
+		this.childDescription = childDescription;
+	}
+	
+	/**
+	 * @return the bornYear
+	 */
+	public Integer getBornYear() {
+		return bornYear;
+	}
+	
+	/**
+	 * @param bornYear the bornYear to set
+	 */
+	public void setBornYear(Integer bornYear) {
+		this.bornYear = bornYear;
+	}
+	
+	/**
+	 * @return the deathYear
+	 */
+	public Integer getDeathYear() {
+		return deathYear;
+	}
+	
+	/**
+	 * @param deathYear the deathYear to set
+	 */
+	public void setDeathYear(Integer deathYear) {
+		this.deathYear = deathYear;
+	}
+	
+	/**
+	 * @return the ageAtDeath
+	 */
+	public Integer getAgeAtDeath() {
+		return ageAtDeath;
 	}
 
 	/**
-	 * This method sets personId property.
-	 * 
-	 * @param personId
-	 *            the personId to set
+	 * @param ageAtDeath the ageAtDeath to set
 	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
+	public void setAgeAtDeath(Integer ageAtDeath) {
+		this.ageAtDeath = ageAtDeath;
 	}
 }

@@ -89,14 +89,28 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Place> searchPlaceLinkableToTopicDocument(String alias) throws PersistenceException {
-		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException {
+        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
 		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
-		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, Place.class);
-		List<Place> listRecipients = executeFullTextQuery(fullTextQuery, outputFields, Place.class);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		return listRecipients;
+        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
+
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
 	}
 
 	/**

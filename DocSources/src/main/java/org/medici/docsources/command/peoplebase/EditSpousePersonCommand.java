@@ -35,24 +35,79 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.EditSpousePersonController
  */
 public class EditSpousePersonCommand {
+	private Integer marriageId;
 	private Integer personId;
-
+	private Integer startYear;
+	private Integer endYear;
+	private String marriageTerm;
+	
 	/**
-	 * This method returns personId property.
-	 * 
+	 * @return the marriageId
+	 */
+	public Integer getMarriageId() {
+		return marriageId;
+	}
+	
+	/**
+	 * @param marriageId the marriageId to set
+	 */
+	public void setMarriageId(Integer marriageId) {
+		this.marriageId = marriageId;
+	}
+	
+	/**
 	 * @return the personId
 	 */
 	public Integer getPersonId() {
 		return personId;
 	}
-
+	
 	/**
-	 * This method sets personId property.
-	 * 
-	 * @param personId
-	 *            the personId to set
+	 * @param personId the personId to set
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+	
+	/**
+	 * @return the startYear
+	 */
+	public Integer getStartYear() {
+		return startYear;
+	}
+	
+	/**
+	 * @param startYear the startYear to set
+	 */
+	public void setStartYear(Integer startYear) {
+		this.startYear = startYear;
+	}
+	
+	/**
+	 * @return the endYear
+	 */
+	public Integer getEndYear() {
+		return endYear;
+	}
+	
+	/**
+	 * @param endYear the endYear to set
+	 */
+	public void setEndYear(Integer endYear) {
+		this.endYear = endYear;
+	}
+	
+	/**
+	 * @return the marriageTerm
+	 */
+	public String getMarriageTerm() {
+		return marriageTerm;
+	}
+
+	/**
+	 * @param marriageTerm the marriageTerm to set
+	 */
+	public void setMarriageTerm(String marriageTerm) {
+		this.marriageTerm = marriageTerm;
 	}
 }

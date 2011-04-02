@@ -38,21 +38,17 @@ public class EditTitlesOrOccupationsPersonCommand {
 	private Integer personId;
 
 	/**
-	 * This method returns personId property.
-	 * 
+	 * @param personId the personId to set
+	 */
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
+	}
+
+	/**
 	 * @return the personId
 	 */
 	public Integer getPersonId() {
 		return personId;
 	}
 
-	/**
-	 * This method sets personId property.
-	 * 
-	 * @param personId
-	 *            the personId to set
-	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
-	}
 }

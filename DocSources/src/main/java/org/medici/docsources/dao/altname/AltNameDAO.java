@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.altname;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.AltName;
 
@@ -37,5 +39,14 @@ import org.medici.docsources.domain.AltName;
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface AltNameDAO extends Dao<Integer, AltName> {
+
+	/**
+	 * 
+	 * @param personId
+	 * @param nameId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public AltName findAltNamePerson(Integer personId, Integer nameId) throws PersistenceException;
 
 }

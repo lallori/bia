@@ -85,10 +85,10 @@ public class ShowPersonController {
 			People person = getPeopleBaseService().findPerson(command.getPersonId());
 			model.put("person", person);
 
-			List<People> children = getPeopleBaseService().findChildren(person.getPersonId(), person.getGender());
+			List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId(), person.getGender());
 			model.put("children", children);
-			
-			List<Marriage> marriages = getPeopleBaseService().findPersonMarriages(person.getPersonId(), person.getGender());
+
+			List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 			model.put("marriages", marriages);
 		} catch (ApplicationThrowable ath) {
 			new ModelAndView("error/ShowPerson", model);

@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.command.peoplebase;
 
+import java.util.Set;
+
+import org.medici.docsources.domain.AltName;
+
 /**
  * Command bean for action "Edit Names Person".
  * 
@@ -36,6 +40,7 @@ package org.medici.docsources.command.peoplebase;
  */
 public class EditNamesPersonCommand {
 	private Integer personId;
+	private Set<AltName> altNames;
 
 	/**
 	 * This method returns personId property.
@@ -54,5 +59,19 @@ public class EditNamesPersonCommand {
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+
+	/**
+	 * @param altNames the altNames to set
+	 */
+	public void setAltNames(Set<AltName> altNames) {
+		this.altNames = altNames;
+	}
+
+	/**
+	 * @return the altNames
+	 */
+	public Set<AltName> getAltNames() {
+		return altNames;
 	}
 }

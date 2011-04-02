@@ -33,6 +33,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditTitlesOrOccupationsPersonCommand;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -76,29 +79,6 @@ public class EditTitlesOrOccupationsPersonController {
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditTitlesOrOccupationsPersonCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
-
-			return new ModelAndView("peoplebase/modifyperson", model);
-		}
-
-	}
-
-	/**
 	 * @param peopleBaseService
 	 *            the peopleBaseService to set
 	 */
@@ -113,7 +93,21 @@ public class EditTitlesOrOccupationsPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTitlesOrOccupationsPersonCommand command) {
-		return new ModelAndView("peoplebase/modifyperson");
+		Map<String, Object> model = new HashMap<String, Object>();
+		if ((command != null) && (command.getPersonId() > 0)) {
+			try {
+				People person = getPeopleBaseService().findPerson(command.getPersonId());
+				model.put("person", person);
+
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditTitlesOrOccupationsPerson", model);
+			}
+
+		} else {
+			model.put("person", new People(0));
+		}
+
+		return new ModelAndView("peoplebase/EditTitlesOrOccupationsPerson", model);
 	}
 
 	/**

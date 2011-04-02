@@ -32,6 +32,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -95,8 +97,9 @@ public class Marriage implements Serializable {
 	@Column (name="\"ENDUNS\"", length=1, columnDefinition="tinyint", nullable=false)
 	private Boolean endUns;
 	
-	@Column (name="\"MARTERM\"", length=50)
-	private String marTerm;
+	@Column (name="\"MARTERM\"", length=50, nullable=true)
+	@Enumerated(EnumType.STRING)
+	private MarriageTerm marTerm;
 	
 	@Column (name="\"REFID\"", length=10)
 	private Integer refId;
@@ -162,162 +165,189 @@ public class Marriage implements Serializable {
 	public Integer getStartDay() {
 		return startDay;
 	}
+	
 	/**
 	 * @param startDay the startDay to set
 	 */
 	public void setStartDay(Integer startDay) {
 		this.startDay = startDay;
 	}
+	
 	/**
 	 * @return the startMonth
 	 */
 	public String getStartMonth() {
 		return startMonth;
 	}
+	
 	/**
 	 * @param startMonth the startMonth to set
 	 */
 	public void setStartMonth(String startMonth) {
 		this.startMonth = startMonth;
 	}
+	
 	/**
 	 * @return the startYear
 	 */
 	public Integer getStartYear() {
 		return startYear;
 	}
+	
 	/**
 	 * @param startYear the startYear to set
 	 */
 	public void setStartYear(Integer startYear) {
 		this.startYear = startYear;
 	}
+	
 	/**
 	 * @return the startUns
 	 */
 	public Boolean getStartUns() {
 		return startUns;
 	}
+	
 	/**
 	 * @param startUns the startUns to set
 	 */
 	public void setStartUns(Boolean startUns) {
 		this.startUns = startUns;
 	}
+	
 	/**
 	 * @return the endDay
 	 */
 	public Integer getEndDay() {
 		return endDay;
 	}
+	
 	/**
 	 * @param endDay the endDay to set
 	 */
 	public void setEndDay(Integer endDay) {
 		this.endDay = endDay;
 	}
+	
 	/**
 	 * @return the endMonth
 	 */
 	public String getEndMonth() {
 		return endMonth;
 	}
+	
 	/**
 	 * @param endMonth the endMonth to set
 	 */
 	public void setEndMonth(String endMonth) {
 		this.endMonth = endMonth;
 	}
+	
 	/**
 	 * @return the endYear
 	 */
 	public Integer getEndYear() {
 		return endYear;
 	}
+	
 	/**
 	 * @param endYear the endYear to set
 	 */
 	public void setEndYear(Integer endYear) {
 		this.endYear = endYear;
 	}
+	
 	/**
 	 * @return the endUns
 	 */
 	public Boolean getEndUns() {
 		return endUns;
 	}
+	
 	/**
 	 * @param endUns the endUns to set
 	 */
 	public void setEndUns(Boolean endUns) {
 		this.endUns = endUns;
 	}
+	
 	/**
 	 * @return the marTerm
 	 */
-	public String getMarTerm() {
+	public MarriageTerm getMarTerm() {
 		return marTerm;
 	}
+	
 	/**
 	 * @param marTerm the marTerm to set
 	 */
-	public void setMarTerm(String marTerm) {
+	public void setMarTerm(MarriageTerm marTerm) {
 		this.marTerm = marTerm;
 	}
+	
 	/**
 	 * @return the refId
 	 */
 	public Integer getRefId() {
 		return refId;
 	}
+	
 	/**
 	 * @param refId the refId to set
 	 */
 	public void setRefId(Integer refId) {
 		this.refId = refId;
 	}
+	
 	/**
 	 * @return the notes
 	 */
 	public String getNotes() {
 		return notes;
 	}
+	
 	/**
 	 * @param notes the notes to set
 	 */
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	
 	/**
 	 * @return the startMonthNum
 	 */
 	public Integer getStartMonthNum() {
 		return startMonthNum;
 	}
+	
 	/**
 	 * @param startMonthNum the startMonthNum to set
 	 */
 	public void setStartMonthNum(Integer startMonthNum) {
 		this.startMonthNum = startMonthNum;
 	}
+	
 	/**
 	 * @return the endMonthNum
 	 */
 	public Integer getEndMonthNum() {
 		return endMonthNum;
 	}
+	
 	/**
 	 * @param endMonthNum the endMonthNum to set
 	 */
 	public void setEndMonthNum(Integer endMonthNum) {
 		this.endMonthNum = endMonthNum;
 	}
+	
 	/**
 	 * @return the dateCreated
 	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+	
 	/**
 	 * @param dateCreated the dateCreated to set
 	 */
@@ -325,4 +355,25 @@ public class Marriage implements Serializable {
 		this.dateCreated = dateCreated;
 	}
 	
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum MarriageTerm {
+		Death("Death"),
+		Divorce("Divorce"),
+		Annulment("Annulment");
+		
+		private final String marriageTerm;
+
+	    private MarriageTerm(String value) {
+	    	marriageTerm = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return marriageTerm;
+	    }
+	}
 }

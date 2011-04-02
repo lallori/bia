@@ -33,6 +33,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditSpousePersonCommand;
+import org.medici.docsources.domain.AltName;
+import org.medici.docsources.domain.Marriage;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -113,7 +116,32 @@ public class EditSpousePersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditSpousePersonCommand command) {
-		return new ModelAndView("peoplebase/modifyperson");
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		if ((command != null) && (command.getPersonId() > 0)) {
+
+			if (command.getMarriageId().equals(0)) {
+				command.setStartYear(null);
+				command.setEndYear(null);
+			} else {
+				try {
+					Marriage marriage = getPeopleBaseService().findMarriagePerson(command.getMarriageId(), command.getPersonId());
+
+					command.setStartYear(marriage.getStartYear());
+					command.setEndYear(marriage.getEndYear());
+					command.setMarriageTerm(marriage.getMarTerm().toString());
+
+					return new ModelAndView("peoplebase/EditSpousePerson", model);
+				} catch (ApplicationThrowable applicationThrowable) {
+					return new ModelAndView("error/EditSpousePerson", model);
+				}
+			}
+
+		} else {
+			// On Name creation, every field is null
+		}
+
+		return new ModelAndView("peoplebase/EditSpousePerson", model);
 	}
 
 	/**

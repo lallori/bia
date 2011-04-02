@@ -28,11 +28,15 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditSpousesPersonCommand;
+import org.medici.docsources.domain.Marriage;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -76,29 +80,6 @@ public class EditSpousesPersonController {
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditSpousesPersonCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
-
-			return new ModelAndView("peoplebase/modifyperson", model);
-		}
-
-	}
-
-	/**
 	 * @param peopleBaseService
 	 *            the peopleBaseService to set
 	 */
@@ -113,7 +94,21 @@ public class EditSpousesPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditSpousesPersonCommand command) {
-		return new ModelAndView("peoplebase/modifyperson");
+		Map<String, Object> model = new HashMap<String, Object>();
+		if ((command != null) && (command.getPersonId() > 0)) {
+			try {
+				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(command.getPersonId());
+				model.put("marriages", marriages);
+
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditSpousesPerson", model);
+			}
+
+		} else {
+			model.put("person", new People(0));
+		}
+
+		return new ModelAndView("peoplebase/EditSpousesPerson", model);
 	}
 
 	/**

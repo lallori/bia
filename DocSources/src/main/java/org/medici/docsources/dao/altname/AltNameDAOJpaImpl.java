@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.altname;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.AltName;
 import org.springframework.stereotype.Repository;
@@ -60,5 +62,11 @@ public class AltNameDAOJpaImpl extends JpaDao<Integer, AltName> implements AltNa
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 617902723399766439L;
+
+	@Override
+	public AltName findAltNamePerson(Integer personId, Integer nameId) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

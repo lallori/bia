@@ -78,7 +78,7 @@ public class EditTopicsDocumentController {
 		if ((command != null) && (command.getEntryId() > 0)) {
 			try {
 				Document document = getDocBaseService().findDocument(command.getEntryId());
-				command.setDocument(document);
+				model.put("document", document);
 
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
@@ -86,7 +86,7 @@ public class EditTopicsDocumentController {
 
 		} else {
 			// On Document creation, the research is always the current user.
-			command.setDocument(new Document(command.getEntryId()));
+			model.put("document", new Document(0));
 		}
 
 		return new ModelAndView("docbase/EditTopicsDocument", model);

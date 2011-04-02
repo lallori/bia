@@ -70,7 +70,7 @@ public class MarriageDAOJpaImpl extends JpaDao<Integer, Marriage> implements Mar
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Marriage> findPersonMarriages(Integer personId, Gender gender) throws PersistenceException {
+	public List<Marriage> findMarriagesPerson(Integer personId, Gender gender) throws PersistenceException {
         String queryJPQL = "FROM Marriage WHERE ";
         if ((gender == null) || (gender.equals(Gender.X))) {
         	queryJPQL += "husband.personId = :husbandId or wife.personId = :wifeId ";
@@ -94,6 +94,32 @@ public class MarriageDAOJpaImpl extends JpaDao<Integer, Marriage> implements Mar
 		List<Marriage> result = query.getResultList();
 		
 		return result;
+	}
+
+	@Override
+	public Marriage findMarriagePerson(Integer marriageId, Integer personId, Gender gender) throws PersistenceException {
+        String queryJPQL = "FROM Marriage WHERE marriageId = :marriageId";
+        if ((gender == null) || (gender.equals(Gender.X))) {
+        	queryJPQL += "husband.personId = :husbandId or wife.personId = :wifeId ";
+        } else if (gender.equals(Gender.M)) {
+        	queryJPQL += "husband.personId = :husbandId";
+        } else if (gender.equals(Gender.F)) {
+        	queryJPQL += "wife.personId = :wifeId";
+        }
+    	
+        Query query = getEntityManager().createQuery(queryJPQL);
+        query.setParameter("marriageId", marriageId);
+
+        if ((gender == null) || (gender.equals(Gender.X))) {
+	        query.setParameter("husbandId", personId);
+	        query.setParameter("wifeId", personId);
+        } else if (gender.equals(Gender.M)) {
+	        query.setParameter("husbandId", personId);
+        } else if (gender.equals(Gender.F)) {
+	        query.setParameter("wifeId", personId);
+        }
+
+		return (Marriage)query.getSingleResult();
 	}
 
 }

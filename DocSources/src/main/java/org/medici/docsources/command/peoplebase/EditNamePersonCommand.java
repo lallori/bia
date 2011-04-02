@@ -36,6 +36,9 @@ package org.medici.docsources.command.peoplebase;
  */
 public class EditNamePersonCommand {
 	private Integer personId;
+	private Integer nameId;
+	private String nameType;
+	private String altName;
 
 	/**
 	 * This method returns personId property.
@@ -55,4 +58,48 @@ public class EditNamePersonCommand {
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
 	}
+
+	/**
+	 * @return the nameId
+	 */
+	public Integer getNameId() {
+		return nameId;
+	}
+
+	/**
+	 * @param nameId the nameId to set
+	 */
+	public void setNameId(Integer nameId) {
+		this.nameId = nameId;
+	}
+
+	/**
+	 * @return the nameType
+	 */
+	public String getNameType() {
+		return nameType;
+	}
+
+	/**
+	 * @param nameType the nameType to set
+	 */
+	public void setNameType(String nameType) {
+		this.nameType = nameType;
+	}
+
+	/**
+	 * @return the altName
+	 */
+	public String getAltName() {
+		return altName;
+	}
+
+	/**
+	 * @param altName the altName to set
+	 */
+	public void setAltName(String altName) {
+		this.altName = altName;
+	}
+	
+	
 }

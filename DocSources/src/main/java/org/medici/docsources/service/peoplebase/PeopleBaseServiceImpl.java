@@ -41,10 +41,12 @@ import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.polink.PoLinkDAO;
 import org.medici.docsources.dao.rolecat.RoleCatDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
+import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
+import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,7 +93,39 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<People> findChildren(Integer personId, Gender gender) throws ApplicationThrowable {
+	public AltName findAltNamePerson(Integer personId, Integer nameId) throws ApplicationThrowable {
+		try {
+			return getAltNameDAO().findAltNamePerson(personId, nameId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public People findChildPerson(Integer parentId, Integer childId) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable {
+		try {
+			People parent = getPeopleDAO().find(personId);
+			
+			return getPeopleDAO().findChildren(parent.getPersonId(), parent.getGender());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> findChildrenPerson(Integer personId, Gender gender) throws ApplicationThrowable {
 		try {
 			return getPeopleDAO().findChildren(personId, gender);
 		} catch (Throwable th) {
@@ -115,9 +149,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public People findPerson(Integer personId)  throws ApplicationThrowable {
+	public Marriage findMarriagePerson(Integer marriageId, Integer personId) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().find(personId);
+			People person = getPeopleDAO().find(personId);
+			
+			return getMarriageDAO().findMarriagePerson(marriageId, person.getPersonId(), person.getGender());
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -127,12 +163,44 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Marriage> findPersonMarriages(Integer personId, Gender gender) throws ApplicationThrowable {
+	public List<Marriage> findMarriagesPerson(Integer personId) throws ApplicationThrowable {
 		try {
-			return getMarriageDAO().findPersonMarriages(personId, gender);
+			People person = getPeopleDAO().find(personId);
+			
+			return getMarriageDAO().findMarriagesPerson(person.getPersonId(), person.getGender());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Marriage> findMarriagesPerson(Integer personId, Gender gender) throws ApplicationThrowable {
+		try {
+			return getMarriageDAO().findMarriagesPerson(personId, gender);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People findPerson(Integer personId)  throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().find(personId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prLinkId) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -259,6 +327,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		return epLinkDAO;
 	}
 
+	/**
+	 * @return the marriageDAO
+	 */
 	public MarriageDAO getMarriageDAO() {
 		return marriageDAO;
 	}

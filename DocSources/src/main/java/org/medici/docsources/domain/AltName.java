@@ -31,6 +31,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -82,7 +84,7 @@ public class AltName implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"NAMEID\"", length=10, nullable=false)
 	@DocumentId
-	private Integer nameID;
+	private Integer nameId;
 
 	@ManyToOne
 	@JoinColumn(name="\"PERSONID\"")
@@ -97,25 +99,26 @@ public class AltName implements Serializable{
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String altName;
 
-	@Column (name="\"NAMETYPE\"", length=50)
+	@Column (name="\"NAMETYPE\"", length=50, nullable=true)
+	@Enumerated(EnumType.STRING)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private String nameType;
+	private NameType nameType;
 
 	@Column (name="\"NOTES\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String notes;
 
 	/**
-	 * @return the nameID
+	 * @return the nameId
 	 */
-	public Integer getNameID() {
-		return nameID;
+	public Integer getNameId() {
+		return nameId;
 	}
 	/**
-	 * @param nameID the nameID to set
+	 * @param nameId the nameId to set
 	 */
-	public void setNameID(Integer nameID) {
-		this.nameID = nameID;
+	public void setNameId(Integer nameId) {
+		this.nameId = nameId;
 	}
 	/**
 	 * @return the personId
@@ -156,13 +159,13 @@ public class AltName implements Serializable{
 	/**
 	 * @return the nameType
 	 */
-	public String getNameType() {
+	public NameType getNameType() {
 		return nameType;
 	}
 	/**
 	 * @param nameType the nameType to set
 	 */
-	public void setNameType(String nameType) {
+	public void setNameType(NameType nameType) {
 		this.nameType = nameType;
 	}
 	/**
@@ -176,5 +179,31 @@ public class AltName implements Serializable{
 	 */
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum NameType {
+		Patronymic("Patronymic"),
+		Appellative("Appellative"),
+		Family("Family"),
+		Married("Married"),
+		Given("Given"),	
+		SearchName("SearchName"),
+		Maiden("Maiden");
+		
+		private final String nameType;
+
+	    private NameType(String value) {
+	    	nameType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return nameType;
+	    }
 	}
 }

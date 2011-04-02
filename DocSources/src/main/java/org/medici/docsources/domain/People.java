@@ -122,15 +122,15 @@ public class People implements Serializable {
 	@JoinColumn(name="\"BMONTHNUM\"", nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=MonthBridge.class)
-	private Month bMonth;
+	private Month bornMonth;
 	
 	@Column (name="\"BDAY\"", length=3, columnDefinition="TINYINT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer bDay;
+	private Integer bornDay;
 	
 	@Column (name="\"BYEAR\"", length=4, nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer bYear;
+	private Integer bornYear;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"BPLACEID\"")
@@ -145,15 +145,15 @@ public class People implements Serializable {
 	@JoinColumn(name="\"DMONTHNUM\"", nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=MonthBridge.class)
-	private Month dMonth;
+	private Month deathMonth;
 	
 	@Column (name="\"DDAY\"", length=3, columnDefinition="TINYINT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer dDay;
+	private Integer deathDay;
 	
 	@Column (name="\"DYEAR\"", length=4, nullable=true)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer dYear;
+	private Integer deathYear;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"DPLACEID\"")
@@ -404,7 +404,6 @@ public class People implements Serializable {
 		return activeEnd;
 	}
 
-
 	/**
 	 * @param activeEnd the activeEnd to set
 	 */
@@ -412,48 +411,46 @@ public class People implements Serializable {
 		this.activeEnd = activeEnd;
 	}
 
-
 	/**
-	 * @return the bMonth
+	 * @return the bornMonth
 	 */
-	public Month getbMonth() {
-		return bMonth;
-	}
-
-
-	/**
-	 * @param bMonth the bMonth to set
-	 */
-	public void setbMonth(Month bMonth) {
-		this.bMonth = bMonth;
+	public Month getBornMonth() {
+		return bornMonth;
 	}
 
 	/**
-	 * @return the bDay
+	 * @param bMonth the bornMonth to set
 	 */
-	public Integer getbDay() {
-		return bDay;
+	public void setBornMonth(Month bornMonth) {
+		this.bornMonth = bornMonth;
 	}
 
 	/**
-	 * @param bDay the bDay to set
+	 * @return the bornDay
 	 */
-	public void setbDay(Integer bDay) {
-		this.bDay = bDay;
+	public Integer getBornDay() {
+		return bornDay;
 	}
 
 	/**
-	 * @return the bYear
+	 * @param bDay the bornDay to set
 	 */
-	public Integer getbYear() {
-		return bYear;
+	public void setBornDay(Integer bornDay) {
+		this.bornDay = bornDay;
 	}
 
 	/**
-	 * @param bYear the bYear to set
+	 * @return the bornYear
 	 */
-	public void setbYear(Integer bYear) {
-		this.bYear = bYear;
+	public Integer getBornYear() {
+		return bornYear;
+	}
+
+	/**
+	 * @param bYear the bornYear to set
+	 */
+	public void setBornYear(Integer bornYear) {
+		this.bornYear = bornYear;
 	}
 
 	/**
@@ -466,22 +463,22 @@ public class People implements Serializable {
 	@Transient
 	public String getBornDate() {
 		StringBuffer stringBuffer = new StringBuffer();
-		if (bDay != null) {
-			stringBuffer.append(bDay);
+		if (bornDay != null) {
+			stringBuffer.append(bornDay);
 		}
 		
-		if (!ObjectUtils.toString(bMonth).equals("")) {
+		if (!ObjectUtils.toString(bornMonth).equals("")) {
 			if (stringBuffer.length() > 0 ) {
 				stringBuffer.append(" ");
 			}
-			stringBuffer.append(bMonth.toString());
+			stringBuffer.append(bornMonth.toString());
 		}
 
-		if (bYear != null) {
+		if (bornYear != null) {
 			if (stringBuffer.length() > 0 ) {
 				stringBuffer.append(" ");
 			}
-			stringBuffer.append(bYear);
+			stringBuffer.append(bornYear);
 		}
 
 		return stringBuffer.toString();
@@ -520,50 +517,50 @@ public class People implements Serializable {
 
 
 	/**
-	 * @return the dMonth
+	 * @return the deathMonth
 	 */
-	public Month getdMonth() {
-		return dMonth;
+	public Month getDeathMonth() {
+		return deathMonth;
 	}
 
 
 	/**
-	 * @param dMonthNum the dMonthNum to set
+	 * @param deathMonthNum the deathMonthNum to set
 	 */
-	public void setdMonth(Month dMonth) {
-		this.dMonth = dMonth;
+	public void setDeathMonth(Month deathMonth) {
+		this.deathMonth = deathMonth;
 	}
 
 
 	/**
-	 * @return the dDay
+	 * @return the deathDay
 	 */
 	public Integer getdDay() {
-		return dDay;
+		return deathDay;
 	}
 
 
 	/**
-	 * @param dDay the dDay to set
+	 * @param deathDay the deathDay to set
 	 */
-	public void setdDay(Integer dDay) {
-		this.dDay = dDay;
+	public void setDeathDay(Integer deathDay) {
+		this.deathDay = deathDay;
 	}
 
 
 	/**
-	 * @return the dYear
+	 * @return the deathYear
 	 */
-	public Integer getdYear() {
-		return dYear;
+	public Integer getDeathYear() {
+		return deathYear;
 	}
 
 
 	/**
-	 * @param dYear the dYear to set
+	 * @param deathYear the deathYear to set
 	 */
-	public void setdYear(Integer dYear) {
-		this.dYear = dYear;
+	public void setdYear(Integer deathYear) {
+		this.deathYear = deathYear;
 	}
 
 	/**
@@ -576,22 +573,22 @@ public class People implements Serializable {
 	@Transient
 	public String getDeathDate() {
 		StringBuffer stringBuffer = new StringBuffer();
-		if (dDay != null) {
-			stringBuffer.append(dDay);
+		if (deathDay != null) {
+			stringBuffer.append(deathDay);
 		}
 		
-		if (!ObjectUtils.toString(dMonth).equals("")) {
+		if (!ObjectUtils.toString(deathMonth).equals("")) {
 			if (stringBuffer.length() > 0 ) {
 				stringBuffer.append(" ");
 			}
-			stringBuffer.append(dMonth.toString());
+			stringBuffer.append(deathMonth.toString());
 		}
 
-		if (dYear != null) {
+		if (deathYear != null) {
 			if (stringBuffer.length() > 0 ) {
 				stringBuffer.append(" ");
 			}
-			stringBuffer.append(dYear);
+			stringBuffer.append(deathYear);
 		}
 
 		return stringBuffer.toString();

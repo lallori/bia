@@ -1,5 +1,5 @@
 /*
- * EditChildPersonController.java
+ * EditTitleOrOccupationsPersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,10 +32,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.command.peoplebase.EditChildPersonCommand;
-import org.medici.docsources.domain.AltName;
-import org.medici.docsources.domain.People;
+import org.medici.docsources.command.peoplebase.EditTitleOrOccupationPersonCommand;
+import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +47,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Child Person".
+ * Controller for action "Edit single Title Or Occupation Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/EditChildPerson")
-public class EditChildPersonController {
+@RequestMapping("/de/peoplebase/EditTitleOrOccupationPerson")
+public class EditTitleOrOccupationPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	@Autowired(required = false)
@@ -86,7 +84,7 @@ public class EditChildPersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditChildPersonCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditTitleOrOccupationPersonCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
@@ -116,36 +114,45 @@ public class EditChildPersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditChildPersonCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditTitleOrOccupationPersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if (command.getParentId().equals(0)) {
-			command.setChildId(null);
-			command.setChildDescription(null);
-			command.setBornYear(null);
-			command.setDeathYear(null);
-		} else {
-			try {
-				People child = getPeopleBaseService().findChildPerson(command.getParentId(), command.getChildId());
+		if ((command != null) && (command.getPersonId() > 0)) {
 
-				command.setChildId(child.getPersonId());
-				command.setChildDescription(child.getMapNameLf());
-				command.setBornYear(child.getBornYear());
-				command.setDeathYear(child.getDeathYear());
-				//Calculate age at death
-				if ((!ObjectUtils.toString(command.getBornYear()).equals("")) && (!ObjectUtils.toString(command.getDeathYear()).equals(""))) {
-					command.setAgeAtDeath(command.getDeathYear() - command.getBornYear());
-				} else {
-					command.setAgeAtDeath(command.getDeathYear() - command.getBornYear());
+			if (command.getPrLinkId().equals(0)) {
+				
+				command.setTitleOccId(null);
+				command.setTitleOrOccupationDescription(null);
+				command.setStartYear(null);
+				command.setStartMonth(null);
+				command.setStartDay(null);
+				command.setEndYear(null);
+				command.setEndMonth(null);
+				command.setEndDay(null);
+				command.setPrefferedRole(null);
+			} else {
+				try {
+					PoLink poLink = getPeopleBaseService().findTitleOrOccupationPerson(command.getPersonId(), command.getPrLinkId());
+
+					if (poLink.getTitleOccList() != null) {
+						command.setTitleOrOccupationDescription(poLink.getTitleOccList().getTitleOcc());
+						command.setTitleOccId(poLink.getTitleOccList().getTitleOccId());
+					} else {
+						command.setTitleOrOccupationDescription(null);
+						command.setTitleOrOccupationDescription(null);
+					}
+
+					return new ModelAndView("peoplebase/EditTitleOrOccupationPerson", model);
+				} catch (ApplicationThrowable applicationThrowable) {
+					return new ModelAndView("error/EditTopicDocument", model);
 				}
-
-				return new ModelAndView("peoplebase/EditChildPerson", model);
-			} catch (ApplicationThrowable applicationThrowable) {
-				return new ModelAndView("error/EditChildPerson", model);
 			}
+
+		} else {
+			// On Title creation, every field is null
 		}
 
-		return new ModelAndView("peoplebase/EditChildPerson", model);
+		return new ModelAndView("peoplebase/EditTitleOrOccupationPerson", model);
 	}
 
 	/**

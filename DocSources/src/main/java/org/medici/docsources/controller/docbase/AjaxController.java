@@ -93,8 +93,7 @@ public class AjaxController {
 	}
 
 	/**
-	 * This method returns a list of topics linkable to document. Result does not
-	 * contains topics already linked to document. 
+	 * This method returns a list of places linkable to a document's topic. 
 	 *  
 	 * @param entryId Unique document identifier
 	 * @param query Search string filled by user
@@ -110,8 +109,9 @@ public class AjaxController {
 			model.put("query", query);
 			model.put("count", places.size());
 			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
-			model.put("suggestions", ListBeanUtils.transformList(places, "placeName"));
-
+			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
+			model.put("prefFlags", ListBeanUtils.transformList(places, "prefFlag"));
+			model.put("plTypes", ListBeanUtils.transformList(places, "plType"));
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}

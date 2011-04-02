@@ -31,10 +31,12 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
+import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -55,11 +57,37 @@ public interface PeopleBaseService {
 	/**
 	 * 
 	 * @param personId
+	 * @param nameId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public AltName findAltNamePerson(Integer personId, Integer nameId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param parentId
+	 * @param childId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People findChildPerson(Integer parentId, Integer childId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
 	 * @param gender
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<People> findChildren(Integer personId, Gender gender) throws ApplicationThrowable;
+	public List<People> findChildrenPerson(Integer personId, Gender gender) throws ApplicationThrowable;
 
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.People}.
@@ -68,6 +96,33 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People findLastEntryPerson() throws ApplicationThrowable;
+
+	/**
+	 * This method searches for a specific marriage.
+	 * 
+	 * @param marriageId
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Marriage findMarriagePerson(Integer marriageId, Integer personId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Marriage> findMarriagesPerson(Integer personId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @param gender
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Marriage> findMarriagesPerson(Integer personId, Gender gender) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -79,11 +134,11 @@ public interface PeopleBaseService {
 	/**
 	 * 
 	 * @param personId
-	 * @param gender
+	 * @param prLinkId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Marriage> findPersonMarriages(Integer personId, Gender gender) throws ApplicationThrowable;
+	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prLinkId) throws ApplicationThrowable;
 
 	/**
 	 * 

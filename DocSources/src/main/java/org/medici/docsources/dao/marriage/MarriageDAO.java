@@ -49,6 +49,15 @@ public interface MarriageDAO extends Dao<Integer, Marriage> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	List<Marriage> findPersonMarriages(Integer personId, Gender gender) throws PersistenceException;
+	public List<Marriage> findMarriagesPerson(Integer personId, Gender gender) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param marriageId
+	 * @param personId
+	 * @param gender
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Marriage findMarriagePerson(Integer marriageId, Integer personId, Gender gender) throws PersistenceException;
 }

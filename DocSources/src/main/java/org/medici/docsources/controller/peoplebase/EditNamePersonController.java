@@ -33,6 +33,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditNamePersonCommand;
+import org.medici.docsources.domain.AltName;
+import org.medici.docsources.domain.PoLink;
+import org.medici.docsources.domain.AltName.NameType;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -113,7 +117,31 @@ public class EditNamePersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditNamePersonCommand command) {
-		return new ModelAndView("peoplebase/modifyperson");
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		if ((command != null) && (command.getPersonId() > 0)) {
+
+			if (command.getNameId().equals(0)) {
+				command.setNameType(null);
+				command.setAltName(null);
+			} else {
+				try {
+					AltName altName = getPeopleBaseService().findAltNamePerson(command.getPersonId(), command.getNameId());
+
+					command.setNameType(altName.getNameType().toString());
+					command.setAltName(altName.getAltName());
+
+					return new ModelAndView("peoplebase/EditNamePerson", model);
+				} catch (ApplicationThrowable applicationThrowable) {
+					return new ModelAndView("error/EditNamePerson", model);
+				}
+			}
+
+		} else {
+			// On Name creation, every field is null
+		}
+
+		return new ModelAndView("peoplebase/EditNamePerson", model);
 	}
 
 	/**
