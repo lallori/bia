@@ -82,8 +82,8 @@ public class AjaxController {
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
 			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
 			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
-			model.put("bYears", ListBeanUtils.transformList(people, "bYear"));
-			model.put("dYears", ListBeanUtils.transformList(people, "dYear"));
+			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

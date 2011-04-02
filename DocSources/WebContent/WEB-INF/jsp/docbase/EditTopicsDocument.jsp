@@ -6,28 +6,28 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
-			<c:param name="entryId"   value="${command.document.entryId}" />
+			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 		<c:url var="AddTopicUrl" value="/de/docbase/EditTopicDocument.do">
-			<c:param name="entryId"   value="${command.document.entryId}" />
+			<c:param name="entryId"   value="${document.entryId}" />
 			<c:param name="eplToId"  value="0" />
 		</c:url>
 		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
-			<c:param name="entryId"   value="${command.document.entryId}" />
+			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
 
 	<form:form id="EditTopicsDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>TOPICS</b></legend>
-		<c:forEach items="${command.document.eplToLink}" var="currentTopicAndPlace">
+		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
 			<c:url var="EditTopicDocument" value="/de/docbase/EditTopicDocument.do">
-				<c:param name="entryId" value="${command.document.entryId}" />
+				<c:param name="entryId" value="${document.entryId}" />
 				<c:param name="eplToId" value="${currentTopicAndPlace.eplToId}" />
 			</c:url>
 
 			<c:url var="DeleteTopicDocument" value="/de/docbase/DeleteTopicDocument.do" >
-				<c:param name="entryId" value="${command.document.entryId}" />
+				<c:param name="entryId" value="${document.entryId}" />
 				<c:param name="eplToId" value="${currentTopicAndPlace.eplToId}" />
 			</c:url>
 

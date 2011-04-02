@@ -447,7 +447,7 @@ public class People implements Serializable {
 	}
 
 	/**
-	 * @param bYear the bornYear to set
+	 * @param bornYear the bornYear to set
 	 */
 	public void setBornYear(Integer bornYear) {
 		this.bornYear = bornYear;

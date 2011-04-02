@@ -42,7 +42,9 @@ import org.apache.lucene.search.WildcardQuery;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.transform.Transformers;
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.TopicList;
 import org.springframework.stereotype.Repository;
 
@@ -96,8 +98,10 @@ TopicsListDAO {
 
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, TopicList.class);
 		fullTextQuery.setProjection(outputFields);
+		// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+		fullTextQuery.setResultTransformer(Transformers.aliasToBean(TopicList.class));
 
-		List<TopicList> listTopics = executeFullTextQuery(fullTextQuery, outputFields, TopicList.class);
+		List<TopicList> listTopics = fullTextQuery.list();
 		
 		Comparator fieldCompare = new BeanComparator( "topicTitle" );
 		Collections.sort(listTopics, fieldCompare );

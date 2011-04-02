@@ -30,14 +30,16 @@ package org.medici.docsources.dao.serieslist;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.util.Version;
+import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.transform.Transformers;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.SerieList;
 import org.springframework.stereotype.Repository;
@@ -73,39 +75,28 @@ public class SeriesListDAOJpaImpl extends JpaDao<Integer, SerieList> implements 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SerieList> findSeries(String alias) throws PersistenceException {
+	public List<SerieList> findSeries(String searchText) throws PersistenceException {
 		String[] searchFields = new String[]{"title", "subTitle1", "subTitle2"};
 		String[] outputFields = new String[]{"seriesRefNum", "title", "subTitle1", "subTitle2"};
 
-		FullTextQuery fullTextQuery = buildFullTextQuery(getEntityManager(), searchFields, alias, outputFields, SerieList.class);
-		List<SerieList> listSenders = executeFullTextQuery(fullTextQuery, outputFields, SerieList.class);
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		return listSenders;
-	}
+        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings({"unchecked", "rawtypes" })
-	@Override
-	public List<SerieList> findSeriesJpaImpl(String alias) throws PersistenceException {
-		// Create criteria objects
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<SerieList> criteriaQuery = criteriaBuilder.createQuery(SerieList.class);
-		Root root = criteriaQuery.from(SerieList.class);
+        try  {
+        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchTextWithWildCard);
 
-		//Construct literal and predicates
-		Expression<String> literal = criteriaBuilder.upper(criteriaBuilder.literal("%" + alias + "%"));
-		Predicate predicateTitle = criteriaBuilder.like(criteriaBuilder.upper(root.get("title")), literal);
-		Predicate predicateSubTitle1 = criteriaBuilder.like(criteriaBuilder.upper(root.get("subTitle1")), literal);
-		Predicate predicateSubTitle2 = criteriaBuilder.like(criteriaBuilder.upper(root.get("subTitle2")), literal);
-		
-		//Add where clause
-		criteriaQuery.where(criteriaBuilder.or(predicateTitle,predicateSubTitle1, predicateSubTitle2)); 
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, SerieList.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(SerieList.class));
 
-		// create query using criteria   
-		TypedQuery<SerieList> typedQuery = getEntityManager().createQuery(criteriaQuery);
-
-		return typedQuery.getResultList();	
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
 	}
 }

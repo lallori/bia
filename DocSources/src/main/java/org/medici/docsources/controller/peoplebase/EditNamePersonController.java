@@ -34,8 +34,6 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditNamePersonCommand;
 import org.medici.docsources.domain.AltName;
-import org.medici.docsources.domain.PoLink;
-import org.medici.docsources.domain.AltName.NameType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;

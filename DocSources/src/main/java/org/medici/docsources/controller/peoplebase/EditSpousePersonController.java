@@ -33,7 +33,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditSpousePersonCommand;
-import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;

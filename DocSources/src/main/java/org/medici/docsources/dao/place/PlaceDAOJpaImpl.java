@@ -98,7 +98,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
 
         try  {
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
+        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchTextWithWildCard);
 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -127,7 +128,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
 
         try  {
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
+        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchTextWithWildCard);
 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -156,7 +158,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
 
         try  {
-	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchText.toLowerCase());
+        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchTextWithWildCard);
 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 			// Projection permits to extract only a subset of domain class, tuning application.

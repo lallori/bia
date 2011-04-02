@@ -51,14 +51,4 @@ public interface SeriesListDAO extends Dao<Integer, SerieList> {
 	 * @throws PersistenceException
 	 */
 	public List<SerieList> findSeries(String alias) throws PersistenceException;
-
-	/**
-	 * This is a jpa implementation for extraction directly from database.
-	 * 
-	 * @param alias Text to search in title or subTitle1 or subTitle2 
-	 * @return a List of serieList
-	 * @throws PersistenceException
-	 */
-	public List<SerieList> findSeriesJpaImpl(String alias) throws PersistenceException;
-
 }

@@ -115,6 +115,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 * @param searchedEntity Entity to search
 	 * @return
 	 * @throws PersistenceException
+	 * 
+	 * @deprecated since 0.0.9-aplha
 	 */
 	@SuppressWarnings("rawtypes")
 	protected org.hibernate.search.FullTextQuery buildFullTextQuery(EntityManager entityManager, String[] searchFields, String alias, String[] outputFields, Class<?> searchedEntity) throws PersistenceException { 
@@ -146,6 +148,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 * @param searchedEntity Entity to search
 	 * @return
 	 * @throws PersistenceException
+	 * 
+	 * @deprecated since 0.0.9-aplha
 	 */
 	@SuppressWarnings("rawtypes")
 	protected org.hibernate.search.FullTextQuery buildFullTextQuery(EntityManager entityManager, String[] searchFields, String[] queries, String[] outputFields, Class<?> searchedEntity) throws PersistenceException { 
@@ -176,6 +180,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 * @param searchedEntity
 	 * @return
 	 * @throws PersistenceException
+	 * 
+	 * @deprecated since 0.0.9-aplha
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected List executeFullTextQuery(FullTextQuery fullTextQuery, String[] outputFields, Class<?> searchedEntity) throws PersistenceException {

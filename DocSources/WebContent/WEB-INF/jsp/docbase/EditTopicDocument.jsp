@@ -39,18 +39,18 @@
 		<form:hidden path="entryId"/>
 	</form:form>
 
-	<c:url var="searchTopicLinkableToDocumentUrl" value="/de/docbase/SearchTopicLinkableToDocument.json">
+	<c:url var="searchTopicLinkableToDocumentURL" value="/de/docbase/SearchTopicLinkableToDocument.json">
 		<c:param name="entryId" value="${command.entryId}" />
 	</c:url>
 
-	<c:url var="searchPlaceLinkableToTopicDocumentUrl" value="/de/docbase/SearchPlaceLinkableToTopicDocument.json">
+	<c:url var="searchPlaceLinkableToTopicDocumentURL" value="/de/docbase/SearchPlaceLinkableToTopicDocument.json">
 		<c:param name="entryId" value="${command.entryId}" />
 	</c:url>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			var topicDescription = $j('#topicDescriptionAutoCompleter').autocomplete({ 
-			    serviceUrl:'${searchTopicLinkableToDocumentUrl}',
+			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
@@ -61,8 +61,8 @@
 			    onSelect: function(value, data){ $j('#topicId').val(data); }
 			  });
 
-			var placeDescription = $j('#placeDescriptionAutoCompleter').autocomplete({ 
-			    serviceUrl:'${searchPlaceLinkableToTopicDocumentUrl}',
+			var placeDescription = $j('#placeDescriptionAutoCompleter').autocompletePlace({ 
+			    serviceUrl:'${searchPlaceLinkableToTopicDocumentURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,

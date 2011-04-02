@@ -10,32 +10,32 @@
 	<legend><b>PERSON DETAILS</b></legend>
 		<div>
 			<form:label for="firstName" path="firstName" cssErrorClass="error"><b>First Name:</b></form:label>
-			<input id="firstName" name="firstName" class="input_20c" type="text" value="" />
+			<form:input path="firstName" cssClass="input_5c" />
 			<form:label for="sucNum" path="sucNum" cssErrorClass="error">Succes. Number:</form:label>
-			<input id="successNumber" name="successNumber" class="input_5c" type="text" value="" maxlength="5"/>
+			<form:input path="sucNum" cssClass="input_5c" maxlength="5"/>
 		</div>
 		
 		<div>
 			<form:label for="midPrefix" path="midPrefix" cssErrorClass="error">Prefix Pre-Id:</form:label>
-			<input id="prefixPreId" name="prefixPreId" class="input_5c" type="text" value="" maxlength="5"/>
+			<form:input path="midPrefix" cssClass="input_5c" maxlength="5"/>
 
 			<form:label for="middle" path="middle" cssErrorClass="error">Pre-Id:</form:label>
-			<input id="PreId" name="PreId" class="input_20c" type="text" value="" />
+			<form:input path="middle" cssClass="input_20c" />
 		</div>
 		
 		<div>
 			<form:label for="lastPrefix" path="lastPrefix" cssErrorClass="error">Prefix Lastname:</form:label>
-			<input id="prefixLname" name="prefixLname" class="input_5c" type="text" value="" maxlength="5"/>
+			<form:input path="lastPrefix" cssClass="input_5c" maxlength="5"/>
 
 			<form:label for="last" path="last" cssErrorClass="error">Lastname:</form:label>
-			<input id="lastname" name="lastname" class="input_20c" type="text" value="" />
+			<form:input path="last" cssClass="input_20c" />
 		</div>
 		
 		<div>
 			<form:label for="postLastPrefix" path="postLastPrefix" cssErrorClass="error">Prefix Post-Id:</form:label>
-			<input id="prefixPostId" name="prefixPostId" class="input_5c" type="text" value="" maxlength="5"/>
+			<form:input path="postLastPrefix" cssClass="input_5c" maxlength="5"/>
 			<form:label for="postLast" path="postLast" cssErrorClass="error">Post-Id:</form:label>
-			<input id="PostId" name="PostId" class="input_20c" type="text" value="" />
+			<form:input path="postLast" cssClass="input_20c" maxlength="5"/>
 		</div>
 		
 		<div>
@@ -47,50 +47,51 @@
 		
 		<div>
 			<b>Birth:</b>
-			<form:label for="bYear" path="bYear" cssErrorClass="error">Year</form:label>
-			<input id="yearBirth" name="yearBirth" class="input_4c" type="text" value="" maxlength="4"/>
-			<form:label for="bMonth" path="bMonth" cssErrorClass="error">Month</form:label>
+			<form:label for="bornYear" path="bornYear" cssErrorClass="error">Year</form:label>
+			<form:input path="bornYear" cssClass="input_4c" maxlength="4"/>
+			<form:label for="bornMonth" path="bornMonth" cssErrorClass="error">Month</form:label>
 			<select id="monthBirth" name="monthBirth" class="selectform">
 				<option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option><option value="" selected="selected"></option>
 			</select>
-			<form:label for="bDay" path="bDay" cssErrorClass="error">Day</form:label>
-			<input id="dayBirth" name="dayBirth" class="input_2c" type="text" value="" maxlength="2"/>
+			<form:label for="bornDay" path="bDay" cssErrorClass="error">Day</form:label>
+			<form:input path="bDay" cssClass="input_2c" maxlength="2"/>
 		</div>
 		
 		<div>
 			<form:label for="bApprox" path="bApprox" cssErrorClass="error">Approx</form:label>
+			<form:checkbox path="bApprox" cssClass="checkboxPers1"/>
 			<input type="checkbox" name="approxBirth" class="checkboxPers1"/>
 			<form:label for="bDateBc" path="bDateBc" cssErrorClass="error">BC?</form:label>
-			<input type="checkbox" name="bcBirth" class="checkboxPers2"/>
+			<form:checkbox path="bDateBc" cssClass="checkboxPers2"/>
 		</div>
 		
 		<div>
 			<form:label for="bPlace" path="bPlace" cssErrorClass="error">Place</form:label>
-			<input id="placeBirth" name="placeBirth" class="input_10c" type="text" value=""/>
+			<form:input path="bPlace" cssClass="input_10c"/>
 		</div>
 		
 		<div>
 			<form:label for="activeStart" path="activeStart" cssErrorClass="error">Active Start:</form:label>
-			<input id="activeStartAutoCompleter" name="activeStart" class="input_10c" type="text" value=""/>
+			<form:input path="activeStart" cssClass="input_10c"/>
 
 			<form:label for="bUnsure" path="bUnsure" cssErrorClass="error">Unsure?</form:label>
-			<input type="checkbox" name="unsure" class="checkboxPers2"/>
+			<form:checkbox path="bUnsure" cssClass="checkboxPers2"/>
 		</div>
 		
 		<div>
 			<b>Death:</b>
-			<form:label for="dYear" path="dYear" cssErrorClass="error">Year</form:label>
-			<input id="yearDeath" name="yearDeath" class="input_4c" type="text" value="" maxlength="4"/>
-			<form:label for="dMonth" path="dMonth" cssErrorClass="error">Month</form:label>
+			<form:label for="deathYear" path="deathYear" cssErrorClass="error">Year</form:label>
+			<form:input path="deathYear" cssClass="input_4c" maxlength="4"/>
+			<form:label for="deathMonth" path="deathMonth" cssErrorClass="error">Month</form:label>
 			<select id="monthDeath" name="monthDeath" class="selectform">
 				<option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option><option value="" selected="selected"></option>
 			</select>
-			<form:label for="dDay" path="dDay" cssErrorClass="error">Day</form:label>
-			<input id="dayDeath" name="dayDeath" class="input_2c" type="text" value="" maxlength="2"/>
+			<form:label for="deathDay" path="deathDay" cssErrorClass="error">Day</form:label>
+			<form:input path="deathDay" cssClass="input_2c" maxlength="2"/>
 		</div>
 		
 		
-			<input id="summaryId" name="summaryId" type="hidden" value="0"/>			
+			<form:hidden path="personId"/>			
 		<div>
 			<input id="close" type="submit" value="" title="Do not save changes" class="button" />
 			<input id="save" type="submit" value="" class="button"/>

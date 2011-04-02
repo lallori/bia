@@ -26,8 +26,8 @@
     this.suggestions = [];
     this.data = [];
     this.activeStarts = [];
-    this.bYears = [];
-    this.dYears =[];
+    this.bornYears = [];
+    this.deathYears =[];
     this.badQueries = [];
     this.selectedIndex = -1;
     this.currentValue = this.el.val();
@@ -223,7 +223,7 @@
       var ret, arr, len, val, i;
       arr = this.options.lookup;
       len = arr.suggestions.length;
-      ret = { suggestions:[], data:[], activeStarts:[], bYears:[], dYears:[]};
+      ret = { suggestions:[], data:[], activeStarts:[], bornYears:[], deathYears:[]};
       textFieldValue = textFieldValue.toLowerCase();
       for(i=0; i< len; i++){
         val = arr.suggestions[i];
@@ -243,8 +243,8 @@
         this.data = cr.data;
         // Additional arrays...
         this.activeStarts = cr.activeStarts;
-        this.bYears = cr.bYears;
-        this.dYears = cr.dYears;
+        this.bornYears = cr.bornYears;
+        this.deathYears = cr.deathYears;
         
         this.suggest();
       } else if (!this.isBadQuery(q)) {
@@ -286,7 +286,7 @@
 	
 	      for (i = 0; i < len; i++) {
 	        s = this.suggestions[i];
-	        tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v) + '</td>' + '<td>' + this.activeStarts[i] + '</td>' + '<td>' + this.bYears[i] + '</td>' + '<td>' + this.dYears[i] + '</td>' + '</tr>');
+	        tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v) + '</td>' + '<td>' + this.activeStarts[i] + '</td>' + '<td>' + this.bornYears[i] + '</td>' + '<td>' + this.deathYears[i] + '</td>' + '</tr>');
 	        tr.mouseover(mOver(i));
 	        tr.click(mClick(i));
 	        this.container.append(tr);
@@ -311,8 +311,8 @@
         this.suggestions = response.suggestions;
         this.data = response.data;
         this.activeStarts = response.activeStarts;
-        this.bYears = response.bYears;
-        this.dYears = response.dYears;
+        this.bornYears = response.bornYears;
+        this.deathYears = response.deathYears;
         this.suggest(); 
       }
     },
