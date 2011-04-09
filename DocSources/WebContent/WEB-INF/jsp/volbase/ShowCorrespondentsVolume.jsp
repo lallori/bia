@@ -10,12 +10,13 @@
 		</c:url>
 	</security:authorize>
 	
-	<div id="EditCorrespondentsVolumeDiv">
-		<h5>Correspondents </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolumeURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditCorrespondentsVolumeDiv" class="background">
+		<div class="title">
+			<h5>CORRESPONDENTS</h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditCorrespondentsVolume" href="${EditCorrespondentsVolumeURL}" class="editButton"></a><span id="loading"/>
+		</security:authorize>
+		</div>
 		
 		<ul>
 			<li><b>From: </b>${volume.senders}</li>

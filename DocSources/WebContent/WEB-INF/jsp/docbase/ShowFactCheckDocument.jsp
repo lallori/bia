@@ -10,12 +10,13 @@
 		</c:url>
 	</security:authorize>
 
-	<div id="EditFactCheckDocumentDiv">
-		<h5>FACT CHECK </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditFactCheckDocument" href="${EditFactCheckDocumentURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditFactCheckDocumentDiv" class="background">
+		<div class="title">
+			<h5>FACT CHECK </h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditFactCheckDocument" href="${EditFactCheckDocumentURL}" class="editButton"></a><span id="loading"/>
+		</security:authorize>
+		</div>
 		<ul>
 			<li>${document.factChecks.addLRes}</li>
 		</ul>

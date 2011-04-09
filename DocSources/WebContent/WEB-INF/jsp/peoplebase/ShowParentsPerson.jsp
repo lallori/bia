@@ -10,16 +10,26 @@
 		</c:url>
 	</security:authorize>
 
-<div id="EditParentsPersonDiv">	
-	<b>Parents:</b>
- 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditParentsPerson" href="${EditParentsPersonURL}">edit</a><span id="loading"/>
-	</security:authorize>
-	<ul>
-		<li>Father: <a href="#" id="linkSearch">${person.father.last}, ${person.father.first} ${person.father.sucNum}</a> <p id="info"><u>Birth:</u> ${person.father.bYear} | <u>Death:</u> ${person.father.dYear}</p></li>
-		<li>Mother: <a href="#" id="linkSearch">${person.mother.last}, ${person.mother.first} ${person.mother.sucNum}</a> <p id="info"><u>Birth:</u> ${person.mother.bYear} | <u>Death:</u> ${person.mother.dYear}</p></li>
-	</ul>
-</div>
+	<div id="EditParentsPersonDiv" class="background">
+		<div class="title">	
+			<h5>PARENTS:</h5>
+		 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<a id="EditParentsPerson" href="${EditParentsPersonURL}" class="editButton"></a><span id="loading"/>
+			</security:authorize>
+		</div>
+		<div class="list">
+			<div class="row">
+				<div class="item">Father</div> 
+				<div class="value"><a href="#">${person.father.last}, ${person.father.first} ${person.father.sucNum}</a></div> 
+				<div class="info">${person.father.bornYear} | Death ${person.father.deathYear}</div>
+			</div>
+			<div class="row">
+				<div class="item">Mother</div> 
+				<div class="value"><a href="#">${person.mother.last}, ${person.mother.first} ${person.mother.sucNum}</a></div> 
+				<div class="info">${person.mother.bornYear} | Death ${person.mother.deathYear}</div>
+			</div>
+		</div>
+	</div>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">

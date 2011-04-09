@@ -39,12 +39,14 @@
 		</div>
 	</div>
 
-	<div id="EditDetailsDocumentDiv">
-		<h5>DOCUMENT DETAILS </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditDetailsDocument" href="${EditDetailsDocumentURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditDetailsDocumentDiv" class="background">
+		<div class="title">
+			<h5>DOCUMENT DETAILS </h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditDetailsDocument" href="${EditDetailsDocumentURL}" class="editButton"></a><span id="loading"/>
+		</security:authorize>
+		</div>
+
 		<div id="DocumentImageDiv">
 			<c:if test="${not empty image}">
 			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">

@@ -300,20 +300,40 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CheckPerson.jsp"/>
 	</definition>
 
-	<definition name="peoplebase/EditDetailsPerson" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditDetailsPerson.jsp"/>
+	<definition name="peoplebase/EditChildPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditChildPerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/EditChildrenPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditChildrenPerson.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/EditDetailsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditDetailsPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditNamePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditNamePerson.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/EditNamesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditNamesPerson.jsp"/>
 	</definition>
 
-	<definition name="peoplebase/EditRelationships" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditRelationshipsPerson.jsp"/>
+	<definition name="peoplebase/EditParentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditParentsPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditSpousesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditSpousesPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditSpousePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditSpousePerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditTitleOrOccupationPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitleOrOccupationPerson.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/EditTitlesOrOccupationsPerson" extends="template.partialDOM">

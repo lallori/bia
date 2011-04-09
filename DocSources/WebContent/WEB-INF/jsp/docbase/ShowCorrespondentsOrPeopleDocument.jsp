@@ -16,13 +16,15 @@
 	<c:url var="CheckRecipientURL" value="/src/peoplebase/CheckPerson.do">
 		<c:param name="personId"   value="${document.recipientPeople.personId}" />
 	</c:url>
-	<div id="EditCorrespondentsOrPeopleDocumentDiv">
-		<h5>CORRESPONDENTS/PEOPLE </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocumentURL}">edit</a>
-		<span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditCorrespondentsOrPeopleDocumentDiv" class="background">
+		<div class="title">
+			<h5>CORRESPONDENTS/PEOPLE </h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocumentURL}" class="editButton"></a>
+			<span id="loading"/>
+		</security:authorize>
+		</div>
+
 		<ul>
 			<li><b>Sender:</b> <a class="linkSearch" href="${CheckSenderURL}">${document.senderPeople.mapNameLf}</a></li>
 			<li><b>From:</b> <a class="linkSearch" href="">${document.senderPlace.placeNameFull} </a></li>	

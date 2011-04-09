@@ -10,12 +10,13 @@
 		</c:url>
 	</security:authorize>
 
-	<div id="EditContextVolumeDiv">
-		<h5>Context </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditContextVolume" href="${EditContextVolumeURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditContextVolumeDiv" class="background">
+		<div class="title">
+			<h5>CONTEXT</h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditContextVolume" href="${EditContextVolumeURL}" class="editButton"></a><span id="loading"/>
+		</security:authorize>
+		</div>
 
 		<ul>
 			<li><b>Context: </b>${volume.ccontext}</li>

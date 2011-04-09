@@ -8,9 +8,9 @@
 		<c:url var="EditTitlesOrOccupationsPersonURL" value="/de/peoplebase/EditTitlesOrOccupationsPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
-		<c:url var="AddNamePersonURL" value="/de/peoplebase/EditNamePerson.do">
+		<c:url var="AddTitleOrOccupationPersonURL" value="/de/peoplebase/EditTitleOrOccupationPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
-			<c:param name="nameId"  value="0" />
+			<c:param name="prfLinkId"  value="0" />
 		</c:url>
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
@@ -20,27 +20,27 @@
 	<form:form id="EditTitlesOrOccupationsPersonForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>TITLES / OCCUPATIONS</b></legend>
-		<c:forEach items="${command.titleOccList}" var="titleOrOccupation">
-			<c:url var="EditNamePersonURL" value="/de/peoplebase/EditNamePerson.do">
+		<c:forEach items="${person.poLink}" var="titleOrOccupation">
+			<c:url var="EditTitleOrOccupationPersonURL" value="/de/peoplebase/EditTitleOrOccupationPerson.do">
 				<c:param name="personId" value="${command.personId}" />
-				<c:param name="nameId" value="${currentName.nameId}" />
+				<c:param name="prfLinkId" value="${titleOrOccupation.prfLinkId}" />
 			</c:url>
 
-			<c:url var="DeleteNamePersonURL" value="/de/peoplebase/DeleteNamePerson.do" >
+			<c:url var="DeleteTitleOrOccupationPersonURL" value="/de/peoplebase/DeleteTitleOrOccupationPerson.do" >
 				<c:param name="personId" value="${command.personId}" />
-				<c:param name="nameId" value="${currentName.nameId}" />
+				<c:param name="prfLinkId" value="${titleOrOccupation.prfLinkId}" />
 			</c:url>
 
 			<div>
-      			<input id="name_${currentName.nameId}" name="name_${currentName.nameId}" class="input_28c_disabled" type="text" value="${currentName}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteNamePersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditNamePersonURL}">edit value</a>
+      			<input id="title_${titleOrOccupation.prfLinkId}" name="name_${titleOrOccupation.prfLinkId}" class="input_28c_disabled" type="text" value="${currentName}" disabled="disabled" />
+				<a class="deleteIcon" title="Delete this entry" href="${DeleteTitleOrOccupationPersonURL}"></a>
+				<a class="editValue" class="editValue" href="${EditTitleOrOccupationPersonURL}">edit value</a>
 			</div>
 		</c:forEach>
 			
 			<div>
 				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<a id="AddNewValue" title="Add new Name" href="${AddNamePersonURL}"></a>
+				<a id="AddNewValue" title="Add new Name" href="${AddTitleOrOccupationPersonURL}"></a>
 			</div>
 			
 		</fieldset>	
@@ -56,7 +56,7 @@
 		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 		        
 		        $j('#close').click(function() {
-					$j('#EditTopicsDocumentDiv').block({ message: $j('#question') }); 
+					$j('#EditTitlesOrOccupationsPersonDiv').block({ message: $j('#question') }); 
 					return false;
 				});
 
@@ -72,12 +72,12 @@
 				});
 
 				$j(".editValue").click(function() {
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
+					$j("#EditTitleOrOccupationPersonDiv").load($j(this).attr("href"));
 					return false;
 				});
 
 				$j("#AddNewValue").click(function(){
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
+					$j("#EditTitleOrOccupationPersonDiv").load($j(this).attr("href"));
 					return false;
 				});
 			});

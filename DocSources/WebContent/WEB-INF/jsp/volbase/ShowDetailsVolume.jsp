@@ -33,12 +33,13 @@
 		</div>
 	</div>
 		
-	<div id="EditDetailsVolumeDiv">
-		<h5>VOLUME DETAILS </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditDetailsVolume" href="${EditDetailsVolumeURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditDetailsVolumeDiv" class="background">
+		<div class="title">
+			<h5>VOLUME DETAILS </h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditDetailsVolume" href="${EditDetailsVolumeURL}" class="editButton"></a><span id="loading"/>
+		</security:authorize>
+		</div>
 
 		<div id="SpineVolumeDiv">
 			<p><b>Volume Spine</b></p>

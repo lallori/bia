@@ -104,31 +104,14 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
-		var b = $j('#docIdAutoCompleter').autocomplete({ 
-		    serviceUrl:'/DocSources/de/docbase/ajax/FindDocId.json',
-		    minChars:3, 
-		    delimiter: /(,|;)\s*/, // regex or character
-		    maxHeight:400,
-		    width:600,
-		    zIndex: 9999,
-		    deferRequestBy: 0, //miliseconds
-		    noCache: false, //default is false, set to true to disable caching
-		    onSelect: function(value, data){ $j('#seriesRefNum').val(data); }
-		  });
-	$j(document).ready(function() {
-		var b = $j('#volNumAutoCompleter').autocomplete({ 
-		    serviceUrl:'/DocSources/de/docbase/ajax/FindVolNum.json',
-		    minChars:3, 
-		    delimiter: /(,|;)\s*/, // regex or character
-		    maxHeight:400,
-		    width:600,
-		    zIndex: 9999,
-		    deferRequestBy: 0, //miliseconds
-		    noCache: false, //default is false, set to true to disable caching
-		    onSelect: function(value, data){ $j('#seriesRefNum').val(data); }
-		  });
-		});
-		$j("#EditDetailsVolume").submit(function (){
+		$j("#EditNamesPerson").css('visibility', 'hidden');
+        $j("#EditTitlesOccupationsPerson").css('visibility', 'hidden'); 
+		$j("#EditParentsPerson").css('visibility', 'hidden');
+		$j("#EditChildrenPerson").css('visibility', 'hidden');
+		$j("#EditSpousesPerson").css('visibility', 'hidden');
+        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
+        
+        $j("#EditDetailsPerson").submit(function (){
 			$j.post($j(this).attr("action"), $j(this).serialize(), function() {
 				// In questa function si definisce la sostituzione del div dove visualizzare il risultato
 				// questa function rappresenta 

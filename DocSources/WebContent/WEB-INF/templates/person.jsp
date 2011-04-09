@@ -12,11 +12,6 @@
 
 <br />
 
-<div id="EditRelationshipPersonDiv">
-	<h5>RELATIONSHIPS </h5>
-	<hr id="lineSeparator"/>
-</div>
-
 <tiles:insertAttribute name="parents"/>
 
 <br/>

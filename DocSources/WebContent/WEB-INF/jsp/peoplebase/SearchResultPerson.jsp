@@ -4,17 +4,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="searchPeoplePaginationUrl" value="/src/PaginationSearchData.json">
+<c:url var="searchPeoplePaginationURL" value="/src/PaginationSearchData.json">
 	<c:param name="searchType" value="people" />
 </c:url>
 <c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
-<c:url var="searchPeoplePaginationUrlExample" value="/examples/ajax/pagination.txt"/>
 
 		<script type="text/javascript" charset="utf-8">
 			TableToolsInit.sSwfPath = "${zeroClipboard}";
 
-			$(document).ready(function() {
-				$('#result').dataTable( {
+			$j(document).ready(function() {
+				$j('#result').dataTable( {
 					"bProcessing": true,
 					"bServerSide": true,
 					"sPaginationType": "full_numbers",
@@ -22,20 +21,23 @@
 					"iDisplayStart": 0,
 					"sDom": 'T<"clear">lfrtip',
 					"oSearch": {"sSearch": "${command.text}"},
-					"sAjaxSource": "${searchPeoplePaginationUrl}",
+					"sAjaxSource": "${searchPeoplePaginationURL}",
 					"fnServerData": function ( sSource, aoData, fnCallback ) {
 						/* Add some extra data to the sender */
 						aoData.push( { "name": "more_data", "value": "xxx" } );
-						$.getJSON( sSource, aoData, function (json) { 
+						$j.getJSON( sSource, aoData, function (json) { 
 							/* Do whatever additional processing you want on the callback, then tell DataTables */
 							fnCallback(json)
 						} );
 					}
 				} );
 
-				// result links have a specific class style on which we trigger load 
-				$('.searchResult').live('click', function() {
-					$("#body_left").load($(this).attr("href"));
+				// We need to remove any previous live function
+				$j('.searchResult').die();
+				
+				// Result links have a specific class style on which we attach click live. 
+				$j('.searchResult').live('click', function() {
+					$j("#body_left").load($j(this).attr("href"));
 					return false;
 				}); 
 			} );

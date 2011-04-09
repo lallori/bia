@@ -12,22 +12,25 @@
 
 	<div id="CreatedSharePrintDiv">
 		<div id="createdby">CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
-		<a title="Print this record" href="#" id="buttonPrint"></a>
+		<a id="vettingChronology" href="/DocSources/de/VettingChronology.html"></a>
+		<a id="menuActions" href="/DocSources/de/peoplebase/ActionsMenu.html"></a>
+		<a id="buttonPrint" title="Print this record" href="#"></a>
 		<div id="buttonShareLink">
 			<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
 			<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
 		</div>
 	</div>
 		
-	<div id="EditDetailsPersonDiv">
-		<h5>PERSON DETAILS</h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditDetailsPerson" href="${EditDetailsPersonURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditDetailsPersonDiv" class="background">
+		<div class="title">
+			<h5>PERSON DETAILS</h5>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<a id="EditDetailsPerson" href="${EditDetailsPersonURL}" class="editButton"></a><span id="loading"/>
+			</security:authorize>
+		</div>
 		<div id="EditPortraitPersonDiv">
-			<img src="/DocSources/images/default_user.jpg" alt="default image" />
-			<p><b>Portrait</b> <a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></p>
+			<div id="imgPortraitPerson"></div>
+			<p style="text-align:center"><b>Portrait</b></p>
 		</div>
 		<h2 class="titlepeople">${person.mapNameLf}</h2>
 		<ul id="activeEnd">

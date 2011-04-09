@@ -10,12 +10,13 @@
 		</c:url>
 	</security:authorize>
 	
-	<div id="EditTopicsDocumentDiv">
-		<h5>TOPICS </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditTopicsDocument" href="${EditTopicsDocumentURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditTopicsDocumentDiv" class="background">
+		<div class="title">
+			<h5>TOPICS </h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditTopicsDocument" href="${EditTopicsDocumentURL}" class="editButton"></a><span id="loading"/>
+		</security:authorize>
+		</div>
 		<ul>
 			<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
 				<li><b>Topic:</b> ${currentTopicAndPlace.topic.topicTitle}</li>

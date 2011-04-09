@@ -10,20 +10,20 @@
 		</c:url>
 	</security:authorize>
 
-<div id="EditNamesPersonDiv">
-	<h5>NAMES </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditNamesPerson" href="${EditNamesPersonURL}">edit</a><span id="loading"/>
-	</security:authorize>
-
-	<hr id="lineSeparator"/>
-
-	<ul>
-	<c:forEach items="${person.altName}" var="currentName">
-		<li>${currentName.nameType}: <a href="#" id="linkSearch">${currentName.namePrefix} ${currentName.altName}</a></li>
-	</c:forEach>
-	</ul>
-</div>
+	<div id="EditNamesPersonDiv" class="background">
+		<div class="title">
+			<h5>NAMES </h5>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<a id="EditNamesPerson" href="${EditNamesPersonURL}" class="editButton"></a><span id="loading"/>
+			</security:authorize>
+		</div>
+	
+		<ul>
+		<c:forEach items="${person.altName}" var="currentName">
+			<li>${currentName.nameType}: <a href="#" id="linkSearch">${currentName.namePrefix} ${currentName.altName}</a></li>
+		</c:forEach>
+		</ul>
+	</div>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">

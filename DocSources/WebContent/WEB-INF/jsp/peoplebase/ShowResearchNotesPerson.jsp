@@ -10,13 +10,13 @@
 		</c:url>
 	</security:authorize>
 
-	<div id="EditResearchNotesPersonDiv">
-		<h5>RESEARCH NOTES </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditResearchNotesPerson" href="${EditResearchNotesPersonURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
-	
+	<div id="EditResearchNotesPersonDiv" class="background">
+		<div class="title">
+			<h5>RESEARCH NOTES </h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditResearchNotesPerson" href="${EditResearchNotesPersonURL}" class="editButton"></a><span id="loading"/>
+		</security:authorize>
+		</div>
 		<ul>
 			<li>${person.bioNotes}</li>
 		</ul>

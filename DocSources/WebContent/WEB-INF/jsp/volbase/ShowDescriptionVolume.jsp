@@ -10,12 +10,13 @@
 		</c:url>
 	</security:authorize>
 
-	<div id="EditDescriptionVolumeDiv">
-		<h5>DESCRIPTION </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditDescriptionVolume" href="${EditDescriptionVolume}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditDescriptionVolumeDiv" class="background">
+		<div class="title">
+			<h5>DESCRIPTION </h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditDescriptionVolume" href="${EditDescriptionVolume}" class="editButton"></a><span id="loading"/>
+		</security:authorize>
+		</div>
 		
 		<ul>
 			<li><b>Organizational Criteria: </b>${volume.orgNotes}</li>

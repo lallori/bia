@@ -17,16 +17,16 @@
 		</c:url>
 	</security:authorize>
 		
-	<div id="EditExtractOrSynopsisDocumentDiv">
-		<h5>EXTRACT/SYNOPSIS </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}">edit</a>
-		/
-		<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindow}" title="EXTRACT/SYNOPSIS">edit fullscreen</a>
-		/
-		<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewer}" >edit with manuscript viewer</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
+	<div id="EditExtractOrSynopsisDocumentDiv" class="background">
+		<div class="title">
+			<h5>EXTRACT/SYNOPSIS </h5>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}" class="editButton"></a>
+			<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindow}" class="editFullscreen" title="EXTRACT/SYNOPSIS"></a>
+			<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewer}" class="EditExtractOrSynopsisDocument"></a><span id="loading"/>
+		</security:authorize>
+		</div>
+		
 		<ul>
 			<li><b>Extract:</b></li>
 			<li>${document.synExtract.docExtract}</li>
