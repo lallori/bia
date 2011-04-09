@@ -71,19 +71,19 @@
 			<div>
 				<label for="people" id="peopleLabel">People:</label>
 			</div>
-		<c:forEach items="${command.document.epLink}" var="currentPerson">
+		<c:forEach items="${command.document.epLink}" var="currentPersonLinked">
 			<c:url var="EditPersonDocumentURL" value="/de/docbase/EditPersonDocument.do">
-				<c:param name="entryId" value="${currentPerson.document.entryId}" />
-				<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
+				<c:param name="entryId" value="${currentPersonLinked.document.entryId}" />
+				<c:param name="epLinkId" value="${currentPersonLinked.epLinkId}" />
 			</c:url>
 
 			<c:url var="DeletePersonDocumentURL" value="/de/docbase/DeletePersonDocument.do" >
-				<c:param name="entryId" value="${currentPerson.document.entryId}" />
-				<c:param name="epLinkId" value="${currentPerson.epLinkId}" />
+				<c:param name="entryId" value="${currentPersonLinked.document.entryId}" />
+				<c:param name="epLinkId" value="${currentPersonLinked.epLinkId}" />
 			</c:url>
 
 			<div>
-				<input id="people_${currentPerson.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPerson.people.mapNameLf}" disabled="disabled"/>
+				<input id="people_${currentPersonLinked.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPersonLinked.person.mapNameLf}" disabled="disabled"/>
 				<a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentURL}"></a>
 				<a class="editValue" href="${EditPersonDocumentURL}">edit value</a>
 				<a title="Show this person record" id="personIcon" href="#"></a>
