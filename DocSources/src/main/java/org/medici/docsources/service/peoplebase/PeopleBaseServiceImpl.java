@@ -234,7 +234,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	@Override
-	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prLinkId) throws ApplicationThrowable {
+	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prfLinkId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -520,4 +520,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		this.titleOccsListDAO = titleOccsListDAO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().simpleSearchPeople(searchText, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 }

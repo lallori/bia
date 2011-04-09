@@ -56,6 +56,42 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param marriage
+	 * @throws ApplicationThrowable
+	 */
+	public void addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param child
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteFatherFromChildPerson(People child) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param child
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMotherFromChildPerson(People child) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param child
+	 * @param parentId
+	 * @throws ApplicationThrowable
+	 */
+	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param marriage
+	 * @throws ApplicationThrowable
+	 */
+	public void editMarriagePerson(Marriage marriage) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param personId
 	 * @param nameId
 	 * @return
@@ -98,6 +134,14 @@ public interface PeopleBaseService {
 	public People findLastEntryPerson() throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param marriageId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Marriage findMarriagePerson(Integer marriageId) throws ApplicationThrowable;
+
+	/**
 	 * This method searches for a specific marriage.
 	 * 
 	 * @param marriageId
@@ -134,11 +178,11 @@ public interface PeopleBaseService {
 	/**
 	 * 
 	 * @param personId
-	 * @param prLinkId
+	 * @param prfLinkId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prLinkId) throws ApplicationThrowable;
+	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prfLinkId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -222,45 +266,10 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param marriageId
+	 * @param text
+	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Marriage findMarriagePerson(Integer marriageId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param child
-	 * @param parentId
-	 * @throws ApplicationThrowable
-	 */
-	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param marriage
-	 * @throws ApplicationThrowable
-	 */
-	public void addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param marriage
-	 * @throws ApplicationThrowable
-	 */
-	public void editMarriagePerson(Marriage marriage) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param child
-	 * @throws ApplicationThrowable
-	 */
-	public void deleteFatherFromChildPerson(People child) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param child
-	 * @throws ApplicationThrowable
-	 */
-	public void deleteMotherFromChildPerson(People child) throws ApplicationThrowable;
+	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }
