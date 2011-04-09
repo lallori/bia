@@ -80,7 +80,7 @@ public class EpLink implements Serializable{
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"PERSONID\"")
 	@ContainedIn
-	private People people;
+	private People person;
 	
 	@Column (name="\"PORTRAIT\"", length=1, columnDefinition="tinyint", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -160,15 +160,15 @@ public class EpLink implements Serializable{
 	/**
 	 * @return the people
 	 */
-	public People getPeople() {
-		return people;
+	public People getPerson() {
+		return person;
 	}
 	
 	/**
-	 * @param people the people to set
+	 * @param person the people to set
 	 */
-	public void setPeople(People people) {
-		this.people = people;
+	public void setPerson(People person) {
+		this.person = person;
 	}
 	/**
 	 * @return the portrait

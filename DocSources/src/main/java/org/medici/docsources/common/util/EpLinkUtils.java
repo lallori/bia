@@ -56,9 +56,9 @@ public class EpLinkUtils {
 		List<Integer> retValue = new ArrayList(inputList.size());
 
 		for (int i = 0; i < inputList.size(); i++) {
-			if (inputList.get(i).getPeople() != null) {
-				if (! retValue.contains(inputList.get(i).getPeople().getPersonId())) {
-					retValue.add(inputList.get(i).getPeople().getPersonId());
+			if (inputList.get(i).getPerson() != null) {
+				if (! retValue.contains(inputList.get(i).getPerson().getPersonId())) {
+					retValue.add(inputList.get(i).getPerson().getPersonId());
 				}
 			}
 		}

@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.polink;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.PoLink;
 
@@ -36,5 +38,14 @@ import org.medici.docsources.domain.PoLink;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface PoLinkDAO extends Dao<Integer, PoLink> {
+
+	/**
+	 * 
+	 * @param personId
+	 * @param prfLinkId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public PoLink find(Integer personId, Integer prfLinkId) throws PersistenceException;
 
 }

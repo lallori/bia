@@ -142,8 +142,6 @@ public class EditTopicDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTopicDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-
-
 		if ((command != null) && (command.getEntryId() > 0)) {
 
 			if (command.getEplToId().equals(0)) {
@@ -170,12 +168,12 @@ public class EditTopicDocumentController {
 						command.setTopicDescription(null);
 						command.setTopicId(null);
 					}
-					return new ModelAndView("docbase/EditTopicDocument", model);
 				} catch (ApplicationThrowable applicationThrowable) {
 					return new ModelAndView("error/EditTopicDocument", model);
 				}
 			}
 
+			return new ModelAndView("docbase/EditTopicDocument", model);
 		} else {
 			// On Document creation, the research is always the current user.
 			//command.setEntryId();

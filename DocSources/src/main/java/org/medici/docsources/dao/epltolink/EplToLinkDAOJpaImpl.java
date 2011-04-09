@@ -95,6 +95,5 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		} else {
 			return result.get(0);
 		}
-
 	}
 }

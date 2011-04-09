@@ -35,7 +35,7 @@ package org.medici.docsources.command.peoplebase;
  * @see org.docsources.controller.peoplebase.EditTitlesOrOccupationsPersonController
  */
 public class EditTitleOrOccupationPersonCommand {
-	private Integer prLinkId;
+	private Integer prfLinkId;
 	private Integer personId;
 	private Integer titleOccId;
 	private String titleOrOccupationDescription;
@@ -48,17 +48,17 @@ public class EditTitleOrOccupationPersonCommand {
 	private Integer prefferedRole;
 
 	/**
-	 * @param prLinkId the prLinkId to set
+	 * @param prfLinkId the prfLinkId to set
 	 */
-	public void setPrLinkId(Integer prLinkId) {
-		this.prLinkId = prLinkId;
+	public void setPrfLinkId(Integer prfLinkId) {
+		this.prfLinkId = prfLinkId;
 	}
 
 	/**
-	 * @return the prLinkId
+	 * @return the prfLinkId
 	 */
-	public Integer getPrLinkId() {
-		return prLinkId;
+	public Integer getPrfLinkId() {
+		return prfLinkId;
 	}
 
 	/**

@@ -119,7 +119,7 @@ public class EditTitleOrOccupationPersonController {
 
 		if ((command != null) && (command.getPersonId() > 0)) {
 
-			if (command.getPrLinkId().equals(0)) {
+			if (command.getPrfLinkId().equals(0)) {
 				
 				command.setTitleOccId(null);
 				command.setTitleOrOccupationDescription(null);
@@ -132,7 +132,7 @@ public class EditTitleOrOccupationPersonController {
 				command.setPrefferedRole(null);
 			} else {
 				try {
-					PoLink poLink = getPeopleBaseService().findTitleOrOccupationPerson(command.getPersonId(), command.getPrLinkId());
+					PoLink poLink = getPeopleBaseService().findTitleOrOccupationPerson(command.getPersonId(), command.getPrfLinkId());
 
 					if (poLink.getTitleOccList() != null) {
 						command.setTitleOrOccupationDescription(poLink.getTitleOccList().getTitleOcc());

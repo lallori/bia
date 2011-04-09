@@ -27,7 +27,13 @@
  */
 package org.medici.docsources.dao.polink;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.PoLink;
 import org.springframework.stereotype.Repository;
 
@@ -60,5 +66,23 @@ public class PoLinkDAOJpaImpl extends JpaDao<Integer, PoLink> implements PoLinkD
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 2663955366990151079L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public PoLink find(Integer personId, Integer prfLinkId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from PoLink where prfLinkId=:prfLinkId and person.personId=:personId");
+		query.setParameter("prfLinkId", prfLinkId);
+		query.setParameter("personId", personId);
+
+		List<PoLink> result = query.getResultList();
+		if (result.size() == 0) {
+			return null;
+		} else {
+			return result.get(0);
+		}
+	}
 
 }

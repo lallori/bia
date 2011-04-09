@@ -445,7 +445,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// fill fields to update document section
 			epLinkToUpdate.setAssignUnsure(epLink.getAssignUnsure());
 			epLinkToUpdate.setPortrait(epLink.getPortrait());
-			epLinkToUpdate.setPeople(epLink.getPeople());
+			epLinkToUpdate.setPerson(epLink.getPerson());
 
 			getEpLinkDAO().merge(epLinkToUpdate);
 

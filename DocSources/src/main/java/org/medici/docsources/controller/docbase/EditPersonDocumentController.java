@@ -100,7 +100,7 @@ public class EditPersonDocumentController {
 			EpLink epLink = new EpLink(command.getEpLinkId());
 			epLink.setAssignUnsure(command.getAssignUnsure());
 			epLink.setPortrait(command.getPortrait());
-			epLink.setPeople(new People(command.getPersonId()));
+			epLink.setPerson(new People(command.getPersonId()));
 			epLink.setDocument(new Document(command.getEntryId()));
 
 			try {
@@ -145,8 +145,8 @@ public class EditPersonDocumentController {
 				try {
 					EpLink epLink = getDocBaseService().findPersonDocument(command.getEntryId(), command.getEpLinkId());
 					
-					command.setPersonId(epLink.getPeople().getPersonId());
-					command.setPersonDescription(epLink.getPeople().getMapNameLf());
+					command.setPersonId(epLink.getPerson().getPersonId());
+					command.setPersonDescription(epLink.getPerson().getMapNameLf());
 					command.setAssignUnsure(epLink.getAssignUnsure());
 					command.setPortrait(epLink.getPortrait());
 				} catch (ApplicationThrowable applicationThrowable) {

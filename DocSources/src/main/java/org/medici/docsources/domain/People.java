@@ -285,17 +285,17 @@ public class People implements Serializable {
 	private Set<AltName> altName;
 	
 	//Association Biographic
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="person")
 	@IndexedEmbedded(depth=1)
 	private Set<BioRefLink> bioRefLink;
 
 	//Association Linked Document
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="people")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="person")
 	@IndexedEmbedded(depth=1)
 	private Set<EpLink> epLink;
 	
 	//Association titles and occupations
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="person")
 	@OrderBy("titleOccList ASC")
 	@IndexedEmbedded
 	private Set<PoLink> poLink;

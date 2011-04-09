@@ -246,13 +246,13 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	private void simpleSearchPeople(Map<String, Object> model, String alias, Integer firstRecord, Integer length) {
+	private void simpleSearchPeople(Map<String, Object> model, String searchText, Integer firstRecord, Integer length) {
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
 
 		try {
-			page = getPeopleBaseService().searchPeople(alias, paginationFilter);
+			page = getPeopleBaseService().simpleSearchPeople(searchText, paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 

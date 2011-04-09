@@ -35,13 +35,30 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.EditSpousePersonController
  */
 public class EditSpousePersonCommand {
+	private Integer personId;
 	private Integer marriageId;
-	private Integer wifeId;
 	private Integer husbandId;
+	private String husbandDescription;
+	private Integer wifeId;
+	private String wifeDescription;
 	private Integer startYear;
 	private Integer endYear;
 	private String marriageTerm;
 	
+	/**
+	 * @param personId the personId to set
+	 */
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
+	}
+
+	/**
+	 * @return the personId
+	 */
+	public Integer getPersonId() {
+		return personId;
+	}
+
 	/**
 	 * @return the marriageId
 	 */
@@ -55,7 +72,21 @@ public class EditSpousePersonCommand {
 	public void setMarriageId(Integer marriageId) {
 		this.marriageId = marriageId;
 	}
-	
+
+	/**
+	 * @return the husbandId
+	 */
+	public Integer getHusbandId() {
+		return husbandId;
+	}
+
+	/**
+	 * @param husbandId the husbandId to set
+	 */
+	public void setHusbandId(Integer husbandId) {
+		this.husbandId = husbandId;
+	}
+
 	/**
 	 * @return the wifeId
 	 */
@@ -71,17 +102,31 @@ public class EditSpousePersonCommand {
 	}
 
 	/**
-	 * @return the husbandId
+	 * @param wifeDescription the wifeDescription to set
 	 */
-	public Integer getHusbandId() {
-		return husbandId;
+	public void setWifeDescription(String wifeDescription) {
+		this.wifeDescription = wifeDescription;
 	}
 
 	/**
-	 * @param husbandId the husbandId to set
+	 * @return the wifeDescription
 	 */
-	public void setHusbandId(Integer husbandId) {
-		this.husbandId = husbandId;
+	public String getWifeDescription() {
+		return wifeDescription;
+	}
+
+	/**
+	 * @param husbandDescription the husbandDescription to set
+	 */
+	public void setHusbandDescription(String husbandDescription) {
+		this.husbandDescription = husbandDescription;
+	}
+
+	/**
+	 * @return the husbandDescription
+	 */
+	public String getHusbandDescription() {
+		return husbandDescription;
 	}
 
 	/**

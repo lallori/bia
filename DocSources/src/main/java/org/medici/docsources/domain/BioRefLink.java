@@ -70,7 +70,7 @@ public class BioRefLink implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="\"PERSONID\"")
 	@ContainedIn
-	private People personId;
+	private People person;
 
 	@ManyToOne
 	@JoinColumn(name="\"BIBLIOID\"")
@@ -96,17 +96,17 @@ public class BioRefLink implements Serializable{
 	}
 
 	/**
-	 * @return the personId
+	 * @return the person
 	 */
-	public People getPersonId() {
-		return personId;
+	public People getPerson() {
+		return person;
 	}
 
 	/**
 	 * @param personId the personId to set
 	 */
-	public void setPersonId(People personId) {
-		this.personId = personId;
+	public void setPerson(People person) {
+		this.person = person;
 	}
 
 	/**

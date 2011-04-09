@@ -134,8 +134,8 @@ public class EditPersonDocumentValidator implements Validator {
 						// if we are editing or creating, we check that user didn't specify an already linked person
 						Set<EpLink> peopleLinked = document.getEpLink();
 						
-					    for (EpLink currentPerson : peopleLinked) {
-					    	if (currentPerson.getPeople().getPersonId().equals(personId)) {
+					    for (EpLink currentLink : peopleLinked) {
+					    	if (currentLink.getPerson().getPersonId().equals(personId)) {
 								errors.reject("personId", "error.personId.alreadyPresent");
 					    	}
 					    }

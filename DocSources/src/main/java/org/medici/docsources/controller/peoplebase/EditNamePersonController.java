@@ -129,13 +129,14 @@ public class EditNamePersonController {
 					command.setNameType(altName.getNameType().toString());
 					command.setAltName(altName.getAltName());
 					
-					model.put("nameTypes", AltName.NameType.values());
-					return new ModelAndView("peoplebase/EditNamePerson", model);
 				} catch (ApplicationThrowable applicationThrowable) {
 					return new ModelAndView("error/EditNamePerson", model);
 				}
 			}
+			// We need nameType enumeration to populate relative combo-box
+			model.put("nameTypes", AltName.NameType.values());
 
+			return new ModelAndView("peoplebase/EditNamePerson", model);
 		} else {
 			// On Name creation, every field is null
 		}

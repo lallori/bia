@@ -89,30 +89,45 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired 
 	private TitleOccsListDAO titleOccsListDAO;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteFatherFromChildPerson(People child) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void deleteMotherFromChildPerson(People child) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void editMarriagePerson(Marriage marriage) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
@@ -131,6 +146,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public People findChildPerson(Integer parentId, Integer childId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
@@ -175,10 +193,16 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Marriage findMarriagePerson(Integer marriageId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return getMarriageDAO().find(marriageId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -233,10 +257,17 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prfLinkId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return getPoLinkDAO().find(personId, prfLinkId);
+		} catch(Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
 	}
 
 	/**

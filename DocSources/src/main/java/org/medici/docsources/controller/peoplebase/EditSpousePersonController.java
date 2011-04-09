@@ -28,7 +28,6 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -153,13 +152,14 @@ public class EditSpousePersonController {
 					command.setMarriageTerm(marriage.getMarTerm().toString());
 					command.setWifeId(marriage.getWife().getPersonId());
 					command.setHusbandId(marriage.getHusband().getPersonId());
-
-					return new ModelAndView("peoplebase/EditSpousePerson", model);
 				} catch (ApplicationThrowable applicationThrowable) {
 					return new ModelAndView("error/EditSpousePerson", model);
 				}
 			}
+			// We need nameType enumeration to populate relative combo-box
+			model.put("marriageTerms", Marriage.MarriageTerm.values());
 
+			return new ModelAndView("peoplebase/EditSpousePerson", model);
 		} else {
 			// On Name creation, every field is null
 		}

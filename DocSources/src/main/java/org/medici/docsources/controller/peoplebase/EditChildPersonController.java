@@ -35,9 +35,6 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.EditChildPersonCommand;
-import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.EpLink;
-import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
