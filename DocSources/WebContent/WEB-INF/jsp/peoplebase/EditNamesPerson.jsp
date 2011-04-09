@@ -48,49 +48,44 @@
 			
 		</fieldset>	
 		<div id="EditNamePersonDiv"></div>
-	
-		<script type="text/javascript">
-			$j(document).ready(function() {
-				$j("#EditDetailsPerson").css('visibility', 'hidden');
-		        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
-				$j("#EditParentsPerson").css('visibility', 'hidden');
-				$j("#EditChildrenPerson").css('visibility', 'hidden');
-				$j("#EditSpousesPerson").css('visibility', 'hidden');
-		        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
-		        
-		        $j('#close').click(function() {
-					$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 
-					return false;
-				});
-
-		        $j(".deleteValue").click(function() {
-					$j.get(this.href, function(data) {
-						if(data.match(/KO/g)){
-				            var resp = $j('<div></div>').append(data); // wrap response
-						} else {
-							$j("#EditNamesPersonDiv").load('${EditNamesPersonURL}');
-						}
-			        });
-					return false;
-				});
-
-				$j(".editValue").click(function() {
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
-					return false;
-				});
-
-				$j("#topicDescription").click(function() {
-					Modalbox.show(this.href, {title: this.title, width: 750});
-					return false;
-				});
-
-				$j("#AddNewValue").click(function(){
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
-					return false;
-				});
-			});
-		</script>
 	</form:form>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#EditDetailsPerson").css('visibility', 'hidden');
+	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
+			$j("#EditParentsPerson").css('visibility', 'hidden');
+			$j("#EditChildrenPerson").css('visibility', 'hidden');
+			$j("#EditSpousesPerson").css('visibility', 'hidden');
+	        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
+	        
+	        $j('#close').click(function() {
+				$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 
+				return false;
+			});
+
+	        $j(".deleteValue").click(function() {
+				$j.get(this.href, function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditNamesPersonDiv").load('${EditNamesPersonURL}');
+					}
+		        });
+				return false;
+			});
+
+			$j(".editValue").click(function() {
+				$j("#EditNamePersonDiv").load($j(this).attr("href"));
+				return false;
+			});
+
+			$j("#AddNewValue").click(function(){
+				$j("#EditNamePersonDiv").load($j(this).attr("href"));
+				return false;
+			});
+		});
+	</script>
 
 <div id="question" style="display:none; cursor: default"> 
 	<h1>discard changes?</h1> 
