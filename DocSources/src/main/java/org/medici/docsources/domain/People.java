@@ -44,6 +44,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -279,6 +280,7 @@ public class People implements Serializable {
 
 	//Association alternative Names
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="person")
+	@OrderBy("altName ASC")
 	@IndexedEmbedded(depth=1)
 	private Set<AltName> altName;
 	
@@ -294,6 +296,7 @@ public class People implements Serializable {
 	
 	//Association titles and occupations
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	@OrderBy("titleOccList ASC")
 	@IndexedEmbedded
 	private Set<PoLink> poLink;
 
@@ -1166,11 +1169,26 @@ public class People implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		if (getPersonId() == null) {
-			return null;
+		StringBuffer stringBuffer = new StringBuffer();
+		if (getLast() != null) {
+			stringBuffer.append(getLast());
+		}
+		if ((stringBuffer.length() > 0) && ((getFirst() != null) || (getSucNum() != null))) {
+			stringBuffer.append(", ");
+		}
+		if (getFirst() != null) {
+			stringBuffer.append(getFirst());
+		}
+
+		if (getSucNum() != null) {
+			if (stringBuffer.length() > 0) {
+				stringBuffer.append(" ");
+			}
+			
+			stringBuffer.append(getSucNum());
 		}
 		
-		return getPersonId().toString();
+		return stringBuffer.toString();
 	}
 
 	/* (non-Javadoc)
