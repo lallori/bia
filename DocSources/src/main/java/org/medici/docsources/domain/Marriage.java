@@ -118,6 +118,13 @@ public class Marriage implements Serializable {
 	private Date dateCreated;
 	
 	/**
+	 * Default constructor
+	 */
+	public Marriage() {
+		super();
+	}
+
+	/**
 	 * 
 	 * @param marriageId
 	 */
