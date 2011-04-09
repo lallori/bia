@@ -33,7 +33,7 @@
 
 			<div>
 				<select disabled="disabled" class="selectform_long_disabled" name="nameType" id="nameType">
-					<option value="${currentName.nameType}" selected="selected">currentName.nameType</option>
+					<option value="${currentName.nameType}" selected="selected">${currentName.nameType}</option>
 				</select>
       			<input id="name_${currentName.nameId}" name="name_${currentName.nameId}" class="input_10c_disabled" type="text" value="${currentName.namePrefix} ${currentName.altName}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteNamePersonURL}"></a>
@@ -51,12 +51,12 @@
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
-		        $j("#EditDetailsPerson").css('visibility', 'hidden'); 
-		        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden'); 
-		        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
-		        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
-		        $j("#EditDocumentInModal").css('visibility', 'hidden');
-		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
+				$j("#EditDetailsPerson").css('visibility', 'hidden');
+		        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
+				$j("#EditParentsPerson").css('visibility', 'hidden');
+				$j("#EditChildrenPerson").css('visibility', 'hidden');
+				$j("#EditSpousesPerson").css('visibility', 'hidden');
+		        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
 		        
 		        $j('#close').click(function() {
 					$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 

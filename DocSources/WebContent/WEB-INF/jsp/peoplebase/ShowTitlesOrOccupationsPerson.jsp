@@ -17,13 +17,15 @@
 				<a id="EditTitlesOrOccupationsPerson" href="${EditTitlesOrOccupationsPersonURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
 		</div>
-		<ul>
+		<div class="list">
 			<c:forEach items="${person.poLink}" var="currentPoLink">
-				<li><a href="#" id="linkSearch"><b>${currentPoLink.titleOccList.titleOcc}</b></a></li>
-				<li><a href="#" id="linkSearch">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a><p id="info"><u>Start:</u> ${currentPoLink.startDate} | <u>End:</u>${currentPoLink.endDate} </p></li>
-				<br />
+				<div class="row">
+					<div class="value"><a class="linkSearch" href="#"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
+					<a class="linkSearch" href="#">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
+					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
+				</div>
 			</c:forEach>
-		</ul>
+		</div>
 	</div>
 
 

@@ -5,10 +5,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditNamesPersonURL" value="/de/peoplebase/EditNamesPerson.do">
+		<c:url var="EditSpousesPersonURL" value="/de/peoplebase/EditSpousesPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
-		<c:url var="AddNamePersonURL" value="/de/peoplebase/EditNamePerson.do">
+		<c:url var="AddSpousePersonURL" value="/de/peoplebase/EditSpousePerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 			<c:param name="nameId"  value="0" />
 		</c:url>
@@ -17,34 +17,51 @@
 		</c:url>
 	</security:authorize>
 
-	<form:form id="EditNamesPersonForm" method="post" cssClass="edit">
+	<form:form id="EditSpousesPersonForm" method="post" cssClass="edit">
 		<fieldset>
-		<legend><b>NAMES</b></legend>
-		<c:forEach items="${command.altNames}" var="currentName">
-			<c:url var="EditNamePersonURL" value="/de/peoplebase/EditNamePerson.do">
+		<legend><b>SPOUSES</b></legend>
+		<c:forEach items="${marriages}" var="currentMarriage">
+			<c:url var="EditSpousePersonURL" value="/de/peoplebase/EditSpousePerson.do">
 				<c:param name="personId" value="${command.personId}" />
-				<c:param name="nameId" value="${currentName.nameId}" />
+				<c:param name="marriageId" value="${currentMarriage.marriageId}" />
+				<c:if test="${command.personId == currentMarriage.wife.personId}">
+					<c:param name="husbandId" value="${currentMarriage.husband.personId}" />
+				</c:if> 
+				<c:if test="${command.personId == currentMarriage.husband.personId}">
+					<c:param name="wifeId" value="${currentMarriage.wife.personId}" />
+				</c:if> 
 			</c:url>
 
-			<c:url var="DeleteNamePersonURL" value="/de/peoplebase/DeleteNamePerson.do" >
+			<c:url var="DeleteSpousePersonURL" value="/de/peoplebase/DeleteSpousePerson.do" >
 				<c:param name="personId" value="${command.personId}" />
-				<c:param name="nameId" value="${currentName.nameId}" />
+				<c:param name="marriageId" value="${currentMarriage.marriageId}" />
+				<c:if test="${command.personId == currentMarriage.wife.personId}">
+					<c:param name="husbandId" value="${currentMarriage.husband.personId}" />
+				</c:if> 
+				<c:if test="${command.personId == currentMarriage.husband.personId}">
+					<c:param name="wifeId" value="${currentMarriage.wife.personId}" />
+				</c:if> 
 			</c:url>
 
 			<div>
-      			<input id="name_${currentName.nameId}" name="name_${currentName.nameId}" class="input_28c_disabled" type="text" value="${currentName}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteNamePersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditNamePersonURL}">edit value</a>
+				<c:if test="${command.personId == currentMarriage.husband.personId}">
+      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_28c_disabled" type="text" value="${currentMarriage.wife} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.wife.deathYear}" disabled="disabled" />
+				</c:if> 
+				<c:if test="${command.personId == currentMarriage.wife.personId}">
+      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_28c_disabled" type="text" value="${currentMarriage.husband} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.husband.deathYear}" disabled="disabled" />
+				</c:if> 
+				<a class="deleteIcon" title="Delete this entry" href="${DeleteSpousePersonURL}"></a>
+				<a class="editValue" class="editValue" href="${EditSpousePersonURL}">edit value</a>
 			</div>
 		</c:forEach>
 			
 			<div>
 				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<a id="AddNewValue" title="Add new Name" href="${AddNamePersonURL}"></a>
+				<a id="AddNewValue" title="Add new Name" href="${AddSpousePersonURL}"></a>
 			</div>
 			
 		</fieldset>	
-		<div id="EditNamePersonDiv"></div>
+		<div id="EditSpousePersonDiv"></div>
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
@@ -56,7 +73,7 @@
 		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 		        
 		        $j('#close').click(function() {
-					$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 
+					$j('#EditSpousesPersonDiv').block({ message: $j('#question') }); 
 					return false;
 				});
 
@@ -65,24 +82,19 @@
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
 						} else {
-							$j("#EditNamesPersonDiv").load('${EditNamesPersonURL}');
+							$j("#EditSpousesPersonDiv").load('${EditSpousesPersonURL}');
 						}
 			        });
 					return false;
 				});
 
 				$j(".editValue").click(function() {
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
-					return false;
-				});
-
-				$j("#topicDescription").click(function() {
-					Modalbox.show(this.href, {title: this.title, width: 750});
+					$j("#EditSpousePersonDiv").load($j(this).attr("href"));
 					return false;
 				});
 
 				$j("#AddNewValue").click(function(){
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
+					$j("#EditSpousePersonDiv").load($j(this).attr("href"));
 					return false;
 				});
 			});

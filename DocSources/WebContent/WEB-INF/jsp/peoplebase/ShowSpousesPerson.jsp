@@ -18,11 +18,14 @@
 		</security:authorize>
 		</div>
 
-		<ul>
-		<c:forEach items="${marriages}" var="currentMarriage">
-			<li><a href="#" id="linkSearch">${currentMarriage.wife.last}, ${currentMarriage.wife.first} ${currentMarriage.wife.sucNum}</a> <p id="info"><u>Marriage:</u> ${currentMarriage.startYear} - ${currentMarriage.endYear} | <u>Death:</u> ${currentMarriage.wife.dYear}</p></li>
-		</c:forEach>
-		</ul>
+		<div class="list">
+			<c:forEach items="${marriages}" var="currentMarriage">
+				<div class="row">
+					<div class="value"><a class="linkSearch" href="#">${currentMarriage.wife}</a></div> 
+					<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
+				</div>
+			</c:forEach>
+		</div>
 	</div>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">

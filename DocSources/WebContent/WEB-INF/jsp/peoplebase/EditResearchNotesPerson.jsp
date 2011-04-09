@@ -28,9 +28,10 @@
 		</fieldset>	
 	</form:form>
 	<script type="text/javascript">
-		$(document).ready(function() {
+		$j(document).ready(function() {
 	        $j("#EditDetailsPerson").css('visibility', 'hidden'); 
-	        $j("#EditNamesPerson").css('visibility', 'hidden'); 
+	        $j("#EditNamesPerson").css('visibility', 'hidden');
+	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden');
 	        $j("#EditParentsPerson").css('visibility', 'hidden');
 	        $j("#EditChildrenPerson").css('visibility', 'hidden');
 	        $j("#EditSpousesPerson").css('visibility', 'hidden');
@@ -42,8 +43,8 @@
 	        
 	        $("#save").click(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					$("#EditRelationshipsPersonDiv").html(html);
-				});
+					$("#EditResearchNotesPersonDiv").html(html);
+				}});
 				return false;
 			});
 		});
@@ -64,7 +65,7 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowDocument}', cache: false, success:function(html) { 
+			$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
 				

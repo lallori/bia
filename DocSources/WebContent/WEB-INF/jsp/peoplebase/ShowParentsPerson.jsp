@@ -20,13 +20,17 @@
 		<div class="list">
 			<div class="row">
 				<div class="item">Father</div> 
-				<div class="value"><a href="#">${person.father.last}, ${person.father.first} ${person.father.sucNum}</a></div> 
-				<div class="info">${person.father.bornYear} | Death ${person.father.deathYear}</div>
+				<div class="value"><a href="#">${person.father}</a></div> 
+				<c:if test="${not empty person.father}"> 
+					<div class="info">Born ${person.father.bornYear} | Death ${person.father.deathYear}</div>
+				</c:if>				
 			</div>
 			<div class="row">
 				<div class="item">Mother</div> 
-				<div class="value"><a href="#">${person.mother.last}, ${person.mother.first} ${person.mother.sucNum}</a></div> 
-				<div class="info">${person.mother.bornYear} | Death ${person.mother.deathYear}</div>
+				<div class="value"><a href="#">${person.mother}</a></div> 
+				<c:if test="${not empty person.mother}"> 
+					<div class="info">Born ${person.mother.bornYear} | Death ${person.mother.deathYear}</div>
+				</c:if>				
 			</div>
 		</div>
 	</div>

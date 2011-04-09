@@ -25,7 +25,7 @@
 			</c:url>
 			<div>
 				Father:
-      			<input id="father" name="father" class="input_28c_disabled" type="text" value="${person.father.last}" disabled="disabled" />
+      			<input id="father" name="father" class="input_28c_disabled" type="text" value="${person.father}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteFatherPersonURL}"></a>
 				<a class="editValue" class="editValue" href="${EditFatherPersonURL}">edit value</a>
 			</div>
@@ -39,7 +39,7 @@
 
 			<div>
 				Mother: 
-      			<input id="mother" name="mother" class="input_28c_disabled" type="text" value="${person.mother.last}" disabled="disabled" />
+      			<input id="mother" name="mother" class="input_28c_disabled" type="text" value="${person.mother}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteMotherPersonURL}"></a>
 				<a class="editValue" class="editValue" href="${EditMotherPersonURL}">edit value</a>
 			</div>
@@ -53,15 +53,15 @@
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
-		        $j("#EditDetailsPerson").css('visibility', 'hidden'); 
-		        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden'); 
-		        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
-		        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
-		        $j("#EditDocumentInModal").css('visibility', 'hidden');
-		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
+				$j("#EditDetailsPerson").css('visibility', 'hidden');
+				$j("#EditNamesPerson").css('visibility', 'hidden');
+		        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
+				$j("#EditChildrenPerson").css('visibility', 'hidden');
+				$j("#EditSpousesPerson").css('visibility', 'hidden');
+		        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
 		        
 		        $j('#close').click(function() {
-					$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 
+					$j('#EditParentsPersonDiv').block({ message: $j('#question') }); 
 					return false;
 				});
 

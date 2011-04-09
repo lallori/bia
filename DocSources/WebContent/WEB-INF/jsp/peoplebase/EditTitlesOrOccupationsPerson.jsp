@@ -20,19 +20,19 @@
 	<form:form id="EditTitlesOrOccupationsPersonForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>TITLES / OCCUPATIONS</b></legend>
-		<c:forEach items="${person.poLink}" var="titleOrOccupation">
+		<c:forEach items="${person.poLink}" var="currentTitleOrOccupation">
 			<c:url var="EditTitleOrOccupationPersonURL" value="/de/peoplebase/EditTitleOrOccupationPerson.do">
 				<c:param name="personId" value="${command.personId}" />
-				<c:param name="prfLinkId" value="${titleOrOccupation.prfLinkId}" />
+				<c:param name="prfLinkId" value="${currentTitleOrOccupation.prfLinkId}" />
 			</c:url>
 
 			<c:url var="DeleteTitleOrOccupationPersonURL" value="/de/peoplebase/DeleteTitleOrOccupationPerson.do" >
 				<c:param name="personId" value="${command.personId}" />
-				<c:param name="prfLinkId" value="${titleOrOccupation.prfLinkId}" />
+				<c:param name="prfLinkId" value="${currentTitleOrOccupation.prfLinkId}" />
 			</c:url>
 
 			<div>
-      			<input id="title_${titleOrOccupation.prfLinkId}" name="name_${titleOrOccupation.prfLinkId}" class="input_28c_disabled" type="text" value="${currentName}" disabled="disabled" />
+      			<input id="title_${currentTitleOrOccupation.prfLinkId}" name="name_${currentTitleOrOccupation.prfLinkId}" class="input_28c_disabled" type="text" value="${currentTitleOrOccupation.titleOccList.titleOcc}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteTitleOrOccupationPersonURL}"></a>
 				<a class="editValue" class="editValue" href="${EditTitleOrOccupationPersonURL}">edit value</a>
 			</div>
@@ -48,12 +48,12 @@
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
-		        $j("#EditDetailsPerson").css('visibility', 'hidden'); 
-		        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden'); 
-		        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
-		        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
-		        $j("#EditDocumentInModal").css('visibility', 'hidden');
-		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
+				$j("#EditDetailsPerson").css('visibility', 'hidden');
+				$j("#EditNamesPerson").css('visibility', 'hidden');
+		        $j("#EditParentsPerson").css('visibility', 'hidden'); 
+				$j("#EditChildrenPerson").css('visibility', 'hidden');
+				$j("#EditSpousesPerson").css('visibility', 'hidden');
+		        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
 		        
 		        $j('#close').click(function() {
 					$j('#EditTitlesOrOccupationsPersonDiv').block({ message: $j('#question') }); 

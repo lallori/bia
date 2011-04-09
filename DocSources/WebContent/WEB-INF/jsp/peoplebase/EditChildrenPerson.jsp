@@ -5,10 +5,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditNamesPersonURL" value="/de/peoplebase/EditNamesPerson.do">
+		<c:url var="EditChildrenPersonURL" value="/de/peoplebase/EditChildrenPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
-		<c:url var="AddNamePersonURL" value="/de/peoplebase/EditNamePerson.do">
+		<c:url var="AddChildPersonURL" value="/de/peoplebase/EditChildPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 			<c:param name="nameId"  value="0" />
 		</c:url>
@@ -17,45 +17,47 @@
 		</c:url>
 	</security:authorize>
 
-	<form:form id="EditNamesPersonForm" method="post" cssClass="edit">
+	<form:form id="EditChildrenPersonForm" method="post" cssClass="edit">
 		<fieldset>
-		<legend><b>NAMES</b></legend>
-		<c:forEach items="${command.altNames}" var="currentName">
-			<c:url var="EditNamePersonURL" value="/de/peoplebase/EditNamePerson.do">
-				<c:param name="personId" value="${command.personId}" />
-				<c:param name="nameId" value="${currentName.nameId}" />
+		<legend><b>CHILDREN</b></legend>
+		<c:forEach items="${children}" var="currentChild">
+			<c:url var="EditChildPersonURL" value="/de/peoplebase/EditChildPerson.do">
+				<c:param name="parentId" value="${command.personId}" />
+				<c:param name="childId" value="${currentChild.personId}" />
 			</c:url>
 
-			<c:url var="DeleteNamePersonURL" value="/de/peoplebase/DeleteNamePerson.do" >
-				<c:param name="personId" value="${command.personId}" />
-				<c:param name="nameId" value="${currentName.nameId}" />
+			<c:url var="DeleteChildPersonURL" value="/de/peoplebase/DeleteNamePerson.do" >
+				<c:param name="parentId" value="${command.personId}" />
+				<c:param name="childId" value="${currentChild.personId}" />
 			</c:url>
 
 			<div>
-      			<input id="name_${currentName.nameId}" name="name_${currentName.nameId}" class="input_28c_disabled" type="text" value="${currentName}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteNamePersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditNamePersonURL}">edit value</a>
+      			<input id="child_${currentChild.personId}" name="child_${currentChild.personId}" class="input_28c_disabled" type="text" value="${currentChild.mapNameLf}" disabled="disabled" />
+				<a class="deleteIcon" title="Delete this entry" href="${DeleteChildPersonURL}"></a>
+				<a class="editValue" class="editValue" href="${EditChildPersonURL}">edit value</a>
 			</div>
 		</c:forEach>
 			
 			<div>
 				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<a id="AddNewValue" title="Add new Name" href="${AddNamePersonURL}"></a>
+				<a id="AddNewValue" title="Add new Name" href="${AddChildPersonURL}"></a>
 			</div>
 			
 		</fieldset>	
-		<div id="EditNamePersonDiv"></div>
+		
+		<div id="EditChildPersonDiv"></div>
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j("#EditDetailsPerson").css('visibility', 'hidden');
 				$j("#EditNamesPerson").css('visibility', 'hidden');
-		        $j("#EditTitlesOccupationsPerson").css('visibility', 'hidden'); 
+		        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
+				$j("#EditParentsPerson").css('visibility', 'hidden');
 				$j("#EditSpousesPerson").css('visibility', 'hidden');
 		        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
 		        
 		        $j('#close').click(function() {
-					$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 
+					$j('#EditChildrenPersonDiv').block({ message: $j('#question') }); 
 					return false;
 				});
 
@@ -64,24 +66,19 @@
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
 						} else {
-							$j("#EditNamesPersonDiv").load('${EditNamesPersonURL}');
+							$j("#EditChildrenPersonDiv").load('${EditChildrenPersonURL}');
 						}
 			        });
 					return false;
 				});
 
 				$j(".editValue").click(function() {
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
-					return false;
-				});
-
-				$j("#topicDescription").click(function() {
-					Modalbox.show(this.href, {title: this.title, width: 750});
+					$j("#EditChildPersonDiv").load($j(this).attr("href"));
 					return false;
 				});
 
 				$j("#AddNewValue").click(function(){
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
+					$j("#EditChildPersonDiv").load($j(this).attr("href"));
 					return false;
 				});
 			});

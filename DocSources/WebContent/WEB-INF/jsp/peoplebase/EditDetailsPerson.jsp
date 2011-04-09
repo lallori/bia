@@ -160,7 +160,7 @@
 		    onSelect: function(value, data){ $j('#seriesRefNum').val(data); }
 		  });
 		});
-		$j("#EditDetailsVolume").submit(function (){
+		$j("#EditDetailsPerson").submit(function (){
 			$j.post($j(this).attr("action"), $j(this).serialize(), function() {
 				// In questa function si definisce la sostituzione del div dove visualizzare il risultato
 				// questa function rappresenta 

@@ -17,12 +17,18 @@
 				<a id="EditNamesPerson" href="${EditNamesPersonURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
 		</div>
-	
-		<ul>
-		<c:forEach items="${person.altName}" var="currentName">
-			<li>${currentName.nameType}: <a href="#" id="linkSearch">${currentName.namePrefix} ${currentName.altName}</a></li>
-		</c:forEach>
-		</ul>
+		<div class="list">
+			<c:forEach items="${person.altName}" var="currentName">
+				<div class="row">
+					<div class="item">${currentName.nameType}</div> 
+					<div class="value"><a id="linkSearch" href="#">${currentName.namePrefix} ${currentName.altName}</a></div> 
+				</div>
+			</c:forEach>
+			<div class="row">
+				<div class="item">Family</div>
+				<div class="value"><a id="linkSearch" href="#">Tudor</a></div>
+			</div>
+		</div>	
 	</div>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">

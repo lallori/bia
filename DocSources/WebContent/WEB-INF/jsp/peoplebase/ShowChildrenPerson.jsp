@@ -17,11 +17,14 @@
 			<a id="EditChildrenPerson" href="${EditChildrenPersonURL}" class="editButton"></a><span id="loading"/>
 		</security:authorize>
 		</div>
-		<ul>
-		<c:forEach items="${children}" var="currentChildren">
-			<li><a href="#" id="linkSearch">${currentChildren.last}, ${currentChildren.first} ${currentChildren.sucNum}</a> <p id="info"><u>Birth:</u> ${currentChildren.bYear} | <u>Death:</u> ${currentChildren.dYear}</p> </li>
-		</c:forEach>
-		</ul>
+		<div class="list">
+			<c:forEach items="${children}" var="currentChildren">
+				<div class="row">
+					<div class="value"><a class="linkSearch" href="#">${currentChildren}</a></div> 
+					<div class="info">Birth ${currentChildren.bornYear} | Death ${currentChildren.deathYear}</div>
+				</div>
+			</c:forEach>
+		</div>
 	</div>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
