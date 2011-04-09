@@ -145,7 +145,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@Override
 	public Page searchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
-		String[] outputFields = new String[]{"personId", "Name", "Gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink.titleOccList.titleOcc"};
+		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
 
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -174,8 +174,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
 		// Projection permits to extract only a subset of domain class, tuning application.
-		fullTextQuery.setProjection(outputFields);
-		fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
+		//fullTextQuery.setProjection(outputFields);
+		//fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
 		
 		page.setList(fullTextQuery.list());
 
@@ -324,6 +324,47 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			// TODO: handle exception
         	return null;
 		}
+	}
+
+	@Override
+	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
+
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(People.class).get();
+        
+		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
+				"first",
+				"last",
+				"midPrefix",
+				"middle",
+				"lastPrefix",
+				"mapNameLf"
+			).matching(searchText + "*").createQuery();
+		
+        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+        for (String singleWord:words) {
+        	queryAltName.add(new Term("altName.altName", singleWord));
+        }
+
+		BooleanQuery booleanQuery = new BooleanQuery();
+		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
+		booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+
+		final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		}
+
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+
+		page.setList(fullTextQuery.list());
+
+        return page;
 	}
 
 }

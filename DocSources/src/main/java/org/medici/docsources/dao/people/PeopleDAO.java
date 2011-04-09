@@ -104,4 +104,14 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public List<People> searchSendersPeople(String searchText) throws PersistenceException;
+	
+
+	/**
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
 }
