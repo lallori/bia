@@ -28,12 +28,16 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.EditChildPersonCommand;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -93,12 +97,22 @@ public class EditChildPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
+			People child = new People(command.getChildId());
+			child.setBornYear(command.getBornYear());
+			child.setDeathYear(command.getBornYear());
 
-			return new ModelAndView("peoplebase/modifyperson", model);
+			try {
+				getPeopleBaseService().editChildPerson(child, command.getParentId());
+
+				List<People> children = getPeopleBaseService().findChildrenPerson(command.getParentId());
+				model.put("children", children);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowDocument", model);
+			}
+
+			// We return block for edit Children
+			return new ModelAndView("peoplebase/EditChildrenPerson", model);
 		}
-
 	}
 
 	/**

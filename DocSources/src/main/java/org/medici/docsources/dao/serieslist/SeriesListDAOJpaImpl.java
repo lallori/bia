@@ -81,7 +81,7 @@ public class SeriesListDAOJpaImpl extends JpaDao<Integer, SerieList> implements 
 
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("serieListAnalyzer"));
 
         try  {
         	String searchTextWithWildCard = searchText.toLowerCase() + "*";

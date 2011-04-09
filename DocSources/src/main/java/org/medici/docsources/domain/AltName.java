@@ -89,7 +89,7 @@ public class AltName implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="\"PERSONID\"")
 	@ContainedIn
-	private People personId;
+	private People person;
 
 	@Column (name="\"NAMEPREFIX\"", length=50)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -114,66 +114,77 @@ public class AltName implements Serializable{
 	public Integer getNameId() {
 		return nameId;
 	}
+	
 	/**
 	 * @param nameId the nameId to set
 	 */
 	public void setNameId(Integer nameId) {
 		this.nameId = nameId;
 	}
+	
 	/**
 	 * @return the personId
 	 */
-	public People getPersonId() {
-		return personId;
+	public People getPerson() {
+		return person;
 	}
+	
 	/**
-	 * @param personId the personId to set
+	 * @param person the person to set
 	 */
-	public void setPersonId(People personId) {
-		this.personId = personId;
+	public void setPerson(People person) {
+		this.person = person;
 	}
+	
 	/**
 	 * @return the namePrefix
 	 */
 	public String getNamePrefix() {
 		return namePrefix;
 	}
+	
 	/**
 	 * @param namePrefix the namePrefix to set
 	 */
 	public void setNamePrefix(String namePrefix) {
 		this.namePrefix = namePrefix;
 	}
+	
 	/**
 	 * @return the altName
 	 */
 	public String getAltName() {
 		return altName;
 	}
+	
 	/**
 	 * @param altName the altName to set
 	 */
 	public void setAltName(String altName) {
 		this.altName = altName;
 	}
+	
 	/**
 	 * @return the nameType
 	 */
 	public NameType getNameType() {
 		return nameType;
 	}
+	
 	/**
 	 * @param nameType the nameType to set
 	 */
 	public void setNameType(NameType nameType) {
 		this.nameType = nameType;
 	}
+	
 	/**
 	 * @return the notes
 	 */
 	public String getNotes() {
 		return notes;
 	}
+	
 	/**
 	 * @param notes the notes to set
 	 */

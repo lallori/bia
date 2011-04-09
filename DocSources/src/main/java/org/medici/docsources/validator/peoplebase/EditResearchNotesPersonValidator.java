@@ -1,5 +1,5 @@
 /*
- * DeleteChildPersonCommand.java
+ * EditResearchNotesPersonValidator.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,54 +25,13 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.peoplebase;
+package org.medici.docsources.validator.peoplebase;
 
 /**
- * Command bean for action "Delete Child Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
- * @see org.medici.docsources.controller.peoplebase.DeleteChildPersonController
+ *
  */
-public class DeleteChildPersonCommand {
-	private Integer childId;
-	private Integer fatherId;
-	private Integer motherId;
-	/**
-	 * @return the childId
-	 */
-	public Integer getChildId() {
-		return childId;
-	}
-	/**
-	 * @param childId the childId to set
-	 */
-	public void setChildId(Integer childId) {
-		this.childId = childId;
-	}
-	/**
-	 * @return the fatherId
-	 */
-	public Integer getFatherId() {
-		return fatherId;
-	}
-	/**
-	 * @param fatherId the fatherId to set
-	 */
-	public void setFatherId(Integer fatherId) {
-		this.fatherId = fatherId;
-	}
-	/**
-	 * @return the motherId
-	 */
-	public Integer getMotherId() {
-		return motherId;
-	}
-	/**
-	 * @param motherId the motherId to set
-	 */
-	public void setMotherId(Integer motherId) {
-		this.motherId = motherId;
-	}
+public class EditResearchNotesPersonValidator {
 
 }

@@ -219,4 +219,48 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchSendersPeople(String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param marriageId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Marriage findMarriagePerson(Integer marriageId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param child
+	 * @param parentId
+	 * @throws ApplicationThrowable
+	 */
+	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param marriage
+	 * @throws ApplicationThrowable
+	 */
+	public void addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param marriage
+	 * @throws ApplicationThrowable
+	 */
+	public void editMarriagePerson(Marriage marriage) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param child
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteFatherFromChildPerson(People child) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param child
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMotherFromChildPerson(People child) throws ApplicationThrowable;
 }

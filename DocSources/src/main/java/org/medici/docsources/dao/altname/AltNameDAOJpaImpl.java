@@ -27,8 +27,10 @@
  */
 package org.medici.docsources.dao.altname;
 
-import javax.persistence.PersistenceException;
+import java.util.List;
 
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.AltName;
 import org.springframework.stereotype.Repository;
@@ -63,10 +65,20 @@ public class AltNameDAOJpaImpl extends JpaDao<Integer, AltName> implements AltNa
 	 */
 	private static final long serialVersionUID = 617902723399766439L;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public AltName findAltNamePerson(Integer personId, Integer nameId) throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = getEntityManager().createQuery("from AltName where person.personId=:personId and nameId=:nameId");
+		query.setParameter("personId", personId);
+		query.setParameter("nameId", nameId);
+		
+		List<AltName> result = query.getResultList();
+		
+		if (result.size() == 0) {
+			return null;
+		} else {
+			return result.get(0);
+		}
 	}
 
 }

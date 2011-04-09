@@ -32,7 +32,11 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.DeleteChildPersonCommand;
+import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -87,11 +91,23 @@ public class DeleteChildPersonController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/DeletePersonDocument");
+			return new ModelAndView("error/DeleteChildPerson");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			return new ModelAndView("response/OK", model);
+			People child = new People(command.getChildId());
+
+			try {
+				if (!ObjectUtils.toString(command.getFatherId()).equals("")) {
+					getPeopleBaseService().deleteFatherFromChildPerson(child);
+				} else {
+					getPeopleBaseService().deleteMotherFromChildPerson(child);
+				}
+
+				return new ModelAndView("response/OK", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("response/KO", model);
+			}
 		}
 	}
 

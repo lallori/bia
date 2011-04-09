@@ -126,7 +126,7 @@ public class EditNamesPersonController {
 				return new ModelAndView("error/EditDetailsPerson", model);
 			}
 	
-			command.setAltNames(people.getAltName());
+			model.put("person", people);
 		} 
 		return new ModelAndView("peoplebase/EditNamesPerson", model);
 	}

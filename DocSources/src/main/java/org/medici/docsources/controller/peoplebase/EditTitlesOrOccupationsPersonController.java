@@ -94,7 +94,6 @@ public class EditTitlesOrOccupationsPersonController {
 			try {
 				People person = getPeopleBaseService().findPerson(command.getPersonId());
 				model.put("person", person);
-
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditTitlesOrOccupationsPerson", model);
 			}

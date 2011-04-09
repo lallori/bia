@@ -278,7 +278,7 @@ public class People implements Serializable {
 	private List<People> childrenMother = new LinkedList<People>(); 
 
 	//Association alternative Names
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="personId")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="person")
 	@IndexedEmbedded(depth=1)
 	private Set<AltName> altName;
 	
@@ -559,7 +559,7 @@ public class People implements Serializable {
 	/**
 	 * @param deathYear the deathYear to set
 	 */
-	public void setdYear(Integer deathYear) {
+	public void setDeathYear(Integer deathYear) {
 		this.deathYear = deathYear;
 	}
 

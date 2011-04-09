@@ -143,33 +143,43 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchPeople(String text, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page searchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
+		String[] outputFields = new String[]{"personId", "Name", "Gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink.titleOccList.titleOcc"};
+
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(People.class).get();
+        
+		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
+				"first",
+				"last",
+				"midPrefix",
+				"middle",
+				"lastPrefix",
+				"mapNameLf"
+			).matching(searchText + "*").createQuery();
+		
+        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+        for (String singleWord:words) {
+        	queryAltName.add(new Term("altName.altName", singleWord));
+        }
 
-		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
-			"volume.serieList.title",
-			"volume.serieList.subTitle1", 
-			"volume.serieList.subTitle2",
-			"senderPeople.mapNameLf", 
-			"senderPeople.poLink.titleOccList.titleOcc",
-			"senderPeople.altName.altName", 
-			"senderPlace.placeName", 
-			"senderPlace.placeNameFull",
-			"recipientPeople.mapNameLf", 
-			"recipientPeople.poLink.titleOccList.titleOcc",
-			"recipientPeople.altName.altName",
-			"recipientPlace.placeName", 
-			"recipientPlace.placeNameFull"
-		).matching(text + "*").createQuery();
+		BooleanQuery booleanQuery = new BooleanQuery();
+		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
+		booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
 
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, People.class );
+		final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
+		// Projection permits to extract only a subset of domain class, tuning application.
+		fullTextQuery.setProjection(outputFields);
+		fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
 		
 		page.setList(fullTextQuery.list());
-		return page;
+
+        return page;
 	}
 
 	/**
@@ -178,18 +188,18 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
 
         try  {
-	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase());
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
 	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
 	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
 	        for (String singleWord:words) {
-	        	queryAltName.add(new Term("altName.altName", singleWord));
+	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
 	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
@@ -218,18 +228,18 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
 
         try  {
-	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase());
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
 	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
 	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
 	        for (String singleWord:words) {
-	        	queryAltName.add(new Term("altName.altName", singleWord));
+	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
 	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
@@ -285,7 +295,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchSendersPeople(String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bYear", "dYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 

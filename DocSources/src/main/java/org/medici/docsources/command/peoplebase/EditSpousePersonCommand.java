@@ -36,7 +36,8 @@ package org.medici.docsources.command.peoplebase;
  */
 public class EditSpousePersonCommand {
 	private Integer marriageId;
-	private Integer personId;
+	private Integer wifeId;
+	private Integer husbandId;
 	private Integer startYear;
 	private Integer endYear;
 	private String marriageTerm;
@@ -56,19 +57,33 @@ public class EditSpousePersonCommand {
 	}
 	
 	/**
-	 * @return the personId
+	 * @return the wifeId
 	 */
-	public Integer getPersonId() {
-		return personId;
+	public Integer getWifeId() {
+		return wifeId;
 	}
-	
+
 	/**
-	 * @param personId the personId to set
+	 * @param wifeId the wifeId to set
 	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
+	public void setWifeId(Integer wifeId) {
+		this.wifeId = wifeId;
 	}
-	
+
+	/**
+	 * @return the husbandId
+	 */
+	public Integer getHusbandId() {
+		return husbandId;
+	}
+
+	/**
+	 * @param husbandId the husbandId to set
+	 */
+	public void setHusbandId(Integer husbandId) {
+		this.husbandId = husbandId;
+	}
+
 	/**
 	 * @return the startYear
 	 */

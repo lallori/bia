@@ -128,7 +128,8 @@ public class EditNamePersonController {
 
 					command.setNameType(altName.getNameType().toString());
 					command.setAltName(altName.getAltName());
-
+					
+					model.put("nameTypes", AltName.NameType.values());
 					return new ModelAndView("peoplebase/EditNamePerson", model);
 				} catch (ApplicationThrowable applicationThrowable) {
 					return new ModelAndView("error/EditNamePerson", model);

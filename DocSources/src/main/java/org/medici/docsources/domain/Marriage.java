@@ -118,6 +118,14 @@ public class Marriage implements Serializable {
 	private Date dateCreated;
 	
 	/**
+	 * 
+	 * @param marriageId
+	 */
+	public Marriage(Integer marriageId) {
+		this.marriageId = marriageId; 
+	}
+
+	/**
 	 * @return the marriageId
 	 */
 	public Integer getMarriageId() {

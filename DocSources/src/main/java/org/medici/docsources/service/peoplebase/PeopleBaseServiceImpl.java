@@ -89,6 +89,36 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired 
 	private TitleOccsListDAO titleOccsListDAO;
 
+	@Override
+	public void addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteFatherFromChildPerson(People child) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteMotherFromChildPerson(People child) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editMarriagePerson(Marriage marriage) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -143,6 +173,12 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	@Override
+	public Marriage findMarriagePerson(Integer marriageId) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

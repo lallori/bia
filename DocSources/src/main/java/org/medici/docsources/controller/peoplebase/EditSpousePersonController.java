@@ -28,12 +28,16 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.peoplebase.EditSpousePersonCommand;
 import org.medici.docsources.domain.Marriage;
+import org.medici.docsources.domain.Marriage.MarriageTerm;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,12 +96,30 @@ public class EditSpousePersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
+			Marriage marriage = new Marriage(command.getMarriageId());
+			marriage.setStartYear(command.getStartYear());
+			marriage.setEndYear(command.getEndYear());
+			marriage.setWife(new People(command.getWifeId()));
+			marriage.setHusband(new People(command.getHusbandId()));
+			if (StringUtils.isBlank(command.getMarriageTerm())) {
+				marriage.setMarTerm(null);
+			} else {
+				marriage.setMarTerm(MarriageTerm.valueOf(command.getMarriageTerm()));
+			}
 
-			return new ModelAndView("peoplebase/modifyperson", model);
+			try {
+				if (marriage.getMarriageId().equals(0)) {
+					getPeopleBaseService().addNewMarriagePerson(marriage);
+				} else {
+					getPeopleBaseService().editMarriagePerson(marriage);
+				}
+
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditSpousePerson", model);
+			}
+
+			return new ModelAndView("peoplebase/EditSpousesPerson", model);
 		}
-
 	}
 
 	/**
@@ -117,18 +139,20 @@ public class EditSpousePersonController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditSpousePersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if ((command != null) && (command.getPersonId() > 0)) {
+		if ((command != null) && ((command.getWifeId() > 0) || (command.getHusbandId() > 0))) {
 
 			if (command.getMarriageId().equals(0)) {
 				command.setStartYear(null);
 				command.setEndYear(null);
 			} else {
 				try {
-					Marriage marriage = getPeopleBaseService().findMarriagePerson(command.getMarriageId(), command.getPersonId());
+					Marriage marriage = getPeopleBaseService().findMarriagePerson(command.getMarriageId());
 
 					command.setStartYear(marriage.getStartYear());
 					command.setEndYear(marriage.getEndYear());
 					command.setMarriageTerm(marriage.getMarTerm().toString());
+					command.setWifeId(marriage.getWife().getPersonId());
+					command.setHusbandId(marriage.getHusband().getPersonId());
 
 					return new ModelAndView("peoplebase/EditSpousePerson", model);
 				} catch (ApplicationThrowable applicationThrowable) {
