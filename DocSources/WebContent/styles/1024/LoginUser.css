@@ -199,6 +199,15 @@ input {
 	float:left;
 }
 
+.loginerror { /* Error Span messages */
+	color:#900;
+	font-size:11px;
+	border:#900 solid 1px;
+	padding:2px;
+	position:absolute;
+	margin:57px 0 0 103px;
+}
+
 /*  Recovery - Form */
 
 #recovery { /*  Form content */

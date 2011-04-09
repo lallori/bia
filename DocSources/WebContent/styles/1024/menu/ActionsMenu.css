@@ -30,7 +30,7 @@
 /*Top level menu link items style*/
 .actionsmenu ul li a{
 	display: block;
-	padding: 3px 7px 4px 7px;
+	padding: 3px 7px 0px 7px;
 	color: #FFFDF5;
 	text-decoration: none;
 	font-size:95%;

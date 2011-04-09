@@ -23,7 +23,7 @@ body {
 	margin:0 !important; 
 	padding:0 !important; 
 	height: 100%;
-	font-size:small;
+	font-size:11px;
 	color:#6F6B69;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
@@ -79,17 +79,18 @@ a {
 
 #top_middle { /* MAIN MENU: Entry Menu - Vet Menu - Advanced Search - Chronology - My Profile - Messages - Log out */
 	width:745px;
-	height:60px;
+	height:64px;
 	margin-top:95px;
 	margin-left:255px;
 	position:absolute;
 	background-image:url(/DocSources/images/1024/bg_mainmenu.png);
+	background-repeat:no-repeat;
 	z-index:3;
 }
 
 #top_bottom { /* USER INTERFACE MENU Container*/
 	width:1000px;
-	height:25px;
+	height:23px;
 	margin-top:158px;
 	position:absolute;
 	z-index:-1 !important; 
@@ -99,7 +100,7 @@ a {
 #DocSourcesContent { /* MAIN Website Container */
 	width:1000px;
 	height:auto;	
-	margin-top:185px;
+	margin-top:181px;
 	position:absolute;
 }
 
@@ -120,31 +121,28 @@ a {
 
 
 #body_left{ /* LEFT-hand side of the SCREEN */
-	width:495px;
+	width:490px;
 	height:auto;
-	margin-top:15px;
-	padding-left:5px;
+	padding:5px 5px 0 5px;
 	float:left;
 	position:absolute;
-	border-right: 2px solid #e6d0c6;
 	font-size:11px;
 	z-index:1;
 	margin-bottom:100px;
+	border-right:1px solid #BEA08B;
+
 }
 	
 #body_right{ /* RIGHT-hand side of the SCREEN */
-	width:495px;
+	width:490px;
 	height:auto;
-	padding-right:25px;
-	margin-top:25px;
+	padding:5px 5px 0 5px;
 	float:right;
 	position:absolute;
-	padding-left:5px;
 	margin-left:500px;
 	font-size:11px;
-	border-left: 2px solid #e6d0c6;
-	z-index:1;
-	margin-bottom:100px;
+	border-left:1px solid #BEA08B;
+
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 
@@ -298,16 +296,6 @@ input {
 /*
 /*
 /* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
-
-/* ACTIONS MENU */
-
-
-#menu_actions {
-	height:25px;
-	width: 100px;
-	margin-left: 520px;
-	font-size: 80%;
-}
 
 #top_bottom p{ /* top_bottom (Who am I?) */
 	color:#FFF;

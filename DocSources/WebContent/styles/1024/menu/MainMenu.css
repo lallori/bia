@@ -1,6 +1,5 @@
 .menumain {
 	z-index:2;
-	padding-left:15px;
 }
 
 .menumain ul{
@@ -14,7 +13,7 @@
 	position: relative;
 	display: inline;
 	float: left;
-	width:100px;
+	width:110px;
 }
 
 /*Top level menu link items style*/
@@ -32,36 +31,30 @@
 	background-repeat:no-repeat;
 	display:block;
 	width:99px;
-	height:63px;
-	padding: 0;
+	height:64px;
+	margin-left:20px;
+}
+
+.entrymenu {
+	margin-left:20px;
 }
 
 #entryMenu:hover{
 	background-image:url(/DocSources/images/1024/button_entrymenuRollover.png);
 }
 
-#vetMenu{
-	background-image:url(/DocSources/images/1024/button_vetmenu.png);
-	background-repeat:no-repeat;
-	display:block;
-	width:99px;
-	height:63px;
-	padding: 0;
-}
-
-#vetMenu:hover{
-	background-image:url(/DocSources/images/1024/button_vetmenuRollover.png);
-}
-
 #advsearchMenu{
 	background-image:url(/DocSources/images/1024/button_advsearch.png);
 	background-repeat:no-repeat;
 	display:block;
-	width:99px;
-	height:63px;
-	padding: 0;
+	width:110px;
+	height:64px;
 }
 
+.advsearchMenu{
+	margin-left:30px;
+}
+	
 #advsearchMenu:hover{
 	background-image:url(/DocSources/images/1024/button_advsearchRollover.png);
 }
@@ -71,8 +64,11 @@
 	background-repeat:no-repeat;
 	display:block;
 	width:99px;
-	height:63px;
-	padding: 0;
+	height:64px;
+}
+
+.chronologyMenu{
+	margin-left:30px;
 }
 
 #chronologyMenu:hover{
@@ -84,8 +80,11 @@
 	background-repeat:no-repeat;
 	display:block;
 	width:99px;
-	height:63px;
-	padding: 0;
+	height:64px;
+}
+
+.myprofileMenu{
+	margin-left:10px;
 }
 
 #myprofileMenu:hover{
@@ -97,8 +96,11 @@
 	background-repeat:no-repeat;
 	display:block;
 	width:99px;
-	height:63px;
-	padding: 0;
+	height:64px;
+}
+
+.messagesMenu{
+	margin-left:5px;
 }
 
 #messagesMenu:hover{
@@ -110,8 +112,11 @@
 	background-repeat:no-repeat;
 	display:block;
 	width:99px;
-	height:63px;
-	padding: 0;
+	height:64px;
+}
+
+.logoutMenu{
+	margin-left:0px;
 }
 
 
@@ -171,7 +176,7 @@
 
 /* ENTRY MENU - MODAL WINDOW */
 
-#EntryMenuDiv h1, #VetMenuDiv h1{
+#EntryMenuDiv h1, #VetMenuDiv h1, #ActionsMenuDiv h1{
 	text-align:center;
 	font-size:11px;
 	font-weight:normal;
@@ -270,4 +275,35 @@
 	position:absolute;
 	width:498px;
 	height:520px;
+}
+
+/* ACTIONS MENU - MODAL WINDOW */
+
+#ActionsMenuDiv #Action1Docs{
+	background-image:url(/DocSources/images/1024/button_action1.png);
+	margin: 20px 0 5px 180px;
+	position:absolute;
+	width:120px;
+	height:25px;
+}
+
+#ActionsMenuDiv #Action2Docs{
+	background-image:url(/DocSources/images/1024/button_action2.png);
+	margin: 20px 0 5px 305px;
+	position:absolute;
+	width:120px;
+	height:25px;
+}
+
+#ActionsMenuDiv #Action3Docs{
+	background-image:url(/DocSources/images/1024/button_action3.png);
+	margin: 20px 0 5px 430px;
+	position:absolute;
+	width:120px;
+	height:25px;
+}
+
+#ActionsMenuDiv #close{
+	margin:60px 0 0 340px;
+	position:absolute;
 }
