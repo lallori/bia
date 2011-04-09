@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
+		<c:url var="EditTopicsDocumentURL" value="/de/docbase/EditTopicsDocument.do">
 			<c:param name="entryId" value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
@@ -82,7 +82,7 @@
 
 			$j("#EditTopicDocumentForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
+					$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
 				}})
 				return false;
 			});

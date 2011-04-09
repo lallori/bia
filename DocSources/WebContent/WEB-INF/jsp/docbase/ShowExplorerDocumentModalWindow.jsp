@@ -5,29 +5,15 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
+		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${documentExplorer.image}" />
 			<c:param name="flashVersion"   value="true" />
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="ShowExplorerVolume" value="/src/docbase/ShowExplorerDocument.do" />
+	<c:url var="ShowExplorerVolumeURL" value="/src/docbase/ShowExplorerDocument.do" />
 	
-	<c:url var="currentPage" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
-		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
-		<c:param name="total" value="${documentExplorer.total}" />
-		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
-		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
-		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
-		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
-		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
-		<c:param name="modalWindow" value="true"/>
-	</c:url>
-
-	<c:url var="nextPage" value="/src/docbase/ShowExplorerDocument.do">
+	<c:url var="nextPageURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder + 1}" />
@@ -41,7 +27,7 @@
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 
-	<c:url var="previousPage" value="/src/docbase/ShowExplorerDocument.do">
+	<c:url var="previousPageURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder - 1}" />
@@ -63,7 +49,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -71,13 +57,13 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</c:if>
 		</div>
 		
-		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:100"></iframe>
+		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
 		
 		<div id="prevNextButtons">
 			<div id="previousPage">
@@ -85,7 +71,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -93,7 +79,7 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>

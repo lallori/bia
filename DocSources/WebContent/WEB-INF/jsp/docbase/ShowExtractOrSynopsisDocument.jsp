@@ -5,14 +5,14 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditExtractOrSynopsisDocument" value="/de/docbase/EditExtractOrSynopsisDocument.do">
+		<c:url var="EditExtractOrSynopsisDocumentURL" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="EditExtractOrSynopsisDocumentModalWindow" value="/de/docbase/EditExtractOrSynopsisDocument.do">
+		<c:url var="EditExtractOrSynopsisDocumentModalWindowURL" value="/de/docbase/EditExtractOrSynopsisDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 			<c:param name="modalWindow"   value="true" />
 		</c:url>
-		<c:url var="EditDocumentInManuscriptViewer" value="/de/mview/EditDocumentInManuscriptViewer.do">
+		<c:url var="EditDocumentInManuscriptViewerURL" value="/de/mview/EditDocumentInManuscriptViewer.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
@@ -21,9 +21,9 @@
 		<div class="title">
 			<h5>EXTRACT/SYNOPSIS </h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-			<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocument}" class="editButton"></a>
-			<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindow}" class="editFullscreen" title="EXTRACT/SYNOPSIS"></a>
-			<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewer}" class="EditExtractOrSynopsisDocument"></a><span id="loading"/>
+			<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editButton"></a>
+			<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindowURL}" class="editFullscreen" title="EXTRACT/SYNOPSIS"></a>
+			<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewerURL}" class="EditExtractOrSynopsisDocument"></a><span id="loading"/>
 		</security:authorize>
 		</div>
 		

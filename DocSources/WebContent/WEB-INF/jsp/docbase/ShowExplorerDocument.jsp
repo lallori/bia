@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="explorerDocumentModalWindow" value="/src/docbase/ShowExplorerDocument.do">
+		<c:url var="explorerDocumentModalWindowURL" value="/src/docbase/ShowExplorerDocument.do">
 			<c:param name="summaryId" value="${command.summaryId}"/>
 			<c:param name="volNum" value="${command.volNum}" />
 			<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -20,15 +20,15 @@
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
-		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
+		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${documentExplorer.image}" />
 			<c:param name="flashVersion"   value="${command.flashVersion}" />
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="ShowExplorerDocument" value="/src/docbase/ShowExplorerDocument.do" />
+	<c:url var="ShowExplorerDocumentURL" value="/src/docbase/ShowExplorerDocument.do" />
 	
-	<c:url var="currentPage" value="/src/docbase/ShowExplorerDocument.do">
+	<c:url var="currentPageURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
@@ -41,7 +41,7 @@
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 
-	<c:url var="nextPage" value="/src/docbase/ShowExplorerDocument.do">
+	<c:url var="nextPageURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder + 1}" />
@@ -54,7 +54,7 @@
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 
-	<c:url var="previousPage" value="/src/docbase/ShowExplorerDocument.do">
+	<c:url var="previousPageURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder - 1}" />
@@ -76,7 +76,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -84,13 +84,13 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
 
 		<div id="flipDiv">
-			<iframe class="iframeFlipVolume" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:0"></iframe>
+			<iframe class="iframeFlipVolume" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:0"></iframe>
 		</div>	
 		
 		<div id="prevNextButtons">
@@ -99,7 +99,7 @@
 				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
@@ -107,7 +107,7 @@
 				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
@@ -121,7 +121,7 @@
 				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerDocument}" cssClass="edit">
+			<form:form id="moveToRubricarioForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 				<input id="goR" type="submit" value="" />
@@ -148,7 +148,7 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 		
-			<form:form id="moveToFolioForm" action="${ShowExplorerDocument}" cssClass="edit">
+			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
 				<input id="go" type="submit" value="" />
@@ -169,8 +169,8 @@
 		<br />
 			
 		<div>
-			<a id="flipItInFullScreen" href="${explorerDocumentModalWindow}" title="DOCUMENT EXPLORER"></a>
-			<a id="refreshVolumeExplorer" href="${currentPage}"></a>
+			<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER"></a>
+			<a id="refreshVolumeExplorer" href="${currentPageURL}"></a>
 		</div>
 
 		<div align="center">

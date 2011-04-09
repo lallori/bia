@@ -5,10 +5,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditTopicsDocument" value="/de/docbase/EditTopicsDocument.do">
+		<c:url var="EditTopicsDocumentURL" value="/de/docbase/EditTopicsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
-		<c:url var="AddTopicUrl" value="/de/docbase/EditTopicDocument.do">
+		<c:url var="AddTopicURL" value="/de/docbase/EditTopicDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
 			<c:param name="eplToId"  value="0" />
 		</c:url>
@@ -46,7 +46,7 @@
 			
 			<div>
 				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<a id="AddNewValue" title="Add new Topic" href="${AddTopicUrl}"></a>
+				<a id="AddNewValue" title="Add new Topic" href="${AddTopicURL}"></a>
 			</div>
 			
 		</fieldset>	
@@ -71,7 +71,7 @@
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
 						} else {
-							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocument}');
+							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
 						}
 			        });
 					return false;
