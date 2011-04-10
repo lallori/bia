@@ -27,8 +27,13 @@
  */
 package org.medici.docsources.dao.document;
 
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
+import org.hibernate.CacheMode;
+import org.hibernate.Session;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -69,6 +74,8 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	private static final long serialVersionUID = 270290031716661534L;
 
+	private final Logger logger = Logger.getLogger(this.getClass());
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -89,6 +96,28 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
         return (Document) query.getSingleResult();
 	}
 
+	/**
+	 * 
+	 * @throws PersistenceException
+	 */
+	public void generateIndex() throws PersistenceException {
+		try {
+			EntityManager entityManager = getEntityManager();
+			Session session = ((HibernateEntityManager) entityManager).getSession();
+			session = session.getSessionFactory().openSession();
+			FullTextSession fullTextSession = Search.getFullTextSession(session);
+
+			fullTextSession.createIndexer( Document.class )
+			.batchSizeToLoadObjects( 10 )
+			.cacheMode( CacheMode.IGNORE )
+			.threadsToLoadObjects( 5 )
+			.threadsForSubsequentFetching( 5 )
+			.startAndWait();
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

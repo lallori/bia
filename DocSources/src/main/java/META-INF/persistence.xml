@@ -20,6 +20,7 @@
 			<!-- create-drop will generate database schema -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 
+			<property name="hibernate.search.default.exclusive_index_use" value="true"/> 
 			<property name="hibernate.search.default.directory_provider" value="filesystem"/> 
 			<property name="hibernate.search.default.indexBase" value="/data/indexes"/> 
 		</properties>
