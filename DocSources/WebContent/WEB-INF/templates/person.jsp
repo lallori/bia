@@ -8,7 +8,7 @@
 
 <br />
 
-<tiles:insertAttribute name="titlesoroccupations"/>
+<tiles:insertAttribute name="titlesOrOccupations"/>
 
 <br />
 
@@ -24,10 +24,4 @@
 
 <br/>
 
-<tiles:insertAttribute name="researchnotes"/>
-
-<div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
-	<input type="button" id="yes" value="Yes" /> 
-	<input type="button" id="no" value="No" /> 
-</div> 
+<tiles:insertAttribute name="researchNotes"/>

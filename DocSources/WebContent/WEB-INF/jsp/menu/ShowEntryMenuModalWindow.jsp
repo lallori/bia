@@ -15,8 +15,6 @@
 			
 			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlace.do"/>"></a>
 			
-			<a id="DeleteThisItem" href="#"></a>
-		
 			<input id="close" type="submit" title="Close Entry Menu window" onClick="Modalbox.hide(); return false;" value=""/>
 		</div>
 		

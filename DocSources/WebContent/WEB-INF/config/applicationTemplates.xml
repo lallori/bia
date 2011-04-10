@@ -6,47 +6,42 @@
     <definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp">
     </definition>
     
-    <definition name="template.compare" template="/WEB-INF/templates/compare.jsp">
-    </definition>
+    <definition name="template.compare" template="/WEB-INF/templates/compare.jsp" />
 
     <definition name="template.completeDOM" template="/WEB-INF/templates/completeDOM.jsp">
-        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
     </definition>
         
-    <definition name="template.document" template="/WEB-INF/templates/document.jsp">
-    </definition>
+    <definition name="template.document" template="/WEB-INF/templates/document.jsp"/>
 
-    <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp">
-    </definition>
+    <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp"/>
 
     <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
-        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
     </definition>
 
 	<definition name="template.main" template="/WEB-INF/templates/main.jsp">
-		<put-attribute name="searchForm" value="/WEB-INF/jsp/menu/SearchForm.jsp"/>
-		<put-attribute name="lastEntryMenu" value="/WEB-INF/jsp/menu/LastEntry.jsp"/>
-		<put-attribute name="dataEntryMenu" value="/WEB-INF/jsp/menu/DataEntry.jsp"/>
-		<put-attribute name="profileMenu" value="/WEB-INF/jsp/menu/Profile.jsp"/>
-		<put-attribute name="administratorMenu" value="/WEB-INF/jsp/menu/Administrator.jsp"/>
-		<put-attribute name="whoAmIMenu" value="/WEB-INF/jsp/menu/WhoAmI.jsp"/>
+		<put-attribute name="searchForm" value="/WEB-INF/jsp/menu/SearchForm.jsp" />
+		<put-attribute name="lastEntryMenu" value="/WEB-INF/jsp/menu/LastEntry.jsp" />
+		<put-attribute name="dataEntryMenu" value="/WEB-INF/jsp/menu/DataEntry.jsp" />
+		<put-attribute name="profileMenu" value="/WEB-INF/jsp/menu/Profile.jsp" />
+		<put-attribute name="administratorMenu" value="/WEB-INF/jsp/menu/Administrator.jsp" />
+		<put-attribute name="whoAmIMenu" value="/WEB-INF/jsp/menu/WhoAmI.jsp" />
 	</definition>
     
-	<definition name="template.manuscriptViewerFlash" template="/WEB-INF/templates/manuscriptViewerFlash.jsp">
-	</definition>
+	<definition name="template.manuscriptViewerFlash" template="/WEB-INF/templates/manuscriptViewerFlash.jsp" />
 
-	<definition name="template.manuscriptViewerHtml" template="/WEB-INF/templates/manuscriptViewerHtml.jsp">
-	</definition>
+	<definition name="template.manuscriptViewerHtml" template="/WEB-INF/templates/manuscriptViewerHtml.jsp" />
 	
-	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp">
-    </definition>
+	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp" />
 
-    <definition name="template.person" template="/WEB-INF/templates/person.jsp">
-    </definition>
+    <definition name="template.person" template="/WEB-INF/templates/person.jsp" />
 
-    <definition name="template.volume" template="/WEB-INF/templates/volume.jsp">
-    </definition>
+	<definition name="template.place" template="/WEB-INF/templates/place.jsp" />
 
+    <definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
+
+	<!-- Various definitions -->
 	<definition name="error/ActivateUser" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
     </definition>
@@ -198,10 +193,6 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicDocument.jsp"/>	
 	</definition>
 	
-	<definition name="docbase/SearchResultDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/SearchResultDocument.jsp"/>	
-	</definition>
-	
 	<definition name="docbase/ShowCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
 	</definition>
@@ -256,8 +247,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CheckPlace.jsp"/>
 	</definition>
 
-	<definition name="geobase/ShowPlace" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowPlace.jsp"/>
+	<definition name="geobase/ShowPlace" extends="template.place">
+		<put-attribute name="details" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
+		<put-attribute name="namesOrNamesVariants" value="/WEB-INF/jsp/geobase/ShowNamesOrNamesVariantsPlace.jsp"/>
+		<put-attribute name="geographicCoordinates" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp"/>
+		<put-attribute name="externalLinks" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp"/>
+		<put-attribute name="topicsList" value="/WEB-INF/jsp/geobase/ShowTopicsListPlace.jsp"/>
+		<put-attribute name="birthAndDeath" value="/WEB-INF/jsp/geobase/ShowBirthAndDeathPlace.jsp"/>
+		<put-attribute name="sendersAndRecipients" value="/WEB-INF/jsp/geobase/ShowSendersAndRecipientsPlace.jsp"/>
 	</definition>
 	<!-- GeoBase Module END -->
 	
@@ -312,6 +309,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditDetailsPerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/EditFatherPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditFatherPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/EditMotherPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditMotherPerson.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/EditNamePerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditNamePerson.jsp"/>
 	</definition>
@@ -324,12 +329,16 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditParentsPerson.jsp"/>
 	</definition>
 
-	<definition name="peoplebase/EditSpousesPerson" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditSpousesPerson.jsp"/>
+	<definition name="peoplebase/EditResearchNotesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditResearchNotesPerson.jsp"/>	
 	</definition>
-
+	
 	<definition name="peoplebase/EditSpousePerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditSpousePerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/EditSpousesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditSpousesPerson.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/EditTitleOrOccupationPerson" extends="template.partialDOM">
@@ -340,22 +349,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitlesOrOccupationsPerson.jsp"/>
 	</definition>
 
-	<definition name="peoplebase/SearchResultPerson" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/SearchResultPerson.jsp"/>	
-	</definition>
-
-	<definition name="peoplebase/EditResearchNotesPerson" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditResearchNotesPerson.jsp"/>	
-	</definition>
-
 	<definition name="peoplebase/ShowPerson" extends="template.person">
 		<put-attribute name="details" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
 		<put-attribute name="names" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
-		<put-attribute name="titlesoroccupations" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
+		<put-attribute name="titlesOrOccupations" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
 		<put-attribute name="parents" value="/WEB-INF/jsp/peoplebase/ShowParentsPerson.jsp"/>
 		<put-attribute name="children" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
 		<put-attribute name="spouses" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
-		<put-attribute name="researchnotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
+		<put-attribute name="researchNotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
 	</definition>
 
 	<!-- PeopleBase Module END -->
@@ -386,6 +387,22 @@
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
 	</definition>
 
+	<definition name="search/SimpleSearchResultDocuments" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultDocuments.jsp"/>	
+	</definition>
+	
+	<definition name="search/SimpleSearchResultPeople" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultPeople.jsp"/>	
+	</definition>
+
+	<definition name="search/SimpleSearchResultPlaces" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultPlaces.jsp"/>	
+	</definition>
+
+	<definition name="search/SimpleSearchResultVolumes" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultVolumes.jsp"/>	
+	</definition>
+
 	<!-- Search Module END -->
 
 	<!-- VolBase Module START -->
@@ -407,10 +424,6 @@
 
 	<definition name="volbase/EditDetailsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDetailsVolume.jsp"/>
-	</definition>
-
-	<definition name="volbase/SearchResultVolume" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/volbase/SearchResultVolume.jsp"/>
 	</definition>
 
 	<definition name="volbase/ShowContextVolume" extends="template.partialDOM">

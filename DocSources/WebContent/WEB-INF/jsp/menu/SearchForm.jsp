@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 				<div id="searchForm">
-					<form id="SearchForm" action="<c:url value="/SearchData.do"/>" method="post">
+					<form id="SearchForm" action="<c:url value="/src/SimpleSearch.do"/>" method="post">
 						Search in <select name="searchType" class="select" style="margin-left:8px">
 										<option value="documents" selected>Documents</option>
 										<option value="volumes">Volumes</option>

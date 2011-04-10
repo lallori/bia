@@ -4,13 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-				<li><a id="advsearchMenu" href="<c:url value="/src/ChoiceAdvancedSearch.do"/>"></a></li>
+				<li class="advsearchMenu"><a id="advsearchMenu" href="<c:url value="/src/ChoiceAdvancedSearch.do"/>"></a></li>
 			<security:authorize ifNotGranted="ROLE_GUESTS">
-				<li><a id="chronologyMenu" href="#"></a></li>
-				<li><a id="myprofileMenu" href="<c:url value="/user/ShowUserProfile.do"/>" title="MY PROFILE"></a></li>
-				<li><a id="messagesMenu" href="#"></a></li>
+				<li class="chronologyMen"><a id="chronologyMenu" href="#"></a></li>
+				<li class="myprofileMenu"><a id="myprofileMenu" href="<c:url value="/user/ShowUserProfile.do"/>" title="MY PROFILE"></a></li>
+				<li class="messagesMenu"><a id="messagesMenu" href="#"></a></li>
 			</security:authorize>
-				<li><a id="logoutMenu" href="<c:url value="/LogoutUser.do"/>"></a></li>
+				<li class="logOutMenu"><a id="logoutMenu" href="<c:url value="/LogoutUser.do"/>"></a></li>
 				<script type="text/javascript">
 					$j(document).ready(function() {
 						$j("#advsearchMenu").click(function() {															
