@@ -129,7 +129,7 @@ public class EditChildPersonController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditChildPersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if (command.getParentId().equals(0)) {
+		if (command.getChildId().equals(0)) {
 			command.setChildId(null);
 			command.setChildDescription(null);
 			command.setBornYear(null);
