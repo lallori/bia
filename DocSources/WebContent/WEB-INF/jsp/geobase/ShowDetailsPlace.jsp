@@ -61,23 +61,40 @@
 			</div>
 			<div class="row">
 				<div class="item">GParent</div>
-				<div class="value">2949</div>
+				<div class="value">${place.gParent}</div>
 			</div>
 			<div class="row">
 				<div class="item">GGParent</div>
-				<div class="value">${place. }</div>
+				<div class="value">${place.ggp}</div>
 			</div>
 			<div class="row">
 				<div class="item">GP2</div>
-				<div class="value">Firenze/Toscana/Italia/Europa</div>
+				<div class="value">${place.gp2}</div>
 			</div>
 			<div class="row">
 				<div class="item">Parent_TGN_id</div>
-				<div class="value">Firenze/Toscana/Italia/Europa</div>
+				<div class="value">?????</div>
 			</div>
 			<div class="row">
 				<div class="item">Parent_GEOKEY</div>
-				<div class="value">Firenze/Toscana/Italia/Europa</div>
+				<div class="value">?????</div>
 			</div>
 		</div>
 	</div>
+
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#EditDetailsPlace").css('visibility', 'visible');
+			$j("#EditNamesOrNamesVariantsPlace").css('visibility', 'visible');
+	        $j("#EditGeographicCoordinatesPlace").css('visibility', 'visible'); 
+			$j("#EditExternalLinksPlace").css('visibility', 'visible');
+
+			$j("#EditDetailsPlace").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditDetailsPlaceDiv").load($j(this).attr("href"));
+				return false;
+			});
+		});
+	</script>
+</security:authorize>

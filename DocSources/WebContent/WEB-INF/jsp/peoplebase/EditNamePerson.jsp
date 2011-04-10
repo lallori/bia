@@ -29,7 +29,7 @@
 				<form:select path="nameType" items="${nameTypes}"/>
 			</div>
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="closePerson" type="submit" value="" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="" class="button"/>
 			</div>
 		</fieldset>	
@@ -40,7 +40,7 @@
 
 	<script type="text/javascript"> 
 	    $j(document).ready(function() { 
-			$j('#close').click(function(e) {
+			$j('#closePerson').click(function(e) {
 				$j('#EditNamePersonDiv').block({ message: $j('#question') }); 
 	            return false;
 			});
@@ -69,8 +69,10 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j("#EditPersonDocumentDiv").html('');				
-				
+			$j.ajax({ url: '${EditNamesPersonURL}', cache: false, success:function(html) { 
+				$j("#EditNamesPersonDiv").html(html);
+			}});
+
 			return false; 
 		}); 
      
