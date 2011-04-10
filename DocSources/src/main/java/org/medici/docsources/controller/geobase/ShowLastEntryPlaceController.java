@@ -1,5 +1,5 @@
 /*
- * EditBirthAndDeathPlaceController.java
+ * ShowLastEntryPlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,66 +30,44 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.Valid;
-
-import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Birth and Death Place".
+ * Controller for action "Show last entry place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/EditBirthAndDeathPlace")
-public class EditBirthAndDeathPlaceController {
+@RequestMapping("/src/geobase/ShowLastEntryPlace")
+public class ShowLastEntryPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
-	@Autowired(required = false)
-	@Qualifier("editDetailsPlaceValidator")
-	private Validator validator;
 
 	/**
-	 * @return the geoBaseService
-	 */
-	public GeoBaseService getGeoBaseService() {
-		return geoBaseService;
-	}
-
-	/**
-	 * This method returns the Validator class used by Controller to make
-	 * business validation.
 	 * 
+	 * @param volumeId
 	 * @return
 	 */
-	public Validator getValidator() {
-		return validator;
-	}
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm(){
+		Map<String, Object> model = new HashMap<String, Object>();
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditDetailsPlaceCommand command, BindingResult result) {
-		getValidator().validate(command, result);
+		try {
+			Place place = getGeoBaseService().findLastEntryPlace();
+			model.put("place", place);
 
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-
-			/** TODO : Implement invocation business logic */
-			getGeoBaseService();
-
-			return new ModelAndView("geobase/ShowDetailsPlace", model);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/ShowLastEntryPlace", model);
 		}
 
+		return new ModelAndView("geobase/ShowPlace", model);
 	}
 
 	/**
@@ -100,22 +78,10 @@ public class EditBirthAndDeathPlaceController {
 	}
 
 	/**
-	 * 
-	 * @param command
-	 * @return
+	 * @return the geoBaseService
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPlaceCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		return new ModelAndView("geobase/EditDetailsPlace", model);
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
 
-	/**
-	 * 
-	 * @param validator
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
 }

@@ -326,6 +326,9 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);

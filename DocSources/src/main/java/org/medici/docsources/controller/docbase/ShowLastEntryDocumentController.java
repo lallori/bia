@@ -66,23 +66,6 @@ public class ShowLastEntryDocumentController {
 
 			Image image = getDocBaseService().findDocumentImageThumbnail(document);
 			model.put("image", image);
-			/*
-			// Fact Checks
-			FactChecks factChecks = getDocBaseService().findFactChecks(document);
-			model.put("factChecks", factChecks);
-
-			// Correspondents People
-			List<EpLink> epLink = getDocBaseService().findCorrespondentsPeople(document);
-			model.put("epLink", epLink);
-
-			// Linked Topics
-			List<EplToLink> eplToLink = getDocBaseService().findTopics(document);
-			model.put("eplToLink", eplToLink);
-
-			// Synopsys and Extract
-			SynExtract synExtract = getDocBaseService().findSynExtract(document);
-			model.put("synExtract", synExtract);
-			 */			
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowLastEntryDocument", model);
 		}

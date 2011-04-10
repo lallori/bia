@@ -35,12 +35,17 @@ import javax.persistence.Query;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.transform.Transformers;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Place;
 import org.springframework.stereotype.Repository;
@@ -78,7 +83,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 */
 	@Override
 	public Place findLastEntryPlace() throws PersistenceException {
-        Query query = getEntityManager().createQuery("FROM Place ORDER BY dateCreated DESC");
+        Query query = getEntityManager().createQuery("FROM Place ORDER BY dateEntered DESC");
         query.setMaxResults(1);
 
         return (Place) query.getSingleResult();
@@ -172,6 +177,51 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			// TODO: handle exception
         	return null;
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
+
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Place.class).get();
+        
+		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
+				"placeName",
+				"placeNameFull",
+				"termAccent",
+				"plType",
+				"geogKey"
+			).matching(searchText + "*").createQuery();
+		
+        /*
+        // TODO : WE DON'T KNOW IF WE NEED AN ADDITIONAL QUERY..
+        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+        for (String singleWord:words) {
+        	queryAltName.add(new Term("altName.altName", singleWord));
+        }
+        */
+		BooleanQuery booleanQuery = new BooleanQuery();
+		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
+		//booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+
+		final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, Place.class );
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		}
+
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+
+		page.setList(fullTextQuery.list());
+
+        return page;
 	}
 
 }

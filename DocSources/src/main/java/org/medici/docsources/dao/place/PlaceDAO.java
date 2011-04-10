@@ -31,6 +31,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Place;
 
@@ -71,5 +73,14 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param searchText
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

@@ -164,7 +164,7 @@ public class Place implements Serializable {
 	
 	@Column (name="\"GGPTYPE\"", length=255)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private String ggpTypeGGPTYPE;
+	private String ggpType;
 	
 	@Column (name="\"GP2\"", length=255)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -176,7 +176,7 @@ public class Place implements Serializable {
 	
 	@Column (name="\"RESID\"", length=50)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private String resId;
+	private String researcher;
 	
 	@Column (name="\"DATEENTERED\"")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -236,15 +236,15 @@ public class Place implements Serializable {
 	public Place(){
 		super();
 	}
-	
+
 	/**
 	 * 
-	 * @param placeId
+	 * @param placeAllId
 	 */
-	public Place(Integer placeId) {
+	public Place(Integer placeAllId) {
 		super();
 		
-		setPlaceAllId(placeId);
+		setPlaceAllId(placeAllId);
 	}
 	
 	/**
@@ -486,17 +486,17 @@ public class Place implements Serializable {
 	}
 	
 	/**
-	 * @return the ggpTypeGGPTYPE
+	 * @return the ggpType
 	 */
-	public String getGgpTypeGGPTYPE() {
-		return ggpTypeGGPTYPE;
+	public String getGgpType() {
+		return ggpType;
 	}
 	
 	/**
-	 * @param ggpTypeGGPTYPE the ggpTypeGGPTYPE to set
+	 * @param ggpType the ggpType to set
 	 */
-	public void setGgpTypeGGPTYPE(String ggpTypeGGPTYPE) {
-		this.ggpTypeGGPTYPE = ggpTypeGGPTYPE;
+	public void setGgpType(String ggpType) {
+		this.ggpType = ggpType;
 	}
 	
 	/**
@@ -528,17 +528,17 @@ public class Place implements Serializable {
 	}
 	
 	/**
-	 * @return the resId
+	 * @return the researcher
 	 */
-	public String getResId() {
-		return resId;
+	public String getResearcher() {
+		return researcher;
 	}
 	
 	/**
-	 * @param resId the resId to set
+	 * @param researcher the researcher to set
 	 */
-	public void setResId(String resId) {
-		this.resId = resId;
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
 	}
 	
 	/**

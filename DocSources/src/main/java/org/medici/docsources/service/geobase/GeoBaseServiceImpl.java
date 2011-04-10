@@ -29,6 +29,8 @@ package org.medici.docsources.service.geobase;
 
 import java.util.List;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -120,6 +122,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public void setPlaceDAO(PlaceDAO placeDAO) {
 		this.placeDAO = placeDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().simpleSearchPlaces(searchText, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 }

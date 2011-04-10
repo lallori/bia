@@ -29,6 +29,8 @@ package org.medici.docsources.service.geobase;
 
 import java.util.List;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -82,7 +84,7 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Place> searchRecipientsPlace(String query)throws ApplicationThrowable;
+	public List<Place> searchRecipientsPlace(String query) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -90,5 +92,14 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Place> searchSendersPlace(String query)throws ApplicationThrowable;
+	public List<Place> searchSendersPlace(String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param searchText
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

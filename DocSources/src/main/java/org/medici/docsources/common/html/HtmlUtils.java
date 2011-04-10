@@ -35,11 +35,86 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
+ * This class is an utility to obtains specific application Url.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 public class HtmlUtils {
+
+	/**
+	 * 
+	 * @param documentExplorer
+	 * @return
+	 */
+	public static String getDocumentExplorerNextPageUrl(DocumentExplorer documentExplorer) {
+		if (documentExplorer == null)
+			return "";
+		
+		if (documentExplorer.getImage().getImageOrder() == documentExplorer.getTotal().intValue())
+			return "";
+
+		StringBuffer stringBuffer = new StringBuffer(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
+		stringBuffer.append("?entryId=");
+		stringBuffer.append(documentExplorer.getEntryId());
+		stringBuffer.append("&volNum=");
+		stringBuffer.append(documentExplorer.getVolNum());
+		stringBuffer.append("&volLetExt=");
+		stringBuffer.append(documentExplorer.getVolLetExt());
+		stringBuffer.append("&imageOrder=");
+		stringBuffer.append(documentExplorer.getImage().getImageOrder()+1);
+		stringBuffer.append("&total=");
+		stringBuffer.append(documentExplorer.getTotal());
+		stringBuffer.append("&totalRubricario=");
+		stringBuffer.append(documentExplorer.getTotalRubricario());
+		stringBuffer.append("&totalCarta=");
+		stringBuffer.append(documentExplorer.getTotalCarta());
+		stringBuffer.append("&totalAppendix=");
+		stringBuffer.append(documentExplorer.getTotalAppendix());
+		stringBuffer.append("&totalOther=");
+		stringBuffer.append(documentExplorer.getTotalOther());
+		stringBuffer.append("&totalGuardia=");
+		stringBuffer.append(documentExplorer.getTotalGuardia());
+		
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * 
+	 * @param documentExplorer
+	 * @return
+	 */
+	public static String getDocumentExplorerPreviousPageUrl(DocumentExplorer documentExplorer) {
+		if (documentExplorer == null)
+			return "";
+		
+		if (documentExplorer.getImage().getImageOrder() == 1)
+			return "";
+
+		StringBuffer stringBuffer = new StringBuffer(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
+		stringBuffer.append("?entryId=");
+		stringBuffer.append(documentExplorer.getEntryId());
+		stringBuffer.append("&volNum=");
+		stringBuffer.append(documentExplorer.getVolNum());
+		stringBuffer.append("&volLetExt=");
+		stringBuffer.append(documentExplorer.getVolLetExt());
+		stringBuffer.append("&imageOrder=");
+		stringBuffer.append(documentExplorer.getImage().getImageOrder()-1);
+		stringBuffer.append("&total=");
+		stringBuffer.append(documentExplorer.getTotal());
+		stringBuffer.append("&totalRubricario=");
+		stringBuffer.append(documentExplorer.getTotalRubricario());
+		stringBuffer.append("&totalCarta=");
+		stringBuffer.append(documentExplorer.getTotalCarta());
+		stringBuffer.append("&totalAppendix=");
+		stringBuffer.append(documentExplorer.getTotalAppendix());
+		stringBuffer.append("&totalOther=");
+		stringBuffer.append(documentExplorer.getTotalOther());
+		stringBuffer.append("&totalGuardia=");
+		stringBuffer.append(documentExplorer.getTotalGuardia());
+		
+		return stringBuffer.toString();
+	}
 
 	/**
 	 * 
@@ -98,6 +173,35 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param singleRow
+	 * @param placeAllId
+	 * @return
+	 */
+	public static List<String> showPlace(List<String> inputList, Integer placeAllId) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/geobase/ShowPlace.do?placeAllId=");
+		anchorBegin.append(placeAllId);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
+			stringBuffer.append(inputList.get(i));
+			stringBuffer.append(hrefEnd);
+			retValue.add(stringBuffer.toString());
+		}
+		
+		return retValue;
+	}
+
+	/**
+	 * 
 	 * @param inputList
 	 * @param summaryId
 	 * @return
@@ -123,79 +227,5 @@ public class HtmlUtils {
 		}
 		
 		return retValue;
-	}
-
-	/**
-	 * 
-	 * @param documentExplorer
-	 * @return
-	 */
-	public static String getDocumentExplorerPreviousPageUrl(DocumentExplorer documentExplorer) {
-		if (documentExplorer == null)
-			return "";
-		
-		if (documentExplorer.getImage().getImageOrder() == 1)
-			return "";
-
-		StringBuffer stringBuffer = new StringBuffer(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
-		stringBuffer.append("?entryId=");
-		stringBuffer.append(documentExplorer.getEntryId());
-		stringBuffer.append("&volNum=");
-		stringBuffer.append(documentExplorer.getVolNum());
-		stringBuffer.append("&volLetExt=");
-		stringBuffer.append(documentExplorer.getVolLetExt());
-		stringBuffer.append("&imageOrder=");
-		stringBuffer.append(documentExplorer.getImage().getImageOrder()-1);
-		stringBuffer.append("&total=");
-		stringBuffer.append(documentExplorer.getTotal());
-		stringBuffer.append("&totalRubricario=");
-		stringBuffer.append(documentExplorer.getTotalRubricario());
-		stringBuffer.append("&totalCarta=");
-		stringBuffer.append(documentExplorer.getTotalCarta());
-		stringBuffer.append("&totalAppendix=");
-		stringBuffer.append(documentExplorer.getTotalAppendix());
-		stringBuffer.append("&totalOther=");
-		stringBuffer.append(documentExplorer.getTotalOther());
-		stringBuffer.append("&totalGuardia=");
-		stringBuffer.append(documentExplorer.getTotalGuardia());
-		
-		return stringBuffer.toString();
-	}
-
-	/**
-	 * 
-	 * @param documentExplorer
-	 * @return
-	 */
-	public static String getDocumentExplorerNextPageUrl(DocumentExplorer documentExplorer) {
-		if (documentExplorer == null)
-			return "";
-		
-		if (documentExplorer.getImage().getImageOrder() == documentExplorer.getTotal().intValue())
-			return "";
-
-		StringBuffer stringBuffer = new StringBuffer(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
-		stringBuffer.append("?entryId=");
-		stringBuffer.append(documentExplorer.getEntryId());
-		stringBuffer.append("&volNum=");
-		stringBuffer.append(documentExplorer.getVolNum());
-		stringBuffer.append("&volLetExt=");
-		stringBuffer.append(documentExplorer.getVolLetExt());
-		stringBuffer.append("&imageOrder=");
-		stringBuffer.append(documentExplorer.getImage().getImageOrder()+1);
-		stringBuffer.append("&total=");
-		stringBuffer.append(documentExplorer.getTotal());
-		stringBuffer.append("&totalRubricario=");
-		stringBuffer.append(documentExplorer.getTotalRubricario());
-		stringBuffer.append("&totalCarta=");
-		stringBuffer.append(documentExplorer.getTotalCarta());
-		stringBuffer.append("&totalAppendix=");
-		stringBuffer.append(documentExplorer.getTotalAppendix());
-		stringBuffer.append("&totalOther=");
-		stringBuffer.append(documentExplorer.getTotalOther());
-		stringBuffer.append("&totalGuardia=");
-		stringBuffer.append(documentExplorer.getTotalGuardia());
-		
-		return stringBuffer.toString();
 	}
 }

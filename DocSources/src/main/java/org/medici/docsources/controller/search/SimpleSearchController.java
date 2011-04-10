@@ -25,11 +25,12 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller;
+package org.medici.docsources.controller.search;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.medici.docsources.command.SearchDataCommand;
+
+import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -48,8 +49,8 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping("/SearchData")
-public class SearchDataController {
+@RequestMapping("/src/SimpleSearch")
+public class SimpleSearchController {
 	@Autowired
 	private DocBaseService docBaseService;
 	@Autowired
@@ -95,26 +96,24 @@ public class SearchDataController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("command") SearchDataCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
+
+		// Search operation is made by View with a jquery plugin to contextualized AjaxController
 		if (command.getSearchType().toLowerCase().trim().equals("documents")) {
-			// Search operation is made by View with a jquery plugin to contextualized AjaxController
-			return new ModelAndView("docbase/SearchResultDocument",model);
+			return new ModelAndView("search/SimpleSearchResultDocuments",model);
 		}
 		
 		if (command.getSearchType().toLowerCase().trim().equals("people")) {
-			// Search operation is made by View with a jquery plugin to contextualized AjaxController
-			return new ModelAndView("peoplebase/SearchResultPerson",model);
+			return new ModelAndView("search/SimpleSearchResultPeople",model);
 		}
 		
 		if (command.getSearchType().toLowerCase().trim().equals("places")) {
-			// Search operation is made by View with a jquery plugin to contextualized AjaxController
-			return new ModelAndView("geobase/SearchResultPlace",model);
+			return new ModelAndView("search/SimpleSearchResultPlaces",model);
 		}
 		
 		if (command.getSearchType().toLowerCase().trim().equals("volumes")) {
-			// Search operation is made by View with a jquery plugin to contextualized AjaxController
-			return new ModelAndView("volbase/SearchResultVolume",model);
+			return new ModelAndView("search/SimpleSearchResultVolumes",model);
 		}
 
 		// Wee should never arrive at this point.

@@ -1,5 +1,5 @@
 /*
- * SearchDataCommand.java
+ * SimpleSearchCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,7 +25,7 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command;
+package org.medici.docsources.command.search;
 
 
 /**
@@ -33,7 +33,7 @@ package org.medici.docsources.command;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class SearchDataCommand {
+public class SimpleSearchCommand {
 	private String searchType;
 	private String text;
 	private Integer pageNumber;
