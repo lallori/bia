@@ -13,9 +13,9 @@
         <property name="jdbcUrl" value="jdbc:mysql://mysql.medici.org:3306/docsources?autoReconnect=true" />
         <property name="user" value="docsources" />
         <property name="password" value="docsources" />
-        <property name="initialPoolSize" value="2" />
-        <property name="minPoolSize" value="1" />
-        <property name="maxPoolSize" value="20" />
+        <property name="initialPoolSize" value="20" />
+        <property name="minPoolSize" value="20" />
+        <property name="maxPoolSize" value="50" />
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
