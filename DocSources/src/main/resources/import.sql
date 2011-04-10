@@ -45,62 +45,100 @@ create table docsources_audit.tblTitleOccsList_AUD (TITLEOCCID integer not null,
 create table docsources_audit.tblTopicsList_AUD (TOPICID integer not null, REV integer not null, REVTYPE tinyint, DESCRIPTION LONGTEXT, TOPICTITLE varchar(50), primary key (TOPICID, REV));
 create table docsources_audit.tblVolumes_AUD (SUMMARYID integer not null, REV integer not null, REVTYPE tinyint, BOUND TINYINT default '-1', CCONDITION LONGTEXT, CCONTEXT LONGTEXT, CIPHER TINYINT default '-1', CIPHERNOTES varchar(255), DATECREATED datetime, DATENOTES LONGTEXT, ENDDAY TINYINT, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDYEAR integer, ENGLISH TINYINT default '-1', FOLIOCOUNT varchar(50), FOLSNUMBRD TINYINT default '-1', FRENCH TINYINT default '-1', GERMAN TINYINT default '-1', ITALIAN TINYINT default '-1', LATIN TINYINT default '-1', OLDALPHAINDEX TINYINT default '-1', ORGNOTES LONGTEXT, OTHERLANG varchar(50), PRINTEDDRAWINGS TINYINT default '-1', PRINTEDMATERIAL TINYINT default '-1', RECIPS LONGTEXT, RESID varchar(255), SENDERS LONGTEXT, SPANISH TINYINT default '-1', STAFFMEMO LONGTEXT, STARTDAY TINYINT, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, STATBOX varchar(50), VOLLETEXT varchar(1), VOLNUM integer, VOLTOBEVETTED TINYINT default '-1', VOLTOBEVETTEDDATE datetime, VOLVETBEGINS datetime, VOLVETID varchar(50), VOLVETTED TINYINT default '-1', VOLVETTEDDATE datetime, SERIESREFNUM integer, primary key (SUMMARYID, REV));
 
--- Folio transcribes fields (2).
-ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `TRANSCRIBEFOLIONUM` int(10) NULL AFTER `FOLIOMOD` , ADD COLUMN `TRANSCRIBEFOLIOMOD` varchar(15) NULL AFTER `TRANSCRIBEFOLIONUM` ;
 
--- Gender types patch to allow correct use of numeration type Gender
-update tblPeople set gender = 'M' where gender = 'm';
-update tblPeople set gender = 'F' where gender = 'f';
-update tblPeople set gender = 'X' where gender = 'x';
-update tblPeople set gender = null where gender = '';
+-- MYSQL DATABASE STRUCTURE NORMALIZATION PATCH
 
--- Months: month 13 is invalid
-delete from tblMonths where monthNum = 13;
+-- DOCUMENTS
+-- Doc Typology
+ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `DOCTYPOLOGY` VARCHAR(250) AFTER `GRAPHIC`;
+-- Folio transcribes Num
+ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `TRANSCRIBEFOLIONUM` INT(10) AFTER `FOLIOMOD`;
+-- Folio transcribes Mod
+ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `TRANSCRIBEFOLIOMOD` VARCHAR(15) AFTER `TRANSCRIBEFOLIONUM`;
 
--- Documents : docMonthNum 0 or 13 must be setted to null
+-- IMAGES
+-- ImageType
+ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageType` VARCHAR(1) NOT NULL  AFTER `imageName` ;
+-- ImageOrder
+ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageOrder` INT(5) NOT NULL  AFTER `imageType` ;
+-- ImageProgTypeNum
+ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageProgTypeNum` INT(5) NOT NULL  AFTER `imageOrder` ;
+
+-- VOLUMES
+-- Context to CContext (context is a reserved key on Mysql)
+ALTER TABLE `docsources`.`tblVolumes` CHANGE COLUMN `CONTEXT` `CCONTEXT` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL, CHANGE COLUMN `CONDITION` `CCONDITION` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
+-- Printed Drawings
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN PRINTEDDRAWINGS TINYINT(1) AFTER `STAFFMEMO`;
+-- Printed Material
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN PRINTEDMATERIAL TINYINT(1) AFTER `PRINTEDDRAWINGS`;
+
+
+-- MYSQL DATABASE DATA NORMALIZATION PATCH
+
+-- DOCUMENTS :
+
+-- docMonthNum 0 or 13 must be setted to null  (Foreign Keys Checks)
 update docsources.tblDocuments set docMonthNum = null where docMonthNum = 0;
 update docsources.tblDocuments set docMonthNum = null where docMonthNum = 13;
+-- Sender people linked to invalid people (Foreign Keys Checks)
+update docsources.tblDocuments set sendID = null where sendID not in (select personId from tblPeople);
+-- Recipient people linked to invalid people (Foreign Keys Checks)
+update docsources.tblDocuments set recipID = null where recipID not in (select personId from tblPeople);
+-- Sender place linked to invalid place (Foreign Keys Checks)
+update docsources.tblDocuments set sendLocplall = null where sendLocplall not in (select placeAllId from tblPlaces);
+-- Recipient place linked to invalid place (Foreign Keys Checks)
+update docsources.tblDocuments set recipLocplall = null where recipLocplall not in (select placeAllId from tblPlaces);
 
--- People : Birth month num 0 or 13 must be setted to null
+
+-- IMAGES
+
+-- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
+update docsources.tblImages set imageType = substr(imageName, 6,1);
+-- Recto Verso : 
+update docsources.tblImages set imageRectoVerso = substring(SUBSTRING_INDEX(imageName, '_', -1),1,1); 
+
+
+-- PEOPLE
+-- Gender types patch to allow correct use of numeration type Gender
+update docsources.tblPeople set gender = 'M' where gender = 'm';
+update docsources.tblPeople set gender = 'F' where gender = 'f';
+update docsources.tblPeople set gender = 'X' where gender = 'x';
+update docsources.tblPeople set gender = null where gender = '';
+-- Born place linked to invalid place
+update docsources.tblPeople set bPlaceId = null where (bPlaceId not in (select placeAllId from tblPlaces));
+-- Death place linked to invalid place
+update docsources.tblPeople set dPlaceId = null where (dPlaceId not in (select placeAllId from tblPlaces));
+-- Marriages linked to invalid people
+delete from docsources.tblMarriages where (husbandId not in (select personId from tblPeople) ) or ( wifeId not in (select personId from tblPeople));
+-- PrcLink linked to invalid RoleCat
+delete from docsources.tblPrcLink where RoleCatId not in (select roleCatID from tblRoleCats);
+-- Birth month num 0 or 13 must be setted to null
 update docsources.tblPeople set bMonthNum = null where bMonthNum = 0;
 update docsources.tblPeople set bMonthNum = null where bMonthNum = 13;
--- People : Death month num 0 or 13 must be setted to null
+-- Death month num 0 or 13 must be setted to null
 update docsources.tblPeople set dMonthNum = null where dMonthNum = 0;
 update docsources.tblPeople set dMonthNum = null where dMonthNum = 13;
+-- linked alternative names is an enumeration with first letter in upper case
+update docsources.tblAltNames set nameType = 'Appellative' where lower(nameType) = 'appellative';
+update docsources.tblAltNames set nameType = 'Family' where lower(nameType) = 'family';
+update docsources.tblAltNames set nameType = 'Given' where lower(nameType) = 'given';
+update docsources.tblAltNames set nameType = 'Maiden' where lower(nameType) = 'maiden';
+update docsources.tblAltNames set nameType = 'Married' where lower(nameType) = 'married';
+update docsources.tblAltNames set nameType = 'Patronymic' where lower(nameType) = 'patronymic';
+update docsources.tblAltNames set nameType = 'SearchName' where lower(nameType) = 'searchname';
 
--- Volumes : start Document Month num 0 or 13 must be setted to null
+
+-- VOLUMES 
+
+-- start Document Month num 0 or 13 must be setted to null
 update docsources.tblVolumes set startMonthNum = null where startMonthNum = 0;
 update docsources.tblVolumes set startMonthNum = null where startMonthNum = 13;
-
--- Volumes : end Document Month num 0 or 13 must be setted to null
+-- end Document Month num 0 or 13 must be setted to null
 update docsources.tblVolumes set endMonthNum = null where endMonthNum = 0;
 update docsources.tblVolumes set endMonthNum = null where endMonthNum = 13;
--- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
-update tblimages set imageType = substr(imageName, 6,1);
--- Recto Verso : 
-update tblImages set imageRectoVerso = substring(SUBSTRING_INDEX(imageName, '_', -1),1,1); 
 
--- Tables foreign keys checks :
--- Sender people linked to invalid people
-update tblDocuments set sendID = null where sendID not in (select personId from tblPeople);
--- Recipient people linked to invalid people
-update tblDocuments set recipID = null where recipID not in (select personId from tblPeople);
--- Sender place linked to invalid place
-update tblDocuments set sendLocplall = null where sendLocplall not in (select placeAllId from tblPlaces);
--- Recipient place linked to invalid place
-update tblDocuments set recipLocplall = null where recipLocplall not in (select placeAllId from tblPlaces);
 
--- Born place linked to invalid place
-update tblPeople set bPlaceId = null where (bPlaceId not in (select placeAllId from tblPlaces));
--- Death place linked to invalid place
-update tblPeople set dPlaceId = null where (dPlaceId not in (select placeAllId from tblPlaces));
--- Marriages linked to invalid people
-delete from tblMarriages where (husbandId not in (select personId from tblPeople) ) or ( wifeId not in (select personId from tblPeople));
--- PrcLink linked to invalid RoleCat
-delete from tblPrcLink where RoleCatId not in (select roleCatID from tblRoleCats);
-
--- Table schema is based on ISO standard 3166 code lists 
--- http://www.iso.org/iso/list-en1-semic-3.txt
+-- COUNTRY DATA ENTRY (Table schema is based on ISO standard 3166 code lists http://www.iso.org/iso/list-en1-semic-3.txt)
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ÅLAND ISLANDS', 'AX');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ALBANIA', 'AL');
@@ -347,18 +385,3 @@ INSERT INTO tblCountries (NAME, CODE) VALUES ('WESTERN SAHARA', 'EH');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('YEMEN', 'YE');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ZAMBIA', 'ZM');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ZIMBABWE', 'ZW');
-
--- Mysql database patch
-ALTER TABLE `docsources`.`tblvolumes` CHANGE COLUMN `CONTEXT` `CCONTEXT` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-CHANGE COLUMN `CONDITION` `CCONDITION` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
-
-ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `DOCTYPOLOGY` VARCHAR(250) AFTER `GRAPHIC`;
-ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `TRANSCRIBEFOLIONUM` INT(10) AFTER `FOLIOMOD`;
-ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `TRANSCRIBEFOLIOMOD` VARCHAR(15) AFTER `TRANSCRIBEFOLIONUM`;
-
-ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageType` VARCHAR(1) NOT NULL  AFTER `imageName` ;
-ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageOrder` INT(5) NOT NULL  AFTER `imageType` ;
-ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageProgTypeNum` INT(5) NOT NULL  AFTER `imageOrder` ;
-
-ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN PRINTEDDRAWINGS TINYINT(1) AFTER `STAFFMEMO`;
-ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN PRINTEDMATERIAL TINYINT(1) AFTER `PRINTEDDRAWINGS`;
