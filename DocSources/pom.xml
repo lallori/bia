@@ -5,7 +5,7 @@
 	<artifactId>DocSources</artifactId>
 	<packaging>war</packaging>
 	<name>DocSources</name>
-	<version>0.0.9-alpha</version>
+	<version>0.0.7-alpha</version>
 	<url>http://java.net/jira/browse/DOCSOURCES</url>
 	<issueManagement>
 		<system>JIRA</system>
