@@ -27,8 +27,6 @@
  */
 package org.medici.docsources.command.docbase;
 
-import org.medici.docsources.domain.Document;
-
 /**
  * Command bean for action "Edit Topics Document".
  * 

@@ -44,7 +44,6 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.transform.Transformers;
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.TopicList;
 import org.springframework.stereotype.Repository;
 

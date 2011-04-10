@@ -33,7 +33,6 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.PoLink;
 import org.springframework.stereotype.Repository;
 
