@@ -109,7 +109,7 @@
 		<springdao.version>2.0.8</springdao.version>
 		<springjmx.version>2.0.8</springjmx.version>
 		<springldap.version>1.3.1.CI-SNAPSHOT</springldap.version>
-		<springsecurity.version>3.0.3.RELEASE</springsecurity.version>
+		<springsecurity.version>3.0.5.RELEASE</springsecurity.version>
 		<springsupport.version>2.0.8</springsupport.version>
 		<tiles.version>2.2.1</tiles.version>
 	</properties>
