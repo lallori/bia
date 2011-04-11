@@ -36,9 +36,9 @@
 				<ul>
 				<c:forEach items="${document.epLink}" var="currentPeople">
 					<c:url var="CheckPersonURL" value="/src/peoplebase/CheckPerson.do">
-						<c:param name="personId"   value="${currentPeople.people.personId}" />
+						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
-					<li><a class="linkSearch" href="${CheckPersonURL}">${currentPeople.people.mapNameLf}</a></li>
+					<li><a class="linkSearch" href="${CheckPersonURL}">${currentPeople.person.mapNameLf}</a></li>
 					<br/>
 				</c:forEach>
 				</ul>
