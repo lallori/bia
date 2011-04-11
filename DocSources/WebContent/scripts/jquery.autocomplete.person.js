@@ -281,7 +281,7 @@
     	  message = 'No person found.';
     	  this.container.append(message);
       } else {
-	      table = '<tr><td width="50%"><b>FullName</b></td><td><b>Active Starts</b></td><td><b>Born Year</b></td><td><b>Dead Year</b></td></tr>';
+	      table = '<tr><td width="50%"><b>FullName</b></td><td><b>Active Starts</b></td><td><b>Birth</b></td><td><b>Death</b></td></tr>';
 	      this.container.append(table);
 	
 	      for (i = 0; i < len; i++) {
