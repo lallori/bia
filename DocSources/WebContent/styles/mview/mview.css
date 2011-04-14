@@ -28,7 +28,7 @@ html version
 
 #EditPersonalNotesDiv #prevNextButtons {
 	width:190px;
-	margin-top:15px;
+	margin-top:10px;
 	position:absolute;
 }
 
@@ -53,6 +53,79 @@ html version
 	float:right;
 	opacity:0.5;
 }
+
+
+/* ---- Volume Summary ----- */
+
+#volumeSummary { /* Volume Summary button on Page Turner Pannel */
+	margin:45px 0 0 37px;
+	position:absolute;
+}
+
+#volumeSummary:hover { /* Volume Summary button on Rollover */
+	opacity:0.5;
+}
+
+/* Volume Summary dialog Window */
+
+#volumeSummaryWindow {
+	max-height:500px;
+	width:500px;
+}
+
+#volumeSummaryWindow .row {
+	display: table-row;
+}
+
+#volumeSummaryWindow .item {
+	display: table-cell;
+	width:160px;
+	text-align:left;
+	color:#6d5c4d;
+	padding:3px 0 3px 0;
+}
+
+#volumeSummaryWindow .value {
+	display: table-cell;
+	width:340px;
+	text-align:left;
+	color:#8B7563;
+	padding:3px 0 3px 5px;
+	text-align:justify;
+}
+
+#volumeSummaryWindow .valueMissingFolios {
+	color:#900;
+	display: table-cell;
+	width:350px;
+	text-align:left;
+	padding:3px 0 3px 5px;
+	text-align:justify;
+}
+
+#volumeSummaryWindow hr { /* Horizontal Line used to separate areas inside the Edit Forms */
+	margin:10px 0 10px 0;
+	padding:0;
+	width:480px;
+	color:#e6d0c6;
+	background-color:#e6d0c6;
+	height:1px;
+	border:0;
+}
+
+h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
+	font-size:14px;
+	font-style:italic;
+	color:#C18D72;
+	margin:3px 0 15px 0;
+}
+
+h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
+	font-size:11px;
+	color:#6d5c4d;
+	margin:3px 0 3px 0;
+}
+
 
 /* ---------------- */
 /*
