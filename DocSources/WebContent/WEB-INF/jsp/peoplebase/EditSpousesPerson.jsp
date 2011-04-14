@@ -10,7 +10,7 @@
 		</c:url>
 		<c:url var="AddSpousePersonURL" value="/de/peoplebase/EditSpousePerson.do">
 			<c:param name="personId"   value="${command.personId}" />
-			<c:param name="nameId"  value="0" />
+			<c:param name="marriageId" value="0" />
 		</c:url>
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 			<c:param name="personId"   value="${command.personId}" />

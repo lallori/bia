@@ -22,7 +22,7 @@
 				<b>Edit SPOUSE</b>
 			</c:if>
 			<%-- We manage fields for husband --%>
-			<c:if test="${command.personId == currentMarriage.wife.personId}">
+			<c:if test="${command.personId == command.wifeId}">
 				<div>
 					<form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error">Name:</form:label>
 					<form:input id="husbandDescription" path="husbandDescription" cssClass="input_25c" />
@@ -31,7 +31,7 @@
 				</div>
 			</c:if> 
 			<%-- We manage fields for wife --%>
-			<c:if test="${command.personId == currentMarriage.husband.personId}">
+			<c:if test="${command.personId == command.husbandId}">
 				<div>
 					<form:label id="wifeDescriptionLabel" for="wifeDescription" path="wifeDescription" cssErrorClass="error">Name:</form:label>
 					<form:input id="wifeDescription" path="wifeDescription" cssClass="input_25c" />
