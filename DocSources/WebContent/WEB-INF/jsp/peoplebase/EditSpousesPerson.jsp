@@ -65,13 +65,13 @@
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
-		        $j("#EditDetailsPerson").css('visibility', 'hidden'); 
-		        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden'); 
-		        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
-		        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
-		        $j("#EditDocumentInModal").css('visibility', 'hidden');
-		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
-		        
+				$j("#EditDetailsPerson").css('visibility', 'hidden');
+				$j("#EditNamesPerson").css('visibility', 'hidden');
+		        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
+				$j("#EditParentsPerson").css('visibility', 'hidden');
+				$j("#EditChildrenPerson").css('visibility', 'hidden');
+		        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
+
 		        $j('#close').click(function() {
 					$j('#EditSpousesPersonDiv').block({ message: $j('#question') }); 
 					return false;
