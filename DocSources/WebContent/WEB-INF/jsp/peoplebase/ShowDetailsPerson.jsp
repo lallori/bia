@@ -10,8 +10,8 @@
 		</c:url>
 	</security:authorize>
 
-	<div id="CreatedSharePrintDiv">
-		<div id="createdby">CREATED BY ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
+	<div id="topBodyLeftMenuDiv">
+		<div id="createdby">Created by ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
 		<a id="vettingChronology" href="/DocSources/de/VettingChronology.html"></a>
 		<a id="menuActions" href="/DocSources/de/peoplebase/ActionsMenu.html"></a>
 		<a id="buttonPrint" title="Print this record" href="#"></a>

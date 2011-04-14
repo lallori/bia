@@ -30,9 +30,11 @@
 		<c:param name="flashVersion"   value="true" />
 	</c:url>
 
-	<div id="CreatedSharePrintDiv">
-		<div id="createdby">CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
-		<a title="Print this record" href="#" id="buttonPrint"></a>
+	<div id="topBodyLeftMenuDiv">
+		<div id="createdby">Created by ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
+		<a id="vettingChronology" href="/DocSources/de/VettingChronology.html"></a>
+		<a id="menuActions" href="/DocSources/de/peoplebase/ActionsMenu.html"></a>
+		<a id="buttonPrint" title="Print this record" href="#"></a>
 		<div id="buttonShareLink">
 			<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
 			<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>

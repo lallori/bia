@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditTitleOrOccupationPersonURL" value="/de/peoplebase/EditTitleOrOccupationPerson.do">
+		<c:url var="EditTitlesOrOccupationsPersonURL" value="/de/peoplebase/EditTitlesOrOccupationsPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
@@ -99,8 +99,8 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
-				$j("#body_left").html(html);
+			$j.ajax({ url: '${EditTitlesOrOccupationsPersonURL}', cache: false, success:function(html) { 
+				$j("#EditTitlesOrOccupationsPersonDiv").html(html);
 			}});
 				
 			return false; 
