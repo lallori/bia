@@ -26,7 +26,7 @@
 			</div>
 			<div>
 				<form:label id="nameTypeLabel" for="nameType" path="nameType" cssErrorClass="error">NameType:</form:label>
-				<form:select path="nameType" items="${nameTypes}"/>
+				<form:select path="nameType" cssClass="selectform_long" items="${nameTypes}"/>
 			</div>
 			<div>
 				<input id="closePerson" type="submit" value="" title="do not save changes" class="button" />

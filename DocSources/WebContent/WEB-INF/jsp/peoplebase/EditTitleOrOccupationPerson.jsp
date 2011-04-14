@@ -5,52 +5,69 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditSpousesPersonURL" value="/de/peoplebase/EditSpousesPerson.do">
+		<c:url var="EditTitleOrOccupationPersonURL" value="/de/peoplebase/EditTitleOrOccupationPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
 	</security:authorize>
-
-	<form:form id="EditNamesPersonForm" method="post" cssClass="edit">
+	<br>
+	<form:form id="EditTitleOrOccupationPersonForm" method="post" cssClass="edit">
 		<fieldset>
-			<c:if test="${empty command.marriageId}"> 
-				<b>ADD NEW SPOUSE</b>
+			<legend>
+			<c:if test="${empty command.prfLinkId}"> 
+				<b>ADD NEW TITLE</b>
 			</c:if>
-			<c:if test="${command.marriageId > 0}">
-				<b>Edit SPOUSE</b>
+			<c:if test="${command.prfLinkId > 0}">
+				<b>Edit TITLE</b>
 			</c:if>
-			<%-- We manage fields for husband --%>
-			<c:if test="${command.personId == currentMarriage.wife.personId}">
-				<div>
-					<form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error">Name:</form:label>
-					<form:input id="husbandDescription" path="husbandDescription" cssClass="input_25c" />
-					<form:hidden path="husbandId"/>
-					<form:hidden path="personId"/>
-				</div>
-			</c:if> 
-			<%-- We manage fields for wife --%>
-			<c:if test="${command.personId == currentMarriage.husband.personId}">
-				<div>
-					<form:label id="wifeDescriptionLabel" for="wifeDescription" path="wifeDescription" cssErrorClass="error">Name:</form:label>
-					<form:input id="wifeDescription" path="wifeDescription" cssClass="input_25c" />
-					<form:hidden path="wifeId"/>
-					<form:hidden path="personId"/>
-				</div>
-			</c:if> 
-
+			</legend>
 			<div>
-				<form:label id="startYearLabel" for="startYear" path="startYear">Start Year:</</form:label>
-				<form:input path="startYear" cssClass="input_4c"/>
-				<form:label id="endYearLabel" for="endYear" path="endYear">End Year:</form:label>
-				<form:input path="endYear" cssClass="input_4c"/>
-				<form:label id="marriageTermLabel" for="marriageTerm" path="marriageTerm">Reason:</form:label>
-				<form:select cssClass="selectform" path="marriageTerm" items="${marriageTerms}"/>
+				<form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">New Title &amp; Occ:</form:label>
+				<form:input path="titleOrOccupationDescription" cssClass="input_23c"/>
+			</div>
+			<div>
+				<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role:</form:label>
+				<form:checkbox path="preferredRole" cssClass="input_23c"/>
+			</div>
+			<hr>
+			<div>
+				<b>Start:</b>
+				<br>
+				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Year</form:label>
+				<form:input path="startYear" cssClass="input_4c" maxlength="4"/>
+				<form:label id="startMonthLabel" for="startMonth" path="startMonth" cssErrorClass="error">Month</form:label>
+				<form:select id="startMonth" path="startMonth" cssClass="selectform"><form:option value="">&nbsp;</form:option><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
+				<form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Day</form:label>
+				<form:input path="startDay" cssClass="input_2c" maxlength="2"/>
+				<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error">Approx</form:label>
+				<form:checkbox path="startApprox" />
+				<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error">Uns</form:label>
+				<form:checkbox path="startUns" />
 			</div>
 			
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<b>End:</b>
+				<br>
+				<form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">Year</form:label>
+				<form:input path="endYear" cssClass="input_4c" maxlength="2"/>
+				<form:label id="endMonthLabel" for="endMonth" path="endMonth" cssErrorClass="error">Month</form:label>
+				<form:select id="endMonth" path="endMonth" cssClass="selectform"><form:option value="">&nbsp;</form:option><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
+				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">Day</form:label>
+				<form:input path="endDay" cssClass="input_2c" maxlength="2"/>
+				<form:label id="endApproxLabel" for="endApprox" path="endApprox" cssErrorClass="error">Approx</form:label>
+				<form:checkbox path="endApprox" />
+				<form:label id="endUnsLabel" for="endtUns" path="endUns" cssErrorClass="error">Uns</form:label>
+				<form:checkbox path="endUns" />
+			</div>
+			
+			<form:hidden path="titleOccId" />
+			<form:hidden path="personId" />
+			<form:hidden path="prfLinkId" />
+			
+			<div>
+				<input id="closePerson" type="submit" value="" title="do not save changes" class="button" />
 				<input type="submit" value="" id="save">
 			</div>
 			
@@ -58,15 +75,11 @@
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
-		        $j('#close').click(function() {
-					$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 
+		        $j('#closePerson').click(function() {
+					$j('#EditTitleOrOccupationPersonDiv').block({ message: $j('#question') }); 
 					return false;
 				});
 
-				$j("#AddNewValue").click(function(){
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
-					return false;
-				});
 			});
 		</script>
 	</form:form>
