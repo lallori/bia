@@ -36,6 +36,7 @@ import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.peoplebase.EditSpousePersonCommand;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Marriage.MarriageTerm;
+import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -138,11 +139,23 @@ public class EditSpousePersonController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditSpousePersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if ((command != null) && ((command.getWifeId() > 0) || (command.getHusbandId() > 0))) {
+		if (command != null) {
 
 			if (command.getMarriageId().equals(0)) {
-				command.setStartYear(null);
-				command.setEndYear(null);
+				try {
+					People person = getPeopleBaseService().findPerson(command.getPersonId());
+					if (person.getGender().equals(Gender.M)) {
+						command.setHusbandId(person.getPersonId());
+					} else {
+						command.setWifeId(person.getPersonId());
+					}
+
+					command.setStartYear(null);
+					command.setEndYear(null);
+					command.setMarriageTerm(null);
+				} catch (ApplicationThrowable applicationThrowable) {
+					return new ModelAndView("error/EditSpousePerson", model);
+				}
 			} else {
 				try {
 					Marriage marriage = getPeopleBaseService().findMarriagePerson(command.getMarriageId());
@@ -156,6 +169,7 @@ public class EditSpousePersonController {
 					return new ModelAndView("error/EditSpousePerson", model);
 				}
 			}
+
 			// We need nameType enumeration to populate relative combo-box
 			model.put("marriageTerms", Marriage.MarriageTerm.values());
 
