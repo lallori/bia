@@ -28,11 +28,13 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditTitleOrOccupationPersonCommand;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -118,6 +120,12 @@ public class EditTitleOrOccupationPersonController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if ((command != null) && (command.getPersonId() > 0)) {
+			try {
+				List<Month> months = getPeopleBaseService().getMonths();
+				model.put("months", months);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowDocument", model);
+			}
 
 			if (command.getPrfLinkId().equals(0)) {
 				
@@ -129,7 +137,7 @@ public class EditTitleOrOccupationPersonController {
 				command.setEndYear(null);
 				command.setEndMonth(null);
 				command.setEndDay(null);
-				command.setPrefferedRole(null);
+				command.setPreferredRole(null);
 			} else {
 				try {
 					PoLink poLink = getPeopleBaseService().findTitleOrOccupationPerson(command.getPersonId(), command.getPrfLinkId());
@@ -137,6 +145,17 @@ public class EditTitleOrOccupationPersonController {
 					if (poLink.getTitleOccList() != null) {
 						command.setTitleOrOccupationDescription(poLink.getTitleOccList().getTitleOcc());
 						command.setTitleOccId(poLink.getTitleOccList().getTitleOccId());
+						command.setPreferredRole(poLink.getPreferredRole());
+						command.setStartYear(poLink.getStartYear());
+						command.setStartMonth(poLink.getStartMonth());
+						command.setStartDay(poLink.getStartDay());
+						command.setStartApprox(poLink.getStartApprox());
+						command.setStartUns(poLink.getStartUns());
+						command.setEndYear(poLink.getEndYear());
+						command.setEndMonth(poLink.getEndMonth());
+						command.setEndDay(poLink.getEndDay());
+						command.setEndApprox(poLink.getEndApprox());
+						command.setEndUns(poLink.getEndUns());
 					} else {
 						command.setTitleOrOccupationDescription(null);
 						command.setTitleOrOccupationDescription(null);

@@ -110,9 +110,10 @@ public class PoLink implements Serializable {
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer endDay;
 	
-	@Column (name="\"PRTAG\"", length=10)
-	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer prTag;
+	@Column (name="\"PRTAG\"", length=1, columnDefinition="tinyint", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
+	private Boolean preferredRole;
 	
 	@Column (name="\"PRLINKNOTES\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -126,7 +127,7 @@ public class PoLink implements Serializable {
 	@Column (name="\"STARTUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
-	private Boolean StartUns;
+	private Boolean startUns;
 	
 	@Column (name="\"ENDAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -343,15 +344,15 @@ public class PoLink implements Serializable {
 	/**
 	 * @return the prTag
 	 */
-	public Integer getPrTag() {
-		return prTag;
+	public Boolean getPreferredRole() {
+		return preferredRole;
 	}
 	
 	/**
 	 * @param prTag the prTag to set
 	 */
-	public void setPrTag(Integer prTag) {
-		this.prTag = prTag;
+	public void setPreferredRole(Boolean preferredRole) {
+		this.preferredRole = preferredRole;
 	}
 	
 	/**
@@ -386,14 +387,14 @@ public class PoLink implements Serializable {
 	 * @return the startUns
 	 */
 	public Boolean getStartUns() {
-		return StartUns;
+		return startUns;
 	}
 
 	/**
 	 * @param startUns the startUns to set
 	 */
 	public void setStartUns(Boolean startUns) {
-		StartUns = startUns;
+		this.startUns = startUns;
 	}
 
 	/**

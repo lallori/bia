@@ -39,170 +39,195 @@ public class EditTitleOrOccupationPersonCommand {
 	private Integer personId;
 	private Integer titleOccId;
 	private String titleOrOccupationDescription;
+	private Boolean preferredRole;
 	private Integer startDay;
 	private String startMonth;
 	private Integer startYear;
+	private Boolean startApprox;
+	private Boolean startUns;
 	private Integer endDay;
 	private String endMonth;
 	private Integer endYear;
-	private Integer prefferedRole;
-
-	/**
-	 * @param prfLinkId the prfLinkId to set
-	 */
-	public void setPrfLinkId(Integer prfLinkId) {
-		this.prfLinkId = prfLinkId;
-	}
-
+	private Boolean endApprox;
+	private Boolean endUns;
 	/**
 	 * @return the prfLinkId
 	 */
 	public Integer getPrfLinkId() {
 		return prfLinkId;
 	}
-
 	/**
-	 * @return the endDay
+	 * @param prfLinkId the prfLinkId to set
 	 */
-	public Integer getEndDay() {
-		return endDay;
+	public void setPrfLinkId(Integer prfLinkId) {
+		this.prfLinkId = prfLinkId;
 	}
-
 	/**
-	 * @return the endMonth
-	 */
-	public String getEndMonth() {
-		return endMonth;
-	}
-
-	/**
-	 * @return the endYear
-	 */
-	public Integer getEndYear() {
-		return endYear;
-	}
-
-	/**
-	 * This method returns personId property.
-	 * 
 	 * @return the personId
 	 */
 	public Integer getPersonId() {
 		return personId;
 	}
-
 	/**
-	 * @return the prefferedRole
+	 * @param personId the personId to set
 	 */
-	public Integer getPrefferedRole() {
-		return prefferedRole;
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
 	}
-
-	/**
-	 * @return the startDay
-	 */
-	public Integer getStartDay() {
-		return startDay;
-	}
-
-	/**
-	 * @return the startMonth
-	 */
-	public String getStartMonth() {
-		return startMonth;
-	}
-
-	/**
-	 * @return the startYear
-	 */
-	public Integer getStartYear() {
-		return startYear;
-	}
-
 	/**
 	 * @return the titleOccId
 	 */
 	public Integer getTitleOccId() {
 		return titleOccId;
 	}
-
-	/**
-	 * @return the titleOrOccupationDescription
-	 */
-	public String getTitleOrOccupationDescription() {
-		return titleOrOccupationDescription;
-	}
-
-	/**
-	 * @param endDay the endDay to set
-	 */
-	public void setEndDay(Integer endDay) {
-		this.endDay = endDay;
-	}
-
-	/**
-	 * @param endMonth the endMonth to set
-	 */
-	public void setEndMonth(String endMonth) {
-		this.endMonth = endMonth;
-	}
-
-	/**
-	 * @param endYear the endYear to set
-	 */
-	public void setEndYear(Integer endYear) {
-		this.endYear = endYear;
-	}
-
-	/**
-	 * This method sets personId property.
-	 * 
-	 * @param personId
-	 *            the personId to set
-	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
-	}
-
-	/**
-	 * @param prefferedRole the prefferedRole to set
-	 */
-	public void setPrefferedRole(Integer prefferedRole) {
-		this.prefferedRole = prefferedRole;
-	}
-
-	/**
-	 * @param startDay the startDay to set
-	 */
-	public void setStartDay(Integer startDay) {
-		this.startDay = startDay;
-	}
-
-	/**
-	 * @param startMonth the startMonth to set
-	 */
-	public void setStartMonth(String startMonth) {
-		this.startMonth = startMonth;
-	}
-
-	/**
-	 * @param startYear the startYear to set
-	 */
-	public void setStartYear(Integer startYear) {
-		this.startYear = startYear;
-	}
-
 	/**
 	 * @param titleOccId the titleOccId to set
 	 */
 	public void setTitleOccId(Integer titleOccId) {
 		this.titleOccId = titleOccId;
 	}
-
+	/**
+	 * @return the titleOrOccupationDescription
+	 */
+	public String getTitleOrOccupationDescription() {
+		return titleOrOccupationDescription;
+	}
 	/**
 	 * @param titleOrOccupationDescription the titleOrOccupationDescription to set
 	 */
 	public void setTitleOrOccupationDescription(String titleOrOccupationDescription) {
 		this.titleOrOccupationDescription = titleOrOccupationDescription;
+	}
+	/**
+	 * @return the preferredRole
+	 */
+	public Boolean getPreferredRole() {
+		return preferredRole;
+	}
+	/**
+	 * @param preferredRole the preferredRole to set
+	 */
+	public void setPreferredRole(Boolean preferredRole) {
+		this.preferredRole = preferredRole;
+	}
+	/**
+	 * @return the startDay
+	 */
+	public Integer getStartDay() {
+		return startDay;
+	}
+	/**
+	 * @param startDay the startDay to set
+	 */
+	public void setStartDay(Integer startDay) {
+		this.startDay = startDay;
+	}
+	/**
+	 * @return the startMonth
+	 */
+	public String getStartMonth() {
+		return startMonth;
+	}
+	/**
+	 * @param startMonth the startMonth to set
+	 */
+	public void setStartMonth(String startMonth) {
+		this.startMonth = startMonth;
+	}
+	/**
+	 * @return the startYear
+	 */
+	public Integer getStartYear() {
+		return startYear;
+	}
+	/**
+	 * @param startYear the startYear to set
+	 */
+	public void setStartYear(Integer startYear) {
+		this.startYear = startYear;
+	}
+	/**
+	 * @return the startApprox
+	 */
+	public Boolean getStartApprox() {
+		return startApprox;
+	}
+	/**
+	 * @param startApprox the startApprox to set
+	 */
+	public void setStartApprox(Boolean startApprox) {
+		this.startApprox = startApprox;
+	}
+	/**
+	 * @return the startUns
+	 */
+	public Boolean getStartUns() {
+		return startUns;
+	}
+	/**
+	 * @param startUns the startUns to set
+	 */
+	public void setStartUns(Boolean startUns) {
+		this.startUns = startUns;
+	}
+	/**
+	 * @return the endDay
+	 */
+	public Integer getEndDay() {
+		return endDay;
+	}
+	/**
+	 * @param endDay the endDay to set
+	 */
+	public void setEndDay(Integer endDay) {
+		this.endDay = endDay;
+	}
+	/**
+	 * @return the endMonth
+	 */
+	public String getEndMonth() {
+		return endMonth;
+	}
+	/**
+	 * @param endMonth the endMonth to set
+	 */
+	public void setEndMonth(String endMonth) {
+		this.endMonth = endMonth;
+	}
+	/**
+	 * @return the endYear
+	 */
+	public Integer getEndYear() {
+		return endYear;
+	}
+	/**
+	 * @param endYear the endYear to set
+	 */
+	public void setEndYear(Integer endYear) {
+		this.endYear = endYear;
+	}
+	/**
+	 * @return the endApprox
+	 */
+	public Boolean getEndApprox() {
+		return endApprox;
+	}
+	/**
+	 * @param endApprox the endApprox to set
+	 */
+	public void setEndApprox(Boolean endApprox) {
+		this.endApprox = endApprox;
+	}
+	/**
+	 * @return the endUns
+	 */
+	public Boolean getEndUns() {
+		return endUns;
+	}
+	/**
+	 * @param endUns the endUns to set
+	 */
+	public void setEndUns(Boolean endUns) {
+		this.endUns = endUns;
 	}
 }
