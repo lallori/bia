@@ -126,7 +126,8 @@ update docsources.tblAltNames set nameType = 'Maiden' where lower(nameType) = 'm
 update docsources.tblAltNames set nameType = 'Married' where lower(nameType) = 'married';
 update docsources.tblAltNames set nameType = 'Patronymic' where lower(nameType) = 'patronymic';
 update docsources.tblAltNames set nameType = 'SearchName' where lower(nameType) = 'searchname';
-
+-- Preferred Role must be a boolean column (tinyint)
+update docsources.tblPOLink set prtag = 1 where prtag =-1;
 
 -- VOLUMES 
 
