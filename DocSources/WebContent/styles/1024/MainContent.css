@@ -269,7 +269,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	opacity:0.5;
 }
 
-#close { /* Close button on bottom left  */
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother { /* Close button on bottom left  */
 	margin:5px auto auto 0px;
 	padding:0;
 	cursor:pointer;
@@ -1331,6 +1331,9 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin-left:310px;
 }
 
+#EditTitlesOccupationsPersonForm #startMonthLabel, #EditTitlesOccupationsPersonForm #startDayLabel, #EditTitlesOccupationsPersonForm #endYearLabel, #EditTitlesOccupationsPersonForm #endMonthLabel, #EditTitlesOccupationsPersonForm #endDayLabel, #AddTitlesOccupationsPersonForm #startMonthLabel, #AddTitlesOccupationsPersonForm #startDayLabel, #AddTitlesOccupationsPersonForm #endYearLabel, #AddTitlesOccupationsPersonForm #endMonthLabel, #AddTitlesOccupationsPersonForm #endDayLabel {
+	margin-left:0;
+}
 
 /* -------------------------------------- */
 /*

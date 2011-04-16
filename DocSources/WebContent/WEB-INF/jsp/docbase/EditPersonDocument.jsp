@@ -41,14 +41,14 @@
 		<form:hidden path="entryId"/>
 	</form:form>
 
-	<c:url var="searchPersonLinkableToDocumentUrl" value="/de/docbase/SearchPersonLinkableToDocument.json">
+	<c:url var="searchPersonLinkableToDocumentURL" value="/de/docbase/SearchPersonLinkableToDocument.json">
 		<c:param name="entryId" value="${command.entryId}" />
 	</c:url>
 
 	<script type="text/javascript"> 
 	    $j(document).ready(function() { 
 			var peopleDescription = $j('#personDescriptionAutoCompleter').autocompletePerson({ 
-			    serviceUrl:'${searchPersonLinkableToDocumentUrl}',
+			    serviceUrl:'${searchPersonLinkableToDocumentURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,

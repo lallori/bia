@@ -5,92 +5,103 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditSpousesPersonURL" value="/de/peoplebase/EditSpousesPerson.do">
-			<c:param name="personId"   value="${command.personId}" />
-		</c:url>
-		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+		<c:url var="EditParentsPersonURL" value="/de/peoplebase/EditParentsPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
 	</security:authorize>
 
-	<form:form id="EditNamesPersonForm" method="post" cssClass="edit">
+	<form:form id="EditMotherPersonForm" method="post" cssClass="edit">
 		<fieldset>
-			<legend><b>FATHER</b></legend>
+			<legend>
+				<b>MOTHER</b></legend>
 				<div>
-					<label id="nameFatherLabel" for="nameFather">Name:</label>
-					<input type="text" value="Pippo de' Pippi" class="input_25c" name="nameFather" id="fatherAutoCompleter"><!-- Autocompleter soltanto con nomi di maschi -->
+					<form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error">Name:</form:label>
+					<form:input id="motherAutocompleter" path="motherDescription" cssClass="input_25c" />
 				</div>
 				
 				<div> 
 					<b>Birth:</b>
-					<label id="yearBirthLabel" for="yearBirth">Year</label>
-					<input type="text" disabled="disabled" maxlength="4" value="1564" class="input_4c_disabled" name="yearBirth" id="yearBirth">
-					<label id="monthBirthLabel" for="monthBirth">Month</label>
-					<select disabled="disabled" class="selectform_disabled" name="monthBirth" id="monthBirth">
-						<option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option value="May">May</option><option selected="selected" value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option>
-					</select>
-					<label id="dayBirthLabel" for="dayBirth">Day</label>
-					<input type="text" disabled="disabled" maxlength="2" value="12" class="input_2c_disabled" name="dayBirth" id="dayBirth">
+					<form:label id="bornYearLabel" for="bornYear" path="bornYear">Year</form:label>
+					<form:input path="bornYear" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
+					<form:label id="bornMonthLabel" for="bornMonthNum" path="bornMonthNum">Month</form:label>
+					<form:select id="bornMonthNum" disabled="disabled" path="bornMonthNum" cssClass="selectform_disabled"/>
+					<form:label id="bornDayLabel" for="bornDay" path="bornDay">Day</form:label>
+					<form:input path="bornDay" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
 				</div>
 				
 				<div>
 					<b>Death:</b>
-					<label id="yearDeathLabel" for="yearDeath">Year</label>
-					<input type="text" disabled="disabled" maxlength="4" value="1615" class="input_4c_disabled" name="yearDeath" id="yearDeath">
-					<label id="monthDeathLabel" for="monthDeath">Month</label>
-					<select disabled="disabled" class="selectform_disabled" name="monthDeath" id="monthDeath">
-						<option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option selected="selected" value="November">November</option><option value="December">December</option>
-					</select>
-					<label id="dayDeathLabel" for="dayDeath">Day</label>
-					<input type="text" maxlength="2" value="05" class="input_2c_disabled" name="dayDeath" id="dayDeath">
+					<form:label id="deathYearLabel" for="deathYear" path="bornYear">Year</form:label>
+					<form:input path="deathYear" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
+					<form:label id="deathMonthLabel" for="deathMonthNum" path="deathMonthNum">Month</form:label>
+					<form:select id="deathMonthNum" disabled="disabled" path="deathMonthNum" cssClass="selectform_disabled"/>
+					<form:label id="deathDayLabel" for="deathDay" path="deathDay">Day</form:label>
+					<form:input path="deathDay" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
 				</div>
-				
-				<div><label id="bioNotesLabel" for="bioNotes">Bio notes:</label></div>
-				<div><textarea disabled="disabled" class="txtarea_disabled" name="bioNotes" id="bioNotes"></textarea></div>
-				
 				
 				<div>
-					<input type="submit" title="Do not save changes" value="" id="close">
-					<input type="submit" value="" id="save">
+					<form:label id="bioNotesLabel" for="bioNotes" path="bioNotes">Bio notes:</form:label>
+				</div>
+				<div>
+					<form:textarea path="bioNotes" readonly="true" cssClass="txtarea_disabled" />
 				</div>
 				
+				<div>
+					<input id="closeFather" type="submit" value="" title="do not save changes" class="button" />
+					<input id="save" type="submit" value="" class="button"/>
+				</div>
+				
+				<form:hidden path="motherId"/>
+				<form:hidden path="personId"/>
 			</fieldset>	
-		<script type="text/javascript">
-			$j(document).ready(function() {
-		        $j('#close').click(function() {
-					$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 
-					return false;
-				});
-
-				$j("#AddNewValue").click(function(){
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
-					return false;
-				});
-			});
-		</script>
 	</form:form>
 
-<div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
-	<input type="button" id="yes" value="Yes" /> 
-	<input type="button" id="no" value="No" /> 
-</div>
+	<c:url var="SearchMotherLinkableToPersonURL" value="/de/peoplebase/SearchMotherLinkableToPerson.json">
+		<c:param name="personId" value="${command.personId}" />
+	</c:url>
 
-<script type="text/javascript">
-	$j(document).ready(function() {
-		$j('#no').click(function() { 
-			$j.unblockUI();
-			$j(".blockUI").fadeOut("slow");
-			return false; 
-		}); 
-        
-		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
-				$j("#body_left").html(html);
-			}});
-				
-			return false; 
-		}); 
-     
-	});
-</script>
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			var motherDescription = $j('#motherAutocompleter').autocompletePerson({ 
+			    serviceUrl:'${SearchMotherLinkableToPersonURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $j('#motherId').val(data); }
+			  });
+
+			$j('#closeFather').click(function() {
+				$j('#EditParentPersonDiv').block({ message: $j('#question') }); 
+				return false;
+			});
+		});
+	</script>
+
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>discard changes?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${EditParentsPersonURL}', cache: false, success:function(html) { 
+					$j("#EditParentsPersonDiv").html(html);
+				}});
+					
+				return false; 
+			}); 
+	     
+		});
+	</script>

@@ -25,7 +25,7 @@
 			</legend>
 			<div>
 				<form:label id="childDescriptionLabel" for="childDescription" path="childDescription" cssErrorClass="error">Name:</form:label>
-				<form:input path="childDescription" class="input_25c" />
+				<form:input id="childDescriptionAutoCompleter" path="childDescription" class="input_25c" />
 			</div>
 			<div>
 				<form:label id="bornYearLabel" for="bornYear" path="bornYear" cssErrorClass="error">Born:</form:label>
@@ -36,7 +36,7 @@
 				<form:input path="ageAtDeath" cssClass="input_3c" maxlength="2"/>
 			</div>
 			<div>
-				<input id="closePerson" type="submit" value="" title="do not save changes" class="button" />
+				<input id="closeChild" type="submit" value="" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="" class="button"/>
 			</div>
 		</fieldset>	
@@ -45,6 +45,37 @@
 		<form:hidden path="parentId"/>
 	</form:form>
 	
+	<c:url var="SearchChildLinkableToPersonURL" value="/de/peoplebase/SearchChildLinkableToPerson.json">
+		<c:param name="personId" value="${command.parentId}" />
+	</c:url>
+
+	<script type="text/javascript"> 
+	    $j(document).ready(function() { 
+			var childDescription = $j('#childDescriptionAutoCompleter').autocompletePerson({ 
+			    serviceUrl:'${SearchChildLinkableToPersonURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $j('#personId').val(data); }
+			  });
+
+			$j('#closeChild').click(function(e) {
+				$j('#EditChildPersonDiv').block({ message: $j('#question') }); 
+	            return false;
+			});
+
+			$j("#EditChildPersonForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#EditChildPersonDiv").load('${EditChildPersonURL}');
+				}})
+				return false;
+			});
+		});					  
+	</script>
 
 <div id="question" style="display:none; cursor: default"> 
 	<h1>discard changes?</h1> 
@@ -62,7 +93,7 @@
         
 		$j('#yes').click(function() { 
 			$j.ajax({ url: '${EditChildrenPersonURL}', cache: false, success:function(html) { 
-				$j("#body_left").html(html);
+				$j("#EditChildrenPersonDiv").html(html);
 			}});
 				
 			return false; 

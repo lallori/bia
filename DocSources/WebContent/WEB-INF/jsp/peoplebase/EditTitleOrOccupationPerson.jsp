@@ -25,7 +25,7 @@
 			</legend>
 			<div>
 				<form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">New Title &amp; Occ:</form:label>
-				<form:input path="titleOrOccupationDescription" cssClass="input_23c"/>
+				<form:input id="titleOrOccupationDescription" path="titleOrOccupationDescription" cssClass="input_23c"/>
 			</div>
 			<div>
 				<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role:</form:label>
@@ -67,44 +67,60 @@
 			<form:hidden path="prfLinkId" />
 			
 			<div>
-				<input id="closePerson" type="submit" value="" title="do not save changes" class="button" />
+				<input id="closeTitleOrOccupation" type="submit" value="" title="do not save changes" class="button" />
 				<input type="submit" value="" id="save">
 			</div>
 			
 		</fieldset>	
-	
-		<script type="text/javascript">
-			$j(document).ready(function() {
-		        $j('#closePerson').click(function() {
-					$j('#EditTitleOrOccupationPersonDiv').block({ message: $j('#question') }); 
-					return false;
-				});
-
-			});
-		</script>
 	</form:form>
+	
+	<c:url var="SearchTitleOrOccupationURL" value="/de/peoplebase/SearchTitleOrOccupation.json">
+		<c:param name="personId" value="${command.personId}"></c:param>
+	</c:url>
 
-<div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
-	<input type="button" id="yes" value="Yes" /> 
-	<input type="button" id="no" value="No" /> 
-</div>
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			var titleOrOccupationDescription = $j('#titleOrOccupationDescription').autocompleteTitle({ 
+			    serviceUrl:'${SearchTitleOrOccupationURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $j('#titleOccId').val(data); }
+			});
 
-<script type="text/javascript">
-	$j(document).ready(function() {
-		$j('#no').click(function() { 
-			$j.unblockUI();
-			$j(".blockUI").fadeOut("slow");
-			return false; 
-		}); 
-        
-		$j('#yes').click(function() { 
-			$j.ajax({ url: '${EditTitlesOrOccupationsPersonURL}', cache: false, success:function(html) { 
-				$j("#EditTitlesOrOccupationsPersonDiv").html(html);
-			}});
-				
-			return false; 
-		}); 
-     
-	});
-</script>
+			$j('#closeTitleOrOccupation').click(function() {
+				$j('#EditTitleOrOccupationPersonDiv').block({ message: $j('#question') }); 
+				return false;
+			});
+
+		});
+	</script>
+
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>discard changes?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${EditTitlesOrOccupationsPersonURL}', cache: false, success:function(html) { 
+					$j("#EditTitlesOrOccupationsPersonDiv").html(html);
+				}});
+					
+				return false; 
+			}); 
+	     
+		});
+	</script>

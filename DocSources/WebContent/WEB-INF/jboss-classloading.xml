@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+Add support for persistence 2 schema :
+ 1 - copy persistence_2_0.xsd to <JBOSS_51_INSTALL_DIR>/docs/schema directory
+     Use curl http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd > 
+     persistence_2_0.xsd (or equivalent) to get the required XSD file
+ 
+ 2 - Modify <JBOSS_60_INSTALL_DIR>/server/default/deployers/metadata-deployer-jboss-beans.xml
+     to add the following lines after persistence_1_0.xsd entry:
+          <entry>
+             <key>persistence_2_0.xsd</key>
+              <value>org.jboss.metadata.jpa.spec.PersistenceMetaData</value>
+          </entry>
+-->
+<classloading xmlns="urn:jboss:classloading:1.0"
+              export-all="NON_EMPTY"
+              import-all="true"
+              parent-first="false">
+</classloading>

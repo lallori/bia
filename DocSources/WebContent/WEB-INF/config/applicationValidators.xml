@@ -60,6 +60,30 @@
 	</bean>
 
 	<!-- People base validator -->
+	<bean id="deleteChildPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteChildPersonValidator">
+        <description>Delete Child Person Validator.</description>
+	</bean>
+
+	<bean id="deleteFatherPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteFatherPersonValidator">
+        <description>Delete Father Person Validator.</description>
+	</bean>
+
+	<bean id="deleteMotherPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteMotherPersonValidator">
+        <description>Delete Mother Person Validator.</description>
+	</bean>
+
+	<bean id="deleteNamePersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteNamePersonValidator">
+        <description>Delete Name Person Validator.</description>
+	</bean>
+
+	<bean id="deleteSpousePersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteSpousePersonValidator">
+        <description>Delete Spouse Person Validator.</description>
+	</bean>
+
+	<bean id="deleteTitleOrOccupationPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteTitleOrOccupationPersonValidator">
+        <description>Delete Title Or Occupation Validator.</description>
+	</bean>
+
 	<bean id="editDetailsPersonValidator" class="org.medici.docsources.validator.peoplebase.EditDetailsPersonValidator">
         <description>Edit Details Person Validator.</description>
 	</bean>

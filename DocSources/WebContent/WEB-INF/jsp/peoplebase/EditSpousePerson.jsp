@@ -50,26 +50,25 @@
 			</div>
 			
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="closeSpouse" type="submit" value="" title="do not save changes" class="button" />
 				<input type="submit" value="" id="save">
 			</div>
-			
 		</fieldset>	
-	
-		<script type="text/javascript">
-			$j(document).ready(function() {
-		        $j('#close').click(function() {
-					$j('#EditNamesPersonDiv').block({ message: $j('#question') }); 
-					return false;
-				});
-
-				$j("#AddNewValue").click(function(){
-					$j("#EditNamePersonDiv").load($j(this).attr("href"));
-					return false;
-				});
-			});
-		</script>
 	</form:form>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+	        $j('#closeSpouse').click(function() {
+				$j('#EditSpousePersonDiv').block({ message: $j('#question') }); 
+				return false;
+			});
+
+			$j("#AddNewValue").click(function(){
+				$j("#EditNamePersonDiv").load($j(this).attr("href"));
+				return false;
+			});
+		});
+	</script>
 
 <div id="question" style="display:none; cursor: default"> 
 	<h1>discard changes?</h1> 
@@ -86,8 +85,8 @@
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
-				$j("#body_left").html(html);
+			$j.ajax({ url: '${EditSpousesPersonURL}', cache: false, success:function(html) { 
+				$j("#EditSpousesPersonDiv").html(html);
 			}});
 				
 			return false; 
