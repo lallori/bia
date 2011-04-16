@@ -142,6 +142,117 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> searchChildLinkableToDocument(Integer personId, String searchText) throws PersistenceException {
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
+	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
+	        }
+
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> searchFatherLinkableToDocument(String searchText) throws PersistenceException {
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
+	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
+	        }
+
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> searchMotherLinkableToDocument(String searchText) throws PersistenceException {
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+
+		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
+	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
+	        }
+
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);

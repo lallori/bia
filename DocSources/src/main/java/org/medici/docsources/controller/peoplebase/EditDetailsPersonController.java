@@ -36,7 +36,9 @@ import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -97,12 +99,45 @@ public class EditDetailsPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
+			People person = new People(command.getPersonId());
+			person.setResearcher(command.getResearcher());
+			person.setFirst(command.getFirstName());
+			person.setSucNum(command.getSucNum());
+			person.setMidPrefix(command.getMidPrefix());
+			person.setMiddle(command.getMiddle());
+			person.setLastPrefix(command.getLastPrefix());
+			person.setLast(command.getLast());
+			person.setPostLastPrefix(command.getPostLastPrefix());
+			person.setPostLast(command.getPostLast());
+			person.setGender(command.getGender());
+			person.setBornYear(command.getBornYear());
+			person.setBornMonth((command.getBornMonth() != null) ? new Month(command.getBornMonth()) : null);
+			person.setBornDay(command.getBornDay());
+			person.setBornApprox(command.getBornApprox());
+			person.setBornDateBc(command.getBornDateBc());
+			person.setBornPlace(new Place(command.getBornPlaceId()));
+			person.setActiveStart(command.getActiveStart());
+			person.setBornPlaceUnsure(command.getBornPlaceUnsure());
+			person.setDeathYear(command.getDeathYear());
+			person.setDeathMonth((command.getBornMonth() != null) ? new Month(command.getBornMonth()) : null);
+			person.setDeathDay(command.getDeathDay());
 
-			return new ModelAndView("peoplebase/modifyperson", model);
+			try {
+				if (command.getPersonId().equals(0)) {
+					person = getPeopleBaseService().addNewPerson(person);
+					model.put("person", person);
+
+					return new ModelAndView("peoplebase/ShowPerson", model);
+				} else {
+					person = getPeopleBaseService().editDetailsPerson(person);
+					model.put("person", person);
+
+					return new ModelAndView("peoplebase/ShowDetailsPerson", model);
+				}
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsPerson", model);
+			}
 		}
-
 	}
 
 	/**

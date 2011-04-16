@@ -36,23 +36,152 @@ package org.medici.docsources.command.peoplebase;
  */
 public class EditFatherPersonCommand {
 	private Integer personId;
-
+	private Integer fatherId;
+	private String fatherDescription;
+	private Integer bornYear;
+	private Integer bornMonthNum;
+	private Integer bornDay;
+	private Integer deathYear;
+	private Integer deathMonthNum;
+	private Integer deathDay;
+	private String bioNotes;
+	
 	/**
-	 * This method returns personId property.
-	 * 
 	 * @return the personId
 	 */
 	public Integer getPersonId() {
 		return personId;
 	}
-
+	
 	/**
-	 * This method sets personId property.
-	 * 
-	 * @param personId
-	 *            the personId to set
+	 * @param personId the personId to set
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+	
+	/**
+	 * @return the fatherId
+	 */
+	public Integer getFatherId() {
+		return fatherId;
+	}
+	
+	/**
+	 * @param fatherId the fatherId to set
+	 */
+	public void setFatherId(Integer fatherId) {
+		this.fatherId = fatherId;
+	}
+	
+	/**
+	 * @return the fatherDescription
+	 */
+	public String getFatherDescription() {
+		return fatherDescription;
+	}
+	/**
+	 * @param fatherDescription the fatherDescription to set
+	 */
+	public void setFatherDescription(String fatherDescription) {
+		this.fatherDescription = fatherDescription;
+	}
+	
+	/**
+	 * @return the bornYear
+	 */
+	public Integer getBornYear() {
+		return bornYear;
+	}
+	
+	/**
+	 * @param bornYear the bornYear to set
+	 */
+	public void setBornYear(Integer bornYear) {
+		this.bornYear = bornYear;
+	}
+	
+	/**
+	 * @return the bornMonthNum
+	 */
+	public Integer getBornMonthNum() {
+		return bornMonthNum;
+	}
+	
+	/**
+	 * @param bornMonthNum the bornMonthNum to set
+	 */
+	public void setBornMonthNum(Integer bornMonthNum) {
+		this.bornMonthNum = bornMonthNum;
+	}
+	
+	/**
+	 * @return the bornDay
+	 */
+	public Integer getBornDay() {
+		return bornDay;
+	}
+	
+	/**
+	 * @param bornDay the bornDay to set
+	 */
+	public void setBornDay(Integer bornDay) {
+		this.bornDay = bornDay;
+	}
+	
+	/**
+	 * @return the deathYear
+	 */
+	public Integer getDeathYear() {
+		return deathYear;
+	}
+	
+	/**
+	 * @param deathYear the deathYear to set
+	 */
+	public void setDeathYear(Integer deathYear) {
+		this.deathYear = deathYear;
+	}
+	
+	/**
+	 * @return the deathMonthNum
+	 */
+	public Integer getDeathMonthNum() {
+		return deathMonthNum;
+	}
+
+	/**
+	 * @param deathMonthNum the deathMonthNum to set
+	 */
+	public void setDeathMonthNum(Integer deathMonthNum) {
+		this.deathMonthNum = deathMonthNum;
+	}
+	
+	/**
+	 * @return the deathDay
+	 */
+	public Integer getDeathDay() {
+		return deathDay;
+	}
+	
+	/**
+	 * @param deathDay the deathDay to set
+	 */
+	public void setDeathDay(Integer deathDay) {
+		this.deathDay = deathDay;
+	}
+
+	/**
+	 * @return the bioNotes
+	 */
+	public String getBioNotes() {
+		return bioNotes;
+	}
+	
+	/**
+	 * @param bioNotes the bioNotes to set
+	 */
+	public void setBioNotes(String bioNotes) {
+		this.bioNotes = bioNotes;
 	}
 }

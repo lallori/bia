@@ -33,6 +33,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditMotherPersonCommand;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -113,7 +115,21 @@ public class EditMotherPersonController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditMotherPersonCommand command) {
-		return new ModelAndView("peoplebase/modifyperson");
+		Map<String, Object> model = new HashMap<String, Object>();
+		if ((command != null) && (command.getPersonId() > 0)) {
+			try {
+				People person = getPeopleBaseService().findPerson(command.getPersonId());
+				model.put("person", person);
+
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditMotherPerson", model);
+			}
+
+		} else {
+			model.put("person", new People(0));
+		}
+
+		return new ModelAndView("peoplebase/EditMotherPerson", model);
 	}
 
 	/**

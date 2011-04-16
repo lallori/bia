@@ -200,17 +200,17 @@ public class People implements Serializable {
 	@Column (name="\"BAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
-	private Boolean bApprox;
+	private Boolean bornApprox;
 	
 	@Column (name="\"BDATEBC\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
-	private Boolean bDateBc;
+	private Boolean bornDateBc;
 	
 	@Column (name="\"BPLACEUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
-	private Boolean bPlaceUns;
+	private Boolean bornPlaceUnsure;
 	
 	@Column (name="\"DAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -758,50 +758,50 @@ public class People implements Serializable {
 
 
 	/**
-	 * @return the bApprox
+	 * @return the bornApprox
 	 */
-	public Boolean getbApprox() {
-		return bApprox;
+	public Boolean getBornApprox() {
+		return bornApprox;
 	}
 
 
 	/**
-	 * @param bApprox the bApprox to set
+	 * @param bornApprox the bornApprox to set
 	 */
-	public void setbApprox(Boolean bApprox) {
-		this.bApprox = bApprox;
+	public void setBornApprox(Boolean bornApprox) {
+		this.bornApprox = bornApprox;
 	}
 
 
 	/**
-	 * @return the bDateBc
+	 * @return the bornDateBc
 	 */
-	public Boolean getbDateBc() {
-		return bDateBc;
+	public Boolean getBornDateBc() {
+		return bornDateBc;
 	}
 
 
 	/**
-	 * @param bDateBc the bDateBc to set
+	 * @param bornDateBc the bornDateBc to set
 	 */
-	public void setbDateBc(Boolean bDateBc) {
-		this.bDateBc = bDateBc;
+	public void setBornDateBc(Boolean bornDateBc) {
+		this.bornDateBc = bornDateBc;
 	}
 
 
 	/**
-	 * @return the bPlaceUns
+	 * @return the bornPlaceUnsure
 	 */
-	public Boolean getbPlaceUns() {
-		return bPlaceUns;
+	public Boolean getBornPlaceUnsure() {
+		return bornPlaceUnsure;
 	}
 
 
 	/**
-	 * @param bPlaceUns the bPlaceUns to set
+	 * @param bornPlaceUnsure the bornPlaceUnsure to set
 	 */
-	public void setbPlaceUns(Boolean bPlaceUns) {
-		this.bPlaceUns = bPlaceUns;
+	public void setBornPlaceUnsure(Boolean bornPlaceUnsure) {
+		this.bornPlaceUnsure = bornPlaceUnsure;
 	}
 
 

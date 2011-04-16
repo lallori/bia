@@ -109,6 +109,22 @@ public class AltName implements Serializable{
 	private String notes;
 
 	/**
+	 * Default constructor.
+	 * 
+	 */
+	public AltName() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param nameId
+	 */
+	public AltName(Integer nameId) {
+		setNameId(nameId);
+	}
+
+	/**
 	 * @return the nameId
 	 */
 	public Integer getNameId() {

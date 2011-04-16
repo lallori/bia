@@ -57,7 +57,7 @@ public class DeleteSpousePersonController {
 	private PeopleBaseService peopleBaseService;
 
 	@Autowired(required = false)
-	@Qualifier("deletePersonDocumentValidator")
+	@Qualifier("deleteSpousePersonValidator")
 	private Validator validator;
 
 	/**

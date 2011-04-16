@@ -1,5 +1,5 @@
 /*
- * DeleteNamePersonCommand.java
+ * DeleteTitleOrOccupationPersonCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -28,15 +28,14 @@
 package org.medici.docsources.command.peoplebase;
 
 /**
- * Command bean for action "Delete Name Person".
+ * Command bean for action "Delete Title Or Occupation Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  * @see org.medici.docsources.controller.peoplebase.DeleteNamePersonController
  */
-public class DeleteNamePersonCommand {
+public class DeleteTitleOrOccupationPersonCommand {
 	private Integer personId;
-	private Integer nameId;
 
 	/**
 	 * This method returns personId property.
@@ -55,19 +54,5 @@ public class DeleteNamePersonCommand {
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
-	}
-
-	/**
-	 * @param nameId the nameId to set
-	 */
-	public void setNameId(Integer nameId) {
-		this.nameId = nameId;
-	}
-
-	/**
-	 * @return the nameId
-	 */
-	public Integer getNameId() {
-		return nameId;
 	}
 }

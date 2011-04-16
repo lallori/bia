@@ -54,13 +54,13 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/DeleteChildDocument")
+@RequestMapping("/de/peoplebase/DeleteChildPerson")
 public class DeleteChildPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
 	@Autowired(required = false)
-	@Qualifier("deletePersonDocumentValidator")
+	@Qualifier("deleteChildDocumentValidator")
 	private Validator validator;
 
 	/**
@@ -94,13 +94,18 @@ public class DeleteChildPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			People child = new People(command.getChildId());
+			People person = new People(command.getChildId());
+			if (!ObjectUtils.toString(command.getFatherId()).equals("")) {
+				person.setFather(new People(command.getChildId()));
+			} else if (!ObjectUtils.toString(command.getMotherId()).equals("")) {
+				person.setMother(new People(command.getMotherId()));
+			}
 
 			try {
 				if (!ObjectUtils.toString(command.getFatherId()).equals("")) {
-					getPeopleBaseService().deleteFatherFromChildPerson(child);
+					getPeopleBaseService().deleteFatherFromPerson(person);
 				} else {
-					getPeopleBaseService().deleteMotherFromChildPerson(child);
+					getPeopleBaseService().deleteMotherFromPerson(person);
 				}
 
 				return new ModelAndView("response/OK", model);

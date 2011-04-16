@@ -109,6 +109,87 @@ public class AjaxController {
 	}
 
 	/**
+	 * This method returns a list of ipotetical children for a person. 
+	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/SearchChildLinkableToPerson", method = RequestMethod.GET)
+	public ModelAndView searchChildLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<People> people = getPeopleBaseService().searchChildLinkableToPerson(personId, query);
+			model.put("query", query);
+			model.put("count", people.size());
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * This method returns a list of ipotetical children for a person. 
+	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/SearchFatherLinkableToPerson", method = RequestMethod.GET)
+	public ModelAndView searchFatherLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<People> people = getPeopleBaseService().searchFatherLinkableToPerson(personId, query);
+			model.put("query", query);
+			model.put("count", people.size());
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * This method returns a list of ipotetical children for a person. 
+	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/SearchMotherLinkableToPerson", method = RequestMethod.GET)
+	public ModelAndView searchMotherLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<People> people = getPeopleBaseService().searchMotherLinkableToPerson(personId, query);
+			model.put("query", query);
+			model.put("count", people.size());
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
 	 * @param peopleBaseService the peopleBaseService to set
 	 */
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {

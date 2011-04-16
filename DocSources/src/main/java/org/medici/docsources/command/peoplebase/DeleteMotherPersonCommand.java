@@ -36,6 +36,7 @@ package org.medici.docsources.command.peoplebase;
  */
 public class DeleteMotherPersonCommand {
 	private Integer personId;
+	private Integer motherId;
 
 	/**
 	 * This method returns personId property.
@@ -54,5 +55,19 @@ public class DeleteMotherPersonCommand {
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+
+	/**
+	 * @param motherId the motherId to set
+	 */
+	public void setMotherId(Integer motherId) {
+		this.motherId = motherId;
+	}
+
+	/**
+	 * @return the motherId
+	 */
+	public Integer getMotherId() {
+		return motherId;
 	}
 }

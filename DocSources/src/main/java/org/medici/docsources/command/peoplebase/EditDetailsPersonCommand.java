@@ -60,399 +60,372 @@ public class EditDetailsPersonCommand {
 	//Gender:
 	private Gender gender;
 	// Birth Year 
-	private Integer bYear;
+	private Integer bornYear;
 	// Birth Month
-	private Month bMonth;
+	private Integer bornMonth;
 	// Birth Day
-	private Integer bDay;
+	private Integer bornDay;
 	// Birth Approx 
-	private Boolean bApprox;
+	private Boolean bornApprox;
 	// Birth BC?
-	private Boolean bDateBc;
+	private Boolean bornDateBc;
 	// Birth Place:
-	private Integer bPlace;
+	private Integer bornPlaceId;
+	// Birth Place:
+	private String bornPlaceDescription;
 	// Birth Active Start: 
 	private String activeStart;
 	// Birth Unsure
-	private Boolean bUnsure;
+	private Boolean bornPlaceUnsure;
 	// Death Year 
-	private Integer dYear;
+	private Integer deathYear;
 	// Death Month
-	private Month dMonth;
+	private Month deathMonth;
 	// Death Day
-	private Integer dDay;
+	private Integer deathDay;
 	// Death Approx 
-	private Boolean dApprox;
+	private Boolean deathApprox;
 	// Death BC?
-	private Boolean dDateBc;
+	private Boolean deathDateBc;
 	// Death Place:
-	private Integer dPlace;
+	private Integer deathPlace;
 	// Death Unsure
-	private Boolean dUnsure;
-
+	private Boolean deathPlaceUnsure;
 	/**
 	 * @return the personId
 	 */
 	public Integer getPersonId() {
 		return personId;
 	}
-	
 	/**
 	 * @param personId the personId to set
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
 	}
-	
-	public void setResearcher(String researcher) {
-		this.researcher = researcher;
-	}
-
+	/**
+	 * @return the researcher
+	 */
 	public String getResearcher() {
 		return researcher;
 	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
+	/**
+	 * @param researcher the researcher to set
+	 */
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
 	}
-
+	/**
+	 * @return the dateCreated
+	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 	/**
 	 * @return the firstName
 	 */
 	public String getFirstName() {
 		return firstName;
 	}
-	
 	/**
 	 * @param firstName the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
 	/**
 	 * @return the sucNum
 	 */
 	public String getSucNum() {
 		return sucNum;
 	}
-	
 	/**
 	 * @param sucNum the sucNum to set
 	 */
 	public void setSucNum(String sucNum) {
 		this.sucNum = sucNum;
 	}
-	
 	/**
 	 * @return the midPrefix
 	 */
 	public String getMidPrefix() {
 		return midPrefix;
 	}
-	
 	/**
 	 * @param midPrefix the midPrefix to set
 	 */
 	public void setMidPrefix(String midPrefix) {
 		this.midPrefix = midPrefix;
 	}
-	
 	/**
 	 * @return the middle
 	 */
 	public String getMiddle() {
 		return middle;
 	}
-	
 	/**
 	 * @param middle the middle to set
 	 */
 	public void setMiddle(String middle) {
 		this.middle = middle;
 	}
-	
 	/**
 	 * @return the lastPrefix
 	 */
 	public String getLastPrefix() {
 		return lastPrefix;
 	}
-	
 	/**
 	 * @param lastPrefix the lastPrefix to set
 	 */
 	public void setLastPrefix(String lastPrefix) {
 		this.lastPrefix = lastPrefix;
 	}
-	
 	/**
 	 * @return the last
 	 */
 	public String getLast() {
 		return last;
 	}
-	
 	/**
 	 * @param last the last to set
 	 */
 	public void setLast(String last) {
 		this.last = last;
 	}
-	
 	/**
 	 * @return the postLastPrefix
 	 */
 	public String getPostLastPrefix() {
 		return postLastPrefix;
 	}
-	
 	/**
 	 * @param postLastPrefix the postLastPrefix to set
 	 */
 	public void setPostLastPrefix(String postLastPrefix) {
 		this.postLastPrefix = postLastPrefix;
 	}
-	
 	/**
 	 * @return the postLast
 	 */
 	public String getPostLast() {
 		return postLast;
 	}
-	
 	/**
 	 * @param postLast the postLast to set
 	 */
 	public void setPostLast(String postLast) {
 		this.postLast = postLast;
 	}
-	
 	/**
 	 * @return the gender
 	 */
 	public Gender getGender() {
 		return gender;
 	}
-	
 	/**
 	 * @param gender the gender to set
 	 */
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	
 	/**
-	 * @return the bYear
+	 * @return the bornYear
 	 */
-	public Integer getbYear() {
-		return bYear;
+	public Integer getBornYear() {
+		return bornYear;
 	}
-	
 	/**
-	 * @param bYear the bYear to set
+	 * @param bornYear the bornYear to set
 	 */
-	public void setbYear(Integer bYear) {
-		this.bYear = bYear;
+	public void setBornYear(Integer bornYear) {
+		this.bornYear = bornYear;
 	}
-	
 	/**
-	 * @return the bMonth
+	 * @return the bornMonth
 	 */
-	public Month getbMonth() {
-		return bMonth;
+	public Integer getBornMonth() {
+		return bornMonth;
 	}
-	
 	/**
-	 * @param bMonth the bMonth to set
+	 * @param bornMonth the bornMonth to set
 	 */
-	public void setbMonth(Month bMonth) {
-		this.bMonth = bMonth;
+	public void setBornMonth(Integer bornMonth) {
+		this.bornMonth = bornMonth;
 	}
-	
 	/**
-	 * @return the bDay
+	 * @return the bornDay
 	 */
-	public Integer getbDay() {
-		return bDay;
+	public Integer getBornDay() {
+		return bornDay;
 	}
-	
 	/**
-	 * @param bDay the bDay to set
+	 * @param bornDay the bornDay to set
 	 */
-	public void setbDay(Integer bDay) {
-		this.bDay = bDay;
+	public void setBornDay(Integer bornDay) {
+		this.bornDay = bornDay;
 	}
-	
 	/**
-	 * @return the bApprox
+	 * @return the bornApprox
 	 */
-	public Boolean getbApprox() {
-		return bApprox;
+	public Boolean getBornApprox() {
+		return bornApprox;
 	}
-	
 	/**
-	 * @param bApprox the bApprox to set
+	 * @param bornApprox the bornApprox to set
 	 */
-	public void setbApprox(Boolean bApprox) {
-		this.bApprox = bApprox;
+	public void setBornApprox(Boolean bornApprox) {
+		this.bornApprox = bornApprox;
 	}
-	
 	/**
-	 * @return the bDateBc
+	 * @return the bornDateBc
 	 */
-	public Boolean getbDateBc() {
-		return bDateBc;
+	public Boolean getBornDateBc() {
+		return bornDateBc;
 	}
-	
 	/**
-	 * @param bDateBc the bDateBc to set
+	 * @param bornDateBc the bornDateBc to set
 	 */
-	public void setbDateBc(Boolean bDateBc) {
-		this.bDateBc = bDateBc;
+	public void setBornDateBc(Boolean bornDateBc) {
+		this.bornDateBc = bornDateBc;
 	}
-	
 	/**
-	 * @return the bPlace
+	 * @return the bornPlaceId
 	 */
-	public Integer getbPlace() {
-		return bPlace;
+	public Integer getBornPlaceId() {
+		return bornPlaceId;
 	}
-	
 	/**
-	 * @param bPlace the bPlace to set
+	 * @param bornPlaceId the bornPlaceId to set
 	 */
-	public void setbPlace(Integer bPlace) {
-		this.bPlace = bPlace;
+	public void setBornPlaceId(Integer bornPlaceId) {
+		this.bornPlaceId = bornPlaceId;
 	}
-	
+	/**
+	 * @param bornPlaceDescription the bornPlaceDescription to set
+	 */
+	public void setBornPlaceDescription(String bornPlaceDescription) {
+		this.bornPlaceDescription = bornPlaceDescription;
+	}
+	/**
+	 * @return the bornPlaceDescription
+	 */
+	public String getBornPlaceDescription() {
+		return bornPlaceDescription;
+	}
 	/**
 	 * @return the activeStart
 	 */
 	public String getActiveStart() {
 		return activeStart;
 	}
-	
 	/**
 	 * @param activeStart the activeStart to set
 	 */
 	public void setActiveStart(String activeStart) {
 		this.activeStart = activeStart;
 	}
-	
 	/**
-	 * @return the bUnsure
+	 * @return the bornUnsure
 	 */
-	public Boolean getbUnsure() {
-		return bUnsure;
+	public Boolean getBornPlaceUnsure() {
+		return bornPlaceUnsure;
 	}
-	
 	/**
-	 * @param bUnsure the bUnsure to set
+	 * @param bornPlaceUnsure the bornPlaceUnsure to set
 	 */
-	public void setbUnsure(Boolean bUnsure) {
-		this.bUnsure = bUnsure;
+	public void setBornPlaceUnsure(Boolean bornPlaceUnsure) {
+		this.bornPlaceUnsure = bornPlaceUnsure;
 	}
-	
 	/**
-	 * @return the dYear
+	 * @return the deathYear
 	 */
-	public Integer getdYear() {
-		return dYear;
+	public Integer getDeathYear() {
+		return deathYear;
 	}
-	
 	/**
-	 * @param dYear the dYear to set
+	 * @param deathYear the deathYear to set
 	 */
-	public void setdYear(Integer dYear) {
-		this.dYear = dYear;
+	public void setDeathYear(Integer deathYear) {
+		this.deathYear = deathYear;
 	}
-	
 	/**
-	 * @return the dMonth
+	 * @return the deathMonth
 	 */
-	public Month getdMonth() {
-		return dMonth;
+	public Month getDeathMonth() {
+		return deathMonth;
 	}
-	
 	/**
-	 * @param dMonth the dMonth to set
+	 * @param deathMonth the deathMonth to set
 	 */
-	public void setdMonth(Month dMonth) {
-		this.dMonth = dMonth;
+	public void setDeathMonth(Month deathMonth) {
+		this.deathMonth = deathMonth;
 	}
-	
 	/**
-	 * @return the dDay
+	 * @return the deathDay
 	 */
-	public Integer getdDay() {
-		return dDay;
+	public Integer getDeathDay() {
+		return deathDay;
 	}
-	
 	/**
-	 * @param dDay the dDay to set
+	 * @param deathDay the deathDay to set
 	 */
-	public void setdDay(Integer dDay) {
-		this.dDay = dDay;
+	public void setDeathDay(Integer deathDay) {
+		this.deathDay = deathDay;
 	}
-	
 	/**
-	 * @return the dApprox
+	 * @return the deathApprox
 	 */
-	public Boolean getdApprox() {
-		return dApprox;
+	public Boolean getDeathApprox() {
+		return deathApprox;
 	}
-	
 	/**
-	 * @param dApprox the dApprox to set
+	 * @param deathApprox the deathApprox to set
 	 */
-	public void setdApprox(Boolean dApprox) {
-		this.dApprox = dApprox;
+	public void setDeathApprox(Boolean deathApprox) {
+		this.deathApprox = deathApprox;
 	}
-	
 	/**
-	 * @return the dDateBc
+	 * @return the deathDateBc
 	 */
-	public Boolean getdDateBc() {
-		return dDateBc;
+	public Boolean getDeathDateBc() {
+		return deathDateBc;
 	}
-	
 	/**
-	 * @param dDateBc the dDateBc to set
+	 * @param deathDateBc the deathDateBc to set
 	 */
-	public void setdDateBc(Boolean dDateBc) {
-		this.dDateBc = dDateBc;
+	public void setDeathDateBc(Boolean deathDateBc) {
+		this.deathDateBc = deathDateBc;
 	}
-	
 	/**
-	 * @return the dPlace
+	 * @return the deathPlace
 	 */
-	public Integer getdPlace() {
-		return dPlace;
+	public Integer getDeathPlace() {
+		return deathPlace;
 	}
-	
 	/**
-	 * @param dPlace the dPlace to set
+	 * @param deathPlace the deathPlace to set
 	 */
-	public void setdPlace(Integer dPlace) {
-		this.dPlace = dPlace;
+	public void setDeathPlace(Integer deathPlace) {
+		this.deathPlace = deathPlace;
 	}
-	
 	/**
-	 * @return the dUnsure
+	 * @return the deathPlaceUnsure
 	 */
-	public Boolean getdUnsure() {
-		return dUnsure;
+	public Boolean getDeathPlaceUnsure() {
+		return deathPlaceUnsure;
 	}
-	
 	/**
-	 * @param dUnsure the dUnsure to set
+	 * @param deathPlaceUnsure the deathPlaceUnsure to set
 	 */
-	public void setdUnsure(Boolean dUnsure) {
-		this.dUnsure = dUnsure;
+	public void setDeathPlaceUnsure(Boolean deathPlaceUnsure) {
+		this.deathPlaceUnsure = deathPlaceUnsure;
 	}
+
 }

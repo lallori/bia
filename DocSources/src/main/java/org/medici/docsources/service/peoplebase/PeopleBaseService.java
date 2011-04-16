@@ -63,17 +63,25 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param child
+	 * @param person
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteFatherFromChildPerson(People child) throws ApplicationThrowable;
+	public People addNewPerson(People person) throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @param child
+	 * @param person
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteMotherFromChildPerson(People child) throws ApplicationThrowable;
+	public void deleteFatherFromPerson(People person) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param person
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMotherFromPerson(People person) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -82,6 +90,8 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable;
+
+	public People editDetailsPerson(People person) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -241,6 +251,33 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> searchFatherLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> searchMotherLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param text
 	 * @param paginationFilter
 	 * @return
@@ -272,4 +309,11 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param altName
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteNamePerson(AltName altName) throws ApplicationThrowable;
 }

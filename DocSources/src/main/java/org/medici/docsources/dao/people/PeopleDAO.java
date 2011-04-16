@@ -73,12 +73,38 @@ public interface PeopleDAO extends Dao<Integer, People> {
 
 	/**
 	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 */
+	public List<People> searchChildLinkableToDocument(Integer personId, String query) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<People> searchFatherLinkableToDocument(String query) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<People> searchMotherLinkableToDocument(String query) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param searchText
 	 * @param paginationFilter
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public Page searchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
+	
 
 	/**
 	 * 
@@ -104,7 +130,6 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public List<People> searchSendersPeople(String searchText) throws PersistenceException;
-	
 
 	/**
 	 * 

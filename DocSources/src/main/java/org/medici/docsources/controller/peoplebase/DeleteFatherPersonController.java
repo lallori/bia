@@ -32,7 +32,10 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.peoplebase.DeleteChildPersonCommand;
+import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.command.peoplebase.DeleteFatherPersonCommand;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,13 +54,13 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/DeleteFatherDocument")
+@RequestMapping("/de/peoplebase/DeleteFatherPerson")
 public class DeleteFatherPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
 	@Autowired(required = false)
-	@Qualifier("deletePersonDocumentValidator")
+	@Qualifier("deleteFatherPersonValidator")
 	private Validator validator;
 
 	/**
@@ -83,15 +86,28 @@ public class DeleteFatherPersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeleteChildPersonCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeleteFatherPersonCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/DeletePersonDocument");
+			return new ModelAndView("error/DeleteFatherPerson");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			return new ModelAndView("response/OK", model);
+			People person = new People(command.getPersonId());
+			person.setFather(new People(command.getFatherId()));
+
+			try {
+				if (!ObjectUtils.toString(command.getFatherId()).equals("")) {
+					getPeopleBaseService().deleteFatherFromPerson(person);
+				} else {
+					return new ModelAndView("response/KO", model);
+				}
+
+				return new ModelAndView("response/OK", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("response/KO", model);
+			}
 		}
 	}
 

@@ -32,7 +32,10 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.peoplebase.DeleteChildPersonCommand;
+import org.medici.docsources.command.peoplebase.DeleteNamePersonCommand;
+import org.medici.docsources.domain.AltName;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,13 +54,13 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/DeleteNameDocument")
+@RequestMapping("/de/peoplebase/DeleteNamePerson")
 public class DeleteNamePersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
 	@Autowired(required = false)
-	@Qualifier("deletePersonDocumentValidator")
+	@Qualifier("deleteNamePersonValidator")
 	private Validator validator;
 
 	/**
@@ -83,15 +86,23 @@ public class DeleteNamePersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeleteChildPersonCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeleteNamePersonCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/DeletePersonDocument");
+			return new ModelAndView("error/DeleteFatherPerson");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			return new ModelAndView("response/OK", model);
+			AltName altName = new AltName(command.getNameId());
+			altName.setPerson(new People(command.getPersonId()));
+
+			try {
+				getPeopleBaseService().deleteNamePerson(altName);
+				return new ModelAndView("response/OK", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("response/KO", model);
+			}
 		}
 	}
 

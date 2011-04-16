@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.peoplebase;
 
+import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
@@ -48,7 +49,9 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -102,7 +105,28 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteFatherFromChildPerson(People child) throws ApplicationThrowable {
+	public People addNewPerson(People person) throws ApplicationThrowable {
+		try {
+			person.setPersonId(null);
+			
+			//Setting fields that are defined as nullable = false
+			person.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			person.setDateCreated(new Date());
+			person.setLastUpdate(new Date());
+
+			getPeopleDAO().persist(person);
+
+			return person;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteFatherFromPerson(People person) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		
 	}
@@ -111,9 +135,17 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteMotherFromChildPerson(People child) throws ApplicationThrowable {
+	public void deleteMotherFromPerson(People person) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteNamePerson(AltName altName) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -123,6 +155,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People editDetailsPerson(People person) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -446,6 +487,42 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public TitleOccsListDAO getTitleOccsListDAO() {
 		return titleOccsListDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().searchChildLinkableToDocument(personId, query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchFatherLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().searchFatherLinkableToDocument(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchMotherLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().searchMotherLinkableToDocument(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
