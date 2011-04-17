@@ -53,59 +53,10 @@ public class AjaxController {
 	private PeopleBaseService peopleBaseService;
 
 	/**
-	 * This method returns a list of ipotetical senders. 
-	 *  
-	 * @param text Text to search in ...
-	 * @return ModelAndView containing senders.
+	 * @return the peopleBaseService
 	 */
-	@RequestMapping(value = "/de/peoplebase/SearchSenderPeople", method = RequestMethod.GET)
-	public ModelAndView searchSenders(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
-
-			List<People> people = getPeopleBaseService().searchSendersPeople(query);
-			model.put("query", query);
-			model.put("count", people.size());
-			model.put("data", ListBeanUtils.transformList(people, "personId"));
-			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
-			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
-			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
-			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
-
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-
-	/**
-	 * This method returns a list of ipotetical recipients. 
-	 *  
-	 * @param text Text to search in ...
-	 * @return ModelAndView containing recipients.
-	 */
-	@RequestMapping(value = "/de/peoplebase/SearchRecipientPeople", method = RequestMethod.GET)
-	public ModelAndView searchRecipients(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			List<People> people = getPeopleBaseService().searchRecipientsPeople(query);
-			model.put("query", query);
-			model.put("count", people.size());
-			model.put("data", ListBeanUtils.transformList(people, "personId"));
-			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
-			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
-			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
-			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
-
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
 	}
 
 	/**
@@ -190,6 +141,62 @@ public class AjaxController {
 	}
 
 	/**
+	 * This method returns a list of ipotetical recipients. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing recipients.
+	 */
+	@RequestMapping(value = "/de/peoplebase/SearchRecipientPeople", method = RequestMethod.GET)
+	public ModelAndView searchRecipients(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<People> people = getPeopleBaseService().searchRecipientsPeople(query);
+			model.put("query", query);
+			model.put("count", people.size());
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns a list of ipotetical senders. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing senders.
+	 */
+	@RequestMapping(value = "/de/peoplebase/SearchSenderPeople", method = RequestMethod.GET)
+	public ModelAndView searchSenders(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
+
+			List<People> people = getPeopleBaseService().searchSendersPeople(query);
+			model.put("query", query);
+			model.put("count", people.size());
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
 	 * @param peopleBaseService the peopleBaseService to set
 	 */
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
@@ -197,10 +204,79 @@ public class AjaxController {
 	}
 
 	/**
-	 * @return the peopleBaseService
+	 * This method returns specific information on mother. 
+	 * 
+	 * @param personId
+	 * @return
 	 */
-	public PeopleBaseService getPeopleBaseService() {
-		return peopleBaseService;
+	@RequestMapping(value = "/de/peoplebase/ShowChildDetails", method = RequestMethod.GET)
+	public ModelAndView showChildDetails(@RequestParam("personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person = getPeopleBaseService().findPerson(personId);
+			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
+			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
+			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
+			model.put("ageAtDeath", ((person.getBornYear() != null ) && (person.getDeathYear() != null)) ? "" + (person.getDeathYear() - person.getBornYear()) : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
 	}
 
+	/**
+	 * This method returns specific information on father. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/ShowFatherDetails", method = RequestMethod.GET)
+	public ModelAndView showFatherDetails(@RequestParam("personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person = getPeopleBaseService().findPerson(personId);
+			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
+			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
+			model.put("bornMonth", (person.getBornMonth() != null ) ? person.getBornMonth().toString() : "");
+			model.put("bornDay", (person.getBornDay() != null ) ? person.getBornDay().toString() : "");
+			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
+			model.put("deathMonth", (person.getDeathMonth() != null ) ? person.getDeathMonth().toString() : "");
+			model.put("deathDay", (person.getDeathDay() != null ) ? person.getDeathDay().toString() : "");
+			model.put("bioNotes", (person.getBioNotes() != null ) ? person.getBioNotes().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * This method returns specific information on mother. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/ShowMotherDetails", method = RequestMethod.GET)
+	public ModelAndView showMotherDetails(@RequestParam("personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person = getPeopleBaseService().findPerson(personId);
+			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
+			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
+			model.put("bornMonth", (person.getBornMonth() != null ) ? person.getBornMonth().toString() : "");
+			model.put("bornDay", (person.getBornDay() != null ) ? person.getBornDay().toString() : "");
+			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
+			model.put("deathMonth", (person.getDeathMonth() != null ) ? person.getDeathMonth().toString() : "");
+			model.put("deathDay", (person.getDeathDay() != null ) ? person.getDeathDay().toString() : "");
+			model.put("bioNotes", (person.getBioNotes() != null ) ? person.getBioNotes().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
 }

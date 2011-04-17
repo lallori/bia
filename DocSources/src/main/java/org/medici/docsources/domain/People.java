@@ -538,7 +538,7 @@ public class People implements Serializable {
 	/**
 	 * @return the deathDay
 	 */
-	public Integer getdDay() {
+	public Integer getDeathDay() {
 		return deathDay;
 	}
 
