@@ -29,11 +29,11 @@
 			</div>
 			<div>
 				<form:label id="bornYearLabel" for="bornYear" path="bornYear" cssErrorClass="error">Born:</form:label>
-				<form:input path="bornYear" cssClass="input_4c" maxlength="4"/>
+				<form:input path="bornYear" cssClass="input_4c_disabled" maxlength="4"/>
 				<form:label id="deathYearLabel" for="deathYear" path="deathYear" cssErrorClass="error">Died:</form:label>
-				<form:input path="deathYear" cssClass="input_4c" maxlength="4"/>
+				<form:input path="deathYear" cssClass="input_4c_disabled" maxlength="4"/>
 				<form:label id="ageAtDeathLabel" for="ageAtDeath" path="ageAtDeath" cssErrorClass="error">Age at death:</form:label>
-				<form:input path="ageAtDeath" cssClass="input_3c" maxlength="2"/>
+				<form:input path="ageAtDeath" cssClass="input_2c_disabled" maxlength="2"/>
 			</div>
 			<div>
 				<input id="closeChild" type="submit" value="" title="do not save changes" class="button" />
@@ -49,6 +49,8 @@
 		<c:param name="personId" value="${command.parentId}" />
 	</c:url>
 
+	<c:url var="ShowChildDetailsURL" value="/de/peoplebase/ShowChildDetails.json" />
+
 	<script type="text/javascript"> 
 	    $j(document).ready(function() { 
 			var childDescription = $j('#childDescriptionAutoCompleter').autocompletePerson({ 
@@ -60,7 +62,14 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#personId').val(data); }
+			    onSelect: function(value, data){ 
+			    	$j('#personId').val(data);
+					$j.get("${ShowChildDetailsURL}", { personId: "" + data }, function(data) {
+						$j("#bornYear").val(data.bornYear);
+						$j("#deathYear").val(data.deathYear);
+						$j("#ageAtDeath").val(data.ageAtDeath);
+					});
+				}
 			  });
 
 			$j('#closeChild').click(function(e) {

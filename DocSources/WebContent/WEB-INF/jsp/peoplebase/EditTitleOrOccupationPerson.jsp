@@ -25,7 +25,7 @@
 			</legend>
 			<div>
 				<form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">New Title &amp; Occ:</form:label>
-				<form:input id="titleOrOccupationDescription" path="titleOrOccupationDescription" cssClass="input_23c"/>
+				<form:input id="titleOrOccAutocomplete" path="titleOrOccupationDescription" cssClass="input_23c"/>
 			</div>
 			<div>
 				<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role:</form:label>
@@ -67,7 +67,7 @@
 			<form:hidden path="prfLinkId" />
 			
 			<div>
-				<input id="closeTitleOrOccupation" type="submit" value="" title="do not save changes" class="button" />
+				<input id="closeTitle" type="submit" value="" title="do not save changes" class="button" />
 				<input type="submit" value="" id="save">
 			</div>
 			
@@ -80,7 +80,7 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			var titleOrOccupationDescription = $j('#titleOrOccupationDescription').autocompleteTitle({ 
+			var titleOrOccupationDescription = $j('#titleOrOccAutocomplete').autocompleteTitle({ 
 			    serviceUrl:'${SearchTitleOrOccupationURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -92,7 +92,7 @@
 			    onSelect: function(value, data){ $j('#titleOccId').val(data); }
 			});
 
-			$j('#closeTitleOrOccupation').click(function() {
+			$j('#closeTitle').click(function() {
 				$j('#EditTitleOrOccupationPersonDiv').block({ message: $j('#question') }); 
 				return false;
 			});

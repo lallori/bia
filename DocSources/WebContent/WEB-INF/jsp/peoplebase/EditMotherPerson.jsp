@@ -60,6 +60,8 @@
 		<c:param name="personId" value="${command.personId}" />
 	</c:url>
 
+	<c:url var="ShowMotherDetailsURL" value="/de/peoplebase/ShowMotherDetails.json" />
+
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			var motherDescription = $j('#motherAutocompleter').autocompletePerson({ 
@@ -71,7 +73,18 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#motherId').val(data); }
+			    onSelect: function(value, data){ 
+			    	$j('#motherId').val(data); 
+					$j.get("${ShowMotherDetailsURL}", { personId: "" + data }, function(data) {
+						$j("#bornYear").val(data.bornYear);
+						$j("#bornMonthNum").append('<option value="' + data.bornMonth + '" selected="selected">' + data.bornMonth + '</option>');
+						$j("#bornDay").val(data.bornDay);
+						$j("#deathYear").val(data.deathYear);
+						$j("#deathMonthNum").val(data.deathMonth);
+						$j("#deathDay").val(data.deathDay);
+						$j("#bioNotes").val(data.bioNotes);
+					})
+			    }
 			  });
 
 			$j('#closeFather').click(function() {
