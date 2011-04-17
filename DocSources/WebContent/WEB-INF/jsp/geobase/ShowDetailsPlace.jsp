@@ -10,17 +10,6 @@
 		</c:url>
 	</security:authorize>
 	
-	<div id="CreatedSharePrintDiv">
-		<div id="createdby">CREATED BY ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
-		<a id="vettingChronology" href="/DocSources/de/VettingChronology.html"></a>
-		<a id="menuActions" href="/DocSources/de/geobase/ActionsMenu.html"></a>
-		<a id="buttonPrint" title="Print this record" href="#"></a>
-		<div id="buttonShareLink">
-			<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
-			<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
-		</div>
-	</div>
-
 	<div class="background" id="EditDetailsPlaceDiv">
 		<div class="title">
 			<h5>PLACE DETAILS</h5>

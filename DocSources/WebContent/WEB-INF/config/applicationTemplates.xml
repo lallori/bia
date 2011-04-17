@@ -218,6 +218,7 @@
 	</definition>
 	
 	<definition name="docbase/ShowDocument" extends="template.document">
+		<put-attribute name="menu" value="/WEB-INF/jsp/docbase/ShowMenuDocument.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
 		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
 		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
@@ -248,6 +249,7 @@
 	</definition>
 
 	<definition name="geobase/ShowPlace" extends="template.place">
+		<put-attribute name="menu" value="/WEB-INF/jsp/geobase/ShowMenuPlace.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
 		<put-attribute name="namesOrNamesVariants" value="/WEB-INF/jsp/geobase/ShowNamesOrNamesVariantsPlace.jsp"/>
 		<put-attribute name="geographicCoordinates" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp"/>
@@ -349,7 +351,36 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitlesOrOccupationsPerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/ShowChildrenPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowDetailsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowParentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowParentsPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowResearchNotesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>	
+	</definition>
+
+	<definition name="peoplebase/ShowSpousesPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowTitlesOrOccupationsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/ShowPerson" extends="template.person">
+		<put-attribute name="menu" value="/WEB-INF/jsp/peoplebase/ShowMenuPerson.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
 		<put-attribute name="names" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
 		<put-attribute name="titlesOrOccupations" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
@@ -451,6 +482,7 @@
 	</definition>
 
 	<definition name="volbase/ShowVolume" extends="template.volume">
+		<put-attribute name="menu" value="/WEB-INF/jsp/volbase/ShowMenuVolume.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/volbase/ShowDetailsVolume.jsp"/>
 		<put-attribute name="description" value="/WEB-INF/jsp/volbase/ShowDescriptionVolume.jsp"/>
 		<put-attribute name="correspondents" value="/WEB-INF/jsp/volbase/ShowCorrespondentsVolume.jsp"/>
