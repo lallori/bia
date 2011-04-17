@@ -384,6 +384,17 @@ img.transparent {
 	border:1px solid #900;
 }
 
+.folioerrors { /* Error Span messages */
+	color:#900;
+	font-size:10px;
+	position:absolute;
+	margin:40px 0 0 45px;
+	width:160px;
+	position:absolute;
+	float: right;
+	text-align:center;
+	border:1px solid #900;
+}
 
 
 /* ----------------- CHECKBOXES --------------------- */
@@ -1567,7 +1578,7 @@ iframe{ /* Common for all iFrame */
 
 .rubricarioLabel { /* "Move to rubricario" <label> class  */
 	font-size:10px;
-	margin:0 0 0 -65px;
+	margin:0 0 0 -64px;
 	position:absolute;
 	color:#6d5c4d;
 }
@@ -1799,6 +1810,13 @@ iframe{ /* Common for all iFrame */
 	position:relative;
 }
 
+#modalBox .folioerrors { /* Error Span messages */
+	color:#900;
+	float: right;
+	width: 190px;
+	margin: 10px 80px 0 51px
+	position:relative;
+}
 
 
 /* --------------------------------------- */ 

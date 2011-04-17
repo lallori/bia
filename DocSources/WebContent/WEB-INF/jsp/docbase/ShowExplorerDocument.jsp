@@ -111,7 +111,7 @@
 			</c:if>
 			</div>
 		</div>
-		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
+		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="folioerrors"/></form:form>
 	<c:if test="${documentExplorer.totalRubricario > 0}">
 		<br/>
 		<br/>
@@ -122,7 +122,7 @@
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 				<input id="goR" type="submit" value="" />
 				<form:hidden path="volNum" />

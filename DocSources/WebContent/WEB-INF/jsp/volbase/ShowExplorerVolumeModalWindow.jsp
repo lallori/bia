@@ -118,11 +118,11 @@
 		</div>
 
 		<div>
-		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
+		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="folioerrors"/></form:form>
 		</div>
 	<c:if test="${volumeExplorer.totalRubricario > 0}">
-		<br/>
-		<br/>
+		<br/>&nbsp;
+		<br/>&nbsp;
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
@@ -130,7 +130,7 @@
 			</div>
 		
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to rubricario</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario MB_focusable" type="text" value="" />
 				<input id="goR" type="submit" value="" />
 				<form:hidden path="volNum" />
@@ -181,11 +181,7 @@
 			<a id="transcribe" class="MB_focusable" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO" onclick="Modalbox.show(this.href, {title: this.title, width: 750, height: 600}); return false;"></a>
 		</c:if>
 
-		<div id="CloseButtonRight">
-			<input id="close" class="closeModal" type="submit" value="" onClick="Modalbox.hide(); return false;">
-			<br />
-			<span>(or click the overlay)</span>
-		</div>
+		<div id="CloseButtonRight"><input value="Close" class="modalBox-close" onClick="Modalbox.hide(); return false;" type="submit"><br /><span>(or click the overlay)</span></div>
 	</div>
 
 	<script type="text/javascript">
