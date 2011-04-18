@@ -4,11 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="searchAjaxUrl" value="/src/mview/SearchCarta.json"/>
+	<c:url var="SearchAjaxURL" value="/src/mview/SearchCarta.json"/>
 	
-	<c:url var="ReverseProxyIIPImage" value="/mview/ReverseProxyIIPImage.do"/>
+	<c:url var="ReverseProxyIIPImageURL" value="/mview/ReverseProxyIIPImage.do"/>
 	
-	<c:url var="PersonalNotesDialogUrl" value="/src/mview/EditPersonalNotesDialog.do"/>
+	<c:url var="PersonalNotesDialogURL" value="/src/mview/EditPersonalNotesDialog.do"/>
+	
+	<c:url var="VolumeSummaryDialogURL" value="/src/mview/ShowSummaryVolumeDialog.do"/>
 
 	<c:url var="currentPage" value="${caller}">
 		<c:param name="entryId" value="${command.entryId}" />
@@ -53,8 +55,6 @@
 
 <div id="EditPersonalNotesDiv">
 	<div id="prevNextButtons">
-		<div style="text-align:center; color:#6D5C4D">Flip throught</div>
-		<br />
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
 	    	<a class="previousPage"><img src="<c:url value="/images/mview/button_prev.png" />" alt="prev" /></a>
@@ -75,7 +75,9 @@
 		</c:if>
 		</div>
 	</div>
-	
+
+	<a id="volumeSummary" href="#"><img alt="Volume Summary" src="<c:url value="/images/mview/button_volumesummary.png"/>"></a>
+
 	<div id="line"></div>
 	
 	<div id="rubricarioMoveTo">
@@ -139,10 +141,10 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ReverseProxyIIPImage}'});
-			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${searchAjaxUrl}', proxyIIPImage: '${ReverseProxyIIPImage}'});
-			$j("#previous").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImage}'});
-			$j("#next").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImage}'});
+			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${SearchAjaxURL}', proxyIIPImage: '${ReverseProxyIIPImageURL}'});
+			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${SearchAjaxURL}', proxyIIPImage: '${ReverseProxyIIPImageURL}'});
+			$j("#previous").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImageURL}'});
+			$j("#next").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImageURL}'});
 			
 			var $dialogPersonalNotes = $j('<div id="DialogPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
 				autoOpen: false,
@@ -154,12 +156,28 @@
 				closeOnEscape: false,
 				maximized:false,
 				open: function(event, ui) { 
-            		$(this).load('${PersonalNotesDialogUrl}');
+            		$(this).load('${PersonalNotesDialogURL}');
            		},
 				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
 			}).dialogExtend({"minimize" : true});
-
+			
+			var $dialogVolumeSummary = $j('<div id="DialogVolumeSummaryDiv"></div>').dialog({
+				resizable: false,
+				width: 520,
+				height: 600, 
+				modal: true,
+				autoOpen : false,
+				zIndex: 3999,
+				open: function(event, ui) { 
+            		$(this).load('${VolumeSummaryDialogURL}');
+           		},
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				}
+			});
+			
 			$j("#exit").dialog({
 				resizable: false,
 				height:140,
@@ -182,9 +200,20 @@
 			});
 
 			$j('#exitButton').click(function() {
-				$j('#exit').dialog('open'); 
+				$j('#exit').dialog('open');
+				return false;
 			});
 			
+			$j('#volumeSummary').click(function(){
+				if ($dialogVolumeSummary.dialog("isOpen")) {
+					$dialogVolumeSummary.dialog("close");;
+					return false;
+				} else {
+					$dialogVolumeSummary.dialog("open");
+					return false;
+				}
+			});
+
 			$j('#personalNotesButton').click(function() {
 				if ($dialogPersonalNotes.dialog("isOpen")) {
 					$dialogPersonalNotes.dialog("close");
