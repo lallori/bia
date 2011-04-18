@@ -1,7 +1,7 @@
 /*
- * ReCaptchaConfiguration.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * ShowSummaryVolumeDialogCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -25,63 +25,28 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.support.recaptcha;
+package org.medici.docsources.command.manuscriptviewer;
 
 /**
- * This class contains Recaptcha configuration.
- * Recaptcha needs following information :
- *  - private key
- *  - public key
- *  - site id
- *  
- *  Please see more details on <a href ="http://www.google.com/recaptcha/captcha">Recaptcha Google</a>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
+ *
  */
-public class ReCaptchaConfiguration {
-	private String privateKey;
-	private String publicKey;
-	private Integer siteId;
+public class ShowSummaryVolumeDialogCommand {
+	private Integer entryId;
 
 	/**
-	 * 
-	 * @return
+	 * @param entryId the entryId to set
 	 */
-	public String getPrivateKey() {
-		return privateKey;
+	public void setEntryId(Integer entryId) {
+		this.entryId = entryId;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * @return the entryId
 	 */
-	public String getPublicKey() {
-		return publicKey;
-	}
-
-	public Integer getSiteId() {
-		return siteId;
-	}
-
-	/**
-	 * 
-	 * @param privateKey
-	 */
-	public void setPrivateKey(String privateKey) {
-		this.privateKey = privateKey;
-	}
-
-	/**
-	 * 
-	 * @param publicKey
-	 */
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
-	}
-
-	public void setSiteId(Integer siteId) {
-		this.siteId = siteId;
+	public Integer getEntryId() {
+		return entryId;
 	}
 
 }

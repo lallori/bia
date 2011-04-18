@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.volbase.EditDetailsVolumeCommand;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
@@ -104,7 +105,7 @@ public class EditDetailsVolumeController {
 			volume.setResearcher(command.getResearcher());
 
 			// We consider null series if the user clean description field
-			if (command.getSeriesRefNum() != null && command.getSeriesRefDescription() != null) {
+			if ((!ObjectUtils.toString(command.getSeriesRefNum()).equals("")) && (!ObjectUtils.toString(command.getSeriesRefDescription()).equals(""))) {
 				volume.setSerieList(new SerieList(command.getSeriesRefNum()));
 			}
 
@@ -120,12 +121,13 @@ public class EditDetailsVolumeController {
 				if (command.getSummaryId().equals(0)) {
 					volume = getVolBaseService().addNewVolume(volume);
 					model.put("volume", volume);
+					return new ModelAndView("volbase/ShowVolume", model);
 				} else {
 					volume = getVolBaseService().editDetailsVolume(volume);
 					model.put("volume", volume);
-				}
 
-				return new ModelAndView("volbase/ShowVolume", model);
+					return new ModelAndView("volbase/ShowDetailsVolume", model);
+				}
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsVolume", model);
 			}
