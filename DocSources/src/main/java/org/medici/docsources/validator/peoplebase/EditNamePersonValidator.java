@@ -1,5 +1,5 @@
 /*
- * EditTitlesOrOccupationsPersonValidator.java
+ * EditNamePersonValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,8 +27,7 @@
  */
 package org.medici.docsources.validator.peoplebase;
 
-import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
-import org.medici.docsources.command.peoplebase.EditTitlesOrOccupationsPersonCommand;
+import org.medici.docsources.command.peoplebase.EditNamePersonCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ import org.springframework.validation.Validator;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class EditTitlesOrOccupationsPersonValidator implements Validator {
+public class EditNamePersonValidator implements Validator {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
@@ -70,7 +69,7 @@ public class EditTitlesOrOccupationsPersonValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(EditDetailsPersonCommand.class);
+		return givenClass.equals(EditNamePersonCommand.class);
 	}
 
 	/**
@@ -83,8 +82,8 @@ public class EditTitlesOrOccupationsPersonValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditTitlesOrOccupationsPersonCommand editTitlesOrOccupationsPersonCommand = (EditTitlesOrOccupationsPersonCommand) object;
-		validatePersonId(editTitlesOrOccupationsPersonCommand.getPersonId(), errors);
+		EditNamePersonCommand editNamePersonCommand = (EditNamePersonCommand) object;
+		validatePersonId(editNamePersonCommand.getPersonId(), errors);
 	}
 
 	/**
@@ -92,10 +91,10 @@ public class EditTitlesOrOccupationsPersonValidator implements Validator {
 	 * @param personId
 	 * @param errors
 	 */
-	public void validatePersonId(Integer personId, Errors errors) {
+	public void validatePersonId(Integer peopleId, Errors errors) {
 		if (!errors.hasErrors()) {
 			try {
-				if (getPeopleBaseService().findPerson(personId) == null) {
+				if (getPeopleBaseService().findPerson(peopleId) == null) {
 					errors.reject("personId", "error.personId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {

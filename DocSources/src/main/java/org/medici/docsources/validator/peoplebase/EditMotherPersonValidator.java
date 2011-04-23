@@ -1,5 +1,5 @@
 /*
- * EditResearchNotesPersonValidator.java
+ * EditMotherPersonValidator.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,11 +27,78 @@
  */
 package org.medici.docsources.validator.peoplebase;
 
+import org.medici.docsources.command.peoplebase.EditMotherPersonCommand;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.peoplebase.PeopleBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 public class EditMotherPersonValidator {
+	@Autowired
+	private PeopleBaseService peopleBaseService;
 
+	/**
+	 * 
+	 * @return
+	 */
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
+	}
+
+	/**
+	 * 
+	 * @param peopleBaseService
+	 */
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
+	}
+
+	/**
+	 * Indicates whether the given class is supported by this converter. This
+	 * validator supports only ModifyPersonCommand.
+	 * 
+	 * @param givenClass
+	 *            the class to test for support
+	 * @return true if supported; false otherwise
+	 */
+	@SuppressWarnings("rawtypes")
+	public boolean supports(Class givenClass) {
+		return givenClass.equals(EditMotherPersonCommand.class);
+	}
+
+	/**
+	 * Validate the supplied target object, which must be of a Class for which
+	 * the supports(Class) method typically has (or would) return true. The
+	 * supplied errors instance can be used to report any resulting validation
+	 * errors.
+	 * 
+	 * @param object the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
+	 */
+	public void validate(Object object, Errors errors) {
+		EditMotherPersonCommand editMotherPersonCommand = (EditMotherPersonCommand) object;
+		validatePersonId(editMotherPersonCommand.getPersonId(), errors);
+	}
+
+	/**
+	 * 
+	 * @param personId
+	 * @param errors
+	 */
+	public void validatePersonId(Integer peopleId, Errors errors) {
+		if (!errors.hasErrors()) {
+			try {
+				if (getPeopleBaseService().findPerson(peopleId) == null) {
+					errors.reject("personId", "error.personId.notfound");
+				}
+			} catch (ApplicationThrowable ath) {
+				
+			}
+		}
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * EditNamesPersonValidator.java
+ * EditTitleOrOccupationPersonValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,7 +27,7 @@
  */
 package org.medici.docsources.validator.peoplebase;
 
-import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
+import org.medici.docsources.command.peoplebase.EditTitleOrOccupationPersonCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ import org.springframework.validation.Validator;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class EditNamesPersonValidator implements Validator {
+public class EditTitleOrOccupationPersonValidator implements Validator {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
@@ -69,7 +69,7 @@ public class EditNamesPersonValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(EditDetailsPersonCommand.class);
+		return givenClass.equals(EditTitleOrOccupationPersonCommand.class);
 	}
 
 	/**
@@ -82,8 +82,8 @@ public class EditNamesPersonValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditDetailsPersonCommand editDetailsPersonCommand = (EditDetailsPersonCommand) object;
-		validatePersonId(editDetailsPersonCommand.getPersonId(), errors);
+		EditTitleOrOccupationPersonCommand editTitleOrOccupationPersonCommand = (EditTitleOrOccupationPersonCommand) object;
+		validatePersonId(editTitleOrOccupationPersonCommand.getPersonId(), errors);
 	}
 
 	/**
