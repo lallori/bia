@@ -57,7 +57,7 @@ public class EditNamePersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	@Autowired(required = false)
-	@Qualifier("modifyPersonValidator")
+	@Qualifier("editNamePersonValidator")
 	private Validator validator;
 
 	/**

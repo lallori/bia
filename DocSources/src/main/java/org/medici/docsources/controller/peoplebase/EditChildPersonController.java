@@ -59,7 +59,7 @@ public class EditChildPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	@Autowired(required = false)
-	@Qualifier("modifyPersonValidator")
+	@Qualifier("editChildPersonValidator")
 	private Validator validator;
 
 	/**

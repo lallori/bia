@@ -20,8 +20,10 @@
 		<div class="title">
 			<h5>CORRESPONDENTS/PEOPLE </h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<c:if test="${document.entryId > 0}">
 			<a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocumentURL}" class="editButton"></a>
 			<span id="loading"/>
+			</c:if>
 		</security:authorize>
 		</div>
 

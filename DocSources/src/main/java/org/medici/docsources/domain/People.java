@@ -215,17 +215,17 @@ public class People implements Serializable {
 	@Column (name="\"DAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
-	private Boolean dApprox;
+	private Boolean deathApprox;
 	
 	@Column (name="\"DYEARBC\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
-	private Boolean dYearBc;
+	private Boolean deathDateBc;
 	
 	@Column (name="\"DPLACEUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
-	private Boolean dPlaceUns;
+	private Boolean deathPlaceUnsure;
 	
 	@Column (name="\"STATUS\"", length=15)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -806,50 +806,50 @@ public class People implements Serializable {
 
 
 	/**
-	 * @return the dApprox
+	 * @return the deathApprox
 	 */
-	public Boolean getdApprox() {
-		return dApprox;
+	public Boolean getDeathApprox() {
+		return deathApprox;
 	}
 
 
 	/**
-	 * @param dApprox the dApprox to set
+	 * @param dApprox the deathApprox to set
 	 */
-	public void setdApprox(Boolean dApprox) {
-		this.dApprox = dApprox;
+	public void setDeathApprox(Boolean deathApprox) {
+		this.deathApprox = deathApprox;
 	}
 
 
 	/**
-	 * @return the dYearBc
+	 * @return the deathDateBc
 	 */
-	public Boolean getdYearBc() {
-		return dYearBc;
+	public Boolean getDeathDateBc() {
+		return deathDateBc;
 	}
 
 
 	/**
-	 * @param dYearBc the dYearBc to set
+	 * @param deathDateBc the deathDateBc to set
 	 */
-	public void setdYearBc(Boolean dYearBc) {
-		this.dYearBc = dYearBc;
+	public void setDeathDateBc(Boolean deathDateBc) {
+		this.deathDateBc = deathDateBc;
 	}
 
 
 	/**
-	 * @return the dPlaceUns
+	 * @return the deathPlaceUnsure
 	 */
-	public Boolean getdPlaceUns() {
-		return dPlaceUns;
+	public Boolean getDeathPlaceUnsure() {
+		return deathPlaceUnsure;
 	}
 
 
 	/**
-	 * @param dPlaceUns the dPlaceUns to set
+	 * @param deathPlaceUnsure the deathPlaceUnsure to set
 	 */
-	public void setdPlaceUns(Boolean dPlaceUns) {
-		this.dPlaceUns = dPlaceUns;
+	public void setDeathPlaceUnsure(Boolean deathPlaceUnsure) {
+		this.deathPlaceUnsure = deathPlaceUnsure;
 	}
 
 

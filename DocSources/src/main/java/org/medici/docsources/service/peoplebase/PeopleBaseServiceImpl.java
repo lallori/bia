@@ -113,6 +113,24 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			person.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			person.setDateCreated(new Date());
 			person.setLastUpdate(new Date());
+			if (person.getBornApprox() == null) {
+				person.setBornApprox(Boolean.FALSE);
+			}
+			if (person.getBornDateBc() == null) {
+				person.setBornDateBc(Boolean.FALSE);
+			}
+			if (person.getBornPlaceUnsure() == null) {
+				person.setBornPlaceUnsure(Boolean.FALSE);
+			}
+			if (person.getDeathApprox() == null) {
+				person.setDeathApprox(Boolean.FALSE);
+			}
+			if (person.getDeathDateBc() == null) {
+				person.setDeathDateBc(Boolean.FALSE);
+			}
+			if (person.getDeathPlaceUnsure() == null) {
+				person.setDeathPlaceUnsure(Boolean.FALSE);
+			}
 
 			getPeopleDAO().persist(person);
 

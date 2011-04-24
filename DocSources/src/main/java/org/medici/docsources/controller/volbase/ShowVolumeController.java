@@ -73,7 +73,7 @@ public class ShowVolumeController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowVolumeRequestCommand command, BindingResult result){
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowVolumeRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Volume volume = new Volume();
 		

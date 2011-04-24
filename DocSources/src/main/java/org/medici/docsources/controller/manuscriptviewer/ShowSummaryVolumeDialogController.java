@@ -29,19 +29,12 @@ package org.medici.docsources.controller.manuscriptviewer;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.validation.Valid;
-
-import org.medici.docsources.command.manuscriptviewer.EditPersonalNotesDialogCommand;
 import org.medici.docsources.command.manuscriptviewer.ShowSummaryVolumeDialogCommand;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
-import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -72,7 +65,7 @@ public class ShowSummaryVolumeDialogController {
 
 		try {
 			Document document = getDocBaseService().findDocument(command.getEntryId());
-
+			model.put("document", document);
 			
 			return new ModelAndView("mview/ShowSummaryVolumeDialog", model);
 		} catch (ApplicationThrowable ath) {

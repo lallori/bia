@@ -21,9 +21,11 @@
 		<div class="title">
 			<h5>EXTRACT/SYNOPSIS </h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<c:if test="${document.entryId > 0}">
 			<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editButton"></a>
 			<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindowURL}" class="editFullscreen" title="EXTRACT/SYNOPSIS"></a>
 			<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewerURL}" class="EditExtractOrSynopsisDocument"></a><span id="loading"/>
+			</c:if>
 		</security:authorize>
 		</div>
 		

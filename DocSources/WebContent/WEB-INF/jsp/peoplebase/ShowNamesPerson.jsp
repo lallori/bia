@@ -14,7 +14,9 @@
 		<div class="title">
 			<h5>NAMES </h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<c:if test="${person.personId > 0}">
 				<a id="EditNamesPerson" href="${EditNamesPersonURL}" class="editButton"></a><span id="loading"/>
+				</c:if>
 			</security:authorize>
 		</div>
 		<div class="list">
@@ -24,10 +26,6 @@
 					<div class="value"><a id="linkSearch" href="#">${currentName.namePrefix} ${currentName.altName}</a></div> 
 				</div>
 			</c:forEach>
-			<div class="row">
-				<div class="item">Family</div>
-				<div class="value"><a id="linkSearch" href="#">Tudor</a></div>
-			</div>
 		</div>	
 	</div>
 

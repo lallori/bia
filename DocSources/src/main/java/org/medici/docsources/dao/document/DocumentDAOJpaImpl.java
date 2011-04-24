@@ -27,11 +27,15 @@
  */
 package org.medici.docsources.dao.document;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.hibernate.ejb.HibernateEntityManager;
@@ -40,6 +44,8 @@ import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
 import org.springframework.stereotype.Repository;
@@ -192,6 +198,16 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortingCriteria firstSortingCriteria = sortingCriterias.get(0);
+			if (firstSortingCriteria.getOrder().equals(Order.ASC)) {
+				fullTextQuery.setSort(new Sort(new SortField(firstSortingCriteria.getColumn(), firstSortingCriteria.getColumnType(), true)));
+			} else if (firstSortingCriteria.getOrder().equals(Order.DESC)) {
+				fullTextQuery.setSort(new Sort(new SortField(firstSortingCriteria.getColumn(), firstSortingCriteria.getColumnType(), false)));
+			} 
+		}
 		page.setList(fullTextQuery.list());
 		
 		return page;

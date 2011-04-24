@@ -59,7 +59,7 @@ public class EditTitleOrOccupationPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	@Autowired(required = false)
-	@Qualifier("modifyPersonValidator")
+	@Qualifier("editTitleOrOccupationPersonValidator")
 	private Validator validator;
 
 	/**

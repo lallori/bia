@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -61,18 +63,14 @@ public class AjaxController {
 	@Autowired
 	private DocBaseService docBaseService;
 
-
 	@Autowired
 	private GeoBaseService geoBaseService;
-
 
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
-
 	@Autowired
 	private VolBaseService volBaseService;
-
 
 	/**
 	 * @return the docBaseService
@@ -81,14 +79,12 @@ public class AjaxController {
 		return docBaseService;
 	}
 
-
 	/**
 	 * @return the geoBaseService
 	 */
 	public GeoBaseService getGeoBaseService() {
 		return geoBaseService;
 	}
-
 
 	/**
 	 * @return the peopleBaseService
@@ -97,14 +93,12 @@ public class AjaxController {
 		return peopleBaseService;
 	}
 
-
 	/**
 	 * @return the volBaseService
 	 */
 	public VolBaseService getVolBaseService() {
 		return volBaseService;
 	}
-
 
 	/**
 	 * 
@@ -113,26 +107,28 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/src/SimpleSearchPagination.json", method = RequestMethod.GET)
-	public ModelAndView searchPagination(@RequestParam("searchType") String searchType, 
-								   		 @RequestParam("sSearch") String alias, 
-								   		 @RequestParam("iDisplayStart") Integer firstRecord,
-									     @RequestParam("iDisplayLength") Integer length) {
+	public ModelAndView searchPagination(@RequestParam(value="searchType") String searchType, 
+								   		 @RequestParam(value="sSearch") String alias,
+								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumn,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if (searchType.toLowerCase().trim().equals("documents")) {
-			simpleSearchDocuments(model, alias, firstRecord, length);
+			simpleSearchDocuments(model, alias, sortingColumn, sortingDirection, firstRecord, length);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("people")) {
-			simpleSearchPeople(model, alias, firstRecord, length);
+			simpleSearchPeople(model, alias, sortingColumn, sortingDirection, firstRecord, length);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("places")) {
-			simpleSearchPlaces(model, alias, firstRecord, length);
+			simpleSearchPlaces(model, alias, sortingColumn, sortingDirection, firstRecord, length);
 		}
 		
 		if (searchType.toLowerCase().trim().equals("volumes")) {
-			simpleSearchVolumes(model, alias, firstRecord, length);
+			simpleSearchVolumes(model, alias, sortingColumn, sortingDirection, firstRecord, length);
 		}
 
 		return new ModelAndView("responseOK", model);
@@ -145,7 +141,6 @@ public class AjaxController {
 		this.docBaseService = docBaseService;
 	}
 
-
 	/**
 	 * @param geoBaseService the geoBaseService to set
 	 */
@@ -153,14 +148,12 @@ public class AjaxController {
 		this.geoBaseService = geoBaseService;
 	}
 
-
 	/**
 	 * @param peopleBaseService the peopleBaseService to set
 	 */
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
 		this.peopleBaseService = peopleBaseService;
 	}
-
 
 	/**
 	 * @param volBaseService the volBaseService to set
@@ -177,10 +170,38 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	private void simpleSearchDocuments(Map<String, Object> model, String searchText, Integer firstRecord, Integer length) {
+	private void simpleSearchDocuments(Map<String, Object> model, String searchText, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+				case 0:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", sortingDirection);
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("dateApprox", sortingDirection, SortField.STRING);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
+					break;
+				case 4:
+					paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
+					break;
+				case 5:
+					paginationFilter.addSortingCriteria("volume", sortingDirection, SortField.INT);
+					break;
+				case 6:
+					paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.INT);
+					break;
+				default:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+			}
+		}
 
 		try {
 			page = getDocBaseService().simpleSearchDocuments(searchText, paginationFilter);
@@ -242,10 +263,38 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	private void simpleSearchPeople(Map<String, Object> model, String searchText, Integer firstRecord, Integer length) {
+	private void simpleSearchPeople(Map<String, Object> model, String searchText, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+				case 0:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", sortingDirection);
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("dateApprox", sortingDirection);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
+					break;
+				case 4:
+					paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
+					break;
+				case 5:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+				case 6:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+				default:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+			}		
+		}
 
 		try {
 			page = getPeopleBaseService().simpleSearchPeople(searchText, paginationFilter);
@@ -277,10 +326,38 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	private void simpleSearchPlaces(Map<String, Object> model, String searchText, Integer firstRecord, Integer length) {
+	private void simpleSearchPlaces(Map<String, Object> model, String searchText, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+				case 0:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", sortingDirection);
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("dateApprox", sortingDirection);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
+					break;
+				case 4:
+					paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
+					break;
+				case 5:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+				case 6:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+				default:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+			}
+		}
 
 		try {
 			page = getGeoBaseService().simpleSearchPlaces(searchText, paginationFilter);
@@ -313,10 +390,29 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	private void simpleSearchVolumes(Map<String, Object> model, String searchText, Integer firstRecord, Integer length) {
+	private void simpleSearchVolumes(Map<String, Object> model, String searchText, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
 		Page page = null;
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+				case 0:
+					paginationFilter.addSortingCriteria("serieList", sortingDirection);
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("mdp", sortingDirection);
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("startDate", sortingDirection);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("endDate", sortingDirection);
+					break;
+				default:
+					paginationFilter.addSortingCriteria("serieList", sortingDirection);
+					break;
+			}
+		}
 
 		try {
 			page = getVolBaseService().simpleSearchVolumes(searchText, paginationFilter);

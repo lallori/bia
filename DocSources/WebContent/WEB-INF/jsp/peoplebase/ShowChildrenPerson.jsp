@@ -14,7 +14,9 @@
 		<div class="title">
 			<h5>CHILDREN:</h5>
 	 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	 		<c:if test="${person.personId > 0}">
 			<a id="EditChildrenPerson" href="${EditChildrenPersonURL}" class="editButton"></a><span id="loading"/>
+			</c:if>
 		</security:authorize>
 		</div>
 		<div class="list">

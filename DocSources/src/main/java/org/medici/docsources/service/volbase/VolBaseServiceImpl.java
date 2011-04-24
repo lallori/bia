@@ -270,12 +270,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		if (volume.getSerieList() != null) {
 			volumeToUpdate.setSerieList(getSeriesListDAO().find(volume.getSerieList().getSeriesRefNum()));
+		} else {
+			volumeToUpdate.setSerieList(null);
 		}
 
 		volumeToUpdate.setStartYear(volume.getStartYear());
 		if (volume.getStartMonthNum() != null) {
-			volumeToUpdate.setStartMonth(volume.getStartMonthNum().getMonthName());
-			volumeToUpdate.setStartMonthNum(volume.getStartMonthNum());
+			Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
+			volumeToUpdate.setStartMonth(month.getMonthName());
+			volumeToUpdate.setStartMonthNum(month);
 		} else {
 			volumeToUpdate.setStartMonth(null);
 			volumeToUpdate.setStartMonthNum(null);
@@ -283,8 +286,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		volumeToUpdate.setStartDay(volume.getStartDay());
 		volumeToUpdate.setEndYear(volume.getEndYear());
 		if (volume.getEndMonthNum() != null) {
-			volumeToUpdate.setEndMonth(volume.getEndMonthNum().getMonthName());
-			volumeToUpdate.setEndMonthNum(volume.getEndMonthNum());
+			Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
+			volumeToUpdate.setEndMonth(month.getMonthName());
+			volumeToUpdate.setEndMonthNum(month);
 		} else {
 			volumeToUpdate.setEndMonth(null);
 			volumeToUpdate.setEndMonthNum(null);

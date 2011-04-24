@@ -30,33 +30,72 @@ package org.medici.docsources.common.pagination;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.lucene.search.SortField;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 public class PaginationFilter {
-	public enum Order {
-        ASCENDING,
-        DESCENDING
+	public static enum Order {
+		ASC("ascending"), DESC("descending");
+        
+		private final String order;
+
+	    private Order(String value) {
+	    	if (!ObjectUtils.toString(value).equals("")) {
+	    		order = value.toUpperCase();
+	    	} else {
+	    		order = "ASC";
+	    	}
+	    }
+
+	    @Override
+	    public String toString(){
+	        return order;
+	    }
+	    
     }
 
     public class SortingCriteria {
         private String column;
+        private Integer columnType;
         private Order order;
 
         public SortingCriteria(String column, Order order) {
             this.column = column;
             this.order = order;
+            this.columnType = SortField.STRING;
         }
 
+        public SortingCriteria(String column, Order order, Integer columnType) {
+            this.column = column;
+            this.order = order;
+            this.columnType = columnType;
+        }
+
+		/**
+		 * @return the column
+		 */
         public String getColumn() {
             return column;
         }
 
+		/**
+		 * @return the order
+		 */
         public Order getOrder() {
             return order;
         }
+
+		/**
+		 * @return the columnType
+		 */
+		public Integer getColumnType() {
+			return columnType;
+		}
     }
 
     private Integer firstRecord;
@@ -97,11 +136,22 @@ public class PaginationFilter {
      * @param order
      * @return
      */
-    public PaginationFilter addSortingCriteria(String field, Order order) {
-        this.sortingCriterias.add(new SortingCriteria(field, order));
+    public PaginationFilter addSortingCriteria(String field, String direction) {
+        this.sortingCriterias.add(new SortingCriteria(field, Order.valueOf(direction.toUpperCase())));
         return this;
     }
 
+    /**
+     * 
+     * @param field
+     * @param order
+     * @return
+     */
+    public PaginationFilter addSortingCriteria(String field, String direction, Integer fieldType) {
+        this.sortingCriterias.add(new SortingCriteria(field, Order.valueOf(direction.toUpperCase()), fieldType));
+        return this;
+    }
+    
     /**
 	 * @return the firstRecord
 	 */

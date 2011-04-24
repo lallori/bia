@@ -18,11 +18,9 @@
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditDetailsVolumeURL" value="/de/volbase/EditDetailsVolume.do">
-			<c:param name="summaryId"   value="${volume.summaryId}" />
-		</c:url>
-	</security:authorize>
+	<c:url var="EditDetailsVolumeURL" value="/de/volbase/EditDetailsVolume.do">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
+	</c:url>
 		
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
