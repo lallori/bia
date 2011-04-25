@@ -96,9 +96,38 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		
+	public People addNewAltNamePerson(AltName altName) throws ApplicationThrowable {
+		try {
+			// Set nameId to null to use generator value
+			altName.setNameId(null);
+			
+			getAltNameDAO().persist(altName);
+
+			// We need to refresh linked People entity state, otherwise altName property will be null
+			getPeopleDAO().refresh(altName.getPerson());
+
+			return altName.getPerson();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable {
+		try {
+			// Set marriageId to null to use generator value
+			marriage.setMarriageId(null);
+			
+			getMarriageDAO().persist(marriage);
+
+			// TODO : We need to change sign method to inser specific person who invoked the add new Person 
+			return marriage.getHusband();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -170,9 +199,28 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		
+	public People editChildPerson(People child, Integer parentId) throws ApplicationThrowable {
+		try {
+			People personToUpdate = getPeopleDAO().find(child.getPersonId());
+
+			People parent = getPeopleDAO().find(parentId);
+
+			// We set parent in child object making a choice on parent gender
+			if (parent.getGender().equals(Gender.F)) {
+				personToUpdate.setMother(parent);
+			} else {
+				personToUpdate.setFather(parent);
+			}
+			
+			getPeopleDAO().merge(personToUpdate);
+
+			// We need to refresh child entity state, otherwise father or mother property will be null
+			getPeopleDAO().refresh(personToUpdate);
+
+			return personToUpdate;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -188,9 +236,114 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editMarriagePerson(Marriage marriage) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		
+	public People editFatherPerson(People person) throws ApplicationThrowable {
+		try {
+			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+
+			// fill fields to update document section
+			personToUpdate.setFather(getPeopleDAO().find(person.getFather().getPersonId()));
+
+			getPeopleDAO().merge(personToUpdate);
+
+			// We need to refresh child entity state, otherwise father property will be null
+			getPeopleDAO().refresh(personToUpdate);
+
+			return person;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Marriage editMarriagePerson(Marriage marriage) throws ApplicationThrowable {
+		try {
+			Marriage marriageToUpdate = getMarriageDAO().find(marriage.getMarriageId());
+			
+			marriageToUpdate.setHusband(marriage.getHusband());
+			marriageToUpdate.setWife(marriage.getWife());
+			marriageToUpdate.setStartYear(marriage.getStartYear());
+			marriageToUpdate.setStartMonth(marriage.getStartMonth());
+			marriageToUpdate.setStartDay(marriage.getStartDay());
+			marriageToUpdate.setStartUns(marriage.getStartUns());
+			marriageToUpdate.setEndYear(marriage.getEndYear());
+			marriageToUpdate.setEndMonth(marriage.getEndMonth());
+			marriageToUpdate.setEndDay(marriage.getEndDay());
+			marriageToUpdate.setEndUns(marriage.getEndUns());
+			marriageToUpdate.setMarTerm(marriage.getMarTerm());
+			
+			getMarriageDAO().persist(marriage);
+
+			// TODO : We need to change sign method to inser specific person who invoked the add new Person 
+			return marriage;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People editMotherPerson(People person) throws ApplicationThrowable {
+		try {
+			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+
+			// fill fields to update document section
+			personToUpdate.setMother(getPeopleDAO().find(person.getMother().getPersonId()));
+
+			getPeopleDAO().merge(personToUpdate);
+
+			// We need to refresh child entity state, otherwise mother property will be null
+			getPeopleDAO().refresh(personToUpdate);
+
+			return person;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People editNamePerson(AltName altName) throws ApplicationThrowable {
+		try {
+			AltName altNameToUpdate = getAltNameDAO().find(altName.getNameId());
+
+			// fill fields to update document section
+			altNameToUpdate.setAltName(altName.getAltName());
+			altNameToUpdate.setNamePrefix(altName.getNamePrefix());
+			altNameToUpdate.setNameType(altName.getNameType());
+			
+			getAltNameDAO().merge(altNameToUpdate);
+
+			// We need to refresh linked person entity state, otherwise names property will be null
+			getPeopleDAO().refresh(altNameToUpdate.getPerson());
+
+			return altName.getPerson();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People editResearchNotesPerson(People person) throws ApplicationThrowable {
+		try {
+			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+
+			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
+			getPeopleDAO().refresh(personToUpdate);
+
+			return person;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

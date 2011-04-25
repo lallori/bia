@@ -56,10 +56,19 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param marriage
+	 * @param altName
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public void addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable;
+	public People addNewAltNamePerson(AltName altName) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param marriage
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -85,20 +94,67 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param child
-	 * @param parentId
+	 * @param altName
 	 * @throws ApplicationThrowable
 	 */
-	public void editChildPerson(People child, Integer parentId) throws ApplicationThrowable;
+	public void deleteNamePerson(AltName altName) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param child
+	 * @param parentId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People editChildPerson(People child, Integer parentId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param person
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public People editDetailsPerson(People person) throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @param marriage
+	 * @param person
+	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public void editMarriagePerson(Marriage marriage) throws ApplicationThrowable;
+	public People editFatherPerson(People person) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param marriage
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Marriage editMarriagePerson(Marriage marriage) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param person
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People editMotherPerson(People person) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param altName
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People editNamePerson(AltName altName) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param person
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People editResearchNotesPerson(People person) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -309,11 +365,4 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param altName
-	 * @throws ApplicationThrowable
-	 */
-	public void deleteNamePerson(AltName altName) throws ApplicationThrowable;
 }
