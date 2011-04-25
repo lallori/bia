@@ -32,13 +32,14 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class EditMotherPersonValidator {
+public class EditMotherPersonValidator implements Validator {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 
