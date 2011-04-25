@@ -84,36 +84,36 @@
         <description>Delete Title Or Occupation Validator.</description>
 	</bean>
 
-	<bean id="editDetailsPersonValidator" class="org.medici.docsources.validator.peoplebase.EditDetailsPersonValidator">
-        <description>Edit Details Person Validator.</description>
+	<bean id="editChildPersonValidator" class="org.medici.docsources.validator.peoplebase.EditChildPersonValidator">
+        <description>Edit Child Person Validator.</description>
 	</bean>
 
-	<bean id="editChildPersonValidator" class="org.medici.docsources.validator.peoplebase.EditChildPersonValidator">
+	<bean id="editDetailsPersonValidator" class="org.medici.docsources.validator.peoplebase.EditDetailsPersonValidator">
         <description>Edit Details Person Validator.</description>
 	</bean>
 	
 	<bean id="editFatherPersonValidator" class="org.medici.docsources.validator.peoplebase.EditFatherPersonValidator">
-        <description>Edit Details Person Validator.</description>
+        <description>Edit Father Person Validator.</description>
 	</bean>
 
 	<bean id="editMotherPersonValidator" class="org.medici.docsources.validator.peoplebase.EditMotherPersonValidator">
-        <description>Edit Details Person Validator.</description>
+        <description>Edit Mother Person Validator.</description>
 	</bean>
 
 	<bean id="editNamePersonValidator" class="org.medici.docsources.validator.peoplebase.EditNamePersonValidator">
-        <description>Edit Details Person Validator.</description>
+        <description>Edit Name Person Validator.</description>
 	</bean>
 
 	<bean id="editResearchNotesPersonValidator" class="org.medici.docsources.validator.peoplebase.EditResearchNotesPersonValidator">
-        <description>Edit Details Person Validator.</description>
+        <description>Edit ResearchNotes Person Validator.</description>
 	</bean>
 
 	<bean id="editSpousePersonValidator" class="org.medici.docsources.validator.peoplebase.EditSpousePersonValidator">
-        <description>Edit Details Person Validator.</description>
+        <description>Edit Spouse Person Validator.</description>
 	</bean>
 
 	<bean id="editTitleOrOccupationPersonValidator" class="org.medici.docsources.validator.peoplebase.EditTitleOrOccupationPersonValidator">
-        <description>Edit Details Person Validator.</description>
+        <description>Edit Title Or Occupation Person Validator.</description>
 	</bean>
 
 	<!-- Volume base Validators-->
