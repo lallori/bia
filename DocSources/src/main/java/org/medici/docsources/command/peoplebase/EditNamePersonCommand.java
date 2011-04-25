@@ -37,7 +37,7 @@ package org.medici.docsources.command.peoplebase;
 public class EditNamePersonCommand {
 	private Integer personId;
 	private Integer nameId;
-	private String nameType;
+	private String namePrefix;
 	private String altName;
 
 	/**
@@ -74,17 +74,17 @@ public class EditNamePersonCommand {
 	}
 
 	/**
-	 * @return the nameType
+	 * @return the namePrefix
 	 */
-	public String getNameType() {
-		return nameType;
+	public String getNamePrefix() {
+		return namePrefix;
 	}
 
 	/**
-	 * @param nameType the nameType to set
+	 * @param namePrefix the namePrefix to set
 	 */
-	public void setNameType(String nameType) {
-		this.nameType = nameType;
+	public void setNamePrefix(String namePrefix) {
+		this.namePrefix = namePrefix;
 	}
 
 	/**

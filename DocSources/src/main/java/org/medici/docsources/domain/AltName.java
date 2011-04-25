@@ -125,6 +125,16 @@ public class AltName implements Serializable{
 	}
 
 	/**
+	 * 
+	 * @param nameId
+	 * @param personId
+	 */
+	public AltName(Integer nameId, Integer personId) {
+		setNameId(nameId);
+		setPerson(new People(personId));
+	}
+
+	/**
 	 * @return the nameId
 	 */
 	public Integer getNameId() {
