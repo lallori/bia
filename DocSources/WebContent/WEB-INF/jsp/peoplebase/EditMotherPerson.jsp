@@ -47,7 +47,7 @@
 				</div>
 				
 				<div>
-					<input id="closeFather" type="submit" value="" title="do not save changes" class="button" />
+					<input id="closeMother" type="submit" value="" title="do not save changes" class="button" />
 					<input id="save" type="submit" value="" class="button"/>
 				</div>
 				
@@ -87,8 +87,15 @@
 			    }
 			  });
 
-			$j('#closeFather').click(function() {
+			$j('#closeMother').click(function() {
 				$j('#EditParentPersonDiv').block({ message: $j('#question') }); 
+				return false;
+			});
+
+			$j("#EditMotherPersonForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#EditParentsPersonDiv").load('${EditParentsPersonURL}');
+				}})
 				return false;
 			});
 		});
