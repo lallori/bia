@@ -92,10 +92,15 @@ public class EditResearchNotesPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
+			People person = new People(command.getPersonId());
 
-			return new ModelAndView("peoplebase/modifyperson", model);
+			try {
+				getPeopleBaseService().editResearchNotesPerson(person);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowPerson", model);
+			}
+
+			return new ModelAndView("peoplebase/ShowResearchNotesPerson", model);
 		}
 
 	}

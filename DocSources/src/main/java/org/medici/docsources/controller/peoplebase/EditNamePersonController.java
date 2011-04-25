@@ -92,10 +92,21 @@ public class EditNamePersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
+			AltName altName = new AltName(command.getNameId(), command.getPersonId());
+			altName.setAltName(command.getAltName());
+			altName.setNamePrefix(command.getNamePrefix());
 
-			return new ModelAndView("peoplebase/modifyperson", model);
+			try {
+				if (command.getNameId().equals(0)) {
+					getPeopleBaseService().addNewAltNamePerson(altName);
+				} else {
+					getPeopleBaseService().editNamePerson(altName);
+				}
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowPerson", model);
+			}
+
+			return new ModelAndView("peoplebase/EditNamesPerson", model);
 		}
 
 	}
@@ -120,13 +131,13 @@ public class EditNamePersonController {
 		if ((command != null) && (command.getPersonId() > 0)) {
 
 			if (command.getNameId().equals(0)) {
-				command.setNameType(null);
+				command.setNamePrefix(null);
 				command.setAltName(null);
 			} else {
 				try {
 					AltName altName = getPeopleBaseService().findAltNamePerson(command.getPersonId(), command.getNameId());
 
-					command.setNameType(altName.getNameType().toString());
+					command.setNamePrefix(altName.getNameType().toString());
 					command.setAltName(altName.getAltName());
 					
 				} catch (ApplicationThrowable applicationThrowable) {

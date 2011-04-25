@@ -92,10 +92,16 @@ public class EditMotherPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
+			People person = new People(command.getPersonId());
+			person.setFather(new People(command.getMotherId()));
 
-			return new ModelAndView("peoplebase/modifyperson", model);
+			try {
+				getPeopleBaseService().editMotherPerson(person);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowPerson", model);
+			}
+
+			return new ModelAndView("peoplebase/ShowParentsPerson", model);
 		}
 
 	}
