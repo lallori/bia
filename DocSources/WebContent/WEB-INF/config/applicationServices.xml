@@ -19,8 +19,8 @@
     	<description>Service that manages Geographics locations.</description>
     </bean>
 
-    <bean id="historyLogService" class="org.medici.docsources.service.historylog.HistoryLogServiceImpl">
-        <description>History Log Service.</description>
+    <bean id="logService" class="org.medici.docsources.service.log.LogServiceImpl">
+        <description>Service that manages accessLog and history log.</description>
     </bean>
     
     <bean id="mailService" class="org.medici.docsources.service.mail.MailServiceImpl">
