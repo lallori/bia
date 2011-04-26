@@ -4,13 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<div id="TopicsDescriptionWindow">
-	<h1>${topic.topicTitle}</h1>
-	
-	<p>${topic.description}</p>
-	
-	<p><input class="modalBox-close" onClick="Modalbox.hide(); return false;" type="submit" value="Close"><br /><span>(or click the overlay)</span></p>
-</div>
+	<div id="TopicsDescriptionWindow">
+		<h1>${topic.topicTitle}</h1>
+		
+		<p>${topic.description}</p>
+		
+		<p><input class="modalBox-close" onClick="Modalbox.hide(); return false;" type="submit" value="Close"><br /><span>(or click the overlay)</span></p>
+	</div>
 	<script type="text/javascript">
 		$j(document).ready(function() {			 
 	        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'visible');

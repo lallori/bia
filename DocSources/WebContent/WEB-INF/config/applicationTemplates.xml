@@ -234,6 +234,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExplorerDocumentModalWindow.jsp"/>
 	</definition>
 
+	<definition name="docbase/ShowVettingChronologyDocumentModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowVettingChronologyDocumentModalWindow.jsp"/>
+	</definition>
+	
 	<definition name="docbase/TranscribeAndContextualizeDocument" extends="template.document">
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/EditDetailsDocument.jsp"/>
 		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
@@ -258,6 +262,11 @@
 		<put-attribute name="birthAndDeath" value="/WEB-INF/jsp/geobase/ShowBirthAndDeathPlace.jsp"/>
 		<put-attribute name="sendersAndRecipients" value="/WEB-INF/jsp/geobase/ShowSendersAndRecipientsPlace.jsp"/>
 	</definition>
+
+	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
+	</definition>
+	
 	<!-- GeoBase Module END -->
 	
 	<!--  Manuscript Viewer START -->
@@ -367,6 +376,17 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowParentsPerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/ShowPerson" extends="template.person">
+		<put-attribute name="menu" value="/WEB-INF/jsp/peoplebase/ShowMenuPerson.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
+		<put-attribute name="names" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
+		<put-attribute name="titlesOrOccupations" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
+		<put-attribute name="parents" value="/WEB-INF/jsp/peoplebase/ShowParentsPerson.jsp"/>
+		<put-attribute name="children" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
+		<put-attribute name="spouses" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
+		<put-attribute name="researchNotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/ShowResearchNotesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>	
 	</definition>
@@ -379,18 +399,11 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
 	</definition>
 
-	<definition name="peoplebase/ShowPerson" extends="template.person">
-		<put-attribute name="menu" value="/WEB-INF/jsp/peoplebase/ShowMenuPerson.jsp"/>
-		<put-attribute name="details" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
-		<put-attribute name="names" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
-		<put-attribute name="titlesOrOccupations" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
-		<put-attribute name="parents" value="/WEB-INF/jsp/peoplebase/ShowParentsPerson.jsp"/>
-		<put-attribute name="children" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
-		<put-attribute name="spouses" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
-		<put-attribute name="researchNotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
+	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
 	</definition>
-
-	<!-- PeopleBase Module END -->
+	
+		<!-- PeopleBase Module END -->
 
 	<!-- Search Module START -->
 	<definition name="search/ChoiceAdvancedSearch" extends="template.partialDOM">

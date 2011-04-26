@@ -10,7 +10,6 @@
 			<c:param name="parentId"  value="${command.personId}" />
 		</c:url>
 		<c:url var="AddChildPersonURL" value="/de/peoplebase/EditChildPerson.do">
-			<c:param name="personId"   value="${command.personId}" />
 			<c:param name="parentId"  value="${command.personId}" />
 			<c:param name="childId"  value="0" />
 		</c:url>

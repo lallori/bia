@@ -5,6 +5,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditChildPersonURL" value="/de/peoplebase/EditChildPerson.do">
+			<c:param name="personId"   value="${command.parentId}" />
+		</c:url>
 		<c:url var="EditChildrenPersonURL" value="/de/peoplebase/EditChildrenPerson.do">
 			<c:param name="personId"   value="${command.parentId}" />
 		</c:url>
@@ -13,7 +16,7 @@
 		</c:url>
 	</security:authorize>
 	<br>
-	<form:form id="EditChildPersonForm" method="post" cssClass="edit">
+	<form:form id="EditChildPersonForm" action="${EditChildPersonURL}" method="post" cssClass="edit">
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.childId}"> 
@@ -79,7 +82,7 @@
 
 			$j("#EditChildPersonForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#EditChildPersonDiv").load('${EditChildPersonURL}');
+					$j("#EditChildrenPersonDiv").load('${EditChildrenPersonURL}');
 				}})
 				return false;
 			});
