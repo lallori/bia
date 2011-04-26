@@ -50,7 +50,7 @@
 		
 		<ul>
 			<li><b>Doc ID:</b> ${document.entryId == 0 ? '' : document.entryId}</li>
-			<li><b>Volume (MDP):</b> ${document.volume.volNum}</li>
+			<li><b>Volume (MDP):</b> ${document.volume.volNum}${document.volume.volLetExt}</li>
 			<li><b>Insert/Part:</b> ${document.insertNum} / ${document.insertLet}</li>
 			<li><b>Document starts at folio :</b> ${document.folioNum} / ${document.folioMod}</li>
 			<li><b>Paginated:</b> ${document.unpaged}</li>
