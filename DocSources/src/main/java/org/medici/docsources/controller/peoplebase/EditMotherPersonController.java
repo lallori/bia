@@ -93,7 +93,7 @@ public class EditMotherPersonController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			People person = new People(command.getPersonId());
-			person.setFather(new People(command.getMotherId()));
+			person.setMother(new People(command.getMotherId()));
 
 			try {
 				getPeopleBaseService().editMotherPerson(person);

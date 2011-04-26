@@ -108,7 +108,7 @@ public class EditChildPersonController {
 			}
 
 			// We return block for edit Children
-			return new ModelAndView("peoplebase/EditChildrenPerson", model);
+			return new ModelAndView("peoplebase/ShowPerson", model);
 		}
 	}
 
