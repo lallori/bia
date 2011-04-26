@@ -1,5 +1,5 @@
 /*
- * HistoryLogAction.java
+ * AccessLogAction.java
  * Developed by Medici Archive Project (2010-2012).
  * 
  * This file is part of DocSources.
@@ -35,10 +35,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.util.GrantedAuthorityUtils;
 import org.medici.docsources.common.util.HttpUtils;
-import org.medici.docsources.domain.HistoryLog;
+import org.medici.docsources.domain.AccessLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.log.LogService;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.event.AuthorizationFailureEvent;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -63,16 +64,12 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class HistoryLogAction extends HandlerInterceptorAdapter /*
- * implements
- * ApplicationListener
- */{
-	private LogService logService;
+public class AccessLogAction extends HandlerInterceptorAdapter {
 	private final Logger logger = Logger.getLogger(this.getClass());
+	private LogService logService;
 
 	/**
-	 * 
-	 * @return
+	 * @return the logService
 	 */
 	public LogService getLogService() {
 		return logService;
@@ -88,19 +85,19 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 		} else if (event instanceof AuthenticationSuccessEvent) {
 			UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = ((UsernamePasswordAuthenticationToken) event
 					.getSource());
-			HistoryLog historyLog = new HistoryLog();
-			historyLog.setUsername(userNamePasswordAuthenticationToken.getCredentials().toString());
-			historyLog.setDateAndTime(new Date(System.currentTimeMillis()));
-			historyLog.setIpAddress(((WebAuthenticationDetails) userNamePasswordAuthenticationToken.getDetails()).getRemoteAddress());
-			historyLog.setAction("/loginProcess");
-			historyLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
+			AccessLog accessLog = new AccessLog();
+			accessLog.setUsername(userNamePasswordAuthenticationToken.getCredentials().toString());
+			accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
+			accessLog.setIpAddress(((WebAuthenticationDetails) userNamePasswordAuthenticationToken.getDetails()).getRemoteAddress());
+			accessLog.setAction("/loginProcess");
+			accessLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
 
 			try {
-				getLogService().traceHistoryLog(historyLog);
+				getLogService().traceAccessLog(accessLog);
 			} catch (ApplicationThrowable ex) {
 			}
 
-			logger.info(historyLog.toString());
+			logger.info(accessLog.toString());
 		}
 	}
 
@@ -110,7 +107,7 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		HistoryLog historyLog = (HistoryLog) request.getAttribute("historyLog");
+		AccessLog accessLog = (AccessLog) request.getAttribute("accessLog");
 
 		if (modelAndView != null) {
 			if (modelAndView.getModelMap().get("org.springframework.validation.BindingResult.command") != null) {
@@ -118,23 +115,23 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 
 				if (errors.size() > 0) {
 					StringBuffer stringBuffer = new StringBuffer(
-							historyLog.getInformations());
+							accessLog.getInformations());
 					for (int i = 0; i < errors.size(); i++) {
 						stringBuffer.append(errors.get(i).toString());
 					}
-					historyLog.setInformations(stringBuffer.toString());
+					accessLog.setInformations(stringBuffer.toString());
 				}
 			}
 		}
 
-		historyLog.setExecutionTime(System.currentTimeMillis() - historyLog.getExecutionTime());
+		accessLog.setExecutionTime(System.currentTimeMillis() - accessLog.getExecutionTime());
 
 		try {
-			getLogService().traceHistoryLog(historyLog);
+			getLogService().traceAccessLog(accessLog);
 		} catch (ApplicationThrowable ex) {
 		}
 
-		logger.info(historyLog.toString());
+		logger.info(accessLog.toString());
 		super.postHandle(request, response, handler, modelAndView);
 	}
 
@@ -145,41 +142,42 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// Nel pre-handle prepara l'oggetto prima dell'esecuzione
 		// dell'operazione
-		HistoryLog historyLog = new HistoryLog();
+		AccessLog accessLog = new AccessLog();
 
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("AnonymousAuthenticationToken")) {
-				historyLog.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+				accessLog.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 			} else if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("UsernamePasswordAuthenticationToken")) {
 				UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-				historyLog.setUsername(userNamePasswordAuthenticationToken.getName());
-				historyLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
+				accessLog.setUsername(userNamePasswordAuthenticationToken.getName());
+				accessLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
 			} else if (SecurityContextHolder.getContext().getAuthentication().getClass().getName().endsWith("RememberMeAuthenticationToken")) {
 				RememberMeAuthenticationToken rememberMeAuthenticationToken = (RememberMeAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-				historyLog.setUsername(rememberMeAuthenticationToken.getName());
-				historyLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) rememberMeAuthenticationToken.getPrincipal()).getAuthorities()));
+				accessLog.setUsername(rememberMeAuthenticationToken.getName());
+				accessLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) rememberMeAuthenticationToken.getPrincipal()).getAuthorities()));
 			}
 		} else {
-			historyLog.setUsername("");
-			historyLog.setInformations("");
+			accessLog.setUsername("");
+			accessLog.setInformations("");
 		}
 
-		historyLog.setDateAndTime(new Date(System.currentTimeMillis()));
-		historyLog.setIpAddress(request.getRemoteAddr());
-		historyLog.setAction(request.getRequestURI().toString());
-		historyLog.setInformations(HttpUtils.retrieveHttpParametersAsString(request, false, true));
-		historyLog.setExecutionTime(System.currentTimeMillis());
-		request.setAttribute("historyLog", historyLog);
+		accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
+		accessLog.setIpAddress(request.getRemoteAddr());
+		accessLog.setAction(request.getRequestURI().toString());
+		accessLog.setHttpMethod(HttpMethod.valueOf(request.getMethod()).toString());
+		accessLog.setInformations(HttpUtils.retrieveHttpParametersAsString(request, false, true));
+		accessLog.setExecutionTime(System.currentTimeMillis());
+		request.setAttribute("accessLog", accessLog);
 
-		logger.info(historyLog.toString());
+		logger.info(accessLog.toString());
 		return true;
 	}
 
 	/**
-	 * 
-	 * @param logService
+	 * @param logService the logService to set
 	 */
 	public void setLogService(LogService logService) {
 		this.logService = logService;
 	}
+
 }
