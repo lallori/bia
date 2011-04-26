@@ -63,7 +63,7 @@
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
-			    	$j('#personId').val(data);
+			    	$j('#childId').val(data);
 					$j.get("${ShowChildDetailsURL}", { personId: "" + data }, function(data) {
 						$j("#bornYear").val(data.bornYear);
 						$j("#deathYear").val(data.deathYear);
