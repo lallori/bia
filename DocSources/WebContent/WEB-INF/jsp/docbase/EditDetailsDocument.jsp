@@ -88,7 +88,7 @@
 				<input id="save" type="submit" value="" style="margin-left:300px" class="button"/>
 			</div>
 		</fieldset>	
-		<input type="hidden" name="summaryId" value="${document.volume.summaryId}"
+		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
 	</form:form>
 
 	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
