@@ -1,5 +1,5 @@
 /*
- * ShowVetMenuController.java
+ * ShowVettingChronologyVolumeController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -26,7 +26,7 @@
  * executable file might be covered by the GNU General Public License.
  * 
  */
-package org.medici.docsources.controller.menu;
+package org.medici.docsources.controller.volbase;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,13 +34,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show Vet Menu".
+ * Controller for action "Show Chronology Vetting on Volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/ShowVetMenu")
-public class ShowVetMenuController {
+@RequestMapping("/de/volbase/ShowVettingChronologyVolume")
+public class ShowVettingChronologyVolumeController {
 	/**
 	 * 
 	 * @param volumeId
@@ -48,7 +48,7 @@ public class ShowVetMenuController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(){
-		return new ModelAndView("menu/ShowVetMenuModalWindow");
+		return new ModelAndView("volbase/ShowVettingChronologyVolume");
 	}
 
 }

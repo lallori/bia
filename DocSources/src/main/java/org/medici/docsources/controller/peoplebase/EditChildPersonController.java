@@ -96,7 +96,7 @@ public class EditChildPersonController {
 
 			People child = new People(command.getChildId());
 			child.setBornYear(command.getBornYear());
-			child.setDeathYear(command.getBornYear());
+			child.setDeathYear(command.getDeathYear());
 
 			try {
 				getPeopleBaseService().editChildPerson(child, command.getParentId());
@@ -104,7 +104,7 @@ public class EditChildPersonController {
 				List<People> children = getPeopleBaseService().findChildrenPerson(command.getParentId());
 				model.put("children", children);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowDocument", model);
+				return new ModelAndView("error/EditChildPerson", model);
 			}
 
 			// We return block for edit Children
