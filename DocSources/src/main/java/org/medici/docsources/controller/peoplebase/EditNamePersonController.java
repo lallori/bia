@@ -34,6 +34,7 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditNamePersonCommand;
 import org.medici.docsources.domain.AltName;
+import org.medici.docsources.domain.AltName.NameType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,7 @@ public class EditNamePersonController {
 			AltName altName = new AltName(command.getNameId(), command.getPersonId());
 			altName.setAltName(command.getAltName());
 			altName.setNamePrefix(command.getNamePrefix());
+			altName.setNameType(NameType.valueOf(command.getNameType()));
 
 			try {
 				if (command.getNameId().equals(0)) {
@@ -131,13 +133,15 @@ public class EditNamePersonController {
 		if ((command != null) && (command.getPersonId() > 0)) {
 
 			if (command.getNameId().equals(0)) {
+				command.setNameType(null);
 				command.setNamePrefix(null);
 				command.setAltName(null);
 			} else {
 				try {
 					AltName altName = getPeopleBaseService().findAltNamePerson(command.getPersonId(), command.getNameId());
 
-					command.setNamePrefix(altName.getNameType().toString());
+					command.setNameType(altName.getNameType().toString());
+					command.setNamePrefix(altName.getNamePrefix());
 					command.setAltName(altName.getAltName());
 					
 				} catch (ApplicationThrowable applicationThrowable) {

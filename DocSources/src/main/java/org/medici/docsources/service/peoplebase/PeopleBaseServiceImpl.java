@@ -214,9 +214,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			getPeopleDAO().merge(personToUpdate);
 
-			// We need to refresh child entity state, otherwise father or mother property will be null
-			getPeopleDAO().refresh(personToUpdate);
-
 			return personToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -244,9 +241,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setFather(getPeopleDAO().find(person.getFather().getPersonId()));
 
 			getPeopleDAO().merge(personToUpdate);
-
-			// We need to refresh child entity state, otherwise father property will be null
-			getPeopleDAO().refresh(personToUpdate);
 
 			return person;
 		} catch (Throwable th) {
@@ -291,13 +285,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			People personToUpdate = getPeopleDAO().find(person.getPersonId());
 
-			// fill fields to update document section
+			// fill mother property
 			personToUpdate.setMother(getPeopleDAO().find(person.getMother().getPersonId()));
 
 			getPeopleDAO().merge(personToUpdate);
-
-			// We need to refresh child entity state, otherwise mother property will be null
-			getPeopleDAO().refresh(personToUpdate);
 
 			return person;
 		} catch (Throwable th) {
@@ -319,9 +310,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			altNameToUpdate.setNameType(altName.getNameType());
 			
 			getAltNameDAO().merge(altNameToUpdate);
-
-			// We need to refresh linked person entity state, otherwise names property will be null
-			getPeopleDAO().refresh(altNameToUpdate.getPerson());
 
 			return altName.getPerson();
 		} catch (Throwable th) {

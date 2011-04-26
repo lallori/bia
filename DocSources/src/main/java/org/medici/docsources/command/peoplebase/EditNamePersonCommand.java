@@ -39,6 +39,7 @@ public class EditNamePersonCommand {
 	private Integer nameId;
 	private String namePrefix;
 	private String altName;
+	private String nameType;
 
 	/**
 	 * This method returns personId property.
@@ -99,6 +100,20 @@ public class EditNamePersonCommand {
 	 */
 	public void setAltName(String altName) {
 		this.altName = altName;
+	}
+
+	/**
+	 * @param nameType the nameType to set
+	 */
+	public void setNameType(String nameType) {
+		this.nameType = nameType;
+	}
+
+	/**
+	 * @return the nameType
+	 */
+	public String getNameType() {
+		return nameType;
 	}
 	
 	
