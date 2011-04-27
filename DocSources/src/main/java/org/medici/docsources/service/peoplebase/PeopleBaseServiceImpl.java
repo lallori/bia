@@ -30,6 +30,7 @@ package org.medici.docsources.service.peoplebase;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.altname.AltNameDAO;
@@ -293,7 +294,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setBornDay(person.getBornDay());
 			personToUpdate.setBornApprox(person.getBornApprox());
 			personToUpdate.setBornDateBc(person.getBornDateBc());
-			if (person.getBornPlace() != null) {
+			if (!ObjectUtils.toString(person.getBornPlace().getPlaceAllId()).equals("")) {
 				personToUpdate.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
 			} else {
 				personToUpdate.setBornPlace(null);
