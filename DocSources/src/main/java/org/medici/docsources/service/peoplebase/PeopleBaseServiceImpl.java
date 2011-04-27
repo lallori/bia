@@ -614,7 +614,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public List<Month> getMonths() throws ApplicationThrowable {
 		try {
-			return getMonthDAO().getAllMonths();
+			List<Month> months = getMonthDAO().getAllMonths();
+			
+			months.add(0, new Month(null, ""));
+			
+			return months;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

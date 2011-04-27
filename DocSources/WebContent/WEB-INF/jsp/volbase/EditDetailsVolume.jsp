@@ -22,7 +22,7 @@
 			<div>
 				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Start year: </form:label><form:input path="startYear" cssClass="input_4c" maxlength="4"/>
 				<form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error">Start month: </form:label>
-				<form:select path="startMonthNum" items="${months}" itemValue="monthNum" itemLabel="monthName" cssClass="selectform"><form:option value="">&nbsp;</form:option></form:select>
+				<form:select path="startMonthNum" cssClass="selectform" items="${months}" itemValue="monthNum" itemLabel="monthName" />
 				<form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Start day: </form:label>
 				<form:input path="startDay" cssClass="input_2c" maxlength="2"/>
 			</div>
@@ -31,7 +31,7 @@
 				<form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">End year: </form:label>
 				<form:input path="endYear" cssClass="input_4c" maxlength="4"/>
 				<form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error">End month: </form:label>
-				<form:select path="endMonthNum" cssClass="selectform"><form:option value="">&nbsp;</form:option><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
+				<form:select path="endMonthNum" cssClass="selectform" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">End day: </form:label>
 				<form:input path="endDay" cssClass="input_2c" maxlength="2"/>
 			</div>

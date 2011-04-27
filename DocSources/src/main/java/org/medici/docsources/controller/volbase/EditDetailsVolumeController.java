@@ -170,6 +170,14 @@ public class EditDetailsVolumeController {
 				command.setSeriesRefNum(volume.getSerieList().getSeriesRefNum());
 				command.setSeriesRefDescription(volume.getSerieList().toString());
 			}
+
+			if (volume.getStartMonthNum() != null) {
+				command.setStartMonthNum(volume.getStartMonthNum().getMonthNum());
+			}
+			if (volume.getEndMonthNum() != null) {
+				command.setEndMonthNum(volume.getEndMonthNum().getMonthNum());
+			}
+
 			if (command.getStartYear() == 0)
 				command.setStartYear(null);
 

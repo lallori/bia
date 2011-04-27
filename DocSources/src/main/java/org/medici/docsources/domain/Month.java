@@ -76,6 +76,15 @@ public class Month implements Serializable {
 		setMonthNum(monthNum);
 	}
 
+	/**
+	 * 
+	 * @param monthNum
+	 * @param monthName
+	 */
+	public Month(Integer monthNum, String monthName) {
+		setMonthNum(monthNum);
+		setMonthName(monthName);
+	}
 
 	/**
 	 * @return the monthNum
