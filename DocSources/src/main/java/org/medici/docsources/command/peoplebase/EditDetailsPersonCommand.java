@@ -42,7 +42,7 @@ public class EditDetailsPersonCommand {
 	private Integer personId;
 	private String researcher;
 	private Date dateCreated;
-	private String firstName;
+	private String first;
 	private String sucNum;
 	//Prefix Pre-Id: 
 	private String midPrefix;
@@ -127,16 +127,16 @@ public class EditDetailsPersonCommand {
 		this.dateCreated = dateCreated;
 	}
 	/**
-	 * @return the firstName
+	 * @return the first
 	 */
-	public String getFirstName() {
-		return firstName;
+	public String getFirst() {
+		return first;
 	}
 	/**
-	 * @param firstName the firstName to set
+	 * @param first the first to set
 	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirst(String first) {
+		this.first = first;
 	}
 	/**
 	 * @return the sucNum
