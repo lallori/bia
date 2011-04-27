@@ -442,8 +442,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Override
 	public People findChildPerson(Integer parentId, Integer childId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			People parent = getPeopleDAO().find(parentId);
+			
+			return getPeopleDAO().findChild(parent.getPersonId(), parent.getGender(), childId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
