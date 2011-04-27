@@ -7,7 +7,6 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditChildrenPersonURL" value="/de/peoplebase/EditChildrenPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
-			<c:param name="parentId"  value="${command.personId}" />
 		</c:url>
 		<c:url var="AddChildPersonURL" value="/de/peoplebase/EditChildPerson.do">
 			<c:param name="parentId"  value="${command.personId}" />
@@ -27,7 +26,7 @@
 				<c:param name="childId" value="${currentChild.personId}" />
 			</c:url>
 
-			<c:url var="DeleteChildPersonURL" value="/de/peoplebase/DeleteNamePerson.do" >
+			<c:url var="DeleteChildPersonURL" value="/de/peoplebase/DeleteChildPerson.do" >
 				<c:param name="parentId" value="${command.personId}" />
 				<c:param name="childId" value="${currentChild.personId}" />
 			</c:url>
@@ -64,7 +63,7 @@
 				return false;
 			});
 
-	        $j(".deleteValue").click(function() {
+	        $j(".deleteIcon").click(function() {
 				$j.get(this.href, function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response

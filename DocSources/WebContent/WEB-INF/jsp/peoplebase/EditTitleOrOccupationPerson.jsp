@@ -25,7 +25,7 @@
 			</legend>
 			<div>
 				<form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">New Title &amp; Occ:</form:label>
-				<form:input id="titleOrOccAutocomplete" path="titleOrOccupationDescription" cssClass="input_23c"/>
+				<form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_23c"/>
 			</div>
 			<div>
 				<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role:</form:label>
@@ -80,7 +80,7 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			var titleOrOccupationDescription = $j('#titleOrOccAutocomplete').autocompleteTitle({ 
+			var titleOrOccupationDescription = $j('#titleAutocomplete').AutocompletePlace({ 
 			    serviceUrl:'${SearchTitleOrOccupationURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character

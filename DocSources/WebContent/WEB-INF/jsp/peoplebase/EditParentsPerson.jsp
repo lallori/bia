@@ -6,10 +6,10 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditParentsPersonURL" value="/de/peoplebase/EditParentsPerson.do">
-			<c:param name="personId"   value="${command.personId}" />
+			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
-			<c:param name="personId"   value="${command.personId}" />
+			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
 	</security:authorize>
 
@@ -17,30 +17,37 @@
 		<fieldset>
 		<legend><b>PARENTS</b></legend>
 			<c:url var="EditFatherPersonURL" value="/de/peoplebase/EditFatherPerson.do">
-				<c:param name="personId" value="${command.personId}" />
+				<c:param name="personId" value="${person.personId}" />
+				<c:param name="fatherId" value="${person.father.personId}" />
 			</c:url>
 			<c:url var="DeleteFatherPersonURL" value="/de/peoplebase/DeleteFatherPerson.do" >
-				<c:param name="personId" value="${command.personId}" />
-				<c:param name="nameId" value="${currentName.nameId}" />
+				<c:param name="personId" value="${person.personId}" />
+				<c:param name="fatherId" value="${person.father.personId}" />
 			</c:url>
 			<div>
 				Father:
       			<input id="father" name="father" class="input_28c_disabled" type="text" value="${person.father}" disabled="disabled" />
+      		<c:if test="${not empty person.father}">
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteFatherPersonURL}"></a>
+			</c:if>
 				<a class="editValue" class="editValue" href="${EditFatherPersonURL}">edit value</a>
 			</div>
 
 			<c:url var="EditMotherPersonURL" value="/de/peoplebase/EditMotherPerson.do">
-				<c:param name="personId" value="${command.personId}" />
+				<c:param name="personId" value="${person.personId}" />
+				<c:param name="motherId" value="${person.mother.personId}" />
 			</c:url>
 			<c:url var="DeleteMotherPersonURL" value="/de/peoplebase/DeleteMotherPerson.do" >
-				<c:param name="personId" value="${command.personId}" />
+				<c:param name="personId" value="${person.personId}" />
+				<c:param name="motherId" value="${person.mother.personId}" />
 			</c:url>
 
 			<div>
 				Mother: 
       			<input id="mother" name="mother" class="input_28c_disabled" type="text" value="${person.mother}" disabled="disabled" />
+			<c:if test="${not empty person.mother}">
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteMotherPersonURL}"></a>
+			</c:if>
 				<a class="editValue" class="editValue" href="${EditMotherPersonURL}">edit value</a>
 			</div>
 			
@@ -67,7 +74,7 @@
 				return false;
 			});
 
-	        $j(".deleteValue").click(function() {
+	        $j(".deleteIcon").click(function() {
 				$j.get(this.href, function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
