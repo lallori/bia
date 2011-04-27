@@ -46,13 +46,23 @@ public interface PeopleDAO extends Dao<Integer, People> {
 
 	/**
 	 * 
+	 * @param parentId
+	 * @param gender
+	 * @param childId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public People findChild(Integer parentId, Gender gender, Integer childId) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param personId
 	 * @param gender
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public List<People> findChildren(Integer personId, Gender gender) throws PersistenceException;
-
+	
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.People} 
 	 * created on database.
@@ -63,7 +73,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public People findLastEntryPerson() throws PersistenceException;
-	
+
 	/**
 	 * This method generate Hibernate search index.
 	 * 
@@ -95,6 +105,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public List<People> searchMotherLinkableToDocument(String query) throws PersistenceException;
+	
 
 	/**
 	 * 
@@ -104,7 +115,6 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public Page searchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
-	
 
 	/**
 	 * 

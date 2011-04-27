@@ -97,6 +97,42 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public People findChild(Integer parentId, Gender gender, Integer childId) throws PersistenceException{
+        String queryJPQL = "FROM People WHERE ";
+        queryJPQL += "personId = :childId ";
+        if ((gender == null) || (gender.equals(Gender.X))) {
+        	queryJPQL += "father.personId = :fatherId or mother.personId = :motherId ";
+        } else if (gender.equals(Gender.M)) {
+        	queryJPQL += "father.personId = :fatherId";
+        } else if (gender.equals(Gender.F)) {
+        	queryJPQL += "mother.personId = :motherId";
+        }
+    	
+        Query query = getEntityManager().createQuery(queryJPQL);
+        query.setParameter("childId", childId);
+
+        if ((gender == null) || (gender.equals(Gender.X))) {
+	        query.setParameter("fatherId", parentId);
+	        query.setParameter("motherId", parentId);
+        } else if (gender.equals(Gender.M)) {
+	        query.setParameter("fatherId", parentId);
+        } else if (gender.equals(Gender.F)) {
+	        query.setParameter("motherId", parentId);
+        }
+
+		List<People> result = query.getResultList();
+		if (result.size() == 1) {
+			return result.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<People> findChildren(Integer personId, Gender gender) throws PersistenceException {
         String queryJPQL = "FROM People WHERE ";
         if ((gender == null) || (gender.equals(Gender.X))) {
@@ -120,7 +156,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
 		return query.getResultList();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
