@@ -119,7 +119,7 @@ public class EditDetailsPersonController {
 			person.setActiveStart(command.getActiveStart());
 			person.setBornPlaceUnsure(command.getBornPlaceUnsure());
 			person.setDeathYear(command.getDeathYear());
-			person.setDeathMonth((command.getBornMonth() != null) ? new Month(command.getBornMonth()) : null);
+			person.setDeathMonth((command.getDeathMonth() != null) ? new Month(command.getDeathMonth()) : null);
 			person.setDeathDay(command.getDeathDay());
 
 			try {

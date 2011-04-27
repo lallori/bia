@@ -29,7 +29,6 @@ package org.medici.docsources.command.peoplebase;
 
 import java.util.Date;
 
-import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People.Gender;
 
 /**
@@ -80,7 +79,7 @@ public class EditDetailsPersonCommand {
 	// Death Year 
 	private Integer deathYear;
 	// Death Month
-	private Month deathMonth;
+	private Integer deathMonth;
 	// Death Day
 	private Integer deathDay;
 	// Death Approx 
@@ -358,13 +357,13 @@ public class EditDetailsPersonCommand {
 	/**
 	 * @return the deathMonth
 	 */
-	public Month getDeathMonth() {
+	public Integer getDeathMonth() {
 		return deathMonth;
 	}
 	/**
 	 * @param deathMonth the deathMonth to set
 	 */
-	public void setDeathMonth(Month deathMonth) {
+	public void setDeathMonth(Integer deathMonth) {
 		this.deathMonth = deathMonth;
 	}
 	/**

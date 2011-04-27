@@ -39,6 +39,7 @@ import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.marriage.MarriageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
+import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.polink.PoLinkDAO;
 import org.medici.docsources.dao.rolecat.RoleCatDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
@@ -83,6 +84,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired
 	private PeopleDAO peopleDAO;
 	
+	@Autowired
+	private PlaceDAO placeDAO;
+
 	@Autowired
 	private PoLinkDAO poLinkDAO;
 	
@@ -204,7 +208,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Override
 	public void deleteNamePerson(AltName altName) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
+		try {
+			AltName altNameToDelete = getAltNameDAO().find(altName.getNameId());
+			
+			getAltNameDAO().remove(altNameToDelete);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
 	}
 
 	/**
@@ -261,8 +271,48 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Override
 	public People editDetailsPerson(People person) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+
+			// fill fields to update person details section
+			personToUpdate.setFirst(person.getFirst());
+			personToUpdate.setSucNum(person.getSucNum());
+			personToUpdate.setMidPrefix(person.getMidPrefix());
+			personToUpdate.setMiddle(person.getMiddle());
+			personToUpdate.setLastPrefix(person.getLastPrefix());
+			personToUpdate.setLast(person.getLast());
+			personToUpdate.setPostLastPrefix(person.getPostLastPrefix());
+			personToUpdate.setPostLast(person.getPostLast());
+			personToUpdate.setGender(person.getGender());
+			personToUpdate.setBornYear(person.getBornYear());
+			if (person.getBornMonth() != null) {
+				personToUpdate.setBornMonth(getMonthDAO().find(person.getBornMonth().getMonthNum()));
+			} else {
+				personToUpdate.setBornMonth(null);
+			}
+			personToUpdate.setBornDay(person.getBornDay());
+			personToUpdate.setBornApprox(person.getBornApprox());
+			personToUpdate.setBornDateBc(person.getBornDateBc());
+			if (person.getBornPlace() != null) {
+				personToUpdate.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
+			} else {
+				personToUpdate.setBornPlace(null);
+			}
+			personToUpdate.setActiveStart(person.getActiveStart());
+			personToUpdate.setBornPlaceUnsure(person.getBornPlaceUnsure());
+			personToUpdate.setDeathYear(person.getDeathYear());
+			if (person.getDeathMonth() != null)
+				personToUpdate.setDeathMonth(getMonthDAO().find(person.getDeathMonth().getMonthNum()));
+			else
+				personToUpdate.setDeathMonth(null);
+			personToUpdate.setDeathDay(person.getDeathDay());
+
+			getPeopleDAO().merge(personToUpdate);
+
+			return personToUpdate;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -273,7 +323,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			People personToUpdate = getPeopleDAO().find(person.getPersonId());
 
-			// fill fields to update document section
+			// fill field to update father
 			personToUpdate.setFather(getPeopleDAO().find(person.getFather().getPersonId()));
 
 			getPeopleDAO().merge(personToUpdate);
@@ -665,6 +715,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
+	}
+
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
+	}
+
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
 	}
 
 	/**
