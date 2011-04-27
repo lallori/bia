@@ -32,7 +32,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.DeleteMotherPersonCommand;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -98,11 +97,7 @@ public class DeleteMotherPersonController {
 			person.setMother(new People(command.getMotherId()));
 
 			try {
-				if (!ObjectUtils.toString(command.getMotherId()).equals("")) {
-					getPeopleBaseService().deleteMotherFromPerson(person);
-				} else {
-					return new ModelAndView("response/KO", model);
-				}
+				getPeopleBaseService().deleteMotherFromPerson(person);
 
 				return new ModelAndView("response/OK", model);
 			} catch (ApplicationThrowable ath) {

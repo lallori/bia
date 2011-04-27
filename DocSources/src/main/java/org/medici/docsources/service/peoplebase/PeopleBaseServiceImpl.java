@@ -174,8 +174,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Override
 	public void deleteFatherFromPerson(People person) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		
+		try {
+			People child = getPeopleDAO().find(person.getPersonId());
+			child.setFather(null);
+			
+			getPeopleDAO().merge(child);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
 	}
 
 	/**
@@ -183,8 +189,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Override
 	public void deleteMotherFromPerson(People person) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		
+		try {
+			People child = getPeopleDAO().find(person.getPersonId());
+			child.setMother(null);
+			
+			getPeopleDAO().merge(child);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
 	}
 
 	/**
@@ -193,6 +205,30 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public void deleteNamePerson(AltName altName) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteParentFromPerson(People child, Integer parentId) throws ApplicationThrowable {
+		try {
+			People parent = getPeopleDAO().find(parentId);
+			People childToUpdate = getPeopleDAO().find(child.getPersonId());
+
+			if (parent.getGender().equals(Gender.F)) {
+				childToUpdate.setMother(null);
+			} else if (parent.getGender().equals(Gender.M)) {
+				childToUpdate.setFather(null);
+			} else if (parent.getGender().equals(Gender.X)) {
+				//We manage Gender.X as father
+				childToUpdate.setFather(null);
+			}
+
+			getPeopleDAO().merge(childToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

@@ -83,36 +83,25 @@ public class DeleteChildPersonValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		DeleteChildPersonCommand deleteChildPersonCommand = (DeleteChildPersonCommand) object;
-		validateChild(deleteChildPersonCommand.getChildId(), deleteChildPersonCommand.getFatherId(), deleteChildPersonCommand.getMotherId(), errors);
+		validateChild(deleteChildPersonCommand.getChildId(), deleteChildPersonCommand.getParentId(), errors);
 	}
 
 	/**
 	 * 
 	 * @param childId
-	 * @param fatherId
-	 * @param motherId
+	 * @param parentId
 	 * @param errors
 	 */
-	public void validateChild(Integer childId, Integer fatherId, Integer motherId, Errors errors) {
+	public void validateChild(Integer childId, Integer parentId, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "childId", "error.childId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "parentId", "error.parentId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				People person = getPeopleBaseService().findPerson(childId); 
-				if (person == null) {
+				People child= getPeopleBaseService().findPerson(childId); 
+				if (child == null) {
 					errors.reject("personId", "error.personId.notfound");
-				} else {
-					if (fatherId != null) {
-						if (person.getFather() == null) {
-							errors.reject("father", "error.fatherId.notfound");
-						}
-					}
-					if (motherId != null) {
-						if (person.getMother() == null) {
-							errors.reject("father", "error.fatherId.notfound");
-						}
-					}
-				}
+				} 
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");
 			}

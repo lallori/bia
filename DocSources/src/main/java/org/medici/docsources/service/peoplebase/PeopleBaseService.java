@@ -103,6 +103,14 @@ public interface PeopleBaseService {
 	 * 
 	 * @param child
 	 * @param parentId
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteParentFromPerson(People child, Integer parentId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param child
+	 * @param parentId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */

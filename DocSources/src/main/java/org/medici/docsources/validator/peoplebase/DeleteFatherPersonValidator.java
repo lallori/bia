@@ -83,7 +83,7 @@ public class DeleteFatherPersonValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		DeleteFatherPersonCommand deleteFatherPersonCommand = (DeleteFatherPersonCommand) object;
-		validateChild(deleteFatherPersonCommand.getPersonId(), deleteFatherPersonCommand.getFatherId(), errors);
+		validateFather(deleteFatherPersonCommand.getPersonId(), deleteFatherPersonCommand.getFatherId(), errors);
 	}
 
 	/**
@@ -93,8 +93,9 @@ public class DeleteFatherPersonValidator implements Validator {
 	 * @param motherId
 	 * @param errors
 	 */
-	public void validateChild(Integer personId, Integer fatherId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "childId", "error.childId.null");
+	public void validateFather(Integer personId, Integer fatherId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fatherId", "error.fatherId.null");
 
 		if (!errors.hasErrors()) {
 			try {

@@ -94,6 +94,7 @@ public class DeleteMotherPersonValidator implements Validator {
 	 */
 	public void validateMother(Integer personId, Integer motherId, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "motherId", "error.motherId.null");
 
 		if (!errors.hasErrors()) {
 			try {

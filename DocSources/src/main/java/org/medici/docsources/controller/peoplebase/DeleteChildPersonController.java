@@ -32,7 +32,6 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.DeleteChildPersonCommand;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -60,7 +59,7 @@ public class DeleteChildPersonController {
 	private PeopleBaseService peopleBaseService;
 
 	@Autowired(required = false)
-	@Qualifier("deleteChildDocumentValidator")
+	@Qualifier("deleteChildPersonValidator")
 	private Validator validator;
 
 	/**
@@ -94,19 +93,10 @@ public class DeleteChildPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			People person = new People(command.getChildId());
-			if (!ObjectUtils.toString(command.getFatherId()).equals("")) {
-				person.setFather(new People(command.getChildId()));
-			} else if (!ObjectUtils.toString(command.getMotherId()).equals("")) {
-				person.setMother(new People(command.getMotherId()));
-			}
+			People child = new People(command.getChildId());
 
 			try {
-				if (!ObjectUtils.toString(command.getFatherId()).equals("")) {
-					getPeopleBaseService().deleteFatherFromPerson(person);
-				} else {
-					getPeopleBaseService().deleteMotherFromPerson(person);
-				}
+				getPeopleBaseService().deleteParentFromPerson(child, command.getParentId());
 
 				return new ModelAndView("response/OK", model);
 			} catch (ApplicationThrowable ath) {
