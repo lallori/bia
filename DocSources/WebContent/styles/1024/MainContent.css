@@ -269,7 +269,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	opacity:0.5;
 }
 
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother { /* Close button on bottom left  */
+#close, #closeName, #closeTitle, #closeChild, #closeSpouse, #closeFather, #closeMother { /* Close button on bottom left  */
 	margin:5px auto auto 0px;
 	padding:0;
 	cursor:pointer;
