@@ -18,8 +18,8 @@
 			<fieldset>
 			<legend><b>PERSON DETAILS</b></legend>
 				<div>
-					<form:label for="firstName" path="firstName" cssErrorClass="error"><b>First Name:</b></form:label>
-					<form:input path="firstName" cssClass="input_5c" />
+					<form:label for="first" path="first" cssErrorClass="error"><b>First Name:</b></form:label>
+					<form:input path="first" cssClass="input_5c" />
 					<form:label for="sucNum" path="sucNum" cssErrorClass="error">Succes. Number:</form:label>
 					<form:input path="sucNum" cssClass="input_5c" maxlength="5"/>
 				</div>
@@ -59,9 +59,7 @@
 					<form:label for="bornYear" path="bornYear" cssErrorClass="error">Year</form:label>
 					<form:input path="bornYear" cssClass="input_4c" maxlength="4"/>
 					<form:label for="bornMonth" path="bornMonth" cssErrorClass="error">Month</form:label>
-					<select id="bornMonth" name="bornMonth" class="selectform">
-						<option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option><option value="" selected="selected"></option>
-					</select>
+					<form:select id="bornMonth" path="bornMonth" cssClass="selectform"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 					<form:label for="bornDay" path="bornDay" cssErrorClass="error">Day</form:label>
 					<form:input path="bornDay" cssClass="input_2c" maxlength="2"/>
 				</div>
@@ -91,9 +89,7 @@
 					<form:label for="deathYear" path="deathYear" cssErrorClass="error">Year</form:label>
 					<form:input path="deathYear" cssClass="input_4c" maxlength="4"/>
 					<form:label for="deathMonth" path="deathMonth" cssErrorClass="error">Month</form:label>
-					<select id="monthDeath" name="monthDeath" class="selectform">
-						<option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option><option value="" selected="selected"></option>
-					</select>
+					<form:select id="deathMonth" path="deathMonth" cssClass="selectform"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 					<form:label for="deathDay" path="deathDay" cssErrorClass="error">Day</form:label>
 					<form:input path="deathDay" cssClass="input_2c" maxlength="2"/>
 				</div>

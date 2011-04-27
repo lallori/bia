@@ -30,6 +30,7 @@ package org.medici.docsources.controller.peoplebase;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -101,7 +102,7 @@ public class EditDetailsPersonController {
 
 			People person = new People(command.getPersonId());
 			person.setResearcher(command.getResearcher());
-			person.setFirst(command.getFirstName());
+			person.setFirst(command.getFirst());
 			person.setSucNum(command.getSucNum());
 			person.setMidPrefix(command.getMidPrefix());
 			person.setMiddle(command.getMiddle());
@@ -157,20 +158,47 @@ public class EditDetailsPersonController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
+		List<Month> months = null;
+		try {
+			months = getPeopleBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/EditDetailsPerson", model);
+		}
+
 		if ((command != null) && (command.getPersonId() > 0)) {
-			People people = new People();
+			People person = new People();
 	
 			try {
-				people = getPeopleBaseService().findPerson(command.getPersonId());
+				person = getPeopleBaseService().findPerson(command.getPersonId());
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsPerson", model);
 			}
 	
 			try {
-				BeanUtils.copyProperties(command, people);
+				BeanUtils.copyProperties(command, person);
 			} catch (IllegalAccessException iaex) {
 			} catch (InvocationTargetException itex) {
 			}
+
+			if (person.getBornMonth() != null) {
+				command.setBornMonth(person.getBornMonth().getMonthNum());
+			}
+			if (person.getDeathMonth() != null) {
+				command.setDeathMonth(person.getDeathMonth().getMonthNum());
+			}
+
+			if (command.getBornYear() == 0)
+				command.setBornYear(null);
+
+			if (command.getBornDay() == 0)
+				command.setBornDay(null);
+
+			if (command.getDeathYear() == 0)
+				command.setDeathYear(null);
+
+			if (command.getDeathDay() == 0)
+				command.setDeathDay(null);
 		} else {
 			// On Volume creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());

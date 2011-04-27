@@ -28,11 +28,13 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditMotherPersonCommand;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -122,6 +124,15 @@ public class EditMotherPersonController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditMotherPersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+
+		List<Month> months = null;
+		try {
+			months = getPeopleBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/EditFatherPerson", model);
+		}
+		
 		if ((command != null) && (command.getPersonId() > 0)) {
 			try {
 				People person = getPeopleBaseService().findPerson(command.getPersonId());

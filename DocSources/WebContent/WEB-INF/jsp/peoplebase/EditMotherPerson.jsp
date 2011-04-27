@@ -26,7 +26,7 @@
 					<form:label id="bornYearLabel" for="bornYear" path="bornYear">Year</form:label>
 					<form:input path="bornYear" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
 					<form:label id="bornMonthLabel" for="bornMonthNum" path="bornMonthNum">Month</form:label>
-					<form:select id="bornMonthNum" disabled="disabled" path="bornMonthNum" cssClass="selectform_disabled"/>
+					<form:select id="bornMonthNum" disabled="disabled" path="bornMonthNum" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 					<form:label id="bornDayLabel" for="bornDay" path="bornDay">Day</form:label>
 					<form:input path="bornDay" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
 				</div>
