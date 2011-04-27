@@ -49,9 +49,7 @@
 				
 				<div>
 					<form:label for="gender" path="gender" cssErrorClass="error">Gender:</form:label>
-					<select id="gender" name="gender" class="selectform_short">
-						<option value="M">M</option><option value="F">F</option><option value="X">X</option><option value="" selected="selected"></option>		
-					</select>
+					 <form:select path="gender" cssClass="selectform_short" items="${genders}"/>
 				</div>
 				
 				<div>
@@ -133,12 +131,22 @@
 			    onSelect: function(value, data){ $j('#bornPlaceId').val(data); }
 			  });
 
-			$j("#EditDetailsPerson").submit(function (){
-				$j.post($j(this).attr("action"), $j(this).serialize(), function() {
-					// In questa function si definisce la sostituzione del div dove visualizzare il risultato
-					// questa function rappresenta 
-					alert('done!');
-				});
+			$j("#EditDetailsPersonForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					if ($j(html).find(".inputerrors").length > 0){
+						$j("#EditDetailsPersonDiv").html(html);
+					} else {
+				<c:choose> 
+					<c:when test="${command.personId == 0}"> 
+						$j("#body_left").html(html);
+					</c:when> 
+					<c:otherwise> 
+						$j("#EditDetailsPersonDiv").html(html);
+					</c:otherwise> 
+				</c:choose> 
+					}
+				}});
+				return false;
 			});
 		});
 	</script>

@@ -1228,7 +1228,7 @@ public class People implements Serializable {
 	 *
 	 */
 	public static enum Gender {
-		M("M"), F("F"), X("X");
+		NULL(null), M("M"), F("F"), X("X");
 		
 		private final String gender;
 

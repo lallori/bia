@@ -284,7 +284,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setLast(person.getLast());
 			personToUpdate.setPostLastPrefix(person.getPostLastPrefix());
 			personToUpdate.setPostLast(person.getPostLast());
-			personToUpdate.setGender(person.getGender());
+			if (!person.getGender().equals(People.Gender.NULL)) {
+				personToUpdate.setGender(person.getGender());
+			} else {
+				personToUpdate.setGender(null);
+			}
 			personToUpdate.setBornYear(person.getBornYear());
 			if (person.getBornMonth() != null) {
 				personToUpdate.setBornMonth(getMonthDAO().find(person.getBornMonth().getMonthNum()));
@@ -719,13 +723,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
-	 * @param placeDAO the placeDAO to set
-	 */
-	public void setPlaceDAO(PlaceDAO placeDAO) {
-		this.placeDAO = placeDAO;
-	}
-
-	/**
 	 * @return the placeDAO
 	 */
 	public PlaceDAO getPlaceDAO() {
@@ -869,6 +866,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setPeopleDAO(PeopleDAO peopleDAO) throws ApplicationThrowable {
 		this.peopleDAO = peopleDAO;
+	}
+
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
 	}
 
 	/**

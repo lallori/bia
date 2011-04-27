@@ -162,10 +162,14 @@ public class EditDetailsPersonController {
 		try {
 			months = getPeopleBaseService().getMonths();
 			model.put("months", months);
+
+			// We need genders enumeration to populate relative combo-box
+			model.put("genders", People.Gender.values());
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/EditDetailsPerson", model);
 		}
 
+		
 		if ((command != null) && (command.getPersonId() > 0)) {
 			People person = new People();
 	
