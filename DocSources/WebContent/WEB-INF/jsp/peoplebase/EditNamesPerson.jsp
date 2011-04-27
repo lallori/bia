@@ -64,7 +64,7 @@
 				return false;
 			});
 
-	        $j(".deleteValue").click(function() {
+	        $j(".deleteIcon").click(function() {
 				$j.get(this.href, function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response

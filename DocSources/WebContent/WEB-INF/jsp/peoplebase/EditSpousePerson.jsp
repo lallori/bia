@@ -5,6 +5,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditSpousePersonURL" value="/de/peoplebase/EditSpousePerson.do"/>
+
 		<c:url var="EditSpousesPersonURL" value="/de/peoplebase/EditSpousesPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
@@ -13,7 +15,7 @@
 		</c:url>
 	</security:authorize>
 
-	<form:form id="EditNamesPersonForm" method="post" cssClass="edit">
+	<form:form id="EditSpousePersonForm" action="${EditSpousePersonURL}" method="post" cssClass="edit">
 		<fieldset>
 			<c:if test="${empty command.marriageId}"> 
 				<b>ADD NEW SPOUSE</b>
@@ -63,10 +65,6 @@
 				return false;
 			});
 
-			$j("#AddNewValue").click(function(){
-				$j("#EditNamePersonDiv").load($j(this).attr("href"));
-				return false;
-			});
 		});
 	</script>
 

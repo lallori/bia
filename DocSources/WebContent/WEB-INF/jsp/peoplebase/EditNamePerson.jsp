@@ -5,12 +5,14 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="EditNamePersonURL" value="/de/peoplebase/EditNamePerson.do" />
+
 		<c:url var="EditNamesPersonURL" value="/de/peoplebase/EditNamesPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
 	</security:authorize>
 	<br>
-	<form:form id="EditNamePersonForm" cssClass="edit">
+	<form:form id="EditNamePersonForm" action="${EditNamePersonURL}" method="post" cssClass="edit">
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.nameId}"> 
