@@ -57,6 +57,8 @@
 			<li><b>Document Typology (other than letter):</b> ${document.docTypology}</li>
 			<li><b>Modern Date:</b> ${document.yearModern}</li>
 			<li><b>Recorded year:</b> ${document.docYear} ${document.docMonthNum} ${document.docDay}</li>
+			<li><b>Date uncertain or approximate:</b> ${document.dateUns}</li>
+			<li><b>Undated:</b> ${document.undated}</li>
 			<li><b>Date Notes:</b> ${document.dateNotes}</li>
 		</ul>
 	</div>
