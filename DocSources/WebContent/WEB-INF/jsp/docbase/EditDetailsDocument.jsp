@@ -25,6 +25,9 @@
 				<form:label id="insertNumLabel" for="insertNum" path="insertNum" cssErrorClass="error">Insert/Part:</form:label>
 				<form:input id="insertNum" path="insertNum" class="input_5c" />
 				<form:input id="insertLet" path="insertLet" class="input_5c" />
+			</div>
+			
+			<div>
 				<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error">Document starts at folio :</form:label>
 				<form:input id="folioNum" path="folioNum" class="input_5c" />
 				<form:input id="folioMod" path="folioMod" class="input_5c" />
