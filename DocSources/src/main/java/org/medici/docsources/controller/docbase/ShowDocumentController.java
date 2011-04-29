@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.controller.docbase;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +35,10 @@ import org.medici.docsources.command.docbase.ShowDocumentRequestCommand;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -71,17 +74,27 @@ public class ShowDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowDocumentRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			// Details
-			Document document = getDocBaseService().findDocument(command.getEntryId());
-			model.put("document", document);
+		Document document = new Document();
+		
+		if(command.getEntryId() > 0){
+			try {
+				// Details
+				document = getDocBaseService().findDocument(command.getEntryId());
+				
 	
-			Image image = getDocBaseService().findDocumentImageThumbnail(document);
-			model.put("image", image);
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowDocument", model);
+				Image image = getDocBaseService().findDocumentImageThumbnail(document);
+				model.put("image", image);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowDocument", model);
+			}
+		} else {
+			//EntryId equals to zero is 'New Document'
+			document.setEntryId(0);
+			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setDateCreated(new Date());
 		}
+		
+		model.put("document", document);		
 
 		return new ModelAndView("docbase/ShowDocument", model);
 	}
