@@ -25,6 +25,24 @@
 				<role>Senior Developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>Amill</id>
+			<name>Joana Amill Luzondo</name>
+			<email>joana.amill@gmail.com</email>
+			<organization>Joana Amill</organization>
+			<roles>
+				<role>Web Designer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>Doni</id>
+			<name>Matteo Doni</name>
+			<email>donimatteo@gmail.com</email>
+			<organization>Matteo Doni</organization>
+			<roles>
+				<role>Junior Developer</role>
+			</roles>
+		</developer>
 	</developers>
 
 	<licenses>
