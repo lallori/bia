@@ -35,39 +35,49 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.DeleteFatherPersonController
  */
 public class DeleteFatherPersonCommand {
-	private Integer personId;
-	private Integer fatherId;
-
+	private Integer id;
+	private Integer parentId;
+	private Integer childId;
+	
 	/**
-	 * This method returns personId property.
-	 * 
-	 * @return the personId
+	 * @return the id
 	 */
-	public Integer getPersonId() {
-		return personId;
+	public Integer getId() {
+		return id;
 	}
-
+	
 	/**
-	 * This method sets personId property.
-	 * 
-	 * @param personId
-	 *            the personId to set
+	 * @param id the id to set
 	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-
+	
 	/**
-	 * @param fatherId the fatherId to set
+	 * @return the parentId
 	 */
-	public void setFatherId(Integer fatherId) {
-		this.fatherId = fatherId;
+	public Integer getParentId() {
+		return parentId;
 	}
-
+	
 	/**
-	 * @return the fatherId
+	 * @param parentId the parentId to set
 	 */
-	public Integer getFatherId() {
-		return fatherId;
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+	
+	/**
+	 * @return the childId
+	 */
+	public Integer getChildId() {
+		return childId;
+	}
+	
+	/**
+	 * @param childId the childId to set
+	 */
+	public void setChildId(Integer childId) {
+		this.childId = childId;
 	}
 }

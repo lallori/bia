@@ -35,8 +35,9 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.EditMotherPersonController
  */
 public class EditMotherPersonCommand {
-	private Integer personId;
-	private Integer motherId;
+	private Integer id;
+	private Integer childId;
+	private Integer parentId;
 	private String motherDescription;
 	private Integer bornYear;
 	private Integer bornMonthNum;
@@ -46,32 +47,47 @@ public class EditMotherPersonCommand {
 	private Integer deathDay;
 	private String bioNotes;
 
+	
 	/**
-	 * @return the personId
+	 * @return the id
 	 */
-	public Integer getPersonId() {
-		return personId;
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the childId
+	 */
+	public Integer getChildId() {
+		return childId;
+	}
+
+	/**
+	 * @param childId the childId to set
+	 */
+	public void setChildId(Integer childId) {
+		this.childId = childId;
+	}
+
+	/**
+	 * @return the parentId
+	 */
+	public Integer getParentId() {
+		return parentId;
 	}
 	
 	/**
-	 * @param personId the personId to set
+	 * @param parentId the parentId to set
 	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
-	}
-	
-	/**
-	 * @return the motherId
-	 */
-	public Integer getMotherId() {
-		return motherId;
-	}
-	
-	/**
-	 * @param motherId the motherId to set
-	 */
-	public void setMotherId(Integer motherId) {
-		this.motherId = motherId;
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 	
 	/**

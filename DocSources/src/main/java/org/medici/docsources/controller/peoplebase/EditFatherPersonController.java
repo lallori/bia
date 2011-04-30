@@ -35,6 +35,7 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditFatherPersonCommand;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -94,13 +95,19 @@ public class EditFatherPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			People person = new People(command.getPersonId());
-			person.setFather(new People(command.getFatherId()));
+			Parent parent = new Parent(command.getId());
+			parent.setParent(new People(command.getParentId()));
+			parent.setChild(new People(command.getChildId()));
 
 			try {
-				getPeopleBaseService().editFatherPerson(person);
+				if (command.getId().equals(0)) {
+					parent = getPeopleBaseService().addNewFatherPerson(parent);
+				} else {
+					parent = getPeopleBaseService().editFatherPerson(parent);
+				}
+				model.put("person", parent.getChild());
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowPerson", model);
+				return new ModelAndView("error/EditFatherPerson", model);
 			}
 
 			return new ModelAndView("peoplebase/ShowParentsPerson", model);
@@ -132,17 +139,27 @@ public class EditFatherPersonController {
 			return new ModelAndView("error/EditFatherPerson", model);
 		}
 
-		if ((command != null) && (command.getPersonId() > 0)) {
+		if ((command != null) && (command.getId() != null)) {
 			try {
-				People person = getPeopleBaseService().findPerson(command.getPersonId());
-				model.put("person", person);
-
+				Parent parent = getPeopleBaseService().findParent(command.getId());
+				
+				command.setFatherDescription(parent.getParent().toString());
+				command.setBioNotes(parent.getParent().getBioNotes());
+				command.setBornYear(parent.getParent().getBornYear());
+				if (parent.getParent().getBornMonth()!= null){
+					command.setBornMonthNum(parent.getParent().getBornMonth().getMonthNum());
+				}
+				command.setBornDay(parent.getParent().getBornDay());
+				command.setDeathYear(parent.getParent().getDeathYear());
+				if (parent.getParent().getDeathMonth() != null) {
+					command.setDeathMonthNum(parent.getParent().getDeathMonth().getMonthNum());
+				}
+				command.setDeathDay(parent.getParent().getDeathDay());
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditFatherPerson", model);
 			}
-
-		} else {
-			model.put("person", new People(0));
+		} else{
+			command.setId(0);
 		}
 
 		return new ModelAndView("peoplebase/EditFatherPerson", model);

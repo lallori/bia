@@ -83,7 +83,7 @@ public class EditChildPersonValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditChildPersonCommand editChildPersonCommand = (EditChildPersonCommand) object;
-		validatePersonId(editChildPersonCommand.getParentId(), errors);
+		validatePersonId(editChildPersonCommand.getId(), errors);
 	}
 
 	/**
@@ -91,11 +91,13 @@ public class EditChildPersonValidator implements Validator {
 	 * @param personId
 	 * @param errors
 	 */
-	public void validatePersonId(Integer peopleId, Errors errors) {
+	public void validatePersonId(Integer id, Errors errors) {
 		if (!errors.hasErrors()) {
 			try {
-				if (getPeopleBaseService().findPerson(peopleId) == null) {
-					errors.reject("personId", "error.personId.notfound");
+				if (id > 0) {
+					if (getPeopleBaseService().findParent(id) == null) {
+						errors.reject("personId", "error.personId.notfound");
+					}
 				}
 			} catch (ApplicationThrowable ath) {
 				

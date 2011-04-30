@@ -33,6 +33,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.DeleteFatherPersonCommand;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -93,11 +94,12 @@ public class DeleteFatherPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			People person = new People(command.getPersonId());
-			person.setFather(new People(command.getFatherId()));
+			Parent parent = new Parent(command.getId());
+			parent.setParent(new People(command.getParentId()));
+			parent.setChild(new People(command.getChildId()));
 
 			try {
-				getPeopleBaseService().deleteFatherFromPerson(person);
+				getPeopleBaseService().deleteFatherFromPerson(parent);
 
 				return new ModelAndView("response/OK", model);
 			} catch (ApplicationThrowable ath) {

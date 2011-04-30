@@ -35,6 +35,7 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.EditChildPersonController
  */
 public class EditChildPersonCommand {
+	private Integer id;
 	private Integer parentId;
 	private Integer childId;
 	private String childDescription;
@@ -42,6 +43,20 @@ public class EditChildPersonCommand {
 	private Integer deathYear;
 	private Integer ageAtDeath;
 	
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
 	/**
 	 * @return the parentId
 	 */

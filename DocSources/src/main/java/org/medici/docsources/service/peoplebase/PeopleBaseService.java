@@ -34,6 +34,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.domain.PoLink;
@@ -64,11 +65,35 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param parent
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Parent addNewChildPerson(Parent parent) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param parent
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Parent addNewFatherPerson(Parent parent) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param marriage
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public People addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param parent
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Parent addNewMotherPerson(Parent parent) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -80,17 +105,24 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param person
+	 * @param child
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteFatherFromPerson(People person) throws ApplicationThrowable;
+	public void deleteChildFromPerson(Parent parent) throws ApplicationThrowable;
 
 	/**
 	 * 
-	 * @param person
+	 * @param parent
 	 * @throws ApplicationThrowable
 	 */
-	public void deleteMotherFromPerson(People person) throws ApplicationThrowable;
+	public void deleteFatherFromPerson(Parent parent) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param parent
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMotherFromPerson(Parent parent) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -102,19 +134,11 @@ public interface PeopleBaseService {
 	/**
 	 * 
 	 * @param child
-	 * @param parentId
-	 * @throws ApplicationThrowable
-	 */
-	public void deleteParentFromPerson(People child, Integer parentId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param child
-	 * @param parentId
+	 * @param parent
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public People editChildPerson(People child, Integer parentId) throws ApplicationThrowable;
+	public Parent editChildPerson(Parent parent) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -126,11 +150,11 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param person
+	 * @param parent
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public People editFatherPerson(People person) throws ApplicationThrowable;
+	public Parent editFatherPerson(Parent parent) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -142,11 +166,11 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param person
+	 * @param parent
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public People editMotherPerson(People person) throws ApplicationThrowable;
+	public Parent editMotherPerson(Parent parent) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -175,29 +199,11 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param parentId
-	 * @param childId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public People findChildPerson(Integer parentId, Integer childId) throws ApplicationThrowable;
-
-	/**
-	 * 
 	 * @param personId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param personId
-	 * @param gender
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<People> findChildrenPerson(Integer personId, Gender gender) throws ApplicationThrowable;
 
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.People}.
@@ -244,6 +250,22 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param id
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Parent findParent(Integer id)throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Parent findParentPerson(Integer id) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param personId
 	 * @return
 	 */
@@ -281,6 +303,12 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexEpLink() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexParents() throws ApplicationThrowable;
 
 	/**
 	 * 

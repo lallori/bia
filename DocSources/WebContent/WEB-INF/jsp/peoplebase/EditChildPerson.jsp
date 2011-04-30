@@ -44,8 +44,9 @@
 			</div>
 		</fieldset>	
 
-		<form:hidden path="childId"/>
+		<form:hidden path="id"/>
 		<form:hidden path="parentId"/>
+		<form:hidden path="childId"/>
 	</form:form>
 	
 	<c:url var="SearchChildLinkableToPersonURL" value="/de/peoplebase/SearchChildLinkableToPerson.json">

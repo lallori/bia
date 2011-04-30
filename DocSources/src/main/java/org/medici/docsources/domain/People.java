@@ -29,8 +29,6 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -244,16 +242,6 @@ public class People implements Serializable {
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean portrait;
 	
-	@ManyToOne
-	@JoinColumn(name="\"FATHERID\"")
-	@IndexedEmbedded(depth=1)
-	private People father;
-
-	@ManyToOne
-	@JoinColumn(name="\"MOTHERID\"")
-	@IndexedEmbedded(depth=1)
-	private People mother;
-	
 	@Column (name="\"RESID\"")
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
@@ -268,15 +256,14 @@ public class People implements Serializable {
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "FATHERID")
-	//@IndexedEmbedded
-	private List<People> childrenFather = new LinkedList<People>(); 
-	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "MOTHERID")
-	//@IndexedEmbedded(depth=1)
-	private List<People> childrenMother = new LinkedList<People>(); 
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="child")
+	@IndexedEmbedded(depth=1)
+	private Set<Parent> parents;
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="parent")
+	@IndexedEmbedded(depth=1)
+	//@OrderBy("child.last ASC")
+	private Set<Parent> children;
 
 	//Association alternative Names
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="person")
@@ -916,39 +903,6 @@ public class People implements Serializable {
 		this.portrait = portrait;
 	}
 
-
-	/**
-	 * @return the father
-	 */
-	public People getFather() {
-		return father;
-	}
-
-
-	/**
-	 * @param father the father to set
-	 */
-	public void setFather(People father) {
-		this.father = father;
-	}
-
-
-	/**
-	 * @return the mother
-	 */
-	public People getMother() {
-		return mother;
-	}
-
-
-	/**
-	 * @param mother the mother to set
-	 */
-	public void setMother(People mother) {
-		this.mother = mother;
-	}
-
-
 	/**
 	 * @return the researcher 
 	 */
@@ -994,46 +948,6 @@ public class People implements Serializable {
 	 */
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
-	}
-
-	/**
-	 * @param childrenFather the childrenFather to set
-	 */
-	public void setChildrenFather(List<People> childrenFather) {
-		this.childrenFather = childrenFather;
-	}
-
-	/**
-	 * @return the childrenFather
-	 */
-	public List<People> getChildrenFather() {
-		return childrenFather;
-	}
-
-	/**
-	 * @param childrenMother the childrenMother to set
-	 */
-	public void setChildrenMother(List<People> childrenMother) {
-		this.childrenMother = childrenMother;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	@Transient
-	public List<People> getChildren() {
-		if (getChildrenFather().size() > 0)
-			return getChildrenFather();
-		
-		return getChildrenMother();
-	}
-
-	/**
-	 * @return the childrenMother
-	 */
-	public List<People> getChildrenMother() {
-		return childrenMother;
 	}
 
 	/**
@@ -1162,6 +1076,34 @@ public class People implements Serializable {
 	 */
 	public Set<Marriage> getMarriagesAsWife() {
 		return marriagesAsWife;
+	}
+
+	/**
+	 * @param parents the parents to set
+	 */
+	public void setParents(Set<Parent> parents) {
+		this.parents = parents;
+	}
+
+	/**
+	 * @return the parents
+	 */
+	public Set<Parent> getParents() {
+		return parents;
+	}
+
+	/**
+	 * @param children the children to set
+	 */
+	public void setChildren(Set<Parent> children) {
+		this.children = children;
+	}
+
+	/**
+	 * @return the children
+	 */
+	public Set<Parent> getChildren() {
+		return children;
 	}
 
 	/**

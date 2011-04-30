@@ -28,7 +28,7 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.DeleteFatherPersonCommand;
-import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +83,7 @@ public class DeleteFatherPersonValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		DeleteFatherPersonCommand deleteFatherPersonCommand = (DeleteFatherPersonCommand) object;
-		validateFather(deleteFatherPersonCommand.getPersonId(), deleteFatherPersonCommand.getFatherId(), errors);
+		validateFather(deleteFatherPersonCommand.getId(), deleteFatherPersonCommand.getParentId(), errors);
 	}
 
 	/**
@@ -93,19 +93,22 @@ public class DeleteFatherPersonValidator implements Validator {
 	 * @param motherId
 	 * @param errors
 	 */
-	public void validateFather(Integer personId, Integer fatherId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fatherId", "error.fatherId.null");
+	public void validateFather(Integer id, Integer fatherId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "error.id.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "parentId", "error.parentId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "childId", "error.childId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				People person = getPeopleBaseService().findPerson(personId); 
-				if (person == null) {
+				Parent parent = getPeopleBaseService().findParent(id); 
+				if (parent == null) {
 					errors.reject("personId", "error.personId.notfound");
 				} else {
 					if (fatherId != null) {
-						if (person.getFather() == null) {
+						if (parent.getParent() == null) {
 							errors.reject("father", "error.fatherId.notfound");
+						} else if (!parent.getParent().getPersonId().equals(fatherId)) {
+							errors.reject("mother", "error.fatherId.notfound");
 						}
 					}
 				}

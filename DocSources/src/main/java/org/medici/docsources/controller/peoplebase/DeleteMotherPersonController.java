@@ -33,6 +33,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.DeleteMotherPersonCommand;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -89,15 +90,16 @@ public class DeleteMotherPersonController {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/DeleteFatherPerson");
+			return new ModelAndView("error/DeleteMotherPerson");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			People person = new People(command.getPersonId());
-			person.setMother(new People(command.getMotherId()));
+			Parent parent = new Parent(command.getId());
+			parent.setParent(new People(command.getParentId()));
+			parent.setChild(new People(command.getChildId()));
 
 			try {
-				getPeopleBaseService().deleteMotherFromPerson(person);
+				getPeopleBaseService().deleteMotherFromPerson(parent);
 
 				return new ModelAndView("response/OK", model);
 			} catch (ApplicationThrowable ath) {

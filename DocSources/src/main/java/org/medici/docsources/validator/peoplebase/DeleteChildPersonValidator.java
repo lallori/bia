@@ -28,7 +28,7 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.DeleteChildPersonCommand;
-import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +83,7 @@ public class DeleteChildPersonValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		DeleteChildPersonCommand deleteChildPersonCommand = (DeleteChildPersonCommand) object;
-		validateChild(deleteChildPersonCommand.getChildId(), deleteChildPersonCommand.getParentId(), errors);
+		validateChild(deleteChildPersonCommand.getId(), deleteChildPersonCommand.getParentId(), deleteChildPersonCommand.getChildId(), errors);
 	}
 
 	/**
@@ -92,16 +92,27 @@ public class DeleteChildPersonValidator implements Validator {
 	 * @param parentId
 	 * @param errors
 	 */
-	public void validateChild(Integer childId, Integer parentId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "childId", "error.childId.null");
+	public void validateChild(Integer id, Integer parentId, Integer childId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "error.id.null");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "parentId", "error.parentId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "childId", "error.childId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				People child= getPeopleBaseService().findPerson(childId); 
-				if (child == null) {
+				Parent parent = getPeopleBaseService().findParent(id); 
+				if (parent == null) {
 					errors.reject("personId", "error.personId.notfound");
-				} 
+				} else {
+					if (parent.getParent() == null) {
+						errors.reject("parentId", "error.parentId.notfound");
+					} else if (!parent.getParent().getPersonId().equals(parentId)) {
+						errors.reject("parentId", "error.parentId.notfound");
+					} else if (parent.getChild() == null) {
+						errors.reject("childId", "error.childId.null");
+					} else if (!parent.getChild().getPersonId().equals(childId)) {
+						errors.reject("parentId", "error.childId.notfound");
+					}
+				}
 			} catch (ApplicationThrowable ath) {
 				errors.reject("entryId", "error.entryId.notfound");
 			}

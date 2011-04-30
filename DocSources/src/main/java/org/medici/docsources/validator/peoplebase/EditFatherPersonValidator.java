@@ -28,10 +28,12 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.EditFatherPersonCommand;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
@@ -83,22 +85,34 @@ public class EditFatherPersonValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditFatherPersonCommand editFatherPersonCommand = (EditFatherPersonCommand) object;
-		validatePersonId(editFatherPersonCommand.getPersonId(), errors);
+		validateFather(editFatherPersonCommand.getId(), editFatherPersonCommand.getParentId(), errors);
 	}
 
 	/**
 	 * 
-	 * @param personId
+	 * @param childId
+	 * @param fatherId
+	 * @param motherId
 	 * @param errors
 	 */
-	public void validatePersonId(Integer peopleId, Errors errors) {
+	public void validateFather(Integer id, Integer fatherId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "parentId", "error.parentId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "childId", "error.personId.null");
+
 		if (!errors.hasErrors()) {
 			try {
-				if (getPeopleBaseService().findPerson(peopleId) == null) {
-					errors.reject("personId", "error.personId.notfound");
+				if (id > 0) {
+					Parent parent = getPeopleBaseService().findParent(id); 
+					if (parent == null) {
+						errors.reject("personId", "error.personId.notfound");
+					} else {
+						if (parent.getParent() == null) {
+							errors.reject("father", "error.fatherId.notfound");
+						}
+					}
 				}
 			} catch (ApplicationThrowable ath) {
-				
+				errors.reject("entryId", "error.entryId.notfound");
 			}
 		}
 	}

@@ -35,9 +35,38 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.DeleteChildPersonController
  */
 public class DeleteChildPersonCommand {
-	private Integer childId;
+	private Integer id;
 	private Integer parentId;
-	
+	private Integer childId;
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the parentId
+	 */
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	/**
+	 * @param parentId the parentId to set
+	 */
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
 	/**
 	 * @return the childId
 	 */
@@ -50,19 +79,5 @@ public class DeleteChildPersonCommand {
 	 */
 	public void setChildId(Integer childId) {
 		this.childId = childId;
-	}
-
-	/**
-	 * @param parentId the parentId to set
-	 */
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	/**
-	 * @return the parentId
-	 */
-	public Integer getParentId() {
-		return parentId;
 	}
 }

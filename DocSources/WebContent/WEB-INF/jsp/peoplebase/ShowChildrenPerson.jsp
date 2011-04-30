@@ -20,10 +20,10 @@
 		</security:authorize>
 		</div>
 		<div class="list">
-			<c:forEach items="${children}" var="currentChildren">
+			<c:forEach items="${person.children}" var="currentChild">
 				<div class="row">
-					<div class="value"><a class="linkSearch" href="#">${currentChildren}</a></div> 
-					<div class="info">Birth ${currentChildren.bornYear} | Death ${currentChildren.deathYear}</div>
+					<div class="value"><a class="linkSearch" href="#">${currentChild.child}</a></div> 
+					<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
 				</div>
 			</c:forEach>
 		</div>

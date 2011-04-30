@@ -35,7 +35,6 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.People;
-import org.medici.docsources.domain.People.Gender;
 
 /**
  * Person Dao.
@@ -44,25 +43,6 @@ import org.medici.docsources.domain.People.Gender;
  */
 public interface PeopleDAO extends Dao<Integer, People> {
 
-	/**
-	 * 
-	 * @param parentId
-	 * @param gender
-	 * @param childId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public People findChild(Integer parentId, Gender gender, Integer childId) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param personId
-	 * @param gender
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public List<People> findChildren(Integer personId, Gender gender) throws PersistenceException;
-	
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.People} 
 	 * created on database.

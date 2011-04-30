@@ -45,6 +45,11 @@ create table docsources_audit.tblTitleOccsList_AUD (TITLEOCCID integer not null,
 create table docsources_audit.tblTopicsList_AUD (TOPICID integer not null, REV integer not null, REVTYPE tinyint, DESCRIPTION LONGTEXT, TOPICTITLE varchar(50), primary key (TOPICID, REV));
 create table docsources_audit.tblVolumes_AUD (SUMMARYID integer not null, REV integer not null, REVTYPE tinyint, BOUND TINYINT default '-1', CCONDITION LONGTEXT, CCONTEXT LONGTEXT, CIPHER TINYINT default '-1', CIPHERNOTES varchar(255), DATECREATED datetime, DATENOTES LONGTEXT, ENDDAY TINYINT, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDYEAR integer, ENGLISH TINYINT default '-1', FOLIOCOUNT varchar(50), FOLSNUMBRD TINYINT default '-1', FRENCH TINYINT default '-1', GERMAN TINYINT default '-1', ITALIAN TINYINT default '-1', LATIN TINYINT default '-1', OLDALPHAINDEX TINYINT default '-1', ORGNOTES LONGTEXT, OTHERLANG varchar(50), PRINTEDDRAWINGS TINYINT default '-1', PRINTEDMATERIAL TINYINT default '-1', RECIPS LONGTEXT, RESID varchar(255), SENDERS LONGTEXT, SPANISH TINYINT default '-1', STAFFMEMO LONGTEXT, STARTDAY TINYINT, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, STATBOX varchar(50), VOLLETEXT varchar(1), VOLNUM integer, VOLTOBEVETTED TINYINT default '-1', VOLTOBEVETTEDDATE datetime, VOLVETBEGINS datetime, VOLVETID varchar(50), VOLVETTED TINYINT default '-1', VOLVETTEDDATE datetime, SERIESREFNUM integer, primary key (SUMMARYID, REV));
 
+-- tblParents
+-- Creating father records
+insert into tblParents select null, fatherId, personId, dateCreated, now() from tblPeople where fatherId is not null;
+-- Creating mother records
+insert into tblParents select null, motherId, personId, now(), now() from tblPeople where motherId is not null;
 
 -- MYSQL DATABASE STRUCTURE NORMALIZATION PATCH
 
@@ -118,6 +123,8 @@ update docsources.tblPeople set bMonthNum = null where bMonthNum = 13;
 -- Death month num 0 or 13 must be setted to null
 update docsources.tblPeople set dMonthNum = null where dMonthNum = 0;
 update docsources.tblPeople set dMonthNum = null where dMonthNum = 13;
+-- lastUpdate cannot be null, we update this to dateCreated
+update docsources.tblPeople set lastUpdate = dateCreated where lastUpdate is null;
 -- linked alternative names is an enumeration with first letter in upper case
 update docsources.tblAltNames set nameType = 'Appellative' where lower(nameType) = 'appellative';
 update docsources.tblAltNames set nameType = 'Family' where lower(nameType) = 'family';

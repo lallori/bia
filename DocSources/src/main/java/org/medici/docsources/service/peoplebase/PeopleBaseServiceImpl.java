@@ -39,6 +39,7 @@ import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.marriage.MarriageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
+import org.medici.docsources.dao.parent.ParentDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.polink.PoLinkDAO;
@@ -47,6 +48,7 @@ import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.domain.PoLink;
@@ -83,8 +85,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	private MonthDAO monthDAO;
 
 	@Autowired
-	private PeopleDAO peopleDAO;
+	private ParentDAO parentDAO;
 	
+	@Autowired
+	private PeopleDAO peopleDAO;
+
 	@Autowired
 	private PlaceDAO placeDAO;
 
@@ -121,6 +126,42 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Parent addNewChildPerson(Parent parent) throws ApplicationThrowable {
+		try {
+			parent.setId(null);
+			parent.setDateCreated(new Date());
+			parent.setLastUpdate(new Date());
+
+			getParentDAO().persist(parent);
+
+			return parent;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Parent addNewFatherPerson(Parent parent) throws ApplicationThrowable {
+		try {
+			parent.setId(null);
+			parent.setDateCreated(new Date());
+			parent.setLastUpdate(new Date());
+
+			getParentDAO().persist(parent);
+
+			return parent;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public People addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable {
 		try {
 			// Set marriageId to null to use generator value
@@ -130,6 +171,24 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			// TODO : We need to change sign method to inser specific person who invoked the add new Person 
 			return marriage.getHusband();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Parent addNewMotherPerson(Parent parent) throws ApplicationThrowable {
+		try {
+			parent.setId(null);
+			parent.setDateCreated(new Date());
+			parent.setLastUpdate(new Date());
+
+			getParentDAO().persist(parent);
+
+			return parent;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -178,12 +237,25 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteFatherFromPerson(People person) throws ApplicationThrowable {
+	public void deleteChildFromPerson(Parent parent) throws ApplicationThrowable {
 		try {
-			People child = getPeopleDAO().find(person.getPersonId());
-			child.setFather(null);
+			Parent parentToDelete = getParentDAO().find(parent.getId());
+
+			getParentDAO().remove(parentToDelete);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteFatherFromPerson(Parent parent) throws ApplicationThrowable {
+		try {
+			Parent parentToDelete = getParentDAO().find(parent.getId());
 			
-			getPeopleDAO().merge(child);
+			getParentDAO().remove(parentToDelete);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -193,15 +265,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteMotherFromPerson(People person) throws ApplicationThrowable {
+	public void deleteMotherFromPerson(Parent parent) throws ApplicationThrowable {
 		try {
-			People child = getPeopleDAO().find(person.getPersonId());
-			child.setMother(null);
+			Parent parentToDelete = getParentDAO().find(parent.getId());
 			
-			getPeopleDAO().merge(child);
+			getParentDAO().remove(parentToDelete);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
-		}	
+		}
 	}
 
 	/**
@@ -222,46 +293,17 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteParentFromPerson(People child, Integer parentId) throws ApplicationThrowable {
+	public Parent editChildPerson(Parent parent) throws ApplicationThrowable {
 		try {
-			People parent = getPeopleDAO().find(parentId);
-			People childToUpdate = getPeopleDAO().find(child.getPersonId());
+			Parent parentToUpdate = getParentDAO().find(parent.getId());
 
-			if (parent.getGender().equals(Gender.F)) {
-				childToUpdate.setMother(null);
-			} else if (parent.getGender().equals(Gender.M)) {
-				childToUpdate.setFather(null);
-			} else if (parent.getGender().equals(Gender.X)) {
-				//We manage Gender.X as father
-				childToUpdate.setFather(null);
-			}
+			// fill mother property
+			parentToUpdate.setChild(getPeopleDAO().find(parent.getChild().getPersonId()));
+			parentToUpdate.setLastUpdate(new Date());
 
-			getPeopleDAO().merge(childToUpdate);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
+			getParentDAO().merge(parentToUpdate);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public People editChildPerson(People child, Integer parentId) throws ApplicationThrowable {
-		try {
-			People personToUpdate = getPeopleDAO().find(child.getPersonId());
-
-			People parent = getPeopleDAO().find(parentId);
-
-			// We set parent in child object making a choice on parent gender
-			if (parent.getGender().equals(Gender.F)) {
-				personToUpdate.setMother(parent);
-			} else {
-				personToUpdate.setFather(parent);
-			}
-			
-			getPeopleDAO().merge(personToUpdate);
-
-			return personToUpdate;
+			return parentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -324,16 +366,17 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public People editFatherPerson(People person) throws ApplicationThrowable {
+	public Parent editFatherPerson(Parent parent) throws ApplicationThrowable {
 		try {
-			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+			Parent parentToUpdate = getParentDAO().find(parent.getId());
 
-			// fill field to update father
-			personToUpdate.setFather(getPeopleDAO().find(person.getFather().getPersonId()));
+			// fill mother property
+			parentToUpdate.setParent(getPeopleDAO().find(parent.getParent().getPersonId()));
+			parentToUpdate.setLastUpdate(new Date());
 
-			getPeopleDAO().merge(personToUpdate);
+			getParentDAO().merge(parentToUpdate);
 
-			return person;
+			return parentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -372,16 +415,17 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public People editMotherPerson(People person) throws ApplicationThrowable {
+	public Parent editMotherPerson(Parent parent) throws ApplicationThrowable {
 		try {
-			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+			Parent parentToUpdate = getParentDAO().find(parent.getId());
 
-			// fill mother property
-			personToUpdate.setMother(getPeopleDAO().find(person.getMother().getPersonId()));
+			// fill parent property
+			parentToUpdate.setParent(getPeopleDAO().find(parent.getParent().getPersonId()));
+			parentToUpdate.setLastUpdate(new Date());
 
-			getPeopleDAO().merge(personToUpdate);
+			getParentDAO().merge(parentToUpdate);
 
-			return person;
+			return parentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -437,44 +481,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public People findChildPerson(Integer parentId, Integer childId) throws ApplicationThrowable {
-		try {
-			People parent = getPeopleDAO().find(parentId);
-			
-			return getPeopleDAO().findChild(parent.getPersonId(), parent.getGender(), childId);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable {
-		try {
-			People parent = getPeopleDAO().find(personId);
-			
-			return getPeopleDAO().findChildren(parent.getPersonId(), parent.getGender());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<People> findChildrenPerson(Integer personId, Gender gender) throws ApplicationThrowable {
-		try {
-			return getPeopleDAO().findChildren(personId, gender);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -539,6 +549,30 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Parent findParent(Integer id) throws ApplicationThrowable {
+		try {
+			return getParentDAO().find(id);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Parent findParentPerson(Integer id) throws ApplicationThrowable {
+		try {
+			return getParentDAO().find(id);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -612,6 +646,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexParents() throws ApplicationThrowable {
+		try {
+			getParentDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
 	}
 
 	/**
@@ -721,6 +767,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @return the parentDAO
+	 */
+	public ParentDAO getParentDAO() {
+		return parentDAO;
+	}
+
+	/**
 	 * @return the peopleDAO
 	 */
 	public PeopleDAO getPeopleDAO() {
@@ -826,7 +879,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * @param altNameDAO the altNameDAO to set
 	 */
@@ -855,6 +907,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		this.epLinkDAO = epLinkDAO;
 	}
 
+	/**
+	 * @param marriageDAO the marriageDAO to set
+	 */
 	public void setMarriageDAO(MarriageDAO marriageDAO) {
 		this.marriageDAO = marriageDAO;
 	}
@@ -864,6 +919,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @param parentDAO the parentDAO to set
+	 */
+	public void setParentDAO(ParentDAO parentDAO) {
+		this.parentDAO = parentDAO;
 	}
 
 	/**

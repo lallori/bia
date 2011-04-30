@@ -28,13 +28,13 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.EditChildPersonCommand;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -94,21 +94,25 @@ public class EditChildPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			People child = new People(command.getChildId());
-			child.setBornYear(command.getBornYear());
-			child.setDeathYear(command.getDeathYear());
+			Parent parent = new Parent(command.getId());
+			parent.setParent(new People(command.getParentId()));
+			parent.setChild(new People(command.getChildId()));
 
 			try {
-				getPeopleBaseService().editChildPerson(child, command.getParentId());
+				if (command.getId().equals(0)) {
+					parent = getPeopleBaseService().addNewChildPerson(parent);
+				} else {
+					parent = getPeopleBaseService().editChildPerson(parent);
+				}
+				model.put("person", parent.getParent());
+				getPeopleBaseService().editChildPerson(parent);
 
-				List<People> children = getPeopleBaseService().findChildrenPerson(command.getParentId());
-				model.put("children", children);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditChildPerson", model);
 			}
 
 			// We return block for edit Children
-			return new ModelAndView("peoplebase/ShowPerson", model);
+			return new ModelAndView("peoplebase/ShowChildrenPerson", model);
 		}
 	}
 
@@ -129,24 +133,24 @@ public class EditChildPersonController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditChildPersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if (command.getChildId().equals(0)) {
+		if (command.getId().equals(0)) {
 			command.setChildId(null);
 			command.setChildDescription(null);
 			command.setBornYear(null);
 			command.setDeathYear(null);
 		} else {
 			try {
-				People child = getPeopleBaseService().findChildPerson(command.getParentId(), command.getChildId());
+				Parent parent = getPeopleBaseService().findParentPerson(command.getId());
 
-				command.setChildId(child.getPersonId());
-				command.setChildDescription(child.getMapNameLf());
-				command.setBornYear(child.getBornYear());
-				command.setDeathYear(child.getDeathYear());
-				//Calculate age at death
+				command.setChildId(parent.getChild().getPersonId());
+				command.setChildDescription(parent.getChild().getMapNameLf());
+				command.setBornYear(parent.getChild().getBornYear());
+				command.setDeathYear(parent.getChild().getDeathYear());
+				//Calculate age at death only if bornYear and deathYear are not null
 				if ((!ObjectUtils.toString(command.getBornYear()).equals("")) && (!ObjectUtils.toString(command.getDeathYear()).equals(""))) {
 					command.setAgeAtDeath(command.getDeathYear() - command.getBornYear());
 				} else {
-					command.setAgeAtDeath(command.getDeathYear() - command.getBornYear());
+					command.setAgeAtDeath(null);
 				}
 
 				return new ModelAndView("peoplebase/EditChildPerson", model);

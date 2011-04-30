@@ -22,17 +22,21 @@
 		<div class="list">
 			<div class="row">
 				<div class="item">Father</div> 
-				<div class="value"><a href="#">${person.father}</a></div> 
-				<c:if test="${not empty person.father}"> 
-					<div class="info">Born ${person.father.bornYear} | Death ${person.father.deathYear}</div>
-				</c:if>				
+		<c:forEach items="${person.parents}" var="currentParent">
+			<c:if test="${currentParent.parent.gender == 'M'}">
+				<div class="value"><a href="#">${currentParent.parent}</a></div> 
+				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+			</c:if>				
+		</c:forEach>
 			</div>
 			<div class="row">
 				<div class="item">Mother</div> 
-				<div class="value"><a href="#">${person.mother}</a></div> 
-				<c:if test="${not empty person.mother}"> 
-					<div class="info">Born ${person.mother.bornYear} | Death ${person.mother.deathYear}</div>
-				</c:if>				
+		<c:forEach items="${person.parents}" var="currentParent">
+			<c:if test="${currentParent.parent.gender == 'F'}">
+				<div class="value"><a href="#">${currentParent.parent}</a></div> 
+				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+			</c:if>				
+		</c:forEach>
 			</div>
 		</div>
 	</div>

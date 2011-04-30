@@ -8,7 +8,7 @@
 		<c:url var="EditMotherPersonURL" value="/de/peoplebase/EditMotherPerson.do" />
 
 		<c:url var="EditParentsPersonURL" value="/de/peoplebase/EditParentsPerson.do">
-			<c:param name="personId"   value="${command.personId}" />
+			<c:param name="personId"   value="${command.childId}" />
 		</c:url>
 	</security:authorize>
 
@@ -53,13 +53,14 @@
 					<input id="save" type="submit" value="" class="button"/>
 				</div>
 				
-				<form:hidden path="motherId"/>
-				<form:hidden path="personId"/>
+				<form:hidden path="id"/>
+				<form:hidden path="parentId"/>
+				<form:hidden path="childId"/>
 			</fieldset>	
 	</form:form>
 
 	<c:url var="SearchMotherLinkableToPersonURL" value="/de/peoplebase/SearchMotherLinkableToPerson.json">
-		<c:param name="personId" value="${command.personId}" />
+		<c:param name="personId" value="${command.childId}" />
 	</c:url>
 
 	<c:url var="ShowMotherDetailsURL" value="/de/peoplebase/ShowMotherDetails.json" />
@@ -76,7 +77,7 @@
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
-			    	$j('#motherId').val(data); 
+			    	$j('#parentId').val(data); 
 					$j.get("${ShowMotherDetailsURL}", { personId: "" + data }, function(data) {
 						$j("#bornYear").val(data.bornYear);
 						$j("#bornMonthNum").append('<option value="' + data.bornMonth + '" selected="selected">' + data.bornMonth + '</option>');

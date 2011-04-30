@@ -30,7 +30,9 @@ package org.medici.docsources.controller.peoplebase;
 import java.util.HashMap;
 import java.util.Map;
 import org.medici.docsources.command.peoplebase.EditParentsPersonCommand;
+import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +95,14 @@ public class EditParentsPersonController {
 			try {
 				People person = getPeopleBaseService().findPerson(command.getPersonId());
 				model.put("person", person);
+				
+				for (Parent parent: person.getParents()) {
+					if (parent.getParent().getGender().equals(Gender.M)) {
+						model.put("father", parent);
+					} if (parent.getParent().getGender().equals(Gender.F)) {
+						model.put("mother", parent);
+					}
+				}
 
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditParentsPerson", model);

@@ -35,8 +35,9 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.EditFatherPersonController
  */
 public class EditFatherPersonCommand {
-	private Integer personId;
-	private Integer fatherId;
+	private Integer id;
+	private Integer childId;
+	private Integer parentId;
 	private String fatherDescription;
 	private Integer bornYear;
 	private Integer bornMonthNum;
@@ -47,31 +48,45 @@ public class EditFatherPersonCommand {
 	private String bioNotes;
 	
 	/**
-	 * @return the personId
+	 * @param id the id to set
 	 */
-	public Integer getPersonId() {
-		return personId;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param childId the childId to set
+	 */
+	public void setChildId(Integer childId) {
+		this.childId = childId;
+	}
+
+	/**
+	 * @return the childId
+	 */
+	public Integer getChildId() {
+		return childId;
+	}
+
+	/**
+	 * @return the parentId
+	 */
+	public Integer getParentId() {
+		return parentId;
 	}
 	
 	/**
-	 * @param personId the personId to set
+	 * @param parentId the parentId to set
 	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
-	}
-	
-	/**
-	 * @return the fatherId
-	 */
-	public Integer getFatherId() {
-		return fatherId;
-	}
-	
-	/**
-	 * @param fatherId the fatherId to set
-	 */
-	public void setFatherId(Integer fatherId) {
-		this.fatherId = fatherId;
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 	
 	/**
