@@ -113,6 +113,7 @@ public class DocSourcesIndexer {
         	PeopleBaseService peopleBaseService = (PeopleBaseService) ctx.getBean("peopleBaseService");
 	
     		peopleBaseService.generateIndexPeople();
+    		peopleBaseService.generateIndexParents();
     		peopleBaseService.generateIndexTitleOccsList();
     		peopleBaseService.generateIndexRoleCat();
     		peopleBaseService.generateIndexAltName();
