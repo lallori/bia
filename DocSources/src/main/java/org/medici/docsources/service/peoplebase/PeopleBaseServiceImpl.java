@@ -357,7 +357,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public void deleteTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable {
 		try {
 			PoLink poLinkToDelete = getPoLinkDAO().find(poLink.getPrfLinkId());
-
+			// Pasquinelli (05/01/2011) : I don't know why but withtout this access hibernate is unable to initi parent's set during index update.    
+			poLinkToDelete.getPerson().getParents();
+			
 			getPoLinkDAO().remove(poLinkToDelete);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
