@@ -27,8 +27,8 @@
  */
 package org.medici.docsources.validator.peoplebase;
 
-import org.medici.docsources.command.peoplebase.DeleteNamePersonCommand;
-import org.medici.docsources.domain.AltName;
+import org.medici.docsources.command.peoplebase.DeleteTitleOrOccupationPersonCommand;
+import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ public class DeleteTitleOrOccupationPersonValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(DeleteNamePersonCommand.class);
+		return givenClass.equals(DeleteTitleOrOccupationPersonCommand.class);
 	}
 
 	/**
@@ -82,8 +82,8 @@ public class DeleteTitleOrOccupationPersonValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		DeleteNamePersonCommand deleteNamePersonCommand = (DeleteNamePersonCommand) object;
-		validateName(deleteNamePersonCommand.getNameId(), deleteNamePersonCommand.getPersonId(), errors);
+		DeleteTitleOrOccupationPersonCommand deleteTitleOrOccupationPersonCommand = (DeleteTitleOrOccupationPersonCommand) object;
+		validateTitle(deleteTitleOrOccupationPersonCommand.getPrfLinkId(), deleteTitleOrOccupationPersonCommand.getTitleOccId(), deleteTitleOrOccupationPersonCommand.getPersonId(), errors);
 	}
 
 	/**
@@ -92,17 +92,19 @@ public class DeleteTitleOrOccupationPersonValidator implements Validator {
 	 * @param personId
 	 * @param errors
 	 */
-	public void validateName(Integer nameId, Integer personId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nameId", "error.nameId.null");
+	public void validateTitle(Integer prfLinkId, Integer titleOccId, Integer personId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "prfLinkId", "error.prfLinkId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "titleOccId", "error.titleOccId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				AltName altName = getPeopleBaseService().findAltNamePerson(personId, nameId); 
-				if (altName == null) {
-					errors.reject("nameId", "error.nameId.notfound");
+				PoLink poLink = getPeopleBaseService().findTitleOrOccupationPerson(personId, prfLinkId); 
+				if (poLink == null) {
+					errors.reject("nameId", "error.prfLinkId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
-				errors.reject("nameId", "error.nameId.notfound");
+				errors.reject("nameId", "error.prfLinkId.notfound");
 			}
 		}
 	}

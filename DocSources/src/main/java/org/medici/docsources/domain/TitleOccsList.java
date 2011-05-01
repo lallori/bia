@@ -107,8 +107,24 @@ public class TitleOccsList implements Serializable {
     @OneToMany(mappedBy="titleOccList", fetch=FetchType.LAZY)
 	@ContainedIn
     private Set<PoLink> poLinks;
-	
-	/**
+
+    /**
+     * Default constructor.
+     */
+    public TitleOccsList() {
+		super();
+	}
+
+    /**
+     * 
+     * @param titleOccId
+     */
+    public TitleOccsList(Integer titleOccId) {
+		super();
+		setTitleOccId(titleOccId);
+	}
+
+    /**
 	 * @return the titleOccId
 	 */
 	public Integer getTitleOccId() {

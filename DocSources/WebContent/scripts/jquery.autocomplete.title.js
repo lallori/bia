@@ -25,7 +25,8 @@
     this.el.attr('autocomplete', 'off');
     this.suggestions = [];
     this.data = [];
-    this.rolesCatMin = [];
+    this.rolesCatMinor = [];
+    this.rolesCatMajor = [];
     this.badQueries = [];
     this.selectedIndex = -1;
     this.currentValue = this.el.val();
@@ -221,7 +222,7 @@
       var ret, arr, len, val, i;
       arr = this.options.lookup;
       len = arr.suggestions.length;
-      ret = { suggestions:[], data:[], rolesCatMin:[]};
+      ret = { suggestions:[], data:[], rolesCatMajor:[], rolesCatMinor:[]};
       textFieldValue = textFieldValue.toLowerCase();
       for(i=0; i< len; i++){
         val = arr.suggestions[i];
@@ -240,7 +241,8 @@
         this.suggestions = cr.suggestions;
         this.data = cr.data;
         // Additional arrays...
-        this.rolesCatMin = cr.rolesCatMin;
+        this.rolesCatMajor = cr.rolesCatMajor; 
+        this.rolesCatMinor = cr.rolesCatMinor;
         
         this.suggest();
       } else if (!this.isBadQuery(q)) {
@@ -274,15 +276,15 @@
       mClick = function(xi) { return function() { me.select(xi); }; };
       this.container.hide().empty();
       if (len ==0) {
-    	  message = 'No person found.';
+    	  message = 'No Title found.';
     	  this.container.append(message);
       } else {
-	      table = '<tr><td width="50%"><b>Title Or Occupation</b></td><td><b>Role Cat Minor</b></td></tr>';
+	      table = '<tr><td width="50%"><b>Title Or Occupation</b></td><td><b>Role Cat Major</b></td><td><b>Role Cat Minor</b></td></tr>';
 	      this.container.append(table);
 	
 	      for (i = 0; i < len; i++) {
 	        s = this.suggestions[i];
-	        tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v) + '</td>' + '<td>' + this.rolesCatMin[i] + '</td></tr>');
+	        tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v) + '</td>' + '<td>' + this.rolesCatMajor[i] + '</td>' + '<td>' + this.rolesCatMinor[i] + '</td></tr>');
 	        tr.mouseover(mOver(i));
 	        tr.click(mClick(i));
 	        this.container.append(tr);
@@ -306,7 +308,8 @@
       if (response.query === this.getQuery(this.currentValue)) {
         this.suggestions = response.suggestions;
         this.data = response.data;
-        this.rolesCatMin = response.rolesCatMin;
+        this.rolesCatMajor = response.rolesCatMajor;
+        this.rolesCatMinor = response.rolesCatMinor;
         this.suggest(); 
       }
     },

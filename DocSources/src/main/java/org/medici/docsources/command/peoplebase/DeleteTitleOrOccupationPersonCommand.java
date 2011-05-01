@@ -35,24 +35,49 @@ package org.medici.docsources.command.peoplebase;
  * @see org.medici.docsources.controller.peoplebase.DeleteNamePersonController
  */
 public class DeleteTitleOrOccupationPersonCommand {
+	private Integer prfLinkId;
 	private Integer personId;
-
+	private Integer titleOccId;
+	
 	/**
-	 * This method returns personId property.
-	 * 
+	 * @return the prfLinkId
+	 */
+	public Integer getPrfLinkId() {
+		return prfLinkId;
+	}
+	
+	/**
+	 * @param prfLinkId the prfLinkId to set
+	 */
+	public void setPrfLinkId(Integer prfLinkId) {
+		this.prfLinkId = prfLinkId;
+	}
+	
+	/**
 	 * @return the personId
 	 */
 	public Integer getPersonId() {
 		return personId;
 	}
-
+	
 	/**
-	 * This method sets personId property.
-	 * 
-	 * @param personId
-	 *            the personId to set
+	 * @param personId the personId to set
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+	
+	/**
+	 * @return the titleOccId
+	 */
+	public Integer getTitleOccId() {
+		return titleOccId;
+	}
+	
+	/**
+	 * @param titleOccId the titleOccId to set
+	 */
+	public void setTitleOccId(Integer titleOccId) {
+		this.titleOccId = titleOccId;
 	}
 }

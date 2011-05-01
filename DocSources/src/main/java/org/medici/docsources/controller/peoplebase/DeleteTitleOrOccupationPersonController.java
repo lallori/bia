@@ -33,6 +33,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.DeleteTitleOrOccupationPersonCommand;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.PoLink;
+import org.medici.docsources.domain.TitleOccsList;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -91,7 +95,16 @@ public class DeleteTitleOrOccupationPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			return new ModelAndView("response/OK", model);
+			PoLink poLink = new PoLink(command.getPrfLinkId());
+			poLink.setTitleOcc(new TitleOccsList(command.getTitleOccId()));
+			poLink.setPerson(new People(command.getPersonId()));
+
+			try {
+				getPeopleBaseService().deleteTitleOrOccupationPerson(poLink);
+				return new ModelAndView("response/OK", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("response/KO", model);
+			}
 		}
 	}
 

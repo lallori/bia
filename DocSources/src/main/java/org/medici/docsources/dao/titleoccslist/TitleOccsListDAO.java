@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.titleoccslist;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.TitleOccsList;
 
@@ -37,5 +41,13 @@ import org.medici.docsources.domain.TitleOccsList;
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
+
+	/**
+	 * 
+	 * @param searchText
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<TitleOccsList> searchTitleOrOccupationLinkableToPerson(String searchText) throws PersistenceException;
 
 }

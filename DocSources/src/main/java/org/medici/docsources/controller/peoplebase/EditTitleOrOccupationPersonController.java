@@ -35,7 +35,9 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.peoplebase.EditTitleOrOccupationPersonCommand;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.PoLink;
+import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,10 +96,32 @@ public class EditTitleOrOccupationPersonController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			getPeopleBaseService();
+			PoLink poLink = new PoLink(command.getPrfLinkId());
+			poLink.setTitleOcc(new TitleOccsList(command.getTitleOccId()));
+			poLink.setPerson(new People(command.getPersonId()));
+			poLink.setPreferredRole(command.getPreferredRole());
+			poLink.setStartYear(command.getStartYear());
+			poLink.setStartMonthNum((command.getStartMonthNum() != null) ? new Month(command.getStartMonthNum()) : null);
+			poLink.setStartDay(command.getStartDay());
+			poLink.setStartApprox(command.getStartApprox());
+			poLink.setStartUns(command.getStartUns());
+			poLink.setEndYear(command.getEndYear());
+			poLink.setEndMonthNum((command.getEndMonthNum() != null) ? new Month(command.getEndMonthNum()) : null);
+			poLink.setEndDay(command.getEndDay());
+			poLink.setEndApprox(command.getEndApprox());
+			poLink.setEndUns(command.getEndUns());
 
-			return new ModelAndView("peoplebase/modifyperson", model);
+			try {
+				if (command.getPrfLinkId().equals(0)) {
+					getPeopleBaseService().addNewTitleOrOccupationPerson(poLink);
+				} else {
+					getPeopleBaseService().editTitleOrOccupationPerson(poLink);
+				}
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowPerson", model);
+			}
+
+			return new ModelAndView("peoplebase/EditTitlesOrOccupationsPerson", model);
 		}
 
 	}
@@ -132,10 +156,10 @@ public class EditTitleOrOccupationPersonController {
 				command.setTitleOccId(null);
 				command.setTitleOrOccupationDescription(null);
 				command.setStartYear(null);
-				command.setStartMonth(null);
+				command.setStartMonthNum(null);
 				command.setStartDay(null);
 				command.setEndYear(null);
-				command.setEndMonth(null);
+				command.setEndMonthNum(null);
 				command.setEndDay(null);
 				command.setPreferredRole(null);
 			} else {
@@ -147,12 +171,16 @@ public class EditTitleOrOccupationPersonController {
 						command.setTitleOccId(poLink.getTitleOccList().getTitleOccId());
 						command.setPreferredRole(poLink.getPreferredRole());
 						command.setStartYear(poLink.getStartYear());
-						command.setStartMonth(poLink.getStartMonth());
+						if (poLink.getStartMonthNum() != null) {
+							command.setStartMonthNum(poLink.getStartMonthNum().getMonthNum());
+						}
 						command.setStartDay(poLink.getStartDay());
 						command.setStartApprox(poLink.getStartApprox());
 						command.setStartUns(poLink.getStartUns());
 						command.setEndYear(poLink.getEndYear());
-						command.setEndMonth(poLink.getEndMonth());
+						if (poLink.getEndMonthNum() != null) {
+							command.setEndMonthNum(poLink.getEndMonthNum().getMonthNum());
+						}
 						command.setEndDay(poLink.getEndDay());
 						command.setEndApprox(poLink.getEndApprox());
 						command.setEndUns(poLink.getEndUns());

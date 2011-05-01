@@ -29,6 +29,7 @@ package org.medici.docsources.common.util;
 
 import com.mchange.v1.util.StringTokenizerUtils;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -46,7 +47,8 @@ import org.springframework.beans.BeanUtils;
 public class ListBeanUtils {
 	/**
 	 * Method to obtains a list of a specific field contained in input list
-	 * inputObject.
+	 * inputObject. This method is able to manage simple property and nested
+	 * property (first level only ndr).  
 	 * 
 	 * @param inputList
 	 *            List object containing beans having the field to extract.
@@ -60,21 +62,55 @@ public class ListBeanUtils {
 
 		ArrayList retValue = new ArrayList(inputList.size());
 
-		PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(inputList.get(0).getClass(), fieldName);
-		Method method = pd.getReadMethod();
-
-		for (int i = 0; i < inputList.size(); i++) {
-			try {
-				retValue.add(i, method.invoke(inputList.get(i), (Object[]) null));
-				if ((ObjectUtils.toString(retValue.get(i)).equals("0")) || ((ObjectUtils.toString(retValue.get(i)).equals("")))) {
-					retValue.set(i, "");
+		if (!StringUtils.contains(fieldName, ".")) {
+			PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(inputList.get(0).getClass(), fieldName);
+			Method method = pd.getReadMethod();
+	
+			for (int i = 0; i < inputList.size(); i++) {
+				try {
+					retValue.add(i, method.invoke(inputList.get(i), (Object[]) null));
+					if ((ObjectUtils.toString(retValue.get(i)).equals("0")) || ((ObjectUtils.toString(retValue.get(i)).equals("")))) {
+						retValue.set(i, "");
+					}
+				} catch (IllegalAccessException iaex) {
+					retValue.set(i, null);
+				} catch (InvocationTargetException itex) {
+					retValue.set(i, null);
 				}
-			} catch (IllegalAccessException iaex) {
-				retValue.set(i, null);
-			} catch (InvocationTargetException itex) {
-				retValue.set(i, null);
 			}
-		}
+		} /*else {
+			PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(inputList.get(0).getClass(), fieldName.substring(0, fieldName.indexOf(".")));
+			Method method = pd.getReadMethod();
+	
+			for (int i = 0; i < inputList.size(); i++) {
+				try {
+					Object beanProperty = method.invoke(inputList.get(i), (Object[]) null);
+					if (beanProperty != null) {
+						try {
+							Class clazz = Class.forName(beanProperty.getClass().getName());
+							Field field = clazz.getDeclaredField(fieldName.substring(fieldName.indexOf(".")+1));
+							PropertyDescriptor nestedProperty = BeanUtils.getPropertyDescriptor(field.getType(), fieldName.substring(fieldName.indexOf(".")+1));
+							method = nestedProperty.getReadMethod();
+							retValue.add(i, method.invoke(beanProperty, (Object[]) null));
+							if ((ObjectUtils.toString(retValue.get(i)).equals("0")) || ((ObjectUtils.toString(retValue.get(i)).equals("")))) {
+								retValue.set(i, "");
+							}
+						} catch (NoSuchFieldException noSuchFieldException) {
+							retValue.set(i, "");
+						} catch (ClassNotFoundException classNotFoundException) {
+							retValue.set(i, "");
+						}
+					} else {
+						retValue.add(i, "");
+					}
+
+				} catch (IllegalAccessException iaex) {
+					retValue.set(i, null);
+				} catch (InvocationTargetException itex) {
+					retValue.set(i, null);
+				}
+			}
+		}*/
 
 		return retValue;
 	}

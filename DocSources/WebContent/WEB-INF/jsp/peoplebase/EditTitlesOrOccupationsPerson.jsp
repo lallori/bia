@@ -22,13 +22,15 @@
 		<legend><b>TITLES / OCCUPATIONS</b></legend>
 		<c:forEach items="${person.poLink}" var="currentTitleOrOccupation">
 			<c:url var="EditTitleOrOccupationPersonURL" value="/de/peoplebase/EditTitleOrOccupationPerson.do">
-				<c:param name="personId" value="${command.personId}" />
 				<c:param name="prfLinkId" value="${currentTitleOrOccupation.prfLinkId}" />
+				<c:param name="titleOccId" value="${currentTitleOrOccupation.titleOccList.titleOccId}" />
+				<c:param name="personId" value="${command.personId}" />
 			</c:url>
 
 			<c:url var="DeleteTitleOrOccupationPersonURL" value="/de/peoplebase/DeleteTitleOrOccupationPerson.do" >
-				<c:param name="personId" value="${command.personId}" />
 				<c:param name="prfLinkId" value="${currentTitleOrOccupation.prfLinkId}" />
+				<c:param name="titleOccId" value="${currentTitleOrOccupation.titleOccList.titleOccId}" />
+				<c:param name="personId" value="${command.personId}" />
 			</c:url>
 
 			<div>
@@ -56,11 +58,14 @@
 		        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
 		        
 		        $j('#close').click(function() {
-					$j('#EditTitlesOrOccupationsPersonDiv').block({ message: $j('#question') }); 
+					$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
+						$j("#body_left").html(html);
+					}});
+
 					return false;
 				});
 
-		        $j(".deleteValue").click(function() {
+		        $j(".deleteIcon").click(function() {
 					$j.get(this.href, function(data) {
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
@@ -83,28 +88,3 @@
 			});
 		</script>
 	</form:form>
-
-<div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
-	<input type="button" id="yes" value="Yes" /> 
-	<input type="button" id="no" value="No" /> 
-</div>
-
-<script type="text/javascript">
-	$j(document).ready(function() {
-		$j('#no').click(function() { 
-			$j.unblockUI();
-			$j(".blockUI").fadeOut("slow");
-			return false; 
-		}); 
-        
-		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
-				$j("#body_left").html(html);
-			}});
-				
-			return false; 
-		}); 
-     
-	});
-</script>

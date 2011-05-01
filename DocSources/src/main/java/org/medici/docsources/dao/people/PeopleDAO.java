@@ -67,7 +67,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @param query
 	 * @return
 	 */
-	public List<People> searchChildLinkableToDocument(Integer personId, String query) throws PersistenceException;
+	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws PersistenceException;
 
 	/**
 	 * 
@@ -75,7 +75,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchFatherLinkableToDocument(String query) throws PersistenceException;
+	public List<People> searchFatherLinkableToPerson(String query) throws PersistenceException;
 
 	/**
 	 * 
@@ -84,7 +84,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<People> searchMotherLinkableToDocument(String query) throws PersistenceException;
+	public List<People> searchMotherLinkableToPerson(String query) throws PersistenceException;
 	
 
 	/**

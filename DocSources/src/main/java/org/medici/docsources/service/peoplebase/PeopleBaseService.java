@@ -38,6 +38,7 @@ import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.domain.PoLink;
+import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -105,6 +106,14 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param poLink
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People addNewTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param child
 	 * @throws ApplicationThrowable
 	 */
@@ -130,6 +139,13 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteNamePerson(AltName altName) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param poLink
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteTitleOrOccupationPerson(PoLink poLink)throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -190,20 +206,20 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param poLink
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People editTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param personId
 	 * @param nameId
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public AltName findAltNamePerson(Integer personId, Integer nameId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param personId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable;
 
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.People}.
@@ -392,6 +408,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchSendersPeople(String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<TitleOccsList> searchTitleOrOccupation(String query) throws ApplicationThrowable;
 
 	/**
 	 * 

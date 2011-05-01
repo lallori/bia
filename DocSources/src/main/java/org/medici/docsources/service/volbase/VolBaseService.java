@@ -286,6 +286,10 @@ public interface VolBaseService {
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
+	 * This method searches for existing {@link org.medici.docsources.domain.Volume}
+	 * containing input text and return a specific 
+	 * {@link org.medici.docsources.common.pagination.Page} of complete reulst 
+	 * base on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
 	 * 
 	 * @param text
 	 * @param paginationFilter

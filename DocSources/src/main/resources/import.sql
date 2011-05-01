@@ -135,6 +135,9 @@ update docsources.tblAltNames set nameType = 'Patronymic' where lower(nameType) 
 update docsources.tblAltNames set nameType = 'SearchName' where lower(nameType) = 'searchname';
 -- Preferred Role must be a boolean column (tinyint)
 update docsources.tblPOLink set prtag = 1 where prtag =-1;
+-- MonthNum in linked TitleOrOccupation must be null if not present
+update docsources.tblPOLink set startMonthNum = null where startMonthNum = 0;
+update docsources.tblPOLink set endMonthNum = null where endMonthNum = 0;
 
 -- VOLUMES 
 

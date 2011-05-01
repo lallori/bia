@@ -37,8 +37,8 @@
 				<br>
 				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Year</form:label>
 				<form:input path="startYear" cssClass="input_4c" maxlength="4"/>
-				<form:label id="startMonthLabel" for="startMonth" path="startMonth" cssErrorClass="error">Month</form:label>
-				<form:select id="startMonth" path="startMonth" cssClass="selectform"><form:option value="">&nbsp;</form:option><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
+				<form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error">Month</form:label>
+				<form:select id="startMonthNum" path="startMonthNum" cssClass="selectform" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 				<form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Day</form:label>
 				<form:input path="startDay" cssClass="input_2c" maxlength="2"/>
 				<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error">Approx</form:label>
@@ -51,9 +51,9 @@
 				<b>End:</b>
 				<br>
 				<form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">Year</form:label>
-				<form:input path="endYear" cssClass="input_4c" maxlength="2"/>
-				<form:label id="endMonthLabel" for="endMonth" path="endMonth" cssErrorClass="error">Month</form:label>
-				<form:select id="endMonth" path="endMonth" cssClass="selectform"><form:option value="">&nbsp;</form:option><form:options items="${months}" itemValue="monthNum" itemLabel="monthName"/></form:select>
+				<form:input path="endYear" cssClass="input_4c" maxlength="4"/>
+				<form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error">Month</form:label>
+				<form:select id="endMonthNum" path="endMonthNum" cssClass="selectform" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">Day</form:label>
 				<form:input path="endDay" cssClass="input_2c" maxlength="2"/>
 				<form:label id="endApproxLabel" for="endApprox" path="endApprox" cssErrorClass="error">Approx</form:label>
@@ -80,7 +80,7 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			var titleOrOccupationDescription = $j('#titleAutocomplete').AutocompletePlace({ 
+			var titleOrOccupationDescription = $j('#titleAutocomplete').AutocompleteTitle({ 
 			    serviceUrl:'${SearchTitleOrOccupationURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -93,34 +93,17 @@
 			});
 
 			$j('#closeTitle').click(function() {
-				$j('#EditTitleOrOccupationPersonDiv').block({ message: $j('#question') }); 
-				return false;
-			});
-
-		});
-	</script>
-
-	<div id="question" style="display:none; cursor: default"> 
-		<h1>discard changes?</h1> 
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" /> 
-	</div>
-	
-	<script type="text/javascript">
-		$j(document).ready(function() {
-			$j('#no').click(function() { 
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
 				$j.ajax({ url: '${EditTitlesOrOccupationsPersonURL}', cache: false, success:function(html) { 
 					$j("#EditTitlesOrOccupationsPersonDiv").html(html);
 				}});
-					
-				return false; 
-			}); 
-	     
+				return false;
+			});
+
+			$j("#EditTitleOrOccupationPersonForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#EditTitlesOrOccupationsPersonDiv").load('${EditTitlesOrOccupationsPersonURL}');
+				}})
+				return false;
+			});
 		});
 	</script>

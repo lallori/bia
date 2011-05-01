@@ -106,6 +106,22 @@ public class RoleCat implements Serializable {
     @OneToMany(mappedBy="roleCatId", fetch=FetchType.LAZY)
     @ContainedIn
     private Set<PrcLink> prcLinks;
+
+    /**
+     * Default constructor.
+     */
+    public RoleCat() {
+		super();
+	}
+
+    /**
+     * 
+     * @param roleCatId
+     */
+    public RoleCat(Integer roleCatId) {
+    	super();
+    	setRoleCatId(roleCatId);
+    }
     
 	/**
 	 * @return the roleCatId
@@ -113,63 +129,63 @@ public class RoleCat implements Serializable {
 	public Integer getRoleCatId() {
 		return roleCatId;
 	}
-	
+
 	/**
 	 * @param roleCatId the roleCatId to set
 	 */
 	public void setRoleCatId(Integer roleCatId) {
 		this.roleCatId = roleCatId;
 	}
-	
+
 	/**
 	 * @return the roleCatMinor
 	 */
 	public String getRoleCatMinor() {
 		return roleCatMinor;
 	}
-	
+
 	/**
 	 * @param roleCatMinor the roleCatMinor to set
 	 */
 	public void setRoleCatMinor(String roleCatMinor) {
 		this.roleCatMinor = roleCatMinor;
 	}
-	
+
 	/**
 	 * @return the roleCatMajor
 	 */
 	public String getRoleCatMajor() {
 		return roleCatMajor;
 	}
-	
+
 	/**
 	 * @param roleCatMajor the roleCatMajor to set
 	 */
 	public void setRoleCatMajor(String roleCatMajor) {
 		this.roleCatMajor = roleCatMajor;
 	}
-	
+
 	/**
 	 * @return the roleCatMajorId
 	 */
 	public Integer getRoleCatMajorId() {
 		return roleCatMajorId;
 	}
-	
+
 	/**
 	 * @param roleCatMajorId the roleCatMajorId to set
 	 */
 	public void setRoleCatMajorId(Integer roleCatMajorId) {
 		this.roleCatMajorId = roleCatMajorId;
 	}
-	
+
 	/**
 	 * @return the sortGroups
 	 */
 	public Integer getSortGroups() {
 		return sortGroups;
 	}
-	
+
 	/**
 	 * @param sortGroups the sortGroups to set
 	 */
@@ -178,16 +194,17 @@ public class RoleCat implements Serializable {
 	}
 
 	/**
-	 * @param prcLinks the prcLinks to set
-	 */
-	public void setPrcLinks(Set<PrcLink> prcLinks) {
-		this.prcLinks = prcLinks;
-	}
-
-	/**
 	 * @return the prcLinks
 	 */
 	public Set<PrcLink> getPrcLinks() {
 		return prcLinks;
 	}
+
+	/**
+	 * @param prcLinks the prcLinks to set
+	 */
+	public void setPrcLinks(Set<PrcLink> prcLinks) {
+		this.prcLinks = prcLinks;
+	}
+    
 }

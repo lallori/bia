@@ -52,6 +52,7 @@ import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.domain.PoLink;
+import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,15 +109,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public People addNewAltNamePerson(AltName altName) throws ApplicationThrowable {
 		try {
-			// Set nameId to null to use generator value
-			altName.setNameId(null);
-			
-			getAltNameDAO().persist(altName);
+			AltName altNameToPersist = new AltName(null, altName.getPerson().getPersonId());
+			altNameToPersist.setAltName(altName.getAltName());
+			altNameToPersist.setNamePrefix(altName.getNamePrefix());
+			altNameToPersist.setNameType(altName.getNameType());
+			altNameToPersist.setNotes(altName.getNotes());
+			altNameToPersist.setPerson(getPeopleDAO().find(altName.getPerson().getPersonId()));
+			getAltNameDAO().persist(altNameToPersist);
 
-			// We need to refresh linked People entity state, otherwise altName property will be null
-			getPeopleDAO().refresh(altName.getPerson());
-
-			return altName.getPerson();
+			return altNameToPersist.getPerson();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -237,6 +238,66 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public People addNewTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable {
+		try {
+			PoLink poLinkToCreate = new PoLink();
+			poLinkToCreate.setPrfLinkId(null);
+			poLinkToCreate.setTitleOcc(getTitleOccsListDAO().find(poLink.getTitleOccList().getTitleOccId()));
+			poLinkToCreate.setPerson(getPeopleDAO().find(poLink.getPerson().getPersonId()));
+			poLinkToCreate.setPreferredRole(poLink.getPreferredRole());
+			poLinkToCreate.setStartYear(poLink.getStartYear());
+			if (poLink.getStartMonthNum() != null) {
+				poLinkToCreate.setStartMonthNum(getMonthDAO().find(poLink.getStartMonthNum().getMonthNum()));
+				poLinkToCreate.setStartMonth(poLinkToCreate.getStartMonthNum().getMonthName());
+			} else {
+				poLinkToCreate.setStartMonthNum(null);
+				poLinkToCreate.setStartMonth(null);
+			}
+			poLinkToCreate.setStartMonth(poLink.getStartMonth());
+			poLinkToCreate.setStartDay(poLink.getStartDay());
+			if (poLink.getStartApprox() == null) {
+				poLinkToCreate.setStartApprox(Boolean.FALSE);
+			} else {
+				poLinkToCreate.setStartApprox(poLink.getStartApprox());
+			}
+			if (poLink.getStartUns() == null) {
+				poLinkToCreate.setStartUns(Boolean.FALSE);
+			} else {
+				poLinkToCreate.setStartUns(poLink.getStartUns());
+			}
+			poLinkToCreate.setEndYear(poLink.getEndYear());
+			if (poLink.getEndMonthNum() != null) {
+				poLinkToCreate.setEndMonthNum(getMonthDAO().find(poLink.getEndMonthNum().getMonthNum()));
+				poLinkToCreate.setEndMonth(poLinkToCreate.getEndMonthNum().getMonthName());
+			} else {
+				poLinkToCreate.setEndMonthNum(null);
+				poLinkToCreate.setEndMonth(null);
+			}
+			poLinkToCreate.setEndDay(poLink.getEndDay());
+			if (poLink.getEndApprox() == null) {
+				poLinkToCreate.setEndApprox(Boolean.FALSE);
+			} else {
+				poLinkToCreate.setEndApprox(poLink.getEndApprox());
+			}
+			if (poLink.getEndUns() == null) {
+				poLinkToCreate.setEndUns(Boolean.FALSE);
+			} else {
+				poLinkToCreate.setEndUns(poLink.getEndUns());
+			}
+			poLinkToCreate.setDateCreated(new Date());
+
+			getPoLinkDAO().persist(poLinkToCreate);
+
+			return poLinkToCreate.getPerson();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void deleteChildFromPerson(Parent parent) throws ApplicationThrowable {
 		try {
 			Parent parentToDelete = getParentDAO().find(parent.getId());
@@ -284,6 +345,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			AltName altNameToDelete = getAltNameDAO().find(altName.getNameId());
 			
 			getAltNameDAO().remove(altNameToDelete);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable {
+		try {
+			PoLink poLinkToDelete = getPoLinkDAO().find(poLink.getPrfLinkId());
+
+			getPoLinkDAO().remove(poLinkToDelete);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -473,18 +548,68 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public People editTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable {
+		try {
+			PoLink poLinkToUpdate = getPoLinkDAO().find(poLink.getPrfLinkId());
+			poLinkToUpdate.setTitleOcc(getTitleOccsListDAO().find(poLink.getTitleOccList().getTitleOccId()));
+			poLinkToUpdate.setPerson(getPeopleDAO().find(poLink.getPerson().getPersonId()));
+			poLinkToUpdate.setPreferredRole(poLink.getPreferredRole());
+			poLinkToUpdate.setStartYear(poLink.getStartYear());
+			if (poLink.getStartMonthNum() != null) {
+				poLinkToUpdate.setStartMonthNum(getMonthDAO().find(poLink.getStartMonthNum().getMonthNum()));
+				poLinkToUpdate.setStartMonth(poLinkToUpdate.getStartMonthNum().getMonthName());
+			} else {
+				poLinkToUpdate.setStartMonthNum(null);
+				poLinkToUpdate.setStartMonth(null);
+			}
+			poLinkToUpdate.setStartDay(poLink.getStartDay());
+			if (poLink.getStartApprox() == null) {
+				poLinkToUpdate.setStartApprox(Boolean.FALSE);
+			} else {
+				poLinkToUpdate.setStartApprox(poLink.getStartApprox());
+			}
+			if (poLink.getStartUns() == null) {
+				poLinkToUpdate.setStartUns(Boolean.FALSE);
+			} else {
+				poLinkToUpdate.setStartUns(poLink.getStartUns());
+			}
+			poLinkToUpdate.setEndYear(poLink.getEndYear());
+			if (poLink.getEndMonthNum() != null) {
+				poLinkToUpdate.setEndMonthNum(getMonthDAO().find(poLink.getEndMonthNum().getMonthNum()));
+				poLinkToUpdate.setEndMonth(poLinkToUpdate.getEndMonthNum().getMonthName());
+			} else {
+				poLinkToUpdate.setEndMonthNum(null);
+				poLinkToUpdate.setEndMonth(null);
+			}
+			poLinkToUpdate.setEndDay(poLink.getEndDay());
+			if (poLink.getEndApprox() == null) {
+				poLinkToUpdate.setEndApprox(Boolean.FALSE);
+			} else {
+				poLinkToUpdate.setEndApprox(poLink.getEndApprox());
+			}
+			if (poLink.getEndUns() == null) {
+				poLinkToUpdate.setEndUns(Boolean.FALSE);
+			} else {
+				poLinkToUpdate.setEndUns(poLink.getEndUns());
+			}
+			getPoLinkDAO().merge(poLinkToUpdate);
+
+			return poLinkToUpdate.getPerson();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public AltName findAltNamePerson(Integer personId, Integer nameId) throws ApplicationThrowable {
 		try {
 			return getAltNameDAO().findAltNamePerson(personId, nameId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
-	@Override
-	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -814,7 +939,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchChildLinkableToDocument(personId, query);
+			return getPeopleDAO().searchChildLinkableToPerson(personId, query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -826,7 +951,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public List<People> searchFatherLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchFatherLinkableToDocument(query);
+			return getPeopleDAO().searchFatherLinkableToPerson(query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -838,12 +963,12 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public List<People> searchMotherLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchMotherLinkableToDocument(query);
+			return getPeopleDAO().searchMotherLinkableToPerson(query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -879,6 +1004,19 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<TitleOccsList> searchTitleOrOccupation(String query) throws ApplicationThrowable {
+		try {
+			return getTitleOccsListDAO().searchTitleOrOccupationLinkableToPerson(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * @param altNameDAO the altNameDAO to set
 	 */

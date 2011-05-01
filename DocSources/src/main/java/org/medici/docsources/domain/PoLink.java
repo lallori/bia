@@ -55,6 +55,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
+import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
 
 /**
  * PoLink entity. This entity links a Person with his correspondents TitleOccList
@@ -93,6 +94,12 @@ public class PoLink implements Serializable {
 	@Column (name="\"STARTMONTH\"", length=50)
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String startMonth;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"STARTMONTHNUM\"", nullable=true)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=MonthBridge.class)
+	private Month startMonthNum;
 	
 	@Column (name="\"STARTDAY\"", length=10)
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -106,6 +113,12 @@ public class PoLink implements Serializable {
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String endMonth; 
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"ENDMONTHNUM\"", nullable=true)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=MonthBridge.class)
+	private Month endMonthNum;
+
 	@Column (name="\"ENDDAY\"", length=10)
 	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer endDay;
@@ -139,20 +152,29 @@ public class PoLink implements Serializable {
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean endUns;
 	
-	@Column (name="\"STARTMONTHNUM\"", length=10)
-	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer startMonthNum;
-	
-	@Column (name="\"ENDMONTHNUM\"", length=10)
-	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer endMonthNum;
-	
 	@Column (name="\"DATECREATED\"")
 	@Temporal (TemporalType.TIMESTAMP)
 	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 	
+	/**
+	 * Default constructor.
+	 */
+	public PoLink() {
+		super();
+	}
+	
+	/**
+	 * 
+	 * @param prfLinkId
+	 */
+	public PoLink(Integer prfLinkId) {
+		super();
+		
+		setPrfLinkId(prfLinkId);
+	}
+
 	/**
 	 * @return the prfLinkId
 	 */
@@ -428,28 +450,28 @@ public class PoLink implements Serializable {
 	/**
 	 * @return the startMonthNum
 	 */
-	public Integer getStartMonthNum() {
+	public Month getStartMonthNum() {
 		return startMonthNum;
 	}
 	
 	/**
 	 * @param startMonthNum the startMonthNum to set
 	 */
-	public void setStartMonthNum(Integer startMonthNum) {
+	public void setStartMonthNum(Month startMonthNum) {
 		this.startMonthNum = startMonthNum;
 	}
 	
 	/**
 	 * @return the endMonthNum
 	 */
-	public Integer getEndMonthNum() {
+	public Month getEndMonthNum() {
 		return endMonthNum;
 	}
 	
 	/**
 	 * @param endMonthNum the endMonthNum to set
 	 */
-	public void setEndMonthNum(Integer endMonthNum) {
+	public void setEndMonthNum(Month endMonthNum) {
 		this.endMonthNum = endMonthNum;
 	}
 	
