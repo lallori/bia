@@ -22,7 +22,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td align="right"><input name="Login" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="Log_in" title="send the module" style="margin-left:35px" class="button_login"/>
+							<td align="right"><input name="Login" type="image" src="<c:url value="/images/1024/img_transparentLogin.png"/>" alt="Log_in" title="send the module" style="margin-left:35px" class="button_login"/>
 							</td>
 						</tr>
 						<tr>
