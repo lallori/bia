@@ -11,8 +11,8 @@
 		</div>	
 		<div id="body_right">
 			<a id="mapcourses" href="http://courses.medici.org/" target="_blank"></a>
-			<ul class="welcome_list">
-				<li><h5>Welcome back <security:authentication property="principal.firstName"/>. <br />From your last log on:</h5>
+			<div class="welcome_list">
+				<h2>Welcome back <security:authentication property="principal.firstName"/>. <br />From your last log on:</h2>
 					<ul>
 						<li>you have <b>23</b> new messages</li>
 			
@@ -22,9 +22,8 @@
 						<li><b>15</b> new people have been entered</li>
 			
 						<li><b>5</b> new places and/or locations have been entered</li>
-					</ul>
-				</li>
-			</ul>
+					</ul>				
+			</div>
 		</div>
 	</div>
 	
