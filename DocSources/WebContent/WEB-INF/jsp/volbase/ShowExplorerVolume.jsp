@@ -181,9 +181,7 @@
 
 			<script type="text/javascript">
 			$j(document).ready(function() {
-				$j('.piro_overlay,.piro_html').remove();
-
-				$j().piroBox_ext( {
+				$j().piroBox_ext({
 					piro_speed : 700,
 					bg_alpha : 0.5,
 					piro_scroll : true
