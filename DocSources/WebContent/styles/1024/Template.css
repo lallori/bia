@@ -123,7 +123,7 @@ a {
 #body_left{ /* LEFT-hand side of the SCREEN */
 	width:490px;
 	height:auto;
-	padding:5px 5px 0 5px;
+	padding:0 5px 0 5px;
 	float:left;
 	position:absolute;
 	font-size:11px;
@@ -136,7 +136,7 @@ a {
 #body_right{ /* RIGHT-hand side of the SCREEN */
 	width:490px;
 	height:auto;
-	padding:5px 5px 0 5px;
+	padding:0 5px 0 5px;
 	float:right;
 	position:absolute;
 	margin-left:500px;
@@ -213,9 +213,9 @@ input {
 /* --------------------------------------- SHORTCUT MENU (#top_top) --------------------------------------- */
 
 #lastentry { /* Shortcut Menu Container */
-	width:480px;
+	width:435px;
 	height:90px;
-	margin-left:240px;
+	margin:10px 0 0 300px;
 	position:absolute;
 	list-style:none;
 	float:left;

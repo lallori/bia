@@ -1524,20 +1524,17 @@ a.linkSearch {
 /*
 /* -------- iFrame -------- */
 
-iframe{ /* Common for all iFrame */
+.iframeFlipVolume { /* used in Add New Volume - #body_right */
+	z-index:-1;
+	width:460px;
+	margin-left:15px;
+	height:300px;
 	margin-top:10px;
 	border:1px solid #e6d0c6; 	
 	z-index:-1;
 	border: 1px solid #e6d0c6;
 	-moz-border-radius: 15px;
-	border-radius: 15px;
-}
-
-.iframeFlipVolume { /* used in Add New Volume - #body_right */
-	z-index:-1;
-	width:460px;
-	margin-left:15px;
-	height:300px;	
+	border-radius: 15px;	
 }
 
 /* ---------------------------- */
@@ -1548,6 +1545,12 @@ iframe{ /* Common for all iFrame */
 	width:595px;
 	height:400px;
 	margin: 10px auto 0 50px;
+	margin-top:10px;
+	border:1px solid #e6d0c6; 	
+	z-index:-1;
+	border: 1px solid #e6d0c6;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 }
 
 .iframeFlipVolumeFullFellows { /* used for Fellows */
@@ -1694,6 +1697,10 @@ iframe{ /* Common for all iFrame */
 	background-image:url(/DocSources/images/1024/button_fullscreenmode.png);
 }
 
+.pirobox_gall1 {
+	height:22px;
+}
+
 /* ---------------- */
 /*
 /* ---- Refresh --- */
@@ -1802,7 +1809,7 @@ iframe{ /* Common for all iFrame */
 }
 
 #modalBox #transcribe {
-	margin:10px 0 0 50px;
+	margin:10px 0 0 275px;
 }
 
 #modalBox #transcribe a{
