@@ -70,8 +70,10 @@
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 	
-		<h5>VOLUME EXPLORER</h5>
-		<hr id="lineSeparator"/>
+		<div id="ShowVolumeExplorer" class="background">
+		<div class="title">
+			<h5>VOLUME EXPLORER</h5>
+		</div>
 		
 		<div id="prevNextButtons">
 			<div id="previousPage">
@@ -174,12 +176,24 @@
 		<br />
 			
 		<div>
-			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" onclick="Modalbox.show(this.href, {title: this.title, width: 750}); return false;" title="VOLUME EXPLORER"></a>
+			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full"></a>
 			<a id="refreshVolumeExplorer" href="${currentPage}"></a>
-		</div>
+
+			<script type="text/javascript">
+			$j(document).ready(function() {
+				$j('.piro_overlay,.piro_html').remove();
+
+				$j().piroBox_ext( {
+					piro_speed : 700,
+					bg_alpha : 0.5,
+					piro_scroll : true
+				});
+			});
+			</script></div>
 
 		<div align="center">
 			
+		</div>
 		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
@@ -187,7 +201,9 @@
 				$j(".previousPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});					
 				$j(".nextPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
 				$j("#refreshVolumeExplorer").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
+
 				
+								
 		        $j("#moveToRubricarioForm").submit(function (){
 					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 						$j("#body_right").html(html);

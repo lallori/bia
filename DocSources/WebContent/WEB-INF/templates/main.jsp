@@ -64,6 +64,8 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.documentExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.shareButton.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery-ui-1.8.9.custom.min.js"/>"></script>
+		<script type="text/javasript" src="<c:url value="/scripts/pirobox_extend.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
