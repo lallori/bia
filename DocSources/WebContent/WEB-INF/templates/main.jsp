@@ -15,6 +15,7 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/Template.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/Chronology.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/modalbox.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/pirobox.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/TableTools.css"/>" />
@@ -64,14 +65,14 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.documentExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.shareButton.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery-ui-1.8.9.custom.min.js"/>"></script>
-		<script type="text/javasript" src="<c:url value="/scripts/pirobox_extend.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/pirobox_extended.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.9.custom.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script>
-		
+
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {

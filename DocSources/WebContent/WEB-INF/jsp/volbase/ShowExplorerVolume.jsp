@@ -178,8 +178,9 @@
 		<div>
 			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full"></a>
 			<a id="refreshVolumeExplorer" href="${currentPage}"></a>
+		</div>
 
-			<script type="text/javascript">
+		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j().piroBox_ext({
 					piro_speed : 700,
@@ -187,21 +188,17 @@
 					piro_scroll : true
 				});
 			});
-			</script></div>
-
+		</script>				
 		<div align="center">
 			
 		</div>
 		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
-
 				$j(".previousPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});					
 				$j(".nextPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
 				$j("#refreshVolumeExplorer").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
 
-				
-								
 		        $j("#moveToRubricarioForm").submit(function (){
 					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 						$j("#body_right").html(html);
