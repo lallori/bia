@@ -130,7 +130,7 @@
 				<b>Index of Names Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
+			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario MB_focusable" type="text" value="" />
 				<input id="goR" type="submit" value="" />
@@ -159,7 +159,7 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 
-			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" cssClass="edit">
+			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio MB_focusable" type="text" value="" />
 				<input class="openmodalbox" id="go" type="submit" value=""/>
@@ -195,15 +195,15 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-	        $j("#moveToRubricarioForm").submit(function (){
+	        $j("#moveToRubricarioModalForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
                 	$j("#modalBox").html(html);
 				}});
 				return false;
 			});
 
-	       $j("#moveToFolioForm").submit(function (){
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+	       $j("#moveToFolioModalForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 					$j("#modalBox").html(html);
 				}});
 				return false;
