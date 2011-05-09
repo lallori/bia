@@ -182,6 +182,7 @@
 
 		<script type="text/javascript">
 			$j(document).ready(function() {
+				$j('.piro_overlay,.piro_html').remove(); // trick to resolve scroll bug with pirobox
 				$j().piroBox_ext({
 					piro_speed : 700,
 					bg_alpha : 0.5,
