@@ -180,6 +180,10 @@
 			<a id="refreshVolumeExplorer" href="${currentPage}"></a>
 		</div>
 
+		<div align="center">
+			
+		</div>
+		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j('.piro_overlay,.piro_html').remove(); // trick to resolve scroll bug with pirobox
@@ -188,14 +192,7 @@
 					bg_alpha : 0.5,
 					piro_scroll : true
 				});
-			});
-		</script>				
-		<div align="center">
-			
-		</div>
-		</div>
-		<script type="text/javascript">
-			$j(document).ready(function() {
+
 				$j(".previousPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});					
 				$j(".nextPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
 				$j("#refreshVolumeExplorer").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
