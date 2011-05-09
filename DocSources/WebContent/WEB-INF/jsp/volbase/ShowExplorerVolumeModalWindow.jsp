@@ -29,6 +29,7 @@
 	</security:authorize>
 	
 	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
+		
 	
 	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${command.volNum}" />
@@ -176,12 +177,20 @@
 				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>
+		
+		<br />
+		
+		<div id="transcribe">
+		<c:if test="${volumeExplorer.image.imageType == 'C'}">
+			<a class="transcribe"></a>
+		</c:if>
+		</div>
 
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
 			<a id="transcribe" class="MB_focusable" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO" onclick="Modalbox.show(this.href, {title: this.title, width: 750, height: 600}); return false;"></a>
 		</c:if>
-
-		<div id="CloseButtonRight"><input value="Close" class="modalBox-close" onClick="Modalbox.hide(); return false;" type="submit"><br /><span>(or click the overlay)</span></div>
+	
+		
 	</div>
 
 	<script type="text/javascript">
@@ -193,7 +202,7 @@
 				return false;
 			});
 
-	        $j("#moveToFolioForm").submit(function (){
+	       $j("#moveToFolioForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					$j("#modalBox").html(html);
 				}});
