@@ -67,8 +67,11 @@
 		<c:param name="flashVersion" value="true" />
 	</c:url>
 	
+		<div id="ShowDocumentExplorer" class="background">
+		<div class="title">
 		<h5>DOCUMENT EXPLORER</h5>
-		<hr id="lineSeparator"/>
+		</div>
+		
 		
 		<div id="prevNextButtons">
 			<div id="previousPage">
@@ -169,20 +172,27 @@
 		<br />
 			
 		<div>
-			<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER"></a>
+			<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full"></a>
 			<a id="refreshVolumeExplorer" href="${currentPageURL}"></a>
 		</div>
+		</div>
+		
+		<script type="text/javascript">
+			$j(document).ready(function() {
+				$j('.piro_overlay,.piro_html').remove(); // trick to resolve scroll bug with pirobox
+				$j().piroBox_ext({
+					piro_speed: 700,
+					bg_alpha: 0.5,
+					piro_scroll : true
+				});
+			});
+		</script>
 
 		<div align="center">
 			
 		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				$j("#flipItInFullScreen").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
-					return false;
-				});
-
 				$j(".previousPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});					
 				$j(".nextPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
 				$j("#refreshVolumeExplorer").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
