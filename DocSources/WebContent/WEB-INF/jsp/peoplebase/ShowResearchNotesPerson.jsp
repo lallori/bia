@@ -19,9 +19,14 @@
 			</c:if>
 		</security:authorize>
 		</div>
-		<ul>
-			<li>${person.bioNotes}</li>
-		</ul>
+		
+		<div class="list">
+			<div class="row">
+				<div class="value">
+					${person.bioNotes}
+				</div>
+			</div>		
+		</div>		
 	</div>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
