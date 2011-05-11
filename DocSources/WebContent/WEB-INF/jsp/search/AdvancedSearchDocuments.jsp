@@ -5,157 +5,184 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <b>ADVANCED SEARCH</b><a href="#" class="helpLink">?</a>
-<p><u>Search Documents</u></p>
+
 <br />
-<div>
-	<form id="wordSearchForm" method="post" class="edit">
-		<label for="wordSearch" id="wordSearchLabel">Word Search: <a href="#" class="helpLink">?</a></label> 
-		<input id="wordSearch" name="wordSearch" class="input_15c" type="text" value=""/>
-		in 
-		<select id="wordSearchIn" name="fromDateMonthSearch" class="selectform_MXlong">
-			<option value="Synopsis and Extract" selected="selected">Synopsis and Extract</option>
-			<option value="Document Synopsis">Document Synopsis</option>
-			<option value="Document Extract">Document Extract</option>
-		</select>
-		<a href="/DocSources/de/docbase/AddWordSearch.html" id="AddWordSearch">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="volumeSearchForm" method="post" class="edit">
-		<label for="volumeSearch" id="volumeSearchLabel">Volume:  <a href="#" class="helpLink">?</a></label> 
-		<input id="volumeSearch" name="volumeSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#" id="AddVolumeSearch">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="fromDateSearchForm" method="post" class="edit">
-		<label for="fromDateSearch" id="fromDateSearchLabel">From Date:  <a href="#" class="helpLink">?</a></label>
-		<input id="fromDateYearSearch" name="fromDateYearSearch" class="input_4c" type="text" value="year" maxlength="4"/>
-		<select id="fromDateMonthSearch" name="fromDateMonthSearch" class="selectform">
-			<option value="January">January</option>
-			<option value="February">February</option>
-			<option value="March">March</option>
-			<option value="April">April</option>
-			<option value="May">May</option>
-			<option value="June">June</option>
-			<option value="July">July</option>
-			<option value="August">August</option>
-			<option value="September">September</option>
-			<option value="October">October</option>
-			<option value="November">November</option>
-			<option value="December">December</option>
-			<option value="month" selected="selected">month</option>
-		</select>
-		<input id="fromDateDaySearch" name="fromDateDaySearch" class="input_2c" type="text" value="day" maxlength="2"/>
-		<a href="#" id="addSearchFilter">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="toDateSearchForm" method="post" class="edit">
-		<label for="toDateSearch" id="toDateSearchLabel">To Date:  <a href="#" class="helpLink">?</a></label>
-		<input id="toDateYearSearch" name="toDateYearSearch" class="input_4c" type="text" value="year" maxlength="4"/>
-		<select id="toDateMonthSearch" name="toDateMonthSearch" class="selectform">
-			<option value="January">January</option>
-			<option value="February">February</option>
-			<option value="March">March</option>
-			<option value="April">April</option>
-			<option value="May">May</option>
-			<option value="June">June</option>
-			<option value="July">July</option>
-			<option value="August">August</option>
-			<option value="September">September</option>
-			<option value="October">October</option>
-			<option value="November">November</option>
-			<option value="December">December</option>
-			<option value="month" selected="selected">month</option>
-		</select>
-		<input id="toDateDaySearch" name="toDateDaySearch" class="input_2c" type="text" value="day" maxlength="2"/>
-		<a href="#" id="addSearchFilter">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="extractSearchForm" method="post" class="edit">
-		<label for="extractSearch" id="extractSearchLabel">Extract:  <a href="#" class="helpLink">?</a></label>
-		<textarea id="extractSearch" name="extractSearch" class="txtadvsearch"></textarea>
-		<a href="#" id="addSearchFilter">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="synopsisSearchForm" method="post" class="edit">
-		<label for="synopsisSearch" id="synopsisSearchLabel">Synopsis:  <a href="#" class="helpLink">?</a></label>
-		<textarea id="synopsisSearch" name="synopsisSearch" class="txtadvsearch"></textarea>
-		<a href="#" id="addSearchFilter">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="topicsSearchForm" method="post" class="edit">
-		<label for="topicsSearch" id="topicsSearchLabel">Topics:  <a href="#" class="helpLink">?</a></label> 
-		<input id="topicsSearch" name="topicsSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#" id="addSearchFilter">Add</a>
-	</form>
-</div>
 <br />
-<p><u>General search on People & Places:</u></p>
-<br />
-<div>
-	<form id="personSearchForm" method="post" class="edit">
-		<label for="personSearch" id="personSearchLabel">Person:  <a href="#" class="helpLink">?</a></label> 
-		<input id="personSearch" name="personSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#" id="addSearchFilter">Add</a>
-	</form>
+
+<div id="multiOpenAccordion">
+	<h1><a>WORD SEARCH</a></h1>
+	<div>
+		<a href="#" class="helpLinkFrom">?</a>
+		<form:form id="wordSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:input id="wordSearch" path="wordSearch" cssClass="input_15c" />
+			in 
+			<form:select id="fromDateMonthSearch" path="fromDateMonthSearch" cssClass="selectform_LXlong">
+				<form:option value="Synopsis and Extract" selected="selected">Synopsis and Extract</form:option>
+				<form:option value="Document Synopsis">Document Synopsis</form:option>
+				<form:option value="Document Extract">Document Extract</form:option>				
+			</form:select>
+			<a href="/DocSources/de/docbase/AddWordSearch.html" id="AddWordSearch">Add</a>
+		</fieldset>
+		</form:form>
+	</div>
+
+	<h1><a><i>in</i> VOLUME</a></h1>
+	<div>
+		<a href="#" class="helpLinkFrom">?</a>
+		<form:form id="volumeSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:select id="volumeSearchExactlyBetween" path="volumeSearchExactlyBetween" cssClass="selectform_long">
+				<form:option value="Exactly" selected="selected">Exactly</form:option>
+				<form:option value="Between">Between</form:option>
+			</form:select>
+			<form:input id="volumeSearch" path="volumeSearch" cssClass="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+		
+		<a href="#" class="helpLinkFrom">?</a>
+		<form:form id="dateSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:select id="dateSearch" path="dateSearch" class="selectform_long">
+				<form:option value="From Date">From Date</form:option>
+				<form:option value="To Date">To Date</form:option>
+				<form:option value="Before">Before</form:option>
+				<form:option value="After">After</form:option>
+			</form:select>
+			<form:input id="fromDateYearSearch" path="fromDateYearSearch" cssClass="input_4c" maxlength="4"/>
+			<form:select id="fromDateMonthSearch" path="fromDateMonthSearch" class="selectform">
+				<form:option value="January">January</form:option>
+				<form:option value="February">February</form:option>
+				<form:option value="March">March</form:option>
+				<form:option value="April">April</form:option>
+				<form:option value="May">May</form:option>
+				<form:option value="June">June</form:option>
+				<form:option value="July">July</form:option>
+				<form:option value="August">August</form:option>
+				<form:option value="September">September</form:option>
+				<form:option value="October">October</form:option>
+				<form:option value="November">November</form:option>
+				<form:option value="December">December</form:option>
+				<form:option value="month">month</form:option>
+			</form:select>
+			<form:input id="fromDateDaySearch" path="fromDateDaySearch" cssClass="input_2c" maxlength="2"/>
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+	</div>	
+
+	<h1><a><i>in</i> EXTRACT and/or SYNOPSIS</a></h1>
+	<div>
+		<a href="#" class="helpLinkFrom">?</a>
+		<form:form id="extractSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:label for="extractSearch" id="extractSearchLabel" path="extractSearch">Extract</form:label>
+			<form:textarea id="extractSearch" path="extractSearch" cssClass="txtadvsearch"></form:textarea>
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+		
+		<form:form id="synopsisSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:label for="synopsisSearch" id="synopsisSearchLabel" path="sysopsisSearch">Synopsis</form:label>
+			<form:textarea id="synopsisSearch" path="synopsisSearch" cssClass="txtadvsearch"></form:textarea>
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+	</div>
+	
+	<h1><a><i>with</i> TOPICS</a></h1>
+	<div>
+		<a href="#" class="helpLinkFrom">?</a>
+		<form:form id="topicsSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:input id="topicsSearch" path="topicsSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+	</div>
+
+	<h1><a><i>search on</i> PEOPLE & PLACES</a></h1>
+	<div>
+		<a href="#" class="helpLinkFrom">?</a>
+		<form:form id="personSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:label for="personSearch" id="personSearchLabel" path="personSearch">Person</form:label> 
+			<form:input id="personSearch" path="personSearch" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+		<form:form id="placeSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:label for="placeSearch" id="placeSearchLabel" path="placeSearch">Place</form:label> 
+			<form:input id="placeSearch" path="placeSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+		</fieldset>
+		</form:form>
+		
+		<form:form id="senderSearchForm" method="post" cssClass="edit">
+			<fieldset>
+				<form:label for="senderSearch" id="senderSearchLabel" path="ssenderSearch">Sender</form:label> 
+				<form:input id="senderSearchAutoCompleter" path="senderSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+				<a href="#" id="addSearchFilter">Add</a>
+				
+			</fieldset>
+		</form:form>
+				
+		
+		
+		<form:form id="fromSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:label for="fromSearch" id="fromSearchLabel" path="fromSearch">From</form:label> 
+			<form:input id="fromSearch" path="fromSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+		
+		<form:form id="recipientSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:label for="recipientSearch" id="recipientSearchLabel" path="recipientSearch">Recipient</form:label> 
+			<form:input id="recipientSearch" path="recipientSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+		<form:form id="toSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:label for="toSearch" id="toSearchLabel" path="toSearch">To</form:label> 
+			<form:input id="toSearch" path="toSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+		
+		<form:form id="referstoSearchForm" method="post" cssClass="edit">
+		<fieldset>
+			<form:label for="referstoSearch" id="referstoSearchLabel" path="referstoSearch">Refers to</form:label> 
+			<form:input id="referstoSearch" path="referstoSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<a href="#" id="addSearchFilter">Add</a>
+		</fieldset>
+		</form:form>
+	</div>
 </div>
 
-<div>
-	<form id="placeSearchForm" method="post" class="edit">
-		<label for="placeSearch" id="placeSearchLabel">Place:  <a href="#" class="helpLink">?</a></label> 
-		<input id="placeSearch" name="placeSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#" id="addSearchFilter">Add</a>
-	</form>
-</div>
-<br />
-<p><u>Specific search on People & Places:</u></p>
-<br />
-<div>
-	<form id="senderSearchForm" method="post" class="edit">
-		<label for="senderSearch" id="senderSearchLabel">Sender:  <a href="#" class="helpLink">?</a></label> 
-		<input id="senderSearch" name="senderSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#">Add</a>
-	</form>
-	<form id="fromSearchForm" method="post" class="edit">
-		<label for="fromSearch" id="fromSearchLabel">From:  <a href="#" class="helpLink">?</a></label> 
-		<input id="fromSearch" name="fromSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="recipientSearchForm" method="post" class="edit">
-		<label for="recipientSearch" id="recipientSearchLabel">Recipient:  <a href="#" class="helpLink">?</a></label> 
-		<input id="recipientSearch" name="recipientSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#">Add</a>
-	</form>
-	<form id="toSearchForm" method="post" class="edit">
-		<label for="toSearch" id="toSearchLabel">To:  <a href="#" class="helpLink">?</a></label> 
-		<input id="toSearch" name="toSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="referstoSearchForm" method="post" class="edit">
-		<label for="referstoSearch" id="referstoSearchLabel">Refers to:  <a href="#" class="helpLink">?</a></label> 
-		<input id="referstoSearch" name="referstoSearch" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-		<a href="#">Add</a>
-	</form>
-</div>
+<c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json"/>
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#multiOpenAccordion").multiAccordion({active: [0]});
+
+			$j("#senderSearchAutoCompleter").autocompletePerson({
+				serviceUrl: '${searchSenderPeopleURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 600,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#senderPeopleId').val(data);
+				}
+			});	
+			
 			$j("#AddWordSearch").click(function(){
 				var searchElement = "				<div class=\"searchFilterDiv\">																		   " +
 				"					<span class=\"categorySearch\">Word Search</span>                                                  " +
@@ -225,7 +252,10 @@
 				}
 
 				$j("#volumeSearchDiv").prepend(searchElement);
-			});			
+
+			});
+
+					
 		});
 
 	</script>
