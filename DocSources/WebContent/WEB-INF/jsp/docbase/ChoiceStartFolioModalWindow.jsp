@@ -133,11 +133,8 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="choose" href="${TranscribeAndContextualizeDocumentURL}"></a>
 	</security:authorize>
-		<a id="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER" onClick="Modalbox.show(this.href, {onUpdate: function() { alert('Are you sure you want to go back?') } });return false;"></a>
-		<div id="closeModal">
-			<input value="" onClick="Modalbox.hide(); return false;" type="submit" id="closeModalBox"><br /><span>(or click the overlay)</span>
-		</div>
-		
+		<a id="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"></a>
+				
 	</div>
 
 	<script type="text/javascript">
@@ -157,6 +154,11 @@
 				$j("#body_left").load($j(this).attr("href"));
 				$j("#body_right").load("${ShowExplorerVolumeURL}");
 				Modalbox.hide(); 
+				return false;
+			});
+
+			$j(".gobackvolume").click(function(){
+				$j("#volumeExplorerButtons").load("${ExplorerVolumeModalURL}");
 				return false;
 			});
 		});

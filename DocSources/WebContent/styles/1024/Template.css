@@ -222,7 +222,7 @@ input {
 }
 
 #menulastentry { /* Shortcut Menu <ul> list */
-	width:480px;
+	width:450px;
 	height:90px;
 	list-style:none;
 	float:left;
