@@ -270,7 +270,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 #close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother { /* Close button on bottom left  */
-	margin:5px auto auto 0px;
+	margin:5px auto 5px 0px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -281,7 +281,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 #closePerson { /* Close button on bottom left  */
-	margin:5px auto auto 0px;
+	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -292,7 +292,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 #closeTopic  { /* Close button on bottom left  */
-	margin:5px auto auto 0px;
+	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -303,7 +303,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 #closePlace  { /* Close button on bottom left  */
-	margin:5px auto auto 0px;
+	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -1395,19 +1395,19 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin-left:20px;
 }
 
-#nameSpouseLabel {
+#wifeDescriptionLabel {
 	margin-left:32px;
 }
 
-#startYearSpouseLabel {
+#startYearLabel {
 	margin-left:6px;
 }
 
-#endYearSpouseLabel {
+#EditSpousePersonForm #endYearLabel {
 	margin-left:15px;
 }
 
-#reasonLabel {
+#marriageTermLabel {
 	margin-left:15px;
 }
 
