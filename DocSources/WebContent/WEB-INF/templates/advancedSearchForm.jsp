@@ -54,7 +54,6 @@
 	<body>
 		<div id="advancedSearch">
 			<div id="advancedSearch_top">
-				<h1>ADVANCED SEARCH on PLACES</h1>
 			</div>
 			<div id="body_left">
 				<tiles:insertAttribute name="advancedSearchForm"/>
@@ -64,6 +63,6 @@
 				<tiles:insertAttribute name="advancedSearchFilter"/>
 			</div>
 		</div>
-		</div>
+		
 	</body>
 </html>
