@@ -270,7 +270,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 #close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother { /* Close button on bottom left  */
-	margin:5px auto 5px 0px;
+	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -278,6 +278,18 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	width:45px;
 	height:22px;
 	border:none;
+}
+
+#button_transparent { /* Close button on bottom left  */
+	margin:5px auto 7px 0px;
+	padding:0;
+	cursor:default;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/img_transparentClose.png);
+	width:45px;
+	height:22px;
+	border:none;
+	visibility:hidden;
 }
 
 #closePerson { /* Close button on bottom left  */
@@ -333,7 +345,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 #AddNewValue, .AddNewValue  { /* "Add New Value" Button */
-	margin:5px auto auto 305px;
+	margin:5px auto 7px 305px;
 	position:absolute;
 	padding:0;
 	cursor:pointer;
@@ -347,12 +359,26 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 .AddNewValue2  { /* "Add New Value" Button */
-	margin:5px auto auto 355px;
+	margin:5px auto 7px 355px;
 	position:absolute;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
 	background-image:url(/DocSources/images/1024/button_addnew.png);
+	background-repeat:no-repeat;
+	width:59px;
+	height:23px;
+	border:none;
+	outline:none;
+}
+
+.Add  { /* "Add" Button */
+	margin:5px auto 7px 305px;
+	position:absolute;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_add.png);
 	background-repeat:no-repeat;
 	width:59px;
 	height:23px;
@@ -1612,7 +1638,7 @@ a.linkSearch {
 	font-size:10px;
 }
 
-#moveToRubricarioForm { /* "Move to Rubricario" FORM */
+#moveToRubricarioForm, #moveToRubricarioModalForm { /* "Move to Rubricario" FORM */
 	width:150px;
 	display:inline;
 	color:#6d5c4d;
@@ -1662,7 +1688,7 @@ a.linkSearch {
 	font-size:10px;
 }
 
-#moveToFolioForm { /* Move to folio FORM */
+#moveToFolioForm, #moveToFolioModalForm { /* Move to folio FORM */
 	width:150px;
 	display:inline;
 	color:#6d5c4d;
@@ -2413,13 +2439,11 @@ a.linkSearch {
 /* ------------------- pop up window ------------------------ */
 
 #advancedSearch {
-	width:900px;
 	height:auto;
 }
 
 #advancedSearch_top {
-	width:900px;
-	height:80px;
+	height:100px;
 	background:url(/DocSources/images/1024/img_advacedSearchOnDocuments.png) center no-repeat;
 }
 
@@ -2436,22 +2460,22 @@ a.linkSearch {
 	margin:0 0 10px 0;
 }
 
-#advancedSearch #body_left_advSearch { /* LEFT-hand side of the SCREEN */
+#advancedSearch #body_left_doc, #advancedSearch #body_left_vol, #advancedSearch #body_left_peop, #advancedSearch #body_left_pla  { /* LEFT-hand side of the SCREEN */
 	width:480px;
 	height:auto;
+	min-height:400px;
 	padding:10px 10px 15px 5px;
 	float:left;
 	font-size:11px;
-	z-index:1;
 }
 
-#advancedSearch #body_right_advSearch { /* RIGHT-hand side of the SCREEN */
-	width:380px;
+#advancedSearch #body_right_doc, #advancedSearch #body_right_vol, #advancedSearch #body_right_peop, #advancedSearch #body_right_pla,  { /* RIGHT-hand side of the SCREEN */
+	width:300px;
+	background-color:#069;
 	height:auto;
 	float:right;
-	padding:10px 0 15px 5px;
+	margin-left:10px;
 	font-size:11px;
-	z-index:1;
 }
 
 #advancedSearch #body_right_advSearch p{
@@ -2536,7 +2560,7 @@ span.categorySearch {
 /*
 /* ----------------- form common elements ----------------- */
 
-#advancedSearch #body_left_advSearch a.helpLink, #advancedSearch #body_right_advSearch a.helpLink, #VettingChronologyDiv a.helpLink { /* Help symbol "?" */
+#advancedSearch a.helpLink, #VettingChronologyDiv a.helpLink { /* Help symbol "?" */
 	border: 1px solid #6d5c4d;
 	color:  #6d5c4d; 
 	font-size: 12px; 
@@ -2565,10 +2589,7 @@ span.categorySearch {
 	border-radius: 1px;
 }
 
-
-
-
-#advancedSearch #body_right_advSearch .easySearchMode, #advancedSearch #body_right_advSearch .expertSearchMode {
+#advancedSearch .easySearchMode, #advancedSearch.expertSearchMode {
 	text-decoration:underline;
 	font-size:11px;
 	color:#b99c84;
