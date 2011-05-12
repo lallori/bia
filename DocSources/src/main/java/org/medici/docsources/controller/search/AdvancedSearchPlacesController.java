@@ -48,7 +48,7 @@ public class AdvancedSearchPlacesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(){
-		return new ModelAndView("search/AdvancedSearchDocuments");
+		return new ModelAndView("search/AdvancedSearchPlaces");
 	}
 
 }
