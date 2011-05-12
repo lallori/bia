@@ -22,6 +22,7 @@
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
 		
+	
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
 			<h5>VOLUME DETAILS </h5>
@@ -37,16 +38,29 @@
 			<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
 			<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></security:authorize></p>
 		</div> -->
-
+		<br />
 		<h3>${volume.serieList}</h3>
-		<ul>
-			<li><b>Volume/Filza (MDP): </b> ${volume.volNum}${volume.volLetExt}</li>
-			<li><b>Start Date: </b> ${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</li>
-			<li><b>End Date: </b> ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay}</li>
-			<li><b>Date Notes: </b> ${volume.dateNotes}</li>
-		</ul>
+		<div class="listDetails">
+			<div class="row">
+				<div class="item">Volume/Filza (MDP)</div>
+				<div class="value">${volume.volNum}${volume.volLetExt}</div>
+			</div>
+			<div class="row">
+				<div class="item">Start Date</div>
+				<div class="value">${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</div>
+			</div>
+			<div class="row">
+				<div class="item">End Date</div>
+				<div class="value">${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay}</div>
+			</div>
+			<div class="row">	
+				<div class="item">Date Notes</div>
+				<div class="value">${volume.dateNotes}</div>
+			</div>
+		</div>
 	</div>
-	<br>
+	<br />
+	<br />
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {

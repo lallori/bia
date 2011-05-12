@@ -20,26 +20,59 @@
 		</security:authorize>
 		</div>
 		
-		<ul>
-			<li><b>Organizational Criteria: </b>${volume.orgNotes}</li>
-			<li><b>Condition: </b> ${volume.ccondition}</li>
-			<li><b>Bound: </b>${volume.bound ? 'Yes' : 'No'}</li>
-			<li><b>Folios Numbered: </b>${volume.folsNumbrd ? 'Yes' : 'No'}</li>
-			<li><b>Folios Count: </b>${volume.folioCount}</li>
-			<li><b>Alphabetical Index: </b>${volume.oldAlphaIndex ? 'Yes' : 'No'}</li>
-			<li><b>Printed material: </b>${volume.printedMaterial ? 'Yes' : 'No'}</li>
-			<li><b>Printed drawings: </b>${volume.printedDrawings ? 'Yes' : 'No'}</li>
-			<li><b>Languages: </b>  ${volume.italian ? 'Italian' : '' } 
+		<div class="list">
+			<div class="row">
+				<div class="item">Organizational Criteria</div>
+				<div class="value">${volume.orgNotes}</div>
+			</div>
+			<div class="row">
+				<div class="item">Condition</div>
+				<div class="value">${volume.ccondition}</div>
+			</div>
+			<div class="row">
+				<div class="item">Bound</div>
+				<div class="value">${volume.bound ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Folios Numbered</div>
+				<div class="value">${volume.folsNumbrd ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Folios Count</div>
+				<div class="value">${volume.folioCount}</div>
+			</div>
+			<div class="row">
+				<div class="item">Alphabetical Index</div>
+				<div class="value">${volume.oldAlphaIndex ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Printed material</div>
+				<div class="value">${volume.printedMaterial ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Printed drawings</div>
+				<div class="value">${volume.printedDrawings ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Languages</div>
+				<div class="value"> ${volume.italian ? 'Italian' : '' } 
 									${volume.spanish ? 'Spanish' : ''}
 									${volume.english ? 'English' : ''}
 									${volume.latin ? 'Latin' : ''}
 									${volume.german ? 'German' : ''}
 									${volume.french ? 'French' : ''}
 									${volume.otherLang}
-			</li>
-			<li><b>Some Documents in Cipher: </b>${volume.cipher ? 'Yes' : 'No'}</li>
-			<li><b>Cipher Notes: </b>${volume.cipherNotes}</li>
-		</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="item">Some Documents in Cipher</div>
+				<div class="value">${volume.cipher ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Cipher Notes</div>
+				<div class="value">${volume.cipherNotes}</div>
+			</div>
+		</div>
 	</div>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
