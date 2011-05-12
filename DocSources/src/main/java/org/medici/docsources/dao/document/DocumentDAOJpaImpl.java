@@ -129,10 +129,13 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
+		// We obtain hibernate-search session
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
 
+		// We set search on fields .
 		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
 			"volume.serieList.title",
 			"volume.serieList.subTitle1", 
@@ -149,11 +152,16 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			"recipientPlace.placeNameFull"
 		).matching(text + "*").createQuery();
 
+		// We execute search
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Document.class );
+
+		// We set pagination  
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
 		
+		// We set search result on return method
 		page.setList(fullTextQuery.list());
+
 		return page;
 	}
 
@@ -162,10 +170,14 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
+		// We obtain hibernate-search session
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		// We define entity on which we make search 
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
 
+		// We set search on fields .
 		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
 			"volume.serieList.title",
 			"volume.serieList.subTitle1", 
@@ -191,23 +203,29 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			"eplToLink.place.placeNameFull"
 		).matching(text).createQuery();
 
+		// We execute search
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Document.class );
+
+		// We set size of result.
 		if (paginationFilter.getTotal() == null) {
 			page.setTotal(new Long(fullTextQuery.getResultSize()));
 		}
 
+		// We set pagination  
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
-		
+
+		// We manage sorting (this manages sorting on multiple fields)
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		if (sortingCriterias.size() > 0) {
-			SortingCriteria firstSortingCriteria = sortingCriterias.get(0);
-			if (firstSortingCriteria.getOrder().equals(Order.ASC)) {
-				fullTextQuery.setSort(new Sort(new SortField(firstSortingCriteria.getColumn(), firstSortingCriteria.getColumnType(), true)));
-			} else if (firstSortingCriteria.getOrder().equals(Order.DESC)) {
-				fullTextQuery.setSort(new Sort(new SortField(firstSortingCriteria.getColumn(), firstSortingCriteria.getColumnType(), false)));
-			} 
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+			}
+			fullTextQuery.setSort(new Sort(sortFields));
 		}
+		
+		// We set search result on return method
 		page.setList(fullTextQuery.list());
 		
 		return page;

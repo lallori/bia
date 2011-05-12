@@ -192,7 +192,8 @@ public class AjaxController {
 					paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
 					break;
 				case 5:
-					paginationFilter.addSortingCriteria("volume", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("volume.volNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("volume.volLetExt", sortingDirection, SortField.STRING);
 					break;
 				case 6:
 					paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.INT);
