@@ -7,10 +7,10 @@
 	<div id="advancedSearchModal">
 		<h1>Click the button below to search in one of the following categories:</h1>
 		
-		<a id="documentSearch" class="pirobox" rel="content-full-full" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
-		<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPeople.do"/>"></a>
-		<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchVolumes.do"/>"></a>
-		<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPlaces.do"/>"></a>
+		<a id="documentSearch" class="pirobox" rel="iframe-full-full" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
+		<a id="personSearch" class="pirobox" rel="iframe-full-full" href="<c:url value="/src/AdvancedSearchPeople.do"/>"></a>
+		<a id="volumeSearch" class="pirobox" rel="iframe-full-full" href="<c:url value="/src/AdvancedSearchVolumes.do"/>"></a>
+		<a id="placeSearch" class="pirobox" rel="iframe-full-full" href="<c:url value="/src/AdvancedSearchPlaces.do"/>"></a>
 		<a id="savedFilters" class="advSearchButton" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
 	
 		<div id="CloseButton">
@@ -28,17 +28,7 @@
 			piro_scroll: true
 		});
 		
-	    // $j("#documentSearch").open({width: 920, height: 450, scrollbars: "yes"});
-	    
-		$j("#personSearch").open({width: 920, height: 450, scrollbars: "yes"});
-		
-		$j("#volumeSearch").open({width: 920, height: 450, scrollbars: "yes"});
-				
-		$j("#placeSearch").open({width: 920, height: 450, scrollbars: "yes"});
-		
-		$j("#objectSearch").open({width: 920, height: 450, scrollbars: "yes"});
-		
-		// This closes modal window
+	    // This closes modal window
 		$j(".advSearchButton").click(function() {										
 			Modalbox.hide(); return false;
 		});

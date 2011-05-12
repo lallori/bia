@@ -4,10 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<b>ADVANCED SEARCH</b><a href="#" class="helpLink">?</a>
-
-<br />
-<br />
+<h2>SEARCH FORM</h2>
 
 <div id="multiOpenAccordion">
 	<h1><a>WORD SEARCH</a></h1>
@@ -37,7 +34,7 @@
 				<option value="Between">Between</option>
 			</select>
 			<input type="text" id="volumeSearch"  class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addSearchFilter">Add</a>
+			<a href="#" id="addVolumeSearch">Add</a>
 		</fieldset>
 		</form>
 		
@@ -67,7 +64,7 @@
 				<option value="month">month</option>
 			</select>
 			<input type="text" id="fromDateDaySearch" class="input_2c" maxlength="2"/>
-			<a href="#" id="addSearchFilter">Add</a>
+			<a href="#" id="addDateSearch">Add</a>
 		</fieldset>
 		</form>
 	</div>	
@@ -78,16 +75,16 @@
 		<form id="extractSearchForm" method="post" class="edit">
 		<fieldset>
 			<label for="extractSearch" id="extractSearchLabel">Extract</label>
-			<form:textarea id="extractSearch" class="txtadvsearch"></form:textarea>
-			<a href="#" id="addSearchFilter">Add</a>
+			<textarea id="extractSearch" class="txtadvsearch"></textarea>
+			<a href="#" id="addExtractSearch">Add</a>
 		</fieldset>
 		</form>
 		
 		<form id="synopsisSearchForm" method="post" class="edit">
 		<fieldset>
 			<label for="synopsisSearch" id="synopsisSearchLabel">Synopsis</label>
-			<form:textarea id="synopsisSearch" class="txtadvsearch"></form:textarea>
-			<a href="#" id="addSearchFilter">Add</a>
+			<textarea id="synopsisSearch" class="txtadvsearch"></textarea>
+			<a href="#" id="addSynopsisSearch">Add</a>
 		</fieldset>
 		</form>
 	</div>
@@ -98,7 +95,7 @@
 		<form id="topicsSearchForm" method="post" class="edit">
 		<fieldset>
 			<input type="text" id="topicsSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addSearchFilter">Add</a>
+			<a href="#" id="addTopicsSearch">Add</a>
 		</fieldset>
 		</form>
 	</div>
@@ -110,13 +107,14 @@
 		<fieldset>
 			<label for="personSearch" id="personSearchLabel">Person</label> 
 			<input type="text" id="personSearch" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addSearchFilter">Add</a>
+			<a href="#" id="addPersonSearch">Add</a>
 		</fieldset>
 		</form>
 		<form id="placeSearchForm" method="post" class="edit">
 		<fieldset>
 			<label for="placeSearch" id="placeSearchLabel">Place</label> 
 			<input type="text" id="placeSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
+			<a href="#" id="addPlaceSearch">Add</a>
 		</fieldset>
 		</form>
 		
@@ -124,7 +122,7 @@
 			<fieldset>
 				<label for="senderSearch" id="senderSearchLabel">Sender</label> 
 				<input type="text" id="senderSearchAutoCompleter" class="input_25c"/><!-- AUTOCOMPLETE -->
-				<a href="#" id="addSearchFilter">Add</a>
+				<a href="#" id="addSenderSearch">Add</a>
 				
 			</fieldset>
 		</form>
@@ -135,7 +133,7 @@
 		<fieldset>
 			<label for="fromSearch" id="fromSearchLabel">From</label> 
 			<input type="text" id="fromSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addSearchFilter">Add</a>
+			<a href="#" id="addFromSearch">Add</a>
 		</fieldset>
 		</form>
 		
@@ -143,14 +141,14 @@
 		<fieldset>
 			<label for="recipientSearch" id="recipientSearchLabel">Recipient</label> 
 			<input type="text" id="recipientSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addSearchFilter">Add</a>
+			<a href="#" id="addRecipientSearch">Add</a>
 		</fieldset>
 		</form>
 		<form id="toSearchForm" method="post" class="edit">
 		<fieldset>
 			<label for="toSearch" id="toSearchLabel">To</label> 
 			<input type="text" id="toSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addSearchFilter">Add</a>
+			<a href="#" id="addToSearch">Add</a>
 		</fieldset>
 		</form>
 		
@@ -158,7 +156,7 @@
 		<fieldset>
 			<label for="referstoSearch" id="referstoSearchLabel">Refers to</label> 
 			<input type="text" id="referstoSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addSearchFilter">Add</a>
+			<a href="#" id="addReferstoSearch">Add</a>
 		</fieldset>
 		</form>
 	</div>
@@ -167,7 +165,7 @@
 <c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json"/>
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#multiOpenAccordion").multiAccordion({active: [0]});
+			$j('#multiOpenAccordion').multiAccordion({active: [0]});
 
 			$j("#senderSearchAutoCompleter").autocompletePerson({
 				serviceUrl: '${searchSenderPeopleURL}',
