@@ -8,7 +8,7 @@
 		<c:param name="entryId" value="${command.entryId}" />
 	</c:url>
 
-	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
+	<form:form id="EditExtractOrSynopsisDocumentFullscreenForm" method="post" cssClass="edit">
 
 		<div style="float:left">
 			<form:label for="docExtract" id="docExtractLabel" path="docExtract">Extract:</form:label>
