@@ -13,154 +13,154 @@
 	<h1><a>WORD SEARCH</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form:form id="wordSearchForm" method="post" cssClass="edit">
+		<form id="wordSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:input id="wordSearch" path="wordSearch" cssClass="input_15c" />
+			<input type="text" id="wordSearch" class="input_15c" />
 			in 
-			<form:select id="fromDateMonthSearch" path="fromDateMonthSearch" cssClass="selectform_LXlong">
-				<form:option value="Synopsis and Extract" selected="selected">Synopsis and Extract</form:option>
-				<form:option value="Document Synopsis">Document Synopsis</form:option>
-				<form:option value="Document Extract">Document Extract</form:option>				
-			</form:select>
+			<select id="fromDateMonthSearch" class="selectform_LXlong">
+				<option value="Synopsis and Extract" selected="selected">Synopsis and Extract</option>
+				<option value="Document Synopsis">Document Synopsis</option>
+				<option value="Document Extract">Document Extract</option>				
+			</select>
 			<a href="/DocSources/de/docbase/AddWordSearch.html" id="AddWordSearch">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 	</div>
 
 	<h1><a><i>in</i> VOLUME</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form:form id="volumeSearchForm" method="post" cssClass="edit">
+		<form id="volumeSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:select id="volumeSearchExactlyBetween" path="volumeSearchExactlyBetween" cssClass="selectform_long">
-				<form:option value="Exactly" selected="selected">Exactly</form:option>
-				<form:option value="Between">Between</form:option>
-			</form:select>
-			<form:input id="volumeSearch" path="volumeSearch" cssClass="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
+			<select id="volumeSearchExactlyBetween" class="selectform_long">
+				<option value="Exactly" selected="selected">Exactly</option>
+				<option value="Between">Between</option>
+			</select>
+			<input type="text" id="volumeSearch"  class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 		
 		<a href="#" class="helpLinkFrom">?</a>
-		<form:form id="dateSearchForm" method="post" cssClass="edit">
+		<form id="dateSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:select id="dateSearch" path="dateSearch" class="selectform_long">
-				<form:option value="From Date">From Date</form:option>
-				<form:option value="To Date">To Date</form:option>
-				<form:option value="Before">Before</form:option>
-				<form:option value="After">After</form:option>
-			</form:select>
-			<form:input id="fromDateYearSearch" path="fromDateYearSearch" cssClass="input_4c" maxlength="4"/>
-			<form:select id="fromDateMonthSearch" path="fromDateMonthSearch" class="selectform">
-				<form:option value="January">January</form:option>
-				<form:option value="February">February</form:option>
-				<form:option value="March">March</form:option>
-				<form:option value="April">April</form:option>
-				<form:option value="May">May</form:option>
-				<form:option value="June">June</form:option>
-				<form:option value="July">July</form:option>
-				<form:option value="August">August</form:option>
-				<form:option value="September">September</form:option>
-				<form:option value="October">October</form:option>
-				<form:option value="November">November</form:option>
-				<form:option value="December">December</form:option>
-				<form:option value="month">month</form:option>
-			</form:select>
-			<form:input id="fromDateDaySearch" path="fromDateDaySearch" cssClass="input_2c" maxlength="2"/>
+			<select id="dateSearch" class="selectform_long">
+				<option value="From Date">From Date</option>
+				<option value="To Date">To Date</option>
+				<option value="Before">Before</option>
+				<option value="After">After</option>
+			</select>
+			<input type="text" id="fromDateYearSearch" class="input_4c" maxlength="4"/>
+			<select id="fromDateMonthSearch" class="selectform">
+				<option value="January">January</option>
+				<option value="February">February</option>
+				<option value="March">March</option>
+				<option value="April">April</option>
+				<option value="May">May</option>
+				<option value="June">June</option>
+				<option value="July">July</option>
+				<option value="August">August</option>
+				<option value="September">September</option>
+				<option value="October">October</option>
+				<option value="November">November</option>
+				<option value="December">December</option>
+				<option value="month">month</option>
+			</select>
+			<input type="text" id="fromDateDaySearch" class="input_2c" maxlength="2"/>
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 	</div>	
 
 	<h1><a><i>in</i> EXTRACT and/or SYNOPSIS</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form:form id="extractSearchForm" method="post" cssClass="edit">
+		<form id="extractSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:label for="extractSearch" id="extractSearchLabel" path="extractSearch">Extract</form:label>
-			<form:textarea id="extractSearch" path="extractSearch" cssClass="txtadvsearch"></form:textarea>
+			<label for="extractSearch" id="extractSearchLabel">Extract</label>
+			<form:textarea id="extractSearch" class="txtadvsearch"></form:textarea>
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 		
-		<form:form id="synopsisSearchForm" method="post" cssClass="edit">
+		<form id="synopsisSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:label for="synopsisSearch" id="synopsisSearchLabel" path="sysopsisSearch">Synopsis</form:label>
-			<form:textarea id="synopsisSearch" path="synopsisSearch" cssClass="txtadvsearch"></form:textarea>
+			<label for="synopsisSearch" id="synopsisSearchLabel">Synopsis</label>
+			<form:textarea id="synopsisSearch" class="txtadvsearch"></form:textarea>
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 	</div>
 	
 	<h1><a><i>with</i> TOPICS</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form:form id="topicsSearchForm" method="post" cssClass="edit">
+		<form id="topicsSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:input id="topicsSearch" path="topicsSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<input type="text" id="topicsSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 	</div>
 
-	<h1><a><i>search on</i> PEOPLE & PLACES</a></h1>
+	<h1><a><i>search on</i> PEOPLE &amp; PLACES</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form:form id="personSearchForm" method="post" cssClass="edit">
+		<form id="personSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:label for="personSearch" id="personSearchLabel" path="personSearch">Person</form:label> 
-			<form:input id="personSearch" path="personSearch" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
+			<label for="personSearch" id="personSearchLabel">Person</label> 
+			<input type="text" id="personSearch" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
-		<form:form id="placeSearchForm" method="post" cssClass="edit">
+		</form>
+		<form id="placeSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:label for="placeSearch" id="placeSearchLabel" path="placeSearch">Place</form:label> 
-			<form:input id="placeSearch" path="placeSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<label for="placeSearch" id="placeSearchLabel">Place</label> 
+			<input type="text" id="placeSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
 		</fieldset>
-		</form:form>
+		</form>
 		
-		<form:form id="senderSearchForm" method="post" cssClass="edit">
+		<form id="senderSearchForm" method="post" class="edit">
 			<fieldset>
-				<form:label for="senderSearch" id="senderSearchLabel" path="ssenderSearch">Sender</form:label> 
-				<form:input id="senderSearchAutoCompleter" path="senderSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+				<label for="senderSearch" id="senderSearchLabel">Sender</label> 
+				<input type="text" id="senderSearchAutoCompleter" class="input_25c"/><!-- AUTOCOMPLETE -->
 				<a href="#" id="addSearchFilter">Add</a>
 				
 			</fieldset>
-		</form:form>
+		</form>
 				
 		
 		
-		<form:form id="fromSearchForm" method="post" cssClass="edit">
+		<form id="fromSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:label for="fromSearch" id="fromSearchLabel" path="fromSearch">From</form:label> 
-			<form:input id="fromSearch" path="fromSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<label for="fromSearch" id="fromSearchLabel">From</label> 
+			<input type="text" id="fromSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 		
-		<form:form id="recipientSearchForm" method="post" cssClass="edit">
+		<form id="recipientSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:label for="recipientSearch" id="recipientSearchLabel" path="recipientSearch">Recipient</form:label> 
-			<form:input id="recipientSearch" path="recipientSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<label for="recipientSearch" id="recipientSearchLabel">Recipient</label> 
+			<input type="text" id="recipientSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
-		<form:form id="toSearchForm" method="post" cssClass="edit">
+		</form>
+		<form id="toSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:label for="toSearch" id="toSearchLabel" path="toSearch">To</form:label> 
-			<form:input id="toSearch" path="toSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<label for="toSearch" id="toSearchLabel">To</label> 
+			<input type="text" id="toSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 		
-		<form:form id="referstoSearchForm" method="post" cssClass="edit">
+		<form id="referstoSearchForm" method="post" class="edit">
 		<fieldset>
-			<form:label for="referstoSearch" id="referstoSearchLabel" path="referstoSearch">Refers to</form:label> 
-			<form:input id="referstoSearch" path="referstoSearch" cssClass="input_25c"/><!-- AUTOCOMPLETE -->
+			<label for="referstoSearch" id="referstoSearchLabel">Refers to</label> 
+			<input type="text" id="referstoSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<a href="#" id="addSearchFilter">Add</a>
 		</fieldset>
-		</form:form>
+		</form>
 	</div>
 </div>
 
