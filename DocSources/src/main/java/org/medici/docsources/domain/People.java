@@ -283,7 +283,7 @@ public class People implements Serializable {
 	
 	//Association titles and occupations
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="person")
-	@OrderBy("titleOccList ASC")
+	@OrderBy("preferredRole DESC, titleOccList ASC")
 	@IndexedEmbedded
 	private Set<PoLink> poLink;
 

@@ -83,4 +83,11 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 */
 	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
 
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<String> findPlaceTypes() throws PersistenceException;
+
 }

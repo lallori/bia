@@ -1,5 +1,5 @@
 /*
- * CheckPlaceController.java
+ * ComparePlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,25 +30,27 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.command.geobase.ComparePlaceRequestCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Check place".
+ * Controller for action "Compare place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/geobase/CheckPlace")
-public class CheckPlaceController {
+@RequestMapping("/src/geobase/ComparePlace")
+public class ComparePlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 
@@ -75,17 +77,17 @@ public class CheckPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@RequestParam("placeId") Integer placeId, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ComparePlaceRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Place place = new Place();
 		try {
-			place = getGeoBaseService().findPlace(placeId);
+			place = getGeoBaseService().findPlace(command.getPlaceAllId());
 			model.put("place", place);
 		} catch (ApplicationThrowable ath) {
-			new ModelAndView("error/ShowPlace", model);
+			new ModelAndView("error/ComparePlace", model);
 		}
 
-		return new ModelAndView("geobase/ShowPlace", model);
+		return new ModelAndView("geobase/ComparePlace", model);
 	}
 }

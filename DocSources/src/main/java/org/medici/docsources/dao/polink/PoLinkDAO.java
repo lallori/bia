@@ -48,4 +48,13 @@ public interface PoLinkDAO extends Dao<Integer, PoLink> {
 	 */
 	public PoLink find(Integer personId, Integer prfLinkId) throws PersistenceException;
 
+	/**
+	 * This method will reset to false every PreferredRole setted on person's titles.
+	 * 
+	 * @param prfLinkId
+	 * @param personId
+	 * @throws PersistenceException
+	 */
+	public void resetPreferredRoleForPersonTitles(Integer prfLinkId, Integer personId) throws PersistenceException;
+
 }

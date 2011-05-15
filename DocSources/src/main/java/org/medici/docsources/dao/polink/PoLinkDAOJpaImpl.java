@@ -84,4 +84,23 @@ public class PoLinkDAOJpaImpl extends JpaDao<Integer, PoLink> implements PoLinkD
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void resetPreferredRoleForPersonTitles(Integer prfLinkId, Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from PoLink where prfLinkId!=:prfLinkId and person.personId=:personId and preferredRole=:booleanValue");
+		query.setParameter("prfLinkId", prfLinkId);  
+		query.setParameter("personId", personId);
+		query.setParameter("booleanValue", Boolean.TRUE);
+
+		List<PoLink> result = query.getResultList();
+
+		for (int i=0; i<result.size(); i++) {
+			PoLink singleResult = result.get(i);
+			singleResult.setPreferredRole(Boolean.FALSE);
+			getEntityManager().merge(singleResult);
+		}
+	}
 }

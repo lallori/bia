@@ -102,4 +102,11 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<String> findPlaceTypes() throws ApplicationThrowable;
 }

@@ -1,5 +1,5 @@
 /*
- * CompareDocumentRequestCommand.java
+ * CompareVolumeRequestCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,30 +25,32 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.docbase;
+package org.medici.docsources.command.volbase;
 
 import javax.validation.constraints.NotNull;
 
 /**
+ * Command bean for action "Compare Volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- *
+ * 
+ * @see org.docsources.controller.volbase.ShowVolumeController
  */
-public class CheckDocumentRequestCommand {
+public class CompareVolumeRequestCommand {
 	@NotNull
-	private Integer entryId;
+	private Integer summaryId;
 
 	/**
-	 * @param entryId the entryId to set
+	 * @return the summaryId
 	 */
-	public void setEntryId(Integer entryId) {
-		this.entryId = entryId;
+	public Integer getSummaryId() {
+		return summaryId;
 	}
-
+	
 	/**
-	 * @return the entryId
+	 * @param summaryId the summaryId to set
 	 */
-	public Integer getEntryId() {
-		return entryId;
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
 	}
 }

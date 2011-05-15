@@ -207,6 +207,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			person.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			person.setDateCreated(new Date());
 			person.setLastUpdate(new Date());
+			
+			if (person.getGender().equals(Gender.NULL)) {
+				person.setGender(null);
+			}
 			if (person.getBornApprox() == null) {
 				person.setBornApprox(Boolean.FALSE);
 			}
@@ -226,6 +230,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				person.setDeathPlaceUnsure(Boolean.FALSE);
 			}
 
+			if (person.getPortrait() == null){
+				person.setPortrait(false);
+			}
+			
 			getPeopleDAO().persist(person);
 
 			return person;
@@ -593,6 +601,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				poLinkToUpdate.setEndUns(Boolean.FALSE);
 			} else {
 				poLinkToUpdate.setEndUns(poLink.getEndUns());
+			}
+
+			// Person can have only one PreferredRole, so if this title is preferred we remove from others. 
+			if (poLink.getPreferredRole()) {
+				getPoLinkDAO().resetPreferredRoleForPersonTitles(poLink.getPrfLinkId(), poLink.getPerson().getPersonId());
 			}
 			getPoLinkDAO().merge(poLinkToUpdate);
 

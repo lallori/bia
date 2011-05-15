@@ -144,7 +144,7 @@ public class EditExtractOrSynopsisDocumentController {
 					command.setDocExtract(synExtract.getDocExtract());
 					command.setSynopsis(synExtract.getSynopsis());
 				} else {
-					command.setSynExtrId(null);
+					command.setSynExtrId(0);
 					command.setDocExtract(null);
 					command.setSynopsis(null);
 				}
@@ -153,7 +153,7 @@ public class EditExtractOrSynopsisDocumentController {
 			}
 		} else {
 			// On Document creation, the research is always the current user.
-			command.setSynExtrId(null);
+			command.setSynExtrId(0);
 			command.setDocExtract(null);
 			command.setSynopsis(null);
 		}

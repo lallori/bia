@@ -27,15 +27,24 @@
  */
 package org.medici.docsources.controller.geobase;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -107,6 +116,35 @@ public class EditDetailsPlaceController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		List<String> placeTypes; 
+		try {
+			placeTypes = getGeoBaseService().findPlaceTypes();
+			model.put("placeTypes", placeTypes);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/EditDetailsPlace", model);
+		}
+
+		if ((command != null) && (command.getPlaceId() > 0)) {
+			Place place = new Place();
+	
+			try {
+				place = getGeoBaseService().findPlace(command.getPlaceId());
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditDetailsPlace", model);
+			}
+	
+			try {
+				BeanUtils.copyProperties(command, place);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
+
+		} else {
+			// On Place creation, the research is always the current user.
+			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			// We need to expose dateCreated field because it must be rendered on view
+			command.setDateCreated(new Date());
+		}
 
 		return new ModelAndView("geobase/EditDetailsPlace", model);
 	}

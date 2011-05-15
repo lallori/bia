@@ -1,5 +1,5 @@
 /*
- * CheckDocumentController.java
+ * ComparePersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,16 +25,17 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.docbase;
+package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.command.docbase.CheckDocumentRequestCommand;
-import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.Image;
+import org.medici.docsources.command.peoplebase.ComparePersonRequestCommand;
+import org.medici.docsources.domain.Marriage;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -44,53 +45,53 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Check Document".
+ * Controller for action "Compare Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/docbase/CheckDocument")
-public class CheckDocumentController {
+@RequestMapping("/src/peoplebase/ComparePerson")
+public class ComparePersonController {
 	@Autowired
-	private DocBaseService docBaseService;
+	private PeopleBaseService peopleBaseService;
 
 	/**
 	 * 
 	 * @return
 	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
 	}
 
 	/**
 	 * 
-	 * @param documentId
+	 * @param peopleBaseService
+	 */
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
+	}
+
+	/**
+	 * 
+	 * @param peopleId
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit(@ModelAttribute("requestCommand") CheckDocumentRequestCommand command, BindingResult result) {
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ComparePersonRequestCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			// Details
-			Document document = getDocBaseService().findDocument(command.getEntryId());
-			model.put("document", document);
-	
-			Image image = getDocBaseService().findDocumentImageThumbnail(document);
-			model.put("image", image);
+			People person = getPeopleBaseService().findPerson(command.getPersonId());
+			model.put("person", person);
+
+			List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
+			model.put("marriages", marriages);
+			
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowDocument", model);
+			new ModelAndView("error/ShowPerson", model);
 		}
 
-		return new ModelAndView("docbase/CheckDocument", model);
-	}
-
-	/**
-	 * 
-	 * @param docBaseService
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
+		return new ModelAndView("peoplebase/ComparePerson", model);
 	}
 }

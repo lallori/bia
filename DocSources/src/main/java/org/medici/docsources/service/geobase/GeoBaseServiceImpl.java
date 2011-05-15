@@ -76,6 +76,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<String> findPlaceTypes() throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().findPlaceTypes();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void generateIndexPlace() throws ApplicationThrowable {
 		try {
 			getPlaceDAO().generateIndex();
@@ -99,6 +111,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Place> searchRecipientsPlace(String query) throws ApplicationThrowable {
 		try {
@@ -107,7 +122,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Place> searchSendersPlace(String query) throws ApplicationThrowable {
 		try {

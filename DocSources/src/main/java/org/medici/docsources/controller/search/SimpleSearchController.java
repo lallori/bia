@@ -95,7 +95,7 @@ public class SimpleSearchController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
@@ -139,15 +139,6 @@ public class SimpleSearchController {
 	 */
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
 		this.peopleBaseService = peopleBaseService;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
-		return new ModelAndView("LoginUser");
 	}
 
 	/**
