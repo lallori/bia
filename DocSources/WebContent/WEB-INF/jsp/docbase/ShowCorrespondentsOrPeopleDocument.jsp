@@ -10,10 +10,10 @@
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="CheckSenderURL" value="/src/peoplebase/CheckPerson.do">
+	<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
 		<c:param name="personId"   value="${document.senderPeople.personId}" />
 	</c:url>
-	<c:url var="CheckRecipientURL" value="/src/peoplebase/CheckPerson.do">
+	<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
 		<c:param name="personId"   value="${document.recipientPeople.personId}" />
 	</c:url>
 	<div id="EditCorrespondentsOrPeopleDocumentDiv" class="background">
@@ -27,25 +27,34 @@
 		</security:authorize>
 		</div>
 
-		<ul>
-			<li><b>Sender:</b> <a class="linkSearch" href="${CheckSenderURL}">${document.senderPeople.mapNameLf}</a></li>
-			<li><b>From:</b> <a class="linkSearch" href="">${document.senderPlace.placeNameFull} </a></li>	
-			<li><b>Recipient:</b> <a class="linkSearch" href="${CheckRecipientURL}">${document.recipientPeople.mapNameLf}</a></li>
-			<li><b>To:</b> <a class="linkSearch" href="">${document.recipientPlace.placeNameFull}</a></li>	
+		<div class="listDetails">
+			<div class="row">
+				<div class="item">Sender:</div> <div class="value"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
+			</div>
+			<div class="row">
+				<div class="item">From:</div> <div class="value"><a class="linkPeople" href="">${document.senderPlace.placeNameFull} </a></div>
+			</div>	
+			<div class="row">
+				<div class="item">Recipient:</div> <div class="value"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
+			</div>
+			<div class="row">
+				<div class="item">To:</div> <div class="value"><a class="linkPeople" href="">${document.recipientPlace.placeNameFull}</a></div>
+			</div>	
 			<br>
-			<li>
-				<b>People:</b>
-				<ul>
-				<c:forEach items="${document.epLink}" var="currentPeople">
-					<c:url var="CheckPersonURL" value="/src/peoplebase/CheckPerson.do">
+			<div class="row">
+				<div class="item">People:</div> <div class="value"></div>
+			</div>	
+			<c:forEach items="${document.epLink}" var="currentPeople">
+				<div class="row">
+					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
-					<li><a class="linkSearch" href="${CheckPersonURL}">${currentPeople.person.mapNameLf}</a></li>
+					<div class="item">&nbsp;</div><div class="value"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
 					<br/>
-				</c:forEach>
-				</ul>
-			</li>
-		</ul>
+				</div>
+			</c:forEach>
+			</div>
+		</div>
 	</div>
 	
 	<script type="text/javascript">
@@ -64,10 +73,9 @@
 				return false;
 			});
 			
-			$j(".linkSearch").click(function() {
-				$j("#body_right").load($j(this).attr("href"));
+			$j(".linkPeople").click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				return false;
 			});
-			 
 		});
 	</script>

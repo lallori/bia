@@ -23,7 +23,7 @@
 		<div class="list">
 			<c:forEach items="${marriages}" var="currentMarriage">
 				<div class="row">
-					<div class="value"><a class="linkSearch" href="#">${currentMarriage.wife}</a></div> 
+					<div class="value"><a class="linkSpouse" href="#">${currentMarriage.wife}</a></div> 
 					<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
 				</div>
 			</c:forEach>

@@ -21,10 +21,14 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {
 						$j("#SearchForm").submit(function() {
-							$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+							var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+							//alert(url);
+							$j( "#tabs" ).tabs( "add" , formSubmitURL, "Simple Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+							/*$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 									$j("#body_right").html(html);
 								}
-							});
-						return false;});
+							});*/
+							return false;
+						});
 					});
 				</script>

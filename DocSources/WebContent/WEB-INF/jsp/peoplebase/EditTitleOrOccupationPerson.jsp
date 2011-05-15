@@ -25,11 +25,11 @@
 			</legend>
 			<div>
 				<form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">New Title &amp; Occ:</form:label>
-				<form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_23c"/>
+				<form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_34c"/>
 			</div>
 			<div>
 				<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role:</form:label>
-				<form:checkbox path="preferredRole" cssClass="input_23c"/>
+				<form:checkbox id="preferredRole1" path="preferredRole" cssClass="checkboxPers2"/>
 			</div>
 			<hr>
 			<div>
@@ -46,7 +46,7 @@
 				<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error">Uns</form:label>
 				<form:checkbox path="startUns" />
 			</div>
-			
+			<hr>
 			<div>
 				<b>End:</b>
 				<br>

@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditDetailsPlaceURL" value="/de/peoplebase/EditDetailsPlaceU.do">
+		<c:url var="EditDetailsPlaceURL" value="/de/geobase/EditDetailsPlace.do">
 			<c:param name="placeAllId"   value="${place.placeAllId}" />
 		</c:url>
 	</security:authorize>

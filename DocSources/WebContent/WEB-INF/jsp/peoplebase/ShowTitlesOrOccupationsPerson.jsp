@@ -22,6 +22,9 @@
 		<div class="list">
 			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<div class="row">
+					<c:if test="${currentPoLink.preferredRole}">
+						<a title="Preferred Role" class="preferredIcon" href="#"></a>
+					</c:if>
 					<div class="value"><a class="linkSearch" href="#"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
 					<a class="linkSearch" href="#">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
 					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>

@@ -2439,19 +2439,32 @@ a.linkSearch {
 /* ------------------- pop up window ------------------------ */
 
 #advancedSearch {
+	width:auto;
 	height:auto;
+	background-color:#f6edec;
 }
 
-#advancedSearch_top {
-	height:100px;
-	background:url(/DocSources/images/1024/img_advacedSearchOnDocuments.png) center no-repeat;
+#advancedSearch_top { /* Backgraound image on the top of the window */
+	width:auto;
+	height:40px;
+	background:url(/DocSources/images/1024/bg_advancedSearchTop.png) repeat-x;
+	margin-bottom:30px;
 }
 
-#advancedSearch_top h1{
-	text-align:center;
-	margin-top:5px;
-	font-size:13px;
-	color:#6D5C4D;
+#advancedSearch_top #advancedSearch_topTitle{ /* Advanced .... Search Title */
+	margin-top:7px;
+	background:url(/DocSources/images/1024/bg_advancedSearchTopTitle.png) no-repeat;
+	background-position:center;
+	height:30px;
+}
+
+#advancedSearch #bodyTitles { /* Search Form and Search Filter titles */
+	margin-top:7px;
+	background:url(/DocSources/images/1024/img_searchTitles.png) no-repeat;
+	background-position:center;
+	height:30px;
+	width:900px;
+	margin:0 0 30px 20px;
 }
 
 #advancedSearch h2{
@@ -2460,36 +2473,49 @@ a.linkSearch {
 	margin:0 0 10px 0;
 }
 
-#advancedSearch #body_left_doc, #advancedSearch #body_left_vol, #advancedSearch #body_left_peop, #advancedSearch #body_left_pla  { /* LEFT-hand side of the SCREEN */
-	width:480px;
-	height:auto;
+
+/* -------- body left (Search Form) ----------- */
+
+#advancedSearch #body_left { /* LEFT-hand side of the SCREEN */
+	width:470px;
 	min-height:400px;
 	padding:10px 10px 15px 5px;
+	margin-left:10px;
+	border:none;
 	float:left;
 	font-size:11px;
 }
 
-#advancedSearch #body_right_doc, #advancedSearch #body_right_vol, #advancedSearch #body_right_peop, #advancedSearch #body_right_pla,  { /* RIGHT-hand side of the SCREEN */
-	width:300px;
-	background-color:#069;
-	height:auto;
-	float:right;
-	margin-left:10px;
-	font-size:11px;
-}
+/*
+/* -------- body right (Search Form) ----------- */
 
-#advancedSearch #body_right_advSearch p{
+#advancedSearch #body_right { /* RIGHT-hand side of the SCREEN */
 	width:400px;
+	min-height:460px;
+	border:none;
+	margin-left:505px;
+	padding:0 0 25px 50px;
+	font-size:11px;
+	background:url(/DocSources/images/1024/bg_searchFilter.png) no-repeat;
+	z-index:2;
 }
 
-#AddWordSearch, #addSearchFilter {
-	text-decoration:underline;
-	font-size:11px;
-	color:#b99c84;
+#advancedSearch #body_right p{
+	margin:0;
+	padding:0;
+}
+
+#advancedSearch #body_right hr{
+	width:350px;
+}
+
+#advancedSearch #advancedSearchForm #AddWordSearch {
+	color:#F00;
 }
 
 .customSeachFilterDiv {
 	margin-top:30px;
+	width:360px;
 }
 
 .searchFilterDiv {
@@ -2527,6 +2553,7 @@ span.categorySearch {
 
 .saveAsButton {
 	margin:5px 0 0 5px;
+	position:absolute;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -2540,6 +2567,7 @@ span.categorySearch {
 
 .saveButton {
 	margin:5px 0 0 58px;
+	position:absolute;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -2551,16 +2579,10 @@ span.categorySearch {
 	outline:none;
 }
 
-#customSearchFilterForm hr {
-	width:380px;	
-}
-
-
-
 /*
 /* ----------------- form common elements ----------------- */
 
-#advancedSearch a.helpLink, #VettingChronologyDiv a.helpLink { /* Help symbol "?" */
+#advancedSearch #body_left a.helpLink, #advancedSearch #body_right a.helpLink, #VettingChronologyDiv a.helpLink { /* Help symbol "?" */
 	border: 1px solid #6d5c4d;
 	color:  #6d5c4d; 
 	font-size: 12px; 
@@ -2574,26 +2596,22 @@ span.categorySearch {
 	border-radius: 1px;
 }
 
-.helpLinkFrom { /* Help symbol "?" */
-	border: 1px solid #6d5c4d;
-	color:  #6d5c4d; 
-	font-size: 12px; 
-	background-color: #e6d0c6; 
-	padding-left: 2px; 
-	padding-right: 2px; 
-	margin-top:5px;
-	float:right;
-	font-weight:bold;
-	text-decoration:none;
-	-moz-border-radius: 1px;
-	border-radius: 1px;
+#advancedSearch #body_right .easySearchMode {
+	margin:-31px 0 0 0;
+	background:url(/DocSources/images/1024/button_easySearchMode.png) no-repeat;
+	width:160px;
+	height:50px;
+	z-index:1;
+	position:absolute;
 }
 
-#advancedSearch .easySearchMode, #advancedSearch.expertSearchMode {
-	text-decoration:underline;
-	font-size:11px;
-	color:#b99c84;
-	margin-left:50px;
+#advancedSearch #body_right .expertSearchMode {
+	margin:-31px 0 0 190px;
+	background:url(/DocSources/images/1024/button_expertSearchMode.png) no-repeat;
+	width:160px;
+	height:50px;
+	z-index:1;
+	position:absolute;
 }
 
 #advsearch { /* Search Advanced Form Button */
@@ -2607,9 +2625,31 @@ span.categorySearch {
 	border:none;
 }
 
-#wordSearchForm {
-	top:50px;
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* ---------------------------- SEARCH FILTER ------------------------- */
+
+#searchFilterListDiv {
+	width:400px;
+	margin:10px 15px 10px 550px;
+	padding:0 0 5px 0;
+	background-color:#EFE0DE;
+	background-image:url(/DocSources/images/1024/);
+	background-position:top;
+	background-repeat:no-repeat;
 }
+
+#searchFilterListDiv #customSeachFilterDiv {
+	width:400px;
+	padding:3px 0 0 7px;
+	margin-top:30px;
+	background-image:url(/DocSources/images/1024/);
+	background-position:bottom;
+}
+
+
 
 /* -------------------------------------------------------------------------- */
 /*

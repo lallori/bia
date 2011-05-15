@@ -27,7 +27,7 @@
 			<c:if test="${command.personId == command.wifeId}">
 				<div>
 					<form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error">Name:</form:label>
-					<form:input id="husbandDescription" path="husbandDescription" cssClass="input_25c" />
+					<form:input id="spouseDescriptionAutoCompleter" path="husbandDescription" cssClass="input_25c" />
 					<form:hidden path="husbandId"/>
 					<form:hidden path="personId"/>
 				</div>
@@ -36,7 +36,7 @@
 			<c:if test="${command.personId == command.husbandId}">
 				<div>
 					<form:label id="wifeDescriptionLabel" for="wifeDescription" path="wifeDescription" cssErrorClass="error">Name:</form:label>
-					<form:input id="wifeDescription" path="wifeDescription" cssClass="input_25c" />
+					<form:input id="spouseDescriptionAutoCompleter" path="wifeDescription" cssClass="input_25c" />
 					<form:hidden path="wifeId"/>
 					<form:hidden path="personId"/>
 				</div>
@@ -60,7 +60,24 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-	        $j('#closeSpouse').click(function() {
+			var spouseDescription = $j('#spouseDescriptionAutoCompleter').autocompletePerson({ 
+			    serviceUrl:'${SearchFatherLinkableToPersonURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ 
+			    	$j('#parentId').val(data); 
+					$j.get("${ShowFatherDetailsURL}", { personId: "" + data }, function(data) {
+						$j("#bioNotes").val(data.bioNotes);
+					})
+			    }
+			  });
+
+			$j('#closeSpouse').click(function() {
 				$j('#EditSpousePersonDiv').block({ message: $j('#question') }); 
 				return false;
 			});

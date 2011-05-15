@@ -48,19 +48,41 @@
 			</c:if>
 		</div>
 		
-		<ul>
-			<li><b>Doc ID:</b> ${document.entryId == 0 ? '' : document.entryId}</li>
-			<li><b>Volume (MDP):</b> ${document.volume.volNum}${document.volume.volLetExt}</li>
-			<li><b>Insert/Part:</b> ${document.insertNum} / ${document.insertLet}</li>
-			<li><b>Document starts at folio :</b> ${document.folioNum} / ${document.folioMod}</li>
-			<li><b>Paginated:</b> ${document.unpaged}</li>
-			<li><b>Document Typology (other than letter):</b> ${document.docTypology}</li>
-			<li><b>Modern Date:</b> ${document.yearModern}</li>
-			<li><b>Recorded year:</b> ${document.docYear} ${document.docMonthNum} ${document.docDay}</li>
-			<li><b>Date uncertain or approximate:</b> ${document.dateUns}</li>
-			<li><b>Undated:</b> ${document.undated}</li>
-			<li><b>Date Notes:</b> ${document.dateNotes}</li>
-		</ul>
+		<div class="listDetails">
+			<div class="row">
+				<div class="item">Doc ID:</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
+			</div>
+			<div class="row">
+				<div class="item">Volume (MDP):</div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
+			</div>
+			<div class="row">
+				<div class="item">Insert/Part:</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
+			</div>
+			<div class="row">
+				<div class="item">Document starts at folio :</div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
+			</div>
+			<div class="row">
+				<div class="item">Paginated:</div> <div class="value">${document.unpaged}</div>
+			</div>
+			<div class="row">
+				<div class="item">Document Typology (other than letter):</div> <div class="value">${document.docTypology}</div>
+			</div>
+			<div class="row">
+				<div class="item">Modern Date:</div> <div class="value">${document.yearModern}</div>
+			</div>
+			<div class="row">
+				<div class="item">Recorded year:</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+			</div>
+			<div class="row">
+				<div class="item">Date uncertain or approximate:</div> <div class="value">${document.dateUns}</div>
+			</div>
+			<div class="row">
+				<div class="item">Undated:</div> <div class="value">${document.undated}</div>
+			</div>
+			<div class="row">
+				<div class="item">Date Notes:</div> <div class="value">${document.dateNotes}</div>
+			</div>
+		</div>
 	</div>
 	
 	<br />

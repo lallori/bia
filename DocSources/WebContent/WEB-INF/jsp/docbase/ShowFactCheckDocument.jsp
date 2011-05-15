@@ -19,9 +19,11 @@
 			</c:if>
 		</security:authorize>
 		</div>
-		<ul>
-			<li>${document.factChecks.addLRes}</li>
-		</ul>
+		<div class="listDetails">
+			<div class="row">
+				<div class="item">${document.factChecks.addLRes}</div>
+			</div>
+		</div>
 	</div>
 	
 	<script type="text/javascript">

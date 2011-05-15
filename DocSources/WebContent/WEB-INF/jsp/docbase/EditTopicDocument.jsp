@@ -49,7 +49,7 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			var topicDescription = $j('#topicDescriptionAutoCompleter').autocomplete({ 
+			var topicDescription = $j('#topicDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character

@@ -108,7 +108,7 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditNamesPerson").css('visibility', 'hidden');
-	        $j("#EditTitlesOccupationsPerson").css('visibility', 'hidden'); 
+	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
 			$j("#EditParentsPerson").css('visibility', 'hidden');
 			$j("#EditChildrenPerson").css('visibility', 'hidden');
 			$j("#EditSpousesPerson").css('visibility', 'hidden');

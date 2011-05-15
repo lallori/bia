@@ -23,8 +23,11 @@
 			<div class="row">
 				<div class="item">Father</div> 
 		<c:forEach items="${person.parents}" var="currentParent">
+			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+				<c:param name="personId"   value="${currentParent.parent.personId}" />
+			</c:url>
 			<c:if test="${currentParent.parent.gender == 'M'}">
-				<div class="value"><a href="#">${currentParent.parent}</a></div> 
+				<div class="value"><a class="linkParent" href="${ComparePersonURL}">${currentParent.parent}</a></div> 
 				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
 			</c:if>				
 		</c:forEach>
@@ -32,8 +35,11 @@
 			<div class="row">
 				<div class="item">Mother</div> 
 		<c:forEach items="${person.parents}" var="currentParent">
+			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+				<c:param name="personId"   value="${currentParent.parent.personId}" />
+			</c:url>
 			<c:if test="${currentParent.parent.gender == 'F'}">
-				<div class="value"><a href="#">${currentParent.parent}</a></div> 
+				<div class="value"><a class="linkParent" href="${ComparePersonURL}">${currentParent.parent}</a></div> 
 				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
 			</c:if>				
 		</c:forEach>
@@ -50,6 +56,11 @@
 			$j("#EditChildrenPerson").css('visibility', 'visible');
 			$j("#EditSpousesPerson").css('visibility', 'visible');
 	        $j("#EditResearchNotesPerson").css('visibility', 'visible'); 
+
+			$j(".linkParent").click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				return false;
+			});
 
 			$j("#EditParentsPerson").click(function(){
 				$j(this).next().css('visibility', 'visible');

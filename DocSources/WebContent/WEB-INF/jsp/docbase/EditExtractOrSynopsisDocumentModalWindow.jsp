@@ -43,7 +43,7 @@
 				return false;
 			});
 
-			$j("#EditExtractOrSynopsisDocumentForm").submit(function (){
+			$j("#EditExtractOrSynopsisDocumentFullscreenForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 						if ($j(html).find(".inputerrors").length > 0){
 							$j("#modalBox").html(html);

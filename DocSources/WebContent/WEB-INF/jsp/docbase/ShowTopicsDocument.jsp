@@ -19,13 +19,18 @@
 			</c:if>
 		</security:authorize>
 		</div>
-		<ul>
-			<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
-				<li><b>Topic:</b> ${currentTopicAndPlace.topic.topicTitle}</li>
-				<li><b>Topic Place:</b> ${currentTopicAndPlace.place.placeNameFull}</li>
-				<br/>
-			</c:forEach>
-		</ul>
+		<div class="listDetails">
+		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
+			<div class="row">
+				<div class="item">Topic:</div>
+				<div class="value"> ${currentTopicAndPlace.topic.topicTitle}</div>
+			</div>
+			<div class="row">
+				<div class="item">Topic Place:</div>
+				<div class="value"> ${currentTopicAndPlace.place.placeNameFull}</div>
+			</div>
+			<br/>
+		</c:forEach>
 	</div>
 
 

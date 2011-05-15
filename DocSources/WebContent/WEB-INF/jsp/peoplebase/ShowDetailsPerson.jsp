@@ -22,16 +22,32 @@
 			<p style="text-align:center"><b>Portrait</b></p>
 		</div>
 		<h2 class="titlepeople">${person.mapNameLf}</h2>
-		<ul id="activeEnd">
-			<li><b>Gender:</b> ${person.gender}</li>
-			<li><b>Date of Birth:</b> ${person.bornDate}</li>
-			<li><b>Birth Place:</b><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></li>
-			<li><b>Active Start:</b> ${person.activeStart}</li>
-			<li><b>Date of Death:</b> ${person.deathDate}</li>
-			<li><b>Modern Date:</b> 1577</li>
-			<li><b>Death Place:</b> <a href="#" id="linkSearch">${person.deathPlace.placeNameFull}</a></li>
-			<li><b>Active End:</b> ${person.activeEnd}</li>
-		</ul>
+		<div class="listDetails">
+			<div class="row">
+				<div class="item">Gender:</div> <div class="value">${person.gender}</div>
+			</div>
+			<div class="row">
+				<div class="item">Date of Birth:</div> <div class="value">${person.bornDate}</div>
+			</div>
+			<div class="row">
+				<div class="item">Birth Place:</b><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+			</div>
+			<div class="row">
+				<div class="item">Active Start:</div> <div class="value">${person.activeStart}</div>
+			</div>
+			<div class="row">
+				<div class="item">Date of Death:</div> <div class="value">${person.deathDate}</div>
+			</div>
+			<div class="row">
+				<div class="item">Modern Date:</div> <div class="value">1577</div>
+			</div>
+			<div class="row">
+				<div class="item">Death Place:</div> <div class="value"><a href="#" id="linkSearch">${person.deathPlace.placeNameFull}</a></div>
+			</div>
+			<div class="row">
+				<div class="item">Active End:</div> <div class="value">${person.activeEnd}</div>
+			</div>
+		</div>
 	</div>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">

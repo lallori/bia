@@ -34,7 +34,10 @@
 			</c:url>
 
 			<div>
-      			<input id="title_${currentTitleOrOccupation.prfLinkId}" name="name_${currentTitleOrOccupation.prfLinkId}" class="input_28c_disabled" type="text" value="${currentTitleOrOccupation.titleOccList.titleOcc}" disabled="disabled" />
+			<c:if test="${currentTitleOrOccupation.preferredRole}">
+				<a title="Preferred Role" class="preferredIcon" href="#"></a>
+			</c:if>
+      			<input id="firstTitleOcc" name="name_${currentTitleOrOccupation.prfLinkId}" class="input_28c_disabled" type="text" value="${currentTitleOrOccupation.titleOccList.titleOcc}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteTitleOrOccupationPersonURL}"></a>
 				<a class="editValue" class="editValue" href="${EditTitleOrOccupationPersonURL}">edit value</a>
 			</div>

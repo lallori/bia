@@ -8,22 +8,34 @@
 		<div id="body_left">
 			<h1 class="welcome">The Medici Archive Project Scholarly Community</h1>
 			<div id="colte_of_arms"></div>
-		</div>	
+		</div>
 		<div id="body_right">
-			<a id="mapcourses" href="http://courses.medici.org/" target="_blank"></a>
-			<div class="welcome_list">
-				<h2>Welcome back <security:authentication property="principal.firstName"/>. <br />From your last log on:</h2>
-					<ul>
-						<li>you have <b>23</b> new messages</li>
-			
-						<li><b>1</b> new digitized volume has been uploaded</li>
-						<li><b>12</b> new documents have been entered</li>
-						<li><b>13</b> documents have been vetted</li>
-						<li><b>15</b> new people have been entered</li>
-			
-						<li><b>5</b> new places and/or locations have been entered</li>
-					</ul>				
+			<div id="tabs">
+				<ul>
+					<li><a href="<c:url value="/Welcome.do"/>">Welcome</a><span class="ui-icon ui-icon-close" title="Close Tab">Remove Tab</span></li>
+				</ul>
 			</div>
 		</div>
 	</div>
-	
+
+<script>
+	$j(function() {
+		$j( "#tabs" ).tabs({
+			ajaxOptions: {
+				error: function( xhr, status, index, anchor ) {
+					$j( anchor.hash ).html(
+						"Couldn't load this tab. We'll try to fix this as soon as possible. " );
+				}
+			}
+		});
+
+		$j( "#tabs span.ui-icon-close" ).live( "click", function() {
+			var index = $j( "li", this ).index( $j( this ).parent() );
+			$j( "#tabs" ).tabs( "remove", index );
+		});
+
+	});
+</script>
+
+
+

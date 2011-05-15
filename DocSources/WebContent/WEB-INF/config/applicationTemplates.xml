@@ -71,6 +71,10 @@
     	<put-attribute name="main" value="/WEB-INF/jsp/Home.jsp"/>
     </definition>
 
+    <definition name="Welcome" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/Welcome.jsp"/>
+    </definition>
+
     <definition name="user/ActivateUserSuccess" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ActivateUserSuccess.jsp"/>
     </definition>
@@ -248,8 +252,8 @@
 	<!-- DocBase Module END -->
 
 	<!-- GeoBase Module START -->
-	<definition name="geobase/CheckPlace" extends="template.compare">
-		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CheckPlace.jsp"/>
+	<definition name="geobase/ComparePlace" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ComparePlace.jsp"/>
 	</definition>
 
 	<definition name="geobase/ShowPlace" extends="template.place">
@@ -304,8 +308,8 @@
 	<!--  Manuscript Viewer END -->
 
 	<!-- PeopleBase Module START -->
-	<definition name="peoplebase/CheckPerson" extends="template.compare">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CheckPerson.jsp"/>
+	<definition name="peoplebase/ComparePerson" extends="template.compare">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ComparePerson.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/EditChildPerson" extends="template.partialDOM">

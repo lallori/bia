@@ -21,8 +21,11 @@
 		</div>
 		<div class="list">
 			<c:forEach items="${person.children}" var="currentChild">
+				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+					<c:param name="personId"   value="${currentChild.child.personId}" />
+				</c:url>
 				<div class="row">
-					<div class="value"><a class="linkSearch" href="#">${currentChild.child}</a></div> 
+					<div class="value"><a class="linkChild" href="${ComparePersonURL}">${currentChild.child}</a></div> 
 					<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
 				</div>
 			</c:forEach>
@@ -39,7 +42,12 @@
 			$j("#EditSpousesPerson").css('visibility', 'visible');
 	        $j("#EditResearchNotesPerson").css('visibility', 'visible'); 
 
-			$j("#EditChildrenPerson").click(function(){
+	        $j(".linkChild").click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				return false;
+			});
+	        
+	        $j("#EditChildrenPerson").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditChildrenPersonDiv").load($j(this).attr("href"));
 				return false;

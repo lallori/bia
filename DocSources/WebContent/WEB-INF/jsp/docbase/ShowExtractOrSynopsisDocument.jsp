@@ -29,14 +29,16 @@
 		</security:authorize>
 		</div>
 		
-		<ul>
-			<li><b>Extract:</b></li>
-			<li>${document.synExtract.docExtract}</li>
-		</ul>
-		<ul>
-			<li><b>Synopsis:</b></li>
-			<li>${document.synExtract.synopsis}</li>
-		</ul>
+		<div class="listDetails">
+			<div class="row">
+				<div class="item">Extract:</div>
+				<div class="value">${document.synExtract.docExtract}</div>
+			</div>
+			<div class="row">
+				<div class="item">Synopsis:</div>
+				<div class="value">${document.synExtract.synopsis}</div>
+			</div>
+		</div>
 	</div>
 	
 	
