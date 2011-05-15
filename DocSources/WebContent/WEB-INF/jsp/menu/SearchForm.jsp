@@ -6,7 +6,7 @@
 
 				<div id="searchForm">
 					<form id="SearchForm" action="<c:url value="/src/SimpleSearch.do"/>" method="post">
-						Search in <select name="searchType" class="select" style="margin-left:8px">
+						Search in <select id="searchType" name="searchType" class="select" style="margin-left:8px">
 										<option value="documents" selected>Documents</option>
 										<option value="volumes">Volumes</option>
 										<option value="people">People</option>
@@ -23,7 +23,7 @@
 						$j("#SearchForm").submit(function() {
 							var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 							//alert(url);
-							$j( "#tabs" ).tabs( "add" , formSubmitURL, "Simple Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+							$j( "#tabs" ).tabs( "add" , formSubmitURL, $j('#searchType').find('option:selected').text() + " Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 							/*$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 									$j("#body_right").html(html);
 								}

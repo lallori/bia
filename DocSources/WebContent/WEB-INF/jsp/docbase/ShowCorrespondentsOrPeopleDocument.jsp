@@ -32,13 +32,13 @@
 				<div class="item">Sender:</div> <div class="value"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
 			</div>
 			<div class="row">
-				<div class="item">From:</div> <div class="value"><a class="linkPeople" href="">${document.senderPlace.placeNameFull} </a></div>
+				<div class="item">From:</div> <div class="value"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
 			</div>	
 			<div class="row">
 				<div class="item">Recipient:</div> <div class="value"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
 			</div>
 			<div class="row">
-				<div class="item">To:</div> <div class="value"><a class="linkPeople" href="">${document.recipientPlace.placeNameFull}</a></div>
+				<div class="item">To:</div> <div class="value"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
 			</div>	
 			<br>
 			<div class="row">
