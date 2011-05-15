@@ -32,7 +32,7 @@
     $.documentExplorerForm = {};
 
     $.documentExplorerForm.defaultParams = {
-        "searchUrl":  "",   // Show scrollbars?
+        "searchUrl":  ""   // Show scrollbars?
     };
 
     $.fn.documentExplorerForm = function (params) {

@@ -29,28 +29,20 @@
 */
 (function ($) {
 
-    $.advancedSearchForm = {};
+	$(".buttonShareLink").hover(function(){
+		var iconName = $(this).find("img").attr("src");
+		var origen =  $(this).find("img").attr("src");
+		$(this).find("img").attr("src");
+		$(this).find("span").attr({"style": 'display:inline'});
+		$(this).find("span").animate({opacity: 1, top: "-60"}, {queue:false, duration:400});
+	}, function(){
+		var iconName = $(this).find("img").attr("src");
+		var origen =  $(this).find("img").attr("src");
+		$(this).find("img").attr("src");
+		$(this).find("span").animate({opacity: 0, top: "-50"}, {queue:false, duration:400, complete: function(){
+			$(this).attr({"style": 'display:none'});
+		}});
+	});
 
-    $.advancedSearchForm.defaults = {
-    	"combo"         : false,
-		"autocompleter" : false
-    };
-
-    $.fn.advancedSearchForm = function (options) {
-    	var options = $.extend($.advancedSearchForm.defaults, options);
-
-    	//console.log($(this).find('.addVolumeSearch'));
-    	// Add an onClick behavior to this element
-        $(this).submit(function (event) {
-            // Prevent the browser's default onClick handler
-            event.preventDefault();
-            var textFieldName = '#' + $(this).attr('id').substring(0, $(this).attr('id').indexOf("SearchForm"));
-            volumeType
-            alert($(this).find(textFieldName).val());
-            return false;
-        });
-
-        return $;
-    };
 	return $;
 })(jQuery);
