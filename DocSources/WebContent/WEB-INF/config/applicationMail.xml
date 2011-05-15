@@ -15,7 +15,7 @@
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     	<description>This bean provide functions to send emails.</description>
         <property name="host" value="smtp.gmail.com"/>
-        <property name="port" value="25"/>
+        <property name="port" value="587"/>
         <property name="username" value="medici.archive@gmail.com"/>
         <property name="password" value="cosimo1537.a"/>
         <property name="javaMailProperties">
