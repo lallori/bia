@@ -29,12 +29,13 @@
 		<a href="#" class="helpLinkFrom">?</a>
 		<form id="volumeSearchForm" method="post" class="edit">
 		<fieldset>
-			<select id="volumeSearchExactlyBetween" class="selectform_long">
+			<select id="volumeType" class="selectform_long">
 				<option value="Exactly" selected="selected">Exactly</option>
 				<option value="Between">Between</option>
 			</select>
-			<input type="text" id="volumeSearch"  class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addVolumeSearch">Add</a>
+			<input type="text" id="volume"  class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
+			<input type="hidden" name="type" value="text">
+			<input type="submit" value="add">
 		</fieldset>
 		</form>
 		
@@ -65,6 +66,7 @@
 			</select>
 			<input type="text" id="fromDateDaySearch" class="input_2c" maxlength="2"/>
 			<a href="#" id="addDateSearch">Add</a>
+			<input type="hidden" name="type" value="data">
 		</fieldset>
 		</form>
 	</div>	
@@ -110,6 +112,7 @@
 			<a href="#" id="addPersonSearch">Add</a>
 		</fieldset>
 		</form>
+
 		<form id="placeSearchForm" method="post" class="edit">
 		<fieldset>
 			<label for="placeSearch" id="placeSearchLabel">Place</label> 
@@ -126,8 +129,6 @@
 				
 			</fieldset>
 		</form>
-				
-		
 		
 		<form id="fromSearchForm" method="post" class="edit">
 		<fieldset>
@@ -144,6 +145,7 @@
 			<a href="#" id="addRecipientSearch">Add</a>
 		</fieldset>
 		</form>
+		
 		<form id="toSearchForm" method="post" class="edit">
 		<fieldset>
 			<label for="toSearch" id="toSearchLabel">To</label> 
@@ -165,7 +167,7 @@
 <c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json"/>
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j('#multiOpenAccordion').multiAccordion({active: [0]});
+			//$j('#multiOpenAccordion').multiAccordion({active: [0]});
 
 			$j("#senderSearchAutoCompleter").autocompletePerson({
 				serviceUrl: '${searchSenderPeopleURL}',
@@ -181,17 +183,20 @@
 				}
 			});	
 			
+			$j("#volumeSearchForm").advancedSearchForm({
+				combo: true,
+				autocompleter: false
+			});
+
 			$j("#AddWordSearch").click(function(){
-				var searchElement = "				<div class=\"searchFilterDiv\">																		   " +
-				"					<span class=\"categorySearch\">Word Search</span>                                                  " +
-				"					in                                                                                                 " +
-				"					<span class=\"categorySearch\">" + $j("#wordSearchIn").val()+ "</span>                                        " +
-				"					<span class=\"wordSearch\">" + $j("#wordSearch").val() + "</span>                                                            " +
-				"					<a class=\"remove\" href=\"#\">(remove)</a>                                                        " +
-				"				</div>                                                                                                 " +
-				"				                                                                                                       " +
-				"				<p class=\"andOrNotAdvancedSearch\">And</p>   " +
-				"			                                                                                                           ";
+				var searchElement = "<div class=\"searchFilterDiv\">" +
+				"<span class=\"categorySearch\">Word Search</span>" +
+				"in " +
+				"<span class=\"categorySearch\">" + $j("#wordSearchIn").val()+ "</span>" +
+				"<span class=\"wordSearch\">" + $j("#wordSearch").val() + "</span>" +
+				"<a class=\"remove\" href=\"#\">(remove)</a>" +
+				"</div>" +
+				"<p class=\"andOrNotAdvancedSearch\">And</p>";
 
 				if ($j("#wordSearchDiv").length ==0) {
 					$j("#customSearchFilterForm").append("<div id=\"wordSearchDiv\">" +
@@ -216,43 +221,7 @@
 				return false;
 			});
 				
-			$j("#AddVolumeSearch").click(function(){
-				var searchElement = "				<div class=\"searchFilterDiv\">" +
-				"					<span class=\"categorySearch\">Volume Search</span> " +
-				"					in                                                                                                 " +
-				"					<span class=\"categorySearch\">Volume: </span>                                        " +
-				"					<span class=\"wordSearch\">" + $j("#volumeSearch").val() + "</span>                                                            " +
-				"					<a class=\"remove\" href=\"#\">(remove)</a>                                                        " +
-				"				</div>                                                                                                 " +
-				"				<p class=\"andOrNotAdvancedSearch\">And</p>   " +
-				"			                                                                                                           ";
-
-				if ($j("#volumeSearchDiv").length ==0) {
-					$j("#customSearchFilterForm").append("<div id=\"volumeSearchDiv\">" +
-					"				<hr>" +
-					"</div>" +
-					"	<div class=\"andOrNotAdvancedSearchDiv\"> " +
-					"		<select class=\"selectform_medium\" name=\"andOrNotAdvancedSearch\" id=\"andOrNotAdvancedSearch\"> " +
-					"			<option selected=\"selected\" value=\"And\">And</option> " +
-					"			<option value=\"Or\">Or</option> " +
-					"			<option value=\"Not\">Not</option> " +
-					"		</select> " +
-					"	</div> " +
-					"	<hr>"
-					);
-				} 
-
-				if ($j("#volumeSearchDiv").children(".searchFilterDiv").length == 0) {
-					$j("#volumeSearchDiv").prepend(searchElement);
-				} else {
-					$j("#volumeSearchDiv hr:last").before(searchElement);
-					return false;
-				}
-
-				$j("#volumeSearchDiv").prepend(searchElement);
-
-			});
-
+			
 					
 		});
 

@@ -9,29 +9,20 @@
 	<br />
 </form>
 
-<input type="hidden" name="words">
-<input type="hidden" name="wordsTypes">
-<input type="hidden" name="volumes">
-<input type="hidden" name="volumesBetween">
-<input type="hidden" name="volumesType">
-<input type="hidden" name="datesType">
-<input type="hidden" name="datesYear">
-<input type="hidden" name="datesMonth">
-<input type="hidden" name="datesDay">
+<input type="hidden" name="wordSearch">
+<input type="hidden" name="wordSearchType">
+<input type="hidden" name="volNum">
+<input type="hidden" name="volNumType">
+<input type="hidden" name="volNumDateYear">
+<input type="hidden" name="volNumDateMonth">
+<input type="hidden" name="volNumDateDay">
+<input type="hidden" name="volNumDateType">
 <input type="hidden" name="extract">
 <input type="hidden" name="synopsis">
 <input type="hidden" name="topics">
-<input type="hidden" name="topicsId">
 <input type="hidden" name="person">
-<input type="hidden" name="personId">
 <input type="hidden" name="place">
-<input type="hidden" name="placeId">
 <input type="hidden" name="sender">
-<input type="hidden" name="senderId">
 <input type="hidden" name="from">
-<input type="hidden" name="fromId">
 <input type="hidden" name="recipient">
-<input type="hidden" name="recipientId">
 <input type="hidden" name="to">
-<input type="hidden" name="toId">
-<input type="hidden" name="resTo">
