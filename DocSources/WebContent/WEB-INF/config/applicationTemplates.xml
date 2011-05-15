@@ -408,27 +408,26 @@
 	<!-- Search Module START -->
 	<definition name="search/ChoiceAdvancedSearch" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/search/ChoiceAdvancedSearchModalWindow.jsp"/>
-		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
 	</definition>
 
 	<definition name="search/AdvancedSearchDocuments" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchDocuments.jsp"/>	
-		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchDocumentsFilter.jsp"/>
 	</definition>
 	
 	<definition name="search/AdvancedSearchPeople" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPeople.jsp"/>	
-		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPeopleFilter.jsp"/>
 	</definition>
 
 	<definition name="search/AdvancedSearchPlaces" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPlaces.jsp"/>	
-		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPlacesFilter.jsp.jsp"/>
 	</definition>
 
 	<definition name="search/AdvancedSearchVolumes" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchVolumes.jsp"/>
-		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchFilter.jsp"/>
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchVolumesFilter.jsp"/>
 	</definition>
 
 	<definition name="search/SimpleSearchResultDocuments" extends="template.partialDOM">

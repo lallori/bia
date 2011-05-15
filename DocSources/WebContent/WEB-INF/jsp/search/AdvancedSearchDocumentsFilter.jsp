@@ -4,25 +4,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<form id="customSearchFilterForm" method="post">
+<form id="searchFilterForm" method="post">
 	<p><u>Custom Search Filter</u></p>
 	<br />
+	<div id="wordDiv"></div>
+	<div id="volumeDiv"></div>
+	<div id="dateDiv"></div>
+	<div id="extractDiv"></div>
+	<div id="synopsisDiv"></div>
+	<div id="topicsDiv"></div>
+	<div id="personDiv"></div>
+	<div id="placeDiv"></div>
+	<div id="senderDiv"></div>
+	<div id="fromDiv"></div>
+	<div id="recipientDiv"></div>
+	<div id="toDiv"></div>
+	<div id="refersToDiv"></div>	
 </form>
-
-<input type="hidden" name="wordSearch">
-<input type="hidden" name="wordSearchType">
-<input type="hidden" name="volNum">
-<input type="hidden" name="volNumType">
-<input type="hidden" name="volNumDateYear">
-<input type="hidden" name="volNumDateMonth">
-<input type="hidden" name="volNumDateDay">
-<input type="hidden" name="volNumDateType">
-<input type="hidden" name="extract">
-<input type="hidden" name="synopsis">
-<input type="hidden" name="topics">
-<input type="hidden" name="person">
-<input type="hidden" name="place">
-<input type="hidden" name="sender">
-<input type="hidden" name="from">
-<input type="hidden" name="recipient">
-<input type="hidden" name="to">

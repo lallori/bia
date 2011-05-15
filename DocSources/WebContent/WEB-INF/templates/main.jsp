@@ -55,22 +55,21 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.advancedSearch.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
+		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.general.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.place.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.title.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
-		<!-- <script type="text/javascript" src="<c:url value="/scripts/jquery.cssLoader.js"/>"></script> -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.documentExplorer.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>
+		<!-- <script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script> -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.shareButton.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/pirobox_extended.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.9.custom.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.10.custom.min.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/pirobox_extended.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>

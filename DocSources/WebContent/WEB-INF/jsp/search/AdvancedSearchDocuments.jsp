@@ -10,16 +10,17 @@
 	<h1><a>WORD SEARCH</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form id="wordSearchForm" method="post" class="edit">
+		<form id="wordForm" method="post" class="edit">
 		<fieldset>
-			<input type="text" id="wordSearch" class="input_15c" />
+			<input type="text" id="word" class="input_15c" />
 			in 
-			<select id="fromDateMonthSearch" class="selectform_LXlong">
+			<select id="wordType" class="selectform_LXlong">
 				<option value="Synopsis and Extract" selected="selected">Synopsis and Extract</option>
 				<option value="Document Synopsis">Document Synopsis</option>
 				<option value="Document Extract">Document Extract</option>				
 			</select>
-			<a href="/DocSources/de/docbase/AddWordSearch.html" id="AddWordSearch">Add</a>
+			<input type="submit" value="add">
+			<input type="hidden" id="category" value="Word Search">
 		</fieldset>
 		</form>
 	</div>
@@ -27,29 +28,29 @@
 	<h1><a><i>in</i> VOLUME</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form id="volumeSearchForm" method="post" class="edit">
+		<form id="volumeForm" method="post" class="edit">
 		<fieldset>
 			<select id="volumeType" class="selectform_long">
 				<option value="Exactly" selected="selected">Exactly</option>
 				<option value="Between">Between</option>
 			</select>
 			<input type="text" id="volume"  class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
-			<input type="hidden" name="type" value="text">
 			<input type="submit" value="add">
+			<input type="hidden" id="category" value="Volume">
 		</fieldset>
 		</form>
 		
 		<a href="#" class="helpLinkFrom">?</a>
-		<form id="dateSearchForm" method="post" class="edit">
+		<form id="dateForm" method="post" class="edit">
 		<fieldset>
-			<select id="dateSearch" class="selectform_long">
+			<select id="dateType" class="selectform_long">
 				<option value="From Date">From Date</option>
 				<option value="To Date">To Date</option>
 				<option value="Before">Before</option>
 				<option value="After">After</option>
 			</select>
-			<input type="text" id="fromDateYearSearch" class="input_4c" maxlength="4"/>
-			<select id="fromDateMonthSearch" class="selectform">
+			<input type="text" id="dateYear" class="input_4c" maxlength="4"/>
+			<select id="dateMonth" class="selectform">
 				<option value="January">January</option>
 				<option value="February">February</option>
 				<option value="March">March</option>
@@ -64,9 +65,9 @@
 				<option value="December">December</option>
 				<option value="month">month</option>
 			</select>
-			<input type="text" id="fromDateDaySearch" class="input_2c" maxlength="2"/>
-			<a href="#" id="addDateSearch">Add</a>
-			<input type="hidden" name="type" value="data">
+			<input type="text" id="dateDay" class="input_2c" maxlength="2"/>
+			<input type="submit" value="add">
+			<input type="hidden" id="category" value="Date">
 		</fieldset>
 		</form>
 	</div>	
@@ -74,19 +75,21 @@
 	<h1><a><i>in</i> EXTRACT and/or SYNOPSIS</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form id="extractSearchForm" method="post" class="edit">
+		<form id="extractForm" method="post" class="edit">
 		<fieldset>
-			<label for="extractSearch" id="extractSearchLabel">Extract</label>
-			<textarea id="extractSearch" class="txtadvsearch"></textarea>
-			<a href="#" id="addExtractSearch">Add</a>
+			<label for="extract" id="extractLabel">Extract</label>
+			<textarea id="extract" class="txtadvsearch"></textarea>
+			<input type="submit" value="add">
+			<input type="hidden" id="category" value="Extract">
 		</fieldset>
 		</form>
 		
-		<form id="synopsisSearchForm" method="post" class="edit">
+		<form id="synopsisForm" method="post" class="edit">
 		<fieldset>
-			<label for="synopsisSearch" id="synopsisSearchLabel">Synopsis</label>
-			<textarea id="synopsisSearch" class="txtadvsearch"></textarea>
-			<a href="#" id="addSynopsisSearch">Add</a>
+			<label for="synopsis" id="synopsisLabel">Synopsis</label>
+			<textarea id="synopsis" class="txtadvsearch"></textarea>
+			<input type="submit" value="add">
+			<input type="hidden" id="category" value="Synopsys">
 		</fieldset>
 		</form>
 	</div>
@@ -94,10 +97,11 @@
 	<h1><a><i>with</i> TOPICS</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form id="topicsSearchForm" method="post" class="edit">
+		<form id="topicsForm" method="post" class="edit">
 		<fieldset>
-			<input type="text" id="topicsSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addTopicsSearch">Add</a>
+			<input type="text" id="topics" class="input_25c"/><!-- AUTOCOMPLETE -->
+			<input type="submit" value="add">
+			<input type="hidden" id="category" value="Topics">
 		</fieldset>
 		</form>
 	</div>
@@ -105,61 +109,67 @@
 	<h1><a><i>search on</i> PEOPLE &amp; PLACES</a></h1>
 	<div>
 		<a href="#" class="helpLinkFrom">?</a>
-		<form id="personSearchForm" method="post" class="edit">
+		<form id="personForm" method="post" class="edit">
 		<fieldset>
-			<label for="personSearch" id="personSearchLabel">Person</label> 
-			<input type="text" id="personSearch" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addPersonSearch">Add</a>
+			<label for="person" id="personLabel">Person</label> 
+			<input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
+			<input type="submit" value="add">
+			<input type="hidden" id="category" value="Person">
 		</fieldset>
 		</form>
 
-		<form id="placeSearchForm" method="post" class="edit">
-		<fieldset>
-			<label for="placeSearch" id="placeSearchLabel">Place</label> 
-			<input type="text" id="placeSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addPlaceSearch">Add</a>
-		</fieldset>
-		</form>
-		
-		<form id="senderSearchForm" method="post" class="edit">
+		<form id="placeForm" method="post" class="edit">
 			<fieldset>
-				<label for="senderSearch" id="senderSearchLabel">Sender</label> 
-				<input type="text" id="senderSearchAutoCompleter" class="input_25c"/><!-- AUTOCOMPLETE -->
-				<a href="#" id="addSenderSearch">Add</a>
-				
+				<label for="place" id="placeLabel">Place</label> 
+				<input type="text" id="place" class="input_25c"/><!-- AUTOCOMPLETE -->
+				<input type="submit" value="add">
+				<input type="hidden" id="category" value="Place">
 			</fieldset>
 		</form>
 		
-		<form id="fromSearchForm" method="post" class="edit">
-		<fieldset>
-			<label for="fromSearch" id="fromSearchLabel">From</label> 
-			<input type="text" id="fromSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addFromSearch">Add</a>
-		</fieldset>
+		<form id="senderForm" method="post" class="edit">
+			<fieldset>
+				<label for="sender" id="senderLabel">Sender</label> 
+				<input type="text" id="senderAutoCompleter" class="input_25c"/><!-- AUTOCOMPLETE -->
+				<input type="submit" value="add">
+				<input type="hidden" id="category" value="Sender">
+			</fieldset>
 		</form>
 		
-		<form id="recipientSearchForm" method="post" class="edit">
-		<fieldset>
-			<label for="recipientSearch" id="recipientSearchLabel">Recipient</label> 
-			<input type="text" id="recipientSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addRecipientSearch">Add</a>
-		</fieldset>
+		<form id="fromForm" method="post" class="edit">
+			<fieldset>
+				<label for="from" id="fromLabel">From</label> 
+				<input type="text" id="from" class="input_25c"/><!-- AUTOCOMPLETE -->
+				<input type="submit" value="add">
+				<input type="hidden" id="category" value="Sender">
+			</fieldset>
 		</form>
 		
-		<form id="toSearchForm" method="post" class="edit">
-		<fieldset>
-			<label for="toSearch" id="toSearchLabel">To</label> 
-			<input type="text" id="toSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addToSearch">Add</a>
-		</fieldset>
+		<form id="recipientForm" method="post" class="edit">
+			<fieldset>
+				<label for="recipient" id="recipientLabel">Recipient</label> 
+				<input type="text" id="recipient" class="input_25c"/><!-- AUTOCOMPLETE -->
+				<input type="submit" value="add">
+				<input type="hidden" id="category" value="Recipient">
+			</fieldset>
 		</form>
 		
-		<form id="referstoSearchForm" method="post" class="edit">
-		<fieldset>
-			<label for="referstoSearch" id="referstoSearchLabel">Refers to</label> 
-			<input type="text" id="referstoSearch" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<a href="#" id="addReferstoSearch">Add</a>
-		</fieldset>
+		<form id="toForm" method="post" class="edit">
+			<fieldset>
+				<label for="to" id="toLabel">To</label> 
+				<input type="text" id="to" class="input_25c"/><!-- AUTOCOMPLETE -->
+				<input type="submit" value="add">
+					<input type="hidden" id="category" value="To">
+			</fieldset>
+		</form>
+		
+		<form id="refersToForm" method="post" class="edit">
+			<fieldset>
+				<label for="refersTo" id="refersToLabel">Refers to</label> 
+				<input type="text" id="refersTo" class="input_25c"/><!-- AUTOCOMPLETE -->
+				<input type="submit" value="add">
+				<input type="hidden" id="category" value="Referers To">
+			</fieldset>
 		</form>
 	</div>
 </div>
@@ -167,7 +177,19 @@
 <c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json"/>
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			//$j('#multiOpenAccordion').multiAccordion({active: [0]});
+			$j("#wordForm").advancedSearchForm();
+			$j("#volumeForm").advancedSearchForm();
+			$j("#dateForm").advancedSearchForm();
+			$j("#extractForm").advancedSearchForm();
+			$j("#synopsisForm").advancedSearchForm();
+			$j("#topicsForm").advancedSearchForm();
+			$j("#personForm").advancedSearchForm();
+			$j("#placeForm").advancedSearchForm();
+			$j("#senderForm").advancedSearchForm();
+			$j("#fromForm").advancedSearchForm();
+			$j("#recipientForm").advancedSearchForm();
+			$j("#toForm").advancedSearchForm();
+			$j("#refersToForm").advancedSearchForm();
 
 			$j("#senderSearchAutoCompleter").autocompletePerson({
 				serviceUrl: '${searchSenderPeopleURL}',
@@ -183,11 +205,6 @@
 				}
 			});	
 			
-			$j("#volumeSearchForm").advancedSearchForm({
-				combo: true,
-				autocompleter: false
-			});
-
 			$j("#AddWordSearch").click(function(){
 				var searchElement = "<div class=\"searchFilterDiv\">" +
 				"<span class=\"categorySearch\">Word Search</span>" +
