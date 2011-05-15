@@ -6,15 +6,15 @@
 	<bean id="reCaptchaConfiguration" class="org.medici.docsources.support.recaptcha.ReCaptchaConfiguration">
 		<description>Bean to store private and public key for ReCaptcha Google Service (AntiSpam function)</description>
 		
-		<property name="siteId" value="314444523" />
-		<property name="privateKey" value="6LfrCr4SAAAAAJfEd7UKVy62pCmxXOu8mQjZgq7h " />
-		<property name="publicKey" value="6LfrCr4SAAAAAGaTRc80AJ8_Z8MU1j-WuhAY1mx4" />
+		<property name="siteId" value="314849700" />
+		<property name="privateKey" value="6LekOcQSAAAAAGUpaW0rYHZ6jxAux3s_puoI8JaW  " />
+		<property name="publicKey" value="6LekOcQSAAAAALMJ57M6ZZjv2tU0c1Nc9hc0oIoS" />
 	</bean>
 
 	<bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
 		<description>Bean for ReCaptcha callback</description>
-		<property name="privateKey" value="6LfrCr4SAAAAAJfEd7UKVy62pCmxXOu8mQjZgq7h " />
-		<property name="publicKey" value="6LfrCr4SAAAAAGaTRc80AJ8_Z8MU1j-WuhAY1mx4" />
+		<property name="privateKey" value="6LekOcQSAAAAAGUpaW0rYHZ6jxAux3s_puoI8JaW  " />
+		<property name="publicKey" value="6LekOcQSAAAAALMJ57M6ZZjv2tU0c1Nc9hc0oIoS" />
 		<property name="recaptchaServer" value="http://www.google.com/recaptcha/api/" />
 	</bean>
 </beans>
