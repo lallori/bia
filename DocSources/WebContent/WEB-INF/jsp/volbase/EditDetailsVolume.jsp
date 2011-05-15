@@ -110,7 +110,7 @@
 			$j("#volNum").change(showVolumeExplorer);
 			$j("#volLetExt").change(showVolumeExplorer);	        	
 
-			var a = $j('#seriesRefDescriptionAutoCompleter').autocomplete({ 
+			var a = $j('#seriesRefDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchSeriesListUrl}',
 			    minChars:1, 
 			    delimiter: /(,|;)\s*/, // regex or character
