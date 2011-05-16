@@ -32,6 +32,7 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -66,9 +67,22 @@ public interface GeoBaseService {
 
 	/**
 	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<PlaceType> findPlaceTypes() throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexPlace() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexPlaceType() throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -102,11 +116,4 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<String> findPlaceTypes() throws ApplicationThrowable;
 }

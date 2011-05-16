@@ -32,7 +32,6 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -224,20 +223,4 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 
         return page;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<String> findPlaceTypes() throws PersistenceException {
-        String stringQuery = "SELECT distinct(placeType) FROM Place ";
-    	
-        Query query = getEntityManager().createQuery(stringQuery);
-
-		List<String> result = (List<String>)query.getResultList();
-
-		return result;
-	}
-
 }

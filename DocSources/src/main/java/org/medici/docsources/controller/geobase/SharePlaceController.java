@@ -1,5 +1,5 @@
 /*
- * ComparePlaceController.java
+ * SharePlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,7 +30,7 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.geobase.ComparePlaceRequestCommand;
+import org.medici.docsources.command.geobase.SharePlaceRequestCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -43,13 +43,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Compare place".
+ * Controller for action "Share place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/geobase/ComparePlace")
-public class ComparePlaceController {
+@RequestMapping("/src/geobase/SharePlace")
+public class SharePlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 
@@ -76,7 +76,7 @@ public class ComparePlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ComparePlaceRequestCommand command, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") SharePlaceRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Place place = new Place();

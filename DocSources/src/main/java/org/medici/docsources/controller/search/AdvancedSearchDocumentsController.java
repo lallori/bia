@@ -28,6 +28,14 @@
  */
 package org.medici.docsources.controller.search;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.medici.docsources.domain.Month;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.docbase.DocBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,14 +49,37 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/src/AdvancedSearchDocuments")
 public class AdvancedSearchDocumentsController {
-
+	@Autowired
+	private DocBaseService docBaseService;
 	/**
 	 * 
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(){
-		return new ModelAndView("search/AdvancedSearchDocuments");
+		Map<String, Object> model = new HashMap<String, Object>();
+		List<Month> months = null;
+
+		try {
+			months = getDocBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/AdvancedSearchDocuments", model);
+		}
+
+		return new ModelAndView("search/AdvancedSearchDocuments", model);
+	}
+	/**
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
 	}
 
 }

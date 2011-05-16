@@ -32,7 +32,9 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.place.PlaceDAO;
+import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,8 @@ import org.springframework.stereotype.Service;
 public class GeoBaseServiceImpl implements GeoBaseService {
 	@Autowired
 	private PlaceDAO placeDAO;
+	@Autowired
+	private PlaceTypeDAO placeTypeDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -76,9 +80,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<String> findPlaceTypes() throws ApplicationThrowable {
+	public List<PlaceType> findPlaceTypes() throws ApplicationThrowable {
 		try {
-			return getPlaceDAO().findPlaceTypes();
+			return getPlaceTypeDAO().findPlaceTypes();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -97,10 +101,29 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexPlaceType() throws ApplicationThrowable {
+		try {
+			getPlaceTypeDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+	
+	/**
 	 * @return the placeDAO
 	 */
 	public PlaceDAO getPlaceDAO() {
 		return placeDAO;
+	}
+
+	/**
+	 * @return the placeTypeDAO
+	 */
+	public PlaceTypeDAO getPlaceTypeDAO() {
+		return placeTypeDAO;
 	}
 
 	/**
@@ -110,7 +133,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public List<Place> searchPlaces(String text) throws ApplicationThrowable {
 		return null;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -122,7 +145,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -140,6 +163,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public void setPlaceDAO(PlaceDAO placeDAO) {
 		this.placeDAO = placeDAO;
+	}
+
+	/**
+	 * @param placeTypeDAO the placeTypeDAO to set
+	 */
+	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
+		this.placeTypeDAO = placeTypeDAO;
 	}
 
 	/**

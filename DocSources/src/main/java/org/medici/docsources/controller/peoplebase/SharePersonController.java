@@ -1,5 +1,5 @@
 /*
- * ComparePlaceController.java
+ * SharePersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,15 +25,17 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.geobase;
+package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.command.geobase.ComparePlaceRequestCommand;
-import org.medici.docsources.domain.Place;
+import org.medici.docsources.command.peoplebase.SharePersonRequestCommand;
+import org.medici.docsources.domain.Marriage;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.geobase.GeoBaseService;
+import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -43,50 +45,53 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Compare place".
+ * Controller for action "Share Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/geobase/ComparePlace")
-public class ComparePlaceController {
+@RequestMapping("/src/peoplebase/SharePerson")
+public class SharePersonController {
 	@Autowired
-	private GeoBaseService geoBaseService;
+	private PeopleBaseService peopleBaseService;
 
 	/**
 	 * 
 	 * @return
 	 */
-	public GeoBaseService getGeoBaseService() {
-		return geoBaseService;
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
 	}
 
 	/**
 	 * 
-	 * @param geoBaseService
+	 * @param peopleBaseService
 	 */
-	public void setGeoBaseService(GeoBaseService geoBaseService) {
-		this.geoBaseService = geoBaseService;
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
 	}
 
 	/**
 	 * 
-	 * @param placeId
+	 * @param peopleId
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ComparePlaceRequestCommand command, BindingResult result) {
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") SharePersonRequestCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		Place place = new Place();
 		try {
-			place = getGeoBaseService().findPlace(command.getPlaceAllId());
-			model.put("place", place);
+			People person = getPeopleBaseService().findPerson(command.getPersonId());
+			model.put("person", person);
+
+			List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
+			model.put("marriages", marriages);
+			
 		} catch (ApplicationThrowable ath) {
-			new ModelAndView("error/ComparePlace", model);
+			new ModelAndView("error/SharePerson", model);
 		}
 
-		return new ModelAndView("geobase/ComparePlace", model);
+		return new ModelAndView("peoplebase/SharePerson", model);
 	}
 }

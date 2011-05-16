@@ -28,6 +28,14 @@
  */
 package org.medici.docsources.controller.search;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.medici.docsources.domain.Month;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.volbase.VolBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,14 +49,41 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/src/AdvancedSearchVolumes")
 public class AdvancedSearchVolumesController {
-
+	@Autowired
+	private VolBaseService volBaseService; 
+	
 	/**
 	 * 
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(){
-		return new ModelAndView("search/AdvancedSearchVolumes");
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		List<Month> months = null;
+
+		try {
+			months = getVolBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/AdvancedSearchVolumes", model);
+		}
+
+		return new ModelAndView("search/AdvancedSearchVolumes", model);
+	}
+
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
+	
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
 	}
 
 }

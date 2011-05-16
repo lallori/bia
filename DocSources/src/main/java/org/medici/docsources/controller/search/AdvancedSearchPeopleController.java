@@ -28,6 +28,14 @@
  */
 package org.medici.docsources.controller.search;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.medici.docsources.domain.Month;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.peoplebase.PeopleBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +49,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/src/AdvancedSearchPeople")
 public class AdvancedSearchPeopleController {
+	@Autowired
+	private PeopleBaseService peopleBaseService; 
 
 	/**
 	 * 
@@ -48,7 +58,32 @@ public class AdvancedSearchPeopleController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(){
-		return new ModelAndView("search/AdvancedSearchPeople");
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		List<Month> months = null;
+
+		try {
+			months = getPeopleBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/AdvancedSearchPeople", model);
+		}
+		
+		return new ModelAndView("search/AdvancedSearchPeople", model);
+	}
+
+	/**
+	 * @param peopleBaseService the peopleBaseService to set
+	 */
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
+	}
+
+	/**
+	 * @return the peopleBaseService
+	 */
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
 	}
 
 }

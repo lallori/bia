@@ -37,8 +37,8 @@ import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
-import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -116,7 +116,7 @@ public class EditDetailsPlaceController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<String> placeTypes; 
+		List<PlaceType> placeTypes; 
 		try {
 			placeTypes = getGeoBaseService().findPlaceTypes();
 			model.put("placeTypes", placeTypes);

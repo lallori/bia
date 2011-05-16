@@ -28,6 +28,11 @@
  */
 package org.medici.docsources.controller.search;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.medici.docsources.service.geobase.GeoBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +46,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/src/AdvancedSearchPlaces")
 public class AdvancedSearchPlacesController {
+	@Autowired
+	private GeoBaseService geoBaseService;
 
 	/**
 	 * 
@@ -48,7 +55,24 @@ public class AdvancedSearchPlacesController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupPage(){
-		return new ModelAndView("search/AdvancedSearchPlaces");
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		
+		return new ModelAndView("search/AdvancedSearchPlaces", model);
+	}
+
+	/**
+	 * @param geoBaseService the geoBaseService to set
+	 */
+	public void setGeoBaseService(GeoBaseService geoBaseService) {
+		this.geoBaseService = geoBaseService;
+	}
+
+	/**
+	 * @return the geoBaseService
+	 */
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
 
 }

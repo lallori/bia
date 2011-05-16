@@ -1,5 +1,5 @@
 /*
- * PlaceDAO.java
+ * PlaceTypeDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,62 +25,27 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.place;
+package org.medici.docsources.dao.placetype;
 
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
-import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceType;
 
 /**
- * Place Dao.
+ * PlaceType Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public interface PlaceDAO extends Dao<Integer, Place> {
+public interface PlaceTypeDAO extends Dao<Integer, PlaceType> {
 
 	/**
 	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Place findLastEntryPlace() throws PersistenceException;
-
-	/**
-	 * 
-	 * @param searchText
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param searchText
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public List<Place> searchRecipientsPlace(String searchText) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param searchText
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public List<Place> searchSendersPlace(String searchText) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param searchText
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
+	public List<PlaceType> findPlaceTypes() throws PersistenceException;
 
 }
