@@ -148,6 +148,9 @@ update docsources.tblVolumes set startMonthNum = null where startMonthNum = 13;
 update docsources.tblVolumes set endMonthNum = null where endMonthNum = 0;
 update docsources.tblVolumes set endMonthNum = null where endMonthNum = 13;
 
+-- PlaceType
+delete from docsources.tblPlaceType;
+insert into docsources.tblPlaceType (description) select distinct(plType) from docsources.tblPlaces order by 1 asc;
 
 -- COUNTRY DATA ENTRY (Table schema is based on ISO standard 3166 code lists http://www.iso.org/iso/list-en1-semic-3.txt)
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');
