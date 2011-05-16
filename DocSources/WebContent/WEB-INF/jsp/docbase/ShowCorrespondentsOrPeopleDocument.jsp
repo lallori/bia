@@ -75,6 +75,7 @@
 			
 			$j(".linkPeople").click(function() {
 				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
 		});

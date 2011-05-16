@@ -89,6 +89,8 @@
     	var functionParams = $.extend($.documentExplorer.defaultParams, params);
     	//$(functionParams.target).load(functionParams["showExplorerDocumentUrl"]);
     	$( "#tabs" ).tabs( "add" , functionParams["showExplorerDocumentUrl"], "Document Explorer</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+    	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
+    	
     	return $;
     };
 
