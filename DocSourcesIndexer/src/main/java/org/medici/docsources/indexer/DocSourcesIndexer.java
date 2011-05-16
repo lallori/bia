@@ -97,6 +97,7 @@ public class DocSourcesIndexer {
         	GeoBaseService geoBaseService = (GeoBaseService) ctx.getBean("geoBaseService");
 	
     		geoBaseService.generateIndexPlace();
+    		geoBaseService.generateIndexPlaceType();
     		logger.info("Indexing places stop");
 		} catch (ApplicationThrowable ath) {
 			ath.printStackTrace();
