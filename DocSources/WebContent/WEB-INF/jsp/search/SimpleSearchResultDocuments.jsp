@@ -51,8 +51,8 @@
 				<th>Date</th>
 				<th>Sender Location</th>
 				<th>Recipient Location</th>
-				<th>Volume</th>
-				<th>Folio</th>
+				<th>MDP/Folio</th>
+				<!--<th>Folio</th> -->
 			</tr>
 		</thead>
 		<tbody>

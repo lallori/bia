@@ -194,10 +194,11 @@ public class AjaxController {
 				case 5:
 					paginationFilter.addSortingCriteria("volume.volNum", sortingDirection, SortField.INT);
 					paginationFilter.addSortingCriteria("volume.volLetExt", sortingDirection, SortField.STRING);
+					//paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.INT);
 					break;
-				case 6:
+				/*case 6:
 					paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.INT);
-					break;
+					break;*/
 				default:
 					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
 					break;
@@ -237,16 +238,22 @@ public class AjaxController {
 			else
 				singleRow.add("");
 			
-			if (currentDocument.getVolume()!= null)
-				singleRow.add(currentDocument.getVolume().toString());
+			if (currentDocument.getVolume()!= null && currentDocument.getFolioNum() != null)
+				singleRow.add(currentDocument.getVolume().toString() + "/" + currentDocument.getFolioNum().toString());
 			else
-				singleRow.add("");
-			
+			{
+				if(currentDocument.getVolume() != null && currentDocument.getFolioNum() == null)
+					singleRow.add(currentDocument.getVolume().toString() + "/NNF");
+				else
+					singleRow.add("");
+			}
+				
+			/*
 			if (currentDocument.getFolioNum() != null)
 				singleRow.add(currentDocument.getFolioNum().toString());
 			else
 				singleRow.add("");
-			
+			*/
 			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
 		}
 		model.put("iEcho", "1");

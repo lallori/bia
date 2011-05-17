@@ -29,13 +29,13 @@
 		</security:authorize>
 		</div>
 		
-		<div class="listDetails">
+		<div class="list">
 			<div class="row">
-				<div class="item">Extract:</div>
+				<div class="item">Extract</div>
 				<div class="value">${document.synExtract.docExtract}</div>
 			</div>
 			<div class="row">
-				<div class="item">Synopsis:</div>
+				<div class="item">Synopsis</div>
 				<div class="value">${document.synExtract.synopsis}</div>
 			</div>
 		</div>

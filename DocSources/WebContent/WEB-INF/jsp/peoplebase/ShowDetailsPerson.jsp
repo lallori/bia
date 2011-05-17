@@ -21,7 +21,7 @@
 			<div id="imgPortraitPerson"></div>
 			<p style="text-align:center"><b>Portrait</b></p>
 		</div>
-		<h2 class="titlepeople">${person.mapNameLf}</h2>
+		<h3>${person.mapNameLf}</h3>
 		<div class="listDetails">
 			<div class="row">
 				<div class="item">Gender</div> <div class="value">${person.gender}</div>
@@ -30,7 +30,7 @@
 				<div class="item">Date of Birth</div> <div class="value">${person.bornDate}</div>
 			</div>
 			<div class="row">
-				<div class="item">Birth Place</b><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+				<div class="item">Birth Place</div><div class="value"><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
 			</div>
 			<div class="row">
 				<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>

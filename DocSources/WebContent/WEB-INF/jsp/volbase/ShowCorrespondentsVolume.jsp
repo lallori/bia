@@ -20,10 +20,14 @@
 		</security:authorize>
 		</div>
 		
-		<ul>
-			<li><b>From: </b>${volume.senders}</li>
-			<li><b>To: </b>${volume.recips}</li>
-		</ul>
+		<div class="list">
+			<div class="row">
+				<div class="item">From </div><div class="value80"> ${volume.senders}</div>
+			</div>
+			<div class="row">
+				<div class="item">To </div><div class="value80">${volume.recips}</div>
+			</div>
+		</div>
 	</div>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">

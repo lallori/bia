@@ -19,7 +19,7 @@
 			</c:if>
 		</security:authorize>
 		</div>
-		<div class="listDetails">
+		<div class="list">
 		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
 			<div class="row">
 				<div class="item">Topic:</div>

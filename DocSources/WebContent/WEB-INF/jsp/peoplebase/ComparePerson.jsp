@@ -21,7 +21,7 @@
 			<div class="item">Date of Birth:</div> <div class="value">${person.bornDate}</div>
 		</div>
 		<div class="row">
-			<div class="item">Birth Place:</b><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+			<div class="item">Birth Place:</div><div class="value"><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
 		</div>
 		<div class="row">
 			<div class="item">Active Start:</div> <div class="value">${person.activeStart}</div>

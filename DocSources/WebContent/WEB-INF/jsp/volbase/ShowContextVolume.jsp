@@ -20,10 +20,14 @@
 		</security:authorize>
 		</div>
 
-		<ul>
-			<li><b>Context: </b>${volume.ccontext}</li>
-			<li><b>Inventario Sommario Description: </b>${volume.inventarioSommarioDescription}</li>
-		</ul>
+		<div class="list">
+			<div class="row">
+				<div class="item">Context </div><div class="value80">${volume.ccontext}</div>
+			</div>
+			<div class="row">
+				<div class="item"> Inventario Sommario Description </div><div class="value80">${volume.inventarioSommarioDescription}</div>
+			</div>
+		</div>
 	</div>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">

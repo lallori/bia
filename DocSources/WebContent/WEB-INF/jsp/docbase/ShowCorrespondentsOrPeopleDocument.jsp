@@ -16,33 +16,33 @@
 	<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
 		<c:param name="personId"   value="${document.recipientPeople.personId}" />
 	</c:url>
-	<div id="EditCorrespondentsOrPeopleDocumentDiv" class="background">
+	<div id="EditCorrespondentsDocumentDiv" class="background">
 		<div class="title">
 			<h5>CORRESPONDENTS/PEOPLE </h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${document.entryId > 0}">
-			<a id="EditCorrespondentsOrPeopleDocument" href="${EditCorrespondentsOrPeopleDocumentURL}" class="editButton"></a>
+			<a id="EditCorrespondentsDocument" href="${EditCorrespondentsOrPeopleDocumentURL}" class="editButton"></a>
 			<span id="loading"/>
 			</c:if>
 		</security:authorize>
 		</div>
 
-		<div class="listDetails">
+		<div class="list">
 			<div class="row">
-				<div class="item">Sender:</div> <div class="value"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
+				<div class="item">Sender</div> <div class="value"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
 			</div>
 			<div class="row">
-				<div class="item">From:</div> <div class="value"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
+				<div class="item">From</div> <div class="value"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
 			</div>	
 			<div class="row">
-				<div class="item">Recipient:</div> <div class="value"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
+				<div class="item">Recipient</div> <div class="value"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
 			</div>
 			<div class="row">
-				<div class="item">To:</div> <div class="value"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
+				<div class="item">To</div> <div class="value"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
 			</div>	
 			<br>
 			<div class="row">
-				<div class="item">People:</div> <div class="value"></div>
+				<div class="item">People</div> <div class="value"></div>
 			</div>	
 			<c:forEach items="${document.epLink}" var="currentPeople">
 				<div class="row">
@@ -50,7 +50,7 @@
 						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
 					<div class="item">&nbsp;</div><div class="value"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
-					<br/>
+					
 				</div>
 			</c:forEach>
 			</div>
