@@ -50,7 +50,7 @@
 	border: 1px solid #ddd;
 	text-align: center;
 	color: #999;
-	font-size: 14px;
+	font-size: 12px;
 	background-color: white;
 }
 
@@ -125,6 +125,10 @@ table.display {
 	 */
 }
 
+.searchResult {
+	font-size:11px;
+}
+
 table.display thead th {
 	padding: 3px 18px 3px 10px;
 	border-bottom: 1px solid black;
@@ -185,7 +189,7 @@ table.display td.center {
  * DataTables row classes
  */
 table.display tr.odd.gradeA {
-	background-color: #ddffdd;
+	background-color: #F0E2DB;
 }
 
 table.display tr.even.gradeA {
@@ -218,7 +222,7 @@ table.display tr.even.gradeU {
 
 
 tr.odd {
-	background-color: #E2E4FF;
+	background-color: #F0E2DB;
 }
 
 tr.even {
@@ -326,12 +330,12 @@ table.display tr.odd.row_selected td {
  * Sorting classes for columns
  */
 /* For the standard odd/even */
-tr.odd td.sorting_1 {
-	background-color: #D3D6FF;
+tr.odd td.sorting_1 { /* first item */
+	background-color: #E6D0C6;
 }
 
 tr.odd td.sorting_2 {
-	background-color: #DADCFF;
+	background-color: #F0E2DB;
 }
 
 tr.odd td.sorting_3 {
@@ -339,7 +343,7 @@ tr.odd td.sorting_3 {
 }
 
 tr.even td.sorting_1 {
-	background-color: #EAEBFF;
+	background-color: #F0E2DB;
 }
 
 tr.even td.sorting_2 {

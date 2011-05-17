@@ -13,10 +13,10 @@
 /* ----------------- TITLES ------------------------------- */ 
 
 h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
-	padding:0 0 15px 15px;
+	padding:0 0 15px 30px;
 	font-size:14px;
 	font-style:italic;
-	color:#C18D72;
+	color:#009;
 }
 
 h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
@@ -34,6 +34,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin:0 7px 10px 15px;
 	position:absolute;
 	color:#6d5c4d;
+	text-decoration:underline;
 }
 
 h2 {
@@ -172,9 +173,25 @@ h2 {
 	padding:3px 0 3px 0; 
 }
 
+.icon {
+	display: table-cell;
+	text-align:left;
+	background-color:#003;
+	padding:3px 0 3px 5px;
+}
+
 .value {
 	display: table-cell;
 	width:40%;
+	text-align:left;
+	color:#6d5c4d;
+	padding:3px 0 3px 5px;
+	text-align:justify;
+}
+
+.value60 {
+	display: table-cell;
+	width:60%;
 	text-align:left;
 	color:#6d5c4d;
 	padding:3px 0 3px 5px;
@@ -269,7 +286,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	opacity:0.5;
 }
 
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother { /* Close button on bottom left  */
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
@@ -617,8 +634,7 @@ img.transparent {
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #000000;
-	padding-left:10px;
-	margin: 5px 7px 5px 5px; 
+	margin: 5px 7px 5px 0; 
 	opacity: 0.3;
 	cursor:default;
 }
@@ -888,6 +904,10 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;
 }
 
+#tabs {
+	top:-7px;
+}
+
 #EditRelationshipPersonDiv { 
 	width:485px;
 	margin:0;
@@ -902,6 +922,10 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 form#EditUserProfileForm.edit { 
 	width:200px;
 	margin-left:20px;
+}
+
+#EditTopicsDocumentDiv { 
+	min-height:100px;
 }
 
 /* Edit Details Forms */ 
@@ -1021,7 +1045,7 @@ input.file {
 
 #DocumentImageDiv { /* Div containing the image specifics */
 	float:right;
-	padding-left:30px;
+	margin-right:15px;
 }
 
 #DocumentImageDiv p a{ /* "Show in manuscript viwer" "Attach folios" */
@@ -1035,7 +1059,6 @@ input.file {
 .imgDocument { /* Default document image */
 	background-image:url(/DocSources/images/1024/img_document.png);
 	background-repeat:no-repeat;
-	margin-left:20px;
 	width:96px;
 	height:120px;
 }
@@ -1144,7 +1167,7 @@ input.file {
 	height:16px;
 	display:inline;
 	position:absolute;
-	margin:5px 10px 0 0;
+	margin:5px 0 0 -17px;
 	background-image:url(/DocSources/images/1024/img_preferred.png);
 	background-repeat:no-repeat;
 	cursor:default;
@@ -1398,7 +1421,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 /* ----- EditTitleOccupationsPerson ----- */
 
 #firstTitleOcc, #secondTitleOcc {
-	margin-left:20px;
+	margin-left:5px;
 }
 
 #preferredRoleLabel {
@@ -1463,7 +1486,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 /*
 /* Parents */
 
-a.linkSearch {
+a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	font-size:11px;
 	text-decoration:none;
 	color:#006;
@@ -2484,6 +2507,10 @@ a.linkSearch {
 	border:none;
 	float:left;
 	font-size:11px;
+}
+
+#advancedSearch #body_left h1 a{
+	text-decoration:none;
 }
 
 /*
