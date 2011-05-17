@@ -183,7 +183,9 @@ public class AjaxController {
 					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", sortingDirection);
 					break;
 				case 2:
-					paginationFilter.addSortingCriteria("dateApprox", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("docYear", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("docMonth.monthNum", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("docDay", sortingDirection, SortField.INT);
 					break;
 				case 3:
 					paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
@@ -222,9 +224,9 @@ public class AjaxController {
 				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 			else
 				singleRow.add("");
-			
-			if (currentDocument.getDateApprox() != null)
-				singleRow.add(currentDocument.getDateApprox());
+
+			if (currentDocument.getDocumentDate() != null) 
+				singleRow.add(currentDocument.getDocumentDate());
 			else
 				singleRow.add("");
 			

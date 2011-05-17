@@ -14,7 +14,8 @@
 		TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
-			$j('#result').dataTable( {
+			$j('#resultDocument${searchNumber}').dataTable( {
+				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
 				"sPaginationType": "full_numbers",
@@ -43,7 +44,7 @@
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="result">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="resultDocument${searchNumber}">
 		<thead>
 			<tr>
 				<th>Sender</th>

@@ -795,12 +795,14 @@ public class Volume implements Serializable {
 	public void setFolioCount(String folioCount) {
 		this.folioCount = folioCount;
 	}
+
 	/**
 	 * @return the bound
 	 */
 	public Boolean getBound() {
 		return bound;
 	}
+
 	/**
 	 * @param bound the bound to set
 	 */
@@ -933,6 +935,7 @@ public class Volume implements Serializable {
 	public void setFrench(Boolean french) {
 		this.french = french;
 	}
+	
 	/**
 	 * @return the otherLang
 	 */
@@ -1002,7 +1005,6 @@ public class Volume implements Serializable {
 	public void setStaffMemo(String staffMemo) {
 		this.staffMemo = staffMemo;
 	}
-
 
 	/**
 	 * @param printedMaterial the printedMaterial to set
@@ -1076,7 +1078,10 @@ public class Volume implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+	/**
+	 * 
+	 */
 	@Override
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer();

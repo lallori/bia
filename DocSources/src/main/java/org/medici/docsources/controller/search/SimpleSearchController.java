@@ -98,6 +98,9 @@ public class SimpleSearchController {
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		// This number is used to generate an unique id for datatable jquery plugin to use multiple object in tabs 
+		model.put("searchNumber", System.currentTimeMillis());
 
 		// Search operation is made by View with a jquery plugin to contextualized AjaxController
 		if (command.getSearchType().toLowerCase().trim().equals("documents")) {

@@ -45,6 +45,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
@@ -198,6 +199,7 @@ public class Document implements Serializable{
 	private Boolean unpaged;
 	
 	@Column (name="\"DOCDAY\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer docDay;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -207,6 +209,7 @@ public class Document implements Serializable{
 	private Month docMonthNum;
 	
 	@Column (name="\"DOCYEAR\"", length=10)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer docYear;
 	
 	@Column (name="\"SORTABLEDATE\"", length=50)
@@ -214,6 +217,7 @@ public class Document implements Serializable{
 	private String sortableDate;
 	
 	@Column (name="\"YEARMODERN\"", length=15, precision=5)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer yearModern;
 	
 	@Column (name="\"RECKONING\"", length=1, columnDefinition="tinyint", nullable=false)
@@ -339,126 +343,147 @@ public class Document implements Serializable{
 	public Integer getEntryId() {
 		return entryId;
 	}
+
 	/**
 	 * @param entryId the entryId to set
 	 */
 	public void setEntryId(Integer entryId) {
 		this.entryId = entryId;
 	}
+	
 	/**
 	 * @return the volume
 	 */
 	public Volume getVolume() {
 		return volume;
 	}
+	
 	/**
 	 * @param volume the volume to set
 	 */
 	public void setVolume(Volume volume) {
 		this.volume = volume;
 	}
+	
 	/**
 	 * @return the subVol
 	 */
 	public String getSubVol() {
 		return subVol;
 	}
+
 	/**
 	 * @param subVol the subVol to set
 	 */
 	public void setSubVol(String subVol) {
 		this.subVol = subVol;
 	}
+	
 	/**
 	 * @return the researcher
 	 */
 	public String getResearcher() {
 		return researcher;
 	}
+
 	/**
 	 * @param researcher the researcher to set
 	 */
 	public void setResearcher(String researcher) {
 		this.researcher = researcher;
 	}
+	
 	/**
 	 * @return the dateCreated
 	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+	
 	/**
 	 * @param dateCreated the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+	
 	/**
 	 * @return the lastUpdate
 	 */
 	public Date getLastUpdate() {
 		return lastUpdate;
 	}
+	
 	/**
 	 * @param lastUpdate the lastUpdate to set
 	 */
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
+
 	/**
 	 * @return the docTobeVetted
 	 */
 	public Boolean getDocTobeVetted() {
 		return docTobeVetted;
 	}
+
 	/**
 	 * @param docTobeVetted the docTobeVetted to set
 	 */
 	public void setDocTobeVetted(Boolean docTobeVetted) {
 		this.docTobeVetted = docTobeVetted;
 	}
+
 	/**
 	 * @return the docToBeVettedDate
 	 */
 	public Date getDocToBeVettedDate() {
 		return docToBeVettedDate;
 	}
+
 	/**
 	 * @param docToBeVettedDate the docToBeVettedDate to set
 	 */
 	public void setDocToBeVettedDate(Date docToBeVettedDate) {
 		this.docToBeVettedDate = docToBeVettedDate;
 	}
+
 	/**
 	 * @return the docVetId
 	 */
 	public String getDocVetId() {
 		return docVetId;
 	}
+
 	/**
 	 * @param docVetId the docVetId to set
 	 */
 	public void setDocVetId(String docVetId) {
 		this.docVetId = docVetId;
 	}
+
 	/**
 	 * @return the docVetBegins
 	 */
 	public Date getDocVetBegins() {
 		return docVetBegins;
 	}
+
 	/**
 	 * @param docVetBegins the docVetBegins to set
 	 */
 	public void setDocVetBegins(Date docVetBegins) {
 		this.docVetBegins = docVetBegins;
 	}
+
 	/**
 	 * @return the docVetted
 	 */
 	public Boolean getDocVetted() {
 		return docVetted;
 	}
+
 	/**
 	 * @param docVetted the docVetted to set
 	 */
@@ -661,7 +686,45 @@ public class Document implements Serializable{
 	public void setDocYear(Integer docYear) {
 		this.docYear = docYear;
 	}
-	
+
+	/**
+	 * This method return document date information. It's a concatenation of 
+	 * docYear docMonthNum docDay and (yearmoden). 
+	 *  
+	 * @return String rappresentation of Document Date.
+	 */
+	@Transient
+    public String getDocumentDate() {
+		StringBuffer returnValue = new StringBuffer("");
+		
+		if (getDocYear() != null) {
+			returnValue.append(getDocYear());
+		}
+		if (getDocMonthNum() != null) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append(" ");
+			}
+			returnValue.append(getDocMonthNum());
+		}
+		if (getDocDay() != null) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append(" ");
+			}
+			returnValue.append(getDocDay());
+		}
+		
+		if (getYearModern() != null) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append(" ");
+			}
+			returnValue.append("(");
+			returnValue.append(getYearModern());
+			returnValue.append(")");
+		}
+		
+		return returnValue.toString();
+    }
+
 	/**
 	 * @return the sortableDate
 	 */

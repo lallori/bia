@@ -72,7 +72,7 @@ public class EditDetailsDocumentCommand {
 	//Date : day
 	private Integer docDay;
 	//Modern Date: (year Modern???) 
-	private Integer yearModern; 
+	private Integer yearModern;
 	// Date Uncertain or Approximate? 
 	private Boolean dateUns;
 	// Undated 
@@ -182,12 +182,14 @@ public class EditDetailsDocumentCommand {
 	public Boolean getUnpaged() {
 		return unpaged;
 	}
+	
 	/**
 	 * @param unpaged the unpaged to set
 	 */
 	public void setUnpaged(Boolean unpaged) {
 		this.unpaged = unpaged;
 	}
+	
 	/**
 	 * @return the contDisc
 	 */
@@ -248,54 +250,63 @@ public class EditDetailsDocumentCommand {
 	public void setYearModern(Integer yearModern) {
 		this.yearModern = yearModern;
 	}
+
 	/**
 	 * @return the dateUns
 	 */
 	public Boolean getDateUns() {
 		return dateUns;
 	}
+
 	/**
 	 * @param dateUns the dateUns to set
 	 */
 	public void setDateUns(Boolean dateUns) {
 		this.dateUns = dateUns;
 	}
+
 	/**
 	 * @return the dateUndated
 	 */
 	public Boolean getDateUndated() {
 		return dateUndated;
 	}
+
 	/**
 	 * @param dateUndated the dateUndated to set
 	 */
 	public void setDateUndated(Boolean dateUndated) {
 		this.dateUndated = dateUndated;
 	}
+
 	/**
 	 * @return the dateNotes
 	 */
 	public String getDateNotes() {
 		return dateNotes;
 	}
+
 	/**
 	 * @param dateNotes the dateNotes to set
 	 */
 	public void setDateNotes(String dateNotes) {
 		this.dateNotes = dateNotes;
 	}
+
 	/**
 	 * @param researcher the researcher to set
 	 */
 	public void setResearcher(String researcher) {
 		this.researcher = researcher;
 	}
+
 	/**
 	 * @return the researcher
 	 */
 	public String getResearcher() {
 		return researcher;
 	}
+
 	/**
 	 * @param dateCreated the dateCreated to set
 	 */

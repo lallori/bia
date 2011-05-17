@@ -136,9 +136,8 @@ public class PaginationFilter {
      * @param order
      * @return
      */
-    public PaginationFilter addSortingCriteria(String field, String direction) {
+    public void addSortingCriteria(String field, String direction) {
         this.sortingCriterias.add(new SortingCriteria(field, Order.valueOf(direction.toUpperCase())));
-        return this;
     }
 
     /**
@@ -147,9 +146,8 @@ public class PaginationFilter {
      * @param order
      * @return
      */
-    public PaginationFilter addSortingCriteria(String field, String direction, Integer fieldType) {
+    public void addSortingCriteria(String field, String direction, Integer fieldType) {
         this.sortingCriterias.add(new SortingCriteria(field, Order.valueOf(direction.toUpperCase()), fieldType));
-        return this;
     }
     
     /**
