@@ -419,11 +419,10 @@ img.transparent {
 	color:#900;
 	font-size:10px;
 	position:absolute;
-	margin:40px 0 0 165px;
-	width:160px;
-	position:absolute;
-	float: right;
 	text-align:center;
+	padding:2px 5px 2px 5px;
+	margin:17px 0 0 -78px;
+	width:150px;
 	border:1px solid #900;
 }
 
@@ -1167,7 +1166,7 @@ input.file {
 	height:16px;
 	display:inline;
 	position:absolute;
-	margin:5px 0 0 -17px;
+	margin:3px 0 0 -15px;
 	background-image:url(/DocSources/images/1024/img_preferred.png);
 	background-repeat:no-repeat;
 	cursor:default;
