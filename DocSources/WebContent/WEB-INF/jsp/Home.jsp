@@ -30,7 +30,7 @@
 		});
 
 		$j( "#tabs span.ui-icon-close" ).live( "click", function() {
-			var index = $j( "li", this ).index( $j( this ).parent() );
+			var index = $j( "li", $j("#tabs") ).index( $j( this ).parent() );
 			$j( "#tabs" ).tabs( "remove", index );
 		});
 

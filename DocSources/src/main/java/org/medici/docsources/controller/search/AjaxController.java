@@ -196,7 +196,8 @@ public class AjaxController {
 				case 5:
 					paginationFilter.addSortingCriteria("volume.volNum", sortingDirection, SortField.INT);
 					paginationFilter.addSortingCriteria("volume.volLetExt", sortingDirection, SortField.STRING);
-					//paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("folioMod", sortingDirection, SortField.STRING);
 					break;
 				/*case 6:
 					paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.INT);
@@ -240,15 +241,10 @@ public class AjaxController {
 			else
 				singleRow.add("");
 			
-			if (currentDocument.getVolume()!= null && currentDocument.getFolioNum() != null)
-				singleRow.add(currentDocument.getVolume().toString() + "/" + currentDocument.getFolioNum().toString());
+			if (currentDocument.getMDPAndFolio() != null)
+				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+ "</b>");
 			else
-			{
-				if(currentDocument.getVolume() != null && currentDocument.getFolioNum() == null)
-					singleRow.add(currentDocument.getVolume().toString() + "/NNF");
-				else
-					singleRow.add("");
-			}
+				singleRow.add("");
 				
 			/*
 			if (currentDocument.getFolioNum() != null)

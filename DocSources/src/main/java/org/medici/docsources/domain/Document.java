@@ -590,6 +590,33 @@ public class Document implements Serializable{
 	}
 	
 	/**
+	 * This method return volume MDP information and Folio information.
+	 * It's a concatenation of volume number, volume letter extension, folio number and folio mod.
+	 * It's a transient property(not stored on database ndr).
+	 * 
+	 * @return String rappresentation of volume and folio identifiers.
+	 */
+	@Transient
+	public String getMDPAndFolio(){
+		String returnValue = "";
+		
+		if(getVolume().getMDP() != null){
+			returnValue += getVolume().getMDP();
+		}
+		if(getFolioNum() != null){
+			returnValue += "/" + getFolioNum().toString();
+			if(getFolioMod() != null){
+				returnValue += getFolioMod();
+			}
+		}
+		else{
+			returnValue += "/NNF";
+		}
+		
+		return returnValue;
+	}
+	
+	/**
 	 * @param transcribeFolioNum the transcribeFolioNum to set
 	 */
 	public void setTranscribeFolioNum(Integer transcribeFolioNum) {

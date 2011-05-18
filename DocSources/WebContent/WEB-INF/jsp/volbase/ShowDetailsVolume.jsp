@@ -38,7 +38,7 @@
 			<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
 			<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></security:authorize></p>
 		</div> -->
-		<br />
+		
 		<h3>${volume.serieList}</h3>
 		<div class="listDetails">
 			<div class="row">

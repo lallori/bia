@@ -52,7 +52,7 @@
 				<th>Date</th>
 				<th>Sender Location</th>
 				<th>Recipient Location</th>
-				<th>MDP/Folio</th>
+				<th>Volume/Folio</th>
 				<!--<th>Folio</th> -->
 			</tr>
 		</thead>
