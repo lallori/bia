@@ -12,31 +12,31 @@
 		<div id="imgPortraitPerson"></div>
 		<p style="text-align:center"><b>Portrait</b></p>
 	</div>
-	<h2 class="titlepeople">${person.mapNameLf}</h2>
+	<h3>${person.mapNameLf}</h3>
 	<div class="listDetails">
 		<div class="row">
-			<div class="item">Gender:</div> <div class="value">${person.gender}</div>
+			<div class="item">Gender</div> <div class="value">${person.gender}</div>
 		</div>
 		<div class="row">
-			<div class="item">Date of Birth:</div> <div class="value">${person.bornDate}</div>
+			<div class="item">Date of Birth</div> <div class="value">${person.bornDate}</div>
 		</div>
 		<div class="row">
-			<div class="item">Birth Place:</div><div class="value"><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+			<div class="item">Birth Place</div><div class="value"><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
 		</div>
 		<div class="row">
-			<div class="item">Active Start:</div> <div class="value">${person.activeStart}</div>
+			<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
 		</div>
 		<div class="row">
-			<div class="item">Date of Death:</div> <div class="value">${person.deathDate}</div>
+			<div class="item">Date of Death</div> <div class="value">${person.deathDate}</div>
 		</div>
 		<div class="row">
-			<div class="item">Modern Date:</div> <div class="value">1577</div>
+			<div class="item">Modern Date</div> <div class="value">1577</div>
 		</div>
 		<div class="row">
-			<div class="item">Death Place:</div> <div class="value"><a href="#" id="linkSearch">${person.deathPlace.placeNameFull}</a></div>
+			<div class="item">Death Place</div> <div class="value"><a href="#" id="linkSearch">${person.deathPlace.placeNameFull}</a></div>
 		</div>
 		<div class="row">
-			<div class="item">Active End:</div> <div class="value">${person.activeEnd}</div>
+			<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
 		</div>
 	</div>
 </div>
@@ -57,17 +57,23 @@
 </div>
 
 
-<div id="EditTitlesOccupationsPersonDiv" class="background">
+<div id="EditTitlesOrOccupationsPersonDiv" class="background">
 	<div class="title">	
 		<h5>TITLES / OCCUPATIONS</h5>
 	</div>
 	
-	<div class="listDetails">
-		<c:forEach items="${person.poLink}" var="currentTitle">
+	<div class="list">
+		<c:forEach items="${person.poLink}" var="currentPoLink">
 		<div class="row">
-			<div class="item"><a href="#" id="linkSearch"><b>${currentTitle.titleOccList.titleOcc}</b></a></div>
-			<div class="item"><a href="#" id="linkSearch">${currentTitle.titleOccList.roleCat.roleCatMajor}, ${currentTitle.titleOccList.roleCat.roleCatMinor}</a><p id="info"><u>Start:</u> ${currentTile.startYear} | <u>End:</u> ${currentTile.endYear}</p></div>
-			<br />
+			<c:if test="${currentPoLink.preferredRole}">
+				<a title="Preferred Role" class="preferredIcon" href="#"></a>
+			</c:if>
+			<c:if test="${!currentPoLink.preferredRole}">
+				<a class="notPreferredIcon" href="#"></a>
+			</c:if>
+			<div class="value60"><a class="linkSearch" href="#"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br />
+			<a class="linkSearch" href="#">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div>
+			<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
 		</div>
 		</c:forEach>
 	</div>
@@ -105,9 +111,10 @@
 		<h5>CHILDREN</h5>
 	</div>
 	<div class="list">
-	<c:forEach items="${children}" var="currentChildren">
+	<c:forEach items="${person.children}" var="currentChild">
 		<div class="row">
-			<div class="item"><a href="#" id="linkSearch">${currentChildren.last}, ${currentChildren.first} ${currentChildren.sucNum}</a> <p id="info"><u>Birth:</u> ${currentChildren.bornYear} | <u>Death:</u> ${currentChildren.deathYear}</p> </div>
+			<div class="value"><a href="#">${currentChild.child}</a></div>
+			<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
 		</div>
 	</c:forEach>
 	</div>
@@ -117,11 +124,14 @@
 	<div class="title">	
 		<h5>SPOUSES</h5>
 	</div>
-	<ul>
+	<div class="list">
 	<c:forEach items="${marriages}" var="currentMarriage">
-		<li><a href="#" id="linkSearch">${currentMarriage.wife.last}, ${currentMarriage.wife.first} ${currentMarriage.wife.sucNum}</a> <p id="info"><u>Marriage:</u> ${currentMarriage.startYear} - ${currentMarriage.endYear} | <u>Death:</u> ${currentMarriage.wife.deathYear}</p></li>
+		<div class="row">
+			<div class="value"><a class="linkSpouse" href="#">${currentMarriage.wife}</a></div>
+			<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
+		</div>
 	</c:forEach>
-	</ul>
+	</div>
 </div>
 
 <div id="EditResearchNotesPersonDiv" class="background">
@@ -129,7 +139,11 @@
 	<h5>RESEARCH NOTES</h5>
 	</div>
 
-	<ul>
-		<li>${person.bioNotes}</li>
-	</ul>
+	<div class="list">
+		<div class="row">
+			<div class="value">
+				${person.bioNotes}
+			</div>
+		</div>
+	</div>
 </div>
