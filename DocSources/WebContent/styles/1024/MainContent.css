@@ -189,6 +189,21 @@ h2 {
 	text-align:justify;
 }
 
+.valueHilight {
+	display: table-cell;
+	width:40%;
+	text-align:left;
+	color:#C0272D;
+	padding:3px 0 3px 5px;
+	text-align:justify;
+}
+
+.value5 {
+	display: table-cell;
+	width:20px;
+	padding-right:7px;
+}
+
 .value60 {
 	display: table-cell;
 	width:60%;
@@ -890,6 +905,11 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;
 }
 
+#EditDetailsDocumentDiv, #EditDetailsVolumeDiv {
+	margin-top:10px;
+	min-height:100px;
+}
+
 #body_left #EditDetailsPlaceDiv, #body_right #EditDetailsPlaceDiv  {
 	width:485px;
 	margin-top:0px;
@@ -904,7 +924,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 #tabs {
-	top:-7px;
+	top:-9px;
 }
 
 #EditRelationshipPersonDiv { 
@@ -1163,11 +1183,22 @@ input.file {
 
 .preferredIcon {
 	width:17px;
-	height:16px;
-	display:inline;
-	position:absolute;
-	margin:3px 0 0 -15px;
+	height:20px;
 	background-image:url(/DocSources/images/1024/img_preferred.png);
+	position:absolute;
+	margin:-15px 0 0 -10px;
+	background-repeat:no-repeat;
+	cursor:default;
+	background-color:transparent;
+	border:none;
+}
+
+.preferredIconEdit {
+	width:17px;
+	height:20px;
+	background-image:url(/DocSources/images/1024/img_preferred.png);
+	position:absolute;
+	margin-left:-20px;
 	background-repeat:no-repeat;
 	cursor:default;
 	background-color:transparent;
@@ -1487,8 +1518,8 @@ a#editValue, .editValue { /* "Edit Value" Button */
 
 a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	font-size:11px;
-	text-decoration:none;
-	color:#006;
+	text-decoration: underline;
+	color: #B99C84;
 	display:inline;
 }
 
@@ -3133,3 +3164,29 @@ span.categorySearch {
 #VettingChronologyDiv #close { /* Close Button */
 	margin-left:340px;
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* ----------------------------- SHARE WINDOW ------------------------------- */
+
+ul#network {
+	list-style-type: none;
+	height: 30px;
+	width: 200px;
+	position:absolute;
+	margin:-3px 0 0 250px;
+}
+
+ul#network a {
+	width:25px;
+	height:25px;
+	background:url(/DocSources/images/1024/img_network.png) no-repeat;
+	display: block;
+	float:right;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+
