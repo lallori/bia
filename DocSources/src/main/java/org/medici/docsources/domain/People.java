@@ -47,27 +47,33 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.NGramFilterFactory;
+import org.apache.solr.analysis.StandardFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.CharFilterDef;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.NumericField;
+import org.hibernate.search.annotations.NumericFields;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
-import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
 
 /**
  * Person entity.
@@ -76,16 +82,31 @@ import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
  */
 @Entity
 @Indexed
-@AnalyzerDef(name="peopleAnalyzer",
-		  charFilters = {
-		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
-		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
-		    })
-		  },
-		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-		  filters = {
-		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
-		    })
+@AnalyzerDefs({
+	@AnalyzerDef(name="peopleAnalyzer",
+		charFilters = {
+			@CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+				@Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+			})
+		},
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		filters = {
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
+	}),
+	@AnalyzerDef(name = "peopleNGram3Analyzer",
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class ),
+		filters = {
+			@TokenFilterDef(factory = StandardFilterFactory.class),
+			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+			@TokenFilterDef(factory = NGramFilterFactory.class,
+				params = { 
+					@Parameter(name = "minGramSize", value = "3"),
+					@Parameter(name = "maxGramSize", value = "3")
+				})
+		}
+	)
+})
 @Audited
 @Table ( name = "\"tblPeople\"" ) 
 public class People implements Serializable {
@@ -101,7 +122,10 @@ public class People implements Serializable {
 	private Integer personId;
 
 	@Column (name="\"MAPNameLF\"", length=150)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="mapNameLf_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String mapNameLf;
 	
 	@Column (name="\"GENDER\"", length=1)
@@ -117,19 +141,32 @@ public class People implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String activeEnd;
 	
+	@Column (name="\"BYEAR\"", length=4, nullable=true)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="bornYear_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="bornYear"),
+		@NumericField(forField="bornYear_Sort")
+	})
+	private Integer bornYear;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"BMONTHNUM\"", nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=MonthBridge.class)
+	@IndexedEmbedded
 	private Month bornMonth;
 	
 	@Column (name="\"BDAY\"", length=3, columnDefinition="TINYINT")
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="bornDay_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="bornDay"),
+		@NumericField(forField="bornDay_Sort")
+	})
 	private Integer bornDay;
-	
-	@Column (name="\"BYEAR\"", length=4, nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer bornYear;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"BPLACEID\"")
@@ -137,22 +174,35 @@ public class People implements Serializable {
 	private Place bornPlace;
 	
 	@Column (name="\"BPLACE\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String bPlace;
+	
+	@Column (name="\"DYEAR\"", length=4, nullable=true)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="deathYear_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="deathYear"),
+		@NumericField(forField="deathYear_Sort")
+	})
+	private Integer deathYear;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"DMONTHNUM\"", nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=MonthBridge.class)
+	@IndexedEmbedded
 	private Month deathMonth;
 	
 	@Column (name="\"DDAY\"", length=3, columnDefinition="TINYINT")
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="deathDay_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="deathDay"),
+		@NumericField(forField="deathDay_Sort")
+	})
 	private Integer deathDay;
-	
-	@Column (name="\"DYEAR\"", length=4, nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer deathYear;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"DPLACEID\"")
@@ -160,7 +210,7 @@ public class People implements Serializable {
 	private Place deathPlace;
 	
 	@Column (name="\"DPLACE\"", length=50)
-	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dPlace;
 	
 	@Column (name="\"FIRST\"", length=50)
@@ -168,15 +218,15 @@ public class People implements Serializable {
 	private String first;
 	
 	@Column (name="\"SUCNUM\"", length=6)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String sucNum;
 	
 	@Column (name="\"MIDDLE\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String middle;
 	
 	@Column (name="\"MIDPREFIX\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String midPrefix;
 	
 	@Column (name="\"LAST\"", length=50)
@@ -184,49 +234,49 @@ public class People implements Serializable {
 	private String last;
 	
 	@Column (name="\"LASTPREFIX\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String lastPrefix;
 	
 	@Column (name="\"POSTLAST\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String postLast;
 	
 	@Column (name="\"POSTLASTPREFIX\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String postLastPrefix;
 	
 	@Column (name="\"BAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bornApprox;
 	
 	@Column (name="\"BDATEBC\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bornDateBc;
 	
 	@Column (name="\"BPLACEUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bornPlaceUnsure;
 	
 	@Column (name="\"DAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean deathApprox;
 	
 	@Column (name="\"DYEARBC\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean deathDateBc;
 	
 	@Column (name="\"DPLACEUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean deathPlaceUnsure;
 	
 	@Column (name="\"STATUS\"", length=15)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String status;
 	
 	@Column (name="\"BIONOTES\"", columnDefinition="LONGTEXT")
@@ -238,7 +288,7 @@ public class People implements Serializable {
 	private String staffNotes;
 	
 	@Column (name="\"PORTRAIT\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean portrait;
 	

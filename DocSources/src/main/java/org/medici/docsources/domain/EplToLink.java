@@ -51,6 +51,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
 
 /**
  * EplToLink entity.
@@ -91,7 +92,7 @@ public class EplToLink implements Serializable{
 	
 	@Column (name="\"DATECREATED\"", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO,  indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 

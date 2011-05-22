@@ -34,8 +34,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.util.GrantedAuthorityUtils;
+import org.medici.docsources.common.util.HistoryLogUtils;
 import org.medici.docsources.common.util.HttpUtils;
 import org.medici.docsources.domain.HistoryLog;
+import org.medici.docsources.domain.HistoryLog.ActionCategory;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.log.LogService;
 import org.springframework.context.ApplicationEvent;
@@ -63,10 +65,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class HistoryLogAction extends HandlerInterceptorAdapter /*
- * implements
- * ApplicationListener
- */{
+public class HistoryLogAction extends HandlerInterceptorAdapter {
 	private LogService logService;
 	private final Logger logger = Logger.getLogger(this.getClass());
 
@@ -76,32 +75,6 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 	 */
 	public LogService getLogService() {
 		return logService;
-	}
-
-	/**
-	 * 
-	 * @param event
-	 */
-	public void onApplicationEvent(ApplicationEvent event) {
-		if (event instanceof AuthorizationFailureEvent) {
-			logger.info("User not authenticated. ");
-		} else if (event instanceof AuthenticationSuccessEvent) {
-			UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = ((UsernamePasswordAuthenticationToken) event
-					.getSource());
-			HistoryLog historyLog = new HistoryLog();
-			historyLog.setUsername(userNamePasswordAuthenticationToken.getCredentials().toString());
-			historyLog.setDateAndTime(new Date(System.currentTimeMillis()));
-			historyLog.setIpAddress(((WebAuthenticationDetails) userNamePasswordAuthenticationToken.getDetails()).getRemoteAddress());
-			historyLog.setAction("/loginProcess");
-			historyLog.setAuthorities(GrantedAuthorityUtils.toString(((UserDetails) userNamePasswordAuthenticationToken.getPrincipal()).getAuthorities()));
-
-			try {
-				getLogService().traceHistoryLog(historyLog);
-			} catch (ApplicationThrowable ex) {
-			}
-
-			logger.info(historyLog.toString());
-		}
 	}
 
 	/**
@@ -127,12 +100,10 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 			}
 		}
 
-		historyLog.setExecutionTime(System.currentTimeMillis() - historyLog.getExecutionTime());
-
-		try {
+		/*try {
 			getLogService().traceHistoryLog(historyLog);
 		} catch (ApplicationThrowable ex) {
-		}
+		}*/
 
 		logger.info(historyLog.toString());
 		super.postHandle(request, response, handler, modelAndView);
@@ -166,9 +137,10 @@ public class HistoryLogAction extends HandlerInterceptorAdapter /*
 
 		historyLog.setDateAndTime(new Date(System.currentTimeMillis()));
 		historyLog.setIpAddress(request.getRemoteAddr());
-		historyLog.setAction(request.getRequestURI().toString());
+		historyLog.setActionCategory(HistoryLogUtils.extractActionCategory(request.getRequestURI().toString()));
+		historyLog.setAction(HistoryLogUtils.extractAction(request, historyLog.getActionCategory()));
+		historyLog.setActionUrl(HistoryLogUtils.extractActionUrl(request, historyLog.getActionCategory()));
 		historyLog.setInformations(HttpUtils.retrieveHttpParametersAsString(request, false, true));
-		historyLog.setExecutionTime(System.currentTimeMillis());
 		request.setAttribute("historyLog", historyLog);
 
 		logger.info(historyLog.toString());

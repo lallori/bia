@@ -47,26 +47,32 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.NGramFilterFactory;
+import org.apache.solr.analysis.StandardFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.CharFilterDef;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.NumericField;
+import org.hibernate.search.annotations.NumericFields;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
-import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
 
 /**
  * Document entity.
@@ -75,16 +81,31 @@ import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
  */
 @Entity
 @Indexed
-@AnalyzerDef(name="documentAnalyzer",
-		  charFilters = {
-		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
-		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
-		    })
-		  },
-		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-		  filters = {
-		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
-		    })
+@AnalyzerDefs({
+	@AnalyzerDef(name="documentAnalyzer",
+		charFilters = {
+			@CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+				@Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+			})
+		},
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		filters = {
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
+	}),
+	@AnalyzerDef(name = "documentNGram3Analyzer",
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class ),
+		filters = {
+			@TokenFilterDef(factory = StandardFilterFactory.class),
+			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+			@TokenFilterDef(factory = NGramFilterFactory.class,
+				params = { 
+					@Parameter(name = "minGramSize", value = "3"),
+					@Parameter(name = "maxGramSize", value = "3")
+				})
+		}
+	)
+})
 @Audited
 @Table ( name = "\"tblDocuments\"" ) 
 public class Document implements Serializable{
@@ -109,134 +130,176 @@ public class Document implements Serializable{
 	private String subVol;
 	
 	@Column (name="\"RESID\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String researcher;
 	
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 
 	@Column (name="\"LASTUPDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
 	
 	@Column (name="\"DOCTOBEVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean docTobeVetted;
 	
 	@Column (name="\"DOCTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date docToBeVettedDate;
 	
 	@Column (name="\"DOCVETID\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docVetId;
 	
 	@Column (name="\"DOCVETBEGINS\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date docVetBegins;
 	
 	@Column (name="\"DOCVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Boolean docVetted;
 	
 	@Column (name="\"DOCVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date docVettedDate;
 	
 	@Column (name="\"DOCSTATBOX\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docStatBox;
 	
 	@Column (name="\"NEWENTRY\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean newEntry;
 	
 	@Column (name="\"INSERTNUM\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="insertNum_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String insertNum;
 	
 	@Column (name="\"INSERTLET\"", length=15)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="insertLet_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String insertLet;
 	
 	@Column (name="\"FOLIONUM\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="folioNum_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="folioNum"),
+		@NumericField(forField="folioNum_Sort")
+	})
 	private Integer folioNum;
 	
 	@Column (name="\"FOLIOMOD\"", length=15)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="folioMod_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String folioMod;
 	
 	@Column (name="\"TRANSCRIBEFOLIONUM\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="transcribeFolioNum_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private Integer transcribeFolioNum;
 
 	@Column (name="\"TRANSCRIBEFOLIOMOD\"", length=15)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="transcribeFolioMod_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String transcribeFolioMod;
 	
 	@Column (name="\"CONTDISC\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean contDisc;
 	
 	@Column (name="\"UNPAGED\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean unpaged;
 	
-	@Column (name="\"DOCDAY\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer docDay;
+	@Column (name="\"DOCYEAR\"", length=10)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="docYear_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="docYear"),
+		@NumericField(forField="docYear_Sort")
+	})
+	private Integer docYear;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"DOCMONTHNUM\"", nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=MonthBridge.class)
+	@IndexedEmbedded
 	private Month docMonthNum;
 	
-	@Column (name="\"DOCYEAR\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private Integer docYear;
+	@Column (name="\"DOCDAY\"", length=10)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="docDay_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="docDay"),
+		@NumericField(forField="docDay_Sort")
+	})
+	private Integer docDay;
 	
 	@Column (name="\"SORTABLEDATE\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String sortableDate;
 	
 	@Column (name="\"YEARMODERN\"", length=15, precision=5)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="yearModern_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="yearModern"),
+		@NumericField(forField="yearModern_Sort")
+	})
 	private Integer yearModern;
 	
 	@Column (name="\"RECKONING\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean reckoning;
 	
 	@Column (name="\"UNDATED\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean undated;
 	
 	@Column (name="\"DATEUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean dateUns;
 	
 	@Column (name="\"DATEAPPROX\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dateApprox;
 	
 	@Column (name="\"DATENOTES\"", length=255)
@@ -249,7 +312,7 @@ public class Document implements Serializable{
 	private People senderPeople;
 	
 	@Column (name="\"SENDUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean senderPeopleUnsure;
 	
@@ -259,12 +322,12 @@ public class Document implements Serializable{
 	private Place senderPlace;
 	
 	@Column (name="\"SENDLOCUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean senderPlaceUnsure;
 	
 	@Column (name="\"SENDNOTES\"", length=250)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String sendNotes;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -273,7 +336,7 @@ public class Document implements Serializable{
 	private People recipientPeople;
 	
 	@Column (name="\"RECIPUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean recipientPeopleUnsure;
 	
@@ -283,21 +346,21 @@ public class Document implements Serializable{
 	private Place recipientPlace;
 	
 	@Column (name="\"RECIPLOCUNS\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean recipientPlaceUnsure;
 	
 	@Column (name="\"RECIPNOTES\"", length=250)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String recipNotes;
 	
 	@Column (name="\"GRAPHIC\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean graphic;
 
 	@Column (name="\"DOCTYPOLOGY\"", length=250)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docTypology;
 
 	//Linked fact Check
@@ -717,6 +780,10 @@ public class Document implements Serializable{
 	/**
 	 * This method return document date information. It's a concatenation of 
 	 * docYear docMonthNum docDay and (yearmoden). 
+	 * 
+	 * e.g.
+	 * 
+	 * 1500 March 23 (1501)
 	 *  
 	 * @return String rappresentation of Document Date.
 	 */

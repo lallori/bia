@@ -45,6 +45,8 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.PhraseQuery;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
@@ -55,6 +57,8 @@ import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.transform.Transformers;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.People;
@@ -412,13 +416,17 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@Override
 	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
 
+		// We obtain hibernate-search session
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
+		// We define entity on which we make search 
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(People.class).get();
-        
+
+		// We set search on fields .
 		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
 				"first",
 				"last",
@@ -438,14 +446,28 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
 		booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
 
-		final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+		// We execute search
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+		
+		// We set size of result.
 		if (paginationFilter.getTotal() == null) {
 			page.setTotal(new Long(fullTextQuery.getResultSize()));
 		}
 
+		// We set pagination
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
 
+		// We manage sorting (this manages sorting on multiple fields)
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+			}
+			fullTextQuery.setSort(new Sort(sortFields));
+		}
+		
 		page.setList(fullTextQuery.list());
 
         return page;

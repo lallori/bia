@@ -62,6 +62,39 @@ public class AjaxController {
 	}
 
 	/**
+	 * 
+	 */
+	@RequestMapping(value = "/src/docbase/CheckDocumentDigitized", method = RequestMethod.GET)
+	public ModelAndView checkVolumeDigitized(	@RequestParam(value="entryId", required=false) Integer entryId,
+												@RequestParam(value="folioNum", required=false) Integer folioNum,
+												@RequestParam(value="folioMod", required=false) String folioMod,
+												@RequestParam(value="volNum", required=false) Integer volNum, 
+												@RequestParam(value="volLetExt", required=false) String volLetExt) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		if (entryId != null) {
+			try {
+				Boolean digitized = getDocBaseService().checkDocumentDigitized(folioNum, folioMod, volNum, volLetExt);
+				model.put("digitized", digitized.toString());
+			} catch (ApplicationThrowable aex) {
+				model.put("digitized", "false");
+				model.put("error", aex.getApplicationError().toString());
+			}
+		} else {
+			model.put("digitized", "false");
+			model.put("error", "incorrect call");
+		}
+		
+		model.put("entryId", entryId.toString());
+		model.put("folioNum", folioNum.toString());
+		model.put("folioMod", folioMod.toString());
+		model.put("volNum", volNum.toString()); 
+		model.put("volLetExt", volLetExt.toString());
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
 	 * This method returns a list of person to add to document. Result does not
 	 * contains person already linked to document. 
 	 * 

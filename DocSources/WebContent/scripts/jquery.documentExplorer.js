@@ -81,15 +81,24 @@
     $.documentExplorer = {};
 
     $.documentExplorer.defaultParams = {
+    	checkDocumentDigitizedUrl	: "",
     	showExplorerDocumentUrl     : "",
-		target      : $("#body_right")
     };
 
     $.fn.documentExplorer = function (params) {
-    	var functionParams = $.extend($.documentExplorer.defaultParams, params);
-    	//$(functionParams.target).load(functionParams["showExplorerDocumentUrl"]);
-    	$( "#tabs" ).tabs( "add" , functionParams["showExplorerDocumentUrl"], "Document Explorer</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-    	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
+    	var options = $.extend($.documentExplorer.defaultParams, params);
+    	var documentDigitized = false;
+    	$.ajax({ type:"GET", url:options["checkDocumentDigitizedUrl"], async:false, success:function(data) {
+    		if (data.digitized == "true") {
+    			documentDigitized = true;
+    		}
+    	}
+		});
+
+    	if (documentDigitized == true) {
+        	$( "#tabs" ).tabs( "add" , options["showExplorerDocumentUrl"], "Document Explorer</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+        	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
+    	}
     	
     	return $;
     };

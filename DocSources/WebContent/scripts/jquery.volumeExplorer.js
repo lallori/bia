@@ -56,7 +56,8 @@
         	}
 
         	if (volumeDigitized == true) {
-        		$(options["target"]).load(options["showExplorerVolumeURL"]);
+            	$( "#tabs" ).tabs( "add" , options["showExplorerVolumeURL"], "Volume Explorer</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+            	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
         	}
         });
 

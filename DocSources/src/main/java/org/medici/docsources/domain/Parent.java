@@ -38,11 +38,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.CharFilterDef;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
@@ -51,6 +52,7 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.annotations.Parameter;
@@ -62,16 +64,18 @@ import org.hibernate.search.annotations.Parameter;
  */
 @Entity
 @Indexed
-@AnalyzerDef(name="parentsAnalyzer",
-		  charFilters = {
-		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
-		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
-		    })
-		  },
-		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-		  filters = {
-		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
-		    })
+@AnalyzerDefs({
+	@AnalyzerDef(name="parentsAnalyzer",
+		charFilters = {
+			@CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+				@Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+			})
+		},
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		filters = {
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
+	})
+})
 @Audited
 @Table ( name = "\"tblParents\"" ) 
 public class Parent implements Serializable {
@@ -97,12 +101,12 @@ public class Parent implements Serializable {
 	private People child;
 
 	@Column (name="\"DATECREATED\"")
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 	
 	@Column (name="\"LASTUPDATE\"")
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
 

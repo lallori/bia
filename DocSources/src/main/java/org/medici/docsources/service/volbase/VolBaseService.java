@@ -227,6 +227,14 @@ public interface VolBaseService {
 	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
+	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Month}.
+	 * 
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public void generateIndexMonth() throws ApplicationThrowable;
+	
+	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.SerieList}.
 	 * 
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.

@@ -55,7 +55,6 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
-import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
 
 /**
  * PoLink entity. This entity links a Person with his correspondents TitleOccList
@@ -97,8 +96,7 @@ public class PoLink implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"STARTMONTHNUM\"", nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=MonthBridge.class)
+	@IndexedEmbedded
 	private Month startMonthNum;
 	
 	@Column (name="\"STARTDAY\"", length=10)
@@ -115,8 +113,7 @@ public class PoLink implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"ENDMONTHNUM\"", nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=MonthBridge.class)
+	@IndexedEmbedded
 	private Month endMonthNum;
 
 	@Column (name="\"ENDDAY\"", length=10)
@@ -124,37 +121,37 @@ public class PoLink implements Serializable {
 	private Integer endDay;
 	
 	@Column (name="\"PRTAG\"", length=1, columnDefinition="tinyint", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean preferredRole;
 	
 	@Column (name="\"PRLINKNOTES\"", columnDefinition="LONGTEXT")
-	@Field(index=Index.TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String prLinkNotes;
 	
 	@Column (name="\"STARTAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean startApprox;
 	
 	@Column (name="\"STARTUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean startUns;
 	
 	@Column (name="\"ENDAPPROX\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean endApprox;
 	
 	@Column (name="\"ENDUNS\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean endUns;
 	
 	@Column (name="\"DATECREATED\"")
 	@Temporal (TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 	

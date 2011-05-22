@@ -32,6 +32,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,12 +65,15 @@ public class HistoryLog implements Serializable {
 	private String username;
 	@Column (name="\"authorities\"", length=50)
 	private String authorities;
-	@Column (name="\"action\"", length=1000, nullable=false)
+	@Column (name="\"actionCategory\"", length=20, nullable=false)
+	@Enumerated(EnumType.STRING)
+	private ActionCategory actionCategory;
+	@Column (name="\"action\"", length=100, nullable=false)
 	private String action;
+	@Column (name="\"actionUrl\"", length=100, nullable=false)
+	private String actionUrl;
 	@Column (name="\"informations\"", length=3000)
 	private String informations;
-	@Column (name="\"executionTime\"", length=15, nullable=false)
-	private Long executionTime;
 
 	/**
 	 * @return the idHistoryLog
@@ -139,6 +144,20 @@ public class HistoryLog implements Serializable {
 	public void setAuthorities(String authorities) {
 		this.authorities = authorities;
 	}
+
+	/**
+	 * @param actionCategory the actionCategory to set
+	 */
+	public void setActionCategory(ActionCategory actionCategory) {
+		this.actionCategory = actionCategory;
+	}
+
+	/**
+	 * @return the actionCategory
+	 */
+	public ActionCategory getActionCategory() {
+		return actionCategory;
+	}
 	
 	/**
 	 * @return the action
@@ -153,7 +172,21 @@ public class HistoryLog implements Serializable {
 	public void setAction(String action) {
 		this.action = action;
 	}
-	
+
+	/**
+	 * @param actionUrl the actionUrl to set
+	 */
+	public void setActionUrl(String actionUrl) {
+		this.actionUrl = actionUrl;
+	}
+
+	/**
+	 * @return the actionURL
+	 */
+	public String getActionUrl() {
+		return actionUrl;
+	}
+
 	/**
 	 * @return the informations
 	 */
@@ -185,16 +218,24 @@ public class HistoryLog implements Serializable {
 		stringBuffer.append(" ]");
 		return stringBuffer.toString();
 	}
+
 	/**
-	 * @param executionTime the executionTime to set
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
 	 */
-	public void setExecutionTime(Long executionTime) {
-		this.executionTime = executionTime;
-	}
-	/**
-	 * @return the executionTime
-	 */
-	public Long getExecutionTime() {
-		return executionTime;
+	public static enum ActionCategory {
+		DOCUMENTS("Documents"), PEOPLE("People"), PLACE("Place"), VOLUME("Volume"), SIMPLE_SEARCH("Simple Search"), ADVANCED_SEARCH("Advanced Search"), UNKNOWN_CATEGORY("Unknown");
+		
+		private final String actionCategory;
+
+	    private ActionCategory(String value) {
+	    	actionCategory = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return actionCategory;
+	    }
 	}
 }

@@ -115,6 +115,27 @@ public interface DocBaseService {
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
 	
 	/**
+	 * 
+	 * @param alias
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public Page advancedSearchDocuments(Object advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param folioNum
+	 * @param folioMod
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean checkDocumentDigitized(Integer folioNum, String folioMod, Integer volNum, String volLetExt) throws ApplicationThrowable;
+
+	/**
 	 * This method will return a new {@link org.medici.docsources.domain.Document} constructed 
 	 * in runtime, from which, user can follow to editing new document.
 	 * 
@@ -228,7 +249,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param entryId
@@ -247,7 +268,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * with specific image type and folio number linked to a 
@@ -465,5 +486,4 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Page simpleSearchDocuments(String alias, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
 }

@@ -46,27 +46,33 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.NGramFilterFactory;
+import org.apache.solr.analysis.StandardFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.CharFilterDef;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.NumericField;
+import org.hibernate.search.annotations.NumericFields;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.search.bridge.builtin.BooleanBridge;
-import org.medici.docsources.common.hibernate.search.bridge.MonthBridge;
 import org.medici.docsources.common.util.VolumeUtils;
 
 /**
@@ -76,16 +82,31 @@ import org.medici.docsources.common.util.VolumeUtils;
  */
 @Entity
 @Indexed
-@AnalyzerDef(name="volumeAnalyzer",
-		  charFilters = {
-		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
-		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
-		    })
-		  },
-		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-		  filters = {
-		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
-		    })
+@AnalyzerDefs({
+	@AnalyzerDef(name="volumeAnalyzer",
+		charFilters = {
+			@CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+				@Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+			})
+		},
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		filters = {
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
+	}),
+	@AnalyzerDef(name = "volumeNGram3Analyzer",
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class ),
+		filters = {
+			@TokenFilterDef(factory = StandardFilterFactory.class),
+			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+			@TokenFilterDef(factory = NGramFilterFactory.class,
+				params = { 
+					@Parameter(name = "minGramSize", value = "3"),
+					@Parameter(name = "maxGramSize", value = "3")
+				})
+		}
+	)
+})
 @Audited
 @Table ( name = "\"tblVolumes\"" ) 
 public class Volume implements Serializable {
@@ -105,11 +126,21 @@ public class Volume implements Serializable {
 	private SerieList serieList;
 	
 	@Column (name="\"VOLNUM\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="volNum_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="volNum"),
+		@NumericField(forField="volNum_Sort")
+	})
 	private Integer volNum;
 	
 	@Column (name="\"VOLLETEXT\"", length=1)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="volLetExt_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String volLetExt;
 	
 	@Column (name="\"RESID\"")
@@ -118,80 +149,109 @@ public class Volume implements Serializable {
 	
 	@Column (name="\"DATECREATED\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateCreated;
 	
 	@Column (name="\"VOLTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date volTobeVettedDate;
 	
 	@Column (name="\"VOLTOBEVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean volTobeVetted;
 	
 	@Column (name="\"VOLVETID\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String volVetId;
 	
 	@Column (name="\"VOLVETBEGINS\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date volVetBegins;
 	
 	@Column (name="\"VOLVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean volVetted;
 	
 	@Column (name="\"VOLVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date volVettedDate;
 	
 	@Column (name="\"STATBOX\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String statBox;
 	
 	@Column (name="\"STARTYEAR\"", length=5)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="startYear_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="startYear"),
+		@NumericField(forField="startYear_Sort")
+	})
 	private Integer startYear;
 	
 	@Column (name="\"STARTMONTH\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="startMonth_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String startMonth;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"STARTMONTHNUM\"", nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=MonthBridge.class)
+	@IndexedEmbedded
 	private Month startMonthNum;
 	
 	@Column (name="\"STARTDAY\"", length=3, columnDefinition="TINYINT")
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="startDay_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="startDay"),
+		@NumericField(forField="startDay_Sort")
+	})
 	private Integer startDay;
 	
 	@Column (name="\"ENDYEAR\"", length=5)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="endYear_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="endYear"),
+		@NumericField(forField="endYear_Sort")
+	})
 	private Integer endYear;
 	
 	@Column (name="\"ENDMONTH\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String endMonth;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"ENDMONTHNUM\"", nullable=true)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=MonthBridge.class)
+	@IndexedEmbedded
 	private Month endMonthNum;
 	
 	@Column (name="\"ENDDAY\"", length=3, columnDefinition="TINYINT")
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="endDay_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="endDay"),
+		@NumericField(forField="endDay_Sort")
+	})
 	private Integer endDay;
 	
 	@Column (name="\"DATENOTES\"", columnDefinition="LONGTEXT")
@@ -215,20 +275,23 @@ public class Volume implements Serializable {
 	private String inventarioSommarioDescription;
 
 	@Column (name="\"FOLIOCOUNT\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="folioCount_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String folioCount;
 	
 	@Column (name="\"BOUND\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bound;
 	
 	@Column (name="\"FOLSNUMBRD\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Boolean folsNumbrd;
 	
 	@Column (name="\"OLDALPHAINDEX\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean oldAlphaIndex;
 	
@@ -272,7 +335,7 @@ public class Volume implements Serializable {
 	private String otherLang;
 	
 	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean cipher;
 	
@@ -289,12 +352,12 @@ public class Volume implements Serializable {
 	private String staffMemo;
 	
 	@Column (name="\"PRINTEDMATERIAL\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean printedMaterial;
 	
 	@Column (name="\"PRINTEDDRAWINGS\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean printedDrawings;
 

@@ -53,6 +53,7 @@ import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
@@ -218,6 +219,33 @@ public class DocBaseServiceImpl implements DocBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page advancedSearchDocuments(Object advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean checkDocumentDigitized(Integer folioNum, String folioMod, Integer volNum, String volLetExt) throws ApplicationThrowable {
+		Boolean digitized = Boolean.FALSE;
+		try {
+			Image firstImage = getImageDAO().findDocumentImage(volNum, volLetExt, folioNum, folioMod);
+			if (firstImage != null) {
+				digitized = Boolean.TRUE;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return digitized;
 	}
 
 	/**
@@ -532,7 +560,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -568,7 +596,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -930,18 +958,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getDocumentDAO().simpleSearchDocuments(text, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
 	 * @param documentDAO the documentDAO to set
 	 */
 	public void setDocumentDAO(DocumentDAO documentDAO) {
@@ -1016,5 +1032,17 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().simpleSearchDocuments(text, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 }

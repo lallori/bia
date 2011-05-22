@@ -41,12 +41,16 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
@@ -184,10 +188,16 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 */
 	@Override
 	public Page simpleSearchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
+		
+		// We obtain hibernate-search session
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+		// We define entity on which we make search 
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Volume.class).get();
 
+		// We set search on fields .
 		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
 			"ccondition",
 			"ccontext", 
@@ -198,23 +208,37 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 			"serieList.subTitle1",
 			"serieList.subTitle2", 
 			"startYear",
-			"startMonth", 
+			"startMonthNum.monthName", 
 			"startDay",
 			"endYear",
-			"endMonth", 
+			"endMonthNum.monthName", 
 			"endDay"
 		).matching(text).createQuery();
 
+		// We execute search
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Volume.class );
+		
+		// We set size of result.
 		if (paginationFilter.getTotal() == null) {
 			page.setTotal(new Long(fullTextQuery.getResultSize()));
 		}
 
+		// We set pagination  
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
+		
+		// We manage sorting (this manages sorting on multiple fields)
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+			}
+			fullTextQuery.setSort(new Sort(sortFields));
+		}
+		
 		page.setList(fullTextQuery.list());
 		
 		return page;
-
 	}
 }

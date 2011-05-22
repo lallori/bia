@@ -42,11 +42,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.NGramFilterFactory;
+import org.apache.solr.analysis.StandardFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.CharFilterDef;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DocumentId;
@@ -66,16 +70,31 @@ import org.hibernate.search.annotations.TokenizerDef;
  */
 @Entity
 @Indexed
-@AnalyzerDef(name="titleOccsListAnalyzer",
-		  charFilters = {
-		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
-		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
-		    })
-		  },
-		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-		  filters = {
-		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
-		    })
+@AnalyzerDefs({
+	@AnalyzerDef(name="titleOccsListAnalyzer",
+		charFilters = {
+			@CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+				@Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+			})
+		},
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		filters = {
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
+	}),
+	@AnalyzerDef(name = "titleOccsListNGram3Analyzer",
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class ),
+		filters = {
+			@TokenFilterDef(factory = StandardFilterFactory.class),
+			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+			@TokenFilterDef(factory = NGramFilterFactory.class,
+				params = { 
+					@Parameter(name = "minGramSize", value = "3"),
+					@Parameter(name = "maxGramSize", value = "3")
+				})
+		}
+	)
+})
 @Audited
 @Table ( name = "\"tblTitleOccsList\"" ) 
 public class TitleOccsList implements Serializable {

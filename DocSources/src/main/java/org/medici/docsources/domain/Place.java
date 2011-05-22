@@ -44,17 +44,22 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
+import org.apache.solr.analysis.NGramFilterFactory;
+import org.apache.solr.analysis.StandardFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.CharFilterDef;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
@@ -72,16 +77,31 @@ import org.hibernate.search.bridge.builtin.BooleanBridge;
  */
 @Entity
 @Indexed
-@AnalyzerDef(name="placeAnalyzer",
-		  charFilters = {
-		    @CharFilterDef(factory = MappingCharFilterFactory.class, params = {
-		      @Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
-		    })
-		  },
-		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-		  filters = {
-		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
-		    })
+@AnalyzerDefs({
+	@AnalyzerDef(name="placeAnalyzer",
+		charFilters = {
+			@CharFilterDef(factory = MappingCharFilterFactory.class, params = {
+				@Parameter(name = "mapping", value = "org/medici/docsources/mapping-chars.properties")
+			})
+		},
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+		filters = {
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
+	}),
+	@AnalyzerDef(name = "placeNGram3Analyzer",
+		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class ),
+		filters = {
+			@TokenFilterDef(factory = StandardFilterFactory.class),
+			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+			@TokenFilterDef(factory = NGramFilterFactory.class,
+				params = { 
+					@Parameter(name = "minGramSize", value = "3"),
+					@Parameter(name = "maxGramSize", value = "3")
+				})
+		}
+	)
+})
 @Audited
 @Table ( name = "\"tblPlaces\"" ) 
 public class Place implements Serializable {
@@ -106,11 +126,17 @@ public class Place implements Serializable {
 	private Integer geogKey;
 	
 	@Column (name="\"PLACENAME\"", length=255)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="placeName_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String placeName;
 	
 	@Column (name="\"PLACENAMEFULL\"", length=255)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="placeNameFull_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String placeNameFull;
 	
 	@Column (name="\"PLNAMEFULL_PLTYPE\"", length=255)
@@ -118,11 +144,14 @@ public class Place implements Serializable {
 	private String plNameFullPlType;
 	
 	@Column (name="\"PLTYPE\"", length=255)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="plType_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String plType;
 	
 	@Column (name="\"PREFFLAG\"", length=5)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String prefFlag;
 	
 	@Column (name="\"PLSOURCE\"", length=50)
@@ -130,7 +159,10 @@ public class Place implements Serializable {
 	private String plSource;
 	
 	@Column (name="\"PLPARENT\"", length=255)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="plParent", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String plParent;
 	
 	@Column (name="\"PARENTTYPE\"", length=255)
@@ -138,11 +170,11 @@ public class Place implements Serializable {
 	private String parentType;
 	
 	@Column (name="\"PLPARENT_TERM_ID\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer plParentTermId;
 	
 	@Column (name="\"PLPARENT_SUBJECT_ID\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer plParentSubjectId;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -180,16 +212,16 @@ public class Place implements Serializable {
 	
 	@Column (name="\"DATEENTERED\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateEntered;
 	
 	@Column (name="\"PLACESMEMO\"", columnDefinition="LONGTEXT")
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String placesMemo;
 	
 	@Column (name="\"ADDLRES\"", length=1, columnDefinition="TINYINT", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean addlRes;
 	
@@ -198,11 +230,11 @@ public class Place implements Serializable {
 	private String termAccent;
 	
 	@Column (name="\"LANGUAGE\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer language;
 	
 	@Column (name="\"OTHER_FLAGS\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String otherFlags;
 	
 	@Column (name="\"GEOGKEY_CHILDREN\"", columnDefinition="LONGTEXT")

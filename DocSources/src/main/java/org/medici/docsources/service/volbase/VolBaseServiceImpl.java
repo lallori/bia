@@ -411,6 +411,18 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void generateIndexMonth() throws ApplicationThrowable {
+		try {
+			getMonthDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void generateIndexSerieList() throws ApplicationThrowable {
 		try {
 			getSeriesListDAO().generateIndex();
@@ -555,5 +567,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 			return getVolumeDAO().simpleSearchVolumes(text, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
-		}	}
+		}	
+	}
 }

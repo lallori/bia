@@ -7,7 +7,15 @@
 	<c:url var="ShareDocumentURL" value="/src/docbase/ShowDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
-	
+
+	<c:url var="checkDocumentDigitizedURL" value="/src/docbase/CheckDocumentDigitized.json">
+		<c:param name="entryId"   value="${document.entryId}" />
+		<c:param name="folioNum"   value="${document.folioNum}" />
+		<c:param name="folioMod"   value="${document.folioMod}" />
+		<c:param name="volNum"   value="${document.volume.volNum}" />
+		<c:param name="volLetExt"   value="${document.volume.volLetExt}" />
+	</c:url>
+
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do">
 			<c:param name="entryId"   value="${document.entryId}" />
@@ -103,9 +111,9 @@
 				return false;
 			});
 
-			$j("#EditDetailsDocumentDiv").documentExplorer( {  
+			$j("#EditDetailsDocumentDiv").documentExplorer( {
+				checkDocumentDigitizedUrl	: "${checkDocumentDigitizedURL}",
 				showExplorerDocumentUrl     : "${ShowDocumentExplorerURL}",
-				target                      : $j("#body_right")
 			});  
 
 			$j("#buttonShareLink").click(function() {

@@ -177,33 +177,31 @@ public class AjaxController {
 		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 			switch (sortingColumnNumber) {
 				case 0:
-					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection, SortField.STRING);
 					break;
 				case 1:
-					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", sortingDirection);
+					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf_Sort", sortingDirection, SortField.STRING);
 					break;
 				case 2:
-					paginationFilter.addSortingCriteria("docYear", sortingDirection, SortField.INT);
-					paginationFilter.addSortingCriteria("docMonth.monthNum", sortingDirection, SortField.STRING);
-					paginationFilter.addSortingCriteria("docDay", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("docYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("docMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("docDay_Sort", sortingDirection, SortField.INT);
 					break;
 				case 3:
-					paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
+					paginationFilter.addSortingCriteria("senderPlace.placeName_Sort", sortingDirection, SortField.STRING);
 					break;
 				case 4:
-					paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
+					paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection, SortField.STRING);
 					break;
 				case 5:
-					paginationFilter.addSortingCriteria("volume.volNum", sortingDirection, SortField.INT);
-					paginationFilter.addSortingCriteria("volume.volLetExt", sortingDirection, SortField.STRING);
-					paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.STRING);
-					paginationFilter.addSortingCriteria("folioMod", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("volume.volNum_Sort", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("volume.volLetExt_Sort", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("folioNum_Sort", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("folioMod_Sort", sortingDirection, SortField.STRING);
 					break;
-				/*case 6:
-					paginationFilter.addSortingCriteria("folioNum", sortingDirection, SortField.INT);
-					break;*/
 				default:
-					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
 					break;
 			}
 		}
@@ -276,25 +274,25 @@ public class AjaxController {
 		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 			switch (sortingColumnNumber) {
 				case 0:
-					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
 					break;
 				case 1:
-					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", sortingDirection);
+					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf_Sort", sortingDirection);
 					break;
 				case 2:
 					paginationFilter.addSortingCriteria("dateApprox", sortingDirection);
 					break;
 				case 3:
-					paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
+					paginationFilter.addSortingCriteria("senderPlace.placeName_Sort", sortingDirection);
 					break;
 				case 4:
-					paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
+					paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection);
 					break;
 				case 5:
-					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
 					break;
 				case 6:
-					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
 					break;
 				default:
 					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
@@ -403,19 +401,30 @@ public class AjaxController {
 		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 			switch (sortingColumnNumber) {
 				case 0:
-					paginationFilter.addSortingCriteria("serieList", sortingDirection);
+					paginationFilter.addSortingCriteria("serieList.title_Sort", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("serieList.subTitle1_Sort", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("serieList.subTitle2_Sort", sortingDirection, SortField.STRING);
 					break;
 				case 1:
-					paginationFilter.addSortingCriteria("mdp", sortingDirection);
+					paginationFilter.addSortingCriteria("volNum_Sort", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("volLetExt_Sort", sortingDirection, SortField.STRING);
 					break;
 				case 2:
-					paginationFilter.addSortingCriteria("startDate", sortingDirection);
+					paginationFilter.addSortingCriteria("startYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("startMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("startDay_Sort", sortingDirection, SortField.INT);
 					break;
 				case 3:
-					paginationFilter.addSortingCriteria("endDate", sortingDirection);
+					paginationFilter.addSortingCriteria("endYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("endMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("endDay_Sort", sortingDirection, SortField.INT);
 					break;
 				default:
-					paginationFilter.addSortingCriteria("serieList", sortingDirection);
+					paginationFilter.addSortingCriteria("serieList.title_Sort", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("serieList.subTitle1_Sort", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("serieList.subTitle2_Sort", sortingDirection, SortField.STRING);
 					break;
 			}
 		}

@@ -36,7 +36,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.envers.Audited;
@@ -66,7 +66,7 @@ import org.hibernate.search.annotations.TokenizerDef;
 		  },
 		  tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 		  filters = {
-		    @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class)
+		    @TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
 		    })
 @Audited
 @Table ( name = "\"tblPlaceType\"" ) 
