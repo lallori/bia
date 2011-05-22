@@ -108,7 +108,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hibernate.version>3.6.0.Final</hibernate.version>
-		<hibernatesearch.version>3.3.0.Final</hibernatesearch.version>
+		<hibernatesearch.version>3.4.0.Final</hibernatesearch.version>
 		<hibernatevalidator.version>4.1.0.Final</hibernatevalidator.version>
 		<jpa.version>2.0-cr-1</jpa.version>
 		<jstl.version>1.1.2</jstl.version>
