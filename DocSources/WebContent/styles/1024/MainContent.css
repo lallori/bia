@@ -2497,18 +2497,10 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	background-color:#f6edec;
 }
 
-#advancedSearch_top { /* Backgraound image on the top of the window */
-	width:auto;
+#advancedSearch #advancedSearch_top { /* Backgraound image on the top of the window */
+	width:250px;
 	height:40px;
-	background:url(/DocSources/images/1024/bg_advancedSearchTop.png) repeat-x;
-	margin-bottom:30px;
-}
-
-#advancedSearch_top #advancedSearch_topTitle{ /* Advanced .... Search Title */
-	margin-top:7px;
-	background:url(/DocSources/images/1024/bg_advancedSearchTopTitle.png) no-repeat;
-	background-position:center;
-	height:30px;
+	margin-left:370px;
 }
 
 #advancedSearch #bodyTitles { /* Search Form and Search Filter titles */
@@ -2522,7 +2514,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 
 #advancedSearch h2{
 	font-size:11px;
-	color:#6D5C4D;
+	color:#645350;
 	margin:0 0 10px 0;
 }
 
@@ -2532,7 +2524,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 #advancedSearch #body_left { /* LEFT-hand side of the SCREEN */
 	width:470px;
 	min-height:400px;
-	padding:10px 10px 15px 5px;
+	margin-top:-25px;
+	padding:0 10px 15px 5px;
 	margin-left:10px;
 	border:none;
 	float:left;
@@ -2541,6 +2534,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 
 #advancedSearch #body_left h1 a{
 	text-decoration:none;
+	color: #6D5C4D;
 }
 
 /*
@@ -2548,7 +2542,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 
 #advancedSearch #body_right { /* RIGHT-hand side of the SCREEN */
 	width:400px;
-	min-height:460px;
+	min-height:500px;
 	border:none;
 	margin-left:505px;
 	padding:0 0 25px 50px;
@@ -2653,22 +2647,45 @@ span.categorySearch {
 	border-radius: 1px;
 }
 
-#advancedSearch #body_right .easySearchMode {
-	margin:-31px 0 0 0;
-	background:url(/DocSources/images/1024/button_easySearchMode.png) no-repeat;
+#advancedSearch #body_right .easySearchModeOn {
+	margin:-62px 0 0 0;
+	background:url(/DocSources/images/1024/button_easySearchMode_on.png) no-repeat;
 	width:160px;
 	height:50px;
 	z-index:1;
 	position:absolute;
 }
 
-#advancedSearch #body_right .expertSearchMode {
-	margin:-31px 0 0 190px;
-	background:url(/DocSources/images/1024/button_expertSearchMode.png) no-repeat;
+#advancedSearch #body_right .expertSearchModeOn {
+	margin:-62px 0 0 190px;
+	background:url(/DocSources/images/1024/button_expertSearchMode_on.png) no-repeat;
 	width:160px;
 	height:50px;
 	z-index:1;
 	position:absolute;
+}
+
+#advancedSearch #body_right .easySearchModeOff {
+	margin:-62px 0 0 0;
+	background:url(/DocSources/images/1024/button_easySearchMode_off.png) no-repeat;
+	width:160px;
+	height:50px;
+	z-index:1;
+	position:absolute;
+}
+
+#advancedSearch #body_right .expertSearchModeOff {
+	margin:-62px 0 0 190px;
+	background:url(/DocSources/images/1024/button_expertSearchMode_off.png) no-repeat;
+	width:160px;
+	height:50px;
+	z-index:1;
+	position:absolute;
+}
+
+
+#advancedSearch #body_right .expertSearchModeOn:hover, #advancedSearch #body_right .easySearchModeOn:hover {
+	opacity:0.5;
 }
 
 #advsearch { /* Search Advanced Form Button */
@@ -2698,7 +2715,7 @@ span.categorySearch {
 	background-repeat:no-repeat;
 }
 
-#searchFilterListDiv #customSeachFilterDiv {
+#searchFilterListDiv #customSeachFilterDiv{
 	width:400px;
 	padding:3px 0 0 7px;
 	margin-top:30px;
@@ -2915,24 +2932,18 @@ span.categorySearch {
 	margin-left:2px;
 }
 
-#extractSearchForm #extractSearchLabel {
-	margin:5px 0 0 25px;
+#extractSearchForm #extractSearchLabe, #synopsisSearchForm #synopsisSearchLabel {
+	margin:5px 0 0 5px;
 }
 
-#extractSearchForm .txtadvsearch{
-	margin:5px 10px 0 90px;
+#extractSearchForm .txtadvsearch, #synopsisSearchForm .txtadvsearch{
+	margin:5px 10px 0 5px;
+	width: 360px;
+	height:100px;
 }
 
 #extractSearchForm #addSearchFilter{
 	margin:50px 0 0 0;
-}
-
-#synopsisSearchForm #synopsisSearchLabel {
-	margin:5px 0 0 18px;
-}
-
-#synopsisSearchForm .txtadvsearch{
-	margin:5px 10px 0 90px;
 }
 
 #synopsisSearchForm #addSearchFilter{
@@ -3174,9 +3185,9 @@ span.categorySearch {
 ul#network {
 	list-style-type: none;
 	height: 30px;
-	width: 200px;
+	width: 140px;
 	position:absolute;
-	margin:-3px 0 0 250px;
+	margin:-3px 0 0 310px;
 }
 
 ul#network a {
@@ -3187,6 +3198,18 @@ ul#network a {
 	float:right;
 	margin-right: 10px;
 	margin-left: 10px;
+}
+
+.moreInfo {
+	height:23px;
+	width:109px;
+	position:absolute;
+	margin:-2px 0 0 243px;
+	background:url(/DocSources/images/1024/button_moreinfo.png) no-repeat;
+}
+
+.moreInfo:hover {
+	opacity:0.5;
 }
 
 
