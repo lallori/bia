@@ -1899,11 +1899,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 }
 
 #modalBox #transcribe {
-	margin:10px 0 0 275px;
-}
-
-#modalBox #transcribe a{
 	background-image:url(/DocSources/images/1024/button_transcribe.png);
+	margin:10px 0 0 275px;
 	float:left;
 	width:141px;
 	height:23px;

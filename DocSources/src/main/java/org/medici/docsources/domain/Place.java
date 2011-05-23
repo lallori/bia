@@ -151,7 +151,7 @@ public class Place implements Serializable {
 	private String plType;
 	
 	@Column (name="\"PREFFLAG\"", length=5)
-	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String prefFlag;
 	
 	@Column (name="\"PLSOURCE\"", length=50)

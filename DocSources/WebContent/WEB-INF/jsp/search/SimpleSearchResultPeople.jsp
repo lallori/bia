@@ -51,7 +51,6 @@
 				<th>Gender</th>
 				<th>Born Date</th>
 				<th>Death Date</th>
-				<th>N. Titles</th>
 			</tr>
 		</thead>
 		<tbody>

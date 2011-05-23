@@ -41,8 +41,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.WildcardQuery;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -51,6 +55,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
@@ -187,7 +192,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page simpleSearchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page simpleSearchVolumes(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
@@ -213,10 +218,18 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 			"endYear",
 			"endMonthNum.monthName", 
 			"endDay"
-		).matching(text).createQuery();
+		).matching(searchText).createQuery();
 
-		// We execute search
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Volume.class );
+		BooleanQuery booleanQuery = new BooleanQuery();
+		booleanQuery.add(new BooleanClause(luceneQuery, BooleanClause.Occur.SHOULD));
+        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+        for (String singleWord:words) {
+        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volNum", singleWord.toLowerCase())), BooleanClause.Occur.SHOULD));
+        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volLetExt", singleWord.toLowerCase())), BooleanClause.Occur.SHOULD));
+        }
+
+        // We execute search
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, Volume.class );
 		
 		// We set size of result.
 		if (paginationFilter.getTotal() == null) {

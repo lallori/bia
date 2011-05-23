@@ -78,5 +78,5 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page simpleSearchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
+	public Page simpleSearchVolumes(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
 }

@@ -22,13 +22,8 @@
 					$j(document).ready(function() {
 						$j("#SearchForm").submit(function() {
 							var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
-							//alert(url);
 							$j( "#tabs" ).tabs( "add" , formSubmitURL, $j('#searchType').find('option:selected').text() + " Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 							$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-							/*$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-									$j("#body_right").html(html);
-								}
-							});*/
 							return false;
 						});
 					});

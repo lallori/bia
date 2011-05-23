@@ -41,7 +41,7 @@
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 
@@ -69,7 +69,7 @@
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 	
@@ -179,12 +179,6 @@
 		</div>
 		
 		<br />
-		
-		<div id="transcribe">
-		<c:if test="${volumeExplorer.image.imageType == 'C'}">
-			<a class="transcribe"></a>
-		</c:if>
-		</div>
 
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
 			<a id="transcribe" class="MB_focusable" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO" onclick="Modalbox.show(this.href, {title: this.title, width: 750, height: 600}); return false;"></a>
@@ -220,7 +214,7 @@
 			});
 			
 			$j("#transcribe").click(function() { 
-				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 750}); 
+				$j("#modalBox").load($j(this).attr("href")); 
 				return false;
 			});
 		});

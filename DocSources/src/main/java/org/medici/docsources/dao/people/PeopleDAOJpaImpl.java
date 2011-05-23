@@ -48,6 +48,7 @@ import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
@@ -127,15 +128,13 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
         try  {
 	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
-	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
+
+	        BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
 	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
 	        for (String singleWord:words) {
-	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
+	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
 	        }
-
-			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
-			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
 
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -164,15 +163,13 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
         try  {
 	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
-	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
-	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-	        for (String singleWord:words) {
-	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
-	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
 			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
-			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+	        }
 	
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -201,15 +198,13 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
         try  {
 	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
-	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
-	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-	        for (String singleWord:words) {
-	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
-	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
 			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
-			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+	        }
 	
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -237,23 +232,20 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(People.class).get();
         
 		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
-				"first",
-				"last",
-				"midPrefix",
-				"middle",
-				"lastPrefix",
-				"mapNameLf"
-			).matching(searchText + "*").createQuery();
+			"first",
+			"last",
+			"midPrefix",
+			"middle",
+			"lastPrefix",
+			"mapNameLf"
+		).matching(searchText + "*").createQuery();
 		
-        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
-        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-        for (String singleWord:words) {
-        	queryAltName.add(new Term("altName.altName", singleWord));
-        }
-
 		BooleanQuery booleanQuery = new BooleanQuery();
 		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
-		booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+        for (String singleWord:words) {
+        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+        }
 
 		final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
@@ -281,15 +273,12 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
         try  {
 	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
-	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
-	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-	        for (String singleWord:words) {
-	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
-	        }
-
 			BooleanQuery booleanQuery = new BooleanQuery();
 			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
-			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+	        }
 			for (int i=0; i<peopleIdList.size(); i++) {
 				booleanQuery.add(new BooleanClause(new TermQuery(new Term("personId", peopleIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
 			}
@@ -321,15 +310,13 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
         try  {
 	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
-	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
-	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-	        for (String singleWord:words) {
-	        	queryAltName.add(new Term("altName.altName", singleWord.toLowerCase() + "*"));
-	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
 			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
-			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+	        }
 	
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 			// Projection permits to extract only a subset of domain class, tuning application.
@@ -337,7 +324,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
 			
-			
+
+			fullTextQuery.toString();
 			return fullTextQuery.list();
         } catch (ParseException parseException) {
 			// TODO: handle exception
@@ -387,16 +375,14 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
         QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
         
         try  {
-	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase());
-	        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
-	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-	        for (String singleWord:words) {
-	        	queryAltName.add(new Term("altName.altName", singleWord));
-	        }
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
 
 			BooleanQuery booleanQuery = new BooleanQuery();
 			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
-			booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+	        }
 	
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 			// Projection permits to extract only a subset of domain class, tuning application.

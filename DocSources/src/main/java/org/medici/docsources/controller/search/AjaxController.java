@@ -277,22 +277,16 @@ public class AjaxController {
 					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
 					break;
 				case 1:
-					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf_Sort", sortingDirection);
+					paginationFilter.addSortingCriteria("gender", sortingDirection);
 					break;
 				case 2:
-					paginationFilter.addSortingCriteria("dateApprox", sortingDirection);
+					paginationFilter.addSortingCriteria("bornDate", sortingDirection);
 					break;
 				case 3:
-					paginationFilter.addSortingCriteria("senderPlace.placeName_Sort", sortingDirection);
+					paginationFilter.addSortingCriteria("deathDate", sortingDirection);
 					break;
 				case 4:
 					paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection);
-					break;
-				case 5:
-					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
-					break;
-				case 6:
-					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
 					break;
 				default:
 					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
@@ -312,7 +306,6 @@ public class AjaxController {
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			singleRow.add(currentPerson.getBornDate());
 			singleRow.add(currentPerson.getDeathDate());
-			singleRow.add("" + currentPerson.getPoLink().size());
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
 		model.put("iEcho", "" + 1);

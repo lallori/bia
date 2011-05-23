@@ -16,7 +16,7 @@
 			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="${command.flashVersion}"/>
+			<c:param name="flashVersion" value="false"/>
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
@@ -39,7 +39,7 @@
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 	</c:url>
 
 	<c:url var="nextPage" value="/src/volbase/ShowExplorerVolume.do">
@@ -53,7 +53,7 @@
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 	</c:url>
 
 	<c:url var="previousPage" value="/src/volbase/ShowExplorerVolume.do">
@@ -67,7 +67,7 @@
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 	</c:url>
 	
 		<div id="ShowVolumeExplorer" class="background">
@@ -141,7 +141,7 @@
 				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="flashVersion" value="false" />
 			</form:form>
 		</div>
 	</c:if>
@@ -169,7 +169,7 @@
 				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="flashVersion" value="false" />
 			</form:form>
 		</div>
 
@@ -186,7 +186,7 @@
 		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				console.log($("#tabs"));
+				console.log();
 
 				$j('.piro_overlay,.piro_html').remove(); // trick to resolve scroll bug with pirobox
 				$j().piroBox_ext({
@@ -195,17 +195,37 @@
 					piro_scroll : true
 				});
 
-				$j(".previousPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});					
-				$j(".nextPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
-				$j("#refreshVolumeExplorer").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
-
-		        $j("#moveToRubricarioForm").submit(function (){
-					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						$j("#body_right").html(html);
-					}});
+				$j(".previousPage").click(function(){
+					// we change selected tab url, 
+					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					// we force tab reload 
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
-		        $j("#moveToFolioForm").submit(function (){
+				// nel click del nextPage ci metti il caricamento nel tab selezionato del dell'attributo $j(this).attr("href")
+				$j(".nextPage").click(function(){
+					// we change selected tab url, 
+					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					return false;
+				});
+				$j("#refreshVolumeExplorer").click(function(){
+					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					return false;
+				});
+
+				// nel submit del form devi mettere la concatenazione del form con il serialize
+		        $j("#moveToRubricarioForm").submit(function (){
+		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+		        	//alert(formSubmitURL);
+		        	//$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(formSubmitURL));
+					//$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					return false;
+				});
+		        
+		     	// nel submit del form devi mettere la concatenazione del form con il serialize
+				$j("#moveToFolioForm").submit(function (){
 					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 						$j("#body_right").html(html);
 					}});
