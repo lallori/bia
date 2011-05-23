@@ -54,7 +54,7 @@
 				</div>
 			</c:forEach>
 			</div>
-		</div>
+		
 	</div>
 	
 	<script type="text/javascript">
@@ -67,9 +67,9 @@
 	        $j("#EditDocumentInModal").css('visibility', 'visible');
 	        $j("#EditTopicsDocument").css('visibility', 'visible');
 
-			$j("#EditCorrespondentsOrPeopleDocument").click(function(){
+			$j("#EditCorrespondentsDocument").click(function(){
 				$j(this).next().css('visibility', 'visible');
-				$j("#EditCorrespondentsOrPeopleDocumentDiv").load($j(this).attr("href"));
+				$j("#EditCorrespondentsDocumentDiv").load($j(this).attr("href"));
 				return false;
 			});
 			

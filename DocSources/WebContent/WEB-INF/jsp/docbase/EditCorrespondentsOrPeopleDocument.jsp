@@ -168,7 +168,7 @@
 
 			$j("#save").click(function (){
 	 			$j.ajax({ type:"POST", url:$j(this).closest('form').attr("action"), data:$j(this).closest('form').serialize(), async:false, success:function(html) { 
-					$j("#EditCorrespondentsOrPeopleDocumentDiv").html(html);
+					$j("#EditCorrespondentsDocumentDiv").html(html);
 				}});
 	 			return false;
 			});
@@ -183,7 +183,7 @@
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
-						$j("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocument}');
+						$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsDocument}');
 					}
 		        });
 				return false;
@@ -195,7 +195,7 @@
 			});
 
 			$j('#close').click(function() {
-				$j('#EditCorrespondentsOrPeopleDocumentDiv').block({ message: $j('#question') }); 
+				$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question') }); 
 				return false;
 			});
 		});

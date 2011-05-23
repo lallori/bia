@@ -87,7 +87,7 @@
 				return false;
 			});
 
-	        $j(".deleteIcon").click(function() {
+	        /*$j(".deleteIcon").click(function() {
 				$j.get(this.href, function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
@@ -96,11 +96,45 @@
 					}
 		        });
 				return false;
-			});
+			});*/
 
 			$j(".editValue").click(function() {
 				$j("#EditParentPersonDiv").load($j(this).attr("href"));
 				return false;
+			});
+
+			$j(".deleteIcon").click(function(){
+				$j('#EditParentsPersonDiv').block({ message: $j('#question') }); 
+				return false;
+			});
+				
+		});
+	</script>
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>Delete this Parent entry?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j('#no').click(function() {
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.get($j(".deleteIcon").attr("href"), function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditParentsPersonDiv").load('${EditParentsPersonURL}');
+					}
+					
+					return false; 
+				}); 	     
 			});
 		});
 	</script>
