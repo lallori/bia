@@ -74,10 +74,8 @@
 			  });
 
 			$j('#close').click(function() { 
-	            $j('#EditTopicDocumentDiv').block({ 
-	                message: '<h1>Discard changes and close window?</h1>', 
-	                css: { border: '3px solid #a00' } 
-	            })
+	            $j('#EditTopicDocumentDiv').block({ message: $j("#question") }); 
+	            return false;
 			});
 
 			$j("#EditTopicDocumentForm").submit(function (){
@@ -88,3 +86,31 @@
 			});
 		});
 	</script>
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>discard changes?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<script type="text/javascript">
+	$j(document).ready(function() {
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j("#question").hide();
+			$j("#EditTopicDocumentDiv").append($j("#question"));
+			$j(".blockUI").remove();
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
+			$j.ajax({ url: '${EditTopicsDocumentURL}', cache: false, success:function(html) { 
+				$j("#EditTopicsDocumentDiv").html(html);
+			}});
+				
+			return false; 
+		}); 
+     
+	});
+</script>

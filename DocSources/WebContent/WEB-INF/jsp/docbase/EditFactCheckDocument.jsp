@@ -60,6 +60,9 @@
 		$j('#no').click(function() { 
 			$j.unblockUI();
 			$j(".blockUI").fadeOut("slow");
+			$j("#question").hide();
+			$j("#EditFactCheckDocumentDiv").append($j("#question"));
+			$j(".blockUI").remove();
 			return false; 
 		}); 
         

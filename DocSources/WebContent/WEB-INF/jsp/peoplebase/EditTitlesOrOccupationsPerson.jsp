@@ -50,6 +50,8 @@
 			
 		</fieldset>	
 		<div id="EditTitleOrOccupationPersonDiv"></div>
+		
+		</form:form>
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
@@ -68,7 +70,7 @@
 					return false;
 				});
 
-		        $j(".deleteIcon").click(function() {
+		        /*$j(".deleteIcon").click(function() {
 					$j.get(this.href, function(data) {
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
@@ -76,6 +78,11 @@
 							$j("#EditTitlesOrOccupationsPersonDiv").load('${EditTitlesOrOccupationsPersonURL}');
 						}
 			        });
+					return false;
+				});*/
+
+				$j(".deleteIcon").click(function() {
+					$j('#EditTitlesOrOccupationsPersonDiv').block({ message: $j('#question') }); 
 					return false;
 				});
 
@@ -90,4 +97,35 @@
 				});
 			});
 		</script>
-	</form:form>
+	
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>Delete this Occupation entry?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j('#no').click(function() {
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#question").hide();
+				$j("#EditTitlesOrOccupationsPersonDiv").append($j("#question"));
+				$j(".blockUI").remove();
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.get($j(".deleteIcon").attr("href"), function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditTitlesOrOccupationsPersonDiv").load('${EditTitlesOrOccupationsPersonURL}');
+					}
+		       
+				return false;
+			}); 	     
+			});
+		});
+	</script>

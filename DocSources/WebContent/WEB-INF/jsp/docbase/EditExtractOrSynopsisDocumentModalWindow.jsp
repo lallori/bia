@@ -70,13 +70,19 @@
 		$j('#no').click(function() { 
 			$j.unblockUI();
 			$j(".blockUI").fadeOut("slow");
+			$j("#question").hide();
+			$j("#MB_frame").append($j("#question"));
+			$j(".blockUI").remove();
 			return false; 
 		}); 
         
 		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
-				$j("#body_left").html(html);
-			}});
+			//$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+				//$j("#body_left").html(html);
+				Modalbox.hide();
+				//return false;
+			//}});
+			
 				
 			return false; 
 		}); 

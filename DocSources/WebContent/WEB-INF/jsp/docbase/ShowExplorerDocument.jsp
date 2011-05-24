@@ -193,8 +193,14 @@
 		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				$j(".previousPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});					
-				$j(".nextPage").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
+				$j(".previousPage").click(function(){
+					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+				});					
+				$j(".nextPage").click(function(){
+					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+				});
 				$j("#refreshVolumeExplorer").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
 				
 		        $j("#moveToRubricarioForm").submit(function (){
