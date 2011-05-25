@@ -414,25 +414,23 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
 		// We set search on fields .
 		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
-				"first",
-				"last",
-				"midPrefix",
-				"middle",
-				"lastPrefix",
-				"mapNameLf"
-			).matching(searchText + "*").createQuery();
+			"first",
+			"last",
+			"midPrefix",
+			"middle",
+			"lastPrefix",
+			"mapNameLf"
+		).matching(searchText + "*").createQuery();
 		
-        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
-        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-        for (String singleWord:words) {
-        	queryAltName.add(new Term("altName.altName", singleWord));
-        }
 
 		BooleanQuery booleanQuery = new BooleanQuery();
 		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
-		booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+        for (String singleWord:words) {
+        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+        }
 
-		// We execute search
+        // We execute search
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
 		
 		// We set size of result.

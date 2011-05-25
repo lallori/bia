@@ -280,10 +280,16 @@ public class AjaxController {
 					paginationFilter.addSortingCriteria("gender", sortingDirection);
 					break;
 				case 2:
-					paginationFilter.addSortingCriteria("bornDate", sortingDirection);
+					paginationFilter.addSortingCriteria("bornYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("bornMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("bornDay_Sort", sortingDirection, SortField.INT);
 					break;
 				case 3:
-					paginationFilter.addSortingCriteria("deathDate", sortingDirection);
+					paginationFilter.addSortingCriteria("deathYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("deathMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("deathDay_Sort", sortingDirection, SortField.INT);
 					break;
 				case 4:
 					paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection);
