@@ -37,6 +37,12 @@
       			<input id="father" name="father" class="input_28c_disabled" type="text" value="" disabled="disabled" />
       		</c:if>
 				<a class="editValue" class="editValue" href="${EditFatherPersonURL}">edit value</a>
+				<c:if test="${not empty father}">
+					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+						<c:param name="personId"   value="${father.parent.personId}" />
+					</c:url>
+					<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"></a>
+				</c:if>
 			</div>
 
 			<c:url var="EditMotherPersonURL" value="/de/peoplebase/EditMotherPerson.do">
@@ -60,6 +66,12 @@
       			<input id="mother" name="mother" class="input_28c_disabled" type="text" value="" disabled="disabled" />
       		</c:if>
 				<a class="editValue" class="editValue" href="${EditMotherPersonURL}">edit value</a>
+				<c:if test="${not empty mother}">
+				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+					<c:param name="personId"   value="${mother.parent.personId}" />
+				</c:url>
+					<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"></a>
+				</c:if>
 			</div>
 			
 			<div>
@@ -105,6 +117,12 @@
 
 			$j(".deleteIcon").click(function(){
 				$j('#EditParentsPersonDiv').block({ message: $j('#question') }); 
+				return false;
+			});
+
+			$j(".personIcon").click(function(){
+				$j("#tabs").tabs("add", $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
 				

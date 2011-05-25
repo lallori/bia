@@ -33,11 +33,16 @@
 				<c:param name="parentId" value="${command.personId}" />
 				<c:param name="childId" value="${currentChild.child.personId}" />
 			</c:url>
+			
+			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+					<c:param name="personId"   value="${currentChild.child.personId}" />
+				</c:url>
 
 			<div>
-      			<input id="child_${currentChild.id}" name="child_${currentChild.id}" class="input_28c_disabled" type="text" value="${currentChild.child.mapNameLf}" disabled="disabled" />
+      			<input id="child_${currentChild.id}" name="child_${currentChild.id}" class="input_35c_disabled" type="text" value="${currentChild.child.mapNameLf}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteChildPersonURL}"></a>
 				<a class="editValue" class="editValue" href="${EditChildPersonURL}">edit value</a>
+				<a href="${ComparePersonURL }" class="personIcon" title="Show this person record"></a>
 			</div>
 		</c:forEach>
 			
@@ -69,7 +74,7 @@
 				return false;
 			});
 
-	        $j(".deleteIcon").click(function() {
+	        /*$j(".deleteIcon").click(function() {
 				$j.get(this.href, function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
@@ -77,6 +82,11 @@
 						$j("#EditChildrenPersonDiv").load('${EditChildrenPersonURL}');
 					}
 		        });
+				return false;
+			});*/
+
+			$j(".deleteIcon").click(function() {
+				$j("#EditChildrenPersonDiv").block({ message: $j("#question")});
 				return false;
 			});
 
@@ -88,6 +98,43 @@
 			$j("#AddNewValue").click(function(){
 				$j("#EditChildPersonDiv").load($j(this).attr("href"));
 				return false;
+			});
+
+			$j(".personIcon").click(function(){
+				$j("#tabs").tabs("add", $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				return false;
+			});
+		});
+	</script>
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>Delete this Child entry?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j('#no').click(function() {
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#question").hide();
+				$j("#EditChildrenPersonDiv").append($j("#question"));
+				$j(".blockUI").remove();
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.get($j(".deleteIcon").attr("href"), function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditChildrenPersonDiv").load('${EditChildrenPersonURL}');
+					}
+					
+					return false; 
+				}); 	     
 			});
 		});
 	</script>

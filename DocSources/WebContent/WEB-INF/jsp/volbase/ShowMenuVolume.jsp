@@ -21,8 +21,20 @@
 		<a id="vettingChronology" href="${ShowVettingChronologyVolumeURL}"></a>
 		<a id="menuActions" href="${ShowMenuActionsVolumeURL}"></a>
 		<a id="buttonPrint" title="Print this record" href="#"></a>
-		<div id="buttonShareLink">
-			<a href="${ShowShareLinkVolumeURL}"><img src="/DocSources/images/1024/img_transparent.png"></a>
-			<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
-		</div>
+		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc."></a>
 	</div>
+	
+	<script type="text/javascript">
+	$j(document).ready(function() {
+		$j("#buttonShareLink").click(
+				function() {										
+					window.open('${ShowShareLinkVolumeURL}','SHARE VOLUME','width=510,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+				});
+			
+		$j('#buttonShareLink').tooltip({
+				track: true,
+				fade: 350 
+		});
+
+	});
+	</script>

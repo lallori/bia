@@ -23,10 +23,10 @@
 			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<div class="row">
 					<c:if test="${currentPoLink.preferredRole}">
-						<a title="Preferred Role" class="preferredIcon" href="#"></a>
+						<a class="value5" title="Preferred Role" id="preferredRoleIcon" href="#"></a>
 					</c:if>
 					<c:if test="${!currentPoLink.preferredRole}">
-						<a class="notPreferredIcon" href="#"></a>
+						<div class="value5"></div>
 					</c:if>
 					<div class="value60"><a class="linkSearch" href="#"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
 					<a class="linkSearch" href="#">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 

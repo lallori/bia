@@ -45,13 +45,24 @@
 
 			<div>
 				<c:if test="${command.personId == currentMarriage.husband.personId}">
-      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_28c_disabled" type="text" value="${currentMarriage.wife} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.wife.deathYear}" disabled="disabled" />
+      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_35c_disabled" type="text" value="${currentMarriage.wife} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.wife.deathYear}" disabled="disabled" />
 				</c:if> 
 				<c:if test="${command.personId == currentMarriage.wife.personId}">
-      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_28c_disabled" type="text" value="${currentMarriage.husband} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.husband.deathYear}" disabled="disabled" />
+      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_35c_disabled" type="text" value="${currentMarriage.husband} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.husband.deathYear}" disabled="disabled" />
 				</c:if> 
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteSpousePersonURL}"></a>
 				<a class="editValue" class="editValue" href="${EditSpousePersonURL}">edit value</a>
+				<c:if test="${command.personId == currentMarriage.husband.personId}">
+					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+						<c:param name="personId"   value="${currentMarriage.wife.personId}" />
+					</c:url>
+				</c:if> 
+				<c:if test="${command.personId == currentMarriage.wife.personId}">
+      				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+						<c:param name="personId"   value="${currentMarriage.husband.personId}" />
+					</c:url>
+				</c:if> 
+				<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"></a>
 			</div>
 		</c:forEach>
 			
@@ -79,7 +90,7 @@
 					return false;
 				});
 
-		        $j(".deleteValue").click(function() {
+		        /*$j(".deleteValue").click(function() {
 					$j.get(this.href, function(data) {
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
@@ -87,6 +98,11 @@
 							$j("#EditSpousesPersonDiv").load('${EditSpousesPersonURL}');
 						}
 			        });
+					return false;
+				});*/
+
+				$j(".deleteIcon").click(function() {
+					$j("#EditSpousesPersonDiv").block({ message: $j("#question") });
 					return false;
 				});
 
@@ -99,6 +115,43 @@
 					$j("#EditSpousePersonDiv").load($j(this).attr("href"));
 					return false;
 				});
+
+				$j(".personIcon").click(function(){
+					$j("#tabs").tabs("add", $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				});
 			});
 		</script>
 	</form:form>
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>Delete this Spouse entry?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j('#no').click(function() {
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#question").hide();
+				$j("#EditSpousesPersonDiv").append($j("#question"));
+				$j(".blockUI").remove();
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.get($j(".deleteIcon").attr("href"), function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditSpousesPersonDiv").load('${EditSpousesPersonURL}');
+					}
+					
+					return false; 
+				}); 	     
+			});
+		});
+	</script>

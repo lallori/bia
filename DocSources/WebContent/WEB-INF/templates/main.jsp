@@ -70,6 +70,7 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.10.custom.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/pirobox_extended.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.tooltip.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
