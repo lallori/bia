@@ -106,7 +106,7 @@ public class EditExtractDocumentDialogValidator implements Validator {
 				} else {
 					if (synExtrId != null) {
 						if (synExtrId > 0) {
-							if (document.getSynExtract().getSynExtrId() != synExtrId) {
+							if (!document.getSynExtract().getSynExtrId().equals(synExtrId)) {
 								errors.reject("synExtrId", "error.synExtrId.notfound");
 							}
 						}
