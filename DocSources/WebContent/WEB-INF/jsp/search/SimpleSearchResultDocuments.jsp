@@ -15,15 +15,16 @@
 
 		$j(document).ready(function() {
 			$j('#resultDocument${searchNumber}').dataTable( {
+				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
-				"sPaginationType": "full_numbers",
 				"iDisplayLength": 10,
 				"iDisplayStart": 0,
-				"sDom": 'T<"clear">lfrtip',
 				"oSearch": {"sSearch": "${command.text}"},
 				"sAjaxSource": "${SimpleSearchPaginationURL}",
+				"sDom": 'T<"clear">lfrtip',
+				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
 					/* Add some extra data to the sender */
 					aoData.push( { "name": "more_data", "value": "xxx" } );
@@ -52,7 +53,7 @@
 				<th>Date</th>
 				<th>Sender Location</th>
 				<th>Recipient Location</th>
-				<th>Volume/Folio</th>
+				<th>Volume / Folio</th>
 				<!--<th>Folio</th> -->
 			</tr>
 		</thead>

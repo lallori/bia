@@ -14,15 +14,16 @@
 
 		$j(document).ready(function() {
 			$j('#resultVolume${searchNumber}').dataTable( {
+				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
-				"sPaginationType": "full_numbers",
 				"iDisplayLength": 10,
 				"iDisplayStart": 0,
-				"sDom": 'T<"clear">lfrtip',
 				"oSearch": {"sSearch": "${command.text}"},
 				"sAjaxSource": "${SimpleSearchPaginationURL}",
+				"sDom": 'T<"clear">lfrtip',
+				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
 					/* Add some extra data to the sender */
 					aoData.push( { "name": "more_data", "value": "xxx" } );
