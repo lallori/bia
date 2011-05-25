@@ -367,14 +367,15 @@ input {
 /*
 /* ------------------------------------------------- ANCORS ---------------------------------------------- */
 
-#body_left a{ /* Edit buttons */
+#body_left a, .link { /* Edit buttons */
 	text-decoration:underline;
 	font-size:11px;
-	color:#b99c84;
+	color:#B7958F;
 }
 
+
 #body_left a:hover, #body_right a:hover{ 
-	opacity:0.5;
+	opacity:0.7;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */

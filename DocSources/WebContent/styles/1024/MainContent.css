@@ -43,6 +43,13 @@ h2 {
 	margin-left:15px;
 }
 
+h1 {
+	font-size:11px;
+	color:#A13125;
+	font-weight:normal;
+}
+
+
 /* --------------------------------------------------------- */ 
 /*
 /* -------------- TOP RECORD MENU -------------------------- */ 
@@ -81,9 +88,13 @@ h2 {
 	position:absolute;
 	background-image:url(/DocSources/images/1024/button_sharelink.png);
 	background-repeat:no-repeat;
+	cursor:pointer;
 }
 
-#buttonShareLink span { /* "Use this to share this content..." text */
+/*#buttonShareLink:hover {  Share/Link Button 
+	border: 1px solid #900;}*/
+
+/* #buttonShareLink span { /* "Use this to share this content..." text
 	background: url(/DocSources/images/1024/bg_floatingbox.png) no-repeat;
 	width: 280px;
 	height: 70px;
@@ -97,7 +108,7 @@ h2 {
 	color:#6d5c4d;
 	cursor:pointer;
 	font: 10px "Georgia", Times New Roman, Times, serif;
-}
+} */
 
 #buttonPrint {  /* Print this Document Button */
 	background-image:url(/DocSources/images/1024/button_print.png);
@@ -200,7 +211,7 @@ h2 {
 
 .value5 {
 	display: table-cell;
-	width:20px;
+	width:5%;
 	padding-right:7px;
 }
 
@@ -263,6 +274,7 @@ legend { /* FORM TITLE */
 	font-size:11px;
 	color:#6d5c4d;
 	background-color:#e6d0c6;
+	padding:0 2px 0 2px;
 }
 
 input { /* INPUT text */
@@ -653,6 +665,16 @@ img.transparent {
 	cursor:default;
 }
 
+.input_30c_disabled { /* input for 10 characters */ 
+	width: 275px; 
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	margin: 5px 7px 5px 0; 
+	opacity: 0.3;
+	cursor:default;
+}
+
 .input_35c_disabled { /* input for 10 characters */ 
 	width: 290px; 
 	border: 1px solid #e6d0c6;
@@ -974,7 +996,7 @@ form#EditUserProfileForm.edit {
 #EditCorrespondentsDocumentForm a, #EditExtSynDocumentDiv a, #EditDetailsDocumentDiv a, #EditFactCheckDocumentDiv a, #EditCorrespondentsDocumentDiv a, #EditExtractOrSynopsisDocumentDiv a, #EditDescriptionVolumeDiv a, #EditCorrespondentsVolumeDiv a, #EditContextVolumeDiv a, #EditDetailsPersonDiv a, #EditNamesPersonDiv a, #EditCorrespondentsDocumentDiv a, #EditExtSynDocumentDiv a, #EditDetailsVolumeDiv a, #EditNamesPersonDiv a, #EditTitleOccupationsPersDiv a, #EditRelationshipPersDiv a, #EditDetailsPersonForm a, #EditDetailsPlaceDiv a, #EditNamePlaceDiv a, #EditExtLinkPlaceDiv a, #EditGeoCoorPlaceDiv a, #EditFactChecksDocumentDiv a, #EditRelationshipPersonDiv a, #EditTitlesOccupationsPersonDiv a, #EditResearchNotesPersonDiv a, #SpousesPersonForm a, #TopicsDocumentForm a, #EditTopicsDocumentForm a, #EditParentsPersonDiv a, #EditChildrenPersonDiv a, #EditSpousesPersonDiv a, #AdddChildPersonForm a, #AddSpousePersonForm a, #AddNamesPersonForm a, #AddTitlesOccupationsPersonForm a, #AddPersonCorrespondentsDocumentForm a, #AddTopicsDocumentForm a, #AddExtLinkTgnPlaceForm a, #AddExtLinkMapPlaceForm a, #AddExtLinkMapSitePlaceForm a, #AddNameTgnPlaceForm a, #AddNameMapPlaceForm a, #AddNameMapSitePlaceForm a{ 
 	text-decoration:underline;
 	font-size:11px;
-	color:#b99c84;
+	color:#B7958F;
 }
 
 #PeopleCorrespondentsDocumentsForm fieldset{
@@ -999,13 +1021,13 @@ form#EditUserProfileForm.edit {
 
 #SpineVolumeDiv {
 	float:right;
-	margin:30px 10px 10px 0;
 	z-index:1;
 	background-image:url(/DocSources/images/1024/img_volumespinedefault.png);
-	background-position:right;
+	background-position:center;
 	height:160px;
 	width:90px;
 	background-repeat:no-repeat;
+	text-align:center;
 }
 
 #SpineVolumeDiv p{
@@ -1148,7 +1170,7 @@ input.file {
 	height:14px;
 	display:inline;
 	position:absolute;
-	margin:5px 0 0 15px;
+	margin:5px 0 0 10px;
 	background-image:url(/DocSources/images/1024/button_person.gif);
 	cursor:pointer;
 	background-color:transparent;
@@ -1181,28 +1203,12 @@ input.file {
 	border:none;
 }
 
-.preferredIcon {
-	width:17px;
-	height:20px;
-	background-image:url(/DocSources/images/1024/img_preferred.png);
-	position:absolute;
-	margin:-15px 0 0 -10px;
-	background-repeat:no-repeat;
-	cursor:default;
-	background-color:transparent;
-	border:none;
-}
-
 .preferredIconEdit {
 	width:17px;
 	height:20px;
-	background-image:url(/DocSources/images/1024/img_preferred.png);
+	background:url(/DocSources/images/1024/img_preferred.png) no-repeat;
 	position:absolute;
-	margin-left:-20px;
-	background-repeat:no-repeat;
 	cursor:default;
-	background-color:transparent;
-	border:none;
 }
 
 
@@ -1451,7 +1457,12 @@ a#editValue, .editValue { /* "Edit Value" Button */
 /* ----- EditTitleOccupationsPerson ----- */
 
 #firstTitleOcc, #secondTitleOcc {
-	margin-left:5px;
+	margin-left:25px;
+}
+
+#preferredRoleIcon { /* Star Icon meaning the preferred role */
+	background:url(/DocSources/images/1024/img_preferred.png) no-repeat;
+	cursor:default;
 }
 
 #preferredRoleLabel {
@@ -1465,6 +1476,14 @@ a#editValue, .editValue { /* "Edit Value" Button */
 /* -------------------------------------- */
 /*
 /* ----- EditTitleOccupationsPerson ----- */
+
+#father {
+	margin-left:8px;
+}
+
+#mother {
+	margin-left:7px;
+}
 
 #fatherLabel {
 	margin-left:21px;
@@ -1519,7 +1538,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	font-size:11px;
 	text-decoration: underline;
-	color: #B99C84;
+	color: #B7958F;
 	display:inline;
 }
 
@@ -2191,7 +2210,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	font-size:11px;
 	margin:20px 0 0 510px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
-	padding-left:15px;
+	padding:10px 0 0 15px;
 	width:200px;
 	height:100px;
 	position:absolute;
@@ -2213,7 +2232,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	font-size:11px;
 	margin:140px 0 0 510px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
-	padding:0 0 10px 15px;
+	padding:10px 0 10px 15px;
 	width:200px;
 	height:100px;
 	position:absolute;
@@ -2515,6 +2534,30 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	margin:0 0 10px 0;
 }
 
+/* floating message when rollover on help simbol */
+#tooltip {
+	position: absolute;
+	z-index: 3000;
+	border: 1px solid #A13125;
+	background-color: #ECD6D3; 
+	padding:3px 5px 3px 5px;
+	opacity: 0.9;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	width:350px;
+	-moz-box-shadow: 2px 2px 2px #666;
+	-webkit-box-shadow: 2px 2px 2px #666;
+	box-shadow: 2px 2px 2px #666;
+	text-align:justify;
+}
+
+#tooltip h1, #tooltip div { margin: 0; }
+
+#tooltip h1	{
+	font-size:11px;
+	color:#6D5C4D;
+	font-weight:normal;
+}
 
 /* -------- body left (Search Form) ----------- */
 
@@ -2630,18 +2673,25 @@ span.categorySearch {
 /*
 /* ----------------- form common elements ----------------- */
 
-#advancedSearch #body_left a.helpLink, #advancedSearch #body_right a.helpLink, #VettingChronologyDiv a.helpLink { /* Help symbol "?" */
-	border: 1px solid #6d5c4d;
-	color:  #6d5c4d; 
+#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #VettingChronologyDiv a.helpIcon { /* Help symbol "?" */
+	border: 1px solid #6D5C4D;
+	color:  #6D5C4D; 
 	font-size: 12px; 
-	background-color: #e6d0c6; 
-	padding-left: 2px; 
-	padding-right: 2px; 
-	margin-left: 3px;
+	background-color: #DCC0BA; 
+	padding-left: 5px; 
+	padding-right: 4px; 
 	font-weight:bold;
 	text-decoration:none;
-	-moz-border-radius: 1px;
-	border-radius: 1px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	cursor:help;
+}
+
+#advancedSearch #body_left a:hover.helpIcon { /* Help symbol "?" */
+	border: 1px solid #A13125;
+	color:  #6D5C4D; 
+	background-color: #ECD6D3; 
+	opacity:0.9;
 }
 
 #advancedSearch #body_right .easySearchModeOn {
@@ -2929,14 +2979,14 @@ span.categorySearch {
 	margin-left:2px;
 }
 
-#extractSearchForm #extractSearchLabe, #synopsisSearchForm #synopsisSearchLabel {
+#extractSearchForm #extractSearchLabel, #synopsisSearchForm #synopsisSearchLabel {
 	margin:5px 0 0 5px;
 }
 
 #extractSearchForm .txtadvsearch, #synopsisSearchForm .txtadvsearch{
-	margin:5px 10px 0 5px;
-	width: 360px;
-	height:100px;
+	margin:5px 10px 0 25px;
+	width: 340px;
+	height:150px;
 }
 
 #extractSearchForm #addSearchFilter{
@@ -2985,6 +3035,10 @@ span.categorySearch {
 
 #referstoSearchLabel {
 	margin-right:5px;
+}
+
+#personSearchLabel, #placeSearchLabel, #senderSearchLabel, #fromSearchLabel, #toSearchLabel, #referstoSearchLabel, #recipientSearchLabel {
+	margin-left:7px;
 }
 
 /* ------------------------------------------------- */
