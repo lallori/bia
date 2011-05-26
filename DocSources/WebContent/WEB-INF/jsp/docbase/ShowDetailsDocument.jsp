@@ -70,7 +70,7 @@
 				<div class="item">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
 			</div>
 			<div class="row">
-				<div class="item">Paginated</div> <div class="value">${document.unpaged}</div>
+				<div class="item">Paginated</div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
 				<div class="item">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
@@ -82,10 +82,10 @@
 				<div class="item">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Date uncertain or approximate</div> <div class="value">${document.dateUns}</div>
+				<div class="item">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Undated</div> <div class="value">${document.undated}</div>
+				<div class="item">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
 				<div class="item">Date Notes</div> <div class="value">${document.dateNotes}</div>
