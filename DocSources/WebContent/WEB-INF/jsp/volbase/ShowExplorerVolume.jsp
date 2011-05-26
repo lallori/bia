@@ -186,9 +186,8 @@
 		</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
-				console.log();
-
 				$j('.piro_overlay,.piro_html').remove(); // trick to resolve scroll bug with pirobox
+
 				$j().piroBox_ext({
 					piro_speed : 700,
 					bg_alpha : 0.5,
@@ -215,20 +214,17 @@
 					return false;
 				});
 
-				// nel submit del form devi mettere la concatenazione del form con il serialize
 		        $j("#moveToRubricarioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
-		        	//alert(formSubmitURL);
-		        	//$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(formSubmitURL));
-					//$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 		        
-		     	// nel submit del form devi mettere la concatenazione del form con il serialize
 				$j("#moveToFolioForm").submit(function (){
-					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						$j("#body_right").html(html);
-					}});
+		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 			});
