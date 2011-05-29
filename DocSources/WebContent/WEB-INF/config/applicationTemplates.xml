@@ -305,6 +305,10 @@
 	<definition name="mview/ShowManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerHtml.jsp"/>
 	</definition>
+
+	<definition name="mview/ShowSummaryVolumeDialog" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/mview/ShowSummaryVolumeDialog.jsp"/>
+	</definition>
 	<!--  Manuscript Viewer END -->
 
 	<!-- PeopleBase Module START -->

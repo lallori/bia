@@ -96,7 +96,7 @@
 		});
 
     	if (documentDigitized == true) {
-        	$( "#tabs" ).tabs( "add" , options["showExplorerDocumentUrl"], "Document Explorer</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+        	$( "#tabs" ).tabs( "add" , options["showExplorerDocumentUrl"], "Volume Explorer</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
         	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
     	}
     	

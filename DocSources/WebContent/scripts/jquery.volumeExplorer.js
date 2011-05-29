@@ -46,18 +46,16 @@
         // Loop over all matching elements
         this.each(function (){
         	var volumeDigitized = false;
+        	
         	if ((options["summaryId"] >0) || (options["volNum"] >0)) {
             	$.ajax({ type:"GET", url:options["checkVolumeDigitizedURL"], async:false, success:function(data) {
             		if (data.digitized == "true") {
-            			volumeDigitized = true;
+            			var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+                    	$("#tabs").tabs("add", options["showExplorerVolumeURL"], tabName);
+                    	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
             		}
             	}
     			});
-        	}
-
-        	if (volumeDigitized == true) {
-            	$( "#tabs" ).tabs( "add" , options["showExplorerVolumeURL"], "Volume Explorer</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-            	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
         	}
         });
 

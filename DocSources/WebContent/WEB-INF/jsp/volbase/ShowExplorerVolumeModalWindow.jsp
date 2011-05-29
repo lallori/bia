@@ -18,7 +18,7 @@
 			<c:param name="totalAppendix" 			value="${volumeExplorer.totalAppendix}" />
 			<c:param name="totalOther" 				value="${volumeExplorer.totalOther}" />
 			<c:param name="totalGuardia" 			value="${volumeExplorer.totalGuardia}" />
-			<c:param name="flashVersion" 			value="${command.flashVersion}"/>
+			<c:param name="flashVersion" 			value="false"/>
 			<c:param name="modalWindow"  			value="true"/>
 		</c:url>
 
@@ -55,7 +55,7 @@
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 

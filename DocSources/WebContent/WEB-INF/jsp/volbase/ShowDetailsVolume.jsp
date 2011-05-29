@@ -31,9 +31,19 @@
 		</security:authorize>
 		</div>
 
-		<div id="SpineVolumeDiv">
-			<p><b>Volume Spine</b></p>
+		<c:if test="${not empty image}">
+		<div id="SpineVolumeDigitDiv">
+			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
+			<b>Volume Spine</b><br>
+			<a id="ShowVolumeExplorer" href="${ShowExplorerVolumeURL}">Show Volume Explorer</a>
 		</div>
+		</c:if>
+		<c:if test="${empty image}">
+			<div id="SpineVolumeNotDigitDiv">
+				<img src="<c:url value="/images/1024/img_volumespinedefault.png"/>">
+				<b>Volume Spine</b>
+			</div>
+		</c:if>
 		<!-- <div id="SpineVolumeDiv">
 			<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
 			<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></security:authorize></p>
@@ -100,6 +110,13 @@
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditDetailsVolumeDiv").load($j(this).attr("href"));
 				return false;
+			});
+			
+			$j("#ShowVolumeExplorer").click(function(){
+				var tabName = "Volume Explorer ${volume.volNum} ${volume.volLetExt} </span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
+            	$j("#tabs").tabs("add", "" + $j(this).attr("href"), tabName);
+            	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+            	return false;
 			});
 		});
 	</script>

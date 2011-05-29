@@ -35,7 +35,7 @@
 		<c:param name="folioMod"   value="${document.folioMod}" />
 		<c:param name="imageType"   value="C" />
 		<c:param name="imageProgTypeNum"   value="${document.folioNum}" />
-		<c:param name="flashVersion"   value="true" />
+		<c:param name="flashVersion"   value="false" />
 	</c:url>
 
 	<div id="EditDetailsDocumentDiv" class="background">
@@ -46,49 +46,52 @@
 		</security:authorize>
 		</div>
 
-		<div id="DocumentImageDiv">
-			<c:if test="${not empty image}">
-			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
-			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a></p>
-			</c:if>
-			<c:if test="${empty image}">
-			<img src="<c:url value="/images/1024/img_document.png"/>" alt="document image" />
-			</c:if>
-		</div>
+		<c:if test="${not empty image}">
+			<div id="DocumentImageDigitDiv">
+				<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
+				<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a>
+			</div>
+		</c:if>
+		<c:if test="${empty image}">
+			<div id="DocumentImageNotDigitDiv">
+				<img src="<c:url value="/images/1024/img_document.png"/>">
+				<b>Volume Spine</b>
+			</div>
+		</c:if>
 		
 		<div class="listDetails">
 			<div class="row">
-				<div class="item">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
+				<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 			</div>
 			<div class="row">
-				<div class="item">Volume (MDP)</div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
+				<div class="item60">Volume (MDP)</div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
 			</div>
 			<div class="row">
-				<div class="item">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
+				<div class="item60">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
 			</div>
 			<div class="row">
-				<div class="item">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
+				<div class="item60">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
 			</div>
 			<div class="row">
-				<div class="item">Paginated</div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
+				<div class="item60">Paginated</div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
+				<div class="item60">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
 			</div>
 			<div class="row">
-				<div class="item">Modern Date</div> <div class="value">${document.yearModern}</div>
+				<div class="item60">Modern Date</div> <div class="valueHilight">${document.yearModern}</div>
 			</div>
 			<div class="row">
-				<div class="item">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+				<div class="item60">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
+				<div class="item60">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
+				<div class="item60">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Date Notes</div> <div class="value">${document.dateNotes}</div>
+				<div class="item60">Date Notes</div> <div class="value">${document.dateNotes}</div>
 			</div>
 		</div>
 	</div>
@@ -113,7 +116,7 @@
 
 			$j("#EditDetailsDocumentDiv").documentExplorer( {
 				checkDocumentDigitizedUrl	: "${checkDocumentDigitizedURL}",
-				showExplorerDocumentUrl     : "${ShowDocumentExplorerURL}",
+				showExplorerDocumentUrl     : "${ShowDocumentExplorerURL}"
 			});  
 
 			$j("#buttonShareLink").click(function() {

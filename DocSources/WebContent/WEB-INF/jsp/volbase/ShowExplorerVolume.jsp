@@ -20,13 +20,16 @@
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
-		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
-			<c:param name="imageName"   value="${volumeExplorer.image}" />
-			<c:param name="flashVersion"   value="${command.flashVersion}" />
-		</c:url>
 	</security:authorize>
 	
-	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
+	<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
+		<c:param name="imageName"		value="${volumeExplorer.image}" />
+		<c:param name="flashVersion"	value="${command.flashVersion}" />
+		<c:param name="showHelp" value="false" />
+		<c:param name="showThumbnail" value="false" />
+	</c:url>
+
+	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do" />
 	
 	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="summaryId" value="${command.summaryId}"/>
@@ -40,6 +43,8 @@
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="false" />
+		<c:param name="showHelp" value="false" />
+		<c:param name="showThumbnail" value="false" />
 	</c:url>
 
 	<c:url var="nextPage" value="/src/volbase/ShowExplorerVolume.do">
@@ -54,6 +59,8 @@
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="false" />
+		<c:param name="showHelp" value="false" />
+		<c:param name="showThumbnail" value="false" />
 	</c:url>
 
 	<c:url var="previousPage" value="/src/volbase/ShowExplorerVolume.do">
@@ -68,9 +75,11 @@
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="false" />
+		<c:param name="showHelp" value="false" />
+		<c:param name="showThumbnail" value="false" />
 	</c:url>
 	
-		<div id="ShowVolumeExplorer" class="background">
+	<div id="ShowVolumeExplorer" class="background">
 		<div class="title">
 			<h5>VOLUME EXPLORER</h5>
 		</div>
@@ -126,7 +135,7 @@
 				<b>Index of Names folio count:</b> <label for="rubricarioCount" id="rubricarioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolume}" cssClass="edit">
+			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 				<input id="goR" type="submit" value="" />
@@ -154,7 +163,7 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 		
-			<form:form id="moveToFolioForm" action="${ShowExplorerVolume}" cssClass="edit">
+			<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
 				<input id="go" type="submit" value="" />
@@ -201,29 +210,37 @@
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
-				// nel click del nextPage ci metti il caricamento nel tab selezionato del dell'attributo $j(this).attr("href")
+				
 				$j(".nextPage").click(function(){
-					// we change selected tab url, 
+					// we change selected tab url 
 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					// we force tab reload 
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
+				
 				$j("#refreshVolumeExplorer").click(function(){
+					// we change selected tab url
 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					// we force tab reload 
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 
 		        $j("#moveToRubricarioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+		        	// we change selected tab url
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+		        	// we force tab reload 
+		        	$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 		        
 				$j("#moveToFolioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+		        	// we change selected tab url
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
+		        	// we force tab reload 
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});

@@ -29,27 +29,27 @@
 
 		<div class="list">
 			<div class="row">
-				<div class="item">Sender</div> <div class="value"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
+				<div class="item">Sender</div> <div class="value80"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
 			</div>
 			<div class="row">
-				<div class="item">From</div> <div class="value"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
+				<div class="item">From</div> <div class="value80"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
 			</div>	
 			<div class="row">
-				<div class="item">Recipient</div> <div class="value"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
+				<div class="item">Recipient</div> <div class="value80"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
 			</div>
 			<div class="row">
-				<div class="item">To</div> <div class="value"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
+				<div class="item">To</div> <div class="value80"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
 			</div>	
 			<br>
 			<div class="row">
-				<div class="item">People</div> <div class="value"></div>
+				<div class="item">People</div> <div class="value80"></div>
 			</div>	
 			<c:forEach items="${document.epLink}" var="currentPeople">
 				<div class="row">
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
-					<div class="item">&nbsp;</div><div class="value"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
+					<div class="item">&nbsp;</div><div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
 					
 				</div>
 			</c:forEach>

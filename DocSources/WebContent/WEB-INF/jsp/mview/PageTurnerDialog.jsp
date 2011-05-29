@@ -10,7 +10,11 @@
 	
 	<c:url var="PersonalNotesDialogURL" value="/src/mview/EditPersonalNotesDialog.do"/>
 	
-	<c:url var="VolumeSummaryDialogURL" value="/src/mview/ShowSummaryVolumeDialog.do"/>
+	<c:url var="VolumeSummaryDialogURL" value="/src/mview/ShowSummaryVolumeDialog.do">
+		<c:param name="volNum" value="${command.volNum}" />
+		<c:param name="volLetExt" value="${command.volLetExt}" />
+	</c:url>
+	
 
 	<c:url var="currentPage" value="${caller}">
 		<c:param name="entryId" value="${command.entryId}" />
@@ -82,7 +86,7 @@
 	
 	<div id="rubricarioMoveTo">
 		<form:form id="moveToRubricarioForm" method="post" class="edit">
-			<label id="imageProgTypeNumLabel" class="rubricarioLabel" for="imageProgTypeNum">Move to rubricario(page)</label>
+			<label id="imageProgTypeNumLabel" class="rubricarioLabel" for="imageProgTypeNum">Move to <i>Index of Names</i> folio</label>
 			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 			<input id="goR" type="image" src="<c:url value="/images/mview/go.png" />" alt="Go"/>
 			<form:hidden path="entryId" />
@@ -101,7 +105,7 @@
 	</div>
 	<div id="folioMoveTo">
 		<form:form id="moveToFolioForm" method="post" class="edit">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio (page)</label>
+			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio </label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
 			<input id="go" type="image" src="<c:url value="/images/mview/go.png" />" alt="Go"/>
 			<form:hidden path="entryId" />

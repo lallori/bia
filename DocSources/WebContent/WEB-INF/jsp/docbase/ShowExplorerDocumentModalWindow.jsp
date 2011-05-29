@@ -7,7 +7,7 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${documentExplorer.image}" />
-			<c:param name="flashVersion"   value="true" />
+			<c:param name="flashVersion"   value="false" />
 		</c:url>
 	</security:authorize>
 	
@@ -23,7 +23,7 @@
 		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 
@@ -37,7 +37,7 @@
 		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 	
@@ -108,7 +108,7 @@
 				<form:hidden path="totalAppendix" value="${documentExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${documentExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${documentExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="flashVersion" value="false" />
 				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>
@@ -137,7 +137,7 @@
 				<form:hidden path="totalAppendix" value="${documentExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${documentExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${documentExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="flashVersion" value="false" />
 				<form:hidden path="modalWindow" value="true"/>
 			</form:form>
 		</div>

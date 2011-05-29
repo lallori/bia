@@ -32,11 +32,11 @@
 		<div class="list">
 			<div class="row">
 				<div class="item">Extract</div>
-				<div class="value">${document.synExtract.docExtract}</div>
+				<div class="value80">${document.synExtract.docExtract}</div>
 			</div>
 			<div class="row">
 				<div class="item">Synopsis</div>
-				<div class="value">${document.synExtract.synopsis}</div>
+				<div class="value80">${document.synExtract.synopsis}</div>
 			</div>
 		</div>
 	</div>

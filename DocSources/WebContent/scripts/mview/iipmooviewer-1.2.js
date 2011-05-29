@@ -195,6 +195,10 @@ var IIP = new Class({
     this.showNavButtons = true;
     if( options['showNavButtons'] == false ) this.showNavButtons = false;
 
+    // Medici Archive Project : parametrization of help button and nav thumbnail
+    this.showHelpButton = options['showHelpButton'] || null;
+    this.showNavThumbnail = options['showNavThumbnail'] || null;
+
     // If we want to assign a function for a click within the image
     // - used for multispectral curve visualization, for example
     this.targetclick = options['targetclick'] || null;
@@ -806,6 +810,9 @@ var IIP = new Class({
     });
     zone.injectInside( navwin );
 
+    //Medici Archive Project
+    alert(this.showNavThumbnail);
+    if( this.showNavThumbnail == false ) navwin.slide('out');
 
    // Create our progress bar
    var loadBarContainer = new Element('div', {

@@ -16,13 +16,13 @@
 			<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
 			<c:param name="totalOther" value="${documentExplorer.totalOther}" />
 			<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="${command.flashVersion}"/>
+			<c:param name="flashVersion" value="false"/>
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${documentExplorer.image}" />
-			<c:param name="flashVersion"   value="${command.flashVersion}" />
+			<c:param name="flashVersion"   value="false" />
 		</c:url>
 	</security:authorize>
 	
@@ -38,7 +38,7 @@
 		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 	</c:url>
 
 	<c:url var="nextPageURL" value="/src/docbase/ShowExplorerDocument.do">
@@ -51,7 +51,7 @@
 		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 	</c:url>
 
 	<c:url var="previousPageURL" value="/src/docbase/ShowExplorerDocument.do">
@@ -64,12 +64,12 @@
 		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 	</c:url>
 	
-		<div id="ShowDocumentExplorer" class="background">
+	<div id="ShowDocumentExplorer" class="background">
 		<div class="title">
-		<h5>DOCUMENT EXPLORER</h5>
+		<h5>VOLUME EXPLORER</h5>
 		</div>
 		
 		
@@ -138,7 +138,7 @@
 				<form:hidden path="totalAppendix" value="${documentExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${documentExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${documentExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="flashVersion" value="false" />
 			</form:form>
 		</div>
 	</c:if>
@@ -165,7 +165,7 @@
 				<form:hidden path="totalAppendix" value="${documentExplorer.totalAppendix}" />
 				<form:hidden path="totalOther" value="${documentExplorer.totalOther}" />
 				<form:hidden path="totalGuardia" value="${documentExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="true" />
+				<form:hidden path="flashVersion" value="false" />
 			</form:form>
 		</div>
 
@@ -175,44 +175,48 @@
 			<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full"></a>
 			<a id="refreshVolumeExplorer" href="${currentPageURL}"></a>
 		</div>
-		</div>
-		
+	</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j('.piro_overlay,.piro_html').remove(); // trick to resolve scroll bug with pirobox
+
 				$j().piroBox_ext({
-					piro_speed: 700,
-					bg_alpha: 0.5,
+					piro_speed : 700,
+					bg_alpha : 0.5,
 					piro_scroll : true
 				});
-			});
-		</script>
 
-		<div align="center">
-			
-		</div>
-		<script type="text/javascript">
-			$j(document).ready(function() {
 				$j(".previousPage").click(function(){
+					// we change selected tab url, 
 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					// we force tab reload 
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-				});					
+					return false;
+				});
+				
 				$j(".nextPage").click(function(){
 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
-				});
-				$j("#refreshVolumeExplorer").click(function(){$j("#body_right").load($j(this).attr("href"));return false;});
-				
-		        $j("#moveToRubricarioForm").submit(function (){
-					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						$j("#body_right").html(html);
-					}});
 					return false;
 				});
+				
+				$j("#refreshVolumeExplorer").click(function(){
+					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					return false;
+				});
+				
+		        $j("#moveToRubricarioForm").submit(function (){
+		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					return false;
+				});
+		        
 		        $j("#moveToFolioForm").submit(function (){
-					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-						$j("#body_right").html(html);
-					}});
+		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 			});

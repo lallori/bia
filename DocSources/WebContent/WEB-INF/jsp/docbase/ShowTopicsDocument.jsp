@@ -23,11 +23,11 @@
 		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
 			<div class="row">
 				<div class="item">Topic:</div>
-				<div class="value"> ${currentTopicAndPlace.topic.topicTitle}</div>
+				<div class="value80"> ${currentTopicAndPlace.topic.topicTitle}</div>
 			</div>
 			<div class="row">
 				<div class="item">Topic Place:</div>
-				<div class="value"> ${currentTopicAndPlace.place.placeNameFull}</div>
+				<div class="value80"> ${currentTopicAndPlace.place.placeNameFull}</div>
 			</div>
 			<br/>
 		</c:forEach>

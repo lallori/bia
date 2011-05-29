@@ -22,6 +22,7 @@
 	$j(function() {
 		$j("#tabs").tabs({
 			ajaxOptions: {
+				type: 'post',
 				error: function( xhr, status, index, anchor ) {
 					$j( anchor.hash ).html(
 						"Couldn't load this tab. We'll try to fix this as soon as possible. " );

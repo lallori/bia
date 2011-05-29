@@ -19,9 +19,9 @@
 			</c:if>
 		</security:authorize>
 		</div>
-		<div class="listDetails">
+		<div class="list">
 			<div class="row">
-				<div class="item">${document.factChecks.addLRes}</div>
+				<div class="valueHilight">${document.factChecks.addLRes}</div>
 			</div>
 		</div>
 	</div>

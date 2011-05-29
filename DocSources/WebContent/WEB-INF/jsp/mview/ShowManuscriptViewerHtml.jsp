@@ -6,6 +6,7 @@
 
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
+			${command.showHelp}
 			$j(document).ready(function() {
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses */
@@ -19,6 +20,7 @@
 				credit: '&copy; copyright or information message', 
 				zoom: 1,
 				showNavButtons: true,
+				showNavThumbnail : false,
 				render: 'random'
 			});
 

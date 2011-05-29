@@ -1019,14 +1019,19 @@ form#EditUserProfileForm.edit {
 	color:#6F6B69;
 }
 
-#SpineVolumeDiv {
+#SpineVolumeNotDigitDiv {
 	float:right;
 	z-index:1;
-	background-image:url(/DocSources/images/1024/img_volumespinedefault.png);
-	background-position:center;
 	height:160px;
 	width:90px;
-	background-repeat:no-repeat;
+	text-align:center;
+}
+
+#SpineVolumeDigitDiv {
+	float:right;
+	z-index:1;
+	height:160px;
+	width:150px;
 	text-align:center;
 }
 
@@ -1083,6 +1088,21 @@ input.file {
 /*
 /*
 /* ------------ EditDetailsDocument ------------ */
+#DocumentImageNotDigitDiv {
+	float:right;
+	z-index:1;
+	height:160px;
+	width:90px;
+	text-align:center;
+}
+
+#DocumentImageDigitDiv {
+	float:right;
+	z-index:1;
+	height:160px;
+	width:150px;
+	text-align:center;
+}
 
 #DocumentImageDiv { /* Div containing the image specifics */
 	float:right;
