@@ -66,15 +66,15 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/docbase/CheckDocumentDigitized", method = RequestMethod.GET)
 	public ModelAndView checkVolumeDigitized(	@RequestParam(value="entryId", required=false) Integer entryId,
-												@RequestParam(value="folioNum", required=false) Integer folioNum,
-												@RequestParam(value="folioMod", required=false) String folioMod,
 												@RequestParam(value="volNum", required=false) Integer volNum, 
-												@RequestParam(value="volLetExt", required=false) String volLetExt) {
+												@RequestParam(value="volLetExt", required=false) String volLetExt,
+												@RequestParam(value="folioNum", required=false) Integer folioNum,
+												@RequestParam(value="folioMod", required=false) String folioMod) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		if (entryId != null) {
 			try {
-				Boolean digitized = getDocBaseService().checkDocumentDigitized(folioNum, folioMod, volNum, volLetExt);
+				Boolean digitized = getDocBaseService().checkDocumentDigitized(volNum, volLetExt, folioNum, folioMod);
 				model.put("digitized", digitized.toString());
 			} catch (ApplicationThrowable aex) {
 				model.put("digitized", "false");

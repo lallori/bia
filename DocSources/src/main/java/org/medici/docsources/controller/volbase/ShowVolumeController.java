@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.command.volbase.ShowVolumeRequestCommand;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -80,6 +81,8 @@ public class ShowVolumeController {
 		if (command.getSummaryId() > 0) {
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
+				Image image = getVolBaseService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+				model.put("image", image);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
 			}

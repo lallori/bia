@@ -31,9 +31,10 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
 import org.medici.docsources.command.manuscriptviewer.ShowSummaryVolumeDialogCommand;
-import org.medici.docsources.domain.Document;
+import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -52,6 +53,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShowSummaryVolumeDialogController {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private VolBaseService volBaseService;
 
 	/**
 	 * 
@@ -64,8 +67,8 @@ public class ShowSummaryVolumeDialogController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			Document document = getDocBaseService().findDocument(command.getEntryId());
-			model.put("document", document);
+			VolumeSummary volumeSummary = getVolBaseService().findVolumeSummmary(command.getVolNum(), command.getVolLetExt());
+			model.put("volumeSummary", volumeSummary);
 			
 			return new ModelAndView("mview/ShowSummaryVolumeDialog", model);
 		} catch (ApplicationThrowable ath) {
@@ -85,5 +88,19 @@ public class ShowSummaryVolumeDialogController {
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
+	}
+
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
+
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
 	}
 }

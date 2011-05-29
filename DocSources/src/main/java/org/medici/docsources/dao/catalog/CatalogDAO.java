@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.catalog;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Catalog;
 
@@ -37,4 +39,12 @@ import org.medici.docsources.domain.Catalog;
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface CatalogDAO extends Dao<Integer, Catalog> {
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Catalog findBySummaryId(Integer summaryId) throws PersistenceException;
 }

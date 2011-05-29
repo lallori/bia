@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
@@ -129,10 +130,28 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * 
 	 * @param volNum
 	 * @param volLetExt
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public FoliosInformations findVolumeFoliosInformations(Integer volNum, String volLetExt) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
 	 * @param imageType
 	 * @param imageProgTypeNum
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Image findVolumeSpine(Integer volNum, String volLetExt) throws PersistenceException;
 }

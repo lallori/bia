@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.catalog;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Catalog;
 import org.springframework.stereotype.Repository;
@@ -60,4 +62,10 @@ public class CatalogDAOJpaImpl extends JpaDao<Integer, Catalog> implements Catal
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -7766262138445120927L;
+
+	@Override
+	public Catalog findBySummaryId(Integer summaryId) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -30,6 +30,7 @@ package org.medici.docsources.controller.volbase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
@@ -70,6 +71,9 @@ public class ShowLastEntryVolumeController {
 		try {
 			Volume volume = getVolBaseService().findLastEntryVolume();
 			model.put("volume", volume);
+
+			Image image = getVolBaseService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+			model.put("image", image);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowVolume", model);
 		}

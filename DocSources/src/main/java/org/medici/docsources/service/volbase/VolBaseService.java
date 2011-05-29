@@ -32,6 +32,7 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
@@ -227,13 +228,31 @@ public interface VolBaseService {
 	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Image findVolumeImageSpine(Integer volNum, String volLetExt) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public VolumeSummary findVolumeSummmary(Integer volNum, String volLetExt) throws ApplicationThrowable;
+	
+	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Month}.
 	 * 
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
 	public void generateIndexMonth() throws ApplicationThrowable;
-	
+
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.SerieList}.
 	 * 
@@ -241,7 +260,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public void generateIndexSerieList() throws ApplicationThrowable;
-	
+
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Volume}.
 	 * 

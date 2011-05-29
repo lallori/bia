@@ -44,6 +44,7 @@ import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.ImageUtils;
+import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
@@ -86,10 +87,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	@Override
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
-        if (volLetExt != null)
-        	stringBuffer.append(" = :volLetExt");
-        else
+        if (StringUtils.isEmpty(volLetExt))
         	stringBuffer.append(" is null");
+        else
+        	stringBuffer.append(" = :volLetExt");
+
     	stringBuffer.append(" and imageName like '%_C_");
     	stringBuffer.append(ImageUtils.formatFolioNumber(folioNum, folioMod));
     	stringBuffer.append("_R.tif'");
@@ -97,7 +99,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         Query query = getEntityManager().createQuery(stringBuffer.toString());
 
         query.setParameter("volNum", volNum);
-        if (volLetExt != null)
+        if (!StringUtils.isEmpty(volLetExt))
         	query.setParameter("volLetExt", volLetExt);
 
 		List<Image> result = query.getResultList();
@@ -107,7 +109,6 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		}
 		
 		return null;
-
 	}
 
 	/**
@@ -415,6 +416,92 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public FoliosInformations findVolumeFoliosInformations(Integer volNum, String volLetExt) throws PersistenceException {
+		FoliosInformations foliosInformations = new FoliosInformations();
+		
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+
+		CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+		Root<Image> rootCount = criteriaQueryCount.from(Image.class);
+		criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+		// Define predicate's elements
+		ParameterExpression<Integer> parameterVolNum = criteriaBuilder.parameter(Integer.class, "volNum");
+		ParameterExpression<String> parameterVolLeText = StringUtils.isEmpty("volLetExt") ? null : criteriaBuilder.parameter(String.class, "volLetExt"); 
+
+		criteriaQueryCount.where(
+			criteriaBuilder.and(
+				criteriaBuilder.equal(rootCount.get("volNum"), parameterVolNum),
+				StringUtils.isEmpty(volLetExt) ? 
+					criteriaBuilder.isNull(rootCount.get("volLetExt")) : 
+					criteriaBuilder.equal(rootCount.get("volLetExt"), parameterVolLeText)
+			)
+		);
+
+		TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+		typedQueryCount.setParameter("volNum", volNum);
+		if (!StringUtils.isEmpty(volLetExt))
+			typedQueryCount.setParameter("volLetExt", volLetExt);
+		foliosInformations.setTotal((Long)typedQueryCount.getSingleResult());
+
+        StringBuffer stringBuffer = new StringBuffer("SELECT imageType, imageRectoVerso, max(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volLetExt))
+        	stringBuffer.append(" = :volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" group by imageType, imageRectoVerso");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volNum);
+        if (!StringUtils.isEmpty(volLetExt)) {
+        	query.setParameter("volLetExt", volLetExt);
+        }
+
+		List<Object[]> result = (List<Object[]>)query.getResultList();
+
+		// We init every partial-total
+		foliosInformations.setTotalRubricario(new Long(0));
+		foliosInformations.setTotalCarta(new Long(0));
+		foliosInformations.setTotalAppendix(new Long(0));
+		foliosInformations.setTotalOther(new Long(0));
+		foliosInformations.setTotalGuardia(new Long(0));
+		
+		// We set new partial-total values 
+		for (int i=0; i<result.size(); i++) {
+			// This is an array defined as [ImageType, Count by ImageType]
+			Object[] singleGroup = result.get(i);
+
+			if(((ImageType) singleGroup[0]).equals(ImageType.R)) {
+				if (foliosInformations.getTotalRubricario() < new Long(singleGroup[2].toString())) {
+					foliosInformations.setTotalRubricario(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.C)) {
+				if (foliosInformations.getTotalCarta() < new Long(singleGroup[2].toString())) {
+					foliosInformations.setTotalCarta(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.A)) {
+				if (foliosInformations.getTotalAppendix() < new Long(singleGroup[2].toString())) {
+					foliosInformations.setTotalAppendix(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.O)) {
+				if (foliosInformations.getTotalOther() < new Long(singleGroup[2].toString())) {
+					foliosInformations.setTotalOther(new Long(singleGroup[2].toString()));
+				}
+			} else if(((ImageType) singleGroup[0]).equals(ImageType.G)) {
+				if (foliosInformations.getTotalGuardia() < new Long(singleGroup[2].toString())) {
+					foliosInformations.setTotalGuardia(new Long(singleGroup[2].toString()));
+				}
+			}
+		}
+		
+		return foliosInformations;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws PersistenceException {
@@ -439,6 +526,34 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			return null;
 		
 		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Image findVolumeSpine(Integer volNum, String volLetExt) throws PersistenceException {
+        StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE volNum = :volNum and volLetExt ");
+        if (volLetExt != null)
+        	stringBuffer.append(" = :volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" and imageName like '%SPI.tif'");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+
+        query.setParameter("volNum", volNum);
+        if (volLetExt != null)
+        	query.setParameter("volLetExt", volLetExt);
+
+		List<Image> result = query.getResultList();
+		
+		if (result.size() >0) {
+			return result.get(0);
+		}
+		
+		return null;
 	}
 
 	/**

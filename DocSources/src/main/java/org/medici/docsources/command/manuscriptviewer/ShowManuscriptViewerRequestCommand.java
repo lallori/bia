@@ -44,7 +44,10 @@ public class ShowManuscriptViewerRequestCommand {
 	private String volLeText;
 	private Integer imageId;
 	private String imageName;
+	private Boolean showHelp;
+	private Boolean showThumbnail;
 	private Boolean flashVersion;
+
 	/**
 	 * @param entryId the entryId to set
 	 */
@@ -128,5 +131,29 @@ public class ShowManuscriptViewerRequestCommand {
 	 */
 	public String getImageName() {
 		return imageName;
+	}
+	/**
+	 * @param showHelp the showHelp to set
+	 */
+	public void setShowHelp(Boolean showHelp) {
+		this.showHelp = showHelp;
+	}
+	/**
+	 * @return the showHelp
+	 */
+	public Boolean getShowHelp() {
+		return showHelp;
+	}
+	/**
+	 * @param showThumbnail the showThumbnail to set
+	 */
+	public void setShowThumbnail(Boolean showThumbnail) {
+		this.showThumbnail = showThumbnail;
+	}
+	/**
+	 * @return the showThumbnail
+	 */
+	public Boolean getShowThumbnail() {
+		return showThumbnail;
 	}
 }

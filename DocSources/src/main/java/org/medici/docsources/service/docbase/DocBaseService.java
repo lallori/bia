@@ -133,7 +133,7 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Boolean checkDocumentDigitized(Integer folioNum, String folioMod, Integer volNum, String volLetExt) throws ApplicationThrowable;
+	public Boolean checkDocumentDigitized(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
 
 	/**
 	 * This method will return a new {@link org.medici.docsources.domain.Document} constructed 

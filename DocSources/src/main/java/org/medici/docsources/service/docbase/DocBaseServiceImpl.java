@@ -234,7 +234,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean checkDocumentDigitized(Integer folioNum, String folioMod, Integer volNum, String volLetExt) throws ApplicationThrowable {
+	public Boolean checkDocumentDigitized(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable {
 		Boolean digitized = Boolean.FALSE;
 		try {
 			Image firstImage = getImageDAO().findDocumentImage(volNum, volLetExt, folioNum, folioMod);

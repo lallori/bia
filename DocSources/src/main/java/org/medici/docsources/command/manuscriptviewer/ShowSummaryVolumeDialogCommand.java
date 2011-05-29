@@ -33,20 +33,34 @@ package org.medici.docsources.command.manuscriptviewer;
  *
  */
 public class ShowSummaryVolumeDialogCommand {
-	private Integer entryId;
-
+	private Integer volNum;
+	private String volLetExt;
+	
 	/**
-	 * @param entryId the entryId to set
+	 * @param volNum the volNum to set
 	 */
-	public void setEntryId(Integer entryId) {
-		this.entryId = entryId;
+	public void setVolNum(Integer volNum) {
+		this.volNum = volNum;
 	}
-
+	
 	/**
-	 * @return the entryId
+	 * @return the volNum
 	 */
-	public Integer getEntryId() {
-		return entryId;
+	public Integer getVolNum() {
+		return volNum;
 	}
-
+	
+	/**
+	 * @param volLetExt the volLetExt to set
+	 */
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
+	}
+	
+	/**
+	 * @return the volLetExt
+	 */
+	public String getVolLetExt() {
+		return volLetExt;
+	}
 }
