@@ -17,11 +17,12 @@
 			iip = new IIP( "targetframe", {
 				server: '/DocSources/mview/ReverseProxyIIPImage.do',
 				image: '${image}',
-				credit: '&copy; copyright or information message', 
+				credit: 'Folio n. ', 
 				zoom: 1,
-				showNavButtons: true,
-				showNavThumbnail : false,
-				render: 'random'
+				showNavButtons: 'true',
+				render: 'random',
+				showNavThumbnail: 'false',
+				showHelpButton: 'true'
 			});
 
 		</script>
