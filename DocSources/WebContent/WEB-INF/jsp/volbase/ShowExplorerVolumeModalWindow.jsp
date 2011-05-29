@@ -181,7 +181,7 @@
 		<br />
 
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
-			<a id="transcribe" class="MB_focusable" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO" onclick="Modalbox.show(this.href, {title: this.title, width: 750, height: 600}); return false;"></a>
+			<a id="transcribe" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"  class="pirobox" rel="content-full-full"></a>
 		</c:if>
 	
 		
