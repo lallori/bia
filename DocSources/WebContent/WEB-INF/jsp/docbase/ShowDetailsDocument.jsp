@@ -90,8 +90,10 @@
 			<div class="row">
 				<div class="item60">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
 			</div>
+		</div>
+		<div class="list">
 			<div class="row">
-				<div class="item60">Date Notes</div> <div class="value">${document.dateNotes}</div>
+				<div class="item37">Date Notes</div> <div class="value50">${document.dateNotes}</div>
 			</div>
 		</div>
 	</div>

@@ -88,7 +88,7 @@
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 	
-	<div id="modalBox">
+	
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
@@ -130,12 +130,15 @@
 		</div>
 		<br />	
 		<br />
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="choose" href="${TranscribeAndContextualizeDocumentURL}"></a>
-	</security:authorize>
-		<a id="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"></a>
-				
-	</div>
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<div id="choose">
+			<a  href="${TranscribeAndContextualizeDocumentURL}"></a>
+		</div>
+		</security:authorize>
+		<div id="gobackvolume">
+			<a href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"></a>
+		</div>	
+	
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -157,8 +160,8 @@
 				return false;
 			});
 
-			$j(".gobackvolume").click(function(){
-				$j("#volumeExplorerButtons").load("${ExplorerVolumeModalURL}");
+			$j("#gobackvolume").click(function(){
+				$j("#modalBox").load($j(this).attr("href"));
 				return false;
 			});
 		});
