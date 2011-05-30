@@ -101,10 +101,10 @@
 	margin:520px 0 0 300px;
 }
 
-/* ------------- Specific Chronology Window --------------- */
-/* When pressed More >> button */
+/* ------------- Specific Chronology Window --------------- 
+/* When pressed More >> button 
 
-#MoreDocsChronology, #MorePlaceChronology, #MoreVolChronology, #MorePeopleChronology { /* Specific Documents Chronology Div */
+#MoreDocsChronology, #MorePlaceChronology, #MoreVolChronology, #MorePeopleChronology { /* Specific Documents Chronology Div 
 	width:700px;
 	height:auto;
 	margin-top:5px;
@@ -113,12 +113,12 @@
 	padding:10px 10px 20px 0;
 }
 
-table {
+#MoreDocsChronology table, #MorePlaceChronology table, #MoreVolChronology table, #MorePeopleChronology table {
 	border-collapse: separate;
 	margin:0 auto 25px auto;
 }
 
-td, th {
+#MoreDocsChronology table, #MorePlaceChronology table, #MoreVolChronology table, #MorePeopleChronology table td, th {
 	display: table-cell;
 	vertical-align: inherit;
 	padding:7px;
@@ -184,4 +184,4 @@ tr.odd td.sorting_1 {
 .even {
 	background-color:#FFF;
 }
-
+*/
