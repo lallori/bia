@@ -121,19 +121,21 @@
 		<div>
 		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="folioerrors"/></form:form>
 		</div>
+		
+	<div id="volumeExplorerButtons">
 	<c:if test="${volumeExplorer.totalRubricario > 0}">
 		<br/>&nbsp;
 		<br/>&nbsp;
 				
-		<div id="rubricarioMoveTo">
-			<div id="rubricarioCountForm">
+		<div id="rubricarioModalMoveTo">
+			<div id="rubricarioModalCountForm">
 				<b>Index of Names Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario MB_focusable" type="text" value="" />
-				<input id="goR" type="submit" value="" />
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
+				<input id="goRModal" type="submit" value="" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
@@ -153,16 +155,16 @@
 		<br/>
 		<br/>
 		
-		<div id="folioMoveTo">
+		<div id="folioModalMoveTo">
 
-			<div id="folioCountForm"> 
+			<div id="folioModalCountForm"> 
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 
 			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio MB_focusable" type="text" value="" />
-				<input class="openmodalbox" id="go" type="submit" value=""/>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
+				<input class="openmodalbox" id="goModal" type="submit" value=""/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
@@ -179,12 +181,13 @@
 		</div>
 		
 		<br />
-
+		
+		<a id="transcribe" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"  class="pirobox" rel="content-full-full"></a>
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
 			<a id="transcribe" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"  class="pirobox" rel="content-full-full"></a>
 		</c:if>
 	
-		
+		</div>
 	</div>
 
 	<script type="text/javascript">

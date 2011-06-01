@@ -334,15 +334,17 @@ input {
 }
 
 .welcome_list{
-	margin-left: 50px;
+	margin-left:78px;
 	margin-top:150px;
 	line-height:20px;
-	list-style-type:none;
 	position:absolute;
 }
 
 .welcome_list ul li{
 	list-style-type:none;
+	margin:7px 0 0 40px;
+	font-size:11px;
+	color:#6F6B69;
 }
 
 #colte_of_arms { /*  Medici symbol */

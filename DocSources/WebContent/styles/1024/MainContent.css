@@ -1723,6 +1723,12 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	font-size:10px;
 }
 
+#rubricarioModalMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" in Fullscreen Mode */
+	width:595px;
+	margin:30px 0 0 60px;
+	font-size:11px;
+}
+
 #rubricarioCountForm { /* "Rubricario Count" FORM */
 	display:inline;
 	color:#6d5c4d;
@@ -1730,12 +1736,27 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	font-size:10px;
 }
 
-#moveToRubricarioForm, #moveToRubricarioModalForm { /* "Move to Rubricario" FORM */
+#rubricarioModalCountForm { /* "Rubricario Count" FORM in Fullscreen Mode */
+	display:inline;
+	color:#6d5c4d;
+	margin-top:10px;
+	font-size:11px;
+}
+
+#moveToRubricarioForm { /* "Move to Rubricario" FORM */
 	width:150px;
 	display:inline;
 	color:#6d5c4d;
 	float:right;
 	margin:0;
+}
+
+#moveToRubricarioModalForm { /* "Move to Rubricario" FORM in Fullscreen Mode */
+	width:160px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+	margin:-7px 0 0 0;
 }
 
 .rubricarioLabel { /* "Move to rubricario" <label> class  */
@@ -1745,14 +1766,37 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	color:#6d5c4d;
 }
 
+.rubricarioLabelModal { /* "Move to rubricario" <label> class in Fullscreen Mode  */
+	font-size:11px;
+	margin:0 0 0 -85px;
+	position:relative;
+	color:#6d5c4d;
+}
+
 .input_4cRucricario { /* "Move to rubricario" <input> ID  */
 	margin:-1px 0 0 80px;
 	position:absolute;
 	width: 30px;
 }
 
+.input_4cRubricarioModal { /* "Move to rubricario" <input> ID  */
+	position:relative;
+	width: 30px;
+}
+
 #goR { /* "Move to rubricario" <input> GO button ID  */
 	margin:-4px 0 0 120px;
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/1024/button_go.png);
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+}
+
+#goRModal { /* "Move to rubricario" <input> GO button ID  */
+	margin:0;
 	width:22px;
 	height:22px;
 	background-image:url(/DocSources/images/1024/button_go.png);
@@ -1772,6 +1816,11 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	margin:0 0 0 20px;
 }
 
+#folioModalMoveTo { /* Contains "Folio Count" and "Move to folio" */
+	width:660px;
+	margin:0 0 0 10px;
+}
+
 #folioCountForm { /* "Folio Count" FORM */
 	display:inline;
 	color:#6d5c4d;
@@ -1780,12 +1829,29 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	font-size:10px;
 }
 
-#moveToFolioForm, #moveToFolioModalForm { /* Move to folio FORM */
+#folioModalCountForm { /* "Folio Count" FORM in Fullscreen Mode */
+	display:inline;
+	color:#6d5c4d;
+	margin-top:10px;
+	margin-left:50px;
+	position:relative;
+	font-size:11px;
+}
+
+#moveToFolioForm { /* Move to folio FORM */
 	width:150px;
 	display:inline;
 	color:#6d5c4d;
 	float:right;
 	font-size:10px;
+}
+
+#moveToFolioModalForm { /* Move to folio FORM in Fullscreen Mode */
+	width:230px;
+	display:inline;
+	color:#6d5c4d;
+	float:right;
+	margin:-7px 0 0 0;
 }
 
 .folioLabel { /* "Move to folio" <label> ID  */
@@ -1795,14 +1861,38 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	color:#6d5c4d;
 }
 
+.folioLabelModal { /* "Move to folio" <label> ID in Fullscreen Mode  */
+	font-size:11px;
+	margin:0 0 0 59px;
+	position:relative;
+	color:#6d5c4d;
+}
+
 .input_4cFolio { /* "Move to folio" <input> ID  */
 	margin:-1px 0 0 80px;
 	position:absolute;
 	width: 30px;
 }
 
+.input_4cFolioModal { /* "Move to folio" <input> ID  */
+	width: 30px;
+	margin:0 0 0 5px;
+	position:relative;
+}
+
 #go { /* "Move to rubricario" <input> GO button ID  */
 	margin:-4px 0 0 120px;
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/1024/button_go.png);
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+}
+
+#goModal { /* "Move to rubricario" <input> GO button ID  */
+	margin:0 0 0 7px;
 	width:22px;
 	height:22px;
 	background-image:url(/DocSources/images/1024/button_go.png);
@@ -1859,7 +1949,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 /* modalBox Previous / Next Folio */
 
 #modalBox #prevNextButtons {
-	margin:10px 0 10px 255px;
+	margin:10px 0 10px 265px;
 	width: 170px;
 	z-index:2;
 }
@@ -1937,22 +2027,10 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	border:none;
 }
 
- /* Modifiche fatte da Pasquinelli
-#modalBox #transcribe {
-	margin:10px 0 0 275px;
-}
-
-#modalBox #transcribe a{
-	background-image:url(/DocSources/images/1024/button_transcribe.png);
-	float:left;
-	width:141px;
-	height:23px;
-}*/
-
 /* Modifiche fatte da Pasquinelli*/
 #modalBox #transcribe {
 	background-image:url(/DocSources/images/1024/button_transcribe.png);
-	margin:10px 0 0 275px;
+	margin:10px 0 0 280px;
 	float:left;
 	width:141px;
 	height:23px;

@@ -29,6 +29,14 @@
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
 		
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css"/>" />
+		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.5.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.10.custom.min.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.tooltip.js"/>"></script>
+		
+		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {

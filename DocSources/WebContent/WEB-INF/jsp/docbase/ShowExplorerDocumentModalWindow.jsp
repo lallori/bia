@@ -89,15 +89,15 @@
 		<br/>&nbsp;
 		<br/>&nbsp;
 				
-		<div id="rubricarioMoveTo">
-			<div id="rubricarioCountForm">
+		<div id="rubricarioModalMoveTo">
+			<div id="rubricarioModalCountForm">
 				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
 			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario MB_focusable" type="text" value="" />
-				<input id="goR" type="submit" value="" />
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
+				<input id="goRModal" type="submit" value="" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
@@ -117,16 +117,16 @@
 		<br/>
 		<br/>
 		
-		<div id="folioMoveTo">
+		<div id="folioModalMoveTo">
 
-			<div id="folioCountForm"> 
+			<div id="folioModalCountForm"> 
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 
 			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio MB_focusable" type="text" value="" />
-				<input class="openmodalbox" id="go" type="submit" value=""/>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
+				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
+				<input class="openmodalbox" id="goModal" type="submit" value=""/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" value="${command.volLetExt}" />
 				<form:hidden path="imageType" value="C"/>
@@ -142,7 +142,7 @@
 			</form:form>
 		</div>
 			
-		<div id="CloseButtonRight"><input value="Close" class="modalBox-close" onClick="Modalbox.hide(); return false;" type="submit"><br /><span>(or click the overlay)</span></div>
+		
 	</div>
 
 	<script type="text/javascript">
@@ -171,9 +171,5 @@
 				return false;
 			});
 
-			$j(".simplemodal-close").click(function() {
-				$j.modal.close(); 
-				return false;
-			});
 		});
 	</script>

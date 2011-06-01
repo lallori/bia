@@ -55,7 +55,6 @@
 		<c:if test="${empty image}">
 			<div id="DocumentImageNotDigitDiv">
 				<img src="<c:url value="/images/1024/img_document.png"/>">
-				<b>Volume Spine</b>
 			</div>
 		</c:if>
 		
