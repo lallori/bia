@@ -281,6 +281,16 @@ valueNotes {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.editMoveToRubricarioForm { /* Edit FORM class */
+	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.editMoveToFolioForm { /* Edit FORM class */
+	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
 fieldset {  /* FORM BACKGROUND */
 	border: 1px solid #e6d0c6;
 	background-color:#f3e7e2;
@@ -1924,7 +1934,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 /*
 /* ---- Refresh --- */
 
-#refreshVolumeExplorer {
+a.refreshVolumeExplorer {
 	margin: 0 0 0 383px;
 	position:absolute;
 	width:95px;
@@ -2036,22 +2046,22 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	height:23px;
 }
 
-#modalBox #choose {
+#modalBox #chooseDiv {
 	margin:0 0 0 50px;
 }
 
-#modalBox #choose a{
+#modalBox #choose {
 	background-image:url(/DocSources/images/1024/button_choose.png);
 	float:left;
 	width:189px;
 	height:23px;
 }
 
-#modalBox #gobackvolume{
+#modalBox #gobackvolumeDiv {
 	margin-left:495px;
 }
 
-#modalBox #gobackvolume a{
+#modalBox #gobackvolume {
 	background-image:url(/DocSources/images/1024/button_gobackvolume.png);
 	float:left;
 	width:150px;
