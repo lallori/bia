@@ -135,7 +135,7 @@
 				<b>Index of Names folio count:</b> <label for="rubricarioCount" id="rubricarioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
+			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToRubricarioForm">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 				<input id="goR" type="submit" value="" />
@@ -163,7 +163,7 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 		
-			<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
+			<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
 				<input id="go" type="submit" value="" />
@@ -186,7 +186,7 @@
 			
 		<div>
 			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full"></a>
-			<a id="refreshVolumeExplorer" href="${currentPage}"></a>
+			<a class="refreshVolumeExplorer" href="${currentPage}"></a>
 		</div>
 
 		<div align="center">
@@ -219,7 +219,7 @@
 					return false;
 				});
 				
-				$j("#refreshVolumeExplorer").click(function(){
+				$j(".refreshVolumeExplorer").click(function(){
 					// we change selected tab url
 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 					// we force tab reload 
@@ -227,7 +227,7 @@
 					return false;
 				});
 
-		        $j("#moveToRubricarioForm").submit(function (){
+		        $j(".editMoveToRubricarioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 		        	// we change selected tab url
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
@@ -236,7 +236,7 @@
 					return false;
 				});
 		        
-				$j("#moveToFolioForm").submit(function (){
+				$j(".editMoveToFolioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 		        	// we change selected tab url
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);

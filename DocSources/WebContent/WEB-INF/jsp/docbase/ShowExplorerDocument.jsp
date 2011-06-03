@@ -124,7 +124,7 @@
 				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
+			<form:form id="moveToRubricarioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToRubricarioForm">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 				<input id="goR" type="submit" value="" />
@@ -151,7 +151,7 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 		
-			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
+			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
 				<input id="go" type="submit" value="" />
@@ -173,7 +173,7 @@
 			
 		<div>
 			<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full"></a>
-			<a id="refreshVolumeExplorer" href="${currentPageURL}"></a>
+			<a class="refreshVolumeExplorer" href="${currentPageURL}"></a>
 		</div>
 	</div>
 		<script type="text/javascript">
@@ -200,20 +200,20 @@
 					return false;
 				});
 				
-				$j("#refreshVolumeExplorer").click(function(){
+				$j(".refreshVolumeExplorer").click(function(){
 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 				
-		        $j("#moveToRubricarioForm").submit(function (){
+		        $j(".editMoveToRubricarioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 		        
-		        $j("#moveToFolioForm").submit(function (){
+		        $j(".editMoveToFolioForm").submit(function (){
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
