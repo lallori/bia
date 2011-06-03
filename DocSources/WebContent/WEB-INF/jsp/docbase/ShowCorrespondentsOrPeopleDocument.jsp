@@ -13,9 +13,11 @@
 	<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
 		<c:param name="personId"   value="${document.senderPeople.personId}" />
 	</c:url>
+
 	<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
 		<c:param name="personId"   value="${document.recipientPeople.personId}" />
 	</c:url>
+
 	<div id="EditCorrespondentsDocumentDiv" class="background">
 		<div class="title">
 			<h5>CORRESPONDENTS/PEOPLE </h5>
