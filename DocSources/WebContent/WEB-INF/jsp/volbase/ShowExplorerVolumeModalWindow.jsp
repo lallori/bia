@@ -28,9 +28,8 @@
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="ShowExplorerVolume" value="/src/volbase/ShowExplorerVolume.do" />
-		
-	
+	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do" />	
+
 	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -132,7 +131,7 @@
 				<b>Index of Names Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
+			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
 				<input id="goRModal" type="submit" value="" />
@@ -161,7 +160,7 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 
-			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
+			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
 				<input class="openmodalbox" id="goModal" type="submit" value=""/>
@@ -182,7 +181,6 @@
 		
 		<br />
 		
-		<a id="transcribe" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"  class="pirobox" rel="content-full-full"></a>
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
 			<a id="transcribe" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"  class="pirobox" rel="content-full-full"></a>
 		</c:if>

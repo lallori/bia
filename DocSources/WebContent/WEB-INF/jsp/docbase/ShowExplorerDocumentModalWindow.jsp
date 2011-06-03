@@ -11,7 +11,7 @@
 		</c:url>
 	</security:authorize>
 	
-	<c:url var="ShowExplorerVolumeURL" value="/src/docbase/ShowExplorerDocument.do" />
+	<c:url var="ShowExplorerDocumentURL" value="/src/docbase/ShowExplorerDocument.do" />
 	
 	<c:url var="nextPageURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="volNum" value="${command.volNum}" />
@@ -94,7 +94,7 @@
 				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
 			</div>
 		
-			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
+			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
 				<input id="goRModal" type="submit" value="" />
@@ -123,7 +123,7 @@
 				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${documentExplorer.totalCarta}</label>
 			</div>
 
-			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolume}" cssClass="edit">
+			<form:form id="moveToFolioModalForm" action="${ShowExplorerDocumentURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
 				<input class="openmodalbox" id="goModal" type="submit" value=""/>
