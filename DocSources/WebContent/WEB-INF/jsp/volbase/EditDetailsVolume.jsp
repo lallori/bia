@@ -67,6 +67,10 @@
 
 	<c:url var="searchSeriesListUrl" value="/de/volbase/SearchSeriesList.json"/>
 
+	<c:url var="CheckVolumeDigitizedURL" value="/src/volbase/CheckVolumeDigitized.json"/>
+	
+	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do"/>
+
 	<c:url var="ShowVolume" value="/src/volbase/ShowVolume.do">
 		<c:param name="summaryId"   value="${command.summaryId}" />
 	</c:url>
@@ -92,15 +96,20 @@
 								$j("#volExist").remove();
 							}
 							$j("#save").removeAttr("disabled");
-							$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val(), flashVersion : true },
-								function(data){
-									$j("#body_right").html(data);
-									return true;
+
+							$j.get('${CheckVolumeDigitizedURL}', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val() }, function(data){
+									if (data.digitized == "true") {
+				            			var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+				            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+				                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
+				                    	$j("#tabs").tabs("select", $("#tabs").tabs("length")-1);
+				            		}
 								}
+								 
 							);
 						} else {
 							if ($j("#volExist").length == 0) {
-								$j("#close").before("<span class=\"inputerrors\" id=\"volExist\">Volume is already present, you cannot add again this volume. Save is disabled.<br></span>");
+								$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\">Volume is already present, you cannot add again this volume. Save is disabled.<br></span>");
 							}
 							$j("#save").attr("disabled","true");
 						}
