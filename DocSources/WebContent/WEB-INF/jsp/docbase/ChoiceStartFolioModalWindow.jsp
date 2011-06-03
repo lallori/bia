@@ -130,13 +130,14 @@
 		</div>
 		<br />	
 		<br />
+	</div>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<div id="choose">
-			<a  href="${TranscribeAndContextualizeDocumentURL}"></a>
+		<div id="chooseDiv">
+			<a id="choose" href="${TranscribeAndContextualizeDocumentURL}"></a>
 		</div>
 		</security:authorize>
-		<div id="gobackvolume">
-			<a href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"></a>
+		<div id="gobackvolumeDiv">
+			<a id="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"></a>
 		</div>	
 	
 
@@ -155,8 +156,8 @@
 			$j("#choose").click(function(e) {
 				e.preventDefault();
 				$j("#body_left").load($j(this).attr("href"));
-				$j("#body_right").load("${ShowExplorerVolumeURL}");
-				Modalbox.hide(); 
+				//$j("#body_right").load("${ShowExplorerVolumeURL}");
+				Modalbox.hide();
 				return false;
 			});
 
