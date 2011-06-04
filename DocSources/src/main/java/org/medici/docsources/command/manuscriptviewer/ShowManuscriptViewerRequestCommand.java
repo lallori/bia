@@ -44,6 +44,8 @@ public class ShowManuscriptViewerRequestCommand {
 	private String volLeText;
 	private Integer imageId;
 	private String imageName;
+	private String imageProgTypeNum;
+	private String imageRectoVerso;
 	private Boolean showHelp;
 	private Boolean showThumbnail;
 	private Boolean flashVersion;
@@ -54,102 +56,147 @@ public class ShowManuscriptViewerRequestCommand {
 	public void setEntryId(Integer entryId) {
 		this.entryId = entryId;
 	}
+	
 	/**
 	 * @return the entryId
 	 */
 	public Integer getEntryId() {
 		return entryId;
 	}
+	
 	/**
 	 * @return the summaryId
 	 */
 	public Integer getSummaryId() {
 		return summaryId;
 	}
+	
 	/**
 	 * @param summaryId the summaryId to set
 	 */
 	public void setSummaryId(Integer summaryId) {
 		this.summaryId = summaryId;
 	}
+
 	/**
 	 * @return the volNum
 	 */
 	public Integer getVolNum() {
 		return volNum;
 	}
+
 	/**
 	 * @param volNum the volNum to set
 	 */
 	public void setVolNum(Integer volNum) {
 		this.volNum = volNum;
 	}
+	
 	/**
 	 * @return the volLeText
 	 */
 	public String getVolLeText() {
 		return volLeText;
 	}
+	
 	/**
 	 * @param volLeText the volLeText to set
 	 */
 	public void setVolLeText(String volLeText) {
 		this.volLeText = volLeText;
 	}
+	
 	/**
 	 * @param flashVersion the flashVersion to set
 	 */
 	public void setFlashVersion(Boolean flashVersion) {
 		this.flashVersion = flashVersion;
 	}
+	
 	/**
 	 * @return the flashVersion
 	 */
 	public Boolean getFlashVersion() {
 		return flashVersion;
 	}
+	
 	/**
 	 * @param imageId the imageId to set
 	 */
 	public void setImageId(Integer imageId) {
 		this.imageId = imageId;
 	}
+	
 	/**
 	 * @return the imageId
 	 */
 	public Integer getImageId() {
 		return imageId;
 	}
+	
+	/**
+	 * @param imageProgTypeNum the imageProgTypeNum to set
+	 */
+	public void setImageProgTypeNum(String imageProgTypeNum) {
+		this.imageProgTypeNum = imageProgTypeNum;
+	}
+	
+	/**
+	 * @return the imageProgTypeNum
+	 */
+	public String getImageProgTypeNum() {
+		return imageProgTypeNum;
+	}
+	
 	/**
 	 * @param imageName the imageName to set
 	 */
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
+	
 	/**
 	 * @return the imageName
 	 */
 	public String getImageName() {
 		return imageName;
 	}
+	
+	/**
+	 * @param imageRectoVerso the imageRectoVerso to set
+	 */
+	public void setImageRectoVerso(String imageRectoVerso) {
+		this.imageRectoVerso = imageRectoVerso;
+	}
+	
+	/**
+	 * @return the imageRectoVerso
+	 */
+	public String getImageRectoVerso() {
+		return imageRectoVerso;
+	}
+
 	/**
 	 * @param showHelp the showHelp to set
 	 */
 	public void setShowHelp(Boolean showHelp) {
 		this.showHelp = showHelp;
 	}
+
 	/**
 	 * @return the showHelp
 	 */
 	public Boolean getShowHelp() {
 		return showHelp;
 	}
+
 	/**
 	 * @param showThumbnail the showThumbnail to set
 	 */
 	public void setShowThumbnail(Boolean showThumbnail) {
 		this.showThumbnail = showThumbnail;
 	}
+	
 	/**
 	 * @return the showThumbnail
 	 */

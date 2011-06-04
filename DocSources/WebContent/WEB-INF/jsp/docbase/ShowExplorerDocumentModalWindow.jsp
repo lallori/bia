@@ -7,6 +7,8 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"   value="${documentExplorer.image}" />
+			<c:param name="imageProgTypeNum"   value="${documentExplorer.image.imageProgTypeNum}" /> 
+			<c:param name="imageRectoVerso"   value="${documentExplorer.image.imageRectoVerso}" />
 			<c:param name="flashVersion"   value="false" />
 		</c:url>
 	</security:authorize>

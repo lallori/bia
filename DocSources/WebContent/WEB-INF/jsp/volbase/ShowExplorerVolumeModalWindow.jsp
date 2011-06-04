@@ -24,6 +24,8 @@
 
 		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
 			<c:param name="imageName"    value="${volumeExplorer.image}" />
+			<c:param name="imageProgTypeNum"   value="${volumeExplorer.image.imageProgTypeNum}" /> 
+			<c:param name="imageRectoVerso"   value="${volumeExplorer.image.imageRectoVerso}" />
 			<c:param name="flashVersion" value="${command.flashVersion}" />
 		</c:url>
 	</security:authorize>
