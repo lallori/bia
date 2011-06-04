@@ -118,7 +118,8 @@ public class TranscribeAndContextualizeDocumentController {
 			command.setUnpaged(document.getUnpaged());
 			command.setContDisc(document.getContDisc());
 			command.setDocYear(document.getDocYear());
-			command.setDocMonthNum(months.get(months.size()-1).getMonthNum());
+			// we set first month which is empty
+			command.setDocMonthNum(months.get(0).getMonthNum());
 			command.setDocDay(document.getDocDay());
 			command.setYearModern(document.getYearModern());
 			command.setDateUns(document.getDateUns());
