@@ -5,15 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 		<script type="text/javascript">
-			var $j = jQuery.noConflict();
-
-			$j(document).ready(function() {
-				$j.ajaxSetup ({
-					// Disable caching of AJAX responses */
-					cache: false
-				});
-			});
-
 			iip = new IIP( "targetframe", {
 				server: '/DocSources/mview/ReverseProxyIIPImage.do',
 				image: '${image}',
