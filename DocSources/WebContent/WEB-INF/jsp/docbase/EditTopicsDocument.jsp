@@ -82,7 +82,7 @@
 					return false;
 				});
 
-				$j("#topicDescription").click(function() {
+				$j(".topicDescription").click(function() {
 					Modalbox.show(this.href, {title: this.title, width: 750});
 					return false;
 				});
