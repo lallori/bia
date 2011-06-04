@@ -156,8 +156,8 @@
 			$j("#choose").click(function(e) {
 				e.preventDefault();
 				$j("#body_left").load($j(this).attr("href"));
-				//$j("#body_right").load("${ShowExplorerVolumeURL}");
-				Modalbox.hide();
+				// We fire close event for piro box.
+				$j(".piro_close").trigger("click");
 				return false;
 			});
 
