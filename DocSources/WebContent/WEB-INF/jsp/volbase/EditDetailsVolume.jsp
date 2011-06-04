@@ -102,7 +102,7 @@
 				            			var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
 				            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
 				                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
-				                    	$j("#tabs").tabs("select", $("#tabs").tabs("length")-1);
+				                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				            		}
 								}
 								 
