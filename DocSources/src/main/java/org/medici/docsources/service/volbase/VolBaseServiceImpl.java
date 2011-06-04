@@ -34,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.dao.catalog.CatalogDAO;
@@ -143,6 +144,18 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page advancedSearchVolumes(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getVolumeDAO().advancedSearchVolumes(advancedSearchContainer, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Boolean checkVolumeDigitized(Integer summaryId) throws ApplicationThrowable {
 		Boolean digitized = Boolean.FALSE;
 		try {
@@ -198,7 +211,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 		return volumeToUpdate;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -222,7 +235,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		return volumeToUpdate;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -429,6 +442,45 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public VolumeSummary findVolumeSummmary(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try {
+			VolumeSummary volumeSummary = new VolumeSummary();
+			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
+			if (volume != null) {
+				volumeSummary.setSummaryId(volume.getSummaryId());
+				volumeSummary.setVolNum(volume.getVolNum());
+				volumeSummary.setVolLetExt(volume.getVolLetExt());
+				volumeSummary.setCarteggio(volume.getSerieList().toString());
+				FoliosInformations foliosInformations = getImageDAO().findVolumeFoliosInformations(volume.getVolNum(), volume.getVolLetExt());
+				if (foliosInformations != null) {
+					volumeSummary.setTotal(foliosInformations.getTotal());
+					volumeSummary.setTotalRubricario(foliosInformations.getTotalRubricario());
+					volumeSummary.setTotalCarta(foliosInformations.getTotalRubricario());
+					volumeSummary.setTotalGuardia(foliosInformations.getTotalGuardia());
+					volumeSummary.setTotalAppendix(foliosInformations.getTotalAppendix());
+					volumeSummary.setTotalOther(foliosInformations.getTotalOther());
+					volumeSummary.setMissingFolios(foliosInformations.getMissingFolios());
+				}
+				
+				Catalog catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
+				if (catalog != null) {
+					volumeSummary.setCartulazione(catalog.getCartulazione());
+					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
+					//volumeSummary.setHeight(catalog.getNumeroTotaleImmagini());
+					//volumeSummary.setWidth(
+				}
+			}
+			
+			return volumeSummary;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void generateIndexMonth() throws ApplicationThrowable {
 		try {
 			getMonthDAO().generateIndex();
@@ -462,32 +514,25 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 
 	/**
-	 * @param catalogDAO the catalogDAO to set
-	 */
-	public void setCatalogDAO(CatalogDAO catalogDAO) {
-		this.catalogDAO = catalogDAO;
-	}
-
-	/**
 	 * @return the catalogDAO
 	 */
 	public CatalogDAO getCatalogDAO() {
 		return catalogDAO;
 	}
-
 	/**
 	 * @return the imageDAO
 	 */
 	public ImageDAO getImageDAO() {
 		return imageDAO;
 	}
+	
 	/**
 	 * @return the monthDAO
 	 */
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -503,22 +548,22 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * @return the seriesListDAO
 	 */
 	public SeriesListDAO getSeriesListDAO() {
 		return seriesListDAO;
 	}
-	
+
+
 	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
-
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -563,12 +608,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 	
 	/**
+	 * @param catalogDAO the catalogDAO to set
+	 */
+	public void setCatalogDAO(CatalogDAO catalogDAO) {
+		this.catalogDAO = catalogDAO;
+	}
+
+	/**
 	 * @param imageDAO the imageDAO to set
 	 */
 	public void setImageDAO(ImageDAO imageDAO) {
 		this.imageDAO = imageDAO;
 	}
-	
+
 	/**
 	 * @param monthDAO the monthDAO to set
 	 */
@@ -597,45 +649,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public Page simpleSearchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getVolumeDAO().simpleSearchVolumes(text, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}	
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public VolumeSummary findVolumeSummmary(Integer volNum, String volLetExt) throws ApplicationThrowable {
-		try {
-			VolumeSummary volumeSummary = new VolumeSummary();
-			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
-			if (volume != null) {
-				volumeSummary.setSummaryId(volume.getSummaryId());
-				volumeSummary.setVolNum(volume.getVolNum());
-				volumeSummary.setVolLetExt(volume.getVolLetExt());
-				volumeSummary.setCarteggio(volume.getSerieList().toString());
-				FoliosInformations foliosInformations = getImageDAO().findVolumeFoliosInformations(volume.getVolNum(), volume.getVolLetExt());
-				if (foliosInformations != null) {
-					volumeSummary.setTotal(foliosInformations.getTotal());
-					volumeSummary.setTotalRubricario(foliosInformations.getTotalRubricario());
-					volumeSummary.setTotalCarta(foliosInformations.getTotalRubricario());
-					volumeSummary.setTotalGuardia(foliosInformations.getTotalGuardia());
-					volumeSummary.setTotalAppendix(foliosInformations.getTotalAppendix());
-					volumeSummary.setTotalOther(foliosInformations.getTotalOther());
-					volumeSummary.setMissingFolios(foliosInformations.getMissingFolios());
-				}
-				
-				Catalog catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
-				if (catalog != null) {
-					volumeSummary.setCartulazione(catalog.getCartulazione());
-					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
-					//volumeSummary.setHeight(catalog.getNumeroTotaleImmagini());
-					//volumeSummary.setWidth(
-				}
-			}
-			
-			return volumeSummary;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	

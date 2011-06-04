@@ -1,5 +1,5 @@
 /*
- * VolumeUtils.java
+ * AdvancedSearch.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,63 +25,12 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.common.util;
-
-import org.apache.commons.lang.StringUtils;
+package org.medici.docsources.common.search;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
+ *
  */
-public class VolumeUtils {
-
-	/**
-	 * This method extract volNum from a complete volume string.
-	 * @param volume
-	 * @return
-	 */
-	public static Integer extractVolNum(String volume) {
-		if (StringUtils.isEmpty(volume)) {
-			return null;
-		}
-		
-		String volumeToExtract = volume.trim();
-
-		if (StringUtils.isNumeric(volumeToExtract)){
-			try {
-				return new Integer(volumeToExtract);
-			} catch (NumberFormatException nfx){
-				return null;
-			}
-		} else {
-			if (StringUtils.isAlphanumeric(volumeToExtract)) {
-				try {
-					return new Integer(volumeToExtract.substring(0, volumeToExtract.length()-1));
-				} catch (NumberFormatException nfx){
-					return null;
-				}
-			}
-			
-			return null;
-		}
-	}
-
-	public static String extractVolLetExt(String volume) {
-		if (StringUtils.isEmpty(volume)) {
-			return null;
-		}
-		
-		String volumeToExtract = volume.trim();
-
-		if (StringUtils.isNumeric(volumeToExtract)){
-			return null;
-		} else {
-			if (StringUtils.isAlphanumeric(volumeToExtract)) {
-				return volumeToExtract.substring(volumeToExtract.length()-1);
-			}
-			
-			return null;
-		}
-	}
+public interface AdvancedSearch extends SimpleSearch {
 }

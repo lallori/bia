@@ -31,17 +31,25 @@ import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Volume;
 
 /**
  * Volume Dao.
  * 
- * @author Lorenzo Pasquinelli (<a
- *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface VolumeDAO extends Dao<Integer, Volume> {
 
+	/**
+	 * 
+	 * @param advancedSearchContainer
+	 * @param paginationFilter
+	 * @return
+	 */
+	public Page advancedSearchVolumes(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter);
+	
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Volume}created on database.
 	 * 

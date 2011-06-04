@@ -34,9 +34,12 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.common.util.EpLinkUtils;
 import org.medici.docsources.common.util.EplToLinkUtils;
 import org.medici.docsources.common.util.ImageUtils;
+import org.medici.docsources.dao.advancedsearchfilter.AdvancedSearchFilterDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
@@ -48,6 +51,8 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.synextract.SynExtractDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.AdvancedSearchFilter;
+import org.medici.docsources.domain.AdvancedSearchFilter.AdvancedSearchFilterType;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
@@ -75,6 +80,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
+	private AdvancedSearchFilterDAO advancedSearchFilterDAO;
+	@Autowired
 	private DocumentDAO documentDAO;
 	@Autowired
 	private EpLinkDAO epLinkDAO;
@@ -96,6 +103,24 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private TopicsListDAO topicsListDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public AdvancedSearchFilter addNewAdvancedSearchFilter(String name, AdvancedSearchDocument advancedSearchDocument) throws ApplicationThrowable {
+		try {
+			AdvancedSearchFilter advancedSearchFilter = new AdvancedSearchFilter(AdvancedSearchFilterType.DOCUMENT);
+			advancedSearchFilter.setUsername(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			advancedSearchFilter.setFilterData(advancedSearchDocument);
+			
+			getAdvancedSearchFilterDAO().persist(advancedSearchFilter);
+
+			return advancedSearchFilter;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -225,9 +250,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page advancedSearchDocuments(Object advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+	public Page advancedSearchDocuments(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().advancedSearchDocuments(advancedSearchContainer, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -548,7 +576,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -560,7 +588,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -786,6 +814,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @return the advancedSearchFilterDAO
+	 */
+	public AdvancedSearchFilterDAO getAdvancedSearchFilterDAO() {
+		return advancedSearchFilterDAO;
+	}
+
+	/**
 	 * @return the documentDAO
 	 */
 	public DocumentDAO getDocumentDAO() {
@@ -955,6 +990,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @param advancedSearchFilterDAO the advancedSearchFilterDAO to set
+	 */
+	public void setAdvancedSearchFilterDAO(AdvancedSearchFilterDAO advancedSearchFilterDAO) {
+		this.advancedSearchFilterDAO = advancedSearchFilterDAO;
 	}
 
 	/**

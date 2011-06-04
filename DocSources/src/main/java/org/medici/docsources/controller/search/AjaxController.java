@@ -32,11 +32,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
@@ -102,12 +105,151 @@ public class AjaxController {
 
 	/**
 	 * 
+	 * @param searchType
 	 * @param alias
-	 * @param model
+	 * @param sortingColumn
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/src/AdvancedSearchPagination.json", method = RequestMethod.GET)
+	public ModelAndView advancedSearchPagination(HttpSession httpSession,
+											@RequestParam(value="searchType") String searchType, 
+								   		 	@RequestParam(value="sSearch") String alias,
+								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+								   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		if (searchType.toLowerCase().trim().equals("documents")) {
+			advancedSearchDocuments(httpSession, model, sortingColumnNumber, sortingDirection, firstRecord, length);
+		}
+		
+		if (searchType.toLowerCase().trim().equals("people")) {
+			advancedSearchPeople(httpSession, model, sortingColumnNumber, sortingDirection, firstRecord, length);
+		}
+		
+		if (searchType.toLowerCase().trim().equals("places")) {
+			advancedSearchPlaces(httpSession, model, sortingColumnNumber, sortingDirection, firstRecord, length);
+		}
+		
+		if (searchType.toLowerCase().trim().equals("volumes")) {
+			advancedSearchVolumes(httpSession, model, alias, sortingColumnNumber, sortingDirection, firstRecord, length);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	private void advancedSearchVolumes(HttpSession httpSession, Map<String, Object> model, String alias, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void advancedSearchPlaces(HttpSession httpSession, Map<String, Object> model, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void advancedSearchPeople(HttpSession httpSession, Map<String, Object> model, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void advancedSearchDocuments(HttpSession httpSession, Map<String, Object> model, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		Page page = null;
+		AdvancedSearchDocument advancedSearchDocument = (AdvancedSearchDocument) httpSession.getAttribute("advancedSearchDocument");
+		
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+		
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+				case 0:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection, SortField.STRING);
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("recipientPeople.mapNameLf_Sort", sortingDirection, SortField.STRING);
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("docYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("docMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("docDay_Sort", sortingDirection, SortField.INT);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("senderPlace.placeName_Sort", sortingDirection, SortField.STRING);
+					break;
+				case 4:
+					paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection, SortField.STRING);
+					break;
+				case 5:
+					paginationFilter.addSortingCriteria("volume.volNum_Sort", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("volume.volLetExt_Sort", sortingDirection, SortField.STRING);
+					paginationFilter.addSortingCriteria("folioNum_Sort", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("folioMod_Sort", sortingDirection, SortField.STRING);
+					break;
+				default:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
+					break;
+			}
+		}
+
+		try {
+			page = getDocBaseService().advancedSearchDocuments(advancedSearchDocument, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null)
+				singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null)
+				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+			else
+				singleRow.add("");
+
+			if (currentDocument.getDocumentDate() != null) 
+				singleRow.add(currentDocument.getDocumentDate());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getSenderPlace() != null)
+				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null)
+				singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null)
+				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+ "</b>");
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
+		}
+	}
+
+	/**
+	 * 
+	 * @param searchType
+	 * @param alias
+	 * @param sortingColumn
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
 	 * @return
 	 */
 	@RequestMapping(value = "/src/SimpleSearchPagination.json", method = RequestMethod.GET)
-	public ModelAndView searchPagination(@RequestParam(value="searchType") String searchType, 
+	public ModelAndView simpleSearchPagination(@RequestParam(value="searchType") String searchType, 
 								   		 @RequestParam(value="sSearch") String alias,
 								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumn,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -243,15 +385,10 @@ public class AjaxController {
 				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+ "</b>");
 			else
 				singleRow.add("");
-				
-			/*
-			if (currentDocument.getFolioNum() != null)
-				singleRow.add(currentDocument.getFolioNum().toString());
-			else
-				singleRow.add("");
-			*/
+
 			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
 		}
+
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());

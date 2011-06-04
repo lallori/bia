@@ -33,6 +33,7 @@ import java.util.List;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
@@ -297,6 +298,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			getPoLinkDAO().persist(poLinkToCreate);
 
 			return poLinkToCreate.getPerson();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page advancedSearchPeople(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getPeopleDAO().advancedSearchPeople(advancedSearchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -971,7 +984,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -983,7 +996,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

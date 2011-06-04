@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -49,6 +50,15 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface GeoBaseService {
+
+	/**
+	 * 
+	 * @param advancedSearchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Page advancedSearchPlaces(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.Place}.

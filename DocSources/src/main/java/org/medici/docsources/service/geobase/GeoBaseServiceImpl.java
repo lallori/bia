@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.domain.Place;
@@ -51,6 +52,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private PlaceDAO placeDAO;
 	@Autowired
 	private PlaceTypeDAO placeTypeDAO;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page advancedSearchPlaces(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().advancedSearchPlaces(advancedSearchContainer, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -99,7 +112,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -111,7 +124,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-	
+
 	/**
 	 * @return the placeDAO
 	 */
@@ -125,7 +138,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public PlaceTypeDAO getPlaceTypeDAO() {
 		return placeTypeDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -133,7 +146,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public List<Place> searchPlaces(String text) throws ApplicationThrowable {
 		return null;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

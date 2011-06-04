@@ -1,5 +1,5 @@
 /*
- * VolumeUtils.java
+ * SimpleSearchPeople.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,63 +25,64 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.common.util;
+package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * 
+ *
  */
-public class VolumeUtils {
+public class SimpleSearchPeople implements SimpleSearch {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5135090884608784944L;
+	
+	private Logger logger = Logger.getLogger(this.getClass()); 
+
+	private String alias;
 
 	/**
-	 * This method extract volNum from a complete volume string.
-	 * @param volume
-	 * @return
+	 * 
 	 */
-	public static Integer extractVolNum(String volume) {
-		if (StringUtils.isEmpty(volume)) {
-			return null;
-		}
-		
-		String volumeToExtract = volume.trim();
+	public SimpleSearchPeople() {
+		super();
+	}
 
-		if (StringUtils.isNumeric(volumeToExtract)){
-			try {
-				return new Integer(volumeToExtract);
-			} catch (NumberFormatException nfx){
-				return null;
-			}
-		} else {
-			if (StringUtils.isAlphanumeric(volumeToExtract)) {
-				try {
-					return new Integer(volumeToExtract.substring(0, volumeToExtract.length()-1));
-				} catch (NumberFormatException nfx){
-					return null;
-				}
-			}
-			
-			return null;
+	/**
+	 * 
+	 * @param command
+	 */
+	public void initFromText(String text) {
+		if (!StringUtils.isEmpty(text)) {
+			setAlias(text);
 		}
 	}
 
-	public static String extractVolLetExt(String volume) {
-		if (StringUtils.isEmpty(volume)) {
-			return null;
-		}
-		
-		String volumeToExtract = volume.trim();
+	/**
+	 * It's more simple construct lucene Query with string.
+	 */
+	@Override
+	public String toLuceneQueryString() {
+		// @TODO
+		return "";
+	}
 
-		if (StringUtils.isNumeric(volumeToExtract)){
-			return null;
-		} else {
-			if (StringUtils.isAlphanumeric(volumeToExtract)) {
-				return volumeToExtract.substring(volumeToExtract.length()-1);
-			}
-			
-			return null;
-		}
+	/**
+	 * @param alias the alias to set
+	 */
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	/**
+	 * @return the alias
+	 */
+	public String getAlias() {
+		return alias;
 	}
 }
+

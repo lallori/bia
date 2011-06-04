@@ -33,6 +33,7 @@ import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.People;
 
@@ -43,6 +44,15 @@ import org.medici.docsources.domain.People;
  */
 public interface PeopleDAO extends Dao<Integer, People> {
 
+	/**
+	 * 
+	 * @param advancedSearchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page advancedSearchPeople(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.People} 
 	 * created on database.

@@ -32,11 +32,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
+import org.medici.docsources.command.user.UpdateUserCommand;
+import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +57,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdvancedSearchDocumentsController {
 	@Autowired
 	private DocBaseService docBaseService;
+	
 	/**
 	 * 
 	 * @return
@@ -69,6 +76,23 @@ public class AdvancedSearchDocumentsController {
 
 		return new ModelAndView("search/AdvancedSearchDocuments", model);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView executeSearch(@ModelAttribute("command") AdvancedSearchDocumentsCommand command, HttpSession session) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
+		advancedSearchDocument.initFromCommand(command);
+			
+		session.setAttribute("advancedSearchDocument", advancedSearchDocument);
+
+		return new ModelAndView("search/AdvancedSearchDocuments", model);
+	}
+
 	/**
 	 * @param docBaseService the docBaseService to set
 	 */

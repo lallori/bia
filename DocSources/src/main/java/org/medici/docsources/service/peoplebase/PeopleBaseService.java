@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
@@ -112,6 +113,15 @@ public interface PeopleBaseService {
 	 */
 	public People addNewTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param advancedSearchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Page advancedSearchPeople(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param child

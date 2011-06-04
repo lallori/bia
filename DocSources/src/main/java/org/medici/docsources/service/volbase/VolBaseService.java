@@ -32,6 +32,7 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
@@ -63,6 +64,15 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume addNewVolume(Volume volume) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param advancedSearchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Page advancedSearchVolumes(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method checks if {@link org.medici.docsources.domain.Volume} identified 
