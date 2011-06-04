@@ -161,7 +161,8 @@
 			});
 
 	        $j('#close').click(function() {
-				$j('#EditDetailsDocumentDiv').block({ message: $j('#question') }); 
+	        	// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+				$j('#EditDetailsDocumentForm').block({ message: $j('#question') }); 
 				return false;
 			});
       
@@ -180,7 +181,8 @@
 			$j.unblockUI();
 			$j(".blockUI").fadeOut("slow");
 			$j("#question").hide();
-			$j("#EditDetailsDocumentDiv").append($j("#question"));
+			// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+			$j("#EditDetailsDocumentForm").append($j("#question"));
 			$j(".blockUI").remove();
 			return false; 
 		}); 
