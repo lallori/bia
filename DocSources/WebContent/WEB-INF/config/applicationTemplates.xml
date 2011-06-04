@@ -32,7 +32,9 @@
 	<definition name="template.manuscriptViewerFlash" template="/WEB-INF/templates/manuscriptViewerFlash.jsp" />
 
 	<definition name="template.manuscriptViewerHtml" template="/WEB-INF/templates/manuscriptViewerHtml.jsp" />
-	
+
+	<definition name="template.manuscriptViewerHtmlSimple" template="/WEB-INF/templates/manuscriptViewerHtmlSimple.jsp" />
+
 	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp" />
 
     <definition name="template.person" template="/WEB-INF/templates/person.jsp" />
@@ -303,7 +305,7 @@
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerFlash.jsp"/>
 	</definition>
 
-	<definition name="mview/ShowManuscriptViewerHtml" extends="template.manuscriptViewerHtml">
+	<definition name="mview/ShowManuscriptViewerHtml" extends="template.manuscriptViewerHtmlSimple">
 		<put-attribute name="manuscriptviewer" value="/WEB-INF/jsp/mview/ShowManuscriptViewerHtml.jsp"/>
 	</definition>
 

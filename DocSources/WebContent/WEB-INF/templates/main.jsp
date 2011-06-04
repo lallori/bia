@@ -60,7 +60,7 @@
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.place.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.title.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
