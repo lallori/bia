@@ -6,7 +6,7 @@
 
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
-			${command.showHelp}
+
 			$j(document).ready(function() {
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses */
@@ -17,7 +17,7 @@
 			iip = new IIP( "targetframe", {
 				server: '/DocSources/mview/ReverseProxyIIPImage.do',
 				image: '${image}',
-				credit: 'Folio n. ', 
+				credit: 'Folio n. ${requestCommand.imageProgTypeNum} ${requestCommand.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
 				zoom: 1,
 				showNavButtons: 'true',
 				render: 'random',
