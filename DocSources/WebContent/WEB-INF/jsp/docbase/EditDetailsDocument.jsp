@@ -98,6 +98,8 @@
 		<c:param name="entryId"   value="${command.entryId}" />
 	</c:url>
 
+	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do"/>
+
 	<script type="text/javascript">
 		$j(document).ready(function() {
 	        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden');
@@ -112,7 +114,7 @@
 					function(data){
 						if (data.summaryId == "") {
 							if ($j("#volNotExist").length == 0) {
-								$j("#close").before("<span class=\"inputerrors\" id=\"volNotExist\">Volume is not present, you cannot create this document. Save is disabled.<br></span>");
+								$j("#close").before("<span class=\"inputerrorsVolumeNotExist\" id=\"volNotExist\">Volume is not present, you cannot create this document. Save is disabled.<br></span>");
 							}
 							$j("#save").attr("disabled","true");
 						} else {
@@ -120,12 +122,18 @@
 								$j("#volNotExist").remove();
 							}
 							$j("#save").removeAttr("disabled");
-							$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : true },
+							
+							var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+	            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+	                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
+	                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+	                    	
+	                    	/*$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
 								function(data){
 									$j("#body_right").html(data);
 									return true;
 								}
-							);
+							);*/
 						}
 					}
 				);
