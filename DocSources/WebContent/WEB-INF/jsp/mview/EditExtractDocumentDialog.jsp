@@ -10,7 +10,7 @@
 	<c:url var="editExtractDocumentDialogURL" value="/de/mview/EditExtractDocumentDialog.do"/>
 
 	<div id="EditExtractDocumentDiv">
-	<form:form id="EditExtractDocumentForm" method="post" action="${editExtractDocumentDialogURL}"cssClass="edit">
+	<form:form id="EditExtractDocumentForm" method="post" action="${editExtractDocumentDialogURL}" cssClass="edit">
 		<form:textarea id="extract" path="docExtract" rows="22"/>
 		<input id="saveExtract" type="image" src="<c:url value="/images/mview/saveExtract.png"/>" alt="Save Extract"/>
 		<input id="saveAndEditSynopsis" type="image" src="<c:url value="/images/mview/saveAndEditSynopsis.png"/>" alt="Save and edit Synopsis"/>
