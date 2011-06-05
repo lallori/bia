@@ -27,7 +27,8 @@
 					$j( anchor.hash ).html(
 						"Couldn't load this tab. We'll try to fix this as soon as possible. " );
 				}
-			}
+			},
+			cache: true // load only once or with every click
 		});
 
 		$j("#tabs span.ui-icon-close" ).live("click", function() {
