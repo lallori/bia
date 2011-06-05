@@ -1,1 +1,0 @@
-This directory contains ajax example response 
