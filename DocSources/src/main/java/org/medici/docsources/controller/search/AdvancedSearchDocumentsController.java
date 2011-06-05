@@ -35,7 +35,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
-import org.medici.docsources.command.user.UpdateUserCommand;
 import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;

@@ -36,6 +36,7 @@ import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.search.AdvancedSearchDocument;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.common.util.EpLinkUtils;
 import org.medici.docsources.common.util.EplToLinkUtils;
 import org.medici.docsources.common.util.ImageUtils;
@@ -58,7 +59,6 @@ import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.Volume;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
@@ -1080,9 +1080,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public Page simpleSearchDocuments(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getDocumentDAO().simpleSearchDocuments(text, paginationFilter);
+			return getDocumentDAO().simpleSearchDocuments(simpleSearchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

@@ -40,6 +40,10 @@ import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearchDocument;
+import org.medici.docsources.common.search.SimpleSearchDocument;
+import org.medici.docsources.common.search.SimpleSearchPeople;
+import org.medici.docsources.common.search.SimpleSearchPlace;
+import org.medici.docsources.common.search.SimpleSearchVolume;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
@@ -349,7 +353,7 @@ public class AjaxController {
 		}
 
 		try {
-			page = getDocBaseService().simpleSearchDocuments(searchText, paginationFilter);
+			page = getDocBaseService().simpleSearchDocuments(new SimpleSearchDocument(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -438,7 +442,7 @@ public class AjaxController {
 		}
 
 		try {
-			page = getPeopleBaseService().simpleSearchPeople(searchText, paginationFilter);
+			page = getPeopleBaseService().simpleSearchPeople(new SimpleSearchPeople(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -500,7 +504,7 @@ public class AjaxController {
 		}
 
 		try {
-			page = getGeoBaseService().simpleSearchPlaces(searchText, paginationFilter);
+			page = getGeoBaseService().simpleSearchPlaces(new SimpleSearchPlace(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -566,7 +570,7 @@ public class AjaxController {
 		}
 
 		try {
-			page = getVolBaseService().simpleSearchVolumes(searchText, paginationFilter);
+			page = getVolBaseService().simpleSearchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 

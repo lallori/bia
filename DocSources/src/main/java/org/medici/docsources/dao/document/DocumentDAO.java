@@ -32,6 +32,7 @@ import javax.persistence.PersistenceException;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Document;
 
@@ -80,10 +81,10 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 
 	/**
 	 * 
-	 * @param text
+	 * @param simpleSearchContainer
 	 * @param paginationFilter
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException;
+	public Page simpleSearchDocuments(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 }

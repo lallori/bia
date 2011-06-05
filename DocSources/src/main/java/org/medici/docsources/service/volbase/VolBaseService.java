@@ -33,6 +33,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
@@ -328,10 +329,10 @@ public interface VolBaseService {
 	 * {@link org.medici.docsources.common.pagination.Page} of complete reulst 
 	 * base on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
 	 * 
-	 * @param text
+	 * @param simpleSearchContainer
 	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page simpleSearchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page simpleSearchVolumes(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

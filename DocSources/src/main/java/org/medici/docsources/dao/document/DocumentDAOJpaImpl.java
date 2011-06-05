@@ -50,6 +50,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
 import org.springframework.stereotype.Repository;
@@ -223,7 +224,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page simpleSearchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page simpleSearchDocuments(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		// We obtain hibernate-search session
@@ -255,7 +256,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			"factChecks.addLRes",
 			"eplToLink.place.placeName",
 			"eplToLink.place.placeNameFull"
-		).matching(text).createQuery();
+		).matching(simpleSearchContainer.toString()).createQuery();
 
 		// We execute search
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Document.class );

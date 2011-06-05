@@ -28,6 +28,7 @@
 package org.medici.docsources.common.util;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 
 /**
  * 
@@ -35,6 +36,49 @@ import org.apache.commons.lang.StringUtils;
  * 
  */
 public class VolumeUtils {
+
+	/**
+	 * This method check if a string is in volume Format
+	 * 
+	 * @param text
+	 * @return
+	 */
+	public static Boolean isVolumeFormat(String text) {
+		if (StringUtils.isEmpty(text)) {
+			return Boolean.FALSE;
+		}
+		
+		// We put this control here because often a word for search is not a volume
+		// E.g. Michele (it's not a volume)
+		if (StringUtils.isAlpha(text) && text.length() > 1) {
+			return Boolean.FALSE;
+		}
+
+		String trimmedText = text.trim();
+
+		// E.g. 23a
+		if (StringUtils.isNumeric(trimmedText)) {
+			return Boolean.TRUE;
+		}
+
+		// E.g. a  (word with a single letter can be consider as volume Letter Extension)
+		if (StringUtils.isAlpha(trimmedText) && trimmedText.length() == 1)
+			return Boolean.TRUE;
+
+		// E.g. 23a
+		if (StringUtils.isAlphanumeric(trimmedText)) {
+			// A correct volumeNumber E.g. 23a
+			if (NumberUtils.isNumber(trimmedText.substring(0, trimmedText.length()-1))) {
+				return Boolean.TRUE;	
+			} else {
+				// A correct volumeNumber E.g. 23da, volume Letter must be a single letter 
+				return Boolean.FALSE;	
+			}
+		}
+
+		// It 's not a volume format string
+		return Boolean.FALSE;
+	}
 
 	/**
 	 * This method extract volNum from a complete volume string.

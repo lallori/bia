@@ -27,14 +27,10 @@
  */
 package org.medici.docsources.common.search;
 
-import java.io.Serializable;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public interface SimpleSearch extends Serializable {
-	
-	public String toLuceneQueryString();
+public interface SimpleSearch extends Search {
 }

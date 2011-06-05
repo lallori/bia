@@ -34,6 +34,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
@@ -1133,9 +1134,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public Page simpleSearchPeople(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().simpleSearchPeople(searchText, paginationFilter);
+			return getPeopleDAO().simpleSearchPeople(simpleSearchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

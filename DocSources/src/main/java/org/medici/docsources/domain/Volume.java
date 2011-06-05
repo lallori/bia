@@ -52,6 +52,7 @@ import org.apache.solr.analysis.MappingCharFilterFactory;
 import org.apache.solr.analysis.NGramFilterFactory;
 import org.apache.solr.analysis.StandardFilterFactory;
 import org.apache.solr.analysis.StandardTokenizerFactory;
+import org.apache.solr.analysis.StopFilterFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDefs;
@@ -91,7 +92,11 @@ import org.medici.docsources.common.util.VolumeUtils;
 		},
 		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 		filters = {
-			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+			@TokenFilterDef(factory = StopFilterFactory.class, params = {
+                @Parameter(name="words",      value="org/medici/docsources/stopWords.properties" ),
+                @Parameter(name="ignoreCase", value="true")
+            })
 	}),
 	@AnalyzerDef(name = "volumeNGram3Analyzer",
 		tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class ),

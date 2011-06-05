@@ -32,6 +32,7 @@ import java.util.List;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
@@ -429,10 +430,10 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param text
+	 * @param simpleSearchContainer
 	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page simpleSearchPeople(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

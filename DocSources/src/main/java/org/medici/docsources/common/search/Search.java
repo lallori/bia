@@ -1,5 +1,5 @@
 /*
- * AdvancedSearch.java
+ * Search.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,10 +27,14 @@
  */
 package org.medici.docsources.common.search;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public interface AdvancedSearch extends Search {
+public interface Search extends Serializable {
+
+	public String toLuceneQueryString();
 }

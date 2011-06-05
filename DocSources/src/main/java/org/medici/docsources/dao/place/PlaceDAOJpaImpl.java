@@ -52,6 +52,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Place;
@@ -242,7 +243,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page simpleSearchPlaces(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page simpleSearchPlaces(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
 
@@ -256,7 +257,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 				"termAccent",
 				"plType",
 				"geogKey"
-			).matching(searchText + "*").createQuery();
+		).matching(simpleSearchContainer.toString() + "*").createQuery();
 		
         /*
         // TODO : WE DON'T KNOW IF WE NEED AN ADDITIONAL QUERY..

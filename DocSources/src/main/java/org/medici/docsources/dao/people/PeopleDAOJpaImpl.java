@@ -60,6 +60,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
@@ -452,7 +453,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page simpleSearchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page simpleSearchPeople(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
@@ -471,12 +472,12 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			"middle",
 			"lastPrefix",
 			"mapNameLf"
-		).matching(searchText + "*").createQuery();
+		).matching(simpleSearchContainer.toString() + "*").createQuery();
 		
 
 		BooleanQuery booleanQuery = new BooleanQuery();
 		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(simpleSearchContainer.toString());
         for (String singleWord:words) {
         	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
         }

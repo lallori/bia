@@ -34,6 +34,7 @@ import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.search.AdvancedSearchDocument;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.domain.AdvancedSearchFilter;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
@@ -490,11 +491,11 @@ public interface DocBaseService {
 
 	/**
 	 * 
-	 * @param alias
+	 * @param simpleSearchContainer
 	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
-	public Page simpleSearchDocuments(String alias, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page simpleSearchDocuments(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

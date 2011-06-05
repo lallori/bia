@@ -60,6 +60,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
@@ -250,7 +251,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page simpleSearchVolumes(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page simpleSearchVolumes(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
@@ -276,11 +277,11 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 			"endYear",
 			"endMonthNum.monthName", 
 			"endDay"
-		).matching(searchText).createQuery();
+		).matching(simpleSearchContainer.toString()).createQuery();
 
 		BooleanQuery booleanQuery = new BooleanQuery();
 		booleanQuery.add(new BooleanClause(luceneQuery, BooleanClause.Occur.SHOULD));
-        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+        String[] words = RegExUtils.splitPunctuationAndSpaceChars(simpleSearchContainer.toString());
         for (String singleWord:words) {
         	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volNum", singleWord.toLowerCase())), BooleanClause.Occur.SHOULD));
         	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volLetExt", singleWord.toLowerCase())), BooleanClause.Occur.SHOULD));

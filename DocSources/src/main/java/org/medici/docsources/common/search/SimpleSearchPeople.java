@@ -28,7 +28,8 @@
 package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang.math.NumberUtils;
+import org.medici.docsources.common.util.RegExUtils;
 
 /**
  * 
@@ -41,15 +42,31 @@ public class SimpleSearchPeople implements SimpleSearch {
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
 	
-	private Logger logger = Logger.getLogger(this.getClass()); 
-
-	private String alias;
+	private String alias; 
 
 	/**
 	 * 
 	 */
 	public SimpleSearchPeople() {
 		super();
+	}
+
+	/**
+	 * 
+	 * @param text
+	 */
+	public SimpleSearchPeople(String text) {
+		super();
+		if (!StringUtils.isEmpty(text)) {
+			setAlias(text.toLowerCase());
+		}
+	}
+
+	/**
+	 * @return the alias
+	 */
+	public String getAlias() {
+		return alias;
 	}
 
 	/**
@@ -63,15 +80,6 @@ public class SimpleSearchPeople implements SimpleSearch {
 	}
 
 	/**
-	 * It's more simple construct lucene Query with string.
-	 */
-	@Override
-	public String toLuceneQueryString() {
-		// @TODO
-		return "";
-	}
-
-	/**
 	 * @param alias the alias to set
 	 */
 	public void setAlias(String alias) {
@@ -79,10 +87,73 @@ public class SimpleSearchPeople implements SimpleSearch {
 	}
 
 	/**
-	 * @return the alias
+	 * It's more simple construct lucene Query with string.
 	 */
-	public String getAlias() {
-		return alias;
+	@Override
+	public String toLuceneQueryString() {
+		if (StringUtils.isEmpty(alias)) {
+			return "";
+		}
+
+		String[] stringFields = new String[]{			
+			"mapNameLf", 
+			"altName.altName", 
+		};
+		String[] numericFields = new String[]{
+			"personId",
+			"bornYear",
+			"bornMonth.monthNum", 
+			"bornDay",
+			"deathYear",
+			"deathMonth.monthNum", 
+			"deathDay",
+		};
+
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+
+		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
+		StringBuffer stringBuffer = new StringBuffer();
+
+		// We add conditions on string fields
+		for (int i=0; i<stringFields.length; i++) {
+			// volume.serieList.title
+			stringBuffer.append("(");
+			stringBuffer.append(stringFields[i]);
+			stringBuffer.append(": (");
+			for (int j=0; j<words.length; j++) {
+				stringBuffer.append("+");
+				stringBuffer.append( words[j]);
+				stringBuffer.append(" ");
+			}
+			stringBuffer.append(")) ");
+		}
+
+		// We add conditions on numeric fields only for input word which are numbers
+		for (int i=0; i<words.length; i++) {
+			if (!NumberUtils.isNumber(words[i])) {
+				continue;
+			}
+			for (int j=0; j<numericFields.length; j++) {
+				stringBuffer.append("(");
+				stringBuffer.append(numericFields[j]);
+				stringBuffer.append(": ");
+				stringBuffer.append(words[i]);
+				stringBuffer.append(") ");
+			}
+		}
+		
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		if (alias != null)
+			return getAlias();
+		else
+			return "";
 	}
 }
 
