@@ -35,7 +35,7 @@
 		<div id="SpineVolumeDigitDiv">
 			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
 			<b>Volume Spine</b><br>
-			<a id="ShowVolumeExplorer" href="${ShowExplorerVolumeURL}">Show Volume Explorer</a>
+			<a id="ShowVolumeExplorer" href="${ShowExplorerVolumeURL}">Show in Volume Explorer</a>
 		</div>
 		</c:if>
 		<c:if test="${empty image}">
