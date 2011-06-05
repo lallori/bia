@@ -49,7 +49,8 @@
 		<c:if test="${not empty image}">
 			<div id="DocumentImageDigitDiv">
 				<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
-				<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a>
+				<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a><br>
+				<a id="ShowVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview on the right screen">Open in Volume Explorer</a>
 			</div>
 		</c:if>
 		<c:if test="${empty image}">
@@ -115,10 +116,12 @@
 				return false;
 			});
 
+			/*
 			$j("#EditDetailsDocumentDiv").documentExplorer( {
 				checkDocumentDigitizedUrl	: "${checkDocumentDigitizedURL}",
 				showExplorerDocumentUrl     : "${ShowDocumentExplorerURL}"
-			});  
+			});
+			*/  
 
 			$j("#buttonShareLink").click(function() {
 				window.open('${ShareDocumentURL}','ADD NEW PERSON','width=490,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
@@ -140,5 +143,12 @@
 			});
 
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
+			
+			$j("#ShowVolumeExplorer").click(function(){
+				var tabName = "Vol Exp ${document.volume.volNum}${document.volume.volLetExt}/${document.entryId}</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
+            	$j("#tabs").tabs("add", "" + $j(this).attr("href"), tabName);
+            	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+            	return false;
+			});
 		});
 	</script>
