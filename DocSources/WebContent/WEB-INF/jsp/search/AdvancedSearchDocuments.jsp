@@ -86,11 +86,12 @@
 	
 	<h1><a><i>with</i> TOPICS</a></h1>
 	<div>
-		<form id="topicsSearchForm" method="post" class="edit">
+		<form id="topicSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
-			<input type="text" id="topics" name="topics" class="input_25c"/><!-- AUTOCOMPLETE -->
+			<input type="text" id="topic" name="topic" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Topics">
+			<input type="hidden" id="topicId" value=""/>
 		</form>
 	</div>
 
@@ -102,6 +103,7 @@
 			<input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Person">
+			<input type="hidden" id="personId" value=""/>
 		</form>
 
 		<form id="placeSearchForm" method="post" class="edit">
@@ -110,6 +112,7 @@
 			<input type="text" id="placeSearch" name="placeSearch" class="input_25c" value=""/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Place">
+			<input type="hidden" id="placeId" value=""/>
 		</form>
 		
 		<hr />
@@ -120,6 +123,7 @@
 			<input type="text" id="senderAutoCompleter" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Sender">
+			<input type="hidden" id="sender" value=""/>
 		</form>
 		
 		<form id="fromSearchForm" method="post" class="edit">
