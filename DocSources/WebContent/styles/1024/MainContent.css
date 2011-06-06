@@ -282,13 +282,13 @@ valueNotes {
 }
 
 .editMoveToRubricarioForm { /* Edit FORM class */
-	font-size:11px;
-	font-family:Georgia, "Times New Roman", Times, serif;
+    font-size:11px;
+    font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 .editMoveToFolioForm { /* Edit FORM class */
-	font-size:11px;
-	font-family:Georgia, "Times New Roman", Times, serif;
+    font-size:11px;
+    font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 fieldset {  /* FORM BACKGROUND */
@@ -472,10 +472,9 @@ img.transparent {
 .inputerrors { /* Error Span messages */
 	color:#900;
 	font-size:10px;
-	position:absolute;
 	text-align:center;
 	padding:2px 5px 2px 5px;
-	margin:17px 0 0 -78px;
+	margin:27px 0 0 168px;
 	width:150px;
 	border:1px solid #900;
 }
@@ -1751,7 +1750,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 
 #rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
 	width:465px;
-	margin:30px 0 0 20px;
+	margin:10px 0 0 20px;
 	font-size:10px;
 }
 
@@ -2068,22 +2067,22 @@ a.refreshVolumeExplorer {
 	height:23px;
 }
 
-#modalBox #chooseDiv {
+#modalBox #chooseDiv{
 	margin:0 0 0 50px;
 }
 
-#modalBox #choose {
+#modalBox #choose{
 	background-image:url(/DocSources/images/1024/button_choose.png);
 	float:left;
 	width:189px;
 	height:23px;
 }
 
-#modalBox #gobackvolumeDiv {
+#modalBox #gobackvolumeDiv{
 	margin-left:495px;
 }
 
-#modalBox #gobackvolume {
+#modalBox #gobackvolume{
 	background-image:url(/DocSources/images/1024/button_gobackvolume.png);
 	float:left;
 	width:150px;
