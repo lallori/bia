@@ -4,49 +4,64 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<b>ADVANCED SEARCH</b><a href="#" id="helpLink">?</a>
-<p><u>Search Places</u></p>
-<br />
-<div>
-	<form id="placeNameSearchForm" method="post" class="edit">
-		<label for="placeNameSearch" id="placeNameSearchLabel">Place Name: <a href="#" class="helpLink">?</a></label>
-		<input id="placeNameSearch" name="placeNameSearch" class="input_20c" type="text" value=""/>
-		<label for="stressSense" id="stressSenseLabel">Stress sense</label>
-		<input type="checkbox" name="stressSense" class="checkbox4"/>
-		<a href="#" id="addPlaceNameSearch">Add</a>
-	</form>
+<div id="multiOpenAccordion">
+	<h1><a>PLACE NAME</a></h1>
+	<div>
+		<form id="placeNameSearchForm" method="post" class="edit">
+			<a class="helpIcon" title="You can search here for place names in many languages (without accents).">?</a>
+			<input id="placeName" name="placeName" class="input_20c" type="text" value=""/>
+			<label for="stressSense" id="stressSenseLabel">Stress sense</label>
+			<input type="checkbox" name="stressSense" class="checkbox4"/>
+			<input type="submit" id="addSearchFilter" value="Add">
+			<input type="hidden" id="category" value="Place Name">
+		</form>
+	</div>
+	
+	<h1><a>PLACE TYPE</a></h1>
+	<div>
+		<form id="placeTypeSearchForm" method="post" class="edit">
+			<a class="helpIcon" title="These Place Types are assigned to geographical place names in the Getty Thesaurus of Geographic Names. Most places in the Documentary Sources database are of the type 'Inhabited Place' (that is to say, cities, towns and villages.)">?</a>
+			<select id="placeType" name="placeType" class="selectform_Mlong">
+				<option value="Select a Place Type" selected="selected">Select a Place Type</option>
+			</select>
+			<input type="submit" id="addSearchFilter" value="Add">
+			<input type="hidden" id="category" value="Place Type">
+		</form>
+	</div>
+	
+	<h1><a>Linked to Topics</a></h1>
+	<div>
+		<form id="linkedToTopicsSearchForm" method="post" class="edit">
+			<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Most documents are indexed to one or more Topic Categories, and each Topic is indexed to the related Places. By selecting a Topic, you will create a list here of the places that are associated with that topic in the indexed documents. For example, selecting the Topic 'Music and Musical Instruments' will produce a list of places that are linked to documents mentioning Music and Musical Instruments. This allows you to select those relevant to your research.">?</a>
+			<select id="linkedToTopic" name="linkedToTopic" class="selectform_Mlong">
+				<option value="Select a Topic" selected="selected">Select a Topic</option>
+			</select>
+			<input type="submit" id="addSearchFilter" value="Add">
+			<input type="hidden" id="category" value="Linked to Topics">
+		</form>
+	</div>
+
+	<h1><a>Linked to People</a></h1>
+	<div>
+		<form id="linkedToPeopleSearchForm" method="post" class="edit">
+			<a class="helpIcon" title="You can refine your Places search by specifying 'Sender Location', 'Recipient Location', 'Birth Place', or 'Death Place'. The resulting hit list will include a link to the biographical records for the people who meet your criteria.">?</a>
+			<select id="linkedToPeopleType" name="linkedToPeopleType" class="selectform_Mlong">
+				<option value="Select a Topic" selected="selected">Select a Topic</option>
+				<option value="Sender Location">Sender Location</option>
+				<option value="Recipient Location">Recipient Location</option>
+				<option value="Birt Place">Birt Place</option>
+				<option value="Death Place">Death Place</option>
+			</select>
+			<input type="submit" id="addSearchFilter" value="Add">
+			<input type="hidden" id="category" value="Linked to People">
+		</form>
+	</div>
 </div>
 
-<div>
-	<form id="placeTypeSearchForm" method="post" class="edit">
-		<label for="placeTypeSearch" id="placeTypeSearchLabel">Place Type: <a href="helpLink">?</a></label>
-		<select id="placeTypeSearch" name="placeTypeSearch" class="selectform_Mlong">
-			<option value="Select a Place Type" selected="selected">Select a Place Type</option>
-		</select>
-		<a href="#" id="addPlaceTypeSearch">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="linkedToTopicsSearchForm" method="post" class="edit">
-		<label for="linkedToTopicSearch" id="linkedToTopicSearchLabel">Linked to Topics: <a href="#" id="helpLink">?</a></label>
-		<select id="linkedToTopicSearch" name="linkedToTopicSearch" class="selectform_Mlong">
-			<option value="Select a Topic" selected="selected">Select a Topic</option>
-		</select>
-		<a href="#" id="addLinkedToTopicSearch">Add</a>
-	</form>
-</div>
-
-<div>
-	<form id="linkedToPeopleSearchForm" method="post" class="edit">
-		<label for="linkedToPeopleSearch" id="linkedToPeopleSearchLabel">Linked to People: <a href="#" id="helpLink">?</a></label>
-		<select id="linkedToPeopleSearch" name="linkedToPeopleSearch" class="selectform_Mlong">
-			<option value="Select a Topic" selected="selected">Select a Topic</option>
-			<option value="Sender Location">Sender Location</option>
-			<option value="Recipient Location">Recipient Location</option>
-			<option value="Birt Place">Birt Place</option>
-			<option value="Death Place">Death Place</option>
-		</select>
-		<a href="#" id="addLinkedToPeopleSearch">Add</a>
-	</form>
-</div>
+<script type="text/javascript">
+	  $j(document).ready(function() {								
+			  $j("#body_right").load("/DocSources/src/searchFilterList.html");
+			  $j('#multiOpenAccordion').multiAccordion({active: [0]});
+			  return false;	
+	  });
+</script>
