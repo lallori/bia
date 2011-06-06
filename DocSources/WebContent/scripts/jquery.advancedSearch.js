@@ -41,11 +41,11 @@
         $(this).submit(function (event) {
             // Prevent the browser's default onClick handler
             event.preventDefault();
-            
             // Extract form Name
             var formName = $(this).attr('id');
             // Extracting field on which this form works on.
-            var fieldName = formName.substring(0, formName.indexOf('Form'));
+            var fieldName = formName.substring(0, formName.indexOf('SearchForm'));
+
 
             var searchType = "";
         	if (formName.indexOf("date") >= 0) {
@@ -58,66 +58,58 @@
         	}
 
         	var searchWord = "";
+            var hiddenValue = "";
 
         	// Date form is composed of three fields.
-        	if (formName.indexOf("date") >= 0) {
-        		searchWord = $('#' + formName).find('#' + fieldName + 'Year').val();
-        		searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
-        		searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Day').val();
-        	} else {
-        		searchWord = $('#' + formName).find('#' + fieldName).val();
-        	}
+    		if ($('#' + formName).find('#' + fieldName + 'Type').size() > 0) {
+    			if ($(this).find("option:selected").text() == 'Between') {
+    	        	if (formName.indexOf("date") >= 0) {
+    	        		searchWord = $('#' + formName).find('#' + fieldName + 'Year').val();
+    	        		searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
+    	        		searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Day').val();
+    	        	} else {
+    	        	}
+    			} else if ($(this).find("option:selected").text() == 'Exactly') {
+    				searchWord = $('#' + formName).find('#' + fieldName).val();    				
+            		hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
+    			} else {
+    				searchWord = $('#' + formName).find('#' + fieldName).val();    				
+    				hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
+    			}
+    		} else {
+    			searchWord = $('#' + formName).find('#' + fieldName).val();
+    			hiddenValue = searchWord;
+    		}
 
-
-            var hiddenValue = "";
+            console.log("resulting hiddenName : " + fieldName);
+            console.log("resulting hiddenValue : " + hiddenValue);
             // we loop on every form fields and construct a resulting hidden field
-            $('#' + formName + ' :input').each(function(index) {
-        		// we discard submit button
-            	if ($(this).attr('type') == "submit") {
-		    		return;
-        		}
-            	
-            	// we append separator for values in case of hidden field is not empty
-            	if (hiddenValue.length > 0) {
-            		hiddenValue += "|";
-            	}
-
-            	// We fill hiddenField on element type
-            	if (($(this).attr('type') == "text") || ($(this).attr('type') == "textarea")) {
-            		hiddenValue += $(this).val();
-            	} else if ($(this).attr('type') == "select-one") {
-            		hiddenValue += $(this).find("option:selected").text();
-            	} else {
-            		console.log("Unmanaged type " + $(this).attr('type') + "!!!!!!");
-            	} 
-            });
 
             console.log("resulting hiddenName : " + fieldName);
             console.log("resulting hiddenValue : " + hiddenValue);
 
             // We add html to right form :
-            if ($("#searchFilterForm").find("#" + fieldName + "Div").length ==0) {
+            if ($("#searchFilterForm").find("#" + fieldName + "SearchDiv").length ==0) {
             	console.log("Creating " + fieldName + "SearchDiv");
                 var fieldSearchDiv = $('<div id="' + fieldName + 'SearchDiv">');
             	$("#searchFilterForm").append(fieldSearchDiv);
             } else {
-
             }
 
             // We construct new html block with condition and hidden field 
-            var searchFilterDiv = $('<div id="SearchFilterDiv">');
+            var searchFilterDiv = $('<div class="SearchFilterDiv">');
             $(searchFilterDiv).append('<span class="categorySearch">' + searchType + ': </span>');
             $(searchFilterDiv).append('<span class="wordSearch">' + searchWord + '</span>');
             $(searchFilterDiv).append('<a href="#" class="remove">(remove)</a>');
             $(searchFilterDiv).append('<input type="hidden" name="' + fieldName + '" value="' + hiddenValue + '"/>');
 
-            console.log($(searchFilterDiv));
-            if ($("#" + fieldName + "Div").find("#SearchFilterDiv").length >0) {
-            	$("#" + fieldName + "Div").append('<p class="andOrNotAdvancedSearch">And</p>');
+            console.log($("#" + fieldName + "SearchDiv").find(".SearchFilterDiv").length);
+            if ($("#" + fieldName + "SearchDiv").find(".SearchFilterDiv").length >0) {
+            	$("#" + fieldName + "SearchDiv").find(".SearchFilterDiv").last().after('<p class="andOrNotAdvancedSearch">And</p>');
             }
 
             // We append new block at the end of "field" SearchDiv 
-            $("#" + fieldName + "Div").append(searchFilterDiv);
+            $("#" + fieldName + "SearchDiv").append(searchFilterDiv);
             return false;
         });
 

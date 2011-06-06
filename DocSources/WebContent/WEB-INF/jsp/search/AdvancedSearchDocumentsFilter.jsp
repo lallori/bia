@@ -7,17 +7,26 @@
 <form id="searchFilterForm" method="post">
 	<p><u>Custom Search Filter</u></p>
 	<br />
-	<div id="wordDiv"></div>
-	<div id="volumeDiv"></div>
-	<div id="dateDiv"></div>
-	<div id="extractDiv"></div>
-	<div id="synopsisDiv"></div>
-	<div id="topicsDiv"></div>
-	<div id="personDiv"></div>
-	<div id="placeDiv"></div>
-	<div id="senderDiv"></div>
-	<div id="fromDiv"></div>
-	<div id="recipientDiv"></div>
-	<div id="toDiv"></div>
-	<div id="refersToDiv"></div>	
+	<div id="wordSearchDiv"></div>
+	<div id="volumeSearchDiv"></div>
+	<div id="dateSearchDiv"></div>
+	<div id="extractSearchDiv"></div>
+	<div id="synopsisSearchDiv"></div>
+	<div id="topicsSearchDiv"></div>
+	<div id="personSearchDiv"></div>
+	<div id="placeSearchDiv"></div>
+	<div id="senderSearchDiv"></div>
+	<div id="fromSearchDiv"></div>
+	<div id="recipientSearchDiv"></div>
+	<div id="toSearchDiv"></div>
+	<div id="refersToSearchDiv"></div>	
+	<br>
+	<br>
+	<input type="submit" title="Search" value="" id="advsearch">
+	<a class="saveAsButton" href="#"></a>
 </form>
+
+	<script type="text/javascript">
+		$j(document).ready(function() {
+		});
+	</script>
