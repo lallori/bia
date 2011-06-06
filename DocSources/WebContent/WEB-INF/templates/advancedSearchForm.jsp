@@ -32,7 +32,6 @@
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.10.custom.min.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.tooltip.js"/>"></script>
 		
 		
