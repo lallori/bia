@@ -10,6 +10,7 @@
 
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/MainContent.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/Template.css" />" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css"/>" />
 <!-- 
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/MainContent.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/Template.css" />" />
@@ -30,8 +31,6 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css"/>" />
-		<script type="text/javascript" src="<c:url value="/scripts/jquery-1.5.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.10.custom.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.tooltip.js"/>"></script>
@@ -68,7 +67,9 @@
 			</div>
 			
 			<div id="body_right">
-				<tiles:insertAttribute name="advancedSearchFilter"/>
+				<div class="customSeachFilterDiv"><div class="easySearchModeOn"></div>
+					<tiles:insertAttribute name="advancedSearchFilter"/>
+				</div>
 			</div>
 		</div>
 		
