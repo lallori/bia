@@ -3176,11 +3176,11 @@ span.categorySearch {
 	margin-right:40px;
 }
 
-#referstoSearchLabel {
+#refersToSearchLabel {
 	margin-right:5px;
 }
 
-#personSearchLabel, #placeSearchLabel, #senderSearchLabel, #fromSearchLabel, #toSearchLabel, #referstoSearchLabel, #recipientSearchLabel {
+#personSearchLabel, #placeSearchLabel, #senderSearchLabel, #fromSearchLabel, #toSearchLabel, #refersToSearchLabel, #recipientSearchLabel {
 	margin-left:7px;
 }
 
