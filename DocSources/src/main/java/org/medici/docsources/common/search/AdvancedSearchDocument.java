@@ -88,11 +88,11 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 	 */
 	public void initFromCommand(AdvancedSearchDocumentsCommand command) {
 		//Words
-		if (command.getWords().size() >0) {
-			wordsTypes = new ArrayList<WordType>(command.getWords().size());
-			words = new ArrayList<String>(command.getWords().size());
+		if ((command.getWord() != null) && (command.getWord().size() >0)) {
+			wordsTypes = new ArrayList<WordType>(command.getWord().size());
+			words = new ArrayList<String>(command.getWord().size());
 			
-			for (String singleWord : command.getWords()) {
+			for (String singleWord : command.getWord()) {
 				String[] fields = singleWord.split("\\|");
 				
 				if (fields.length != 2) {
@@ -103,209 +103,255 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 					words.add(fields[1]);
 				}
 			}
+		} else {
+			wordsTypes = new ArrayList<WordType>(0);
+			words = new ArrayList<String>(0);
 		}
 
 		// Extract
-		if (command.getExtract().size() >0) {
+		if ((command.getExtract() != null) &&  (command.getExtract().size() >0)) {
 			extract = new ArrayList<String>(command.getExtract().size());
 			
-			for (String singleWord : command.getWords()) {
+			for (String singleWord : command.getExtract()) {
 				extract.add(singleWord);
 			}
+		} else {
+			extract = new ArrayList<String>(0);
 		}
 		
-		// synopsis;
-		if (command.getSynopsis().size() >0) {
+		// synopsis
+		if ((command.getSynopsis() != null) && (command.getSynopsis().size() >0)) {
 			synopsis = new ArrayList<String>(command.getSynopsis().size());
 			
-			for (String singleWord : command.getWords()) {
+			for (String singleWord : command.getSynopsis()) {
 				synopsis.add(singleWord);
 			}
+		} else {
+			synopsis = new ArrayList<String>(0);
 		}
 
-		// topics;
-		topicsId = new ArrayList<Integer>(command.getTopics().size());
-		topics = new ArrayList<String>(command.getTopics().size());
-		
-		for (String singleWord : command.getTopics()) {
-			String[] fields = singleWord.split("\\|");
+		// topics
+		if ((command.getTopic() != null) && (command.getTopic().size() >0)) {
+			topicsId = new ArrayList<Integer>(command.getTopic().size());
+			topics = new ArrayList<String>(command.getTopic().size());
 			
-			if (fields.length != 2) {
-				logger.error("Wrong field topics " + singleWord + " skipped.");
-				continue;
-			} else {
-				try {
-					// Check if field is correct
-					if (NumberUtils.isNumber(fields[0])) { 
-						topicsId.add(NumberUtils.createInteger(fields[0]));
-					} else {
-						//Empty topicId is equal to 0
-						topicsId.add(new Integer(0));
+			for (String singleWord : command.getTopic()) {
+				String[] fields = singleWord.split("\\|");
+				
+				if (fields.length != 2) {
+					logger.error("Wrong field topics " + singleWord + " skipped.");
+					continue;
+				} else {
+					try {
+						// Check if field is correct
+						if (NumberUtils.isNumber(fields[0])) { 
+							topicsId.add(NumberUtils.createInteger(fields[0]));
+						} else {
+							//Empty topicId is equal to 0
+							topicsId.add(new Integer(0));
+						}
+					}catch (NumberFormatException nex) {
+						logger.error("Wrong topic id " + singleWord + " skipped.");
 					}
-				}catch (NumberFormatException nex) {
-					logger.error("Wrong topic id " + singleWord + " skipped.");
+					topics.add(fields[1]);
 				}
-				topics.add(fields[1]);
 			}
+		} else {
+			topicsId = new ArrayList<Integer>(0);
+			topics = new ArrayList<String>(0);
 		}
 
-		// person;
-		personId = new ArrayList<Integer>(command.getPerson().size());
-		person = new ArrayList<String>(command.getPerson().size());
-		
-		for (String singleWord : command.getPerson()) {
-			String[] fields = singleWord.split("\\|");
+		// person
+		if ((command.getPerson() != null) && (command.getPerson().size() >0)) {
+			personId = new ArrayList<Integer>(command.getPerson().size());
+			person = new ArrayList<String>(command.getPerson().size());
 			
-			if (fields.length != 2) {
-				logger.error("Wrong field person " + singleWord + " skipped.");
-				continue;
-			} else {
-				try {
-					// Check if field is correct
-					if (NumberUtils.isNumber(fields[0])) { 
-						personId.add(NumberUtils.createInteger(fields[0]));
-					} else {
-						//Empty personId is equal to 0
-						personId.add(new Integer(0));
+			for (String singleWord : command.getPerson()) {
+				String[] fields = singleWord.split("\\|");
+				
+				if (fields.length != 2) {
+					logger.error("Wrong field person " + singleWord + " skipped.");
+					continue;
+				} else {
+					try {
+						// Check if field is correct
+						if (NumberUtils.isNumber(fields[0])) { 
+							personId.add(NumberUtils.createInteger(fields[0]));
+						} else {
+							//Empty personId is equal to 0
+							personId.add(new Integer(0));
+						}
+					}catch (NumberFormatException nex) {
+						logger.error("Wrong person id " + singleWord + " skipped.");
 					}
-				}catch (NumberFormatException nex) {
-					logger.error("Wrong person id " + singleWord + " skipped.");
+					person.add(fields[1]);
 				}
-				person.add(fields[1]);
 			}
+		} else {
+			personId = new ArrayList<Integer>(0);
+			person = new ArrayList<String>(0);
 		}
 
-		// place;
-		placeId = new ArrayList<Integer>(command.getPlaces().size());
-		place = new ArrayList<String>(command.getPlaces().size());
-		
-		for (String singleWord : command.getWords()) {
-			String[] fields = singleWord.split("\\|");
+		// place
+		if ((command.getPlace() != null) && (command.getPlace().size() >0)) {
+			placeId = new ArrayList<Integer>(command.getPlace().size());
+			place = new ArrayList<String>(command.getPlace().size());
 			
-			if (fields.length != 2) {
-				logger.error("Wrong field places " + singleWord + " skipped.");
-				continue;
-			} else {
-				try {
-					// Check if field is correct
-					if (NumberUtils.isNumber(fields[0])) { 
-						placeId.add(NumberUtils.createInteger(fields[0]));
-					} else {
-						// Empty placeId is equal to 0
-						placeId.add(new Integer(0));
+			for (String singleWord : command.getPlace()) {
+				String[] fields = singleWord.split("\\|");
+				
+				if (fields.length != 2) {
+					logger.error("Wrong field places " + singleWord + " skipped.");
+					continue;
+				} else {
+					try {
+						// Check if field is correct
+						if (NumberUtils.isNumber(fields[0])) { 
+							placeId.add(NumberUtils.createInteger(fields[0]));
+						} else {
+							// Empty placeId is equal to 0
+							placeId.add(new Integer(0));
+						}
+					}catch (NumberFormatException nex) {
+						logger.error("Wrong place id " + singleWord + " skipped.");
 					}
-				}catch (NumberFormatException nex) {
-					logger.error("Wrong place id " + singleWord + " skipped.");
+					place.add(fields[1]);
 				}
-				place.add(fields[1]);
 			}
+		} else {
+			placeId = new ArrayList<Integer>(0);
+			place = new ArrayList<String>(0);
 		}
 
 		// sender;
-		senderId = new ArrayList<Integer>(command.getSenders().size());
-		sender = new ArrayList<String>(command.getSenders().size());
-		
-		for (String singleWord : command.getWords()) {
-			String[] fields = singleWord.split("\\|");
+		if ((command.getSender() != null) && (command.getSender().size() >0)) {
+			senderId = new ArrayList<Integer>(command.getSender().size());
+			sender = new ArrayList<String>(command.getSender().size());
 			
-			if (fields.length != 2) {
-				logger.error("Wrong field senders " + singleWord + " skipped.");
-				continue;
-			} else {
-				try {
-					if (NumberUtils.isNumber(fields[0])) { 
-						senderId.add(NumberUtils.createInteger(fields[0]));
-					} else {
-						//Empty senderId is equal to 0
-						senderId.add(new Integer(0));
+			for (String singleWord : command.getSender()) {
+				String[] fields = singleWord.split("\\|");
+				
+				if (fields.length != 2) {
+					logger.error("Wrong field senders " + singleWord + " skipped.");
+					continue;
+				} else {
+					try {
+						if (NumberUtils.isNumber(fields[0])) { 
+							senderId.add(NumberUtils.createInteger(fields[0]));
+						} else {
+							//Empty senderId is equal to 0
+							senderId.add(new Integer(0));
+						}
+					}catch (NumberFormatException nex) {
+						logger.error("Wrong sender id " + singleWord + " skipped.");
 					}
-				}catch (NumberFormatException nex) {
-					logger.error("Wrong sender id " + singleWord + " skipped.");
+					sender.add(fields[1]);
 				}
-				sender.add(fields[1]);
 			}
+		} else {
+			senderId = new ArrayList<Integer>(0);
+			sender = new ArrayList<String>(0);
 		}
 
 		// from;
-		fromId = new ArrayList<Integer>(command.getFrom().size());
-		from = new ArrayList<String>(command.getFrom().size());
-		
-		for (String singleWord : command.getFrom()) {
-			String[] fields = singleWord.split("\\|");
+		if ((command.getFrom() != null) && (command.getFrom().size() >0)) {
+			fromId = new ArrayList<Integer>(command.getFrom().size());
+			from = new ArrayList<String>(command.getFrom().size());
 			
-			if (fields.length != 2) {
-				logger.error("Wrong field topics " + singleWord + " skipped.");
-				continue;
-			} else {
-				try {
-					if (NumberUtils.isNumber(fields[0])) { 
-						fromId.add(NumberUtils.createInteger(fields[0]));
-					} else {
-						//Empty topicId is equal to 0
-						fromId.add(new Integer(0));
+			for (String singleWord : command.getFrom()) {
+				String[] fields = singleWord.split("\\|");
+				
+				if (fields.length != 2) {
+					logger.error("Wrong field topics " + singleWord + " skipped.");
+					continue;
+				} else {
+					try {
+						if (NumberUtils.isNumber(fields[0])) { 
+							fromId.add(NumberUtils.createInteger(fields[0]));
+						} else {
+							//Empty topicId is equal to 0
+							fromId.add(new Integer(0));
+						}
+					}catch (NumberFormatException nex) {
+						logger.error("Wrong from id " + singleWord + " skipped.");
 					}
-				}catch (NumberFormatException nex) {
-					logger.error("Wrong from id " + singleWord + " skipped.");
+					from.add(fields[1]);
 				}
-				from.add(fields[1]);
 			}
+		} else {
+			fromId = new ArrayList<Integer>(0);
+			from= new ArrayList<String>(0);
 		}
 
 		// recipient;
-		recipientId = new ArrayList<Integer>(command.getRecipients().size());
-		recipient = new ArrayList<String>(command.getRecipients().size());
-		
-		for (String singleWord : command.getRecipients()) {
-			String[] fields = singleWord.split("\\|");
+		if ((command.getRecipient() != null) && (command.getRecipient().size() >0)) {
+			recipientId = new ArrayList<Integer>(command.getRecipient().size());
+			recipient = new ArrayList<String>(command.getRecipient().size());
 			
-			if (fields.length != 2) {
-				logger.error("Wrong field recipients " + singleWord + " skipped.");
-				continue;
-			} else {
-				try {
-					if (NumberUtils.isNumber(fields[0])) { 
-						recipientId.add(NumberUtils.createInteger(fields[0]));
-					} else {
-						//Empty topicId is equal to 0
-						recipientId.add(new Integer(0));
+			for (String singleWord : command.getRecipient()) {
+				String[] fields = singleWord.split("\\|");
+				
+				if (fields.length != 2) {
+					logger.error("Wrong field recipients " + singleWord + " skipped.");
+					continue;
+				} else {
+					try {
+						if (NumberUtils.isNumber(fields[0])) { 
+							recipientId.add(NumberUtils.createInteger(fields[0]));
+						} else {
+							//Empty topicId is equal to 0
+							recipientId.add(new Integer(0));
+						}
+					}catch (NumberFormatException nex) {
+						logger.error("Wrong recipient id " + singleWord + " skipped.");
 					}
-				}catch (NumberFormatException nex) {
-					logger.error("Wrong recipient id " + singleWord + " skipped.");
+					recipient.add(fields[1]);
 				}
-				recipient.add(fields[1]);
 			}
+		} else {
+			recipientId = new ArrayList<Integer>(0);
+			recipient = new ArrayList<String>(0);
 		}
 
 		// to;
-		toId = new ArrayList<Integer>(command.getTo().size());
-		to = new ArrayList<String>(command.getTo().size());
-		
-		for (String singleWord : command.getTo()) {
-			String[] fields = singleWord.split("\\|");
+		if ((command.getTo() != null) && (command.getTo().size() >0)) {
+			toId = new ArrayList<Integer>(command.getTo().size());
+			to = new ArrayList<String>(command.getTo().size());
 			
-			if (fields.length != 2) {
-				logger.error("Wrong field to " + singleWord + " skipped.");
-				continue;
-			} else {
-				try {
-					if (NumberUtils.isNumber(fields[0])) { 
-						toId.add(NumberUtils.createInteger(fields[0]));
-					} else {
-						//Empty toId is equal to 0
-						toId.add(new Integer(0));
+			for (String singleWord : command.getTo()) {
+				String[] fields = singleWord.split("\\|");
+				
+				if (fields.length != 2) {
+					logger.error("Wrong field to " + singleWord + " skipped.");
+					continue;
+				} else {
+					try {
+						if (NumberUtils.isNumber(fields[0])) { 
+							toId.add(NumberUtils.createInteger(fields[0]));
+						} else {
+							//Empty toId is equal to 0
+							toId.add(new Integer(0));
+						}
+					}catch (NumberFormatException nex) {
+						logger.error("Wrong to id " + singleWord + " skipped.");
 					}
-				}catch (NumberFormatException nex) {
-					logger.error("Wrong to id " + singleWord + " skipped.");
+					to.add(fields[1]);
 				}
-				to.add(fields[1]);
 			}
+		} else {
+			toId = new ArrayList<Integer>(0);
+			to = new ArrayList<String>(0);
 		}
 
 		// resTo;
-		resTo = new ArrayList<String>(command.getResTo().size());
-		
-		for (String singleWord : command.getResTo()) {
-			resTo.add(singleWord);
+		if ((command.getResTo() != null) && (command.getResTo().size() >0)) {
+			resTo = new ArrayList<String>(command.getResTo().size());
+			
+			for (String singleWord : command.getResTo()) {
+				resTo.add(singleWord);
+			}
+		} else {
+			resTo = new ArrayList<String>(0);
 		}
 	}
 
@@ -700,7 +746,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 					/*booleanClause.setQuery(new WildcardQuery(new Term("synExtract.synopsis", words.get(i).toLowerCase() + "*")));
 					booleanClause.setOccur(BooleanClause.Occur.MUST);
 					booleanQuery.add(booleanClause);*/
-				} else if (wordsTypes.get(i).equals(WordType.ExtractAndSynopsis)) {
+				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
 					stringBuffer.append("((synExtract.docExtract: ");
 					stringBuffer.append(words.get(i).toLowerCase());
 					stringBuffer.append("*) AND (synExtract.synopsis: ");
@@ -932,7 +978,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 	 *
 	 */
 	public static enum WordType {
-		Extract("Extract"), Synopsis("Synopsis"), ExtractAndSynopsis("ExtractAndSynopsis");
+		Extract("Extract"), Synopsis("Synopsis"), SynopsisAndExtract("SynopsisAndExtract");
 		
 		private final String wordType;
 
