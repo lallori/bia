@@ -31,6 +31,7 @@ package org.medici.docsources.controller.search;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -78,6 +79,8 @@ public class AdvancedSearchDocumentsController {
 	
 	/**
 	 * 
+	 * @param command
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
@@ -87,9 +90,13 @@ public class AdvancedSearchDocumentsController {
 		AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
 		advancedSearchDocument.initFromCommand(command);
 			
-		session.setAttribute("advancedSearchDocument", advancedSearchDocument);
+		// This number is used to generate an unique id for datatable jquery plugin to use multiple object in tabs
+		UUID uuid = UUID.randomUUID();
+		model.put("searchNumber", uuid.toString());
 
-		return new ModelAndView("search/AdvancedSearchDocuments", model);
+		session.setAttribute("advancedSearchDocument" + uuid.toString(), advancedSearchDocument);
+
+		return new ModelAndView("search/AdvancedSearchResultDocuments", model);
 	}
 
 	/**
