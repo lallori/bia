@@ -127,10 +127,11 @@
 			</c:if>
 			</div>
 		</div>
-		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="folioerrors"/></form:form>
+		<br />
+		<br />
+		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
 	<c:if test="${volumeExplorer.totalRubricario > 0}">
-		<br/>
-		<br/>
+		<br />
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">

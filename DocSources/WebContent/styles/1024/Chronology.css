@@ -67,7 +67,6 @@
 #DocsChronology ul, #PeopleChronology ul, #VolumesChronology ul, #PlaceChronology ul, #MoreDocsCronology ul { /* Chronology's List */
 	list-style:none;
 	font-size:12px;
-	margin-left:-17px;
 	text-align:justify;
 }
 
@@ -101,10 +100,10 @@
 	margin:520px 0 0 300px;
 }
 
-/* ------------- Specific Chronology Window --------------- 
-/* When pressed More >> button 
+/* ------------- Specific Chronology Window --------------- */
+/* When pressed More >> button  */
 
-#MoreDocsChronology, #MorePlaceChronology, #MoreVolChronology, #MorePeopleChronology { /* Specific Documents Chronology Div 
+#MoreDocsChronology, #MorePlaceChronology, #MoreVolChronology, #MorePeopleChronology { /* Specific Documents Chronology Div */
 	width:700px;
 	height:auto;
 	margin-top:5px;
@@ -118,70 +117,70 @@
 	margin:0 auto 25px auto;
 }
 
-#MoreDocsChronology table, #MorePlaceChronology table, #MoreVolChronology table, #MorePeopleChronology table td, th {
+#MoreDocsChronology table td th, #MorePlaceChronology table td th, #MoreVolChronology table td th, #MorePeopleChronology table td th {
 	display: table-cell;
 	vertical-align: inherit;
 	padding:7px;
 }
 
-tr.odd td.sorting_1 {
+#MoreDocsChronology tr.odd td.sorting_1, #MorePlaceChronology tr.odd td.sorting_1, #MoreVolChronology tr.odd td.sorting_1, #MorePeopleChronology tr.odd td.sorting_1 {
 	background-color: #e6d0c6;
 }
 
-.sortingSender {
+#MoreDocsChronology .sortingSender, #MorePlaceChronology td.sorting_1, #MoreVolChronology .sortingSender, #MorePeopleChronology td.sorting_1 {
 	width:80px;
 	font-size:11px;
 	color:#777;
 	font-weight:normal;
 }
 
-.sortingRecipient {
+#MoreDocsChronology .sortingRecipient,  #MorePlaceChronology .sortingRecipient, #MoreVolChronology .sortingRecipient, #MorePeopleChronology td.sorting_1{
 	width:80px;
 	font-size:11px;
 	color:#777;
 	font-weight:normal;
 }
 
-.sortingDate {
+#MoreDocsChronology .sortingDate,  #MorePlaceChronology .sortingDate, #MoreVolChronology .sortingDate, #MorePeopleChronology .sortingDate {
 	width:40px;
 	font-size:11px;
 	color:#777;
 	font-weight:normal;
 }
 
-.sortingSLocation {
+#MoreDocsChronology .sortingSLocation,  #MorePlaceChronology .sortingSLocation, #MoreVolChronology .sortingSLocation, #MorePeopleChronology .sortingSLocation {
 	width:80px;
 	font-size:11px;
 	color:#777;
 	font-weight:normal;
 }
 
-.sortingRLocation {
+#MoreDocsChronology .sortingRLocation,  #MorePlaceChronology .sortingRLocation, #MoreVolChronology .sortingRLocation, #MorePeopleChronology .sortingRLocation {
 	width:80px;
 	font-size:11px;
 	color:#777;
 	font-weight:normal;
 }
 
-.sortingVolume {
+#MoreDocsChronology .sortingVolume,  #MorePlaceChronology .sortingVolume, #MoreVolChronology .sortingVolume, #MorePeopleChronology .sortingVolume {
 	width:60px;
 	font-size:11px;
 	color:#777;
 	font-weight:normal;
 }
 
-.sortingFolio {
+#MoreDocsChronology .sortingFolio,  #MorePlaceChronology .sortingFolio, #MoreVolChronology .sortingFolio, #MorePeopleChronology .sortingFolio {
 	width:40px;
 	font-size:11px;
 	color:#777;
 	font-weight:normal;
 }
 
-.odd, .sorting_2 {
+#MoreDocsChronology .odd,  #MorePlaceChronology .odd, #MoreVolChronology .odd, #MorePeopleChronology .odd, #MoreDocsChronology .sorting_2,  #MorePlaceChronology .odd, #MoreVolChronology .odd, #MorePeopleChronology .sorting_2 {
 	background-color: #F0E2DB;
 }
 
 .even {
 	background-color:#FFF;
 }
-*/
+
