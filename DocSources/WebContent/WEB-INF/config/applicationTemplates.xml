@@ -425,10 +425,18 @@
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchDocuments.jsp"/>	
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchDocumentsFilter.jsp"/>
 	</definition>
-	
+
+	<definition name="search/AdvancedSearchResultDocuments" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultDocuments.jsp"/>	
+	</definition>
+
 	<definition name="search/AdvancedSearchPeople" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPeople.jsp"/>	
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPeopleFilter.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchResultPeople" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultPeople.jsp"/>	
 	</definition>
 
 	<definition name="search/AdvancedSearchPlaces" extends="template.advancedSearchForm">
@@ -436,9 +444,17 @@
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPlacesFilter.jsp.jsp"/>
 	</definition>
 
+	<definition name="search/AdvancedSearchResultPlaces" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultPlaces.jsp"/>	
+	</definition>
+
 	<definition name="search/AdvancedSearchVolumes" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchVolumes.jsp"/>
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchVolumesFilter.jsp"/>
+	</definition>
+
+	<definition name="search/AdvancedSearchResultPlaces" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultVolumes.jsp"/>	
 	</definition>
 
 	<definition name="search/SimpleSearchResultDocuments" extends="template.partialDOM">
