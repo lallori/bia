@@ -456,56 +456,46 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	public Page simpleSearchPeople(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
-		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
+		
+		String luceneQuery = simpleSearchContainer.toLuceneQueryString();
 
 		// We obtain hibernate-search session
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		// We define entity on which we make search 
-		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(People.class).get();
-
-		// We set search on fields .
-		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
-			"first",
-			"last",
-			"midPrefix",
-			"middle",
-			"lastPrefix",
-			"mapNameLf"
-		).matching(simpleSearchContainer.toString() + "*").createQuery();
-		
-
-		BooleanQuery booleanQuery = new BooleanQuery();
-		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(simpleSearchContainer.toString());
-        for (String singleWord:words) {
-        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
-        }
-
-        // We execute search
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
-		
-		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
-			page.setTotal(new Long(fullTextQuery.getResultSize()));
-		}
-
-		// We set pagination
-		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-		fullTextQuery.setMaxResults(paginationFilter.getLength());
-
-		// We manage sorting (this manages sorting on multiple fields)
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		if (sortingCriterias.size() > 0) {
-			SortField[] sortFields = new SortField[sortingCriterias.size()];
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+		try {
+			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "personId", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+	
+			// We convert AdvancedSearchContainer to luceneQuery
+			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
+	
+			// We execute search
+			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, People.class );
+	
+			// We set size of result.
+			if (paginationFilter.getTotal() == null) {
+				page.setTotal(new Long(fullTextQuery.getResultSize()));
 			}
-			fullTextQuery.setSort(new Sort(sortFields));
+	
+			// We set pagination  
+			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+			fullTextQuery.setMaxResults(paginationFilter.getLength());
+	
+			// We manage sorting (this manages sorting on multiple fields)
+			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+			if (sortingCriterias.size() > 0) {
+				SortField[] sortFields = new SortField[sortingCriterias.size()];
+				for (int i=0; i<sortingCriterias.size(); i++) {
+					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+				}
+				fullTextQuery.setSort(new Sort(sortFields));
+			}
+			
+			// We set search result on return method
+			page.setList(fullTextQuery.list());
+		} catch (ParseException parseException) {
+			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
 		}
 		
-		page.setList(fullTextQuery.list());
-
-        return page;
+		return page;
 	}
 }

@@ -336,6 +336,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			EplToLink eplToLinkToDelete = getEplToLinkDAO().find(eplToLink.getDocument().getEntryId(), eplToLink.getEplToId());
 			getEplToLinkDAO().remove(eplToLinkToDelete);
+			// LP : We need to remove the association between parent and child first, 
+			// otherwise Hibernate tries to persist the child again due to cascade = ALL
+			// Tnx to http://stackoverflow.com/questions/4748426/cannot-remove-entity-which-is-target-of-onetoone-relation
+			eplToLinkToDelete.getDocument().setEplToLink(null);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	

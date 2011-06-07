@@ -227,61 +227,45 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	public Page simpleSearchDocuments(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
+		
+		String luceneQuery = simpleSearchContainer.toLuceneQueryString();
+
 		// We obtain hibernate-search session
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-		// We define entity on which we make search 
-		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
 
-		// We set search on fields .
-		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
-			"volume.serieList.title",
-			"volume.serieList.subTitle1", 
-			"volume.serieList.subTitle2",
-			"senderPeople.first", 
-			"senderPeople.last", 
-			"senderPeople.middle", 
-			"senderPeople.poLink.titleOccList.titleOcc",
-			"senderPeople.altName.altName", 
-			"senderPlace.placeName", 
-			"senderPlace.placeNameFull",
-			"recipientPeople.first", 
-			"recipientPeople.last", 
-			"recipientPeople.middle", 
-			"recipientPeople.poLink.titleOccList.titleOcc",
-			"recipientPeople.altName.altName",
-			"recipientPlace.placeName", 
-			"recipientPlace.placeNameFull",
-			"synExtract.docExtract",
-			"synExtract.synopsis",
-			"factChecks.addLRes",
-			"eplToLink.place.placeName",
-			"eplToLink.place.placeNameFull"
-		).matching(simpleSearchContainer.toString()).createQuery();
-
-		// We execute search
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Document.class );
-
-		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
-			page.setTotal(new Long(fullTextQuery.getResultSize()));
-		}
-
-		// We set pagination  
-		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-		fullTextQuery.setMaxResults(paginationFilter.getLength());
-
-		// We manage sorting (this manages sorting on multiple fields)
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		if (sortingCriterias.size() > 0) {
-			SortField[] sortFields = new SortField[sortingCriterias.size()];
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+		try {
+			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "entryId", fullTextSession.getSearchFactory().getAnalyzer("documentAnalyzer"));
+	
+			// We convert AdvancedSearchContainer to luceneQuery
+			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
+	
+			// We execute search
+			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Document.class );
+	
+			// We set size of result.
+			if (paginationFilter.getTotal() == null) {
+				page.setTotal(new Long(fullTextQuery.getResultSize()));
 			}
-			fullTextQuery.setSort(new Sort(sortFields));
+	
+			// We set pagination  
+			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+			fullTextQuery.setMaxResults(paginationFilter.getLength());
+	
+			// We manage sorting (this manages sorting on multiple fields)
+			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+			if (sortingCriterias.size() > 0) {
+				SortField[] sortFields = new SortField[sortingCriterias.size()];
+				for (int i=0; i<sortingCriterias.size(); i++) {
+					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+				}
+				fullTextQuery.setSort(new Sort(sortFields));
+			}
+			
+			// We set search result on return method
+			page.setList(fullTextQuery.list());
+		} catch (ParseException parseException) {
+			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
 		}
-		
-		// We set search result on return method
-		page.setList(fullTextQuery.list());
 		
 		return page;
 	}

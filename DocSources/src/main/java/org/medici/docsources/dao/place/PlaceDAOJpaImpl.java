@@ -244,43 +244,48 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 */
 	@Override
 	public Page simpleSearchPlaces(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
-		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
+		
+		String luceneQuery = simpleSearchContainer.toLuceneQueryString();
 
+		// We obtain hibernate-search session
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Place.class).get();
-        
-		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
-				"placeName",
-				"placeNameFull",
-				"termAccent",
-				"plType",
-				"geogKey"
-		).matching(simpleSearchContainer.toString() + "*").createQuery();
-		
-        /*
-        // TODO : WE DON'T KNOW IF WE NEED AN ADDITIONAL QUERY..
-        org.apache.lucene.search.PhraseQuery queryAltName = new PhraseQuery();
-        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-        for (String singleWord:words) {
-        	queryAltName.add(new Term("altName.altName", singleWord));
-        }
-        */
-		BooleanQuery booleanQuery = new BooleanQuery();
-		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
-		//booleanQuery.add(new BooleanClause(queryAltName, BooleanClause.Occur.SHOULD));
-
-		final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, Place.class );
-		if (paginationFilter.getTotal() == null) {
-			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		try {
+			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "placeAllId", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+	
+			// We convert AdvancedSearchContainer to luceneQuery
+			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
+	
+			// We execute search
+			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Place.class );
+	
+			// We set size of result.
+			if (paginationFilter.getTotal() == null) {
+				page.setTotal(new Long(fullTextQuery.getResultSize()));
+			}
+	
+			// We set pagination  
+			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+			fullTextQuery.setMaxResults(paginationFilter.getLength());
+	
+			// We manage sorting (this manages sorting on multiple fields)
+			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+			if (sortingCriterias.size() > 0) {
+				SortField[] sortFields = new SortField[sortingCriterias.size()];
+				for (int i=0; i<sortingCriterias.size(); i++) {
+					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+				}
+				fullTextQuery.setSort(new Sort(sortFields));
+			}
+			
+			// We set search result on return method
+			page.setList(fullTextQuery.list());
+		} catch (ParseException parseException) {
+			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
 		}
-
-		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-		fullTextQuery.setMaxResults(paginationFilter.getLength());
-
-		page.setList(fullTextQuery.list());
-
-        return page;
+		
+		return page;
 	}
 }

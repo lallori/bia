@@ -255,61 +255,44 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
+		String luceneQuery = simpleSearchContainer.toLuceneQueryString();
+
 		// We obtain hibernate-search session
 		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		// We define entity on which we make search 
-		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Volume.class).get();
-
-		// We set search on fields .
-		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
-			"ccondition",
-			"ccontext", 
-			"orgNotes",
-			"recips", 
-			"senders", 
-			"serieList.title", 
-			"serieList.subTitle1",
-			"serieList.subTitle2", 
-			"startYear",
-			"startMonthNum.monthName", 
-			"startDay",
-			"endYear",
-			"endMonthNum.monthName", 
-			"endDay"
-		).matching(simpleSearchContainer.toString()).createQuery();
-
-		BooleanQuery booleanQuery = new BooleanQuery();
-		booleanQuery.add(new BooleanClause(luceneQuery, BooleanClause.Occur.SHOULD));
-        String[] words = RegExUtils.splitPunctuationAndSpaceChars(simpleSearchContainer.toString());
-        for (String singleWord:words) {
-        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volNum", singleWord.toLowerCase())), BooleanClause.Occur.SHOULD));
-        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volLetExt", singleWord.toLowerCase())), BooleanClause.Occur.SHOULD));
-        }
-
-        // We execute search
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, Volume.class );
-		
-		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
-			page.setTotal(new Long(fullTextQuery.getResultSize()));
-		}
-
-		// We set pagination  
-		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-		fullTextQuery.setMaxResults(paginationFilter.getLength());
-		
-		// We manage sorting (this manages sorting on multiple fields)
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		if (sortingCriterias.size() > 0) {
-			SortField[] sortFields = new SortField[sortingCriterias.size()];
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+		try {
+			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "summaryId", fullTextSession.getSearchFactory().getAnalyzer("volumeAnalyzer"));
+	
+			// We convert AdvancedSearchContainer to luceneQuery
+			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
+	
+			// We execute search
+			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Volume.class );
+	
+			// We set size of result.
+			if (paginationFilter.getTotal() == null) {
+				page.setTotal(new Long(fullTextQuery.getResultSize()));
 			}
-			fullTextQuery.setSort(new Sort(sortFields));
+	
+			// We set pagination  
+			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+			fullTextQuery.setMaxResults(paginationFilter.getLength());
+	
+			// We manage sorting (this manages sorting on multiple fields)
+			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+			if (sortingCriterias.size() > 0) {
+				SortField[] sortFields = new SortField[sortingCriterias.size()];
+				for (int i=0; i<sortingCriterias.size(); i++) {
+					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+				}
+				fullTextQuery.setSort(new Sort(sortFields));
+			}
+			
+			// We set search result on return method
+			page.setList(fullTextQuery.list());
+		} catch (ParseException parseException) {
+			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
 		}
-		
-		page.setList(fullTextQuery.list());
 		
 		return page;
 	}

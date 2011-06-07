@@ -107,6 +107,7 @@ public class SimpleSearchVolume implements SimpleSearch {
 		};
 		String[] numericFields = new String[]{
 			"summaryId",
+			"volNum",
 			"startYear",
 			"startMonthNum.monthName", 
 			"startDay",

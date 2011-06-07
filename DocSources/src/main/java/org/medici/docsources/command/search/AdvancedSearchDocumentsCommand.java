@@ -36,60 +36,60 @@ import java.util.List;
  *
  */
 public class AdvancedSearchDocumentsCommand {
-	private List<String> words;
-	private List<String> volumes;
-	private List<String> datesType;
+	private List<String> word;
+	private List<String> volume;
+	private List<String> date;
 	private List<String> extract;
 	private List<String> synopsis;
-	private List<String> topics;
+	private List<String> topic;
 	private List<String> person;
-	private List<String> places;
-	private List<String> senders;
+	private List<String> place;
+	private List<String> sender;
 	private List<String> from;
-	private List<String> recipients;
+	private List<String> recipient;
 	private List<String> to;
 	private List<String> resTo;
 	
 	/**
-	 * @return the words
+	 * @return the word
 	 */
-	public List<String> getWords() {
-		return words;
+	public List<String> getWord() {
+		return word;
 	}
 	
 	/**
-	 * @param words the words to set
+	 * @param word the word to set
 	 */
-	public void setWords(List<String> words) {
-		this.words = words;
+	public void setWord(List<String> word) {
+		this.word = word;
 	}
 	
 	/**
-	 * @return the volumes
+	 * @return the volume
 	 */
-	public List<String> getVolumes() {
-		return volumes;
+	public List<String> getVolume() {
+		return volume;
 	}
 	
 	/**
-	 * @param volumes the volumes to set
+	 * @param volume the volume to set
 	 */
-	public void setVolumes(List<String> volumes) {
-		this.volumes = volumes;
+	public void setVolume(List<String> volume) {
+		this.volume = volume;
 	}
 	
 	/**
-	 * @return the datesType
+	 * @return the date
 	 */
-	public List<String> getDatesType() {
-		return datesType;
+	public List<String> getDate() {
+		return date;
 	}
 	
 	/**
-	 * @param datesType the datesType to set
+	 * @param dateType the datesType to set
 	 */
-	public void setDatesType(List<String> datesType) {
-		this.datesType = datesType;
+	public void setDate(List<String> date) {
+		this.date = date;
 	}
 	
 	/**
@@ -123,15 +123,15 @@ public class AdvancedSearchDocumentsCommand {
 	/**
 	 * @return the topics
 	 */
-	public List<String> getTopics() {
-		return topics;
+	public List<String> getTopic() {
+		return topic;
 	}
 	
 	/**
 	 * @param topics the topics to set
 	 */
-	public void setTopics(List<String> topics) {
-		this.topics = topics;
+	public void setTopic(List<String> topic) {
+		this.topic = topic;
 	}
 	
 	/**
@@ -149,31 +149,31 @@ public class AdvancedSearchDocumentsCommand {
 	}
 	
 	/**
-	 * @return the places
+	 * @return the place
 	 */
-	public List<String> getPlaces() {
-		return places;
+	public List<String> getPlace() {
+		return place;
 	}
 	
 	/**
-	 * @param places the places to set
+	 * @param place the place to set
 	 */
-	public void setPlaces(List<String> places) {
-		this.places = places;
+	public void setPlace(List<String> place) {
+		this.place = place;
 	}
 	
 	/**
-	 * @return the senders
+	 * @return the sender
 	 */
-	public List<String> getSenders() {
-		return senders;
+	public List<String> getSender() {
+		return sender;
 	}
 	
 	/**
-	 * @param senders the senders to set
+	 * @param sender the sender to set
 	 */
-	public void setSender(List<String> senders) {
-		this.senders = senders;
+	public void setSender(List<String> sender) {
+		this.sender = sender;
 	}
 	
 	/**
@@ -191,17 +191,17 @@ public class AdvancedSearchDocumentsCommand {
 	}
 	
 	/**
-	 * @return the recipients
+	 * @return the recipient
 	 */
-	public List<String> getRecipients() {
-		return recipients;
+	public List<String> getRecipient() {
+		return recipient;
 	}
 	
 	/**
-	 * @param recipients the recipients to set
+	 * @param recipient the recipient to set
 	 */
-	public void setRecipients(List<String> recipients) {
-		this.recipients = recipients;
+	public void setRecipient(List<String> recipient) {
+		this.recipient = recipient;
 	}
 	
 	/**
