@@ -31,7 +31,7 @@ import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Document;
@@ -51,7 +51,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page advancedSearchDocuments(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	public Page advancedSearchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * This method searches a single document identified by his volume.
@@ -70,6 +70,14 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Document findLastEntryDocument() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param text
+	 * @param paginationFilter
+	 * @return
+	 */
+	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 

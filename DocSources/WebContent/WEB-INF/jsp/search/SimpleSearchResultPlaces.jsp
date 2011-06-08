@@ -11,7 +11,7 @@
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
 
 	<script type="text/javascript" charset="utf-8">
-		TableToolsInit.sSwfPath = "${zeroClipboard}";
+		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
 			$j('#resultPlace${searchNumber}').dataTable( {

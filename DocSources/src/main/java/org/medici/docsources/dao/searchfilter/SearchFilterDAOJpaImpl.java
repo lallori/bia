@@ -1,5 +1,5 @@
 /*
- * AdvancedSearchFilterDAOJpaImpl.java
+ * SearchFilterDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,21 +25,24 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.advancedsearchfilter;
+package org.medici.docsources.dao.searchfilter;
 
+import javax.persistence.PersistenceException;
+
+import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.AdvancedSearchFilter;
+import org.medici.docsources.domain.SearchFilter;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>ActivationUserDAOJpaImpl</b> is a default implementation of <b>AdvancedSearchFilterDAO</b>.
+ * <b>ActivationUserDAOJpaImpl</b> is a default implementation of <b>SearchFilterDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.ActivationUser
  */
 @Repository
-public class AdvancedSearchFilterDAOJpaImpl extends JpaDao<String, AdvancedSearchFilter> implements AdvancedSearchFilterDAO {
+public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> implements SearchFilterDAO {
 
 	/**
 	 * 
@@ -60,5 +63,15 @@ public class AdvancedSearchFilterDAOJpaImpl extends JpaDao<String, AdvancedSearc
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 617902723399766439L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findUserSearchFilters(String username) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

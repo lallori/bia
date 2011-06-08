@@ -33,8 +33,7 @@ import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.SimpleSearch;
+import org.medici.docsources.common.search.Search;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.People;
 
@@ -44,15 +43,6 @@ import org.medici.docsources.domain.People;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface PeopleDAO extends Dao<Integer, People> {
-
-	/**
-	 * 
-	 * @param advancedSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page advancedSearchPeople(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.People} 
@@ -97,7 +87,6 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 */
 	public List<People> searchMotherLinkableToPerson(String query) throws PersistenceException;
 	
-
 	/**
 	 * 
 	 * @param searchText
@@ -106,6 +95,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public Page searchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
@@ -132,12 +130,4 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 */
 	public List<People> searchSendersPeople(String searchText) throws PersistenceException;
 
-	/**
-	 * 
-	 * @param simpleSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page simpleSearchPeople(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 }

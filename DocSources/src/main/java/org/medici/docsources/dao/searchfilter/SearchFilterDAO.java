@@ -1,5 +1,5 @@
 /*
- * AdvancedSearchFilterDAO.java
+ * SearchFilterDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,16 +25,21 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.advancedsearchfilter;
+package org.medici.docsources.dao.searchfilter;
 
 
+import javax.persistence.PersistenceException;
+
+import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.dao.Dao;
-import org.medici.docsources.domain.AdvancedSearchFilter;
+import org.medici.docsources.domain.SearchFilter;
 
 /**
- * Advanced Search Filter Dao.
+ * Search Filter DAO.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public interface AdvancedSearchFilterDAO extends Dao<String, AdvancedSearchFilter> {
+public interface SearchFilterDAO extends Dao<String, SearchFilter> {
+
+	public Page findUserSearchFilters(String username) throws PersistenceException;
 }

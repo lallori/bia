@@ -28,9 +28,8 @@
 package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.medici.docsources.common.util.RegExUtils;
-import org.medici.docsources.common.util.VolumeUtils;
+import org.medici.docsources.common.util.SimpleSearchUtils;
 
 /**
  * 
@@ -96,7 +95,7 @@ public class SimpleSearchDocument implements SimpleSearch {
 			return "";
 		}
 
-		String[] stringFields = new String[]{			
+		String[] stringFields = new String[]{
 			"volume.serieList.title",
 			"volume.serieList.subTitle1",
 			"volume.serieList.subTitle2 ",
@@ -108,74 +107,49 @@ public class SimpleSearchDocument implements SimpleSearch {
 			"recipientPeople.poLink.titleOccList.titleOcc",
 			"recipientPeople.altName.altName",
 			"recipientPlace.placeNameFull",
+			"epLink.person.mapNameLf",
+			"epLink.person.altName.altName",
 			"synExtract.docExtract",
 			"synExtract.synopsis",
 			"factChecks.addLRes",
 			"eplToLink.place.placeNameFull"
 		};
+		
 		String[] numericFields = new String[]{
 			"entryId",
+			"folioNum"
+		};
+		
+		String[] yearFields = new String[]{
 			"docYear",
-			"docMonthNum.monthNum",
-			"docDay",
+		};
+
+		String[] monthFields = new String[]{
+			"docMonthNum.monthNum"
+		};
+		
+		String[] dayFields = new String[]{
+			"docDay"
+		};
+
+		String[] volumeFields = new String[]{
+			"volume"
 		};
 
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-
+		
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
 		StringBuffer stringBuffer = new StringBuffer();
-
-		// We add conditions on string fields
-		for (int i=0; i<stringFields.length; i++) {
-			// volume.serieList.title
-			stringBuffer.append("(");
-			stringBuffer.append(stringFields[i]);
-			stringBuffer.append(": (");
-			for (int j=0; j<words.length; j++) {
-				stringBuffer.append("+");
-				stringBuffer.append( words[j]);
-				stringBuffer.append(" ");
-			}
-			stringBuffer.append(")) ");
-		}
-
-		// We add conditions on numeric fields only for input word which are numbers
-		for (int i=0; i<words.length; i++) {
-			if (!NumberUtils.isNumber(words[i])) {
-				continue;
-			}
-			for (int j=0; j<numericFields.length; j++) {
-				stringBuffer.append("(");
-				stringBuffer.append(numericFields[j]);
-				stringBuffer.append(": ");
-				stringBuffer.append(words[i]);
-				stringBuffer.append(") ");
-			}
-		}
-
-		// We add conditions on volume 
-		for (int i=0; i<words.length; i++) {
-			// if word is not in volume format we skip
-			if (!VolumeUtils.isVolumeFormat(words[i])) {
-				continue;
-			}
-			// if word contains volLetExt we manage with a specific condition
-			if (StringUtils.isAlphanumeric(words[i])) {
-				stringBuffer.append("(volume.volNum:");
-				stringBuffer.append(VolumeUtils.extractVolNum(words[i]));
-				stringBuffer.append(") ");
-			} else {
-				stringBuffer.append("(+(volume.volNum:");
-				stringBuffer.append(VolumeUtils.extractVolNum(words[i]));
-				stringBuffer.append(") +(volume.volLetExt:");
-				stringBuffer.append(VolumeUtils.extractVolLetExt(words[i]));
-				stringBuffer.append("))");
-			}
-		}
+		stringBuffer.append(SimpleSearchUtils.constructConditionOnStringFields(stringFields, words));
+		stringBuffer.append(SimpleSearchUtils.constructConditionOnNumericFields(numericFields, words));
+		stringBuffer.append(SimpleSearchUtils.constructConditionOnYearFields(yearFields, words));
+		stringBuffer.append(SimpleSearchUtils.constructConditionOnMonthFields(monthFields, words));
+		stringBuffer.append(SimpleSearchUtils.constructConditionOnDayFields(dayFields, words));
+		stringBuffer.append(SimpleSearchUtils.constructConditionOnVolumeFields(volumeFields, words));
 		
 		return stringBuffer.toString();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

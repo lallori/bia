@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/MainContent.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/Template.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css"/>" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
 <!-- 
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/MainContent.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/Template.css" />" />
@@ -26,8 +27,10 @@
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.advancedSearch.js"/>"></script>
-		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
+		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.general.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.person.js"/>"></script>
+		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.place.js"/>"></script>
+		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.title.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.open.js"/>"></script>
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>

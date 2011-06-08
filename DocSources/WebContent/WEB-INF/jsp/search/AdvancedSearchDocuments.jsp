@@ -120,10 +120,10 @@
 		<form id="senderSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Search documents sent FROM Person/Organization.">?</a>
 			<label for="sender" id="senderLabel">Sender</label> 
-			<input type="text" id="senderAutoCompleter" class="input_25c"/><!-- AUTOCOMPLETE -->
+			<input type="text" id="sender" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Sender">
-			<input type="hidden" id="sender" value=""/>
+			<input type="hidden" id="senderId" value=""/>
 		</form>
 		
 		<form id="fromSearchForm" method="post" class="edit">
@@ -132,6 +132,7 @@
 			<input type="text" id="from" name="from" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Sender">
+			<input type="hidden" id="fromId" value=""/>
 		</form>
 		
 		<form id="recipientSearchForm" method="post" class="edit">
@@ -140,6 +141,7 @@
 			<input type="text" id="recipient" name="recipient" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Recipient">
+			<input type="hidden" id="recipientId" value=""/>
 		</form>
 		
 		<form id="toSearchForm" method="post" class="edit">
@@ -148,6 +150,7 @@
 			<input type="text" id="to" name="to" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="To">
+			<input type="hidden" id="toId" value=""/>
 		</form>
 		
 		<form id="refersToSearchForm" method="post" class="edit">
@@ -156,11 +159,14 @@
 			<input type="text" id="refersTo" name="refersTo" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Referers To">
+			<input type="hidden" id="refersToId" value""/>
 		</form>
 	</div>
 </div>
 
-	<c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json"/>
+	<c:url var="searchTopicURL" value="/src/SearchTopic.json"/>
+	<c:url var="searchPersonURL" value="/src/SearchPerson.json"/>
+	<c:url var="searchPlaceURL" value="/src/SearchPlace.json"/>
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -179,9 +185,21 @@
 			$j("#refersToSearchForm").advancedSearchForm();
 
 			$j('#multiOpenAccordion').multiAccordion({active: [0]});
-
-			$j("#senderSearchAutoCompleter").autocompletePerson({
-				serviceUrl: '${searchSenderPeopleURL}',
+			$j("#topic").autocompleteGeneral({
+				serviceUrl: '${searchTopicURL}',
+				minChars: 1,
+				delimiter: null,
+				maxHeight: 400,
+				width: 200,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#topicId').val(data);
+				}
+			});	
+			$j("#person").autocompletePerson({
+				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
@@ -190,45 +208,87 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-					$j('#senderPeopleId').val(data);
+					$j('#personId').val(data);
 				}
 			});	
-			
-			$j("#AddWordSearch").click(function(){
-				var searchElement = "<div class=\"searchFilterDiv\">" +
-				"<span class=\"categorySearch\">Word Search</span>" +
-				"in " +
-				"<span class=\"categorySearch\">" + $j("#wordSearchIn").val()+ "</span>" +
-				"<span class=\"wordSearch\">" + $j("#wordSearch").val() + "</span>" +
-				"<a class=\"remove\" href=\"#\">(remove)</a>" +
-				"</div>" +
-				"<p class=\"andOrNotAdvancedSearch\">And</p>";
-
-				if ($j("#wordSearchDiv").length ==0) {
-					$j("#customSearchFilterForm").append("<div id=\"wordSearchDiv\">" +
-					"				<hr>" +
-					"</div>" +
-					"	<div class=\"andOrNotAdvancedSearchDiv\"> " +
-					"		<select class=\"selectform_medium\" name=\"andOrNotAdvancedSearch\" id=\"andOrNotAdvancedSearch\"> " +
-					"			<option selected=\"selected\" value=\"And\">And</option> " +
-					"			<option value=\"Or\">Or</option> " +
-					"			<option value=\"Not\">Not</option> " +
-					"		</select> " +
-					"	</div> " +
-					"	<hr>"
-					);
-				} 
-
-				if ($j("#wordSearchDiv").children(".searchFilterDiv").length == 0) {
-					$j("#wordSearchDiv").prepend(searchElement);
-				} else {
-					$j("#wordSearchDiv hr:last").before(searchElement);
+			$j("#placeSearch").autocompletePlace({
+				serviceUrl: '${searchPlaceURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 600,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#placeId').val(data);
 				}
-				return false;
-			});
-				
-			
-					
+			});	
+			$j("#sender").autocompletePerson({
+				serviceUrl: '${searchPersonURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 600,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#senderId').val(data);
+				}
+			});	
+			$j("#from").autocompletePlace({
+				serviceUrl: '${searchPlaceURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 600,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#fromId').val(data);
+				}
+			});	
+			$j("#recipient").autocompletePerson({
+				serviceUrl: '${searchPersonURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 600,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#recipientId').val(data);
+				}
+			});	
+			$j("#to").autocompletePlace({
+				serviceUrl: '${searchPlaceURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 600,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#toId').val(data);
+				}
+			});	
+			$j("refersTo").autocompletePerson({
+				serviceUrl: '${searchReferersToURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 600,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#referesToId').val(data);
+				}
+			});		
 		});
 
 	</script>

@@ -178,7 +178,7 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
 	/**
 	 * @param docBaseService the docBaseService to set
 	 */

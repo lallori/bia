@@ -29,13 +29,7 @@ package org.medici.docsources.service.docbase;
 
 import java.util.List;
 
-import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.DocumentExplorer;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.AdvancedSearchDocument;
-import org.medici.docsources.common.search.SimpleSearch;
-import org.medici.docsources.domain.AdvancedSearchFilter;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
@@ -65,15 +59,6 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * 
  */
 public interface DocBaseService {
-
-	/**
-	 * 
-	 * @param name
-	 * @param advancedSearchDocument
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public AdvancedSearchFilter addNewAdvancedSearchFilter(String name, AdvancedSearchDocument advancedSearchDocument) throws ApplicationThrowable;
 
 	/**
 	 * Adds a new {@link org.medici.docsources.domain.Document} entry.
@@ -126,15 +111,6 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param advancedSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public Page advancedSearchDocuments(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -451,16 +427,6 @@ public interface DocBaseService {
 
 	/**
 	 * 
-	 * @param text
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
-	 * 
 	 * @param entryId
 	 * @param query
 	 * @return
@@ -488,14 +454,4 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param simpleSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public Page simpleSearchDocuments(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

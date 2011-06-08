@@ -1,5 +1,5 @@
 /*
- * SimpleSearchPlace.java
+ * SimpleSearchVolume.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -21,8 +21,7 @@
  *
  * As a special exception, if you link this library with other files to
  * produce an executable, this library does not by itself cause the
- * resulting executa
- * ble to be covered by the GNU General Public License.
+ * resulting executable to be covered by the GNU General Public License.
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
@@ -37,7 +36,7 @@ import org.medici.docsources.common.util.SimpleSearchUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class SimpleSearchPlace implements SimpleSearch {
+public class SimpleSearchTopic implements SimpleSearch {
 	/**
 	 * 
 	 */
@@ -48,7 +47,7 @@ public class SimpleSearchPlace implements SimpleSearch {
 	/**
 	 * 
 	 */
-	public SimpleSearchPlace() {
+	public SimpleSearchTopic() {
 		super();
 	}
 
@@ -56,9 +55,8 @@ public class SimpleSearchPlace implements SimpleSearch {
 	 * 
 	 * @param text
 	 */
-	public SimpleSearchPlace(String text) {
+	public SimpleSearchTopic(String text) {
 		super();
-		
 		if (!StringUtils.isEmpty(text)) {
 			setAlias(text.toLowerCase());
 		}
@@ -96,34 +94,17 @@ public class SimpleSearchPlace implements SimpleSearch {
 		if (StringUtils.isEmpty(alias)) {
 			return "";
 		}
-		String[] stringFields = new String[]{			
-			"placeNameFull",
-			"termAccent",
-			"plType",
-			"geogKey"
-		};
-			
-		String[] numericFields = new String[]{
-		};
-			
-		String[] yearFields = new String[]{
-		};
 
-		String[] monthFields = new String[]{
-		};
-			
-		String[] dayFields = new String[]{
+		String[] stringFields = new String[]{			
+			"description",
+			"title"
 		};
 
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-			
+		
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(SimpleSearchUtils.constructConditionOnStringFields(stringFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnNumericFields(numericFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnYearFields(yearFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnMonthFields(monthFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnDayFields(dayFields, words));
 
 		return stringBuffer.toString();
 	}

@@ -32,6 +32,7 @@ import javax.persistence.PersistenceException;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Volume;
@@ -80,6 +81,15 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param simpleSearchContainer

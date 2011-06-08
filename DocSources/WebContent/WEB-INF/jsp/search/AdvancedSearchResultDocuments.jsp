@@ -8,11 +8,7 @@
 		<c:param name="searchType" value="documents" />
 	</c:url>
 
-	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
-
 	<script type="text/javascript" charset="utf-8">
-		//TableToolsInit.sSwfPath = "${zeroClipboard}";
-
 		$j(document).ready(function() {
 			$j('#resultDocument${searchNumber}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 

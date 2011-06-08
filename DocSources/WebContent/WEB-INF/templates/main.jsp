@@ -18,7 +18,7 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/pirobox.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
-		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/TableTools.css"/>" />
+<!-- 	<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/TableTools.css"/>" />  -->
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui-1.8.10.custom.css"/>" />
 <!-- 
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
@@ -73,8 +73,8 @@
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/effects.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/modalbox.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script>
+		<!-- <script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script> -->
 
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();

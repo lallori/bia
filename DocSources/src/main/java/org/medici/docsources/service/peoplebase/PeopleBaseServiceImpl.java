@@ -31,10 +31,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
@@ -299,18 +295,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			getPoLinkDAO().persist(poLinkToCreate);
 
 			return poLinkToCreate.getPerson();
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page advancedSearchPeople(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getPeopleDAO().advancedSearchPeople(advancedSearchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1002,18 +986,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchPeople(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getPeopleDAO().searchPeople(text, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable {
 		try {
 			return getPeopleDAO().searchRecipientsPeople(query);
@@ -1128,17 +1100,5 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setTitleOccsListDAO(TitleOccsListDAO titleOccsListDAO) {
 		this.titleOccsListDAO = titleOccsListDAO;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page simpleSearchPeople(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getPeopleDAO().simpleSearchPeople(simpleSearchContainer, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
 	}
 }

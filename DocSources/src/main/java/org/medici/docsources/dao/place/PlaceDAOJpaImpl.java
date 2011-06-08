@@ -36,22 +36,19 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.transform.Transformers;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Document;
@@ -99,7 +96,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		String luceneQuery = advancedSearchContainer.toLuceneQueryString();
 
 		// We obtain hibernate-search session
-		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
 		try {
 			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "placeAllId", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
@@ -158,7 +155,37 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
 		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
-		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+
+        try  {
+        	String searchTextWithWildCard = searchText.toLowerCase() + "*";
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchTextWithWildCard);
+
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Place> searchPlaces(String searchText) throws PersistenceException {
+		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
 
@@ -188,7 +215,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
 		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
-		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
 
@@ -218,7 +245,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
 		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
-		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
         QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
 
@@ -250,7 +277,54 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		String luceneQuery = simpleSearchContainer.toLuceneQueryString();
 
 		// We obtain hibernate-search session
-		FullTextSession fullTextSession = Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+		try {
+			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "placeAllId", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+	
+			// We convert AdvancedSearchContainer to luceneQuery
+			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
+	
+			// We execute search
+			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Place.class );
+	
+			// We set size of result.
+			if (paginationFilter.getTotal() == null) {
+				page.setTotal(new Long(fullTextQuery.getResultSize()));
+			}
+	
+			// We set pagination  
+			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+			fullTextQuery.setMaxResults(paginationFilter.getLength());
+	
+			// We manage sorting (this manages sorting on multiple fields)
+			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+			if (sortingCriterias.size() > 0) {
+				SortField[] sortFields = new SortField[sortingCriterias.size()];
+				for (int i=0; i<sortingCriterias.size(); i++) {
+					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+				}
+				fullTextQuery.setSort(new Sort(sortFields));
+			}
+			
+			// We set search result on return method
+			page.setList(fullTextQuery.list());
+		} catch (ParseException parseException) {
+			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
+		}
+		
+		return page;
+	}
+
+	@Override
+	public Page searchPlaces(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		String luceneQuery = searchContainer.toLuceneQueryString();
+
+		// We obtain hibernate-search session
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
 		try {
 			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "placeAllId", fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));

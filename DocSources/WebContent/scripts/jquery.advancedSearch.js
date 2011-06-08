@@ -1,5 +1,5 @@
 /**
-*  Share Button graphic effect for jQuery, version 1.0
+*  Advanced Search plugin for jQuery, version 1.0
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -74,7 +74,7 @@
             		hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
     			} else {
     				searchWord = $('#' + formName).find('#' + fieldName).val();    				
-    				hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
+    				hiddenValue = $(this).find("option:selected").val() + "|" + searchWord;
     			}
     		} else {
     			searchWord = $('#' + formName).find('#' + fieldName).val();

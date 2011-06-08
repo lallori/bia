@@ -1,5 +1,5 @@
 /*
- * AdvancedSearchFilter.java
+ * SearchFilter.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -44,14 +44,14 @@ import javax.persistence.TemporalType;
 import org.medici.docsources.common.search.AdvancedSearch;
 
 /**
- * AdvancedSearchFilter entity.
+ * SearchFilter entity.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 @Entity
 @Table ( name = "\"tblAdvancedSearchFilter\"" ) 
-public class AdvancedSearchFilter implements Serializable {
+public class SearchFilter implements Serializable {
 	/**
 	 * 
 	 */
@@ -67,7 +67,7 @@ public class AdvancedSearchFilter implements Serializable {
 
 	@Column (name="\"filterType\"", length=1)
 	@Enumerated(EnumType.STRING)
-	private AdvancedSearchFilterType filterType;
+	private SearchFilterType searchFilterType;
 	
 	@Column (name="\"filterName\"", length=50, nullable=false)
 	private String filterName;
@@ -84,18 +84,18 @@ public class AdvancedSearchFilter implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateUpdated;
 
-	public AdvancedSearchFilter() {
+	public SearchFilter() {
 		super();
 	}
 	
 	/**
 	 * 
-	 * @param document
+	 * @param searchFilterType
 	 */
-	public AdvancedSearchFilter(AdvancedSearchFilterType filterType) {
+	public SearchFilter(SearchFilterType searchFilterType) {
 		super();
 		
-		setFilterType(filterType);
+		setSearchFilterType(searchFilterType);
 	}
 
 	/**
@@ -127,17 +127,17 @@ public class AdvancedSearchFilter implements Serializable {
 	}
 
 	/**
-	 * @param filterType the filterType to set
+	 * @param searchFilterType the searchFilterType to set
 	 */
-	public void setFilterType(AdvancedSearchFilterType filterType) {
-		this.filterType = filterType;
+	public void setSearchFilterType(SearchFilterType searchFilterType) {
+		this.searchFilterType = searchFilterType;
 	}
 
 	/**
-	 * @return the filterType
+	 * @return the searchFilterType
 	 */
-	public AdvancedSearchFilterType getFilterType() {
-		return filterType;
+	public SearchFilterType getSearchFilterType() {
+		return searchFilterType;
 	}
 
 	/**
@@ -201,18 +201,18 @@ public class AdvancedSearchFilter implements Serializable {
 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
 	 *
 	 */
-	public static enum AdvancedSearchFilterType {
+	public static enum SearchFilterType {
 		VOLUME("VOLUME"), DOCUMENT("DOCUMENT"), PEOPLE("PEOPLE"), PLACE("PLACE");
 		
-		private final String advancedSearchFilterType;
+		private final String searchFilterType;
 
-	    private AdvancedSearchFilterType(String value) {
-	    	advancedSearchFilterType = value;
+	    private SearchFilterType(String value) {
+	    	searchFilterType = value;
 	    }
 
 	    @Override
 	    public String toString(){
-	        return advancedSearchFilterType;
+	        return searchFilterType;
 	    }
 	}
 }

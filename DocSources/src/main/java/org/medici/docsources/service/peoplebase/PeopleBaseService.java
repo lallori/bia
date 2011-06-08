@@ -29,10 +29,6 @@ package org.medici.docsources.service.peoplebase;
 
 import java.util.List;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
@@ -114,15 +110,6 @@ public interface PeopleBaseService {
 	 */
 	public People addNewTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable;
 
-	/**
-	 * 
-	 * @param advancedSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public Page advancedSearchPeople(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
 	/**
 	 * 
 	 * @param child
@@ -397,15 +384,6 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
-	 * @param text
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Page searchPeople(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
-	 * 
 	 * @param query
 	 * @return
 	 * @throws ApplicationThrowable
@@ -427,13 +405,4 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<TitleOccsList> searchTitleOrOccupation(String query) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param simpleSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Page simpleSearchPeople(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

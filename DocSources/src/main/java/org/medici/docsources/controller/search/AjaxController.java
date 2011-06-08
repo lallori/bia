@@ -46,16 +46,15 @@ import org.medici.docsources.common.search.AdvancedSearchVolume;
 import org.medici.docsources.common.search.SimpleSearchDocument;
 import org.medici.docsources.common.search.SimpleSearchPeople;
 import org.medici.docsources.common.search.SimpleSearchPlace;
+import org.medici.docsources.common.search.SimpleSearchTopic;
 import org.medici.docsources.common.search.SimpleSearchVolume;
+import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
-import org.medici.docsources.service.geobase.GeoBaseService;
-import org.medici.docsources.service.peoplebase.PeopleBaseService;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.docsources.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,16 +70,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller("SearchAjaxController")
 public class AjaxController {
 	@Autowired
-	private DocBaseService docBaseService;
-
-	@Autowired
-	private GeoBaseService geoBaseService;
-
-	@Autowired
-	private PeopleBaseService peopleBaseService;
-
-	@Autowired
-	private VolBaseService volBaseService;
+	private SearchService searchService;
 
 	/**
 	 * 
@@ -95,7 +85,7 @@ public class AjaxController {
 		AdvancedSearchDocument advancedSearchDocument = (AdvancedSearchDocument) httpSession.getAttribute("advancedSearchDocument" + searchNumber);
 		
 		try {
-			page = getDocBaseService().advancedSearchDocuments(advancedSearchDocument, paginationFilter);
+			page = getSearchService().searchDocuments(advancedSearchDocument, paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -174,6 +164,105 @@ public class AjaxController {
 		}
 
 		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @param httpSession
+	 * @param paginationFilter
+	 * @param searchNumber
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void advancedSearchPeople(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
+		Page page = null;
+		AdvancedSearchPeople advancedSearchPeople = (AdvancedSearchPeople) httpSession.getAttribute("advancedSearchPeople" + searchNumber);
+		
+		try {
+			page = getSearchService().searchPeople(advancedSearchPeople, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (People currentPerson : (List<People>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentPerson.getMapNameLf());
+			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
+			singleRow.add(currentPerson.getBornDate());
+			singleRow.add(currentPerson.getDeathDate());
+			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
+		}
+		model.put("iEcho", "" + 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @param httpSession
+	 * @param paginationFilter
+	 * @param searchNumber
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void advancedSearchPlaces(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
+		Page page = null;
+		AdvancedSearchPlace advancedSearchPlace = (AdvancedSearchPlace) httpSession.getAttribute("advancedSearchPlace" + searchNumber);
+
+		try {
+			page = getSearchService().searchPlaces(advancedSearchPlace, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (Place currentPlace : (List<Place>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentPlace.getPlaceNameFull());
+			singleRow.add(currentPlace.getPlType());
+			singleRow.add(currentPlace.getParentPlace().getPlaceName());
+			singleRow.add(currentPlace.getParentType());
+
+			resultList.add(HtmlUtils.showPlace(singleRow, currentPlace.getPlaceAllId()));
+		}
+		
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @param httpSession
+	 * @param paginationFilter
+	 * @param searchNumber
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void advancedSearchVolumes(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
+		Page page = null;
+		AdvancedSearchVolume advancedSearchVolume = (AdvancedSearchVolume) httpSession.getAttribute("advancedSearchVolume" + searchNumber);
+
+		try {
+			page = getSearchService().searchVolumes(advancedSearchVolume, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (Volume currentVolume : (List<Volume>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentVolume.getSerieList().toString());
+			singleRow.add(currentVolume.getMDP());
+			singleRow.add(currentVolume.getStartDate());
+			singleRow.add(currentVolume.getEndDate());
+
+			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
+		}
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
 	}
 
 	/**
@@ -315,192 +404,97 @@ public class AjaxController {
 	}
 
 	/**
-	 * 
-	 * @param model
-	 * @param httpSession
-	 * @param paginationFilter
-	 * @param searchNumber
+	 * @return the searchService
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void advancedSearchPeople(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
-		Page page = null;
-		AdvancedSearchPeople advancedSearchPeople = (AdvancedSearchPeople) httpSession.getAttribute("advancedSearchPeople" + searchNumber);
-		
-		try {
-			page = getPeopleBaseService().advancedSearchPeople(advancedSearchPeople, paginationFilter);
-		} catch (ApplicationThrowable aex) {
-		}
-
-		List resultList = new ArrayList();
-		for (People currentPerson : (List<People>)page.getList()) {
-			List singleRow = new ArrayList();
-			singleRow.add(currentPerson.getMapNameLf());
-			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
-			singleRow.add(currentPerson.getBornDate());
-			singleRow.add(currentPerson.getDeathDate());
-			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
-		}
-		model.put("iEcho", "" + 1);
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
+	public SearchService getSearchService() {
+		return searchService;
 	}
 
 	/**
-	 * 
-	 * @param model
-	 * @param httpSession
-	 * @param paginationFilter
-	 * @param searchNumber
+	 * This method returns a list of person. It's used in autocompleter of advanced search. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing senders.
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void advancedSearchPlaces(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
-		Page page = null;
-		AdvancedSearchPlace advancedSearchPlace = (AdvancedSearchPlace) httpSession.getAttribute("advancedSearchPlace" + searchNumber);
-
-		try {
-			page = getGeoBaseService().advancedSearchPlaces(advancedSearchPlace, paginationFilter);
-		} catch (ApplicationThrowable aex) {
-		}
-
-		List resultList = new ArrayList();
-		for (Place currentPlace : (List<Place>)page.getList()) {
-			List singleRow = new ArrayList();
-			singleRow.add(currentPlace.getPlaceNameFull());
-			singleRow.add(currentPlace.getPlType());
-			singleRow.add(currentPlace.getParentPlace().getPlaceName());
-			singleRow.add(currentPlace.getParentType());
-
-			resultList.add(HtmlUtils.showPlace(singleRow, currentPlace.getPlaceAllId()));
-		}
-		
-		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
-	}
-
-	/**
-	 * 
-	 * @param model
-	 * @param httpSession
-	 * @param paginationFilter
-	 * @param searchNumber
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void advancedSearchVolumes(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
-		Page page = null;
-		AdvancedSearchVolume advancedSearchVolume = (AdvancedSearchVolume) httpSession.getAttribute("advancedSearchVolume" + searchNumber);
-
-		try {
-			page = getVolBaseService().advancedSearchVolumes(advancedSearchVolume, paginationFilter);
-		} catch (ApplicationThrowable aex) {
-		}
-
-		List resultList = new ArrayList();
-		for (Volume currentVolume : (List<Volume>)page.getList()) {
-			List singleRow = new ArrayList();
-			singleRow.add(currentVolume.getSerieList().toString());
-			singleRow.add(currentVolume.getMDP());
-			singleRow.add(currentVolume.getStartDate());
-			singleRow.add(currentVolume.getEndDate());
-
-			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
-		}
-		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
-	}
-
-	/**
-	 * @return the docBaseService
-	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
-
-	/**
-	 * @return the geoBaseService
-	 */
-	public GeoBaseService getGeoBaseService() {
-		return geoBaseService;
-	}
-
-	/**
-	 * @return the peopleBaseService
-	 */
-	public PeopleBaseService getPeopleBaseService() {
-		return peopleBaseService;
-	}
-
-	/**
-	 * @return the volBaseService
-	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
-	}
-
-	/**
-	 * @param docBaseService the docBaseService to set
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
-
-	/**
-	 * @param geoBaseService the geoBaseService to set
-	 */
-	public void setGeoBaseService(GeoBaseService geoBaseService) {
-		this.geoBaseService = geoBaseService;
-	}
-
-	/**
-	 * @param peopleBaseService the peopleBaseService to set
-	 */
-	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
-		this.peopleBaseService = peopleBaseService;
-	}
-
-	/**
-	 * @param volBaseService the volBaseService to set
-	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
-	}
-
-	/**
-	 * 
-	 * @param searchType
-	 * @param alias
-	 * @param sortingColumn
-	 * @param sortingDirection
-	 * @param firstRecord
-	 * @param length
-	 * @return
-	 */
-	@RequestMapping(value = "/src/SimpleSearchPagination.json", method = RequestMethod.GET)
-	public ModelAndView simpleSearchPagination(@RequestParam(value="searchType") String searchType, 
-								   		 @RequestParam(value="sSearch") String alias,
-								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	@RequestMapping(value = "/src/SearchPerson", method = RequestMethod.GET)
+	public ModelAndView searchPerson(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
+		try {
+			Page page = getSearchService().searchPeople(new SimpleSearchPeople(query), new PaginationFilter(0, Integer.MAX_VALUE));
+			model.put("query", query);
+			model.put("count", page.getTotal());
+			model.put("data", ListBeanUtils.transformList(page.getList(), "personId"));
+			model.put("suggestions", ListBeanUtils.transformList(page.getList(), "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(page.getList(), "activeStart"));
+			model.put("bornYears", ListBeanUtils.transformList(page.getList(), "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(page.getList(), "deathYear"));
 
-		if (searchType.toLowerCase().trim().equals("documents")) {
-			simpleSearchDocuments(model, alias, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("people")) {
-			simpleSearchPeople(model, alias, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("places")) {
-			simpleSearchPlaces(model, alias, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("volumes")) {
-			simpleSearchVolumes(model, alias, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
 		}
 
 		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * This method returns a list of places. It's used in autocompleter of advanced search. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing senders.
+	 */
+	@RequestMapping(value = "/src/SearchPlace", method = RequestMethod.GET)
+	public ModelAndView searchPlace(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Page page = getSearchService().searchPlaces(new SimpleSearchPlace(query), new PaginationFilter(0, Integer.MAX_VALUE));
+			model.put("query", query);
+			model.put("count", page.getTotal());
+			model.put("data", ListBeanUtils.transformList(page.getList(), "placeAllId"));
+			model.put("suggestions", ListBeanUtils.transformList(page.getList(), "placeNameFull"));
+			model.put("prefFlags", ListBeanUtils.transformList(page.getList(), "prefFlag"));
+			model.put("plTypes", ListBeanUtils.transformList(page.getList(), "plType"));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * This method returns a list of topics linkable to document. Result does not
+	 * contains topics already linked to document. 
+	 *  
+	 * @param entryId Unique document identifier
+	 * @param query Search string filled by user
+	 * 
+	 * @return ModelAndView containing linkable topics.
+	 */
+	@RequestMapping(value = "/src/SearchTopic", method = RequestMethod.GET)
+	public ModelAndView searchTopic(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Page page = getSearchService().searchTopics(new SimpleSearchTopic(query), new PaginationFilter(0, Integer.MAX_VALUE));
+			model.put("query", query);
+			model.put("count", page.getTotal());
+			model.put("data", ListBeanUtils.transformList(page.getList(), "topicId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(page.getList(), "topicTitle", " ", " ", Boolean.TRUE));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * @param searchService the searchService to set
+	 */
+	public void setSearchService(SearchService searchService) {
+		this.searchService = searchService;
 	}
 
 	/**
@@ -515,7 +509,7 @@ public class AjaxController {
 		Page page = null;
 
 		try {
-			page = getDocBaseService().simpleSearchDocuments(new SimpleSearchDocument(searchText), paginationFilter);
+			page = getSearchService().searchDocuments(new SimpleSearchDocument(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -560,6 +554,40 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 	}
+
+	/**
+	 * 
+	 * @param searchType
+	 * @param alias
+	 * @param sortingColumn
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/src/SimpleSearchPagination.json", method = RequestMethod.GET)
+	public ModelAndView simpleSearchPagination(@RequestParam(value="searchType") String searchType, 
+								   		 @RequestParam(value="sSearch") String alias,
+								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
+
+		if (searchType.toLowerCase().trim().equals("documents")) {
+			simpleSearchDocuments(model, alias, paginationFilter);
+		} else if (searchType.toLowerCase().trim().equals("people")) {
+			simpleSearchPeople(model, alias, paginationFilter);
+		} else if (searchType.toLowerCase().trim().equals("places")) {
+			simpleSearchPlaces(model, alias, paginationFilter);
+		} else if (searchType.toLowerCase().trim().equals("volumes")) {
+			simpleSearchVolumes(model, alias, paginationFilter);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
 	
 	/**
 	 * This method performs a simple search on people dictionary.
@@ -574,7 +602,7 @@ public class AjaxController {
 		Page page = null;
 
 		try {
-			page = getPeopleBaseService().simpleSearchPeople(new SimpleSearchPeople(searchText), paginationFilter);
+			page = getSearchService().searchPeople(new SimpleSearchPeople(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -606,7 +634,7 @@ public class AjaxController {
 		Page page = null;
 
 		try {
-			page = getGeoBaseService().simpleSearchPlaces(new SimpleSearchPlace(searchText), paginationFilter);
+			page = getSearchService().searchPlaces(new SimpleSearchPlace(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -640,7 +668,7 @@ public class AjaxController {
 		Page page = null;
 
 		try {
-			page = getVolBaseService().simpleSearchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
+			page = getSearchService().searchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 

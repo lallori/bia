@@ -34,9 +34,6 @@ import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.SimpleSearch;
-import org.medici.docsources.common.search.SimpleSearchVolume;
 import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.dao.catalog.CatalogDAO;
@@ -142,17 +139,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page advancedSearchVolumes(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getVolumeDAO().advancedSearchVolumes(advancedSearchContainer, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -642,17 +628,5 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page simpleSearchVolumes(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getVolumeDAO().simpleSearchVolumes(simpleSearchContainer, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}	
 	}
 }

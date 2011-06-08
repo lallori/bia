@@ -145,7 +145,11 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	@Override
 	public List<Place> searchPlaces(String text) throws ApplicationThrowable {
-		return null;
+		try {
+			return getPlaceDAO().searchPlaces(text);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
