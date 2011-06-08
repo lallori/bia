@@ -109,7 +109,7 @@
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="General Place Search: search here for a document realated to place either if it is attached to a sender, a recipient and/or to a document topic.">?</a>
 			<label for="place" id="placeLabel">Place</label> 
-			<input type="text" id="placeSearch" name="placeSearch" class="input_25c" value=""/><!-- AUTOCOMPLETE -->
+			<input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Place">
 			<input type="hidden" id="placeId" value=""/>
@@ -131,7 +131,7 @@
 			<label for="from" id="fromLabel">From</label> 
 			<input type="text" id="from" name="from" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
-			<input type="hidden" id="category" value="Sender">
+			<input type="hidden" id="category" value="From">
 			<input type="hidden" id="fromId" value=""/>
 		</form>
 		
@@ -175,7 +175,7 @@
 			$j("#dateSearchForm").advancedSearchForm();
 			$j("#extractSearchForm").advancedSearchForm();
 			$j("#synopsisSearchForm").advancedSearchForm();
-			$j("#topicsSearchForm").advancedSearchForm();
+			$j("#topicSearchForm").advancedSearchForm();
 			$j("#personSearchForm").advancedSearchForm();
 			$j("#placeSearchForm").advancedSearchForm();
 			$j("#senderSearchForm").advancedSearchForm();
@@ -211,12 +211,12 @@
 					$j('#personId').val(data);
 				}
 			});	
-			$j("#placeSearch").autocompletePlace({
+			$j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
-				width: 600,
+				width: 450,
 				zIndex: 9999,
 				deferRequestBy: 0,
 				noCache: true,

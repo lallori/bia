@@ -14,7 +14,7 @@
 		<div id="dateSearchDiv"></div>
 		<div id="extractSearchDiv"></div>
 		<div id="synopsisSearchDiv"></div>
-		<div id="topicsSearchDiv"></div>
+		<div id="topicSearchDiv"></div>
 		<div id="personSearchDiv"></div>
 		<div id="placeSearchDiv"></div>
 		<div id="senderSearchDiv"></div>

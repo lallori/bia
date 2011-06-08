@@ -46,6 +46,8 @@
             // Extracting field on which this form works on.
             var fieldName = formName.substring(0, formName.indexOf('SearchForm'));
 
+            console.log("AdvancedSearchForm started. Form Name : " + formName);
+            console.log("Field Name : " + fieldName);
 
             var searchType = "";
         	if (formName.indexOf("date") >= 0) {
@@ -56,6 +58,7 @@
         			searchType += ' in ' + $('#' + formName).find('#' + fieldName + 'Type').find('option:selected').text();  
         		}
         	}
+            console.log("Search Type : " + formName);
 
         	var searchWord = "";
             var hiddenValue = "";
@@ -70,23 +73,25 @@
     	        	} else {
     	        	}
     			} else if ($(this).find("option:selected").text() == 'Exactly') {
-    				searchWord = $('#' + formName).find('#' + fieldName).val();    				
+    				searchWord = $('#' + formName).find('#' + fieldName).val();
             		hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
     			} else {
-    				searchWord = $('#' + formName).find('#' + fieldName).val();    				
+    				searchWord = $('#' + formName).find('#' + fieldName).val();
     				hiddenValue = $(this).find("option:selected").val() + "|" + searchWord;
     			}
     		} else {
     			searchWord = $('#' + formName).find('#' + fieldName).val();
-    			hiddenValue = searchWord;
+    			// If element has autocompleter, its hiddenValue is a concatenation of id + description
+    			if ($('#' + formName).find('#' + fieldName + 'Id').size() > 0) {
+    				console.log("Form has an autocompleter element")
+    				hiddenValue = $('#' + formName).find('#' + fieldName + 'Id').val() + "|" + searchWord;
+    			} else {
+    				hiddenValue = searchWord;
+    			}
     		}
 
-            console.log("resulting hiddenName : " + fieldName);
-            console.log("resulting hiddenValue : " + hiddenValue);
-            // we loop on every form fields and construct a resulting hidden field
-
-            console.log("resulting hiddenName : " + fieldName);
-            console.log("resulting hiddenValue : " + hiddenValue);
+            console.log("Search word : " + searchWord);
+            console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
 
             // We add html to right form :
             if ($("#searchFilterForm").find("#" + fieldName + "SearchDiv").length ==0) {
@@ -103,13 +108,15 @@
             $(searchFilterDiv).append('<a href="#" class="remove">(remove)</a>');
             $(searchFilterDiv).append('<input type="hidden" name="' + fieldName + '" value="' + hiddenValue + '"/>');
 
-            console.log($("#" + fieldName + "SearchDiv").find(".SearchFilterDiv").length);
             if ($("#" + fieldName + "SearchDiv").find(".SearchFilterDiv").length >0) {
             	$("#" + fieldName + "SearchDiv").find(".SearchFilterDiv").last().after('<p class="andOrNotAdvancedSearch">And</p>');
             }
 
             // We append new block at the end of "field" SearchDiv 
+            console.log("appending searchFilterDiv : " + searchFilterDiv);
             $("#" + fieldName + "SearchDiv").append(searchFilterDiv);
+
+            console.log("AdvancedSearchForm " + formName + " completed.");
             return false;
         });
 
