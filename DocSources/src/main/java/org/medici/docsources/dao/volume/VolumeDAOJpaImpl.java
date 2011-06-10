@@ -291,6 +291,9 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		return page;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
