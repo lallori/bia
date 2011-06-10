@@ -69,6 +69,37 @@ public class AjaxController {
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
 	}
+	/**
+	 * 
+	 * @param entryId Document identifier
+	 * @param volNum Volume Number
+	 * @param volLetExt Volume Letter Extension
+	 * @param imageType 
+	 * @param imageProgTypeNum
+	 * @param firstRecord This is input parameter for Carta Form
+	 * @param secondRecord This is input parameter for Rubricario Form
+	 * @param imageOrder Unique id identifier inside volume.
+	 * @param total Global total of volume.
+	 * @param totalRubricario Total count page in rubricario section.
+	 * @param totalCarta Total count page in carta section.
+	 * @param totalAppendix Total count page in appendix section.
+	 * @param totalOther
+	 * @param totalGuardia
+	 * @param modeEdit
+	 * @return
+	 */
+	@RequestMapping(value = {"/src/mview/GetImageAnnotation.json", "/de/mview/GetImageAnnotation.json"}, method = RequestMethod.GET)
+	public ModelAndView getImageAnnotation(@RequestParam(value="imageName", required=false) String imageName) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+	/*	try {
+			List<String> = getDocBaseService().getImageAnnotation(imageName);			
+			model.put("annotations", null);
+		} catch (ApplicationThrowable ath) {
+		}
+		*/	
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * 

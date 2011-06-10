@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.manuscriptviewer;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +69,95 @@ public class ReverseProxyIIPImageController {
 	public void proxyIIPImage(HttpServletRequest httpServletRequest, HttpServletResponse response) {
 		// Create an instance of HttpClient.
 		HttpClient client = new HttpClient(); 	
+		String versionServer = properties.getProperty("iipimage.version");
+		String connectUrl = null;
+		
+		if (versionServer.equals("0.9.8")) {
+			connectUrl = getConnectUrlServer098(httpServletRequest);
+		} else if (versionServer.equals("0.9.9")) {
+			connectUrl = getConnectUrlServer099(httpServletRequest);
+		}
+		
+		// Create a method instance.
+		GetMethod method = new GetMethod(connectUrl);
+
+		try {
+			// Execute the method.
+			client.executeMethod(method);
+			logger.debug("Proxying IIPImage Url : " + connectUrl + " (Status Line" + method.getStatusLine() + ")");
+
+			// Set content type 
+			response.setContentType(method.getResponseHeader("Content-Type").getValue());
+			//response.getOutputStream().write(method.getResponseBody());
+			// Redirecting proxed output to client
+			IOUtils.copy(method.getResponseBodyAsStream(),response.getOutputStream());  
+
+			// Flushing request
+			response.getOutputStream().flush();
+		} catch (HttpException httpException) {
+			logger.error("Fatal protocol violation: " + httpException.getMessage());
+		} catch (IOException e) {
+			logger.error("Fatal transport error: " + e.getMessage());
+		} finally {
+			// Release the connection.
+			method.releaseConnection();
+		}
+	}
+
+	/**
+	 * This method creates url for Server version 0.9.9
+	 * @param httpServletRequest
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private String getConnectUrlServer099(HttpServletRequest httpServletRequest) {
+		// "GET /fcgi-bin/iipsrv.fcgi?FIF=1/MDP5/0899_C_494_R.tif&obj=IIP,1.0&obj=Max-size&obj=Tile-size&obj=Resolution-number
+		// "GET http://localhost/fcgi-bin/iipsrv.fcgi?FIF=1/MDP5/0899_C_494_R.tif&CNT=1&SDS=0,90&JTL=3,2
+		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
+		
+		StringBuffer stringBuffer = new StringBuffer("");
+		stringBuffer.append(properties.getProperty("iipimage.protocol"));
+		stringBuffer.append("://");
+		stringBuffer.append(properties.getProperty("iipimage.host"));
+		stringBuffer.append(":");
+		stringBuffer.append(properties.getProperty("iipimage.port"));
+		stringBuffer.append(properties.getProperty("iipimage.fcgi.path"));
+		stringBuffer.append("?");
+		stringBuffer.append("FIF=");
+		stringBuffer.append(properties.getProperty("iipimage.image.path"));
+		stringBuffer.append(httpServletRequest.getParameter("FIF"));
+		stringBuffer.append("&");
+
+		Enumeration<String> enumeration = httpServletRequest.getParameterNames();
+		
+		while (enumeration.hasMoreElements()) {
+			String httpParameter = enumeration.nextElement();
+			
+			if (httpParameter.equals("FIF")) {
+				continue;
+			} else {
+				String[] values = httpServletRequest.getParameterValues(httpParameter);
+				for (int i=0; i<values.length;i++) {
+					stringBuffer.append(httpParameter);
+					stringBuffer.append("=");
+					stringBuffer.append(values[i]);
+					stringBuffer.append("&");
+				}
+			}
+		}
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * 
+	 * @param httpServletRequest
+	 * @return
+	 */
+	private String getConnectUrlServer098(HttpServletRequest httpServletRequest) {
+		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&obj=IIP,1.0&obj=Max-size&obj=Tile-size&obj=Resolution-number& HTTP/1.1" 200 69
+		// "GET /fcgi-bin/iipsrv.fcgi?WID=75&FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&CVT=JPEG& HTTP/1.1" 200 1329
+		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
 		
 		StringBuffer stringBuffer = new StringBuffer("");
 		stringBuffer.append(properties.getProperty("iipimage.protocol"));
@@ -78,10 +168,6 @@ public class ReverseProxyIIPImageController {
 		stringBuffer.append(properties.getProperty("iipimage.fcgi.path"));
 		stringBuffer.append("?");
 
-		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&obj=IIP,1.0&obj=Max-size&obj=Tile-size&obj=Resolution-number& HTTP/1.1" 200 69
-		// "GET /fcgi-bin/iipsrv.fcgi?WID=75&FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&CVT=JPEG& HTTP/1.1" 200 1329
-		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
-		
 		if (httpServletRequest.getParameter("obj") != null) {
 			// This get image tile informations
 			stringBuffer.append("FIF=");
@@ -114,31 +200,8 @@ public class ReverseProxyIIPImageController {
 			stringBuffer.append(httpServletRequest.getParameter("jtl"));
 			stringBuffer.append("&");
 		}
-
-		// Create a method instance.
-		GetMethod method = new GetMethod(stringBuffer.toString());
-
-		try {
-			// Execute the method.
-			client.executeMethod(method);
-			logger.debug("Proxying IIPImage Url : " + stringBuffer.toString() + " (Status Line" + method.getStatusLine() + ")");
-
-			// Set content type 
-			response.setContentType(method.getResponseHeader("Content-Type").getValue());
-			//response.getOutputStream().write(method.getResponseBody());
-			// Redirecting proxed output to client
-			IOUtils.copy(method.getResponseBodyAsStream(),response.getOutputStream());  
-
-			// Flushing request
-			response.getOutputStream().flush();
-		} catch (HttpException httpException) {
-			logger.error("Fatal protocol violation: " + httpException.getMessage());
-		} catch (IOException e) {
-			logger.error("Fatal transport error: " + e.getMessage());
-		} finally {
-			// Release the connection.
-			method.releaseConnection();
-		}
+		
+		return stringBuffer.toString();
 	}
 
 	/**
