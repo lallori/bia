@@ -161,12 +161,15 @@ public class Place implements Serializable {
 	@Column (name="\"PLPARENT\"", length=255)
 	@Fields({
 		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
-		@Field(name="plParent", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+		@Field(name="plParent_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	})
 	private String plParent;
 	
 	@Column (name="\"PARENTTYPE\"", length=255)
-	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="parentType_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
 	private String parentType;
 	
 	@Column (name="\"PLPARENT_TERM_ID\"", length=10)
