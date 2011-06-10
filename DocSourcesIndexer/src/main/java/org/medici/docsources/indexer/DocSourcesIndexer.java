@@ -133,8 +133,9 @@ public class DocSourcesIndexer {
     		logger.info("Indexing volumes start");
 	    	VolBaseService volBaseService = (VolBaseService) ctx.getBean("volBaseService");
 	
-	    	volBaseService.generateIndexVolume();
+			volBaseService.generateIndexMonth();
 			volBaseService.generateIndexSerieList();
+	    	volBaseService.generateIndexVolume();
 			logger.info("Indexing volumes stop");
 		} catch (ApplicationThrowable ath) {
 			ath.printStackTrace();
