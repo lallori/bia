@@ -27,10 +27,19 @@
  */
 package org.medici.docsources.dao.searchfilter;
 
-import javax.persistence.PersistenceException;
+import java.util.List;
 
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.SearchFilter;
 import org.springframework.stereotype.Repository;
 
@@ -73,5 +82,29 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 		return null;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username ");
+		
+		if (paginationFilter.getSortingCriterias().size() > 0) {
+			jpql.append("order by ");
+			for (int i=0; i<paginationFilter.getSortingCriterias().size(); i++) {
+				jpql.append(paginationFilter.getSortingCriterias().get(i).getColumn());
+				jpql.append(paginationFilter.getSortingCriterias().get(i).getOrder()); 
+			}
+		}
+		
+		Query query = getEntityManager().createQuery(jpql.toString());
+		query.setParameter("username", username);
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 }

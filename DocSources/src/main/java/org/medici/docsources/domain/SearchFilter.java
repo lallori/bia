@@ -59,8 +59,8 @@ public class SearchFilter implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column (name="\"idAdvancedSearchFilter\"", length=10, nullable=false)
-	private Integer idAdvancedSearchFilter;
+	@Column (name="\"id\"", length=10, nullable=false)
+	private Integer id;
 
 	@Column (name="\"username\"", length=50, nullable=false)
 	private String username;
@@ -76,6 +76,9 @@ public class SearchFilter implements Serializable {
 	@Lob
 	private AdvancedSearch filterData;
 
+	@Column (name="\"totalResult\"", nullable=false)
+	private Integer totalResult;
+	
 	@Column (name="\"dateCreated\"", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
@@ -99,17 +102,17 @@ public class SearchFilter implements Serializable {
 	}
 
 	/**
-	 * @return the idAdvancedSearchFilter
+	 * @return the id
 	 */
-	public Integer getIdAdvancedSearchFilter() {
-		return idAdvancedSearchFilter;
+	public Integer getId() {
+		return id;
 	}
 
 	/**
-	 * @param idAdvancedSearchFilter the idAdvancedSearchFilter to set
+	 * @param id the id to set
 	 */
-	public void setIdAdvancedSearchFilter(Integer idAdvancedSearchFilter) {
-		this.idAdvancedSearchFilter = idAdvancedSearchFilter;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	/**
@@ -166,6 +169,20 @@ public class SearchFilter implements Serializable {
 	 */
 	public void setFilterData(AdvancedSearch filterData) {
 		this.filterData = filterData;
+	}
+
+	/**
+	 * @param totalResult the totalResult to set
+	 */
+	public void setTotalResult(Integer totalResult) {
+		this.totalResult = totalResult;
+	}
+
+	/**
+	 * @return the totalResult
+	 */
+	public Integer getTotalResult() {
+		return totalResult;
 	}
 
 	/**

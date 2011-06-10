@@ -73,6 +73,14 @@ public interface SearchService {
 
 	/**
 	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page getUserSearchFilters(PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
 	 * @return
@@ -105,7 +113,7 @@ public interface SearchService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchTopics(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -114,5 +122,5 @@ public interface SearchService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Page searchTopics(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

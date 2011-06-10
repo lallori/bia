@@ -130,12 +130,28 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	/**
+	 * @return the topicsListDAO
+	 */
+	public TopicsListDAO getTopicsListDAO() {
+		return topicsListDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Page getUserSearchFilters() throws ApplicationThrowable {
 		try {
 			return getSearchFilterDAO().findUserSearchFilters(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public Page getUserSearchFilters(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getSearchFilterDAO().findUserSearchFilters(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -244,13 +260,6 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	/**
-	 * @param volumeDAO the volumeDAO to set
-	 */
-	public void setVolumeDAO(VolumeDAO volumeDAO) {
-		this.volumeDAO = volumeDAO;
-	}
-
-	/**
 	 * @param topicsListDAO the topicsListDAO to set
 	 */
 	public void setTopicsListDAO(TopicsListDAO topicsListDAO) {
@@ -258,9 +267,9 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	/**
-	 * @return the topicsListDAO
+	 * @param volumeDAO the volumeDAO to set
 	 */
-	public TopicsListDAO getTopicsListDAO() {
-		return topicsListDAO;
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
 	}
 }

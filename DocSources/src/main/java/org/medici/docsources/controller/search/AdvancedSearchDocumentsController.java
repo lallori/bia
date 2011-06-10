@@ -89,7 +89,7 @@ public class AdvancedSearchDocumentsController {
 
 		AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
 		advancedSearchDocument.initFromCommand(command);
-			
+
 		// This number is used to generate an unique id for datatable jquery plugin to use multiple object in tabs
 		UUID uuid = UUID.randomUUID();
 		model.put("searchNumber", uuid.toString());

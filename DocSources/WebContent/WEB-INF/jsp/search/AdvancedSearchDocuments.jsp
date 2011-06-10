@@ -92,7 +92,7 @@
 			<input type="text" id="topic" name="topic" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Topics">
-			<input type="hidden" id="topicId" value=""/>
+			<input type="hidden" id="topicId" value="">
 		</form>
 	</div>
 
@@ -104,7 +104,7 @@
 			<input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Person">
-			<input type="hidden" id="personId" value=""/>
+			<input type="hidden" id="personId" value="">
 		</form>
 
 		<form id="placeSearchForm" method="post" class="edit">
@@ -113,7 +113,7 @@
 			<input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Place">
-			<input type="hidden" id="placeId" value=""/>
+			<input type="hidden" id="placeId" value="">
 		</form>
 		
 		<hr />
@@ -124,7 +124,7 @@
 			<input type="text" id="sender" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Sender">
-			<input type="hidden" id="senderId" value=""/>
+			<input type="hidden" id="senderId" value="">
 		</form>
 		
 		<form id="fromSearchForm" method="post" class="edit">
@@ -133,7 +133,7 @@
 			<input type="text" id="from" name="from" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="From">
-			<input type="hidden" id="fromId" value=""/>
+			<input type="hidden" id="fromId" value="">
 		</form>
 		
 		<form id="recipientSearchForm" method="post" class="edit">
@@ -142,7 +142,7 @@
 			<input type="text" id="recipient" name="recipient" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Recipient">
-			<input type="hidden" id="recipientId" value=""/>
+			<input type="hidden" id="recipientId" value="">
 		</form>
 		
 		<form id="toSearchForm" method="post" class="edit">
@@ -151,7 +151,7 @@
 			<input type="text" id="to" name="to" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="To">
-			<input type="hidden" id="toId" value=""/>
+			<input type="hidden" id="toId" value="">
 		</form>
 		
 		<form id="refersToSearchForm" method="post" class="edit">
@@ -160,7 +160,7 @@
 			<input type="text" id="refersTo" name="refersTo" class="input_25c"/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add">
 			<input type="hidden" id="category" value="Referers To">
-			<input type="hidden" id="refersToId" value""/>
+			<input type="hidden" id="refersToId" value="">
 		</form>
 	</div>
 </div>

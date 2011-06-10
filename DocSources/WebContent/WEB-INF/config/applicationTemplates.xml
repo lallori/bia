@@ -457,6 +457,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultVolumes.jsp"/>	
 	</definition>
 
+	<definition name="search/ShowUserSearchFiltersModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/ShowUserSearchFiltersModalWindow.jsp"/>	
+	</definition>
+
 	<definition name="search/SimpleSearchResultDocuments" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultDocuments.jsp"/>	
 	</definition>

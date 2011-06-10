@@ -52,6 +52,7 @@ import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.search.SearchService;
@@ -686,5 +687,87 @@ public class AjaxController {
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
+	}
+
+	
+	private void userSearchFiltersAll(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
+		Page page = null;
+
+		try {
+			page = getSearchService().getUserSearchFilters(paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (SearchFilter currentFilter : (List<SearchFilter>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentFilter.getFilterName());
+			singleRow.add(currentFilter.getTotalResult());
+			singleRow.add(currentFilter.getSearchFilterType());
+			singleRow.add(currentFilter.getDateUpdated());
+
+			//resultList.add(HtmlUtils.showAdvancedSearchResult(singleRow, currentFilter.getId()));
+			resultList.add(singleRow);
+		}
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
+
+	private void userSearchFiltersDocuments(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * 
+	 * @param searchType
+	 * @param alias
+	 * @param sortingColumn
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/src/UserSearchFiltersPagination.json", method = RequestMethod.GET)
+	public ModelAndView userSearchFiltersPagination(HttpSession httpSession,
+											@RequestParam(value="searchType") String searchType,
+								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+								   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
+
+		if (searchType.toLowerCase().trim().equals("all")){
+			userSearchFiltersAll(model, httpSession, paginationFilter);
+		} else if (searchType.toLowerCase().trim().equals("documents")) {
+			userSearchFiltersDocuments(model, httpSession, paginationFilter);
+		} else if (searchType.toLowerCase().trim().equals("people")) {
+			userSearchFiltersPeople(model, httpSession, paginationFilter);
+		} else if (searchType.toLowerCase().trim().equals("places")) {
+			userSearchFiltersPlaces(model, httpSession, paginationFilter);
+		} else if (searchType.toLowerCase().trim().equals("volumes")) {
+			userSearchFiltersVolumes(model, httpSession, paginationFilter);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	private void userSearchFiltersPeople(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void userSearchFiltersPlaces(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void userSearchFiltersVolumes(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		
 	}
 }

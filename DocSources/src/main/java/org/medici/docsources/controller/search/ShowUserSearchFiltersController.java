@@ -1,5 +1,5 @@
 /*
- * ShowAdvancedSearchUserFiltersController.java
+ * ShowUserSearchFiltersController.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -30,18 +30,11 @@ package org.medici.docsources.controller.search;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
-import org.medici.docsources.service.geobase.GeoBaseService;
-import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.medici.docsources.service.search.SearchService;
-import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,8 +45,8 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping("/src/ShowAdvancedSearchUserFiltersController")
-public class ShowAdvancedSearchUserFiltersController {
+@RequestMapping("/src/ShowUserSearchFilters")
+public class ShowUserSearchFiltersController {
 	@Autowired
 	private SearchService searchService;
 
@@ -75,7 +68,7 @@ public class ShowAdvancedSearchUserFiltersController {
 		}
 
 		// Wee should never arrive at this point.
-		return new ModelAndView("errorKO",model);
+		return new ModelAndView("search/ShowUserSearchFiltersModalWindow", model);
 	}
 
 	/**

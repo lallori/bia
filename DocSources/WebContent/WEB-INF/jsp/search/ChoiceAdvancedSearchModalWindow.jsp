@@ -11,7 +11,7 @@
 		<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPeople.do"/>"></a>
 		<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchVolumes.do"/>"></a>
 		<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPlaces.do"/>"></a>
-		<a id="savedFilters" class="advSearchButton" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
+		<a id="savedFilters" href="<c:url value="/src/ShowUserSearchFilters.do"/>"></a>
 	
 		<div id="CloseButton">
 			<input id="close" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value=""/>
@@ -29,7 +29,12 @@
 				
 		$j("#placeSearch").open({width: 980, height: 680, scrollbars: "yes"});		
 
-	    // This closes modal window
+		$j("#savedFilters").click(function(){
+			Modalbox.show($j(this).attr("href"), {title: "SAVED SEARCH FILTERS", width: 750});
+			return false;
+		});
+	    
+		// This closes modal window
 		$j(".advSearchButton").click(function() {										
 			Modalbox.hide(); return false;
 		});
