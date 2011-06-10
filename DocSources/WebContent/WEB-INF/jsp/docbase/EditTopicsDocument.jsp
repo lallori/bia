@@ -61,12 +61,7 @@
 		        $j("#EditDocumentInModal").css('visibility', 'hidden');
 		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 		        
-		        $j('#close').click(function() {
-					$j('#EditTopicsDocumentDiv').block({ message: $j('#question') }); 
-					return false;
-				});
-
-		        $j(".deleteValue").click(function() {
+		        $j(".deleteIcon").click(function() {
 					$j.get(this.href, function(data) {
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
@@ -91,34 +86,14 @@
 					$j("#EditTopicDocumentDiv").load($j(this).attr("href"));
 					return false;
 				});
+
+				$j('#close').click(function() {
+					$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+						$j("#body_left").html(html);
+					}});
+
+					return false;
+				});
 			});
 		</script>
 	</form:form>
-
-<div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
-	<input type="button" id="yes" value="Yes" /> 
-	<input type="button" id="no" value="No" /> 
-</div>
-
-<script type="text/javascript">
-	$j(document).ready(function() {
-		$j('#no').click(function() { 
-			$j.unblockUI();
-			$j(".blockUI").fadeOut("slow");
-			$j("#question").hide();
-			$j("#EditTopicsDocumentDiv").append($j("#question"));
-			$j(".blockUI").remove();
-			return false; 
-		}); 
-        
-		$j('#yes').click(function() { 
-			$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
-				$j("#body_left").html(html);
-			}});
-				
-			return false; 
-		}); 
-     
-	});
-</script>
