@@ -49,6 +49,13 @@ h1 {
 	font-weight:normal;
 }
 
+h6 {
+	font-size:11px;
+	color:#6d5c4d;
+	font-weight:bold;
+	text-align:center;
+}
+
 
 /* --------------------------------------------------------- */ 
 /*
@@ -304,14 +311,14 @@ legend { /* FORM TITLE */
 	padding:0 2px 0 2px;
 }
 
-input { /* INPUT text */
+input, select { /* INPUT text */
 	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	color: #6d5c4d;
-	padding-left:3px;
-	margin: 5px 7px 2px 5px;
+	padding:3px;
+	margin: 5px 7px 5px 5px;
 }
 
 label {
@@ -413,6 +420,17 @@ input[type="submit"]:hover, input[type="image"]:hover {
 
 #saveProfile { /* Save button on bottom right  */
 	margin-left:160px;
+}
+
+#saveFilter { /* Save button on bottom right  */
+	margin:5px auto auto 90px;
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_save.png);
+	width:45px;
+	height:22px;
+	border:none;
 }
 
 #AddNewValue, .AddNewValue  { /* "Add New Value" Button */
@@ -609,6 +627,10 @@ img.transparent {
 
 .input_23c { /* input for 23 characters approx. */ 
 	width: 185px;
+}
+
+.input_24c { /* input for 23 characters approx. */ 
+	width: 210px;
 }
 
 .input_25c { /* input for 25 characters approx. */ 
@@ -820,6 +842,10 @@ img.transparent {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.selectform_XXlong{ /* dropdown menu class */
+	width:218px;
+}
+
 /* ---------------------------------------------------- */ 
 /*
 /*
@@ -993,10 +1019,6 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;
 }
 
-#tabs {
-	top:-9px;
-}
-
 #EditRelationshipPersonDiv { 
 	width:485px;
 	margin:0;
@@ -1137,19 +1159,37 @@ input.file {
 /* ------------ EditDetailsDocument ------------ */
 
 #DocumentImageNotDigitDiv { /* Document image to be digitized */
-    float:right;
+    float:right; 
+	margin-right:20px;
     z-index:1;
     height:160px;
-    width:150px;
+    width:120px;
     text-align:center;
 }
 
 #DocumentImageDigitDiv { /* Document image */
     float:right; 
+	margin-right:20px;
     z-index:1;
     height:160px;
-    width:150px;
+    width:120px;
     text-align:center;
+}
+
+#ShowDocumentInManuscriptViewer {
+	width:50px;
+	height:55px;
+	background:url(/DocSources/images/1024/button_openVolExplorer.png) bottom no-repeat;
+	cursor:pointer;
+	float:left;
+}
+
+#ShowDocumentInVolumeExplorer {
+	width:50px;
+	height:55px;
+	background:url(/DocSources/images/1024/button_showManuscViewer.png) bottom no-repeat;
+	cursor:pointer;
+	float:right;
 }
 
 /* Input positions */
@@ -1693,8 +1733,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	border:1px solid #e6d0c6; 	
 	z-index:-1;
 	border: 1px solid #e6d0c6;
-	-moz-border-radius: 15px;
-	border-radius: 15px;	
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 }
 
 /* ---------------------------- */
@@ -1709,8 +1749,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	border:1px solid #e6d0c6; 	
 	z-index:-1;
 	border: 1px solid #e6d0c6;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 
 .iframeFlipVolumeFullFellows { /* used for Fellows */
@@ -1806,7 +1846,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 }
 
 .input_4cRucricario { /* "Move to rubricario" <input> ID  */
-	margin:-1px 0 0 80px;
+	margin:-3px 0 0 80px;
 	position:absolute;
 	width: 30px;
 }
@@ -1901,9 +1941,10 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 }
 
 .input_4cFolio { /* "Move to folio" <input> ID  */
-	margin:-1px 0 0 80px;
+	margin:-3px 0 0 80px;
 	position:absolute;
 	width: 30px;
+	font-size:10px;
 }
 
 .input_4cFolioModal { /* "Move to folio" <input> ID  */
@@ -2715,6 +2756,11 @@ a.refreshVolumeExplorer {
 	font-size:11px;
 }
 
+#advancedSearch #body_left a{
+	text-decoration:none;
+	color:#654c47;
+}
+
 #advancedSearch #body_left .addSearchFilter {
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
@@ -2806,7 +2852,7 @@ span.categorySearch {
 }
 
 .saveButton {
-	margin:5px 0 0 58px;
+	margin:5px 0 0 55px;
 	position:absolute;
 	padding:0;
 	cursor:pointer;
@@ -2885,7 +2931,7 @@ span.categorySearch {
 }
 
 #advsearch { /* Search Advanced Form Button */
-	margin:5px auto auto 140px;
+	margin:5px auto auto 120px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -2919,6 +2965,9 @@ span.categorySearch {
 	background-position:bottom;
 }
 
+#saveAsLabel, #replaceLabel {
+	font-weight:bold;
+}
 
 
 /* -------------------------------------------------------------------------- */
@@ -2926,82 +2975,46 @@ span.categorySearch {
 /*
 /* ---------------------------- SAVED SEARCH FILTERS ------------------------- */
 
-#savedSearchFiltersDiv table { 
-	border-collapse: separate;
-	margin:10px auto 20px 0;
+#savedSearchFiltersDiv{
+	width:650px;
+	margin:5px 0 0 40px;
 }
 
-#savedSearchFiltersDiv td, th {
-	display: table-cell;
-	vertical-align: inherit;
-	font-size:11px;
-	padding:10px 7px 10px 7px;
-	text-align:center;
+#savedSearchFiltersDiv #documentSearchFilters {
+	background-image:url(/DocSources/images/1024/button_documentsearch.png);
+	float:left;
+	margin:10px 20px 0 20px;
+	width:115px;
+	height:25px;
 }
 
-#savedSearchFiltersDiv a{
-	font-size:11px;
+#savedSearchFiltersDiv #personSearchFilters {
+	background-image:url(/DocSources/images/1024/button_personsearch.png);
+	float:right;
+	margin:10px 20px 0 20px;
+	width:115px;
+	height:25px;
 }
 
-#savedSearchFiltersDiv .odd { /* Background color of the rows */
-	background-color: #EFDFDF;
+#savedSearchFiltersDiv #volumeSearchFilters {
+	background-image:url(/DocSources/images/1024/button_volumesearch.png);
+	float:right;
+	margin:10px 20px 0 20px;
+	width:115px;
+	height:25px;
 }
 
-#savedSearchFiltersDiv .sortingFilterName {  /* Filter Name cell proprieties */
-	width:215px;
-	font-size:11px;
-	color:#6D5C4D;
-	text-align:center;
-	font-weight:normal;
+#savedSearchFiltersDiv #placeSearchFilters {
+	background-image:url(/DocSources/images/1024/button_placesearch.png);
+	float:right;
+	margin:10px 20px 0 20px;
+	width:115px;
+	height:25px;
 }
 
-#savedSearchFiltersDiv .sortingResults, #savedSearchFiltersDiv .sortingDate { /* Results and Date cell proprieties */
-	width:135px; 
-	font-size:11px;
-	color:#6D5C4D;
-	text-align:center;
-	font-weight:normal;
-}
-
-#savedSearchFiltersDiv .sortingRecordTypes { /* Record Types cell proprieties */
-	width:230px;
-	font-size:11px;
-	color:#6D5C4D;
-	text-align:center;
-	font-weight:normal;
-}
- 
-#savedSearchFiltersDiv .nameResult{  /* Filter Name Results color */
-	color:#2E3192; /* Blue */
-}
-
-#savedSearchFiltersDiv .numberResult{ /* Number Results color */
-	color:#C1272D; /* Red */
-}
-
-#savedSearchFiltersDiv .dateResult{ /* Filter Name Results color */
-	color:#888888; /* Grey */
-}
-
-/* Record Types  */
-#savedSearchFiltersDiv .peopleSearchResult{ /* People Search Results color */
-	color:#09C; /* Blue */
-}
-
-#savedSearchFiltersDiv .documentSearchResult{ /* People Search Results color - Record Types  */
-	color:#090; /* Green */
-}
-
-#savedSearchFiltersDiv .volumeSearchResult{ /* People Search Results color - Record Types  */
-	color:#F60; /* Orange */
-}
-
-#savedSearchFiltersDiv .placeSearchResult{ /* People Search Results color - Record Types  */
-	color:#909; /* Purple */
-}
-
-#savedSearchFiltersDiv a:hover{ /* On Rollover underline effect */
-	text-decoration:underline;
+table#savedSearchFiltersForm.display {
+	width:700px;
+	margin-left:15px;
 }
 
 #savedSearchFiltersDiv #close { /* Close Button */

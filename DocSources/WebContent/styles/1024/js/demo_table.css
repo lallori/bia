@@ -542,3 +542,49 @@ div.box {
     border: 1px solid #8080FF;
     background-color: #E5E5FF;
 }
+
+/* Color on Record Type column */
+
+.peopleType {
+	color:#09C; /* Blue */
+}
+
+.documentType {
+	color:#090; /* Green */
+}
+
+.volumeType {
+	color:#F60; /* Orange */
+}
+
+.placeType {
+	color:#909; /* Purple */
+}
+
+.filterResult:hover, .peopleType:hover, .documentType:hover, .volumeType:hover, .placeType:hover, .nameType:hover, .resultType:hover, .dateType:hover  {
+	text-decoration:underline;
+}
+
+.nameType { /* Filter Name Results color */
+	color:#2E3192; /* Blue */
+}
+
+.resultType { /* Number Results color */
+	color:#C1272D; /* Red */
+}
+
+.dateType{ /* Filter Name Results color */
+	color:#888888; /* Grey */
+}
+
+#savedSearchFiltersForm_info {
+	margin-left:15px;
+	font-size:10px;
+	color:#888888; /* Grey */
+}
+
+#savedSearchFiltersForm_paginate {
+	margin-right:15px;
+}
+
+

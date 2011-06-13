@@ -176,7 +176,7 @@
 
 /* ENTRY MENU - MODAL WINDOW */
 
-#EntryMenuDiv h1, #VetMenuDiv h1, #ActionsMenuDiv h1{
+#EntryMenuDiv h1, #VetMenuDiv h1, #ActionsMenuDiv h1, #savedSearchFiltersDiv h1{
 	text-align:center;
 	font-size:11px;
 	font-weight:normal;
