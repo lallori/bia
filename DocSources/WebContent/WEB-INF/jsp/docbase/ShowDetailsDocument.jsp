@@ -55,7 +55,7 @@
 		</c:if>
 		<c:if test="${empty image}">
 			<div id="DocumentImageNotDigitDiv">
-				<img src="<c:url value="/images/1024/img_document.png"/>">
+				<img src="<c:url value="/images/1024/img_toBeDigitizedDocument.png"/>" title="To be digitized" width="120px" height="160px">
 			</div>
 		</c:if>
 		

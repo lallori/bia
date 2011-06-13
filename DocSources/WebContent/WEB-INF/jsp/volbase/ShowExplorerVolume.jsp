@@ -81,11 +81,7 @@
 		<c:param name="showThumbnail" value="false" />
 	</c:url>
 	
-	<div id="ShowVolumeExplorer" class="background">
-		<div class="title">
-			<h5>VOLUME EXPLORER</h5>
-		</div>
-		
+	<div id="ShowVolumeExplorer">
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">

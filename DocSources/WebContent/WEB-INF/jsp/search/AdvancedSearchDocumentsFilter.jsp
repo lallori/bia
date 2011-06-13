@@ -27,6 +27,7 @@
 		<br>
 		<input type="submit" title="Search" value="" id="advsearch">
 		<input type="hidden" name="searchType" value="documents">
+		<a class="saveButton" href="#"></a>
 		<a class="saveAsButton" href="#"></a>
 	</form>
 
@@ -52,7 +53,7 @@
 				open: function(event, ui) { 
             		//$(this).load('${choiceSaveSearchFilterURL}');
             		//alert($j("#searchFilterForm").serialize());
-            		$j.ajax({ type:"POST", url: ${choiceSaveSearchFilterURL}, data:$j("#searchFilterForm").serialize(), async:false, success:function(html) { 
+            		$j.ajax({ type:"POST", url: '${choiceSaveSearchFilterURL}', data: $j("#searchFilterForm").serialize(), async:false, success:function(html) { 
 						$j("#DialogSaveAs").focus();
 						$j("#DialogSaveAs").html(html);
 						} 

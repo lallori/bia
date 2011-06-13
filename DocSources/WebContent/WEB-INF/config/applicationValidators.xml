@@ -149,6 +149,10 @@
     <bean id="createUserValidator" class="org.medici.docsources.validator.user.CreateUserValidator">
         <description>User create validator (administration console component).</description>
     </bean>
+    
+    <bean id="editUserProfileValidator" class="org.medici.docsources.validator.user.EditUserProfileValidator">
+    	<description>Edit user profile validator.</description>
+    </bean>
 
     <bean id="lockUserValidator" class="org.medici.docsources.validator.user.LockUserValidator">
         <description>User lock validator (administration console component).</description>

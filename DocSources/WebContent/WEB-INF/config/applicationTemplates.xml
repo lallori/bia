@@ -132,6 +132,10 @@
 	<definition name="user/AdvancedSearchUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/advancedsearch.jsp"/>
     </definition>
+    
+    <definition name="user/EditUserProfile" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/user/EditUserProfile.jsp"></put-attribute>
+    </definition>
 
    	<definition name="user/SearchUserResult" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/SearchUserResult.jsp"/>
