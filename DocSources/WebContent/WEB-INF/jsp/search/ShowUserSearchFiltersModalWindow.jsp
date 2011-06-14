@@ -12,8 +12,15 @@
 
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
-			$j('#userSearchFilters').dataTable( {
+			$j('#savedSearchFiltersForm').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }],
+				"bAutoWidth" : false,
+				"aoColumns" : [
+				{ sWidth : "200px" },
+				{ sWidth : "50px" },
+				{ sWidth : "90px" },
+				{ sWidth : "70px" },
+				], 
 				"bLengthChange": false,
 				"bDestroy" : true,
 				"bFilter" : false,
@@ -44,18 +51,18 @@
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="userSearchFilters">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="savedSearchFiltersForm">
 		<thead>
 			<tr>
-				<th>Filter Name</th>
-				<th>Results</th>
-				<th>Records Type</th>
-				<th>Date</th>
+				<th>FILTER NAME</th>
+				<th>RESULTS</th>
+				<th>RECORD TYPES</th>
+				<th>DATE</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="5" class="dataTables_empty">Loading data from server</td>
+				<td colspan="4" class="dataTables_empty">Loading data from server</td>
 			</tr>
 		</tbody>
 	</table>
