@@ -812,6 +812,16 @@ img.transparent {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.selectform_SXlong{ /* dropdown menu class */
+	width:130px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	padding-left:3px;
+	margin: 5px 7px 5px 5px; 
+	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
 .selectform_MXlong{ /* dropdown menu class */
 	width:140px;
 	border: 1px solid #e6d0c6;
@@ -844,6 +854,10 @@ img.transparent {
 
 .selectform_XXlong{ /* dropdown menu class */
 	width:218px;
+}
+
+.selectform_XXXlong{ /* dropdown menu class */
+	width:250px;
 }
 
 /* ---------------------------------------------------- */ 
@@ -2722,8 +2736,8 @@ a.refreshVolumeExplorer {
 #tooltip {
 	position: absolute;
 	z-index: 3000;
-	border: 1px solid #A13125;
-	background-color: #ECD6D3; 
+	border: 1px solid #2e83ff;
+	background-color: #ebf3ff; 
 	padding:3px 5px 3px 5px;
 	opacity: 0.9;
 	-moz-border-radius: 5px;
@@ -2739,7 +2753,7 @@ a.refreshVolumeExplorer {
 
 #tooltip h1	{
 	font-size:11px;
-	color:#6D5C4D;
+	color:#363636;
 	font-weight:normal;
 }
 
@@ -2761,14 +2775,21 @@ a.refreshVolumeExplorer {
 	color:#654c47;
 }
 
-#advancedSearch #body_left .addSearchFilter {
-	border: 1px solid #e6d0c6;
-	background-color: #fbf7f4;
-	color: #6d5c4d;
-	padding:1px 4px 1px 4px;
+#multiOpenAccordion #addSearchFilter {
+	background: url(/DocSources/images/1024/button_addSearchFilter.png) no-repeat;
+	width:40px;
+	height:23px;
 	float:right;
+	border:none;
 	cursor:pointer;
 }
+
+
+#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
+	float:none;
+	margin-left:34px;
+}
+
 
 
 
@@ -2793,10 +2814,6 @@ a.refreshVolumeExplorer {
 
 #advancedSearch #body_right hr{
 	width:350px;
-}
-
-#advancedSearch #advancedSearchForm #AddWordSearch {
-	color:#F00;
 }
 
 .customSeachFilterDiv {
@@ -2883,9 +2900,9 @@ span.categorySearch {
 }
 
 #advancedSearch #body_left a:hover.helpIcon { /* Help symbol "?" */
-	border: 1px solid #A13125;
-	color:  #6D5C4D; 
-	background-color: #ECD6D3; 
+	border: 1px solid #2e83ff;
+	color:  #363636; 
+	background-color: #ebf3ff; 
 	opacity:0.9;
 }
 
@@ -3152,11 +3169,11 @@ table#savedSearchFiltersForm.display {
 }
 
 #extractSearchForm #addSearchFilter{
-	margin:50px 0 0 0;
+	margin:70px 0 0 0;
 }
 
 #synopsisSearchForm #addSearchFilter{
-	margin:50px 0 0 0;
+	margin:70px 0 0 0;
 }
 
 .txtadvsearch {
@@ -3171,23 +3188,19 @@ table#savedSearchFiltersForm.display {
 	margin: 5px 0px 5px 0px;
 }
 
-#topicsSearchLabel {
-	margin-left:;
-}
-
-#personSearchLabel {
+#personLabel {
 	margin-right:15px;
 }
 
-#placeSearchLabel {
+#placeLabel {
 	margin-right:23px;
 }
 
-#senderSearchLabel {
+#senderLabel {
 	margin-right:13px;
 }
 
-#fromSearchLabel {
+#fromLabel {
 	margin-right:23px;
 }
 
@@ -3195,11 +3208,11 @@ table#savedSearchFiltersForm.display {
 	margin-right:40px;
 }
 
-#refersToSearchLabel {
+#refersToLabel {
 	margin-right:5px;
 }
 
-#personSearchLabel, #placeSearchLabel, #senderSearchLabel, #fromSearchLabel, #toSearchLabel, #referstoSearchLabel, #recipientSearchLabel {
+#personLabel, #placeLabel, #senderLabel, #fromLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel {
 	margin-left:7px;
 }
 
@@ -3223,6 +3236,8 @@ table#savedSearchFiltersForm.display {
 #placeSearchLabel {
 	margin-left:;
 }
+
+.
 
 /* ------------------------------------------------- */
 /*
