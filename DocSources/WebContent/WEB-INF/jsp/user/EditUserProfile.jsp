@@ -6,12 +6,13 @@
 
 <c:url var="EditUserProfileURL" value="/user/EditUserProfile.do" />
 
+
 <c:url var="ShowUserProfileURL" value="/user/ShowUserProfile.do" />
 
 <form:form id="EditUserProfileForm" action="${EditUserProfileURL}" method="post" cssClass="edit">
 	<fieldset>
 	<div>
-		<form:label id="emailLabel" for="email" path="mail">Email</form:label>
+		<form:label id="emailLabel" for="mail" path="mail">Email</form:label>
 		<form:input id="email" path="mail" cssClass="input_20c" /><form:errors path="mail" />
 	</div>
 	

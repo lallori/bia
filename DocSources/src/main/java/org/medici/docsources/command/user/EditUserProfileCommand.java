@@ -35,6 +35,8 @@ package org.medici.docsources.command.user;
  * @see org.merdici.docsources.controller.user.UpdateUserController
  */
 public class EditUserProfileCommand {
+	/** User's account **/
+	private String account;
 	/** User's email **/
 	private String mail;
 	/** User's address **/
@@ -51,6 +53,12 @@ public class EditUserProfileCommand {
 	private String interests;
 	
 	
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public String getAccount() {
+		return account;
+	}
 	public String getMail() {
 		return mail;
 	}

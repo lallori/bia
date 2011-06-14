@@ -30,6 +30,8 @@ package org.medici.docsources.controller.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 
 
 import org.medici.docsources.command.user.EditUserProfileCommand;
@@ -83,7 +85,7 @@ public class EditUserProfileController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@ModelAttribute("command") EditUserProfileCommand command, BindingResult result){
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditUserProfileCommand command, BindingResult result){
 		getValidator().validate(command, result);
 		
 		if(result.hasErrors()){
@@ -93,11 +95,11 @@ public class EditUserProfileController {
 		
 			Map<String, Object> model = new HashMap<String, Object>();
 			User user = new User();
-			/*try{
-				user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			try{
+				user.setAccount(getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()).getAccount());
 			}catch(ApplicationThrowable ath){
-				user = new User();
-			}*/
+				
+			}
 			user.setMail(command.getMail());
 			user.setAddress(command.getAddress());
 			user.setCountry(command.getCountry());
@@ -133,6 +135,7 @@ public class EditUserProfileController {
 		} catch (ApplicationThrowable ath) {
 			user = new User();
 		}
+		command.setAccount(user.getAccount());
 		command.setMail(user.getMail());
 		command.setAddress(user.getAddress());
 		command.setCountry(user.getCountry());
