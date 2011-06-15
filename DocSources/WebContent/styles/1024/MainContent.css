@@ -299,22 +299,29 @@ valueNotes {
 }
 
 fieldset {  /* FORM BACKGROUND */
-	border: 1px solid #e6d0c6;
-	background-color:#f3e7e2;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color:#F2E6E5;
 	padding-left:30px;	
 }
 
 legend { /* FORM TITLE */
 	font-size:11px;
 	color:#6d5c4d;
-	background-color:#e6d0c6;
+	background-color:#DCC0BA;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 	padding:0 2px 0 2px;
 }
 
 input, select { /* INPUT text */
 	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	border: 1px solid #e6d0c6;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 	background-color: #fbf7f4;
 	color: #6d5c4d;
 	padding:3px;
@@ -340,11 +347,15 @@ form img{ /* Red Cross used to "Delete this entry"  */
 }
 
 input[type="submit"]:hover, input[type="image"]:hover { 
-	opacity:0.5;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
 }
 
 :hover input.submit, :hover input.image { 
-	opacity:0.5;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
 }
 
 #close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle { /* Close button on bottom left  */
@@ -689,7 +700,9 @@ img.transparent {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 5px; 
-	opacity:0.3; !important
+	opacity:0.3; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.3;
+	filter:alpha(opacity=30); /* IE */ !important
 	cursor:default; !important
 }
 
@@ -700,7 +713,9 @@ img.transparent {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 0px; 
-	opacity:0.3; 
+	opacity:0.3; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.3;
+	filter:alpha(opacity=30); /* IE */ !important
 	cursor:default; 
 }
 
@@ -711,7 +726,9 @@ img.transparent {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 5px; 
-	opacity: 0.3; 
+	opacity:0.3; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.3;
+	filter:alpha(opacity=30); /* IE */ !important
 	cursor:default; 
 }
 
@@ -722,7 +739,9 @@ img.transparent {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 5px; 
-	opacity: 0.3; 
+	opacity:0.3; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.3;
+	filter:alpha(opacity=30); /* IE */ !important
 	cursor:default; 
 }
 
@@ -732,7 +751,9 @@ img.transparent {
 	background-color: #fbf7f4;
 	color: #000000;
 	margin: 5px 7px 5px 0; 
-	opacity: 0.3;
+	opacity:0.3; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.3;
+	filter:alpha(opacity=30); /* IE */ !important
 	cursor:default;
 }
 
@@ -742,7 +763,9 @@ img.transparent {
 	background-color: #fbf7f4;
 	color: #000000;
 	margin: 5px 7px 5px 0; 
-	opacity: 0.3;
+	opacity:0.3; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.3;
+	filter:alpha(opacity=30); /* IE */ !important
 	cursor:default;
 }
 
@@ -895,7 +918,9 @@ img.transparent {
 .txtarea { 
 	width: 395px;
 	height:40px;
-	border: 1px solid #e6d0c6;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 	background-color: #fbf7f4;
 	color: #000000;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -908,10 +933,12 @@ img.transparent {
 .txtarea_disabled { 
 	width: 395px;
 	height:40px;
-	border: 1px solid #e6d0c6;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 	background-color: #fbf7f4;
-	color: #000000
-	font-family:Georgia, "Times New Roman", Times, serif;
+	color: #000000;
+	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size:11px;
 	resize: none;
 	padding:5px 10px 5px 10px;
@@ -922,7 +949,9 @@ img.transparent {
 .txtarea_medium { 
 	width: 395px;
 	height:80px;
-	border: 1px solid #e6d0c6;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 	background-color: #fbf7f4;
 	color: #000000;
 	resize: none;
@@ -935,7 +964,9 @@ img.transparent {
 .txtarea_big { 
 	width: 395px;
 	height:120px;
-	border: 1px solid #e6d0c6;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 	background-color: #fbf7f4;
 	color: #000000;
 	resize: none;
@@ -948,7 +979,9 @@ img.transparent {
 .txtarea_small { 
 	width: 372px;
 	height:30px;
-	border: 1px solid #e6d0c6;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 	background-color: #fbf7f4;
 	color: #000000;
 	resize: none;
@@ -961,7 +994,9 @@ img.transparent {
 .txtarea_fullscreen { 
 	width: 375px;
 	height:450px;
-	border: 1px solid #e6d0c6;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
 	background-color: #fbf7f4;
 	color: #000000;
 	resize: none;
@@ -980,8 +1015,8 @@ img.transparent {
 	margin:5px 0 5px 0;
 	padding:0;
 	width:490px;
-	color:#e6d0c6;
-	background-color:#e6d0c6;
+	color:#DCC0BA;
+	background-color:#DCC0BA;
 	height:1px;
 	border:0;
 	z-index:2;
@@ -991,8 +1026,8 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	margin:10px 0 10px 0;
 	padding:0;
 	width:415px;
-	color:#e6d0c6;
-	background-color:#e6d0c6;
+	color:#DCC0BA;
+	background-color:#DCC0BA;
 	height:1px;
 	border:0;
 }
@@ -1041,12 +1076,12 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #EditUserProfileDiv { 
 	width:350px;
-	margin:0 0 0 130px;
+	margin:-10px 0 0 130px;
 }
 
-form#EditUserProfileForm.edit { 
-	width:200px;
+form#EditUserProfileForm { 
 	margin-left:20px;
+	width:325px;
 }
 
 #EditTopicsDocumentDiv { 
@@ -2374,13 +2409,13 @@ a.refreshVolumeExplorer {
 
 #userProfile h3{
 	font-size:14px;
-	margin:0 0 5px 0;	
+	margin:0 0 5px -25px;	
 }
 
 #userProfile{ /* My Profile Div Container */
 	font-size:11px;	
 	float:left;
-	margin:10px 0 0 10px;
+	margin:5px 0 0 10px;
 }
 
 #userProfile a{
@@ -2390,10 +2425,10 @@ a.refreshVolumeExplorer {
 }
 
 #bgImgUserProfile { /* User image profile background*/
-	margin:0;
-	background-image:url(/DocSources/images/1024/bg_userimage.jpg);
+	margin:20px 0 0 0;
+	background:url(/DocSources/images/1024/bg_userimage.jpg) no-repeat;
 	width:128px;
-	height:160px;
+	height:220px;
 	float:left;
 }
 
@@ -2406,7 +2441,7 @@ a.refreshVolumeExplorer {
 
 #helpProfile { /* Help Div Container */
 	font-size:11px;
-	margin:20px 0 0 510px;
+	margin:23px 0 0 510px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
 	padding:10px 0 0 15px;
 	width:200px;
@@ -2471,8 +2506,8 @@ a.refreshVolumeExplorer {
 	margin-left:49px;
 }
 
-#adress{
-	margin-left:47px;
+#address{
+	margin-left:40px;
 }
 
 #email{
@@ -2482,14 +2517,10 @@ a.refreshVolumeExplorer {
 
 /* Close & Save Buttons position */
 #EditUserProfileForm #save {
-	margin:-20px 25px 0 213px;
-	display:inline;
+	margin:0 0 0 170px;
 }
 
 #EditUserProfileDiv #closeMyProfile {
-	margin:50px auto auto 125px;
-	position:absolute;
-	padding:0;
 	cursor:pointer;
 	background-color:transparent;
 	background-image:url(/DocSources/images/1024/button_close.png);
@@ -2502,28 +2533,29 @@ a.refreshVolumeExplorer {
 	background-image:url(/DocSources/images/1024/button_personalnotes.png);
 	width:93px;
 	height:23px;
-	position:absolute;
-	margin:180px 0 0 17px;
+	float:left;
+	margin:55px 0 0 15px;
 }
 
 #userProfile #EditUserProfile {
 	background-image:url(/DocSources/images/1024/button_editprofile.png);
 	width:93px;
 	height:23px;
-	position:absolute;
-	margin:210px 0 0 17px;
+	float:left;
+	margin:10px 0 0 15px;
 }
 
 #userProfile #CloseUserProfile {
 	background-image:url(/DocSources/images/1024/button_closeProfile.png);
 	width:93px;
 	height:23px;
-	position:absolute;
-	margin:240px 0 0 17px;
+	float:left;
+	margin:10px 0 0 15px;
 }
 
 #PersonalNotesButton:hover, #EditUserProfile:hover, #CloseUserProfile:hover {
 	opacity:0.5;
+	filter:alpha(opacity=50);
 }
 
 #modalBox P{
@@ -2590,6 +2622,8 @@ a.refreshVolumeExplorer {
 
 #cleanAll:hover, #edit:hover, #goBack:hover {
 	opacity:0.5;
+	filter:alpha(opacity=50);
+
 }
 
 .txtarea_personalNotes {
@@ -2739,7 +2773,9 @@ a.refreshVolumeExplorer {
 	border: 1px solid #2e83ff;
 	background-color: #ebf3ff; 
 	padding:3px 5px 3px 5px;
-	opacity: 0.9;
+	opacity:0.9; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.9;
+	filter:alpha(opacity=90); /* IE */
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	width:350px;
@@ -2903,7 +2939,9 @@ span.categorySearch {
 	border: 1px solid #2e83ff;
 	color:  #363636; 
 	background-color: #ebf3ff; 
-	opacity:0.9;
+	opacity:0.9; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.9;
+	filter:alpha(opacity=90); /* IE */
 }
 
 #advancedSearch #body_right .easySearchModeOn {
@@ -2944,7 +2982,9 @@ span.categorySearch {
 
 
 #advancedSearch #body_right .expertSearchModeOn:hover, #advancedSearch #body_right .easySearchModeOn:hover {
-	opacity:0.5;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
 }
 
 #advsearch { /* Search Advanced Form Button */
@@ -3437,7 +3477,9 @@ ul#network a {
 }
 
 .moreInfo:hover {
-	opacity:0.5;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
 }
 
 
