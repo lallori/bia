@@ -41,7 +41,7 @@
 				return false;
 			});
 	        
-	        $("#save").click(function (){
+	        $j("#save").click(function (){
 				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
 					$("#EditResearchNotesPersonDiv").html(html);
 				}});

@@ -35,9 +35,12 @@
 
 			<div>
 			<c:if test="${currentTitleOrOccupation.preferredRole}">
-				<a title="Preferred Role" class="preferredIcon" href="#"></a>
+				<a title="Preferred Role" class="preferredIconEdit" href="#"></a>
 			</c:if>
-      			<input id="firstTitleOcc" name="name_${currentTitleOrOccupation.prfLinkId}" class="input_28c_disabled" type="text" value="${currentTitleOrOccupation.titleOccList.titleOcc}" disabled="disabled" />
+			<c:if test="${!currentTitleOrOccupation.preferredRole}">
+				<a title="Preferred Role" class="notPreferredIcon" href="#"></a>
+			</c:if>
+      			<input id="firstTitleOcc" name="name_${currentTitleOrOccupation.prfLinkId}" class="input_30c_disabled" type="text" value="${currentTitleOrOccupation.titleOccList.titleOcc}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteTitleOrOccupationPersonURL}"></a>
 				<a class="editValue" class="editValue" href="${EditTitleOrOccupationPersonURL}">edit value</a>
 			</div>

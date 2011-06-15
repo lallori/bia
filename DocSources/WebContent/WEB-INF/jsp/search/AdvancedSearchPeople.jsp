@@ -157,6 +157,14 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
+
+		$j('#namePartsSearchForm').advancedSearchForm();
+		$j('#wordSearchForm').advancedSearchForm();
+		$j('#dateRangeSearchForm').advancedSearchForm();
+		$j('#genderSearchForm').advancedSearchForm();
+		$j('#placeSearchForm').advancedSearchForm();		
+
+		
 		$j('#multiOpenAccordion').multiAccordion({active: [0]});
 	});
 </script>

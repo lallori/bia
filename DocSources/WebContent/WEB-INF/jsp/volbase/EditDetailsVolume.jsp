@@ -13,31 +13,35 @@
 			</div>
 
 			<div>
-				<form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error" >Volume/Filza (MDP): </form:label>
+				<form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error" >Volume/Filza (MDP)</form:label>
 				<form:input path="volNum" cssClass="input_5c" maxlength="5"/>
-				<form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension:</form:label>
+				<form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension</form:label>
 				<form:input path="volLetExt" size="1" maxlength="1"  cssClass="input_1c"/>
 			</div>
+			
+			<hr />
 
 			<div>
-				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Start year: </form:label><form:input path="startYear" cssClass="input_4c" maxlength="4"/>
-				<form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error">Start month: </form:label>
+				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Start year</form:label><form:input path="startYear" cssClass="input_4c" maxlength="4"/>
+				<form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error">Start month</form:label>
 				<form:select path="startMonthNum" cssClass="selectform" items="${months}" itemValue="monthNum" itemLabel="monthName" />
-				<form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Start day: </form:label>
+				<form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Start day</form:label>
 				<form:input path="startDay" cssClass="input_2c" maxlength="2"/>
 			</div>
 
 			<div>
-				<form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">End year: </form:label>
+				<form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">End year</form:label>
 				<form:input path="endYear" cssClass="input_4c" maxlength="4"/>
-				<form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error">End month: </form:label>
+				<form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error">End month</form:label>
 				<form:select path="endMonthNum" cssClass="selectform" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">End day: </form:label>
+				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">End day</form:label>
 				<form:input path="endDay" cssClass="input_2c" maxlength="2"/>
 			</div>
+			
+			<hr />
 
 			<div>
-				<form:label id="dateNotesLabel" for="dateNotes" path="dateNotes" cssErrorClass="error">Date notes: </form:label>
+				<form:label id="dateNotesLabel" for="dateNotes" path="dateNotes" cssErrorClass="error">Date notes</form:label>
 			</div>
 
 			<div>

@@ -59,9 +59,13 @@
 </div>
 
 <script type="text/javascript">
-	  $j(document).ready(function() {								
-			  $j("#body_right").load("/DocSources/src/searchFilterList.html");
-			  $j('#multiOpenAccordion').multiAccordion({active: [0]});
-			  return false;	
-	  });
+	$j(document).ready(function() {								
+		$j('#placeNameSearchForm').advancedSearchForm();
+		$j('#placeTypeSearchForm').advancedSearchForm();
+		$j('#linkedToTopicsSearchForm').advancedSearchForm();
+		$j('#linkedToPeopleSearchForm').advancedSearchForm(); 
+
+		$j('#multiOpenAccordion').multiAccordion({active: [0]});
+		return false;	
+	});
 </script>

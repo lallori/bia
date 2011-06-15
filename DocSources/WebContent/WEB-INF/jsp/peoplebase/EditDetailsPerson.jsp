@@ -12,84 +12,87 @@
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
 	</security:authorize>
-	<br>
 	<div>
 		<form:form id="EditDetailsPersonForm" cssClass="edit" method="post">
 			<fieldset>
 			<legend><b>PERSON DETAILS</b></legend>
 				<div>
-					<form:label for="first" path="first" cssErrorClass="error"><b>First Name:</b></form:label>
-					<form:input path="first" cssClass="input_5c" />
-					<form:label for="sucNum" path="sucNum" cssErrorClass="error">Succes. Number:</form:label>
-					<form:input path="sucNum" cssClass="input_5c" maxlength="5"/>
+					<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error"><u>First Name</u></form:label>
+					<form:input path="first" id="first" cssClass="input_20c" />
+					<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error">Succes. Number</form:label>
+					<form:input path="sucNum" id="sucNum" cssClass="input_5c" maxlength="5"/>
 				</div>
 				
 				<div>
-					<form:label for="midPrefix" path="midPrefix" cssErrorClass="error">Prefix Pre-Id:</form:label>
-					<form:input path="midPrefix" cssClass="input_5c" maxlength="5"/>
+					<form:label for="midPrefix" id="midPrefixLabel" path="midPrefix" cssErrorClass="error">Prefix Pre-Id</form:label>
+					<form:input path="midPrefix" id="midPrefix" cssClass="input_5c" maxlength="5"/>
 		
-					<form:label for="middle" path="middle" cssErrorClass="error">Pre-Id:</form:label>
-					<form:input path="middle" cssClass="input_20c" />
+					<form:label for="middle" id="middleLabel" path="middle" cssErrorClass="error">Pre-Id</form:label>
+					<form:input path="middle" id="middle" cssClass="input_20c" />
 				</div>
 				
 				<div>
-					<form:label for="lastPrefix" path="lastPrefix" cssErrorClass="error">Prefix Lastname:</form:label>
-					<form:input path="lastPrefix" cssClass="input_5c" maxlength="5"/>
+					<form:label for="lastPrefix" id="lastPrefixLabel" path="lastPrefix" cssErrorClass="error">Prefix Lastname</form:label>
+					<form:input path="lastPrefix" id="lastPrefix" cssClass="input_5c" maxlength="5"/>
 		
-					<form:label for="last" path="last" cssErrorClass="error">Lastname:</form:label>
-					<form:input path="last" cssClass="input_20c" />
+					<form:label for="last" id="lastLabel" path="last" cssErrorClass="error"><u>Lastname</u></form:label>
+					<form:input path="last" id="last" cssClass="input_20c" />
 				</div>
 				
 				<div>
-					<form:label for="postLastPrefix" path="postLastPrefix" cssErrorClass="error">Prefix Post-Id:</form:label>
-					<form:input path="postLastPrefix" cssClass="input_5c" maxlength="5"/>
-					<form:label for="postLast" path="postLast" cssErrorClass="error">Post-Id:</form:label>
-					<form:input path="postLast" cssClass="input_20c" maxlength="5"/>
+					<form:label for="postLastPrefix" id="postLastPrefixLabel" path="postLastPrefix" cssErrorClass="error">Prefix Post-Id</form:label>
+					<form:input path="postLastPrefix" id="postLastPrefix" cssClass="input_5c" maxlength="5"/>
+					<form:label for="postLast" id="postLastLabel" path="postLast" cssErrorClass="error">Post-Id</form:label>
+					<form:input path="postLast" id="postLast" cssClass="input_20c" maxlength="5"/>
 				</div>
 				
 				<div>
-					<form:label for="gender" path="gender" cssErrorClass="error">Gender:</form:label>
-					 <form:select path="gender" cssClass="selectform_short" items="${genders}"/>
+					<form:label for="gender" id="genderLabel" path="gender" cssErrorClass="error">Gender</form:label>
+					 <form:select path="gender" id="gender" cssClass="selectform_short" items="${genders}"/>
 				</div>
+				
+				<hr />
 				
 				<div>
 					<b>Birth:</b>
-					<form:label for="bornYear" path="bornYear" cssErrorClass="error">Year</form:label>
-					<form:input path="bornYear" cssClass="input_4c" maxlength="4"/>
-					<form:label for="bornMonth" path="bornMonth" cssErrorClass="error">Month</form:label>
+					<form:label for="bornYear" id="bornYearLabel" path="bornYear" cssErrorClass="error">Year</form:label>
+					<form:input id="bornYear" path="bornYear" cssClass="input_4c" maxlength="4"/>
+					<form:label for="bornMonth" id="bornMonthLabel" path="bornMonth" cssErrorClass="error">Month</form:label>
 					<form:select id="bornMonth" path="bornMonth" cssClass="selectform"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-					<form:label for="bornDay" path="bornDay" cssErrorClass="error">Day</form:label>
-					<form:input path="bornDay" cssClass="input_2c" maxlength="2"/>
+					<form:label for="bornDay" id="bornDayLabel" path="bornDay" cssErrorClass="error">Day</form:label>
+					<form:input id="bornDay" path="bornDay" cssClass="input_2c" maxlength="2"/>
 				</div>
 				
 				<div>
-					<form:label for="bornApprox" path="bornApprox" cssErrorClass="error">Approx</form:label>
-					<form:checkbox path="bornApprox" cssClass="checkboxPers1"/>
-					<form:label for="bornDateBc" path="bornDateBc" cssErrorClass="error">BC?</form:label>
-					<form:checkbox path="bornDateBc" cssClass="checkboxPers2"/>
+					<form:label for="bornApprox" id="bornApproxLabel" path="bornApprox" cssErrorClass="error">Approx</form:label>
+					<form:checkbox path="bornApprox" id="bornApprox1" cssClass="checkboxPers1"/>
+					<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error">BC?</form:label>
+					<form:checkbox id="bornDateBc1" path="bornDateBc" cssClass="checkboxPers2"/>
 				</div>
 				
 				<div>
-					<form:label for="bornPlaceDescription" path="bornPlaceDescription" cssErrorClass="error">Place</form:label>
+					<form:label for="bornPlaceDescription" id="bornPlaceDescriptionLabel" path="bornPlaceDescription" cssErrorClass="error">Place</form:label>
 					<form:input id="bornPlaceDescriptionAutoCompleter" path="bornPlaceDescription" cssClass="input_10c"/>
 				</div>
 				
 				<div>
-					<form:label for="activeStart" path="activeStart" cssErrorClass="error">Active Start:</form:label>
-					<form:input path="activeStart" cssClass="input_10c"/>
+					<form:label for="activeStart" id="activeStartLabel" path="activeStart" cssErrorClass="error">Active Start</form:label>
+					<form:input id="activeStart" path="activeStart" cssClass="input_10c"/>
 		
-					<form:label for="bornPlaceUnsure" path="bornPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
-					<form:checkbox path="bornPlaceUnsure" cssClass="checkboxPers2"/>
+					<form:label for="bornPlaceUnsure" id="bornPlaceUnsureLabel" path="bornPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
+					<form:checkbox id="bornPlaceUnsure1" path="bornPlaceUnsure" cssClass="checkboxPers2"/>
 				</div>
+				
+				<hr />
 				
 				<div>
 					<b>Death:</b>
-					<form:label for="deathYear" path="deathYear" cssErrorClass="error">Year</form:label>
-					<form:input path="deathYear" cssClass="input_4c" maxlength="4"/>
-					<form:label for="deathMonth" path="deathMonth" cssErrorClass="error">Month</form:label>
+					<form:label for="deathYear" id="deathYearLabel" path="deathYear" cssErrorClass="error">Year</form:label>
+					<form:input id="deathYear" path="deathYear" cssClass="input_4c" maxlength="4"/>
+					<form:label id="deathMonthLabel" for="deathMonth" path="deathMonth" cssErrorClass="error">Month</form:label>
 					<form:select id="deathMonth" path="deathMonth" cssClass="selectform"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-					<form:label for="deathDay" path="deathDay" cssErrorClass="error">Day</form:label>
-					<form:input path="deathDay" cssClass="input_2c" maxlength="2"/>
+					<form:label for="deathDay" id="deathDayLabel" path="deathDay" cssErrorClass="error">Day</form:label>
+					<form:input id="deathDay" path="deathDay" cssClass="input_2c" maxlength="2"/>
 				</div>
 				
 				

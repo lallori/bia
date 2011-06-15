@@ -15,6 +15,14 @@
 		<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId"   value="${command.document.entryId}" />
 		</c:url>
+		
+		<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
+			<c:param name="personId"   value="${command.document.senderPeople.personId}" />
+		</c:url>
+		
+		<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
+			<c:param name="personId"   value="${command.document.recipientPeople.personId}" />
+		</c:url>
 	</security:authorize>
 
 	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post" cssClass="edit">
@@ -22,14 +30,14 @@
 		<fieldset>
 		<legend><b>CORRESPONDENTS/PEOPLE </b></legend>
 			<div>
-				<form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender:</form:label>
+				<form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender</form:label>
 				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
 				<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure" cssClass="checkboxPers2"/>
-				<a title="Show this person record" id="personIcon" href="#"></a>
+				<a title="Show this person record" id="personIcon" class="linkPeople" href="${CompareSenderURL}"></a>
 			</div>
 			<div>	
-				<form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From:</form:label>
+				<form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From</form:label>
 				<form:input id="senderPlaceDescriptionAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" />
 				<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure" cssClass="checkboxPers2"/>
@@ -39,14 +47,14 @@
 			<hr />
 			
 			<div>
-				<form:label id="recipientPeopleDescriptionLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error">Recipient:</form:label>
+				<form:label id="recipientPeopleDescriptionLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error">Recipient</form:label>
 				<form:input id="recipientPeopleDescriptionAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/>
 				<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure" cssClass="checkboxPers2"/>
-				<a title="Show this person record" id="personIcon" href="#"></a>
+				<a title="Show this person record" id="personIcon" class="linkPeople" href="${CompareRecipientURL}"></a>
 			</div>
 			<div>
-				<form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">From:</form:label>
+				<form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">From</form:label>
 				<form:input id="recipientPlaceDescriptionAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" />
 				<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPlaceUnsure" path="recipientPlaceUnsure" cssClass="checkboxPers2"/>
@@ -67,10 +75,12 @@
 	
 	<form:form id="PeopleCorrespondentsDocumentsForm" method="post" cssClass="edit">
 		<fieldset>	
-		
+			<legend><b>PEOPLE</b></legend>
+			<br />
 			<div>
-				<label for="people" id="peopleLabel">People:</label>
+				Individuals and corporate bodies indicated in the document extract:
 			</div>
+			<br />
 		<c:forEach items="${command.document.epLink}" var="currentPersonLinked">
 			<c:url var="EditPersonDocumentURL" value="/de/docbase/EditPersonDocument.do">
 				<c:param name="entryId" value="${currentPersonLinked.document.entryId}" />
@@ -86,7 +96,10 @@
 				<input id="people_${currentPersonLinked.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPersonLinked.person.mapNameLf}" disabled="disabled"/>
 				<a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentURL}"></a>
 				<a class="editValue" href="${EditPersonDocumentURL}">edit value</a>
-				<a title="Show this person record" id="personIcon" href="#"></a>
+				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+						<c:param name="personId"   value="${currentPersonLinked.person.personId}" />
+					</c:url>
+				<a title="Show this person record" id="personIcon" href="${ComparePersonURL}" class="linkPeople"></a>
 			</div>
 		</c:forEach>
 			<br>			
@@ -196,6 +209,12 @@
 
 			$j('#close').click(function() {
 				$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question') }); 
+				return false;
+			});
+
+			$j('.linkPeople').click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
 		});

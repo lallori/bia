@@ -35,7 +35,7 @@
 				<select disabled="disabled" class="selectform_long_disabled" name="nameType" id="nameType">
 					<option value="${currentName.nameType}" selected="selected">${currentName.nameType}</option>
 				</select>
-      			<input id="name_${currentName.nameId}" name="name_${currentName.nameId}" class="input_10c_disabled" type="text" value="${currentName.namePrefix} ${currentName.altName}" disabled="disabled" />
+      			<input id="name_${currentName.nameId}" name="name_${currentName.nameId}" class="input_15c_disabled" type="text" value="${currentName.namePrefix} ${currentName.altName}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteNamePersonURL}"></a>
 				<a class="editValue" class="editValue" href="${EditNamePersonURL}">edit value</a>
 			</div>

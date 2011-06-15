@@ -70,6 +70,10 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#wordSearchForm").advancedSearchForm();
+		$j("#volumeSearchForm").advancedSearchForm();
+		$j("#dateRangeSearchForm").advancedSearchForm();
+		
 		$j("#multiOpenAccordion").multiAccordion({active: [0]});
 	});
 </script>

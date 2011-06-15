@@ -14,9 +14,10 @@
 		<fieldset>
 			<legend><b>EXTRACT/SYNOPSIS</b></legend>
 			
-			<div><form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Extract:</form:label></div>
+			<div><form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Extract</form:label></div>
 			<div><form:textarea id="docExtract" path="docExtract" class="txtarea_big" /></div>
-			<div><form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis:</form:label></div>
+			<br />
+			<div><form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis</form:label></div>
 			<div><form:textarea id="synopsis" path="synopsis" class="txtarea_big" /></div>
 			
 			<div>
