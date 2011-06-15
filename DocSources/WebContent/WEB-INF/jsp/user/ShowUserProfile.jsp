@@ -13,11 +13,12 @@
 		<div id="bgImgUserProfile">
 			<div id="imgUserProfile"></div>
 			<!--  <img src="/DocSources/images/default_user.jpg" alt="default image" id="imgProfile"/>-->
+			<a id="PersonalNotesButton" href="#"></a>
+			<a id="EditUserProfile" href="${EditUserProfileURL}"></a>
+			<a id="CloseUserProfile" href="#"></a>
 		</div>
 		
-		<a id="PersonalNotesButton" href="#"></a>
-		<a id="EditUserProfile" href="${EditUserProfileURL}"></a>
-		<a id="CloseUserProfile" href="#"></a>
+		
 		
 		<div id="EditUserProfileDiv">
 			<div class="list">
