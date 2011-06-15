@@ -58,6 +58,14 @@
 
 			});
 		</script>
+		<script type="text/javascript">
+			$j(document).ready(function() {
+				$j('.helpIcon').tooltip({
+					track: true,
+					fade: 350 
+				});
+			});
+		</script>
 	</head>
 	
 	<body>
@@ -77,3 +85,5 @@
 		
 	</body>
 </html>
+
+
