@@ -14,7 +14,7 @@ body {
 
 #layout {
 	width:1000px;
-	height:750px;
+	height:700px;
 	margin:0px auto 0 auto;
 	padding:0px;
 	top:0px;
@@ -26,16 +26,18 @@ body {
 	height:175px;
 	margin-left:365px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/img_map.png);
+	background:url(/DocSources/images/1024/img_map.png) no-repeat;
 }
 
 #footer {
-	width:100%;
-	height: 130px;
-	margin-top:620px;
+	width:600px;
+	height:53px;
+	margin:600px 0 0 215px;
 	position:absolute;
-
+	background:url(/DocSources/images/1024/img_logoLoginUser.png) no-repeat;
 }
+
+
 
 /* DIV Log in */
 

@@ -67,7 +67,8 @@ a {
 	width:270px;
 	height:165px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/img_map.png);
+	background:url(/DocSources/images/1024/img_map.png) no-repeat;
+	background-color:transparent;
 }
 
 #top_top { /* SEARCH FORM and LAST ENTRY MENU Container */
@@ -224,7 +225,7 @@ input {
 
 #menulastentry { /* Shortcut Menu <ul> list */
 	width:450px;
-	height:90px;
+	height:100px;
 	list-style:none;
 	float:left;
 }
@@ -240,12 +241,16 @@ input {
 	display:block;
 	text-decoration:none;
 	width:100px;
+	top:10px;
 	height:85px;
 	padding-left:10px;
 }
 
 #menulastentry #last_doc a:hover {
-		background-image:url(/DocSources/images/1024/button_lastdocumententryRollover.png);
+	ms-transform:translate(0,-5px);
+	-webkit-transform:translate(0,-5px);
+	-o-transform:translate(0,-5px);
+	transform:translate(0,-5px);
 }
 
 #menulastentry #last_vol a {
@@ -260,7 +265,10 @@ input {
 }
 
 #menulastentry #last_vol a:hover {
-	background-image:url(/DocSources/images/1024/button_lastvolumeentryRollover.png);
+	ms-transform:translate(0,-5px);
+	-webkit-transform:translate(0,-5px);
+	-o-transform:translate(0,-5px);
+	transform:translate(0,-5px);
 }
 
 #menulastentry #last_pers a {
@@ -275,7 +283,10 @@ input {
 }
 
 #menulastentry #last_pers a:hover {
-	background-image:url(/DocSources/images/1024/button_lastpersonentryRollover.png);
+	ms-transform:translate(0,-5px);
+	-webkit-transform:translate(0,-5px);
+	-o-transform:translate(0,-5px);
+	transform:translate(0,-5px);
 }
 
 #menulastentry #last_pla a {
@@ -290,7 +301,10 @@ input {
 }
 
 #menulastentry #last_pla a:hover {
-	background-image:url(/DocSources/images/1024/button_lastplaceentryRollover.png);
+	ms-transform:translate(0,-5px);
+	-webkit-transform:translate(0,-5px);
+	-o-transform:translate(0,-5px);
+	transform:translate(0,-5px);
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 
@@ -378,7 +392,9 @@ input {
 
 
 #body_left a:hover, #body_right a:hover{ 
-	opacity:0.7;
+	opacity:0.75; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.7;
+	filter:alpha(opacity=70); /* IE */ !important
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
