@@ -23,8 +23,20 @@
 		<div class="list">
 			<c:forEach items="${marriages}" var="currentMarriage">
 				<div class="row">
-					<div class="value"><a class="linkSpouse" href="#">${currentMarriage.wife}</a></div> 
-					<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
+					<c:if test="${person.personId == currentMarriage.husband.personId}">
+						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+							<c:param name="personId"   value="${currentMarriage.wife.personId}" />
+						</c:url>
+						<div class="value"><a class="linkSpouse" href="${ComparePersonURL}">${currentMarriage.wife}</a></div> 
+						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
+					</c:if>
+					<c:if test="${person.personId == currentMarriage.wife.personId}">
+						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+							<c:param name="personId"   value="${currentMarriage.husband.personId}" />
+						</c:url>
+						<div class="value"><a class="linkSpouse" href="${ComparePersonURL}">${currentMarriage.husband}</a></div> 
+						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.husband.deathYear}</div>
+					</c:if>
 				</div>
 			</c:forEach>
 		</div>
@@ -43,6 +55,12 @@
 			$j("#EditSpousesPerson").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditSpousesPersonDiv").load($j(this).attr("href"));
+				return false;
+			});
+
+			$j(".linkSpouse").click(function(){
+				$j("#tabs").tabs("add", $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
 		});
