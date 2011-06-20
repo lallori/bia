@@ -102,7 +102,7 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-	        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden');
+	        $j("#EditCorrespondentsDocument").css('visibility', 'hidden');
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
 	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
