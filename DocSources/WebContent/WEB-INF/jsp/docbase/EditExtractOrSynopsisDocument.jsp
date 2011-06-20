@@ -37,7 +37,7 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 	        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
-	        $j("#EditCorrespondentsOrPeopleDocument").css('visibility', 'hidden'); 
+	        $j("#EditCorrespondentsDocument").css('visibility', 'hidden'); 
 	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
