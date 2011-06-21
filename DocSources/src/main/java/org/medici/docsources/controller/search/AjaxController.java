@@ -368,7 +368,7 @@ public class AjaxController {
 						break;
 				}
 			}
-		} else if (searchType.toLowerCase().trim().equals("volume")) {
+		} else if (searchType.toLowerCase().trim().equals("volumes")) {
 			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 				switch (sortingColumnNumber) {
 					case 0:
