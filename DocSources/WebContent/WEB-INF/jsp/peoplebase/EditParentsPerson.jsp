@@ -111,6 +111,7 @@
 			});*/
 
 			$j(".editValue").click(function() {
+				$j(".deleteIcon").css('visibility', 'hidden');
 				$j("#EditParentPersonDiv").load($j(this).attr("href"));
 				return false;
 			});
