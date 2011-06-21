@@ -1716,6 +1716,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	margin-left:4px;
 }
 
+#endYearLabel {
+	margin-left:14px;
+}
 
 #endMonthLabel {
 	margin-left:13px;
@@ -2759,22 +2762,65 @@ a.refreshVolumeExplorer {
 	margin-left:370px;
 }
 
-#advancedSearch #bodyTitles { /* Search Form and Search Filter titles */
+#advancedSearch #body_left { /* LEFT-hand side of the SCREEN */
+	width:470px;
+	min-height:400px;
+	padding:0 10px 15px 5px;
+	margin-left:10px;
+	border:none;
+	position:absolute;
+	font-size:11px;
+}
+
+#advancedSearch #body_right { /* RIGHT-hand side of the SCREEN */
+	width:400px;
+	min-height:500px;
+	border:none;
+	margin:0 0 0 500px;
+	position:absolute;
+	font-size:11px;
+	z-index:2;
+}
+
+#advancedSearch #body_left a{
+	text-decoration:none;
+	color:#654c47;
+}
+
+
+/* -------- Custom Search Filter (body_left) --------- */
+
+#customSearchFilterDiv { /* Custom Search Filter container */
+	width:470px;
+}
+
+#customSearchFilterDiv .customSearchFilterTitle { /* Image Title "Create your custom search filter */
 	margin-top:7px;
-	background:url(/DocSources/images/1024/img_searchTitles.png) no-repeat;
+	background:url(/DocSources/images/1024/bg_customSearchFilterTitle.jpg) no-repeat;
 	background-position:center;
 	height:30px;
-	width:900px;
-	margin:0 0 30px 20px;
+	width:485px;
+	margin:0 0 30px 0;
 }
 
-#advancedSearch h2{
-	font-size:11px;
-	color:#645350;
-	margin:0 0 10px 0;
+
+#multiOpenAccordion #addSearchFilter { /* Add button */
+	background: url(/DocSources/images/1024/button_addSearchFilter.png) no-repeat;
+	width:40px;
+	height:23px;
+	float:right;
+	border:none;
+	cursor:pointer;
 }
 
-/* floating message when rollover on help simbol */
+#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
+	float:none;
+	margin-left:34px;
+}
+
+
+/* --- floating message when rollover on help simbol --- */
+
 #tooltip {
 	position: absolute;
 	z-index: 3000;
@@ -2784,8 +2830,8 @@ a.refreshVolumeExplorer {
 	opacity:0.9; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.9;
 	filter:alpha(opacity=90); /* IE */
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 	width:350px;
 	-moz-box-shadow: 2px 2px 2px #666;
 	-webkit-box-shadow: 2px 2px 2px #666;
@@ -2801,54 +2847,99 @@ a.refreshVolumeExplorer {
 	font-weight:normal;
 }
 
-/* -------- body left (Search Form) ----------- */
-
-#advancedSearch #body_left { /* LEFT-hand side of the SCREEN */
-	width:470px;
-	min-height:400px;
-	margin-top:-25px;
-	padding:0 10px 15px 5px;
-	margin-left:10px;
-	border:none;
-	float:left;
-	font-size:11px;
-}
-
-#advancedSearch #body_left a{
+#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #VettingChronologyDiv a.helpIcon { /* Help symbol "?" */
+	border: 1px solid #6D5C4D;
+	color:  #6D5C4D; 
+	font-size: 12px; 
+	background-color: #DCC0BA; 
+	padding-left: 5px; 
+	padding-right: 4px; 
+	font-weight:bold;
 	text-decoration:none;
-	color:#654c47;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	cursor:help;
 }
 
-#multiOpenAccordion #addSearchFilter {
-	background: url(/DocSources/images/1024/button_addSearchFilter.png) no-repeat;
-	width:40px;
-	height:23px;
-	float:right;
-	border:none;
-	cursor:pointer;
-}
-
-
-#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
-	float:none;
-	margin-left:34px;
+#advancedSearch #body_left a:hover.helpIcon { /* Help symbol "?" */
+	border: 1px solid #2e83ff;
+	color:  #363636; 
+	background-color: #ebf3ff; 
+	opacity:0.9; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.9;
+	filter:alpha(opacity=90); /* IE */
 }
 
 
+/* --------- Your Search Filter (body_right) ---------- */
 
-
-/*
-/* -------- body right (Search Form) ----------- */
-
-#advancedSearch #body_right { /* RIGHT-hand side of the SCREEN */
+#yourSearchFilterDiv { /* RIGHT-hand side of the SCREEN */
 	width:400px;
-	min-height:500px;
-	border:none;
-	margin-left:505px;
-	padding:0 0 25px 50px;
-	font-size:11px;
+	margin:0;
+	position:absolute;
+}
+
+#yourSearchFilterDiv .yourSearchFilterTitle { /* Search Form and Search Filter titles */
+	background:url(/DocSources/images/1024/bg_yourSearchFilterTitle.jpg) no-repeat center;
+	height:30px;
+	width:400px;
+	margin:0 0 0 40px;
+}
+
+#advancedSearch #body_right .easySearchModeOn {
+	margin:25px 0 0 50px;
+	background:url(/DocSources/images/1024/button_easySearchMode_on.png) no-repeat;
+	width:160px;
+	height:50px;
+	z-index:1;
+	position:absolute;
+}
+
+#advancedSearch #body_right .expertSearchModeOn {
+	margin:25px 0 0 250px;
+	background:url(/DocSources/images/1024/button_expertSearchMode_on.png) no-repeat;
+	width:160px;
+	height:50px;
+	z-index:1;
+	position:absolute;
+}
+
+#advancedSearch #body_right .easySearchModeOff {
+	margin:25px 0 0 50px;
+	background:url(/DocSources/images/1024/button_easySearchMode_off.png) no-repeat;
+	width:160px;
+	height:50px;
+	z-index:1;
+	position:absolute;
+}
+
+#advancedSearch #body_right .expertSearchModeOff {
+	margin:25px 0 0 250px;
+	background:url(/DocSources/images/1024/button_expertSearchMode_off.png) no-repeat;
+	width:160px;
+	height:50px;
+	z-index:1;
+	position:absolute;
+}
+
+#advancedSearch #body_right .expertSearchModeOn:hover, #advancedSearch #body_right .easySearchModeOn:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
+#yourEasySearchFilterForm, #yourExpertSearchFilterForm {
 	background:url(/DocSources/images/1024/bg_searchFilter.png) no-repeat;
-	z-index:2;
+	margin:55px 0 0 0;
+	padding:20px 0 0 60px;
+	width:390px;
+	min-height:450px;
+}
+
+#advancedSearch h2{
+	font-size:11px;
+	color:#645350;
+	margin:0 0 10px 0;
 }
 
 #advancedSearch #body_right p{
@@ -2898,7 +2989,7 @@ span.categorySearch {
 	color:#063;
 }
 
-.saveAsButton {
+.saveAsButton { /* Save As Button */
 	margin:5px 0 0 5px;
 	position:absolute;
 	padding:0;
@@ -2912,7 +3003,7 @@ span.categorySearch {
 	outline:none;
 }
 
-.saveButton {
+.saveButton { /* Save Button */
 	margin:5px 0 0 55px;
 	position:absolute;
 	padding:0;
@@ -2926,76 +3017,7 @@ span.categorySearch {
 	outline:none;
 }
 
-/*
-/* ----------------- form common elements ----------------- */
-
-#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #VettingChronologyDiv a.helpIcon { /* Help symbol "?" */
-	border: 1px solid #6D5C4D;
-	color:  #6D5C4D; 
-	font-size: 12px; 
-	background-color: #DCC0BA; 
-	padding-left: 5px; 
-	padding-right: 4px; 
-	font-weight:bold;
-	text-decoration:none;
-	-moz-border-radius: 8px;
-	border-radius: 8px;
-	cursor:help;
-}
-
-#advancedSearch #body_left a:hover.helpIcon { /* Help symbol "?" */
-	border: 1px solid #2e83ff;
-	color:  #363636; 
-	background-color: #ebf3ff; 
-	opacity:0.9; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.9;
-	filter:alpha(opacity=90); /* IE */
-}
-
-#advancedSearch #body_right .easySearchModeOn {
-	margin:-62px 0 0 0;
-	background:url(/DocSources/images/1024/button_easySearchMode_on.png) no-repeat;
-	width:160px;
-	height:50px;
-	z-index:1;
-	position:absolute;
-}
-
-#advancedSearch #body_right .expertSearchModeOn {
-	margin:-62px 0 0 190px;
-	background:url(/DocSources/images/1024/button_expertSearchMode_on.png) no-repeat;
-	width:160px;
-	height:50px;
-	z-index:1;
-	position:absolute;
-}
-
-#advancedSearch #body_right .easySearchModeOff {
-	margin:-62px 0 0 0;
-	background:url(/DocSources/images/1024/button_easySearchMode_off.png) no-repeat;
-	width:160px;
-	height:50px;
-	z-index:1;
-	position:absolute;
-}
-
-#advancedSearch #body_right .expertSearchModeOff {
-	margin:-62px 0 0 190px;
-	background:url(/DocSources/images/1024/button_expertSearchMode_off.png) no-repeat;
-	width:160px;
-	height:50px;
-	z-index:1;
-	position:absolute;
-}
-
-
-#advancedSearch #body_right .expertSearchModeOn:hover, #advancedSearch #body_right .easySearchModeOn:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
-}
-
-#advsearch { /* Search Advanced Form Button */
+#advsearch { /* Search Button */
 	margin:5px auto auto 120px;
 	padding:0;
 	cursor:pointer;
@@ -3006,6 +3028,18 @@ span.categorySearch {
 	border:none;
 }
 
+/* ---------------------------- Your search results ------------------------- */
+
+#yourSearchResults { /* Search Results container */
+	width:470px;
+}
+
+#yourSearchResultsTitle { /* Search Form and Search Filter titles */
+	background:url(/DocSources/images/1024/bg_yourSearchResultsTitle.jpg) no-repeat center;
+	height:30px;
+	width:400px;
+	margin:0 0 0 40px;
+}
 
 /* -------------------------------------------------------------------------- */
 /*

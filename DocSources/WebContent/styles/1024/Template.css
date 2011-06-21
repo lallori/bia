@@ -248,6 +248,7 @@ input {
 
 #menulastentry #last_doc a:hover {
 	ms-transform:translate(0,-5px);
+	-moz-transform:translate(0,-5px);
 	-webkit-transform:translate(0,-5px);
 	-o-transform:translate(0,-5px);
 	transform:translate(0,-5px);
@@ -266,6 +267,7 @@ input {
 
 #menulastentry #last_vol a:hover {
 	ms-transform:translate(0,-5px);
+	-moz-transform:translate(0,-5px);
 	-webkit-transform:translate(0,-5px);
 	-o-transform:translate(0,-5px);
 	transform:translate(0,-5px);
@@ -285,6 +287,7 @@ input {
 #menulastentry #last_pers a:hover {
 	ms-transform:translate(0,-5px);
 	-webkit-transform:translate(0,-5px);
+	-moz-transform:translate(0,-5px);
 	-o-transform:translate(0,-5px);
 	transform:translate(0,-5px);
 }
@@ -302,6 +305,7 @@ input {
 
 #menulastentry #last_pla a:hover {
 	ms-transform:translate(0,-5px);
+	-moz-transform:translate(0,-5px);
 	-webkit-transform:translate(0,-5px);
 	-o-transform:translate(0,-5px);
 	transform:translate(0,-5px);
