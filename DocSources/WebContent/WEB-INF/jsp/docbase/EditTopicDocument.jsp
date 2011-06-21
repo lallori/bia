@@ -28,7 +28,7 @@
 			</div>
 			
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="closeTopic" type="submit" value="" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="" class="button"/>
 			</div>		
 		</fieldset>	
@@ -73,8 +73,8 @@
 			    onSelect: function(value, data){ $j('#placeId').val(data); }
 			  });
 
-			$j('#close').click(function() { 
-	            $j('#EditTopicDocumentDiv').block({ message: $j("#question") }); 
+			$j('#closeTopic').click(function() { 
+	            $j('#EditTopicDocumentDiv').block({ message: $j('#question') }); 
 	            return false;
 			});
 
