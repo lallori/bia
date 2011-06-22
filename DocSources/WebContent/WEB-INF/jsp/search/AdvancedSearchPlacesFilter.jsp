@@ -7,6 +7,10 @@
 <form id="customSearchFilterForm" method="post">
 	<p><u>Custom Search Filter</u></p>
 	<br />
+	<div id="placeNameSearchDiv"></div>
+	<div id="placeTypeSearchDiv"></div>
+	<div id="linkedToTopicsSearchDiv"></div>
+	<div id="linkedToPeopleSearchDiv"></div>
 </form>
 
 <input type="hidden" name="wordSearch">

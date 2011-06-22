@@ -7,6 +7,9 @@
 <form id="customSearchFilterForm" method="post">
 	<p><u>Custom Search Filter</u></p>
 	<br />
+	<div id="wordSearchDiv"></div>
+	<div id="volumeSearchDiv"></div>
+	<div id="dateRangeSearchDiv"></div>
 </form>
 
 <input type="hidden" name="wordSearch">

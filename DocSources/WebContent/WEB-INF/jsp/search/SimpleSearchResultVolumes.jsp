@@ -47,7 +47,7 @@
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="resultVolume${searchNumber}">
 		<thead>
 			<tr>
-				<th>Title</th>
+				<th>Carteggio</th>
 				<th>Filza N.(MDP)</th>
 				<th>Start Date</th>
 				<th>End Date</th>
