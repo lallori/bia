@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Template.css" />" />
-		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/Chronology.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MyHistory.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/modalbox.css" />" />
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
