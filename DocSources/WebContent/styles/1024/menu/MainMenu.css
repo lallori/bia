@@ -59,7 +59,7 @@
 	background-image:url(/DocSources/images/1024/button_advsearchRollover.png);
 }
 
-#chronologyMenu{
+#myHistoryMenu{
 	background-image:url(/DocSources/images/1024/button_chronology.png);
 	background-repeat:no-repeat;
 	display:block;
@@ -67,11 +67,11 @@
 	height:64px;
 }
 
-.chronologyMenu{
+.myHistoryMenu{
 	margin-left:30px;
 }
 
-#chronologyMenu:hover{
+#myHistoryMenu:hover{
 	background-image:url(/DocSources/images/1024/button_chronologyRollover.png);
 }
 

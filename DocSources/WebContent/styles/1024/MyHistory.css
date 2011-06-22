@@ -5,57 +5,50 @@
  * Copyright (c) 2011 MAP
  *
  *
- * This style sheet contains all id and tag from the CHRONOLOGY
+ * This style sheet contains all id and tag from MY HISTORY
  */
 
-.Chronology { /* Chronology Content Div */
-	width:700px;
-	height:500px;
-	border:none;
-	margin:10px auto 0 auto;
 
+#MyHistoryDiv { /* Chronology Content Div */
+	width:702px;
+	height:400px;
+	margin:10px auto 0 15px;
 }
 
-#Chronology { /* Chronology Content Div */
-	width:700px;
-	height:500px;
-	margin:10px auto 0 40px;
-}
-
-#DocsChronology { /* Documents Chronology Div */
-	width:260px;
-	height:230px;
-	position:absolute;
-	color:#6F6B69;
-	padding:10px;
-}
-
-#PeopleChronology { /* People Chronology Div */
+#DocsHistory { /* Documents Chronology Div */
 	width:250px;
-	height:230px;
-	position:absolute;
-	margin-left:350px;
+	height:150px;
+	float:left;
 	color:#6F6B69;
-	padding:10px;
+	padding:10px 50px 40px 50px;
+	border-right:1px solid #EAD9D6;
+	border-bottom:1px solid #EAD9D6;
 }
 
-#VolumesChronology { /* Volumes Chronology Div */
+#PeopleHistory { /* People Chronology Div */
 	width:250px;
-	height:230px;
-	position:absolute;
-	margin-top:250px;
+	height:150px;
+	float:right;
 	color:#6F6B69;
-	padding:10px;
+	padding:10px 50px 40px 50px;
+	border-bottom:1px solid #EAD9D6;
 }
 
-#PlaceChronology { /* Place Chronology Div */
+#VolumesHistory { /* Volumes Chronology Div */
 	width:250px;
-	height:230px;
-	position:absolute;
-	margin-top:250px;
-	margin-left:350px;
+	height:150px;
+	float:left;
 	color:#6F6B69;
-	padding:10px;
+	padding:10px 50px 40px 50px;
+	border-right:1px solid #EAD9D6;
+}
+
+#PlaceHistory { /* Place Chronology Div */
+	width:250px;
+	height:150px;
+	float:right;
+	color:#6F6B69;
+	padding:10px 50px 40px 50px;
 }
 
 #DocsImg, #PeopleImg, #VolumesImg, #PlaceImg {
@@ -64,40 +57,54 @@
 	height:50px;
 }
 
-#DocsChronology ul, #PeopleChronology ul, #VolumesChronology ul, #PlaceChronology ul, #MoreDocsCronology ul { /* Chronology's List */
+#DocsHistory ul, #PeopleHistory ul, #VolumesHistory ul, #PlaceHistory ul, #MoreDocsCronology ul { /* Chronology's List */
 	list-style:none;
-	font-size:12px;
+	font-size:11px;
 	text-align:justify;
 }
 
-#DocsChronology li, #PeopleChronology li, #VolumesChronology li, #PlaceChronology li, #MoreDocsCronology li { /* Chronology's List */
+#DocsHistory li, #PeopleHistory li, #VolumesHistory li, #PlaceHistory li, #MoreDocsCronology li { /* Chronology's List */
 	line-height:22px;
 }
 
-#Chronology h1 { /* Chronology Titles */
+#MyHistoryDiv h1 { /* Chronology Titles */
 	text-align:center;
 	font-size:11px;
 	font-weight:bold;
 	color:#6d5c4d;
+	margin-bottom:10px;
 }
 
-#Chronology h2 { /* Chronology Titles */
+#MyHistoryDiv h2 { /* Chronology Titles */
 	text-align:center;
 	font-size:11px;
 	font-weight:bold;
 	color:#6d5c4d;
-	margin:-20px auto 20px auto;
+	margin:0 auto 20px auto;
 }
 
-#Chronology a, #MoreDocsChronology a, #MorePlaceChronology a, #MoreVolChronology a, #MorePeopleChronology a{
-	font-size:11px;
+#MyHistoryDiv a {
+	font-size:12px;
 	color:#6d5c4d;
+	text-decoration:none;
 	float:right;
+}
+
+#MyHistoryDiv a:hover {
 	text-decoration:underline;
 }
 
-#Chronology #close{
-	margin:520px 0 0 300px;
+#moreDocs, #morePeople, #moreVolumes, #morePlaces {
+	margin:10px 0 0 0;
+	padding-bottom:10px;
+	background:url(/DocSources/images/1024/button_more.png) no-repeat;
+	float:right;
+	width:45px;
+	height:23px;
+}
+
+#MyHistoryDiv #close {
+	margin:20px 0 0 325px;
 }
 
 /* ------------- Specific Chronology Window --------------- */

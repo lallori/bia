@@ -2742,8 +2742,8 @@ a.refreshVolumeExplorer {
 }
 
 #advancedSearchModal a:hover{ /* On Rollover transparency effect */
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
+	opacity:0.5; /* Chrome, Safari */
+	-moz-opacity: 0.5; /* Firefox */
 	filter:alpha(opacity=0); /* IE */
 }
 
@@ -2827,8 +2827,8 @@ a.refreshVolumeExplorer {
 	border: 1px solid #2e83ff;
 	background-color: #ebf3ff; 
 	padding:3px 5px 3px 5px;
-	opacity:0.9; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.9;
+	opacity:0.9; /* Chrome, Safari */
+	-moz-opacity: 0.9;/* FireFox */
 	filter:alpha(opacity=90); /* IE */
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -2865,8 +2865,8 @@ a.refreshVolumeExplorer {
 	border: 1px solid #2e83ff;
 	color:  #363636; 
 	background-color: #ebf3ff; 
-	opacity:0.9; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.9;
+	opacity:0.9; /* Chrome, Safari */
+	-moz-opacity: 0.9; /* FireFox */
 	filter:alpha(opacity=90); /* IE */
 }
 
@@ -2886,7 +2886,7 @@ a.refreshVolumeExplorer {
 	margin:0 0 0 40px;
 }
 
-#advancedSearch #body_right .easySearchModeOn {
+#advancedSearch #body_right .easySearchModeOn { /* Easy Search mode ACTIVE */
 	margin:25px 0 0 50px;
 	background:url(/DocSources/images/1024/button_easySearchMode_on.png) no-repeat;
 	width:160px;
@@ -2895,7 +2895,7 @@ a.refreshVolumeExplorer {
 	position:absolute;
 }
 
-#advancedSearch #body_right .expertSearchModeOn {
+#advancedSearch #body_right .expertSearchModeOn { /* Expert Search mode ACTIVE */
 	margin:25px 0 0 250px;
 	background:url(/DocSources/images/1024/button_expertSearchMode_on.png) no-repeat;
 	width:160px;
@@ -2904,7 +2904,7 @@ a.refreshVolumeExplorer {
 	position:absolute;
 }
 
-#advancedSearch #body_right .easySearchModeOff {
+#advancedSearch #body_right .easySearchModeOff { /* Easy Search mode OFF */
 	margin:25px 0 0 50px;
 	background:url(/DocSources/images/1024/button_easySearchMode_off.png) no-repeat;
 	width:160px;
@@ -2913,7 +2913,7 @@ a.refreshVolumeExplorer {
 	position:absolute;
 }
 
-#advancedSearch #body_right .expertSearchModeOff {
+#advancedSearch #body_right .expertSearchModeOff { /* Easy Search mode OFF */
 	margin:25px 0 0 250px;
 	background:url(/DocSources/images/1024/button_expertSearchMode_off.png) no-repeat;
 	width:160px;
@@ -2923,8 +2923,8 @@ a.refreshVolumeExplorer {
 }
 
 #advancedSearch #body_right .expertSearchModeOn:hover, #advancedSearch #body_right .easySearchModeOn:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
+	opacity:0.5; /* Chrome, Safari */
+	-moz-opacity: 0.5; /* FireFox */
 	filter:alpha(opacity=50); /* IE */
 }
 
