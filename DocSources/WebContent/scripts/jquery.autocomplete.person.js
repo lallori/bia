@@ -270,6 +270,7 @@
 
     suggest: function() {
       var me, len, div, f, v, i, s, mOver, mClick;
+      var test;
       me = this;
       len = this.suggestions.length;
       f = this.options.fnFormatResult;
@@ -281,12 +282,20 @@
     	  message = 'No person found.';
     	  this.container.append(message);
       } else {
-	      table = '<tr><td width="50%"><b>FullName</b></td><td><b>Active Starts</b></td><td><b>Birth</b></td><td><b>Death</b></td></tr>';
+	      table = '<tr><td width="50%"><b>FullName</b></td><td><b>Birth-Active Starts</b></td><td><b>Death-Active Ends</b></td></tr>';
 	      this.container.append(table);
 	
 	      for (i = 0; i < len; i++) {
-	        s = this.suggestions[i];
-	        tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v) + '</td>' + '<td>' + this.activeStarts[i] + '</td>' + '<td>' + this.bornYears[i] + '</td>' + '<td>' + this.deathYears[i] + '</td>' + '</tr>');
+	        test= '';
+	    	s = this.suggestions[i];
+	        //tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v)+ '</td>')+ '<td>' + this.activeStarts[i] + '</td>' + '<td>' + this.bornYears[i] + '</td>' + '<td>' + this.deathYears[i] + '</td>' + '</tr>'); ;
+	        if(this.bornYears[i] === '')
+	        	test += '<td><font color="red">' + this.activeStarts[i] + '</font></td>';
+	        else
+	        	test += '<td>' + this.bornYears[i] + '</td>';
+	        	
+	        test += '<td>' + this.deathYears[i] + '</td>' + '</tr>';
+	        tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v)+ '</td>' + test);
 	        tr.mouseover(mOver(i));
 	        tr.click(mClick(i));
 	        this.container.append(tr);
