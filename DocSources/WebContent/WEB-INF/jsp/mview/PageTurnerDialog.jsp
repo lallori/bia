@@ -6,7 +6,8 @@
 
 	<c:url var="SearchAjaxURL" value="/src/mview/SearchCarta.json"/>
 	
-	<c:url var="ReverseProxyIIPImageURL" value="/mview/ReverseProxyIIPImage.do"/>
+	<c:url var="IIPImageServerURL" value="/mview/IIPImageServer.do"/>
+	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 	
 	<c:url var="PersonalNotesDialogURL" value="/src/mview/EditPersonalNotesDialog.do"/>
 	
@@ -145,10 +146,10 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${SearchAjaxURL}', proxyIIPImage: '${ReverseProxyIIPImageURL}'});
-			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${SearchAjaxURL}', proxyIIPImage: '${ReverseProxyIIPImageURL}'});
-			$j("#previous").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImageURL}'});
-			$j("#next").pageTurnerPage({proxyIIPImage: '${ReverseProxyIIPImageURL}'});
+			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${SearchAjaxURL}', imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
+			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${SearchAjaxURL}', imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
+			$j("#previous").pageTurnerPage({imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
+			$j("#next").pageTurnerPage({imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
 			
 			var $dialogPersonalNotes = $j('<div id="DialogPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
 				autoOpen: false,

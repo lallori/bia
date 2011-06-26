@@ -33,7 +33,8 @@
 
     $.pageTurnerForm.defaultParams = {
         "searchUrl":  "",   // Show scrollbars?
-        "proxyIIPImage": "/mview/ReverseProxyIIPImage.do",
+        "IIPImageServer": "/mview/ReverseProxyIIPImage.do",
+        "imagePrefix": "/DocSources/images/mview", 
         "status":      "no"     // Show the status bar?
     };
 
@@ -64,12 +65,17 @@
 						}
 
 						iip = new IIP( "targetframe", {
-							server: functionParams["proxyIIPImage"],
+							server: functionParams["IIPImageServer"],
 							image: data.imageCompleteName,
+							prefix: functionParams["imagePrefix"],
 							credit: credit, 
-							zoom: 1,
+							scale: 18.0,
+							navigation: true,
+							showNavWindow: true,
+							showNavImage: true, // this property hide navigation image
 							showNavButtons: true,
-							render: 'random'
+							winResize: true,
+							zoom: 3
 						});
 
 						if (data.previousPage == '') {
@@ -95,8 +101,8 @@
 
     $.pageTurnerPage.defaultParams = {
     	"targetFrame":  "targetframe",
-    	"proxyIIPImage": "/mview/ProxyIIPImage.do"
-    		
+    	"IIPImageServer": "/mview/ProxyIIPImage.do",
+    	"imagePrefix": "/DocSources/images/mview"
     };
 
     $.fn.pageTurnerPage = function (params) {
@@ -120,12 +126,17 @@
 					}
 					
 					iip = new IIP( "targetframe", {
-						server: functionParams["proxyIIPImage"],
+						server: functionParams["IIPImageServer"],
 						image: data.imageCompleteName,
+						prefix: functionParams["imagePrefix"],
 						credit: credit, 
-						zoom: 1,
+						scale: 18.0,
+						navigation: true,
+						showNavWindow: true,
+						showNavImage: true, // this property hide navigation image
 						showNavButtons: true,
-						render: 'random'
+						winResize: true,
+						zoom: 3
 					});
 					if (data.previousPage == '') {
 						$("#previous").removeAttr('href');

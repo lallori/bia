@@ -26,21 +26,14 @@ Joana Amill <joana.amill@gmail.com>
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 		<meta name="description" content="IIPImage: High Resolution Remote Image Streaming Viewing"/>
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip.compressed.css"/>" />
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip.css"/>" />
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip-2.1.css"/>" />
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/mview.css"/>" />                                                                                
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css"/>" /> 
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
-		
 		<title>DocSourcesV5 Manuscript Viewer</title>
-
-		<!-- mootools -->
-
-		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.3-full-compat-compressed.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.3-full-compat-compressed.js"/>"></script>
-		
-		<!--iip-->
-		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-1.2.js"/>"/></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.3.2-full-nocompat-yc.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.3.2.1.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.1.js"/>"/></script>
 		
 		<!-- jquery dialog -->
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.min.js"/>"/></script>                                                                                                

@@ -4,7 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ReverseProxyIIPImage" value="/mview/ReverseProxyIIPImage.do"/>
+	<c:url var="ReverseProxyIIPImage" value="/mview/IIPImageServer.do"/>
+	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 
 	<c:url var="PageTurnerDialogUrl" value="/src/mview/PageTurnerDialog.do" >
 		<c:param name="entryId" value="${documentExplorer.entryId}" />
@@ -30,11 +31,16 @@
 
 				iip = new IIP( "targetframe", {
 					server: '${ReverseProxyIIPImage}',
+					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
 					credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
-					zoom: 1,
+					scale: 18.0,
+					navigation: true,
+					showNavWindow: true,
+					showNavImage: true, // this property hide navigation image
 					showNavButtons: true,
-					render: 'random'
+					winResize: true,
+					zoom: 3
 				});
 
 				var $dialogExplorer = $j('<div></div>')

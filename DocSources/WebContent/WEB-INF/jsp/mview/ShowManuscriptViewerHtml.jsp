@@ -4,16 +4,22 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="IIPImageServerURL" value="/mview/IIPImageServer.do"/>
+	<c:url var="ImagePrefixURL" value="/images/mview/"/>
+	
 		<script type="text/javascript">
 			iip = new IIP( "targetframe", {
-				server: '/DocSources/mview/ReverseProxyIIPImage.do',
+				server: '${IIPImageServerURL}',
+				prefix: '${ImagePrefixURL}',
 				image: '${image}',
-				credit: 'Folio n. ${requestCommand.imageProgTypeNum} ${requestCommand.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
-				zoom: 1,
-				showNavButtons: 'true',
-				render: 'random',
-				showNavThumbnail: 'false',
-				showHelpButton: 'true'
+				credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
+				scale: 18.0,
+				navigation: true,
+				showNavWindow: true,
+				showNavImage: false, // this property hide navigation image
+				showNavButtons: true,
+				winResize: true,
+				zoom: 3
 			});
 
 		</script>

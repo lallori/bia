@@ -401,10 +401,11 @@ var IIP = new Class(
 									this.refreshLoadBar();
 								}.bind(this),
 								error : function() {
-									// Medici archive project : fix to prevent progress lock to 94%
-									//this.src = this.src;
+									// Medici archive project : fix to prevent
+									// progress lock to 94%
+									// this.src = this.src;
 									this.nTilesLoaded++;
-									//this.refreshLoadBar();
+									// this.refreshLoadBar();
 								} // Try to reload if we have an error
 							}
 						});
@@ -438,10 +439,10 @@ var IIP = new Class(
 
 				$('target').getChildren().each(function(el) {
 					// If our tile has not yet been loaded, give it a prod ;-)
-					/*if (el.width == 0 || el.height == 0) {
-						el.src = el.src;
-						unloaded = 1;
-					}*/
+					/*
+					 * if (el.width == 0 || el.height == 0) { el.src = el.src;
+					 * unloaded = 1; }
+					 */
 				});
 
 				/*
@@ -802,7 +803,7 @@ var IIP = new Class(
 
 					new Tips('#info, #toolbar', {
 						className : 'tip', // We need this to force the tip in
-											// front of nav window
+						// front of nav window
 						// We have to first set opacity to zero to fix a bug in
 						// mootools 1.2
 						// where the tip appears without any fade in the first
@@ -1026,7 +1027,8 @@ var IIP = new Class(
 
 				// If we're done with loading, fade out the load bar
 				// Medici archive project : fix to prevent progress lock to 94%
-				if ((this.nTilesLoaded == this.nTilesToLoad) || (this.nTilesLoaded >= 11)){
+				if ((this.nTilesLoaded == this.nTilesToLoad)
+						|| (this.nTilesLoaded >= 11)) {
 					// Fade out our progress bar and loading animation in a
 					// chain
 					$('target').setStyle('cursor', 'move');
@@ -1040,11 +1042,11 @@ var IIP = new Class(
 			 */
 			setScale : function() {
 				var pixels = 1000 * this.scale * this.wid / this.max_width; // x1000
-																			// because
-																			// we
-																			// want
-																			// per
-																			// m
+				// because
+				// we
+				// want
+				// per
+				// m
 				var label = '1m';
 				if (pixels > 1000) {
 					pixels = pixels / 100;
@@ -1076,6 +1078,7 @@ var IIP = new Class(
 								var response = transport
 										|| alert("No response from server "
 												+ this.server);
+								alert(response);
 								var tmp = response.split("Max-size");
 								if (!tmp[1])
 									alert("Unexpected response from server "

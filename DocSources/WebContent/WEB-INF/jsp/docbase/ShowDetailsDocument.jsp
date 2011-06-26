@@ -48,7 +48,7 @@
 
 		<c:if test="${not empty image}">
 			<div id="DocumentImageDigitDiv">
-				<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
+				<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
 				<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}"></a><br>
 				<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview on the right screen"></a>
 			</div>
