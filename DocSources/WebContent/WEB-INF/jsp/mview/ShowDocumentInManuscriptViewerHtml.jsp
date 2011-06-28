@@ -40,7 +40,7 @@
 					showNavImage: true, // this property hide navigation image
 					showNavButtons: true,
 					winResize: true,
-					zoom: 3
+					zoom: 1
 				});
 
 				var $dialogExplorer = $j('<div></div>')

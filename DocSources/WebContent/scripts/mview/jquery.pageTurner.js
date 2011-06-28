@@ -75,7 +75,7 @@
 							showNavImage: true, // this property hide navigation image
 							showNavButtons: true,
 							winResize: true,
-							zoom: 3
+							zoom: 1
 						});
 
 						if (data.previousPage == '') {
@@ -136,7 +136,7 @@
 						showNavImage: true, // this property hide navigation image
 						showNavButtons: true,
 						winResize: true,
-						zoom: 3
+						zoom: 1
 					});
 					if (data.previousPage == '') {
 						$("#previous").removeAttr('href');
