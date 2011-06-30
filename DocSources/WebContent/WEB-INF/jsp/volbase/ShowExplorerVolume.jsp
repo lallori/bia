@@ -81,6 +81,11 @@
 		<c:param name="showThumbnail" value="false" />
 	</c:url>
 	
+	<c:url var="VolumeSummaryDialogURL" value="/src/mview/ShowSummaryVolumeDialog.do">
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
+	</c:url> 
+	
 	<div id="ShowVolumeExplorer">
 		<div id="prevNextButtons">
 			<div id="previousPage">
@@ -185,6 +190,7 @@
 			
 		<div>
 			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full"></a>
+			<a id="volumeSummary" href="#"></a>
 			<a class="refreshVolumeExplorer" href="${currentPage}"></a>
 		</div>
 
@@ -241,6 +247,27 @@
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
 		        	// we force tab reload 
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+					return false;
+				});
+
+				var $dialogVolumeSummary = $j('<div id="DialogVolumeSummaryDiv"></div>').dialog({
+					resizable: false,
+					width: 500,
+					height: 600, 
+					modal: true,
+					autoOpen : false,
+					zIndex: 3999,
+					open: function(event, ui) { 
+	            		$j(this).load('${VolumeSummaryDialogURL}');
+	           		},
+					overlay: {
+						backgroundColor: '#000',
+						opacity: 0.5
+					}
+				});
+				
+				$j("#volumeSummary").click(function(){
+					$dialogVolumeSummary.dialog('open');
 					return false;
 				});
 			});
