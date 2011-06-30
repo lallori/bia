@@ -5,6 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 		<div id="reset">
+			<h1>RESET PASSWORD</h1>
 			<p>In 5 seconds you will be redirected to the home page.<br />If it won't <a id="HomeLink" href="<c:url value="/"/>">click here.</a></p>
 		</div>
 		<script type="text/javascript">

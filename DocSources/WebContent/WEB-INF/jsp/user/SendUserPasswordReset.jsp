@@ -7,7 +7,8 @@
 			<div id="recovery">
 				<p>Did you forget your password?<br/>Enter here your E-mail adress to get a new one:</p><br/>  		
 				<form:form method="post" cssClass="recovery">
-					<form:input path="mail" cssClass="input_recovery"/><form:errors path="mail"/><br/><br/>
+					<form:errors path="mail"/>
+					<form:input path="mail" cssClass="input_recovery"/>
 					<div id="captcha_recovery">
 						<c:out value="${reCaptchaHTML}" escapeXml="false"/>
 					</div>

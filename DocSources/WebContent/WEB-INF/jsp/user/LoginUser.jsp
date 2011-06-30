@@ -5,20 +5,21 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 			<div id="login">
+				<h1>PLEASE LOG IN</h1>
 	  			<form name="login" action="<c:url value="/loginProcess" />" method="post">
 					<table class="loginform">
 						<tr>
 							<td>Name: </td>
 						</tr>
 						<tr>
-							<td><input type="text" name="j_username" class="input" style="margin-left:15px"/></td>
+							<td><input type="text" name="j_username" class="loginInput" style="margin-left:15px"/></td>
 						</tr>
 						<tr>
 							<td>Password:</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="password" name="j_password" class="input" style="margin-left:15px"/><br/><br/>
+								<input type="password" name="j_password" class="loginInput" style="margin-left:15px"/><br/><br/>
 							</td>
 						</tr>
 						<tr>
@@ -50,7 +51,9 @@
 			<div id="guest">
 				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="register" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form>
 			</div>
-
+			
+			<div id="footer"></div>
+			
 			<script type="text/javascript">
 			$j(document).ready( function(){
 				$j("#login").submit(function (){$j.blockUI({message: $j('img#displayBox'), css: { top:  ($j(window).height() - 300) /2 + 'px', left: ($j(window).width() - 170) /2 + 'px', width: '300px'}});});

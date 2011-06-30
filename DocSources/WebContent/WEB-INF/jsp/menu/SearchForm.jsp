@@ -13,7 +13,7 @@
 										<option value="places">Places</option>
 								</select>
 						<br/>
-						for <input id="text" name="text" type="text" value="" class="input_search" style="margin-top:5px"/>
+						for <input id="text" name="text" type="text" value="" style="margin-top:5px"/>
 						<br/>
 						<input id="search" type="submit" value="" title="submit form"/>
 					</form>

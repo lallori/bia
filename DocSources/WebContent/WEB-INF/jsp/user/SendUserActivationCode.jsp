@@ -4,10 +4,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-			<div id="recovery">
+			<div id="activationcode">
+				<h1>PASSWORD RECOVERY</h1>
 				<p>Did you not receive Activation code?<br/>Enter here your E-mail adress to get a new one:</p><br/>  		
 				<form:form method="post" cssClass="recovery">
-					<form:input path="mail" cssClass="input_recovery"/><form:errors path="mail" /><br/><br/>
+					<form:errors path="mail" />
+					<form:input path="mail" cssClass="recoveryInput"/>
 					<div id="captcha_recovery">
 						<c:out value="${reCaptchaHTML}" escapeXml="false"/>
 					</div>

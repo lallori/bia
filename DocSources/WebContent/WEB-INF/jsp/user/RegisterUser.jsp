@@ -17,27 +17,27 @@
 					<table class="registrationForm" cellpadding="3">
 						<tr>
 							<td align="right"><form:label id="firstNameLabel" for="firstName" path="firstName" cssErrorClass="error"><b>First Name:<font color="#990000">*</font></b></form:label></td>
-							<td><form:input id="firstName" path="firstName" cssClass="input"/><form:errors path="firstName" cssClass="inputerrors"/></td>
+							<td><form:input id="firstName" path="firstName" cssClass="registerInput"/><form:errors path="firstName" cssClass="inputerrors"/></td>
 							<td align="right"><form:label id="passwordLabel" for="password" path="password" cssErrorClass="error"><b>Password:<font color="#990000">*</font></b></form:label></td>
-							<td><form:password path="password" cssClass="input" cssStyle="align:left"/><form:errors path="password" cssClass="inputerrors"/></td>
+							<td><form:password path="password" cssClass="registerInput" cssStyle="align:left"/><form:errors path="password" cssClass="inputerrors"/></td>
 							<td align="right" width="90"><form:label id="confirmPasswordLabel" for="confirmPassword" path="confirmPassword" cssErrorClass="error"><b>Confirm Password:<font color="#990000">*</font></b></form:label></td>       
-							<td><input id="confirmPassword" name="confirmPassword" type="password"class="input" value=""/></td>
+							<td><input id="confirmPassword" name="confirmPassword" type="password"class="registerInput" value=""/></td>
 						</tr>    	
 						<tr>        		
 							<td align="right"><form:label id="lastNameLabel" for="lastName" path="lastName" cssErrorClass="error"><b>Last Name:<font color="#990000">*</font></b></form:label></td>
-							<td><form:input id="lastName" path="lastName" cssClass="input"/><form:errors path="lastName" cssClass="inputerrors"/></td>
+							<td><form:input id="lastName" path="lastName" cssClass="registerInput"/><form:errors path="lastName" cssClass="inputerrors"/></td>
 							<td align="right"><form:label id="countryDescriptionLabel" for="countryDescription" path="countryDescription" cssErrorClass="error"><b>Country:<font color="#990000">*</font></b></form:label></td>
-							<td><form:input id="countryAutoCompleter" path="countryDescription" cssClass="input"/><form:errors path="countryDescription" cssClass="inputerrors"/></td>
+							<td><form:input id="countryAutoCompleter" path="countryDescription" cssClass="registerInput"/><form:errors path="countryDescription" cssClass="inputerrors"/></td>
 							<td align="right"><form:label id="organizationLabel" for="organization" path="organization" cssErrorClass="error">Organization:</form:label></td>
-							<td><form:input id="organization" path="organization" cssClass="input"/><form:errors path="organization" cssClass="inputerrors"/></td>
+							<td><form:input id="organization" path="organization" cssClass="registerInput"/><form:errors path="organization" cssClass="inputerrors"/></td>
 						</tr>	
 						<tr>
 							<td align="right"><form:label id="mailLabel" for="mail" path="mail" cssErrorClass="error"><b>Email:<font color="#990000">*</font></b></form:label></td>
-							<td><form:input id="mail" path="mail" cssClass="input"/><form:errors path="mail" cssClass="inputerrors"/></td>
+							<td><form:input id="mail" path="mail" cssClass="registerInput"/><form:errors path="mail" cssClass="inputerrors"/></td>
 							<td align="right"><form:label id="cityLabel" for="city" path="city" cssErrorClass="error"><b>City:<font color="#990000">*</font></b></form:label></td>
-							<td><form:input id="city" path="city" cssClass="input"/><form:errors path="city" cssClass="inputerrors"/></td>
+							<td><form:input id="city" path="city" cssClass="registerInput"/><form:errors path="city" cssClass="inputerrors"/></td>
 							<td align="right"><form:label id="titleLabel" for="title" path="title" cssErrorClass="error">Title:</form:label></td>
-							<td><form:input id="tittle" path="title" cssClass="input"/><form:errors path="title" cssClass="inputerrors"/></td>
+							<td><form:input id="tittle" path="title" cssClass="registerInput"/><form:errors path="title" cssClass="inputerrors"/></td>
 						</tr>     
 						<tr>        	        	
 							<td align="right"><b>Verification:<font color="#990000">*</font></b></td>
