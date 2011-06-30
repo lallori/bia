@@ -115,6 +115,7 @@ public class AjaxController {
 			model.put("data", ListBeanUtils.transformList(people, "personId"));
 			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
 			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("activeEnds", ListBeanUtils.transformList(people, "activeEnd"));
 			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
 			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
 
