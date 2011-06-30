@@ -119,7 +119,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchChildLinkableToPerson(Integer personId, String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -154,7 +154,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchFatherLinkableToPerson(String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -189,7 +189,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchMotherLinkableToPerson(String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -314,7 +314,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -351,7 +351,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -417,7 +417,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchSendersPeople(String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "bornYear", "deathYear"};
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 

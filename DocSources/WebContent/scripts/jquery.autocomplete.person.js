@@ -26,6 +26,7 @@
     this.suggestions = [];
     this.data = [];
     this.activeStarts = [];
+    this.activeEnds = [];
     this.bornYears = [];
     this.deathYears =[];
     this.badQueries = [];
@@ -223,7 +224,7 @@
       var ret, arr, len, val, i;
       arr = this.options.lookup;
       len = arr.suggestions.length;
-      ret = { suggestions:[], data:[], activeStarts:[], bornYears:[], deathYears:[]};
+      ret = { suggestions:[], data:[], activeStarts:[], activeEnds:[], bornYears:[], deathYears:[]};
       textFieldValue = textFieldValue.toLowerCase();
       for(i=0; i< len; i++){
         val = arr.suggestions[i];
@@ -243,6 +244,7 @@
         this.data = cr.data;
         // Additional arrays...
         this.activeStarts = cr.activeStarts;
+        this.activeEnds = cr.activeEnds;
         this.bornYears = cr.bornYears;
         this.deathYears = cr.deathYears;
         
@@ -282,7 +284,7 @@
     	  message = 'No person found.';
     	  this.container.append(message);
       } else {
-	      table = '<tr><td width="50%"><b>FullName</b></td><td><b>Birth-Active Starts</b></td><td><b>Death-Active Ends</b></td></tr>';
+	      table = '<tr><td width="50%"><b>FullName</b></td><td><b>Birth/<font color="red">Active Starts &nbsp</font></b></td><td><b>Death/<font color="red">Active Ends</font></b></td></tr>';
 	      this.container.append(table);
 	
 	      for (i = 0; i < len; i++) {
@@ -290,11 +292,14 @@
 	    	s = this.suggestions[i];
 	        //tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v)+ '</td>')+ '<td>' + this.activeStarts[i] + '</td>' + '<td>' + this.bornYears[i] + '</td>' + '<td>' + this.deathYears[i] + '</td>' + '</tr>'); ;
 	        if(this.bornYears[i] === '')
-	        	test += '<td><font color="red">' + this.activeStarts[i] + '</font></td>';
+	        	test += '<td><font color="red">&emsp;' + this.activeStarts[i] + '</font></td>';
 	        else
 	        	test += '<td>' + this.bornYears[i] + '</td>';
 	        	
-	        test += '<td>' + this.deathYears[i] + '</td>' + '</tr>';
+	        if(this.deathYears[i] === '')
+	        	test += '<td><font color="red">&emsp;' + this.activeEnds[i] + '</font></td></tr>';
+	        else
+	        	test += '<td>' + this.deathYears[i] + '</td>' + '</tr>';
 	        tr = $((me.selectedIndex === i ? '<tr class="selected>"' : '<tr>') + '<td>' + f(s, this.data[i], v)+ '</td>' + test);
 	        tr.mouseover(mOver(i));
 	        tr.click(mClick(i));
@@ -320,6 +325,7 @@
         this.suggestions = response.suggestions;
         this.data = response.data;
         this.activeStarts = response.activeStarts;
+        this.activeEnds = response.activeEnds;
         this.bornYears = response.bornYears;
         this.deathYears = response.deathYears;
         this.suggest(); 
