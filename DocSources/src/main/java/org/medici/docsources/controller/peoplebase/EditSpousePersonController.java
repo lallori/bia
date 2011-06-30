@@ -160,6 +160,8 @@ public class EditSpousePersonController {
 				try {
 					Marriage marriage = getPeopleBaseService().findMarriagePerson(command.getMarriageId());
 
+					command.setHusbandDescription(marriage.getHusband().getMapNameLf());
+					command.setWifeDescription(marriage.getWife().getMapNameLf());
 					command.setStartYear(marriage.getStartYear());
 					command.setEndYear(marriage.getEndYear());
 					command.setMarriageTerm(marriage.getMarTerm().toString());
