@@ -15,13 +15,14 @@
 		</c:url>
 	</security:authorize>
 
+	<br />
 	<form:form id="EditSpousePersonForm" action="${EditSpousePersonURL}" method="post" cssClass="edit">
 		<fieldset>
-			<c:if test="${empty command.marriageId}"> 
-				<b>ADD NEW SPOUSE</b>
+			<c:if test="${command.marriageId == 0}"> 
+				<legend><b>ADD NEW SPOUSE</b></legend>
 			</c:if>
 			<c:if test="${command.marriageId > 0}">
-				<b>Edit SPOUSE</b>
+				<legend><b>EDIT SPOUSE</b></legend>
 			</c:if>
 			<%-- We manage fields for husband --%>
 			<c:if test="${command.personId == command.wifeId}">

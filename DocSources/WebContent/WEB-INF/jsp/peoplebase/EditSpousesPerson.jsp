@@ -107,6 +107,7 @@
 				});
 
 				$j(".editValue").click(function() {
+					$j(".deleteIcon").css('visibility', 'hidden');
 					$j("#EditSpousePersonDiv").load($j(this).attr("href"));
 					return false;
 				});
