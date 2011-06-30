@@ -2049,6 +2049,87 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 
 /* ---------------- */
 /*
+/* ---- Volume Summary --- */
+
+a#volumeSummary {
+	margin: 0 0 0 190px;
+	position:absolute;
+	width:105px;
+	height:22px;
+	display:inline;
+	background-image:url(/DocSources/images/1024/button_volumeSummary.png);
+	cursor:pointer;
+}
+
+#volumeSummaryWindow {
+	max-height:500px;
+	width:500px;
+}
+
+#volumeSummaryWindow .summarylist  {
+	display: table;
+	margin: 5px 0 0 30px;
+	width: 500px;
+	font-size: 11px;
+}
+
+#volumeSummaryWindow .summaryrow {
+	display: table-row;
+}
+
+#volumeSummaryWindow .item {
+	display: table-cell;
+	width:160px;
+	text-align:left;
+	font-weight:normal;
+	color:#6d5c4d;
+	padding:3px 0 3px 0;
+}
+
+#volumeSummaryWindow .value {
+	display: table-cell;
+	width:340px;
+	text-align:left;
+	color:#8B7563;
+	padding:3px 0 3px 5px;
+	text-align:justify;
+}
+
+#volumeSummaryWindow .valueMissingFolios {
+	color:#900;
+	display: table-cell;
+	width:350px;
+	text-align:left;
+	padding:3px 0 3px 5px;
+	text-align:justify;
+}
+
+#volumeSummaryWindow hr { /* Horizontal Line used to separate areas inside the Edit Forms */
+	margin:10px 0 10px 0;
+	padding:0;
+	width:480px;
+	color:#e6d0c6;
+	background-color:#e6d0c6;
+	height:1px;
+	border:0;
+}
+
+#volumeSummaryWindow h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
+	font-size:11px;
+	color:#6d5c4d;
+	margin:3px 0 15px 0;
+	text-decoration:none;
+}
+
+#volumeSummaryWindow h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
+	font-size:14px;
+	font-style:italic;
+	color:#C18D72;
+	margin:25px 0 5px -30px;
+	text-align:left;
+}
+
+/* ---------------- */
 /* ---- Refresh --- */
 
 a.refreshVolumeExplorer {
@@ -2858,7 +2939,7 @@ a.refreshVolumeExplorer {
 	text-decoration:none;
 	-moz-border-radius: 8px;
 	border-radius: 8px;
-	cursor:help;
+	cursor:default;
 }
 
 #advancedSearch #body_left a:hover.helpIcon { /* Help symbol "?" */

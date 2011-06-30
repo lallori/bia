@@ -153,15 +153,18 @@ a {
 /* ---------------------------------------- SEARCH FORM (#top_top) --------------------------------------- */
 
 #searchForm { /* Search Form Container */
-	width:240px;
+	width:200px;
 	height:80px;
-	margin-left:40px;
+	margin:10px 0 0 40px;
 	position:absolute;
 	font-size:11px;
 }
 
+.searchIn, .select {
+	margin: 5px 0 5px 18px;
+}
+
 .input_search { /* Input Text class */
-	background-image:url(/DocSources/images/1024/bg_input_search.png);
 	background-color: transparent;
 	background-repeat:no-repeat;
 	height:30px;
@@ -171,42 +174,24 @@ a {
 	margin-top:0px;
 }
 
-.select{ /* Dropdown Menu: Documents, Volumes, People, Locations and community Comments  */
-	background-image:url(/DocSources/images/1024/bg_input_select.png);
-	background-color: transparent;
-	background-repeat:no-repeat;
-	height:25px;
-	border:none;
-	width:100px;
-	padding-left:10px;
-	padding-top:7px;
-	margin-top:10px;
-	font-size:103%;
-	color:#6F6B69;
-	outline:0px; 
-}
-
 .select option{
 	background-color: transparent;
 }
 
-input { 
-	outline: 0px; 
-}
-
 #search { /* Search button */
-	margin-left:125px;
+	margin-left:123px;
 	border:none;
 	background-color:transparent;
-	margin-top:-3px;
+	margin-top:-1px;
 	background-image:url(/DocSources/images/1024/button_search.png);
 	width:50px;
 	height:13px;
 	cursor:pointer;
 }
 
-#firstName {
-	margin-top:5px;
+#firstName, #text {
+	margin-top:3px;
+	width:140px;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */ 

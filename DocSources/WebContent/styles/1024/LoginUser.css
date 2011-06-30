@@ -47,15 +47,22 @@ body {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_login.png);
+	border:1px solid #AEAEAE;
+	border-right:none;
 }
 
 /*  Log in - Form */
 
+#login h1 {
+	padding:15px 0 15px 90px;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
+}
+
 .loginform{ /*  Form class */
 	width:200px;
 	height:220px;
-	margin-top: 60px;
+	margin-top: 10px;
 	margin-left:55px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -82,15 +89,17 @@ input {
 	float:left;
 }
 
-.input { /* input text class */
-	background-image:url(/DocSources/images/1024/bg_input.png);
-	background-color:transparent;
-	background-repeat:no-repeat;
-	height:30px;
-	border:none;
+.loginInput, .registerInput { /* INPUT text */
+	font-size:12px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+	margin: 5px 7px 5px 5px;
 	width:150px;
-	padding-left:10px;
-	margin-top:0px;
 }
 
 .remember { /* Remember me class */
@@ -133,15 +142,28 @@ input {
 	margin-top:190px;
 	margin-left: 75px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_registration.png);
+	border:1px solid #AEAEAE;
+	border-right:none;
 	background-repeat:no-repeat;
 	z-index:1;
+}
+
+#registrationForm h1 {
+	padding:7px 0 5px 340px;
+	margin:0;
+}
+
+#registrationForm .title{
+	padding:0 0 8px 347px;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
+	font-size:10px;
 }
 
 .registrationForm { /*  Form class */
 	width:850px;
 	height:300px;
-	margin-top: 85px;
+	margin-top: 30px;
 	margin-left:20px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -151,7 +173,7 @@ input {
 .registrationFormKO { /*  Form class */
 	width:850px;
 	height:290px;
-	margin-top: 85px;
+	margin-top: 30px;
 	margin-left:20px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -167,7 +189,7 @@ input {
 
 .readThis { /* read this text class */
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size: 90%;
+	font-size: 10px;
 	margin:10px 0px 0px 240px;
 }
 
@@ -185,14 +207,14 @@ input {
 .already { /* Already have an account? */
 	font-family:Georgia, "Times New Roman", Times, serif;
 	color:#886863;
-	font-size: 95%;
-	margin:0px 0px 0px 670px;
+	font-size: 11px;
+	margin:0px 0px 0px 660px;
 }
 
 .already a { /* Already have an account? Links */
 	font-family:Georgia, "Times New Roman", Times, serif;
 	color:#642221;
-	font-size: 95%;
+	font-size: 11px;
 }
 
 .inputerrors { /* Error Span messages */
@@ -207,7 +229,7 @@ input {
 	border:#900 solid 1px;
 	padding:2px;
 	position:absolute;
-	margin:57px 0 0 103px;
+	margin:7px 0 0 103px;
 }
 
 /*  Recovery - Form */
@@ -218,7 +240,14 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_recovery.png);
+	border:1px solid #AEAEAE;
+	border-right:none;
+}
+
+#recovery h1 {
+	padding:15px 0 15px 150px;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
 }
 
 .recovery { /*  Form class */
@@ -244,16 +273,18 @@ input {
 	background-image:url(/DocSources/images/1024/img_coatofarms.png);
 }
 
-.input_recovery { /* input text class */
-	background-image:url(/DocSources/images/1024/bg_input_recovery.png);
-	background-color:transparent;
-	background-repeat:no-repeat;
-	height:30px;
-	border:none;
+.recoveryInput { /* input text class */
+	font-size:12px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+	margin: 5px 7px 5px 5px;
 	width:250px;
-	padding-left:10px;
-	margin-top:0px;
-	margin-left:100px;
+	margin-left:90px;
 }
 
 #captcha_recovery{
@@ -268,13 +299,13 @@ input {
 	width:250px;
 	height:130px;
 	margin-left: 10px;
-	margin-top:4px;
+	margin-top:40px;
 	z-index:2;
 }
 
 #recovery p {
 	text-align:center;
-	margin-top:70px;
+	margin-top:30px;
 	line-height: 20px;
 }
 
@@ -292,12 +323,19 @@ input {
 	margin-top:200px;
 	margin-left:265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_activationcode.png);
+	border:1px solid #AEAEAE;
+	border-right:none;
+}
+
+#activationcode h1 {
+	padding:15px 0 15px 150px;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
 }
 
 #activationcode p {
 	text-align:center;
-	margin-top:70px;
+	margin-top:30px;
 	line-height: 20px;
 }
 
@@ -309,11 +347,19 @@ input {
 	margin-top:220px;
 	margin-left: 210px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_thankyou.png);
+	border:1px solid #AEAEAE;
+	border-right:none;
 }
 
+#usersuccess h1 {
+	padding:15px 0 15px 65px;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
+}
+
+
 .usersuccess {  /* p class */
-	margin-top:100px;
+	margin-top:40px;
 	margin-left:25px;
 	height:50px;
 	width:250px;
@@ -342,11 +388,18 @@ input {
 	margin-top:200px;
 	margin-left: 265px;	
 	position:absolute;
-	background-image:url(/DocSources/images/1024/bg_reset.png);
+	border:1px solid #AEAEAE;
+	border-right:none;
+}
+
+#reset h1 {
+	padding:15px 0 15px 170px;
+	border-bottom:1px solid #AEAEAE;
+	margin:0;
 }
 
 .reset { /*  Form class */
-	margin-top:75px;
+	margin-top:25px;
 	margin-left:20px;
 	height:100px;
 	width:250px;
@@ -355,7 +408,7 @@ input {
 
 #reset p{
 	text-align:center;
-	margin-top:170px;
+	margin-top:130px;
 	line-height:20px;
 }
 
@@ -381,8 +434,9 @@ input {
 
 .inputerrors_reset { /* Error Span messages */
 	color:#900;
-	font-size:85%;
-	margin-left:5px;
+	font-size:11px;
+	margin:10px 0 0 5px;
+	float:left;
 }
 
 /* Tag */
@@ -394,8 +448,8 @@ h1 {
 	color:#6F6B69;
 }
 
-a img {
-   border:0px;
+a img, img {
+   border:none;
 }
 
 a:focus { 

@@ -125,6 +125,11 @@ table.display {
      */
 }
 
+table.display#MyDocumentsHistoryTable, table.display#MyPeopleHistoryTable, table.display#MyVolumeHistoryTable, table.display#MyPlaceHistoryTable{
+	margin: 20px 0 10px 10px;
+	width:710px;
+}
+
 .searchResult {
     font-size:11px;
 }
@@ -574,7 +579,11 @@ div.box {
 }
 
 .dateType{ /* Filter Name Results color */
-	color:#888888; /* Grey */
+	color:#333; /* Gray */
+}
+
+.carteggioType, .placeNameType {
+	font-size:11px;
 }
 
 #savedSearchFiltersForm_info {
@@ -583,8 +592,20 @@ div.box {
 	color:#888888; /* Grey */
 }
 
-#savedSearchFiltersForm_paginate {
+#savedSearchFiltersForm_paginate  {
 	margin-right:15px;
 }
 
+#MyDocumentsHistoryTable_info, #MyPeopleHistoryTable_info, #MyVolumeHistoryTable_info, #MyPlaceHistoryTable_info {
+	margin-left: 10px;
+	font-size: 10px;
+	color: #888;
+}
 
+#MyDocumentsHistoryTable_paginate, #MyPeopleHistoryTable_paginate, #MyVolumeHistoryTable_paginate, #MyPlaceHistoryTable_paginate{
+	margin-right:10px;
+}
+
+a:hover {
+	text-decoration:underline;
+}
