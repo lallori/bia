@@ -1463,7 +1463,11 @@ var IIP = new Class({
 			});
 			// MEDICI ARCHIVE PROJECT START
 			// this.zone.inject(navwin);
-			this.zone.inject(navcontainer);
+			if (this.showNavImage) {
+				this.zone.inject(navwin);
+			} else {
+				this.zone.inject(navcontainer);
+			}
 			// MEDICI ARCHIVE PROJECT END
 
 		}
