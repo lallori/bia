@@ -9,7 +9,7 @@
 	  			<form name="login" action="<c:url value="/loginProcess" />" method="post">
 					<table class="loginform">
 						<tr>
-							<td>Name: </td>
+							<td>Username: </td>
 						</tr>
 						<tr>
 							<td><input type="text" name="j_username" class="loginInput" style="margin-left:15px"/></td>
