@@ -169,7 +169,7 @@
 			
 			var $dialogVolumeSummary = $j('<div id="DialogVolumeSummaryDiv"></div>').dialog({
 				resizable: false,
-				width: 520,
+				width: 550,
 				height: 600, 
 				modal: true,
 				autoOpen : false,
