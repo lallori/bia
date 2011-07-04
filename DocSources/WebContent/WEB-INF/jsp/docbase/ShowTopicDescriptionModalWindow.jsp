@@ -9,7 +9,7 @@
 		
 		<p>${topic.description}</p>
 		
-		<p><input class="modalBox-close" onClick="Modalbox.hide(); return false;" type="submit" value="Close"><br /><span>(or click the overlay)</span></p>
+		<input id="close" type="submit" title="Close Topic Description window" value="" />
 	</div>
 	<script type="text/javascript">
 		$j(document).ready(function() {			 
@@ -24,6 +24,11 @@
 	        $j("#EditTopicsDocument").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditTopicsDocumentDiv").load($j(this).attr("href"));
+				return false;
+			});
+
+			$j("#close").click(function(){
+				Modalbox.hide();
 				return false;
 			});
 		});
