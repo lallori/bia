@@ -16,7 +16,7 @@
 				scale: 18.0,
 				navigation: true,
 				showNavWindow: true,
-				showNavImage: false, // this property hide navigation image
+				showNavImage: true, // this property hide navigation image
 				showNavButtons: true,
 				winResize: true,
 				zoom: 1
