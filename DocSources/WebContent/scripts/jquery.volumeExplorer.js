@@ -50,9 +50,22 @@
         	if ((options["summaryId"] >0) || (options["volNum"] >0)) {
             	$.ajax({ type:"GET", url:options["checkVolumeDigitizedURL"], async:false, success:function(data) {
             		if (data.digitized == "true") {
-            			var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
-                    	$("#tabs").tabs("add", options["showExplorerVolumeURL"], tabName);
-                    	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
+            			var tabName = "Volume Explorer " + data.volNum + data.volLetExt;
+            			var tabExist = false;
+            			//Verify if a tab with same title already exist
+        				$j("#tabs ul li a").each(function(){
+        					if(this.text == tabName){
+        						tabExist = true;
+        					}
+        				});
+        				
+        				if(!tabExist){
+        					tabName += "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
+        					$("#tabs").tabs("add", options["showExplorerVolumeURL"], tabName);
+                        	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
+        				}
+                    	return false;
+                    	
             		}
             	}
     			});

@@ -113,9 +113,20 @@
 			});
 			
 			$j("#ShowVolumeExplorer").click(function(){
-				var tabName = "Volume Explorer ${volume.volNum} ${volume.volLetExt} </span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
-            	$j("#tabs").tabs("add", "" + $j(this).attr("href"), tabName);
-            	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				var tabName = "Volume Explorer ${volume.volNum}${volume.volLetExt}";
+				var tabExist = false;
+
+				$j("#tabs ul li a").each(function(){
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					tabName += "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
+            		$j("#tabs").tabs("add", "" + $j(this).attr("href"), tabName);
+            		$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				}
             	return false;
 			});
 		});
