@@ -53,10 +53,8 @@
 		<!-- <script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.3-full-compat-compressed.js"/>"></script>-->
 		<script src="/DocSources/scripts/mview/mootools-core-1.3.2-full-nocompat-yc.js" type="text/javascript"></script>
 		<script src="/DocSources/scripts/mview/mootools-more-1.3.2.1.js" type="text/javascript"></script>
-		<script src="/DocSources/scripts/mview/jquery.dialogextend.min.js" type="text/javascript"></script>
-<script src="/DocSources/scripts/mview/jquery.pageTurner.js" type="text/javascript"></script>
-<!-- <script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-1.2.js"/>"></script> -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
+<!-- <script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-1.2.js"/>"></script> -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.advancedSearch.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.general.js"/>"></script>
@@ -64,6 +62,8 @@
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.place.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.autocomplete.title.js"/>"></script>
 		<script type='text/javascript' src="<c:url value="/scripts/jquery.blockUI.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.dialogextend.min.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.pageTurner.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.dataTables.pagination.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.form-2.47.js"/>"></script>
