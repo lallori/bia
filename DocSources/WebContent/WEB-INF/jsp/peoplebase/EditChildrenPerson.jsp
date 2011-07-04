@@ -86,7 +86,30 @@
 			});*/
 
 			$j(".deleteIcon").click(function() {
+				var temp = $j(this);
 				$j("#EditChildrenPersonDiv").block({ message: $j("#question")});
+
+				$j('#no').click(function() {
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j("#question").hide();
+					$j("#EditChildrenPersonDiv").append($j("#question"));
+					$j(".blockUI").remove();
+					return false; 
+				}); 
+
+				$j('#yes').click(function() { 
+					$j.get(temp.attr("href"), function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditChildrenPersonDiv").load('${EditChildrenPersonURL}');
+					}
+					
+					return false; 
+				}); 	
+									     
+				});
 				return false;
 			});
 
@@ -115,27 +138,3 @@
 		<input type="button" id="no" value="No" /> 
 	</div>
 	
-	<script type="text/javascript">
-		$j(document).ready(function() {
-			$j('#no').click(function() {
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j("#question").hide();
-				$j("#EditChildrenPersonDiv").append($j("#question"));
-				$j(".blockUI").remove();
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
-				$j.get($j(".deleteIcon").attr("href"), function(data) {
-					if(data.match(/KO/g)){
-			            var resp = $j('<div></div>').append(data); // wrap response
-					} else {
-						$j("#EditChildrenPersonDiv").load('${EditChildrenPersonURL}');
-					}
-					
-					return false; 
-				}); 	     
-			});
-		});
-	</script>

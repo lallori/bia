@@ -117,7 +117,29 @@
 			});
 
 			$j(".deleteIcon").click(function(){
-				$j('#EditParentsPersonDiv').block({ message: $j('#question') }); 
+				var temp = $j(this);
+				$j('#EditParentsPersonDiv').block({ message: $j('#question') });
+
+				$j('#no').click(function() {
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j("#question").hide();
+					$j("#EditParentsPersonDiv").append($j("#question"));
+					$j(".blockUI").remove();
+					return false; 
+				}); 
+		        
+				$j('#yes').click(function() { 
+					$j.get(temp.attr("href"), function(data) {
+						if(data.match(/KO/g)){
+				            var resp = $j('<div></div>').append(data); // wrap response
+						} else {
+							$j("#EditParentsPersonDiv").load('${EditParentsPersonURL}');
+						}
+						
+						return false; 
+					}); 	     
+				}); 
 				return false;
 			});
 
@@ -135,28 +157,3 @@
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>
-	
-	<script type="text/javascript">
-		$j(document).ready(function() {
-			$j('#no').click(function() {
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j("#question").hide();
-				$j("#EditParentsPersonDiv").append($j("#question"));
-				$j(".blockUI").remove();
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
-				$j.get($j(".deleteIcon").attr("href"), function(data) {
-					if(data.match(/KO/g)){
-			            var resp = $j('<div></div>').append(data); // wrap response
-					} else {
-						$j("#EditParentsPersonDiv").load('${EditParentsPersonURL}');
-					}
-					
-					return false; 
-				}); 	     
-			});
-		});
-	</script>
