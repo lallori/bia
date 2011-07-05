@@ -34,7 +34,7 @@
 				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
 				<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure" cssClass="checkboxPers2"/>
-				<a title="Show this person record" id="personIcon" class="linkPeople" href="${CompareSenderURL}"></a>
+				<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"></a>
 			</div>
 			<div>	
 				<form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From</form:label>
@@ -67,8 +67,8 @@
 			<form:hidden path="recipientPlaceId"/>	
 
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="" class="button"/>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" class="button"/>
 			</div>			
 		</fieldset>	
 	</form:form>
@@ -104,7 +104,7 @@
 		</c:forEach>
 			<br>			
 			<div>
-				<a id="AddNewValue" title="Add new person" href="${AddPersonURL}"></a>
+				<a id="AddNewValue" title="Add new person" href="${AddPersonURL}">Add</a>
 			</div>
 			<img src="/DocSources/images/1024/img_transparent.png">
 			<br>
@@ -138,11 +138,17 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ 
-			    	$j('#senderPeopleId').val(data); 
-			    	}
+			    onSelect: function(value, data){
+				    //the following code is for "refresh" the link to view the tab of sender people 
+				    var oldSender = $j('#senderPeopleId').val(); 
+			    	$j('#senderPeopleId').val(data);
+			    	var link = $j('.senderLinkPeople').attr("href");
+			    	link = link.replace(oldSender, data);
+			    	$j('.senderLinkPeople').attr("href", link);  
+			    	}			    
 			  });
 
+			
 			$j('#senderPlaceDescriptionAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchSenderPlaceURL}',
 			    minChars:5, 
@@ -212,8 +218,8 @@
 				return false;
 			});
 
-			$j('.linkPeople').click(function() {
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+			$j('#personIcon').click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#senderPeopleDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
