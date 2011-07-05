@@ -31,8 +31,8 @@
 				<form:select path="nameType" cssClass="selectform_long" items="${nameTypes}"/>
 			</div>
 			<div>
-				<input id="closePerson" type="submit" value="" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="" class="button"/>
+				<input id="closePerson" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
 		</fieldset>	
 

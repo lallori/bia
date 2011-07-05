@@ -47,8 +47,8 @@
 		</c:forEach>
 			
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<a id="AddNewValue" title="Add new Name" href="${AddChildPersonURL}"></a>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<a id="AddNewValue" title="Add new Name" href="${AddChildPersonURL}">Add</a>
 			</div>
 			
 		</fieldset>	

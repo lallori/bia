@@ -25,10 +25,10 @@
 		<div id="refersToSearchDiv"></div>	
 		<br>
 		<br>
-		<input type="submit" title="Search" value="" id="advsearch">
+		<input type="submit" title="Search" value="Search" id="advsearch">
 		<input type="hidden" name="searchType" value="documents">
-		<a class="saveButton" href="#"></a>
-		<a class="saveAsButton" href="#"></a>
+		<a class="saveButton" href="#">Save</a>
+		<a class="saveAsButton" href="#">Save as</a>
 	</form>
 
 	<script type="text/javascript">

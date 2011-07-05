@@ -67,8 +67,8 @@
 			<form:hidden path="prfLinkId" />
 			
 			<div>
-				<input id="closeTitle" type="submit" value="" title="do not save changes" class="button" />
-				<input type="submit" value="" id="save">
+				<input id="closeTitle" type="submit" value="Close" title="do not save changes" class="button" />
+				<input type="submit" value="Save" id="save">
 			</div>
 			
 		</fieldset>	

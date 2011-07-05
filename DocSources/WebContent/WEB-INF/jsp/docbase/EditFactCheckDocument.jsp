@@ -11,8 +11,8 @@
 			<div><form:textarea id="addLRes" path="addLRes" class="txtarea" /></div>
 			
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="" class="button"/>
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
 
 			<form:hidden path="entryId"/>

@@ -75,7 +75,7 @@
 			</div>
 			
 			<div>
-				<input id="close" type="submit" value="" title="do not save changes" class="button" />
+				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 			</div>
 			
 		</fieldset>	

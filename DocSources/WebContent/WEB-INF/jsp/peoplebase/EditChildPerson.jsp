@@ -39,8 +39,8 @@
 				<form:input path="ageAtDeath" cssClass="input_2c_disabled" maxlength="2"/>
 			</div>
 			<div>
-				<input id="closeChild" type="submit" value="" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="" class="button"/>
+				<input id="closeChild" type="submit" value="Close" title="do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
 		</fieldset>	
 

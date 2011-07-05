@@ -21,8 +21,8 @@
 			<form:hidden path="personId"/>
 			
 			<div>
-				<input id="close" type="submit" value="" title="Do not save changes" class="button" />
-				<input id="save" type="submit" value="" class="button"/>
+				<input id="close" type="submit" value="Close" title="Do not save changes" class="button" />
+				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
 			
 		</fieldset>	

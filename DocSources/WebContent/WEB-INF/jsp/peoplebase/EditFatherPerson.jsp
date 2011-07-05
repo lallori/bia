@@ -49,8 +49,8 @@
 				</div>
 				
 				<div>
-					<input id="closeFather" type="submit" value="" title="do not save changes" class="button" />
-					<input id="save" type="submit" value="" class="button"/>
+					<input id="closeFather" type="submit" value="Close" title="do not save changes" class="button" />
+					<input id="save" type="submit" value="Save" class="button"/>
 				</div>
 				
 				<form:hidden path="id"/>

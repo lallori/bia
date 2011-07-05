@@ -14,7 +14,7 @@
 		<a id="savedFilters" href="<c:url value="/src/ShowUserSearchFilters.do"/>"></a>
 	
 		<div id="CloseButton">
-			<input id="close" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value=""/>
+			<input id="close" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value="Close"/>
 		</div>
 	</div>
 	

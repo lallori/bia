@@ -79,18 +79,18 @@
 		<c:if test="${volumeExplorer.total > 0}">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage"></a>
+				<a id="previousPage">Previous folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<a id="nextPage"></a>
+				<a id="nextPage">Next folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
 			</c:if>
 			</div>
 		</c:if>
@@ -102,18 +102,18 @@
 			<div id="prevNextButtons">
 				<div id="previousPage">
 				<c:if test="${volumeExplorer.image.imageOrder == 1}">
-					<a id="previousPage"></a>
+					<a id="previousPage">Previous folio</a>
 				</c:if>
 				<c:if test="${volumeExplorer.image.imageOrder > 1}">
-					<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+					<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
 				</c:if>
 				</div>
 				<div id="nextPage">
 				<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-					<a id="nextPage"></a>
+					<a id="nextPage">Next folio</a>
 				</c:if>
 				<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-					<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+					<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
 				</c:if>
 				</div>
 			</div>
@@ -136,7 +136,7 @@
 			<form:form id="moveToRubricarioModalForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
-				<input id="goRModal" type="submit" value="" />
+				<input id="goRModal" type="submit" value="Go" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
@@ -165,7 +165,7 @@
 			<form:form id="moveToFolioModalForm" action="${ShowExplorerVolumeURL}" cssClass="edit">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
-				<input class="openmodalbox" id="goModal" type="submit" value=""/>
+				<input class="openmodalbox" id="goModal" type="submit" value="Go"/>
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>

@@ -9,7 +9,7 @@
 		
 		<p>${topic.description}</p>
 		
-		<input id="close" type="submit" title="Close Topic Description window" value="" />
+		<input id="close" type="submit" title="Close Topic Description window" value="Close" />
 	</div>
 	<script type="text/javascript">
 		$j(document).ready(function() {			 

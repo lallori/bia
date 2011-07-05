@@ -56,8 +56,8 @@
 		<input id="resume" name="resume" class="input_20c" type="text" value="no"/>
 	</div>
 	
-		<input id="close" type="submit" value="" title="Do not save changes" />
-		<input id="save" type="submit" value="" />
+		<input id="close" type="submit" value="Close" title="Do not save changes" />
+		<input id="save" type="submit" value="Save" />
 	</fieldset>
 </form:form>
 	

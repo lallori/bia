@@ -12,7 +12,7 @@
 			<input id="placeName" name="placeName" class="input_20c" type="text" value=""/>
 			<label for="stressSense" id="stressSenseLabel">Stress sense</label>
 			<input type="checkbox" name="stressSense" class="checkbox4"/>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Place Name">
 		</form>
 	</div>
@@ -24,7 +24,7 @@
 			<select id="placeType" name="placeType" class="selectform_Mlong">
 				<option value="Select a Place Type" selected="selected">Select a Place Type</option>
 			</select>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Place Type">
 		</form>
 	</div>
@@ -36,7 +36,7 @@
 			<select id="linkedToTopic" name="linkedToTopic" class="selectform_Mlong">
 				<option value="Select a Topic" selected="selected">Select a Topic</option>
 			</select>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Linked to Topics">
 		</form>
 	</div>
@@ -52,7 +52,7 @@
 				<option value="Birt Place">Birt Place</option>
 				<option value="Death Place">Death Place</option>
 			</select>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Linked to People">
 		</form>
 	</div>

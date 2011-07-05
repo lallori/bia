@@ -92,18 +92,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage"></a>
+				<a id="previousPage">Previous folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == imageToCreate.imageOrder }">
-				<a id="nextPage"></a>
+				<a id="nextPage">Next folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < imageToCreate.imageOrder }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
 			</c:if>
 			</div>
 		</div>
@@ -113,18 +113,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage"></a>
+				<a id="previousPage">Previous folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previous" href="${previousPage}" class="previousPage"></a>
+				<a id="previous" href="${previousPage}" class="previousPage">Previous folio</a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == imageToCreate.imageOrder }">
-				<a id="nextPage"></a>
+				<a id="nextPage">Next folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < imageToCreate.imageOrder }">
-				<a id="next" href="${nextPage}" class="nextPage"></a>
+				<a id="next" href="${nextPage}" class="nextPage">Next folio</a>
 			</c:if>
 			</div>
 		</div>

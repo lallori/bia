@@ -90,18 +90,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage"></a>
+				<a id="previousPage">Previous folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<a id="nextPage"></a>
+				<a id="nextPage">Next folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
 			</c:if>
 			</div>
 		</div>
@@ -113,18 +113,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage"></a>
+				<a id="previousPage">Previous folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<a id="nextPage"></a>
+				<a id="nextPage">Next folio</a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
 			</c:if>
 			</div>
 		</div>
@@ -142,7 +142,7 @@
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToRubricarioForm">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
-				<input id="goR" type="submit" value="" />
+				<input id="goR" type="submit" value="Go" />
 				<form:hidden path="summaryId" />
 				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
 				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
@@ -170,7 +170,7 @@
 			<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
-				<input id="go" type="submit" value="" />
+				<input id="go" type="submit" value="Go" />
 				<form:hidden path="summaryId" />
 				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
 				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
@@ -189,9 +189,9 @@
 		<br />
 			
 		<div>
-			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full"></a>
-			<a id="volumeSummary" href="#"></a>
-			<a class="refreshVolumeExplorer" href="${currentPage}"></a>
+			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a>
+			<a id="volumeSummary" href="#">Volume Summary</a>
+			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
 		</div>
 
 		<div align="center">

@@ -24,8 +24,8 @@
 
 		<br />
 		<div id="closeSaveButtonsFullscreen">
-			<input id="close" type="submit" value="" title="Do not save changes" />
-			<input id="save" type="submit" value="" />
+			<input id="close" type="submit" value="Close" title="Do not save changes" />
+			<input id="save" type="submit" value="Save" />
 		</div>
 		
 		<form:hidden path="entryId"/>

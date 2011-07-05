@@ -20,7 +20,7 @@
 				<option value="Married">Married</option>
 				<option value="Patronymic">Patronymic</option> 
 			</select>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Name Parts">
 		</form>	
 	</div>
@@ -30,7 +30,7 @@
 		<form id="wordSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
 			<input id="word" name="word" class="input_20c" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Word Search">
 		</form>
 	</div>
@@ -63,7 +63,7 @@
 				<option value="month" selected="selected">month</option>
 			</select>
 			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="day" maxlength="2"/>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Date">
 		</form>
 	</div>
@@ -139,7 +139,7 @@
 				<option value="M.9">UNASSIGNED</option>
 				<option value="1">Unassigned</option>
 			</select>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Gender">
 		</form>
 	</div>
@@ -149,7 +149,7 @@
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>
 			<input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Place">
 		</form>
 	</div>

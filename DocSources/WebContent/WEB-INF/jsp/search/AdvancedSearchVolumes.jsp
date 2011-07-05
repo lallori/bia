@@ -16,7 +16,7 @@
 				<option value="Volume Titles">Volume Titles</option>
 				<option value="Notes">Notes</option>
 			</select>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Word Search">
 		</form>
 	</div>
@@ -30,7 +30,7 @@
 				<option value="Between">Between</option>
 			</select>
 			<input id="volumeSearch" name="volumeSearch" class="input_5c" type="text" value="" maxlength="5"/>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Volume">
 		</form>
 		
@@ -60,7 +60,7 @@
 				<option value="month" selected="selected">month</option>
 			</select>
 			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="day" maxlength="2"/>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Date">
 			
 		</form>

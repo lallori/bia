@@ -18,10 +18,10 @@
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
-		<a id="vettingChronology" href="${ShowVettingChronologyDocumentURL}"></a>
-		<a id="menuActions" href="${ShowMenuActionsDocumentURL}"></a>
+		<a id="vettingChronology" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
+		<a id="menuActions" href="${ShowMenuActionsDocumentURL}">Actions</a>
 		<a id="buttonPrint" title="Print this record" href="#"></a>
-		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc."></a>
+		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
 	<script type="text/javascript">

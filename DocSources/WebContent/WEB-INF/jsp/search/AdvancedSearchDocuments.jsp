@@ -17,7 +17,7 @@
 				<option value="Synopsis">Document Synopsis</option>
 				<option value="Extract">Document Extract</option>				
 			</select>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Word Search">
 		</form>
 	</div>
@@ -32,7 +32,7 @@
 			</select>
 			<input type="text" id="volumeSearch"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
 			<input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Volume">
 		</form>
 		
@@ -61,7 +61,7 @@
 				<option value="month">month</option>
 			</select>
 			<input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2"/>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Date">
 		</form>
 	</div>	
@@ -72,7 +72,7 @@
 			<a class="helpIcon" title="That text will explain...">?</a>
 			<label for="extract" id="extractLabel">Extract</label>
 			<textarea id="extract" name="extract" class="txtadvsearch"></textarea>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Extract">
 		</form>
 		<br />
@@ -80,7 +80,7 @@
 			<a class="helpIcon" title="That text will explain...">?</a>
 			<label for="synopsis" id="synopsisLabel">Synopsis</label>
 			<textarea id="synopsis" name="synopsis" class="txtadvsearch"></textarea>
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Synopsys">
 		</form>
 	</div>
@@ -90,7 +90,7 @@
 		<form id="topicSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
 			<input type="text" id="topic" name="topic" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Topics">
 			<input type="hidden" id="topicId" value="">
 		</form>
@@ -102,7 +102,7 @@
 			<a class="helpIcon" title="General Person Search: search here for documents related to person name either if it is a sender, a recipient and/or referenced in a document.">?</a>
 			<label for="person" id="personLabel">Person</label> 
 			<input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Person">
 			<input type="hidden" id="personId" value="">
 		</form>
@@ -111,7 +111,7 @@
 			<a class="helpIcon" title="General Place Search: search here for a document realated to place either if it is attached to a sender, a recipient and/or to a document topic.">?</a>
 			<label for="place" id="placeLabel">Place</label> 
 			<input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Place">
 			<input type="hidden" id="placeId" value="">
 		</form>
@@ -122,7 +122,7 @@
 			<a class="helpIcon" title="Search documents sent FROM Person/Organization.">?</a>
 			<label for="sender" id="senderLabel">Sender</label> 
 			<input type="text" id="sender" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Sender">
 			<input type="hidden" id="senderId" value="">
 		</form>
@@ -131,7 +131,7 @@
 			<a class="helpIcon" title="Search documents sent FROM Place/Location.">?</a>
 			<label for="from" id="fromLabel">From</label> 
 			<input type="text" id="from" name="from" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="From">
 			<input type="hidden" id="fromId" value="">
 		</form>
@@ -140,7 +140,7 @@
 			<a class="helpIcon" title="Search documents sent TO Person/Organization.">?</a>
 			<label for="recipientSearch" id="recipientSearchLabel">Recipient</label> 
 			<input type="text" id="recipient" name="recipient" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Recipient">
 			<input type="hidden" id="recipientId" value="">
 		</form>
@@ -149,7 +149,7 @@
 			<a class="helpIcon" title="Search documents sent Place/Location.">?</a>
 			<label for="to" id="toSearchLabel">To</label> 
 			<input type="text" id="to" name="to" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="To">
 			<input type="hidden" id="toId" value="">
 		</form>
@@ -158,7 +158,7 @@
 			<a class="helpIcon" title="Search documents in which this Person's name is mentioned.">?</a>
 			<label for="refersTo" id="refersToLabel">Refers to</label> 
 			<input type="text" id="refersTo" name="refersTo" class="input_25c"/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Referers To">
 			<input type="hidden" id="refersToId" value="">
 		</form>

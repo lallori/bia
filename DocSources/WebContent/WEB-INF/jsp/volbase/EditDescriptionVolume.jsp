@@ -78,8 +78,8 @@
 				<div><form:textarea path="cipherNotes" cssClass="txtarea"/><form:errors path="cipherNotes" cssClass="inputerrors"/></div>
 	
 				<div>
-					<input id="close" type="submit" value="" title="do not save changes" class="button" />
-					<input id="save" type="submit" value="" style="margin-left:300px" class="button"/>
+					<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+					<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
 				</div>
 				<form:hidden path="summaryId"/>
 			</fieldset>

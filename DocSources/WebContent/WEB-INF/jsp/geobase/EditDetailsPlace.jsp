@@ -61,8 +61,8 @@
 				</div>
 					
 				<div>
-					<input type="submit" title="Do not save changes" value="" id="close">
-					<input type="submit" value="" id="save">
+					<input type="submit" title="Do not save changes" value="Close" id="close">
+					<input type="submit" value="Save" id="save">
 				</div>
 			</fieldset>	
 
