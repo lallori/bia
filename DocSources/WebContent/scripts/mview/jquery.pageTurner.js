@@ -69,13 +69,13 @@
 							image: data.imageCompleteName,
 							prefix: functionParams["imagePrefix"],
 							credit: credit, 
-							scale: 18.0,
+							scale: 20.0,
 							navigation: true,
 							showNavWindow: true,
 							showNavImage: true, // this property hide navigation image
 							showNavButtons: true,
 							winResize: true,
-							zoom: 1
+							zoom: 3
 						});
 
 						if (data.previousPage == '') {
@@ -130,13 +130,13 @@
 						image: data.imageCompleteName,
 						prefix: functionParams["imagePrefix"],
 						credit: credit, 
-						scale: 18.0,
+						scale: 20.0,
 						navigation: true,
 						showNavWindow: true,
 						showNavImage: true, // this property hide navigation image
 						showNavButtons: true,
 						winResize: true,
-						zoom: 1
+						zoom: 3
 					});
 					if (data.previousPage == '') {
 						$("#previous").removeAttr('href');

@@ -12,14 +12,14 @@
 				server: '${IIPImageServerURL}',
 				prefix: '${ImagePrefixURL}',
 				image: '${image}',
-				credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
-				scale: 18.0,
+				credit: 'Folio n. ${image.imageProgTypeNum} ${image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
+				scale: 20.0,
 				navigation: true,
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image
 				showNavButtons: true,
 				winResize: true,
-				zoom: 1
+				zoom: 3,
 			});
 
 		</script>

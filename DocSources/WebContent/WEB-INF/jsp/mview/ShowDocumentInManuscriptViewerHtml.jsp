@@ -34,13 +34,13 @@
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
 					credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
-					scale: 18.0,
+					scale: 20.0,
 					navigation: true,
 					showNavWindow: true,
 					showNavImage: true, // this property hide navigation image
 					showNavButtons: true,
 					winResize: true,
-					zoom: 1
+					zoom: 3,
 				});
 
 				var $dialogExplorer = $j('<div></div>')

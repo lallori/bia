@@ -244,8 +244,8 @@ var IIP = new Class({
 
 		// Delete our annotations
 		if (this.annotationTip)
-			this.annotationTip.detach(this.canvas
-					.getChildren('div.annotation'));
+			this.annotationTip.detach(this.canvas .getChildren('div.annotation'));
+		
 		this.canvas.getChildren('div.annotation').each(function(el) {
 			el.eliminate('tip:text');
 			el.destroy();
@@ -256,10 +256,10 @@ var IIP = new Class({
 
 		// Create new annotations
 		this.createAnnotations();
-		if (this.annotationTip)
-			this.annotationTip.attach(this.canvas
-					.getChildren('div.annotation'));
 
+		if (this.annotationTip) {
+			this.annotationTip.attach(this.canvas.getChildren('div.annotation'));
+		}
 	},
 
 	/*
@@ -1002,7 +1002,10 @@ var IIP = new Class({
 			if (tx < this.view.w && ty < this.view.h)
 				this.res++;
 		}
-		this.res -= 1;
+		// MEDICI ARCHIVE PROJECT START
+		//this.res -= 1;
+		this.res = this.initialZoom;
+		// MEDICI ARCHIVE PROJECT END
 
 		// Watch our for small screen displays
 		if (this.res < 0)
@@ -1012,7 +1015,6 @@ var IIP = new Class({
 		this.resolutions.reverse();
 		this.wid = this.resolutions[this.res].w;
 		this.hei = this.resolutions[this.res].h;
-
 	},
 
 	/*
@@ -1797,7 +1799,6 @@ var IIP = new Class({
 	 * resolutions from the server
 	 */
 	load : function() {
-
 		// If we have supplied the relevent information, simply use the
 		// given data
 		if (this.loadoptions) {
