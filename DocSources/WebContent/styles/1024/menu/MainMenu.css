@@ -189,49 +189,64 @@
 
 
 #EntryMenuDiv #AddNewDocument{
-	background-image:url(/DocSources/images/1024/button_addnewdocument.png);
-	margin: 20px 0 5px 50px;
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	font-size:11px;
 	position:absolute;
-	width:120px;
-	height:25px;
+	margin: 20px 0 5px 50px;
+	padding:5px 0 0 4px;
+	width:122px;
+	height:22px;
 }
 
 #EntryMenuDiv #AddNewPerson{
-	background-image:url(/DocSources/images/1024/button_addnewperson.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	font-size:11px;
+	padding:5px 0 0 14px;
+	position:absolute;
 	margin: 20px 0 5px 175px;
 	position:absolute;
 	width:120px;
-	height:25px;
+	height:22px;
 }
 
 #EntryMenuDiv #AddNewVolume{
-	background-image:url(/DocSources/images/1024/button_addnewvolume.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	font-size:11px;
+	padding:5px 0 0 10px;
+	position:absolute;
 	margin: 20px 0 5px 300px;
 	position:absolute;
 	width:120px;
-	height:25px;
+	height:22px;
 }
 
 #EntryMenuDiv #AddNewPlace{
-	background-image:url(/DocSources/images/1024/button_addnewplace.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	font-size:11px;
+	padding:5px 0 0 17px;
+	position:absolute;
 	margin: 20px 0 5px 425px;
 	position:absolute;
 	width:120px;
-	height:25px;
+	height:22px;
 }
 
 #EntryMenuDiv #DeleteThisItem{
-	background-image:url(/DocSources/images/1024/button_deletethisitem.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	font-size:11px;
+	padding:5px 0 0 14px;
+	position:absolute;
 	margin: 20px 0 5px 550px;
 	position:absolute;
 	width:120px;
-	height:25px;
+	height:22px;
 }
 
 #EntryMenuDiv a:hover, #VetMenuDiv a:hover{
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=0); /* IE */
+	text-decoration:none;
 }
 
 

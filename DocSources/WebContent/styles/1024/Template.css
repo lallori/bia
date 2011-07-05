@@ -46,7 +46,7 @@ a {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	text-decoration:none;
 	color:#6F6B69;
-	font-size:small;
+	font-size:11px;
 }
 
 
@@ -373,11 +373,11 @@ a {
 /*
 /* ------------------------------------------------- ANCORS ---------------------------------------------- */
 
-#body_left a, .link { /* Edit buttons */
+/*#body_left a, .link {  Edit buttons 
 	text-decoration:underline;
 	font-size:11px;
 	color:#B7958F;
-}
+}*/
 
 
 #body_left a:hover, #body_right a:hover{ 

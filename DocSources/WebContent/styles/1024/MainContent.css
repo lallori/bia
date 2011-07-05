@@ -89,12 +89,13 @@ h6 {
 }
 
 #buttonShareLink { /* Share/Link Button */
-	width:60px;
-	height:18px;
-	right:31px;
+	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
+	font-size:10px;
+	padding:2px 0 0 5px;
+	width:65px;
+	height:17px;
+	right:25px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/button_sharelink.png);
-	background-repeat:no-repeat;
 	cursor:pointer;
 }
 
@@ -107,20 +108,30 @@ h6 {
 }
 
 #menuActions { /* Actions Menu Button */
-	background-image:url(/DocSources/images/1024/button_actions.png);
-	width:55px;
-	height:18px;
+	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
+	font-size:10px;
+	padding:2px 0 0 12px;
+	width:65px;
+	height:17px;
 	position:absolute;
-	right:97px;
+	right:88px;
 }
 
 #vettingChronology { /* Actions Menu Button */
-	background-image:url(/DocSources/images/1024/button_vettingchronology.png);
-	width:105px;
-	height:18px;
+	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
+	font-size:10px;
+	padding:2px 0 0 10px;
+	width:102px;
+	height:17px;
 	position:absolute;
+	text-decoration:none;
 	right:158px;
 }
+
+#buttonShareLink:hover, #menuActions:hover, #vettingChronology:hover {
+	text-decoration:none;
+}
+
 
 /* ----------------------------------------------------- */ 
 /*
@@ -170,6 +181,12 @@ h6 {
 	color:#6d5c4d;
 	font-weight:bold;
 	padding:3px 0 3px 0; 
+}
+
+item a{
+	text-decoration:underline;
+	font-size:11px;
+	color:#B7958F;	
 }
 
 .item37 {
@@ -363,8 +380,8 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_close.png);
-	width:45px;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	width:52px;
 	height:22px;
 	border:none;
 }
@@ -386,7 +403,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_close.png);
+	background-image:url(/DocSources/images/1024/button_small.png);
 	width:45px;
 	height:22px;
 	border:none;
@@ -397,7 +414,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_close.png);
+	background-image:url(/DocSources/images/1024/button_small.png);
 	width:45px;
 	height:22px;
 	border:none;
@@ -408,7 +425,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_close.png);
+	background-image:url(/DocSources/images/1024/button_small.png);
 	width:45px;
 	height:22px;
 	border:none;
@@ -419,12 +436,12 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 #save { /* Save button on bottom right  */
-	margin:5px auto auto 325px;
+	margin:5px auto auto 310px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_save.png);
-	width:45px;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	width:52px;
 	height:22px;
 	border:none;
 }
@@ -444,14 +461,16 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	border:none;
 }
 
-#AddNewValue, .AddNewValue  { /* "Add New Value" Button */
+#AddNewValue, .AddNewValue { /* "Add New Value" Button */
 	margin:5px auto 7px 310px;
 	position:absolute;
-	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_addnew.png);
+	background-image:url(/DocSources/images/1024/button_small.png);
 	background-repeat:no-repeat;
+	text-decoration:none;
+	color:#6D5C4D;
+	padding: 5px 0 0 13px;
 	width:59px;
 	height:23px;
 	border:none;
@@ -464,7 +483,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_addnew.png);
+	background-image:url(/DocSources/images/1024/button_small.png);
 	background-repeat:no-repeat;
 	width:59px;
 	height:23px;
@@ -478,7 +497,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_add.png);
+	background-image:url(/DocSources/images/1024/button_small.png);
 	background-repeat:no-repeat;
 	width:59px;
 	height:23px;
@@ -1119,8 +1138,8 @@ form#EditUserProfileForm {
 	margin:10px 0 0 0;
 }
 
-/* Ancors inside the Edit Forms */
-#EditCorrespondentsDocumentForm a, #EditExtSynDocumentDiv a, #EditDetailsDocumentDiv a, #EditFactCheckDocumentDiv a, #EditCorrespondentsDocumentDiv a, #EditExtractOrSynopsisDocumentDiv a, #EditDescriptionVolumeDiv a, #EditCorrespondentsVolumeDiv a, #EditContextVolumeDiv a, #EditDetailsPersonDiv a, #EditNamesPersonDiv a, #EditCorrespondentsDocumentDiv a, #EditExtSynDocumentDiv a, #EditDetailsVolumeDiv a, #EditNamesPersonDiv a, #EditTitleOccupationsPersDiv a, #EditRelationshipPersDiv a, #EditDetailsPersonForm a, #EditDetailsPlaceDiv a, #EditNamePlaceDiv a, #EditExtLinkPlaceDiv a, #EditGeoCoorPlaceDiv a, #EditFactChecksDocumentDiv a, #EditRelationshipPersonDiv a, #EditTitlesOccupationsPersonDiv a, #EditResearchNotesPersonDiv a, #SpousesPersonForm a, #TopicsDocumentForm a, #EditTopicsDocumentForm a, #EditParentsPersonDiv a, #EditChildrenPersonDiv a, #EditSpousesPersonDiv a, #AdddChildPersonForm a, #AddSpousePersonForm a, #AddNamesPersonForm a, #AddTitlesOccupationsPersonForm a, #AddPersonCorrespondentsDocumentForm a, #AddTopicsDocumentForm a, #AddExtLinkTgnPlaceForm a, #AddExtLinkMapPlaceForm a, #AddExtLinkMapSitePlaceForm a, #AddNameTgnPlaceForm a, #AddNameMapPlaceForm a, #AddNameMapSitePlaceForm a{ 
+/* Ancors inside the Edit Forms 
+#EditCorrespondentsDocumentForm a, #EditExtSynDocumentDiv a, #EditDetailsDocumentDiv a, #EditFactCheckDocumentDiv a, #EditCorrespondentsDocumentDiv a, #EditExtractOrSynopsisDocumentDiv a, #EditDescriptionVolumeDiv a, #EditCorrespondentsVolumeDiv a, #EditContextVolumeDiv a, #EditDetailsPersonDiv a, #EditNamesPersonDiv a, #EditCorrespondentsDocumentDiv a, #EditExtSynDocumentDiv a, #EditDetailsVolumeDiv a, #EditNamesPersonDiv a, #EditTitleOccupationsPersDiv a, #EditRelationshipPersDiv a, #EditDetailsPersonForm a, #EditDetailsPlaceDiv a, #EditNamePlaceDiv a, #EditExtLinkPlaceDiv a, #EditGeoCoorPlaceDiv a, #EditFactChecksDocumentDiv a, #EditRelationshipPersonDiv a, #EditTitlesOccupationsPersonDiv a, #EditResearchNotesPersonDiv a, #SpousesPersonForm a, #TopicsDocumentForm a, #EditTopicsDocumentForm a, #EditParentsPersonDiv a, #EditChildrenPersonDiv a, #EditSpousesPersonDiv a, #AdddChildPersonForm a, #AddSpousePersonForm a, #AddNamesPersonForm a, #AddTitlesOccupationsPersonForm a, #AddPersonCorrespondentsDocumentForm a, #AddTopicsDocumentForm a, #AddExtLinkTgnPlaceForm a, #AddExtLinkMapPlaceForm a, #AddExtLinkMapSitePlaceForm a, #AddNameTgnPlaceForm a, #AddNameMapPlaceForm a, #AddNameMapSitePlaceForm a, .editvalue{ */
 	text-decoration:underline;
 	font-size:11px;
 	color:#B7958F;
@@ -1352,13 +1371,17 @@ input.file {
 	cursor:default;
 }
 
+.Add {
+	padding:4px 0 0 13px;
+}
+
 
 #AddPersonCorrespondentsDocument {
 	margin:5px auto auto 280px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_addnew.png);
+	background-image:url(/DocSources/images/1024/button_small.png);
 	width:59px;
 	height:23px;
 	border:none;
@@ -1427,7 +1450,7 @@ input.file {
 }
 
 #AddTopicDocument { /* "Add New ..." Button */
-	background-image: url(/DocSources/images/1024/button_addnew.png);
+	background-image: url(/DocSources/images/1024/button_small.png);
 	border:none;
 	margin:5px auto auto 280px;
 	width:59px;
@@ -1565,11 +1588,12 @@ input.file {
 a#editValue, .editValue { /* "Edit Value" Button */
 	font-size:11px;
 	margin-left:35px;
-	
+	text-decoration: underline;
+	color: #B7958F;
 }
 
 #AddNamesPerson, #AddChildPerson, #AddExtLinkTgnPlace, #AddExtLinkMapPlace, #AddExtLinkMapSitePlace, #AddNameMapSitePlace, #AddNameMapPlace, #AddNameTgnPlace { /* "Add New ..." Button */
-	background-image: url(/DocSources/images/1024/button_addnew.png);
+	background-image: url(/DocSources/images/1024/button_small.png);
 	border:none;
 	display:inline;
 	margin-left:260px;
@@ -1579,7 +1603,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 
 #AddSpousePerson, #EditPerson { /* "Add New ..." Button */
 	background-color:transparent;
-	background-image: url(/DocSources/images/1024/button_addnew.png);
+	background-image: url(/DocSources/images/1024/button_small.png);
 	padding:1px 5px 1px 5px;
 	border:none;
 	display:inline;
@@ -1682,7 +1706,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 /*
 /* Parents */
 
-a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
+a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	font-size:11px;
 	text-decoration: underline;
 	color: #B7958F;
@@ -1821,23 +1845,32 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 
 #prevNextButtons {
 	margin:10px 0 10px 160px;
-	width: 170px;
+	width: 205px;
 	z-index:2;
 }
 
 #prevNextButtons #previousPage a{
 	float:left;
-	background-image:url(/DocSources/images/1024/button_prevfolio.png);
-	width:83px;
-	height:23px;
+	background:url(/DocSources/images/1024/button_arrow_left.png) no-repeat;
+	padding:4px 0 0 10px;
+	width:90px;
+	height:22px;
+	font-size:11px;
 }
 
 #prevNextButtons #nextPage a{
 	float:right;
-	background-image:url(/DocSources/images/1024/button_nextfolio.png);
-	width:83px;
-	height:23px;
+	background:url(/DocSources/images/1024/button_arrow_right.png) no-repeat;
+	padding:4px 0 0 15px;
+	width:90px;
+	height:22px;
+	font-size:11px;
 }
+
+#prevNextButtons #previousPage a:hover, #prevNextButtons #nextPage a:hover {
+	text-decoration:none;
+}
+
 
 /* ---------------- */
 /*
@@ -1914,7 +1947,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	margin:-4px 0 0 120px;
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/1024/button_go.png);
+	background-image:url(/DocSources/images/1024/button_mini.png);
+	font-size:11px;
+	padding:2px 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -1925,7 +1960,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	margin:0;
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/1024/button_go.png);
+	background-image:url(/DocSources/images/1024/button_mini.png);
+	font-size:11px;
+	padding:2px 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -2011,7 +2048,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	margin:-4px 0 0 120px;
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/1024/button_go.png);
+	background-image:url(/DocSources/images/1024/button_mini.png);
+	font-size:11px;
+	padding:2px 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -2022,7 +2061,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 	margin:0 0 0 7px;
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/1024/button_go.png);
+	background-image:url(/DocSources/images/1024/button_mini.png);
+	font-size:11px;
+	padding:2px 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -2034,17 +2075,24 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 /*  Fullscreen Mode */
 
 #flipItInFullScreen { /* "Move to folio" <input> GO button ID  */
-	width:95px;
+	width:122px;
 	height:22px;
 	position:absolute;
 	margin-left:20px;
 	display:inline;
-	background-image:url(/DocSources/images/1024/button_fullscreenmode.png);
+	background-image:url(/DocSources/images/1024/button_medium.png);
 	background-repeat:no-repeat;
+	font-size:11px;
+	padding:4px 0 0 15px;
 }
 
 .pirobox_gall1 {
 	height:22px;
+}
+
+
+#flipItInFullScreen:hover, #volumeSummary:hover, .refreshVolumeExplorer:hover {
+	text-decoration:none;
 }
 
 /* ---------------- */
@@ -2054,10 +2102,13 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse {
 a#volumeSummary {
 	margin: 0 0 0 190px;
 	position:absolute;
-	width:105px;
+	width:122px;
 	height:22px;
 	display:inline;
-	background-image:url(/DocSources/images/1024/button_volumeSummary.png);
+	background-image:url(/DocSources/images/1024/button_medium.png);
+	background-repeat:no-repeat;
+	font-size:11px;
+	padding:4px 0 0 6px;
 	cursor:pointer;
 }
 
@@ -2133,12 +2184,15 @@ a#volumeSummary {
 /* ---- Refresh --- */
 
 a.refreshVolumeExplorer {
-	margin: 0 0 0 383px;
+	margin: 0 0 0 355px;
 	position:absolute;
-	width:95px;
+	width:122px;
 	height:22px;
 	display:inline;
-	background-image:url(/DocSources/images/1024/button_refresh.png);
+	background-image:url(/DocSources/images/1024/button_medium.png);
+	background-repeat:no-repeat;
+	font-size:11px;
+	padding:4px 0 0 40px;
 	cursor:pointer;
 }
 
@@ -2325,10 +2379,6 @@ a.refreshVolumeExplorer {
 	position:absolute;
 }
 
-#createPlace a:hover{
-	text-decoration:underline;
-}
-
 #createPlace #tgnPlace{
 	width:220px;
 	height:230px;
@@ -2360,12 +2410,14 @@ a.refreshVolumeExplorer {
 }
 
 #createPlace #tgnPlace #AddNewTgnPlace {
-	background-image:url(/DocSources/images/1024/button_tgnplace.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 11px;
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
-	width:114px;
-	height:25px;
+	width:122px;
+	height:22px;
 }
 
 #createPlace #tgnPlace p, #createPlace #mapSite p, #createPlace #mapPlace p {
@@ -2379,39 +2431,46 @@ a.refreshVolumeExplorer {
 }
 
 #createPlace #mapPlace #AddNewMapPlace {
-	background-image:url(/DocSources/images/1024/button_mapplace.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 10px;
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
-	width:114px;
-	height:25px;
+	width:122px;
+	height:22px;
 }
 
 #createPlace #mapSite #AddNewMapSitePlace {
-	background-image:url(/DocSources/images/1024/button_mapsite.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 5px;
     top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
-	width:114px;
-	height:25px;
+	width:122px;
+	height:22px;
 }
 
 
-#createPlace #tgnPlace #AddNewTgnPlace:hover, #createPlace #mapPlace #AddNewMapPlace:hover, #createPlace #mapSite #AddNewMapSitePlace:hover {
+#AddNewTgnPlace:hover,#AddNewMapPlace:hover, #AddNewMapSitePlace:hover, #goBack:hover  {
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */ !important
+	text-decoration:none;
 }
 
 #createPlace #goBack {
-	margin:356px 0 0 370px;
+	margin:355px 0 0 380px;
 	position:absolute;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_goback.png);
-	width:50px;
-	height:23px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 4px;
+	width:52px;
+	height:22px;
 	border:none;
 }
 
@@ -2607,7 +2666,7 @@ a.refreshVolumeExplorer {
 
 /* Close & Save Buttons position */
 #EditUserProfileForm #save {
-	margin:0 0 0 170px;
+	margin:0 0 0 153px;
 }
 
 #EditUserProfileDiv #closeMyProfile {
@@ -2620,27 +2679,36 @@ a.refreshVolumeExplorer {
 }
 
 #userProfile #PersonalNotesButton {
-	background-image:url(/DocSources/images/1024/button_personalnotes.png);
-	width:93px;
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	width:122px;
 	height:23px;
 	float:left;
-	margin:55px 0 0 15px;
+	margin:50px 0 0 5px;
+	text-decoration:none;
+	color:#6D5C4D;
+	padding:4px 0 0 17px;
 }
 
 #userProfile #EditUserProfile {
-	background-image:url(/DocSources/images/1024/button_editprofile.png);
-	width:93px;
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	width:122px;
 	height:23px;
 	float:left;
-	margin:10px 0 0 15px;
+	margin:10px 0 0 5px;
+	text-decoration:none;
+	color:#6D5C4D;
+	padding:4px 0 0 27px;
 }
 
 #userProfile #CloseUserProfile {
-	background-image:url(/DocSources/images/1024/button_closeProfile.png);
-	width:93px;
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	width:122px;
 	height:23px;
 	float:left;
-	margin:10px 0 0 15px;
+	margin:10px 0 0 5px;
+	text-decoration:none;
+	color:#6D5C4D;
+	padding:4px 0 0 24px;
 }
 
 #PersonalNotesButton:hover, #EditUserProfile:hover, #CloseUserProfile:hover {
@@ -2658,8 +2726,7 @@ a.refreshVolumeExplorer {
 }
 
 #modalBox #editCleanClose{
-	margin:65px 0 0 220px;
-	position:absolute;
+	margin:25px 0 0 220px;
 	width:270px;
 }
 
@@ -2668,54 +2735,62 @@ a.refreshVolumeExplorer {
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_edit.png);
-	width:44px;
-	height:23px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	padding:4px 0 0 15px;
+	font-size:11px;
+	width:52px;
+	height:22px;
 	border:none;
 }
 
 #modalBox #editCleanClose #cleanAll {
-	margin:2px auto auto 55px;
+	margin:2px auto auto 60px;
 	position:absolute;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_deleteall.png);
-	width:56px;
-	height:23px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	padding:4px 0 0 10px;
+	font-size:11px;
+	width:52px;
+	height:22px;
 	border:none;
 }
 
 #modalBox #editCleanClose #close {
-	margin:1px auto auto 125px;
+	margin:1px auto auto 120px;
 	position:absolute;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_close.png);
-	width:45px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	padding:4px 0 0 12px;
+	font-size:11px;
+	width:52px;
 	height:22px;
 	border:none;
 }
 
 #modalBox #editCleanClose #goBack {
-	margin:2px auto auto 180px;
+	margin:1px auto auto 180px;
 	position:absolute;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_goback.png);
-	width:50px;
-	height:23px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	padding:4px 0 0 5px;
+	font-size:11px;
+	width:52px;
+	height:22px;
 	border:none;
 }
 
 
-#cleanAll:hover, #edit:hover, #goBack:hover {
+#cleanAll:hover, #edit:hover, #closesavePersonalNotes #goBack:hover, #closesavePersonalNotes #close:hover {
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */ !important
-
+	text-decoration:none;
 }
 
 .txtarea_personalNotes {
@@ -2733,30 +2808,46 @@ a.refreshVolumeExplorer {
 }
 
 #closesavePersonalNotes {
-	margin:5px 0 0 260px;
-	width:250px;
-	position:absolute;
+	margin:5px 0 0 250px;
+	width:140px;
+	float:left;
 }
 
-#closesavePersonalNotes #save{
-	position:absolute;
-	margin:1px 0 0 70px;
-}
 
 #closesavePersonalNotes #close{
-	position:absolute;
-	margin:0 0 0 135px;
+	margin:0 0 0 10px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	float:right;
+	padding:4px 0 0 12px;
+	font-size:11px;
+	width:52px;
+	height:22px;
 }
 
 #closesavePersonalNotes #goBack{
-	position:absolute;
-	margin:1px 0 0 0;
+	margin:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_goback.png);
-	width:50px;
-	height:23px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	padding:4px 0 0 5px;
+	float:left;
+	font-size:11px;
+	width:52px;
+	height:22px;
 	border:none;
+}
+
+#EditPersonalNotesForm #savePersonalNotes {
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	background-color:transparent;
+	padding:0 0 0 3px;
+	font-size:11px;
+	width:52px;
+	height:22px;
+	margin:5px 0 0 0;
+	border:none;
+	cursor:pointer;
+	
 }
 
 /* -------------------------------------------------------------------------- */
@@ -2886,17 +2977,23 @@ a.refreshVolumeExplorer {
 
 
 #multiOpenAccordion #addSearchFilter { /* Add button */
-	background: url(/DocSources/images/1024/button_addSearchFilter.png) no-repeat;
-	width:40px;
-	height:23px;
+	background: url(/DocSources/images/1024/button_small.png) no-repeat;
+	padding:3px 0 0 0;
+	font-size:11px;
+	width:52px;
+	height:22px;
 	float:right;
 	border:none;
 	cursor:pointer;
+	margin:5px 0 0 0;
 }
 
 #personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
 	float:none;
-	margin-left:34px;
+	margin-left:29px;
+	background: url(/DocSources/images/1024/button_small.png) no-repeat;
+	padding:3px 0 0 2px;
+	font-size:11px;
 }
 
 
@@ -3073,10 +3170,11 @@ span.categorySearch {
 .saveAsButton { /* Save As Button */
 	margin:5px 0 0 5px;
 	position:absolute;
-	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_saveas.png);
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 5px; 
 	background-repeat:no-repeat;
 	width:59px;
 	height:23px;
@@ -3085,12 +3183,13 @@ span.categorySearch {
 }
 
 .saveButton { /* Save Button */
-	margin:5px 0 0 55px;
+	margin:5px 0 0 62px;
 	position:absolute;
-	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_save.png);
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 12px; 
 	background-repeat:no-repeat;
 	width:59px;
 	height:23px;
@@ -3100,13 +3199,18 @@ span.categorySearch {
 
 #advsearch { /* Search Button */
 	margin:5px auto auto 120px;
-	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_advsearchform.png);
-	width:45px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	font-size:11px;
+	padding:0 0 0 2px; 
+	width:52px;
 	height:22px;
 	border:none;
+}
+
+#advsearch:hover, .saveButton:hover, .saveAsButton:hover {
+	text-decoration:none;
 }
 
 /* ---------------------------- Your search results ------------------------- */
@@ -3210,6 +3314,40 @@ table#savedSearchFiltersForm.display {
 	height:23px;
 }
 
+#savedFiltersButtons {
+	width:120px;
+	height:22px;
+	margin:10px 0 0 310px;
+}
+
+#goBackToAdvancedSearch {
+	float:left;
+	cursor:pointer;
+	background-color:transparent;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 5px;
+	width:50px;
+	height:22px;
+}
+
+#closeSavedFilters {
+	float:right;
+	cursor:pointer;
+	background-color:transparent;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 12px;
+	width:52px;
+	height:22px;
+}
+
+#goBackToAdvancedSearch:hover, #closeSavedFilters:hover {
+	opacity:0.5; /* Chrome, Safari */
+	-moz-opacity: 0.5; /* FireFox */
+	filter:alpha(opacity=50); /* IE */
+	text-decoration:none;
+}
 
 
 /* -------------------------------------------------------------------------- */

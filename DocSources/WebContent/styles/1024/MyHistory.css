@@ -170,8 +170,10 @@
 	float:right;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_close.png);
-	width:45px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 12px;
+	width:52px;
 	height:22px;
 }
 
@@ -179,8 +181,19 @@
 	float:left;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_goback.png);
-	width:50px;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	font-size:11px;
+	padding:4px 0 0 4px;
+	width:52px;
 	height:22px;
 }
+
+#goBackToMyHistory:hover, #closeMyHistory:hover {
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
+
 

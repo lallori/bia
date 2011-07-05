@@ -32,9 +32,7 @@
 
 .dataTables_wrapper {
     position: relative;
-    min-height: 302px;
     clear: both;
-    _height: 302px;
     zoom: 1; /* Feeling sorry for IE */
 }
 
@@ -593,7 +591,7 @@ div.box {
 }
 
 #savedSearchFiltersForm_paginate  {
-	margin-right:15px;
+	margin:0 15px 10px 0;
 }
 
 #MyDocumentsHistoryTable_info, #MyPeopleHistoryTable_info, #MyVolumeHistoryTable_info, #MyPlaceHistoryTable_info {
