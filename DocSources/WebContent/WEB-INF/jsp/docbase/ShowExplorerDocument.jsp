@@ -6,9 +6,9 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="explorerDocumentModalWindowURL" value="/src/docbase/ShowExplorerDocument.do">
-			<c:param name="summaryId" value="${command.summaryId}"/>
-			<c:param name="volNum" value="${command.volNum}" />
-			<c:param name="volLetExt" value="${command.volLetExt}" />
+			<c:param name="entryId" value="${documentExplorer.entryId}" />
+			<c:param name="volNum" value="${documentExplorer.volNum}" />
+			<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
 			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
 			<c:param name="total" value="${documentExplorer.total}" />
 			<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
@@ -21,18 +21,20 @@
 		</c:url>
 
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
-			<c:param name="imageName"   value="${documentExplorer.image}" />
-			<c:param name="imageProgTypeNum"   value="${documentExplorer.image.imageProgTypeNum}" /> 
-			<c:param name="imageRectoVerso"   value="${documentExplorer.image.imageRectoVerso}" />
+			<c:param name="entryId" value="${documentExplorer.entryId}"/>
+			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
 			<c:param name="flashVersion"   value="false" />
+			<c:param name="showHelp" value="true" />
+			<c:param name="showThumbnail" value="true" />
 		</c:url>
 	</security:authorize>
 	
 	<c:url var="ShowExplorerDocumentURL" value="/src/docbase/ShowExplorerDocument.do" />
 	
 	<c:url var="currentPageURL" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="entryId" value="${documentExplorer.entryId}" />
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
 		<c:param name="total" value="${documentExplorer.total}" />
 		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
@@ -44,8 +46,9 @@
 	</c:url>
 
 	<c:url var="nextPageURL" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="entryId" value="${documentExplorer.entryId}" />
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder + 1}" />
 		<c:param name="total" value="${documentExplorer.total}" />
 		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
@@ -57,8 +60,9 @@
 	</c:url>
 
 	<c:url var="previousPageURL" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="entryId" value="${documentExplorer.entryId}" />
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder - 1}" />
 		<c:param name="total" value="${documentExplorer.total}" />
 		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
@@ -123,7 +127,7 @@
 		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
 	<c:if test="${documentExplorer.totalRubricario > 0}">
 		<br/>
-	
+
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
@@ -137,7 +141,8 @@
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
-				<form:hidden path="imageOrder" />
+				<form:hidden path="imageOrder" value="${documentExplorer.image.imageOrder}"/>
+				<form:hidden path="entryId" value="${documentExplorer.entryId}" />
 				<form:hidden path="total" value="${documentExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${documentExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${documentExplorer.totalCarta}" />
@@ -164,7 +169,8 @@
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
-				<form:hidden path="imageOrder" />
+				<form:hidden path="imageOrder" value="${documentExplorer.image.imageOrder}"/>
+				<form:hidden path="entryId" value="${documentExplorer.entryId}" />
 				<form:hidden path="total" value="${documentExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${documentExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${documentExplorer.totalCarta}" />

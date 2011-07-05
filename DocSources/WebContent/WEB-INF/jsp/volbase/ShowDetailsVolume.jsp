@@ -80,6 +80,7 @@
 			$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
 			$j("#EditDetailsVolume").volumeExplorer( {
+				summaryId				: "${volume.summaryId}",
 				volNum					: "${volume.volNum}",
 				volLetExt				: "${volume.volLetExt}",
 				checkVolumeDigitizedURL	: "${checkVolumeDigitizedURL}",

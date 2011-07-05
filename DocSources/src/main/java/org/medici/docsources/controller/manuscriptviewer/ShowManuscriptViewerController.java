@@ -32,8 +32,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.manuscriptviewer.ShowManuscriptViewerRequestCommand;
 import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
@@ -88,28 +90,30 @@ public class ShowManuscriptViewerController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowManuscriptViewerRequestCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
-		List<Image> images = new ArrayList<Image>();
+		Image image = null;
 		
 		try {
 			// we set default image as empty string, so we need only to update the record.
 			model.put("image", "");
 
 			//If the request is made with imageName, we don't need to query database
-			if (command.getImageName() != null) {
-				model.put("image", command.getImageName());
-			} else  {
-				if (!ObjectUtils.toString(command.getEntryId()).equals("")) {
-					images = getDocBaseService().findDocumentImages(command.getEntryId());
-				} else if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
-					images = getVolBaseService().findVolumeImages(command.getSummaryId());
+			if (!ObjectUtils.toString(command.getEntryId()).equals("")) {
+				if ((!ObjectUtils.toString(command.getImageOrder()).equals(""))) {
+					image = getDocBaseService().findDocumentImage(command.getEntryId(), command.getImageOrder());
 				} else {
-					images = getVolBaseService().findVolumeImages(command.getVolNum(), command.getVolLeText());
+					image = getDocBaseService().findDocumentImage(command.getEntryId(), command.getImageType(), command.getImageProgTypeNum());
 				}
-
-				if ((images != null) && (images.size() >0)) {
-					model.put("image", images.get(0));
+			} else if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
+				if ((!ObjectUtils.toString(command.getImageOrder()).equals(""))) {
+					image = getVolBaseService().findVolumeImage(command.getSummaryId(), command.getImageOrder());
+				} else if ((!ObjectUtils.toString(command.getImageProgTypeNum()).equals(""))) {
+					image = getVolBaseService().findVolumeImage(command.getSummaryId(), command.getImageType(), command.getImageProgTypeNum());
+				} else {
+					image = getVolBaseService().findVolumeImage(command.getSummaryId());
 				}
 			}
+
+			model.put("image", image);
 		} catch (ApplicationThrowable ath) {
 		}
 

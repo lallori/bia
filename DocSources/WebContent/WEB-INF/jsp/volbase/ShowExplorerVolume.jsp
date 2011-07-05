@@ -6,7 +6,7 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="explorerVolumeModalWindow" value="/src/volbase/ShowExplorerVolume.do">
-			<c:param name="summaryId" value="${command.summaryId}"/>
+			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 			<c:param name="volNum" value="${volumeExplorer.volNum}" />
 			<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
@@ -23,12 +23,11 @@
 	</security:authorize>
 	
 	<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
-		<c:param name="imageName"		value="${volumeExplorer.image}" />
-		<c:param name="imageProgTypeNum"   value="${volumeExplorer.image.imageProgTypeNum}" /> 
-		<c:param name="imageRectoVerso"   value="${volumeExplorer.image.imageRectoVerso}" />
+		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 		<c:param name="flashVersion"	value="${command.flashVersion}" />
-		<c:param name="showHelp" value="false" />
-		<c:param name="showThumbnail" value="false" />
+		<c:param name="showHelp" value="true" />
+		<c:param name="showThumbnail" value="true" />
 	</c:url>
 
 	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do" />
@@ -147,7 +146,7 @@
 				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
 				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
 				<form:hidden path="imageType" value="R"/>
-				<form:hidden path="imageOrder" />
+				<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
@@ -175,7 +174,7 @@
 				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
 				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
 				<form:hidden path="imageType" value="C"/>
-				<form:hidden path="imageOrder" />
+				<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />

@@ -6,13 +6,16 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 			<c:param name="imageName"   value="${volumeExplorer.image}" />
-			<c:param name="flashVersion"   value="true" />
+			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+			<c:param name="flashVersion"   value="false" />
 		</c:url>
 
 		<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do">
-			<c:param name="volNum" value="${requestCommand.volNum}" />
-			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
+			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+			<c:param name="volNum" value="${volumeExplorer.volNum}" />
+			<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 			<c:param name="imageOrder" value="${imageToCreate.imageOrder}" />
 			<c:param name="total" value="${volumeExplorer.total}" />
 			<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
@@ -20,13 +23,14 @@
 			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="true" />
+			<c:param name="flashVersion" value="false" />
 			<c:param name="imageDocumentToCreate" value="${requestCommand.imageDocumentToCreate}" />
 			<c:param name="imageDocumentFolioStart" value="${volumeExplorer.image.imageId}" />
 			<c:param name="modalWindow" value="false"/>
 		</c:url>
 
 		<c:url var="TranscribeAndContextualizeDocumentURL" value="/de/docbase/TranscribeAndContextualizeDocument.do">
+			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 			<c:param name="volNum" value="${requestCommand.volNum}" />
 			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
@@ -36,13 +40,14 @@
 			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="true" />
+			<c:param name="flashVersion" value="false" />
 			<c:param name="imageDocumentToCreate" value="${requestCommand.imageDocumentToCreate}" />
 			<c:param name="imageDocumentFolioStart" value="${volumeExplorer.image.imageId}" />
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 
 		<c:url var="ExplorerVolumeModalURL" value="/src/volbase/ShowExplorerVolume.do">
+			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 			<c:param name="volNum" value="${requestCommand.volNum}" />
 			<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
@@ -52,12 +57,13 @@
 			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="true" />
+			<c:param name="flashVersion" value="false" />
 			<c:param name="modalWindow" value="true"/>
 		</c:url>
 	</security:authorize>
 	
 	<c:url var="nextPage" value="/de/docbase/ChoiceStartFolioDocument.do">
+		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder + 1}" />
@@ -68,11 +74,12 @@
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 		<c:param name="imageDocumentToCreate" value="${requestCommand.imageDocumentToCreate}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 		<c:param name="modalWindow" value="true"/>
 	</c:url>
 
 	<c:url var="previousPage" value="/de/docbase/ChoiceStartFolioDocument.do">
+		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 		<c:param name="volNum" value="${requestCommand.volNum}" />
 		<c:param name="volLetExt" value="${requestCommand.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder - 1}" />
@@ -82,7 +89,7 @@
 		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
 		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
 		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-		<c:param name="flashVersion" value="true" />
+		<c:param name="flashVersion" value="false" />
 		<c:param name="imageDocumentToCreate" value="${requestCommand.imageDocumentToCreate}" />
 		<c:param name="flashVersion" value="true" />
 		<c:param name="modalWindow" value="true"/>

@@ -557,9 +557,56 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Image> findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+	public Image findDocumentImage(Integer entryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
 		try {
-			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+			Document document = getDocumentDAO().find(entryId);
+			
+			if (document != null) {
+
+				List<Image> images = getImageDAO().findVolumeImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageType, imageProgTypeNum);
+				if (images.size() > 0) {
+					return images.get(0);
+				} else 
+					return null;
+			} else {
+				return null;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image findDocumentImage(Integer entryId, Integer imageOrder) throws ApplicationThrowable {
+		try {
+			Document document = getDocumentDAO().find(entryId);
+			
+			if (document != null) {
+				return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
+			} else {
+				return null;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+		try {
+			List<Image> images = getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+			
+			if (images.size()>0) {
+				return images.get(0);
+			}
+			
+			return null;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -584,6 +631,19 @@ public class DocBaseServiceImpl implements DocBaseService {
 			} else {
 				return new ArrayList<Image>(0);
 			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Image> findDocumentImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+			
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

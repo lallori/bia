@@ -6,10 +6,9 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="ChoiceStartFolioDocument" value="/de/docbase/ChoiceStartFolioDocument.do">
-			<c:param name="summaryId" 				value="${command.summaryId}"/>
-			<c:param name="volNum" 					value="${command.volNum}" />
-			<c:param name="volLetExt" 				value="${command.volLetExt}" />
-			<c:param name="flashVersion" 			value="${command.flashVersion}"/>
+			<c:param name="summaryId" 				value="${volumeExplorer.summaryId}"/>
+			<c:param name="volNum" 					value="${volumeExplorer.volNum}" />
+			<c:param name="volLetExt" 				value="${volumeExplorer.volLetExt}" />
 			<c:param name="imageOrder" 				value="${volumeExplorer.image.imageOrder}" />
 			<c:param name="imageDocumentToCreate" 	value="${volumeExplorer.image.imageId}" />
 			<c:param name="total" 					value="${volumeExplorer.total}" />
@@ -23,9 +22,8 @@
 		</c:url>
 
 		<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
-			<c:param name="imageName"    value="${volumeExplorer.image}" />
-			<c:param name="imageProgTypeNum"   value="${volumeExplorer.image.imageProgTypeNum}" /> 
-			<c:param name="imageRectoVerso"   value="${volumeExplorer.image.imageRectoVerso}" />
+			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 			<c:param name="flashVersion" value="${command.flashVersion}" />
 		</c:url>
 	</security:authorize>
@@ -33,8 +31,9 @@
 	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do" />	
 
 	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
@@ -47,8 +46,9 @@
 	</c:url>
 
 	<c:url var="nextPage" value="/src/volbase/ShowExplorerVolume.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder + 1}" />
 		<c:param name="total" value="${volumeExplorer.total}" />
 		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
@@ -61,6 +61,7 @@
 	</c:url>
 
 	<c:url var="previousPage" value="/src/volbase/ShowExplorerVolume.do">
+		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder - 1}" />
@@ -137,10 +138,11 @@
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabelModal">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRubricarioModal" type="text" value="" />
 				<input id="goRModal" type="submit" value="Go" />
+				<form:hidden path="summaryId" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
-				<form:hidden path="imageOrder" />
+				<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
@@ -166,10 +168,11 @@
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabelModal">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
 				<input class="openmodalbox" id="goModal" type="submit" value="Go"/>
+				<form:hidden path="summaryId" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
-				<form:hidden path="imageOrder" />
+				<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
 				<form:hidden path="total" value="${volumeExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />

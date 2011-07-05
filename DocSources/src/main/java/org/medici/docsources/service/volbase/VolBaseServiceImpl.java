@@ -349,11 +349,70 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
+	@Override
+	public Image findVolumeImage(Integer summaryId) throws ApplicationThrowable {
+		try {
+			Volume volume = getVolumeDAO().find(summaryId);
+			if (volume != null) {
+				List<Image> images = getImageDAO().findVolumeImages(volume.getVolNum(), volume.getVolLetExt());
+				if (images.size() > 0) {
+					return images.get(0);
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Image> findVolumeImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+	public Image findVolumeImage(Integer summaryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+		try {
+			Volume volume = getVolumeDAO().find(summaryId);
+			if (volume != null) {
+				List<Image> images = getImageDAO().findVolumeImages(volume.getVolNum(), volume.getVolLetExt(), imageType, imageProgTypeNum);
+				if (images.size() > 0) {
+					return images.get(0);
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image findVolumeImage(Integer summaryId, Integer imageOrder) throws ApplicationThrowable {
+		try {
+			Volume volume = getVolumeDAO().find(summaryId);
+			if (volume != null) {
+				return getImageDAO().findVolumeImage(volume.getVolNum(), volume.getVolLetExt(), imageOrder);
+			} else {
+				return null;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
 		try {
 			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
 		} catch (Throwable th) {
@@ -425,7 +484,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -464,7 +522,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -488,7 +546,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -501,12 +559,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}		
 	}
 
+
 	/**
 	 * @return the catalogDAO
 	 */
 	public CatalogDAO getCatalogDAO() {
 		return catalogDAO;
 	}
+	
 	/**
 	 * @return the imageDAO
 	 */
@@ -520,7 +580,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -544,21 +604,20 @@ public class VolBaseServiceImpl implements VolBaseService {
 		return seriesListDAO;
 	}
 
-
 	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable {
 		try {
-			if (volumeExplorer.getSummaryId() != null) {
+			if (volumeExplorer.getSummaryId() != null && volumeExplorer.getVolNum() == null) {
 				if (volumeExplorer.getSummaryId() >0) {
 					Volume volume = getVolumeDAO().find(volumeExplorer.getSummaryId());
 					volumeExplorer.setVolNum(volume.getVolNum());
@@ -570,7 +629,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -582,7 +641,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -594,13 +653,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+
 	/**
 	 * @param catalogDAO the catalogDAO to set
 	 */
 	public void setCatalogDAO(CatalogDAO catalogDAO) {
 		this.catalogDAO = catalogDAO;
 	}
+
 
 	/**
 	 * @param imageDAO the imageDAO to set
@@ -609,6 +670,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.imageDAO = imageDAO;
 	}
 
+
 	/**
 	 * @param monthDAO the monthDAO to set
 	 */
@@ -616,12 +678,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.monthDAO = monthDAO;
 	}
 
+
 	/**
 	 * @param seriesListDAO the seriesListDAO to set
 	 */
 	public void setSeriesListDAO(SeriesListDAO seriesListDAO) {
 		this.seriesListDAO = seriesListDAO;
 	}
+
 
 	/**
 	 * @param volumeDAO the volumeDAO to set

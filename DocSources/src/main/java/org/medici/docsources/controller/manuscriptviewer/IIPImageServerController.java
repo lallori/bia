@@ -36,6 +36,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.awt.image.renderable.ParameterBlock;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -79,6 +80,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sun.media.jai.codec.ImageCodec;
+import com.sun.media.jai.codec.ImageEncoder;
+import com.sun.media.jai.codec.JPEGEncodeParam;
 import com.sun.media.jai.codec.SeekableStream;
 
 /**
@@ -309,15 +313,22 @@ public class IIPImageServerController {
 	        Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
 	        Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
 	        StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"),",");
-	        //pageImage is inverted as stored in tiff file : first image is the last image
+	        //pageImage is inverted as stored in tiff file : first image is last image
 	        Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
 	        Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
 			generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
 		} else if (httpServletRequest.getParameter("WID") != null) {
 			Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
 			String imageName = httpServletRequest.getParameter("FIF");
+			Integer quality = NumberUtils.toInt(httpServletRequest.getParameter("QLT"));
+			if (quality == 0) {
+				quality=99;
+			}
 			String thumbnailFormat = httpServletRequest.getParameter("CVT");
-			generateThumbnailImage(imageName, thumbnailWidth, thumbnailFormat, response);
+			if (thumbnailFormat == null) {
+				thumbnailFormat = "jpeg";
+			}
+			generateThumbnailImage(imageName, thumbnailWidth, quality, thumbnailFormat, response);
 		}
 	}
 
@@ -328,7 +339,7 @@ public class IIPImageServerController {
 	 * @param thumbnailFormat
 	 * @param response
 	 */
-	private void generateThumbnailImage(String imageName, Double thumbnailWidth, String thumbnailFormat, HttpServletResponse httpServletResponse) {
+	private void generateThumbnailImage(String imageName, Double thumbnailWidth, Integer imageQuality, String thumbnailFormat, HttpServletResponse httpServletResponse) {
 		File imageFile = new File(getProperties().getProperty("iipimage.image.path") + imageName);
 
 		ImageInputStream imageInputStream = null; 
@@ -342,19 +353,36 @@ public class IIPImageServerController {
 			if (readers.hasNext()) {
 				ImageReader reader = readers.next(); 
 				reader.setInput(imageInputStream,true,true);
-				BufferedImage page = reader.read(4); 
+				BufferedImage page = reader.read(2); 
 				
 				if (page != null) {
-					RenderedOp image = null;
+					RenderedOp thubmnailImage = null;
 			        try {
 			            double resizeFactor = thumbnailWidth/page.getWidth();
+			            
 			            if (resizeFactor < 1) {
-			                image = JAI.create("SubsampleAverage", page, resizeFactor, resizeFactor, RenderingHints.VALUE_RENDER_QUALITY);
+			            	 ParameterBlock paramBlock = new ParameterBlock();
+			            	 paramBlock.addSource(page); // The source image
+			            	 paramBlock.add(resizeFactor); // The xScale
+			            	 paramBlock.add(resizeFactor); // The yScale
+			            	 paramBlock.add(0.0); // The x translation
+			            	 paramBlock.add(0.0); // The y translation
+			            	 RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+			            	 thubmnailImage = JAI.create("SubsampleAverage", paramBlock, qualityHints);			            	 
 			            } else if (resizeFactor > 1) {
-			                image = ScaleDescriptor.create(page, (float) resizeFactor, (float) resizeFactor, 0.0f, 0.0f, Interpolation.getInstance(Interpolation.INTERP_BICUBIC), null);
+			            	thubmnailImage = ScaleDescriptor.create(page, (float) resizeFactor, (float) resizeFactor, 0.0f, 0.0f, Interpolation.getInstance(Interpolation.INTERP_BICUBIC), null);
 			            }
 
-	                    ImageIO.write(image, "jpeg", byteArrayOutputStream);
+			            if ((thumbnailFormat != null) && (thumbnailFormat.toLowerCase().equals("jpeg"))) {
+				            // replaced statement to control jpeg quality 
+				            // ImageIO.write(thubmnailImage, "jpeg", byteArrayOutputStream);
+				            JPEGEncodeParam jpgparam = new JPEGEncodeParam();
+				            jpgparam.setQuality(imageQuality);
+				            ImageEncoder enc = ImageCodec.createImageEncoder("jpeg", byteArrayOutputStream, jpgparam);
+				            enc.encode(thubmnailImage);
+			            } else {
+			            	logger.error("Unmanaged thumbnail format " + thumbnailFormat);
+			            }
 		            } catch (IOException ioException) {
 		                logger.error(ioException);
 		            } finally {

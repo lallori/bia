@@ -29,6 +29,8 @@ package org.medici.docsources.command.manuscriptviewer;
 
 import javax.validation.constraints.Size;
 
+import org.medici.docsources.domain.Image.ImageType;
+
 /**
  * Command bean for action "Show Manuscript Viewer".
  * 
@@ -44,7 +46,9 @@ public class ShowManuscriptViewerRequestCommand {
 	private String volLeText;
 	private Integer imageId;
 	private String imageName;
-	private String imageProgTypeNum;
+	private ImageType imageType;
+	private Integer imageOrder;
+	private Integer imageProgTypeNum;
 	private String imageRectoVerso;
 	private Boolean showHelp;
 	private Boolean showThumbnail;
@@ -137,14 +141,14 @@ public class ShowManuscriptViewerRequestCommand {
 	/**
 	 * @param imageProgTypeNum the imageProgTypeNum to set
 	 */
-	public void setImageProgTypeNum(String imageProgTypeNum) {
+	public void setImageProgTypeNum(Integer imageProgTypeNum) {
 		this.imageProgTypeNum = imageProgTypeNum;
 	}
 	
 	/**
 	 * @return the imageProgTypeNum
 	 */
-	public String getImageProgTypeNum() {
+	public Integer getImageProgTypeNum() {
 		return imageProgTypeNum;
 	}
 	
@@ -162,6 +166,34 @@ public class ShowManuscriptViewerRequestCommand {
 		return imageName;
 	}
 	
+	/**
+	 * @param imageType the imageType to set
+	 */
+	public void setImageType(ImageType imageType) {
+		this.imageType = imageType;
+	}
+
+	/**
+	 * @return the imageType
+	 */
+	public ImageType getImageType() {
+		return imageType;
+	}
+
+	/**
+	 * @param imageOrder the imageOrder to set
+	 */
+	public void setImageOrder(Integer imageOrder) {
+		this.imageOrder = imageOrder;
+	}
+
+	/**
+	 * @return the imageOrder
+	 */
+	public Integer getImageOrder() {
+		return imageOrder;
+	}
+
 	/**
 	 * @param imageRectoVerso the imageRectoVerso to set
 	 */

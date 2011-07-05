@@ -6,8 +6,8 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
-			<c:param name="imageName"   value="${documentExplorer.image}" />
-			<c:param name="imageProgTypeNum"   value="${documentExplorer.image.imageProgTypeNum}" /> 
+			<c:param name="entryId" value="${documentExplorer.entryId}"/>
+			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
 			<c:param name="imageRectoVerso"   value="${documentExplorer.image.imageRectoVerso}" />
 			<c:param name="flashVersion"   value="false" />
 		</c:url>
@@ -16,8 +16,9 @@
 	<c:url var="ShowExplorerDocumentURL" value="/src/docbase/ShowExplorerDocument.do" />
 	
 	<c:url var="nextPageURL" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="entryId" value="${documentExplorer.entryId}"/>
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder + 1}" />
 		<c:param name="total" value="${documentExplorer.total}" />
 		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
@@ -30,8 +31,9 @@
 	</c:url>
 
 	<c:url var="previousPageURL" value="/src/docbase/ShowExplorerDocument.do">
-		<c:param name="volNum" value="${command.volNum}" />
-		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="entryId" value="${documentExplorer.entryId}"/>
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder - 1}" />
 		<c:param name="total" value="${documentExplorer.total}" />
 		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
@@ -103,7 +105,8 @@
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
-				<form:hidden path="imageOrder" />
+				<form:hidden path="imageOrder" value="${documentExplorer.image.imageOrder}"/>
+				<form:hidden path="entryId" value="${documentExplorer.entryId}" />
 				<form:hidden path="total" value="${documentExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${documentExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${documentExplorer.totalCarta}" />
@@ -130,9 +133,10 @@
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolioModal" type="text" value="" />
 				<input class="openmodalbox" id="goModal" type="submit" value=""/>
 				<form:hidden path="volNum" />
-				<form:hidden path="volLetExt" value="${command.volLetExt}" />
+				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
-				<form:hidden path="imageOrder" />
+				<form:hidden path="imageOrder" value="${documentExplorer.image.imageOrder}"/>
+				<form:hidden path="entryId" value="${documentExplorer.entryId}" />
 				<form:hidden path="total" value="${documentExplorer.total}" />
 				<form:hidden path="totalRubricario" value="${documentExplorer.totalRubricario}" />
 				<form:hidden path="totalCarta" value="${documentExplorer.totalCarta}" />

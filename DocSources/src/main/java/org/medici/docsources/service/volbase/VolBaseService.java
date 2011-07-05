@@ -159,6 +159,36 @@ public interface VolBaseService {
 	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
 	/**
+	 * This method will search first {@link org.medici.docsources.domain.Image} 
+	 * linked to a  {@link org.medici.docsources.domain.Volume} identified by his volume
+	 * summaryId.
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Image findVolumeImage(Integer summaryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @param imageType
+	 * @param imageProgTypeNum
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Image findVolumeImage(Integer summaryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @param imageOrder
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Image findVolumeImage(Integer summaryId, Integer imageOrder) throws ApplicationThrowable;
+
+	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * with specific image type and folio number linked to a 
 	 * {@link org.medici.docsources.domain.Volume} identified by his volume
@@ -172,8 +202,8 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
-	public List<Image> findVolumeImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
-
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
+	
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
@@ -185,7 +215,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.Image}
 	 * using a {@link org.medici.docsources.common.pagination.Page} object result
@@ -235,7 +265,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Image findVolumeImageSpine(Integer volNum, String volLetExt) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param volNum
@@ -244,7 +274,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public VolumeSummary findVolumeSummmary(Integer volNum, String volLetExt) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Month}.
 	 * 

@@ -79,7 +79,7 @@ public class ShowExplorerDocumentValidator implements Validator {
 		
 		if (showExplorerDocumentCommand.getImageProgTypeNum() != null) {
 			try {
-				if (getDocBaseService().findDocumentImage(showExplorerDocumentCommand.getVolNum(), showExplorerDocumentCommand.getVolLetExt(), showExplorerDocumentCommand.getImageType(), showExplorerDocumentCommand.getImageProgTypeNum()) == null) {
+				if (getDocBaseService().findDocumentImages(showExplorerDocumentCommand.getVolNum(), showExplorerDocumentCommand.getVolLetExt(), showExplorerDocumentCommand.getImageType(), showExplorerDocumentCommand.getImageProgTypeNum()) == null) {
 					if (showExplorerDocumentCommand.getImageType().equals(ImageType.R)) {
 						errors.rejectValue("imageProgTypeNum", "error.rubricario.notfound", new Object[]{showExplorerDocumentCommand.getImageProgTypeNum()}, null);
 					}
