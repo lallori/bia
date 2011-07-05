@@ -80,18 +80,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${documentExplorer.image.imageOrder == 1}">
-				<a id="previousPage"></a>
+				<a id="previousPage">Previous folio</a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage">Previous folio</a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total }">
-				<a id="nextPage"></a>
+				<a id="nextPage">Next folio</a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage">Next folio</a>
 			</c:if>
 			</div>
 		</div>
@@ -103,25 +103,27 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${documentExplorer.image.imageOrder == 1}">
-				<a id="previousPage"></a>
+				<a id="previousPage">Previous folio</a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage">Previous folio</a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total }">
-				<a id="nextPage"></a>
+				<a id="nextPage">Next folio</a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage">Next folio</a>
 			</c:if>
 			</div>
 		</div>
-		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="folioerrors"/></form:form>
+		<br />
+		<br />
+		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
 	<c:if test="${documentExplorer.totalRubricario > 0}">
 		<br/>
-		<br/>
+	
 				
 		<div id="rubricarioMoveTo">
 			<div id="rubricarioCountForm">
@@ -131,7 +133,7 @@
 			<form:form id="moveToRubricarioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToRubricarioForm">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
-				<input id="goR" type="submit" value="" />
+				<input id="goR" type="submit" value="Go" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="R"/>
@@ -158,7 +160,7 @@
 			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm">
 				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
-				<input id="go" type="submit" value="" />
+				<input id="go" type="submit" value="Go" />
 				<form:hidden path="volNum" />
 				<form:hidden path="volLetExt" />
 				<form:hidden path="imageType" value="C"/>
@@ -176,9 +178,9 @@
 		<br />
 			
 		<div>
-			<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full"></a>
-			<a id="volumeSummary" href="#"></a>
-			<a class="refreshVolumeExplorer" href="${currentPageURL}"></a>
+			<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a>
+			<a id="volumeSummary" href="#">Volume Summary</a>
+			<a class="refreshVolumeExplorer" href="${currentPageURL}">Refresh</a>
 		</div>
 	</div>
 		<script type="text/javascript">
