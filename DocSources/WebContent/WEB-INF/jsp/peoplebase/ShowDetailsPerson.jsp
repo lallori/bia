@@ -39,9 +39,6 @@
 				<div class="item">Date of Death</div> <div class="value">${person.deathDate}</div>
 			</div>
 			<div class="row">
-				<div class="item">Modern Date</div> <div class="value">1577</div>
-			</div>
-			<div class="row">
 				<div class="item">Death Place</div> <div class="value"><a href="#" id="linkSearch">${person.deathPlace.placeNameFull}</a></div>
 			</div>
 			<div class="row">
