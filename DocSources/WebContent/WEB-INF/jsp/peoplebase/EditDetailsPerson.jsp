@@ -72,7 +72,7 @@
 				
 				<div>
 					<form:label for="bornPlaceDescription" id="bornPlaceDescriptionLabel" path="bornPlaceDescription" cssErrorClass="error">Place</form:label>
-					<form:input id="bornPlaceDescriptionAutoCompleter" path="bornPlaceDescription" cssClass="input_10c"/>
+					<form:input id="bornPlaceAutoCompleter" path="bornPlaceDescription" cssClass="input_25c"/>
 				</div>
 				
 				<div>
@@ -106,7 +106,8 @@
 		</form:form>
 	</div>
 
-	<c:url var="searchBornPlaceURL" value="/de/peoplebase/SearchBornPlacePerson.json"/>
+	<c:url var="SearchBornPlaceURL" value="/de/geobase/SearchBornPlace.json"/>
+	<c:url var="SearchDeathPlaceURL" value="/de/geobase/SearchDeathPlace.json"/>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -117,13 +118,8 @@
 			$j("#EditSpousesPerson").css('visibility', 'hidden');
 	        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
 	        
-			$j('#close').click(function(e) {
-				$j('#EditDetailsPersonDiv').block({ message: $j('#question') }); 
-	            return false;
-			});
-			
-			var bornPlaceDescription = $j('#bornPlaceDescriptionAutoCompleter').autocompletePerson({ 
-			    serviceUrl:'${searchBornPlaceURL}',
+			$j('#bornPlaceAutoCompleter').autocompletePlace({ 
+			    serviceUrl:'${SearchBornPlaceURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
@@ -131,8 +127,10 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#bornPlaceId').val(data); }
-			  });
+			    onSelect: function(value, data){ 
+			    	$j('#bornPlaceId').val(data); 
+			    }
+			});
 
 			$j("#EditDetailsPersonForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
@@ -150,6 +148,11 @@
 					}
 				}});
 				return false;
+			});
+
+			$j('#close').click(function(e) {
+				$j('#EditDetailsPersonDiv').block({ message: $j('#question') }); 
+	            return false;
 			});
 		});
 	</script>

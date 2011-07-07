@@ -64,11 +64,36 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 
 	/**
 	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Place> searchBornPlace(String query) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Place> searchDeathPlace(String query) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param searchText
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchPlaces(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
@@ -78,15 +103,6 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 */
 	public List<Place> searchPlaces(String searchText) throws PersistenceException;
 
-	/**
-	 * 
-	 * @param searchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page searchPlaces(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
-	
 	/**
 	 * 
 	 * @param searchText

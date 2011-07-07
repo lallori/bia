@@ -61,6 +61,7 @@ public class AjaxController {
 		return peopleBaseService;
 	}
 
+
 	/**
 	 * This method returns a list of ipotetical children for a person. 
 	 * 
@@ -174,34 +175,6 @@ public class AjaxController {
 	}
 
 	/**
-	 * This method returns a list of ipotetical recipients. 
-	 *  
-	 * @param text Text to search in ...
-	 * @return ModelAndView containing recipients.
-	 */
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/de/peoplebase/SearchTitleOrOccupation", method = RequestMethod.GET)
-	public ModelAndView searchTitleOrOccupation(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			List<TitleOccsList> titlesOrOccupations = getPeopleBaseService().searchTitleOrOccupation(query);
-			model.put("query", query);
-			model.put("count", titlesOrOccupations.size());
-			model.put("data", ListBeanUtils.transformList(titlesOrOccupations, "titleOccId"));
-			model.put("suggestions", ListBeanUtils.transformList(titlesOrOccupations, "titleOcc"));
-			// transformList does not support nested property, so we need to extract list of RoleCat, then we can extract every single field.
-			List<RoleCat> roleCatList = (List<RoleCat>) ListBeanUtils.transformList(titlesOrOccupations, "roleCat");
-			model.put("rolesCatMajor", ListBeanUtils.transformList(roleCatList, "roleCatMajor"));
-			model.put("rolesCatMinor", ListBeanUtils.transformList(roleCatList, "roleCatMinor"));
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-	
-	/**
 	 * This method returns a list of ipotetical senders. 
 	 *  
 	 * @param text Text to search in ...
@@ -224,6 +197,34 @@ public class AjaxController {
 			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
 			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
 
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns a list of ipotetical recipients. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing recipients.
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/de/peoplebase/SearchTitleOrOccupation", method = RequestMethod.GET)
+	public ModelAndView searchTitleOrOccupation(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<TitleOccsList> titlesOrOccupations = getPeopleBaseService().searchTitleOrOccupation(query);
+			model.put("query", query);
+			model.put("count", titlesOrOccupations.size());
+			model.put("data", ListBeanUtils.transformList(titlesOrOccupations, "titleOccId"));
+			model.put("suggestions", ListBeanUtils.transformList(titlesOrOccupations, "titleOcc"));
+			// transformList does not support nested property, so we need to extract list of RoleCat, then we can extract every single field.
+			List<RoleCat> roleCatList = (List<RoleCat>) ListBeanUtils.transformList(titlesOrOccupations, "roleCat");
+			model.put("rolesCatMajor", ListBeanUtils.transformList(roleCatList, "roleCatMajor"));
+			model.put("rolesCatMinor", ListBeanUtils.transformList(roleCatList, "roleCatMinor"));
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}

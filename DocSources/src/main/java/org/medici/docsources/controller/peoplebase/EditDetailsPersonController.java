@@ -116,7 +116,7 @@ public class EditDetailsPersonController {
 			person.setBornDay(command.getBornDay());
 			person.setBornApprox(command.getBornApprox());
 			person.setBornDateBc(command.getBornDateBc());
-			person.setBornPlace(new Place(command.getBornPlaceId()));
+			person.setBornPlace((command.getBornPlaceId() != null) ? new Place(command.getBornPlaceId()) : null);
 			person.setActiveStart(command.getActiveStart());
 			person.setBornPlaceUnsure(command.getBornPlaceUnsure());
 			person.setDeathYear(command.getDeathYear());
@@ -185,24 +185,33 @@ public class EditDetailsPersonController {
 			} catch (InvocationTargetException itex) {
 			}
 
+			if (person.getBornPlace() != null) {
+				command.setBornPlaceDescription(person.getBornPlace().getPlaceNameFull());
+				command.setBornPlaceId(person.getBornPlace().getPlaceAllId());
+			}
+			if (person.getDeathPlace() != null) {
+				command.setDeathPlaceDescription(person.getDeathPlace().getPlaceNameFull());
+				command.setDeathPlaceId(person.getDeathPlace().getPlaceAllId());
+			}
+
+			if (command.getBornYear() == 0) {
+				command.setBornYear(null);
+			}
 			if (person.getBornMonth() != null) {
 				command.setBornMonth(person.getBornMonth().getMonthNum());
+			}
+			if (command.getBornDay() == 0) {
+				command.setBornDay(null);
+			}
+			if (command.getDeathYear() == 0) {
+				command.setDeathYear(null);
 			}
 			if (person.getDeathMonth() != null) {
 				command.setDeathMonth(person.getDeathMonth().getMonthNum());
 			}
-
-			if (command.getBornYear() == 0)
-				command.setBornYear(null);
-
-			if (command.getBornDay() == 0)
-				command.setBornDay(null);
-
-			if (command.getDeathYear() == 0)
-				command.setDeathYear(null);
-
-			if (command.getDeathDay() == 0)
+			if (command.getDeathDay() == 0) {
 				command.setDeathDay(null);
+			}
 		} else {
 			// On Volume creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());

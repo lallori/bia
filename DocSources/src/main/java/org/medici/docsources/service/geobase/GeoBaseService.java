@@ -97,6 +97,22 @@ public interface GeoBaseService {
 
 	/**
 	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Place> searchBornPlace(String query) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Place> searchDeathPlace(String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param text
 	 * @return
 	 * @throws ApplicationThrowable

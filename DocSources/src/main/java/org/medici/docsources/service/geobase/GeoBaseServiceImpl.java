@@ -144,6 +144,30 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Place> searchBornPlace(String query) throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().searchBornPlace(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Place> searchDeathPlace(String query) throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().searchDeathPlace(query);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Place> searchPlaces(String text) throws ApplicationThrowable {
 		try {
 			return getPlaceDAO().searchPlaces(text);

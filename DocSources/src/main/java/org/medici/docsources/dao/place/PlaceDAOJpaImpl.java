@@ -362,4 +362,64 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		
 		return page;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Place> searchBornPlace(String query) throws PersistenceException {
+        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+
+        try  {
+        	String searchTextWithWildCard = query.toLowerCase() + "*";
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchTextWithWildCard);
+
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Place> searchDeathPlace(String query) throws PersistenceException {
+        String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
+		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserMapNameLf = new MultiFieldQueryParser(Version.LUCENE_30, searchFields, fullTextSession.getSearchFactory().getAnalyzer("placeAnalyzer"));
+
+        try  {
+        	String searchTextWithWildCard = query.toLowerCase() + "*";
+	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchTextWithWildCard);
+
+	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
 }

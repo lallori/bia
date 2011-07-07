@@ -61,10 +61,11 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	public void afterReturning(Object returnValue, Method method,
 			Object[] args, Object target) throws Throwable {
 		StringBuffer stringBuffer = new StringBuffer("Ending service ");
+		stringBuffer.append(target.getClass().getName());
+		stringBuffer.append(":");
 		stringBuffer.append(method.getName());
 		stringBuffer.append(" OK : ");
 		appendParameters(stringBuffer, args);
-		appendTarget(stringBuffer, target);
 		appendReturns(stringBuffer, returnValue);
 
 		logger = Logger.getLogger(target.getClass());
@@ -81,10 +82,11 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	public void afterThrowing(Method method, Object[] args, Object target,
 			Throwable throwable) {
 		StringBuffer stringBuffer = new StringBuffer("Ending service ");
+		stringBuffer.append(target.getClass().getName());
+		stringBuffer.append(":");
 		stringBuffer.append(method.getName());
 		stringBuffer.append(" KO : ");
 		appendParameters(stringBuffer, args);
-		appendTarget(stringBuffer, target);
 		appendThrowable(stringBuffer, throwable);
 
 		logger = Logger.getLogger(target.getClass());
@@ -123,10 +125,13 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 * 
 	 * @param stringBuffer
 	 * @param target
+	 * 
+	 * @depracted
 	 */
+	@SuppressWarnings("unused")
 	private void appendTarget(StringBuffer stringBuffer, Object target) {
 		stringBuffer.append(" - Target : ");
-		stringBuffer.append(ClassUtils.toString(target));
+		stringBuffer.append(target.getClass().getName());
 	}
 
 	/**

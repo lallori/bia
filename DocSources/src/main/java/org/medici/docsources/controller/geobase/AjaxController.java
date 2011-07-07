@@ -58,6 +58,56 @@ public class AjaxController {
 	 * @param text Text to search in ...
 	 * @return ModelAndView containing senders.
 	 */
+	@RequestMapping(value = "/de/geobase/SearchBornPlace", method = RequestMethod.GET)
+	public ModelAndView searchBornPlace(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<Place> places = getGeoBaseService().searchBornPlace(query);
+			model.put("query", query);
+			model.put("count", places.size());
+			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
+			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
+			model.put("prefFlags", ListBeanUtils.transformList(places, "prefFlag"));
+			model.put("plTypes", ListBeanUtils.transformList(places, "plType"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns a list of ipotetical senders places. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing senders.
+	 */
+	@RequestMapping(value = "/de/geobase/SearchDeathPlace", method = RequestMethod.GET)
+	public ModelAndView searchDeathPlace(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<Place> places = getGeoBaseService().searchDeathPlace(query);
+			model.put("query", query);
+			model.put("count", places.size());
+			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
+			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
+			model.put("prefFlags", ListBeanUtils.transformList(places, "prefFlag"));
+			model.put("plTypes", ListBeanUtils.transformList(places, "plType"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns a list of ipotetical senders places. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing senders.
+	 */
 	@RequestMapping(value = "/de/geobase/SearchSenderPlace", method = RequestMethod.GET)
 	public ModelAndView searchSenders(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();

@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.common.util.PersonUtils;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
@@ -205,7 +206,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			person.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			person.setDateCreated(new Date());
 			person.setLastUpdate(new Date());
-			
+			person.setMapNameLf(PersonUtils.generateMapNameLf(person));
+
 			if (person.getGender().equals(Gender.NULL)) {
 				person.setGender(null);
 			}
@@ -227,7 +229,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			if (person.getDeathPlaceUnsure() == null) {
 				person.setDeathPlaceUnsure(Boolean.FALSE);
 			}
-
 			if (person.getPortrait() == null){
 				person.setPortrait(false);
 			}
@@ -409,6 +410,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setLast(person.getLast());
 			personToUpdate.setPostLastPrefix(person.getPostLastPrefix());
 			personToUpdate.setPostLast(person.getPostLast());
+			//Update setMapNameLf
+			personToUpdate.setMapNameLf(PersonUtils.generateMapNameLf(personToUpdate));
+
 			if (!person.getGender().equals(People.Gender.NULL)) {
 				personToUpdate.setGender(person.getGender());
 			} else {
@@ -423,7 +427,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setBornDay(person.getBornDay());
 			personToUpdate.setBornApprox(person.getBornApprox());
 			personToUpdate.setBornDateBc(person.getBornDateBc());
-			if (!ObjectUtils.toString(person.getBornPlace().getPlaceAllId()).equals("")) {
+			if (!ObjectUtils.toString(person.getBornPlace()).equals("")) {
 				personToUpdate.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
 			} else {
 				personToUpdate.setBornPlace(null);
