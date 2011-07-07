@@ -1102,13 +1102,17 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 #EditUserProfileDiv { 
-	width:350px;
+	width:600px;
 	margin:-10px 0 0 130px;
 }
 
 form#EditUserProfileForm { 
-	margin-left:20px;
-	width:325px;
+	margin:-32px 0 0 10px;
+	width:575px;
+}
+
+#EditUserProfileForm fieldset { 
+	padding-left:20px;
 }
 
 #EditTopicsDocumentDiv { 
@@ -2173,9 +2177,6 @@ a#volumeSummary {
 }
 
 #volumeSummaryWindow h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
-	font-size:14px;
-	font-style:italic;
-	color:#C18D72;
 	margin:25px 0 5px -30px;
 	text-align:left;
 }
@@ -2590,17 +2591,22 @@ a.refreshVolumeExplorer {
 
 #helpProfile { /* Help Div Container */
 	font-size:11px;
-	margin:23px 0 0 510px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
 	padding:10px 0 0 15px;
 	width:200px;
 	height:100px;
-	position:absolute;
+	float:right;
 }
 
 #helpProfile h1, #aboutmapProfile h1{
 	text-align:center;
 	color:#6D2323;
+}
+
+#EditUserProfileDiv .list {
+	float:left;
+	width:350px;
+	line-height:20px;
 }
 
 #helpProfile a, #aboutmapProfile a{	/* Help ancors (User Manual, Download Manual, Help Videos) */
@@ -2612,12 +2618,11 @@ a.refreshVolumeExplorer {
 
 #aboutmapProfile { /* Help Div Container */
 	font-size:11px;
-	margin:140px 0 0 510px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
 	padding:10px 0 10px 15px;
 	width:200px;
 	height:100px;
-	position:absolute;
+	float:right;
 }
 
 #aboutmapProfile a:hover, #helpProfile a:hover{ /* Help ancors rollover */
@@ -2663,10 +2668,35 @@ a.refreshVolumeExplorer {
 	margin-left:50px;
 }
 
+#EditUserProfileForm #password {
+	margin-left:32px;
+}
+
+#EditUserProfileForm #newPasswordLabel {
+	margin-left:28px;
+}
+
+#EditUserProfileForm #linkLabel,  #EditUserProfileForm #browseLabel{
+	margin-left:0px;
+}
+
+#EditUserProfileForm #link {
+	margin-left:60px;
+}
+
+#EditUserProfileForm #browse {
+	margin-left:45px;
+}
+
+
+#EditUserProfileForm hr {
+	width:530px;
+}
+
 
 /* Close & Save Buttons position */
 #EditUserProfileForm #save {
-	margin:0 0 0 153px;
+	margin:0 0 0 425px;
 }
 
 #EditUserProfileDiv #closeMyProfile {
@@ -2683,7 +2713,7 @@ a.refreshVolumeExplorer {
 	width:122px;
 	height:23px;
 	float:left;
-	margin:50px 0 0 5px;
+	margin:40px 0 0 5px;
 	text-decoration:none;
 	color:#6D5C4D;
 	padding:4px 0 0 17px;
