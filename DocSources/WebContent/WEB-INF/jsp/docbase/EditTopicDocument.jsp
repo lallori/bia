@@ -9,6 +9,11 @@
 			<c:param name="entryId" value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
+	
+	<c:url var="ShowTopicDescription" value="/src/docbase/ShowTopicDescription.do">
+		<c:param name="topicId" value="${command.topicId}" />
+	</c:url>
+	
 	<br>
 	<form:form id="EditTopicDocumentForm" cssClass="edit">
 		<fieldset>
@@ -21,6 +26,7 @@
 			<div>
 				<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic:</form:label>
 				<form:input id="topicDescriptionAutoCompleter" path="topicDescription" class="input_25c" />
+				<a class="topicDescription" id="refreshDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
 			</div>
 			<div>
 				<form:label id="placeDescriptionLabel" for="placeDescription" path="placeDescription" cssErrorClass="error">Topic Place:</form:label>
@@ -58,7 +64,16 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#topicId').val(data); }
+			    onSelect: function(value, data){ 
+					var oldTopic = $j('#topicId').val();
+					$j('#topicId').val(data);
+					var link = $j('#refreshDescription').attr('href');
+					if(oldTopic == '')
+						link += data;
+					else
+						link = link.replace(oldTopic, data);
+					$j('#refreshDescription').attr('href', link); 
+				}
 			  });
 
 			var placeDescription = $j('#placeDescriptionAutoCompleter').autocompletePlace({ 
@@ -76,6 +91,11 @@
 			$j('#closeTopic').click(function() { 
 	            $j('#EditTopicDocumentDiv').block({ message: $j('#question') }); 
 	            return false;
+			});
+
+			$j(".topicDescription").click(function() {
+				Modalbox.show(this.href, {title: this.title, width: 750});
+				return false;
 			});
 
 			$j("#EditTopicDocumentForm").submit(function (){
