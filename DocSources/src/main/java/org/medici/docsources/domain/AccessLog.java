@@ -69,6 +69,8 @@ public class AccessLog implements Serializable {
 	private String action;
 	@Column (name="\"informations\"", length=3000)
 	private String informations;
+	@Column (name="\"errors\"", length=3000)
+	private String errors;
 	@Column (name="\"executionTime\"", length=15, nullable=false)
 	private Long executionTime;
 
@@ -186,6 +188,20 @@ public class AccessLog implements Serializable {
 
 	
 	/**
+	 * @param errors the errors to set
+	 */
+	public void setErrors(String errors) {
+		this.errors = errors;
+	}
+
+	/**
+	 * @return the errors
+	 */
+	public String getErrors() {
+		return errors;
+	}
+
+	/**
 	 * @param executionTime the executionTime to set
 	 */
 	public void setExecutionTime(Long executionTime) {
@@ -218,6 +234,8 @@ public class AccessLog implements Serializable {
 		stringBuffer.append(getAction());
 		stringBuffer.append(" - ");
 		stringBuffer.append(getInformations());
+		stringBuffer.append(" - ");
+		stringBuffer.append(getErrors());
 		stringBuffer.append(" ]");
 		return stringBuffer.toString();
 	}
