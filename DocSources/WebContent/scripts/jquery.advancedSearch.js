@@ -66,18 +66,29 @@
         	// Date form is composed of three fields.
     		if ($('#' + formName).find('#' + fieldName + 'Type').size() > 0) {
     			if ($(this).find("option:selected").text() == 'Between') {
-    	        	if (formName.indexOf("date") >= 0) {
-    	        		searchWord = $('#' + formName).find('#' + fieldName + 'Year').val();
-    	        		searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
-    	        		searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Day').val();
-    	        	} else {
+    				if (formName.indexOf("volume") >= 0) {
+    	        		searchWord = $('#' + formName).find('#' + fieldName).val();
+    	        		searchWord += ', ' + $('#' + formName).find('#' + fieldName + 'Between').val();
+    	        		hiddenValue = $(this).find("option:selected").text() + "|" + $('#' + formName).find('#' + fieldName).val() + '|' + $('#' + formName).find('#' + fieldName + 'Between').val();
+    	        		$('#' + formName).find('#' + fieldName).val("");
+    	        		$('#' + formName).find('#' + fieldName + 'Between').val("");
     	        	}
     			} else if ($(this).find("option:selected").text() == 'Exactly') {
     				searchWord = $('#' + formName).find('#' + fieldName).val();
             		hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
-    			} else {
+    				$('#' + formName).find('#' + fieldName).val("");
+    			} else if (formName.indexOf("date") >= 0) {
+	        		searchWord = $('#' + formName).find('#' + fieldName + 'Year').val();
+	        		searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
+	        		searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Day').val();
+	        		hiddenValue = $('#' + formName).find('#' + fieldName + 'Year').val() + '|' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text() + '|' + $('#' + formName).find('#' + fieldName + 'Day').val();
+	        		$('#' + formName).find('#' + fieldName + 'Year').val("");
+	        		$('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
+	        		$('#' + formName).find('#' + fieldName + 'Day').val("");
+	        	} else {
     				searchWord = $('#' + formName).find('#' + fieldName).val();
     				hiddenValue = $(this).find("option:selected").val() + "|" + searchWord;
+    				$('#' + formName).find('#' + fieldName).val("");
     			}
     		} else {
     			searchWord = $('#' + formName).find('#' + fieldName).val();
@@ -88,6 +99,7 @@
     			} else {
     				hiddenValue = searchWord;
     			}
+				$('#' + formName).find('#' + fieldName).val("");
     		}
 
             console.log("Search word : " + searchWord);
@@ -117,6 +129,7 @@
             $("#" + fieldName + "SearchDiv").append(searchFilterDiv);
 
             console.log("AdvancedSearchForm " + formName + " completed.");
+            
             return false;
         });
 
