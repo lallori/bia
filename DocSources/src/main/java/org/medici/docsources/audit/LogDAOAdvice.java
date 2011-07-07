@@ -33,7 +33,6 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.util.ClassUtils;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.ThrowsAdvice;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,10 +50,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
+public class LogDAOAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	private static Logger logger = null;
 
-	public LogServiceAdvice() {
+	public LogDAOAdvice() {
 	}
 
 	/**
@@ -86,7 +85,7 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	public void afterThrowing(Method method, Object[] args, Object target, Throwable throwable) {
 		StringBuffer stringBuffer = new StringBuffer();
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
-			stringBuffer.append(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			stringBuffer.append(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 		}
 		stringBuffer.append(" - ");
 		stringBuffer.append(target.getClass().getName());
@@ -111,7 +110,7 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 			stringBuffer.append(ClassUtils.toString(args[i]));
 			stringBuffer.append(" - ");
 		}
-		stringBuffer.delete(stringBuffer.length() - 3, stringBuffer.length());
+		stringBuffer.delete(stringBuffer.length() - 1, stringBuffer.length());
 	}
 
 	/**

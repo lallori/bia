@@ -105,7 +105,7 @@ public class HistoryLogAction extends HandlerInterceptorAdapter {
 		} catch (ApplicationThrowable ex) {
 		}*/
 
-		logger.info(historyLog.toString());
+		//logger.info(historyLog.toString());
 		super.postHandle(request, response, handler, modelAndView);
 	}
 
@@ -143,7 +143,7 @@ public class HistoryLogAction extends HandlerInterceptorAdapter {
 		historyLog.setInformations(HttpUtils.retrieveHttpParametersAsString(request, false, true));
 		request.setAttribute("historyLog", historyLog);
 
-		logger.info(historyLog.toString());
+		//logger.info(historyLog.toString());
 		return true;
 	}
 

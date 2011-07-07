@@ -38,6 +38,7 @@ import org.medici.docsources.common.util.HttpUtils;
 import org.medici.docsources.domain.AccessLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.log.LogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.event.AuthorizationFailureEvent;
@@ -66,6 +67,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class AccessLogAction extends HandlerInterceptorAdapter {
 	private final Logger logger = Logger.getLogger(this.getClass());
+	@Autowired
 	private LogService logService;
 
 	/**
@@ -96,7 +98,10 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 			} catch (ApplicationThrowable ex) {
 			}
 
-			logger.info(accessLog.toString());
+			StringBuffer stringBuffer = new StringBuffer();
+			stringBuffer.append(accessLog.getUsername());
+			stringBuffer.append(" Authentication OK");
+			logger.info(stringBuffer.toString());
 		}
 	}
 
@@ -113,12 +118,12 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 				List errors = ((BeanPropertyBindingResult) modelAndView.getModelMap().get("org.springframework.validation.BindingResult.command")).getAllErrors();
 
 				if (errors.size() > 0) {
-					StringBuffer stringBuffer = new StringBuffer(
-							accessLog.getInformations());
+					StringBuffer stringBufferErrors = new StringBuffer(accessLog.getInformations());
 					for (int i = 0; i < errors.size(); i++) {
-						stringBuffer.append(errors.get(i).toString());
+						stringBufferErrors.append(errors.get(i).toString());
 					}
-					accessLog.setInformations(stringBuffer.toString());
+					accessLog.setErrors(stringBufferErrors.toString());
+				} else {
 				}
 			}
 		}
@@ -130,7 +135,22 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		} catch (ApplicationThrowable ex) {
 		}
 
-		logger.info(accessLog.toString());
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(accessLog.getUsername());
+		stringBuffer.append(" - ");
+		stringBuffer.append(accessLog.getHttpMethod());
+		stringBuffer.append(" ");
+		stringBuffer.append(accessLog.getAction());
+		if (accessLog.getErrors() != null) {
+			stringBuffer.append("KO ");
+			stringBuffer.append(accessLog.getErrors());
+		} else {
+			stringBuffer.append(" OK ");
+		}
+		stringBuffer.append(accessLog.getExecutionTime());
+		stringBuffer.append("ms ");
+		logger.info(stringBuffer.toString());
+		
 		super.postHandle(request, response, handler, modelAndView);
 	}
 
@@ -168,7 +188,17 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		accessLog.setExecutionTime(System.currentTimeMillis());
 		request.setAttribute("accessLog", accessLog);
 
-		logger.info(accessLog.toString());
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(accessLog.getUsername());
+		stringBuffer.append(" - ");
+		stringBuffer.append(accessLog.getHttpMethod());
+		stringBuffer.append(" ");
+		stringBuffer.append(accessLog.getAction());
+		stringBuffer.append(" START (Http Parameters ");
+		stringBuffer.append(accessLog.getInformations());
+		stringBuffer.append(")");
+		logger.info(stringBuffer.toString());
+
 		return true;
 	}
 
