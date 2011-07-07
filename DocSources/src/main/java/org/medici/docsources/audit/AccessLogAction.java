@@ -83,8 +83,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		if (event instanceof AuthorizationFailureEvent) {
 			logger.info("User not authenticated. ");
 		} else if (event instanceof AuthenticationSuccessEvent) {
-			UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = ((UsernamePasswordAuthenticationToken) event
-					.getSource());
+			UsernamePasswordAuthenticationToken userNamePasswordAuthenticationToken = ((UsernamePasswordAuthenticationToken) event.getSource());
 			AccessLog accessLog = new AccessLog();
 			accessLog.setUsername(userNamePasswordAuthenticationToken.getCredentials().toString());
 			accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
