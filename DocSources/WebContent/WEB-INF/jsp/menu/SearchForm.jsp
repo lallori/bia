@@ -6,14 +6,14 @@
 
 				<div id="searchForm">
 					<form id="SearchForm" action="<c:url value="/src/SimpleSearch.do"/>" method="post">
-						Search in <select id="searchType" name="searchType" class="select" style="margin-left:8px">
+						Search in <select id="searchType" name="searchType" class="select">
 										<option value="documents" selected>Documents</option>
 										<option value="volumes">Volumes</option>
 										<option value="people">People</option>
 										<option value="places">Places</option>
 								</select>
 						<br/>
-						for <input id="text" name="text" type="text" value="" style="margin-top:5px"/>
+						for <input id="text" name="text" type="text" value=""/>
 						<br/>
 						<input id="search" type="submit" value="" title="submit form"/>
 					</form>
