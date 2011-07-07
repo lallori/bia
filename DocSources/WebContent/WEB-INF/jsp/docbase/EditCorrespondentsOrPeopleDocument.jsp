@@ -143,9 +143,13 @@
 				    var oldSender = $j('#senderPeopleId').val(); 
 			    	$j('#senderPeopleId').val(data);
 			    	var link = $j('.senderLinkPeople').attr("href");
-			    	link = link.replace(oldSender, data);
-			    	$j('.senderLinkPeople').attr("href", link);  
-			    	}			    
+			    	if(oldSender == ""){
+				    	link += data;
+			    	}else{			    	
+			    		link = link.replace(oldSender, data);
+			    	} 
+			    	$j('.senderLinkPeople').attr("href", link);
+			    }			    
 			  });
 
 			
