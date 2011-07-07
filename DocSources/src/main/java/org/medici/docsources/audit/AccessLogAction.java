@@ -149,7 +149,11 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		}
 		stringBuffer.append(accessLog.getExecutionTime());
 		stringBuffer.append("ms ");
-		logger.info(stringBuffer.toString());
+		if (accessLog.getErrors() != null) {
+			logger.error(stringBuffer.toString());
+		} else {
+			logger.info(stringBuffer.toString());
+		}
 		
 		super.postHandle(request, response, handler, modelAndView);
 	}

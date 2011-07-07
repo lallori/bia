@@ -33,6 +33,7 @@ import java.lang.reflect.Method;
 import org.apache.log4j.Logger;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.ThrowsAdvice;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BeanPropertyBindingResult;
 
 /**
@@ -64,20 +65,27 @@ public class LogValidatorAdvice implements AfterReturningAdvice, ThrowsAdvice {
 			return;
 		}
 
-		if (!args[1]
-		          .getClass()
-		          .getName()
-		          .equals("org.springframework.validation.BeanPropertyBindingResult")) {
+		if (!args[1].getClass().getName().equals("org.springframework.validation.BeanPropertyBindingResult")) {
 			logger.error("Advice configuration error. The second paramter is not of type org.springframework.validation.BeanPropertyBindingResult");
 		}
 
 		BeanPropertyBindingResult beanPropertyBindingResult = (BeanPropertyBindingResult) args[1];
 
+		StringBuffer stringBuffer = new StringBuffer();
+		if (SecurityContextHolder.getContext().getAuthentication() != null) {
+			stringBuffer.append(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+		}
+		stringBuffer.append(" - ");
+		stringBuffer.append(target.getClass().getName());
+		stringBuffer.append(":");
+		stringBuffer.append(method.getName());
+		
 		if (beanPropertyBindingResult.hasErrors()) {
-			logger.error("Validation object KO ("
-					+ beanPropertyBindingResult.getAllErrors().get(0) + ")");
+			stringBuffer.append("Validation object KO (" + beanPropertyBindingResult.getAllErrors().get(0) + ")");
+			logger.error(stringBuffer.toString());
 		} else {
-			logger.info("Validation object OK.");
+			stringBuffer.append("Validation object OK.");
+			logger.info(stringBuffer.toString());
 		}
 	}
 
