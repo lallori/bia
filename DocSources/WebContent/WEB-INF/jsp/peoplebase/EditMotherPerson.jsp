@@ -49,13 +49,14 @@
 				</div>
 				
 				<div>
-					<input id="closeMother" type="submit" value="" title="do not save changes" class="button" />
-					<input id="save" type="submit" value="" class="button"/>
+					<input id="closeMother" type="submit" value="Close" title="do not save changes" class="button" />
+					<input id="save" type="submit" value="Save" class="button"/>
 				</div>
 				
 				<form:hidden path="id"/>
 				<form:hidden path="parentId"/>
 				<form:hidden path="childId"/>
+				<form:hidden path="gender"/>
 			</fieldset>	
 	</form:form>
 
@@ -86,6 +87,7 @@
 						$j("#deathMonthNum").val(data.deathMonth);
 						$j("#deathDay").val(data.deathDay);
 						$j("#bioNotes").val(data.bioNotes);
+						$j("#gender").val(data.gender);
 					})
 			    }
 			  });
@@ -96,10 +98,15 @@
 			});
 
 			$j("#EditMotherPersonForm").submit(function (){
+				if($j("#gender").val() != 'F'){
+					$j('#EditParentPersonDiv').block({ message: $j('.differentGender') });
+					return false;
+				}else{
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 					$j("#EditParentsPersonDiv").load('${EditParentsPersonURL}');
 				}})
 				return false;
+				}
 			});
 		});
 	</script>
@@ -108,6 +115,11 @@
 		<h1>discard changes?</h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<div id="questionGender" class="differentGender" style="display:none; cursor: default">
+		<h1>A mother can't be a male</h1>
+		<input type="button" id="ok" value="Ok" />
 	</div>
 	
 	<script type="text/javascript">
@@ -128,6 +140,15 @@
 					
 				return false; 
 			}); 
+
+			$j("#ok").click(function(){
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j(".differentGender").hide();
+				$j("#EditParentPersonDiv").append($j(".differentGender"));
+				$j(".blockUI").remove();
+				return false;
+			});
 	     
 		});
 	</script>
