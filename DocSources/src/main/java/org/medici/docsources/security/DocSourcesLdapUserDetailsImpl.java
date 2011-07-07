@@ -293,6 +293,14 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	public String toString() {
+		return getUsername();
+	}
+
+	/**
 	 * @return the active
 	 */
 	public Boolean getActive() {
