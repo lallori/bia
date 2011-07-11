@@ -28,7 +28,7 @@
 	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post" cssClass="edit">
 
 		<fieldset>
-		<legend><b>CORRESPONDENTS/PEOPLE </b></legend>
+		<legend><b>CORRESPONDENTS </b></legend>
 			<div>
 				<form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender</form:label>
 				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
