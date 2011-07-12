@@ -55,7 +55,7 @@
 				<form:label id="DocYearLabel" for="docYear" path="docYear" cssErrorClass="error">Year</form:label>
 				<form:input id="docYear" path="docYear" class="input_4c" value="" maxlength="4"/>
 				<form:label id="docMonthNumLabel" for="docMonthNum" path="docMonthNum" cssErrorClass="error">Month</form:label>
-				<form:select id="docMonthNum" path="docMonthNum" cssClass="selectform" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+				<form:select id="docMonthNum" path="docMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 				<form:label  for="docDay" id="docDayLabel" path="docDay" cssErrorClass="error">Day</form:label>
 				<form:input id="docDay" path="docDay" class="input_2c" maxlength="2"/>
 			</div>
@@ -65,6 +65,7 @@
 				<form:input id="yearModern" path="yearModern" class="input_4c" maxlength="4"/>
 			</div>
 			
+			<br />
 			<div>
 				<form:label  id="dateUnsLabel" for="dateUns" path="dateUns">Date Uncertain or Approximate?</form:label>
 				<form:checkbox id="dateUns" path="dateUns" class="checkboxDoc2"/>
@@ -88,7 +89,7 @@
 
 			<div style="margin-top:5px">
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
 		</fieldset>	
 		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
