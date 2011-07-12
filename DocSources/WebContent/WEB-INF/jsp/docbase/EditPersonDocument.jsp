@@ -66,7 +66,7 @@
 
 			$j("#EditPersonDocumentForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#EditCorrespondentsOrPeopleDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
+					$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
 				}})
 				return false;
 			});

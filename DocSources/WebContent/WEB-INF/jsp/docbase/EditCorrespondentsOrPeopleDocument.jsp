@@ -201,7 +201,7 @@
 				return false;
 			});
 
-			$j(".deleteValue").click(function() {
+			$j(".deleteIcon").click(function() {
 				$j.get($j(this).attr("href"), function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
@@ -222,8 +222,14 @@
 				return false;
 			});
 
-			$j('#personIcon').click(function() {
+			$j('.senderLinkPeople').click(function() {
 				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#senderPeopleDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				return false;
+			});
+
+			$j('.linkPeople').click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), "Person</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
