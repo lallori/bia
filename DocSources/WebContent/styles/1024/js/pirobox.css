@@ -188,22 +188,27 @@
 	bottom:-23px; 
 	right:0; 
 	height:26px; 
-	width:50px; 
+	width:60px; 
 	background: url(images/caption.png); 
 	z-index:1500190000000;
 }
 
 .piro_close{
 	position:absolute;
-	right:3px;
-	bottom:2px;
-	height:23px;
-	width:44px;
-	background: transparent url(/DocSources/images/1024/button_close.png) no-repeat center center;
+	height:22px;
+	width:52px;
+	right:4px;
+	background: transparent url(/DocSources/images/1024/button_small.png) no-repeat center center;
 	cursor:pointer;
-	margin:0 0 0 0;
+	margin:0;
 	z-index:150022;
 	display:none;
+}
+
+.piro_close p {
+	font-size:11px;
+	text-align:center;
+	padding-top:4px;
 }
 
 a:hover.piro_close{

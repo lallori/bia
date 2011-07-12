@@ -28,7 +28,7 @@ h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	color:#6F6B69;
 }
 
-h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
+h5{ /* Data Entry main fields Title */
 	font-size:11px;
 	display:inline;
 	margin:0 7px 10px 15px;
@@ -37,19 +37,19 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	text-decoration:underline;
 }
 
-h2 {
+h2 { /* Error Text 403, 404, 500, 503*/
 	font-size:11px;
 	color:#6d5c4d;
 	margin-left:15px;
 }
 
-h1 {
+h1 { /* Titles or explaining text */
 	font-size:11px;
 	color:#A13125;
 	font-weight:normal;
 }
 
-h6 {
+h6 { /* Titles */
 	font-size:11px;
 	color:#6d5c4d;
 	font-weight:bold;
@@ -135,19 +135,19 @@ h6 {
 
 /* ----------------------------------------------------- */ 
 /*
-/* --------------- DIV STRUCTURE ----------------------- */ 
+/* --------------- DATA ENTRY DISPLAY ELEMENTS ----------------------- */ 
 
 .background { /* Background image of each section */
 	background:url(/DocSources/images/1024/bg_div.png) no-repeat;
 }
 
-.title {
+.title { /* Title */
 	width:220px;
 	height:30px;
 	padding-top:18px;
 }
 
-.editButton {
+.editButton { /* Edit button on top right */
 	background-image:url(/DocSources/images/1024/button_edit_pencilicon.png);
 	width:40px;
 	height:20px;
@@ -156,25 +156,25 @@ h6 {
 	display:inline;
 }
 
-.list {
+.list { /* Whole display list */
 	display: table;
 	margin:5px 0 0 30px;
 	width:90%; 
 	font-size:11px;
 }
 
-.listDetails {
+.listDetails { /* Display list in Details section (the first one) */
 	display: table;
 	margin:5px 0 0 30px;
 	width:63%; 
 	font-size:11px;
 }
 
-.row {
+.row { /* Single row */
 	display: table-row;
 }
 
-.item {
+.item { /* Sub-fields title cell */
 	display: table-cell;
 	width:20%;
 	text-align:left;
@@ -189,7 +189,7 @@ item a{
 	color:#B7958F;	
 }
 
-.item37 {
+.item37 { /* Sub-fields title 37% large */
 	display: table-cell;
 	width:37%;
 	text-align:left;
@@ -198,7 +198,7 @@ item a{
 	padding:3px 0 3px 0; 
 }
 
-.item60 {
+.item60 { /* Sub-fields title 60% large */
 	display: table-cell;
 	width:60%;
 	text-align:left;
@@ -207,14 +207,7 @@ item a{
 	padding:3px 0 3px 0; 
 }
 
-.icon {
-	display: table-cell;
-	text-align:left;
-	background-color:#003;
-	padding:3px 0 3px 5px;
-}
-
-.value {
+.value { /* Sub-fields value */
 	display: table-cell;
 	width:40%;
 	text-align:left;
@@ -223,7 +216,7 @@ item a{
 	text-align:justify;
 }
 
-.valueHilight {
+.valueHilight { /* Sub-fields red colored (Fact Check on Document Base) */
 	display: table-cell;
 	width:40%;
 	text-align:left;
@@ -232,13 +225,13 @@ item a{
 	text-align:justify;
 }
 
-.value5 {
+.value5 { /* Sub-fields value 5% large */
 	display: table-cell;
 	width:5%;
 	padding-right:7px;
 }
 
-.value50 {
+.value50 { /* Sub-fields value 50% large */
 	display: table-cell;
 	width:50%;
 	text-align:left;
@@ -247,7 +240,7 @@ item a{
 	text-align:justify;
 }
 
-.value60 {
+.value60 { /* Sub-fields value 60% large */
 	display: table-cell;
 	width:60%;
 	text-align:left;
@@ -256,7 +249,7 @@ item a{
 	text-align:justify;
 }
 
-.value80 {
+.value80 { /* Sub-fields value 80% large */
 	display: table-cell;
 	width:80%;
 	text-align:left;
@@ -265,16 +258,7 @@ item a{
 	text-align:justify;
 }
 
-valueNotes {
-	display: table-cell;
-	width:80%;
-	text-align:left;
-	color:#6d5c4d;
-	padding:3px 0 3px 5px; 
-	text-align:justify;
-}
-
-.info{
+.info{ /* Sub-fields dates value on People Base (Titles&Occupations, Parents, Children, Spouses */
 	display: table-cell;
 	text-align:right;
 	width:40%;
@@ -392,41 +376,19 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	cursor:default;
 	background-color:transparent;
 	background-image:url(/DocSources/images/1024/img_transparentClose.png);
-	width:45px;
+	width:52px;
 	height:22px;
 	border:none;
 	visibility:hidden;
 }
 
-#closePerson { /* Close button on bottom left  */
+#closePerson, #closeTopic, #closePlace  { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
 	background-image:url(/DocSources/images/1024/button_small.png);
-	width:45px;
-	height:22px;
-	border:none;
-}
-
-#closeTopic  { /* Close button on bottom left  */
-	margin:5px auto 7px 0px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_small.png);
-	width:45px;
-	height:22px;
-	border:none;
-}
-
-#closePlace  { /* Close button on bottom left  */
-	margin:5px auto 7px 0px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_small.png);
-	width:45px;
+	width:52px;
 	height:22px;
 	border:none;
 }
@@ -456,14 +418,13 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	cursor:pointer;
 	background-color:transparent;
 	background-image:url(/DocSources/images/1024/button_save.png);
-	width:45px;
+	width:52px;
 	height:22px;
 	border:none;
 }
 
-#AddNewValue, .AddNewValue { /* "Add New Value" Button */
-	margin:5px auto 7px 310px;
-	position:absolute;
+.AddNewValue { /* "Add New Value" Button */
+	margin:0 0 7px 365px;
 	cursor:pointer;
 	background-color:transparent;
 	background-image:url(/DocSources/images/1024/button_small.png);
@@ -476,6 +437,22 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	border:none;
 	outline:none;
 }
+
+#AddNewValue { /* "Add New Value" Button */
+	margin: 5px 0 7px 310px;
+	position:absolute;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	background-repeat:no-repeat;
+	text-decoration:none;
+	color:#6D5C4D;
+	padding: 5px 0 0 13px;
+	width:59px;
+	height:23px;
+	border:none;
+	outline:none;
+} 
 
 .AddNewValue2  { /* "Add New Value" Button */
 	margin:5px auto 7px 355px;
@@ -492,7 +469,7 @@ input[type="submit"]:hover, input[type="image"]:hover {
 }
 
 .Add  { /* "Add" Button */
-	margin:5px auto 7px 305px;
+	margin:5px auto 7px 315px;
 	position:absolute;
 	padding:0;
 	cursor:pointer;
@@ -877,7 +854,7 @@ img.transparent {
 }
 
 .selectform_LXlong{ /* dropdown menu class */
-	width:150px;
+	width:152px;
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	padding-left:3px;
@@ -1065,7 +1042,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv { 
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm { 
 	width:485px;
 	margin:10px 0 0 0;
 	min-height:100px;
@@ -1153,14 +1130,9 @@ form#EditUserProfileForm {
 	height:100%;
 }
 
-#PeopleCorrespondentsDocumentsForm #AddNewValue{
-	margin-left:355px;
-	margin-bottom:20px;
-}
-
 #EditPortraitPersonDiv {
 	z-index:1;
-	margin:10px 0 0 340px;
+	margin:0 0 0 340px;
 	background-image:url(/DocSources/images/1024/bg_userimage.jpg);
 	width:128px;
 	height:160px;
@@ -1405,8 +1377,8 @@ input.file {
 }
 
 .EditExtractOrSynopsisDocument {
-	background-image:url(/DocSources/images/1024/button_edit_manviewer.png);
-	width:112px;
+	background-image:url(/DocSources/images/1024/button_edit_mantranscriber.png);
+	width:125px;
 	height:20px;
 	position:absolute;
 	margin:-14px 0 0 360px;
@@ -1745,7 +1717,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 }
 
 #endYearLabel {
-	margin-left:14px;
+	margin-left:8px;
 }
 
 #endMonthLabel {
@@ -1753,7 +1725,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 }
 
 #endDayLabel {
-	margin-left:3px;
+	margin-left:12px;
 }
 
 #dateNotesLabel {
@@ -1782,7 +1754,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 }
 
 #alphaIndexLabel {
-	margin-left:58px;
+	margin-left: 55px;
 }
 
 #printedDrawingsLabel {
@@ -2193,7 +2165,8 @@ a.refreshVolumeExplorer {
 	background-image:url(/DocSources/images/1024/button_medium.png);
 	background-repeat:no-repeat;
 	font-size:11px;
-	padding:4px 0 0 40px;
+	padding-top:4px;
+	text-align:center;
 	cursor:pointer;
 }
 
@@ -2214,8 +2187,8 @@ a.refreshVolumeExplorer {
 /* modalBox Previous / Next Folio */
 
 #modalBox #prevNextButtons {
-	margin:10px 0 10px 265px;
-	width: 170px;
+	margin:10px 0 10px 250px;
+	width: 205px;
 	z-index:2;
 }
 
@@ -2282,45 +2255,48 @@ a.refreshVolumeExplorer {
 	width:150px;
 }
 
-#modalBox #closeModal #closeModalBox {
-	margin-left:25px;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_close.png);
-	width:45px;
-	height:22px;
-	border:none;
-}
 
 /* Modifiche fatte da Pasquinelli*/
 #modalBox #transcribe {
-	background-image:url(/DocSources/images/1024/button_transcribe.png);
-	margin:10px 0 0 280px;
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	margin:10px 0 0 255px;
 	float:left;
-	width:141px;
-	height:23px;
+	width:182px;
+	height:22px;
+	cursor:auto;
 }
+
+#transcribe a:hover, #chooseDiv a:hover, #gobackvolumeDiv a:hover   {
+	text-decoration:none;
+}
+
 
 #modalBox #chooseDiv{
 	margin:0 0 0 50px;
 }
 
-#modalBox #choose{
-	background-image:url(/DocSources/images/1024/button_choose.png);
+#chooseDiv .choose{
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	float:left;
-	width:189px;
-	height:23px;
+	width:182px;
+	height:22px;
+	text-align:center;
+	padding:4px 0 0 0;
 }
 
 #modalBox #gobackvolumeDiv{
-	margin-left:495px;
+	margin-left:465px;
 }
 
-#modalBox #gobackvolume{
-	background-image:url(/DocSources/images/1024/button_gobackvolume.png);
+#gobackvolumeDiv .gobackvolume{
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	float:left;
-	width:150px;
-	height:23px;
+	width:182px;
+	height:22px;
+	text-align:center;
+	padding:4px 0 0 0;
 }
 
 #modalBox .inputerrors { /* Error Span messages */
@@ -3026,6 +3002,21 @@ a.refreshVolumeExplorer {
 	font-size:11px;
 }
 
+#dateYearBetween {
+	margin-left:176px;
+}
+
+#dateRangeForm p {
+	visibility:hidden; 
+	margin:0 0 0 260px;
+}
+
+#volumeSearchForm p {
+	visibility:hidden; 
+	margin:0;
+	display:inline;
+}
+
 
 /* --- floating message when rollover on help simbol --- */
 
@@ -3666,74 +3657,34 @@ table#savedSearchFiltersForm.display {
 /*
 /* -------------------------- VETTING CHRONOLOGY MODAL ----------------------------- */
 
-#VettingChronologyDiv table { 
-	border-collapse: separate;
-	margin:10px auto 20px 0;
+#VettingChronologyTable {
+	margin-left:10px;
+	width:710px;
 }
 
-#VettingChronologyDiv td, th {
-	display: table-cell;
-	vertical-align: inherit;
+#VettingChronologyButtons {
+	width:52px;
+	margin:60px 0 0 360px;
+}
+
+#VettingChronologyButtons #close {
+	float:right;
+	cursor:pointer;
+	background-color:transparent;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:10px 7px 10px 7px;
-	text-align:center;
+	padding:4px 0 0 12px;
+	width:52px;
+	height:22px;
 }
 
-#VettingChronologyDiv a{
-	font-size:11px;
+#close:hover {
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
 }
 
-#VettingChronologyDiv .odd { /* Background color of the rows */
-	background-color: #EFDFDF;
-}
-
-#VettingChronologyDiv .sortingWhen {  /* WHEN cell proprieties */
-	width:135px;
-	font-size:11px;
-	color:#6D5C4D;
-	text-align:center;
-	font-weight:normal;
-}
-
-#VettingChronologyDiv .sortingWho, #VettingChronologyDiv .sortingWhat { /* WHO and WHAT cell proprieties */
-	width:215px; 
-	font-size:11px;
-	color:#6D5C4D;
-	text-align:center;
-	font-weight:normal;
-}
-
-#VettingChronologyDiv .sortingAction { /* ACTION cell proprieties */
-	width:230px;
-	font-size:11px;
-	color:#6D5C4D;
-	text-align:center;
-	font-weight:normal;
-}
- 
-#VettingChronologyDiv .whenResult{  /* When Results color */
-	color:#2E3192; /* Blue */
-}
-
-#VettingChronologyDiv .whoResult{ /* What Results color */
-	color:#C1272D; /* Red */
-}
-
-#VettingChronologyDiv .whatResult{ /* What Results color */
-	color:#609; /* Red */
-}
-
-#VettingChronologyDiv .actionResult{ /* Action Results color */
-	color:#060; /* Green */
-}
-
-#VettingChronologyDiv a:hover{ /* On Rollover underline effect */
-	text-decoration:underline;
-}
-
-#VettingChronologyDiv #close { /* Close Button */
-	margin-left:340px;
-}
 
 
 /* -------------------------------------------------------------------------- */

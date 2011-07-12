@@ -295,27 +295,40 @@
 /* ACTIONS MENU - MODAL WINDOW */
 
 #ActionsMenuDiv #Action1Docs{
-	background-image:url(/DocSources/images/1024/button_action1.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	margin: 20px 0 5px 180px;
+	text-align:center;
+	padding-top:4px;
 	position:absolute;
-	width:120px;
-	height:25px;
+	width:122px;
+	height:22px;
 }
 
 #ActionsMenuDiv #Action2Docs{
-	background-image:url(/DocSources/images/1024/button_action2.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	margin: 20px 0 5px 305px;
+	text-align:center;
+	padding-top:4px;
 	position:absolute;
-	width:120px;
-	height:25px;
+	width:122px;
+	height:22px;
 }
 
 #ActionsMenuDiv #Action3Docs{
-	background-image:url(/DocSources/images/1024/button_action3.png);
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	margin: 20px 0 5px 430px;
 	position:absolute;
-	width:120px;
-	height:25px;
+	text-align:center;
+	padding-top:4px;
+	width:122px;
+	height:22px;
+}
+
+#ActionsMenuDiv #Action1Docs:hover, #ActionsMenuDiv #Action2Docs:hover, #ActionsMenuDiv #Action3Docs:hover {
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
 }
 
 #ActionsMenuDiv #close{
