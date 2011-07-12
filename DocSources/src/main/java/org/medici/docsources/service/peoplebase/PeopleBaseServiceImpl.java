@@ -440,6 +440,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			else
 				personToUpdate.setDeathMonth(null);
 			personToUpdate.setDeathDay(person.getDeathDay());
+			personToUpdate.setDeathApprox(person.getDeathApprox());
+			personToUpdate.setDeathDateBc(person.getDeathDateBc());
+			if (!ObjectUtils.toString(person.getDeathPlace()).equals("")){
+				personToUpdate.setDeathPlace(getPlaceDAO().find(person.getDeathPlace().getPlaceAllId()));
+			} else {
+				personToUpdate.setDeathPlace(null);
+			}
+			personToUpdate.setActiveEnd(person.getActiveEnd());
+			personToUpdate.setDeathPlaceUnsure(person.getDeathPlaceUnsure());
 
 			getPeopleDAO().merge(personToUpdate);
 

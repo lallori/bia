@@ -95,9 +95,30 @@
 					<form:input id="deathDay" path="deathDay" cssClass="input_2c" maxlength="2"/>
 				</div>
 				
+				<div>
+					<form:label for="deathApprox" id="deathApproxLabel" path="deathApprox" cssErrorClass="error">Approx</form:label>
+					<form:checkbox path="deathApprox" id="deathApprox" cssClass="checkboxPers1"/>
+					<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error">BC?</form:label>
+					<form:checkbox id="deathDateBc" path="deathDateBc" cssClass="checkboxPers2"/>
+				</div>
+				
+				<div>
+					<form:label for="deathPlaceDescription" id="deathPlaceDescriptionLabel" path="deathPlaceDescription" cssErrorClass="error">Place</form:label>
+					<form:input id="deathPlaceAutoCompleter" path="deathPlaceDescription" cssClass="input_25c"/>
+				</div>
+				
+				<div>
+					<form:label for="activeEnd" id="activeEndLabel" path="activeEnd" cssErrorClass="error">Active End</form:label>
+					<form:input id="activeEnd" path="activeEnd" cssClass="input_10c"/>
+					
+					<form:label for="deathPlaceUnsure" id="deathPlaceUnsureLabel" path="deathPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
+					<form:checkbox id="deathPlaceUnsure" path="deathPlaceUnsure" cssClass="checkboxPers2"/>
+				</div>
+				
 				
 					<form:hidden path="personId"/>
-					<form:hidden path="bornPlaceId"/>			
+					<form:hidden path="bornPlaceId"/>
+					<form:hidden path="deathPlaceId"/>			
 				<div>
 					<input id="close" type="submit" value="Close" title="Do not save changes" class="button" />
 					<input id="save" type="submit" value="Save" class="button"/>
@@ -129,6 +150,20 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
 			    	$j('#bornPlaceId').val(data); 
+			    }
+			});
+
+			$j('#deathPlaceAutoCompleter').autocompletePlace({ 
+			    serviceUrl:'${SearchDeathPlaceURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ 
+			    	$j('#deathPlaceId').val(data); 
 			    }
 			});
 

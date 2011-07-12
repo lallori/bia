@@ -122,6 +122,11 @@ public class EditDetailsPersonController {
 			person.setDeathYear(command.getDeathYear());
 			person.setDeathMonth((command.getDeathMonth() != null) ? new Month(command.getDeathMonth()) : null);
 			person.setDeathDay(command.getDeathDay());
+			person.setDeathApprox(command.getDeathApprox());
+			person.setDeathDateBc(command.getDeathDateBc());
+			person.setDeathPlace((command.getDeathPlaceId() != null) ? new Place(command.getDeathPlaceId()) : null);
+			person.setActiveEnd(command.getActiveEnd());
+			person.setDeathPlaceUnsure(command.getDeathPlaceUnsure());
 
 			try {
 				if (command.getPersonId().equals(0)) {

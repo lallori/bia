@@ -74,6 +74,8 @@ public class EditDetailsPersonCommand {
 	private String bornPlaceDescription;
 	// Birth Active Start: 
 	private String activeStart;
+	//Active End:
+	private String activeEnd;
 	// Birth Unsure
 	private Boolean bornPlaceUnsure;
 	// Death Year 
@@ -488,6 +490,14 @@ public class EditDetailsPersonCommand {
 	 */
 	public void setDeathPlaceUnsure(Boolean deathPlaceUnsure) {
 		this.deathPlaceUnsure = deathPlaceUnsure;
+	}
+
+	public void setActiveEnd(String activeEnd) {
+		this.activeEnd = activeEnd;
+	}
+
+	public String getActiveEnd() {
+		return activeEnd;
 	}
 
 }
