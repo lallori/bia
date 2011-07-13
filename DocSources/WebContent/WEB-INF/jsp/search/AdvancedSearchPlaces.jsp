@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div id="multiOpenAccordion">
-	<h1><a>PLACE NAME</a></h1>
+	<h1><a>Place Name</a></h1>
 	<div>
 		<form id="placeNameSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="You can search here for place names in many languages (without accents).">?</a>
@@ -17,7 +17,7 @@
 		</form>
 	</div>
 	
-	<h1><a>PLACE TYPE</a></h1>
+	<h1><a>Place Type</a></h1>
 	<div>
 		<form id="placeTypeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="These Place Types are assigned to geographical place names in the Getty Thesaurus of Geographic Names. Most places in the Documentary Sources database are of the type 'Inhabited Place' (that is to say, cities, towns and villages.)">?</a>

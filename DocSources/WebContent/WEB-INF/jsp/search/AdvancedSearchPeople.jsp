@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div id="multiOpenAccordion">
-	<h1><a>NAME PARTS</a></h1>
+	<h1><a>Name Parts</a></h1>
 	<div>
 		<form id="namePartsSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Names are broken down into their component parts in order to help identify individuals who may have been referred to by a variety of names. Each person therefore has various distinct name records in order to track 'Given Names', 'Appellatives', 'Family Names', 'Married Names' and 'Patronymics'. You should enter name parts without modifiers (e.g. Agnolo instead of d'Agnolo or di Agnolo). You can select a specific name type to further limit the name search. Women's 'maiden' names are categorized as 'Family' names.">?</a>
@@ -25,7 +25,7 @@
 		</form>	
 	</div>
 	
-	<h1><a>WORD SEARCH</a></h1>
+	<h1><a>Word Search</a></h1>
 	<div>
 		<form id="wordSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
@@ -35,7 +35,7 @@
 		</form>
 	</div>
 	
-	<h1><a>DATE RANGE</a></h1>
+	<h1><a>Date Range</a></h1>
 	<div>
 		<form id="dateRangeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
@@ -68,7 +68,7 @@
 		</form>
 	</div>
 
-	<h1><a>GENDER</a></h1>
+	<h1><a>Gender</a></h1>
 	<div>
 		<form id="genderSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="The subjects of some biographical entries are categorized as 'Groups', with the 'Gender' specified as 'X'. This includes entities such as academies and confraternities (even if their membership was made up of a single gender), and families when they are mentioned collectively in a document.">?</a>
@@ -144,7 +144,7 @@
 		</form>
 	</div>
 	
-	<h1><a>PLACE</a></h1>
+	<h1><a>Place</a></h1>
 	<div>
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>

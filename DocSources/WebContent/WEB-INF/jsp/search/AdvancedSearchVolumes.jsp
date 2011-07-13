@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div id="multiOpenAccordion">
-	<h1><a>WORD SEARCH</a></h1>
+	<h1><a>Word Search</a></h1>
 	<div>
 		<form id="wordSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
@@ -21,7 +21,7 @@
 		</form>
 	</div>
 	
-	<h1><a><i>in</i> VOLUME</a></h1>
+	<h1><a><i>in</i> Volume</a></h1>
 	<div>
 		<form id="volumeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
