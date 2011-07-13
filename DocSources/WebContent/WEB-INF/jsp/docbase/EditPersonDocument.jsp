@@ -60,7 +60,7 @@
 			  });
 
 			$j('#closePerson').click(function(e) {
-				$j('#EditPersonDocumentDiv').block({ message: $j('#question') }); 
+				$j('#EditPersonDocumentDiv').block({ message: $j('#questionPerson') }); 
 	            return false;
 			});
 
@@ -73,15 +73,15 @@
 		});					  
 	</script>
 
-<div id="question" style="display:none; cursor: default"> 
+<div id="questionPerson" style="display:none; cursor: default"> 
 	<h1>discard changes?</h1> 
-	<input type="button" id="yes" value="Yes" /> 
-	<input type="button" id="no" value="No" /> 
+	<input type="button" id="yesPerson" value="Yes" /> 
+	<input type="button" id="noPerson" value="No" /> 
 </div>
 
 <script type="text/javascript">
 	$j(document).ready(function() {
-		$j('#no').click(function() { 
+		$j('#noPerson').click(function() { 
 			$j.unblockUI();
 			$j(".blockUI").fadeOut("slow");
 			$j("#question").hide();
@@ -90,7 +90,7 @@
 			return false; 
 		}); 
         
-		$j('#yes').click(function() { 
+		$j('#yesPerson').click(function() { 
 			$j("#EditPersonDocumentDiv").html('');				
 				
 			return false; 
