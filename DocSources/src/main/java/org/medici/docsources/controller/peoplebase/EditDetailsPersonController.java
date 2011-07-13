@@ -36,6 +36,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
@@ -116,17 +117,33 @@ public class EditDetailsPersonController {
 			person.setBornDay(command.getBornDay());
 			person.setBornApprox(command.getBornApprox());
 			person.setBornDateBc(command.getBornDateBc());
-			person.setBornPlace((command.getBornPlaceId() != null) ? new Place(command.getBornPlaceId()) : null);
+			
+			if(ObjectUtils.toString(command.getBornPlaceDescription()).equals("")){
+				person.setBornPlace(null);
+				person.setBornPlaceUnsure(false);
+			} else {
+				person.setBornPlace((command.getBornPlaceId() != null) ? new Place(command.getBornPlaceId()) : null);
+				person.setBornPlaceUnsure(command.getBornPlaceUnsure());
+			}
+			
 			person.setActiveStart(command.getActiveStart());
-			person.setBornPlaceUnsure(command.getBornPlaceUnsure());
+			
 			person.setDeathYear(command.getDeathYear());
 			person.setDeathMonth((command.getDeathMonth() != null) ? new Month(command.getDeathMonth()) : null);
 			person.setDeathDay(command.getDeathDay());
 			person.setDeathApprox(command.getDeathApprox());
 			person.setDeathDateBc(command.getDeathDateBc());
-			person.setDeathPlace((command.getDeathPlaceId() != null) ? new Place(command.getDeathPlaceId()) : null);
+			
+			if(ObjectUtils.toString(command.getDeathPlaceDescription()).equals("")){
+				person.setDeathPlace(null);
+				person.setDeathPlaceUnsure(false);
+			} else {
+				person.setDeathPlace((command.getDeathPlaceId() != null) ? new Place(command.getDeathPlaceId()) : null);
+				person.setDeathPlaceUnsure(command.getDeathPlaceUnsure());
+			}
+			
 			person.setActiveEnd(command.getActiveEnd());
-			person.setDeathPlaceUnsure(command.getDeathPlaceUnsure());
+			
 
 			try {
 				if (command.getPersonId().equals(0)) {
