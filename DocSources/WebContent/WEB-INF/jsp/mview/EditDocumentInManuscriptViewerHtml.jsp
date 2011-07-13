@@ -87,9 +87,10 @@
 				var $pageTurner = $j('<div id="PageTurnerDiv"></div>')
 				.dialog({
 					autoOpen: true,
-					width: 575,
+					resizable: false,
+					width: 605,
 					height: 110,
-					minWidth: 575,
+					minWidth: 605,
 					minHeight: 110,                                                                                                                                                         
 					title: 'Page Turner',
 					position: ['right','bottom'],                                                                                                                                                       

@@ -33,24 +33,25 @@
 					server: '${ReverseProxyIIPImage}',
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
-					credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
+					credit: "Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}", 
 					scale: 20.0,
 					navigation: true,
 					showNavWindow: true,
 					showNavImage: true, // this property hide navigation image
 					showNavButtons: true,
 					winResize: true,
-					zoom: 3,
+					zoom: 3
 				});
 
 				var $dialogExplorer = $j('<div></div>')
 				.dialog({                                                                                                                                                                   
 					autoOpen: true,
-					width: 575,
+					resizable: false,
+					width: 605,
 					height: 110,
-					minWidth: 575,
+					minWidth: 605,
 					minHeight: 110,                                                                                                                                                         
-					title: 'PAGE TURNER',
+					title: 'Page Turner',
 					position: ['right','bottom'],                                                                                                                                                       
 					closeOnEscape: false,
 					maximized:false,

@@ -21,7 +21,7 @@
 				<div class="valueMissingFolios">33</div> 
 			</div>
 			<div class="row">
-				<div class="item">Mis-numbered folios (bis, ter, quater, etc.)</div> 
+				<div class="item">Misnumbered folios <br />(bis, ter, quater, etc.)</div> 
 				<div class="value"><b>63bis, 119bis, 133bis, 149bis, 181bis, 212bis, 255bis, 309bis, 362bis, 381bis., 119bis, 133bis, 149bis, 181bis, 212bis, 255bis, 309bis, 362bis, 381bis63bis, 119bis, 133bis, 149bis, 181bis, 212bis, 255bis, 309bis, 362bis, 381bis.</b></div> 
 			</div>
 			

@@ -7,9 +7,9 @@
 	<c:url var="editPersonalNotesForm" value="/src/mview/EditPersonalNotesDialog.do?"/>
 
 	<form:form id="EditPersonalNotesForm" action="${editPersonalNotesForm}" method="post" cssClass="edit">
-		<form:textarea id="personalNotes" path="personalNotes" rows="20" style="width: 96%; height: 96%;"/>
-		<input type="image" alt="Save Notes" src="/DocSources/images/mview/button_saveNotes.png" id="saveNotes">
-		<input type="image" alt="Clean Notes" src="/DocSources/images/mview/button_cleanNotes.png" id="cleanNotes">
+		<form:textarea id="personalNotes" path="personalNotes" rows="16" style="width: 98%; height: 90%;"/>
+		<input type="submit" value="Save Notes"  id="saveNotes">
+		<input type="submit" value="Clean Notes" id="cleanNotes">
 	</form:form>
 
 	<script type="text/javascript">

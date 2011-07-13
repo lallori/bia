@@ -11,8 +11,8 @@
 	<form:form id="EditSynopsisDocumentForm" method="post" cssClass="edit">
 		<form:textarea id="synopsis" path="synopsis" rows="22"/>
 		<div>
-			<input id="saveSynopsis" type="image" src="<c:url value="/images/mview/saveSynopsis.png" />" alt="Save Synopsis"/>
-			<input id="saveSynopsisExit" type="image" src="<c:url value="/images/mview/saveSynopsisExit.png" />" alt="Save Synopsis and Exit"/>
+			<input id="saveSynopsis" type="submit" value="Save Synopsis"/>
+			<input id="saveSynopsisExit" type="submit" value="Save Synopsis and Exit"/>
 		</div>
 		<form:hidden path="entryId"/>
 		<form:hidden path="synExtrId" />
