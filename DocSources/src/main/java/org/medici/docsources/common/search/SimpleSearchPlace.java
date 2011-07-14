@@ -29,6 +29,9 @@
 package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.common.util.SimpleSearchUtils;
 
@@ -137,6 +140,60 @@ public class SimpleSearchPlace implements SimpleSearch {
 			return getAlias();
 		else
 			return "";
+	}
+
+	@Override
+	public Query toLuceneQuery() {
+		BooleanQuery booleanQuery = new BooleanQuery();
+		
+		if (StringUtils.isEmpty(alias)) {
+			return booleanQuery;
+		}
+
+		String[] stringFields = new String[]{			
+			"placeNameFull",
+			"termAccent",
+			"plType",
+			"geogKey"
+		};
+			
+		String[] numericFields = new String[]{
+		};
+			
+		String[] yearFields = new String[]{
+		};
+
+		String[] monthFields = new String[]{
+		};
+			
+		String[] dayFields = new String[]{
+		};
+
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+			
+		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
+		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words);
+		if (!stringQuery.toString().equals("")) {
+			booleanQuery.add(stringQuery,Occur.SHOULD);
+		}
+		Query numericQuery = SimpleSearchUtils.constructBooleanQueryOnNumericFields(numericFields, words);
+		if (!numericQuery.toString().equals("")) {
+			booleanQuery.add(numericQuery,Occur.SHOULD);
+		}
+		Query yearQuery = SimpleSearchUtils.constructBooleanQueryOnYearFields(yearFields, words);
+		if (!yearQuery.toString().equals("")) {
+			booleanQuery.add(yearQuery,Occur.SHOULD);
+		}
+		Query monthQuery = SimpleSearchUtils.constructBooleanQueryOnMonthFields(monthFields, words);
+		if (!monthQuery.toString().equals("")) {
+			booleanQuery.add(monthQuery,Occur.SHOULD);
+		}
+		Query dayQuery = SimpleSearchUtils.constructBooleanQueryOnDayFields(dayFields, words);
+		if (!dayQuery.toString().equals("")) {
+			booleanQuery.add(dayQuery,Occur.SHOULD);
+		}
+
+		return booleanQuery;
 	}
 }
 

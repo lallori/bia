@@ -299,17 +299,19 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
-		String luceneQuery = searchContainer.toLuceneQueryString();
+		//String luceneQuery = searchContainer.toLuceneQueryString();
 
 		// We obtain hibernate-search session
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		try {
-			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "summaryId", fullTextSession.getSearchFactory().getAnalyzer("volumeAnalyzer"));
+		//try {
+			//QueryParser queryParser = new QueryParser(Version.LUCENE_30, "summaryId", fullTextSession.getSearchFactory().getAnalyzer("volumeAnalyzer"));
 	
 			// We convert AdvancedSearchContainer to luceneQuery
-			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
-	
+			//org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
+			org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
+			logger.info("Lucene Query " + query.toString()); 
+
 			// We execute search
 			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Volume.class );
 	
@@ -334,9 +336,9 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 			
 			// We set search result on return method
 			page.setList(fullTextQuery.list());
-		} catch (ParseException parseException) {
+/*		} catch (ParseException parseException) {
 			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
-		}
+		}*/
 		
 		return page;
 	}

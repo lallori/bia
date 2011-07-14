@@ -1,5 +1,5 @@
 /*
- * Search.java
+ * AdvancedSearchFactory.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -27,26 +27,45 @@
  */
 package org.medici.docsources.common.search;
 
-import java.io.Serializable;
-
-import org.apache.lucene.search.Query;
+import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
+import org.medici.docsources.domain.SearchFilter.SearchFilterType;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public interface Search extends Serializable {
+public class AdvancedSearchFactory {
+	/**
+	 * 
+	 */
+	public AdvancedSearchFactory() {
+		super();
+	}
 
 	/**
 	 * 
+	 * @param command
 	 * @return
+	 * @throws Exception
 	 */
-	public String toLuceneQueryString();
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public Query toLuceneQuery();
-}
+	public static AdvancedSearch create(SaveUserSearchFilterCommand command) {
+		if (command.getSearchFilterType().equals(SearchFilterType.DOCUMENT)) {
+			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
+			advancedSearchDocument.initFromSaveUserSearchFilterCommand(command);
+			return advancedSearchDocument;
+		} else if (command.getSearchFilterType().equals(SearchFilterType.PEOPLE)) {
+			AdvancedSearchPeople advancedSearchPeople= new AdvancedSearchPeople();
+			advancedSearchPeople.initFromSaveUserSearchFilterCommand(command);
+			return advancedSearchPeople;
+		} else if (command.getSearchFilterType().equals(SearchFilterType.PLACE)) {
+			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
+			advancedSearchPlace.initFromSaveUserSearchFilterCommand(command);
+			return advancedSearchPlace;
+		} else {
+			AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
+			advancedSearchVolume.initFromSaveUserSearchFilterCommand(command);
+			return advancedSearchVolume;
+		}
+	}
+	}

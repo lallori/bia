@@ -1,5 +1,5 @@
 /*
- * ShowAdvancedSearchPeopleController.java
+ * AdvancedSearchPeopleController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -31,12 +31,18 @@ package org.medici.docsources.controller.search;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
+import org.medici.docsources.command.search.AdvancedSearchPeopleCommand;
+import org.medici.docsources.common.search.AdvancedSearchPeople;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -70,6 +76,28 @@ public class AdvancedSearchPeopleController {
 		}
 		
 		return new ModelAndView("search/AdvancedSearchPeople", model);
+	}
+
+	/**
+	 * 
+	 * @param command
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView executeSearch(@ModelAttribute("command") AdvancedSearchPeopleCommand command, HttpSession session) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		AdvancedSearchPeople advancedSearchDocument = new AdvancedSearchPeople();
+		advancedSearchDocument.initFromCommand(command);
+
+		// This number is used to generate an unique id for datatable jquery plugin to use multiple object in tabs
+		UUID uuid = UUID.randomUUID();
+		model.put("searchNumber", uuid.toString());
+
+		session.setAttribute("advancedSearchDocument" + uuid.toString(), advancedSearchDocument);
+
+		return new ModelAndView("search/AdvancedSearchResultPeople", model);
 	}
 
 	/**

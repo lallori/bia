@@ -48,22 +48,24 @@ public class VolumeUtils {
 			return Boolean.FALSE;
 		}
 		
-		// We put this control here because often a word for search is not a volume
-		// E.g. Michele (it's not a volume)
-		if (StringUtils.isAlpha(text) && text.length() > 1) {
+		String trimmedText = text.trim();
+
+		/**We put this control here because often a word for search is not a volume
+		 * E.g. Michele (it's not a volume)
+		 * E.g. a  (word with a single letter cannot be consider as volume Letter Extension),
+		 * 
+		 * Previously we have two check :
+		 * if (StringUtils.isAlpha(text) && text.length() > 1)
+		 * if (StringUtils.isAlpha(trimmedText) && trimmedText.length() == 1)
+		 **/
+		if (StringUtils.isAlpha(trimmedText)) {
 			return Boolean.FALSE;
 		}
 
-		String trimmedText = text.trim();
-
-		// E.g. 23a
+		// E.g. 23
 		if (StringUtils.isNumeric(trimmedText)) {
 			return Boolean.TRUE;
 		}
-
-		// E.g. a  (word with a single letter can be consider as volume Letter Extension)
-		if (StringUtils.isAlpha(trimmedText) && trimmedText.length() == 1)
-			return Boolean.TRUE;
 
 		// E.g. 23a
 		if (StringUtils.isAlphanumeric(trimmedText)) {

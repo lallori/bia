@@ -3155,7 +3155,7 @@ span.categorySearch {
 	margin-right:5px;
 }
 
-#wordSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #topicsSearchDiv .searchFilterDiv a{
+#wordSearchDiv .searchFilterDiv a, #extractSearchDiv .searchFilterDiv a, #synopsisSearchDiv .searchFilterDiv a, #personSearchDiv .searchFilterDiv a, #placeSearchDiv .searchFilterDiv a, #senderSearchDiv .searchFilterDiv a, #fromSearchDiv .searchFilterDiv a, #recipientSearchDiv .searchFilterDiv a, #toSearchDiv .searchFilterDiv a, #refersToSearchDiv .searchFilterDiv a, dateSearchDiv, #topicSearchDiv .searchFilterDiv a, #dateSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a {
 	font-size:11px;
 	color:#900;
 }

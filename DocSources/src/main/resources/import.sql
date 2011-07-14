@@ -45,11 +45,9 @@ create table docsources_audit.tblTitleOccsList_AUD (TITLEOCCID integer not null,
 create table docsources_audit.tblTopicsList_AUD (TOPICID integer not null, REV integer not null, REVTYPE tinyint, DESCRIPTION LONGTEXT, TOPICTITLE varchar(50), primary key (TOPICID, REV));
 create table docsources_audit.tblVolumes_AUD (SUMMARYID integer not null, REV integer not null, REVTYPE tinyint, BOUND TINYINT default '-1', CCONDITION LONGTEXT, CCONTEXT LONGTEXT, CIPHER TINYINT default '-1', CIPHERNOTES varchar(255), DATECREATED datetime, DATENOTES LONGTEXT, ENDDAY TINYINT, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDYEAR integer, ENGLISH TINYINT default '-1', FOLIOCOUNT varchar(50), FOLSNUMBRD TINYINT default '-1', FRENCH TINYINT default '-1', GERMAN TINYINT default '-1', ITALIAN TINYINT default '-1', LATIN TINYINT default '-1', OLDALPHAINDEX TINYINT default '-1', ORGNOTES LONGTEXT, OTHERLANG varchar(50), PRINTEDDRAWINGS TINYINT default '-1', PRINTEDMATERIAL TINYINT default '-1', RECIPS LONGTEXT, RESID varchar(255), SENDERS LONGTEXT, SPANISH TINYINT default '-1', STAFFMEMO LONGTEXT, STARTDAY TINYINT, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, STATBOX varchar(50), VOLLETEXT varchar(1), VOLNUM integer, VOLTOBEVETTED TINYINT default '-1', VOLTOBEVETTEDDATE datetime, VOLVETBEGINS datetime, VOLVETID varchar(50), VOLVETTED TINYINT default '-1', VOLVETTEDDATE datetime, SERIESREFNUM integer, primary key (SUMMARYID, REV));
 
--- tblParents
--- Creating father records
-insert into tblParents select null, fatherId, personId, dateCreated, now() from tblPeople where fatherId is not null;
--- Creating mother records
-insert into tblParents select null, motherId, personId, now(), now() from tblPeople where motherId is not null;
+ALTER TABLE `docsources`.`persistent_logins` ENGINE = InnoDB ;
+ALTER TABLE `docsources`.`tblAccessLog` ENGINE = InnoDB ;
+ALTER TABLE `docsources`.`tblAdvancedSearchFilter` ENGINE = InnoDB ;
 
 -- MYSQL DATABASE STRUCTURE NORMALIZATION PATCH
 
@@ -60,6 +58,14 @@ ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `DOCTYPOLOGY` VARCHAR(250) AF
 ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `TRANSCRIBEFOLIONUM` INT(10) AFTER `FOLIOMOD`;
 -- Folio transcribes Mod
 ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `TRANSCRIBEFOLIOMOD` VARCHAR(15) AFTER `TRANSCRIBEFOLIONUM`;
+-- Change doc date fields order
+ALTER TABLE `docsources`.`tblDocuments` CHANGE COLUMN `DOCYEAR` `DOCYEAR` INT(10) NULL DEFAULT NULL  AFTER `UNPAGED` , CHANGE COLUMN `DOCMONTHNUM` `DOCMONTHNUM` INT(10) NULL DEFAULT NULL  AFTER `DOCYEAR` , CHANGE COLUMN `DOCDAY` `DOCDAY` INT(10) NULL DEFAULT NULL  AFTER `DOCMONTHNUM` ;
+-- Doc Date for Lucene indexing 
+ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `DOCDATE` INT(11) AFTER `DOCDAY`;
+-- Year Modern : type is int (4)
+ALTER TABLE `docsources`.`tblDocuments` CHANGE COLUMN `YEARMODERN` `YEARMODERN` INT(4) NULL DEFAULT NULL  ;
+-- Sortable date : type size decreased from 50 to 10
+ALTER TABLE `docsources`.`tblDocuments` CHANGE COLUMN `SORTABLEDATE` `SORTABLEDATE` VARCHAR(10) NULL DEFAULT NULL  ;
 
 -- IMAGES
 -- ImageType
@@ -69,13 +75,26 @@ ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageOrder` INT(5) NOT NULL  AF
 -- ImageProgTypeNum
 ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageProgTypeNum` INT(5) NOT NULL  AFTER `imageOrder` ;
 
+-- PEOPLE
+-- Change born date fields and death date fields order
+ALTER TABLE `docsources`.`tblPeople` CHANGE COLUMN `BYEAR` `BYEAR` DOUBLE NULL DEFAULT NULL  AFTER `ACTIVEEND` , CHANGE COLUMN `DYEAR` `DYEAR` DOUBLE NULL DEFAULT NULL  AFTER `BPLACE` ;
+-- Born Date for Lucene indexing 
+ALTER TABLE `docsources`.`tblPeople` ADD COLUMN `BORNDATE` INT(11) AFTER `BDAY`;
+-- Death Date for Lucene indexing 
+ALTER TABLE `docsources`.`tblPeople` ADD COLUMN `DEATHDATE` INT(11) AFTER `DDAY`;
+
+
 -- VOLUMES
 -- Context to CContext (context is a reserved key on Mysql)
 ALTER TABLE `docsources`.`tblVolumes` CHANGE COLUMN `CONTEXT` `CCONTEXT` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL, CHANGE COLUMN `CONDITION` `CCONDITION` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
 -- Printed Drawings
-ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN PRINTEDDRAWINGS TINYINT(1) AFTER `STAFFMEMO`;
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `PRINTEDDRAWINGS` TINYINT(1) AFTER `STAFFMEMO`;
 -- Printed Material
-ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN PRINTEDMATERIAL TINYINT(1) AFTER `PRINTEDDRAWINGS`;
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `PRINTEDMATERIAL` TINYINT(1) AFTER `PRINTEDDRAWINGS`;
+-- Start Date for Lucene indexing 
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `STARTDATE` INT(11) AFTER `STARTDAY`;
+-- End Date for Lucene indexing 
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `ENDDATE` INT(11) AFTER `ENDDAY`;
 
 
 -- MYSQL DATABASE DATA NORMALIZATION PATCH
@@ -96,12 +115,16 @@ update docsources.tblDocuments set recipLocplall = null where recipLocplall not 
 
 
 -- IMAGES
-
 -- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
 update docsources.tblImages set imageType = substr(imageName, 6,1);
 -- Recto Verso : 
 update docsources.tblImages set imageRectoVerso = substring(SUBSTRING_INDEX(imageName, '_', -1),1,1); 
 
+-- PARENTS
+-- Creating father records
+insert into tblParents select null, fatherId, personId, dateCreated, now() from tblPeople where fatherId is not null;
+-- Creating mother records
+insert into tblParents select null, motherId, personId, now(), now() from tblPeople where motherId is not null;
 
 -- PEOPLE
 -- Gender types patch to allow correct use of numeration type Gender
@@ -151,6 +174,58 @@ update docsources.tblVolumes set endMonthNum = null where endMonthNum = 13;
 -- PlaceType
 delete from docsources.tblPlaceType;
 insert into docsources.tblPlaceType (description) select distinct(plType) from docsources.tblPlaces order by 1 asc;
+
+-- Lucene Indexing (START) : Integer Date Fields Population  
+-- Document docDate
+update docsources.tblDocuments set docDate=concat(docYear,SUBSTRING(concat('0',docMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',docDay) FROM -2 FOR 2)) where docYear is not null and docMonthNum is not null and docDay is not null;
+update docsources.tblDocuments set docDate=concat(docYear,SUBSTRING(concat('0',docMonthNum) FROM -2 FOR 2),'01') where docYear is not null and docMonthNum is not null and docDay is null;
+update docsources.tblDocuments set docDate=concat(docYear,'01',SUBSTRING(concat('0',docDay) FROM -2 FOR 2)) where docYear is not null and docMonthNum is null and docDay is not null;
+update docsources.tblDocuments set docDate=concat(docYear,'01','01') where docYear is not null and docMonthNum is null and docDay is null;
+update docsources.tblDocuments set docDate=concat('01',SUBSTRING(concat('0',docMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',docDay) FROM -2 FOR 2)) where docYear is null and docMonthNum is not null and docDay is not null;
+update docsources.tblDocuments set docDate=concat('01',SUBSTRING(concat('0',docMonthNum) FROM -2 FOR 2),'01') where docYear is null and docMonthNum is not null and docDay is null;
+update docsources.tblDocuments set docDate=concat('01','01',SUBSTRING(concat('0',docDay) FROM -2 FOR 2)) where docYear is null and docMonthNum is null and docDay is not null;
+update docsources.tblDocuments set docDate=concat('01','01','01') where docYear is null and docMonthNum is null and docDay is null;
+
+-- People bornDate
+update docsources.tblPeople set bornDate=concat(bYear,SUBSTRING(concat('0',bMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',bDay) FROM -2 FOR 2)) where bYear is not null and bMonthNum is not null and bDay is not null;
+update docsources.tblPeople set bornDate=concat(bYear,SUBSTRING(concat('0',bMonthNum) FROM -2 FOR 2),'01') where bYear is not null and bMonthNum is not null and bDay is null;
+update docsources.tblPeople set bornDate=concat(bYear,'01',SUBSTRING(concat('0',bDay) FROM -2 FOR 2)) where bYear is not null and bMonthNum is null and bDay is not null;
+update docsources.tblPeople set bornDate=concat(bYear,'01','01') where bYear is not null and bMonthNum is null and bDay is null;
+update docsources.tblPeople set bornDate=concat('01',SUBSTRING(concat('0',bMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',bDay) FROM -2 FOR 2)) where bYear is null and bMonthNum is not null and bDay is not null;
+update docsources.tblPeople set bornDate=concat('01',SUBSTRING(concat('0',bMonthNum) FROM -2 FOR 2),'01') where bYear is null and bMonthNum is not null and bDay is null;
+update docsources.tblPeople set bornDate=concat('01','01',SUBSTRING(concat('0',bDay) FROM -2 FOR 2)) where bYear is null and bMonthNum is null and bDay is not null;
+update docsources.tblPeople set bornDate=concat('01','01','01') where bYear is null and bMonthNum is null and bDay is null;
+
+-- People deathDate
+update docsources.tblPeople set deathDate=concat(dYear,SUBSTRING(concat('0',dMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',dDay) FROM -2 FOR 2)) where dYear is not null and dMonthNum is not null and dDay is not null;
+update docsources.tblPeople set deathDate=concat(dYear,SUBSTRING(concat('0',dMonthNum) FROM -2 FOR 2),'01') where dYear is not null and dMonthNum is not null and dDay is null;
+update docsources.tblPeople set deathDate=concat(dYear,'01',SUBSTRING(concat('0',dDay) FROM -2 FOR 2)) where dYear is not null and dMonthNum is null and dDay is not null;
+update docsources.tblPeople set deathDate=concat(dYear,'01','01') where dYear is not null and dMonthNum is null and dDay is null;
+update docsources.tblPeople set deathDate=concat('01',SUBSTRING(concat('0',dMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',dDay) FROM -2 FOR 2)) where dYear is null and dMonthNum is not null and dDay is not null;
+update docsources.tblPeople set deathDate=concat('01',SUBSTRING(concat('0',dMonthNum) FROM -2 FOR 2),'01') where dYear is null and dMonthNum is not null and dDay is null;
+update docsources.tblPeople set deathDate=concat('01','01',SUBSTRING(concat('0',dDay) FROM -2 FOR 2)) where dYear is null and dMonthNum is null and dDay is not null;
+update docsources.tblPeople set deathDate=concat('01','01','01') where dYear is null and dMonthNum is null and dDay is null;
+
+-- Volume startDate
+update docsources.tblVolumes set startDate=concat(startYear,SUBSTRING(concat('0',startMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',startDay) FROM -2 FOR 2)) where startYear is not null and startMonthNum is not null and startDay is not null;
+update docsources.tblVolumes set startDate=concat(startYear,SUBSTRING(concat('0',startMonthNum) FROM -2 FOR 2),'01') where startYear is not null and startMonthNum is not null and startDay is null;
+update docsources.tblVolumes set startDate=concat(startYear,'01',SUBSTRING(concat('0',startDay) FROM -2 FOR 2)) where startYear is not null and startMonthNum is null and startDay is not null;
+update docsources.tblVolumes set startDate=concat(startYear,'01','01') where startYear is not null and startMonthNum is null and startDay is null;
+update docsources.tblVolumes set startDate=concat('01',SUBSTRING(concat('0',startMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',startDay) FROM -2 FOR 2)) where startYear is null and startMonthNum is not null and startDay is not null;
+update docsources.tblVolumes set startDate=concat('01',SUBSTRING(concat('0',startMonthNum) FROM -2 FOR 2),'01') where startYear is null and startMonthNum is not null and startDay is null;
+update docsources.tblVolumes set startDate=concat('01','01',SUBSTRING(concat('0',startDay) FROM -2 FOR 2)) where startYear is null and startMonthNum is null and startDay is not null;
+update docsources.tblVolumes set startDate=concat('01','01','01') where startYear is null and startMonthNum is null and startDay is null;
+
+-- Volume endDate
+update docsources.tblVolumes set endDate=concat(endYear,SUBSTRING(concat('0',endMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',endDay) FROM -2 FOR 2)) where endYear is not null and endMonthNum is not null and endDay is not null;
+update docsources.tblVolumes set endDate=concat(endYear,SUBSTRING(concat('0',endMonthNum) FROM -2 FOR 2),'01') where endYear is not null and endMonthNum is not null and endDay is null;
+update docsources.tblVolumes set endDate=concat(endYear,'01',SUBSTRING(concat('0',endDay) FROM -2 FOR 2)) where endYear is not null and endMonthNum is null and endDay is not null;
+update docsources.tblVolumes set endDate=concat(endYear,'01','01') where endYear is not null and endMonthNum is null and endDay is null;
+update docsources.tblVolumes set endDate=concat('01',SUBSTRING(concat('0',endMonthNum) FROM -2 FOR 2),SUBSTRING(concat('0',endDay) FROM -2 FOR 2)) where endYear is null and endMonthNum is not null and endDay is not null;
+update docsources.tblVolumes set endDate=concat('01',SUBSTRING(concat('0',endMonthNum) FROM -2 FOR 2),'01') where endYear is null and endMonthNum is not null and endDay is null;
+update docsources.tblVolumes set endDate=concat('01','01',SUBSTRING(concat('0',endDay) FROM -2 FOR 2)) where endYear is null and endMonthNum is null and endDay is not null;
+update docsources.tblVolumes set endDate=concat('01','01','01') where endYear is null and endMonthNum is null and endDay is null;
+-- Lucene Indexing (END) : Integer Date Fields Population  
 
 -- COUNTRY DATA ENTRY (Table schema is based on ISO standard 3166 code lists http://www.iso.org/iso/list-en1-semic-3.txt)
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');

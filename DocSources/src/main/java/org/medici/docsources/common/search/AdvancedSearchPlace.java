@@ -32,8 +32,10 @@ import java.util.List;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Query;
 import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
 import org.medici.docsources.command.search.AdvancedSearchPlacesCommand;
+import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 import org.medici.docsources.common.util.RegExUtils;
 
 /**
@@ -44,162 +46,103 @@ import org.medici.docsources.common.util.RegExUtils;
 public class AdvancedSearchPlace implements AdvancedSearch {
 	/**
 	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum DateType {
+		After("After"), Before("Before"), From("From"), To("To");
+		
+		private final String dateType;
+
+	    private DateType(String value) {
+	    	dateType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return dateType;
+	    }
+	}
+	
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum VolumeType {
+		Between("Between"), Exactly("Exactly");
+		
+		private final String volumeType;
+
+	    private VolumeType(String value) {
+	    	volumeType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return volumeType;
+	    }
+	} 
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum WordType {
+		Extract("Extract"), ExtractAndSynopsis("ExtractAndSynopsis"), Synopsis("Synopsis");
+		
+		private final String wordType;
+
+	    private WordType(String value) {
+	    	wordType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return wordType;
+	    }
+	}
+	/**
+	 * 
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
-	
-	private Logger logger = Logger.getLogger(this.getClass()); 
-
-	private List<String> words;
-	private List<WordType> wordsTypes;
-	private List<String> volumes;
-	private List<String> volumesBetween;
-	private List<VolumeType> volumesType;
+	private List<Integer> datesDay;
+	private List<Integer> datesMonth;
 	private List<DateType> datesType;
 	private List<Integer> datesYear;
-	private List<Integer> datesMonth;
-	private List<Integer> datesDay;
 	private List<String> extract;
-	private List<String> synopsis;
-	private List<String> topics;
-	private List<Integer> topicsId;
+	private List<String> from;
+	private List<Integer> fromId;
+	private Logger logger = Logger.getLogger(this.getClass());
 	private List<String> person;
 	private List<Integer> personId;
 	private List<String> place;
 	private List<Integer> placeId;
-	private List<String> sender;
-	private List<Integer> senderId;
-	private List<String> from;
-	private List<Integer> fromId;
 	private List<String> recipient;
 	private List<Integer> recipientId;
+	private List<String> resTo;
+	private List<String> sender;
+	private List<Integer> senderId;
+	private List<String> synopsis;
 	private List<String> to;
 	private List<Integer> toId;
-	private List<String> resTo;
+	private List<String> topics;
+	private List<Integer> topicsId;
+	private List<String> volumes;
+	private List<String> volumesBetween;
+
+	private List<VolumeType> volumesType;
+
+	private List<String> words;
+
+	private List<WordType> wordsTypes;
 
 	/**
 	 * 
 	 */
 	public AdvancedSearchPlace() {
 		super();
-	}
-
-	/**
-	 * 
-	 * @param command
-	 */
-	public void initFromCommand(AdvancedSearchPlacesCommand command) {
-	}
-
-	/**
-	 * @return the words
-	 */
-	public List<String> getWords() {
-		return words;
-	}
-
-	/**
-	 * @param words the words to set
-	 */
-	public void setWords(List<String> words) {
-		this.words = words;
-	}
-
-	/**
-	 * @return the wordsTypes
-	 */
-	public List<WordType> getWordsTypes() {
-		return wordsTypes;
-	}
-
-	/**
-	 * @param wordsTypes the wordsTypes to set
-	 */
-	public void setWordsTypes(List<WordType> wordsTypes) {
-		this.wordsTypes = wordsTypes;
-	}
-
-	/**
-	 * @return the volumes
-	 */
-	public List<String> getVolumes() {
-		return volumes;
-	}
-
-	/**
-	 * @param volumes the volumes to set
-	 */
-	public void setVolumes(List<String> volumes) {
-		this.volumes = volumes;
-	}
-
-	/**
-	 * @return the volumesBetween
-	 */
-	public List<String> getVolumesBetween() {
-		return volumesBetween;
-	}
-
-	/**
-	 * @param volumesBetween the volumesBetween to set
-	 */
-	public void setVolumesBetween(List<String> volumesBetween) {
-		this.volumesBetween = volumesBetween;
-	}
-
-	/**
-	 * @return the volumesType
-	 */
-	public List<VolumeType> getVolumesType() {
-		return volumesType;
-	}
-
-	/**
-	 * @param volumesType the volumesType to set
-	 */
-	public void setVolumesType(List<VolumeType> volumesType) {
-		this.volumesType = volumesType;
-	}
-
-	/**
-	 * @return the datesType
-	 */
-	public List<DateType> getDatesType() {
-		return datesType;
-	}
-
-	/**
-	 * @param datesType the datesType to set
-	 */
-	public void setDatesType(List<DateType> datesType) {
-		this.datesType = datesType;
-	}
-
-	/**
-	 * @return the datesYear
-	 */
-	public List<Integer> getDatesYear() {
-		return datesYear;
-	}
-
-	/**
-	 * @param datesYear the datesYear to set
-	 */
-	public void setDatesYear(List<Integer> datesYear) {
-		this.datesYear = datesYear;
-	}
-
-	/**
-	 * @return the datesMonth
-	 */
-	public List<Integer> getDatesMonth() {
-		return datesMonth;
-	}
-
-	/**
-	 * @param datesMonth the datesMonth to set
-	 */
-	public void setDatesMonth(List<Integer> datesMonth) {
-		this.datesMonth = datesMonth;
 	}
 
 	/**
@@ -210,10 +153,24 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 	}
 
 	/**
-	 * @param datesDay the datesDay to set
+	 * @return the datesMonth
 	 */
-	public void setDatesDay(List<Integer> datesDay) {
-		this.datesDay = datesDay;
+	public List<Integer> getDatesMonth() {
+		return datesMonth;
+	}
+
+	/**
+	 * @return the datesType
+	 */
+	public List<DateType> getDatesType() {
+		return datesType;
+	}
+
+	/**
+	 * @return the datesYear
+	 */
+	public List<Integer> getDatesYear() {
+		return datesYear;
 	}
 
 	/**
@@ -224,150 +181,10 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 	}
 
 	/**
-	 * @param extract the extract to set
-	 */
-	public void setExtract(List<String> extract) {
-		this.extract = extract;
-	}
-
-	/**
-	 * @return the synopsis
-	 */
-	public List<String> getSynopsis() {
-		return synopsis;
-	}
-
-	/**
-	 * @param synopsis the synopsis to set
-	 */
-	public void setSynopsis(List<String> synopsis) {
-		this.synopsis = synopsis;
-	}
-
-	/**
-	 * @return the topics
-	 */
-	public List<String> getTopics() {
-		return topics;
-	}
-
-	/**
-	 * @param topics the topics to set
-	 */
-	public void setTopics(List<String> topics) {
-		this.topics = topics;
-	}
-
-	/**
-	 * @return the topicsId
-	 */
-	public List<Integer> getTopicsId() {
-		return topicsId;
-	}
-
-	/**
-	 * @param topicsId the topicsId to set
-	 */
-	public void setTopicsId(List<Integer> topicsId) {
-		this.topicsId = topicsId;
-	}
-
-	/**
-	 * @return the person
-	 */
-	public List<String> getPerson() {
-		return person;
-	}
-
-	/**
-	 * @param person the person to set
-	 */
-	public void setPerson(List<String> person) {
-		this.person = person;
-	}
-
-	/**
-	 * @return the personId
-	 */
-	public List<Integer> getPersonId() {
-		return personId;
-	}
-
-	/**
-	 * @param personId the personId to set
-	 */
-	public void setPersonId(List<Integer> personId) {
-		this.personId = personId;
-	}
-
-	/**
-	 * @return the place
-	 */
-	public List<String> getPlace() {
-		return place;
-	}
-
-	/**
-	 * @param place the place to set
-	 */
-	public void setPlace(List<String> place) {
-		this.place = place;
-	}
-
-	/**
-	 * @return the placeId
-	 */
-	public List<Integer> getPlaceId() {
-		return placeId;
-	}
-
-	/**
-	 * @param placeId the placeId to set
-	 */
-	public void setPlaceId(List<Integer> placeId) {
-		this.placeId = placeId;
-	}
-
-	/**
-	 * @return the sender
-	 */
-	public List<String> getSender() {
-		return sender;
-	}
-
-	/**
-	 * @param sender the sender to set
-	 */
-	public void setSender(List<String> sender) {
-		this.sender = sender;
-	}
-
-	/**
-	 * @return the senderId
-	 */
-	public List<Integer> getSenderId() {
-		return senderId;
-	}
-
-	/**
-	 * @param senderId the senderId to set
-	 */
-	public void setSenderId(List<Integer> senderId) {
-		this.senderId = senderId;
-	}
-
-	/**
 	 * @return the from
 	 */
 	public List<String> getFrom() {
 		return from;
-	}
-
-	/**
-	 * @param from the from to set
-	 */
-	public void setFrom(List<String> from) {
-		this.from = from;
 	}
 
 	/**
@@ -378,10 +195,31 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 	}
 
 	/**
-	 * @param fromId the fromId to set
+	 * @return the person
 	 */
-	public void setFromId(List<Integer> fromId) {
-		this.fromId = fromId;
+	public List<String> getPerson() {
+		return person;
+	}
+
+	/**
+	 * @return the personId
+	 */
+	public List<Integer> getPersonId() {
+		return personId;
+	}
+
+	/**
+	 * @return the place
+	 */
+	public List<String> getPlace() {
+		return place;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public List<Integer> getPlaceId() {
+		return placeId;
 	}
 
 	/**
@@ -392,52 +230,10 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 	}
 
 	/**
-	 * @param recipient the recipient to set
-	 */
-	public void setRecipient(List<String> recipient) {
-		this.recipient = recipient;
-	}
-
-	/**
 	 * @return the recipientId
 	 */
 	public List<Integer> getRecipientId() {
 		return recipientId;
-	}
-
-	/**
-	 * @param recipientId the recipientId to set
-	 */
-	public void setRecipientId(List<Integer> recipientId) {
-		this.recipientId = recipientId;
-	}
-
-	/**
-	 * @return the to
-	 */
-	public List<String> getTo() {
-		return to;
-	}
-
-	/**
-	 * @param to the to to set
-	 */
-	public void setTo(List<String> to) {
-		this.to = to;
-	}
-
-	/**
-	 * @return the toId
-	 */
-	public List<Integer> getToId() {
-		return toId;
-	}
-
-	/**
-	 * @param toId the toId to set
-	 */
-	public void setToId(List<Integer> toId) {
-		this.toId = toId;
 	}
 
 	/**
@@ -448,10 +244,281 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 	}
 
 	/**
+	 * @return the sender
+	 */
+	public List<String> getSender() {
+		return sender;
+	}
+
+	/**
+	 * @return the senderId
+	 */
+	public List<Integer> getSenderId() {
+		return senderId;
+	}
+
+	/**
+	 * @return the synopsis
+	 */
+	public List<String> getSynopsis() {
+		return synopsis;
+	}
+
+	/**
+	 * @return the to
+	 */
+	public List<String> getTo() {
+		return to;
+	}
+
+	/**
+	 * @return the toId
+	 */
+	public List<Integer> getToId() {
+		return toId;
+	}
+
+	/**
+	 * @return the topics
+	 */
+	public List<String> getTopics() {
+		return topics;
+	}
+
+	/**
+	 * @return the topicsId
+	 */
+	public List<Integer> getTopicsId() {
+		return topicsId;
+	}
+
+	/**
+	 * @return the volumes
+	 */
+	public List<String> getVolumes() {
+		return volumes;
+	}
+
+	/**
+	 * @return the volumesBetween
+	 */
+	public List<String> getVolumesBetween() {
+		return volumesBetween;
+	}
+
+	/**
+	 * @return the volumesType
+	 */
+	public List<VolumeType> getVolumesType() {
+		return volumesType;
+	}
+
+	/**
+	 * @return the words
+	 */
+	public List<String> getWords() {
+		return words;
+	}
+
+	/**
+	 * @return the wordsTypes
+	 */
+	public List<WordType> getWordsTypes() {
+		return wordsTypes;
+	}
+
+	/**
+	 * 
+	 * @param command
+	 */
+	public void initFromCommand(AdvancedSearchPlacesCommand command) {
+	}
+
+	public void initFromSaveUserSearchFilterCommand(SaveUserSearchFilterCommand command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @param datesDay the datesDay to set
+	 */
+	public void setDatesDay(List<Integer> datesDay) {
+		this.datesDay = datesDay;
+	}
+
+	/**
+	 * @param datesMonth the datesMonth to set
+	 */
+	public void setDatesMonth(List<Integer> datesMonth) {
+		this.datesMonth = datesMonth;
+	}
+
+	/**
+	 * @param datesType the datesType to set
+	 */
+	public void setDatesType(List<DateType> datesType) {
+		this.datesType = datesType;
+	}
+
+	/**
+	 * @param datesYear the datesYear to set
+	 */
+	public void setDatesYear(List<Integer> datesYear) {
+		this.datesYear = datesYear;
+	}
+
+	/**
+	 * @param extract the extract to set
+	 */
+	public void setExtract(List<String> extract) {
+		this.extract = extract;
+	}
+
+	/**
+	 * @param from the from to set
+	 */
+	public void setFrom(List<String> from) {
+		this.from = from;
+	}
+
+	/**
+	 * @param fromId the fromId to set
+	 */
+	public void setFromId(List<Integer> fromId) {
+		this.fromId = fromId;
+	}
+
+	/**
+	 * @param person the person to set
+	 */
+	public void setPerson(List<String> person) {
+		this.person = person;
+	}
+
+	/**
+	 * @param personId the personId to set
+	 */
+	public void setPersonId(List<Integer> personId) {
+		this.personId = personId;
+	}
+
+	/**
+	 * @param place the place to set
+	 */
+	public void setPlace(List<String> place) {
+		this.place = place;
+	}
+
+	/**
+	 * @param placeId the placeId to set
+	 */
+	public void setPlaceId(List<Integer> placeId) {
+		this.placeId = placeId;
+	}
+
+	/**
+	 * @param recipient the recipient to set
+	 */
+	public void setRecipient(List<String> recipient) {
+		this.recipient = recipient;
+	}
+
+	/**
+	 * @param recipientId the recipientId to set
+	 */
+	public void setRecipientId(List<Integer> recipientId) {
+		this.recipientId = recipientId;
+	}
+
+	/**
 	 * @param resTo the resTo to set
 	 */
 	public void setResTo(List<String> resTo) {
 		this.resTo = resTo;
+	}
+
+	/**
+	 * @param sender the sender to set
+	 */
+	public void setSender(List<String> sender) {
+		this.sender = sender;
+	}
+
+	/**
+	 * @param senderId the senderId to set
+	 */
+	public void setSenderId(List<Integer> senderId) {
+		this.senderId = senderId;
+	}
+
+	/**
+	 * @param synopsis the synopsis to set
+	 */
+	public void setSynopsis(List<String> synopsis) {
+		this.synopsis = synopsis;
+	}
+
+	/**
+	 * @param to the to to set
+	 */
+	public void setTo(List<String> to) {
+		this.to = to;
+	}
+
+	/**
+	 * @param toId the toId to set
+	 */
+	public void setToId(List<Integer> toId) {
+		this.toId = toId;
+	}
+
+	/**
+	 * @param topics the topics to set
+	 */
+	public void setTopics(List<String> topics) {
+		this.topics = topics;
+	}
+
+	/**
+	 * @param topicsId the topicsId to set
+	 */
+	public void setTopicsId(List<Integer> topicsId) {
+		this.topicsId = topicsId;
+	}
+
+	/**
+	 * @param volumes the volumes to set
+	 */
+	public void setVolumes(List<String> volumes) {
+		this.volumes = volumes;
+	}
+
+	/**
+	 * @param volumesBetween the volumesBetween to set
+	 */
+	public void setVolumesBetween(List<String> volumesBetween) {
+		this.volumesBetween = volumesBetween;
+	}
+	
+	/**
+	 * @param volumesType the volumesType to set
+	 */
+	public void setVolumesType(List<VolumeType> volumesType) {
+		this.volumesType = volumesType;
+	}
+
+	/**
+	 * @param words the words to set
+	 */
+	public void setWords(List<String> words) {
+		this.words = words;
+	}
+
+	/**
+	 * @param wordsTypes the wordsTypes to set
+	 */
+	public void setWordsTypes(List<WordType> wordsTypes) {
+		this.wordsTypes = wordsTypes;
 	}
 
 	/**
@@ -706,65 +773,11 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 
 		return stringBuffer.toString();
 	}
-	
-	/**
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
-	 */
-	public static enum WordType {
-		Extract("Extract"), Synopsis("Synopsis"), ExtractAndSynopsis("ExtractAndSynopsis");
-		
-		private final String wordType;
 
-	    private WordType(String value) {
-	    	wordType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return wordType;
-	    }
-	}
-
-	/**
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
-	 */
-	public static enum VolumeType {
-		Exactly("Exactly"), Between("Between");
-		
-		private final String volumeType;
-
-	    private VolumeType(String value) {
-	    	volumeType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return volumeType;
-	    }
-	}
-
-	/**
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
-	 */
-	public static enum DateType {
-		From("From"), To("To"), After("After"), Before("Before");
-		
-		private final String dateType;
-
-	    private DateType(String value) {
-	    	dateType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return dateType;
-	    }
+	@Override
+	public Query toLuceneQuery() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

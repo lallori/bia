@@ -29,6 +29,7 @@ package org.medici.docsources.scheduler;
 
 import java.util.List;
 
+import org.apache.log4j.MDC;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -65,6 +66,7 @@ public class ActivationUserEmailJob {
 	 */
 	@Scheduled(fixedRate=600000)
 	public void execute() {
+		MDC.put("username", "threademail");
 		try {
 			List<ActivationUser> usersToActivate = getUserService().findActivationUsers();
 

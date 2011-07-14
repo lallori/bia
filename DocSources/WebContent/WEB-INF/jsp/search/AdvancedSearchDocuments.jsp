@@ -125,12 +125,13 @@
 		<form id="dateSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
 			<select id="dateType" name="dateType" class="selectform_long">
-				<option value="Written after">Written after</option>
-				<option value="Written before">Written before</option>
-				<option value="Written between">Written between</option>
+				<option value="After">Written after</option>
+				<option value="Before">Written before</option>
+				<option value="Between">Written between</option>
 			</select>
-			<input type="text" id="dateYear" class="input_4c" maxlength="4"/>
-			<select id="dateMonth" name="dateMonthSearch" class="selectform">
+			<input type="text" id="dateYear" class="input_4c" maxlength="4" value="yyyy"/>
+			<select id="dateMonth" name="dateMonth" class="selectform">
+                <option value="mm" selected="selected">mm</option>
 				<option value="January">January</option>
 				<option value="February">February</option>
 				<option value="March">March</option>
@@ -143,14 +144,14 @@
 				<option value="October">October</option>
 				<option value="November">November</option>
 				<option value="December">December</option>
-				<option value="month">month</option>
 			</select>
-			<input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2"/>
+			<input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/>
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Date">
 			<p class="invisible">and</p>
-                <input id="dateYearBetween" name="dateYear" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
-                <select id="dateMonthBetween" name="dateMonth" class="selectform" style="visibility:hidden">
+                <input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
+                <select id="dateMonthBetween" name="dateMonthBetween" class="selectform" style="visibility:hidden">
+                    <option value="mm" selected="selected">mm</option>
                     <option value="January">January</option>
                     <option value="February">February</option>
                     <option value="March">March</option>
@@ -163,9 +164,8 @@
                     <option value="October">October</option>
                     <option value="November">November</option>
                     <option value="December">December</option>
-                    <option value="mm" selected="selected">mm</option>
                 </select>
-                <input id="dateDayBetween" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
+                <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
                 <input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" style="visibility:hidden" class="invisible">
 		</form>
 	</div>
@@ -178,9 +178,9 @@
 				<option value="Exactly" selected="selected">Exactly</option>
 				<option value="Between">Between</option>
 			</select>
-			<input type="text" id="volumeSearch"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
+			<input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
 			<p class="invisibleVol">and</p>
-			<input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
+			<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Volume">
 		</form>
@@ -194,73 +194,52 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#volumeType").change(function(){
-				if(this.options[1].selected) 
-					$j('#betweenSearch').css('visibility','visible'); 
-				else 
-					$j('#betweenSearch').css('visibility','hidden');
+				if(this.options[1].selected) {
+					$j('#volumeBetween').css('visibility','visible'); 
+					$j('.invisibleVol').css('visibility','visible'); 
+				} else { 
+					$j('#volumeBetween').css('visibility','hidden');
+					$j('.invisibleVol').css('visibility','hidden');
+				}
 			});	
 
-			$j("#volumeType").change(function(){
-				 if(this.options[1].selected) 
-						 $j('.invisibleVol').css('visibility','visible'); 
-				 else 
-						 $j('.invisibleVol').css('visibility','hidden');
-		 });
-		$j("#dateType").change(function(){
-				   if(this.options[2].selected) 
-						   $j('#dateYearBetween').css('visibility','visible');
-				   else 
-						   $j('#dateYearBetween').css('visibility','hidden');
-		   });
-		$j("#dateType").change(function(){
-				   if(this.options[2].selected) 
-						   $j('#dateMonthBetween').css('visibility','visible');
-				   else 
-						   $j('#dateMonthBetween').css('visibility','hidden');
-		   });
-		$j("#dateType").change(function(){
-				   if(this.options[2].selected) 
-						   $j('#dateDayBetween').css('visibility','visible');
-				   else 
-						   $j('#dateDayBetween').css('visibility','hidden');
-		   });
-		$j("#dateType").change(function(){
-				   if(this.options[2].selected) 
-						   $j('.invisible').css('visibility','visible');
-				   else 
-						   $j('.invisible').css('visibility','hidden');
-		   });
-		$j("#dateType").change(function(){
-				   if(this.options[2].selected) 
-						   $j('.visible').css('visibility','hidden');
-				   else 
-						   $j('.visible').css('visibility','visible');
-		   });
-		 $j('#dateYear').focus(function(){
-				  if(this.value=='yyyy')
-					  {
-					  this.value=''
-					  }
-				 });
-		 $j('#dateYearBetween').focus(function(){
-				  if(this.value=='yyyy')
-					  {
-					  this.value=''
-					  }
-		});
-		 $j('#dateDay').focus(function(){
-				  if(this.value=='dd')
-					  {
-					  this.value=''
-					  }
-		});
-		 $j('#dateDayBetween').focus(function(){
-				  if(this.value=='dd')
-					  {
-					  this.value=''
-					  }
-		});
+			$j("#dateType").change(function(){
+				if(this.options[2].selected) { 
+					$j('#dateYearBetween').css('visibility','visible');
+					$j('#dateMonthBetween').css('visibility','visible');
+					$j('#dateDayBetween').css('visibility','visible');
+					$j('.invisible').css('visibility','visible');
+					$j('.visible').css('visibility','hidden');
+			   } else { 
+					$j('#dateYearBetween').css('visibility','hidden');
+					$j('#dateMonthBetween').css('visibility','hidden');
+					$j('#dateDayBetween').css('visibility','hidden');
+					$j('.invisible').css('visibility','hidden');
+					$j('.visible').css('visibility','visible');
+				}
+			});
 			
+			$j('#dateYear').focus(function() {
+				if(this.value=='yyyy') {
+					this.value='';
+				}
+			});
+			$j('#dateYearBetween').focus(function() {
+				if(this.value=='yyyy') {
+					this.value='';
+				}
+			});
+			$j('#dateDay').focus(function() {
+				if(this.value=='yyyy') {
+					this.value='';
+				}
+			});
+			$j('#dateDayBetween').focus(function() {
+				if(this.value=='yyyy') {
+					this.value='';
+				}
+			});
+
 			$j("#wordSearchForm").advancedSearchForm();
 			$j("#volumeSearchForm").advancedSearchForm();
 			$j("#dateSearchForm").advancedSearchForm();
@@ -367,17 +346,17 @@
 					$j('#toId').val(data);
 				}
 			});	
-			$j("refersTo").autocompletePerson({
-				serviceUrl: '${searchReferersToURL}',
+			$j("#refersTo").autocompletePerson({
+				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
 				delimiter: null,
-				maxHeight: 400,
+				maxHeight: 350,
 				width: 600,
 				zIndex: 9999,
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-					$j('#referesToId').val(data);
+					$j('#refersToId').val(data);
 				}
 			});		
 		});

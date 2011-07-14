@@ -12,8 +12,8 @@
 			<input id="word" name="word" class="input_15c" type="text" value=""/>
 			in
 			<select id="wordType" name="wordType" class="selectform_Xlong">
-				<option value="Volumes Titles and Notes" selected="selected">Volumes Titles and Notes</option>
-				<option value="Volume Titles">Volume Titles</option>
+				<option value="TitlesAndNotes" selected="selected">Volumes Titles and Notes</option>
+				<option value="Titles">Volume Titles</option>
 				<option value="Notes">Notes</option>
 			</select>
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
@@ -29,12 +29,13 @@
 				<option value="Exactly" selected="selected">Exactly</option>
 				<option value="Between">Between</option>
 			</select>
-			<input id="volumeSearch" name="volumeSearch" class="input_5c" type="text" value="" maxlength="5"/>
+			<input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
+			<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Volume">
 		</form>
 		
-		<form id="dateRangeSearchForm" method="post" class="edit">
+		<form id="dateSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
 			<select id="dateType" name="dateType" class="selectform">
 				<option value="Any" selected="selected">Any</option>
@@ -45,19 +46,9 @@
 			</select>
 			<input id="dateYear" name="dateYear" class="input_4c" type="text" value="year" maxlength="4"/>
 			<select id="dateMonth" name="dateMonth" class="selectform">
-				<option value="January">January</option>
-				<option value="February">February</option>
-				<option value="March">March</option>
-				<option value="April">April</option>
-				<option value="May">May</option>
-				<option value="June">June</option>
-				<option value="July">July</option>
-				<option value="August">August</option>
-				<option value="September">September</option>
-				<option value="October">October</option>
-				<option value="November">November</option>
-				<option value="December">December</option>
-				<option value="month" selected="selected">month</option>
+			<c:forEach var="month" items="${months}">
+				<option value="${month.monthNum}">${month.monthName}</option>
+			</c:forEach>
 			</select>
 			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="day" maxlength="2"/>
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
@@ -70,6 +61,13 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#volumeType").change(function(){
+			if(this.options[1].selected) 
+				$j('#volumeBetween').css('visibility','visible'); 
+			else 
+				$j('#volumeBetween').css('visibility','hidden');
+		});	
+		
 		$j("#wordSearchForm").advancedSearchForm();
 		$j("#volumeSearchForm").advancedSearchForm();
 		$j("#dateRangeSearchForm").advancedSearchForm();

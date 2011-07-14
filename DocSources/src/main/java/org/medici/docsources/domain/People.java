@@ -44,9 +44,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.solr.analysis.ASCIIFoldingFilterFactory;
 import org.apache.solr.analysis.LowerCaseFilterFactory;
 import org.apache.solr.analysis.MappingCharFilterFactory;
@@ -167,7 +164,18 @@ public class People implements Serializable {
 		@NumericField(forField="bornDay_Sort")
 	})
 	private Integer bornDay;
-	
+
+	@Column (name="\"BORNDATE\"", length=10)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="bornDate_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="bornDate"),
+		@NumericField(forField="bornDate_Sort")
+	})
+	private Integer bornDate;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"BPLACEID\"")
 	@IndexedEmbedded(depth=1)
@@ -203,6 +211,17 @@ public class People implements Serializable {
 		@NumericField(forField="deathDay_Sort")
 	})
 	private Integer deathDay;
+
+	@Column (name="\"DEATHDATE\"", length=10)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="deathDate_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="deathDate"),
+		@NumericField(forField="deathDate_Sort")
+	})
+	private Integer deathDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"DPLACEID\"")
@@ -494,35 +513,18 @@ public class People implements Serializable {
 	}
 
 	/**
-	 * This method return born date. It's a concatenation of three fields,
-	 * born day, born month, and bornYear. It's a transient property 
-	 * (not stored on database ndr).
-	 *  
-	 * @return String rappresentation of volume identifiers.
+	 * @param bornDate the bornDate to set
 	 */
-	@Transient
-	public String getBornDate() {
-		StringBuffer stringBuffer = new StringBuffer();
-		if (bornDay != null) {
-			stringBuffer.append(bornDay);
-		}
-		
-		if (!ObjectUtils.toString(bornMonth).equals("")) {
-			if (stringBuffer.length() > 0 ) {
-				stringBuffer.append(" ");
-			}
-			stringBuffer.append(bornMonth.toString());
-		}
+	public void setBornDate(Integer bornDate) {
+		this.bornDate = bornDate;
+	}
 
-		if (bornYear != null) {
-			if (stringBuffer.length() > 0 ) {
-				stringBuffer.append(" ");
-			}
-			stringBuffer.append(bornYear);
-		}
-
-		return stringBuffer.toString();
-	}	
+	/**
+	 * @return the bornDate
+	 */
+	public Integer getBornDate() {
+		return bornDate;
+	}
 
 	/**
 	 * @return the bornPlace
@@ -604,49 +606,31 @@ public class People implements Serializable {
 	}
 
 	/**
-	 * This method return death date. It's a concatenation of three fields,
-	 * born day, born month, and bornYear. It's a transient property 
-	 * (not stored on database ndr).
-	 *  
-	 * @return String rappresentation of volume identifiers.
+	 * @param deathDate the deathDate to set
 	 */
-	@Transient
-	public String getDeathDate() {
-		StringBuffer stringBuffer = new StringBuffer();
-		if (deathDay != null) {
-			stringBuffer.append(deathDay);
-		}
-		
-		if (!ObjectUtils.toString(deathMonth).equals("")) {
-			if (stringBuffer.length() > 0 ) {
-				stringBuffer.append(" ");
-			}
-			stringBuffer.append(deathMonth.toString());
-		}
-
-		if (deathYear != null) {
-			if (stringBuffer.length() > 0 ) {
-				stringBuffer.append(" ");
-			}
-			stringBuffer.append(deathYear);
-		}
-
-		return stringBuffer.toString();
-	}	
-
-	/**
-	 * @return the deathPlace
-	 */
-	public Place getDeathPlace() {
-		return deathPlace;
+	public void setDeathDate(Integer deathDate) {
+		this.deathDate = deathDate;
 	}
 
+	/**
+	 * @return the deathDate
+	 */
+	public Integer getDeathDate() {
+		return deathDate;
+	}
 
 	/**
 	 * @param deathPlace the deathPlace to set
 	 */
 	public void setDeathPlace(Place deathPlace) {
 		this.deathPlace = deathPlace;
+	}
+
+	/**
+	 * @return the deathPlace
+	 */
+	public Place getDeathPlace() {
+		return deathPlace;
 	}
 
 

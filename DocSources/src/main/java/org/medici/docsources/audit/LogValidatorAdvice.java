@@ -31,6 +31,7 @@ package org.medici.docsources.audit;
 import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.ThrowsAdvice;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,15 +52,12 @@ import org.springframework.validation.BeanPropertyBindingResult;
  * 
  */
 public class LogValidatorAdvice implements AfterReturningAdvice, ThrowsAdvice {
-	private static Logger logger = null;
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * After returning advice. 
 	 */
-	public void afterReturning(Object returnValue, Method method,
-			Object[] args, Object target) throws Throwable {
-		logger = Logger.getLogger(target.getClass());
-
+	public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
 		if ((args == null) || (args.length != 2)) {
 			logger.error("Advice configuration error. Method's sign is not public void validate(Object object, Errors errors).");
 			return;
@@ -72,10 +70,6 @@ public class LogValidatorAdvice implements AfterReturningAdvice, ThrowsAdvice {
 		BeanPropertyBindingResult beanPropertyBindingResult = (BeanPropertyBindingResult) args[1];
 
 		StringBuffer stringBuffer = new StringBuffer();
-		if (SecurityContextHolder.getContext().getAuthentication() != null) {
-			stringBuffer.append(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-		}
-		stringBuffer.append(" - ");
 		stringBuffer.append(target.getClass().getName());
 		stringBuffer.append(":");
 		stringBuffer.append(method.getName());
@@ -96,9 +90,7 @@ public class LogValidatorAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 * @param target
 	 * @param ex
 	 */
-	public void afterThrowing(Method method, Object[] args, Object target,
-			Throwable ex) {
-		logger = Logger.getLogger(target.getClass());
+	public void afterThrowing(Method method, Object[] args, Object target, Throwable ex) {
 		logger.error("Exception is: " + ex.getMessage());
 	}
 }

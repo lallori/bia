@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.medici.docsources.common.util.GrantedAuthorityUtils;
 import org.medici.docsources.common.util.HttpUtils;
 import org.medici.docsources.domain.AccessLog;
@@ -98,10 +99,8 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 			} catch (ApplicationThrowable ex) {
 			}
 
-			StringBuffer stringBuffer = new StringBuffer();
-			stringBuffer.append(accessLog.getUsername());
-			stringBuffer.append(" Authentication OK");
-			logger.info(stringBuffer.toString());
+			MDC.put("username", accessLog.getUsername());
+			logger.info(" Authentication OK");
 		}
 	}
 
@@ -136,8 +135,6 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		}
 
 		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(accessLog.getUsername());
-		stringBuffer.append(" - ");
 		stringBuffer.append(accessLog.getHttpMethod());
 		stringBuffer.append(" ");
 		stringBuffer.append(accessLog.getAction());
@@ -183,6 +180,7 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 			accessLog.setUsername("");
 			accessLog.setInformations("");
 		}
+		MDC.put("username", accessLog.getUsername());
 
 		accessLog.setDateAndTime(new Date(System.currentTimeMillis()));
 		accessLog.setIpAddress(request.getRemoteAddr());
@@ -193,8 +191,6 @@ public class AccessLogAction extends HandlerInterceptorAdapter {
 		request.setAttribute("accessLog", accessLog);
 
 		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(accessLog.getUsername());
-		stringBuffer.append(" - ");
 		stringBuffer.append(accessLog.getHttpMethod());
 		stringBuffer.append(" ");
 		stringBuffer.append(accessLog.getAction());

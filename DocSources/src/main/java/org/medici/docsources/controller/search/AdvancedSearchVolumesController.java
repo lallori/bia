@@ -31,12 +31,18 @@ package org.medici.docsources.controller.search;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
+import org.medici.docsources.command.search.AdvancedSearchVolumesCommand;
+import org.medici.docsources.common.search.AdvancedSearchVolume;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +57,28 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdvancedSearchVolumesController {
 	@Autowired
 	private VolBaseService volBaseService; 
+	
+	/**
+	 * 
+	 * @param command
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView executeSearch(@ModelAttribute("command") AdvancedSearchVolumesCommand command, HttpSession session) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
+		advancedSearchVolume.initFromCommand(command);
+
+		// This number is used to generate an unique id for datatable jquery plugin to use multiple object in tabs
+		UUID uuid = UUID.randomUUID();
+		model.put("searchNumber", uuid.toString());
+
+		session.setAttribute("advancedSearchDocument" + uuid.toString(), advancedSearchVolume);
+
+		return new ModelAndView("search/AdvancedSearchResultVolumes", model);
+	}
 	
 	/**
 	 * 

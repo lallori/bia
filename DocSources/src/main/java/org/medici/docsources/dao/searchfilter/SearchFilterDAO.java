@@ -28,6 +28,8 @@
 package org.medici.docsources.dao.searchfilter;
 
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
@@ -48,7 +50,7 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findUserSearchFilters(String username) throws PersistenceException;
+	public List<SearchFilter> findUserSearchFilters(String username) throws PersistenceException;
 
 	/**
 	 * 

@@ -35,7 +35,6 @@ import org.apache.log4j.Logger;
 import org.medici.docsources.common.util.ClassUtils;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.ThrowsAdvice;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * 
@@ -51,7 +50,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * 
  */
 public class LogDAOAdvice implements AfterReturningAdvice, ThrowsAdvice {
-	private static Logger logger = null;
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	public LogDAOAdvice() {
 	}
@@ -61,17 +60,12 @@ public class LogDAOAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 */
 	public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
 		StringBuffer stringBuffer = new StringBuffer();
-		if (SecurityContextHolder.getContext().getAuthentication() != null) {
-			stringBuffer.append(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-		}
-		stringBuffer.append(" - ");
 		stringBuffer.append(target.getClass().getName());
 		stringBuffer.append(":");
 		stringBuffer.append(method.getName());
 		stringBuffer.append(" OK ");
 		appendReturns(stringBuffer, returnValue);
 
-		logger = Logger.getLogger(target.getClass());
 		logger.info(stringBuffer.toString());
 	}
 
@@ -84,17 +78,12 @@ public class LogDAOAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 */
 	public void afterThrowing(Method method, Object[] args, Object target, Throwable throwable) {
 		StringBuffer stringBuffer = new StringBuffer();
-		if (SecurityContextHolder.getContext().getAuthentication() != null) {
-			stringBuffer.append(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-		}
-		stringBuffer.append(" - ");
 		stringBuffer.append(target.getClass().getName());
 		stringBuffer.append(":");
 		stringBuffer.append(method.getName());
 		stringBuffer.append(" KO ");
 		appendThrowable(stringBuffer, throwable);
 
-		logger = Logger.getLogger(target.getClass());
 		logger.error(stringBuffer.toString());
 	}
 

@@ -28,6 +28,9 @@
 package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.common.util.SimpleSearchUtils;
 
@@ -118,6 +121,33 @@ public class SimpleSearchTopic implements SimpleSearch {
 			return getAlias();
 		else
 			return "";
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Query toLuceneQuery() {
+		BooleanQuery booleanQuery = new BooleanQuery();
+		
+		if (StringUtils.isEmpty(alias)) {
+			return booleanQuery;
+		}
+
+		String[] stringFields = new String[]{			
+			"description",
+			"title"
+		};
+
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		
+		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
+		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words);
+		if (!stringQuery.toString().equals("")) {
+			booleanQuery.add(stringQuery,Occur.SHOULD);
+		}
+
+		return booleanQuery;
 	}
 }
 

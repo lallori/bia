@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.PersonUtils;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
@@ -232,7 +233,23 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			if (person.getPortrait() == null){
 				person.setPortrait(false);
 			}
-			
+
+			if (person.getBornMonth() != null) {
+				Month month = getMonthDAO().find(person.getBornMonth().getMonthNum());
+				person.setBornMonth(month);
+			} else {
+				person.setBornMonth(null);
+			}
+			person.setBornDate(DateUtils.getLuceneDate(person.getBornYear(), person.getBornMonth(), person.getBornDay()));
+
+			if (person.getDeathMonth() != null) {
+				Month month = getMonthDAO().find(person.getDeathMonth().getMonthNum());
+				person.setDeathMonth(month);
+			} else {
+				person.setDeathMonth(null);
+			}
+			person.setDeathDate(DateUtils.getLuceneDate(person.getDeathYear(), person.getDeathMonth(), person.getDeathDay()));
+
 			getPeopleDAO().persist(person);
 
 			return person;
@@ -410,21 +427,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setLast(person.getLast());
 			personToUpdate.setPostLastPrefix(person.getPostLastPrefix());
 			personToUpdate.setPostLast(person.getPostLast());
+			personToUpdate.setGender((!person.getGender().equals(People.Gender.NULL)) ? person.getGender() : null);
 			//Update setMapNameLf
 			personToUpdate.setMapNameLf(PersonUtils.generateMapNameLf(personToUpdate));
-
-			if (!person.getGender().equals(People.Gender.NULL)) {
-				personToUpdate.setGender(person.getGender());
-			} else {
-				personToUpdate.setGender(null);
-			}
+			
 			personToUpdate.setBornYear(person.getBornYear());
 			if (person.getBornMonth() != null) {
 				personToUpdate.setBornMonth(getMonthDAO().find(person.getBornMonth().getMonthNum()));
 			} else {
 				personToUpdate.setBornMonth(null);
 			}
+			
+			// Born Information
 			personToUpdate.setBornDay(person.getBornDay());
+			personToUpdate.setBornDate(DateUtils.getLuceneDate(personToUpdate.getBornYear(), personToUpdate.getBornMonth(), personToUpdate.getBornDay()));
 			personToUpdate.setBornApprox(person.getBornApprox());
 			personToUpdate.setBornDateBc(person.getBornDateBc());
 			if (!ObjectUtils.toString(person.getBornPlace()).equals("")) {
@@ -434,15 +450,19 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			}
 			personToUpdate.setActiveStart(person.getActiveStart());
 			personToUpdate.setBornPlaceUnsure(person.getBornPlaceUnsure());
+
+			// Death Information
 			personToUpdate.setDeathYear(person.getDeathYear());
 			if (person.getDeathMonth() != null)
 				personToUpdate.setDeathMonth(getMonthDAO().find(person.getDeathMonth().getMonthNum()));
 			else
 				personToUpdate.setDeathMonth(null);
 			personToUpdate.setDeathDay(person.getDeathDay());
+			personToUpdate.setDeathDate(DateUtils.getLuceneDate(personToUpdate.getDeathYear(), personToUpdate.getDeathMonth(), personToUpdate.getDeathDay()));
+
 			personToUpdate.setDeathApprox(person.getDeathApprox());
 			personToUpdate.setDeathDateBc(person.getDeathDateBc());
-			if (!ObjectUtils.toString(person.getDeathPlace()).equals("")){
+			if (!ObjectUtils.toString(person.getDeathPlace()).equals("")) {
 				personToUpdate.setDeathPlace(getPlaceDAO().find(person.getDeathPlace().getPlaceAllId()));
 			} else {
 				personToUpdate.setDeathPlace(null);

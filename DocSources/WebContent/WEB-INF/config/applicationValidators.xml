@@ -137,6 +137,10 @@
         <description>Show Volume Explorer Validator.</description> 
 	</bean>
 	
+	<!-- Search Validators -->
+	<bean id="saveUserSearchFilterValidator" class="org.medici.docsources.validator.search.SaveUserSearchFilterValidator">
+	    <description>Save Search Validator.</description>
+	</bean>
 	<!-- User's Validators-->
     <bean id="activateUserRequestValidator" class="org.medici.docsources.validator.user.ActivateUserRequestValidator">
         <description>Validator for action "Activate user.".</description>

@@ -28,6 +28,8 @@
 package org.medici.docsources.scheduler;
 
 import java.util.List;
+
+import org.apache.log4j.MDC;
 import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -67,6 +69,7 @@ public class ResetUserPasswordEmailJob {
 	 */
 	@Scheduled(fixedRate=600000)
 	public void execute() {
+		MDC.put("username", "threademail");
 		try {
 			List<PasswordChangeRequest> passwordChangeRequests = getUserService().findPasswordResetRequests();
 

@@ -36,6 +36,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.util.Version;
@@ -278,17 +279,19 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
-		String luceneQuery = searchContainer.toLuceneQueryString();
+		//String luceneQuery = searchContainer.toLuceneQueryString();
 
 		// We obtain hibernate-search session
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		try {
-			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "entryId", fullTextSession.getSearchFactory().getAnalyzer("documentAnalyzer"));
-	
+		//try {
+			//QueryParser queryParser = new QueryParser(Version.LUCENE_30, "entryId", fullTextSession.getSearchFactory().getAnalyzer("documentAnalyzer"));
+
 			// We convert AdvancedSearchContainer to luceneQuery
-			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
-	
+			//org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
+			org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
+			logger.info("Lucene Query " + query.toString());
+			
 			// We execute search
 			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Document.class );
 	
@@ -313,9 +316,9 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			
 			// We set search result on return method
 			page.setList(fullTextQuery.list());
-		} catch (ParseException parseException) {
+		/*} catch (ParseException parseException) {
 			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
-		}
+		}*/
 		
 		return page;
 	}

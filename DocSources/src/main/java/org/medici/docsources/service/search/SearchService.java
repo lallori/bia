@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.service.search;
 
+import java.util.List;
+
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
@@ -69,7 +71,7 @@ public interface SearchService {
 	 * 
 	 * @throws ApplicationThrowable
 	 */
-	public Page getUserSearchFilters() throws ApplicationThrowable;
+	public List<SearchFilter> getUserSearchFilters() throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -123,4 +125,6 @@ public interface SearchService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	public void replaceSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable;
 }

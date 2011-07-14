@@ -76,10 +76,15 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Page findUserSearchFilters(String username) throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SearchFilter> findUserSearchFilters(String username) throws PersistenceException {
+		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username ");
+		
+		Query query = getEntityManager().createQuery(jpql.toString());
+		query.setParameter("username", username);
+		
+		return query.getResultList();
 	}
 
 	/**

@@ -227,7 +227,18 @@ public class Volume implements Serializable {
 		@NumericField(forField="startDay_Sort")
 	})
 	private Integer startDay;
-	
+
+	@Column (name="\"STARTDATE\"", length=10)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="startDate_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="startDate"),
+		@NumericField(forField="startDate_Sort")
+	})
+	private Integer startDate;
+
 	@Column (name="\"ENDYEAR\"", length=5)
 	@Fields({
 		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
@@ -259,6 +270,17 @@ public class Volume implements Serializable {
 	})
 	private Integer endDay;
 	
+	@Column (name="\"ENDDATE\"", length=10)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="endDate_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="endDate"),
+		@NumericField(forField="endDate_Sort")
+	})
+	private Integer endDate;
+
 	@Column (name="\"DATENOTES\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String dateNotes;
@@ -656,37 +678,6 @@ public class Volume implements Serializable {
 	}
 	
 	/**
-	 * This method return a string rappresentation of start date. 
-	 * It's a concatenation of three fields : startYear + startMonth + startDay.
-	 * If one field is null or empty, it's not concatenated into return value.
-	 * It's a transient property (not stored on database ndr).
-	 *  
-	 * @return String rappresentation of volume identifiers.
-	 */
-	@Transient
-    public String getStartDate() {
-		StringBuffer returnValue = new StringBuffer("");
-		
-		if (getStartYear() != null) {
-			returnValue.append(getStartYear());
-		}
-		if (StringUtils.isNotEmpty(getStartMonth())) {
-			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
-			}
-			returnValue.append(getStartMonth());
-		}
-		if (getStartDay() != null) {
-			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
-			}
-			returnValue.append(getStartDay());
-		}
-		
-		return returnValue.toString();
-    }
-
-	/**
 	 * @return the startDay
 	 */
 	public Integer getStartDay() {
@@ -700,6 +691,20 @@ public class Volume implements Serializable {
 		this.startDay = startDay;
 	}
 	
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Integer startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * @return the startDate
+	 */
+	public Integer getStartDate() {
+		return startDate;
+	}
+
 	/**
 	 * @return the endYear
 	 */
@@ -757,35 +762,18 @@ public class Volume implements Serializable {
 	}
 	
 	/**
-	 * This method return a string rappresentation of end date. 
-	 * It's a concatenation of three fields : endYear + endMonth + endDay.
-	 * If one field is null or empty, it's not concatenated into return value.
-	 * It's a transient property (not stored on database ndr).
-	 *  
-	 * @return String rappresentation of volume identifiers.
+	 * @param endDate the endDate to set
 	 */
-	@Transient
-    public String getEndDate() {
-		StringBuffer returnValue = new StringBuffer("");
-		
-		if (getEndYear() != null) {
-			returnValue.append(getEndYear());
-		}
-		if (StringUtils.isNotEmpty(getEndMonth())) {
-			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
-			}
-			returnValue.append(getEndMonth());
-		}
-		if (getEndDay() != null) {
-			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
-			}
-			returnValue.append(getEndDay());
-		}
-		
-		return returnValue.toString();
-    }
+	public void setEndDate(Integer endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the endDate
+	 */
+	public Integer getEndDate() {
+		return endDate;
+	}
 
 	/**
 	 * @return the dateNotes

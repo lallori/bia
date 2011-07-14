@@ -48,6 +48,7 @@ import org.medici.docsources.common.search.SimpleSearchPeople;
 import org.medici.docsources.common.search.SimpleSearchPlace;
 import org.medici.docsources.common.search.SimpleSearchTopic;
 import org.medici.docsources.common.search.SimpleSearchVolume;
+import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
@@ -103,10 +104,7 @@ public class AjaxController {
 			else
 				singleRow.add("");
 
-			if (currentDocument.getDocumentDate() != null) 
-				singleRow.add(currentDocument.getDocumentDate());
-			else
-				singleRow.add("");
+			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			
 			if (currentDocument.getSenderPlace() != null)
 				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
@@ -189,8 +187,9 @@ public class AjaxController {
 			List singleRow = new ArrayList();
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
-			singleRow.add(currentPerson.getBornDate());
-			singleRow.add(currentPerson.getDeathDate());
+			//Dates column must be filled with a string concatenation
+			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
 		model.put("iEcho", "" + 1);
@@ -255,8 +254,9 @@ public class AjaxController {
 			List singleRow = new ArrayList();
 			singleRow.add(currentVolume.getSerieList().toString());
 			singleRow.add(currentVolume.getMDP());
-			singleRow.add(currentVolume.getStartDate());
-			singleRow.add(currentVolume.getEndDate());
+			//Dates column must be filled with a string concatenation
+			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
+			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
 
 			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 		}
@@ -314,7 +314,7 @@ public class AjaxController {
 			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 				switch (sortingColumnNumber) {
 					case 0:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
+						paginationFilter.addSortingCriteria("mapNameLf_Sort", sortingDirection);
 						break;
 					case 1:
 						paginationFilter.addSortingCriteria("gender", sortingDirection);
@@ -343,28 +343,19 @@ public class AjaxController {
 			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 				switch (sortingColumnNumber) {
 					case 0:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+						paginationFilter.addSortingCriteria("placeNameFull_Sort", sortingDirection);
 						break;
 					case 1:
-						paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", sortingDirection);
+						paginationFilter.addSortingCriteria("plType_Sort", sortingDirection);
 						break;
 					case 2:
-						paginationFilter.addSortingCriteria("dateApprox", sortingDirection);
+						paginationFilter.addSortingCriteria("parentPlace.placeName_Sort", sortingDirection);
 						break;
 					case 3:
-						paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
-						break;
-					case 4:
-						paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
-						break;
-					case 5:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
-						break;
-					case 6:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+						paginationFilter.addSortingCriteria("parentType_Sort", sortingDirection);
 						break;
 					default:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+						paginationFilter.addSortingCriteria("placeNameFull_Sort", sortingDirection);
 						break;
 				}
 			}
@@ -422,12 +413,16 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			Page page = getSearchService().searchPeople(new SimpleSearchPeople(query), new PaginationFilter(0, Integer.MAX_VALUE));
+			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
+			paginationFilter.addSortingCriteria("mapNameLf_Sort", "DESC");
+
+			Page page = getSearchService().searchPeople(new SimpleSearchPeople(query), paginationFilter);
 			model.put("query", query);
 			model.put("count", page.getTotal());
 			model.put("data", ListBeanUtils.transformList(page.getList(), "personId"));
 			model.put("suggestions", ListBeanUtils.transformList(page.getList(), "mapNameLf"));
 			model.put("activeStarts", ListBeanUtils.transformList(page.getList(), "activeStart"));
+			model.put("activeEnds", ListBeanUtils.transformList(page.getList(), "activeEnd"));
 			model.put("bornYears", ListBeanUtils.transformList(page.getList(), "bornYear"));
 			model.put("deathYears", ListBeanUtils.transformList(page.getList(), "deathYear"));
 
@@ -449,7 +444,10 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			Page page = getSearchService().searchPlaces(new SimpleSearchPlace(query), new PaginationFilter(0, Integer.MAX_VALUE));
+			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
+			paginationFilter.addSortingCriteria("placeNameFull_Sort", "DESC");
+
+			Page page = getSearchService().searchPlaces(new SimpleSearchPlace(query), paginationFilter);
 			model.put("query", query);
 			model.put("count", page.getTotal());
 			model.put("data", ListBeanUtils.transformList(page.getList(), "placeAllId"));
@@ -527,10 +525,8 @@ public class AjaxController {
 			else
 				singleRow.add("");
 
-			if (currentDocument.getDocumentDate() != null) 
-				singleRow.add(currentDocument.getDocumentDate());
-			else
-				singleRow.add("");
+			if (currentDocument.getDocYear() != null) 
+				singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			
 			if (currentDocument.getSenderPlace() != null)
 				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
@@ -612,8 +608,9 @@ public class AjaxController {
 			List singleRow = new ArrayList();
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
-			singleRow.add(currentPerson.getBornDate());
-			singleRow.add(currentPerson.getDeathDate());
+			//Dates column must be filled with a string concatenation
+			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
 		model.put("iEcho", "" + 1);
@@ -678,8 +675,9 @@ public class AjaxController {
 			List singleRow = new ArrayList();
 			singleRow.add(currentVolume.getSerieList().toString());
 			singleRow.add(currentVolume.getMDP());
-			singleRow.add(currentVolume.getStartDate());
-			singleRow.add(currentVolume.getEndDate());
+			//Dates column must be filled with a string concatenation
+			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
+			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
 
 			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 		}
@@ -689,7 +687,13 @@ public class AjaxController {
 		model.put("aaData", resultList);
 	}
 
-	
+	/**
+	 * 
+	 * @param model
+	 * @param httpSession
+	 * @param paginationFilter
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void userSearchFiltersAll(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
 		Page page = null;
 

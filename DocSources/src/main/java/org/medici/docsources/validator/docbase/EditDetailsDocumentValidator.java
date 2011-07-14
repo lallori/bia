@@ -91,8 +91,14 @@ public class EditDetailsDocumentValidator implements Validator {
 		EditDetailsDocumentCommand editDetailsDocumentCommand = (EditDetailsDocumentCommand) object;
 		validateDocument(editDetailsDocumentCommand.getEntryId(), errors);
 		validateLinkedVolume(editDetailsDocumentCommand.getVolume(), errors);
+		validateDates(editDetailsDocumentCommand.getDocYear(), editDetailsDocumentCommand.getDocMonthNum(), editDetailsDocumentCommand.getDocDay(), errors);
 	}
 
+	/**
+	 * 
+	 * @param volume
+	 * @param errors
+	 */
 	private void validateLinkedVolume(String volume, Errors errors) {
 		if (!errors.hasErrors()) {
 			if (!StringUtils.isEmpty(volume)) {
@@ -108,6 +114,11 @@ public class EditDetailsDocumentValidator implements Validator {
 		
 	}
 
+	/**
+	 * 
+	 * @param entryId
+	 * @param errors
+	 */
 	public void validateDocument(Integer entryId, Errors errors) {
 		if (!errors.hasErrors()) {
 			// entryId equals zero is 'New Document', it shouldn't be validated  
@@ -118,6 +129,37 @@ public class EditDetailsDocumentValidator implements Validator {
 					}
 				} catch (ApplicationThrowable ath) {
 					errors.reject("entryId", "error.document.notfound");
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param startYear
+	 * @param startMonthNum
+	 * @param startDay
+	 * @param endYear
+	 * @param endMonthNum
+	 * @param endDay
+	 * @param errors
+	 */
+	private void validateDates(Integer startYear, Integer startMonthNum, Integer startDay, Errors errors) {
+		if (!errors.hasErrors()) {
+			if (startYear != null) {
+				if ((startYear < 1200) || (startYear > 1700)) {
+					errors.reject("docYear", "error.docYear.invalid");
+				}
+			}
+			if (startMonthNum != null) {
+				if ((startMonthNum <1) || (startMonthNum >12)) {
+					errors.reject("docMonthNum", "error.docMonthNum.invalid");
+				}
+			}
+			if (startDay != null) {
+				if ((startDay < 0) || (startDay > 31)) {
+					errors.reject("docDay", "error.docDay.invalid");
 				}
 			}
 		}

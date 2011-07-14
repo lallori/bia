@@ -98,6 +98,7 @@ import org.hibernate.search.bridge.builtin.BooleanBridge;
 			@TokenFilterDef(factory = StandardFilterFactory.class),
 			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
 			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
 			@TokenFilterDef(factory = NGramFilterFactory.class,
 				params = { 
 					@Parameter(name = "minGramSize", value = "3"),
@@ -146,34 +147,34 @@ public class Document implements Serializable{
 	private Date lastUpdate;
 	
 	@Column (name="\"DOCTOBEVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@FieldBridge(impl=BooleanBridge.class)
+	/*@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)*/
 	private Boolean docTobeVetted;
 	
 	@Column (name="\"DOCTOBEVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@DateBridge(resolution=Resolution.DAY) 
+	/*@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY)*/ 
 	private Date docToBeVettedDate;
 	
 	@Column (name="\"DOCVETID\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	//@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docVetId;
 	
 	@Column (name="\"DOCVETBEGINS\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@DateBridge(resolution=Resolution.DAY) 
+	//@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	//@DateBridge(resolution=Resolution.DAY) 
 	private Date docVetBegins;
 	
 	@Column (name="\"DOCVETTED\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	//@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Boolean docVetted;
 	
 	@Column (name="\"DOCVETTEDDATE\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	@DateBridge(resolution=Resolution.DAY) 
+	//@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	//@DateBridge(resolution=Resolution.DAY) 
 	private Date docVettedDate;
 	
 	@Column (name="\"DOCSTATBOX\"", length=50)
@@ -267,12 +268,19 @@ public class Document implements Serializable{
 		@NumericField(forField="docDay_Sort")
 	})
 	private Integer docDay;
-	
-	@Column (name="\"SORTABLEDATE\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private String sortableDate;
-	
-	@Column (name="\"YEARMODERN\"", length=15, precision=5)
+
+	@Column (name="\"DOCDATE\"", length=10)
+	@Fields({
+		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
+		@Field(name="docDate_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	})
+	@NumericFields({
+		@NumericField(forField="docDate"),
+		@NumericField(forField="docDate_Sort")
+	})
+	private Integer docDate;
+
+	@Column (name="\"YEARMODERN\"", length=4)
 	@Fields({
 		@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN),
 		@Field(name="yearModern_Sort", index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -778,61 +786,19 @@ public class Document implements Serializable{
 	}
 
 	/**
-	 * This method return document date information. It's a concatenation of 
-	 * docYear docMonthNum docDay and (yearmoden). 
-	 * 
-	 * e.g.
-	 * 
-	 * 1500 March 23 (1501)
-	 *  
-	 * @return String rappresentation of Document Date.
+	 * @param docDate the docDate to set
 	 */
-	@Transient
-    public String getDocumentDate() {
-		StringBuffer returnValue = new StringBuffer("");
-		
-		if (getDocYear() != null) {
-			returnValue.append(getDocYear());
-		}
-		if (getDocMonthNum() != null) {
-			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
-			}
-			returnValue.append(getDocMonthNum());
-		}
-		if (getDocDay() != null) {
-			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
-			}
-			returnValue.append(getDocDay());
-		}
-		
-		if (getYearModern() != null) {
-			if (returnValue.length() > 0 ) {
-				returnValue.append(" ");
-			}
-			returnValue.append("(");
-			returnValue.append(getYearModern());
-			returnValue.append(")");
-		}
-		
-		return returnValue.toString();
-    }
+	public void setDocDate(Integer docDate) {
+		this.docDate = docDate;
+	}
 
 	/**
-	 * @return the sortableDate
+	 * @return the docDate
 	 */
-	public String getSortableDate() {
-		return sortableDate;
+	public Integer getDocDate() {
+		return docDate;
 	}
-	
-	/**
-	 * @param sortableDate the sortableDate to set
-	 */
-	public void setSortableDate(String sortableDate) {
-		this.sortableDate = sortableDate;
-	}
-	
+
 	/**
 	 * @return the yearModern
 	 */

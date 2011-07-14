@@ -1,5 +1,5 @@
 /*
- * AdvancedSearchDocumentsCommand.java
+ * SaveUserSearchFilterCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -29,13 +29,18 @@ package org.medici.docsources.command.search;
 
 import java.util.List;
 
+import org.medici.docsources.domain.SearchFilter.SearchFilterType;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class AdvancedSearchDocumentsCommand {
+public class SaveUserSearchFilterCommand {
+	private SearchFilterType searchFilterType;
+	private SaveType saveType;
+	private String saveAs;
+	private Integer searchFilter;
 	private List<String> word;
 	private List<String> volume;
 	private List<String> date;
@@ -51,12 +56,55 @@ public class AdvancedSearchDocumentsCommand {
 	private List<String> refersTo;
 	
 	/**
+	 * @param searchFilterType the searchFilterType to set
+	 */
+	public void setSearchFilterType(SearchFilterType searchFilterType) {
+		this.searchFilterType = searchFilterType;
+	}
+
+	/**
+	 * @return the searchFilterType
+	 */
+	public SearchFilterType getSearchFilterType() {
+		return searchFilterType;
+	}
+
+	/**
+	 * @param searchFilter the searchFilter to set
+	 */
+	public void setSearchFilter(Integer searchFilter) {
+		this.searchFilter = searchFilter;
+	}
+
+	/**
+	 * @return the searchFilter
+	 */
+	public Integer getSearchFilter() {
+		return searchFilter;
+	}
+
+
+	/**
+	 * @param saveAs the saveAs to set
+	 */
+	public void setSaveAs(String saveAs) {
+		this.saveAs = saveAs;
+	}
+
+	/**
+	 * @return the saveAs
+	 */
+	public String getSaveAs() {
+		return saveAs;
+	}
+
+	/**
 	 * @return the word
 	 */
 	public List<String> getWord() {
 		return word;
 	}
-	
+
 	/**
 	 * @param word the word to set
 	 */
@@ -86,7 +134,7 @@ public class AdvancedSearchDocumentsCommand {
 	}
 	
 	/**
-	 * @param dateType the datesType to set
+	 * @param date the date to set
 	 */
 	public void setDate(List<String> date) {
 		this.date = date;
@@ -121,14 +169,14 @@ public class AdvancedSearchDocumentsCommand {
 	}
 	
 	/**
-	 * @return the topics
+	 * @return the topic
 	 */
 	public List<String> getTopic() {
 		return topic;
 	}
 	
 	/**
-	 * @param topics the topics to set
+	 * @param topic the topic to set
 	 */
 	public void setTopic(List<String> topic) {
 		this.topic = topic;
@@ -147,88 +195,110 @@ public class AdvancedSearchDocumentsCommand {
 	public void setPerson(List<String> person) {
 		this.person = person;
 	}
-	
 	/**
 	 * @return the place
 	 */
 	public List<String> getPlace() {
 		return place;
 	}
-	
 	/**
 	 * @param place the place to set
 	 */
 	public void setPlace(List<String> place) {
 		this.place = place;
 	}
-	
 	/**
 	 * @return the sender
 	 */
 	public List<String> getSender() {
 		return sender;
 	}
-	
 	/**
 	 * @param sender the sender to set
 	 */
 	public void setSender(List<String> sender) {
 		this.sender = sender;
 	}
-	
 	/**
 	 * @return the from
 	 */
 	public List<String> getFrom() {
 		return from;
 	}
-	
 	/**
 	 * @param from the from to set
 	 */
 	public void setFrom(List<String> from) {
 		this.from = from;
 	}
-	
 	/**
 	 * @return the recipient
 	 */
 	public List<String> getRecipient() {
 		return recipient;
 	}
-	
 	/**
 	 * @param recipient the recipient to set
 	 */
 	public void setRecipient(List<String> recipient) {
 		this.recipient = recipient;
 	}
-	
 	/**
 	 * @return the to
 	 */
 	public List<String> getTo() {
 		return to;
 	}
-	
 	/**
 	 * @param to the to to set
 	 */
 	public void setTo(List<String> to) {
 		this.to = to;
 	}
-	
 	/**
-	 * @return the resTo
+	 * @return the refersTo
 	 */
 	public List<String> getRefersTo() {
 		return refersTo;
 	}
-	
 	/**
 	 * @param refersTo the refersTo to set
 	 */
 	public void setRefersTo(List<String> refersTo) {
 		this.refersTo = refersTo;
+	}
+
+	/**
+	 * @param saveType the saveType to set
+	 */
+	public void setSaveType(SaveType saveType) {
+		this.saveType = saveType;
+	}
+
+	/**
+	 * @return the saveType
+	 */
+	public SaveType getSaveType() {
+		return saveType;
+	}
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum SaveType {
+		newSearch("newSearch"), replaceSearch("replaceSearch");
+		
+		private final String saveType;
+
+	    private SaveType(String value) {
+	        saveType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return saveType;
+	    }
 	}
 }

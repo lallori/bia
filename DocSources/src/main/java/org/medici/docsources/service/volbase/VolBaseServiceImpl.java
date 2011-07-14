@@ -34,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.dao.catalog.CatalogDAO;
@@ -115,21 +116,25 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volume.setCipher(false);
 
 			if (volume.getStartMonthNum() != null) {
-				volume.setStartMonth(volume.getStartMonthNum().getMonthName());
-				volume.setStartMonthNum(volume.getStartMonthNum());
+				Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
+				volume.setEndMonth(month.getMonthName());
+				volume.setEndMonthNum(month);
 			} else {
 				volume.setStartMonth(null);
 				volume.setStartMonthNum(null);
 			}
 
 			if (volume.getEndMonthNum() != null) {
-				volume.setEndMonth(volume.getEndMonthNum().getMonthName());
-				volume.setEndMonthNum(volume.getEndMonthNum());
+				Month month = getMonthDAO().find(volume.getEndMonthNum().getMonthNum());
+				volume.setEndMonth(month.getMonthName());
+				volume.setEndMonthNum(month);
 			} else {
 				volume.setEndMonth(null);
 				volume.setEndMonthNum(null);
 			}
 
+			volume.setStartDate(DateUtils.getLuceneDate(volume.getStartYear(), volume.getStartMonthNum(), volume.getStartDay()));
+			volume.setEndDate(DateUtils.getLuceneDate(volume.getEndYear(), volume.getEndMonthNum(), volume.getEndDay()));
 
 			getVolumeDAO().persist(volume);
 			
@@ -281,6 +286,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volumeToUpdate.setSerieList(null);
 		}
 
+		// Start date section
 		volumeToUpdate.setStartYear(volume.getStartYear());
 		if (volume.getStartMonthNum() != null) {
 			Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
@@ -291,6 +297,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volumeToUpdate.setStartMonthNum(null);
 		}
 		volumeToUpdate.setStartDay(volume.getStartDay());
+		volumeToUpdate.setStartDate(DateUtils.getLuceneDate(volumeToUpdate.getStartYear(), volumeToUpdate.getStartMonthNum(), volumeToUpdate.getStartDay()));
+
+		// End date section
 		volumeToUpdate.setEndYear(volume.getEndYear());
 		if (volume.getEndMonthNum() != null) {
 			Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
@@ -300,8 +309,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volumeToUpdate.setEndMonth(null);
 			volumeToUpdate.setEndMonthNum(null);
 		}
-
 		volumeToUpdate.setEndDay(volume.getEndDay());
+		volumeToUpdate.setEndDate(DateUtils.getLuceneDate(volumeToUpdate.getEndYear(), volumeToUpdate.getEndMonthNum(), volumeToUpdate.getEndDay()));
+
 		volumeToUpdate.setDateNotes(volume.getDateNotes());
 		
 		try {

@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.service.search;
 
+import java.util.List;
+
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
@@ -140,7 +142,7 @@ public class SearchServiceImpl implements SearchService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page getUserSearchFilters() throws ApplicationThrowable {
+	public List<SearchFilter> getUserSearchFilters() throws ApplicationThrowable {
 		try {
 			return getSearchFilterDAO().findUserSearchFilters(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 		} catch (Throwable th) {
@@ -162,6 +164,15 @@ public class SearchServiceImpl implements SearchService {
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void replaceSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

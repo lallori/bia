@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.EpLinkUtils;
 import org.medici.docsources.common.util.EplToLinkUtils;
 import org.medici.docsources.common.util.ImageUtils;
@@ -118,6 +119,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setRecipientPeopleUnsure(false);
 			document.setRecipientPlaceUnsure(false);
 			document.setGraphic(false);
+
+			if (document.getDocMonthNum() != null) {
+				Month month = getMonthDAO().find(document.getDocMonthNum().getMonthNum());
+				document.setDocMonthNum(month);
+			} else {
+				document.setDocMonthNum(null);
+			}
+			document.setDocDate(DateUtils.getLuceneDate(document.getDocYear(), document.getDocMonthNum(), document.getDocDay()));
 
 			getDocumentDAO().persist(document);
 
@@ -371,7 +380,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 			documentToUpdate.setDocTypology(document.getDocTypology());
 			// Date
 			documentToUpdate.setDocYear(document.getDocYear());
-			documentToUpdate.setDocMonthNum(document.getDocMonthNum());
+			if (document.getDocMonthNum() != null) {
+				Month month = getMonthDAO().find(document.getDocMonthNum().getMonthNum());
+				documentToUpdate.setDocMonthNum(month);
+			} else {
+				document.setDocMonthNum(null);
+			}
+			documentToUpdate.setDocDate(DateUtils.getLuceneDate(documentToUpdate.getDocYear(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
 			documentToUpdate.setDocDay(document.getDocDay());
 			//Modern Dating
 			documentToUpdate.setYearModern(document.getYearModern());

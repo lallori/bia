@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/MainContent.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/Template.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css"/>" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/demo_table.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
 <!-- 
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/MainContent.css" />" />
@@ -35,6 +36,7 @@
 		
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.multi-open-accordion-1.0.1.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.13.custom.min.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.dialogextend.min.js"/>"/></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.tooltip.js"/>"></script>
 		
 		
@@ -77,7 +79,7 @@
 			</div>
 			
 			<div id="body_right">
-				<div class="customSeachFilterDiv"><div class="easySearchModeOn"></div>
+				<div id="yourSeachFilterDiv">
 					<tiles:insertAttribute name="advancedSearchFilter"/>
 				</div>
 			</div>
