@@ -110,7 +110,7 @@ public class SaveUserSearchFilter {
 			model.put("searchFilters", searchFilters);
 		} catch(ApplicationThrowable applicationThrowable) {
 		}
-		return new ModelAndView("search/SaveUserSearchFilterModalWindow");
+		return new ModelAndView("search/SaveUserSearchFilterModalWindow", model);
 	}
 
 	/**
