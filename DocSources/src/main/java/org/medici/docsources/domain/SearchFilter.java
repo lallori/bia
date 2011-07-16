@@ -77,7 +77,7 @@ public class SearchFilter implements Serializable {
 	private AdvancedSearch filterData;
 
 	@Column (name="\"totalResult\"", nullable=false)
-	private Integer totalResult;
+	private Long totalResult;
 	
 	@Column (name="\"dateCreated\"", nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -174,14 +174,14 @@ public class SearchFilter implements Serializable {
 	/**
 	 * @param totalResult the totalResult to set
 	 */
-	public void setTotalResult(Integer totalResult) {
+	public void setTotalResult(Long totalResult) {
 		this.totalResult = totalResult;
 	}
 
 	/**
 	 * @return the totalResult
 	 */
-	public Integer getTotalResult() {
+	public Long getTotalResult() {
 		return totalResult;
 	}
 

@@ -30,9 +30,6 @@ package org.medici.docsources.controller.search;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,16 +58,7 @@ public class ShowUserSearchFiltersController {
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm() {
 		Map<String, Object> model = new HashMap<String, Object>();
-		try {
-			PaginationFilter paginationFilter = new PaginationFilter(0, 10);
 
-			Page page = getSearchService().getUserSearchFilters(paginationFilter);
-			model.put("page", page);
-		} catch(ApplicationThrowable ath) {
-			
-		}
-
-		// Wee should never arrive at this point.
 		return new ModelAndView("search/ShowUserSearchFiltersModalWindow", model);
 	}
 

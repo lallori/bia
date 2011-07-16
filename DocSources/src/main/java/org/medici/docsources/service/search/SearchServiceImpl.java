@@ -41,6 +41,7 @@ import org.medici.docsources.dao.searchfilter.SearchFilterDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -83,10 +84,20 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public SearchFilter addSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable {
 		try {
+			// we need to perform an advanced search to obtain total number result
+			Page page = null;
+			if (searchFilter.getSearchType().equals(SearchType.DOCUMENT)) {
+				page = this.searchDocuments(searchFilter.getFilterData(), new PaginationFilter(1, 1));
+			} else if (searchFilter.getSearchType().equals(SearchType.PEOPLE)) {
+				page = this.searchPeople(searchFilter.getFilterData(), new PaginationFilter(1, 1));
+			} else if (searchFilter.getSearchType().equals(SearchType.PLACE)) {
+				page = this.searchPlaces(searchFilter.getFilterData(), new PaginationFilter(1, 1));
+			} else {
+				page = this.searchVolumes(searchFilter.getFilterData(), new PaginationFilter(1, 1));
+			}
 			searchFilter.setDateCreated(new Date());
 			searchFilter.setDateUpdated(new Date());
-			// in creation total result is 0, it's updated by call made by pagination. 
-			searchFilter.setTotalResult(new Integer(0));
+			searchFilter.setTotalResult(page.getTotal());
 			searchFilter.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 			getSearchFilterDAO().persist(searchFilter);
 
@@ -186,8 +197,29 @@ public class SearchServiceImpl implements SearchService {
 	 */
 	@Override
 	public void replaceSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		
+		try {
+			SearchFilter searchFilterToUpdate = getSearchFilterDAO().findUserSearchFilter(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString(), searchFilter.getId());
+
+			searchFilterToUpdate.setDateUpdated(new Date());
+			searchFilterToUpdate.setSearchType(searchFilter.getSearchType());
+			searchFilterToUpdate.setFilterData(searchFilter.getFilterData());
+
+			// we need to perform an advanced search to obtain total number result
+			Page page = null;
+			if (searchFilterToUpdate.getSearchType().equals(SearchType.DOCUMENT)) {
+				page = this.searchDocuments(searchFilterToUpdate.getFilterData(), new PaginationFilter(1, 1));
+			} else if (searchFilterToUpdate.getSearchType().equals(SearchType.PEOPLE)) {
+				page = this.searchPeople(searchFilterToUpdate.getFilterData(), new PaginationFilter(1, 1));
+			} else if (searchFilterToUpdate.getSearchType().equals(SearchType.PLACE)) {
+				page = this.searchPlaces(searchFilterToUpdate.getFilterData(), new PaginationFilter(1, 1));
+			} else {
+				page = this.searchVolumes(searchFilterToUpdate.getFilterData(), new PaginationFilter(1, 1));
+			}
+			searchFilterToUpdate.setTotalResult(page.getTotal());
+			getSearchFilterDAO().merge(searchFilterToUpdate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

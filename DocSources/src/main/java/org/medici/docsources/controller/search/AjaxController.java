@@ -35,14 +35,11 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearchDocument;
-import org.medici.docsources.common.search.AdvancedSearchPeople;
-import org.medici.docsources.common.search.AdvancedSearchPlace;
-import org.medici.docsources.common.search.AdvancedSearchVolume;
 import org.medici.docsources.common.search.SimpleSearchDocument;
 import org.medici.docsources.common.search.SimpleSearchPeople;
 import org.medici.docsources.common.search.SimpleSearchPlace;
@@ -82,12 +79,12 @@ public class AjaxController {
 	 * @param searchNumber
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void advancedSearchDocuments(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
+	private void advancedSearchDocuments(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		AdvancedSearchDocument advancedSearchDocument = (AdvancedSearchDocument) httpSession.getAttribute("advancedSearchDocument" + searchNumber);
+		SearchFilter searchFilter = (SearchFilter) httpSession.getAttribute("searchFilter" + searchUUID);
 		
 		try {
-			page = getSearchService().searchDocuments(advancedSearchDocument, paginationFilter);
+			page = getSearchService().searchDocuments(searchFilter.getFilterData(), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -143,7 +140,7 @@ public class AjaxController {
 	@RequestMapping(value = "/src/AdvancedSearchPagination.json", method = RequestMethod.GET)
 	public ModelAndView advancedSearchPagination(HttpSession httpSession,
 											@RequestParam(value="searchType") String searchType,
-											@RequestParam(value="searchNumber") String searchNumber,
+											@RequestParam(value="searchUUID") String searchUUID,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -153,13 +150,13 @@ public class AjaxController {
 		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
 
 		if (searchType.toLowerCase().trim().equals("documents")) {
-			advancedSearchDocuments(model, httpSession, paginationFilter, searchNumber);
+			advancedSearchDocuments(model, httpSession, paginationFilter, searchUUID);
 		} else if (searchType.toLowerCase().trim().equals("people")) {
-			advancedSearchPeople(model, httpSession, paginationFilter, searchNumber);
+			advancedSearchPeople(model, httpSession, paginationFilter, searchUUID);
 		} else if (searchType.toLowerCase().trim().equals("places")) {
-			advancedSearchPlaces(model, httpSession, paginationFilter, searchNumber);
+			advancedSearchPlaces(model, httpSession, paginationFilter, searchUUID);
 		} else if (searchType.toLowerCase().trim().equals("volumes")) {
-			advancedSearchVolumes(model, httpSession, paginationFilter, searchNumber);
+			advancedSearchVolumes(model, httpSession, paginationFilter, searchUUID);
 		}
 
 		return new ModelAndView("responseOK", model);
@@ -170,15 +167,15 @@ public class AjaxController {
 	 * @param model
 	 * @param httpSession
 	 * @param paginationFilter
-	 * @param searchNumber
+	 * @param searchUUID
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void advancedSearchPeople(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
+	private void advancedSearchPeople(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		AdvancedSearchPeople advancedSearchPeople = (AdvancedSearchPeople) httpSession.getAttribute("advancedSearchPeople" + searchNumber);
+		SearchFilter searchFilter = (SearchFilter) httpSession.getAttribute("searchFilter" + searchUUID);
 		
 		try {
-			page = getSearchService().searchPeople(advancedSearchPeople, paginationFilter);
+			page = getSearchService().searchPeople(searchFilter.getFilterData(), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -203,15 +200,15 @@ public class AjaxController {
 	 * @param model
 	 * @param httpSession
 	 * @param paginationFilter
-	 * @param searchNumber
+	 * @param searchUUID
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void advancedSearchPlaces(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
+	private void advancedSearchPlaces(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		AdvancedSearchPlace advancedSearchPlace = (AdvancedSearchPlace) httpSession.getAttribute("advancedSearchPlace" + searchNumber);
+		SearchFilter searchFilter = (SearchFilter) httpSession.getAttribute("searchFilter" + searchUUID);
 
 		try {
-			page = getSearchService().searchPlaces(advancedSearchPlace, paginationFilter);
+			page = getSearchService().searchPlaces(searchFilter.getFilterData(), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -237,15 +234,15 @@ public class AjaxController {
 	 * @param model
 	 * @param httpSession
 	 * @param paginationFilter
-	 * @param searchNumber
+	 * @param searchUUID
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void advancedSearchVolumes(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchNumber) {
+	private void advancedSearchVolumes(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		AdvancedSearchVolume advancedSearchVolume = (AdvancedSearchVolume) httpSession.getAttribute("advancedSearchVolume" + searchNumber);
+		SearchFilter searchFilter = (SearchFilter) httpSession.getAttribute("searchFilter" + searchUUID);
 
 		try {
-			page = getSearchService().searchVolumes(advancedSearchVolume, paginationFilter);
+			page = getSearchService().searchVolumes(searchFilter.getFilterData(), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -708,7 +705,7 @@ public class AjaxController {
 			singleRow.add(currentFilter.getFilterName());
 			singleRow.add(currentFilter.getTotalResult());
 			singleRow.add(currentFilter.getSearchType());
-			singleRow.add(currentFilter.getDateUpdated());
+			singleRow.add(DateFormatUtils.format(currentFilter.getDateUpdated(), "MM/dd/yyyy"));
 
 			//resultList.add(HtmlUtils.showAdvancedSearchResult(singleRow, currentFilter.getId()));
 			resultList.add(singleRow);

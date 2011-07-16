@@ -141,7 +141,7 @@
     			// If element has autocompleter, its hiddenValue is a concatenation of id + description
     			if ($('#' + formName).find('#' + fieldName + 'Id').size() > 0) {
     				console.log("Form has an autocompleter element")
-    				//Calculate hidden value
+    				//Calculate hidden value (escaping text field to prevent field truncation
     				hiddenValue = $('#' + formName).find('#' + fieldName + 'Id').val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
     				// we reset autocompleterId
     				$('#' + formName).find('#' + fieldName + 'Id').val("");

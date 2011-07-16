@@ -29,6 +29,8 @@ package org.medici.docsources.command.search;
 
 import java.util.List;
 
+import org.medici.docsources.domain.SearchFilter.SearchType;
+
 
 /**
  * 
@@ -36,6 +38,8 @@ import java.util.List;
  *
  */
 public class AdvancedSearchDocumentsCommand {
+	private Integer searchFilter;
+	private SearchType searchType;
 	private List<String> word;
 	private List<String> volume;
 	private List<String> date;
@@ -49,7 +53,36 @@ public class AdvancedSearchDocumentsCommand {
 	private List<String> recipient;
 	private List<String> to;
 	private List<String> refersTo;
+	private String searchUUID;
 	
+	/**
+	 * @param searchFilter the searchFilter to set
+	 */
+	public void setSearchFilter(Integer searchFilter) {
+		this.searchFilter = searchFilter;
+	}
+
+	/**
+	 * @return the searchFilter
+	 */
+	public Integer getSearchFilter() {
+		return searchFilter;
+	}
+
+	/**
+	 * @param searchType the searchType to set
+	 */
+	public void setSearchType(SearchType searchType) {
+		this.searchType = searchType;
+	}
+
+	/**
+	 * @return the searchType
+	 */
+	public SearchType getSearchType() {
+		return searchType;
+	}
+
 	/**
 	 * @return the word
 	 */
@@ -230,5 +263,19 @@ public class AdvancedSearchDocumentsCommand {
 	 */
 	public void setRefersTo(List<String> refersTo) {
 		this.refersTo = refersTo;
+	}
+
+	/**
+	 * @param searchUUID the searchUUID to set
+	 */
+	public void setSearchUUID(String searchUUID) {
+		this.searchUUID = searchUUID;
+	}
+
+	/**
+	 * @return the searchUUID
+	 */
+	public String getSearchUUID() {
+		return searchUUID;
 	}
 }

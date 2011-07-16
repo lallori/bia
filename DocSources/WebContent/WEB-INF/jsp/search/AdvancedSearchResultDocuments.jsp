@@ -8,9 +8,13 @@
 		<c:param name="searchType" value="documents" />
 	</c:url>
 
+	<c:url var="AdvancedSearchRefineURL" value="/src/AdvancedSearchDocuments.do">
+		<c:param name="searchUUID" value="${command.searchUUID}"></c:param>
+	</c:url>
+
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
-			$j('#resultDocument${searchNumber}').dataTable( {
+			$j('#result${command.searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bFilter" : false,
@@ -24,7 +28,7 @@
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
 					/* Add some extra data to the sender */
-					aoData.push( { "name": "searchNumber", "value": "${searchNumber}" } );
+					aoData.push( { "name": "searchUUID", "value": "${command.searchUUID}" } );
 					$j.getJSON( sSource, aoData, function (json) { 
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)
@@ -38,11 +42,14 @@
 			$j('.searchResult').live('click', function() {
 				$j("#body_left").load($j(this).attr("href"));
 				return false;
-			}); 
+			});
+			$j('.refine').open({width: 960, height: 680, scrollbars: "yes"});
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="resultDocument${searchNumber}">
+	<a class="refine" href="${AdvancedSearchRefineURL}">REFINE THIS SEARCH</a>
+
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="result${command.searchUUID}">
 		<thead>
 			<tr>
 				<th>Sender</th>
@@ -60,3 +67,4 @@
 			</tr>
 		</tbody>
 	</table>
+

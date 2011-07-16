@@ -13,7 +13,7 @@
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
-			$j('#resultVolume${searchNumber}').dataTable( {
+			$j('#result${searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bProcessing": true,
@@ -44,7 +44,7 @@
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="resultVolume${searchNumber}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="result${searchUUID}">
 		<thead>
 			<tr>
 				<th>Carteggio</th>

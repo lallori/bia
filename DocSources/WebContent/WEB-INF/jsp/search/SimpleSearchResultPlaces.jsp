@@ -14,7 +14,7 @@
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
-			$j('#resultPlace${searchNumber}').dataTable( {
+			$j('#result${searchUUID}').dataTable( {
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
@@ -45,7 +45,7 @@
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="resultPlace${searchNumber}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="result${searchUUID}">
 		<thead>
 			<tr>
 				<th>Place Name</th>

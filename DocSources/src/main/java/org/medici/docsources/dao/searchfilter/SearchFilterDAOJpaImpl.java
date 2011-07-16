@@ -27,10 +27,17 @@
  */
 package org.medici.docsources.dao.searchfilter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -39,11 +46,11 @@ import org.medici.docsources.domain.SearchFilter;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>ActivationUserDAOJpaImpl</b> is a default implementation of <b>SearchFilterDAO</b>.
+ * <b>SearchFilterDAOJpaImpl</b> is a default implementation of <b>SearchFilterDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.ActivationUser
+ * @see org.medici.docsources.domain.SearchFilter
  */
 @Repository
 public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> implements SearchFilterDAO {
@@ -85,10 +92,26 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
+
+		if (paginationFilter.getTotal() == null) {
+			CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
+			Root<SearchFilter> rootCount = criteriaQueryCount.from(SearchFilter.class);
+			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+
+			List<Predicate> predicates = new ArrayList<Predicate>();
+	        predicates.add(criteriaBuilder.equal((Expression) rootCount.get("username"), username));
+	        criteriaQueryCount.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
+	        
+	        TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
+			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
+		}
+
 		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username ");
 		
 		if (paginationFilter.getSortingCriterias().size() > 0) {
@@ -102,7 +125,7 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 		Query query = getEntityManager().createQuery(jpql.toString());
 		query.setParameter("username", username);
 		query.setFirstResult(paginationFilter.getFirstRecord());
-		query.setMaxResults(paginationFilter.getLength());		
+		query.setMaxResults(paginationFilter.getLength());
 		page.setList(query.getResultList());
 		
 		return page;

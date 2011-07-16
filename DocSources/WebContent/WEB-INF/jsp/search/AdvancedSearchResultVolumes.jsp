@@ -14,7 +14,7 @@
 		TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
-			$j('#resultDocument${searchNumber}').dataTable( {
+			$j('#result${command.searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bProcessing": true,
@@ -27,7 +27,7 @@
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
 					/* Add some extra data to the sender */
-					aoData.push( { "name": "more_data", "value": "xxx" } );
+					aoData.push( { "name": "searchUUID", "value": "${command.searchUUID}" } );
 					$j.getJSON( sSource, aoData, function (json) { 
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)
@@ -45,7 +45,7 @@
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="resultDocument${searchNumber}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="result${command.searchUUID}">
 		<thead>
 			<tr>
 				<th>Sender</th>
