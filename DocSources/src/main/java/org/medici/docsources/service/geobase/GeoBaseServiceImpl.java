@@ -54,17 +54,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Autowired
 	private PlaceTypeDAO placeTypeDAO;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page advancedSearchPlaces(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getPlaceDAO().advancedSearchPlaces(advancedSearchContainer, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -213,17 +202,4 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
 		this.placeTypeDAO = placeTypeDAO;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page simpleSearchPlaces(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getPlaceDAO().simpleSearchPlaces(simpleSearchContainer, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
 }

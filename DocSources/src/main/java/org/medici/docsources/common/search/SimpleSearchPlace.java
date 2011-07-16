@@ -92,46 +92,6 @@ public class SimpleSearchPlace implements SimpleSearch {
 	}
 
 	/**
-	 * It's more simple construct lucene Query with string.
-	 */
-	@Override
-	public String toLuceneQueryString() {
-		if (StringUtils.isEmpty(alias)) {
-			return "";
-		}
-		String[] stringFields = new String[]{			
-			"placeNameFull",
-			"termAccent",
-			"plType",
-			"geogKey"
-		};
-			
-		String[] numericFields = new String[]{
-		};
-			
-		String[] yearFields = new String[]{
-		};
-
-		String[] monthFields = new String[]{
-		};
-			
-		String[] dayFields = new String[]{
-		};
-
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-			
-		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnStringFields(stringFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnNumericFields(numericFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnYearFields(yearFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnMonthFields(monthFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnDayFields(dayFields, words));
-
-		return stringBuffer.toString();
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

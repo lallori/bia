@@ -29,7 +29,7 @@ package org.medici.docsources.command.search;
 
 import java.util.List;
 
-import org.medici.docsources.domain.SearchFilter.SearchFilterType;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 
 /**
  * 
@@ -37,7 +37,7 @@ import org.medici.docsources.domain.SearchFilter.SearchFilterType;
  *
  */
 public class SaveUserSearchFilterCommand {
-	private SearchFilterType searchFilterType;
+	private SearchType searchType;
 	private SaveType saveType;
 	private String saveAs;
 	private Integer searchFilter;
@@ -56,17 +56,17 @@ public class SaveUserSearchFilterCommand {
 	private List<String> refersTo;
 	
 	/**
-	 * @param searchFilterType the searchFilterType to set
+	 * @param searchType the searchType to set
 	 */
-	public void setSearchFilterType(SearchFilterType searchFilterType) {
-		this.searchFilterType = searchFilterType;
+	public void setSearchType(SearchType searchType) {
+		this.searchType = searchType;
 	}
 
 	/**
-	 * @return the searchFilterType
+	 * @return the searchType
 	 */
-	public SearchFilterType getSearchFilterType() {
-		return searchFilterType;
+	public SearchType getSearchType() {
+		return searchType;
 	}
 
 	/**

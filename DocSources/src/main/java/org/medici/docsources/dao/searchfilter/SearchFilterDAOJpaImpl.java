@@ -32,14 +32,9 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.pagination.PaginationFilter.Order;
-import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.SearchFilter;
 import org.springframework.stereotype.Repository;
 
@@ -111,5 +106,19 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 		page.setList(query.getResultList());
 		
 		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SearchFilter findUserSearchFilter(String username, Integer id) throws PersistenceException {
+		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username and id=:id");
+		
+		Query query = getEntityManager().createQuery(jpql.toString());
+		query.setParameter("username", username);
+		query.setParameter("id", id);
+		
+		return (SearchFilter) query.getSingleResult();
 	}
 }

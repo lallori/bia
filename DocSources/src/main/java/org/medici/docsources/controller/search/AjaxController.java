@@ -707,7 +707,7 @@ public class AjaxController {
 			List singleRow = new ArrayList();
 			singleRow.add(currentFilter.getFilterName());
 			singleRow.add(currentFilter.getTotalResult());
-			singleRow.add(currentFilter.getSearchFilterType());
+			singleRow.add(currentFilter.getSearchType());
 			singleRow.add(currentFilter.getDateUpdated());
 
 			//resultList.add(HtmlUtils.showAdvancedSearchResult(singleRow, currentFilter.getId()));

@@ -83,6 +83,7 @@
     	        		searchWord = $('#' + formName).find('#' + fieldName).val();
     	        		searchWord += ', ' + $('#' + formName).find('#' + fieldName + 'Between').val();
     	        		hiddenValue = $(this).find("option:selected").val() + "|" + $('#' + formName).find('#' + fieldName).val() + '|' + $('#' + formName).find('#' + fieldName + 'Between').val();
+    	        		// Reset input fields 
     	        		$('#' + formName).find('#' + fieldName).val("");
     	        		$('#' + formName).find('#' + fieldName + 'Between').val("");
     	        	} else if (formName.indexOf("date") >= 0) {
@@ -132,7 +133,7 @@
 	        		$('#' + formName).find('#' + fieldName + 'Day').val("dd");
 	        	} else {
     				searchWord = $('#' + formName).find('#' + fieldName).val();
-    				hiddenValue = $(this).find("option:selected").val() + "|" + searchWord;
+    				hiddenValue = $(this).find("option:selected").val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
     				$('#' + formName).find('#' + fieldName).val("");
     			}
     		} else {
@@ -140,13 +141,16 @@
     			// If element has autocompleter, its hiddenValue is a concatenation of id + description
     			if ($('#' + formName).find('#' + fieldName + 'Id').size() > 0) {
     				console.log("Form has an autocompleter element")
-    				hiddenValue = $('#' + formName).find('#' + fieldName + 'Id').val() + "|" + searchWord;
+    				//Calculate hidden value
+    				hiddenValue = $('#' + formName).find('#' + fieldName + 'Id').val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
+    				// we reset autocompleterId
+    				$('#' + formName).find('#' + fieldName + 'Id').val("");
     			} else {
     				hiddenValue = searchWord;
     			}
 				$('#' + formName).find('#' + fieldName).val("");
     		}
-
+    		
             console.log("Search word : " + searchWord);
             console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
 

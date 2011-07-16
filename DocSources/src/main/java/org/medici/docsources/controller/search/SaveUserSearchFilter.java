@@ -82,7 +82,7 @@ public class SaveUserSearchFilter {
 				SearchFilter searchFilter = new SearchFilter();
 				searchFilter.setId(command.getSearchFilter());
 				searchFilter.setFilterName(command.getSaveAs());
-				searchFilter.setSearchFilterType(command.getSearchFilterType());
+				searchFilter.setSearchType(command.getSearchType());
 				searchFilter.setFilterData(AdvancedSearchFactory.create(command));
 
 				if (command.getSaveType().equals(SaveType.newSearch)) {

@@ -36,15 +36,12 @@ import javax.persistence.PersistenceException;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.WildcardQuery;
-import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.transform.Transformers;
@@ -127,44 +124,37 @@ public class TopicsListDAOJpaImpl extends JpaDao<Integer, TopicList> implements 
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
-		String luceneQuery = searchContainer.toLuceneQueryString();
-
 		// We obtain hibernate-search session
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		try {
-			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "topic", fullTextSession.getSearchFactory().getAnalyzer("volumeAnalyzer"));
-	
-			// We convert AdvancedSearchContainer to luceneQuery
-			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
-	
-			// We execute search
-			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, TopicList.class );
-	
-			// We set size of result.
-			if (paginationFilter.getTotal() == null) {
-				page.setTotal(new Long(fullTextQuery.getResultSize()));
-			}
-	
-			// We set pagination  
-			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-			fullTextQuery.setMaxResults(paginationFilter.getLength());
-	
-			// We manage sorting (this manages sorting on multiple fields)
-			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-			if (sortingCriterias.size() > 0) {
-				SortField[] sortFields = new SortField[sortingCriterias.size()];
-				for (int i=0; i<sortingCriterias.size(); i++) {
-					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
-				}
-				fullTextQuery.setSort(new Sort(sortFields));
-			}
-			
-			// We set search result on return method
-			page.setList(fullTextQuery.list());
-		} catch (ParseException parseException) {
-			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
+		// We convert SearchContainer to luceneQuery
+		org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
+		logger.info("Lucene Query " + query.toString()); 
+
+		// We execute search
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, TopicList.class );
+
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
 		}
+
+		// We set pagination  
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+			}
+			fullTextQuery.setSort(new Sort(sortFields));
+		}
+		
+		// We set search result on return method
+		page.setList(fullTextQuery.list());
 		
 		return page;
 	}

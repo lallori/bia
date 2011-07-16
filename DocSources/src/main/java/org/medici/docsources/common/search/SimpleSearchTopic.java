@@ -90,29 +90,6 @@ public class SimpleSearchTopic implements SimpleSearch {
 	}
 
 	/**
-	 * It's more simple construct lucene Query with string.
-	 */
-	@Override
-	public String toLuceneQueryString() {
-		if (StringUtils.isEmpty(alias)) {
-			return "";
-		}
-
-		String[] stringFields = new String[]{			
-			"description",
-			"title"
-		};
-
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-		
-		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnStringFields(stringFields, words));
-
-		return stringBuffer.toString();
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

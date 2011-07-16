@@ -53,15 +53,6 @@ import org.medici.docsources.exception.ApplicationThrowable;
 public interface GeoBaseService {
 
 	/**
-	 * 
-	 * @param advancedSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public Page advancedSearchPlaces(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
 	 * This method last entry {@link org.medici.docsources.domain.Place}.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.Place}
@@ -134,13 +125,4 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchSendersPlace(String query) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param simpleSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Page simpleSearchPlaces(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

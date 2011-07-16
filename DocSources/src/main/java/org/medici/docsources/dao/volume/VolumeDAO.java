@@ -31,9 +31,7 @@ import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Volume;
 
@@ -44,14 +42,6 @@ import org.medici.docsources.domain.Volume;
  */
 public interface VolumeDAO extends Dao<Integer, Volume> {
 
-	/**
-	 * 
-	 * @param advancedSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 */
-	public Page advancedSearchVolumes(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter);
-	
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Volume}created on database.
 	 * 
@@ -89,13 +79,4 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @throws PersistenceException
 	 */
 	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param simpleSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page simpleSearchVolumes(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 }

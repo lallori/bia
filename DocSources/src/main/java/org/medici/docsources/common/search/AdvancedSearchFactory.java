@@ -27,8 +27,14 @@
  */
 package org.medici.docsources.common.search;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
+import org.medici.docsources.command.search.AdvancedSearchPeopleCommand;
+import org.medici.docsources.command.search.AdvancedSearchPlacesCommand;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
-import org.medici.docsources.domain.SearchFilter.SearchFilterType;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 
 /**
  * 
@@ -50,17 +56,35 @@ public class AdvancedSearchFactory {
 	 * @throws Exception
 	 */
 	public static AdvancedSearch create(SaveUserSearchFilterCommand command) {
-		if (command.getSearchFilterType().equals(SearchFilterType.DOCUMENT)) {
+		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
+			AdvancedSearchDocumentsCommand advancedSearchDocumentsCommand = new AdvancedSearchDocumentsCommand();
+			try {
+				BeanUtils.copyProperties(advancedSearchDocumentsCommand, command);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
 			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
-			advancedSearchDocument.initFromSaveUserSearchFilterCommand(command);
+			advancedSearchDocument.initFromAdvancedSearchDocumentsCommand(advancedSearchDocumentsCommand);
 			return advancedSearchDocument;
-		} else if (command.getSearchFilterType().equals(SearchFilterType.PEOPLE)) {
-			AdvancedSearchPeople advancedSearchPeople= new AdvancedSearchPeople();
-			advancedSearchPeople.initFromSaveUserSearchFilterCommand(command);
+		} else if (command.getSearchType().equals(SearchType.PEOPLE)) {
+			AdvancedSearchPeopleCommand advancedSearchPeopleCommand = new AdvancedSearchPeopleCommand();
+			try {
+				BeanUtils.copyProperties(advancedSearchPeopleCommand, command);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
+			AdvancedSearchPeople advancedSearchPeople = new AdvancedSearchPeople();
+			advancedSearchPeople.initFromAdvancedSearchPeopleCommand(advancedSearchPeopleCommand);
 			return advancedSearchPeople;
-		} else if (command.getSearchFilterType().equals(SearchFilterType.PLACE)) {
+		} else if (command.getSearchType().equals(SearchType.PLACE)) {
+			AdvancedSearchPlacesCommand advancedSearchPlacesCommand = new AdvancedSearchPlacesCommand();
+			try {
+				BeanUtils.copyProperties(advancedSearchPlacesCommand, command);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
 			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
-			advancedSearchPlace.initFromSaveUserSearchFilterCommand(command);
+			advancedSearchPlace.initFromAdvancedSearchPlaceCommand(advancedSearchPlacesCommand);
 			return advancedSearchPlace;
 		} else {
 			AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();

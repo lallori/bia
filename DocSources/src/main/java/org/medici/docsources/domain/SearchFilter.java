@@ -50,7 +50,7 @@ import org.medici.docsources.common.search.AdvancedSearch;
  *
  */
 @Entity
-@Table ( name = "\"tblAdvancedSearchFilter\"" ) 
+@Table ( name = "\"tblSearchFilter\"" ) 
 public class SearchFilter implements Serializable {
 	/**
 	 * 
@@ -58,16 +58,16 @@ public class SearchFilter implements Serializable {
 	private static final long serialVersionUID = -2001847076255349765L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"id\"", length=10, nullable=false)
 	private Integer id;
 
-	@Column (name="\"username\"", length=50, nullable=false)
+	@Column (name="\"username\"", length=20, nullable=false)
 	private String username;
 
-	@Column (name="\"filterType\"", length=1)
+	@Column (name="\"searchType\"", length=15)
 	@Enumerated(EnumType.STRING)
-	private SearchFilterType searchFilterType;
+	private SearchType searchType;
 	
 	@Column (name="\"filterName\"", length=50, nullable=false)
 	private String filterName;
@@ -95,10 +95,10 @@ public class SearchFilter implements Serializable {
 	 * 
 	 * @param searchFilterType
 	 */
-	public SearchFilter(SearchFilterType searchFilterType) {
+	public SearchFilter(SearchType searchType) {
 		super();
 		
-		setSearchFilterType(searchFilterType);
+		setSearchType(searchType);
 	}
 
 	/**
@@ -130,17 +130,17 @@ public class SearchFilter implements Serializable {
 	}
 
 	/**
-	 * @param searchFilterType the searchFilterType to set
+	 * @param searchType the searchType to set
 	 */
-	public void setSearchFilterType(SearchFilterType searchFilterType) {
-		this.searchFilterType = searchFilterType;
+	public void setSearchType(SearchType searchType) {
+		this.searchType = searchType;
 	}
 
 	/**
-	 * @return the searchFilterType
+	 * @return the searchType
 	 */
-	public SearchFilterType getSearchFilterType() {
-		return searchFilterType;
+	public SearchType getSearchType() {
+		return searchType;
 	}
 
 	/**
@@ -218,18 +218,18 @@ public class SearchFilter implements Serializable {
 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
 	 *
 	 */
-	public static enum SearchFilterType {
+	public static enum SearchType {
 		VOLUME("VOLUME"), DOCUMENT("DOCUMENT"), PEOPLE("PEOPLE"), PLACE("PLACE");
 		
-		private final String searchFilterType;
+		private final String searchType;
 
-	    private SearchFilterType(String value) {
-	    	searchFilterType = value;
+	    private SearchType(String value) {
+	    	searchType = value;
 	    }
 
 	    @Override
 	    public String toString(){
-	        return searchFilterType;
+	        return searchType;
 	    }
 	}
 }

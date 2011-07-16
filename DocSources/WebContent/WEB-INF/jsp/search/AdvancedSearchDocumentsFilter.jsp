@@ -29,7 +29,7 @@
 			<br>
 			<br>
 			<input type="submit" title="Search" value="Search" id="advsearch">
-			<input type="hidden" name="searchType" value="documents">
+			<input type="hidden" name="searchType" value="DOCUMENT">
 			<a class="saveButton" href="#">Save</a>
 			<a class="saveAsButton" href="#">Save as</a>
 		</form>
@@ -55,9 +55,7 @@
 				},
 				position: ['center',250],
 				open: function(event, ui) { 
-            		//$(this).load('${choiceSaveSearchFilterURL}');
-            		//alert($j("#searchFilterForm").serialize());
-            		$j.ajax({ type:"GET", url: '${SaveUserSearchFilterURL}', data: $j("#searchFilterForm").serialize(), async:false, success:function(html) { 
+            		$j.ajax({ type:"GET", url: '${SaveUserSearchFilterURL}', data: $j("#yourEasySearchFilterForm").serialize(), async:false, success:function(html) { 
 						$j("#DialogSaveAs").focus();
 						$j("#DialogSaveAs").html(html);
 						} 
@@ -79,6 +77,7 @@
 			});
 
 			$j("#yourEasySearchFilterForm").submit(function() {
+				console.log("serializeArray " + $j(this).serializeArray());
 				var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 				window.opener.$j("#tabs").tabs("add", formSubmitURL, "Advanced Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);

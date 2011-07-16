@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.search;
 
+import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
@@ -82,6 +83,11 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public SearchFilter addSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable {
 		try {
+			searchFilter.setDateCreated(new Date());
+			searchFilter.setDateUpdated(new Date());
+			// in creation total result is 0, it's updated by call made by pagination. 
+			searchFilter.setTotalResult(new Integer(0));
+			searchFilter.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 			getSearchFilterDAO().persist(searchFilter);
 
 			return searchFilter;
@@ -118,10 +124,16 @@ public class SearchServiceImpl implements SearchService {
 		return placeDAO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public SearchFilter getSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return getSearchFilterDAO().findUserSearchFilter(searchFilter.getUsername(), searchFilter.getId());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -150,6 +162,9 @@ public class SearchServiceImpl implements SearchService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page getUserSearchFilters(PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {

@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
@@ -55,7 +54,6 @@ public class AdvancedSearchVolume implements AdvancedSearch {
 	 * 
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
-	private Logger logger = Logger.getLogger(this.getClass());
 
 	private List<WordType> wordsTypes;
 	private List<String> words;
@@ -371,68 +369,6 @@ public class AdvancedSearchVolume implements AdvancedSearch {
 
 		return booleanQuery;
 	} 
-
-	/**
-	 * It's more simple construct lucene Query with string.
-	 */
-	@Override
-	public String toLuceneQueryString() {
-		StringBuffer stringBuffer = new StringBuffer();
-
-		//Words
-		if (words.size()>0) {
-			stringBuffer.append("(");
-			for (int i=0; i<words.size(); i++) {
-				if (wordsTypes.get(i).equals(WordType.Titles)) {
-					stringBuffer.append("((serieList.Title: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) OR (serieList.subTitle1: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) OR (serieList.subTitle2: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*)) ");
-				} else if (wordsTypes.get(i).equals(WordType.Notes)) {
-					stringBuffer.append("(ccontext: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) ");
-				} else if (wordsTypes.get(i).equals(WordType.TitlesAndNotes)) {
-					stringBuffer.append("((serieList.Title: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) OR (serieList.subTitle1: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) OR (serieList.subTitle2: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) OR (ccontext: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*)) ");
-				}
-				if (i<(words.size()-1)) {
-					stringBuffer.append(" OR ");
-				}
-			}
-			stringBuffer.append(")");
-		}
-
-		for (int i=0; i<datesTypes.size(); i++) {
-			if (datesTypes.get(i) == null) {
-				continue;
-			} else if (datesTypes.get(i).equals(DateType.After)) {
-				stringBuffer.append("((startDate> ");
-				stringBuffer.append(DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-				stringBuffer.append(") OR (endDate> ");
-				stringBuffer.append(DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-				stringBuffer.append("))");
-			} else if (datesTypes.get(i).equals(DateType.Before)) {
-				stringBuffer.append("((startDate<= ");
-				stringBuffer.append(DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-				stringBuffer.append(") OR (endDate<= ");
-				stringBuffer.append(DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-				stringBuffer.append("))");
-			}
-		}
-
-		return stringBuffer.toString();
-	}
 
 	/**
 	 * 

@@ -90,60 +90,6 @@ public class SimpleSearchVolume implements SimpleSearch {
 	}
 
 	/**
-	 * It's more simple construct lucene Query with string.
-	 */
-	@Override
-	public String toLuceneQueryString() {
-		if (StringUtils.isEmpty(alias)) {
-			return "";
-		}
-
-		String[] stringFields = new String[]{			
-			"ccondition",
-			"ccontext", 
-			"orgNotes",
-			"recips", 
-			"senders", 
-			"serieList.title", 
-			"serieList.subTitle1",
-			"serieList.subTitle2"
-		};
-		
-		String[] numericFields = new String[]{
-			"summaryId",
-			"volNum"
-		};
-		
-		String[] yearFields = new String[]{
-			"startYear",
-			"endYear"
-		};
-
-		String[] monthFields = new String[]{
-			"startMonthNum.monthNum", 
-			"endMonthNum.monthNum" 
-		};
-		
-		String[] dayFields = new String[]{
-			"startDay",
-			"endDay"		
-		};
-
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-		
-		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnStringFields(stringFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnNumericFields(numericFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnYearFields(yearFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnMonthFields(monthFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnDayFields(dayFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnVolumeFields(dayFields, words));
-
-		return stringBuffer.toString();
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

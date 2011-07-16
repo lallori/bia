@@ -33,9 +33,7 @@ import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Place;
 
@@ -45,15 +43,6 @@ import org.medici.docsources.domain.Place;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface PlaceDAO extends Dao<Integer, Place> {
-
-	/**
-	 * 
-	 * @param advancedSearchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page advancedSearchPlaces(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 
@@ -118,13 +107,4 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchSendersPlace(String searchText) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param searchText
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page simpleSearchPlaces(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 }

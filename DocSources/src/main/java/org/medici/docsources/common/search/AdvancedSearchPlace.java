@@ -27,16 +27,10 @@
  */
 package org.medici.docsources.common.search;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
-import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
 import org.medici.docsources.command.search.AdvancedSearchPlacesCommand;
-import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
-import org.medici.docsources.common.util.RegExUtils;
 
 /**
  * 
@@ -44,6 +38,37 @@ import org.medici.docsources.common.util.RegExUtils;
  *
  */
 public class AdvancedSearchPlace implements AdvancedSearch {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5135090884608784944L;
+	private List<Integer> datesDay;
+	private List<Integer> datesMonth;
+	private List<DateType> datesType;
+	private List<Integer> datesYear;
+	private List<String> extract;
+	private List<String> from;
+	private List<Integer> fromId;
+	private List<String> person;
+	private List<Integer> personId;
+	private List<String> place;
+	private List<Integer> placeId;
+	private List<String> recipient;
+	private List<Integer> recipientId;
+	private List<String> resTo;
+	private List<String> sender;
+	private List<Integer> senderId;
+	private List<String> synopsis;
+	private List<String> to;
+	private List<Integer> toId;
+	private List<String> topics;
+	private List<Integer> topicsId;
+	private List<String> volumes;
+	private List<String> volumesBetween;
+	private List<VolumeType> volumesType;
+	private List<String> words;
+	private List<WordType> wordsTypes;
+
 	/**
 	 * 
 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -103,40 +128,6 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 	        return wordType;
 	    }
 	}
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5135090884608784944L;
-	private List<Integer> datesDay;
-	private List<Integer> datesMonth;
-	private List<DateType> datesType;
-	private List<Integer> datesYear;
-	private List<String> extract;
-	private List<String> from;
-	private List<Integer> fromId;
-	private Logger logger = Logger.getLogger(this.getClass());
-	private List<String> person;
-	private List<Integer> personId;
-	private List<String> place;
-	private List<Integer> placeId;
-	private List<String> recipient;
-	private List<Integer> recipientId;
-	private List<String> resTo;
-	private List<String> sender;
-	private List<Integer> senderId;
-	private List<String> synopsis;
-	private List<String> to;
-	private List<Integer> toId;
-	private List<String> topics;
-	private List<Integer> topicsId;
-	private List<String> volumes;
-	private List<String> volumesBetween;
-
-	private List<VolumeType> volumesType;
-
-	private List<String> words;
-
-	private List<WordType> wordsTypes;
 
 	/**
 	 * 
@@ -327,16 +318,16 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 		return wordsTypes;
 	}
 
+	public void initFromAdvancedSearchPlaceCommand(AdvancedSearchPlacesCommand advancedSearchPlacesCommand) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * 
 	 * @param command
 	 */
 	public void initFromCommand(AdvancedSearchPlacesCommand command) {
-	}
-
-	public void initFromSaveUserSearchFilterCommand(SaveUserSearchFilterCommand command) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**
@@ -492,14 +483,14 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 	public void setVolumes(List<String> volumes) {
 		this.volumes = volumes;
 	}
-
+	
 	/**
 	 * @param volumesBetween the volumesBetween to set
 	 */
 	public void setVolumesBetween(List<String> volumesBetween) {
 		this.volumesBetween = volumesBetween;
 	}
-	
+
 	/**
 	 * @param volumesType the volumesType to set
 	 */
@@ -522,258 +513,8 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 	}
 
 	/**
-	 * It's more simple construct lucene Query with string.
+	 * {@inheritDoc}
 	 */
-	@Override
-	public String toLuceneQueryString() {
-		StringBuffer stringBuffer = new StringBuffer();
-		//BooleanQuery booleanQuery = new BooleanQuery();
-
-		//Words
-		if (words.size()>0) {
-			stringBuffer.append("(");
-			for (int i=0; i<words.size(); i++) {
-				//BooleanClause booleanClause = new BooleanClause(null, null);
-				if (wordsTypes.get(i).equals(WordType.Extract)) {
-					stringBuffer.append("(synExtract.docExtract: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) ");
-					/*booleanClause.setQuery(new WildcardQuery(new Term("synExtract.docExtract", words.get(i).toLowerCase() + "*")));
-					booleanClause.setOccur(BooleanClause.Occur.MUST);
-					booleanQuery.add(booleanClause);*/
-				} else if (wordsTypes.get(i).equals(WordType.Synopsis)) {
-					stringBuffer.append("(synExtract.synopsis: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) ");
-					/*booleanClause.setQuery(new WildcardQuery(new Term("synExtract.synopsis", words.get(i).toLowerCase() + "*")));
-					booleanClause.setOccur(BooleanClause.Occur.MUST);
-					booleanQuery.add(booleanClause);*/
-				} else if (wordsTypes.get(i).equals(WordType.ExtractAndSynopsis)) {
-					stringBuffer.append("((synExtract.docExtract: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*) AND (synExtract.synopsis: ");
-					stringBuffer.append(words.get(i).toLowerCase());
-					stringBuffer.append("*)) ");
-					/*booleanClause.setQuery(new WildcardQuery(new Term("synExtract.docExtract", words.get(i).toLowerCase() + "*")));
-					booleanClause.setOccur(BooleanClause.Occur.MUST);
-					booleanQuery.add(booleanClause);
-					booleanClause.setQuery(new WildcardQuery(new Term("synExtract.synopsis", words.get(i).toLowerCase() + "*")));
-					booleanClause.setOccur(BooleanClause.Occur.MUST);
-					booleanQuery.add(booleanClause);*/
-				}
-				if (i<(words.size()-1)) {
-					stringBuffer.append(" OR ");
-				}
-			}
-			stringBuffer.append(")");
-		}
-
-		// Extract
-		if (extract.size()>0) {
-			for (int i=0; i<extract.size(); i++) {
-				/*BooleanClause booleanClause = new BooleanClause(null, null);
-				booleanClause.setQuery(new WildcardQuery(new Term("synExtract.docExtract", extract.get(i).toLowerCase() + "*")));
-				booleanClause.setOccur(BooleanClause.Occur.MUST);
-				booleanQuery.add(booleanClause);*/
-				stringBuffer.append("(synExtract.docExtract: ");
-				stringBuffer.append(extract.get(i).toLowerCase());
-				stringBuffer.append("*) ");
-			}
-		}
-		
-		// synopsis;
-		if (synopsis.size() >0) {
-			for (int i=0; i<extract.size(); i++) {
-				/*BooleanClause booleanClause = new BooleanClause(null, null);
-				booleanClause.setQuery(new WildcardQuery(new Term("synExtract.synopsis", synopsis.get(i).toLowerCase() + "*")));
-				booleanClause.setOccur(BooleanClause.Occur.MUST);
-				booleanQuery.add(booleanClause);*/
-				stringBuffer.append("(synExtract.synopsis: ");
-				stringBuffer.append(synopsis.get(i).toLowerCase());
-				stringBuffer.append("*) ");
-			}
-		}
-
-		// topics;
-		if (topicsId.size() >0) {
-			for (int i=0; i<topicsId.size(); i++) {
-				if ((topicsId.get(i) == null) || (topicsId.get(i) > 0)) {
-					/*BooleanClause booleanClause = new BooleanClause(null, null);
-					booleanClause.setQuery(new TermQuery(new Term("eplToLink.topic.topicId", "" + topicsId.get(i))));
-					booleanClause.setOccur(BooleanClause.Occur.MUST);
-					booleanQuery.add(booleanClause);*/
-					stringBuffer.append("(eplToLink.topic.topicId: ");
-					stringBuffer.append(topicsId.get(i));
-					stringBuffer.append(") ");
-				} else {
-					/*BooleanClause booleanClause = new BooleanClause(null, null);
-					booleanClause.setQuery(new WildcardQuery(new Term("eplToLink.topic.topicTitle", topics.get(i).toLowerCase() + "*")));
-					booleanClause.setOccur(BooleanClause.Occur.MUST);
-					booleanQuery.add(booleanClause);*/
-					stringBuffer.append("(eplToLink.topic.topicTitle: ");
-					stringBuffer.append(topics.get(i));
-					stringBuffer.append("*) ");
-				}
-			}
-		}
-		
-		
-		// person;
-		if (personId.size() >0) {
-			for (int i=0; i<personId.size(); i++) {
-				if ((personId.get(i) == null) || (personId.get(i) > 0)) {
-					stringBuffer.append("(epLink.person.personId: ");
-					stringBuffer.append(personId.get(i));
-					stringBuffer.append(") ");
-				} else {
-					String[] words = RegExUtils.splitPunctuationAndSpaceChars(person.get(i));
-					stringBuffer.append("((");
-			        for (int j=0; j<words.length; j++) {
-			        	stringBuffer.append("(epLink.person.mapNameLf: ");
-						stringBuffer.append(words[i]);
-						stringBuffer.append("*)");
-						if (j<(words.length)) {
-							stringBuffer.append(" AND ");
-						}
-			        }
-			        stringBuffer.append(") OR ");
-			        for (int j=0; j<words.length; j++) {
-			        	stringBuffer.append("(altName.altName: ");
-						stringBuffer.append(words[i]);
-						stringBuffer.append("*)");
-						if (j<(words.length)) {
-							stringBuffer.append(" AND ");
-						}
-			        }
-			        stringBuffer.append("))");
-				}
-			}
-		}
-
-		// place;
-		if (placeId.size() >0) {
-			for (int i=0; i<placeId.size(); i++) {
-				if ((placeId.get(i) == null) || (placeId.get(i) > 0)) {
-					/*BooleanClause booleanClause = new BooleanClause(null, null);
-					booleanClause.setQuery(new TermQuery(new Term("epLink.person.personId", "" + personId.get(i))));
-					booleanClause.setOccur(BooleanClause.Occur.MUST);
-					booleanQuery.add(booleanClause);*/					
-					stringBuffer.append("((senderPlace.placeAllId: ");
-					stringBuffer.append(placeId.get(i));
-					stringBuffer.append(") OR (recipientPlace.placeAllId: ");
-					stringBuffer.append(placeId.get(i));
-					stringBuffer.append(") OR (eplToLink.place.placeAllId: ");
-					stringBuffer.append(placeId.get(i));
-					stringBuffer.append(")) ");
-				} else {
-					stringBuffer.append("((senderPlace.placeName: ");
-					stringBuffer.append(place.get(i));
-					stringBuffer.append("*) OR (recipientPlace.placeName: ");
-					stringBuffer.append(place.get(i));
-					stringBuffer.append("*) OR (eplToLink.place.placeName: ");
-					stringBuffer.append(place.get(i));
-					stringBuffer.append("*)) ");
-				}
-			}			
-		}
-		
-		//sender
-		if (senderId.size() >0) {
-			for (int i=0; i<senderId.size(); i++) {
-				if ((senderId.get(i) == null) || (senderId.get(i) > 0)) {
-					stringBuffer.append("(senderPeople.personId: ");
-					stringBuffer.append(senderId.get(i));
-					stringBuffer.append(") ");
-				} else {
-					String[] words = RegExUtils.splitPunctuationAndSpaceChars(sender.get(i));
-					stringBuffer.append("(");
-			        for (int j=0; j<words.length; j++) {
-			        	stringBuffer.append("(senderPeople.mapNameLf: ");
-						stringBuffer.append(words[i]);
-						stringBuffer.append("*)");
-						if (j<(words.length)) {
-							stringBuffer.append(" AND ");
-						}
-			        }
-					stringBuffer.append(")");
-				}
-			}
-		}
-
-		// from;
-		if (fromId.size() >0) {
-			for (int i=0; i<fromId.size(); i++) {
-				if ((fromId.get(i) == null) || (fromId.get(i) > 0)) {
-					stringBuffer.append("(senderPlace.placeAllId: ");
-					stringBuffer.append(fromId.get(i));
-					stringBuffer.append(") ");
-				} else {
-					String[] words = RegExUtils.splitPunctuationAndSpaceChars(from.get(i));
-					stringBuffer.append("(");
-			        for (int j=0; j<words.length; j++) {
-			        	stringBuffer.append("(senderPlace.placeNameFull: ");
-						stringBuffer.append(words[i]);
-						stringBuffer.append("*)");
-						if (j<(words.length)) {
-							stringBuffer.append(" AND ");
-						}
-			        }
-					stringBuffer.append(")");
-				}
-			}
-		}
-
-		// recipient;
-		if (recipient.size() >0) {
-			for (int i=0; i<recipientId.size(); i++) {
-				if ((recipientId.get(i) == null) || (recipientId.get(i) > 0)) {
-					stringBuffer.append("(senderPeople.personId: ");
-					stringBuffer.append(recipientId.get(i));
-					stringBuffer.append(") ");
-				} else {
-					String[] words = RegExUtils.splitPunctuationAndSpaceChars(recipient.get(i));
-					stringBuffer.append("(");
-			        for (int j=0; j<words.length; j++) {
-			        	stringBuffer.append("(recipientPeople.mapNameLf: ");
-						stringBuffer.append(words[i]);
-						stringBuffer.append("*)");
-						if (j<(words.length)) {
-							stringBuffer.append(" AND ");
-						}
-			        }
-					stringBuffer.append(")");
-				}
-			}
-		}
-
-		// to;
-		for (int i=0; i<toId.size(); i++) {
-			if ((toId.get(i) == null) || (toId.get(i) > 0)) {
-				stringBuffer.append("(recipientPlace.placeAllId: ");
-				stringBuffer.append(fromId.get(i));
-				stringBuffer.append(") ");
-			} else {
-				String[] words = RegExUtils.splitPunctuationAndSpaceChars(to.get(i));
-				stringBuffer.append("(");
-		        for (int j=0; j<words.length; j++) {
-		        	stringBuffer.append("(recipientPlace.placeNameFull: ");
-					stringBuffer.append(words[i]);
-					stringBuffer.append("*)");
-					if (j<(words.length)) {
-						stringBuffer.append(" AND ");
-					}
-		        }
-				stringBuffer.append(")");
-			}
-		}
-
-		// resTo;
-		for (int i=0; i<resTo.size(); i++) {
-		}
-
-		return stringBuffer.toString();
-	}
-
 	@Override
 	public Query toLuceneQuery() {
 		// TODO Auto-generated method stub

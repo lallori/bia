@@ -42,11 +42,5 @@ public interface Search extends Serializable {
 	 * 
 	 * @return
 	 */
-	public String toLuceneQueryString();
-	
-	/**
-	 * 
-	 * @return
-	 */
 	public Query toLuceneQuery();
 }

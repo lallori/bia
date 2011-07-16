@@ -52,7 +52,6 @@ import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.transform.Transformers;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -226,88 +225,39 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
-		//String luceneQuery = searchContainer.toLuceneQueryString();
-
 		// We obtain hibernate-search session
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		//try {
-			//QueryParser queryParser = new QueryParser(Version.LUCENE_30, "personId", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+		// We convert AdvancedSearchContainer to luceneQuery
+		org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
+		logger.info("Lucene Query " + query.toString()); 
+
+		// We execute search
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, People.class );
 	
-			// We convert AdvancedSearchContainer to luceneQuery
-			//org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
-			org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
-			logger.info("Lucene Query " + query.toString()); 
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		}
 
-			// We execute search
-			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, People.class );
-	
-			// We set size of result.
-			if (paginationFilter.getTotal() == null) {
-				page.setTotal(new Long(fullTextQuery.getResultSize()));
-			}
-	
-			// We set pagination  
-			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-			fullTextQuery.setMaxResults(paginationFilter.getLength());
-	
-			// We manage sorting (this manages sorting on multiple fields)
-			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-			if (sortingCriterias.size() > 0) {
-				SortField[] sortFields = new SortField[sortingCriterias.size()];
-				for (int i=0; i<sortingCriterias.size(); i++) {
-					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
-				}
-				fullTextQuery.setSort(new Sort(sortFields));
-			}
-			
-			// We set search result on return method
-			page.setList(fullTextQuery.list());
-		/*} catch (ParseException parseException) {
-			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
-		}*/
-		
-		return page;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page searchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException {
-		Page page = new Page(paginationFilter);
-		//String[] outputFields = new String[]{"personId", "mapNameLf", "gender", "bornYear", "bornMonth", "bornDay", "deathYear", "deathMonth", "deathDay", "poLink"};
-
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-
-		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(People.class).get();
-        
-		org.apache.lucene.search.Query baseQuery = queryBuilder.keyword().onFields(
-			"first",
-			"last",
-			"midPrefix",
-			"middle",
-			"lastPrefix",
-			"mapNameLf"
-		).matching(searchText + "*").createQuery();
-		
-		BooleanQuery booleanQuery = new BooleanQuery();
-		booleanQuery.add(new BooleanClause(baseQuery, BooleanClause.Occur.SHOULD));
-        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-        for (String singleWord:words) {
-        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
-        }
-
-		final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+		// We set pagination  
 		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
-		// Projection permits to extract only a subset of domain class, tuning application.
-		//fullTextQuery.setProjection(outputFields);
-		//fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
-		
-		page.setList(fullTextQuery.list());
 
-        return page;
+		// We manage sorting (this manages sorting on multiple fields)
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+			}
+			fullTextQuery.setSort(new Sort(sortFields));
+		}
+		
+		// We set search result on return method
+		page.setList(fullTextQuery.list());
+		
+		return page;
 	}
 
 	/**

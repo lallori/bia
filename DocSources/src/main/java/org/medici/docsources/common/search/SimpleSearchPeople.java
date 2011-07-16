@@ -90,51 +90,6 @@ public class SimpleSearchPeople implements SimpleSearch {
 	}
 
 	/**
-	 * It's more simple construct lucene Query with string.
-	 */
-	@Override
-	public String toLuceneQueryString() {
-		if (StringUtils.isEmpty(alias)) {
-			return "";
-		}
-
-		String[] stringFields = new String[]{			
-			"mapNameLf", 
-			"altName.altName", 
-		};
-
-		String[] numericFields = new String[]{
-			"personId"
-		};
-		
-		String[] yearFields = new String[]{
-			"bornYear",
-			"deathYear"
-		};
-
-		String[] monthFields = new String[]{
-			"bornMonth.monthNum", 
-			"deathMonth.monthNum" 
-		};
-		
-		String[] dayFields = new String[]{
-			"bornDay",
-			"deathDay"
-		};
-
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnStringFields(stringFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnNumericFields(numericFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnYearFields(yearFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnMonthFields(monthFields, words));
-		stringBuffer.append(SimpleSearchUtils.constructConditionOnDayFields(dayFields, words));
-
-		return stringBuffer.toString();
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

@@ -42,22 +42,16 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
-import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
-import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
 
@@ -90,56 +84,6 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	private static final long serialVersionUID = -7671104408958929124L;
 
 	private final Logger logger = Logger.getLogger(this.getClass());
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page advancedSearchVolumes(AdvancedSearch advancedSearchContainer, PaginationFilter paginationFilter) {
-		// We prepare object of return method.
-		Page page = new Page(paginationFilter);
-		
-		String luceneQuery = advancedSearchContainer.toLuceneQueryString();
-
-		// We obtain hibernate-search session
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-
-		try {
-			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "summaryId", fullTextSession.getSearchFactory().getAnalyzer("volumeAnalyzer"));
-	
-			// We convert AdvancedSearchContainer to luceneQuery
-			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
-	
-			// We execute search
-			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Document.class );
-	
-			// We set size of result.
-			if (paginationFilter.getTotal() == null) {
-				page.setTotal(new Long(fullTextQuery.getResultSize()));
-			}
-	
-			// We set pagination  
-			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-			fullTextQuery.setMaxResults(paginationFilter.getLength());
-	
-			// We manage sorting (this manages sorting on multiple fields)
-			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-			if (sortingCriterias.size() > 0) {
-				SortField[] sortFields = new SortField[sortingCriterias.size()];
-				for (int i=0; i<sortingCriterias.size(); i++) {
-					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
-				}
-				fullTextQuery.setSort(new Sort(sortFields));
-			}
-			
-			// We set search result on return method
-			page.setList(fullTextQuery.list());
-		} catch (ParseException parseException) {
-			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
-		}
-		
-		return page;
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -245,101 +189,42 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page simpleSearchVolumes(SimpleSearch simpleSearchContainer, PaginationFilter paginationFilter) throws PersistenceException {
-		// We prepare object of return method.
-		Page page = new Page(paginationFilter);
-		
-		String luceneQuery = simpleSearchContainer.toLuceneQueryString();
-
-		// We obtain hibernate-search session
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-
-		try {
-			QueryParser queryParser = new QueryParser(Version.LUCENE_30, "summaryId", fullTextSession.getSearchFactory().getAnalyzer("volumeAnalyzer"));
-	
-			// We convert AdvancedSearchContainer to luceneQuery
-			org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
-	
-			// We execute search
-			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Volume.class );
-	
-			// We set size of result.
-			if (paginationFilter.getTotal() == null) {
-				page.setTotal(new Long(fullTextQuery.getResultSize()));
-			}
-	
-			// We set pagination  
-			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-			fullTextQuery.setMaxResults(paginationFilter.getLength());
-	
-			// We manage sorting (this manages sorting on multiple fields)
-			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-			if (sortingCriterias.size() > 0) {
-				SortField[] sortFields = new SortField[sortingCriterias.size()];
-				for (int i=0; i<sortingCriterias.size(); i++) {
-					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
-				}
-				fullTextQuery.setSort(new Sort(sortFields));
-			}
-			
-			// We set search result on return method
-			page.setList(fullTextQuery.list());
-		} catch (ParseException parseException) {
-			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
-		}
-		
-		return page;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 		
-		//String luceneQuery = searchContainer.toLuceneQueryString();
-
 		// We obtain hibernate-search session
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
-		//try {
-			//QueryParser queryParser = new QueryParser(Version.LUCENE_30, "summaryId", fullTextSession.getSearchFactory().getAnalyzer("volumeAnalyzer"));
-	
-			// We convert AdvancedSearchContainer to luceneQuery
-			//org.apache.lucene.search.Query query = queryParser.parse(luceneQuery);
-			org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
-			logger.info("Lucene Query " + query.toString()); 
+		// We convert SearchContainer to luceneQuery
+		org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
+		logger.info("Lucene Query " + query.toString()); 
 
-			// We execute search
-			org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Volume.class );
+		// We execute search
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Volume.class );
+
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		}
 	
-			// We set size of result.
-			if (paginationFilter.getTotal() == null) {
-				page.setTotal(new Long(fullTextQuery.getResultSize()));
+		// We set pagination  
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
 			}
-	
-			// We set pagination  
-			fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-			fullTextQuery.setMaxResults(paginationFilter.getLength());
-	
-			// We manage sorting (this manages sorting on multiple fields)
-			List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-			if (sortingCriterias.size() > 0) {
-				SortField[] sortFields = new SortField[sortingCriterias.size()];
-				for (int i=0; i<sortingCriterias.size(); i++) {
-					sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
-				}
-				fullTextQuery.setSort(new Sort(sortFields));
-			}
+			fullTextQuery.setSort(new Sort(sortFields));
+		}
 			
-			// We set search result on return method
-			page.setList(fullTextQuery.list());
-/*		} catch (ParseException parseException) {
-			logger.error("Error parsing luceneQuery " + luceneQuery, parseException);
-		}*/
-		
+		// We set search result on return method
+		page.setList(fullTextQuery.list());
+
 		return page;
 	}
 }

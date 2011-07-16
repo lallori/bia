@@ -89,15 +89,6 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	
 	/**
 	 * 
-	 * @param searchText
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page searchPeople(String searchText, PaginationFilter paginationFilter) throws PersistenceException;
-
-	/**
-	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
 	 * @return
