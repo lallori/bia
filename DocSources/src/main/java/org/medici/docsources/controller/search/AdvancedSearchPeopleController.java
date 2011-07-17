@@ -89,7 +89,7 @@ public class AdvancedSearchPeopleController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		AdvancedSearchPeople advancedSearchDocument = new AdvancedSearchPeople();
-		advancedSearchDocument.initFromCommand(command);
+		advancedSearchDocument.initFromAdvancedSearchPeopleCommand(command);
 
 		// This number is used to generate an unique id for datatable jquery plugin to use multiple object in tabs
 		UUID uuid = UUID.randomUUID();

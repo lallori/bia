@@ -87,8 +87,22 @@ public class SearchFilter implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateUpdated;
 
+	/**
+	 * Default constructor
+	 */
 	public SearchFilter() {
 		super();
+	}
+	
+	/**
+	 * 
+	 * @param searchFilterType
+	 */
+	public SearchFilter(Integer id, SearchType searchType) {
+		super();
+		
+		setId(id);
+		setSearchType(searchType);
 	}
 	
 	/**

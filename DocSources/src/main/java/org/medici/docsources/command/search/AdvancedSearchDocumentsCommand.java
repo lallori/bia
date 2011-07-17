@@ -38,7 +38,7 @@ import org.medici.docsources.domain.SearchFilter.SearchType;
  *
  */
 public class AdvancedSearchDocumentsCommand {
-	private Integer searchFilter;
+	private Integer idSearchFilter;
 	private SearchType searchType;
 	private List<String> word;
 	private List<String> volume;
@@ -56,17 +56,17 @@ public class AdvancedSearchDocumentsCommand {
 	private String searchUUID;
 	
 	/**
-	 * @param searchFilter the searchFilter to set
+	 * @param idSearchFilter the idSearchFilter to set
 	 */
-	public void setSearchFilter(Integer searchFilter) {
-		this.searchFilter = searchFilter;
+	public void setIdSearchFilter(Integer idSearchFilter) {
+		this.idSearchFilter = idSearchFilter;
 	}
 
 	/**
-	 * @return the searchFilter
+	 * @return the idSearchFilter
 	 */
-	public Integer getSearchFilter() {
-		return searchFilter;
+	public Integer getIdSearchFilter() {
+		return idSearchFilter;
 	}
 
 	/**

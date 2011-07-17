@@ -30,7 +30,6 @@ package org.medici.docsources.common.search;
 import java.util.List;
 import org.apache.lucene.search.Query;
 import org.medici.docsources.command.search.AdvancedSearchPeopleCommand;
-import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 
 /**
  * 
@@ -117,6 +116,15 @@ public class AdvancedSearchPeople implements AdvancedSearch {
 	 */
 	public AdvancedSearchPeople() {
 		super();
+	}
+
+	/**
+	 * 
+	 * @param advancedSearchPeopleCommand
+	 */
+	public void initFromAdvancedSearchPeopleCommand(AdvancedSearchPeopleCommand advancedSearchPeopleCommand) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -292,22 +300,6 @@ public class AdvancedSearchPeople implements AdvancedSearch {
 	 */
 	public List<WordType> getWordsTypes() {
 		return wordsTypes;
-	}
-
-	/**
-	 * 
-	 * @param command
-	 */
-	public void initFromCommand(AdvancedSearchPeopleCommand command) {
-	}
-
-	/**
-	 * 
-	 * @param command
-	 */
-	public void initFromSaveUserSearchFilterCommand(SaveUserSearchFilterCommand command) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -517,15 +509,6 @@ public class AdvancedSearchPeople implements AdvancedSearch {
 	public Query toLuceneQuery() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	/**
-	 * 
-	 * @param advancedSearchPeopleCommand
-	 */
-	public void initFromAdvancedSearchPeopleCommand(AdvancedSearchPeopleCommand advancedSearchPeopleCommand) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

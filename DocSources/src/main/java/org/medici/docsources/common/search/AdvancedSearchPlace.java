@@ -318,16 +318,13 @@ public class AdvancedSearchPlace implements AdvancedSearch {
 		return wordsTypes;
 	}
 
-	public void initFromAdvancedSearchPlaceCommand(AdvancedSearchPlacesCommand advancedSearchPlacesCommand) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
 	 * 
-	 * @param command
+	 * @param advancedSearchPlacesCommand
 	 */
-	public void initFromCommand(AdvancedSearchPlacesCommand command) {
+	public void initFromAdvancedSearchPlacesCommand(AdvancedSearchPlacesCommand advancedSearchPlacesCommand) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

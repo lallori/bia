@@ -95,6 +95,7 @@ public class SearchServiceImpl implements SearchService {
 			} else {
 				page = this.searchVolumes(searchFilter.getFilterData(), new PaginationFilter(1, 1));
 			}
+			searchFilter.setId(null);
 			searchFilter.setDateCreated(new Date());
 			searchFilter.setDateUpdated(new Date());
 			searchFilter.setTotalResult(page.getTotal());
@@ -159,6 +160,18 @@ public class SearchServiceImpl implements SearchService {
 	 */
 	public TopicsListDAO getTopicsListDAO() {
 		return topicsListDAO;
+	}
+
+	/**
+	 *{@inheritDoc} 
+	 */
+	@Override
+	public SearchFilter getUserSearchFilter(Integer idSearchFilter) throws ApplicationThrowable {
+		try {
+			return getSearchFilterDAO().findUserSearchFilter(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), idSearchFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

@@ -69,6 +69,14 @@ public interface SearchService {
 
 	/**
 	 * 
+	 * @param idSearchFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public SearchFilter getUserSearchFilter(Integer idSearchFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public List<SearchFilter> getUserSearchFilters() throws ApplicationThrowable;
@@ -80,6 +88,13 @@ public interface SearchService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page getUserSearchFilters(PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param searchFilter
+	 * @throws ApplicationThrowable
+	 */
+	public void replaceSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -125,6 +140,4 @@ public interface SearchService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	public void replaceSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable;
 }

@@ -80,7 +80,7 @@ public class SaveUserSearchFilter {
 			Map<String, Object> model = new HashMap<String, Object>();
 			try {
 				SearchFilter searchFilter = new SearchFilter();
-				searchFilter.setId(command.getSearchFilter());
+				searchFilter.setId(command.getIdSearchFilter());
 				searchFilter.setFilterName(command.getSaveAs());
 				searchFilter.setSearchType(command.getSearchType());
 				searchFilter.setFilterData(AdvancedSearchFactory.create(command));

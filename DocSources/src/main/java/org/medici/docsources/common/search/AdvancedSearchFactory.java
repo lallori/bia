@@ -33,6 +33,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
 import org.medici.docsources.command.search.AdvancedSearchPeopleCommand;
 import org.medici.docsources.command.search.AdvancedSearchPlacesCommand;
+import org.medici.docsources.command.search.AdvancedSearchVolumesCommand;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
@@ -84,11 +85,17 @@ public class AdvancedSearchFactory {
 			} catch (InvocationTargetException itex) {
 			}
 			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
-			advancedSearchPlace.initFromAdvancedSearchPlaceCommand(advancedSearchPlacesCommand);
+			advancedSearchPlace.initFromAdvancedSearchPlacesCommand(advancedSearchPlacesCommand);
 			return advancedSearchPlace;
 		} else {
+			AdvancedSearchVolumesCommand advancedSearchVolumesCommand = new AdvancedSearchVolumesCommand();
+			try {
+				BeanUtils.copyProperties(advancedSearchVolumesCommand, command);
+			} catch (IllegalAccessException iaex) {
+			} catch (InvocationTargetException itex) {
+			}
 			AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
-			advancedSearchVolume.initFromSaveUserSearchFilterCommand(command);
+			advancedSearchVolume.initFromAdvancedSearchVolumesCommand(advancedSearchVolumesCommand);
 			return advancedSearchVolume;
 		}
 	}

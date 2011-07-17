@@ -69,7 +69,7 @@ public class AdvancedSearchVolumesController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
-		advancedSearchVolume.initFromCommand(command);
+		advancedSearchVolume.initFromAdvancedSearchVolumesCommand(command);
 
 		// This number is used to generate an unique id for datatable jquery plugin to use multiple object in tabs
 		UUID uuid = UUID.randomUUID();

@@ -66,7 +66,7 @@ public class AdvancedSearchPlacesController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
-		advancedSearchPlace.initFromCommand(command);
+		advancedSearchPlace.initFromAdvancedSearchPlacesCommand(command);
 
 		// This number is used to generate an unique id for datatable jquery plugin to use multiple object in tabs
 		UUID uuid = UUID.randomUUID();

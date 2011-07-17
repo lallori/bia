@@ -43,11 +43,18 @@
 				$j("#body_left").load($j(this).attr("href"));
 				return false;
 			});
-			$j('.refine').open({width: 960, height: 680, scrollbars: "yes"});
+			
+			// We need to remove any previous live function
+			$j('.refine').die();
+			// Refine button have a specific class style on which we attach click live. 
+			$j('.refine').live('click', function() {
+				$j(this).open({width: 960, height: 680, scrollbars: "yes"});
+				return false;
+			});
 		} );
 	</script>
 
-	<a class="refine" href="${AdvancedSearchRefineURL}">REFINE THIS SEARCH</a>
+	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">REFINE THIS SEARCH</a>
 
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="result${command.searchUUID}">
 		<thead>

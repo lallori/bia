@@ -135,12 +135,12 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SearchFilter findUserSearchFilter(String username, Integer id) throws PersistenceException {
+	public SearchFilter findUserSearchFilter(String username, Integer idSearchFilter) throws PersistenceException {
 		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username and id=:id");
 		
 		Query query = getEntityManager().createQuery(jpql.toString());
 		query.setParameter("username", username);
-		query.setParameter("id", id);
+		query.setParameter("id", idSearchFilter);
 		
 		return (SearchFilter) query.getSingleResult();
 	}

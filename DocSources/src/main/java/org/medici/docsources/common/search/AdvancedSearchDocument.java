@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.index.Term;
@@ -58,20 +60,8 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 
 	private List<String> words;
 	private List<WordType> wordsTypes;
-	private List<String> volumes;
-	private List<String> volumesBetween;
-	private List<VolumeType> volumesTypes;
-	private List<DateType> datesTypes;
-	private List<Integer> datesYear;
-	private List<Integer> datesMonth;
-	private List<Integer> datesDay;
-	private List<Integer> datesYearBetween;
-	private List<Integer> datesMonthBetween;
-	private List<Integer> datesDayBetween;
 	private List<String> extract;
 	private List<String> synopsis;
-	private List<String> topics;
-	private List<Integer> topicsId;
 	private List<String> person;
 	private List<Integer> personId;
 	private List<String> place;
@@ -86,12 +76,55 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 	private List<Integer> toId;
 	private List<String> refersTo;
 	private List<Integer> refersToId;
+	private List<String> topics;
+	private List<Integer> topicsId;
+	private List<DateType> datesTypes;
+	private List<Integer> datesYear;
+	private List<Integer> datesMonth;
+	private List<Integer> datesDay;
+	private List<Integer> datesYearBetween;
+	private List<Integer> datesMonthBetween;
+	private List<Integer> datesDayBetween;
+	private List<String> volumes;
+	private List<String> volumesBetween;
+	private List<VolumeType> volumesTypes;
 
 	/**
 	 * 
 	 */
 	public AdvancedSearchDocument() {
 		super();
+
+		words = new ArrayList<String>(0);
+		wordsTypes = new ArrayList<AdvancedSearchDocument.WordType>(0);
+		volumes = new ArrayList<String>(0);
+		volumesBetween = new ArrayList<String>(0);
+		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
+		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
+		datesYear = new ArrayList<Integer>(0);
+		datesMonth = new ArrayList<Integer>(0);
+		datesDay = new ArrayList<Integer>(0);
+		datesYearBetween = new ArrayList<Integer>(0);
+		datesMonthBetween = new ArrayList<Integer>(0);
+		datesDayBetween = new ArrayList<Integer>(0);
+		extract = new ArrayList<String>(0);
+		synopsis = new ArrayList<String>(0);
+		topics = new ArrayList<String>(0);
+		topicsId = new ArrayList<Integer>(0);
+		person = new ArrayList<String>(0);
+		personId = new ArrayList<Integer>(0);
+		place = new ArrayList<String>(0);
+		placeId = new ArrayList<Integer>(0);
+		sender = new ArrayList<String>(0);
+		senderId = new ArrayList<Integer>(0);
+		from = new ArrayList<String>(0);
+		fromId = new ArrayList<Integer>(0);
+		recipient = new ArrayList<String>(0);
+		recipientId = new ArrayList<Integer>(0);
+		to = new ArrayList<String>(0);
+		toId = new ArrayList<Integer>(0);
+		refersTo = new ArrayList<String>(0);
+		refersToId = new ArrayList<Integer>(0);
 	}
 
 	/**
@@ -105,13 +138,16 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			words = new ArrayList<String>(command.getWord().size());
 			
 			for (String singleWord : command.getWord()) {
-				String[] fields = singleWord.split("\\|");
-				
-				if (fields.length != 2) {
-					continue;
-				} else {
-					wordsTypes.add(WordType.valueOf(fields[0]));
-					words.add(fields[1]);
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try {
+					if (stringTokenizer.countTokens() == 2) {
+						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
+						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else {
+						continue;
+					}
+				} catch (URIException e) {
+					wordsTypes.remove(wordsTypes.size()-1);
 				}
 			}
 		} else {
@@ -127,15 +163,16 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			
 			for (String singleWord : command.getPerson()) {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if (stringTokenizer.countTokens() == 0) {
-					continue;
-				} else if (stringTokenizer.countTokens() == 1) {
-					// string format is |text
-					personId.add(new Integer(0));
-					person.add(stringTokenizer.nextToken());
-				} else if (stringTokenizer.countTokens() == 2) {
-					// string format is number|text
-					try {
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						personId.add(new Integer(0));
+						person.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
+	
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
 						// Check if field is correct
@@ -145,14 +182,13 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 							//Empty personId is equal to 0
 							personId.add(new Integer(0));
 						}
-						person.add(singleText);
-					}catch (NumberFormatException nex) {
-						personId.add(new Integer(0));
-						person.add("");
+						person.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
 					}
-				} else {
-					personId.add(new Integer(0));
-					person.add("");
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					personId.remove(personId.size()-1);
 				}
 			}
 		} else {
@@ -167,15 +203,15 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			
 			for (String singleWord : command.getPlace()) {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if (stringTokenizer.countTokens() == 0) {
-					continue;
-				} else if (stringTokenizer.countTokens() == 1) {
-					// string format is |text
-					placeId.add(new Integer(0));
-					place.add(stringTokenizer.nextToken());
-				} else if (stringTokenizer.countTokens() == 2) {
-					// string format is number|text
-					try {
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						placeId.add(new Integer(0));
+						place.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
 						// Check if field is correct
@@ -185,14 +221,13 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 							//Empty placeId is equal to 0
 							placeId.add(new Integer(0));
 						}
-						place.add(singleText);
-					}catch (NumberFormatException nex) {
-						placeId.add(new Integer(0));
-						place.add("");
+						place.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
 					}
-				} else {
-					placeId.add(new Integer(0));
-					place.add("");
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					placeId.remove(placeId.size()-1);
 				}
 			}
 		} else {
@@ -207,15 +242,15 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			
 			for (String singleWord : command.getSender()) {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if (stringTokenizer.countTokens() == 0) {
-					continue;
-				} else if (stringTokenizer.countTokens() == 1) {
-					// string format is |text
-					senderId.add(new Integer(0));
-					sender.add(stringTokenizer.nextToken());
-				} else if (stringTokenizer.countTokens() == 2) {
-					// string format is number|text
-					try {
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						senderId.add(new Integer(0));
+						sender.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
 						// Check if field is correct
@@ -225,14 +260,13 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 							//Empty senderId is equal to 0
 							senderId.add(new Integer(0));
 						}
-						sender.add(singleText);
-					}catch (NumberFormatException nex) {
-						senderId.add(new Integer(0));
-						sender.add("");
+						sender.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
 					}
-				} else {
-					senderId.add(new Integer(0));
-					sender.add("");
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					senderId.remove(senderId.size()-1);
 				}
 			}
 		} else {
@@ -247,15 +281,15 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			
 			for (String singleWord : command.getFrom()) {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if (stringTokenizer.countTokens() == 0) {
-					continue;
-				} else if (stringTokenizer.countTokens() == 1) {
-					// string format is |text
-					fromId.add(new Integer(0));
-					from.add(stringTokenizer.nextToken());
-				} else if (stringTokenizer.countTokens() == 2) {
-					// string format is number|text
-					try {
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						fromId.add(new Integer(0));
+						from.add(stringTokenizer.nextToken());
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
 						// Check if field is correct
@@ -265,14 +299,13 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 							//Empty fromId is equal to 0
 							fromId.add(new Integer(0));
 						}
-						from.add(singleText);
-					}catch (NumberFormatException nex) {
-						fromId.add(new Integer(0));
-						from.add("");
+						from.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
 					}
-				} else {
-					senderId.add(new Integer(0));
-					sender.add("");
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					fromId.remove(fromId.size()-1);
 				}
 			}
 		} else {
@@ -287,15 +320,15 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			
 			for (String singleWord : command.getRecipient()) {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if (stringTokenizer.countTokens() == 0) {
-					continue;
-				} else if (stringTokenizer.countTokens() == 1) {
-					// string format is |text
-					recipientId.add(new Integer(0));
-					recipient.add(stringTokenizer.nextToken());
-				} else if (stringTokenizer.countTokens() == 2) {
-					// string format is number|text
-					try {
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						recipientId.add(new Integer(0));
+						recipient.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
 						// Check if field is correct
@@ -305,14 +338,13 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 							//Empty recipientId is equal to 0
 							recipientId.add(new Integer(0));
 						}
-						recipient.add(singleText);
-					}catch (NumberFormatException nex) {
-						recipientId.add(new Integer(0));
-						recipient.add("");
+						recipient.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
 					}
-				} else {
-					recipientId.add(new Integer(0));
-					recipient.add("");
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					recipientId.remove(recipientId.size()-1);
 				}
 			}
 		} else {
@@ -327,15 +359,15 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			
 			for (String singleWord : command.getTo()) {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if (stringTokenizer.countTokens() == 0) {
-					continue;
-				} else if (stringTokenizer.countTokens() == 1) {
-					// string format is |text
-					toId.add(new Integer(0));
-					to.add(stringTokenizer.nextToken());
-				} else if (stringTokenizer.countTokens() == 2) {
-					// string format is number|text
-					try {
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						toId.add(new Integer(0));
+						to.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
 						// Check if field is correct
@@ -345,14 +377,13 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 							//Empty toId is equal to 0
 							toId.add(new Integer(0));
 						}
-						to.add(singleText);
-					}catch (NumberFormatException nex) {
-						toId.add(new Integer(0));
-						to.add("");
+						to.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
 					}
-				} else {
-					toId.add(new Integer(0));
-					to.add("");
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					toId.remove(toId.size()-1);
 				}
 			}
 		} else {
@@ -367,15 +398,15 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			
 			for (String singleWord : command.getRefersTo()) {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if (stringTokenizer.countTokens() == 0) {
-					continue;
-				} else if (stringTokenizer.countTokens() == 1) {
-					// string format is |text
-					refersToId.add(new Integer(0));
-					refersTo.add(stringTokenizer.nextToken());
-				} else if (stringTokenizer.countTokens() == 2) {
-					// string format is number|text
-					try {
+				// string format is number|text
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						refersToId.add(new Integer(0));
+						refersTo.add(stringTokenizer.nextToken());
+					} else if (stringTokenizer.countTokens() == 2) {
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
 						// Check if field is correct
@@ -385,14 +416,13 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 							//Empty refersToId is equal to 0
 							refersToId.add(new Integer(0));
 						}
-						refersTo.add(singleText);
-					}catch (NumberFormatException nex) {
-						refersToId.add(new Integer(0));
-						refersTo.add("");
+						refersTo.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
 					}
-				} else {
-					refersToId.add(new Integer(0));
-					refersTo.add("");
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					refersToId.remove(refersToId.size()-1);
 				}
 			}
 		} else {
@@ -405,7 +435,11 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			extract = new ArrayList<String>(command.getExtract().size());
 			
 			for (String singleWord : command.getExtract()) {
-				extract.add(singleWord);
+				try {
+					extract.add(URIUtil.decode(singleWord, "UTF-8"));
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+				}
 			}
 		} else {
 			extract = new ArrayList<String>(0);
@@ -416,7 +450,11 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			synopsis = new ArrayList<String>(command.getSynopsis().size());
 			
 			for (String singleWord : command.getSynopsis()) {
-				synopsis.add(singleWord);
+				try {
+					synopsis.add(URIUtil.decode(singleWord, "UTF-8"));
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+				}
 			}
 		} else {
 			synopsis = new ArrayList<String>(0);
@@ -429,15 +467,15 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			
 			for (String singleWord : command.getTopic()) {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if (stringTokenizer.countTokens() == 0) {
-					continue;
-				} else if (stringTokenizer.countTokens() == 1) {
-					// string format is |text
-					topicsId.add(new Integer(0));
-					topics.add(stringTokenizer.nextToken());
-				} else if (stringTokenizer.countTokens() == 2) {
-					// string format is number|text
-					try {
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						topicsId.add(new Integer(0));
+						topics.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
 						// Check if field is correct
@@ -447,14 +485,13 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 							//Empty topicsId is equal to 0
 							topicsId.add(new Integer(0));
 						}
-						topics.add(singleText);
-					}catch (NumberFormatException nex) {
-						topicsId.add(new Integer(0));
-						topics.add("");
+						topics.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
 					}
-				} else {
-					topicsId.add(new Integer(0));
-					topics.add("");
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					topicsId.remove(topicsId.size()-1);
 				}
 			}
 		} else {
@@ -943,84 +980,6 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			}
 		}
 
-		// Volume
-		if (volumes.size()>0) {
-			BooleanQuery volumesQuery = new BooleanQuery();
-			for (int i=0; i<volumes.size(); i++) {
-				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
-					if (volumesTypes.get(i).equals(VolumeType.Exactly)) {
-						if (StringUtils.isNumeric(volumes.get(i))) {
-							// (volume.volNum:1)
-							BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("volume.volNum", volumes.get(i))), Occur.MUST);
-							volumesQuery.add(booleanClause);
-						} else {
-							BooleanQuery subQuery = new BooleanQuery();
-							// (volume.volNum:1 AND volume.volLetExt:a)
-							BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("volume.volNum", VolumeUtils.extractVolNum(volumes.get(i)).toString())), Occur.MUST);
-							subQuery.add(booleanClause);
-
-							booleanClause.setQuery(new TermQuery(new Term("volume.volLetExt", VolumeUtils.extractVolNum(volumes.get(i)).toString())));
-							booleanClause.setOccur(Occur.MUST);
-							subQuery.add(booleanClause);
-
-							volumesQuery.add(subQuery, Occur.MUST);
-						}
-					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
-						// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-						NumericRangeQuery<Integer> volumeRangeQuery = NumericRangeQuery.newIntRange("volume.volNum_Sort", 4, 
-								NumberUtils.toInt(volumes.get(i)), 
-								NumberUtils.toInt(volumesBetween.get(i)), 
-								true, 
-								true);
-						volumesQuery.add(volumeRangeQuery, Occur.MUST); 
-					}
-				} else {
-					// if volume value is not in volume format we discard it!
-					continue;
-				}
-			}
-			if (!volumesQuery.toString().equals("")) {
-				booleanQuery.add(volumesQuery, Occur.MUST);
-			}
-		}
-
-		// Date
-		if (datesTypes.size()>0) {
-			BooleanQuery datesQuery = new BooleanQuery();
-			for (int i=0; i<datesTypes.size(); i++) {
-				if (datesTypes.get(i) == null) {
-					continue;
-				} else if (datesTypes.get(i).equals(DateType.After)) {
-					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
-							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
-							DateUtils.MAX_DATE, 
-							true, 
-							true);
-					datesQuery.add(dateRangeQuery, Occur.MUST); 
-				} else if (datesTypes.get(i).equals(DateType.Before)) {
-					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
-							DateUtils.MIN_DATE,
-							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
-							true, 
-							true);
-					datesQuery.add(dateRangeQuery, Occur.MUST); 
-				}else if (datesTypes.get(i).equals(DateType.Between)) {
-					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
-							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
-							DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), 
-							true, 
-							true);
-					datesQuery.add(dateRangeQuery, Occur.MUST); 
-				}
-			}
-			if (!datesQuery.toString().equals("")) {
-				booleanQuery.add(datesQuery, Occur.MUST);
-			}
-		}
-
 		// Extract
 		if (extract.size()>0) {
 			for (int i=0; i<extract.size(); i++) {
@@ -1045,7 +1004,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			BooleanQuery topicTitleQuery = new BooleanQuery();
 
 			for (int i=0; i<topicsId.size(); i++) {
-				if ((topicsId.get(i) != null) || (topicsId.get(i) > 0)) {
+				if (topicsId.get(i) > 0) {
 					// +(+eplToLink.topic.topicId: 23)
 					BooleanQuery singleTopicIdQuery = new BooleanQuery(); 
 					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("eplToLink.topic.topicId", topicsId.get(i).toString())), Occur.SHOULD);
@@ -1073,7 +1032,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			BooleanQuery personIdQuery = new BooleanQuery();
 			BooleanQuery personQuery = new BooleanQuery();
 			for (int i=0; i<personId.size(); i++) {
-				if ((personId.get(i) != null) || (personId.get(i) > 0)) {
+				if (personId.get(i) > 0) {
 					BooleanQuery singlePersonIdQuery = new BooleanQuery(); 
 					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("epLink.person.personId", personId.get(i).toString())), Occur.SHOULD);
 					singlePersonIdQuery.add(booleanClause);
@@ -1105,7 +1064,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			BooleanQuery placeQuery = new BooleanQuery();
 
 			for (int i=0; i<placeId.size(); i++) {
-				if ((placeId.get(i) != null) || (placeId.get(i) > 0)) {
+				if (placeId.get(i) > 0) {
 					BooleanQuery singlePlaceIdQuery = new BooleanQuery(); 
 					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("senderPlace.placeAllId", placeId.get(i).toString())), Occur.SHOULD);
 					singlePlaceIdQuery.add(booleanClause);
@@ -1139,7 +1098,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			BooleanQuery senderQuery = new BooleanQuery();
 			
 			for (int i=0; i<senderId.size(); i++) {
-				if ((senderId.get(i) != null) || (senderId.get(i) > 0)) {
+				if (senderId.get(i) > 0) {
 					BooleanQuery singleSenderIdQuery = new BooleanQuery(); 
 					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("senderPeople.personId", senderId.get(i).toString())), Occur.SHOULD);
 					singleSenderIdQuery.add(booleanClause);
@@ -1164,7 +1123,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			BooleanQuery fromIdQuery = new BooleanQuery();
 			BooleanQuery fromQuery = new BooleanQuery();
 			for (int i=0; i<fromId.size(); i++) {
-				if ((fromId.get(i) != null) || (fromId.get(i) > 0)) {
+				if (fromId.get(i) > 0) {
 					BooleanQuery singleFromIdQuery = new BooleanQuery(); 
 					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("senderPlace.placeAllId", fromId.get(i).toString())), Occur.SHOULD);
 					singleFromIdQuery.add(booleanClause);
@@ -1189,7 +1148,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			BooleanQuery recipientIdQuery = new BooleanQuery();
 			BooleanQuery recipientQuery = new BooleanQuery();
 			for (int i=0; i<recipientId.size(); i++) {
-				if ((recipientId.get(i) != null) || (recipientId.get(i) > 0)) {
+				if (recipientId.get(i) > 0) {
 					BooleanQuery singleRecipientIdQuery = new BooleanQuery(); 
 					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("recipientPeople.personId", recipientId.get(i).toString())), Occur.SHOULD);
 					singleRecipientIdQuery.add(booleanClause);
@@ -1240,7 +1199,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			BooleanQuery refersToIdQuery = new BooleanQuery();
 			BooleanQuery refersToQuery = new BooleanQuery();
 			for (int i=0; i<personId.size(); i++) {
-				if ((refersToId.get(i) != null) || (refersToId.get(i) > 0)) {
+				if (refersToId.get(i) > 0) {
 					BooleanQuery singleRefersToIdQuery = new BooleanQuery(); 
 					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("epLink.person.personId", personId.get(i).toString())), Occur.SHOULD);
 					singleRefersToIdQuery.add(booleanClause);
@@ -1259,6 +1218,85 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 				booleanQuery.add(refersToQuery, Occur.MUST);
 			}
 		}
+
+		// Date
+		if (datesTypes.size()>0) {
+			BooleanQuery datesQuery = new BooleanQuery();
+			for (int i=0; i<datesTypes.size(); i++) {
+				if (datesTypes.get(i) == null) {
+					continue;
+				} else if (datesTypes.get(i).equals(DateType.After)) {
+					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
+							DateUtils.MAX_DATE, 
+							true, 
+							true);
+					datesQuery.add(dateRangeQuery, Occur.MUST); 
+				} else if (datesTypes.get(i).equals(DateType.Before)) {
+					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+							DateUtils.MIN_DATE,
+							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
+							true, 
+							true);
+					datesQuery.add(dateRangeQuery, Occur.MUST); 
+				}else if (datesTypes.get(i).equals(DateType.Between)) {
+					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
+							DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), 
+							true, 
+							true);
+					datesQuery.add(dateRangeQuery, Occur.MUST); 
+				}
+			}
+			if (!datesQuery.toString().equals("")) {
+				booleanQuery.add(datesQuery, Occur.MUST);
+			}
+		}
+
+		// Volume
+		if (volumes.size()>0) {
+			BooleanQuery volumesQuery = new BooleanQuery();
+			for (int i=0; i<volumes.size(); i++) {
+				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
+					if (volumesTypes.get(i).equals(VolumeType.Exactly)) {
+						if (StringUtils.isNumeric(volumes.get(i))) {
+							// (volume.volNum:1)
+							BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("volume.volNum", volumes.get(i))), Occur.MUST);
+							volumesQuery.add(booleanClause);
+						} else {
+							BooleanQuery subQuery = new BooleanQuery();
+							// (volume.volNum:1 AND volume.volLetExt:a)
+							BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("volume.volNum", VolumeUtils.extractVolNum(volumes.get(i)).toString())), Occur.MUST);
+							subQuery.add(booleanClause);
+
+							booleanClause.setQuery(new TermQuery(new Term("volume.volLetExt", VolumeUtils.extractVolNum(volumes.get(i)).toString())));
+							booleanClause.setOccur(Occur.MUST);
+							subQuery.add(booleanClause);
+
+							volumesQuery.add(subQuery, Occur.MUST);
+						}
+					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
+						// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
+						NumericRangeQuery<Integer> volumeRangeQuery = NumericRangeQuery.newIntRange("volume.volNum_Sort", 4, 
+								NumberUtils.toInt(volumes.get(i)), 
+								NumberUtils.toInt(volumesBetween.get(i)), 
+								true, 
+								true);
+						volumesQuery.add(volumeRangeQuery, Occur.MUST); 
+					}
+				} else {
+					// if volume value is not in volume format we discard it!
+					continue;
+				}
+			}
+			if (!volumesQuery.toString().equals("")) {
+				booleanQuery.add(volumesQuery, Occur.MUST);
+			}
+		}
+
 		return booleanQuery;
 	}
 	

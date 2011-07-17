@@ -27,20 +27,20 @@
  */
 package org.medici.docsources.validator.search;
 
-import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
-import org.medici.docsources.command.search.SaveUserSearchFilterCommand.SaveType;
+import org.apache.commons.lang.StringUtils;
+import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
 import org.medici.docsources.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Save User Search Filter".
+ * Validator bean for action "Advanced Search Documents".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class SaveUserSearchFilterValidator implements Validator {
+public class AdvancedSearchDocumentsValidator implements Validator {
 	@Autowired
 	private SearchService searchService;
 
@@ -60,14 +60,14 @@ public class SaveUserSearchFilterValidator implements Validator {
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only SaveUserSearchFilterCommand.
+	 * validator supports only AdvancedSearchDocumentsCommand.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(SaveUserSearchFilterCommand.class);
+		return givenClass.equals(AdvancedSearchDocumentsCommand.class);
 	}
 
 	/**
@@ -80,19 +80,19 @@ public class SaveUserSearchFilterValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		SaveUserSearchFilterCommand saveUserSearchFilterCommand = (SaveUserSearchFilterCommand) object;
-		validateSaveAction(saveUserSearchFilterCommand.getSaveType(), saveUserSearchFilterCommand.getSaveAs(), saveUserSearchFilterCommand.getIdSearchFilterToReplace(), errors);
+		AdvancedSearchDocumentsCommand advancedSearchDocumentsCommand = (AdvancedSearchDocumentsCommand) object;
+		validateSearchUUID(advancedSearchDocumentsCommand.getSearchUUID(), errors);
 	}
 
 	/**
-	 * 
-	 * @param saveType
-	 * @param saveAs
-	 * @param searchFilter
+	 * This method validate 
+	 * @param searchUUID
 	 * @param errors
 	 */
-	private void validateSaveAction(SaveType saveType, String saveAs, Integer searchFilter, Errors errors) {
-		
+	private void validateSearchUUID(String searchUUID, Errors errors) {
+		if (StringUtils.isBlank(searchUUID)) {
+			errors.reject("searchUUID", "error.searchUUID.notfound");
+		}
 	}
 
 

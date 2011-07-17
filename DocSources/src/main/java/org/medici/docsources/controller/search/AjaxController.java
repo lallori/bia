@@ -37,7 +37,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.lucene.search.SortField;
-import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SimpleSearchDocument;
@@ -46,6 +45,7 @@ import org.medici.docsources.common.search.SimpleSearchPlace;
 import org.medici.docsources.common.search.SimpleSearchTopic;
 import org.medici.docsources.common.search.SimpleSearchVolume;
 import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
@@ -81,8 +81,9 @@ public class AjaxController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void advancedSearchDocuments(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		SearchFilter searchFilter = (SearchFilter) httpSession.getAttribute("searchFilter" + searchUUID);
-		
+		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
+
 		try {
 			page = getSearchService().searchDocuments(searchFilter.getFilterData(), paginationFilter);
 		} catch (ApplicationThrowable aex) {

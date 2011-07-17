@@ -33,8 +33,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.medici.docsources.common.html.HtmlUtils;
 import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;

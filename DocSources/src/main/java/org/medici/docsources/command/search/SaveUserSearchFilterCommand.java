@@ -37,10 +37,11 @@ import org.medici.docsources.domain.SearchFilter.SearchType;
  *
  */
 public class SaveUserSearchFilterCommand {
+	private Integer idSearchFilter;
 	private SearchType searchType;
 	private SaveType saveType;
 	private String saveAs;
-	private Integer searchFilter;
+	private Integer idSearchFilterToReplace;
 	private List<String> word;
 	private List<String> volume;
 	private List<String> date;
@@ -70,17 +71,17 @@ public class SaveUserSearchFilterCommand {
 	}
 
 	/**
-	 * @param searchFilter the searchFilter to set
+	 * @param idSearchFilter the idSearchFilter to set
 	 */
-	public void setSearchFilter(Integer searchFilter) {
-		this.searchFilter = searchFilter;
+	public void setIdSearchFilter(Integer idSearchFilter) {
+		this.idSearchFilter = idSearchFilter;
 	}
 
 	/**
-	 * @return the searchFilter
+	 * @return the idSearchFilter
 	 */
-	public Integer getSearchFilter() {
-		return searchFilter;
+	public Integer getIdSearchFilter() {
+		return idSearchFilter;
 	}
 
 
@@ -96,6 +97,20 @@ public class SaveUserSearchFilterCommand {
 	 */
 	public String getSaveAs() {
 		return saveAs;
+	}
+
+	/**
+	 * @param idSearchFilterToReplace the idSearchFilterToReplace to set
+	 */
+	public void setIdSearchFilterToReplace(Integer idSearchFilterToReplace) {
+		this.idSearchFilterToReplace = idSearchFilterToReplace;
+	}
+
+	/**
+	 * @return the idSearchFilterToReplace
+	 */
+	public Integer getIdSearchFilterToReplace() {
+		return idSearchFilterToReplace;
 	}
 
 	/**

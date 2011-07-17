@@ -61,5 +61,12 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 */
 	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter) throws PersistenceException;
 
-	public SearchFilter findUserSearchFilter(String username, Integer id) throws PersistenceException;
+	/**
+	 * 
+	 * @param username
+	 * @param idSearchFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public SearchFilter findUserSearchFilter(String username, Integer idSearchFilter) throws PersistenceException;
 }

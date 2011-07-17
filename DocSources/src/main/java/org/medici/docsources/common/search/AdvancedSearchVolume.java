@@ -40,7 +40,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.medici.docsources.command.search.AdvancedSearchVolumesCommand;
-import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 
@@ -79,16 +78,7 @@ public class AdvancedSearchVolume implements AdvancedSearch {
 	 * 
 	 * @param command
 	 */
-	public void initFromCommand(AdvancedSearchVolumesCommand command) {
-	}
-
-	/**
-	 * 
-	 * @param command
-	 */
-	public void initFromSaveUserSearchFilterCommand(SaveUserSearchFilterCommand command) {
-		// TODO Auto-generated method stub
-		
+	public void initFromAdvancedSearchVolumesCommand(AdvancedSearchVolumesCommand command) {
 	}
 
 	/**
