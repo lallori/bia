@@ -9,7 +9,7 @@
 	<br />
 	<div id="namePartsSearchDiv"></div>
 	<div id="wordSearchDiv"></div>
-	<div id="dateRangeSearchDiv"></div>
+	<div id="dateSearchDiv"></div>
 	<div id="genderSearchDiv"></div>
 	<div id="placeSearchDiv"></div>
 </form>

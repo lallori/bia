@@ -4,6 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<div id="customSearchFilterDiv">
+	<div class="customSearchFilterTitle"></div>
+
 <div id="multiOpenAccordion">
 	<h1><a>Name Parts</a></h1>
 	<div>
@@ -37,9 +40,9 @@
 	
 	<h1><a>Date Range</a></h1>
 	<div>
-		<form id="dateRangeSearchForm" method="post" class="edit">
+		<form id="dateSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
-			<select id="dateType" name="dateType" class="selectform_Mlong">
+			<select id="dateType" name="dateType" class="selectform_Llong">
 				<option value="Any" selected="selected">Any</option>
 				<option value="Born after">Born after</option>
 				<option value="Died by">Died by</option>
@@ -63,8 +66,26 @@
 				<option value="month" selected="selected">month</option>
 			</select>
 			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="day" maxlength="2"/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="addDateRange">
 			<input type="hidden" id="category" value="Date">
+			<p class="invisible">and</p>
+			<input id="dateYearBetween" name="dateYear" class="input_4c" type="text" value="yyyy" maxlength="4" />
+            <select id="dateMonthBetween" name="dateMonth" class="selectform">
+            	<option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+                <option value="mm" selected="selected">mm</option>
+            </select>
+            <input id="dateDayBetween" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2"/>
 		</form>
 	</div>
 
@@ -154,17 +175,61 @@
 		</form>
 	</div>
 </div>
+</div>
 
 <script type="text/javascript">
 	$j(document).ready(function() {
 
 		$j('#namePartsSearchForm').advancedSearchForm();
 		$j('#wordSearchForm').advancedSearchForm();
-		$j('#dateRangeSearchForm').advancedSearchForm();
+		$j('#dateSearchForm').advancedSearchForm();
 		$j('#genderSearchForm').advancedSearchForm();
 		$j('#placeSearchForm').advancedSearchForm();		
 
 		
 		$j('#multiOpenAccordion').multiAccordion({active: [0]});
+
+		$j("#dateType").change(function(){
+			if(this.options[3].selected) { 
+				$j('#dateYearBetween').css('visibility','visible');
+				$j('#dateMonthBetween').css('visibility','visible');
+				$j('#dateDayBetween').css('visibility','visible');
+				$j('.invisible').css('visibility','visible');
+				$j('.visible').css('visibility','hidden');
+				$j('.addDateRange').css('margin-top','53px');
+		   } else { 
+				$j('#dateYearBetween').css('visibility','hidden');
+				$j('#dateMonthBetween').css('visibility','hidden');
+				$j('#dateDayBetween').css('visibility','hidden');
+				$j('.invisible').css('visibility','hidden');
+				$j('.visible').css('visibility','visible');
+				$j('.addDateRange').css('margin-top','5px');
+			}
+		});
+		 $j('#dateYear').focus(function(){
+				  if(this.value=='yyyy')
+					  {
+					  this.value=''
+					  }
+				 });
+		 $j('#dateYearBetween').focus(function(){
+				  if(this.value=='yyyy')
+					  {
+					  this.value=''
+					  }
+				 });
+		 $j('#dateDay').focus(function(){
+				  if(this.value=='dd')
+					  {
+					  this.value=''
+					  }
+				 });
+		 $j('#dateDayBetween').focus(function(){
+				  if(this.value=='dd')
+					  {
+					  this.value=''
+					  }
+				 });
+		
 	});
 </script>
