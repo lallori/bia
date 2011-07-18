@@ -18,7 +18,7 @@
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
-		<a id="vettingChronology" href="${ShowVettingChronologyPersonURL}">Vetting History</a>
+		<a id="vettingHistory" href="${ShowVettingChronologyPersonURL}">Vetting History</a>
 		<a id="menuActions" href="${ShowMenuActionsPersonURL}">Actions</a>
 		<a id="buttonPrint" title="Print this record" href="#"></a>
 		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
