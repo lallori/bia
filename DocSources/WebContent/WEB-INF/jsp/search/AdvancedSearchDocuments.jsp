@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<div class="customSearchFilterDiv">
+	<div id="customSearchFilterDiv">
 		<div class="customSearchFilterTitle"></div>
 		<div id="multiOpenAccordion">
 			<h1><a>Word search</a></h1>
@@ -125,7 +125,7 @@
 			<div>
 				<form id="dateSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
-					<select id="dateType" name="dateType" class="selectform_long">
+					<select id="dateType" name="dateType" class="selectform_Llong">
 						<option value="After">Written after</option>
 						<option value="Before">Written before</option>
 						<option value="Between">Written between</option>
@@ -147,7 +147,7 @@
 						<option value="December">December</option>
 					</select>
 					<input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="addDateRange">
 					<input type="hidden" id="category" value="Date">
 					<p class="invisible">and</p>
 		                <input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
@@ -167,7 +167,7 @@
 		                    <option value="December">December</option>
 		                </select>
 		                <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
-		                <input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" style="visibility:hidden" class="invisible">
+		                
 				</form>
 			</div>
 			
@@ -195,6 +195,7 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+
 			$j("#volumeType").change(function(){
 				if(this.options[1].selected) {
 					$j('#volumeBetween').css('visibility','visible'); 
@@ -212,12 +213,14 @@
 					$j('#dateDayBetween').css('visibility','visible');
 					$j('.invisible').css('visibility','visible');
 					$j('.visible').css('visibility','hidden');
+					$j('.addDateRange').css('margin-top','53px');
 			   } else { 
 					$j('#dateYearBetween').css('visibility','hidden');
 					$j('#dateMonthBetween').css('visibility','hidden');
 					$j('#dateDayBetween').css('visibility','hidden');
 					$j('.invisible').css('visibility','hidden');
 					$j('.visible').css('visibility','visible');
+					$j('.addDateRange').css('margin-top','5px');
 				}
 			});
 			
