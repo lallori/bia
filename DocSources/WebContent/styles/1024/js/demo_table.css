@@ -138,6 +138,7 @@ table.display thead th {
     font-weight: bold;
     cursor: pointer;
     * cursor: hand;
+	text-align: center;
 }
 
 table.display tfoot th {
@@ -594,13 +595,13 @@ div.box {
 	margin:0 15px 10px 0;
 }
 
-#MyDocumentsHistoryTable_info, #MyPeopleHistoryTable_info, #MyVolumeHistoryTable_info, #MyPlaceHistoryTable_info, #VettingChronologyTable_info {
+#MyDocumentsHistoryTable_info, #MyPeopleHistoryTable_info, #MyVolumeHistoryTable_info, #MyPlaceHistoryTable_info, #vettingHistoryTable_info {
 	margin-left: 10px;
 	font-size: 10px;
 	color: #888;
 }
 
-#MyDocumentsHistoryTable_paginate, #MyPeopleHistoryTable_paginate, #MyVolumeHistoryTable_paginate, #MyPlaceHistoryTable_paginate, #VettingChronologyTable_paginate {
+#MyDocumentsHistoryTable_paginate, #MyPeopleHistoryTable_paginate, #MyVolumeHistoryTable_paginate, #MyPlaceHistoryTable_paginate, #vettingHistoryTable_paginate {
 	margin-right:10px;
 }
 
