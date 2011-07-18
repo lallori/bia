@@ -18,10 +18,10 @@
 	<form:form id="EditTopicDocumentForm" cssClass="edit">
 		<fieldset>
 			<c:if test="${command.eplToId == 0}">  
-				<b>ADD NEW TOPIC</b>
+				<legend><b>ADD NEW TOPIC</b></legend>
 			</c:if>
 			<c:if test="${command.eplToId > 0}">
-				<b>EDIT TOPIC</b>
+				<legend><b>EDIT TOPIC</b></legend>
 			</c:if> 
 			<div>
 				<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic:</form:label>
