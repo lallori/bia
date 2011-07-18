@@ -550,18 +550,19 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			volumesBetween = new ArrayList<String>(command.getVolume().size());
 			
 			for (String singleWord : command.getVolume()) {
-				String[] fields = singleWord.split("\\|");
-				
-				if (fields.length == 2) {
-					volumesTypes.add(VolumeType.valueOf(fields[0]));
-					volumes.add(fields[1]);
-					volumesBetween.add("");
-				} else if (fields.length == 3){
-					volumesTypes.add(VolumeType.valueOf(fields[0]));
-					volumes.add(fields[1]);
-					volumesBetween.add(fields[2]);
-				} else {
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				if ((stringTokenizer.countTokens() == 0) || (stringTokenizer.countTokens() == 1)){
 					continue;
+				} else if (stringTokenizer.countTokens() == 2) {
+					// string format is Exactly|12
+					volumesTypes.add(VolumeType.valueOf(stringTokenizer.nextToken()));
+					volumes.add(stringTokenizer.nextToken());
+					volumesBetween.add("0");
+				} else if (stringTokenizer.countTokens() == 3) {
+					// string format is Exactly|12|16
+					volumesTypes.add(VolumeType.valueOf(stringTokenizer.nextToken()));
+					volumes.add(stringTokenizer.nextToken());
+					volumesBetween.add(stringTokenizer.nextToken());
 				}
 			}
 		} else {

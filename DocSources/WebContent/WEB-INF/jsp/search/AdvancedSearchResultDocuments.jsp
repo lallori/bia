@@ -14,7 +14,7 @@
 
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
-			$j('#result${command.searchUUID}').dataTable( {
+			$j('#${command.searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bFilter" : false,
@@ -56,7 +56,7 @@
 
 	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">REFINE THIS SEARCH</a>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="result${command.searchUUID}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
 		<thead>
 			<tr>
 				<th>Sender</th>

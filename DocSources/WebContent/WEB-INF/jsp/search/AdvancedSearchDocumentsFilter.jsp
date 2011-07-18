@@ -116,6 +116,13 @@
 			<div id="dateSearchDiv">
 			</div>
 			<div id="volumeSearchDiv">
+			<c:forEach items="${searchFilter.filterData.volumes}" varStatus="iterator">
+				<div class="searchFilterDiv">
+					<span class="categorySearch">Volume in <fmt:message key="search.documents.volumeType.${searchFilter.filterData.volumesTypes[iterator.index]}" />: </span><span class="wordSearch">${searchFilter.filterData.topics[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${searchFilter.filterData.volumesTypes[iterator.index]}|${searchFilter.filterData.volumes[iterator.index]||${searchFilter.filterData.volumesBetween[iterator.index]}" name="refersTo">
+				</div>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			</c:forEach>
 			</div>
 			<br>
 			<br>
@@ -164,15 +171,20 @@
 			});
 
 			$j("#yourEasySearchFilterForm").submit(function() {
-				/*window.opener.$('div[id*="ui-tabs-"]').each(function(index) {
-		            if($(this).hasClass('testClass'))
-		                $(this).remove();
-		            else
-		                $(this).addClass('testClass');
-		        });*/
+				// this is search url form 
 				var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
-				window.opener.$j("#tabs").tabs("add", formSubmitURL, "Advanced Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-				window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+
+				// If we found refine button of this search, user is in refine.
+				if (window.opener.$j('#tabs').find("#refine${command.searchUUID}").length==1) {
+					var index = window.opener.$j("#tabs ul li").index(window.opener.$j("li:has(a[href='#" + window.opener.$j("#tabs").find("#refine${command.searchUUID}").parent().attr("id") + "'])"))
+					window.opener.$j("#tabs").tabs("url", index, formSubmitURL);
+					window.opener.$j("#tabs").tabs("select", index);
+					window.opener.$j("#tabs").tabs("load" , index);
+				} else {
+					//otherwise it's in a new search..
+					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Advanced Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+				}
 				return false;
 			});
 		});
