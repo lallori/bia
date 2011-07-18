@@ -32,11 +32,11 @@
 		<div class="list">
 			<div class="row">
 				<div class="item">Extract</div>
-				<div class="value80">${document.synExtract.docExtract}</div>
+				<div class="value80" id="extract">${document.synExtract.docExtract}</div>
 			</div>
 			<div class="row">
 				<div class="item">Synopsis</div>
-				<div class="value80">${document.synExtract.synopsis}</div>
+				<div class="value80" id="synopsis">${document.synExtract.synopsis}</div>
 			</div>
 		</div>
 	</div>
@@ -64,6 +64,10 @@
 				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 850, height:550}); 
 				return false;
 			});
+
+			$j("#extract").html($j("#extract").text().replace(/\n\r?/g, '<br />'));
+
+			$j("#synopsis").html($j("#synopsis").text().replace(/\n\r?/g, '<br />'));
 
 		});
 	</script>
