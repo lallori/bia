@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<div id="customSearchFilterDiv">
+	<div class="customSearchFilterDiv">
 		<div class="customSearchFilterTitle"></div>
 		<div id="multiOpenAccordion">
 			<h1><a>Word search</a></h1>
@@ -150,24 +150,23 @@
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="addDateRange">
 					<input type="hidden" id="category" value="Date">
 					<p class="invisible">and</p>
-		                <input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
-		                <select id="dateMonthBetween" name="dateMonthBetween" class="selectform" style="visibility:hidden">
-		                    <option value="mm" selected="selected">mm</option>
-		                    <option value="January">January</option>
-		                    <option value="February">February</option>
-		                    <option value="March">March</option>
-		                    <option value="April">April</option>
-		                    <option value="May">May</option>
-		                    <option value="June">June</option>
-		                    <option value="July">July</option>
-		                    <option value="August">August</option>
-		                    <option value="September">September</option>
-		                    <option value="October">October</option>
-		                    <option value="November">November</option>
-		                    <option value="December">December</option>
-		                </select>
-		                <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
-		                
+	                <input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
+	                <select id="dateMonthBetween" name="dateMonthBetween" class="selectform" style="visibility:hidden">
+	                    <option value="mm" selected="selected">mm</option>
+	                    <option value="January">January</option>
+	                    <option value="February">February</option>
+	                    <option value="March">March</option>
+	                    <option value="April">April</option>
+	                    <option value="May">May</option>
+	                    <option value="June">June</option>
+	                    <option value="July">July</option>
+	                    <option value="August">August</option>
+	                    <option value="September">September</option>
+	                    <option value="October">October</option>
+	                    <option value="November">November</option>
+	                    <option value="December">December</option>
+	                </select>
+	                <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
 				</form>
 			</div>
 			
@@ -235,12 +234,12 @@
 				}
 			});
 			$j('#dateDay').focus(function() {
-				if(this.value=='yyyy') {
+				if(this.value=='dd') {
 					this.value='';
 				}
 			});
 			$j('#dateDayBetween').focus(function() {
-				if(this.value=='yyyy') {
+				if(this.value=='dd') {
 					this.value='';
 				}
 			});

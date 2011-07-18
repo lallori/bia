@@ -78,7 +78,7 @@
 
         	// Date form is composed of three fields.
     		if ($('#' + formName).find('#' + fieldName + 'Type').size() > 0) {
-    			if ($(this).find("option:selected").text() == 'Between') {
+    			if ($(this).find("option:selected").val() == 'Between') {
     				if (formName.indexOf("volume") >= 0) {
     	        		searchWord = $('#' + formName).find('#' + fieldName).val();
     	        		searchWord += ', ' + $('#' + formName).find('#' + fieldName + 'Between').val();
@@ -87,50 +87,65 @@
     	        		$('#' + formName).find('#' + fieldName).val("");
     	        		$('#' + formName).find('#' + fieldName + 'Between').val("");
     	        	} else if (formName.indexOf("date") >= 0) {
-    	        		if ($('#' + formName).find('#' + fieldName + 'Year').val() != 'dd') {
-    	        			searchWord = $('#' + formName).find('#' + fieldName + 'Year').val();
+    	        		if (($('#' + formName).find('#dateYear').val() == 'yyyy') &&
+    	        			($('#' + formName).find('#dateMonth').find('option:selected').val() == 'mm') &&
+    	        		    ($('#' + formName).find('#dateDay').val() == 'dd')) {
+    	        			return false;
     	        		}
-    	        		if ( $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').val() != 'mm') {
+    	        			
+    	        		if (($('#' + formName).find('#dateYearBetween').val() == 'yyyy') &&
+        	        		($('#' + formName).find('#dateMonthBetween').find('option:selected').val() == 'mm') &&
+        	        		($('#' + formName).find('#dateDayBetween').val() == 'dd')) {
+    	        			return false;
+    	        		}
+
+    	        		if ($('#' + formName).find('#dateYear').val() != 'yyyy')
+    	        			searchWord = $('#' + formName).find('#dateYear').val();
+    	        		if ( $('#' + formName).find('#dateMonth').find('option:selected').val() != 'mm')
     	        			searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
-    	        		}
-    	        		if ($('#' + formName).find('#' + fieldName + 'Day').val() != 'dd') {
-    	        			searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Day').val();
-    	        		}
-    	        		if ($('#' + formName).find('#' + fieldName + 'YearBetween').val() != 'dd') {
-    	        			searchWord = $('#' + formName).find('#' + fieldName + 'YearBetween').val();
-    	        		}
-    	        		if ( $('#' + formName).find('#' + fieldName + 'MonthBetween').find('option:selected').val() != 'mm') {
-    	        			searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'MonthBetween').find('option:selected').text();
-    	        		}
-    	        		if ($('#' + formName).find('#' + fieldName + 'DayBetween').val() != 'dd') {
-    	        			searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'DayBetween').val();
-    	        		}
-    	        		hiddenValue =  $(this).find("option:selected").val() + "|" + $('#' + formName).find('#' + fieldName + 'Year').val() + '|' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').val() + '|' + $('#' + formName).find('#' + fieldName + 'Day').val()+ "|" + $('#' + formName).find('#' + fieldName + 'YearBetween').val() + '|' + $('#' + formName).find('#' + fieldName + 'MonthBetween').find('option:selected').val() + '|' + $('#' + formName).find('#' + fieldName + 'DayBetween').val();
-    	        		$('#' + formName).find('#' + fieldName + 'Year').val("yyyy");
-    	        		$('#' + formName).find('#' + fieldName + 'Month').find('option:selected').val();
-    	        		$('#' + formName).find('#' + fieldName + 'Day').val("dd");
-    	        		$('#' + formName).find('#' + fieldName + 'YearBetween').val("");
-    	        		$('#' + formName).find('#' + fieldName + 'MonthBetween').find('option:selected').val();
-    	        		$('#' + formName).find('#' + fieldName + 'DayBetween').val("");
+    	        		if ($('#' + formName).find('#dateDay').val() != 'dd')
+    	        			searchWord += ' ' + $('#' + formName).find('#dateDay').val();
+    	        		searchWord += ' and'; 
+    	        		if ($('#' + formName).find('#dateYearBetween').val() != 'yyyy')
+    	        			searchWord += '  ' + $('#' + formName).find('#dateYearBetween').val();
+    	        		if ( $('#' + formName).find('#dateMonthBetween').find('option:selected').val() != 'mm')
+    	        			searchWord += ' ' + $('#' + formName).find('#dateMonthBetween').find('option:selected').text();
+    	        		if ($('#' + formName).find('#dateDayBetween').val() != 'dd')
+    	        			searchWord += ' ' + $('#' + formName).find('#dateDayBetween').val();
+
+    	        		hiddenValue =  $(this).find("option:selected").val() + "|" + 
+    	        		               $('#' + formName).find('#dateYear').val() + '|' + 
+    	        		               $('#' + formName).find('#dateMonth').find('option:selected').val() + '|' + 
+    	        		               $('#' + formName).find('#dateDay').val()+ "|" + 
+    	        		               $('#' + formName).find('#dateYearBetween').val() + '|' + 
+    	        		               $('#' + formName).find('#dateMonthBetween').find('option:selected').val() + '|' + 
+    	        		               $('#' + formName).find('#dateDayBetween').val();
+
+    	        		$('#' + formName).find('#dateYear').val("yyyy");
+    	        		$('#' + formName).find('#dateMonth').find('option:selected').val();
+    	        		$('#' + formName).find('#dateDay').val("dd");
+    	        		$('#' + formName).find('#dateYearBetween').val("yyyy");
+    	        		$('#' + formName).find('#dateMonthBetween').find('option:selected').val();
+    	        		$('#' + formName).find('#dateDayBetween').val("dd");
     	        	}
-    			} else if ($(this).find("option:selected").text() == 'Exactly') {
+    			} else if ($(this).find("option:selected").val() == 'Exactly') {
     				searchWord = $('#' + formName).find('#' + fieldName).val();
             		hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
     				$('#' + formName).find('#' + fieldName).val("");
     			} else if (formName.indexOf("date") >= 0) {
-	        		if ($('#' + formName).find('#' + fieldName + 'Year').val() != 'dd') {
-	        			searchWord = $('#' + formName).find('#' + fieldName + 'Year').val();
+	        		if ($('#' + formName).find('#dateYear').val() != 'dd') {
+	        			searchWord = $('#' + formName).find('#dateYear').val();
 	        		}
-	        		if ( $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').val() != 'mm') {
-	        			searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
+	        		if ( $('#' + formName).find('#dateMonth').find('option:selected').val() != 'mm') {
+	        			searchWord += ' ' + $('#' + formName).find('#dateMonth').find('option:selected').text();
 	        		}
-	        		if ($('#' + formName).find('#' + fieldName + 'Day').val() != 'dd') {
-	        			searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Day').val();
+	        		if ($('#' + formName).find('#dateDay').val() != 'dd') {
+	        			searchWord += ' ' + $('#' + formName).find('#dateDay').val();
 	        		}
-	        		hiddenValue =  $(this).find("option:selected").val() + "|" + $('#' + formName).find('#' + fieldName + 'Year').val() + '|' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').val() + '|' + $('#' + formName).find('#' + fieldName + 'Day').val();
-	        		$('#' + formName).find('#' + fieldName + 'Year').val("yyyy");
-	        		$('#' + formName).find('#' + fieldName + 'Month').find('option:selected').val();
-	        		$('#' + formName).find('#' + fieldName + 'Day').val("dd");
+	        		hiddenValue =  $(this).find("option:selected").val() + "|" + $('#' + formName).find('#dateYear').val() + '|' + $('#' + formName).find('#dateMonth').find('option:selected').val() + '|' + $('#' + formName).find('#dateDay').val();
+	        		$('#' + formName).find('#dateYear').val("yyyy");
+	        		$('#' + formName).find('#dateMonth').find('option:selected').val();
+	        		$('#' + formName).find('#dateDay').val("dd");
 	        	} else {
     				searchWord = $('#' + formName).find('#' + fieldName).val();
     				hiddenValue = $(this).find("option:selected").val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
@@ -172,10 +187,10 @@
             if ($("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length >0) {
             	$("#" + fieldName + "SearchDiv").find(".searchFilterDiv").last().after('<p class="andOrNotAdvancedSearch">And</p>');
             }
-
+            
             var previousCondition = false;
-            console.log("LUNGHEZZA DIV " + $("#yourEasySearchFilterForm").find("div").length);
-            $("#yourEasySearchFilterForm").find("div").each(function(index) {
+            //console.log("LUNGHEZZA DIV " + $("#yourEasySearchFilterForm").find("div").length);
+            /*$("#yourEasySearchFilterForm").find("div").each(function(index) {
             	if ($(this).attr('id') == (fieldName+"SearchDiv")) {
             		return true;            		
             	}
@@ -185,7 +200,7 @@
                 	console.log("aaaaaaaaaaaaaaaa");
             	}
             });
-
+*/
             // We append new block at the end of "field" SearchDiv 
             console.log("appending searchFilterDiv : " + searchFilterDiv);
             $("#" + fieldName + "SearchDiv").append(searchFilterDiv);

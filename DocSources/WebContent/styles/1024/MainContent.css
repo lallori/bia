@@ -117,7 +117,7 @@ h6 { /* Titles */
 	right:88px;
 }
 
-#vettingChronology { /* Actions Menu Button */
+#vettingHistory { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
 	font-size:10px;
 	padding:2px 0 0 10px;
@@ -128,7 +128,7 @@ h6 { /* Titles */
 	right:158px;
 }
 
-#buttonShareLink:hover, #menuActions:hover, #vettingChronology:hover {
+#buttonShareLink:hover, #menuActions:hover, #vettingHistory:hover {
 	text-decoration:none;
 }
 
@@ -289,16 +289,6 @@ item a{
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
-.editMoveToRubricarioForm { /* Edit FORM class */
-    font-size:11px;
-    font-family:Georgia, "Times New Roman", Times, serif;
-}
-
-.editMoveToFolioForm { /* Edit FORM class */
-    font-size:11px;
-    font-family:Georgia, "Times New Roman", Times, serif;
-}
-
 fieldset {  /* FORM BACKGROUND */
 	border: 1px solid #DCC0BA;
 	-moz-border-radius: 4px;
@@ -333,33 +323,13 @@ label {
 	color:#6d5c4d;
 }
 
-.button { /* CLOSE / SAVE / ... button */
-	background-color: #e6d0c6;
-	border:none;
-	display:inline; !important
-	color: #6d5c4d;
-}
-
-form img{ /* Red Cross used to "Delete this entry"  */
-	margin: 0 10px 0 5px;
-	height: 13px;
-	width: 13px;
-	vertical-align:middle;
-}
-
-input[type="submit"]:hover, input[type="image"]:hover { 
+input[type="submit"]:hover, input[type="image"]:hover{ 
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */
 }
 
-:hover input.submit, :hover input.image { 
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */
-}
-
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle { /* Close button on bottom left  */
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
@@ -382,20 +352,6 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	visibility:hidden;
 }
 
-#closePerson, #closeTopic, #closePlace  { /* Close button on bottom left  */
-	margin:5px auto 7px 0px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_small.png);
-	width:52px;
-	height:22px;
-	border:none;
-}
-
-#closeProfile {
-	margin-top:5px;
-}
 
 #save { /* Save button on bottom right  */
 	margin:5px auto auto 310px;
@@ -406,10 +362,6 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	width:52px;
 	height:22px;
 	border:none;
-}
-
-#saveProfile { /* Save button on bottom right  */
-	margin-left:160px;
 }
 
 #saveFilter { /* Save button on bottom right  */
@@ -439,6 +391,13 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	outline:none;
 }
 
+#AddNewValue:hover, .AddNewValue:hover, .Add:hover  {
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
 .AddNewValue2  { /* "Add New Value" Button */
 	margin:5px auto 7px 355px;
 	position:absolute;
@@ -465,6 +424,8 @@ input[type="submit"]:hover, input[type="image"]:hover {
 	height:23px;
 	border:none;
 	outline:none;
+	padding:4px 0 0 ;
+	text-align:center;
 }
 
 img.transparent {
@@ -488,48 +449,6 @@ img.transparent {
 	float:right;
 	width:auto;
 	border:1px solid #900;
-}
-
-.inputerrorsVolumeExist { /* Error Span messages */
-	color:#900;
-	font-size:10px;
-	position:absolute;
-	text-align:center;
-	padding:2px 5px 2px 5px;
-	margin: 0 0 0 88px;
-	width:210px;
-	border:1px solid #900;
-}
-
-.inputerrorsVolumeNotExist { /* Error Span messages */
-	color:#900;
-	font-size:10px;
-	position:absolute;
-	text-align:center;
-	padding:2px 5px 2px 5px;
-	margin: 0 0 0 88px;
-	width:210px;
-	border:1px solid #900;
-}
-
-.folioerrors { /* Error Span messages */
-    color:#900;
-    font-size:10px;
-    position:absolute;
-    margin:35px 0 0 45px;
-    width:160px;
-    position:absolute;
-    float: right;
-    text-align:center;
-    border:1px solid #900;
-}
-
-#modalBox .folioerrors { /* Error Span messages */
-    color:#900;
-    float: right;
-    width: 190px;
-    margin: 10px 80px 0 51px
-    position:relative;
 }
 
 -- margin da -65px a -64px
@@ -818,6 +737,10 @@ img.transparent {
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
+.selectform_Llong{ 
+	width:135px;
+}
+
 .selectform_SXlong{ /* dropdown menu class */
 	width:130px;
 	border: 1px solid #e6d0c6;
@@ -1030,55 +953,41 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 #EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm { 
 	width:485px;
 	margin:10px 0 0 0;
-	min-height:100px;
+	min-height:100px;!important
 }
 
 /* Body left Details Divs */
 #body_left #EditDetailsDocumentDiv, #body_left #EditDetailsPersonDiv, #body_left #EditDetailsVolumeDiv, #body_left #EditDetailsVolumeDiv {
 	margin-top:30px;
-	min-height:100px;
+	min-height:100px;!important
 }
 
 #EditDetailsDocumentDiv, #EditDetailsVolumeDiv {
 	margin-top:10px;
-	min-height:100px;
+	min-height:100px;!important
 }
 
 #body_left #EditDetailsPlaceDiv, #body_right #EditDetailsPlaceDiv  {
 	width:485px;
 	margin-top:0px;
-	min-height:100px;
+	min-height:100px;!important
 }
 
 /* Body right (Tabs) Details Divs */
 #body_right #EditDetailsPersonDiv, #body_right #EditDetailsDocumentDiv, #body_right #EditDetailsPlaceDiv  {
 	width:485px;
 	margin:-3px 0 0 3px;
-	min-height:100px;
+	min-height:100px;!important
 }
 
 #EditRelationshipPersonDiv { 
 	width:485px;
 	margin:0;
-	min-height:100px;
-}
-
-#EditUserProfileDiv { 
-	width:600px;
-	margin:30px 0 0 130px;
-}
-
-form#EditUserProfileForm { 
-	margin:-32px 0 0 10px;
-	width:575px;
-}
-
-#EditUserProfileForm fieldset { 
-	padding-left:20px;
+	min-height:100px;!important
 }
 
 #EditTopicsDocumentDiv { 
-	min-height:100px;
+	min-height:100px;!important
 }
 
 /* Edit Details Forms */ 
@@ -1102,13 +1011,6 @@ form#EditUserProfileForm {
 #PeopleCorrespondentsDocumentsForm {
 	width:485px;
 	margin:10px 0 0 0;
-}
-
-/* Ancors inside the Edit Forms 
-#EditCorrespondentsDocumentForm a, #EditExtSynDocumentDiv a, #EditDetailsDocumentDiv a, #EditFactCheckDocumentDiv a, #EditCorrespondentsDocumentDiv a, #EditExtractOrSynopsisDocumentDiv a, #EditDescriptionVolumeDiv a, #EditCorrespondentsVolumeDiv a, #EditContextVolumeDiv a, #EditDetailsPersonDiv a, #EditNamesPersonDiv a, #EditCorrespondentsDocumentDiv a, #EditExtSynDocumentDiv a, #EditDetailsVolumeDiv a, #EditNamesPersonDiv a, #EditTitleOccupationsPersDiv a, #EditRelationshipPersDiv a, #EditDetailsPersonForm a, #EditDetailsPlaceDiv a, #EditNamePlaceDiv a, #EditExtLinkPlaceDiv a, #EditGeoCoorPlaceDiv a, #EditFactChecksDocumentDiv a, #EditRelationshipPersonDiv a, #EditTitlesOccupationsPersonDiv a, #EditResearchNotesPersonDiv a, #SpousesPersonForm a, #TopicsDocumentForm a, #EditTopicsDocumentForm a, #EditParentsPersonDiv a, #EditChildrenPersonDiv a, #EditSpousesPersonDiv a, #AdddChildPersonForm a, #AddSpousePersonForm a, #AddNamesPersonForm a, #AddTitlesOccupationsPersonForm a, #AddPersonCorrespondentsDocumentForm a, #AddTopicsDocumentForm a, #AddExtLinkTgnPlaceForm a, #AddExtLinkMapPlaceForm a, #AddExtLinkMapSitePlaceForm a, #AddNameTgnPlaceForm a, #AddNameMapPlaceForm a, #AddNameMapSitePlaceForm a, .editvalue{ */
-	text-decoration:underline;
-	font-size:11px;
-	color:#B7958F;
 }
 
 #PeopleCorrespondentsDocumentsForm fieldset{
@@ -1143,9 +1045,6 @@ form#EditUserProfileForm {
     text-align:center;
 	font-size:10px;
 }
-
-
-
 
 /* ---------------------------------------------------- */ 
 /*
@@ -1195,7 +1094,7 @@ input.file {
 /*
 /* ------------ EditDetailsDocument ------------ */
 
-#DocumentImageNotDigitDiv { /* Document image to be digitized */
+#DocumentImageNotDigitDiv, #DocumentImageDigitDiv { /* Document image digitized or to be digitized */
     float:right; 
 	margin-right:20px;
     z-index:1;
@@ -1204,16 +1103,7 @@ input.file {
     text-align:center;
 }
 
-#DocumentImageDigitDiv { /* Document image */
-    float:right; 
-	margin-right:20px;
-    z-index:1;
-    height:160px;
-    width:120px;
-    text-align:center;
-}
-
-#ShowDocumentInManuscriptViewer {
+#ShowDocumentInManuscriptViewer { /* Bottom left icon  */
 	width:50px;
 	height:55px;
 	background:url(/DocSources/images/1024/button_openVolExplorer.png) bottom no-repeat;
@@ -1221,7 +1111,7 @@ input.file {
 	float:left;
 }
 
-#ShowDocumentInVolumeExplorer {
+#ShowDocumentInVolumeExplorer { /* Bottom right icon  */
 	width:50px;
 	height:55px;
 	background:url(/DocSources/images/1024/button_showManuscViewer.png) bottom no-repeat;
@@ -1242,11 +1132,7 @@ input.file {
 	margin-left:10px;
 }
 
-#DocYearLabel {
-	margin-left:58px;
-}
-
-#dateUndatedLabel {
+#DocYearLabel, #dateUndatedLabel {
 	margin-left:58px;
 }
 
@@ -1270,7 +1156,7 @@ input.file {
 	margin-left:23px;
 }
 
-#senderPlaceDescriptionLabel  {
+#senderPlaceDescriptionLabel, #recipientPlaceDescriptionLabel  {
 	margin-left:22px;
 }
 
@@ -1278,15 +1164,11 @@ input.file {
 	margin-left:14px;
 }
 
-#recipientPlaceDescriptionLabel {
-	margin-left:22px;
-}
-
 #bornPlaceUnsureLabel, #portraitLabel, #deathPlaceUnsureLabel {
 	margin-left:20px;
 }
 
-#personIcon, .personIcon {
+#personIcon, .personIcon { /* Show this person record icon */
 	width:14px;
 	height:14px;
 	display:inline;
@@ -1298,7 +1180,7 @@ input.file {
 	border:none;
 }
 
-#placeIcon, .placeIcon {
+#placeIcon, .placeIcon { /* Show this place record icon */
 	width:15px;
 	height:14px;
 	display:inline;
@@ -1311,7 +1193,7 @@ input.file {
 	border:none;
 }
 
-#deleteIcon, .deleteIcon {
+#deleteIcon, .deleteIcon { /* Delete this entry icon */
 	width:17px;
 	height:17px;
 	display:inline;
@@ -1324,7 +1206,7 @@ input.file {
 	border:none;
 }
 
-.preferredIconEdit {
+.preferredIconEdit { /* Preferred Role icon */
 	width:17px;
 	height:20px;
 	background:url(/DocSources/images/1024/img_preferred.png) no-repeat;
@@ -1332,27 +1214,11 @@ input.file {
 	cursor:default;
 }
 
-.Add {
-	padding:4px 0 0 13px;
-}
-
-
-#AddPersonCorrespondentsDocument {
-	margin:5px auto auto 280px;
-	padding:0;
-	cursor:pointer;
-	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_small.png);
-	width:59px;
-	height:23px;
-	border:none;
-}
-
 /* -------------------------------------- */
 /*
 /* ----- EditExtractOrSynopsisDocument ----- */
 
-.editFullscreen {
+.editFullscreen { /* Edit in Fullscreen icon */
 	background-image:url(/DocSources/images/1024/button_edit_fullscreen.png);
 	width:70px;
 	height:20px;
@@ -1361,7 +1227,7 @@ input.file {
 	display:inline;
 }
 
-.EditExtractOrSynopsisDocument {
+.EditExtractOrSynopsisDocument { /* Edit with Manuscript Transcriber icon */
 	background-image:url(/DocSources/images/1024/button_edit_mantranscriber.png);
 	width:125px;
 	height:20px;
@@ -1378,20 +1244,20 @@ input.file {
 	margin:10px 0 0 10px;
 }
 
-#closeSaveButtonsFullscreen {
-	margin:475px 0 0 363px;
-	width:110px;
+#closeSaveButtonsFullscreen { /* Close Save div container */
+	margin:475px 0 0 355px;
+	width:127px;
 	height:25px;
 	position:absolute;
 }
 
-#closeSaveButtonsFullscreen #close{
+#closeSaveButtonsFullscreen #close{ /* Close button */
 	float:left;
 	display:inline;
 	margin:0;
 }
 
-#closeSaveButtonsFullscreen #save{
+#closeSaveButtonsFullscreen #save{ /* Save button */
 	float:right;
 	display:inline;
 	margin:0;
@@ -1408,23 +1274,6 @@ input.file {
 	position:absolute;
 	background-repeat:no-repeat;
 	margin:5px 0 0 10px;
-}
-
-#AddTopicDocument { /* "Add New ..." Button */
-	background-image: url(/DocSources/images/1024/button_small.png);
-	border:none;
-	margin:5px auto auto 280px;
-	width:59px;
-	height:23px;
-	border:none;
-	padding:0;
-	background-color:transparent;
-}
-
-#AddTopicDocument:hover {
-	opacity:0.5; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.5;
-	filter:alpha(opacity=50); /* IE */ !important
 }
 
 #topicLabel {
@@ -1475,10 +1324,6 @@ input.file {
 }
 
 #midPrefixLabel {
-	margin-left:26px;
-}
-
-#middleLabel {
 	margin-left:38px;
 }
 
@@ -1490,7 +1335,7 @@ input.file {
 	margin-left:15px;
 }
 
-#postLastPrefixLabel {
+#postLastPrefixLabel, #bornDateBcLabel {
 	margin-left:22px;
 }
 
@@ -1510,15 +1355,11 @@ input.file {
 	margin-left:56px;
 }
 
-#bornDateBcLabel {
-	margin-left:22px;
-}
-
 #bornPlaceDescriptionLabel, #deathPlaceDescriptionLabel {
 	margin-left:67px;
 }
 
-#activeStartLabel, #deathActiveLabel {
+#activeStartLabel, #deathActiveLabel, #midPrefixLabel {
 	margin-left:26px;
 }
 
@@ -1673,7 +1514,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	color: #B7958F;
 	display:inline;
 }
-
 
 
 /* -------------------------------------- */
@@ -2051,7 +1891,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	height:22px;
 }
 
-
 #flipItInFullScreen:hover, #volumeSummary:hover, .refreshVolumeExplorer:hover {
 	text-decoration:none;
 }
@@ -2227,14 +2066,6 @@ a.refreshVolumeExplorer {
 	cursor:pointer;
 }
 
-#CloseButtonRight {
-	margin:10px 0 0 545px;
-}
-
-#CloseButtonRight #close{
-	margin:0 0 5px 60px;
-}
-
 #modalBox #closeModal {
 	margin:10px 0 0 320px;
 	width:150px;
@@ -2256,7 +2087,6 @@ a.refreshVolumeExplorer {
 #transcribe a:hover, #chooseDiv a:hover, #gobackvolumeDiv a:hover   {
 	text-decoration:none;
 }
-
 
 #modalBox #chooseDiv{
 	margin:0 0 0 50px;
@@ -2523,7 +2353,7 @@ a.refreshVolumeExplorer {
 	margin:0 0 5px -25px;	
 }
 
-#userProfile{ /* My Profile Div Container */
+#userProfile { /* My Profile Div Container */
 	font-size:11px;	
 	float:left;
 	margin:5px 0 0 10px;
@@ -2562,6 +2392,20 @@ a.refreshVolumeExplorer {
 #helpProfile h1, #aboutmapProfile h1{
 	text-align:center;
 	color:#6D2323;
+}
+
+#EditUserProfileDiv { 
+	width:600px;
+	margin:30px 0 0 130px;
+}
+
+form#EditUserProfileForm { 
+	margin:-32px 0 0 10px;
+	width:575px;
+}
+
+#EditUserProfileForm fieldset { 
+	padding-left:20px;
 }
 
 #EditUserProfileDiv .list {
@@ -2989,9 +2833,10 @@ a.refreshVolumeExplorer {
 
 #dateYearBetween {
 	margin-left:176px;
+	visibility:hidden;
 }
 
-#dateRangeForm p {
+#dateSearchForm p {
 	visibility:hidden; 
 	margin:0 0 0 260px;
 }
@@ -3000,6 +2845,10 @@ a.refreshVolumeExplorer {
 	visibility:hidden; 
 	margin:0;
 	display:inline;
+}
+
+#dateMonthBetween, #dateDayBetween, .invisible {
+	visibility:hidden;
 }
 
 
@@ -3031,7 +2880,7 @@ a.refreshVolumeExplorer {
 	font-weight:normal;
 }
 
-#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #VettingChronologyDiv a.helpIcon { /* Help symbol "?" */
+#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #vettingHisttoryDiv a.helpIcon { /* Help symbol "?" */
 	border: 1px solid #6D5C4D;
 	color:  #6D5C4D; 
 	font-size: 12px; 
@@ -3155,7 +3004,7 @@ span.categorySearch {
 	margin-right:5px;
 }
 
-#wordSearchDiv .searchFilterDiv a, #extractSearchDiv .searchFilterDiv a, #synopsisSearchDiv .searchFilterDiv a, #personSearchDiv .searchFilterDiv a, #placeSearchDiv .searchFilterDiv a, #senderSearchDiv .searchFilterDiv a, #fromSearchDiv .searchFilterDiv a, #recipientSearchDiv .searchFilterDiv a, #toSearchDiv .searchFilterDiv a, #refersToSearchDiv .searchFilterDiv a, dateSearchDiv, #topicSearchDiv .searchFilterDiv a, #dateSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a {
+#wordSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #topicsSearchDiv .searchFilterDiv a, #wordSearchDiv .searchFilterDiv a, #extractSearchDiv .searchFilterDiv a, #synopsisSearchDiv .searchFilterDiv a, #personSearchDiv .searchFilterDiv a, #placeSearchDiv .searchFilterDiv a, #senderSearchDiv .searchFilterDiv a, #fromSearchDiv .searchFilterDiv a, #recipientSearchDiv .searchFilterDiv a, #toSearchDiv .searchFilterDiv a, #refersToSearchDiv .searchFilterDiv a, dateSearchDiv, #topicSearchDiv .searchFilterDiv a, #dateSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a{
 	font-size:11px;
 	color:#900;
 }
@@ -3640,19 +3489,19 @@ table#savedSearchFiltersForm.display {
 /* -------------------------------------------------------------------------- */
 /*
 /*
-/* -------------------------- VETTING CHRONOLOGY MODAL ----------------------------- */
+/* -------------------------- VETTING HISTORY MODAL ----------------------------- */
 
-#VettingChronologyTable {
+#vettingHistoryTable {
 	margin-left:10px;
 	width:710px;
 }
 
-#VettingChronologyButtons {
+#vettingHistoryButtons {
 	width:52px;
 	margin:60px 0 0 360px;
 }
 
-#VettingChronologyButtons #close {
+#vettingHistoryButtons #close {
 	float:right;
 	cursor:pointer;
 	background-color:transparent;
@@ -3708,5 +3557,3 @@ ul#network a {
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */
 }
-
-
