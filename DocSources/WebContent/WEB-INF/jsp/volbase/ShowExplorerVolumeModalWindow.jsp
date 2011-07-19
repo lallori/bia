@@ -76,6 +76,7 @@
 	</c:url>
 	
 	<div id="modalBox">
+		<h6>VOLUME EXPLORER</h6>
 		<div id="prevNextButtons">
 		<c:if test="${volumeExplorer.total > 0}">
 			<div id="previousPage">
@@ -123,12 +124,11 @@
 		<div>
 		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="folioerrors"/></form:form>
 		</div>
+		<br />
 		
 	<div id="volumeExplorerButtons">
 	<c:if test="${volumeExplorer.totalRubricario > 0}">
-		<br/>&nbsp;
-		<br/>&nbsp;
-				
+					
 		<div id="rubricarioModalMoveTo">
 			<div id="rubricarioModalCountForm">
 				<b>Index of Names Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalRubricario}</label>
@@ -156,7 +156,7 @@
 	</c:if>
 	
 		<br/>
-		<br/>
+		
 		
 		<div id="folioModalMoveTo">
 
