@@ -113,6 +113,7 @@
 				return false;
 			});
 			
+			//For check if already exsist a tab with volume explorer
 			$j("#ShowVolumeExplorer").click(function(){
 				var tabName = "Volume Explorer ${volume.volNum}${volume.volLetExt}";
 				var tabExist = false;
