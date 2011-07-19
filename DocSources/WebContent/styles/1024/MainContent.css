@@ -369,7 +369,8 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
-	background-image:url(/DocSources/images/1024/button_save.png);
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	text-align:center;
 	width:52px;
 	height:22px;
 	border:none;
@@ -389,6 +390,10 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	height:23px;
 	border:none;
 	outline:none;
+}
+
+#PeopleCorrespondentsDocumentsForm #AddNewValue {
+	margin: 5px auto 7px 365px;
 }
 
 #AddNewValue:hover, .AddNewValue:hover, .Add:hover  {
@@ -1119,13 +1124,16 @@ input.file {
 	float:right;
 }
 
-/* Input positions */
-#volumeLabel{
-	margin-left:105px;
+/* Input positions }*/
+
+#entryIdLabel {
+	margin:10px 0 0 112px;
+	width:120px;
+	float:left;
 }
 
-#entryIdLabel{
-	margin-left:111px;
+#volumeLabel{
+	margin-left:40px;
 }
 
 #folioNumLabel {
@@ -1533,7 +1541,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	margin-left:7px;
 }
 
-#startMonthLabel {
+#startMonthNumLabel {
 	margin-left:5px;
 }
 
@@ -1545,7 +1553,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	margin-left:8px;
 }
 
-#endMonthLabel {
+#endMonthNumLabel {
 	margin-left:13px;
 }
 
@@ -1562,7 +1570,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 /*
 /* ------------- EditDescriptionVolume ------------- */
 
-#orgCriteriaDiv {
+#orgNotesLabel {
+	float:left;
 	margin-top:5px;
 }
 
@@ -1574,11 +1583,11 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	margin-left:29px;
 }
 
-#foliosNumLabel {
+#folsNumbrdLabel {
 	margin-left:111px;
 }
 
-#alphaIndexLabel {
+#oldAlphaIndexLabel {
 	margin-left: 55px;
 }
 
@@ -1586,16 +1595,25 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	margin-left:75px;
 }
 
-#languagesDiv {
-	margin-bottom:15px;
+#languagesLabel {
+	float:left;
+	margin:0 300px 10px 0;
 }
 
 #italianLabel, #spanishLabel {
 	margin-left:50px;
 }
 
-#frenchLabel, #germanLabel, #latinLabel, #englishLabel {
+#frenchLabel, #germanLabel {
 	margin-left:5px;
+}
+
+#latinLabel {
+	margin-left:7px;
+}
+
+#englishLabel {
+	margin-left:10px;
 }
 
 /* ------------------------------------------------- */ 
@@ -3357,7 +3375,8 @@ table#savedSearchFiltersForm.display {
 }
 
 #fromLabel {
-	margin-right:23px;
+	float:left;
+	margin:5px 0 0 0;
 }
 
 #toSearchLabel {
@@ -3368,7 +3387,7 @@ table#savedSearchFiltersForm.display {
 	margin-right:5px;
 }
 
-#personLabel, #placeLabel, #senderLabel, #fromLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel {
+#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel {
 	margin-left:7px;
 }
 
@@ -3557,3 +3576,5 @@ ul#network a {
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */
 }
+
+

@@ -918,3 +918,18 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  */
 .ui-progressbar { height:2em; text-align: left; }
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
+
+
+/*
+ * Added by Joana Amill Luzondo
+ */
+ 
+.refine { /* Refine this search button on Advanced Search Tab */
+ 	float:right;
+	margin-top:10px;
+	width:122px;
+	height:22px;
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+ }
