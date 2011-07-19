@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<div class="customSearchFilterDiv">
+	<div id="customSearchFilterDiv">
 		<div class="customSearchFilterTitle"></div>
 		<div id="multiOpenAccordion">
 			<h1><a>Word search</a></h1>
