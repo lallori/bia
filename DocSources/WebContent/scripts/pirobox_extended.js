@@ -63,7 +63,7 @@
 		'<a href="#next" class="piro_next" title="next"></a>'+
 		'<div class="piro_prev_fake">prev</div>'+
 		'<div class="piro_next_fake">next</div>'+
-		'<div class="piro_close" title="close"></div>'+
+		'<div class="piro_close" title="close"><p>Close</p></div>'+
 		'</div>'+
 		'<div class="caption"></div>'+
 		'<div class="div_reg"></div>'+
@@ -107,7 +107,7 @@
 		$('.nav_container').hide();
 		c.preventDefault();
 		piro_next.add(piro_prev).hide();
-		var obj_count = parseInt($('a[class*="pirobox_gall"]').filter('.item').attr('rev'));
+		var obj_count = parseInt($('a[class*="pirobox_gall"]').filter('.itemP').attr('rev'));
 		var start = $(this).is('.piro_prev') ? $('a[class*="pirobox_gall"]').eq(obj_count - 1) : $('a[class*="pirobox_gall"]').eq(obj_count + 1);
 		start.click();
 	});
@@ -118,14 +118,14 @@
 		}
 	});
 	$('html').bind('keyup' ,function(e) {
-		 if ($('.item').is('.first')){
+		 if ($('.itemP').is('.first')){
 		}else if(e.keyCode == 37){
 		e.preventDefault();
 			if($(piro_close).is(':visible')){piro_prev.click();}
 		 }
 	});
 	$('html').bind('keyup' ,function(z) {
-		if ($('.item').is('.last')){
+		if ($('.itemP').is('.last')){
 		}else if(z.keyCode == 39){
 		z.preventDefault();
 			if($(piro_close).is(':visible')){piro_next.click();}
@@ -166,8 +166,8 @@
 			piro_bg.css({'opacity':opt.bg_alpha});	
 			e.preventDefault();
 			piro_next.add(piro_prev).hide().css('visibility','hidden');
-			$(piro_gallery).filter('.item').removeClass('item');
-			$(this).addClass('item');
+			$(piro_gallery).filter('.itemP').removeClass('itemP');
+			$(this).addClass('itemP');
 			open_all();
 			if($(this).is('.first')){
 				piro_prev.hide();
