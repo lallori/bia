@@ -8,11 +8,12 @@
 	<div class="title">
 		<h5>PERSON DETAILS</h5>
 	</div>
+	<h3>${person.mapNameLf}</h3>
 	<div id="EditPortraitPersonDiv">
 		<div id="imgPortraitPerson"></div>
 		<p style="text-align:center"><b>Portrait</b></p>
 	</div>
-	<h3>${person.mapNameLf}</h3>
+	
 	<div class="listDetails">
 		<div class="row">
 			<div class="item">Gender</div> <div class="value">${person.gender}</div>

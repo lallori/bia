@@ -28,7 +28,7 @@
 				<c:param name="childId" value="${person.personId}" />
 			</c:url>
 			<div>
-				Father:
+				Father
 			<c:if test="${not empty father}">
       			<input id="father" name="father" class="input_28c_disabled" type="text" value="${father.parent}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteFatherPersonURL}"></a>
@@ -57,7 +57,7 @@
 			</c:url>
 
 			<div>
-				Mother: 
+				Mother 
 			<c:if test="${not empty mother}">
       			<input id="mother" name="mother" class="input_28c_disabled" type="text" value="${mother.parent}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteMotherPersonURL}"></a>

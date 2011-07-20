@@ -58,7 +58,7 @@
 					<form:label for="bornYear" id="bornYearLabel" path="bornYear" cssErrorClass="error">Year</form:label>
 					<form:input id="bornYear" path="bornYear" cssClass="input_4c" maxlength="4"/>
 					<form:label for="bornMonth" id="bornMonthLabel" path="bornMonth" cssErrorClass="error">Month</form:label>
-					<form:select id="bornMonth" path="bornMonth" cssClass="selectform"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+					<form:select id="bornMonth" path="bornMonth" cssClass="selectform_long"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 					<form:label for="bornDay" id="bornDayLabel" path="bornDay" cssErrorClass="error">Day</form:label>
 					<form:input id="bornDay" path="bornDay" cssClass="input_2c" maxlength="2"/>
 				</div>
@@ -90,7 +90,7 @@
 					<form:label for="deathYear" id="deathYearLabel" path="deathYear" cssErrorClass="error">Year</form:label>
 					<form:input id="deathYear" path="deathYear" cssClass="input_4c" maxlength="4"/>
 					<form:label id="deathMonthLabel" for="deathMonth" path="deathMonth" cssErrorClass="error">Month</form:label>
-					<form:select id="deathMonth" path="deathMonth" cssClass="selectform"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+					<form:select id="deathMonth" path="deathMonth" cssClass="selectform_long"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 					<form:label for="deathDay" id="deathDayLabel" path="deathDay" cssErrorClass="error">Day</form:label>
 					<form:input id="deathDay" path="deathDay" cssClass="input_2c" maxlength="2"/>
 				</div>

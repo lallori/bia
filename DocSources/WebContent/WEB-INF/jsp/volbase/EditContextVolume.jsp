@@ -6,7 +6,7 @@
 
 	<form:form id="EditContextVolumeForm" method="post" cssClass="edit">
 		<fieldset>
-			<legend><b>Context</b></legend>
+			<legend><b>CONTEXT</b></legend>
 			<div><form:label for="ccontext" id="ccontextLabel" path="ccontext">Context</form:label></div>
 			<div><form:textarea path="ccontext" cssClass="txtarea_medium"/><form:errors path="ccontext" cssClass="inputerrors"/></div>
 			<br />
@@ -15,7 +15,7 @@
 
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+				<input id="save" type="submit" value="Save"/>
 			</div>
 			<form:hidden path="summaryId"/>
 		</fieldset>

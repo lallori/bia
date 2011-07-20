@@ -23,12 +23,12 @@
 			</c:if> 
 			</legend>
 			<div>
-				<form:label id="altNameLabel" for="altName" path="altName" cssErrorClass="error">Name:</form:label>
+				<form:label id="altNameLabel" for="altName" path="altName" cssErrorClass="error">Name</form:label>
 				<form:input path="altName" class="input_30c" />
 			</div>
 			<div>
-				<form:label id="nameTypeLabel" for="nameType" path="nameType" cssErrorClass="error">NameType:</form:label>
-				<form:select path="nameType" cssClass="selectform_long" items="${nameTypes}"/>
+				<form:label id="nameTypeLabel" for="nameType" path="nameType" cssErrorClass="error">NameType</form:label>
+				<form:select path="nameType" cssClass="selectform_Mlong" items="${nameTypes}"/>
 			</div>
 			<div>
 				<input id="closePerson" type="submit" value="Close" title="do not save changes" class="button" />

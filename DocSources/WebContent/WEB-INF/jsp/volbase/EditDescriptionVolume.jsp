@@ -51,7 +51,8 @@
 				<form:label id="germanLabel" for="german" path="german" cssErrorClass="error">German</form:label>
 				<form:checkbox path="german" cssClass="checkbox1" /><form:errors path="german" cssClass="inputerrors"/>
 			</div>
-				
+			
+			<br />
 			<div>
 				<form:label id="spanishLabel" for="spanish" path="spanish" cssErrorClass="error">Spanish</form:label>
 				<form:checkbox path="spanish" cssClass="checkbox2" /><form:errors path="spanish" cssClass="inputerrors"/>
@@ -60,6 +61,8 @@
 				<form:label id="englishLabel" for="english" path="english" cssErrorClass="error">English</form:label>
 				<form:checkbox path="english" cssClass="checkbox1" /><form:errors path="english" cssClass="inputerrors"/>
 			</div>
+			
+			<br />
 	
 			<div>				
 				<form:label id="otherLangLabel" for="otherLang" path="otherLang" cssErrorClass="error">Other languages</form:label>
@@ -72,7 +75,7 @@
 				<form:label id="cipherLabel" for="cipher" path="cipher" cssErrorClass="error">Some Docs in Cipher</form:label>
 				<form:select path="cipher" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="cipher" cssClass="inputerrors"/>
 			</div>
-			
+			<br />
 			<div><form:label id="cipherNotesLabel" for="cipherNotes" path="cipherNotes" cssErrorClass="error">Cipher Notes</form:label></div>
 			<div><form:textarea path="cipherNotes" cssClass="txtarea"/><form:errors path="cipherNotes" cssClass="inputerrors"/></div>
 	

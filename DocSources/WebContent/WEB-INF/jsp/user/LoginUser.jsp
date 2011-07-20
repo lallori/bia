@@ -52,7 +52,10 @@
 				<form name="LoginGuest"  action="<c:url value="/loginProcess" />" method="post"><input id="register" type="image" src="<c:url value="/images/1024/img_transparent.png"/>" alt="LoginGuest" title="Login as guest"/><input type="hidden" name="j_username" value="guest" /><br/><input type="hidden" name="j_password" value="guest" /></form>
 			</div>
 			
-			<div id="footer"></div>
+			<div id="footer">
+				<a href="http://www.archivi.beniculturali.it" target="_blank" class="dga"><img src="<c:url value="/images/1024/img_dga.png"/>" alt="DGA" /></a>
+				<a href="http://www.archiviodistato.firenze.it" target="_blank" class="archivio"><img src="<c:url value="/images/1024/img_archivio.png"/>" alt="Archivio di Stato di Firenze"></a>
+			</div>
 			
 			<script type="text/javascript">
 			$j(document).ready( function(){
