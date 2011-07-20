@@ -176,12 +176,13 @@
 
 				// If we found refine button of this search, user is in refine.
 				if (window.opener.$j('#tabs').find("#refine${command.searchUUID}").length==1) {
-					var index = window.opener.$j("#tabs ul li").index(window.opener.$j("li:has(a[href='#" + window.opener.$j("#tabs").find("#refine${command.searchUUID}").parent().attr("id") + "'])"))
+					// calculate tab position
+					var index = window.opener.$j("#tabs ul li").index(window.opener.$j("li:has(a[href='#" + window.opener.$j("#tabs").find("#refine${command.searchUUID}").parent().attr("id") + "'])"));
 					window.opener.$j("#tabs").tabs("url", index, formSubmitURL);
 					window.opener.$j("#tabs").tabs("select", index);
 					window.opener.$j("#tabs").tabs("load" , index);
 				} else {
-					//otherwise it's in a new search..
+					//otherwise it's in a new search so we add a new tab.
 					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Advanced Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
 				}

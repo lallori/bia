@@ -259,19 +259,6 @@
 			$j("#refersToSearchForm").advancedSearchForm();
 
 			$j('#multiOpenAccordion').multiAccordion({active: [0]});
-			$j("#topic").autocompleteGeneral({
-				serviceUrl: '${searchTopicURL}',
-				minChars: 1,
-				delimiter: null,
-				maxHeight: 400,
-				width: 200,
-				zIndex: 9999,
-				deferRequestBy: 0,
-				noCache: true,
-				onSelect: function(value, data){
-					$j('#topicId').val(data);
-				}
-			});	
 			$j("#person").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
@@ -363,6 +350,19 @@
 					$j('#refersToId').val(data);
 				}
 			});
+			$j("#topic").autocompleteGeneral({
+				serviceUrl: '${searchTopicURL}',
+				minChars: 1,
+				delimiter: null,
+				maxHeight: 400,
+				width: 200,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#topicId').val(data);
+				}
+			});	
 		});
 
 	</script>
