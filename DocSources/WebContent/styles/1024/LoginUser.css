@@ -37,6 +37,13 @@ body {
 	background:url(/DocSources/images/1024/img_logoLoginUser.png) no-repeat;
 }
 
+.dga {
+	float:left;
+}
+
+.archivio {
+	float:right;
+}
 
 
 /* DIV Log in */

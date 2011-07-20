@@ -266,6 +266,12 @@ item a{
 	padding:3px 10px 3px 0; 
 }
 
+/* Bottom Div Containers */
+#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditSendRecipPlaceDiv {
+	margin-bottom:30px;!important
+}
+
+
 /* ----------------------------------------------------- */ 
 /*
 /* ------------------- ADJUST PLACE ---------------------------- */ 
@@ -955,7 +961,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOccupationsPersonDiv, #EditResearchNotesPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm { 
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditResearchNotesPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm { 
 	width:485px;
 	margin:10px 0 0 0;
 	min-height:100px;!important
@@ -991,7 +997,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;!important
 }
 
-#EditTopicsDocumentDiv { 
+#EditTopicsDocumentDiv, #EditTitlesOrOccupationsPersonForm, #EditParentsPersonForm, #EditChildrenPersonForm, #EditSpousesPersonForm, #EditResearchNotesPersonForm { 
 	min-height:100px;!important
 }
 
@@ -1328,11 +1334,15 @@ input.file {
 }
 
 #sucNumLabel {
-	margin-left:13px;
+	margin-left: 9px;
 }
 
 #midPrefixLabel {
 	margin-left:38px;
+}
+
+#middleLabel {
+	margin-left: 34px;
 }
 
 #lastPrefixLabel {
@@ -1340,7 +1350,7 @@ input.file {
 }
 
 #lastLabel {
-	margin-left:15px;
+	margin-left: 11px;
 }
 
 #postLastPrefixLabel, #bornDateBcLabel {
@@ -1348,7 +1358,7 @@ input.file {
 }
 
 #postLastLabel {
-	margin-left:34px;
+	margin-left: 30px;
 }
 
 #genderLabel {
@@ -1367,8 +1377,12 @@ input.file {
 	margin-left:67px;
 }
 
-#activeStartLabel, #deathActiveLabel, #midPrefixLabel {
+#activeStartLabel, #midPrefixLabel {
 	margin-left:26px;
+}
+
+#activeEndLabel {
+	margin-left:34px;
 }
 
 #deathYearLabel {
@@ -1376,11 +1390,11 @@ input.file {
 }
 
 #linkLabel  {
-	margin-left:11px;
+	margin-left: 8px;
 }
 
 #browseLabel {
-	margin-left:58px;
+	margin-left: 55px;
 }
 
 /* -------------------------------------- */
@@ -1503,7 +1517,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 }
 
 #deathMonthLabel, #deathDayLabel, #bornMonthLabel, #bornDayLabel {
-	margin-left:22px;
+	margin-left:19px;
 }
 
 #ageAtDeathLabel {
@@ -1614,6 +1628,25 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 
 #englishLabel {
 	margin-left:10px;
+}
+
+/* ------------------------------------------------- */ 
+/*
+/* ------------- Correspondents ------------- */
+
+#EditCorrespondentsVolumeForm #fromLabel {
+	float:left;
+	margin:5px 0 0 0;
+}
+
+
+/* ------------------------------------------------- */ 
+/*
+/* ------------- Context ------------- */
+
+#contextLabel {
+	margin-top:5px;
+	float:left;
 }
 
 /* ------------------------------------------------- */ 
@@ -3374,9 +3407,8 @@ table#savedSearchFiltersForm.display {
 	margin-right:13px;
 }
 
-#fromLabel {
-	float:left;
-	margin:5px 0 0 0;
+#fromSearchForm #fromLabel {
+	margin-right:22px;
 }
 
 #toSearchLabel {
@@ -3387,7 +3419,7 @@ table#savedSearchFiltersForm.display {
 	margin-right:5px;
 }
 
-#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel {
+#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel {
 	margin-left:7px;
 }
 
