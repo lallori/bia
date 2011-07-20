@@ -42,7 +42,6 @@ import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.hibernate.transform.Transformers;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.TitleOccsList;

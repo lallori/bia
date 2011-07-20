@@ -27,8 +27,6 @@
  */
 package org.medici.docsources.common.volume;
 
-import java.util.List;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)

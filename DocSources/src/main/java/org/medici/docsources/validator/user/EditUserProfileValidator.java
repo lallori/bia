@@ -28,7 +28,6 @@
 package org.medici.docsources.validator.user;
 
 import org.medici.docsources.command.user.EditUserProfileCommand;
-import org.medici.docsources.command.user.UpdateUserCommand;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;

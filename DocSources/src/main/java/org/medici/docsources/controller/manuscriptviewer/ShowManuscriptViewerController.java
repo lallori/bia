@@ -27,15 +27,11 @@
  */
 package org.medici.docsources.controller.manuscriptviewer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.manuscriptviewer.ShowManuscriptViewerRequestCommand;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;

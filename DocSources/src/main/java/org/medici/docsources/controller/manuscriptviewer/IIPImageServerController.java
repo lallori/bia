@@ -28,9 +28,7 @@
 package org.medici.docsources.controller.manuscriptviewer;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -53,7 +51,6 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.media.jai.Interpolation;
 import javax.media.jai.JAI;
-import javax.media.jai.OpImage;
 import javax.media.jai.RenderedOp;
 import javax.media.jai.operator.ScaleDescriptor;
 import javax.servlet.ServletOutputStream;
@@ -83,7 +80,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sun.media.jai.codec.ImageCodec;
 import com.sun.media.jai.codec.ImageEncoder;
 import com.sun.media.jai.codec.JPEGEncodeParam;
-import com.sun.media.jai.codec.SeekableStream;
 
 /**
  * This controller is a proxy to IIPImage Server. It's used to not expose 
@@ -600,6 +596,7 @@ public class IIPImageServerController {
 	 * 
 	 * @deprecated
 	 */
+	@SuppressWarnings("unused")
 	private void manageTilesInformationApache(HttpServletRequest httpServletRequest, HttpServletResponse response) {
         String imageWidth = "";
         String imageHeight = "";

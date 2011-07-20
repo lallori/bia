@@ -31,10 +31,8 @@ package org.medici.docsources.audit;
 import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.ThrowsAdvice;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BeanPropertyBindingResult;
 
 /**

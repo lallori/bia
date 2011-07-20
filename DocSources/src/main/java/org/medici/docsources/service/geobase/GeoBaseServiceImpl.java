@@ -29,10 +29,6 @@ package org.medici.docsources.service.geobase;
 
 import java.util.List;
 
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.AdvancedSearch;
-import org.medici.docsources.common.search.SimpleSearch;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.domain.Place;
