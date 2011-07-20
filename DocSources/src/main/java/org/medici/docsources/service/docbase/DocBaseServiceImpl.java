@@ -339,7 +339,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			else
 				documentToUpdate.setRecipientPeople(null);
 			documentToUpdate.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
-			if (document.getSenderPlace().getPlaceAllId() > 0)
+			if (document.getRecipientPlace().getPlaceAllId() > 0)
 				documentToUpdate.setRecipientPlace(getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId()));
 			else
 				documentToUpdate.setRecipientPlace(null);
