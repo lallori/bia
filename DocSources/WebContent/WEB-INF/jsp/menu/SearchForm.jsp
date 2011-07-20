@@ -21,7 +21,7 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {
 						$j("#SearchForm").submit(function() {
-							var title = $j('option:selected').text();
+							var title = $j('#searchType').find('option:selected').text();
 							title = title.replace('s','');
 							var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 							$j( "#tabs" ).tabs( "add" , formSubmitURL, title + " Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
