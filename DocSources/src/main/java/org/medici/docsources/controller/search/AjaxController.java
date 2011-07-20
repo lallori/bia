@@ -525,6 +525,8 @@ public class AjaxController {
 
 			if (currentDocument.getDocYear() != null) 
 				singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			else
+				singleRow.add("");
 			
 			if (currentDocument.getSenderPlace() != null)
 				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
