@@ -16,7 +16,7 @@
 				<option value="${searchFilter.id}">${searchFilter.filterName}</option>
 		    </c:forEach>
 	        </select>
-	        <input id="saveFilter" type="submit" value="" title="Save your filter" />
+	        <input id="saveFilter" type="submit" value="Save" title="Save your filter" />
 	     </form:form>
 	</div>
 
