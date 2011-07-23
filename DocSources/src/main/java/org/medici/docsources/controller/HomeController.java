@@ -27,6 +27,9 @@
  */
 package org.medici.docsources.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,8 +51,9 @@ public class HomeController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
-		//TODO : implement business invocation to retrieve statistics
-		
-		return new ModelAndView("Home");
+		Map<String, Object> model = new HashMap<String, Object>();
+		// We need genders enumeration to populate relative combo-box
+		model.put("searchTypes", SearchType.values());		
+		return new ModelAndView("Home", model);
 	}
 }

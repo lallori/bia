@@ -1,37 +1,41 @@
 /**
-*  Advanced	Search plugin for jQuery, version 1.0
+*  Advanced Search plugin for jQuery, version 1.0
  * 
- * Developed by	Medici Archive Project (2010-2012).
+ * Developed by Medici Archive Project (2010-2012).
  * 
- * This	file is	part of	DocSources.
+ * This file is part of DocSources.
  * 
- * DocSources is free software;	you can redistribute it	and/or modify
- * it under the terms of the GNU General Public	License	as published by
- * the Free Software Foundation; either version	2 of the License, or
+ * DocSources is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  * 
  * DocSources is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A	PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
  * along with this library; if not, write to the Free Software
- * Foundation, Inc., 51	Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * As a	special	exception, if you link this library with other files to
+ * As a special exception, if you link this library with other files to
  * produce an executable, this library does not by itself cause the
- * resulting executable	to be covered by the GNU General Public	License.
- * This	exception does not however invalidate any other reasons	why the
+ * resulting executable to be covered by the GNU General Public License.
+ * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  * 
- * Last	Review:	02/18/2011
+ * Last Review: 07/23/2011
 */
 (function ($) {
 
+	$.fn.reverse = function() {
+	    return this.pushStack(this.get().reverse(), arguments);
+	};
+
 	$.advancedSearchForm = {};
 
-	$.advancedSearchForm.defaults =	{
+	$.advancedSearchForm.defaults = {
 	};
 
 	$.fn.advancedSearchForm = function (options) {
@@ -39,20 +43,20 @@
 
 		addListenerRemoveCondition();
 		
-		// We manage submit	button to populate right frame
-		$(this).submit(function	(event) {
-			//Prevent the browser's	default	onClick	handler
+		// We manage submit button to populate right frame
+		$(this).submit(function (event) {
+			//Prevent the browser's default onClick handler
 			event.preventDefault();
 
-			// Extract form	Name
+			// Extract form Name
 			var formName = $(this).attr('id');
-			//Extracting field on which	this form works	on.
-			var fieldName =	getSearchFieldName($(this));
+			//Extracting field on which this form works on.
+			var fieldName = getSearchFieldName($(this));
 			var searchType = getSearchType(formName, fieldName);
 
-			console.log("AdvancedSearchForm	started. Form Name : " + formName);
+			console.log("AdvancedSearchForm started. Form Name : " + formName);
 			console.log("Field Name	: " + fieldName);
-			console.log("Search	Type : " + searchType);
+			console.log("Search Type : " + searchType);
 
 			var searchWord = "";
 			var hiddenValue = "";
@@ -79,7 +83,7 @@
 					if ($(this).find("option:selected").val() == 'Between') {
 						searchWord = getSearchWordForBetweenField(formName, fieldName);
 						hiddenValue = $(this).find("option:selected").val() + "|" + $('#' + formName).find('#' + fieldName).val() + '|' + $('#' + formName).find('#' + fieldName + 'Between').val();
-						//Reset	input fields
+						//Reset input fields
 						resetBetweenField(formName, fieldName);
 					} else if ($(this).find("option:selected").val() == 'Exactly') {
 						searchWord = $('#' + formName).find('#' + fieldName).val();
@@ -99,8 +103,8 @@
 			console.log("Searching : " + searchWord);
 			console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
 
-			// We construct	new html block with	condition and hidden field 
-			var searchFilterDiv = getSearchFilterDiv(searchType, searchWord, fieldName, hiddenValue);
+			// We construct new html block with condition and hidden field 
+			var searchFilterDiv = getSearchFilterDiv(formName, fieldName, searchType, searchWord, hiddenValue);
 
 			if ($("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length >0) {
 				$("#" + fieldName + "SearchDiv").find(".searchFilterDiv").last().after('<p class="andOrNotAdvancedSearch">And</p>');
@@ -113,7 +117,7 @@
 			// We append new block at the end of "field" SearchDiv 
 			$("#" + fieldName + "SearchDiv").append(searchFilterDiv);
 
-			console.log("AdvancedSearchForm	" + formName + " completed.");
+			console.log("AdvancedSearchForm " + formName + " completed.");
 			
 			return false;
 		});
@@ -135,9 +139,14 @@
 				$(this).parent().prev().remove();
 			}
 
-			removeAfterAndConjunction($(this));
-			// we remove parent	container element
-			$j(this).parent().remove();
+			// we extract main div of this href condition (example volumeSearchDiv), we need it to remove "and conjunction"
+			var divSearch = $(this).parent().parent();
+
+			// we remove parent	container element which is condition.
+			$(this).parent().remove();
+
+			removeAfterAndConjunction($(divSearch));
+			removeBeforeAndConjunction($(divSearch));
 			return false;
 		});
 	}
@@ -163,7 +172,7 @@
 	/**
 	 * This method create result div to attach to right section of advanced search filter page. 
 	 */
-	function getSearchFilterDiv(searchType, searchWord, fieldName, hiddenValue) {
+	function getSearchFilterDiv(formName, fieldName, searchType, searchWord, hiddenValue) {
 		var retValue = $('<div class="searchFilterDiv">');
 		$(retValue).append('<span class="categorySearch">' + searchType + ': </span>');
 		$(retValue).append('<span class="wordSearch">' + searchWord + '</span>');
@@ -185,11 +194,11 @@
 	function getSearchType(formName, fieldName) {
 		var retValue = "";
 		if (formName.indexOf("date") >=	0) {
-			retValue = $('#' + formName).find('#' + fieldName + 'Type').find('option:selected').val();
+			retValue = $('#' + formName).find('#' + fieldName + 'Type').find('option:selected').text();
 		} else {
 			retValue = $('#' + formName).find('#category').val();
 			if ($('#' + formName).find('#' + fieldName + 'Type').length==1) {
-				retValue += ' in ' + $('#' + formName).find('#' + fieldName + 'Type').find('option:selected').val();	 
+				retValue += ' in ' + $('#' + formName).find('#' + fieldName + 'Type').find('option:selected').text();	 
 			}
 		}
 		
@@ -326,7 +335,6 @@
 	function insertBeforeAndConjunction(fieldName){
 		var conditionDivIndex =	$("#yourEasySearchFilterForm > div").index($("div[id='" + fieldName + "SearchDiv']"))
 		//managing "and	conjunction" before condition  
-		//console.log("Number of div containing	search condition : " + $("#yourEasySearchFilterForm div[id$=SearchDiv]").length);
 		var previousConditions = 0;
 		var previousConjunctions = 0;
 		//we calculate div position of actual condition
@@ -352,12 +360,12 @@
 	 * field that contains input href selector.  
 	 */
 	function removeAfterAndConjunction(jqueryHrefSelector) {
-		// we remove condition only if field condition contains 1 element
-		if ($(jqueryHrefSelector).parent().parent().children().size()>1) {
+		// we remove condition only if field condition contains at least 1 element
+		if ($(jqueryHrefSelector).children().size()>0) {
 			return;
 		}
 
-		var conditionDivIndex =	$("#yourEasySearchFilterForm > div").index($("div[id='" + $(jqueryHrefSelector).parent().parent().attr("id") + "']"));
+		var conditionDivIndex =	$("#yourEasySearchFilterForm > div").index($("div[id='" + $(jqueryHrefSelector).attr("id") + "']"));
 		var nextConditions = 0;
 		var nextConjunctions = 0;
 
@@ -396,31 +404,52 @@
 	}
 
 	/**
-	 * This metod insert "and conjunction" before the SearchDiv of correspondents 
-	 * field identified by fieldName.  
+	 * This metod remove "and conjunction" after the SearchDiv of correspondents 
+	 * field that contains input href selector.  
 	 */
-	function removeBeforeAndConjunction(fieldName){
-		var conditionDivIndex =	$("#yourEasySearchFilterForm > div").index($("div[id='" + fieldName + "SearchDiv']"))
-		//managing "and	conjunction" before condition  
-		//console.log("Number of div containing	search condition : " + $("#yourEasySearchFilterForm div[id$=SearchDiv]").length);
-		var previousConditions = 0;
-		var previousConjunctions = 0;
-		//we calculate div position of actual condition
-		$("#yourEasySearchFilterForm div[id$=SearchDiv]").each(function(index) {
-			if (index >= conditionDivIndex)
+	function removeBeforeAndConjunction(jqueryHrefSelector){
+		// we remove condition only if field condition contains at least 1 element
+		if ($(jqueryHrefSelector).children().size()>0) {
+			return;
+		}
+
+		var conditionDivIndex =	$("#yourEasySearchFilterForm > div").reverse().index($("div[id='" + $(jqueryHrefSelector).attr("id") + "']"));
+		var prevConditions = 0;
+		var prevConjunctions = 0;
+
+
+		// we need to count any next conjunction and condition
+		$("#yourEasySearchFilterForm div[id$=SearchDiv]").reverse().each(function(index) {
+			if (index >= conditionDivIndex) {
 				return true;
-			//count	previous filled	condition
-			if ($(this).children().size()>0) {
-				previousConditions++;
 			}
-			// count if how many and conjunctions are present
+			//count	previous filled	condition, we skip current condition element
+			if (($(this).children().size()>0) && (index != conditionDivIndex)) {
+				prevConditions++;
+			}
+			// check if is present "and conjunction" next to this condition
 			if ($(this).next().is('hr')) {
-				previousConjunctions++;
+				prevConjunctions++;
 			}
 		});
-		if (previousConjunctions == (previousConditions-1)) {
-			$("<hr><p class=andOrNotAdvancedSearchCenter>And</p><hr>").insertBefore($("#yourEasySearchFilterForm div[id='" + fieldName + "SearchDiv']"));
-		}
+
+		// too many conjunctions remove first conjunction after this condition div
+		$("#yourEasySearchFilterForm div[id$=SearchDiv]").reverse().each(function(index) {
+			if ((prevConjunctions == prevConditions)) {
+				if (index <= conditionDivIndex) {
+					return true;
+				}
+				// check if is present "and conjunction" next to this condition
+				if ($(this).next().is('hr')) {
+					$(this).next().remove(); //<hr>
+					$(this).next().remove(); //<p class=andOrNotAdvancedSearchCenter>And</p>
+					$(this).next().remove(); //<hr>
+					prevConjunctions--;
+				}
+			}
+		});
+		
+		return true;
 	}
 
 	/**

@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.command.search;
 
+import org.medici.docsources.domain.SearchFilter.SearchType;
+
 
 /**
  * 
@@ -34,21 +36,21 @@ package org.medici.docsources.command.search;
  *
  */
 public class SimpleSearchCommand {
-	private String searchType;
+	private SearchType searchType;
 	private String text;
 	private Integer pageNumber;
 
 	/**
 	 * @param searchType the search to setType
 	 */
-	public void setSearchType(String searchType) {
+	public void setSearchType(SearchType searchType) {
 		this.searchType = searchType;
 	}
 	
 	/**
 	 * @return the search
 	 */
-	public String getSearchType() {
+	public SearchType getSearchType() {
 		return searchType;
 	}
 	

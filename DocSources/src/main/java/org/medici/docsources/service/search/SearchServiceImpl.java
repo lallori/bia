@@ -40,6 +40,7 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.searchfilter.SearchFilterDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -120,6 +121,22 @@ public class SearchServiceImpl implements SearchService {
 	 */
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Month> getMonths() throws ApplicationThrowable {
+		try {
+			List<Month> months = getMonthDAO().getAllMonths();
+			
+			months.add(0, new Month(null, ""));
+			
+			return months;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

@@ -37,8 +37,50 @@ import org.medici.docsources.domain.Month;
  *
  */
 public class DateUtils {
-	public static Integer MIN_DATE = 10101;
 	public static Integer MAX_DATE = 20121221;
+	public static Integer MIN_DATE = 10101;
+
+	/**
+	 * 
+	 * @param nextToken
+	 * @return
+	 */
+	public static Integer getDateDayFromString(String nextToken) {
+		if (nextToken == null)
+			return null;
+		if (nextToken.equals("dd"))
+			return null;
+		
+		return NumberUtils.createInteger(nextToken);
+	}
+
+	/**
+	 * 
+	 * @param nextToken
+	 * @return
+	 */
+	public static Integer getDateMonthFromString(String nextToken) {
+		if (nextToken == null)
+			return null;
+		if (nextToken.equals("mm"))
+			return null;
+		
+		return NumberUtils.createInteger(nextToken);
+	}
+
+	/**
+	 * 
+	 * @param nextToken
+	 * @return
+	 */
+	public static Integer getDateYearFromString(String nextToken) {
+		if (nextToken == null)
+			return null;
+		if (nextToken.equals("yyyy"))
+			return null;
+		
+		return NumberUtils.createInteger(nextToken);
+	}
 
 	/**
 	 * 
@@ -76,7 +118,7 @@ public class DateUtils {
 		
 		return NumberUtils.toInt(stringBuffer.toString());
 	}
-	
+
 	/**
 	 * 
 	 * @param year

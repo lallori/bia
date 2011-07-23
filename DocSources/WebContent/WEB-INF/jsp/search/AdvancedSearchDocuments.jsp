@@ -245,11 +245,6 @@
 			});
 
 			$j("#wordSearchForm").advancedSearchForm();
-			$j("#volumeSearchForm").advancedSearchForm();
-			$j("#dateSearchForm").advancedSearchForm();
-			$j("#extractSearchForm").advancedSearchForm();
-			$j("#synopsisSearchForm").advancedSearchForm();
-			$j("#topicSearchForm").advancedSearchForm();
 			$j("#personSearchForm").advancedSearchForm();
 			$j("#placeSearchForm").advancedSearchForm();
 			$j("#senderSearchForm").advancedSearchForm();
@@ -257,6 +252,11 @@
 			$j("#recipientSearchForm").advancedSearchForm();
 			$j("#toSearchForm").advancedSearchForm();
 			$j("#refersToSearchForm").advancedSearchForm();
+			$j("#extractSearchForm").advancedSearchForm();
+			$j("#synopsisSearchForm").advancedSearchForm();
+			$j("#topicSearchForm").advancedSearchForm();
+			$j("#dateSearchForm").advancedSearchForm();
+			$j("#volumeSearchForm").advancedSearchForm();
 
 			$j('#multiOpenAccordion').multiAccordion({active: [0]});
 			$j("#person").autocompletePerson({

@@ -27,11 +27,14 @@
  */
 package org.medici.docsources.controller.search;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.medici.docsources.command.search.SimpleSearchCommand;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -104,20 +107,47 @@ public class SimpleSearchController {
 		model.put("searchUUID", uuid.toString());
 
 		// Search operation is made by View with a jquery plugin to contextualized AjaxController
-		if (command.getSearchType().toLowerCase().trim().equals("documents")) {
-			return new ModelAndView("search/SimpleSearchResultDocuments",model);
+		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
+			List<String> outputFields = new ArrayList<String>(6);
+			outputFields.add("Sender");
+			outputFields.add("Recipient");
+			outputFields.add("Date");
+			outputFields.add("Sender Location");
+			outputFields.add("Recipient Location");
+			outputFields.add("Volume / Folio");
+			model.put("outputFields", outputFields);
+			return new ModelAndView("search/SimpleSearchResult",model);
 		}
 		
-		if (command.getSearchType().toLowerCase().trim().equals("people")) {
-			return new ModelAndView("search/SimpleSearchResultPeople",model);
+		if (command.getSearchType().equals(SearchType.PEOPLE)) {
+			List<String> outputFields = new ArrayList<String>(5);
+			outputFields.add("Name");
+			outputFields.add("Gender");
+			outputFields.add("Date");
+			outputFields.add("Born Date");
+			outputFields.add("Death Date");
+			model.put("outputFields", outputFields);
+			return new ModelAndView("search/SimpleSearchResult",model);
+		}
+
+		if (command.getSearchType().equals(SearchType.PLACE)) {
+			List<String> outputFields = new ArrayList<String>(4);
+			outputFields.add("Place Name");
+			outputFields.add("Place Type");
+			outputFields.add("Parent Name");
+			outputFields.add("Type");
+			model.put("outputFields", outputFields);
+			return new ModelAndView("search/SimpleSearchResult",model);
 		}
 		
-		if (command.getSearchType().toLowerCase().trim().equals("places")) {
-			return new ModelAndView("search/SimpleSearchResultPlaces",model);
-		}
-		
-		if (command.getSearchType().toLowerCase().trim().equals("volumes")) {
-			return new ModelAndView("search/SimpleSearchResultVolumes",model);
+		if (command.getSearchType().equals(SearchType.VOLUME)) {
+			List<String> outputFields = new ArrayList<String>(4);
+			outputFields.add("Carteggio");
+			outputFields.add("Filza N.(MDP)");
+			outputFields.add("Start Date");
+			outputFields.add("End Date");
+			model.put("outputFields", outputFields);
+			return new ModelAndView("search/SimpleSearchResult",model);
 		}
 
 		// Wee should never arrive at this point.

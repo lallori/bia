@@ -7,10 +7,10 @@
 	<div id="advancedSearchModal">
 		<h1>Click the button below to search in one of the following categories:</h1>
 		
-		<a id="documentSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchDocuments.do"/>"></a>
-		<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPeople.do"/>"></a>
-		<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchVolumes.do"/>"></a>
-		<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearchPlaces.do"/>"></a>
+		<a id="documentSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=DOCUMENT"/>"></a>
+		<a id="personSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=PEOPLE"/>"></a>
+		<a id="volumeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=PLACE"/>"></a>
+		<a id="placeSearch" class="advSearchButton" href="<c:url value="/src/AdvancedSearch.do?searchType=VOLUME"/>"></a>
 		<a id="savedFilters" href="<c:url value="/src/ShowUserSearchFilters.do"/>"></a>
 	
 		<div id="CloseButton">

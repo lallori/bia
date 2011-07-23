@@ -7,10 +7,10 @@
 				<div id="searchForm">
 					<form id="SearchForm" action="<c:url value="/src/SimpleSearch.do"/>" method="post">
 						Search in <select id="searchType" name="searchType" class="select">
-										<option value="documents" selected>Documents</option>
-										<option value="volumes">Volumes</option>
-										<option value="people">People</option>
-										<option value="places">Places</option>
+										<option value="DOCUMENT" selected>Documents</option>
+										<option value="VOLUME">Volumes</option>
+										<option value="PEOPLE">People</option>
+										<option value="PLACE">Places</option>
 								</select>
 						<br/>
 						for <input id="text" name="text" type="text" value=""/>

@@ -5,16 +5,17 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="SimpleSearchPaginationURL" value="/src/SimpleSearchPagination.json">
-		<c:param name="searchType" value="documents" />
+		<c:param name="searchType" value="${command.searchType}" />
 	</c:url>
-
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
-
 	<script type="text/javascript" charset="utf-8">
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
-			$j('#result${searchUUID}').dataTable( {
+			//dynamic field management
+			$j("#${searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+
+			$j('#${searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bProcessing": true,
@@ -31,7 +32,7 @@
 					$j.getJSON( sSource, aoData, function (json) { 
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)
-					} );
+					});
 				}
 			} );
 
@@ -45,17 +46,9 @@
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="result${searchUUID}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${searchUUID}">
 		<thead>
-			<tr>
-				<th>Sender</th>
-				<th>Recipient</th>
-				<th>Date</th>
-				<th>Sender Location</th>
-				<th>Recipient Location</th>
-				<th>Volume / Folio</th>
-				<!--<th>Folio</th> -->
-			</tr>
+			<tr></tr>
 		</thead>
 		<tbody>
 			<tr>

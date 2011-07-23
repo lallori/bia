@@ -40,6 +40,7 @@ import javax.persistence.PersistenceException;
  * 
  */
 public interface Dao<K, E> extends Serializable {
+	
 	/**
 	 * 
 	 * @param id

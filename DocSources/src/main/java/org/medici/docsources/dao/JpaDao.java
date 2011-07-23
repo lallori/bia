@@ -39,6 +39,8 @@ import javax.persistence.PersistenceException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.hibernate.ejb.HibernateEntityManager;
@@ -47,6 +49,10 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.domain.People;
 import org.springframework.stereotype.Repository;
 
@@ -71,38 +77,104 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	/**
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	public JpaDao() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
 	}
 
+	/**
+	 * 
+	 */
 	public E find(K id) throws PersistenceException {
 		return getEntityManager().find(entityClass, id);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
 
+	/**
+	 * 
+	 */
 	public E merge(E entity) throws PersistenceException {
 		return getEntityManager().merge(entity);
 	}
 
+	/**
+	 * 
+	 */
 	public void persist(E entity) throws PersistenceException {
 		getEntityManager().persist(entity);
 	}
 
+	/**
+	 * 
+	 */
 	public void remove(E entity) throws PersistenceException {
 		getEntityManager().remove(entity);
 	}
 
+	/**
+	 * 
+	 */
 	public void refresh(E entity) throws PersistenceException {
 		getEntityManager().refresh(entity);
 	}
 
+	/**
+	 * 
+	 * @param entityManager
+	 */
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+
+	public Page search(org.medici.docsources.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		// We obtain hibernate-search session
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+		// We convert AdvancedSearchContainer to luceneQuery
+		org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
+		logger.info("Lucene Query " + query.toString()); 
+
+		// We execute search
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, People.class );
+	
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		}
+
+		// We set pagination  
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+			}
+			fullTextQuery.setSort(new Sort(sortFields));
+		}
+		
+		// We set search result on return method
+		page.setList(fullTextQuery.list());
+		
+		return page;
 	}
 
 	/**

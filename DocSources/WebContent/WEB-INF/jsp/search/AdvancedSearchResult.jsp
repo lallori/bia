@@ -5,15 +5,18 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="AdvancedSearchPaginationURL" value="/src/AdvancedSearchPagination.json">
-		<c:param name="searchType" value="documents" />
+		<c:param name="searchType" value="${command.searchType}" />
 	</c:url>
 
-	<c:url var="AdvancedSearchRefineURL" value="/src/AdvancedSearchDocuments.do">
+	<c:url var="AdvancedSearchRefineURL" value="/src/AdvancedSearch.do">
 		<c:param name="searchUUID" value="${command.searchUUID}"></c:param>
 	</c:url>
 
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
+			//dynamic field management
+			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+
 			$j('#${command.searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
@@ -59,13 +62,6 @@
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
 		<thead>
 			<tr>
-				<th>Sender</th>
-				<th>Recipient</th>
-				<th>Date</th>
-				<th>Sender Location</th>
-				<th>Recipient Location</th>
-				<th>Volume / Folio</th>
-				<!--<th>Folio</th> -->
 			</tr>
 		</thead>
 		<tbody>

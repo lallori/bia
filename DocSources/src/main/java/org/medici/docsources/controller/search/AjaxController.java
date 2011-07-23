@@ -51,6 +51,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.search.SearchService;
@@ -140,7 +141,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/AdvancedSearchPagination.json", method = RequestMethod.GET)
 	public ModelAndView advancedSearchPagination(HttpSession httpSession,
-											@RequestParam(value="searchType") String searchType,
+											@RequestParam(value="searchType") SearchType searchType,
 											@RequestParam(value="searchUUID") String searchUUID,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -150,13 +151,13 @@ public class AjaxController {
 
 		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
 
-		if (searchType.toLowerCase().trim().equals("documents")) {
+		if (searchType.equals(SearchType.DOCUMENT)) {
 			advancedSearchDocuments(model, httpSession, paginationFilter, searchUUID);
-		} else if (searchType.toLowerCase().trim().equals("people")) {
+		} else if (searchType.equals(SearchType.PEOPLE)) {
 			advancedSearchPeople(model, httpSession, paginationFilter, searchUUID);
-		} else if (searchType.toLowerCase().trim().equals("places")) {
+		} else if (searchType.equals(SearchType.PLACE)) {
 			advancedSearchPlaces(model, httpSession, paginationFilter, searchUUID);
-		} else if (searchType.toLowerCase().trim().equals("volumes")) {
+		} else if (searchType.equals(SearchType.VOLUME)) {
 			advancedSearchVolumes(model, httpSession, paginationFilter, searchUUID);
 		}
 
@@ -273,10 +274,10 @@ public class AjaxController {
 	 * @param length
 	 * @return
 	 */
-	private PaginationFilter generatePaginationFilter(String searchType, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+	private PaginationFilter generatePaginationFilter(SearchType searchType, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
 
-		if (searchType.toLowerCase().trim().equals("documents")) {
+		if (searchType.equals(SearchType.DOCUMENT)) {
 			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 				switch (sortingColumnNumber) {
 					case 0:
@@ -308,7 +309,7 @@ public class AjaxController {
 						break;
 				}
 			}
-		} else if (searchType.toLowerCase().trim().equals("people")) {
+		} else if (searchType.equals(SearchType.PEOPLE)) {
 			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 				switch (sortingColumnNumber) {
 					case 0:
@@ -337,7 +338,7 @@ public class AjaxController {
 						break;
 				}		
 			}
-		} else if (searchType.toLowerCase().trim().equals("places")) {
+		} else if (searchType.equals(SearchType.PLACE)) {
 			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 				switch (sortingColumnNumber) {
 					case 0:
@@ -357,7 +358,7 @@ public class AjaxController {
 						break;
 				}
 			}
-		} else if (searchType.toLowerCase().trim().equals("volumes")) {
+		} else if (searchType.equals(SearchType.VOLUME)) {
 			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 				switch (sortingColumnNumber) {
 					case 0:
@@ -560,7 +561,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/src/SimpleSearchPagination.json", method = RequestMethod.GET)
-	public ModelAndView simpleSearchPagination(@RequestParam(value="searchType") String searchType, 
+	public ModelAndView simpleSearchPagination(@RequestParam(value="searchType") SearchType searchType, 
 								   		 @RequestParam(value="sSearch") String alias,
 								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -570,13 +571,13 @@ public class AjaxController {
 
 		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
 
-		if (searchType.toLowerCase().trim().equals("documents")) {
+		if (searchType.equals(SearchType.DOCUMENT)) {
 			simpleSearchDocuments(model, alias, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("people")) {
+		} else if (searchType.equals(SearchType.PEOPLE)) {
 			simpleSearchPeople(model, alias, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("places")) {
+		} else if (searchType.equals(SearchType.PLACE)) {
 			simpleSearchPlaces(model, alias, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("volumes")) {
+		} else if (searchType.equals(SearchType.VOLUME)) {
 			simpleSearchVolumes(model, alias, paginationFilter);
 		}
 
@@ -733,7 +734,7 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/UserSearchFiltersPagination.json", method = RequestMethod.GET)
 	public ModelAndView userSearchFiltersPagination(HttpSession httpSession,
-											@RequestParam(value="searchType") String searchType,
+											@RequestParam(value="searchType", required=false) SearchType searchType,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -742,15 +743,15 @@ public class AjaxController {
 
 		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
 
-		if (searchType.toLowerCase().trim().equals("all")){
+		if (searchType == null){
 			userSearchFiltersAll(model, httpSession, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("documents")) {
+		} else if (searchType.equals(SearchType.DOCUMENT)) {
 			userSearchFiltersDocuments(model, httpSession, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("people")) {
+		} else if (searchType.equals(SearchType.PEOPLE)) {
 			userSearchFiltersPeople(model, httpSession, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("places")) {
+		} else if (searchType.equals(SearchType.PLACE)) {
 			userSearchFiltersPlaces(model, httpSession, paginationFilter);
-		} else if (searchType.toLowerCase().trim().equals("volumes")) {
+		} else if (searchType.equals(SearchType.VOLUME)) {
 			userSearchFiltersVolumes(model, httpSession, paginationFilter);
 		}
 

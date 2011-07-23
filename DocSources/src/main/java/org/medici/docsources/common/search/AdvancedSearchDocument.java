@@ -510,25 +510,25 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			datesDayBetween = new ArrayList<Integer>(command.getDate().size());
 			
 			for (String singleWord : command.getDate()) {
-				String[] fields = singleWord.split("\\|");
-				
-				if (fields.length == 4) {
-					datesTypes.add(DateType.valueOf(fields[0]));
-					datesYear.add(NumberUtils.toInt(fields[1], 1));
-					datesMonth.add(NumberUtils.toInt(fields[2], 1));
-					datesDay.add(NumberUtils.toInt(fields[3], 1));
-					// we add default date for between beacause every index must be aligned.
-					datesYearBetween.add(01);
-					datesMonthBetween.add(01);
-					datesDayBetween.add(01);
-				} else if (fields.length == 7) {
-					datesTypes.add(DateType.valueOf(fields[0]));
-					datesYear.add(NumberUtils.toInt(fields[1], 1));
-					datesMonth.add(NumberUtils.toInt(fields[2], 1));
-					datesDay.add(NumberUtils.toInt(fields[3], 1));
-					datesYearBetween.add(NumberUtils.toInt(fields[4], 1));
-					datesMonthBetween.add(NumberUtils.toInt(fields[5], 1));
-					datesDayBetween.add(NumberUtils.toInt(fields[6], 1));
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				if ((stringTokenizer.countTokens() == 0) || (stringTokenizer.countTokens() == 1)){
+					continue;
+				} else if (stringTokenizer.countTokens() == 4) {
+					datesTypes.add(DateType.valueOf(stringTokenizer.nextToken()));
+					datesYear.add(DateUtils.getDateYearFromString(stringTokenizer.nextToken()));
+					datesMonth.add(DateUtils.getDateMonthFromString(stringTokenizer.nextToken()));
+					datesDay.add(DateUtils.getDateDayFromString(stringTokenizer.nextToken()));
+					datesYearBetween.add(DateUtils.getDateYearFromString(null));
+					datesMonthBetween.add(DateUtils.getDateMonthFromString(null));
+					datesDayBetween.add(DateUtils.getDateDayFromString(null));
+				} else if (stringTokenizer.countTokens() == 7) {
+					datesTypes.add(DateType.valueOf(stringTokenizer.nextToken()));
+					datesYear.add(DateUtils.getDateYearFromString(stringTokenizer.nextToken()));
+					datesMonth.add(DateUtils.getDateMonthFromString(stringTokenizer.nextToken()));
+					datesDay.add(DateUtils.getDateDayFromString(stringTokenizer.nextToken()));
+					datesYearBetween.add(DateUtils.getDateYearFromString(stringTokenizer.nextToken()));
+					datesMonthBetween.add(DateUtils.getDateMonthFromString(stringTokenizer.nextToken()));
+					datesDayBetween.add(DateUtils.getDateDayFromString(stringTokenizer.nextToken()));
 				} else {
 					continue;
 				}

@@ -425,13 +425,13 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/search/ChoiceAdvancedSearchModalWindow.jsp"/>
 	</definition>
 
+	<definition name="search/AdvancedSearchResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResult.jsp"/>	
+	</definition>
+
 	<definition name="search/AdvancedSearchDocuments" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchDocuments.jsp"/>	
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchDocumentsFilter.jsp"/>
-	</definition>
-
-	<definition name="search/AdvancedSearchResultDocuments" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultDocuments.jsp"/>	
 	</definition>
 
 	<definition name="search/AdvancedSearchPeople" extends="template.advancedSearchForm">
@@ -439,26 +439,14 @@
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPeopleFilter.jsp"/>
 	</definition>
 
-	<definition name="search/AdvancedSearchResultPeople" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultPeople.jsp"/>	
-	</definition>
-
 	<definition name="search/AdvancedSearchPlaces" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPlaces.jsp"/>	
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPlacesFilter.jsp.jsp"/>
 	</definition>
 
-	<definition name="search/AdvancedSearchResultPlaces" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultPlaces.jsp"/>	
-	</definition>
-
 	<definition name="search/AdvancedSearchVolumes" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchVolumes.jsp"/>
 		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchVolumesFilter.jsp"/>
-	</definition>
-
-	<definition name="search/AdvancedSearchResultPlaces" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/search/AdvancedSearchResultVolumes.jsp"/>	
 	</definition>
 
 	<definition name="search/SaveUserSearchFilterModalWindow" extends="template.partialDOM">
@@ -473,20 +461,8 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/search/ShowUserSearchFiltersModalWindow.jsp"/>	
 	</definition>
 
-	<definition name="search/SimpleSearchResultDocuments" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultDocuments.jsp"/>	
-	</definition>
-	
-	<definition name="search/SimpleSearchResultPeople" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultPeople.jsp"/>	
-	</definition>
-
-	<definition name="search/SimpleSearchResultPlaces" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultPlaces.jsp"/>	
-	</definition>
-
-	<definition name="search/SimpleSearchResultVolumes" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResultVolumes.jsp"/>	
+	<definition name="search/SimpleSearchResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchResult.jsp"/>	
 	</definition>
 
 	<!-- Search Module END -->
