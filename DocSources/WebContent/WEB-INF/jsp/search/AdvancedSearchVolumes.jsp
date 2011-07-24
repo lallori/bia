@@ -10,19 +10,19 @@
 			<h1><a>Word search</a></h1>
 			<div>
 				<form id="wordSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Search here for words (in English) that appear in volumes titles, notes and/or words (in the original language and with the original spelling).">?</a>
+					<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
 					<input type="text" id="word" name="word" class="input_15c" value="" />
 					in 
 					<select id="wordType" name="wordType" class="selectform_LXlong">
-						<option value="TitlesAndNotes" selected="selected">Volumes Titles and Notes</option>
-						<option value="Titles">Volume Titles</option>
-						<option value="Notes">Notes</option>
+						<option value="SynopsisAndExtract" selected="selected">Synopsis and Extract</option>
+						<option value="Synopsis">Document Synopsis</option>
+						<option value="Extract">Document Extract</option>				
 					</select>
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 					<input type="hidden" id="category" value="Word Search">
 				</form>
 			</div>
-			
+
 			<h1><a><i>in</i> Volume</a></h1>
 			<div>
 				<form id="volumeSearchForm" method="post" class="edit">
@@ -37,7 +37,7 @@
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 					<input type="hidden" id="category" value="Volume">
 				</form>
-			</div>	
+			</div>
 
 			<h1><a>Date Range</a></h1>
 			<div>
@@ -50,19 +50,9 @@
 					</select>
 					<input type="text" id="dateYear" class="input_4c" maxlength="4" value="yyyy"/>
 					<select id="dateMonth" name="dateMonth" class="selectform">
-		                <option value="mm" selected="selected">mm</option>
-						<option value="January">January</option>
-						<option value="February">February</option>
-						<option value="March">March</option>
-						<option value="April">April</option>
-						<option value="May">May</option>
-						<option value="June">June</option>
-						<option value="July">July</option>
-						<option value="August">August</option>
-						<option value="September">September</option>
-						<option value="October">October</option>
-						<option value="November">November</option>
-						<option value="December">December</option>
+						<c:forEach items="${months}" var="month">
+							<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
+						</c:forEach>
 					</select>
 					<input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/>
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="addDateRange">
@@ -70,19 +60,9 @@
 					<p class="invisible">and</p>
 	                <input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
 	                <select id="dateMonthBetween" name="dateMonthBetween" class="selectform" style="visibility:hidden">
-	                    <option value="mm" selected="selected">mm</option>
-	                    <option value="January">January</option>
-	                    <option value="February">February</option>
-	                    <option value="March">March</option>
-	                    <option value="April">April</option>
-	                    <option value="May">May</option>
-	                    <option value="June">June</option>
-	                    <option value="July">July</option>
-	                    <option value="August">August</option>
-	                    <option value="September">September</option>
-	                    <option value="October">October</option>
-	                    <option value="November">November</option>
-	                    <option value="December">December</option>
+						<c:forEach items="${months}" var="month">
+							<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
+						</c:forEach>
 	                </select>
 	                <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
 				</form>
@@ -93,21 +73,26 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#dateMonth option:eq(0)").text("mm");
+		$j("#dateMonth option:eq(0)").attr('selected', 'selected');
+		$j("#dateMonthBetween option:eq(0)").text("mm");
+		$j("#dateMonthBetween option:eq(0)").attr('selected', 'selected');
+
 		$j("#volumeType").change(function(){
 			if(this.options[1].selected) {
-				$j('#volumeBetween').css('visibility','visible'); 
-				$j('.invisibleVol').css('visibility','visible'); 
+				$j("#volumeBetween").css('visibility','visible'); 
+				$j(".invisibleVol").css('visibility','visible'); 
 			} else { 
-				$j('#volumeBetween').css('visibility','hidden');
-				$j('.invisibleVol').css('visibility','hidden');
+				$j("#volumeBetween").css('visibility','hidden');
+				$j(".invisibleVol").css('visibility','hidden');
 			}
 		});	
 
 		$j("#dateType").change(function(){
 			if(this.options[2].selected) { 
-				$j('#dateYearBetween').css('visibility','visible');
-				$j('#dateMonthBetween').css('visibility','visible');
-				$j('#dateDayBetween').css('visibility','visible');
+				$j("#dateYearBetween").css('visibility','visible');
+				$j("#dateMonthBetween").css('visibility','visible');
+				$j("#dateDayBetween").css('visibility','visible');
 				$j('.invisible').css('visibility','visible');
 				$j('.visible').css('visibility','hidden');
 				$j('.addDateRange').css('margin-top','53px');
@@ -145,7 +130,7 @@
 		$j("#wordSearchForm").advancedSearchForm();
 		$j("#volumeSearchForm").advancedSearchForm();
 		$j("#dateSearchForm").advancedSearchForm();
-		
-		$j("#multiOpenAccordion").multiAccordion({active: [0]});
+
+		$j('#multiOpenAccordion').multiAccordion({active: [0]});
 	});
 </script>
