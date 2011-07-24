@@ -52,19 +52,20 @@
 			var formName = $(this).attr('id');
 			//Extracting field on which this form works on.
 			var fieldName = getSearchFieldName($(this));
+			var searchCategory = getSearchCategory(formName, fieldName);
 			var searchType = getSearchType(formName, fieldName);
 
 			console.log("AdvancedSearchForm started. Form Name : " + formName);
 			console.log("Field Name : " + fieldName);
-			console.log("Search Type : " + searchType);
+			console.log("Search Category : " + searchCategory);
 
 			var searchWord = "";
 			var hiddenValue = "";
 
 			// Manage form with type combobox
-			if ($(searchType)) {
+			if (hasSearchType(formName, fieldName)) {
 				//Date form
-				if (formName.indexOf("date") >= 0) {
+				if (isDateForm(formName)) {
 					if ($(this).find("option:selected").val() == 'Between') {
 						if (checkDateFieldsBetweenAreEmpty(formName, fieldName)) {
 							return true;
@@ -78,7 +79,7 @@
 					}
 
 					resetDateFields(formName, fieldName);
-				} else if (formName.indexOf("volume") >= 0) {
+				} else if (isVolumeForm(formName)) {
 					if ($(this).find("option:selected").val() == 'Between') {
 						searchWord = getSearchWordForBetweenField(formName, fieldName);
 						hiddenValue = $(this).find("option:selected").val() + "|" + $('#' + formName).find('#' + fieldName).val() + '|' + $('#' + formName).find('#' + fieldName + 'Between').val();
@@ -95,8 +96,15 @@
 					$('#' + formName).find('#' + fieldName).val("");
 				}
 			} else {
-				searchWord = getSearchWordForAutocompleterField(formName, fieldName);
-				hiddenValue = getHiddenParameterForAutocompleterField(formName, fieldName);
+				if (isAutocompleterForm(formName)) {
+					searchWord = getSearchWordForAutocompleterField(formName, fieldName);
+					hiddenValue = getHiddenParameterForAutocompleterField(formName, fieldName);
+					resetAutocompleterField(formName, fieldName);
+				} else {
+					searchWord = getSearchWordForNormalField(formName, fieldName);
+					hiddenValue = getHiddenParameterForNormalField(formName, fieldName);
+					resetNormalField(formName, fieldName);
+				}
 			}
 			
 			console.log("Searching : " + searchWord);
@@ -184,22 +192,15 @@
 	 * This function return hidden parameter to diplay for autocompleter field.
 	 */
 	function getHiddenParameterForAutocompleterField(formName, fieldName) {
-		console.log("Form has an autocompleter element");
-		var hiddenParameter = "";
-		// If element has autocompleter, its hiddenValue is a concatenation of id + description
-		if ($('#' + formName).find('#' + fieldName + 'Id').size() > 0) {
-			//Calculate hidden value (escaping text field to prevent field truncation
-			hiddenParameter = $('#' + formName).find('#' + fieldName + 'Id').val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
-			// we reset autocompleterId
-			$('#' + formName).find('#' + fieldName + 'Id').val("");
-		} else {
-			hiddenParameter = $('#' + formName).find('#' + fieldName).val();
-		}
+		//Calculate hidden value (escaping text field to prevent field truncation
+		return $('#' + formName).find('#' + fieldName + 'Id').val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
+	}
 
-		// we reset textfield value
-		$('#' + formName).find('#' + fieldName).val("");
-
-		return hiddenParameter;
+	/**
+	 * This method return hidden parameter for normal field  
+	 */
+	function getHiddenParameterForNormalField(formName, fieldName) {
+		return $('#' + formName).find('#' + fieldName).val();
 	}
 
 	/**
@@ -235,6 +236,13 @@
 	}
 
 	/**
+	 * This method returns search category.   
+	 */
+	function getSearchCategory(formName, fieldName) {
+		return $('#' + formName).find('#category').val();;
+	}
+
+	/**
 	 * This method returns field name of this advanced search form.  
 	 */
 	function getSearchFieldName(jquerySelector) {
@@ -265,6 +273,13 @@
 		return $('#' + formName).find('#' + fieldName).val();
 	}
 	
+	/**
+	 * This function return search word to diplay for normal field (no searchType, no autocomplteer).
+	 */
+	function getSearchWordForNormalField(formName, fieldName) {
+		return $('#' + formName).find('#' + fieldName).val();
+	}
+
 	/**
 	 * This function return search word to diplay for a field which is composed of two elements.
 	 */
@@ -312,6 +327,17 @@
 	}
 	
 	/**
+	 * This method returns type of this search form.   
+	 */
+	function hasSearchType(formName, fieldName) {
+		if ($('#' + formName).find('#' + fieldName + 'Type').length==1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * This metod insert "and conjunction" after the SearchDiv of correspondents 
 	 * field identified by fieldName.  
 	 */
@@ -336,7 +362,6 @@
 		if (nextConjunctions ==	(nextConditions-1)) {
 			$("<hr><p class=andOrNotAdvancedSearchCenter>And</p><hr>").insertAfter($("#yourEasySearchFilterForm div[id='" + fieldName + "SearchDiv']"));
 		}
-	
 	}
 
 	/**
@@ -364,6 +389,37 @@
 		if (previousConjunctions == (previousConditions-1)) {
 			$("<hr><p class=andOrNotAdvancedSearchCenter>And</p><hr>").insertBefore($("#yourEasySearchFilterForm div[id='" + fieldName + "SearchDiv']"));
 		}
+	}
+
+	/**
+	 * This method check if form is an autocompleter.
+	 */
+	function isAutocompleterForm(formName, fieldName) {
+		if ($('#' + formName).find('#' + fieldName + 'Id').size() > 0) {
+			console.log("Form has an autocompleter element");
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * This method check if form manage date.
+	 */
+	function isDateForm(formName) {
+		if (formName.indexOf("date") >= 0)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * This method check if form manage volume.
+	 */
+	function isVolumeForm(formName) {
+		if (formName.indexOf("date") >= 0)
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -477,10 +533,27 @@
 	}
 
 	/**
-	 * 
+	 * This method will reset a between fields (not date).
 	 */
 	function resetBetweenField(formName, fieldName) {
 		$('#' + formName).find('#' + fieldName).val("");
 		$('#' + formName).find('#' + fieldName + 'Between').val("");
 	}
-})(jQuery);
+
+	/**
+	 * This method will reset an autocompleter field (not date).
+	 */
+	function resetAutocompleterField(formName, fieldName) {
+		// we reset autocompleterId and correspondent field
+		$('#' + formName).find('#' + fieldName + 'Id').val("");
+		$('#' + formName).find('#' + fieldName).val("");
+	}
+
+	/**
+	 * This method will reset a normal field.
+	 */
+	function resetNormalField(formName, fieldName) {
+		$('#' + formName).find('#' + fieldName).val("");
+	}
+
+}) (jQuery);
