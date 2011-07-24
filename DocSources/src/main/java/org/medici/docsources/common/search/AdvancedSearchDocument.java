@@ -43,7 +43,8 @@ import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
+import org.medici.docsources.command.search.AdvancedSearchCommand;
+import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 
@@ -52,11 +53,11 @@ import org.medici.docsources.common.util.VolumeUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class AdvancedSearchDocument implements AdvancedSearch {
+public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5135090884608784944L;
+	private static final long serialVersionUID = 8279978012929495622L;
 
 	private List<String> words;
 	private List<WordType> wordsTypes;
@@ -131,7 +132,7 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 	 * 
 	 * @param command
 	 */
-	public void initFromAdvancedSearchDocumentsCommand(AdvancedSearchDocumentsCommand command) {
+	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command) {
 		//Words
 		if ((command.getWord() != null) && (command.getWord().size() >0)) {
 			wordsTypes = new ArrayList<WordType>(command.getWord().size());
@@ -510,28 +511,15 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 			datesDayBetween = new ArrayList<Integer>(command.getDate().size());
 			
 			for (String singleWord : command.getDate()) {
-				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				if ((stringTokenizer.countTokens() == 0) || (stringTokenizer.countTokens() == 1)){
-					continue;
-				} else if (stringTokenizer.countTokens() == 4) {
-					datesTypes.add(DateType.valueOf(stringTokenizer.nextToken()));
-					datesYear.add(DateUtils.getDateYearFromString(stringTokenizer.nextToken()));
-					datesMonth.add(DateUtils.getDateMonthFromString(stringTokenizer.nextToken()));
-					datesDay.add(DateUtils.getDateDayFromString(stringTokenizer.nextToken()));
-					datesYearBetween.add(DateUtils.getDateYearFromString(null));
-					datesMonthBetween.add(DateUtils.getDateMonthFromString(null));
-					datesDayBetween.add(DateUtils.getDateDayFromString(null));
-				} else if (stringTokenizer.countTokens() == 7) {
-					datesTypes.add(DateType.valueOf(stringTokenizer.nextToken()));
-					datesYear.add(DateUtils.getDateYearFromString(stringTokenizer.nextToken()));
-					datesMonth.add(DateUtils.getDateMonthFromString(stringTokenizer.nextToken()));
-					datesDay.add(DateUtils.getDateDayFromString(stringTokenizer.nextToken()));
-					datesYearBetween.add(DateUtils.getDateYearFromString(stringTokenizer.nextToken()));
-					datesMonthBetween.add(DateUtils.getDateMonthFromString(stringTokenizer.nextToken()));
-					datesDayBetween.add(DateUtils.getDateDayFromString(stringTokenizer.nextToken()));
-				} else {
-					continue;
-				}
+				//e.g. After|1222|01|12|1223|12|12
+				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
+				datesTypes.add(DateType.valueOf(fields[0]));
+				datesYear.add(DateUtils.getDateYearFromString(fields[1]));
+				datesMonth.add(DateUtils.getDateMonthFromString(fields[2]));
+				datesDay.add(DateUtils.getDateDayFromString(fields[3]));
+				datesYearBetween.add(DateUtils.getDateYearFromString(fields[4]));
+				datesMonthBetween.add(DateUtils.getDateMonthFromString(fields[5]));
+				datesDayBetween.add(DateUtils.getDateDayFromString(fields[6]));
 			}
 		} else {
 			datesTypes = new ArrayList<DateType>(0);
@@ -572,6 +560,17 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 		}
 	}
 
+	/**
+	 * This method initialize object from a simple search, adding a word search on
+	 * Synopsis and Extract.
+	 * 
+	 * @param command Simple Search parameters 
+	 */
+	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
+		wordsTypes.add(WordType.SynopsisAndExtract);
+		words.add(command.getText());
+	}
+	
 	/**
 	 * @return the words
 	 */
@@ -696,6 +695,48 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 	 */
 	public void setDatesDay(List<Integer> datesDay) {
 		this.datesDay = datesDay;
+	}
+
+	/**
+	 * @return the datesYearBetween
+	 */
+	public List<Integer> getDatesYearBetween() {
+		return datesYearBetween;
+	}
+	
+	/**
+	 * @param datesYearBetween the datesYearBetween to set
+	 */
+	public void setDatesYearBetween(List<Integer> datesYearBetween) {
+		this.datesYearBetween = datesYearBetween;
+	}
+	
+	/**
+	 * @return the datesMonthBetween
+	 */
+	public List<Integer> getDatesMonthBetween() {
+		return datesMonthBetween;
+	}
+	
+	/**
+	 * @param datesMonthBetween the datesMonthBetween to set
+	 */
+	public void setDatesMonthBetween(List<Integer> datesMonthBetween) {
+		this.datesMonthBetween = datesMonthBetween;
+	}
+	
+	/**
+	 * @return the datesDayBetween
+	 */
+	public List<Integer> getDatesDayBetween() {
+		return datesDayBetween;
+	}
+	
+	/**
+	 * @param datesDayBetween the datesDayBetween to set
+	 */
+	public void setDatesDayBetween(List<Integer> datesDayBetween) {
+		this.datesDayBetween = datesDayBetween;
 	}
 
 	/**
@@ -1299,66 +1340,6 @@ public class AdvancedSearchDocument implements AdvancedSearch {
 		}
 
 		return booleanQuery;
-	}
-	
-	/**
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
-	 */
-	public static enum WordType {
-		Extract("Extract"), Synopsis("Synopsis"), SynopsisAndExtract("SynopsisAndExtract");
-		
-		private final String wordType;
-
-	    private WordType(String value) {
-	    	wordType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return wordType;
-	    }
-	}
-
-	/**
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
-	 */
-	public static enum VolumeType {
-		Exactly("Exactly"), Between("Between");
-		
-		private final String volumeType;
-
-	    private VolumeType(String value) {
-	    	volumeType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return volumeType;
-	    }
-	}
-
-	/**
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
-	 */
-	public static enum DateType {
-		After("After"), Before("Before"), Between("Between");
-		
-		private final String dateType;
-
-	    private DateType(String value) {
-	    	dateType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return dateType;
-	    }
 	}
 }
 

@@ -38,7 +38,7 @@ import org.medici.docsources.domain.SearchFilter.SearchType;
 public class SimpleSearchCommand {
 	private SearchType searchType;
 	private String text;
-	private Integer pageNumber;
+	private String searchUUID;
 
 	/**
 	 * @param searchType the search to setType
@@ -69,16 +69,16 @@ public class SimpleSearchCommand {
 	}
 
 	/**
-	 * @param pageNumber the pageNumber to set
+	 * @param searchUUID the searchUUID to set
 	 */
-	public void setPageNumber(Integer pageNumber) {
-		this.pageNumber = pageNumber;
+	public void setSearchUUID(String searchUUID) {
+		this.searchUUID = searchUUID;
 	}
 
 	/**
-	 * @return the pageNumber
+	 * @return the searchUUID
 	 */
-	public Integer getPageNumber() {
-		return pageNumber;
+	public String getSearchUUID() {
+		return searchUUID;
 	}
 }

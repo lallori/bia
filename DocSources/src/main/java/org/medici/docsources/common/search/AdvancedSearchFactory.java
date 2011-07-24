@@ -36,6 +36,7 @@ import org.medici.docsources.command.search.AdvancedSearchPeopleCommand;
 import org.medici.docsources.command.search.AdvancedSearchPlacesCommand;
 import org.medici.docsources.command.search.AdvancedSearchVolumesCommand;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
+import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
 /**
@@ -66,7 +67,7 @@ public class AdvancedSearchFactory {
 			} catch (InvocationTargetException itex) {
 			}
 			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
-			advancedSearchDocument.initFromAdvancedSearchDocumentsCommand(advancedSearchDocumentsCommand);
+			//advancedSearchDocument.initFromAdvancedSearchDocumentsCommand(advancedSearchDocumentsCommand);
 			return advancedSearchDocument;
 		} else if (command.getSearchType().equals(SearchType.PEOPLE)) {
 			AdvancedSearchPeopleCommand advancedSearchPeopleCommand = new AdvancedSearchPeopleCommand();
@@ -76,7 +77,7 @@ public class AdvancedSearchFactory {
 			} catch (InvocationTargetException itex) {
 			}
 			AdvancedSearchPeople advancedSearchPeople = new AdvancedSearchPeople();
-			advancedSearchPeople.initFromAdvancedSearchPeopleCommand(advancedSearchPeopleCommand);
+			//advancedSearchPeople.initFromAdvancedSearchPeopleCommand(advancedSearchPeopleCommand);
 			return advancedSearchPeople;
 		} else if (command.getSearchType().equals(SearchType.PLACE)) {
 			AdvancedSearchPlacesCommand advancedSearchPlacesCommand = new AdvancedSearchPlacesCommand();
@@ -86,7 +87,7 @@ public class AdvancedSearchFactory {
 			} catch (InvocationTargetException itex) {
 			}
 			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
-			advancedSearchPlace.initFromAdvancedSearchPlacesCommand(advancedSearchPlacesCommand);
+			//advancedSearchPlace.initFromAdvancedSearchPlacesCommand(advancedSearchPlacesCommand);
 			return advancedSearchPlace;
 		} else {
 			AdvancedSearchVolumesCommand advancedSearchVolumesCommand = new AdvancedSearchVolumesCommand();
@@ -96,59 +97,31 @@ public class AdvancedSearchFactory {
 			} catch (InvocationTargetException itex) {
 			}
 			AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
-			advancedSearchVolume.initFromAdvancedSearchVolumesCommand(advancedSearchVolumesCommand);
+			//advancedSearchVolume.initFromAdvancedSearchVolumesCommand(advancedSearchVolumesCommand);
 			return advancedSearchVolume;
 		}
 	}
 
 	public static AdvancedSearch create(AdvancedSearchCommand command) {
+		AdvancedSearch advancedSearch = null;
 		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
-			AdvancedSearchDocumentsCommand advancedSearchDocumentsCommand = new AdvancedSearchDocumentsCommand();
-			try {
-				BeanUtils.copyProperties(advancedSearchDocumentsCommand, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
-			advancedSearchDocument.initFromAdvancedSearchDocumentsCommand(advancedSearchDocumentsCommand);
-			return advancedSearchDocument;
+			advancedSearch = new AdvancedSearchDocument();
 		} else if (command.getSearchType().equals(SearchType.PEOPLE)) {
-			AdvancedSearchPeopleCommand advancedSearchPeopleCommand = new AdvancedSearchPeopleCommand();
-			try {
-				BeanUtils.copyProperties(advancedSearchPeopleCommand, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-			AdvancedSearchPeople advancedSearchPeople = new AdvancedSearchPeople();
-			advancedSearchPeople.initFromAdvancedSearchPeopleCommand(advancedSearchPeopleCommand);
-			return advancedSearchPeople;
+			advancedSearch = new AdvancedSearchPeople();
 		} else if (command.getSearchType().equals(SearchType.PLACE)) {
-			AdvancedSearchPlacesCommand advancedSearchPlacesCommand = new AdvancedSearchPlacesCommand();
-			try {
-				BeanUtils.copyProperties(advancedSearchPlacesCommand, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
-			advancedSearchPlace.initFromAdvancedSearchPlacesCommand(advancedSearchPlacesCommand);
-			return advancedSearchPlace;
+			advancedSearch = new AdvancedSearchPlace();
 		} else {
-			AdvancedSearchVolumesCommand advancedSearchVolumesCommand = new AdvancedSearchVolumesCommand();
-			try {
-				BeanUtils.copyProperties(advancedSearchVolumesCommand, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-			AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
-			advancedSearchVolume.initFromAdvancedSearchVolumesCommand(advancedSearchVolumesCommand);
-			return advancedSearchVolume;
+			advancedSearch = new AdvancedSearchVolume();
 		}
+
+		advancedSearch.initFromAdvancedSearchCommand(command);
+		return advancedSearch;
 	}
 
 	/**
-	 * This method create a new AdvancedSearch object from a specific SearchType.
+	 * This method create an empty AdvancedSearch object from a specific SearchType.
 	 * 
-	 * @param searchType
+	 * @param searchType 
 	 * @return
 	 */
 	public static AdvancedSearch create(SearchType searchType) {
@@ -160,6 +133,31 @@ public class AdvancedSearchFactory {
 			return new AdvancedSearchPlace();
 		} else {
 			return new AdvancedSearchVolume();
+		}
+	}
+
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
+	public static AdvancedSearch create(SimpleSearchCommand command) {
+		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
+			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
+			advancedSearchDocument.initFromSimpleSearchCommand(command);
+			return advancedSearchDocument;
+		} else if (command.getSearchType().equals(SearchType.PEOPLE)) {
+			AdvancedSearchPeople advancedSearchPeople = new AdvancedSearchPeople();
+			advancedSearchPeople.initFromSimpleSearchCommand(command);
+			return advancedSearchPeople;
+		} else if (command.getSearchType().equals(SearchType.PLACE)) {
+			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
+			advancedSearchPlace.initFromSimpleSearchCommand(command);
+			return advancedSearchPlace;
+		} else {
+			AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
+			advancedSearchVolume.initFromSimpleSearchCommand(command);
+			return advancedSearchVolume;
 		}
 	}
 }

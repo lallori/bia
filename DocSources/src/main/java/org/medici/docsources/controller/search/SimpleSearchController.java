@@ -99,59 +99,59 @@ public class SimpleSearchController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(method = {RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		// This number is used to generate an unique id for new search 
 		UUID uuid = UUID.randomUUID();
+		command.setSearchUUID(uuid.toString());
 		model.put("searchUUID", uuid.toString());
 
+		// Add outputFields;
+		List<String> outputFields = getOutputFields(command.getSearchType());
+		model.put("outputFields", outputFields);
+		return new ModelAndView("search/SimpleSearchResult",model);
+	}
+
+	/**
+	 * This method return a list of output fields by searchType
+	 * @param searchType
+	 * @return
+	 */
+	private List<String> getOutputFields(SearchType searchType) {
+		List<String> outputFields = null;
+
 		// Search operation is made by View with a jquery plugin to contextualized AjaxController
-		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
-			List<String> outputFields = new ArrayList<String>(6);
+		if (searchType.equals(SearchType.DOCUMENT)) {
+			outputFields = new ArrayList<String>(6);
 			outputFields.add("Sender");
 			outputFields.add("Recipient");
 			outputFields.add("Date");
 			outputFields.add("Sender Location");
 			outputFields.add("Recipient Location");
 			outputFields.add("Volume / Folio");
-			model.put("outputFields", outputFields);
-			return new ModelAndView("search/SimpleSearchResult",model);
-		}
-		
-		if (command.getSearchType().equals(SearchType.PEOPLE)) {
-			List<String> outputFields = new ArrayList<String>(5);
+		} else if (searchType.equals(SearchType.PEOPLE)) {
+			outputFields = new ArrayList<String>(5);
 			outputFields.add("Name");
 			outputFields.add("Gender");
 			outputFields.add("Date");
 			outputFields.add("Born Date");
 			outputFields.add("Death Date");
-			model.put("outputFields", outputFields);
-			return new ModelAndView("search/SimpleSearchResult",model);
-		}
-
-		if (command.getSearchType().equals(SearchType.PLACE)) {
-			List<String> outputFields = new ArrayList<String>(4);
+		} else if (searchType.equals(SearchType.PLACE)) {
+			outputFields = new ArrayList<String>(4);
 			outputFields.add("Place Name");
 			outputFields.add("Place Type");
 			outputFields.add("Parent Name");
 			outputFields.add("Type");
-			model.put("outputFields", outputFields);
-			return new ModelAndView("search/SimpleSearchResult",model);
-		}
-		
-		if (command.getSearchType().equals(SearchType.VOLUME)) {
-			List<String> outputFields = new ArrayList<String>(4);
+		} else {
+			outputFields = new ArrayList<String>(4);
 			outputFields.add("Carteggio");
 			outputFields.add("Filza N.(MDP)");
 			outputFields.add("Start Date");
 			outputFields.add("End Date");
-			model.put("outputFields", outputFields);
-			return new ModelAndView("search/SimpleSearchResult",model);
 		}
-
-		// Wee should never arrive at this point.
-		return new ModelAndView("errorKO",model);
+		
+		return outputFields;
 	}
 
 	/**

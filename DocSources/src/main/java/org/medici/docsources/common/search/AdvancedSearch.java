@@ -27,10 +27,28 @@
  */
 package org.medici.docsources.common.search;
 
+import org.medici.docsources.command.search.AdvancedSearchCommand;
+import org.medici.docsources.command.search.SimpleSearchCommand;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 public interface AdvancedSearch extends Search {
+
+	/**
+	 * This method initialize object from an advanced search command bea.
+	 * 
+	 * @param command Advanced Search command bean,
+	 */
+	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command);
+
+	/**
+	 * This method initialize object from a simple search command bea.
+	 * It's used in refining simple search action.
+	 * 
+	 * @param command Simple Search command bean,
+	 */
+	public void initFromSimpleSearchCommand(SimpleSearchCommand command);
 }

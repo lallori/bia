@@ -48,7 +48,7 @@ public class DateUtils {
 	public static Integer getDateDayFromString(String nextToken) {
 		if (nextToken == null)
 			return null;
-		if (nextToken.equals("dd"))
+		if (nextToken.equals(""))
 			return null;
 		
 		return NumberUtils.createInteger(nextToken);
@@ -62,7 +62,7 @@ public class DateUtils {
 	public static Integer getDateMonthFromString(String nextToken) {
 		if (nextToken == null)
 			return null;
-		if (nextToken.equals("mm"))
+		if (nextToken.equals(""))
 			return null;
 		
 		return NumberUtils.createInteger(nextToken);
@@ -76,7 +76,7 @@ public class DateUtils {
 	public static Integer getDateYearFromString(String nextToken) {
 		if (nextToken == null)
 			return null;
-		if (nextToken.equals("yyyy"))
+		if (nextToken.equals(""))
 			return null;
 		
 		return NumberUtils.createInteger(nextToken);

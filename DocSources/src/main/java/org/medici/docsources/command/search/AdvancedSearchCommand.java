@@ -27,8 +27,11 @@
  */
 package org.medici.docsources.command.search;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
 
@@ -60,7 +63,26 @@ public class AdvancedSearchCommand {
 	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
 	private String searchUUID;
-	
+
+	/**
+	 * 
+	 */
+	public AdvancedSearchCommand() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param advancedSearch
+	 */
+	public AdvancedSearchCommand(AdvancedSearch advancedSearch) {
+		try {
+			BeanUtils.copyProperties(this, advancedSearch);
+		} catch (IllegalAccessException iaex) {
+		} catch (InvocationTargetException itex) {
+		}
+	}
+
 	/**
 	 * @param idSearchFilter the idSearchFilter to set
 	 */

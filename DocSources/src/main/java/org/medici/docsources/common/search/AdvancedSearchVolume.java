@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.common.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -39,7 +40,8 @@ import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
-import org.medici.docsources.command.search.AdvancedSearchVolumesCommand;
+import org.medici.docsources.command.search.AdvancedSearchCommand;
+import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 
@@ -48,7 +50,7 @@ import org.medici.docsources.common.util.VolumeUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class AdvancedSearchVolume implements AdvancedSearch {
+public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	/**
 	 * 
 	 */
@@ -72,13 +74,26 @@ public class AdvancedSearchVolume implements AdvancedSearch {
 	 */
 	public AdvancedSearchVolume() {
 		super();
+
+		words = new ArrayList<String>(0);
+		wordsTypes = new ArrayList<AdvancedSearchDocument.WordType>(0);
+		volumes = new ArrayList<String>(0);
+		volumesBetween = new ArrayList<String>(0);
+		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
+		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
+		datesYear = new ArrayList<Integer>(0);
+		datesMonth = new ArrayList<Integer>(0);
+		datesDay = new ArrayList<Integer>(0);
+		datesYearBetween = new ArrayList<Integer>(0);
+		datesMonthBetween = new ArrayList<Integer>(0);
+		datesDayBetween = new ArrayList<Integer>(0);
 	}
 	
 	/**
 	 * 
 	 * @param command
 	 */
-	public void initFromAdvancedSearchVolumesCommand(AdvancedSearchVolumesCommand command) {
+	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command) {
 	}
 
 	/**
@@ -362,61 +377,11 @@ public class AdvancedSearchVolume implements AdvancedSearch {
 
 	/**
 	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
+	 * @param command
 	 */
-	public static enum DateType {
-		After("After"), Before("Before"), Between("Between");
+	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
+		// TODO Auto-generated method stub
 		
-		private final String dateType;
-
-	    private DateType(String value) {
-	    	dateType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return dateType;
-	    }
-	}
-
-	/**
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
-	 */
-	public static enum VolumeType {
-		Between("Between"), Exactly("Exactly");
-		
-		private final String volumeType;
-
-	    private VolumeType(String value) {
-	    	volumeType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return volumeType;
-	    }
-	}
-	/**
-	 * 
-	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
-	 *
-	 */
-	public static enum WordType {
-		Notes("Notes"), Titles("VolumeTitles"), TitlesAndNotes("TitlesAndNotes");
-
-		private final String wordType;
-
-	    private WordType(String value) {
-	    	wordType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return wordType;
-	    }
 	}
 }
 
