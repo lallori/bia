@@ -7,15 +7,23 @@
 	<c:url var="SimpleSearchPaginationURL" value="/src/SimpleSearchPagination.json">
 		<c:param name="searchType" value="${command.searchType}" />
 	</c:url>
+
+	<c:url var="AdvancedSearchRefineURL" value="/src/ConvertSimpleSearchToAdvancedSearch.do">
+		<c:param name="searchUUID" value="${command.searchUUID}"></c:param>
+		<c:param name="searchType" value="${command.searchType}" />
+		<c:param name="text" value="${command.text}" />
+	</c:url>
+
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
+
 	<script type="text/javascript" charset="utf-8">
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
 			//dynamic field management
-			$j("#${searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#${searchUUID}').dataTable( {
+			$j('#${command.searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bProcessing": true,
@@ -43,10 +51,20 @@
 				$j("#body_left").load($j(this).attr("href"));
 				return false;
 			}); 
+
+			// We need to remove any previous live function
+			$j('.refine').die();
+			// Refine button have a specific class style on which we attach click live. 
+			$j('.refine').live('click', function() {
+				$j(this).open({width: 960, height: 680, scrollbars: "yes"});
+				return false;
+			});
 		} );
 	</script>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${searchUUID}">
+	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">REFINE THIS SEARCH</a>
+
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
 		<thead>
 			<tr></tr>
 		</thead>

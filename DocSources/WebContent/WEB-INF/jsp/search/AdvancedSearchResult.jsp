@@ -10,6 +10,7 @@
 
 	<c:url var="AdvancedSearchRefineURL" value="/src/AdvancedSearch.do">
 		<c:param name="searchUUID" value="${command.searchUUID}"></c:param>
+		<c:param name="searchType" value="${command.searchType}" />
 	</c:url>
 
 	<script type="text/javascript" charset="utf-8">
