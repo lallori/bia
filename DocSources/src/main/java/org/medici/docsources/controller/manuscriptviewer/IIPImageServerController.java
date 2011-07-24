@@ -345,6 +345,10 @@ public class IIPImageServerController {
 		try {
 			// Reading complete tiff information
 			imageInputStream = ImageIO.createImageInputStream(imageFile);
+			if (imageInputStream == null) {
+				logger.error("Image not found in directory " + imageFile.toString());
+			}
+
 			Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
 			if (readers.hasNext()) {
 				ImageReader reader = readers.next(); 
