@@ -1,5 +1,5 @@
 /**
-*  Advanced Search plugin for jQuery, version 1.0
+*  Advanced Search plugin for jQuery, version 1.5
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -55,7 +55,7 @@
 			var searchType = getSearchType(formName, fieldName);
 
 			console.log("AdvancedSearchForm started. Form Name : " + formName);
-			console.log("Field Name	: " + fieldName);
+			console.log("Field Name : " + fieldName);
 			console.log("Search Type : " + searchType);
 
 			var searchWord = "";
@@ -70,15 +70,14 @@
 							return true;
 						}
 
-						searchWord = getSearchWordForBetweenDate(formName, fieldName);
-						hiddenValue = getHiddenParameterForBetweenDate(formName, fieldName);
-						resetDateFields(formName, fieldName);
+						searchWord = getSearchWordForDateBetween(formName, fieldName);
+						hiddenValue = getHiddenParameterForDate(formName);
 					} else {
-						searchWord = getSearchWordForSingleDate(formName, fieldName);
-						hiddenValue = getHiddenParameterForSingleDate(formName, fieldName);
-
-						resetDateFields(formName, fieldName);
+						searchWord = getSearchWordForDateSingle(formName, fieldName);
+						hiddenValue = getHiddenParameterForDate(formName);
 					}
+
+					resetDateFields(formName, fieldName);
 				} else if (formName.indexOf("volume") >= 0) {
 					if ($(this).find("option:selected").val() == 'Between') {
 						searchWord = getSearchWordForBetweenField(formName, fieldName);
@@ -142,7 +141,7 @@
 			// we extract main div of this href condition (example volumeSearchDiv), we need it to remove "and conjunction"
 			var divSearch = $(this).parent().parent();
 
-			// we remove parent	container element which is condition.
+			// we remove parent container element which is condition.
 			$(this).parent().remove();
 
 			removeAfterAndConjunction($(divSearch));
@@ -182,6 +181,60 @@
 	}
 
 	/**
+	 * This function return hidden parameter to diplay for autocompleter field.
+	 */
+	function getHiddenParameterForAutocompleterField(formName, fieldName) {
+		console.log("Form has an autocompleter element");
+		var hiddenParameter = "";
+		// If element has autocompleter, its hiddenValue is a concatenation of id + description
+		if ($('#' + formName).find('#' + fieldName + 'Id').size() > 0) {
+			//Calculate hidden value (escaping text field to prevent field truncation
+			hiddenParameter = $('#' + formName).find('#' + fieldName + 'Id').val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
+			// we reset autocompleterId
+			$('#' + formName).find('#' + fieldName + 'Id').val("");
+		} else {
+			hiddenParameter = $('#' + formName).find('#' + fieldName).val();
+		}
+
+		// we reset textfield value
+		$('#' + formName).find('#' + fieldName).val("");
+
+		return hiddenParameter;
+	}
+
+	/**
+	 * This method return hidden parameter for date field in between condition
+	 */
+	function getHiddenParameterForDate(formName) {
+		var hiddenValue = $("#" + formName).find("#dateType").find("option:selected").val() + "|";
+		if ($("#" + formName).find("#dateYear").val() != "yyyy") {
+			hiddenValue += $("#" + formName).find("#dateYear").val();
+		}
+		hiddenValue += "|";
+		if ( $("#" + formName).find("#dateMonth").find("option:selected").text() != "mm") {
+			hiddenValue += $("#" + formName).find("#dateMonth").find("option:selected").val();
+		}
+		hiddenValue += "|";
+		if ($("#" + formName).find("#dateDay").val() != "dd") {
+			hiddenValue += $("#" + formName).find("#dateDay").val();
+		}
+		hiddenValue += "|"; 
+		if ($("#" + formName).find("#dateYearBetween").val() != "yyyy") {
+			hiddenValue += $("#" + formName).find("#dateYearBetween").val();
+		}
+		hiddenValue += "|";
+		if ( $("#" + formName).find("#dateMonthBetween").find("option:selected").text() != "mm") {
+			hiddenValue += $("#" + formName).find("#dateMonthBetween").find("option:selected").val();
+		}
+		hiddenValue += "|";
+		if ($("#" + formName).find("#dateDayBetween").val() != "dd") {
+			hiddenValue += $("#" + formName).find("#dateDayBetween").val();
+		}
+
+		return hiddenValue;
+	}
+
+	/**
 	 * This method returns field name of this advanced search form.  
 	 */
 	function getSearchFieldName(jquerySelector) {
@@ -198,7 +251,7 @@
 		} else {
 			retValue = $('#' + formName).find('#category').val();
 			if ($('#' + formName).find('#' + fieldName + 'Type').length==1) {
-				retValue += ' in ' + $('#' + formName).find('#' + fieldName + 'Type').find('option:selected').text();	 
+				retValue += ' in ' + $('#' + formName).find('#' + fieldName + 'Type').find('option:selected').text();
 			}
 		}
 		
@@ -222,21 +275,21 @@
 	/**
 	 * This method return search word to display in case of date field with between search type. 
 	 */
-	function getSearchWordForBetweenDate(formName, fieldName) {
+	function getSearchWordForDateBetween(formName, fieldName) {
 		var searchWord = '';
 		if ($('#' + formName).find('#dateYear').val() != 'yyyy')
 			searchWord = $('#' + formName).find('#dateYear').val();
-		if ( $('#' + formName).find('#dateMonth').find('option:selected').val()	!= 'mm')
-			searchWord += '	' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
+		if ( $('#' + formName).find('#dateMonth').find('option:selected').text() != 'mm')
+			searchWord += ' ' + $('#' + formName).find('#' + fieldName + 'Month').find('option:selected').text();
 		if ($('#' + formName).find('#dateDay').val() != 'dd')
-			searchWord += '	' + $('#' + formName).find('#dateDay').val();
-		searchWord += '	and'; 
+			searchWord += ' ' + $('#' + formName).find('#dateDay').val();
+		searchWord += ' and'; 
 		if ($('#' + formName).find('#dateYearBetween').val() != 'yyyy')
-			searchWord += '	 ' + $('#' + formName).find('#dateYearBetween').val();
-		if ( $('#' + formName).find('#dateMonthBetween').find('option:selected').val() != 'mm')
-			searchWord += '	' + $('#' + formName).find('#dateMonthBetween').find('option:selected').text();
+			searchWord += ' ' + $('#' + formName).find('#dateYearBetween').val();
+		if ( $('#' + formName).find('#dateMonthBetween').find('option:selected').text() != 'mm')
+			searchWord += ' ' + $('#' + formName).find('#dateMonthBetween').find('option:selected').text();
 		if ($('#' + formName).find('#dateDayBetween').val()	!= 'dd')
-			searchWord += '	' + $('#' + formName).find('#dateDayBetween').val();
+			searchWord += ' ' + $('#' + formName).find('#dateDayBetween').val();
 		
 		return searchWord;
 	}
@@ -244,68 +297,26 @@
 	/**
 	 * This function return search word to diplay for a field which is composed of two elements.
 	 */
-	function getSearchWordForSingleDate(formName, fieldName) {
+	function getSearchWordForDateSingle(formName, fieldName) {
 		var searchWord = '';
 		if ($('#' + formName).find('#dateYear').val() != 'yyyy') {
 			searchWord += $('#' + formName).find('#dateYear').val();
 		}
-		if ( $('#' + formName).find('#dateMonth').find('option:selected').val()	!= 'mm') {
-			searchWord += '	' + $('#' + formName).find('#dateMonth').find('option:selected').text();
+		if ( $('#' + formName).find('#dateMonth').find('option:selected').text() != 'mm') {
+			searchWord += ' ' + $('#' + formName).find('#dateMonth').find('option:selected').text();
 		}
 		if ($('#' + formName).find('#dateDay').val() != 'dd') {
-			searchWord += '	' + $('#' + formName).find('#dateDay').val();
+			searchWord += ' ' + $('#' + formName).find('#dateDay').val();
 		}
 		return searchWord;
 	}
-
-	/**
-	 * This function return hidden parameter to diplay for autocompleter field.
-	 */
-	function getHiddenParameterForAutocompleterField(formName, fieldName) {
-		console.log("Form has an autocompleter element");
-		var hiddenParameter = "";
-		// If element has autocompleter, its hiddenValue is a concatenation of id + description
-		if ($('#' + formName).find('#' + fieldName + 'Id').size() > 0) {
-			//Calculate hidden value (escaping text field to prevent field truncation
-			hiddenParameter = $('#' + formName).find('#' + fieldName + 'Id').val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
-			// we reset	autocompleterId
-			$('#' + formName).find('#' + fieldName + 'Id').val("");
-		} else {
-			hiddenParameter = $('#' + formName).find('#' + fieldName).val();
-		}
-
-		// we reset textfield value
-		$('#' + formName).find('#' + fieldName).val("");
-
-		return hiddenParameter;
-	}
-
-	/**
-	 * This method return hidden parameter for single date.
-	 */
-	function getHiddenParameterForSingleDate(formName, fieldName) {
-		return $('#' + formName).find("option:selected").val() + "|" + $('#' + formName).find('#dateYear').val() + '|' + $('#' + formName).find('#dateMonth').find('option:selected').val() + '|' + $('#' + formName).find('#dateDay').val();
-	}
-
-	/**
-	 * This method return hidden parameter for date field in between condition
-	 */
-	function getHiddenParameterForBetweenDate(formName, fieldName) {
-		var hiddenValue =  $('#' + formName).find("option:selected").val() + "|" + 
-		   $('#' + formName).find('#dateYear').val() + '|' + 
-		   $('#' + formName).find('#dateMonth').find('option:selected').val() + '|' + 
-		   $('#' + formName).find('#dateDay').val()+ "|" + 
-		   $('#' + formName).find('#dateYearBetween').val() + '|' + 
-		   $('#' + formName).find('#dateMonthBetween').find('option:selected').val() + '|' + 
-		   $('#' + formName).find('#dateDayBetween').val();
-	}
-
+	
 	/**
 	 * This metod insert "and conjunction" after the SearchDiv of correspondents 
 	 * field identified by fieldName.  
 	 */
 	function insertAfterAndConjunction(fieldName) {
-		var conditionDivIndex =	$("#yourEasySearchFilterForm > div").index($("div[id='" + fieldName + "SearchDiv']"))
+		var conditionDivIndex = $("#yourEasySearchFilterForm > div").index($("div[id='" + fieldName + "SearchDiv']"))
 		var nextConditions = 0;
 		var nextConjunctions = 0;
 
