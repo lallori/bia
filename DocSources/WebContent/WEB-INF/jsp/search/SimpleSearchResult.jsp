@@ -52,13 +52,7 @@
 				return false;
 			}); 
 
-			// We need to remove any previous live function
-			$j('.refine').die();
-			// Refine button have a specific class style on which we attach click live. 
-			$j('.refine').live('click', function() {
-				$j(this).open({width: 960, height: 680, scrollbars: "yes"});
-				return false;
-			});
+			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
 		} );
 	</script>
 
