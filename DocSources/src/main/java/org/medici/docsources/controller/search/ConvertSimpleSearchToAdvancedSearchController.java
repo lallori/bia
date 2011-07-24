@@ -102,7 +102,7 @@ public class ConvertSimpleSearchToAdvancedSearchController {
 		session.setAttribute("searchFilterMap", searchFilterMap);
 
 		// Generate command for output page. 
-		AdvancedSearchCommand advancedSearchCommand = new AdvancedSearchCommand(advancedSearch);
+		AdvancedSearchCommand advancedSearchCommand = new AdvancedSearchCommand(advancedSearch, command.getSearchType(), command.getSearchUUID());
 		model.put("command", advancedSearchCommand);
 
 		if (searchFilter.getSearchType().equals(SearchType.DOCUMENT)) {
