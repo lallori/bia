@@ -995,7 +995,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 * This method return a Lucene Query object. 
 	 */
 	public Query toLuceneQuery() {
-		BooleanQuery booleanQuery = new BooleanQuery();
+		BooleanQuery luceneQuery = new BooleanQuery();
 
 		if (words.size()>0) {
 			BooleanQuery wordsQuery = new BooleanQuery();
@@ -1018,26 +1018,45 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!wordsQuery.toString().equals("")) {
-				booleanQuery.add(wordsQuery, Occur.MUST);
+				luceneQuery.add(wordsQuery, Occur.MUST);
 			}
 		}
 
 		// Extract
 		if (extract.size()>0) {
+			BooleanQuery extractQuery = new BooleanQuery();
 			for (int i=0; i<extract.size(); i++) {
-				// (+synExtract.docExtract:med*)
-				BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.docExtract", extract.get(i).toLowerCase())), Occur.MUST);
-				booleanQuery.add(booleanClause);
+				BooleanQuery singleExtractQuery = new BooleanQuery();
+				// 1 - (+synExtract.docExtract:med*)
+				// 1 - BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.docExtract", extract.get(i).toLowerCase())), Occur.MUST);
+				// 1 - luceneQuery.add(booleanClause);
+				// Extract: mi dice anchora che io dia el grano ==> +(+(+synExtract.docExtract:mi +synExtract.docExtract:dice +synExtract.docExtract:anchora +synExtract.docExtract:che +synExtract.docExtract:io +synExtract.docExtract:dia +synExtract.docExtract:el +synExtract.docExtract:grano))
+				String[] wordsSingleExtract = StringUtils.split(extract.get(i), " ");
+				for (int j=0; j<wordsSingleExtract.length; j++) {
+					TermQuery termQuery = new TermQuery(new Term("synExtract.docExtract", wordsSingleExtract[j]));
+					singleExtractQuery.add(termQuery, Occur.MUST);
+				}
+				extractQuery.add(new BooleanClause(singleExtractQuery, Occur.MUST));
 			}
+			luceneQuery.add(new BooleanClause(extractQuery, Occur.MUST));
 		}
 		
 		// synopsis;
 		if (synopsis.size() >0) {
+			BooleanQuery synopsisQuery = new BooleanQuery();
 			for (int i=0; i<synopsis.size(); i++) {
+				BooleanQuery singleSynopsisQuery = new BooleanQuery();
 				// +(synExtract.synopsis:med*)
-				BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.synopsis", synopsis.get(i).toLowerCase())), Occur.MUST);
-				booleanQuery.add(booleanClause);
+				// 1 - BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.synopsis", synopsis.get(i).toLowerCase())), Occur.MUST);
+				// 1 - luceneQuery.add(booleanClause);
+				String[] wordsSingleSynopsis = StringUtils.split(synopsis.get(i), " ");
+				for (int j=0; j<wordsSingleSynopsis.length; j++) {
+					TermQuery termQuery = new TermQuery(new Term("synExtract.docExtract", wordsSingleSynopsis[j]));
+					singleSynopsisQuery.add(termQuery, Occur.MUST);
+				}
+				synopsisQuery.add(new BooleanClause(singleSynopsisQuery, Occur.MUST));
 			}
+			luceneQuery.add(new BooleanClause(synopsisQuery, Occur.MUST));
 		}
 
 		// topics;
@@ -1062,10 +1081,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!topicIdQuery.toString().equals("")) {
-				booleanQuery.add(topicIdQuery, Occur.MUST);
+				luceneQuery.add(topicIdQuery, Occur.MUST);
 			}
 			if (!topicTitleQuery.toString().equals("")) {
-				booleanQuery.add(topicTitleQuery, Occur.MUST);
+				luceneQuery.add(topicTitleQuery, Occur.MUST);
 			}
 		}
 
@@ -1093,10 +1112,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!personIdQuery.toString().equals("")) {
-				booleanQuery.add(personIdQuery, Occur.MUST);
+				luceneQuery.add(personIdQuery, Occur.MUST);
 			}
 			if (!personQuery.toString().equals("")) {
-				booleanQuery.add(personQuery, Occur.MUST);
+				luceneQuery.add(personQuery, Occur.MUST);
 			}
 		}
 
@@ -1127,10 +1146,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}			
 			if (!placeIdQuery.toString().equals("")) {
-				booleanQuery.add(placeIdQuery, Occur.MUST);
+				luceneQuery.add(placeIdQuery, Occur.MUST);
 			}
 			if (!placeQuery.toString().equals("")) {
-				booleanQuery.add(placeQuery, Occur.MUST);
+				luceneQuery.add(placeQuery, Occur.MUST);
 			}
 		}
 		
@@ -1153,10 +1172,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!senderIdQuery.toString().equals("")) {
-				booleanQuery.add(senderIdQuery, Occur.MUST);
+				luceneQuery.add(senderIdQuery, Occur.MUST);
 			}
 			if (!senderQuery.toString().equals("")) {
-				booleanQuery.add(senderQuery, Occur.MUST);
+				luceneQuery.add(senderQuery, Occur.MUST);
 			}
 		}
 
@@ -1178,10 +1197,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!fromIdQuery.toString().equals("")) {
-				booleanQuery.add(fromIdQuery, Occur.MUST);
+				luceneQuery.add(fromIdQuery, Occur.MUST);
 			}
 			if (!fromQuery.toString().equals("")) {
-				booleanQuery.add(fromQuery, Occur.MUST);
+				luceneQuery.add(fromQuery, Occur.MUST);
 			}
 		}
 
@@ -1203,10 +1222,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!recipientIdQuery.toString().equals("")) {
-				booleanQuery.add(recipientIdQuery, Occur.MUST);
+				luceneQuery.add(recipientIdQuery, Occur.MUST);
 			}
 			if (!recipientQuery.toString().equals("")) {
-				booleanQuery.add(recipientQuery, Occur.MUST);
+				luceneQuery.add(recipientQuery, Occur.MUST);
 			}
 		}
 
@@ -1229,10 +1248,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!toIdQuery.toString().equals("")) {
-				booleanQuery.add(toIdQuery, Occur.MUST);
+				luceneQuery.add(toIdQuery, Occur.MUST);
 			}
 			if (!toQuery.toString().equals("")) {
-				booleanQuery.add(toQuery, Occur.MUST);
+				luceneQuery.add(toQuery, Occur.MUST);
 			}
 		}
 
@@ -1254,10 +1273,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!refersToIdQuery.toString().equals("")) {
-				booleanQuery.add(refersToQuery, Occur.MUST);
+				luceneQuery.add(refersToQuery, Occur.MUST);
 			}
 			if (!refersToQuery.toString().equals("")) {
-				booleanQuery.add(refersToQuery, Occur.MUST);
+				luceneQuery.add(refersToQuery, Occur.MUST);
 			}
 		}
 
@@ -1294,7 +1313,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!datesQuery.toString().equals("")) {
-				booleanQuery.add(datesQuery, Occur.MUST);
+				luceneQuery.add(datesQuery, Occur.MUST);
 			}
 		}
 
@@ -1335,11 +1354,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 			}
 			if (!volumesQuery.toString().equals("")) {
-				booleanQuery.add(volumesQuery, Occur.MUST);
+				luceneQuery.add(volumesQuery, Occur.MUST);
 			}
 		}
 
-		return booleanQuery;
+		return luceneQuery;
 	}
 }
 
