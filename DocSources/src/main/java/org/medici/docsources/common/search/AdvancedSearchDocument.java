@@ -1051,7 +1051,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				// 1 - luceneQuery.add(booleanClause);
 				String[] wordsSingleSynopsis = StringUtils.split(synopsis.get(i), " ");
 				for (int j=0; j<wordsSingleSynopsis.length; j++) {
-					TermQuery termQuery = new TermQuery(new Term("synExtract.docExtract", wordsSingleSynopsis[j]));
+					TermQuery termQuery = new TermQuery(new Term("synExtract.synopsis", wordsSingleSynopsis[j]));
 					singleSynopsisQuery.add(termQuery, Occur.MUST);
 				}
 				synopsisQuery.add(new BooleanClause(singleSynopsisQuery, Occur.MUST));
