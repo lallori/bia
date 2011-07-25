@@ -146,9 +146,9 @@ public class AdvancedSearchController {
 		
 		if (searchFilter.getSearchType().equals(SearchType.DOCUMENT)) {
 			return new ModelAndView("search/AdvancedSearchDocuments", model);
-		} else if (searchFilter.equals(SearchType.PEOPLE)) {
+		} else if (searchFilter.getSearchType().equals(SearchType.PEOPLE)) {
 			return new ModelAndView("search/AdvancedSearchPeople", model);
-		} else if (searchFilter.equals(SearchType.PLACE)) {
+		} else if (searchFilter.getSearchType().equals(SearchType.PLACE)) {
 			return new ModelAndView("search/AdvancedSearchPlaces", model);
 		} else {
 			return new ModelAndView("search/AdvancedSearchVolumes", model);
