@@ -74,13 +74,18 @@ public class AdvancedSearchCommand {
 	/**
 	 * 
 	 * @param advancedSearch
+	 * @param searchType
+	 * @param searchUUID
 	 */
-	public AdvancedSearchCommand(AdvancedSearch advancedSearch) {
+	public AdvancedSearchCommand(AdvancedSearch advancedSearch, SearchType searchType, String searchUUID) {
 		try {
 			BeanUtils.copyProperties(this, advancedSearch);
 		} catch (IllegalAccessException iaex) {
 		} catch (InvocationTargetException itex) {
 		}
+		
+		setSearchType(searchType);
+		setSearchUUID(searchUUID);
 	}
 
 	/**
