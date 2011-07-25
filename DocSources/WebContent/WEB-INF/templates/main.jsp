@@ -71,7 +71,8 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.documentExplorer.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.shareButton.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.volumeExplorer.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.13.custom.min.js"/>"></script>
+		<!--  <script type="text/javascript" src="<c:url value="/scripts/jquery-ui-1.8.13.custom.min.js"/>"></script>-->
+		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/pirobox_extended.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.tooltip.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ModalBox/prototype.js"/>"></script>
