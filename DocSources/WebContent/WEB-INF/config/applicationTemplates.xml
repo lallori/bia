@@ -441,7 +441,7 @@
 
 	<definition name="search/AdvancedSearchPlaces" extends="template.advancedSearchForm">
 		<put-attribute name="advancedSearchForm" value="/WEB-INF/jsp/search/AdvancedSearchPlaces.jsp"/>	
-		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPlacesFilter.jsp.jsp"/>
+		<put-attribute name="advancedSearchFilter" value="/WEB-INF/jsp/search/AdvancedSearchPlacesFilter.jsp"/>
 	</definition>
 
 	<definition name="search/AdvancedSearchVolumes" extends="template.advancedSearchForm">
