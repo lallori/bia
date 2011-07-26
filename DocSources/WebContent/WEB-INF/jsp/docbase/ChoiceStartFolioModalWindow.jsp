@@ -137,14 +137,14 @@
 		</div>
 		<br />	
 		<br />
-	</div>
+	
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<div id="chooseDiv">
-			<a id="choose" href="${TranscribeAndContextualizeDocumentURL}"></a>
+			<a id="choose" class="choose" href="${TranscribeAndContextualizeDocumentURL}">Choose this as Doc. start folio</a>
 		</div>
 		</security:authorize>
 		<div id="gobackvolumeDiv">
-			<a id="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER"></a>
+			<a id="gobackvolume" class="gobackvolume" href="${ExplorerVolumeModalURL}" title="VOLUME EXPLORER">Go back to Volume Explorer</a>
 		</div>	
 	
 
