@@ -96,6 +96,11 @@
 			</c:if>
 			</div>
 		</c:if>
+		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
+			<div id="transcribe">
+				<a title="FIND THE DOCUMENT START FOLIO"  href="${ChoiceStartFolioDocument}" class="transcribe">Transcribe this document</a>
+			</div>
+		</c:if>
 		</div>
 		
 		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:100"></iframe>
@@ -118,6 +123,11 @@
 					<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
 				</c:if>
 				</div>
+				<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
+				<div id="transcribe">
+					<a id="transcribe" title="FIND THE DOCUMENT START FOLIO"  href="${ChoiceStartFolioDocument}" class="transcribe">Transcribe this document</a>
+				</div>
+		</c:if>
 			</div>
 		</div>
 
@@ -186,9 +196,7 @@
 		
 		<br />
 		
-		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
-			<a id="transcribe" href="${ChoiceStartFolioDocument}" title="FIND THE DOCUMENT START FOLIO"  class="pirobox" rel="content-full-full"></a>
-		</c:if>
+		
 	
 		</div>
 	</div>
@@ -219,7 +227,7 @@
 				return false;
 			});
 			
-			$j("#transcribe").click(function() { 
+			$j(".transcribe").click(function() { 
 				$j("#modalBox").load($j(this).attr("href")); 
 				return false;
 			});
