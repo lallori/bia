@@ -2062,7 +2062,7 @@ a.refreshVolumeExplorer {
 /* modalBox Previous / Next Folio */
 
 #modalBox #prevNextButtons {
-	margin:10px 0 10px 250px;
+	margin:10px 0 10px 50px;
 	width: 205px;
 	z-index:2;
 }
@@ -2124,15 +2124,14 @@ a.refreshVolumeExplorer {
 
 
 /* Modifiche fatte da Pasquinelli*/
-#modalBox #transcribe {
+#modalBox #prevNextButtons #transcribe a{
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
-	margin:10px 0 0 255px;
+	margin:-26px 0 0 417px;
 	float:left;
 	width:182px;
 	height:22px;
-	cursor:auto;
 }
 
 #transcribe a:hover, #chooseDiv a:hover, #gobackvolumeDiv a:hover   {
