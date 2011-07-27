@@ -42,9 +42,9 @@
 				<form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Day</form:label>
 				<form:input path="startDay" cssClass="input_2c" maxlength="2"/>
 				<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error">Approx</form:label>
-				<form:checkbox path="startApprox" />
+				<form:checkbox path="startApprox" cssClass="checkboxPers3"/>
 				<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error">Uns</form:label>
-				<form:checkbox path="startUns" />
+				<form:checkbox path="startUns" cssClass="checkboxPers3"/>
 			</div>
 			<hr>
 			<div>
@@ -57,9 +57,9 @@
 				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">Day</form:label>
 				<form:input path="endDay" cssClass="input_2c" maxlength="2"/>
 				<form:label id="endApproxLabel" for="endApprox" path="endApprox" cssErrorClass="error">Approx</form:label>
-				<form:checkbox path="endApprox" />
+				<form:checkbox path="endApprox" cssClass="checkboxPers3"/>
 				<form:label id="endUnsLabel" for="endtUns" path="endUns" cssErrorClass="error">Uns</form:label>
-				<form:checkbox path="endUns" />
+				<form:checkbox path="endUns" cssClass="checkboxPers3"/>
 			</div>
 			
 			<form:hidden path="titleOccId" />
