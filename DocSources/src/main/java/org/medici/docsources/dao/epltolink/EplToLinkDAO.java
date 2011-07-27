@@ -42,6 +42,8 @@ import org.medici.docsources.domain.EplToLink;
 public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 
 	/**
+	 * This method searches a topic linked to a document identified by his entryId
+	 * and by a document identifier. 
 	 * 
 	 * @param entryId
 	 * @param eplToId
@@ -51,6 +53,8 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	public EplToLink find(Integer entryId, Integer eplToId) throws PersistenceException;
 
 	/**
+	 * This method searches every topics linked to a document identified by
+	 * his entryId. 
 	 * 
 	 * @param entryId
 	 * @return

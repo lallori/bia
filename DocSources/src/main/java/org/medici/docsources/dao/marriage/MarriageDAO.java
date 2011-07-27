@@ -43,6 +43,8 @@ import org.medici.docsources.domain.People.Gender;
 public interface MarriageDAO extends Dao<Integer, Marriage> {
 
 	/**
+	 * This method searches a list of spouses of a person identified by a person identifier 
+	 * and by gender. 
 	 * 
 	 * @param personId
 	 * @param gender
@@ -52,6 +54,8 @@ public interface MarriageDAO extends Dao<Integer, Marriage> {
 	public List<Marriage> findMarriagesPerson(Integer personId, Gender gender) throws PersistenceException;
 
 	/**
+	 * This method searches the spouse of a person identified by a marriage identifier,
+	 * a person identifier and by gender.
 	 * 
 	 * @param marriageId
 	 * @param personId

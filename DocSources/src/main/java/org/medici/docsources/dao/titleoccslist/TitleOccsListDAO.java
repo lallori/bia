@@ -43,6 +43,8 @@ import org.medici.docsources.domain.TitleOccsList;
 public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 
 	/**
+	 * This method searches a list of titles and occupations which could be related to a person 
+	 * which contains a text parameter (String searchText). 
 	 * 
 	 * @param searchText
 	 * @return

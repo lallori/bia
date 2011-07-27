@@ -48,10 +48,13 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * 
 	 * @param entryId Document identifier.
 	 * @return
+	 * @throws PersistenceException
 	 */
 	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException;
 
 	/**
+	 * This method searches a person linked to a document identified by his entryId
+	 * and by a document identifier.
 	 * 
 	 * @param epLinkId
 	 * @param entryId

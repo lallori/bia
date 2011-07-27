@@ -43,7 +43,9 @@ import org.medici.docsources.domain.People;
 public interface ParentDAO extends Dao<Integer, Parent> {
 
 	/**
-	 * 
+	 * This method searches a child of a parent identified by his identifier and
+	 * a parent identifier.
+	 *  
 	 * @param parentId
 	 * @param childId
 	 * @return
@@ -52,6 +54,7 @@ public interface ParentDAO extends Dao<Integer, Parent> {
 	public People findChild(Integer parentId, Integer childId) throws PersistenceException;
 
 	/**
+	 * This method searches a every children of a parent identified by a parent identifier.
 	 * 
 	 * @param parentId
 	 * @return

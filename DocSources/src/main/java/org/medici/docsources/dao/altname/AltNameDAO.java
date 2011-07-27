@@ -41,6 +41,8 @@ import org.medici.docsources.domain.AltName;
 public interface AltNameDAO extends Dao<Integer, AltName> {
 
 	/**
+	 * This method searches for alternative name of a person identified by his unique identifier and
+	 * his unique name identifier. 
 	 * 
 	 * @param personId
 	 * @param nameId

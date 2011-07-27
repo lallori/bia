@@ -46,6 +46,8 @@ import org.medici.docsources.domain.TopicList;
 public interface TopicsListDAO extends Dao<Integer, TopicList> {
 
 	/**
+	 * This method searches for topics which could be related to a document which contains 
+	 * a text parameter (String alias) and returns a list of {@link org.medici.docsources.domain.TopicList}.
 	 * 
 	 * @param topicIdList
 	 * @param query
@@ -55,6 +57,8 @@ public interface TopicsListDAO extends Dao<Integer, TopicList> {
 	public List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException;
 
 	/**
+	 * This method searches topics which contains the parameters set in {@link org.medici.docsources.common.search}
+	 * object and return a result page.
 	 * 
 	 * @param searchContainer
 	 * @param paginationFilter

@@ -42,6 +42,7 @@ import org.medici.docsources.domain.Month;
 public interface MonthDAO extends Dao<Integer, Month> {
 	
 	/**
+	 * This method returns a list of all months. 
 	 * 
 	 * @return
 	 * @throws PersistenceException

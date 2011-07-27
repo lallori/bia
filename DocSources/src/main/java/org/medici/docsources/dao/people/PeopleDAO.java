@@ -50,7 +50,6 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.People}
 	 * 
-	 * @return
 	 * @throws PersistenceException
 	 */
 	public People findLastEntryPerson() throws PersistenceException;
@@ -63,14 +62,19 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	public void generateIndex() throws PersistenceException;
 
 	/**
+	 * This method searches for children which could be related to a person which contains 
+	 * a text parameter (String query).  
 	 * 
 	 * @param personId
 	 * @param query
 	 * @return
+	 * @throws PersistenceException
 	 */
 	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws PersistenceException;
 
 	/**
+	 * This method searches for fathers which could be related to a person which contains 
+	 * a text parameter (String query).
 	 * 
 	 * @param query
 	 * @return
@@ -79,8 +83,9 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	public List<People> searchFatherLinkableToPerson(String query) throws PersistenceException;
 
 	/**
+	 * This method searches for mothers which could be related to a person which contains 
+	 * a text parameter (String query).
 	 * 
-	 * @param personId
 	 * @param query
 	 * @return
 	 * @throws PersistenceException
@@ -88,6 +93,8 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	public List<People> searchMotherLinkableToPerson(String query) throws PersistenceException;
 	
 	/**
+	 * This method searches for person entities which contains the parameters set in {@link org.medici.docsources.common.search}
+	 * object and return a result page.
 	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
@@ -97,7 +104,9 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
-	 * 
+	 * This method searches for person entities which could be related to a document which contains 
+	 * a text parameter (String query).
+	 *  
 	 * @param entryId
 	 * @param query
 	 * @return
@@ -106,6 +115,8 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String searchText) throws PersistenceException;
 
 	/**
+	 * This method searches for recipients which could be related to a document which contains 
+	 * a text parameter (String searchText).
 	 * 
 	 * @param queries
 	 * @return
@@ -114,6 +125,8 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException;
 
 	/**
+	 * This method searches for senders which could be related to a document which contains 
+	 * a text parameter (String searchText).
 	 * 
 	 * @param alias
 	 * @return

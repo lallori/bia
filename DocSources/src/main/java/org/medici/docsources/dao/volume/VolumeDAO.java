@@ -72,6 +72,8 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
+	 * This method searches volumes which contains the parameters set in {@link org.medici.docsources.common.search}
+	 * object and return a result page.
 	 * 
 	 * @param searchContainer
 	 * @param paginationFilter

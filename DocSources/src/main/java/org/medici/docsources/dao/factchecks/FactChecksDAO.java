@@ -40,6 +40,8 @@ import org.medici.docsources.domain.FactChecks;
 public interface FactChecksDAO extends Dao<Integer, FactChecks> {
 
 	/**
+	 * This method searches factChecks linked to a document identified by
+	 * his entryId.  
 	 * 
 	 * @param entryId
 	 * @return

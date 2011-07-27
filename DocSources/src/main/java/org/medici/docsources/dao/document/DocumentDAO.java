@@ -62,18 +62,24 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	public Document findLastEntryDocument() throws PersistenceException;
 
 	/**
+	 * This method searches documents which contains the parameters set in {@link org.medici.docsources.common.search}
+	 * object and return a result page.
 	 * 
-	 * @param text
+	 * @param searchContainer
 	 * @param paginationFilter
 	 * @return
+	 * @throws PersistenceException
 	 */
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
+	 * This method searches documents which contains text input parameter in one of his fields
+	 * and return a result page.
 	 * 
 	 * @param text
 	 * @param paginationFilter
 	 * @return
+	 * @throws PersistenceException
 	 */
 	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException;
 }

@@ -42,6 +42,7 @@ import org.medici.docsources.domain.PasswordChangeRequest;
 public interface PasswordChangeRequestDAO extends Dao<String, PasswordChangeRequest> {
 
 	/**
+	 * This method returns a list of password change request.
 	 * 
 	 * @param passwordChangeRequest
 	 * @return

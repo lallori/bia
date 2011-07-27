@@ -43,6 +43,7 @@ import org.medici.docsources.domain.Country;
 public interface CountryDAO extends Dao<String, Country> {
 
 	/**
+	 * This method searches for countries identified by their description. 
 	 * 
 	 * @param description
 	 * @return
