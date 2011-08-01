@@ -45,9 +45,9 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * This method searches a topic linked to a document identified by his entryId
 	 * and by a document identifier. 
 	 * 
-	 * @param entryId
-	 * @param eplToId
-	 * @return
+	 * @param entryId Document identifier.
+	 * @param eplToId Topic linked identifier.
+	 * @return A topic linked found.
 	 * @throws PersistenceException
 	 */
 	public EplToLink find(Integer entryId, Integer eplToId) throws PersistenceException;
@@ -56,8 +56,8 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * This method searches every topics linked to a document identified by
 	 * his entryId. 
 	 * 
-	 * @param entryId
-	 * @return
+	 * @param entryId Document identifier.
+	 * @return List of topic linked to a document.
 	 * @throws PersistenceException
 	 */
 	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException;

@@ -45,8 +45,9 @@ public interface CountryDAO extends Dao<String, Country> {
 	/**
 	 * This method searches for countries identified by their description. 
 	 * 
-	 * @param description
-	 * @return
+	 * @param description search text
+	 * @return List<Country> Countries matching search criteria on field
+	 *         description
 	 * @throws PersistenceException
 	 */
 	public List<Country> findByDescription(String description) throws PersistenceException;

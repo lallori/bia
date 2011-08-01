@@ -43,8 +43,8 @@ public interface FactChecksDAO extends Dao<Integer, FactChecks> {
 	 * This method searches factChecks linked to a document identified by
 	 * his entryId.  
 	 * 
-	 * @param entryId
-	 * @return
+	 * @param entryId Document identifier.
+	 * @return A factChecks linked to a document.
 	 * @throws PersistenceException
 	 */
 	public FactChecks findByEntryId(Integer entryId) throws PersistenceException;

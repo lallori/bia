@@ -47,7 +47,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * his entryId.
 	 * 
 	 * @param entryId Document identifier.
-	 * @return
+	 * @return List of people found
 	 * @throws PersistenceException
 	 */
 	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException;
@@ -56,9 +56,9 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * This method searches a person linked to a document identified by his entryId
 	 * and by a document identifier.
 	 * 
-	 * @param epLinkId
-	 * @param entryId
-	 * @return
+	 * @param epLinkId Person linked identifier
+	 * @param entryId Document identifier
+	 * @return A person linked found
 	 * @throws PersistenceException
 	 */
 	public EpLink find(Integer epLinkId, Integer entryId) throws PersistenceException;

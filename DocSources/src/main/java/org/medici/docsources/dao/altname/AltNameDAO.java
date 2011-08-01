@@ -44,9 +44,9 @@ public interface AltNameDAO extends Dao<Integer, AltName> {
 	 * This method searches for alternative name of a person identified by his unique identifier and
 	 * his unique name identifier. 
 	 * 
-	 * @param personId
-	 * @param nameId
-	 * @return
+	 * @param personId person unique identifier
+	 * @param nameId identifier of person's name
+	 * @return the alternative name of a person {@link org.medici.docsources.domain.AltName}
 	 * @throws PersistenceException
 	 */
 	public AltName findAltNamePerson(Integer personId, Integer nameId) throws PersistenceException;

@@ -41,6 +41,13 @@ import org.medici.docsources.domain.ActivationUser;
  */
 public interface ActivationUserDAO extends Dao<String, ActivationUser> {
 
+	/**
+	 * This method searches users that need to be activated
+	 * 
+	 * @param activationUser
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public List<ActivationUser> searchUsersToActivate(ActivationUser activationUser) throws PersistenceException;
 
 }
