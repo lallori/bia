@@ -65,9 +65,9 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * This method searches for children which could be related to a person which contains 
 	 * a text parameter (String query).  
 	 * 
-	 * @param personId
-	 * @param query
-	 * @return
+	 * @param personId Person identifier
+	 * @param query Text to be searched
+	 * @return A List<People> of children that could be related to a person.
 	 * @throws PersistenceException
 	 */
 	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws PersistenceException;
@@ -76,8 +76,8 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * This method searches for fathers which could be related to a person which contains 
 	 * a text parameter (String query).
 	 * 
-	 * @param query
-	 * @return
+	 * @param query Text to be searched
+	 * @return A List<People> of fathers that could be related to a person.
 	 * @throws PersistenceException
 	 */
 	public List<People> searchFatherLinkableToPerson(String query) throws PersistenceException;
@@ -86,8 +86,8 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * This method searches for mothers which could be related to a person which contains 
 	 * a text parameter (String query).
 	 * 
-	 * @param query
-	 * @return
+	 * @param query Text to be searched
+	 * @return A List<People> of mothers that could be related to a person.
 	 * @throws PersistenceException
 	 */
 	public List<People> searchMotherLinkableToPerson(String query) throws PersistenceException;
@@ -98,7 +98,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
-	 * @return
+	 * @return A result Page of people.
 	 * @throws PersistenceException
 	 */
 	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
@@ -107,9 +107,9 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * This method searches for person entities which could be related to a document which contains 
 	 * a text parameter (String query).
 	 *  
-	 * @param entryId
-	 * @param query
-	 * @return
+	 * @param peopleIdList List of person identifier
+	 * @param searchText Text to be searched
+	 * @return A List<People> of person entities that could be related to a document.
 	 * @throws PersistenceException
 	 */
 	public List<People> searchPersonLinkableToDocument(List<Integer> peopleIdList, String searchText) throws PersistenceException;
@@ -118,8 +118,8 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * This method searches for recipients which could be related to a document which contains 
 	 * a text parameter (String searchText).
 	 * 
-	 * @param queries
-	 * @return
+	 * @param searchText Text to be searched
+	 * @return A List<People> of recipients that could be related to a document.
 	 * @throws PersistenceException
 	 */
 	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException;
@@ -128,8 +128,8 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * This method searches for senders which could be related to a document which contains 
 	 * a text parameter (String searchText).
 	 * 
-	 * @param alias
-	 * @return
+	 * @param searchText Text to be searched
+	 * @return A List<People> of senders that could be related to a document.
 	 * @throws PersistenceException
 	 */
 	public List<People> searchSendersPeople(String searchText) throws PersistenceException;

@@ -44,7 +44,7 @@ public interface MonthDAO extends Dao<Integer, Month> {
 	/**
 	 * This method returns a list of all months. 
 	 * 
-	 * @return
+	 * @return A List<Month> of all months
 	 * @throws PersistenceException
 	 */
 	public List<Month> getAllMonths() throws PersistenceException;

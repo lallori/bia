@@ -51,11 +51,11 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * This method searches a document image identified by volume identifiers, number of folio
 	 * and folio format.
 	 *  
-	 * @param volNum MDP
-	 * @param volLetExt MDP Extension
-	 * @param folioNum
-	 * @param folioMod
-	 * @return
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param folioNum Number of folio
+	 * @param folioMod Folio format
+	 * @return A document image
 	 * @throws PersistenceException
 	 */
 	public Image findDocumentImage(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
@@ -64,11 +64,11 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * This method searches every document images identified by volume identifiers, number of folio
 	 * and folio format. 
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @param folioNum
-	 * @param folioMod
-	 * @return
+	 * @param volNum MDP Volume identifier 
+	 * @param volLetExt MDP Volume extension
+	 * @param folioNum Number of folio
+	 * @param folioMod Folio format
+	 * @return A List<Image> of documents
 	 * @throws PersistenceException
 	 */
 	public List<Image> findDocumentImages(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
@@ -77,11 +77,11 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * This method searches an image identified by volume identifiers, number of folio
 	 * and image type. 
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @param imageType
-	 * @param folioNum
-	 * @return
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param imageType Type of image
+	 * @param folioNum Number of folio
+	 * @return A {@link org.medici.docsources.domain.Image}
 	 * @throws PersistenceException
 	 */
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException;
@@ -97,9 +97,9 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	/**
 	 * This method returns a list of Images linked to a specific volume.
 	 * 
-	 * @param volNum MDP
-	 * @param volLetExt MDP Extension
-	 * @return
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @return A List<Image> linked to a volume
 	 * @throws PersistenceException
 	 */
 	public List<Image> findImages(Integer volNum, String volLetExt) throws PersistenceException;
@@ -107,10 +107,10 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	/**
 	 * This method returns a Paged list of Images linked to a specific volume .
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @param paginationFilter
-	 * @return
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param paginationFilter 
+	 * @return A result page of Images
 	 * @throws PersistenceException
 	 */
 	public Page findImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws PersistenceException;
@@ -126,9 +126,9 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	/**
 	 * This method searches the first volume image identified by volume identifiers. 
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @return
+	 * @param volNum MDP Volume identifiers
+	 * @param volLetExt MDP Volume extension
+	 * @return The first Image of a Volume
 	 * @throws PersistenceException
 	 */
 	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException;
@@ -145,10 +145,10 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	/**
 	 * This method searches a volume image identified by volume identifiers and image order.
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @param imageOrder
-	 * @return
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param imageOrder 
+	 * @return A Volume Image
 	 * @throws PersistenceException
 	 */
 	public Image findVolumeImage(Integer volNum, String volLetExt, Integer imageOrder) throws PersistenceException;
@@ -156,9 +156,9 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	/**
 	 * This method searches every volume images identified by volume identifiers. 
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @return
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @return A List<Image> of a Volume
 	 * @throws PersistenceException
 	 */
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws PersistenceException;
@@ -167,11 +167,11 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * This method searches every volume images identified by volume identifiers 
 	 * and type of image. 
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @param imageType
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @param imageType Type of image
 	 * @param imageProgTypeNum
-	 * @return
+	 * @return A List<Image> of a Volume
 	 * @throws PersistenceException
 	 */
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws PersistenceException;
@@ -179,9 +179,9 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	/**
 	 * This method searches the volume spine identified by volume identifiers. 
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @return
+	 * @param volNum MDP Volume identifier
+	 * @param volLetExt MDP Volume extension
+	 * @return An Image of volume spine
 	 * @throws PersistenceException
 	 */
 	public Image findVolumeSpine(Integer volNum, String volLetExt) throws PersistenceException;
