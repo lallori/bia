@@ -17,18 +17,18 @@
 				<b>ADD NEW PERSON</b>
 			</c:if>
 			<c:if test="${command.personId > 0}">
-				<b>Edit PERSON</b>
+				<b>EDIT PERSON</b>
 			</c:if> 
 			</legend>
 			<div>
-				<form:label id="personDescriptionLabel" for="personDescription" path="personDescription" cssErrorClass="error">Name:</form:label>
-				<form:input id="personDescriptionAutoCompleter" path="personDescription" class="input_25c" />
+				<form:label id="personDescriptionLabel" for="personDescription" path="personDescription" cssErrorClass="error">Name</form:label>
+				<form:input id="personDescriptionAutoCompleter" path="personDescription" cssClass="input_25c" />
 			</div>
 			<div>
 				<form:label id="assignUnsureLabel" for="assignUnsure" path="assignUnsure" cssErrorClass="error">Unsure?</form:label>
 				<form:checkbox id="assignUnsure" path="assignUnsure" cssClass="checkboxPers2"/>
 				<form:label id="portraitLabel" for="portrait" path="portrait" cssErrorClass="error">Portrait</form:label>
-				<form:checkbox id="portrait" path="portrait" class="checkboxPers2"/>
+				<form:checkbox id="portrait" path="portrait" cssClass="checkboxPers2"/>
 			</div>
 			<div>
 				<input id="closePerson" type="submit" value="Close" title="do not save changes" class="button" />
