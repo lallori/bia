@@ -47,7 +47,7 @@ public interface SeriesListDAO extends Dao<Integer, SerieList> {
 	 * This implementation uses HibernateSearch.
 	 *   
 	 * @param alias Text to search in title or subTitle1 or subTitle2
-	 * @return @return a List of serieList
+	 * @return a List of serieList
 	 * @throws PersistenceException
 	 */
 	public List<SerieList> findSeries(String alias) throws PersistenceException;

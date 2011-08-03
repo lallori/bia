@@ -49,9 +49,9 @@ public interface TopicsListDAO extends Dao<Integer, TopicList> {
 	 * This method searches for topics which could be related to a document which contains 
 	 * a text parameter (String alias) and returns a list of {@link org.medici.docsources.domain.TopicList}.
 	 * 
-	 * @param topicIdList
-	 * @param query
-	 * @return
+	 * @param topicIdList List of topics identifiers
+	 * @param query Text to be searched
+	 * @return A List<TopicList> that could be related to a document.
 	 * @throws PersistenceException
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException;

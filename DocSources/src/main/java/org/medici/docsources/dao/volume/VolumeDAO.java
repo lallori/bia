@@ -53,9 +53,9 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	/**
 	 * This method searches a single volume identified by is unique identifiers.
 	 * 
-	 * @param volNum
-	 * @param volLetExt
-	 * @return
+	 * @param volNum Volume identifier
+	 * @param volLetExt Volume extension
+	 * @return The Volume searched.
 	 * @throws PersistenceException
 	 */
 	public Volume findVolume(Integer volNum, String volLetExt) throws PersistenceException;
@@ -64,9 +64,9 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * This method searches volumes which contains text input parameter in one of his fields
 	 * and return a result page.
 	 * 
-	 * @param text
+	 * @param text Text to be searched
 	 * @param paginationFilter
-	 * @return
+	 * @return A result page of volumes searched
 	 * @throws PersistenceException
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;

@@ -46,8 +46,8 @@ public interface TitleOccsListDAO extends Dao<Integer, TitleOccsList> {
 	 * This method searches a list of titles and occupations which could be related to a person 
 	 * which contains a text parameter (String searchText). 
 	 * 
-	 * @param searchText
-	 * @return
+	 * @param searchText Text to be searched
+	 * @return A List<TitleOccsList> searched.
 	 * @throws PersistenceException
 	 */
 	public List<TitleOccsList> searchTitleOrOccupationLinkableToPerson(String searchText) throws PersistenceException;

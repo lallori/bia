@@ -43,8 +43,8 @@ public interface SynExtractDAO extends Dao<Integer, SynExtract> {
 	 * This method searches a {@link org.medici.docsources.domain.SynExtract} by 
 	 * its identifier
 	 * 
-	 * @param entryId
-	 * @return
+	 * @param entryId SynExtract identifier
+	 * @return The SynExtract searched.
 	 * @throws PersistenceException
 	 */
 	public SynExtract findByEntryId(Integer entryId) throws PersistenceException;

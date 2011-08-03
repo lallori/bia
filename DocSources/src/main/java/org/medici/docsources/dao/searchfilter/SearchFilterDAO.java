@@ -48,8 +48,8 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * This method searches every {@link org.medici.docsources.domain.SearchFilter} 
 	 * of a user by its username.
 	 * 
-	 * @param username
-	 * @return
+	 * @param username The name of the user
+	 * @return A List<SearchFilter> of the user.
 	 * @throws PersistenceException
 	 */
 	public List<SearchFilter> findUserSearchFilters(String username) throws PersistenceException;
@@ -67,9 +67,9 @@ public interface SearchFilterDAO extends Dao<String, SearchFilter> {
 	 * This method searches a {@link org.medici.docsources.domain.SearchFilter} 
 	 * of a user by its username and the search filter's identifier.
 	 * 
-	 * @param username
-	 * @param idSearchFilter
-	 * @return
+	 * @param username The name of the user 
+	 * @param idSearchFilter A SearchFilter identifier
+	 * @return The SearchFilter searched.
 	 * @throws PersistenceException
 	 */
 	public SearchFilter findUserSearchFilter(String username, Integer idSearchFilter) throws PersistenceException;

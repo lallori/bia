@@ -56,8 +56,8 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * This method searches for born places which could be related to a person which contains 
 	 * a text parameter (String query).
 	 * 
-	 * @param query
-	 * @return
+	 * @param query Text to be searched
+	 * @return A List<Place> that could be related to a person.
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchBornPlace(String query) throws PersistenceException;
@@ -66,8 +66,8 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * This method searches for death places which could be related to a person which contains 
 	 * a text parameter (String query). 
 	 * 
-	 * @param query
-	 * @return
+	 * @param query Text to be searched
+	 * @return A List<Place> that could be related to a person.
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchDeathPlace(String query) throws PersistenceException;
@@ -76,8 +76,8 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * This method searches for places which could be related to a document which contains 
 	 * a text parameter (String searchText). 
 	 * 
-	 * @param searchText
-	 * @return
+	 * @param searchText Text to be searched
+	 * @return A List<Place> that could be related to a document.
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException;
@@ -96,8 +96,8 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	/**
 	 * This method searches for places which contains a text parameter (String searchText). 
 	 * 
-	 * @param searchText
-	 * @return
+	 * @param searchText Text to be searched
+	 * @return A List<Place> searched
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchPlaces(String searchText) throws PersistenceException;
@@ -106,8 +106,8 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * This method searches for places which could be related to a recipient which contains 
 	 * a text parameter (String searchText). 
 	 * 
-	 * @param searchText
-	 * @return
+	 * @param searchText Text to be searched
+	 * @return A List<Place> that could be related to a recipient
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchRecipientsPlace(String searchText) throws PersistenceException;
@@ -116,8 +116,8 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * This method searches for places which could be related to a sender which contains 
 	 * a text parameter (String searchText). 
 	 * 
-	 * @param searchText
-	 * @return
+	 * @param searchText Text to be searched
+	 * @return A List<Place> that could be related to a sender
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchSendersPlace(String searchText) throws PersistenceException;
