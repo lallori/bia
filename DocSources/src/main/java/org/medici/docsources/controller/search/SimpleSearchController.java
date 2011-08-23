@@ -134,7 +134,6 @@ public class SimpleSearchController {
 			outputFields = new ArrayList<String>(5);
 			outputFields.add("Name");
 			outputFields.add("Gender");
-			outputFields.add("Date");
 			outputFields.add("Born Date");
 			outputFields.add("Death Date");
 		} else if (searchType.equals(SearchType.PLACE)) {
