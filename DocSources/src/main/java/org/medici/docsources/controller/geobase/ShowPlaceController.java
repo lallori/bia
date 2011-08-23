@@ -30,15 +30,16 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.command.geobase.ShowPlaceRequestCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -75,12 +76,12 @@ public class ShowPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@RequestParam("placeId") Integer placeId, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowPlaceRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Place place = new Place();
 		try {
-			place = getGeoBaseService().findPlace(placeId);
+			place = getGeoBaseService().findPlace(command.getPlaceId());
 			model.put("place", place);
 		} catch (ApplicationThrowable ath) {
 			new ModelAndView("error/ShowPlace", model);

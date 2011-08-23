@@ -25,33 +25,33 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.peoplebase;
+package org.medici.docsources.command.geobase;
 
 import javax.validation.constraints.NotNull;
 
 /**
- * Command bean for action "Show Person".
+ * Command bean for action "Show Place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  * @see org.docsources.controller.peoplebase.ShowPersonController
  */
-public class ShowPersonRequestCommand {
+public class ShowPlaceRequestCommand {
 	@NotNull
-	private Integer personId;
+	private Integer placeId;
 
 	/**
-	 * @param personId the personId to set
+	 * @param placeId the placeId to set
 	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
+	public void setPlaceId(Integer placeId) {
+		this.placeId = placeId;
 	}
 
 	/**
-	 * @return the personId
+	 * @return the placeId
 	 */
-	public Integer getPersonId() {
-		return personId;
+	public Integer getPlaceId() {
+		return placeId;
 	}
 	
 }
