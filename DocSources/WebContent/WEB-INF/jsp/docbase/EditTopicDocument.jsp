@@ -24,12 +24,12 @@
 				<legend><b>EDIT TOPIC</b></legend>
 			</c:if> 
 			<div>
-				<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic:</form:label>
+				<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic</form:label>
 				<form:input id="topicDescriptionAutoCompleter" path="topicDescription" cssClass="input_25c" />
 				<a class="topicDescription" id="refreshDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
 			</div>
 			<div>
-				<form:label id="placeDescriptionLabel" for="placeDescription" path="placeDescription" cssErrorClass="error">Topic Place:</form:label>
+				<form:label id="placeDescriptionLabel" for="placeDescription" path="placeDescription" cssErrorClass="error">Topic Place</form:label>
 				<form:input id="placeDescriptionAutoCompleter" path="placeDescription" cssClass="input_28c" />
 			</div>
 			
