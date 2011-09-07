@@ -12,11 +12,25 @@
 /*
 /* ----------------- TITLES ------------------------------- */ 
 
-h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
+h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLACE NAME */
 	padding:0 0 15px 30px;
 	font-size:14px;
 	font-style:italic;
 	color:#009;
+}
+
+h3.place { /* PLACE NAME */
+	padding:0 0 5px 30px;
+	font-size:14px;
+	font-style:italic;
+	color:#009;
+}
+
+h3.details { /* PLACE NAME */
+	padding:0 0 15px 30px;
+	font-size:11px;
+	font-weight:normal;
+	color:#006;
 }
 
 h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
@@ -267,7 +281,7 @@ item a{
 }
 
 /* Bottom Div Containers */
-#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditSendRecipPlaceDiv {
+#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv {
 	margin-bottom:30px;!important
 }
 
@@ -961,7 +975,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditContextVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditResearchNotesPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm { 
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditParentPersonDiv {
 	width:485px;
 	margin:10px 0 0 0;
 	min-height:100px;!important
@@ -997,7 +1011,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;!important
 }
 
-#EditTopicsDocumentDiv, #EditTitlesOrOccupationsPersonForm, #EditParentsPersonForm, #EditChildrenPersonForm, #EditSpousesPersonForm, #EditResearchNotesPersonForm { 
+#EditTopicsDocumentDiv, #EditTitlesOrOccupationsPersonForm, #EditParentsPersonForm, #EditChildrenPersonForm, #EditSpousesPersonForm, #EditResearchNotesPersonForm, form { 
 	min-height:100px;!important
 }
 
@@ -1325,6 +1339,11 @@ input.file {
 /* ---------------------------- ADD NEW PERSON ------------------------------ */
 /*
 /* --------- EditDetailsPerson ---------- */
+
+.num_docs {
+	margin-left:30px;
+	color:#900;
+}
 
 #imgPortraitPerson { /* User image profile */
 	margin:7px 0 0 9px;
@@ -2062,7 +2081,7 @@ a.refreshVolumeExplorer {
 /* modalBox Previous / Next Folio */
 
 #modalBox #prevNextButtons {
-	margin:10px 0 10px 50px;
+	margin:10px 0 10px 250px;
 	width: 205px;
 	z-index:2;
 }
@@ -2124,14 +2143,15 @@ a.refreshVolumeExplorer {
 
 
 /* Modifiche fatte da Pasquinelli*/
-#modalBox #prevNextButtons #transcribe a{
+#modalBox #transcribe {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
-	margin:-26px 0 0 417px;
+	margin:10px 0 0 255px;
 	float:left;
 	width:182px;
 	height:22px;
+	cursor:auto;
 }
 
 #transcribe a:hover, #chooseDiv a:hover, #gobackvolumeDiv a:hover   {
@@ -2262,6 +2282,10 @@ a.refreshVolumeExplorer {
 	height:22px;
 }
 
+#createPlace #tgnPlace #AddNewTgnPlace:hover, #createPlace #mapPlace #AddNewMapPlace:hover, #createPlace #mapSite #AddNewMapSitePlace:hover {
+	text-decoration:none;
+}
+
 #createPlace #tgnPlace p, #createPlace #mapSite p, #createPlace #mapPlace p {
 	font-size:11px;
 	color: #6d5c4d;
@@ -2314,6 +2338,10 @@ a.refreshVolumeExplorer {
 	width:52px;
 	height:22px;
 	border:none;
+}
+
+#createPlace #goBack:hover {
+	text-decoration:none;
 }
 
 #notes {
@@ -2930,7 +2958,7 @@ form#EditUserProfileForm {
 	font-weight:normal;
 }
 
-#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #vettingHisttoryDiv a.helpIcon { /* Help symbol "?" */
+#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #vettingHisttoryDiv a.helpIcon,  #EditTopicsDocumentForm a.helpIcon{ /* Help symbol "?" */
 	border: 1px solid #6D5C4D;
 	color:  #6D5C4D; 
 	font-size: 12px; 

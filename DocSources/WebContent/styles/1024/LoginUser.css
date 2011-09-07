@@ -234,9 +234,11 @@ input {
 	color:#900;
 	font-size:11px;
 	border:#900 solid 1px;
+	text-align:left;
 	padding:2px;
 	position:absolute;
-	margin:7px 0 0 103px;
+	margin:115px 0 0 210px;
+	max-width:150px;
 }
 
 /*  Recovery - Form */
