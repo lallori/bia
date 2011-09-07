@@ -262,6 +262,10 @@
 	<definition name="geobase/ComparePlace" extends="template.compare">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ComparePlace.jsp"/>
 	</definition>
+	
+	<definition name="geobase/CreatePlaceMenuModal" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CreatePlaceMenuModal.jsp"/>
+	</definition>
 
 	<definition name="geobase/ShowPlace" extends="template.place">
 		<put-attribute name="menu" value="/WEB-INF/jsp/geobase/ShowMenuPlace.jsp"/>
