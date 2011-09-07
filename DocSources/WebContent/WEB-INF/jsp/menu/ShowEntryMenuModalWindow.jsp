@@ -13,7 +13,7 @@
 				
 			<a id="AddNewVolume" href="<c:url value="/de/volbase/CreateVolume.do"/>">Add New Volume</a>
 			
-			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlace.do"/>">Add New Place</a>
+			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>">Add New Place</a>
 			
 			<input id="close" type="submit" title="Close Entry Menu window" onClick="Modalbox.hide(); return false;" value="Close"/>
 		</div>
