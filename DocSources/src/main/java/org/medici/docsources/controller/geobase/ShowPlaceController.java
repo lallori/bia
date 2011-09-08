@@ -33,8 +33,10 @@ import java.util.Map;
 import org.medici.docsources.command.geobase.ShowPlaceRequestCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -80,12 +82,18 @@ public class ShowPlaceController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Place place = new Place();
-		try {
-			place = getGeoBaseService().findPlace(command.getPlaceId());
-			model.put("place", place);
-		} catch (ApplicationThrowable ath) {
-			new ModelAndView("error/ShowPlace", model);
+		
+		if(command.getPlaceId() > 0){
+			try {
+				place = getGeoBaseService().findPlace(command.getPlaceId());
+			} catch (ApplicationThrowable ath) {
+				new ModelAndView("error/ShowPlace", model);
+			}
+		}else{
+			place.setPlaceAllId(0);
+			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		}
+		model.put("place", place);
 
 		return new ModelAndView("geobase/ShowPlace", model);
 	}
