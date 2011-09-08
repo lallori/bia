@@ -30,8 +30,11 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +46,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobasebase/CreatePlace")
+@RequestMapping("/de/geobase/CreatePlace")
 public class CreatePlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
@@ -66,14 +69,17 @@ public class CreatePlaceController {
 
 	/**
 	 * 
-	 * @param command
-	 * @param request
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Place place = new Place();
+		place.setPlaceAllId(0);
+		place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		
+		model.put("place", place);
 
 		return new ModelAndView("geobase/ShowPlace", model);
 	}
