@@ -266,16 +266,21 @@
 	<definition name="geobase/CreatePlaceMenuModal" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CreatePlaceMenuModal.jsp"/>
 	</definition>
+	
+	<definition name="geobase/EditDetailsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditDetailsPlace.jsp"/>
+	</definition>
 
 	<definition name="geobase/ShowPlace" extends="template.place">
 		<put-attribute name="menu" value="/WEB-INF/jsp/geobase/ShowMenuPlace.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
 		<put-attribute name="namesOrNamesVariants" value="/WEB-INF/jsp/geobase/ShowNamesOrNamesVariantsPlace.jsp"/>
-		<put-attribute name="geographicCoordinates" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp"/>
-		<put-attribute name="externalLinks" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp"/>
+		<put-attribute name="sendersAndRecipients" value="/WEB-INF/jsp/geobase/ShowSendersAndRecipientsPlace.jsp"/>
 		<put-attribute name="topicsList" value="/WEB-INF/jsp/geobase/ShowTopicsListPlace.jsp"/>
 		<put-attribute name="birthAndDeath" value="/WEB-INF/jsp/geobase/ShowBirthAndDeathPlace.jsp"/>
-		<put-attribute name="sendersAndRecipients" value="/WEB-INF/jsp/geobase/ShowSendersAndRecipientsPlace.jsp"/>
+		<put-attribute name="geographicCoordinates" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp"/>
+		<put-attribute name="externalLinks" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp"/>
+		<put-attribute name="hierarchy" value="/WEB-INF/jsp/geobase/ShowHierarchyPlace.jsp" />		
 	</definition>
 
 	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">

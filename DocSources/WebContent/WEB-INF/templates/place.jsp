@@ -10,11 +10,7 @@
 
 <br />
 
-<tiles:insertAttribute name="geographicCoordinates"/>
-
-<br />
-
-<tiles:insertAttribute name="externalLinks"/>
+<tiles:insertAttribute name="sendersAndRecipients"/>
 
 <br />
 
@@ -26,7 +22,13 @@
 
 <br/>
 
-<tiles:insertAttribute name="sendersAndRecipients"/>
+<tiles:insertAttribute name="geographicCoordinates"/>
 
-<br/>
+<br />
+
+<tiles:insertAttribute name="externalLinks"/>
+
+<br />
+
+<tiles:insertAttribute name="hierarchy"/>
 

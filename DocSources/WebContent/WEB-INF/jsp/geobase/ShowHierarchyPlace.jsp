@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditDetailsPlaceURL" value="/de/geobase/EditDetailsPlace.do">
@@ -10,56 +10,46 @@
 		</c:url>
 	</security:authorize>
 	
-	<br />
-	<br />
-	
-	<div><h4>Adding TGN Place Record</h4></div>
-	<div align="center">
-		<p>To get this data throught the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
-	</div>
-	
-	<div class="background" id="EditDetailsPlaceDiv">
+	<div class="background" id="EditHierarchyPlaceDiv">
 		<div class="title">
-			<h5>PLACE DETAILS</h5>
-			<a title="Edit TGN Place Details" href="${EditDetailsPlaceURL}" class="editButton" id="EditDetailsPlace"></a>
+			<h5>HIERARCHY</h5>
 		</div>
-	
+		
 		<div class="list">
 			<div class="row">
-				<div class="item">Place ID</div> 
-				<div class="value">${place.placeAllId}</div> 
+				<div class="item">Parent</div> 
+				<div class="value">${place.parentPlace.placeAllId}</div> 
 			</div>
 			<div class="row">
-				<div class="item">Place name</div>
-				<div class="value">${place.placeName}</div>
+				<div class="item">GParent</div>
+				<div class="value">${place.gParent}</div>
 			</div>
 			<div class="row">
-				<div class="item">Place type</div>
-				<div class="value">${place.plType}</div>
+				<div class="item">GGParent</div>
+				<div class="value">${place.ggp}</div>
 			</div>
 			<div class="row">
-				<div class="item">Place Parent</div>
-				<div class="value">${place.plParent}</div>
+				<div class="item">GP2</div>
+				<div class="value">${place.gp2}</div>
 			</div>
 			<div class="row">
-				<div class="item">Place Notes</div>
-				<div class="value"></div>
+				<div class="item">Parent_TGN_id</div>
+				<div class="value">?????</div>
+			</div>
+			<div class="row">
+				<div class="item">Parent_GEOKEY</div>
+				<div class="value">?????</div>
 			</div>
 		</div>
-
-	
 	</div>
-	
-	<br />
-
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsPlace").css('visibility', 'visible');
-			$j("#EditNamePlace").css('visibility', 'visible');
-	        $j("#EditGeoCoorPlace").css('visibility', 'visible'); 
-			$j("#EditExtLinkPlace").css('visibility', 'visible');
+			$j("#EditNamesOrNamesVariantsPlace").css('visibility', 'visible');
+	        $j("#EditGeographicCoordinatesPlace").css('visibility', 'visible'); 
+			$j("#EditExternalLinksPlace").css('visibility', 'visible');
 
 			$j("#EditDetailsPlace").click(function(){
 				$j(this).next().css('visibility', 'visible');
