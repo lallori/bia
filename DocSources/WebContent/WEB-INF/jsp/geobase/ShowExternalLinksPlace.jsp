@@ -10,7 +10,7 @@
 		</c:url>
 	</security:authorize>
 	
-	<div class="background" id="EditExternalLinksPlaceDiv">
+	<div class="background" id="EditExtLinkPlaceDiv">
 		<div class="title">
 			<h5>EXTERNAL LINKS</h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -27,18 +27,21 @@
 			</div>
 		</div>
 	</div>
+	
+	<br />
+
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsPlace").css('visibility', 'visible');
-			$j("#EditNamesOrNamesVariantsPlace").css('visibility', 'visible');
-	        $j("#EditGeographicCoordinatesPlace").css('visibility', 'visible'); 
-			$j("#EditExternalLinksPlace").css('visibility', 'visible');
+			$j("#EditNamePlace").css('visibility', 'visible');
+	        $j("#EditGeoCoorPlace").css('visibility', 'visible'); 
+			$j("#EditExtLinkPlace").css('visibility', 'visible');
 
-			$j("#EditExternalLinksPlace").click(function(){
+			$j("#EditExtLinkPlace").click(function(){
 				$j(this).next().css('visibility', 'visible');
-				$j("#EditExternalLinksPlaceDiv").load($j(this).attr("href"));
+				$j("#EditExtLinkPlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
 		});

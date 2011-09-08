@@ -16,7 +16,7 @@
 		</c:url>
 	</security:authorize>
 
-	<div id="CreatedSharePrintDiv">
+	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">CREATED BY ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
 		<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
 		<a id="menuActions" href="${ShowMenuActionsPlaceURL}">Actions</a>

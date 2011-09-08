@@ -4,17 +4,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<div class="background" id="EditBirthDeathPlaceDiv">
+<div class="background" id="EditSendRecipPlaceDiv">
 	<div class="title">
-		<h5>BIRTH and DEATH PLACE </h5>
+		<h5>SENDERS and RECIPIENTS </h5>
 	</div>
 	
 	<div class="list">	
 		<div class="row">
-			<div class="value">644 Birth</div>
+			<div class="value">4403 Senders</div>
 		</div>
 		<div class="row">
-			<div class="value">491 Death</div>
+			<div class="value">10904 Recipients</div>
 		</div>
 	</div>
 </div>
+
+<br />
+<br />

@@ -10,7 +10,7 @@
 		</c:url>
 	</security:authorize>
 	
-	<div class="background" id="GeographicCoordinatesPlaceDiv">
+	<div class="background" id="EditGeoCoorPlaceDiv">
 		<div class="title">
 			<h5>GEOGRAPHIC COORDINATES</h5>
 	 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -28,18 +28,20 @@
 			</div>
 		</div>
 	</div>
+	
+	<br />
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsPlace").css('visibility', 'visible');
-			$j("#EditNamesOrNamesVariantsPlace").css('visibility', 'visible');
-	        $j("#EditGeographicCoordinatesPlace").css('visibility', 'visible'); 
+			$j("#EditNamePlace").css('visibility', 'visible');
+	        $j("#EditGeoCoorPlace").css('visibility', 'visible'); 
 			$j("#EditExternalLinksPlace").css('visibility', 'visible');
 
-			$j("#EditGeographicCoordinatesPlace").click(function(){
+			$j("#EditGeoCoorPlace").click(function(){
 				$j(this).next().css('visibility', 'visible');
-				$j("#EditGeographicCoordinatesPlaceDiv").load($j(this).attr("href"));
+				$j("#EditGeoCoorPlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
 		});
