@@ -2490,6 +2490,7 @@ form#EditUserProfileForm {
 	float:left;
 	width:350px;
 	line-height:20px;
+	margin: -10px 0 0 30px;
 }
 
 #helpProfile a, #aboutmapProfile a{	/* Help ancors (User Manual, Download Manual, Help Videos) */
@@ -2777,52 +2778,64 @@ form#EditUserProfileForm {
 }
 
 #advancedSearchModal #documentSearch{ /* Documents Advanced Search Button */
-	width:150px;
-	height:250px;
-	position:absolute;
-	margin:20px 0 0 5px;
+	width:130px;
+	height:40px;
+	float:left;
+	margin:35px 0 0 55px;
 	background-image:url(/DocSources/images/1024/button_advsearchdoc.png);
 	background-repeat:no-repeat;
+	padding:90px 0 0 17px;
+	font-size:12px;
 }
 
 #advancedSearchModal #volumeSearch{ /* Volumes Advanced Search Button */
-	width:150px;
-	height:250px;
-	position:absolute;
-	margin:20px 0 0 155px;
+	width:130px;
+	height:40px;
+	float:left;
+	margin:35px 0 0 10px;
 	background-image:url(/DocSources/images/1024/button_advsearchvol.png);
 	background-repeat:no-repeat;
+	padding:90px 0 0 25px;
+	font-size:12px;
 }
 
 #advancedSearchModal #personSearch{ /* People Advanced Search Button */
-	width:150px;
-	height:250px;
-	position:absolute;
-	margin:20px 0 0 305px;
+	width:130px;
+	height:40px;
+	float:left;
+	margin:35px 0 0 10px;
 	background-image:url(/DocSources/images/1024/button_advsearchpeop.png);
 	background-repeat:no-repeat;
+	padding:90px 0 0 30px;
+	font-size:12px;
 }
 
 #advancedSearchModal #placeSearch{ /* Place Advanced Search Button */
-	width:150px;
-	height:250px;
-	position:absolute;
-	margin:20px 0 0 455px;
+	width:130px;
+	height:40px;
+	float:left;
+	margin:35px 0 0 10px;
 	background-image:url(/DocSources/images/1024/button_advsearchpla.png);
 	background-repeat:no-repeat;
+	padding:90px 0 0 32px;
+	font-size:12px;
 }
 
 #advancedSearchModal #savedFilters{ /* Saved Filters Advanced Search Button */
-	width:150px;
-	height:250px;
-	position:absolute;
-	margin:20px 0 0 590px;
-	background-image:url(/DocSources/images/1024/button_advsearchfilters.png);
+	background: url(/DocSources/images/1024/button_large.png) no-repeat;
+	width: 192px;
+	height: 50px;
+	float: left;
+	text-decoration: none;
+	color: #6D5C4D;
+	text-align:center;
+	padding: 4px 0 0 0;
+	margin:25px 0 0 275px;
 	background-repeat:no-repeat;
 }
 
 #advancedSearchModal #CloseButton{ /* Close Advanced Search Button */
-	margin:285px 0 0 330px;
+	margin:235px 0 0 340px;
 	position:absolute;
 }
 

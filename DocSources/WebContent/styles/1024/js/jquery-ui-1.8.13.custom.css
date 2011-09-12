@@ -920,7 +920,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  * Added by Joana Amill Luzondo
  */
  
-.refine { /* Refine this search button on Advanced Search Tab */
+.refine { /* Refine this search button on Search Results Tab */
  	float:right;
 	margin:5px 6px 0 0;
 	width:122px;
@@ -936,3 +936,19 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */ !important
  }
+ 
+ .yourSearchDiv { /* Your Search: [...] Div containing the reserched words on the Result Tab */
+ 	font-size:11px;
+	margin:15px 0 0 7px;
+ }
+ 
+ .tabLink { /* The word used on the research */
+	 margin-left:8px;
+	 color:#B7958F;
+	 text-decoration:underline;
+ }
+ 
+ .recordsNum { /* The number of records on the research */
+	 style="color:#009;
+	 margin-left:8px;
+}

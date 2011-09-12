@@ -55,6 +55,7 @@
 .dataTables_length {
     width: 40%;
     float: left;
+	margin: -25px 0 10px 10px;
 }
 
 .dataTables_filter {
