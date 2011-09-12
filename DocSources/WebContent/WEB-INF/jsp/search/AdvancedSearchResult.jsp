@@ -51,7 +51,7 @@
 			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
 		} );
 	</script>
-
+	
 	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
 
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">

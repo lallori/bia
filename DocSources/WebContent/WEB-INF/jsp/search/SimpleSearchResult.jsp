@@ -30,7 +30,7 @@
 				"bServerSide": true,
 				"iDisplayLength": 10,
 				"iDisplayStart": 0,
-				"oSearch": {"sSearch": "${command.text}"},
+				"oSearch": {"sSearch": ""},
 				"sAjaxSource": "${SimpleSearchPaginationURL}",
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
@@ -53,8 +53,16 @@
 			}); 
 
 			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
+
+			$j(".recordsNum").append(($j("#${command.searchUUID}_info").text()).substr(18));
 		} );
 	</script>
+	
+	<div class="yourSearchDiv">
+		Your search:
+		<a class="tabLink" href="#">${command.text}</a>
+		<span class="recordsNum"></span>
+	</div>
 
 	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
 
@@ -68,3 +76,12 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	<script type="text/javascript">
+
+		function entries() {
+			$j(".recordsNum").append(($j("#${command.searchUUID}_info").text()).substr(18));
+		}
+
+		setTimeout("entries()", 3000);
+	</script>
