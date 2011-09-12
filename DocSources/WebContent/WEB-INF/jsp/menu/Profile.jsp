@@ -14,7 +14,7 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {
 						$j("#advsearchMenu").click(function() {															
-							Modalbox.show($j(this).attr("href"), {title: "ADVANCED SEARCH", width: 750, height: 380});return false;
+							Modalbox.show($j(this).attr("href"), {title: "ADVANCED SEARCH", width: 750, height: 325});return false;
 						});							   	
 						$j("#myHistoryMenu").click(function() {															
 							Modalbox.show($j(this).attr("href"), {title: "MY HISTORY", width: 750, height: 500});return false;
