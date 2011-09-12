@@ -37,7 +37,7 @@ import java.util.Date;
  * @see org.EditDetailsPlaceController.docsources.controller.geobase.EditDetailsPlaceController
  */
 public class EditDetailsPlaceCommand {
-	private Integer placeId;
+	private Integer placeAllId;
 	private Integer geogKey;
 	private Integer tgnTermId;
 	private String placeNameNoAccents;
@@ -53,8 +53,8 @@ public class EditDetailsPlaceCommand {
 	 * 
 	 * @return the placeId
 	 */
-	public Integer getPlaceId() {
-		return placeId;
+	public Integer getPlaceAllId() {
+		return placeAllId;
 	}
 
 	/**
@@ -63,8 +63,8 @@ public class EditDetailsPlaceCommand {
 	 * @param placeId
 	 *            the placeId to set.
 	 */
-	public void setPlaceId(Integer placeId) {
-		this.placeId = placeId;
+	public void setPlaceAllId(Integer placeAllId) {
+		this.placeAllId = placeAllId;
 	}
 
 	/**

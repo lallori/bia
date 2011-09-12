@@ -8,56 +8,56 @@
 		<c:url var="EditDetailsPlaceURL" value="/de/peoplebase/EditDetailsPlace.do">
 			<c:param name="placeAllId"   value="${command.placeAllId}" />
 		</c:url>
-		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 			<c:param name="placeAllId"   value="${command.placeAllId}" />
 		</c:url>
 	</security:authorize>
-	<br>
+	
 	<div>
-		<form:form id="EditDetailsPlaceForm" cssClass="edit" method="post">
+		<form:form id="EditDetailsTgnPlaceForm" cssClass="edit" method="post">
 			<fieldset>
 				<legend><b>PLACE DETAILS</b></legend>
 				<div id="placeIdDiv">
-					<label id="placeIDLabel" for="placeID">Place ID: </label> <i>Fills in automatically</i>
+					<label id="placeIDLabel" for="placeAllId">Place ID: </label> <i>Fills in automatically</i>
 				</div>
 				
 				<div>
-					<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error"><b>Geog Key:</b></form:label>
+					<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
 					<form:input path="geogKey" cssClass="input_14c" />
-					<form:label for="tgnTermIdLabel" path="tgnTermId" cssErrorClass="error"><b>TGN_TermID</b></form:label>
+					<form:label for="tgnTermIdLabel" path="tgnTermId" cssErrorClass="error" id="tgnTermIDLabel">TGN_TermID</form:label>
 					<form:input path="tgnTermId" cssClass="input_14c" />
 				</div>
 				
-				<hr>
+				<hr />
 				
 				<div>
-					<b>Place name</b><br>
-					<form:label for="nameNoAccentsLabel" path="nameNoAccents" cssErrorClass="error"><b>No accents</b></form:label>
-					<form:input path="nameNoAccents" cssClass="input_14c" />
+					<b>Place name</b><br />
+					<form:label for="nameNoAccentsLabel" path="placeNameNoAccents" cssErrorClass="error" id="nameNoAccentsLabel">No accents</form:label>
+					<form:input path="placeNameNoAccents" cssClass="input_28c" id="nameNoAccents" />
 				</div>
 				
 				<div>
-					<form:label for="nameWithAccentsLabel" path="nameWithAccents" cssErrorClass="error"><b>No accents</b></form:label>
-					<form:input path="nameWithAccents" cssClass="input_14c" />
+					<form:label for="nameWithAccentsLabel" path="placeNameWithAccents" cssErrorClass="error" id="nameWithAccentsLabel">With accents if required</form:label>
+					<form:input path="placeNameWithAccents" cssClass="input_25c" id="nameWithAccents"/>
 				</div>
 				
-				<hr>
+				<hr />
 				
 				<div>
-					<form:label for="placeTypeLabel" path="placeType" cssErrorClass="error"><b>Place Type</b></form:label>
-					<form:select path="placeType" cssClass="selectform_short" items="${placeTypes}"/>
+					<form:label for="placeTypeLabel" path="placeType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label>
+					<form:select path="placeType" cssClass="selectform_long" items="${placeTypes}"/>
 				
-					<form:label for="placeParentLabel" path="placeParent" cssErrorClass="error"><b>Place Parent</b></form:label>
-					<form:input path="placeParent" maxlength="2" cssClass="input_10c" />
+					<form:label for="placeParentLabel" path="placeParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label>
+					<form:input path="placeParent" maxlength="2" cssClass="input_10c" id="placeParent"/>
 				</div>
 				
 				<br>
 				
 				<div>
-					<form:label for="placeNotesLabel" path="placeNotes" cssErrorClass="error"><b>Place Notes</b></form:label>
+					<form:label for="placeNotesLabel" path="placeNotes" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label>
 				</div>
 				<div>
-					<form:textarea path="placeNotes" class="txtarea"/>
+					<form:textarea path="placeNotes" cssClass="txtarea" id="placeNotes"/>
 				</div>
 					
 				<div>
@@ -70,51 +70,19 @@
 		</form:form>
 	</div>
 
-	<c:url var="searchBornPlaceURL" value="/de/peoplebase/SearchBornPlacePerson.json"/>
+	
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditNamesPerson").css('visibility', 'hidden');
-	        $j("#EditTitlesOccupationsPerson").css('visibility', 'hidden'); 
-			$j("#EditParentsPerson").css('visibility', 'hidden');
-			$j("#EditChildrenPerson").css('visibility', 'hidden');
-			$j("#EditSpousesPerson").css('visibility', 'hidden');
-	        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
+			$j("#EditNamePlace").css('visibility', 'hidden');
+	        $j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
+			$j("#EditExtLinkPlace").css('visibility', 'hidden');
+			 
 	        
 			$j('#close').click(function(e) {
-				$j('#EditDetailsPersonDiv').block({ message: $j('#question') }); 
+				$j('#EditDetailsTgnPlaceForm').block({ message: $j('#question') }); 
 	            return false;
-			});
-			
-			var bornPlaceDescription = $j('#bornPlaceDescriptionAutoCompleter').autocompletePerson({ 
-			    serviceUrl:'${searchBornPlaceURL}',
-			    minChars:3, 
-			    delimiter: /(,|;)\s*/, // regex or character
-			    maxHeight:400,
-			    width:600,
-			    zIndex: 9999,
-			    deferRequestBy: 0, //miliseconds
-			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#bornPlaceId').val(data); }
-			  });
-
-			$j("#EditDetailsPersonForm").submit(function (){
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					if ($j(html).find(".inputerrors").length > 0){
-						$j("#EditDetailsPersonDiv").html(html);
-					} else {
-				<c:choose> 
-					<c:when test="${command.personId == 0}"> 
-						$j("#body_left").html(html);
-					</c:when> 
-					<c:otherwise> 
-						$j("#EditDetailsPersonDiv").html(html);
-					</c:otherwise> 
-				</c:choose> 
-					}
-				}});
-				return false;
-			});
+			});			
 		});
 	</script>
 
@@ -131,13 +99,13 @@
 				$j.unblockUI();
 				$j(".blockUI").fadeOut("slow");
 				$j("#question").hide();
-				$j("#EditDetailsPlaceDiv").append($j("#question"));
+				$j("#EditDetailsTgnPlaceForm").append($j("#question"));
 				$j(".blockUI").remove();
 				return false; 
 			}); 
 	        
 			$j('#yes').click(function() { 
-				$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
+				$j.ajax({ url: '${ShowPlaceURL}', cache: false, success:function(html) { 
 					$j("#body_left").html(html);
 				}});
 	

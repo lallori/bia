@@ -83,18 +83,18 @@ public class EditDetailsPlaceValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDetailsPlaceCommand editDetailsPlaceCommand = (EditDetailsPlaceCommand) object;
-		validatePlaceId(editDetailsPlaceCommand.getPlaceId(), errors);
+		validatePlaceAllId(editDetailsPlaceCommand.getPlaceAllId(), errors);
 	}
 
 	/**
 	 * 
-	 * @param placeId
+	 * @param placeAllId
 	 * @param errors
 	 */
-	public void validatePlaceId(Integer placeId, Errors errors) {
+	public void validatePlaceAllId(Integer placeAllId, Errors errors) {
 		if (!errors.hasErrors()) {
 			try {
-				if (getGeoBaseService().findPlace(placeId) == null) {
+				if (getGeoBaseService().findPlace(placeAllId) == null) {
 					errors.reject("placeId", "error.placeId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {

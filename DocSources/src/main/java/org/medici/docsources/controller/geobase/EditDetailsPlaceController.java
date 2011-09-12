@@ -94,6 +94,14 @@ public class EditDetailsPlaceController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			/** TODO : Implement invocation business logic */
+			Place place = new Place(command.getPlaceAllId());
+			place.setResearcher(command.getResearcher());
+			place.setGeogKey(command.getGeogKey());
+			place.setPlType(command.getPlaceType());
+			place.setPlParent(command.getPlaceParent());
+			
+			
+			
 			getGeoBaseService();
 
 			return new ModelAndView("geobase/ShowDetailsPlace", model);
@@ -124,11 +132,11 @@ public class EditDetailsPlaceController {
 			return new ModelAndView("error/EditDetailsPlace", model);
 		}
 
-		if ((command != null) && (command.getPlaceId() > 0)) {
+		if ((command != null) && (command.getPlaceAllId() > 0)) {
 			Place place = new Place();
 	
 			try {
-				place = getGeoBaseService().findPlace(command.getPlaceId());
+				place = getGeoBaseService().findPlace(command.getPlaceAllId());
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsPlace", model);
 			}
@@ -144,6 +152,7 @@ public class EditDetailsPlaceController {
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			// We need to expose dateCreated field because it must be rendered on view
 			command.setDateCreated(new Date());
+			command.setPlaceAllId(0);
 		}
 
 		return new ModelAndView("geobase/EditDetailsPlace", model);
