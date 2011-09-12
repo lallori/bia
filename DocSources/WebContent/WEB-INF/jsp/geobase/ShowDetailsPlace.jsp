@@ -21,7 +21,9 @@
 	<div class="background" id="EditDetailsPlaceDiv">
 		<div class="title">
 			<h5>PLACE DETAILS</h5>
-			<a title="Edit TGN Place Details" href="${EditDetailsPlaceURL}" class="editButton" id="EditDetailsPlace"></a>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<a title="Edit TGN Place Details" href="${EditDetailsPlaceURL}" class="editButton" id="EditDetailsPlace"></a><span id="loading" />
+			</security:authorize>
 		</div>
 	
 		<div class="list">
