@@ -183,63 +183,84 @@
 }
 
 #EntryMenuDiv #close{
-	margin:70px 0 0 340px;
+	margin:110px 0 0 335px;
 	position:absolute;
 }
 
-
 #EntryMenuDiv #AddNewDocument{
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(/DocSources/images/1024/button_addnewdocument.png) no-repeat;
 	font-size:11px;
 	position:absolute;
-	margin: 20px 0 5px 50px;
-	padding:5px 0 0 4px;
+	margin: 20px 0 5px 35px;
 	width:122px;
-	height:22px;
+	height:75px;
+	background-position:top;
+	text-align:center;
+}
+
+#EntryMenuDiv #AddNewDocument p{
+	margin-top:60px;
 }
 
 #EntryMenuDiv #AddNewPerson{
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(/DocSources/images/1024/button_addnewperson.png) no-repeat;
 	font-size:11px;
-	padding:5px 0 0 14px;
+	margin: 20px 0 5px 300px;
+	position:absolute;
+	width:120px;
+	height:75px;
+	background-position:top;
+	text-align:center;
+}
+
+#EntryMenuDiv #AddNewPerson p{
+	margin-top:60px;
+}
+
+#EntryMenuDiv #AddNewVolume{
+	background:url(/DocSources/images/1024/button_addnewvolume.png) no-repeat;
+	font-size:11px;
 	position:absolute;
 	margin: 20px 0 5px 175px;
 	position:absolute;
 	width:120px;
-	height:22px;
+	height:75px;
+	background-position:top;
+	text-align:center;
 }
 
-#EntryMenuDiv #AddNewVolume{
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
-	font-size:11px;
-	padding:5px 0 0 10px;
-	position:absolute;
-	margin: 20px 0 5px 300px;
-	position:absolute;
-	width:120px;
-	height:22px;
+#EntryMenuDiv #AddNewVolume p{
+	margin-top:60px;
 }
 
 #EntryMenuDiv #AddNewPlace{
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(/DocSources/images/1024/button_addnewplace.png) no-repeat;
 	font-size:11px;
-	padding:5px 0 0 17px;
 	position:absolute;
 	margin: 20px 0 5px 425px;
 	position:absolute;
 	width:120px;
-	height:22px;
+	height:75px;
+	background-position:top;
+	text-align:center;
+}
+
+#EntryMenuDiv #AddNewPlace p{
+	margin-top:60px;
 }
 
 #EntryMenuDiv #DeleteThisItem{
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	font-size:11px;
 	padding:5px 0 0 14px;
 	position:absolute;
-	margin: 20px 0 5px 550px;
+	margin: 20px 0 5px 560px;
 	position:absolute;
 	width:120px;
-	height:22px;
+	height:75px;
+}
+
+#EntryMenuDiv #DeleteThisItem p{
+	margin-top:55px;
 }
 
 #EntryMenuDiv a:hover, #VetMenuDiv a:hover{
