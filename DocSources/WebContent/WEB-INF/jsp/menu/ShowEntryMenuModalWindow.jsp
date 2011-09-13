@@ -7,13 +7,13 @@
 		<div id="EntryMenuDiv">
 			<h1>Click the button below to add a new element in one of the following categories:</h1>
 			
-			<a id="AddNewDocument" href="<c:url value="/de/docbase/CreateDocument.do"/>">Add New Document</a>
+			<a id="AddNewDocument" href="<c:url value="/de/docbase/CreateDocument.do"/>"><p>Add New Document</p></a>
 		
-			<a id="AddNewPerson" href="<c:url value="/de/peoplebase/CreatePerson.do"/>">Add New Person</a>
+			<a id="AddNewPerson" href="<c:url value="/de/peoplebase/CreatePerson.do"/>"><p>Add New Person</p></a>
 				
-			<a id="AddNewVolume" href="<c:url value="/de/volbase/CreateVolume.do"/>">Add New Volume</a>
+			<a id="AddNewVolume" href="<c:url value="/de/volbase/CreateVolume.do"/>"><p>Add New Volume</p></a>
 			
-			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>">Add New Place</a>
+			<a id="AddNewPlace" href="<c:url value="/de/geobase/CreatePlaceMenu.do"/>"><p>Add New Place</p></a>
 			
 			<input id="close" type="submit" title="Close Entry Menu window" onClick="Modalbox.hide(); return false;" value="Close"/>
 		</div>
