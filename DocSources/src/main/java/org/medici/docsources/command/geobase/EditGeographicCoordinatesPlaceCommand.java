@@ -1,5 +1,5 @@
 /*
- * EditExternalLinksPlaceCommand.java
+ * EditNamesOrNameVariantsPlaceCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -34,7 +34,7 @@ package org.medici.docsources.command.geobase;
  * 
  * @see org.EditDetailsPlaceController.docsources.controller.geobase.ModifyPlaceController
  */
-public class EditExternalLinksPlaceCommand {
+public class EditGeographicCoordinatesPlaceCommand {
 	private Integer placeAllId;
 
 	/**

@@ -32,7 +32,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
+import org.medici.docsources.command.geobase.EditExternalLinksPlaceCommand;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -76,7 +76,7 @@ public class EditExternalLinksPlaceController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditDetailsPlaceCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditExternalLinksPlaceCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
@@ -105,10 +105,10 @@ public class EditExternalLinksPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPlaceCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditExternalLinksPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		return new ModelAndView("geobase/EditDetailsPlace", model);
+		return new ModelAndView("geobase/EditExternalLinksPlace", model);
 	}
 
 	/**

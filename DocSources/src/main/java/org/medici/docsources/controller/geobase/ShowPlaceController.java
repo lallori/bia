@@ -83,9 +83,9 @@ public class ShowPlaceController {
 
 		Place place = new Place();
 		
-		if(command.getPlaceId() > 0){
+		if(command.getPlaceAllId() > 0){
 			try {
-				place = getGeoBaseService().findPlace(command.getPlaceId());
+				place = getGeoBaseService().findPlace(command.getPlaceAllId());
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowPlace", model);
 			}

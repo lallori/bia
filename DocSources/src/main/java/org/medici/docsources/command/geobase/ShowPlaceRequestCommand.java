@@ -38,20 +38,20 @@ import javax.validation.constraints.NotNull;
  */
 public class ShowPlaceRequestCommand {
 	@NotNull
-	private Integer placeId;
+	private Integer placeAllId;
 
 	/**
 	 * @param placeId the placeId to set
 	 */
-	public void setPlaceId(Integer placeId) {
-		this.placeId = placeId;
+	public void setPlaceAllId(Integer placeAllId) {
+		this.placeAllId = placeAllId;
 	}
 
 	/**
 	 * @return the placeId
 	 */
-	public Integer getPlaceId() {
-		return placeId;
+	public Integer getPlaceAllId() {
+		return placeAllId;
 	}
 	
 }

@@ -32,7 +32,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
+import org.medici.docsources.command.geobase.EditGeographicCoordinatesPlaceCommand;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,8 +50,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/EditNamesOrNameVariantsPlace")
-public class EditNamesOrNameVariantsPlaceController {
+@RequestMapping("/de/geobase/EditGeographicCoordinatesPlace")
+public class EditGeographicCoordinatesPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 	@Autowired(required = false)
@@ -76,7 +76,7 @@ public class EditNamesOrNameVariantsPlaceController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditDetailsPlaceCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditGeographicCoordinatesPlaceCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
@@ -105,10 +105,10 @@ public class EditNamesOrNameVariantsPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditDetailsPlaceCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditGeographicCoordinatesPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		return new ModelAndView("geobase/EditNamesOrNameVariantsPlace", model);
+		return new ModelAndView("geobase/EditGeographicCoordinatesPlace", model);
 	}
 
 	/**

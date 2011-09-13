@@ -5,8 +5,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditNamesOrNamesVariantsPlaceURL" value="/de/geobase/EditNamesOrNamesVariantsPlace.do">
-			<c:param name="place.placeAllId" value="${place.placeAllId}" />
+		<c:url var="EditNamesOrNameVariantsPlaceURL" value="/de/geobase/EditNamesOrNameVariantsPlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
 		</c:url>
 	</security:authorize>
 	
@@ -14,7 +14,7 @@
 		<div class="title">
 			<h5>NAME or NAME VARIANTS</h5>
 		 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-				<a id="EditNamePlace" href="${EditNamesOrNamesVariantsPlaceURL}" class="editButton" title="Edit Name or Name Variants"></a><span id="loading"/>
+				<a id="EditNamePlace" href="${EditNamesOrNameVariantsPlaceURL}" class="editButton" title="Edit Name or Name Variants"></a><span id="loading"/>
 			</security:authorize>
 		</div>
 		
