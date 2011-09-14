@@ -30,7 +30,7 @@
 				"bServerSide": true,
 				"iDisplayLength": 10,
 				"iDisplayStart": 0,
-				"oSearch": {"sSearch": ""},
+				"oSearch": {"sSearch": "${command.text}"},
 				"sAjaxSource": "${SimpleSearchPaginationURL}",
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
