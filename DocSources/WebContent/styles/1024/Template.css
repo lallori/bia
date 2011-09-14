@@ -160,10 +160,6 @@ a {
 	font-size:11px;
 }
 
-.searchIn, .select {
-	margin: 5px 0 5px 18px;
-}
-
 .input_search { /* Input Text class */
 	background-color: transparent;
 	background-repeat:no-repeat;
@@ -179,7 +175,7 @@ a {
 }
 
 #search { /* Search button */
-	margin-left:123px;
+	margin-left:110px;
 	border:none;
 	background-color:transparent;
 	margin-top:-1px;
@@ -187,6 +183,14 @@ a {
 	width:50px;
 	height:13px;
 	cursor:pointer;
+}
+
+#text {
+	width:127px;
+}
+
+#searchType {
+	width:95px;
 }
 
 

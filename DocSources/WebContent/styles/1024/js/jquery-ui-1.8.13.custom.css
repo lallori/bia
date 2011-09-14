@@ -949,6 +949,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  }
  
  .recordsNum { /* The number of records on the research */
-	 style="color:#009;
+	 color:#009;
 	 margin-left:8px;
 }

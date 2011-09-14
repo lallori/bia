@@ -198,7 +198,7 @@ a#editValue { /* "Edit Value" Button */
 	height:13px;
 	bottom:0px;
 	margin-bottom:0;
-	background-image:url(/DocSources/images/1280/button_delete.gif);
+	background-image:url(/DocSources/images/1280/button_delete.png);
 	background-repeat:no-repeat;
 	cursor:pointer;
 	background-color:transparent;
