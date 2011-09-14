@@ -11,10 +11,10 @@
 	
 	<div class="list">	
 		<div class="row">
-			<div class="value">644 Birth</div>
+			<div class="value">${place.bornedPeople.size()} Birth</div>
 		</div>
 		<div class="row">
-			<div class="value">491 Death</div>
+			<div class="value">${place.deathPeople.size()} Death</div>
 		</div>
 	</div>
 </div>

@@ -11,10 +11,10 @@
 	
 	<div class="list">	
 		<div class="row">
-			<div class="value">4403 Senders</div>
+			<div class="value">${place.senderDocuments.size()} Senders</div>
 		</div>
 		<div class="row">
-			<div class="value">10904 Recipients</div>
+			<div class="value">${place.recipientDocuments.size()} Recipients</div>
 		</div>
 	</div>
 </div>
