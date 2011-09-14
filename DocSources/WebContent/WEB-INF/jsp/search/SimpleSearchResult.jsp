@@ -40,9 +40,12 @@
 					$j.getJSON( sSource, aoData, function (json) { 
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)
-					});
+					}); 					
+				},
+				"fnDrawCallback" : function(){
+					$j("#recordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
 				}
-			} );
+			});
 
 			// We need to remove any previous live function
 			$j('.searchResult').die();
@@ -54,14 +57,13 @@
 
 			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
 
-			$j(".recordsNum").append(($j("#${command.searchUUID}_info").text()).substr(18));
 		} );
 	</script>
 	
 	<div class="yourSearchDiv">
 		Your search:
 		<a class="tabLink" href="#">${command.text}</a>
-		<span class="recordsNum"></span>
+		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span>
 	</div>
 
 	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
@@ -76,12 +78,3 @@
 			</tr>
 		</tbody>
 	</table>
-	
-	<script type="text/javascript">
-
-		function entries() {
-			$j(".recordsNum").append(($j("#${command.searchUUID}_info").text()).substr(18));
-		}
-
-		setTimeout("entries()", 3000);
-	</script>
