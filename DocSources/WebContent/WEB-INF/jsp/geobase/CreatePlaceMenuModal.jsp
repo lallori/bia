@@ -69,7 +69,7 @@
 
 			$j("#goBack").click(
 				function(){
-					Modalbox.show($j(this).attr("href"), {title: "ENTRY MENU", width: 750, height: 170});
+					Modalbox.show($j(this).attr("href"), {title: "ENTRY MENU", width: 750, height: 190});
 					return false;
 				}
 			);
