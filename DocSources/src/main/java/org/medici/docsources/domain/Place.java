@@ -743,4 +743,24 @@ public class Place implements Serializable {
 	public Set<EplToLink> getEplToLinks() {
 		return eplToLinks;
 	}
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum GeoIdEncoding {
+		TGN_GEOKEY("TGN_GEOKEY"), MAP_PLACE("MAP_PLACE"), MAP_SITE("MAP_SITE");
+		
+		private final String type;
+
+	    private GeoIdEncoding(String value) {
+	    	type = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return type;
+	    }
+	}
 }
