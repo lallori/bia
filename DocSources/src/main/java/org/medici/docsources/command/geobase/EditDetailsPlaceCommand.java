@@ -44,7 +44,7 @@ public class EditDetailsPlaceCommand {
 	private String placeNameWithAccents;
 	private String placeType;
 	private String placeParent;
-	private String placeNotes;
+	private String placesMemo;
 	private String researcher;
 	private Date dateCreated;
 
@@ -154,15 +154,15 @@ public class EditDetailsPlaceCommand {
 	/**
 	 * @return the placeNotes
 	 */
-	public String getPlaceNotes() {
-		return placeNotes;
+	public String getPlacesMemo() {
+		return placesMemo;
 	}
 
 	/**
 	 * @param placeNotes the placeNotes to set
 	 */
-	public void setPlaceNotes(String placeNotes) {
-		this.placeNotes = placeNotes;
+	public void setPlacesMemo(String placesMemo) {
+		this.placesMemo = placesMemo;
 	}
 
 	/**
