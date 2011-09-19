@@ -33,6 +33,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -184,6 +186,11 @@ public class Place implements Serializable {
 	@JoinColumn(name="\"PLPARENT_PLACEALLID\"")
 	@IndexedEmbedded(depth=1)
 	private Place parentPlace;
+	
+	@Column (name="\"GEO_ID_ENCODING\"", length=10)
+	@Enumerated(EnumType.STRING)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private GeoIdEncoding geoIdEncoding;
 	
 	@Column (name="\"GPARENT\"", length=255)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -742,6 +749,14 @@ public class Place implements Serializable {
 	 */
 	public Set<EplToLink> getEplToLinks() {
 		return eplToLinks;
+	}
+
+	public void setGeoIdEncoding(GeoIdEncoding geoIdEncoding) {
+		this.geoIdEncoding = geoIdEncoding;
+	}
+
+	public GeoIdEncoding getGeoIdEncoding() {
+		return geoIdEncoding;
 	}
 
 	/**
