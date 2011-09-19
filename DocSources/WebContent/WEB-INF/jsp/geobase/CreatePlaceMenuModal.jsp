@@ -9,7 +9,7 @@
 		<h1>Click the button below to add a new Preferred Place in one of the following categories:</h1>
 
 		<div id="tgnPlace">
-			<a id="AddNewTgnPlace" href="<c:url value="/de/geobase/CreatePlace.do"/>">Tgn Place Record</a>
+			<a id="AddNewTgnPlace" href="<c:url value="/de/geobase/CreatePlace.do?geoIdEncoding=TGN_GEOKEY"/>">Tgn Place Record</a>
 			<p>Record from the Getty Thesaurus of Geographic Names to be added to the Doc Sources system.
 			<br/><br/>
 			Consult the Getty website from data to add here.</p>
@@ -17,12 +17,12 @@
 		</div>
 	
 		<div id="mapPlace">
-			<a id="AddNewMapPlace" href="/DocSources/de/geobase/CreateMapPlace.html">MAP Place Record</a>
+			<a id="AddNewMapPlace" href="<c:url value="/de/geobase/CreatePlace.do?geoIdEncoding=MAP_PLACE"/>">MAP Place Record</a>
 			<p>Place names mentioned in M.A.P. document(s) but not found in the TGN. (Check online before adding)</p>
 		</div>
 	
 		<div id="mapSite">
-			<a id="AddNewMapSitePlace" href="/DocSources/de/geobase/CreateMapSitePlace.html">MAP Site or Subsite</a>
+			<a id="AddNewMapSitePlace" href="<c:url value="/de/geobase/CreatePlace.do?geoIdEncoding=MAP_SITE"/>">MAP Site or Subsite</a>
 			<p>Built Srtructures being tracked by the M.A.P.</p>
 		</div>
 
