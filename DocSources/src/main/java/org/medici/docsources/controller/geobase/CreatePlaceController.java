@@ -30,12 +30,15 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.command.geobase.CreatePlaceCommand;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.Place.GeoIdEncoding;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,11 +75,12 @@ public class CreatePlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
+	public ModelAndView setupForm(@ModelAttribute("command") CreatePlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		Place place = new Place();
 		place.setPlaceAllId(0);
+		place.setGeoIdEncoding(command.getGeoIdEncoding());
 		place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		
 		model.put("place", place);
