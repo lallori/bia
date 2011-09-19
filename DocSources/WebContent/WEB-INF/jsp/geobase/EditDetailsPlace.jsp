@@ -54,10 +54,10 @@
 				<br>
 				
 				<div>
-					<form:label for="placeNotesLabel" path="placeNotes" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label>
+					<form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label>
 				</div>
 				<div>
-					<form:textarea path="placeNotes" cssClass="txtarea" id="placeNotes"/>
+					<form:textarea path="placesMemo" cssClass="txtarea" id="placeNotes"/>
 				</div>
 					
 				<div>

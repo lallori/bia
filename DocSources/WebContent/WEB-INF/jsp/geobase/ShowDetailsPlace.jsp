@@ -13,10 +13,20 @@
 	<br />
 	<br />
 	
-	<div><h4>Adding TGN Place Record</h4></div>
-	<div align="center">
-		<p>To get this data throught the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
-	</div>
+	<c:if test="${place.geoIdEncoding == 'TGN_GEOKEY' || place.geogKey >= 1000000}">
+		<div><h4>Adding TGN Place Record</h4></div>
+		<div align="center">
+			<p>To get this data throught the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
+		</div>
+	</c:if>
+	
+	<c:if test="${place.geoIdEncoding == 'MAP_PLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">
+		<h4>MAP Place Record</h4>
+	</c:if>
+	
+	<c:if test="${place.geoIdEncoding == 'MAP_SITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
+		<h4>MAP Site or Subsite</h4>
+	</c:if>
 	
 	<div class="background" id="EditDetailsPlaceDiv">
 		<div class="title">
@@ -45,7 +55,7 @@
 			</div>
 			<div class="row">
 				<div class="item">Place Notes</div>
-				<div class="value"></div>
+				<div class="value">${place.placesMemo }</div>
 			</div>
 		</div>
 
