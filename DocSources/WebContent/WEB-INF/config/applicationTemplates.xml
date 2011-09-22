@@ -294,6 +294,10 @@
 		<put-attribute name="externalLinks" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp"/>
 		<put-attribute name="hierarchy" value="/WEB-INF/jsp/geobase/ShowHierarchyPlace.jsp" />		
 	</definition>
+	
+	<definition name="geobase/ShowDetailsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDetailsPlace.jsp"/>
+	</definition>
 
 	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
