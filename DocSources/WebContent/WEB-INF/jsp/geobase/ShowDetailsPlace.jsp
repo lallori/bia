@@ -55,7 +55,7 @@
 			</div>
 			<div class="row">
 				<div class="item">Place Notes</div>
-				<div class="value">${place.placesMemo }</div>
+				<div class="value">${place.placesMemo}</div>
 			</div>
 		</div>
 
