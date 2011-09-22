@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -42,6 +43,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -270,6 +272,15 @@ public class Place implements Serializable {
     @OneToMany(mappedBy="place", fetch=FetchType.LAZY)
 	@ContainedIn
     private Set<EplToLink> eplToLinks;
+    
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="PLACEALLID", referencedColumnName="PALCEALLID")
+    @IndexedEmbedded
+    private PlaceGeographicCoordinates placeGeographicCoordinates;
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="place", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    @IndexedEmbedded
+    private Set<PlaceExternalLinks> placeExternalLinks;
     
     /**
 	 * Default constructor.
@@ -751,12 +762,52 @@ public class Place implements Serializable {
 		return eplToLinks;
 	}
 
+	/**
+	 * 
+	 * @param geoIdEncoding the geoIdEncoding to set
+	 */
 	public void setGeoIdEncoding(GeoIdEncoding geoIdEncoding) {
 		this.geoIdEncoding = geoIdEncoding;
 	}
 
+	/**
+	 * 
+	 * @return the geoIdEncoding
+	 */
 	public GeoIdEncoding getGeoIdEncoding() {
 		return geoIdEncoding;
+	}
+
+	/**
+	 * 
+	 * @param placeGeographicCoordinates the placeGeographicCoordinates to set
+	 */
+	public void setPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) {
+		this.placeGeographicCoordinates = placeGeographicCoordinates;
+	}
+
+	/**
+	 * 
+	 * @return the placeGeographicCoordinates
+	 */
+	public PlaceGeographicCoordinates getPlaceGeographicCoordinates() {
+		return placeGeographicCoordinates;
+	}
+
+	/**
+	 * 
+	 * @param placeExternalLinks the placeExternalLinks to set
+	 */
+	public void setPlaceExternalLinks(Set<PlaceExternalLinks> placeExternalLinks) {
+		this.placeExternalLinks = placeExternalLinks;
+	}
+
+	/**
+	 * 
+	 * @return the placeExternalLinks
+	 */
+	public Set<PlaceExternalLinks> getPlaceExternalLinks() {
+		return placeExternalLinks;
 	}
 
 	/**
