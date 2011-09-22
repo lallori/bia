@@ -29,6 +29,8 @@ package org.medici.docsources.command.geobase;
 
 import java.util.Date;
 
+import org.medici.docsources.domain.Place.GeoIdEncoding;
+
 /**
  * Command bean for action "Edit Details Place".
  * 
@@ -47,6 +49,7 @@ public class EditDetailsPlaceCommand {
 	private String placesMemo;
 	private String researcher;
 	private Date dateCreated;
+	private GeoIdEncoding geoIdEncoding;
 
 	/**
 	 * This method returns placeId property.
@@ -191,5 +194,13 @@ public class EditDetailsPlaceCommand {
 	 */
 	public Date getDateCreated() {
 		return dateCreated;
+	}
+
+	public void setGeoIdEncoding(GeoIdEncoding geoIdEncoding) {
+		this.geoIdEncoding = geoIdEncoding;
+	}
+
+	public GeoIdEncoding getGeoIdEncoding() {
+		return geoIdEncoding;
 	}
 }
