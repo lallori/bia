@@ -296,7 +296,7 @@
 	</definition>
 	
 	<definition name="geobase/ShowDetailsPlace" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDetailsPlace.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
 	</definition>
 
 	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
