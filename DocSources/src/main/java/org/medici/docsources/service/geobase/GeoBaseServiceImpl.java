@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.geobase;
 
+import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.dao.place.PlaceDAO;
@@ -34,7 +35,9 @@ import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -51,6 +54,38 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private PlaceTypeDAO placeTypeDAO;
 
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place addNewPlace(Place place) throws ApplicationThrowable {
+		try{
+			place.setPlaceAllId(null);
+			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			place.setDateEntered(new Date());
+			
+			getPlaceDAO().persist(place);
+			return place;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place editDetailsPlace(Place place) throws ApplicationThrowable {
+		try{
+			Place placeToUpdate = getPlaceDAO().find(place.getPlaceAllId());
+			placeToUpdate.setPlacesMemo(place.getPlacesMemo());
+			getPlaceDAO().merge(placeToUpdate);
+			return placeToUpdate;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -198,4 +233,5 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
 		this.placeTypeDAO = placeTypeDAO;
 	}
+
 }

@@ -49,6 +49,23 @@ import org.medici.docsources.exception.ApplicationThrowable;
 public interface GeoBaseService {
 
 	/**
+	 * Adds a new {@link org.medici.docsources.domain.Place} entry.
+	 * 
+	 * @param inputPlace the {@link org.medici.docsources.domain.Place} to be added.
+	 * @return {@link org.medici.docsources.domain.Place} entity.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Place addNewPlace(Place inputPlace) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param place
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Place editDetailsPlace(Place place) throws ApplicationThrowable;
+	
+	/**
 	 * This method last entry {@link org.medici.docsources.domain.Place}.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.Place}
