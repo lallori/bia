@@ -98,13 +98,25 @@ public class EditDetailsPlaceController {
 			place.setResearcher(command.getResearcher());
 			place.setGeogKey(command.getGeogKey());
 			place.setPlType(command.getPlaceType());
+			place.setPlacesMemo(command.getPlacesMemo());
 			place.setPlParent(command.getPlaceParent());
 			
-			
-			
-			getGeoBaseService();
+			try{
+				if(command.getPlaceAllId().equals(0)){
+					place = getGeoBaseService().addNewPlace(place);
+					model.put("place", place);
+					return new ModelAndView("geobase/ShowPlace", model);
+				}
+				else{
+					place = getGeoBaseService().editDetailsPlace(place);
+					model.put("place", place);
+					return new ModelAndView("geobase/ShowDetailsPlace", model);
+				}
+			}catch(ApplicationThrowable th){
+				return new ModelAndView("error/EditDetailsPlace", model);
+			}
 
-			return new ModelAndView("geobase/ShowDetailsPlace", model);
+			
 		}
 
 	}
