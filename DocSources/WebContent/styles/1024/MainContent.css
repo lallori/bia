@@ -1011,7 +1011,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;!important
 }
 
-#EditTopicsDocumentDiv, #EditTitlesOrOccupationsPersonForm, #EditParentsPersonForm, #EditChildrenPersonForm, #EditSpousesPersonForm, #EditResearchNotesPersonForm, form { 
+#EditTopicsDocumentDiv, #EditTitlesOrOccupationsPersonForm, #EditParentsPersonForm, #EditChildrenPersonForm, #EditSpousesPersonForm, #EditResearchNotesPersonForm{ 
 	min-height:100px;!important
 }
 
@@ -1247,20 +1247,20 @@ input.file {
 /* ----- EditExtractOrSynopsisDocument ----- */
 
 .editFullscreen { /* Edit in Fullscreen icon */
-	background-image:url(/DocSources/images/1024/button_edit_fullscreen.png);
-	width:70px;
+	background:url(/DocSources/images/1024/button_edit_fullscreen.png) no-repeat;
+	width:52px;
 	height:20px;
 	position:absolute;
-	margin:-14px 0 0 260px;
+	margin:-14px 0 0 270px;
 	display:inline;
 }
 
 .EditExtractOrSynopsisDocument { /* Edit with Manuscript Transcriber icon */
-	background-image:url(/DocSources/images/1024/button_edit_mantranscriber.png);
-	width:125px;
+	background:url(/DocSources/images/1024/button_edit_mantranscriber.png) no-repeat;
+	width:105px;
 	height:20px;
 	position:absolute;
-	margin:-14px 0 0 360px;
+	margin:-14px 0 0 370px;
 	display:inline;
 }
 
@@ -1304,7 +1304,7 @@ input.file {
 	margin:5px 0 0 10px;
 }
 
-#topicLabel {
+#topicDescriptionLabel {
 	margin-left:33px;
 	margin-right: 16px;
 }
@@ -1697,7 +1697,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 /* --- iFrame in Fullscreen --- */
 
 .iframeFlipVolumeFullCom { /* used for the Community */
-	width:595px;
+	width:620px;
 	height:400px;
 	margin: 10px auto 0 50px;
 	margin-top:10px;
@@ -2332,6 +2332,10 @@ a.refreshVolumeExplorer {
 	text-decoration:none;
 }
 
+#geoTitle {
+	margin-top:30px;
+}
+
 #createPlace #goBack {
 	margin:355px 0 0 380px;
 	position:absolute;
@@ -2391,7 +2395,7 @@ a.refreshVolumeExplorer {
 }
 
 #placeParentLabel {
-	margin-left:57px;
+	margin-left:20px;
 }
 
 /* -------------------------------------- */
