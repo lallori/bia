@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 	
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditDetailsPlaceURL" value="/de/peoplebase/EditDetailsPlace.do">
+		<c:url var="EditDetailsPlaceURL" value="/de/geobase/EditDetailsPlace.do">
 			<c:param name="placeAllId"   value="${command.placeAllId}" />
 		</c:url>
 		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
@@ -14,7 +14,7 @@
 	</security:authorize>
 	
 	<div>
-		<form:form id="EditDetailsTgnPlaceForm" cssClass="edit" method="post">
+		<form:form id="EditDetailsTgnPlaceForm" cssClass="edit" method="post" action="${EditDetailsPlaceURL}">
 			<fieldset>
 				<legend><b>PLACE DETAILS</b></legend>
 				<div id="placeIdDiv">
@@ -45,7 +45,7 @@
 				
 				<div>
 					<form:label for="placeTypeLabel" path="placeType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label>
-					<form:select path="placeType" cssClass="selectform_long" items="${placeTypes}"/>
+					<form:select path="placeType" cssClass="selectform_Llong" items="${placeTypes}"/>
 				
 					<form:label for="placeParentLabel" path="placeParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label>
 					<form:input path="placeParent" maxlength="2" cssClass="input_10c" id="placeParent"/>
@@ -77,6 +77,24 @@
 			$j("#EditNamePlace").css('visibility', 'hidden');
 	        $j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
+
+			$j("#EditDetailsTgnPlaceForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					if ($j(html).find(".inputerrors").length > 0){
+						$j("#geoDiv").html(html);
+					} else {
+				<c:choose> 
+					<c:when test="${command.placeAllId == 0}"> 
+						$j("#body_left").html(html);
+					</c:when> 
+					<c:otherwise> 
+						$j("#geoDiv").html(html);
+					</c:otherwise> 
+				</c:choose> 
+					}
+				}});
+				return false;
+			});
 			 
 	        
 			$j('#close').click(function(e) {
