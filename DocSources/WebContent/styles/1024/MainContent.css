@@ -1246,21 +1246,30 @@ input.file {
 /*
 /* ----- EditExtractOrSynopsisDocument ----- */
 
-.editFullscreen { /* Edit in Fullscreen icon */
-	background:url(/DocSources/images/1024/button_edit_fullscreen.png) no-repeat;
-	width:52px;
-	height:20px;
+.editBasic { /* Edit button on top right */
+	background-image:url(/DocSources/images/1024/button_edit_basic.png);
+	width:40px;
+	height:22px;
 	position:absolute;
-	margin:-14px 0 0 270px;
+	margin:-9px 0 0 190px;
 	display:inline;
 }
 
-.EditExtractOrSynopsisDocument { /* Edit with Manuscript Transcriber icon */
+.editSplitScreen { /* Edit in Split Screen icon */
+	background:url(/DocSources/images/1024/button_edit_splitscreen.png) no-repeat;
+	width:77px;
+	height:20px;
+	position:absolute;
+	margin:-8px 0 0 270px;
+	display:inline;
+}
+
+.EditDocumentInManuscriptTranscriber { /* Edit with Manuscript Transcriber icon */
 	background:url(/DocSources/images/1024/button_edit_mantranscriber.png) no-repeat;
 	width:105px;
 	height:20px;
 	position:absolute;
-	margin:-14px 0 0 370px;
+	margin:-8px 0 0 375px;
 	display:inline;
 }
 
@@ -2332,7 +2341,7 @@ a.refreshVolumeExplorer {
 	text-decoration:none;
 }
 
-#geoTitle {
+#geoDiv {
 	margin-top:30px;
 }
 
@@ -2418,8 +2427,8 @@ a.refreshVolumeExplorer {
 	margin-left:58px;
 }
 
-#longitudeGeoLabel {
-	margin-left:84px;
+#latitudeGeoLabel {
+	margin-left:8px;
 }
 
 /* -------------------------------------- */

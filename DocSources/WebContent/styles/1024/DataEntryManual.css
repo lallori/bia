@@ -1,0 +1,152 @@
+/*
+ * The Medici Archive Project
+ * http://documents.medici.org/
+ * 
+ * Copyright (c) 2011 MAP
+ *
+ *
+ * This style sheet contains all classes, id and tag from the MAIN CONTENT elements
+ */
+ 
+/* -------------------------------------------- DISPLAY COMMON ELEMENTS ----------------------------------------------------------- */
+
+html {
+	margin:0;
+}
+
+body {
+	color: #6F6B69;
+}
+
+#cover, #index, #page3{ /* Wrappers */
+	width:950px;
+	height:750px;
+	margin:0px auto 0 auto;
+	padding:0px;
+	top:0px;
+	position:relative;
+}
+
+/* -------------------------------------------------- MANUAL COVER --------------------------------------------------------------- */
+
+#cover { 
+	background-image:url(/DocSources/images/1024/bg.jpg);
+	background-position:center;
+	background-repeat:no-repeat;
+}
+
+#cover #map{ /* The Medici Archive Project image */
+	width:270px;
+	height:175px;
+	position: relative;
+	margin: 0 auto 0 auto;
+	background:url(/DocSources/images/1024/img_map.png) no-repeat;
+}
+
+#cover h1{ /* "Documentary Sources for the Arts and Humatities: 1537 - 1743" */
+	font-size: 16px;
+	text-align: center;
+	font-style: italic;
+	margin-top: 100px;
+}
+
+#cover h2{ /* "Data Entry Manual" */
+	font-size: 16px;
+	text-align: center;
+	font-style: italic;
+	margin-top: 50px;
+}
+
+#cover a.goToIndex{ /* "Go to Index" button */
+	width:122px;
+	height:22px;
+	position:absolute;
+	margin:70px 0 0 420px;
+	display:inline;
+	background-image:url(/DocSources/images/1024/button_medium.png);
+	background-repeat:no-repeat;
+	font-size:11px;
+	padding:4px 0 0 0;
+	text-align:center;
+}
+
+a:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
+}
+
+.backToIndex {
+	position:fixed;
+	width:122px;
+	height:23px;
+	text-align:center;
+	padding-top:4px;
+	bottom:5px;
+	right:5px;
+	/*
+	background:url(/DocSources/images/1024/bg_backtoindex.jpg) no-repeat;
+	*/
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	color:#6D5C4D;
+	margin:0;
+	z-index:10;
+}
+
+
+/* ----------------------------------------------------- INDEX ------------------------------------------------------------------- */
+
+#index  {
+	padding:25px;
+}
+
+#index ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+#index ul#one{
+	float:left;
+	padding-right:50px;
+	border-right:1px solid #6D5C4D;
+}
+
+#index ul#two{
+	float:left;
+	margin-left:50px;
+	border-right:1px solid #6D5C4D;
+	padding-right:50px;
+}
+
+#index ul#three{
+	float:right;
+}
+
+#index h3 a, #index h3{
+	font-size: 12px;
+	font-style: normal;
+	padding:0;
+	color: #6F6B69;
+}
+
+#index .subtitle{
+	font-size:12px;
+	line-height: 22px;
+	margin-left: 15px;
+}
+
+#index .sublist {
+	margin-left: 40px;
+	font-size: 12px;
+	line-height: 22px;
+	font-style:italic;
+}
+
+
+/* ----------------------------------------------------- CONTENT ----------------------------------------------------------------- */
+
+#page3  {
+	padding:25px;
+	text-align:justify;
+}
