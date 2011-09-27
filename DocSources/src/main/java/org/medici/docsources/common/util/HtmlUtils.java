@@ -185,7 +185,7 @@ public class HtmlUtils {
 		
 		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		anchorBegin.append("/src/geobase/ShowPlace.do?placeId=");
+		anchorBegin.append("/src/geobase/ShowPlace.do?placeAllId=");
 		anchorBegin.append(placeAllId);
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
