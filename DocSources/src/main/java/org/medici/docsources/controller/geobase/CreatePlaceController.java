@@ -81,6 +81,15 @@ public class CreatePlaceController {
 		Place place = new Place();
 		place.setPlaceAllId(0);
 		place.setGeoIdEncoding(command.getGeoIdEncoding());
+		if(place.getGeoIdEncoding().equals(GeoIdEncoding.TGN_GEOKEY))
+			place.setPlSource("TGN");
+		else{
+			if(place.getGeoIdEncoding().equals(GeoIdEncoding.MAP_PLACE))
+				place.setPlSource("MAPPLACE");
+			else
+				place.setPlSource("MAPSITE");
+		}
+		
 		place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		
 		model.put("place", place);
