@@ -7,6 +7,7 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditDetailsPlaceURL" value="/de/geobase/EditDetailsPlace.do">
 			<c:param name="placeAllId"   value="${place.placeAllId}" />
+			<c:param name="geoIdEncoding" value="${place.geoIdEncoding.toString()}" />
 		</c:url>
 	</security:authorize>
 	
@@ -16,7 +17,7 @@
 	<c:if test="${place.geoIdEncoding == 'TGN_GEOKEY' || place.geogKey >= 1000000}">
 		<h4>Adding TGN Place Record</h4>
 		<div align="center">
-			<p>To get this data throught the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
+			<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
 		</div>
 	</c:if>
 	
@@ -52,7 +53,7 @@
 			</div>
 			<div class="row">
 				<div class="item">Place Parent</div>
-				<div class="value">${place.plParent}</div>
+				<div class="value">${place.parentPlace.getPlaceNameFull()}</div>
 			</div>
 			<div class="row">
 				<div class="item">Place Notes</div>

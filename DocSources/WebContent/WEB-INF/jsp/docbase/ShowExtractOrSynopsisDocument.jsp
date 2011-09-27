@@ -22,9 +22,9 @@
 			<h5>EXTRACT/SYNOPSIS </h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${document.entryId > 0}">
-			<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editButton"></a>
-			<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindowURL}" class="editFullscreen" title="EXTRACT/SYNOPSIS"></a>
-			<a id="EditDocumentInManuscriptViewer" href="${EditDocumentInManuscriptViewerURL}" class="EditExtractOrSynopsisDocument"></a><span id="loading"/>
+			<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editBasic" title="Edit Extract/Synopsis"></a>
+			<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindowURL}" class="editSplitScreen" title="Edit with Split Screen"></a>
+			<a id="EditDocumentInManuscriptTranscriber" href="${EditDocumentInManuscriptViewerURL}" class="EditDocumentInManuscriptTranscriber" title="Edit with Manuscript Transcirber"></a><span id="loading"/>
 			</c:if>
 		</security:authorize>
 		</div>
@@ -48,7 +48,7 @@
 	        $j("#EditDetailsDocument").css('visibility', 'visible'); 
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'visible');
 	        $j("#EditFactCheckDocument").css('visibility', 'visible');
-	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'visible');
+	        $j("#EditDocumentInManuscriptTranscriber").css('visibility', 'visible');
 	        $j("#EditDocumentInModal").css('visibility', 'visible');
 	        $j("#EditTopicsDocument").css('visibility', 'visible');
 
@@ -58,7 +58,7 @@
 				return false;
 			});
 			
-			$j("#EditDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
+			$j("#EditDocumentInManuscriptTranscriber").open({width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#EditDocumentInModal").click(function(){
 				Modalbox.show($j(this).attr("href"), {title: $j(this).attr("title"), width: 850, height:550}); 

@@ -29,7 +29,7 @@
 	        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
 	        $j("#EditCorrespondentsDocument").css('visibility', 'hidden'); 
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
-	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'hidden');
+	        $j("#EditDocumentInManuscriptTranscriber").css('visibility', 'hidden');
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');

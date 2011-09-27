@@ -20,9 +20,18 @@
 		
 		<div>
 			<label for="latitudeGeo" id="latitudeGeoLabel">Latitude</label>
-			<input id="latitudeGeo" name="latitudeGeo" class="input_10c" type="text" value=""/>
+			<input id="latDegrees" name="latDegrees" class="input_2c" type="text" value="" maxlength="2"/>°
+            <input id="latMinutes" name="latMinutes" class="input_2c" type="text" value="" maxlength="2"/>'
+            <input id="latSeconds" name="latSeconds" class="input_2c" type="text" value="" maxlength="2"/>''
+            <input id="latDirection" name="latDirection" class="input_1c" type="text" value="" maxlength="1"/>
+		</div>
+		
+		<div>
 			<label for="longitudeGeo" id="longitudeGeoLabel">Longitude</label>
-			<input id="longitudeGeo" name="longitudeGeo" class="input_10c" type="text" value=""/>
+            <input id="lonDegrees" name="lonDegrees" class="input_2c" type="text" value="" maxlength="2"/>°
+            <input id="lonMinutes" name="lonMinutes" class="input_2c" type="text" value="" maxlength="2"/>'
+            <input id="lonSeconds" name="lonSeconds" class="input_2c" type="text" value="" maxlength="2"/>''
+            <input id="lonDirection" name="lonDirection" class="input_1c" type="text" value="" maxlength="1"/>
 		</div>
 		
 		<div>

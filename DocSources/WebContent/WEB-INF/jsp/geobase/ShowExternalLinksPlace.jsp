@@ -18,13 +18,12 @@
 			</security:authorize>
 		</div>
 		
-		<div class="list">	
-			<div class="row">
-				<div class="value"><a id="linkSearch" href="#">Wikipedia - Florence</a></div>
-			</div>
-			<div class="row">
-				<div class="value"><a id="linkSearch" href="#">Google Maps - Florence</a></div>
-			</div>
+		<div class="list">
+			<c:forEach items="${place.placeExternalLinks}" var="currentExternalLink">	
+				<div class="row">
+					<div class="value"><a id="linkSearch" href="${currentExternalLink.externalLink}">${currentExternalLink.description}</a></div>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 	

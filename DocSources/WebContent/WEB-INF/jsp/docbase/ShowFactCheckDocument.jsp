@@ -32,7 +32,7 @@
 	        $j("#EditDetailsDocument").css('visibility', 'visible'); 
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'visible');
 	        $j("#EditFactCheckDocument").css('visibility', 'visible');
-	        $j("#EditDocumentInManuscriptViewer").css('visibility', 'visible');
+	        $j("#EditDocumentInManuscriptTranscriber").css('visibility', 'visible');
 	        $j("#EditDocumentInModal").css('visibility', 'visible');
 	        $j("#EditTopicsDocument").css('visibility', 'visible');
 
