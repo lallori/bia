@@ -24,34 +24,36 @@
 				<div>
 					<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
 					<form:input path="geogKey" cssClass="input_14c" />
-					<form:label for="tgnTermIdLabel" path="tgnTermId" cssErrorClass="error" id="tgnTermIDLabel">TGN_TermID</form:label>
-					<form:input path="tgnTermId" cssClass="input_14c" />
+					<c:if test="${command.geoIdEncoding == 'TGN_GEOKEY' || command.geogKey >= 1000000}">
+						<form:label for="tgnTermIdLabel" path="placeNameId" cssErrorClass="error" id="tgnTermIDLabel">TGN_TermID</form:label>
+						<form:input path="placeNameId" cssClass="input_14c" />
+					</c:if>
 				</div>
 				
 				<hr />
 				
 				<div>
 					<b>Place name</b><br />
-					<form:label for="nameNoAccentsLabel" path="placeNameNoAccents" cssErrorClass="error" id="nameNoAccentsLabel">No accents</form:label>
-					<form:input path="placeNameNoAccents" cssClass="input_28c" id="nameNoAccents" />
+					<form:label for="nameNoAccentsLabel" path="placeName" cssErrorClass="error" id="nameNoAccentsLabel">No accents</form:label>
+					<form:input path="placeName" cssClass="input_28c" id="nameNoAccents" />
 				</div>
 				
 				<div>
-					<form:label for="nameWithAccentsLabel" path="placeNameWithAccents" cssErrorClass="error" id="nameWithAccentsLabel">With accents if required</form:label>
-					<form:input path="placeNameWithAccents" cssClass="input_25c" id="nameWithAccents"/>
+					<form:label for="nameWithAccentsLabel" path="termAccent" cssErrorClass="error" id="nameWithAccentsLabel">With accents if required</form:label>
+					<form:input path="termAccent" cssClass="input_25c" id="nameWithAccents"/>
 				</div>
 				
 				<hr />
 				
 				<div>
-					<form:label for="placeTypeLabel" path="placeType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label>
-					<form:select path="placeType" cssClass="selectform_Llong" items="${placeTypes}"/>
+					<form:label for="placeTypeLabel" path="plType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label>
+					<form:select path="plType" cssClass="selectform_Llong" items="${placeTypes}"/>
 				
-					<form:label for="placeParentLabel" path="placeParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label>
-					<form:input path="placeParent" maxlength="2" cssClass="input_10c" id="placeParent"/>
+					<form:label for="placeParentLabel" path="plParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label>
+					<form:input id="placeParentAutoCompleter" path="plParent" cssClass="input_10c"/>
 				</div>
 				
-				<br>
+				<br />
 				
 				<div>
 					<form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label>
@@ -67,16 +69,29 @@
 			</fieldset>	
 
 			<form:hidden path="placeAllId"/>
+			<form:hidden path="parentPlaceAllId" />
 		</form:form>
 	</div>
-
 	
+	<c:url var="searchPlaceParentURL" value="/de/geobase/SearchPlaceParent.json" />
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditNamePlace").css('visibility', 'hidden');
 	        $j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
+			
+			var placeParent = $j('#placeParentAutoCompleter').autocompletePlace({ 
+			    serviceUrl:'${searchPlaceParentURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $j('#parentPlaceAllId').val(data); }
+			  });
 
 			$j("#EditDetailsTgnPlaceForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
