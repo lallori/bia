@@ -63,6 +63,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			place.setPlaceAllId(null);
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			place.setDateEntered(new Date());
+			place.setAddlRes(false);
 			
 			getPlaceDAO().persist(place);
 			return place;
@@ -79,6 +80,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try{
 			Place placeToUpdate = getPlaceDAO().find(place.getPlaceAllId());
 			placeToUpdate.setPlacesMemo(place.getPlacesMemo());
+			placeToUpdate.setGeogKey(place.getGeogKey());
+			placeToUpdate.setPlaceNameId(place.getPlaceNameId());
+			placeToUpdate.setPlaceName(place.getPlaceName());
+			placeToUpdate.setTermAccent(place.getTermAccent());
+			placeToUpdate.setPlType(place.getPlType());
+			placeToUpdate.setAddlRes(false);
+			
 			getPlaceDAO().merge(placeToUpdate);
 			return placeToUpdate;
 		}catch(Throwable th){
@@ -180,6 +188,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			return getPlaceDAO().searchDeathPlace(query);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Place> searchPlaceParent(String query) throws ApplicationThrowable{
+		try{
+			return getPlaceDAO().searchPlaceParent(query);
+		}catch (Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

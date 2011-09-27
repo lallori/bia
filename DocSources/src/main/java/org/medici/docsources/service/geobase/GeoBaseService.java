@@ -117,6 +117,14 @@ public interface GeoBaseService {
 	
 	/**
 	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Place> searchPlaceParent(String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param text
 	 * @return
 	 * @throws ApplicationThrowable

@@ -83,6 +83,16 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException;
 	
 	/**
+	 * This method searches for parent places which could be relataed to a place which contains
+	 * a text parameter (String query).
+	 * 
+	 * @param query Text to be searched
+	 * @return A List<Place> that could be related to a place.
+	 * @throws PersistenceException
+	 */
+	public List<Place> searchPlaceParent(String query) throws PersistenceException;
+	
+	/**
 	 * This method searches places which contains the parameters set in {@link org.medici.docsources.common.search}
 	 * object and return a result page. 
 	 * 
