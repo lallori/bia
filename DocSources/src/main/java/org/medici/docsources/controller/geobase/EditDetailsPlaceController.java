@@ -36,9 +36,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
+import org.medici.docsources.domain.Place.GeoIdEncoding;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -93,13 +95,33 @@ public class EditDetailsPlaceController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
 			Place place = new Place(command.getPlaceAllId());
 			place.setResearcher(command.getResearcher());
 			place.setGeogKey(command.getGeogKey());
-			place.setPlType(command.getPlaceType());
+			place.setPlType(command.getPlType());
 			place.setPlacesMemo(command.getPlacesMemo());
-			place.setPlParent(command.getPlaceParent());
+			place.setPlParent(command.getPlParent());
+			place.setPlaceNameId(command.getPlaceNameId());
+			place.setPlaceName(command.getPlaceName());
+			place.setTermAccent(command.getTermAccent());
+			if(command.getGeoIdEncoding() != null){
+				if(command.getGeoIdEncoding().equals(GeoIdEncoding.TGN_GEOKEY))
+					place.setGeoIdEncoding(GeoIdEncoding.TGN_GEOKEY);
+				else{
+					if(command.getGeoIdEncoding().equals(GeoIdEncoding.MAP_PLACE))
+						place.setGeoIdEncoding(GeoIdEncoding.MAP_PLACE);
+					else
+						place.setGeoIdEncoding(GeoIdEncoding.MAP_SITE);
+				}
+			}
+			// TODO: complete to save the parent place
+			
+			/*if(!ObjectUtils.toString(command.getPlParent()).equals("")){
+				place.setParentPlace(new Place(command.getParentPlaceAllId()));
+			}else{
+				place.setParentPlace(null);
+			}*/
+			
 			
 			try{
 				if(command.getPlaceAllId().equals(0)){
@@ -155,6 +177,7 @@ public class EditDetailsPlaceController {
 	
 			try {
 				BeanUtils.copyProperties(command, place);
+				command.setPlParent(place.getParentPlace().getPlaceNameFull());
 			} catch (IllegalAccessException iaex) {
 			} catch (InvocationTargetException itex) {
 			}
@@ -163,7 +186,7 @@ public class EditDetailsPlaceController {
 			// On Place creation, the research is always the current user.
 			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			// We need to expose dateCreated field because it must be rendered on view
-			command.setDateCreated(new Date());
+			command.setDateEntered(new Date());
 			command.setPlaceAllId(0);
 		}
 

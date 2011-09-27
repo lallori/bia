@@ -29,8 +29,6 @@ package org.medici.docsources.command.geobase;
 
 import java.util.Date;
 
-import org.medici.docsources.domain.Place.GeoIdEncoding;
-
 /**
  * Command bean for action "Edit Details Place".
  * 
@@ -41,15 +39,16 @@ import org.medici.docsources.domain.Place.GeoIdEncoding;
 public class EditDetailsPlaceCommand {
 	private Integer placeAllId;
 	private Integer geogKey;
-	private Integer tgnTermId;
-	private String placeNameNoAccents;
-	private String placeNameWithAccents;
-	private String placeType;
-	private String placeParent;
+	private Integer placeNameId;
+	private String termAccent;
+	private String plType;
+	private String plParent;
 	private String placesMemo;
 	private String researcher;
-	private Date dateCreated;
-	private GeoIdEncoding geoIdEncoding;
+	private Date dateEntered;
+	private String geoIdEncoding;
+	private String placeName;
+	private Integer parentPlaceAllId;
 
 	/**
 	 * This method returns placeId property.
@@ -87,82 +86,68 @@ public class EditDetailsPlaceCommand {
 	/**
 	 * @return the tgnTermId
 	 */
-	public Integer getTgnTermId() {
-		return tgnTermId;
+	public Integer getPlaceNameId() {
+		return placeNameId;
 	}
 
 	/**
 	 * @param tgnTermId the tgnTermId to set
 	 */
-	public void setTgnTermId(Integer tgnTermId) {
-		this.tgnTermId = tgnTermId;
+	public void setPlaceNameId(Integer placeNameId) {
+		this.placeNameId = placeNameId;
 	}
 
 	/**
-	 * @return the placeNameNoAccents
+	 * @return the termAccent
 	 */
-	public String getPlaceNameNoAccents() {
-		return placeNameNoAccents;
+	public String getTermAccent() {
+		return termAccent;
 	}
 
 	/**
-	 * @param placeNameNoAccents the placeNameNoAccents to set
+	 * @param termAccent the termAccent to set
 	 */
-	public void setPlaceNameNoAccents(String placeNameNoAccents) {
-		this.placeNameNoAccents = placeNameNoAccents;
+	public void setTermAccent(String termAccent) {
+		this.termAccent = termAccent;
 	}
 
 	/**
-	 * @return the placeNameWithAccents
+	 * @return the plType
 	 */
-	public String getPlaceNameWithAccents() {
-		return placeNameWithAccents;
+	public String getPlType() {
+		return plType;
 	}
 
 	/**
-	 * @param placeNameWithAccents the placeNameWithAccents to set
+	 * @param plType the plType to set
 	 */
-	public void setPlaceNameWithAccents(String placeNameWithAccents) {
-		this.placeNameWithAccents = placeNameWithAccents;
+	public void setPlType(String plType) {
+		this.plType = plType;
 	}
 
 	/**
-	 * @return the placeType
+	 * @return the plaParent
 	 */
-	public String getPlaceType() {
-		return placeType;
+	public String getPlParent() {
+		return plParent;
 	}
 
 	/**
-	 * @param placeType the placeType to set
+	 * @param plParent the plParent to set
 	 */
-	public void setPlaceType(String placeType) {
-		this.placeType = placeType;
+	public void setPlParent(String plParent) {
+		this.plParent = plParent;
 	}
 
 	/**
-	 * @return the placeParent
-	 */
-	public String getPlaceParent() {
-		return placeParent;
-	}
-
-	/**
-	 * @param placeParent the placeParent to set
-	 */
-	public void setPlaceParent(String placeParent) {
-		this.placeParent = placeParent;
-	}
-
-	/**
-	 * @return the placeNotes
+	 * @return the placeMemo
 	 */
 	public String getPlacesMemo() {
 		return placesMemo;
 	}
 
 	/**
-	 * @param placeNotes the placeNotes to set
+	 * @param placeNMemo the placeMemo to set
 	 */
 	public void setPlacesMemo(String placesMemo) {
 		this.placesMemo = placesMemo;
@@ -185,22 +170,54 @@ public class EditDetailsPlaceCommand {
 	/**
 	 * @param dateCreated the dateCreated to set
 	 */
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
+	public void setDateEntered(Date dateEntered) {
+		this.dateEntered = dateEntered;
 	}
 
 	/**
 	 * @return the dateCreated
 	 */
-	public Date getDateCreated() {
-		return dateCreated;
+	public Date getDateEntered() {
+		return dateEntered;
 	}
 
-	public void setGeoIdEncoding(GeoIdEncoding geoIdEncoding) {
+	/**
+	 * 
+	 * @param geoIdEncoding the geoIdEncoding to set
+	 */
+	public void setGeoIdEncoding(String geoIdEncoding) {
 		this.geoIdEncoding = geoIdEncoding;
 	}
 
-	public GeoIdEncoding getGeoIdEncoding() {
+	/**
+	 * 
+	 * @return the geoIdEncoding
+	 */
+	public String getGeoIdEncoding() {
 		return geoIdEncoding;
+	}
+
+	/**
+	 * 
+	 * @param placeName the placeName to set
+	 */
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
+	}
+
+	/**
+	 * 
+	 * @return the placeName
+	 */
+	public String getPlaceName() {
+		return placeName;
+	}
+
+	public void setParentPlaceAllId(Integer parentPlaceAllId) {
+		this.parentPlaceAllId = parentPlaceAllId;
+	}
+
+	public Integer getParentPlaceAllId() {
+		return parentPlaceAllId;
 	}
 }
