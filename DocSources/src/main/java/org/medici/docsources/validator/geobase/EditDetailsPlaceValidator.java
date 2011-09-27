@@ -104,7 +104,7 @@ public class EditDetailsPlaceValidator implements Validator {
 		}
 	}
 	
-	public void validateGeogKey(Integer geogKey, GeoIdEncoding geoIdEncoding, Errors errors){
+	public void validateGeogKey(Integer geogKey, String geoIdEncoding, Errors errors){
 		if(!errors.hasErrors()){
 			System.out.println(geogKey);
 			if(geogKey != null && geoIdEncoding != null){
