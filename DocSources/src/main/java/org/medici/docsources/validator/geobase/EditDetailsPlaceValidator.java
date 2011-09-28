@@ -28,7 +28,8 @@
 package org.medici.docsources.validator.geobase;
 
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
-import org.medici.docsources.domain.Place.GeoIdEncoding;
+import org.medici.docsources.common.util.ValidationUtils;
+import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +86,8 @@ public class EditDetailsPlaceValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDetailsPlaceCommand editDetailsPlaceCommand = (EditDetailsPlaceCommand) object;
 		validatePlaceAllId(editDetailsPlaceCommand.getPlaceAllId(), errors);
-		validateGeogKey(editDetailsPlaceCommand.getGeogKey(), editDetailsPlaceCommand.getGeoIdEncoding(), errors);
+		validateGeogKey(editDetailsPlaceCommand.getGeogKey(), editDetailsPlaceCommand.getPlSource(), errors);
+		validateParentPlace(editDetailsPlaceCommand.getParentPlaceAllId(), errors);
 	}
 
 	/**
@@ -104,19 +106,33 @@ public class EditDetailsPlaceValidator implements Validator {
 		}
 	}
 	
-	public void validateGeogKey(Integer geogKey, String geoIdEncoding, Errors errors){
+	public void validateGeogKey(Integer geogKey, String plSource, Errors errors){
 		if(!errors.hasErrors()){
-			System.out.println(geogKey);
-			if(geogKey != null && geoIdEncoding != null){
-				if (geoIdEncoding.equals(GeoIdEncoding.TGN_GEOKEY) && geogKey < 1000000){
+			if(geogKey != null && plSource != null){
+				if (plSource.equals("TGN") && geogKey < 1000000){
 					errors.reject("geogKey", "error.geogKey.notvalid");
 				}
-				if(geoIdEncoding.equals(GeoIdEncoding.MAP_SITE) && (geogKey < 400000 || geogKey > 1000000) ){
+				if(plSource.equals("MAPSITE") && (geogKey < 400000 || geogKey > 1000000) ){
 					errors.reject("geogKey", "error.geogKey.notvalid");
 				}
-				if(geoIdEncoding.equals(GeoIdEncoding.MAP_PLACE) && (geogKey < 100000 || geogKey > 400000)){
+				if(plSource.equals("MAPPLACE") && (geogKey < 100000 || geogKey > 400000)){
 					errors.reject("geogKey", "error.geogKey.notvalid");
 				}
+			}
+		}
+	}
+	
+	public void validateParentPlace(Integer parentPlaceAllId, Errors errors){
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "parentPlaceAllId", "error.parentPlaceAllId.null");
+		
+		if(!errors.hasErrors()){
+			try{
+				Place place = getGeoBaseService().findPlace(parentPlaceAllId);
+				if(place == null){
+					errors.reject("parentPlaceAllId", "error.parentPlaceAllId.notfound");
+				}
+			}catch(ApplicationThrowable th){
+				errors.reject("parentPlaceAllId", "error.parentPlaceAllId.notfound");
 			}
 		}
 	}

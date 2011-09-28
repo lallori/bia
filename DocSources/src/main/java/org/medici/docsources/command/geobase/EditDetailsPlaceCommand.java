@@ -46,7 +46,7 @@ public class EditDetailsPlaceCommand {
 	private String placesMemo;
 	private String researcher;
 	private Date dateEntered;
-	private String geoIdEncoding;
+	private String plSource;
 	private String placeName;
 	private Integer parentPlaceAllId;
 
@@ -183,18 +183,18 @@ public class EditDetailsPlaceCommand {
 
 	/**
 	 * 
-	 * @param geoIdEncoding the geoIdEncoding to set
+	 * @param plSource the plSource to set
 	 */
-	public void setGeoIdEncoding(String geoIdEncoding) {
-		this.geoIdEncoding = geoIdEncoding;
+	public void setPlSource(String plSource) {
+		this.plSource = plSource;
 	}
 
 	/**
 	 * 
-	 * @return the geoIdEncoding
+	 * @return the plSource
 	 */
-	public String getGeoIdEncoding() {
-		return geoIdEncoding;
+	public String getPlSource() {
+		return plSource;
 	}
 
 	/**

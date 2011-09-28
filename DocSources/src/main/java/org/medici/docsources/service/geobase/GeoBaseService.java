@@ -30,6 +30,7 @@ package org.medici.docsources.service.geobase;
 import java.util.List;
 
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -58,12 +59,30 @@ public interface GeoBaseService {
 	public Place addNewPlace(Place inputPlace) throws ApplicationThrowable;
 	
 	/**
+	 * Adds a new {@link org.medici.docsources.domain.PlaceGeographicCoordinates} entry to an existing
+	 * {@link org.medici.docsources.domain.Place}
+	 * 
+	 * @param placeGeographicCoordinates the {@link org.medici.docsources.domain.PlaceGeographicCoordinates} to be linked
+	 * @return {@link org.medici.docsources.domain.Place} entity.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Place addNewPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @param place
 	 * @return
-	 * @throws ApplicationThrowable
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Place editDetailsPlace(Place place) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeGeographicCoordinates
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) throws ApplicationThrowable;
 	
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.Place}.
@@ -80,6 +99,14 @@ public interface GeoBaseService {
 	 */
 	public Place findPlace(Integer placeId) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return {@link org.medici.docsources.domain.PlaceGeographicCoordinates}
+	 * @throws ApplicationThrowable
+	 */
+	public PlaceGeographicCoordinates findPlaceGeographicCoordinates(Integer placeAllId) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @return

@@ -32,6 +32,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -99,11 +101,12 @@ public class PlaceGeographicCoordinates implements Serializable{
 	private static final long serialVersionUID = 4400714671552207917L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	@MapsId 
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="\"PLACEALLID\"")
+	@JoinColumn(name="\"PLACEALLID\"", nullable=false)
 	@ContainedIn
 	private Place place;
 

@@ -34,11 +34,11 @@
 			</div>
 			<div class="row">
 				<div class="item">Parent_TGN_id</div>
-				<div class="value">?????</div>
+				<div class="value">${place.plParentTermId}</div>
 			</div>
 			<div class="row">
 				<div class="item">Parent_GEOKEY</div>
-				<div class="value">?????</div>
+				<div class="value">${place.plParentSubjectId}</div>
 			</div>
 		</div>
 	</div>

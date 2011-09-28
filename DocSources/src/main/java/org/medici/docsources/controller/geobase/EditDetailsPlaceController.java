@@ -40,7 +40,6 @@ import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
-import org.medici.docsources.domain.Place.GeoIdEncoding;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -104,25 +103,15 @@ public class EditDetailsPlaceController {
 			place.setPlaceNameId(command.getPlaceNameId());
 			place.setPlaceName(command.getPlaceName());
 			place.setTermAccent(command.getTermAccent());
-			if(command.getGeoIdEncoding() != null){
-				if(command.getGeoIdEncoding().equals(GeoIdEncoding.TGN_GEOKEY))
-					place.setGeoIdEncoding(GeoIdEncoding.TGN_GEOKEY);
-				else{
-					if(command.getGeoIdEncoding().equals(GeoIdEncoding.MAP_PLACE))
-						place.setGeoIdEncoding(GeoIdEncoding.MAP_PLACE);
-					else
-						place.setGeoIdEncoding(GeoIdEncoding.MAP_SITE);
-				}
-			}
+			place.setPlSource(command.getPlSource());
 			// TODO: complete to save the parent place
 			
-			/*if(!ObjectUtils.toString(command.getPlParent()).equals("")){
+			if(!ObjectUtils.toString(command.getParentPlaceAllId()).equals("")){
 				place.setParentPlace(new Place(command.getParentPlaceAllId()));
 			}else{
 				place.setParentPlace(null);
-			}*/
-			
-			
+			}
+						
 			try{
 				if(command.getPlaceAllId().equals(0)){
 					place = getGeoBaseService().addNewPlace(place);

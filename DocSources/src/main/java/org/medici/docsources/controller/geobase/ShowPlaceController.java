@@ -91,6 +91,7 @@ public class ShowPlaceController {
 			}
 		}else{
 			place.setPlaceAllId(0);
+			place.setPlSource(command.getPlSource());
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		}
 		model.put("place", place);

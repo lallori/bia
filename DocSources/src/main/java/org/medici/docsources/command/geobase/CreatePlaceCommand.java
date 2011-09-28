@@ -27,10 +27,6 @@
  */
 package org.medici.docsources.command.geobase;
 
-import javax.validation.constraints.NotNull;
-
-import org.medici.docsources.domain.Place.GeoIdEncoding;
-
 /**
  * Command bean for action "Create Place".
  * 
@@ -39,22 +35,22 @@ import org.medici.docsources.domain.Place.GeoIdEncoding;
  */
 public class CreatePlaceCommand {
 	
-	private GeoIdEncoding geoIdEncoding;
+	private String plSource;
 
 	/**
 	 * 
-	 * @param geoIdEncoding the geoIdEncoding to set
+	 * @param plSource the plSource to set
 	 */
-	public void setGeoIdEncoding(GeoIdEncoding geoIdEncoding) {
-		this.geoIdEncoding = geoIdEncoding;
+	public void setPlSource(String plSource) {
+		this.plSource = plSource;
 	}
 
 	/**
 	 * 
-	 * @return the geoIdEncoding
+	 * @return the plSource
 	 */
-	public GeoIdEncoding getGeoIdEncoding() {
-		return geoIdEncoding;
+	public String getPlSource() {
+		return plSource;
 	} 
 
 	

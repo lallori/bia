@@ -5,27 +5,28 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditDetailsPlaceURL" value="/de/geobase/EditDetailsPlace.do">
-			<c:param name="placeAllId"   value="${place.placeAllId}" />
-			<c:param name="geoIdEncoding" value="${place.geoIdEncoding.toString()}" />
+		<c:url var="EditDetailsPlaceURL" 		value="/de/geobase/EditDetailsPlace.do">
+			<c:param name="placeAllId"   		value="${place.placeAllId}" />
+			<c:param name="plSource" 	 		value="${place.plSource}" />
+			<c:param name="parentPlaceAllId"	value="${place.parentPlace.placeAllId}" />
 		</c:url>
 	</security:authorize>
 	
 	<div id="geoDiv">
 	<div id="geoTitle">
 	
-	<c:if test="${place.geoIdEncoding == 'TGN_GEOKEY' || place.geogKey >= 1000000}">
+	<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
 		<h4>Adding TGN Place Record</h4>
 		<div align="center">
 			<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
 		</div>
 	</c:if>
 	
-	<c:if test="${place.geoIdEncoding == 'MAP_PLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">
+	<c:if test="${place.plSource == 'MAPPLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">
 		<h4>MAP Place Record</h4>
 	</c:if>
 	
-	<c:if test="${place.geoIdEncoding == 'MAP_SITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
+	<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
 		<h4>MAP Site or Subsite</h4>
 	</c:if>
 	</div>

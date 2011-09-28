@@ -30,9 +30,12 @@ package org.medici.docsources.service.geobase;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.dao.place.PlaceDAO;
+import org.medici.docsources.dao.placegeographiccoordinates.PlaceGeographicCoordinatesDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -52,6 +55,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private PlaceDAO placeDAO;
 	@Autowired
 	private PlaceTypeDAO placeTypeDAO;
+	@Autowired
+	private PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO;
 
 
 	/**
@@ -64,9 +69,48 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			place.setDateEntered(new Date());
 			place.setAddlRes(false);
-			
+			if(place.getParentPlace() != null){
+				place.setParentPlace(getPlaceDAO().find(place.getParentPlace().getPlaceAllId()));
+				place.setParentType(place.getParentPlace().getPlType());
+			}
+			if(place.getParentPlace().getParentPlace() != null){			
+				place.setgParent(place.getParentPlace().getParentPlace().getPlaceName());
+				place.setGpType(place.getParentPlace().getParentPlace().getPlType());
+			}
+			if(place.getParentPlace().getParentPlace().getParentPlace() != null){
+				place.setGgp(place.getParentPlace().getParentPlace().getParentPlace().getPlaceName());
+				place.setGgpType(place.getParentPlace().getParentPlace().getParentPlace().getPlType());
+			}
+			if(place.getParentPlace().getParentPlace().getParentPlace().getParentPlace() != null){
+				place.setGp2(place.getParentPlace().getParentPlace().getParentPlace().getParentPlace().getPlaceName());
+				place.setGp2Ttype(place.getParentPlace().getParentPlace().getParentPlace().getParentPlace().getPlType());
+			}
+			place.setPlParentTermId(place.getParentPlace().getPlaceNameId());
+			place.setPlParentSubjectId(place.getParentPlace().getGeogKey());
+				
 			getPlaceDAO().persist(place);
 			return place;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place addNewPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
+		try{
+			placeGeographicCoordinates.setId(null);
+			placeGeographicCoordinates.setPlace(getPlaceDAO().find(placeGeographicCoordinates.getPlace().getPlaceAllId()));
+			placeGeographicCoordinates.setId(placeGeographicCoordinates.getPlace().getPlaceAllId());
+			
+			getPlaceGeographicCoordinatesDAO().persist(placeGeographicCoordinates);
+			
+			
+			getPlaceDAO().refresh(placeGeographicCoordinates.getPlace());
+			
+			return placeGeographicCoordinates.getPlace();
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -86,9 +130,44 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			placeToUpdate.setTermAccent(place.getTermAccent());
 			placeToUpdate.setPlType(place.getPlType());
 			placeToUpdate.setAddlRes(false);
+			if(place.getParentPlace() != null){
+				placeToUpdate.setParentPlace(getPlaceDAO().find(place.getParentPlace().getPlaceAllId()));
+				placeToUpdate.setParentType(placeToUpdate.getParentPlace().getPlType());
+			}
+			if(placeToUpdate.getParentPlace().getParentPlace() != null){			
+				placeToUpdate.setgParent(placeToUpdate.getParentPlace().getParentPlace().getPlaceName());
+				placeToUpdate.setGpType(placeToUpdate.getParentPlace().getParentPlace().getPlType());
+			}
+			if(placeToUpdate.getParentPlace().getParentPlace().getParentPlace() != null){
+				placeToUpdate.setGgp(placeToUpdate.getParentPlace().getParentPlace().getParentPlace().getPlaceName());
+				placeToUpdate.setGgpType(placeToUpdate.getParentPlace().getParentPlace().getParentPlace().getPlType());
+			}
+			if(placeToUpdate.getParentPlace().getParentPlace().getParentPlace().getParentPlace() != null){
+				placeToUpdate.setGp2(placeToUpdate.getParentPlace().getParentPlace().getParentPlace().getParentPlace().getPlaceName());
+				placeToUpdate.setGp2Ttype(placeToUpdate.getParentPlace().getParentPlace().getParentPlace().getParentPlace().getPlType());
+			}
+			placeToUpdate.setPlParentTermId(placeToUpdate.getParentPlace().getPlaceNameId());
+			placeToUpdate.setPlParentSubjectId(placeToUpdate.getParentPlace().getGeogKey());
 			
 			getPlaceDAO().merge(placeToUpdate);
 			return placeToUpdate;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
+		try{
+			PlaceGeographicCoordinates placeGeographicCoordinatesToUpdate = getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeGeographicCoordinates.getPlace().getPlaceAllId());
+			BeanUtils.copyProperties(placeGeographicCoordinatesToUpdate, placeGeographicCoordinates);
+			placeGeographicCoordinatesToUpdate.setId(placeGeographicCoordinates.getPlace().getPlaceAllId());
+			getPlaceGeographicCoordinatesDAO().merge(placeGeographicCoordinatesToUpdate);
+			
+			return placeGeographicCoordinatesToUpdate.getPlace();
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -114,6 +193,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			return getPlaceDAO().find(placeId);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public PlaceGeographicCoordinates findPlaceGeographicCoordinates(Integer placeAllId) throws ApplicationThrowable {
+		try{
+			return getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeAllId);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -252,6 +343,21 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
 		this.placeTypeDAO = placeTypeDAO;
+	}
+
+	/**
+	 * @return the placeGeographicCoordinatesDAO
+	 */
+	public PlaceGeographicCoordinatesDAO getPlaceGeographicCoordinatesDAO() {
+		return placeGeographicCoordinatesDAO;
+	}
+
+	/**
+	 * @param placeGeographicCoordinatesDAO the placeGeographicCoordinatesDAO to set
+	 */
+	public void setPlaceGeographicCoordinatesDAO(
+			PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO) {
+		this.placeGeographicCoordinatesDAO = placeGeographicCoordinatesDAO;
 	}
 
 }

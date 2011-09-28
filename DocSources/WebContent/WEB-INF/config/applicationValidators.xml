@@ -54,9 +54,13 @@
         <description>Edit Synopsis Validator.</description>
 	</bean>
 	
-	<!-- Person base Validators -->
+	<!-- Geo base Validators -->
 	<bean id="editDetailsPlaceValidator" class="org.medici.docsources.validator.geobase.EditDetailsPlaceValidator">
         <description>Edit Details Place Validator.</description>
+	</bean>
+	
+	<bean id="editGeographicCoordinatesPlaceValidator" class="org.medici.docsources.validator.geobase.EditGeographicCoordinatesPlaceValidator">
+		<description>Edit Geographic Coordinates Place Validator</description>
 	</bean>
 
 	<!-- People base validator -->

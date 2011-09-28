@@ -10,6 +10,10 @@
 		</c:url>
 		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 			<c:param name="placeAllId"   value="${command.placeAllId}" />
+			<c:param name="plSource" 	 value="${command.plSource}" />
+		</c:url>
+		<c:url var="ShowHierarchyPlaceURL" value="/de/geobase/ShowHierarchyPlace.do">
+			<c:param name="placeAllId"	 value="${command.placeAllId}" />
 		</c:url>
 	</security:authorize>
 	
@@ -24,7 +28,7 @@
 				<div>
 					<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
 					<form:input path="geogKey" cssClass="input_14c" />
-					<c:if test="${command.geoIdEncoding == 'TGN_GEOKEY' || command.geogKey >= 1000000}">
+					<c:if test="${command.plSource == 'TGN' || command.geogKey >= 1000000}">
 						<form:label for="tgnTermIdLabel" path="placeNameId" cssErrorClass="error" id="tgnTermIDLabel">TGN_TermID</form:label>
 						<form:input path="placeNameId" cssClass="input_14c" />
 					</c:if>
@@ -104,6 +108,7 @@
 					</c:when> 
 					<c:otherwise> 
 						$j("#geoDiv").html(html);
+						$j("#EditHierarchyPlaceDiv").load("${ShowHierarchyPlaceURL}");
 					</c:otherwise> 
 				</c:choose> 
 					}

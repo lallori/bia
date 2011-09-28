@@ -1,5 +1,5 @@
 /*
- * CreatePlaceController.java
+ * ShowHierarchyPlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,40 +30,42 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.geobase.CreatePlaceCommand;
+import org.medici.docsources.command.geobase.ShowHierarchyPlaceCommand;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Create Place".
+ * Controller for action "Show place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/CreatePlace")
-public class CreatePlaceController {
+@RequestMapping("/de/geobase/ShowHierarchyPlace")
+public class ShowHierarchyPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 
 	/**
-	 * @return the geoBaseService
+	 * 
+	 * @return
 	 */
 	public GeoBaseService getGeoBaseService() {
 		return geoBaseService;
 	}
 
 	/**
-	 * This method sets
 	 * 
-	 * @param geoBaseService the geoBaseService to set
+	 * @param geoBaseService
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
@@ -71,20 +73,28 @@ public class CreatePlaceController {
 
 	/**
 	 * 
+	 * @param placeId
+	 * @param result
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") CreatePlaceCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowHierarchyPlaceCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
+
 		Place place = new Place();
-		place.setPlaceAllId(0);
-		place.setPlSource(command.getPlSource());
-				
-		place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		
+		if(command.getPlaceAllId() > 0){
+			try {
+				place = getGeoBaseService().findPlace(command.getPlaceAllId());
+			} catch (ApplicationThrowable ath) {
+				new ModelAndView("error/ShowPlace", model);
+			}
+		}else{
+			place.setPlaceAllId(0);
+			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		}
 		model.put("place", place);
 
-		return new ModelAndView("geobase/ShowPlace", model);
+		return new ModelAndView("geobase/ShowHierarchyPlace", model);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * ShowPlaceRequestCommand.java
+ * ShowHierarchyPlaceCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -30,18 +30,16 @@ package org.medici.docsources.command.geobase;
 import javax.validation.constraints.NotNull;
 
 /**
- * Command bean for action "Show Place".
+ * Command bean for action "Show Hierarchy Place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  * @see org.docsources.controller.peoplebase.ShowPersonController
  */
-public class ShowPlaceRequestCommand {
+public class ShowHierarchyPlaceCommand {
 	@NotNull
 	private Integer placeAllId;
-	@NotNull
-	private String plSource;
-
+	
 	/**
 	 * @param placeId the placeId to set
 	 */
@@ -56,12 +54,5 @@ public class ShowPlaceRequestCommand {
 		return placeAllId;
 	}
 
-	public void setPlSource(String plSource) {
-		this.plSource = plSource;
-	}
-
-	public String getPlSource() {
-		return plSource;
-	}
-	
+		
 }

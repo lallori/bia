@@ -298,6 +298,14 @@
 	<definition name="geobase/ShowDetailsPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
 	</definition>
+	
+	<definition name="geobase/ShowHierarchyPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowHierarchyPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowPlaceGeographicCoordinatesPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp" />
+	</definition>
 
 	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
