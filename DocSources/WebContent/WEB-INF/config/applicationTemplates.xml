@@ -303,7 +303,7 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowHierarchyPlace.jsp" />
 	</definition>
 	
-	<definition name="geobase/ShowPlaceGeographicCoordinatesPlace" extends="template.partialDOM">
+	<definition name="geobase/ShowGeographicCoordinatesPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp" />
 	</definition>
 

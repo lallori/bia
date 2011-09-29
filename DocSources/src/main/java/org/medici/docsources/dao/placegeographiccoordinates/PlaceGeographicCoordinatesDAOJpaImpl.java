@@ -37,12 +37,12 @@ import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>FactChecksDAOJpaImpl</b> is a default implementation of
- * <b>FactChecksDAO</b>.
+ * <b>PlaceGeographicCoordinatesDAOJpaImpl</b> is a default implementation of
+ * <b>PlaceGeographicCoordinatesDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.FactChecks
+ * @see org.medici.docsources.domain.PlaceGeographicCoordinates
  */
 @Repository
 public class PlaceGeographicCoordinatesDAOJpaImpl extends JpaDao<Integer, PlaceGeographicCoordinates> implements PlaceGeographicCoordinatesDAO {
@@ -73,7 +73,7 @@ public class PlaceGeographicCoordinatesDAOJpaImpl extends JpaDao<Integer, PlaceG
 	@SuppressWarnings("unchecked")
 	@Override
 	public PlaceGeographicCoordinates findByPlaceAllId(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("from PlaceGeographicCoordinates where placeAllId=:placeAllId");
+		Query query = getEntityManager().createQuery("from PlaceGeographicCoordinates where place.placeAllId=:placeAllId");
 		query.setParameter("placeAllId", placeAllId);
 		
 		List<PlaceGeographicCoordinates> result = query.getResultList();

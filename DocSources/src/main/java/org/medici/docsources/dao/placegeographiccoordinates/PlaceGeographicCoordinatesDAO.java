@@ -33,7 +33,7 @@ import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 
 /**
- * FactChecks Dao.
+ * PlaceGeographicCoordinates Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */

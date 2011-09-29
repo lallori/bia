@@ -162,9 +162,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
 		try{
-			PlaceGeographicCoordinates placeGeographicCoordinatesToUpdate = getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeGeographicCoordinates.getPlace().getPlaceAllId());
+			PlaceGeographicCoordinates placeGeographicCoordinatesToUpdate = getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeGeographicCoordinates.getId());
 			BeanUtils.copyProperties(placeGeographicCoordinatesToUpdate, placeGeographicCoordinates);
-			placeGeographicCoordinatesToUpdate.setId(placeGeographicCoordinates.getPlace().getPlaceAllId());
+			placeGeographicCoordinatesToUpdate.setId(placeGeographicCoordinates.getId());
 			getPlaceGeographicCoordinatesDAO().merge(placeGeographicCoordinatesToUpdate);
 			
 			return placeGeographicCoordinatesToUpdate.getPlace();
