@@ -14,29 +14,29 @@
 		</c:url>
 	</security:authorize>
 	
-	<form:form id="EditGeoCoorPlaceForm" method="post" cssClass="edit">
+	<form:form id="EditGeoCoorPlaceForm" method="post" cssClass="edit" action="${EditGeographicCoordinatesPlaceURL}">
 		<fieldset>
 		<legend><b>GEOGRAPHIC COORDINATES</b></legend>
 		
 		<div>
 			<label for="latitudeGeo" id="latitudeGeoLabel">Latitude</label>
-			<input id="latDegrees" name="latDegrees" class="input_2c" type="text" value="" maxlength="2"/>°
-            <input id="latMinutes" name="latMinutes" class="input_2c" type="text" value="" maxlength="2"/>'
-            <input id="latSeconds" name="latSeconds" class="input_2c" type="text" value="" maxlength="2"/>''
-            <input id="latDirection" name="latDirection" class="input_1c" type="text" value="" maxlength="1"/>
+			<form:input id="latDegrees" path="degreeLatitude" class="input_2c" type="text" value="" maxlength="2"/>°
+            <form:input id="latMinutes" path="minuteLatitude" class="input_2c" type="text" value="" maxlength="2"/>'
+            <form:input id="latSeconds" path="secondLatitude" class="input_2c" type="text" value="" maxlength="2"/>''
+            <form:input id="latDirection" path="directionLatitude" class="input_1c" type="text" value="" maxlength="1"/>
 		</div>
 		
 		<div>
 			<label for="longitudeGeo" id="longitudeGeoLabel">Longitude</label>
-            <input id="lonDegrees" name="lonDegrees" class="input_2c" type="text" value="" maxlength="2"/>°
-            <input id="lonMinutes" name="lonMinutes" class="input_2c" type="text" value="" maxlength="2"/>'
-            <input id="lonSeconds" name="lonSeconds" class="input_2c" type="text" value="" maxlength="2"/>''
-            <input id="lonDirection" name="lonDirection" class="input_1c" type="text" value="" maxlength="1"/>
+            <form:input id="lonDegrees" path="degreeLongitude" class="input_2c" type="text" value="" maxlength="2"/>°
+            <form:input id="lonMinutes" path="minuteLongitude" class="input_2c" type="text" value="" maxlength="2"/>'
+            <form:input id="lonSeconds" path="secondLongitude" class="input_2c" type="text" value="" maxlength="2"/>''
+            <form:input id="lonDirection" path="directionLongitude" class="input_1c" type="text" value="" maxlength="1"/>
 		</div>
 		
 		<div>
 			<input id="close" type="submit" value="Close" title="Do not save changes"/>
-			<a href="#" id="AddNewValue" title="Add new Name">Add</a>
+			<input type="submit" value="Save" id="save">
 		</div>
 		
 		</fieldset>
@@ -52,6 +52,24 @@
 			$j("#EditGeoCoorPlace").click(function(){
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditGeoCoorPlaceDiv").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j("#EditGeoCoorPlaceForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					if ($j(html).find(".inputerrors").length > 0){
+						$j("#EditGeoCoorPlaceDiv").html(html);
+					} else {
+				<c:choose> 
+					<c:when test="${command.placeAllId == 0}"> 
+						$j("#body_left").html(html);
+					</c:when> 
+					<c:otherwise> 
+						$j("#EditGeoCoorPlaceDiv").html(html);
+					</c:otherwise> 
+				</c:choose> 
+					}
+				}});
 				return false;
 			});
 

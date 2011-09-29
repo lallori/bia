@@ -1,5 +1,5 @@
 /*
- * EditNamesOrNameVariantsPlaceCommand.java
+ * EditGeographicCoordinatesPlaceCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -28,7 +28,7 @@
 package org.medici.docsources.command.geobase;
 
 /**
- * Command bean for action "modify place".
+ * Command bean for action "edit geographic coordinates".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
@@ -36,6 +36,14 @@ package org.medici.docsources.command.geobase;
  */
 public class EditGeographicCoordinatesPlaceCommand {
 	private Integer placeAllId;
+	private Integer degreeLatitude;
+	private Integer minuteLatitude;
+	private Integer secondLatitude;
+	private String directionLatitude;
+	private Integer degreeLongitude;
+	private Integer minuteLongitude;
+	private Integer secondLongitude;
+	private String directionLongitude;
 
 	/**
 	 * This method returns placeId property.
@@ -54,5 +62,117 @@ public class EditGeographicCoordinatesPlaceCommand {
 	 */
 	public void setPlaceAllId(Integer placeAllId) {
 		this.placeAllId = placeAllId;
+	}
+
+	/**
+	 * @param degreeLatitude the degreeLatitude to set
+	 */
+	public void setDegreeLatitude(Integer degreeLatitude) {
+		this.degreeLatitude = degreeLatitude;
+	}
+
+	/**
+	 * @return the degreeLatitude
+	 */
+	public Integer getDegreeLatitude() {
+		return degreeLatitude;
+	}
+
+	/**
+	 * @param minuteLatitude the minuteLatitude to set
+	 */
+	public void setMinuteLatitude(Integer minuteLatitude) {
+		this.minuteLatitude = minuteLatitude;
+	}
+
+	/**
+	 * @return the minuteLatitude
+	 */
+	public Integer getMinuteLatitude() {
+		return minuteLatitude;
+	}
+
+	/**
+	 * @param secondLatitude the secondLatitude to set
+	 */
+	public void setSecondLatitude(Integer secondLatitude) {
+		this.secondLatitude = secondLatitude;
+	}
+
+	/**
+	 * @return the secondLatitude
+	 */
+	public Integer getSecondLatitude() {
+		return secondLatitude;
+	}
+
+	/**
+	 * @param directionLatitude the directionLatitude to set
+	 */
+	public void setDirectionLatitude(String directionLatitude) {
+		this.directionLatitude = directionLatitude;
+	}
+
+	/**
+	 * @return the directionLatitude
+	 */
+	public String getDirectionLatitude() {
+		return directionLatitude;
+	}
+
+	/**
+	 * @param degreeLongitude the degreeLongitude to set
+	 */
+	public void setDegreeLongitude(Integer degreeLongitude) {
+		this.degreeLongitude = degreeLongitude;
+	}
+
+	/**
+	 * @return the degreeLongitude
+	 */
+	public Integer getDegreeLongitude() {
+		return degreeLongitude;
+	}
+
+	/**
+	 * @param minuteLongitude the minuteLongitude to set
+	 */
+	public void setMinuteLongitude(Integer minuteLongitude) {
+		this.minuteLongitude = minuteLongitude;
+	}
+
+	/**
+	 * @return the minuteLongitude
+	 */
+	public Integer getMinuteLongitude() {
+		return minuteLongitude;
+	}
+
+	/**
+	 * @param secondLongitude the secondLongitude to set
+	 */
+	public void setSecondLongitude(Integer secondLongitude) {
+		this.secondLongitude = secondLongitude;
+	}
+
+	/**
+	 * @return the secondLongitude
+	 */
+	public Integer getSecondLongitude() {
+		return secondLongitude;
+	}
+
+	/**
+	 * @param directionLongitude the directionLongitude to set
+	 */
+	public void setDirectionLongitude(String directionLongitude) {
+		this.directionLongitude = directionLongitude;
+	}
+
+	/**
+	 * @return the directionLongitude
+	 */
+	public String getDirectionLongitude() {
+		return directionLongitude;
 	}
 }

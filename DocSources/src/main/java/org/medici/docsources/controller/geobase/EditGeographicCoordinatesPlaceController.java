@@ -33,6 +33,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.geobase.EditGeographicCoordinatesPlaceCommand;
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceGeographicCoordinates;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,7 +58,7 @@ public class EditGeographicCoordinatesPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 	@Autowired(required = false)
-	@Qualifier("editDetailsPlaceValidator")
+	@Qualifier("editGeographicCoordinatesPlaceValidator")
 	private Validator validator;
 
 	/**
@@ -84,10 +87,35 @@ public class EditGeographicCoordinatesPlaceController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			/** TODO : Implement invocation business logic */
-			getGeoBaseService();
+			PlaceGeographicCoordinates placeGeographicCoordinates;
+			try {
+				placeGeographicCoordinates = getGeoBaseService().findPlaceGeographicCoordinates(command.getPlaceAllId());
+			} catch (ApplicationThrowable th) {
+				return new ModelAndView("error/EditGeographicCoordinates", model);
+			}
+			placeGeographicCoordinates.setPlace(new Place(command.getPlaceAllId()));
+			placeGeographicCoordinates.setDegreeLatitude(command.getDegreeLatitude());
+			placeGeographicCoordinates.setMinuteLatitude(command.getMinuteLatitude());
+			placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
+			placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude());
+			placeGeographicCoordinates.setDegreeLongitude(command.getDegreeLongitude());
+			placeGeographicCoordinates.setMinuteLongitude(command.getMinuteLongitude());
+			placeGeographicCoordinates.setSecondLongitude(command.getSecondLongitude());
+			placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude());
+			
+			try{
+				Place place = null;
+				if(placeGeographicCoordinates.getId() == null || placeGeographicCoordinates.getId().equals(0)){
+					place = getGeoBaseService().addNewPlaceGeographicCoordinates(placeGeographicCoordinates);
+				}else{
+					place = getGeoBaseService().editPlaceGeographicCoordinates(placeGeographicCoordinates);
+				}
+				model.put("place", place);
 
-			return new ModelAndView("geobase/ShowDetailsPlace", model);
+				return new ModelAndView("geobase/ShowGeographicCoordinatesPlace", model);
+			}catch(ApplicationThrowable th){
+				return new ModelAndView("error/ShowGeographicCoordinatesPlace", model);
+			}
 		}
 
 	}
@@ -107,6 +135,24 @@ public class EditGeographicCoordinatesPlaceController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditGeographicCoordinatesPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		if((command != null) && (command.getPlaceAllId() > 0)){
+			PlaceGeographicCoordinates placeGeographicCoordinates = new PlaceGeographicCoordinates();
+			
+			try{
+				placeGeographicCoordinates = getGeoBaseService().findPlaceGeographicCoordinates(command.getPlaceAllId());
+			}catch(ApplicationThrowable th){
+				return new ModelAndView("error/EditGeographicCoordinates", model);
+			}
+			command.setDegreeLatitude(placeGeographicCoordinates.getDegreeLatitude());
+			command.setMinuteLatitude(placeGeographicCoordinates.getMinuteLatitude());
+			command.setSecondLatitude(placeGeographicCoordinates.getSecondLatitude());
+			command.setDirectionLatitude(placeGeographicCoordinates.getDirectionLatitude());
+			command.setDegreeLongitude(placeGeographicCoordinates.getDegreeLongitude());
+			command.setMinuteLongitude(placeGeographicCoordinates.getMinuteLongitude());
+			command.setSecondLongitude(placeGeographicCoordinates.getSecondLongitude());
+			command.setDirectionLongitude(placeGeographicCoordinates.getDirectionLongitude());
+		}
 
 		return new ModelAndView("geobase/EditGeographicCoordinatesPlace", model);
 	}
