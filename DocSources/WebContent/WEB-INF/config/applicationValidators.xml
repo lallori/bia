@@ -62,6 +62,10 @@
 	<bean id="editGeographicCoordinatesPlaceValidator" class="org.medici.docsources.validator.geobase.EditGeographicCoordinatesPlaceValidator">
 		<description>Edit Geographic Coordinates Place Validator</description>
 	</bean>
+	
+	<bean id="editExternalLinkPlaceValidator" class="org.medici.docsources.validator.geobase.EditExternalLinkPlaceValidator">
+		<description>Edit External Link Place</description>
+	</bean>
 
 	<!-- People base validator -->
 	<bean id="deleteChildPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteChildPersonValidator">

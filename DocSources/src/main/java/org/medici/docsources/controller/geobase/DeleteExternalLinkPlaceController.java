@@ -1,5 +1,5 @@
 /*
- * EditExternalLinksPlaceController.java
+ * DeleteExternalLinkPlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,37 +30,37 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.medici.docsources.command.geobase.EditExternalLinksPlaceCommand;
-import org.medici.docsources.domain.Place;
+import javax.validation.Valid;
+
+import org.medici.docsources.command.geobase.DeleteExternalLinkPlaceCommand;
+import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Place: Edit External Links".
+ * Controller for action "Delete External Link Place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/EditExternalLinksPlace")
-public class EditExternalLinksPlaceController {
+@RequestMapping("/de/geobase/DeleteExternalLinkPlace")
+public class DeleteExternalLinkPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
-	/*@Autowired(required = false)
-	@Qualifier("editDetailsPlaceValidator")
-	private Validator validator;*/
+	@Autowired(required = false)
+	@Qualifier("deleteExternalLinkPlaceValidator")
+	private Validator validator;
 
-	/**
-	 * @return the geoBaseService
-	 */
-	public GeoBaseService getGeoBaseService() {
-		return geoBaseService;
-	}
+	
 
 	/**
 	 * This method returns the Validator class used by Controller to make
@@ -68,26 +68,45 @@ public class EditExternalLinksPlaceController {
 	 * 
 	 * @return
 	 */
-	/*public Validator getValidator() {
+	public Validator getValidator() {
 		return validator;
-	}*/
+	}
 
-	/*@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditExternalLinksPlaceCommand command, BindingResult result) {
-		getValidator().validate(command, result);
+
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeleteExternalLinkPlaceCommand command, BindingResult result) {
+		//getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return setupForm(command);
+			return new ModelAndView("error/DeleteExternalLinkPlace");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			
-			getGeoBaseService();
+			PlaceExternalLinks placeExternalLinks = new PlaceExternalLinks(command.getPlaceExternalLinksId(), command.getPlaceAllId());
 
-			return new ModelAndView("geobase/ShowDetailsPlace", model);
+			try {
+				getGeoBaseService().deletePlaceExternalLinks(placeExternalLinks);
+
+				return new ModelAndView("response/OK", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("response/KO", model);
+			}
 		}
+	}
 
-	}*/
+	/**
+	 * 
+	 * @param validator
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
 
 	/**
 	 * @param geoBaseService the geoBaseService to set
@@ -96,34 +115,11 @@ public class EditExternalLinksPlaceController {
 		this.geoBaseService = geoBaseService;
 	}
 
-	/**
-	 * 
-	 * @param command
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditExternalLinksPlaceCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
-		
-		if((command != null) && (command.getPlaceAllId() > 0)){
-			try{
-				Place place = getGeoBaseService().findPlace(command.getPlaceAllId());
-				model.put("place", place);
-			}catch(ApplicationThrowable th){
-				return new ModelAndView("error/EditExternalLinksPlace", model);
-			}
-		}else{
-			model.put("place", new Place(0));
-		}
 
-		return new ModelAndView("geobase/EditExternalLinksPlace", model);
+	/**
+	 * @return the geoBaseService
+	 */
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
-
-	/**
-	 * 
-	 * @param validator
-	 */
-	/*public void setValidator(Validator validator) {
-		this.validator = validator;
-	}*/
 }

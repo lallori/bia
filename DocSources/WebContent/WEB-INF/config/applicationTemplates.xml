@@ -279,6 +279,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditGeographicCoordinatesPlace.jsp" />
 	</definition>
 	
+	<definition name="geobase/EditExternalLinkPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinkPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/EditExternalLinksPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditExternalLinksPlace.jsp" />
+	</definition>
+	
 	<definition name="geobase/EditNamesOrNameVariantsPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditNamesOrNameVariantsPlace.jsp" />
 	</definition>
@@ -305,6 +313,10 @@
 	
 	<definition name="geobase/ShowGeographicCoordinatesPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowGeographicCoordinatesPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowExternalLinksPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp" />
 	</definition>
 
 	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">

@@ -32,9 +32,11 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.dao.place.PlaceDAO;
+import org.medici.docsources.dao.placeexternallinks.PlaceExternalLinksDAO;
 import org.medici.docsources.dao.placegeographiccoordinates.PlaceGeographicCoordinatesDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -57,7 +59,23 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private PlaceTypeDAO placeTypeDAO;
 	@Autowired
 	private PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO;
+	@Autowired
+	private PlaceExternalLinksDAO placeExternalLinksDAO;
 
+
+	/**
+	 * @return the placeExternalLinksDAO
+	 */
+	public PlaceExternalLinksDAO getPlaceExternalLinksDAO() {
+		return placeExternalLinksDAO;
+	}
+
+	/**
+	 * @param placeExternalLinksDAO the placeExternalLinksDAO to set
+	 */
+	public void setPlaceExternalLinksDAO(PlaceExternalLinksDAO placeExternalLinksDAO) {
+		this.placeExternalLinksDAO = placeExternalLinksDAO;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -114,6 +132,41 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place addNewPlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
+			throws ApplicationThrowable {
+		try{
+			placeExternalLinks.setPlaceExternalLinksId(null);
+			placeExternalLinks.setPlace(getPlaceDAO().find(placeExternalLinks.getPlace().getPlaceAllId()));
+			getPlaceExternalLinksDAO().persist(placeExternalLinks);
+			
+			getPlaceDAO().refresh(placeExternalLinks.getPlace());
+			
+			return placeExternalLinks.getPlace();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deletePlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
+			throws ApplicationThrowable {
+		try{
+			PlaceExternalLinks placeExternalLinksToDelete = getPlaceExternalLinksDAO().find(placeExternalLinks.getPlace().getPlaceAllId(), placeExternalLinks.getPlaceExternalLinksId());
+			getPlaceExternalLinksDAO().remove(placeExternalLinksToDelete);
+			placeExternalLinksToDelete.getPlace().setPlaceExternalLinks(null);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
 	}
 	
 	/**
@@ -177,6 +230,24 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Place editPlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
+			throws ApplicationThrowable {
+		try{
+			PlaceExternalLinks placeExternalLinksToUpdate = getPlaceExternalLinksDAO().find(placeExternalLinks.getPlaceExternalLinksId());
+			placeExternalLinksToUpdate.setExternalLink(placeExternalLinks.getExternalLink());
+			getPlaceExternalLinksDAO().merge(placeExternalLinksToUpdate);
+			getPlaceDAO().refresh(placeExternalLinksToUpdate.getPlace());
+			
+			return placeExternalLinksToUpdate.getPlace();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Place findLastEntryPlace() throws ApplicationThrowable {
 		try {
 			return getPlaceDAO().findLastEntryPlace();
@@ -204,6 +275,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public PlaceGeographicCoordinates findPlaceGeographicCoordinates(Integer placeAllId) throws ApplicationThrowable {
 		try{
 			return getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeAllId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public PlaceExternalLinks findPlaceExternalLinks(Integer placeAllId, Integer placeExternalLinksId) throws ApplicationThrowable {
+		try{
+			return getPlaceExternalLinksDAO().find(placeAllId, placeExternalLinksId);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

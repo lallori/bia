@@ -12,26 +12,37 @@
 		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 			<c:param name="placeAllId" value="${command.placeAllId}" />
 		</c:url>
+		
+		<c:url var="AddExternalLink" value="/de/geobase/EditExternalLinkPlace.do">
+				<c:param name="placeAllId" value="${place.placeAllId}" />
+				<c:param name="placeExternalLinksId" value="0" />
+		</c:url>
 	</security:authorize>
 	
 	<form:form id="EditExternalLinksPlaceForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>EXTERNAL LINKS</b></legend>
-		<div>
-			<input id="firstLink" name="firstLink" class="input_35c_disabled" type="text" value="Wikipedia - Florence" disabled="disabled" />
-			<a href="#" class="deleteIcon" title="Delete this entry"></a>
-			<a id="editValue" href="/DocSources/de/geobase/EditExtLinkTgnPlace.html">edit value</a>
-		</div>
+		<c:forEach items="${place.placeExternalLinks}" var="currentExternalLink">
+			<c:url var="EditExternalLink" value="/de/geobase/EditExternalLinkPlace.do">
+				<c:param name="placeAllId" value="${place.placeAllId}" />
+				<c:param name="placeExternalLinksId" value="${currentExternalLink.placeExternalLinksId}" />
+			</c:url>
+			
+			<c:url var="DeleteExternalLink" value="/de/geobase/DeleteExternalLinkPlace.do">
+				<c:param name="placeAllId" value="${place.placeAllId}" />
+				<c:param name="placeExternalLinksId" value="${currentExternalLink.placeExternalLinksId}" />
+			</c:url>
 		
 		<div>
-			<input id="secondLink" name="secondLink" class="input_35c_disabled" type="text" value="Google Maps - Florence" disabled="disabled" />
-			<a href="#" class="deleteIcon" title="Delete this entry"></a>
-			<a id="editValue" href="/DocSources/de/geobase/EditExtLinkTgnPlace.html">edit value</a>
+			<input id="externalLink_${currentExternalLink.placeExternalLinksId}" name="externalLink_${currentExternalLink.placeExternalLinksId}" class="input_35c_disabled" type="text" value="${currentExternalLink.externalLink}" disabled="disabled" />
+			<a href="${DeleteExternalLink}" class="deleteIcon" title="Delete this entry"></a>
+			<a id="editValue" class="editValue" href="${EditExternalLink}">edit value</a>
 		</div>
+		</c:forEach>
 		
 		<div>
 			<input id="close" type="submit" value="Close" title="Do not save changes"/>
-			<a href="#" id="AddNewValue" title="Add new Name">Add</a>
+			<a href="${AddExternalLink}" id="AddNewValue" title="Add new Name">Add</a>
 		</div>
 		
 		</fieldset>
@@ -43,45 +54,35 @@
 			$j("#EditDetailsPlace").css('visibility', 'hidden');
 			$j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditNamesOrNameVariantsPlace").css('visibility', 'hidden');
-
-			$j("#EditExtLinkPlace").click(function(){
-				$j(this).next().css('visibility', 'visible');
+			
+			$j(".deleteIcon").click(function() {
+					$j.get(this.href, function(data) {
+						if(data.match(/KO/g)){
+				            var resp = $j('<div></div>').append(data); // wrap response
+						} else {
+							$j("#EditExtLinkPlaceDiv").load('${EditExternalLinksPlaceURL}');
+						}
+			        });
+					return false;
+			});
+			
+			$j(".editValue").click(function() {
+				$j("#EditExtLinkPlaceDiv").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j("#AddNewValue").click(function(){
 				$j("#EditExtLinkPlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
 
 			$j('#close').click(function(e) {
-				$j('#EditExternalLinksPlaceForm').block({ message: $j('#question') }); 
-	            return false;
-			});
-			
-		});
-	</script>
-	
-	<div id="question" style="display:none; cursor: default"> 
-		<h1>discard changes?</h1> 
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" /> 
-	</div>
-	
-	<script type="text/javascript">
-		$j(document).ready(function() {
-			$j('#no').click(function() { 
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j("#question").hide();
-				$j("#EditExternalLinksPlaceForm").append($j("#question"));
-				$j(".blockUI").remove();
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
 				$j.ajax({ url: '${ShowPlaceURL}', cache: false, success:function(html) { 
 					$j("#body_left").html(html);
 				}});
-	
-				return false; 
-			}); 
-	     
+
+				return false;
+			});
+			
 		});
 	</script>

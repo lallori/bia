@@ -30,6 +30,7 @@ package org.medici.docsources.service.geobase;
 import java.util.List;
 
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -69,6 +70,22 @@ public interface GeoBaseService {
 	public Place addNewPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) throws ApplicationThrowable;
 	
 	/**
+	 * Links a {@link org.medici.docsources.domain.PlaceExternalLinks} entry to an existing {@link org.medici.docsources.domain.Place}.
+	 * 
+	 * @param placeExternalLinks the {@link org.medici.docsources.domain.PlaceExternalLinks} to be linked.
+	 * @return {@link org.medici.docsources.domain.Place} entity. 
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Place addNewPlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeExternalLinks
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public void deletePlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @param place
 	 * @return
@@ -83,6 +100,16 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) throws ApplicationThrowable;
+	
+	/**
+	 * This method modify External Link of an existing
+	 * {@link org.medici.docsources.domain.Place}.
+	 * 
+	 * @param placeExternalLinks
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Place editPlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
 	
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.Place}.
@@ -106,6 +133,16 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public PlaceGeographicCoordinates findPlaceGeographicCoordinates(Integer placeAllId) throws ApplicationThrowable;
+	
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return {@link org.medici.docsources.domain.PlaceExternalLinks}
+	 * @throws ApplicationThrowable
+	 */
+	public PlaceExternalLinks findPlaceExternalLinks(Integer placeAllId, Integer placeExternalLinksId) throws ApplicationThrowable;
+	
 	
 	/**
 	 * 
