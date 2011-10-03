@@ -43,8 +43,6 @@
 				$j("#EditExtLinkPlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
-			
-			$j("#linkSearch").attr("href",($j(this).value));
 		});
 	</script>
 </security:authorize>
