@@ -93,7 +93,10 @@ public class EditGeographicCoordinatesPlaceController {
 			} catch (ApplicationThrowable th) {
 				return new ModelAndView("error/EditGeographicCoordinates", model);
 			}
-			placeGeographicCoordinates.setPlace(new Place(command.getPlaceAllId()));
+			
+			if(placeGeographicCoordinates.getPlace() == null){
+				placeGeographicCoordinates.setPlace(new Place(command.getPlaceAllId()));
+			}
 			placeGeographicCoordinates.setDegreeLatitude(command.getDegreeLatitude());
 			placeGeographicCoordinates.setMinuteLatitude(command.getMinuteLatitude());
 			placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
