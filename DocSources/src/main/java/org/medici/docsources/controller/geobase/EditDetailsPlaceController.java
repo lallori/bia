@@ -104,6 +104,7 @@ public class EditDetailsPlaceController {
 			place.setPlaceName(command.getPlaceName());
 			place.setTermAccent(command.getTermAccent());
 			place.setPlSource(command.getPlSource());
+			place.setPrefFlag("P");
 			// TODO: complete to save the parent place
 			
 			if(!ObjectUtils.toString(command.getParentPlaceAllId()).equals("")){
