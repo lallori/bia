@@ -22,9 +22,14 @@
 			<h5>EXTRACT/SYNOPSIS </h5>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${document.entryId > 0}">
-			<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editBasic" title="Edit Extract/Synopsis"></a>
-			<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindowURL}" class="editSplitScreen" title="Edit with Split Screen"></a>
-			<a id="EditDocumentInManuscriptTranscriber" href="${EditDocumentInManuscriptViewerURL}" class="EditDocumentInManuscriptTranscriber" title="Edit with Manuscript Transcirber"></a><span id="loading"/>
+				<a id="EditExtractOrSynopsisDocument" href="${EditExtractOrSynopsisDocumentURL}" class="editBasic" title="Edit Extract/Synopsis"></a>
+				<a id="EditDocumentInModal" href="${EditExtractOrSynopsisDocumentModalWindowURL}" class="editSplitScreen" title="Edit with Split Screen"></a>
+				<c:if test="${not empty image}">
+					<a id="EditDocumentInManuscriptTranscriber" href="${EditDocumentInManuscriptViewerURL}" class="EditDocumentInManuscriptTranscriber" title="Edit with Manuscript Transcirber"></a><span id="loading"/>
+				</c:if>
+				<c:if test="${empty image}">
+					<span class="EditDocumentInManuscriptTranscriberOff" title="Not yet digitized"></span>
+				</c:if>
 			</c:if>
 		</security:authorize>
 		</div>
