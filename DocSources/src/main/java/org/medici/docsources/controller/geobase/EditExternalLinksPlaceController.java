@@ -51,9 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class EditExternalLinksPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
-	/*@Autowired(required = false)
-	@Qualifier("editDetailsPlaceValidator")
-	private Validator validator;*/
+	
 
 	/**
 	 * @return the geoBaseService
@@ -61,33 +59,6 @@ public class EditExternalLinksPlaceController {
 	public GeoBaseService getGeoBaseService() {
 		return geoBaseService;
 	}
-
-	/**
-	 * This method returns the Validator class used by Controller to make
-	 * business validation.
-	 * 
-	 * @return
-	 */
-	/*public Validator getValidator() {
-		return validator;
-	}*/
-
-	/*@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditExternalLinksPlaceCommand command, BindingResult result) {
-		getValidator().validate(command, result);
-
-		if (result.hasErrors()) {
-			return setupForm(command);
-		} else {
-			Map<String, Object> model = new HashMap<String, Object>();
-
-			
-			getGeoBaseService();
-
-			return new ModelAndView("geobase/ShowDetailsPlace", model);
-		}
-
-	}*/
 
 	/**
 	 * @param geoBaseService the geoBaseService to set
@@ -118,12 +89,4 @@ public class EditExternalLinksPlaceController {
 
 		return new ModelAndView("geobase/EditExternalLinksPlace", model);
 	}
-
-	/**
-	 * 
-	 * @param validator
-	 */
-	/*public void setValidator(Validator validator) {
-		this.validator = validator;
-	}*/
 }
