@@ -18,13 +18,50 @@ body {
 	color: #6F6B69;
 }
 
-#cover, #index, #page3{ /* Wrappers */
+h3 {
+	font-size: 12px;
+	font-style: normal;
+	padding:0;
+	color: #6F6B69;
+}
+
+p {
+	font-size:12px;
+	line-height:18px;
+}
+
+h1 {
+	text-decoration:underline;
+	font-weight:bold;
+	margin-top:30px;
+}
+
+h4 {
+	font-weight:bold;
+	font-size:12px;
+	font-style:normal;
+	padding:0;
+	margin-top:15px;
+}
+
+#cover, #index { /* Wrappers */
 	width:950px;
 	height:750px;
 	margin:0px auto 0 auto;
 	padding:0px;
 	top:0px;
 	position:relative;
+}
+
+#chapter1, #chapter2, #chapter3 {
+	height:auto;
+	margin-top:50px;
+	padding:25px;
+	text-align:justify;
+}
+
+a{
+	font-size:12px;
 }
 
 /* -------------------------------------------------- MANUAL COVER --------------------------------------------------------------- */
@@ -84,13 +121,16 @@ a:hover {
 	padding-top:4px;
 	bottom:5px;
 	right:5px;
-	/*
-	background:url(/DocSources/images/1024/bg_backtoindex.jpg) no-repeat;
-	*/
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	color:#6D5C4D;
 	margin:0;
 	z-index:10;
+}
+
+.backToIndex:hover {
+	opacity:0.8; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.8;
+	filter:alpha(opacity=80); /* IE */ !important
 }
 
 
@@ -98,29 +138,12 @@ a:hover {
 
 #index  {
 	padding:25px;
+	height:auto;
 }
 
 #index ul{
-	list-style:none;
-	margin:0;
-	padding:0;
-}
-
-#index ul#one{
-	float:left;
-	padding-right:50px;
-	border-right:1px solid #6D5C4D;
-}
-
-#index ul#two{
-	float:left;
-	margin-left:50px;
-	border-right:1px solid #6D5C4D;
-	padding-right:50px;
-}
-
-#index ul#three{
-	float:right;
+	list-style-type:upper-roman;
+	line-height:18px;
 }
 
 #index h3 a, #index h3{
@@ -128,25 +151,53 @@ a:hover {
 	font-style: normal;
 	padding:0;
 	color: #6F6B69;
+	text-align: center;
+	margin-top: -10px;
+	text-decoration: underline;
 }
 
 #index .subtitle{
-	font-size:12px;
+	font-size:11px;
 	line-height: 22px;
 	margin-left: 15px;
 }
 
 #index .sublist {
-	margin-left: 40px;
-	font-size: 12px;
+	margin-left: 35px;
+	font-size: 11px;
 	line-height: 22px;
-	font-style:italic;
+}
+
+#index .number {
+	font-style:normal;
+	font-weight:bold;	
 }
 
 
 /* ----------------------------------------------------- CONTENT ----------------------------------------------------------------- */
 
-#page3  {
-	padding:25px;
-	text-align:justify;
+
+ul{
+	font-size:12px;
+	line-height:18px;
 }
+
+#chapter1 ul li, #chapter2 ul li, #chapter3 ul li {
+	margin-top:10px;
+}
+
+#chapter3 ul.topicsList li {
+	margin-top:0;
+	list-style:decimal;
+}
+
+ul.letters li, ul.numbers li ul.letters li{
+	list-style:lower-latin;
+}
+
+ul.numbers li{
+	list-style:decimal;
+}
+
+
+

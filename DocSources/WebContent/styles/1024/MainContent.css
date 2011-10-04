@@ -1273,6 +1273,18 @@ input.file {
 	display:inline;
 }
 
+.EditDocumentInManuscriptTranscriberOff { /* Edit with Manuscript Transcriber icon */
+	background:url(/DocSources/images/1024/button_edit_mantranscriber.png) no-repeat;
+	width:105px;
+	height:20px;
+	position:absolute;
+	margin:-8px 0 0 375px;
+	display:inline;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
+}
+
 /* ------------------------------------------ */
 /*
 /*  EditExtractOrSynopsisDocument FULLSCREEN  */
@@ -1319,7 +1331,11 @@ input.file {
 }
 
 #topicPlaceLabel {
-		margin-right:16px;
+	margin-right:16px;
+}
+
+#topicLabel {
+	margin-right: 48px;
 }
 	
 
@@ -2432,6 +2448,11 @@ a.refreshVolumeExplorer {
 }
 
 /* -------------------------------------- */
+/*
+/* ---- EdtitExternalLinkTgn, Map and MapSite --- */
+
+
+
 /*
 /* -------------------------------------------------------------------------- */
 /*
