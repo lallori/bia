@@ -4,6 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+			<c:if test="${not empty param.login_error}">
+					<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION.message}">
+						<span id="password.errors" class="loginerror" >
+							<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
+						</span>
+					</c:if>
+				</c:if>
 			<div id="login">
 				<h1>PLEASE LOG IN</h1>
 	  			<form name="login" action="<c:url value="/loginProcess" />" method="post">
@@ -37,13 +44,7 @@
 						</tr>
 					</table>
 				</form>
-				<c:if test="${not empty param.login_error}">
-					<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION.message}">
-						<span id="password.errors" class="loginerror" >
-							<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
-						</span>
-					</c:if>
-				</c:if>
+				
 			</div>
       
 			<a id="register_here" href="<c:url value="/user/RegisterUser.do"/>"></a>
