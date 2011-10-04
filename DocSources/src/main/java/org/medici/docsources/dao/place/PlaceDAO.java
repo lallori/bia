@@ -45,6 +45,14 @@ import org.medici.docsources.domain.Place;
 public interface PlaceDAO extends Dao<Integer, Place> {
 
 	/**
+	 * This method returns a list of places with the same geogKey
+	 * 
+	 * @return List of {@link org.medici.docsources.domain.Place}
+	 * @throws PersistenceException
+	 */
+	public List<Place> findByGeogKey(Integer geogKey) throws PersistenceException;
+	
+	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Place}created on database.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.Place}

@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.geobase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.geobase.ShowPlaceRequestCommand;
@@ -82,6 +83,7 @@ public class ShowPlaceController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Place place = new Place();
+		List<Place> placeNames;
 		
 		if(command.getPlaceAllId() > 0){
 			try {
@@ -93,6 +95,13 @@ public class ShowPlaceController {
 			place.setPlaceAllId(0);
 			place.setPlSource(command.getPlSource());
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		}
+		
+		try{
+			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
+			model.put("placeNames", placeNames);
+		}catch(ApplicationThrowable th){
+			new ModelAndView("error/ShowPlace", model);
 		}
 		model.put("place", place);
 

@@ -1,5 +1,5 @@
 /*
- * EditNamesOrNameVariantsPlaceController.java
+ * EditNameOrNameVariantPlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -31,13 +31,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.command.geobase.EditNamesOrNameVariantsPlaceCommand;
+import javax.validation.Valid;
+
+import org.medici.docsources.command.geobase.EditNameOrNameVariantPlaceCommand;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,13 +49,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Place: Edit Names or Name Variants".
+ * Controller for action "Place: Edit Name or Name Variant".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/EditNamesOrNameVariantsPlace")
-public class EditNamesOrNameVariantsPlaceController {
+@RequestMapping("/de/geobase/EditNameOrNameVariantPlace")
+public class EditNameOrNameVariantPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 	@Autowired(required = false)
@@ -75,8 +79,10 @@ public class EditNamesOrNameVariantsPlaceController {
 		return validator;
 	}
 
-	/*@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditNamesOrNameVariantsPlaceCommand command, BindingResult result) {
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditNameOrNameVariantPlaceCommand command, BindingResult result) {
+		//TODO: implement the method
+		
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
@@ -90,7 +96,7 @@ public class EditNamesOrNameVariantsPlaceController {
 			return new ModelAndView("geobase/ShowDetailsPlace", model);
 		}
 
-	}*/
+	}
 
 	/**
 	 * @param geoBaseService the geoBaseService to set
@@ -105,20 +111,39 @@ public class EditNamesOrNameVariantsPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditNamesOrNameVariantsPlaceCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditNameOrNameVariantPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
+		List<PlaceType> placeTypes;
 		if((command != null) && (command.getPlaceAllId() > 0)){
-			List<Place> placeNames;
-			try{
-				placeNames = getGeoBaseService().findPlaceNames(command.getGeogKey());
-				model.put("placeNames", placeNames);
-			}catch(ApplicationThrowable th){
-				return new ModelAndView("error/EditNamesOrNameVariantsPlace", model);
+			if(command.getCurrentPlaceAllId().equals(0)){
+				command.setLatitude(null);
+				command.setLongitude(null);
+				command.setPlName(null);
+				
+			}else{
+				try{
+					Place place = getGeoBaseService().findPlace(command.getCurrentPlaceAllId());
+				
+					command.setPlName(place.getPlaceName());
+					command.setPlType(place.getPlType());
+					command.setLatitude(place.getPlaceGeographicCoordinates().getDegreeLatitude());
+					command.setLongitude(place.getPlaceGeographicCoordinates().getDegreeLongitude());
+				}catch(ApplicationThrowable ath){
+					return new ModelAndView("error/EditNameOrNameVariantPlace" , model);
+				}
 			}
+			
+			try {
+				placeTypes = getGeoBaseService().findPlaceTypes();
+				model.put("placeTypes", placeTypes);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/EditNameOrNameVariantPlace", model);
+			}
+			
+			return new ModelAndView("geobase/EditNameOrNameVariantPlace", model);
 		}
-		
-		return new ModelAndView("geobase/EditNamesOrNameVariantsPlace", model);
+		return new ModelAndView("geobase/EditNameOrNameVariantPlace", model);
 	}
 
 	/**

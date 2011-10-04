@@ -182,6 +182,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			placeToUpdate.setPlaceName(place.getPlaceName());
 			placeToUpdate.setTermAccent(place.getTermAccent());
 			placeToUpdate.setPlType(place.getPlType());
+			placeToUpdate.setPrefFlag(place.getPrefFlag());
 			placeToUpdate.setAddlRes(false);
 			if(place.getParentPlace() != null){
 				placeToUpdate.setParentPlace(getPlaceDAO().find(place.getParentPlace().getPlaceAllId()));
@@ -287,6 +288,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public PlaceExternalLinks findPlaceExternalLinks(Integer placeAllId, Integer placeExternalLinksId) throws ApplicationThrowable {
 		try{
 			return getPlaceExternalLinksDAO().find(placeAllId, placeExternalLinksId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Place> findPlaceNames(Integer geogKey) throws ApplicationThrowable {
+		try{
+			return getPlaceDAO().findByGeogKey(geogKey);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

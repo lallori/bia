@@ -5,57 +5,45 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditNamesOrNameVariantsPlaceURL" value="/de/geobase/EditNamesOrNameVariantsPlace.do">
+		<c:url var="EditNamesOrNameVariantsPlaceURL" value="/de/geobase/EditNameOrNameVariantsPlace.do">
 			<c:param name="placeAllId" value="${command.placeAllId}" />
 		</c:url>
 		
 		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 			<c:param name="placeAllId" value="${command.placeAllId}" />
 		</c:url>
+		
+		<c:url var="AddNamePlaceURL" value="/de/geobase/EditNameOrNameVariantPlace.do">
+			<c:param name="placeAllId" value="${command.placeAllId}" />
+			<c:param name="geogKey" value="${command.geogKey}" />
+			<c:param name="currentPlaceAllId" value="0" />
+		</c:url>
 	</security:authorize>
 	
 	<form:form id="EditNamesOrNameVariantsPlaceForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>NAME or NAMES VARIANTS</b></legend>
-		<div>
-			<input id="firstName" name="firstName" class="input_35c_disabled" type="text" value="Firenze" disabled="disabled" />
-			<a href="#" class="deleteIcon" title="Delete this entry"></a>
-			<a class="editValue" href="/DocSources/de/geobase/EditNameTgnPlace.html">edit value</a>
-		</div>
-		
-		<div>
-			<input id="secondLink" name="secondLink" class="input_35c_disabled" type="text" value="Fiorenza" disabled="disabled" />
-			<a href="#" class="deleteIcon" title="Delete this entry"></a>
-			<a class="editValue" href="/DocSources/de/geobase/EditNameTgnPlace.html">edit value</a>
-		</div>
-		
-		<div>
-			<input id="thirdLink" name="thirdLink" class="input_35c_disabled" type="text" value="Florencia" disabled="disabled" />
-			<a href="#" class="deleteIcon" title="Delete this entry"></a>
-			<a class="editValue" href="/DocSources/de/geobase/EditNameTgnPlace.html">edit value</a>
-		</div>
-		
-		<div>
-			<input id="fourthLink" name="fourthLink" class="input_35c_disabled" type="text" value="Fiorentia" disabled="disabled" />
-			<a href="#" class="deleteIcon" title="Delete this entry"></a>
-			<a class="editValue" href="/DocSources/de/geobase/EditNameTgnPlace.html">edit value</a>
-		</div>
-		
-		<div>
-			<input id="fifthLink" name="fifthLink" class="input_35c_disabled" type="text" value="Fiorentine" disabled="disabled" />
-			<a href="#" class="deleteIcon" title="Delete this entry"></a>
-			<a class="editValue" href="/DocSources/de/geobase/EditNameTgnPlace.html">edit value</a>
-		</div>
-		
-		<div>
-			<input id="sixthLink" name="sixthLink" class="input_35c_disabled" type="text" value="Florenz" disabled="disabled" />
-			<a href="#" class="deleteIcon" title="Delete this entry"></a>
-			<a class="editValue" href="/DocSources/de/geobase/EditNameTgnPlace.html">edit value</a>
-		</div>
-		
+		<c:forEach items="${placeNames}" var="currentName">
+			<c:url var="EditNameOrNameVariantPlaceURL" value="/de/geobase/EditNameOrNameVariantPlace.do">
+				<c:param name="placeAllId" value="${command.placeAllId}" />
+				<c:param name="geogKey" value="${command.geogKey}" />
+				<c:param name="currentPlaceAllId" value="${currentName.placeAllId}" />
+			</c:url>
+			
+			<c:url var="DeleteNameOrNameVariantsPlaceURL" value="/de/geobase/DeleteNameOrNameVariantsPlace.do">
+				<c:param name="placeAllId" value="${currentName.placeAllId}" />
+			</c:url>
+			
+			<div>
+				<input id="name_${currentName.placeAllId}" name="name_${currentName.placeAllId}" class="input_35c_disabled" type="text" value="${currentName.placeName}" disabled="disabled" />
+				<a class="deleteIcon" title="Delete this entry" href="${DeleteNameOrNameVariantsPlaceURL}"></a>
+				<a class="editValue" href="${EditNameOrNameVariantPlaceURL}">edit value</a>
+			</div>
+		</c:forEach>
+	
 		<div>
 			<input id="close" type="submit" value="Close" title="Do not save changes"/>
-			<a href="#" id="AddNewValue" title="Add new Name">Add</a>
+			<a href="${AddNamePlaceURL}" id="AddNewValue" title="Add new Name">Add</a>
 		</div>
 		
 		</fieldset>
@@ -75,36 +63,31 @@
 			});
 
 			$j('#close').click(function(e) {
-				$j('#EditNamesOrNameVariantsPlaceForm').block({ message: $j('#question') }); 
-	            return false;
-			});
-		});
-	</script>
-	
-	<div id="question" style="display:none; cursor: default"> 
-		<h1>discard changes?</h1> 
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" /> 
-	</div>
-	
-	<script type="text/javascript">
-		$j(document).ready(function() {
-			$j('#no').click(function() { 
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j("#question").hide();
-				$j("#EditNamesOrNameVariantsPlaceForm").append($j("#question"));
-				$j(".blockUI").remove();
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
 				$j.ajax({ url: '${ShowPlaceURL}', cache: false, success:function(html) { 
 					$j("#body_left").html(html);
 				}});
-	
-				return false; 
-			}); 
-	     
+	            return false;
+			});
+			
+			$j(".deleteIcon").click(function() {
+				$j.get(this.href, function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditNamePlaceDiv").load('${EditNamesOrNameVariantsPlaceURL}');
+					}
+		        });
+				return false;
+			});
+			
+			$j(".editValue").click(function() {
+				$j("#EditNamePlaceDiv").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j("#AddNewValue").click(function(){
+				$j("#EditNamePlaceDiv").load($j(this).attr("href"));
+				return false;
+			});
 		});
 	</script>

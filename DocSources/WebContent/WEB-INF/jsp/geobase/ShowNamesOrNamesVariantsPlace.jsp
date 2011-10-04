@@ -7,6 +7,7 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditNamesOrNameVariantsPlaceURL" value="/de/geobase/EditNamesOrNameVariantsPlace.do">
 			<c:param name="placeAllId" value="${place.placeAllId}" />
+			<c:param name="geogKey" value="${place.geogKey}" />
 		</c:url>
 	</security:authorize>
 	
@@ -19,30 +20,18 @@
 		</div>
 		
 		<div class="list">
-			<div class="row">
-				<div class="item">Principal</div> 
-				<div class="value">Firenze</div> 
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Fiorenza</div>
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Florencia</div>
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Fiorentia</div>
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Fiorentine</div>
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Florenz</div>
-			</div>
+			<c:forEach items="${placeNames}" var="currentName">
+				<div class="row">
+					<c:if test="${currentName.prefFlag == 'P'}">
+						<div class="item">Principal</div>
+						<div class="value">${currentName.placeName}</div>
+					</c:if>
+					<c:if test="${currentName.prefFlag == 'V'}">
+						<div class="item">Variant</div>
+						<div class="value">${currentName.placeName}</div>
+					</c:if>					
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 	

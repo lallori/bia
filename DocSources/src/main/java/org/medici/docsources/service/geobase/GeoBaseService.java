@@ -146,6 +146,14 @@ public interface GeoBaseService {
 	
 	/**
 	 * 
+	 * @param geogKey
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public List<Place> findPlaceNames(Integer geogKey) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */

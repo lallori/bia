@@ -1,5 +1,5 @@
 /*
- * EditNamesOrNameVariantsPlaceCommand.java
+ * EditNameOrNameVariantPlaceCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -34,9 +34,14 @@ package org.medici.docsources.command.geobase;
  * 
  * @see org.EditDetailsPlaceController.docsources.controller.geobase.ModifyPlaceController
  */
-public class EditNamesOrNameVariantsPlaceCommand {
+public class EditNameOrNameVariantPlaceCommand {
 	private Integer placeAllId;
+	private Integer currentPlaceAllId;
 	private Integer geogKey;
+	private String plType;
+	private String plName;
+	private Integer latitude;
+	private Integer longitude;
 
 	/**
 	 * This method returns placeId property.
@@ -68,5 +73,75 @@ public class EditNamesOrNameVariantsPlaceCommand {
 	 */
 	public Integer getGeogKey() {
 		return geogKey;
+	}
+
+	/**
+	 * @param plType the plType to set
+	 */
+	public void setPlType(String plType) {
+		this.plType = plType;
+	}
+
+	/**
+	 * @return the plType
+	 */
+	public String getPlType() {
+		return plType;
+	}
+
+	/**
+	 * @param latitude the latitude to set
+	 */
+	public void setLatitude(Integer latitude) {
+		this.latitude = latitude;
+	}
+
+	/**
+	 * @return the latitude
+	 */
+	public Integer getLatitude() {
+		return latitude;
+	}
+
+	/**
+	 * @param longitude the longitude to set
+	 */
+	public void setLongitude(Integer longitude) {
+		this.longitude = longitude;
+	}
+
+	/**
+	 * @return the longitude
+	 */
+	public Integer getLongitude() {
+		return longitude;
+	}
+
+	/**
+	 * @param plName the plName to set
+	 */
+	public void setPlName(String plName) {
+		this.plName = plName;
+	}
+
+	/**
+	 * @return the plName
+	 */
+	public String getPlName() {
+		return plName;
+	}
+
+	/**
+	 * @param currentPlaceAllId the currentPlaceAllId to set
+	 */
+	public void setCurrentPlaceAllId(Integer currentPlaceAllId) {
+		this.currentPlaceAllId = currentPlaceAllId;
+	}
+
+	/**
+	 * @return the currentPlaceAllId
+	 */
+	public Integer getCurrentPlaceAllId() {
+		return currentPlaceAllId;
 	}
 }

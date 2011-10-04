@@ -6,45 +6,40 @@
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<c:url var="EditNamesOrNamesVariantsPlaceURL" value="/de/geobase/EditNamesOrNamesVariantsPlace.do">
-			<c:param name="place.placeAllId" value="${place.placeAllId}" />
+			<c:param name="placeAllId" value="${command.placeAllId}" />
 		</c:url>
 	</security:authorize>
 	
-	<div class="background" id="EditNamesOrNamesVariantsPlaceDiv">
-		<div class="title">
-			<h5>NAME or NAME VARIANTS</h5>
-		 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-				<a id="EditNamePlace" href="${EditNamesOrNamesVariantsPlaceURL}" class="editButton"></a><span id="loading"/>
-			</security:authorize>
+	<form:form id="EditNamePlaceForm" method="post" class="edit">
+	<fieldset>
+	<legend><b>NAME or NAME VARIANTS</b></legend>
+		<div>
+			<form:label for="namePlace" id="namePlaceLabel" path="plName">Name</form:label>
+			<form:input id="namePlace" path="plName" cssClass="input_30c" type="text" />
 		</div>
 		
-		<div class="list">
-			<div class="row">
-				<div class="item">Principal</div> 
-				<div class="value">Firenze</div> 
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Fiorenza</div>
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Florencia</div>
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Fiorentia</div>
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Fiorentine</div>
-			</div>
-			<div class="row">
-				<div class="item">Variant</div>
-				<div class="value">Florenz</div>
-			</div>
+		<div>
+			<form:label for="nameType" id="nameTypeLabel" path="plType">Name Type</form:label>
+			<form:select id="nameType" path="plType" cssClass="input_14c" type="text" items="${placeTypes}"/>
 		</div>
-	</div>
+		
+		<hr />
+		
+		<div>
+			<b>Geographic Coordinates</b><br /><br />
+			<form:label for="latitudeName" id="latitudeNameLabel" path="latitude">Latitude</form:label>
+			<form:input id="latitudeName" path="latitude" cssClass="input_10c" type="text" />
+			<form:label for="longitudeName" id="longitudeNameLabel" path="longitude">Longitude</form:label>
+			<form:input id="longitudeName" path="longitude" class="input_10c" type="text"/>
+		</div>
+		
+		<div>
+			<input id="close" type="submit" value="Close" title="Do not save changes" />
+			<input id="save" type="submit" value="Save" />
+		</div>
+		
+	</fieldset>	
+	</form:form>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
