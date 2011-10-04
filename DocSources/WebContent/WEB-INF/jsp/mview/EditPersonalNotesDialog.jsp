@@ -9,8 +9,12 @@
 	<form:form id="EditPersonalNotesForm" action="${editPersonalNotesForm}" method="post" cssClass="edit">
 		<form:textarea id="personalNotes" path="personalNotes" rows="16" style="width: 98%; height: 90%;"/>
 		<input type="submit" value="Save Notes"  id="saveNotes">
-		<input type="submit" value="Clean Notes" id="cleanNotes">
+		<a id="cleanNotes">Clear notes</a>
 	</form:form>
+	
+	<div id="clearNotes" title="ALERT" style="display:none"> 
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are your sure you want to clear the Personal Notes window?</p> 
+	</div>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -24,17 +28,33 @@
 			});
 			
 			$j("#cleanNotes").click(function (){
-				$j("#personalNotes").text("");
-				$j.ajax({ type:"POST", url:$j("#EditPersonalNotesForm").attr("action"), data:$j("#EditPersonalNotesForm").serialize(), async:false, success:function(html) { 
-						$j("#DialogPersonalNotes").html(html);
-						personalNotesChanged=false;
-					} 
-				});
+				$j('#clearNotes').dialog('open');
 				return false;
 			});
 
 			$j("#personalNotes").change(function(){
 				personalNotesChanged=true;
+			});
+			
+			$j("#clearNotes").dialog({
+				resizable: false,
+				height:140,
+				modal: true,
+				autoOpen : false,
+				zIndex: 3999,
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				buttons: {
+					YES : function() {
+						$j("#personalNotes").text("");
+						$j(this).dialog('close');
+					},
+					NO: function() {
+						$j(this).dialog('close');
+					}
+				}
 			});
 		});
 	</script>
