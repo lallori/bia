@@ -24,6 +24,11 @@
 		</c:if>
 				
 		<div>
+			<form:label for="name" id="nameLabel" path="description">Name</form:label>
+			<form:input id="name" path="description" cssClass="input_30c" type="text" />
+		</div>
+		
+		<div>
 			<form:label for="link" id="linkLabel" path="externalLink">Link:</form:label>
 			<form:input id="link" path="externalLink" class="input_39c" type="text" />
 		</div>

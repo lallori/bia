@@ -38,6 +38,7 @@ public class EditExternalLinkPlaceCommand {
 	private Integer placeAllId;
 	private Integer placeExternalLinksId;
 	private String externalLink;
+	private String description;
 
 	/**
 	 * This method returns placeId property.
@@ -84,5 +85,19 @@ public class EditExternalLinkPlaceCommand {
 	 */
 	public String getExternalLink() {
 		return externalLink;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
 	}
 }

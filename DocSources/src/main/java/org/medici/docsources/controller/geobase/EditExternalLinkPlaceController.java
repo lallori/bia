@@ -33,9 +33,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.command.docbase.EditTopicDocumentCommand;
 import org.medici.docsources.command.geobase.EditExternalLinkPlaceCommand;
-import org.medici.docsources.command.geobase.EditExternalLinksPlaceCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -93,6 +91,7 @@ public class EditExternalLinkPlaceController {
 			PlaceExternalLinks placeExternalLinks = new PlaceExternalLinks(command.getPlaceExternalLinksId());
 			placeExternalLinks.setPlace(new Place(command.getPlaceAllId()));
 			placeExternalLinks.setExternalLink(command.getExternalLink());
+			placeExternalLinks.setDescription(command.getDescription());
 			
 			try{
 				if(command.getPlaceExternalLinksId().equals(0)){
@@ -140,6 +139,12 @@ public class EditExternalLinkPlaceController {
 						command.setExternalLink(null);
 					}
 					
+					if(placeExternalLinks.getDescription() != null){
+						command.setDescription(placeExternalLinks.getDescription());
+					}else{
+						command.setDescription(null);
+					}
+					
 				}catch(ApplicationThrowable th){
 					return new ModelAndView("error/EditExternalLinkPlace", model);
 				}
@@ -150,6 +155,7 @@ public class EditExternalLinkPlaceController {
 			}
 			command.setPlaceExternalLinksId(null);
 			command.setExternalLink(null);
+			command.setDescription(null);
 		}
 
 		return new ModelAndView("geobase/EditExternalLinkPlace", model);
