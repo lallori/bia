@@ -5,8 +5,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditNamesOrNameVariantsPlaceURL" value="/de/geobase/EditNameOrNameVariantsPlace.do">
+		<c:url var="EditNamesOrNameVariantsPlaceURL" value="/de/geobase/EditNamesOrNameVariantsPlace.do">
 			<c:param name="placeAllId" value="${command.placeAllId}" />
+			<c:param name="geogKey" value="${command.geogKey}" />
 		</c:url>
 		
 		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
@@ -30,13 +31,15 @@
 				<c:param name="currentPlaceAllId" value="${currentName.placeAllId}" />
 			</c:url>
 			
-			<c:url var="DeleteNameOrNameVariantsPlaceURL" value="/de/geobase/DeleteNameOrNameVariantsPlace.do">
+			<c:url var="DeleteNameOrNameVariantsPlaceURL" value="/de/geobase/DeleteNameOrNameVariantPlace.do">
 				<c:param name="placeAllId" value="${currentName.placeAllId}" />
 			</c:url>
 			
 			<div>
 				<input id="name_${currentName.placeAllId}" name="name_${currentName.placeAllId}" class="input_35c_disabled" type="text" value="${currentName.placeName}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteNameOrNameVariantsPlaceURL}"></a>
+				<c:if test="${currentName.prefFlag != 'P' && currentName.placeAllId != command.placeAllId}">
+					<a class="deleteIcon" title="Delete this entry" href="${DeleteNameOrNameVariantsPlaceURL}"></a>
+				</c:if>
 				<a class="editValue" href="${EditNameOrNameVariantPlaceURL}">edit value</a>
 			</div>
 		</c:forEach>
@@ -58,7 +61,7 @@
 
 			$j("#EditNamesOrNameVariantsPlace").click(function(){
 				$j(this).next().css('visibility', 'visible');
-				$j("#EditNamesOrNameVariantsPlaceDiv").load($j(this).attr("href"));
+				$j("#EditNamePlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
 
@@ -70,13 +73,30 @@
 			});
 			
 			$j(".deleteIcon").click(function() {
-				$j.get(this.href, function(data) {
+				var temp = $j(this);
+				$j("#EditNamePlaceDiv").block({ message: $j("#question")});
+
+				$j('#no').click(function() {
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j("#question").hide();
+					$j("#EditNamePlaceDiv").append($j("#question"));
+					$j(".blockUI").remove();
+					return false; 
+				}); 
+
+				$j('#yes').click(function() { 
+					$j.get(temp.attr("href"), function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
 						$j("#EditNamePlaceDiv").load('${EditNamesOrNameVariantsPlaceURL}');
 					}
-		        });
+					
+					return false; 
+				}); 	
+									     
+				});
 				return false;
 			});
 			
@@ -91,3 +111,9 @@
 			});
 		});
 	</script>
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>Delete this Variant Place entry?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>

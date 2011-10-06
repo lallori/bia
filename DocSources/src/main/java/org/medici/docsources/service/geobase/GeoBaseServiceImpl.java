@@ -90,6 +90,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			if(place.getParentPlace() != null){
 				place.setParentPlace(getPlaceDAO().find(place.getParentPlace().getPlaceAllId()));
 				place.setParentType(place.getParentPlace().getPlType());
+				place.setPlParentSubjectId(place.getParentPlace().getGeogKey());
+				place.setPlParentTermId(place.getParentPlace().getPlaceNameId());
 			}
 			if(place.getParentPlace().getParentPlace() != null){			
 				place.setgParent(place.getParentPlace().getParentPlace().getPlaceName());
@@ -105,6 +107,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			}
 			place.setPlParentTermId(place.getParentPlace().getPlaceNameId());
 			place.setPlParentSubjectId(place.getParentPlace().getGeogKey());
+			place.setPlaceNameFull(place.getPlaceName() + " / " + place.getPlParent() + " / " + place.getgParent() + " / " + place.getGgp());
+			place.setPlNameFullPlType(place.getPlaceName() + " (" + place.getPlType() + ") / " + place.getPlParent() + " (" + place.getParentType() + ") / " + place.getgParent() + " (" + place.getGpType() + ") / " + place.getGgp() + " (" + place.getGgpType() + ")");
 				
 			getPlaceDAO().persist(place);
 			return place;
@@ -157,6 +161,19 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void deletePlace(Place place) throws ApplicationThrowable {
+		try{
+			getPlaceDAO().remove(place);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void deletePlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
 			throws ApplicationThrowable {
 		try{
@@ -187,6 +204,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			if(place.getParentPlace() != null){
 				placeToUpdate.setParentPlace(getPlaceDAO().find(place.getParentPlace().getPlaceAllId()));
 				placeToUpdate.setParentType(placeToUpdate.getParentPlace().getPlType());
+				place.setPlParentSubjectId(place.getParentPlace().getGeogKey());
+				place.setPlParentTermId(place.getParentPlace().getPlaceNameId());
 			}
 			if(placeToUpdate.getParentPlace().getParentPlace() != null){			
 				placeToUpdate.setgParent(placeToUpdate.getParentPlace().getParentPlace().getPlaceName());
@@ -202,6 +221,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			}
 			placeToUpdate.setPlParentTermId(placeToUpdate.getParentPlace().getPlaceNameId());
 			placeToUpdate.setPlParentSubjectId(placeToUpdate.getParentPlace().getGeogKey());
+			
+			place.setPlaceNameFull(place.getPlaceName() + " / " + place.getPlParent() + " / " + place.getgParent() + " / " + place.getGgp());
+			place.setPlNameFullPlType(place.getPlaceName() + " (" + place.getPlType() + ") / " + place.getPlParent() + " (" + place.getParentType() + ") / " + place.getgParent() + " (" + place.getGpType() + ") / " + place.getGgp() + " (" + place.getGgpType() + ")");
 			
 			getPlaceDAO().merge(placeToUpdate);
 			return placeToUpdate;
@@ -236,6 +258,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try{
 			PlaceExternalLinks placeExternalLinksToUpdate = getPlaceExternalLinksDAO().find(placeExternalLinks.getPlaceExternalLinksId());
 			placeExternalLinksToUpdate.setExternalLink(placeExternalLinks.getExternalLink());
+			placeExternalLinksToUpdate.setDescription(placeExternalLinks.getDescription());
 			getPlaceExternalLinksDAO().merge(placeExternalLinksToUpdate);
 			getPlaceDAO().refresh(placeExternalLinksToUpdate.getPlace());
 			

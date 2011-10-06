@@ -55,16 +55,28 @@
 	</bean>
 	
 	<!-- Geo base Validators -->
+	<bean id="deleteExternalLinkPlaceValidator" class="org.medici.docsources.validator.geobase.DeleteExternalLinkPlaceValidator">
+		<description>Delete External Link Place Validator.</description>
+	</bean>
+	
+	<bean id="deleteNameOrNameVariantPlaceValidator" class="org.medici.docsources.validator.geobase.DeleteNameOrNameVariantPlaceValidator">
+		<description>Delete Name Or Name Variant Place Validator.</description>
+	</bean>
+	
 	<bean id="editDetailsPlaceValidator" class="org.medici.docsources.validator.geobase.EditDetailsPlaceValidator">
         <description>Edit Details Place Validator.</description>
 	</bean>
 	
 	<bean id="editGeographicCoordinatesPlaceValidator" class="org.medici.docsources.validator.geobase.EditGeographicCoordinatesPlaceValidator">
-		<description>Edit Geographic Coordinates Place Validator</description>
+		<description>Edit Geographic Coordinates Place Validator.</description>
 	</bean>
 	
 	<bean id="editExternalLinkPlaceValidator" class="org.medici.docsources.validator.geobase.EditExternalLinkPlaceValidator">
-		<description>Edit External Link Place</description>
+		<description>Edit External Link Place Validator.</description>
+	</bean>
+	
+	<bean id="editNameOrNameVariantPlaceValidator" class="org.medici.docsources.validator.geobase.EditNameOrNameVariantPlaceValidator">
+		<description>Edit Name Or Name Variant Place Validator.</description>
 	</bean>
 
 	<!-- People base validator -->

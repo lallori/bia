@@ -28,18 +28,18 @@
 package org.medici.docsources.controller.geobase;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.medici.docsources.command.geobase.EditNameOrNameVariantPlaceCommand;
 import org.medici.docsources.domain.Place;
-import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
@@ -59,7 +59,7 @@ public class EditNameOrNameVariantPlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 	@Autowired(required = false)
-	@Qualifier("editDetailsPlaceValidator")
+	@Qualifier("editNameOrNameVariantPlaceValidator")
 	private Validator validator;
 
 	/**
@@ -81,19 +81,40 @@ public class EditNameOrNameVariantPlaceController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditNameOrNameVariantPlaceCommand command, BindingResult result) {
-		//TODO: implement the method
-		
 		getValidator().validate(command, result);
-
+		
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-
 			
-			getGeoBaseService();
+			Place place = new Place(command.getCurrentPlaceAllId());
+			place.setResearcher(command.getResearcher());
+			place.setGeogKey(command.getGeogKey());
+			place.setPlaceName(command.getPlName());
+			place.setPrefFlag("V");
+			try{
+				//Copy some propriety from the principal place
+				Place principalPlace = getGeoBaseService().findPlace(command.getPlaceAllId());
+				place.setPlType(principalPlace.getPlType());
+				place.setPlParent(principalPlace.getPlParent());
+				place.setPlSource(principalPlace.getPlSource());
+				place.setParentPlace(principalPlace.getParentPlace());
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("error/EditNameOrNameVariantPlace", model);
+			}
+			
+			try{
+				if(command.getCurrentPlaceAllId().equals(0)){
+					place = getGeoBaseService().addNewPlace(place);
+				}else{
+					place = getGeoBaseService().editDetailsPlace(place);
+				}
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("error/EditNameOrNameVariantPlace", model);
+			}
 
-			return new ModelAndView("geobase/ShowDetailsPlace", model);
+			return new ModelAndView("geobase/EditNamesOrNameVariantsPlace", model);
 		}
 
 	}
@@ -114,32 +135,26 @@ public class EditNameOrNameVariantPlaceController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditNameOrNameVariantPlaceCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
-		List<PlaceType> placeTypes;
 		if((command != null) && (command.getPlaceAllId() > 0)){
 			if(command.getCurrentPlaceAllId().equals(0)){
-				command.setLatitude(null);
-				command.setLongitude(null);
 				command.setPlName(null);
-				
 			}else{
 				try{
 					Place place = getGeoBaseService().findPlace(command.getCurrentPlaceAllId());
 				
 					command.setPlName(place.getPlaceName());
-					command.setPlType(place.getPlType());
-					command.setLatitude(place.getPlaceGeographicCoordinates().getDegreeLatitude());
-					command.setLongitude(place.getPlaceGeographicCoordinates().getDegreeLongitude());
 				}catch(ApplicationThrowable ath){
 					return new ModelAndView("error/EditNameOrNameVariantPlace" , model);
 				}
 			}
-			
-			try {
-				placeTypes = getGeoBaseService().findPlaceTypes();
-				model.put("placeTypes", placeTypes);
-			} catch (ApplicationThrowable ath) {
+			try{
+				Place parentPlace = getGeoBaseService().findPlace(command.getPlaceAllId());
+				command.setPlType(parentPlace.getPlType());
+			}catch(ApplicationThrowable ath){
 				return new ModelAndView("error/EditNameOrNameVariantPlace", model);
 			}
+			
+			command.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			
 			return new ModelAndView("geobase/EditNameOrNameVariantPlace", model);
 		}

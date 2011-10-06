@@ -80,6 +80,13 @@ public interface GeoBaseService {
 	
 	/**
 	 * 
+	 * @param place
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public void deletePlace(Place place) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param placeExternalLinks
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */

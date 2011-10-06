@@ -40,8 +40,7 @@ public class EditNameOrNameVariantPlaceCommand {
 	private Integer geogKey;
 	private String plType;
 	private String plName;
-	private Integer latitude;
-	private Integer longitude;
+	private String researcher;
 
 	/**
 	 * This method returns placeId property.
@@ -90,34 +89,6 @@ public class EditNameOrNameVariantPlaceCommand {
 	}
 
 	/**
-	 * @param latitude the latitude to set
-	 */
-	public void setLatitude(Integer latitude) {
-		this.latitude = latitude;
-	}
-
-	/**
-	 * @return the latitude
-	 */
-	public Integer getLatitude() {
-		return latitude;
-	}
-
-	/**
-	 * @param longitude the longitude to set
-	 */
-	public void setLongitude(Integer longitude) {
-		this.longitude = longitude;
-	}
-
-	/**
-	 * @return the longitude
-	 */
-	public Integer getLongitude() {
-		return longitude;
-	}
-
-	/**
 	 * @param plName the plName to set
 	 */
 	public void setPlName(String plName) {
@@ -143,5 +114,19 @@ public class EditNameOrNameVariantPlaceCommand {
 	 */
 	public Integer getCurrentPlaceAllId() {
 		return currentPlaceAllId;
+	}
+
+	/**
+	 * @param researcher the researcher to set
+	 */
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
+	}
+
+	/**
+	 * @return the researcher
+	 */
+	public String getResearcher() {
+		return researcher;
 	}
 }
