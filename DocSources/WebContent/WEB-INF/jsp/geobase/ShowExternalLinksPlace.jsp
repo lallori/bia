@@ -21,7 +21,7 @@
 		<div class="list">
 			<c:forEach items="${place.placeExternalLinks}" var="currentExternalLink">	
 				<div class="row">
-					<div class="value"><a id="linkSearch"  href="${currentExternalLink.externalLink}" target="_blank">${currentExternalLink.externalLink}</a></div>
+					<div class="value"><a id="linkSearch"  href="${currentExternalLink.externalLink}" target="_blank">${currentExternalLink.description}</a></div>
 				</div>
 			</c:forEach>
 		</div>
