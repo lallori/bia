@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.geobase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.domain.Place;
@@ -62,11 +63,14 @@ public class ShowLastEntryPlaceController {
 		try {
 			Place place = getGeoBaseService().findLastEntryPlace();
 			model.put("place", place);
+			List<Place> placeNames;
+			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
+			model.put("placeNames", placeNames);
 
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowLastEntryPlace", model);
 		}
-
+		
 		return new ModelAndView("geobase/ShowPlace", model);
 	}
 
