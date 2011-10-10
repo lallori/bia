@@ -145,7 +145,7 @@
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
-				var tabName = "Vol Exp ${document.volume.volNum}${document.volume.volLetExt}/${document.entryId}</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
+				var tabName = "Vol Exp ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
             	$j("#tabs").tabs("add", "" + $j(this).attr("href"), tabName);
             	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
             	return false;
