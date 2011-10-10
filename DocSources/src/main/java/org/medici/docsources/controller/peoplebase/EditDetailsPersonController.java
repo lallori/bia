@@ -126,7 +126,10 @@ public class EditDetailsPersonController {
 				person.setBornPlaceUnsure(command.getBornPlaceUnsure());
 			}
 			
-			person.setActiveStart(command.getActiveStart());
+			if(!command.getActiveStart().equals(""))
+				person.setActiveStart(command.getActiveStart());
+			else
+				person.setActiveStart(null);
 			
 			person.setDeathYear(command.getDeathYear());
 			person.setDeathMonth((command.getDeathMonth() != null) ? new Month(command.getDeathMonth()) : null);
@@ -142,7 +145,10 @@ public class EditDetailsPersonController {
 				person.setDeathPlaceUnsure(command.getDeathPlaceUnsure());
 			}
 			
-			person.setActiveEnd(command.getActiveEnd());
+			if(!command.getActiveEnd().equals(""))
+				person.setActiveEnd(command.getActiveEnd());
+			else
+				person.setActiveEnd(null);
 			
 
 			try {
