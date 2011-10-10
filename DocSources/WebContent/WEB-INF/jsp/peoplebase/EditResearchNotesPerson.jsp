@@ -8,9 +8,12 @@
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
+		<c:url var="EditResearchNotesURL" value="/de/peoplebase/EditResearchNotesPerson.do">
+			<c:param name="personId"   value="${command.personId}" />
+		</c:url>
 	</security:authorize>
 
-	<form:form id="EditResearchNotesPersonForm" class="edit" method="post">
+	<form:form id="EditResearchNotesPersonForm" class="edit" method="post" action="${EditResearchNotesURL}">>
 		<fieldset>
 			<legend><b>RESEARCH NOTES</b></legend>
 			
@@ -41,9 +44,9 @@
 				return false;
 			});
 	        
-	        $j("#save").click(function (){
-				$.ajax({ type:"POST", url:$(this).attr("action"), data:$(this).serialize(), async:false, success:function(html) { 
-					$("#EditResearchNotesPersonDiv").html(html);
+	        $j("#EditResearchNotesPersonForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					$j("#EditResearchNotesPersonDiv").html(html);
 				}});
 				return false;
 			});

@@ -93,9 +93,11 @@ public class EditResearchNotesPersonController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			People person = new People(command.getPersonId());
+			person.setBioNotes(command.getBioNotes());
 
 			try {
-				getPeopleBaseService().editResearchNotesPerson(person);
+				person = getPeopleBaseService().editResearchNotesPerson(person);
+				model.put("person", person);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowPerson", model);
 			}
