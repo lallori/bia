@@ -103,6 +103,24 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Place findNewGeogKey(String plSource) throws PersistenceException {
+		Query query = null;
+		if(plSource.equals("MAPPLACE")){
+			query = getEntityManager().createQuery("FROM Place WHERE plSource=:plSource AND geogkey>=100000 AND geogkey<=400000 ORDER BY geogkey DESC");
+		}
+		if(plSource.equals("MAPSITE")){
+			query = getEntityManager().createQuery("FROM Place WHERE plSource=:plSource AND geogkey>=400000 AND geogkey<=1000000 ORDER BY geogkey DESC");
+		}
+		query.setParameter("plSource", plSource);
+		query.setMaxResults(1);
+		
+		return (Place) query.getSingleResult();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Place findLastEntryPlace() throws PersistenceException {
         Query query = getEntityManager().createQuery("FROM Place ORDER BY dateEntered DESC");
         query.setMaxResults(1);

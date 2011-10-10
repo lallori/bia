@@ -279,6 +279,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNewGeogKey(String plSource) throws ApplicationThrowable {
+		try{
+			return getPlaceDAO().findNewGeogKey(plSource).getGeogKey() + 1;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

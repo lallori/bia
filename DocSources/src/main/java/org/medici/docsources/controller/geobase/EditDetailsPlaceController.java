@@ -178,6 +178,14 @@ public class EditDetailsPlaceController {
 			// We need to expose dateCreated field because it must be rendered on view
 			command.setDateEntered(new Date());
 			command.setPlaceAllId(0);
+			try{
+				if(!command.getPlSource().equals("TGN")){
+					Integer newGeogKey = getGeoBaseService().findNewGeogKey(command.getPlSource());
+					command.setGeogKey(newGeogKey);
+				}
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("error/EditDetailsPlace", model);
+			}
 		}
 
 		return new ModelAndView("geobase/EditDetailsPlace", model);

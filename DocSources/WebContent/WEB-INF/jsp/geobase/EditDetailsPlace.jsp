@@ -27,8 +27,11 @@
 				
 				<div>
 					<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
-					<form:input path="geogKey" cssClass="input_14c" />
+					<c:if test="${command.plSource != 'TGN'}">
+						<form:input path="geogKey" cssClass="input_35c_disabled"/>
+					</c:if>
 					<c:if test="${command.plSource == 'TGN' || command.geogKey >= 1000000}">
+						<form:input path="geogKey" cssClass="input_14c" />
 						<form:label for="tgnTermIdLabel" path="placeNameId" cssErrorClass="error" id="tgnTermIDLabel">TGN_TermID</form:label>
 						<form:input path="placeNameId" cssClass="input_14c" />
 					</c:if>

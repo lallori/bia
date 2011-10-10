@@ -53,6 +53,15 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	public List<Place> findByGeogKey(Integer geogKey) throws PersistenceException;
 	
 	/**
+	 * This method find a new geogKey for a new Place.
+	 * 
+	 * @param plSource
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Place findNewGeogKey(String plSource) throws PersistenceException;
+	
+	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Place}created on database.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.Place}

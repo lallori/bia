@@ -127,6 +127,15 @@ public interface GeoBaseService {
 	public Place findLastEntryPlace() throws ApplicationThrowable;
 	
 	/**
+	 * This method find a new geogKey for a new Place.
+	 * 
+	 * @param plSource
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Integer findNewGeogKey(String plSource) throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @param peopleId
 	 * @return
