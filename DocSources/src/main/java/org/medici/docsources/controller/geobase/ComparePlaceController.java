@@ -75,7 +75,7 @@ public class ComparePlaceController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ComparePlaceRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 

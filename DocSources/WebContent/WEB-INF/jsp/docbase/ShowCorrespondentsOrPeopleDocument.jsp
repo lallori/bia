@@ -17,6 +17,10 @@
 	<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
 		<c:param name="personId"   value="${document.recipientPeople.personId}" />
 	</c:url>
+	
+	<c:url var="CompareFromURL" value="/src/geobase/ComparePlace.do">
+		<c:param name="placeAllId" value="${document.senderPlace.placeAllId}" />
+	</c:url>
 
 	<div id="EditCorrespondentsDocumentDiv" class="background">
 		<div class="title">
