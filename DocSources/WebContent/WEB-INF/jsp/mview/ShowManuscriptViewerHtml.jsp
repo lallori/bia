@@ -13,7 +13,7 @@
 				prefix: '${ImagePrefixURL}',
 				image: '${image}',
 				credit: 'Folio n. ${image.imageProgTypeNum} ${image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
-				scale: 20.0,
+				scale: 0.0,
 				navigation: true,
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image
