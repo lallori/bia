@@ -282,6 +282,7 @@ public class AjaxController {
 			model.put("deathMonth", (person.getDeathMonth() != null ) ? person.getDeathMonth().toString() : "");
 			model.put("deathDay", (person.getDeathDay() != null ) ? person.getDeathDay().toString() : "");
 			model.put("bioNotes", (person.getBioNotes() != null ) ? person.getBioNotes().toString() : "");
+			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}

@@ -118,7 +118,7 @@
 	</div>
 	
 	<div id="questionGender" class="differentGender" style="display:none; cursor: default">
-		<h1>A mother can't be a male</h1>
+		<h1>A mother can't be a male or a corporate identity</h1>
 		<input type="button" id="ok" value="Ok" />
 	</div>
 	

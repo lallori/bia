@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.command.peoplebase;
 
+import org.medici.docsources.domain.People.Gender;
+
 /**
  * Command bean for action "Edit Father Person".
  * 
@@ -46,6 +48,7 @@ public class EditFatherPersonCommand {
 	private Integer deathMonthNum;
 	private Integer deathDay;
 	private String bioNotes;
+	private Gender gender;
 	
 	/**
 	 * @param id the id to set
@@ -198,5 +201,19 @@ public class EditFatherPersonCommand {
 	 */
 	public void setBioNotes(String bioNotes) {
 		this.bioNotes = bioNotes;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public Gender getGender() {
+		return gender;
 	}
 }
