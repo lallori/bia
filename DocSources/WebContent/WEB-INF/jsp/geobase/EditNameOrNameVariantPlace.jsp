@@ -35,10 +35,9 @@
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditDetailsPlace").css('visibility', 'visible');
-			$j("#EditNamesOrNamesVariantsPlace").css('visibility', 'visible');
-	        $j("#EditGeographicCoordinatesPlace").css('visibility', 'visible'); 
-			$j("#EditExternalLinksPlace").css('visibility', 'visible');
+			$j("#EditDetailsPlace").css('visibility', 'hidden');
+			$j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
+			$j("#EditExtLinkPlace").css('visibility', 'hidden');
 
 			$j('#closeName').click(function(e) {
 				$j('#EditNamePlaceDiv').block({ message: $j('#question') }); 
