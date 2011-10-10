@@ -33,8 +33,8 @@
 				server: '${IIPImageServer}',
 				prefix: '${ImagePrefixURL}',
 				image: '${documentExplorer.image}',
-				credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == ImageRectoVerso.R ? 'Recto' : 'Verso'}', 
-				scale: 20.0,
+				credit: 'Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}',
+				scale: 0.0,
 				navigation: true,
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image
