@@ -54,7 +54,9 @@ import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.search.SearchService;
+import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,6 +73,40 @@ import org.springframework.web.servlet.ModelAndView;
 public class AjaxController {
 	@Autowired
 	private SearchService searchService;
+	
+	@Autowired
+	private VolBaseService volBaseService;
+	
+	@Autowired
+	private DocBaseService docBaseService;
+
+	/**
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
+	}
+
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
+	}
+
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
+	}
 
 	/**
 	 * 
@@ -116,7 +152,15 @@ public class AjaxController {
 				singleRow.add("");
 			
 			if (currentDocument.getMDPAndFolio() != null)
-				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+ "</b>");
+				try{
+					if(getDocBaseService().checkDocumentDigitized(currentDocument.getVolume().getVolNum(), currentDocument.getVolume().getVolLetExt(), currentDocument.getFolioNum(), currentDocument.getFolioMod())){
+						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b><img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+					}else{
+						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+					}
+				}catch(ApplicationThrowable ath){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+				}
 			else
 				singleRow.add("");
 
@@ -382,6 +426,11 @@ public class AjaxController {
 						paginationFilter.addSortingCriteria("endMonthNum.monthNum", sortingDirection, SortField.INT);
 						paginationFilter.addSortingCriteria("endDay_Sort", sortingDirection, SortField.INT);
 						break;
+					case 4:
+						paginationFilter.addSortingCriteria("digitized_Sort", sortingDirection, SortField.STRING);
+						paginationFilter.addSortingCriteria("volNum_Sort", sortingDirection, SortField.INT);
+						paginationFilter.addSortingCriteria("volLetExt_Sort", sortingDirection, SortField.STRING);
+						break;
 					default:
 						paginationFilter.addSortingCriteria("serieList.title_Sort", sortingDirection, SortField.STRING);
 						paginationFilter.addSortingCriteria("serieList.subTitle1_Sort", sortingDirection, SortField.STRING);
@@ -536,8 +585,17 @@ public class AjaxController {
 			else
 				singleRow.add("");
 			
-			if (currentDocument.getMDPAndFolio() != null)
-				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+ "</b>");
+			if (currentDocument.getMDPAndFolio() != null){
+				try{
+					if(getDocBaseService().checkDocumentDigitized(currentDocument.getVolume().getVolNum(), currentDocument.getVolume().getVolLetExt(), currentDocument.getFolioNum(), currentDocument.getFolioMod())){
+						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b><img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+					}else{
+						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+					}
+				}catch(ApplicationThrowable ath){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+				}
+			}
 			else
 				singleRow.add("");
 
@@ -676,7 +734,14 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
 			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
-
+			try{
+				if(getVolBaseService().checkVolumeDigitized(currentVolume.getSummaryId()))
+					singleRow.add("YES");
+				else
+					singleRow.add("NO");
+			}catch(ApplicationThrowable ath){
+				
+			}
 			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 		}
 		model.put("iEcho", "1");

@@ -148,6 +148,7 @@ public class SimpleSearchController {
 			outputFields.add("Filza N.(MDP)");
 			outputFields.add("Start Date");
 			outputFields.add("End Date");
+			outputFields.add("Digitized");
 		}
 		
 		return outputFields;
