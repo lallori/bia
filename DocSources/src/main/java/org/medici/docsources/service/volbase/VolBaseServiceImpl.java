@@ -302,7 +302,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		// End date section
 		volumeToUpdate.setEndYear(volume.getEndYear());
 		if (volume.getEndMonthNum() != null) {
-			Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
+			Month month = getMonthDAO().find(volume.getEndMonthNum().getMonthNum());
 			volumeToUpdate.setEndMonth(month.getMonthName());
 			volumeToUpdate.setEndMonthNum(month);
 		} else {
@@ -506,7 +506,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 				volumeSummary.setSummaryId(volume.getSummaryId());
 				volumeSummary.setVolNum(volume.getVolNum());
 				volumeSummary.setVolLetExt(volume.getVolLetExt());
-				volumeSummary.setCarteggio(volume.getSerieList().toString());
+				if(volume.getSerieList() != null){
+					volumeSummary.setCarteggio(volume.getSerieList().toString());
+				}
 				FoliosInformations foliosInformations = getImageDAO().findVolumeFoliosInformations(volume.getVolNum(), volume.getVolLetExt());
 				if (foliosInformations != null) {
 					volumeSummary.setTotal(foliosInformations.getTotal());

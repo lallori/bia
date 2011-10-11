@@ -160,6 +160,35 @@
 			});
 
 			$j("#EditDetailsVolumeForm").submit(function (){
+				if($j("#endYear").val() != '' && $j("#startYear").val() !=''){
+					if($j("#endYear").val() < $j("#startYear").val()){
+						$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate') });
+						return false;
+					}
+					if($j("#endMonthNum").val() > 0 && $j("#startMonthNum").val() > 0){
+						if(($j("#endYear").val() == $j("#startYear").val()) && ($j("#endMonthNum").val() < $j("#startMonthNum").val())){
+							$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate') });
+							return false;
+						}
+						if($j("#endDay").val() != '' && $j("#startDay").val() != ''){
+							if(($j("#endYear").val() == $j("#startYear").val()) && ($j("#endMonthNum").val() == $j("#startMonthNum").val()) && ($j("#endDay").val() < $j("#startDay").val())){
+								$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate') });
+								return false;
+							}							
+						}
+					}
+				}
+				if($j("#startDay").val() != '' && ($j("#startDay").val() < 1 || $j("#startDay").val() > 31)){
+					$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongFormatDate')});
+					return false;
+				}
+				
+				if($j("#endDay").val() != '' && ($j("#endDay").val() < 1 || $j("#endDay").val() > 31)){
+					$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongFormatDate')});
+					return false;
+				}
+								
+				
 				$j("#volNum").removeAttr("disabled");
 				$j("#volLetExt").removeAttr("disabled");
 
@@ -178,6 +207,7 @@
 					}
 				}});
 				return false;
+				
 			});
 		});
 	</script>
@@ -186,6 +216,16 @@
 	<h1>discard changes?</h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
+</div>
+
+<div id="questionEndDate" class="wrongEndDate" style="display:none; cursor: default">
+		<h1>Volume End Year should not be dated before the Volume Start Year</h1>
+		<input type="button" id="okEndDate" value="Ok" />
+</div>
+
+<div id="questionFormatDate" class="wrongFormatDate" style="display:none; cursor: default">
+		<h1>Date format is incorrect</h1>
+		<input type="button" id="okFormatDate" value="Ok" />
 </div>
 
 <script type="text/javascript">
@@ -206,6 +246,26 @@
 				
 			return false; 
 		}); 
+		
+		$j("#okEndDate").click(function(){
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j(".wrongEndDate").hide();
+			$j("#EditDetailsVolumeDiv").append($j(".wrongEndDate"));
+			$j(".blockUI").remove();
+			return false;
+		});
+		
+		$j("#okFormatDate").click(function(){
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j(".wrongFormatDate").hide();
+			$j("#EditDetailsVolumeDiv").append($j(".wrongFormatDate"));
+			$j(".blockUI").remove();
+			return false;
+		});
+		
+		
      
 	});
 </script>

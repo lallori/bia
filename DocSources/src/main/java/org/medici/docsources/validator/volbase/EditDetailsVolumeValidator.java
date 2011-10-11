@@ -90,7 +90,7 @@ public class EditDetailsVolumeValidator implements Validator {
 	private void validateDates(Integer startYear, Integer startMonthNum, Integer startDay, Integer endYear, Integer endMonthNum, Integer endDay, Errors errors) {
 		if (!errors.hasErrors()) {
 			if (startYear != null) {
-				if ((startYear < 1200) || (startYear > 1700)) {
+				if ((startYear < 1300) || (startYear > 1750)) {
 					errors.reject("startYear", "error.startYear.invalid");
 				}
 			}
