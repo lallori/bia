@@ -154,7 +154,7 @@ public class AjaxController {
 			if (currentDocument.getMDPAndFolio() != null)
 				try{
 					if(getDocBaseService().checkDocumentDigitized(currentDocument.getVolume().getVolNum(), currentDocument.getVolume().getVolLetExt(), currentDocument.getFolioNum(), currentDocument.getFolioMod())){
-						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b><img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
 					}else{
 						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 					}
@@ -300,6 +300,15 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
 			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
+			
+			try{
+				if(getVolBaseService().checkVolumeDigitized(currentVolume.getSummaryId()))
+					singleRow.add("YES");
+				else
+					singleRow.add("NO");
+			}catch(ApplicationThrowable ath){
+				
+			}
 
 			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 		}
@@ -588,7 +597,7 @@ public class AjaxController {
 			if (currentDocument.getMDPAndFolio() != null){
 				try{
 					if(getDocBaseService().checkDocumentDigitized(currentDocument.getVolume().getVolNum(), currentDocument.getVolume().getVolLetExt(), currentDocument.getFolioNum(), currentDocument.getFolioMod())){
-						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b><img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
 					}else{
 						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 					}

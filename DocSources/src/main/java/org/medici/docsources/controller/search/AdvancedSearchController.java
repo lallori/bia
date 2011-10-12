@@ -228,11 +228,12 @@ public class AdvancedSearchController {
 			outputFields.add("Parent Name");
 			outputFields.add("Type");
 		} else {
-			outputFields = new ArrayList<String>(4);
+			outputFields = new ArrayList<String>(5);
 			outputFields.add("Carteggio");
 			outputFields.add("Filza N.(MDP)");
 			outputFields.add("Start Date");
 			outputFields.add("End Date");
+			outputFields.add("Digitized");
 		}
 		
 		return outputFields;
