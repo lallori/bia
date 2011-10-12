@@ -5,6 +5,22 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<c:url var="ChoiceStartFolioDocument" value="/de/docbase/ChoiceStartFolioDocument.do">
+			<c:param name="entryId" 				value="${documentExplorer.entryId}"/>
+			<c:param name="volNum" 					value="${documentExplorer.volNum}" />
+			<c:param name="volLetExt" 				value="${documentExplorer.volLetExt}" />
+			<c:param name="imageOrder" 				value="${documentExplorer.image.imageOrder}" />
+			<c:param name="imageDocumentToCreate" 	value="${documentExplorer.image.imageId}" />
+			<c:param name="total" 					value="${documentExplorer.total}" />
+			<c:param name="totalRubricario" 		value="${documentExplorer.totalRubricario}" />
+			<c:param name="totalCarta" 				value="${documentExplorer.totalCarta}" />
+			<c:param name="totalAppendix" 			value="${documentExplorer.totalAppendix}" />
+			<c:param name="totalOther" 				value="${documentExplorer.totalOther}" />
+			<c:param name="totalGuardia" 			value="${documentExplorer.totalGuardia}" />
+			<c:param name="flashVersion" 			value="false"/>
+			<c:param name="modalWindow"  			value="true"/>
+		</c:url>
+		
 		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 			<c:param name="entryId" value="${documentExplorer.entryId}"/>
 			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
@@ -66,6 +82,11 @@
 			</c:if>
 			</div>
 		</c:if>
+		<c:if test="${documentExplorer.image.imageType == 'C'}"> 
+			<div id="transcribe">
+				<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document">Transcribe this document</a>
+			</div>
+		</c:if>
 		</div>
 		
 		<iframe class="iframeFlipVolumeFullCom" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:100"></iframe>
@@ -87,6 +108,12 @@
 				<a id="nextPage" href="${nextPageURL}" class="nextPage">Next folio</a>
 			</c:if>
 			</div>
+			<c:if test="${documentExplorer.image.imageType == 'C'}"> 
+				<div id="transcribe">
+					<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document">Transcribe this document</a>
+				</div>
+			</c:if>
+		<br />
 		</div>
 		
 
@@ -175,6 +202,11 @@
 			
 			$j(".nextPage").click(function(){
 				$j("#modalBox").load($j(this).attr("href"));
+				return false;
+			});
+			
+			$j(".transcribe").click(function() { 
+				$j("#modalBox").load($j(this).attr("href")); 
 				return false;
 			});
 

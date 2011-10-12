@@ -98,7 +98,7 @@
 		</c:if>
 		<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
 			<div id="transcribe">
-				<a title="FIND THE DOCUMENT START FOLIO"  href="${ChoiceStartFolioDocument}" class="transcribe">Transcribe this document</a>
+				<a  href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document">Transcribe this document</a>
 			</div>
 		</c:if>
 		</div>
@@ -124,10 +124,11 @@
 				</c:if>
 				</div>
 				<c:if test="${volumeExplorer.image.imageType == 'C'}"> 
-				<div id="transcribe">
-					<a id="transcribe" title="FIND THE DOCUMENT START FOLIO"  href="${ChoiceStartFolioDocument}" class="transcribe">Transcribe this document</a>
-				</div>
-		</c:if>
+					<div id="transcribe">
+						<a href="${ChoiceStartFolioDocument}" class="transcribe" title="Transcribe this document">Transcribe this document</a>
+					</div>
+				</c:if>
+				<br />
 			</div>
 		</div>
 
