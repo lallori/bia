@@ -145,9 +145,22 @@
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
-				var tabName = "Vol Exp ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
-            	$j("#tabs").tabs("add", "" + $j(this).attr("href"), tabName);
-            	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				var tabName = "Vol Exp ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}";
+				
+				//Check if already exist a tab with this document in volume explorer
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					tabName += "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
+            		$j("#tabs").tabs("add", "" + $j(this).attr("href"), tabName);
+            		$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				}
+				
             	return false;
 			});
 		});
