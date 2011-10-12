@@ -96,7 +96,7 @@ public class EditUserProfileController {
 			Map<String, Object> model = new HashMap<String, Object>();
 			User user = new User();
 			try{
-				user.setAccount(getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()).getAccount());
+				user = getUserService().findUser(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			}catch(ApplicationThrowable ath){
 				
 			}
@@ -106,6 +106,7 @@ public class EditUserProfileController {
 			user.setInterests(command.getInterests());
 			user.setOrganization(command.getOrganization());
 			user.setTitle(command.getTitle());
+			System.out.println(user.getFirstName());
 			
 			try{
 				getUserService().updateUser(user);
