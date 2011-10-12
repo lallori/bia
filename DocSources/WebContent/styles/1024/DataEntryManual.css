@@ -53,7 +53,7 @@ h4 {
 	position:relative;
 }
 
-#chapter1, #chapter2, #chapter3 {
+#chapter1, #chapter2, #chapter3, #chapter4, #chapter5, #chapter6 {
 	height:auto;
 	margin-top:50px;
 	padding:25px;
@@ -182,7 +182,7 @@ ul{
 	line-height:18px;
 }
 
-#chapter1 ul li, #chapter2 ul li, #chapter3 ul li {
+#chapter1 ul li, #chapter2 ul li, #chapter3 ul li, #chapter4 ul li, #chapter5 ul li, #chapter6 ul li {
 	margin-top:10px;
 }
 

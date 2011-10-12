@@ -399,7 +399,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	float:right;	
 	display:inline;
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
-	padding:2px 0 0 0;
+	padding: 4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
