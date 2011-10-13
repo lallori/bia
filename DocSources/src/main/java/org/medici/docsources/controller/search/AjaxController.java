@@ -218,7 +218,8 @@ public class AjaxController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void advancedSearchPeople(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		SearchFilter searchFilter = (SearchFilter) httpSession.getAttribute("searchFilter" + searchUUID);
+		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 		
 		try {
 			page = getSearchService().searchPeople(searchFilter.getFilterData(), paginationFilter);
@@ -251,7 +252,8 @@ public class AjaxController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void advancedSearchPlaces(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		SearchFilter searchFilter = (SearchFilter) httpSession.getAttribute("searchFilter" + searchUUID);
+		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 
 		try {
 			page = getSearchService().searchPlaces(searchFilter.getFilterData(), paginationFilter);
@@ -285,7 +287,8 @@ public class AjaxController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void advancedSearchVolumes(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, String searchUUID) {
 		Page page = null;
-		SearchFilter searchFilter = (SearchFilter) httpSession.getAttribute("searchFilter" + searchUUID);
+		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
+		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 
 		try {
 			page = getSearchService().searchVolumes(searchFilter.getFilterData(), paginationFilter);
