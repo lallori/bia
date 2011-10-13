@@ -98,20 +98,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		words = new ArrayList<String>(0);
 		wordsTypes = new ArrayList<AdvancedSearchDocument.WordType>(0);
-		volumes = new ArrayList<String>(0);
-		volumesBetween = new ArrayList<String>(0);
-		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
-		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
-		datesYear = new ArrayList<Integer>(0);
-		datesMonth = new ArrayList<Integer>(0);
-		datesDay = new ArrayList<Integer>(0);
-		datesYearBetween = new ArrayList<Integer>(0);
-		datesMonthBetween = new ArrayList<Integer>(0);
-		datesDayBetween = new ArrayList<Integer>(0);
-		extract = new ArrayList<String>(0);
-		synopsis = new ArrayList<String>(0);
-		topics = new ArrayList<String>(0);
-		topicsId = new ArrayList<Integer>(0);
 		person = new ArrayList<String>(0);
 		personId = new ArrayList<Integer>(0);
 		place = new ArrayList<String>(0);
@@ -126,12 +112,26 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		toId = new ArrayList<Integer>(0);
 		refersTo = new ArrayList<String>(0);
 		refersToId = new ArrayList<Integer>(0);
+		extract = new ArrayList<String>(0);
+		synopsis = new ArrayList<String>(0);
+		topics = new ArrayList<String>(0);
+		topicsId = new ArrayList<Integer>(0);
+		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
+		datesYear = new ArrayList<Integer>(0);
+		datesMonth = new ArrayList<Integer>(0);
+		datesDay = new ArrayList<Integer>(0);
+		datesYearBetween = new ArrayList<Integer>(0);
+		datesMonthBetween = new ArrayList<Integer>(0);
+		datesDayBetween = new ArrayList<Integer>(0);
+		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
+		volumes = new ArrayList<String>(0);
+		volumesBetween = new ArrayList<String>(0);
 	}
 
 	/**
-	 * 
-	 * @param command
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command) {
 		//Words
 		if ((command.getWord() != null) && (command.getWord().size() >0)) {
@@ -155,7 +155,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			wordsTypes = new ArrayList<WordType>(0);
 			words = new ArrayList<String>(0);
 		}
-
 
 		// Person
 		if ((command.getPerson() != null) && (command.getPerson().size() >0)) {
@@ -561,11 +560,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * This method initialize object from a simple search, adding a word search on
-	 * Synopsis and Extract.
-	 * 
-	 * @param command Simple Search parameters 
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
 		wordsTypes.add(WordType.SynopsisAndExtract);
 		words.add(command.getText());
@@ -1022,72 +1019,6 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 		}
 
-		// Extract
-		if (extract.size()>0) {
-			BooleanQuery extractQuery = new BooleanQuery();
-			for (int i=0; i<extract.size(); i++) {
-				BooleanQuery singleExtractQuery = new BooleanQuery();
-				// 1 - (+synExtract.docExtract:med*)
-				// 1 - BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.docExtract", extract.get(i).toLowerCase())), Occur.MUST);
-				// 1 - luceneQuery.add(booleanClause);
-				// Extract: mi dice anchora che io dia el grano ==> +(+(+synExtract.docExtract:mi +synExtract.docExtract:dice +synExtract.docExtract:anchora +synExtract.docExtract:che +synExtract.docExtract:io +synExtract.docExtract:dia +synExtract.docExtract:el +synExtract.docExtract:grano))
-				String[] wordsSingleExtract = StringUtils.split(extract.get(i), " ");
-				for (int j=0; j<wordsSingleExtract.length; j++) {
-					TermQuery termQuery = new TermQuery(new Term("synExtract.docExtract", wordsSingleExtract[j]));
-					singleExtractQuery.add(termQuery, Occur.MUST);
-				}
-				extractQuery.add(new BooleanClause(singleExtractQuery, Occur.MUST));
-			}
-			luceneQuery.add(new BooleanClause(extractQuery, Occur.MUST));
-		}
-		
-		// synopsis;
-		if (synopsis.size() >0) {
-			BooleanQuery synopsisQuery = new BooleanQuery();
-			for (int i=0; i<synopsis.size(); i++) {
-				BooleanQuery singleSynopsisQuery = new BooleanQuery();
-				// +(synExtract.synopsis:med*)
-				// 1 - BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.synopsis", synopsis.get(i).toLowerCase())), Occur.MUST);
-				// 1 - luceneQuery.add(booleanClause);
-				String[] wordsSingleSynopsis = StringUtils.split(synopsis.get(i), " ");
-				for (int j=0; j<wordsSingleSynopsis.length; j++) {
-					TermQuery termQuery = new TermQuery(new Term("synExtract.synopsis", wordsSingleSynopsis[j]));
-					singleSynopsisQuery.add(termQuery, Occur.MUST);
-				}
-				synopsisQuery.add(new BooleanClause(singleSynopsisQuery, Occur.MUST));
-			}
-			luceneQuery.add(new BooleanClause(synopsisQuery, Occur.MUST));
-		}
-
-		// topics;
-		if (topicsId.size() >0) {
-			BooleanQuery topicIdQuery = new BooleanQuery();
-			BooleanQuery topicTitleQuery = new BooleanQuery();
-
-			for (int i=0; i<topicsId.size(); i++) {
-				if (topicsId.get(i) > 0) {
-					// +(+eplToLink.topic.topicId: 23)
-					BooleanQuery singleTopicIdQuery = new BooleanQuery(); 
-					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("eplToLink.topic.topicId", topicsId.get(i).toString())), Occur.SHOULD);
-					singleTopicIdQuery.add(booleanClause);
-					topicIdQuery.add(singleTopicIdQuery, Occur.MUST);
-				} else {
-					// +(+eplToLink.topic.topicTitle
-					BooleanQuery singleTopicQuery = new BooleanQuery(); 
-					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("eplToLink.topic.topicTitle", topics.get(i).toLowerCase())), Occur.SHOULD);
-					topicTitleQuery.add(booleanClause);
-					singleTopicQuery.add(booleanClause);
-					topicIdQuery.add(singleTopicQuery, Occur.MUST);
-				}
-			}
-			if (!topicIdQuery.toString().equals("")) {
-				luceneQuery.add(topicIdQuery, Occur.MUST);
-			}
-			if (!topicTitleQuery.toString().equals("")) {
-				luceneQuery.add(topicTitleQuery, Occur.MUST);
-			}
-		}
-
 		// person;
 		if (personId.size() >0) {
 			BooleanQuery personIdQuery = new BooleanQuery();
@@ -1280,6 +1211,72 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 		}
 
+		// Extract
+		if (extract.size()>0) {
+			BooleanQuery extractQuery = new BooleanQuery();
+			for (int i=0; i<extract.size(); i++) {
+				BooleanQuery singleExtractQuery = new BooleanQuery();
+				// 1 - (+synExtract.docExtract:med*)
+				// 1 - BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.docExtract", extract.get(i).toLowerCase())), Occur.MUST);
+				// 1 - luceneQuery.add(booleanClause);
+				// Extract: mi dice anchora che io dia el grano ==> +(+(+synExtract.docExtract:mi +synExtract.docExtract:dice +synExtract.docExtract:anchora +synExtract.docExtract:che +synExtract.docExtract:io +synExtract.docExtract:dia +synExtract.docExtract:el +synExtract.docExtract:grano))
+				String[] wordsSingleExtract = StringUtils.split(extract.get(i), " ");
+				for (int j=0; j<wordsSingleExtract.length; j++) {
+					TermQuery termQuery = new TermQuery(new Term("synExtract.docExtract", wordsSingleExtract[j]));
+					singleExtractQuery.add(termQuery, Occur.MUST);
+				}
+				extractQuery.add(new BooleanClause(singleExtractQuery, Occur.MUST));
+			}
+			luceneQuery.add(new BooleanClause(extractQuery, Occur.MUST));
+		}
+		
+		// synopsis;
+		if (synopsis.size() >0) {
+			BooleanQuery synopsisQuery = new BooleanQuery();
+			for (int i=0; i<synopsis.size(); i++) {
+				BooleanQuery singleSynopsisQuery = new BooleanQuery();
+				// +(synExtract.synopsis:med*)
+				// 1 - BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.synopsis", synopsis.get(i).toLowerCase())), Occur.MUST);
+				// 1 - luceneQuery.add(booleanClause);
+				String[] wordsSingleSynopsis = StringUtils.split(synopsis.get(i), " ");
+				for (int j=0; j<wordsSingleSynopsis.length; j++) {
+					TermQuery termQuery = new TermQuery(new Term("synExtract.synopsis", wordsSingleSynopsis[j]));
+					singleSynopsisQuery.add(termQuery, Occur.MUST);
+				}
+				synopsisQuery.add(new BooleanClause(singleSynopsisQuery, Occur.MUST));
+			}
+			luceneQuery.add(new BooleanClause(synopsisQuery, Occur.MUST));
+		}
+
+		// topics;
+		if (topicsId.size() >0) {
+			BooleanQuery topicIdQuery = new BooleanQuery();
+			BooleanQuery topicTitleQuery = new BooleanQuery();
+
+			for (int i=0; i<topicsId.size(); i++) {
+				if (topicsId.get(i) > 0) {
+					// +(+eplToLink.topic.topicId: 23)
+					BooleanQuery singleTopicIdQuery = new BooleanQuery(); 
+					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("eplToLink.topic.topicId", topicsId.get(i).toString())), Occur.SHOULD);
+					singleTopicIdQuery.add(booleanClause);
+					topicIdQuery.add(singleTopicIdQuery, Occur.MUST);
+				} else {
+					// +(+eplToLink.topic.topicTitle
+					BooleanQuery singleTopicQuery = new BooleanQuery(); 
+					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("eplToLink.topic.topicTitle", topics.get(i).toLowerCase())), Occur.SHOULD);
+					topicTitleQuery.add(booleanClause);
+					singleTopicQuery.add(booleanClause);
+					topicIdQuery.add(singleTopicQuery, Occur.MUST);
+				}
+			}
+			if (!topicIdQuery.toString().equals("")) {
+				luceneQuery.add(topicIdQuery, Occur.MUST);
+			}
+			if (!topicTitleQuery.toString().equals("")) {
+				luceneQuery.add(topicTitleQuery, Occur.MUST);
+			}
+		}
+
 		// Date
 		if (datesTypes.size()>0) {
 			BooleanQuery datesQuery = new BooleanQuery();
@@ -1288,7 +1285,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					continue;
 				} else if (datesTypes.get(i).equals(DateType.After)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							DateUtils.MAX_DATE, 
 							true, 
@@ -1296,7 +1293,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.add(dateRangeQuery, Occur.MUST); 
 				} else if (datesTypes.get(i).equals(DateType.Before)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
 							DateUtils.MIN_DATE,
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							true, 
@@ -1304,12 +1301,18 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.add(dateRangeQuery, Occur.MUST); 
 				}else if (datesTypes.get(i).equals(DateType.Between)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+					NumericRangeQuery<Integer> startDateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), 
 							true, 
 							true);
-					datesQuery.add(dateRangeQuery, Occur.MUST); 
+					datesQuery.add(startDateRangeQuery, Occur.MUST); 
+					NumericRangeQuery<Integer> endDateRangeQuery = NumericRangeQuery.newIntRange("endDate_Sort", 4, 
+							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
+							DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), 
+							true, 
+							true);
+					datesQuery.add(endDateRangeQuery, Occur.MUST); 
 				}
 			}
 			if (!datesQuery.toString().equals("")) {

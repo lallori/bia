@@ -575,11 +575,12 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public People editResearchNotesPerson(People person) throws ApplicationThrowable {
 		try {
 			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+			personToUpdate.setBioNotes(person.getBioNotes());
 
-			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
-			getPeopleDAO().refresh(personToUpdate);
+			// We update person object
+			getPeopleDAO().merge(personToUpdate);
 
-			return person;
+			return personToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

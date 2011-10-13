@@ -14,9 +14,9 @@
 					<input type="text" id="word" name="word" class="input_15c" value="" />
 					in 
 					<select id="wordType" name="wordType" class="selectform_LXlong">
-						<option value="SynopsisAndExtract" selected="selected">Synopsis and Extract</option>
-						<option value="Synopsis">Document Synopsis</option>
-						<option value="Extract">Document Extract</option>				
+						<option value="TitlesAndNotes" selected="selected">Volumes Titles and Notes</option>
+						<option value="Titles">Volume Titles</option>
+						<option value="Notes">Notes</option>
 					</select>
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 					<input type="hidden" id="category" value="Word Search">

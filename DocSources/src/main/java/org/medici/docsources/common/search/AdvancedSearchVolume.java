@@ -29,7 +29,10 @@ package org.medici.docsources.common.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.index.Term;
@@ -56,11 +59,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
 
-	private List<WordType> wordsTypes;
 	private List<String> words;
-	private List<String> volumes;
-	private List<String> volumesBetween;
-	private List<VolumeType> volumesTypes;
+	private List<WordType> wordsTypes;
 	private List<Integer> datesDay;
 	private List<Integer> datesMonth;
 	private List<DateType> datesTypes;
@@ -68,6 +68,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<Integer> datesYearBetween;
 	private List<Integer> datesMonthBetween;
 	private List<Integer> datesDayBetween;
+	private List<VolumeType> volumesTypes;
+	private List<String> volumes;
+	private List<String> volumesBetween;
 
 	/**
 	 * 
@@ -77,9 +80,6 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 
 		words = new ArrayList<String>(0);
 		wordsTypes = new ArrayList<AdvancedSearchDocument.WordType>(0);
-		volumes = new ArrayList<String>(0);
-		volumesBetween = new ArrayList<String>(0);
-		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
 		datesYear = new ArrayList<Integer>(0);
 		datesMonth = new ArrayList<Integer>(0);
@@ -87,13 +87,107 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		datesYearBetween = new ArrayList<Integer>(0);
 		datesMonthBetween = new ArrayList<Integer>(0);
 		datesDayBetween = new ArrayList<Integer>(0);
+		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
+		volumes = new ArrayList<String>(0);
+		volumesBetween = new ArrayList<String>(0);
 	}
 	
 	/**
-	 * 
-	 * @param command
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command) {
+		//Words
+		if ((command.getWord() != null) && (command.getWord().size() >0)) {
+			wordsTypes = new ArrayList<WordType>(command.getWord().size());
+			words = new ArrayList<String>(command.getWord().size());
+			
+			for (String singleWord : command.getWord()) {
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try {
+					if (stringTokenizer.countTokens() == 2) {
+						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
+						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else {
+						continue;
+					}
+				} catch (URIException e) {
+					wordsTypes.remove(wordsTypes.size()-1);
+				}
+			}
+		} else {
+			wordsTypes = new ArrayList<WordType>(0);
+			words = new ArrayList<String>(0);
+		}
+
+		//Date
+		if ((command.getDate() != null) && (command.getDate().size() >0)) {
+			datesTypes = new ArrayList<DateType>(command.getDate().size());
+			datesYear = new ArrayList<Integer>(command.getDate().size());
+			datesMonth = new ArrayList<Integer>(command.getDate().size());
+			datesDay = new ArrayList<Integer>(command.getDate().size());
+			datesYearBetween = new ArrayList<Integer>(command.getDate().size());
+			datesMonthBetween = new ArrayList<Integer>(command.getDate().size());
+			datesDayBetween = new ArrayList<Integer>(command.getDate().size());
+			
+			for (String singleWord : command.getDate()) {
+				//e.g. After|1222|01|12|1223|12|12
+				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
+				datesTypes.add(DateType.valueOf(fields[0]));
+				datesYear.add(DateUtils.getDateYearFromString(fields[1]));
+				datesMonth.add(DateUtils.getDateMonthFromString(fields[2]));
+				datesDay.add(DateUtils.getDateDayFromString(fields[3]));
+				datesYearBetween.add(DateUtils.getDateYearFromString(fields[4]));
+				datesMonthBetween.add(DateUtils.getDateMonthFromString(fields[5]));
+				datesDayBetween.add(DateUtils.getDateDayFromString(fields[6]));
+			}
+		} else {
+			datesTypes = new ArrayList<DateType>(0);
+			datesYear = new ArrayList<Integer>(0);
+			datesMonth = new ArrayList<Integer>(0);
+			datesDay = new ArrayList<Integer>(0);
+			datesYearBetween = new ArrayList<Integer>(0);
+			datesMonthBetween = new ArrayList<Integer>(0);
+			datesDayBetween = new ArrayList<Integer>(0);
+		}
+		
+		//Volume
+		if ((command.getVolume() != null) && (command.getVolume().size() >0)) {
+			volumesTypes = new ArrayList<VolumeType>(command.getVolume().size());
+			volumes = new ArrayList<String>(command.getVolume().size());
+			volumesBetween = new ArrayList<String>(command.getVolume().size());
+			
+			for (String singleWord : command.getVolume()) {
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				if ((stringTokenizer.countTokens() == 0) || (stringTokenizer.countTokens() == 1)){
+					continue;
+				} else if (stringTokenizer.countTokens() == 2) {
+					// string format is Exactly|12
+					volumesTypes.add(VolumeType.valueOf(stringTokenizer.nextToken()));
+					volumes.add(stringTokenizer.nextToken());
+					volumesBetween.add("0");
+				} else if (stringTokenizer.countTokens() == 3) {
+					// string format is Exactly|12|16
+					volumesTypes.add(VolumeType.valueOf(stringTokenizer.nextToken()));
+					volumes.add(stringTokenizer.nextToken());
+					volumesBetween.add(stringTokenizer.nextToken());
+				}
+			}
+		} else {
+			volumesTypes = new ArrayList<VolumeType>(0);
+			volumes = new ArrayList<String>(0);
+			volumesBetween = new ArrayList<String>(0);
+		}
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
+		wordsTypes.add(WordType.TitlesAndNotes);
+		words.add(command.getText());
 	}
 
 	/**
@@ -264,124 +358,137 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		this.datesDayBetween = datesDayBetween;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
+	/**
+	 * This method return a Lucene Query object. 
+	 */
 	public Query toLuceneQuery() {
-		BooleanQuery booleanQuery = new BooleanQuery();
+		BooleanQuery luceneQuery = new BooleanQuery();
 
 		if (words.size()>0) {
 			BooleanQuery wordsQuery = new BooleanQuery();
 			for (int i=0; i<words.size(); i++) {
 				if (wordsTypes.get(i).equals(WordType.Titles)) {
-					// (+synExtract.docExtract:med*)
-					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("serieList.Title", words.get(i).toLowerCase())), Occur.MUST);
-					wordsQuery.add(booleanClause);
+					//
+					BooleanQuery subQuery = new BooleanQuery();
+					subQuery.add(new PrefixQuery(new Term("serieList.title", words.get(i).toLowerCase())), Occur.SHOULD);
+					subQuery.add(new PrefixQuery(new Term("serieList.subTitle1", words.get(i).toLowerCase())), Occur.SHOULD);
+					subQuery.add(new PrefixQuery(new Term("serieList.subTitle2", words.get(i).toLowerCase())), Occur.SHOULD);
+					wordsQuery.add(subQuery, Occur.MUST);
 				} else if (wordsTypes.get(i).equals(WordType.Notes)) {
-					// (synExtract.synopsis:med*)
-					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("ccontext", words.get(i).toLowerCase())), Occur.MUST);
-					wordsQuery.add(booleanClause);
+					// 
+					BooleanQuery subQuery = new BooleanQuery();
+					subQuery.add(new PrefixQuery(new Term("ccondition", words.get(i).toLowerCase())), Occur.SHOULD);
+					subQuery.add(new PrefixQuery(new Term("ccontext", words.get(i).toLowerCase())), Occur.SHOULD);
+					subQuery.add(new PrefixQuery(new Term("orgNotes", words.get(i).toLowerCase())), Occur.SHOULD);
+					wordsQuery.add(subQuery, Occur.MUST);
 				} else if (wordsTypes.get(i).equals(WordType.TitlesAndNotes)) {
 					BooleanQuery subQuery = new BooleanQuery();
-					// +(+synExtract.docExtract:med* +synExtract.synopsis:med*) 
-					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("serieList.Title", words.get(i).toString())), Occur.SHOULD);
-					subQuery.add(booleanClause);
-					booleanClause = new BooleanClause(new TermQuery(new Term("serieList.subTitle1", words.get(i).toString())), Occur.SHOULD);
-					subQuery.add(booleanClause);
-					booleanClause = new BooleanClause(new TermQuery(new Term("serieList.subTitle2", words.get(i).toString())), Occur.SHOULD);
-					subQuery.add(booleanClause);
-					booleanClause = new BooleanClause(new PrefixQuery(new Term("ccontext", words.get(i).toLowerCase())), Occur.MUST);
-					subQuery.add(booleanClause);
-					
+					subQuery.add(new PrefixQuery(new Term("serieList.title", words.get(i).toLowerCase())), Occur.SHOULD);
+					subQuery.add(new PrefixQuery(new Term("serieList.subTitle1", words.get(i).toLowerCase())), Occur.SHOULD);
+					subQuery.add(new PrefixQuery(new Term("serieList.subTitle2", words.get(i).toLowerCase())), Occur.SHOULD);
+					wordsQuery.add(subQuery, Occur.MUST);
+					subQuery = new BooleanQuery();
+					subQuery.add(new PrefixQuery(new Term("ccondition", words.get(i).toLowerCase())), Occur.SHOULD);
+					subQuery.add(new PrefixQuery(new Term("ccontext", words.get(i).toLowerCase())), Occur.SHOULD);
+					subQuery.add(new PrefixQuery(new Term("orgNotes", words.get(i).toLowerCase())), Occur.SHOULD);
 					wordsQuery.add(subQuery, Occur.MUST);
 				}
 			}
-			booleanQuery.add(wordsQuery, Occur.MUST);
-
-		}
-
-		// Volume
-		if (volumes.size()>0) {
-			for (int i=0; i<volumes.size(); i++) {
-				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
-					if (volumesTypes.get(i).equals(VolumeType.Exactly)) {
-						if (StringUtils.isNumeric(volumes.get(i))) {
-							// (volume.volNum:1)
-							BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("volume.volNum", volumes.get(i))), Occur.MUST);
-							booleanQuery.add(booleanClause);
-						} else {
-							BooleanQuery subQuery = new BooleanQuery();
-							// (volume.volNum:1 AND volume.volLetExt:a)
-							BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("volume.volNum", VolumeUtils.extractVolNum(volumes.get(i)).toString())), Occur.MUST);
-							subQuery.add(booleanClause);
-
-							booleanClause.setQuery(new TermQuery(new Term("volume.volLetExt", VolumeUtils.extractVolNum(volumes.get(i)).toString())));
-							booleanClause.setOccur(Occur.MUST);
-							subQuery.add(booleanClause);
-
-							booleanQuery.add(subQuery, Occur.MUST);
-						}
-					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
-						// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-						NumericRangeQuery<Integer> volumeRangeQuery = NumericRangeQuery.newIntRange("volume.volNum_Sort", 4, 
-								NumberUtils.toInt(volumes.get(i)), 
-								NumberUtils.toInt(volumesBetween.get(i)), 
-								true, 
-								true);
-						booleanQuery.add(volumeRangeQuery, Occur.MUST); 
-					}
-				} else {
-					// if volume value is not in volume format we discard it!
-					continue;
-				}
+			if (!wordsQuery.toString().equals("")) {
+				luceneQuery.add(wordsQuery, Occur.MUST);
 			}
 		}
 
 		// Date
 		if (datesTypes.size()>0) {
 			BooleanQuery datesQuery = new BooleanQuery();
-
 			for (int i=0; i<datesTypes.size(); i++) {
 				if (datesTypes.get(i) == null) {
 					continue;
 				} else if (datesTypes.get(i).equals(DateType.After)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							DateUtils.MAX_DATE, 
 							true, 
 							true);
-					datesQuery.add(dateRangeQuery, Occur.SHOULD); 
+					datesQuery.add(dateRangeQuery, Occur.MUST); 
 				} else if (datesTypes.get(i).equals(DateType.Before)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("endDate_Sort", 4, 
 							DateUtils.MIN_DATE,
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							true, 
 							true);
-					datesQuery.add(dateRangeQuery, Occur.SHOULD);
+					datesQuery.add(dateRangeQuery, Occur.MUST); 
 				}else if (datesTypes.get(i).equals(DateType.Between)) {
-					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
+					// We add two condition because we work on two different fields.
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
+							DateUtils.MAX_DATE, 
+							true, 
+							true);
+					datesQuery.add(dateRangeQuery, Occur.MUST); 
+
+					dateRangeQuery = NumericRangeQuery.newIntRange("endDate_Sort", 4, 
+							DateUtils.MIN_DATE,
 							DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), 
 							true, 
 							true);
-					datesQuery.add(dateRangeQuery, Occur.SHOULD); 
+					datesQuery.add(dateRangeQuery, Occur.MUST); 
 				}
 			}
-			
-			booleanQuery.add(datesQuery, Occur.MUST);
+			if (!datesQuery.toString().equals("")) {
+				luceneQuery.add(datesQuery, Occur.MUST);
+			}
 		}
 
-		return booleanQuery;
-	} 
+		// Volume
+		if (volumes.size()>0) {
+			BooleanQuery volumesQuery = new BooleanQuery();
+			for (int i=0; i<volumes.size(); i++) {
+				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
+					if (volumesTypes.get(i).equals(VolumeType.Exactly)) {
+						if (StringUtils.isNumeric(volumes.get(i))) {
+							// (volNum:1)
+							BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("volNum", volumes.get(i))), Occur.MUST);
+							volumesQuery.add(booleanClause);
+						} else {
+							BooleanQuery subQuery = new BooleanQuery();
+							// (volNum:1 AND volLetExt:a)
+							BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("volNum", VolumeUtils.extractVolNum(volumes.get(i)).toString())), Occur.MUST);
+							subQuery.add(booleanClause);
 
-	/**
-	 * 
-	 * @param command
-	 */
-	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
-		// TODO Auto-generated method stub
-		
+							booleanClause.setQuery(new TermQuery(new Term("volLetExt", VolumeUtils.extractVolNum(volumes.get(i)).toString())));
+							booleanClause.setOccur(Occur.MUST);
+							subQuery.add(booleanClause);
+
+							volumesQuery.add(subQuery, Occur.MUST);
+						}
+					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
+						// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
+						NumericRangeQuery<Integer> volumeRangeQuery = NumericRangeQuery.newIntRange("volNum_Sort", 4, 
+								NumberUtils.toInt(volumes.get(i)), 
+								NumberUtils.toInt(volumesBetween.get(i)), 
+								true, 
+								true);
+						volumesQuery.add(volumeRangeQuery, Occur.MUST); 
+					}
+				} else {
+					// if volume value is not in volume format we discard it!
+					continue;
+				}
+			}
+			if (!volumesQuery.toString().equals("")) {
+				luceneQuery.add(volumesQuery, Occur.MUST);
+			}
+		}
+
+		return luceneQuery;
 	}
 }
 

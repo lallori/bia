@@ -27,10 +27,17 @@
  */
 package org.medici.docsources.common.search;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
+
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.Query;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
+import org.medici.docsources.common.util.DateUtils;
 
 /**
  * 
@@ -43,7 +50,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
 
-	private List<NameType> namesTpes;
+	private List<NameType> namesTypes;
 	private List<String> names;
 	private List<WordType> wordsTypes;
 	private List<String> words;
@@ -60,6 +67,16 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public AdvancedSearchPeople() {
 		super();
+
+		words = new ArrayList<String>(0);
+		wordsTypes = new ArrayList<AdvancedSearchDocument.WordType>(0);
+		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
+		datesYear = new ArrayList<Integer>(0);
+		datesMonth = new ArrayList<Integer>(0);
+		datesDay = new ArrayList<Integer>(0);
+		datesYearBetween = new ArrayList<Integer>(0);
+		datesMonthBetween = new ArrayList<Integer>(0);
+		datesDayBetween = new ArrayList<Integer>(0);
 	}
 
 	/**
@@ -67,8 +84,59 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command) {
-		// TODO Auto-generated method stub
-		
+		//Words
+		if ((command.getWord() != null) && (command.getWord().size() >0)) {
+			wordsTypes = new ArrayList<WordType>(command.getWord().size());
+			words = new ArrayList<String>(command.getWord().size());
+			
+			for (String singleWord : command.getWord()) {
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try {
+					if (stringTokenizer.countTokens() == 2) {
+						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
+						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else {
+						continue;
+					}
+				} catch (URIException e) {
+					wordsTypes.remove(wordsTypes.size()-1);
+				}
+			}
+		} else {
+			wordsTypes = new ArrayList<WordType>(0);
+			words = new ArrayList<String>(0);
+		}
+
+		//Date
+		if ((command.getDate() != null) && (command.getDate().size() >0)) {
+			datesTypes = new ArrayList<DateType>(command.getDate().size());
+			datesYear = new ArrayList<Integer>(command.getDate().size());
+			datesMonth = new ArrayList<Integer>(command.getDate().size());
+			datesDay = new ArrayList<Integer>(command.getDate().size());
+			datesYearBetween = new ArrayList<Integer>(command.getDate().size());
+			datesMonthBetween = new ArrayList<Integer>(command.getDate().size());
+			datesDayBetween = new ArrayList<Integer>(command.getDate().size());
+			
+			for (String singleWord : command.getDate()) {
+				//e.g. After|1222|01|12|1223|12|12
+				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
+				datesTypes.add(DateType.valueOf(fields[0]));
+				datesYear.add(DateUtils.getDateYearFromString(fields[1]));
+				datesMonth.add(DateUtils.getDateMonthFromString(fields[2]));
+				datesDay.add(DateUtils.getDateDayFromString(fields[3]));
+				datesYearBetween.add(DateUtils.getDateYearFromString(fields[4]));
+				datesMonthBetween.add(DateUtils.getDateMonthFromString(fields[5]));
+				datesDayBetween.add(DateUtils.getDateDayFromString(fields[6]));
+			}
+		} else {
+			datesTypes = new ArrayList<DateType>(0);
+			datesYear = new ArrayList<Integer>(0);
+			datesMonth = new ArrayList<Integer>(0);
+			datesDay = new ArrayList<Integer>(0);
+			datesYearBetween = new ArrayList<Integer>(0);
+			datesMonthBetween = new ArrayList<Integer>(0);
+			datesDayBetween = new ArrayList<Integer>(0);
+		}
 	}
 	
 	/**
@@ -76,22 +144,22 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
-		// TODO Auto-generated method stub
-		
+		wordsTypes.add(WordType.TitlesAndNotes);
+		words.add(command.getText());
 	}
 	
 	/**
-	 * @return the namesTpes
+	 * @return the namesTypes
 	 */
-	public List<NameType> getNamesTpes() {
-		return namesTpes;
+	public List<NameType> getNamesTypes() {
+		return namesTypes;
 	}
 
 	/**
-	 * @param namesTpes the namesTpes to set
+	 * @param namesTypes the namesTypes to set
 	 */
-	public void setNamesTpes(List<NameType> namesTpes) {
-		this.namesTpes = namesTpes;
+	public void setNamesTypes(List<NameType> namesTypes) {
+		this.namesTypes = namesTypes;
 	}
 
 	/**
