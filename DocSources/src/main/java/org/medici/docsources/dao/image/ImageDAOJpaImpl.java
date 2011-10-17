@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.image;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -44,6 +45,7 @@ import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.ImageUtils;
+import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Image;
@@ -571,6 +573,40 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			return null;
 		
 		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<String> findVolumesDigitized(List<Integer> volNums, List<String> volLetExts) {
+        StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE ");
+        for (int i= 0; i<volNums.size(); i++) {
+        	stringBuffer.append("(volNum=");
+        	stringBuffer.append(volNums.get(i));
+        	stringBuffer.append(" and volLetExt ");
+        	if (StringUtils.isEmpty(volLetExts.get(i))) {
+	        	stringBuffer.append(" is null");
+        	} else {
+	        	stringBuffer.append("='");
+	        	stringBuffer.append(volLetExts.get(i));
+	        	stringBuffer.append("'");
+        	}
+        	stringBuffer.append(" and imageOrder=1) ");
+        	if (i<volNums.size()-1) {
+        		stringBuffer.append(" or "); 
+        	}
+        }
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+    	
+		List<Image> result = (List<Image>) query.getResultList();
+
+		List<String> returnValues = new ArrayList(0);
+		for (int i=0; i<result.size(); i++) {
+			returnValues.add(VolumeUtils.toMDPFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt()));
+		}
+
+		return returnValues;
 	}
 
 	/**

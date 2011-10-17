@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.common.util;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 
@@ -37,6 +38,76 @@ import org.apache.commons.lang.math.NumberUtils;
  */
 public class VolumeUtils {
 
+	/**
+	 * 
+	 * @param volume
+	 * @return
+	 */
+	public static String extractVolLetExt(String volume) {
+		if (StringUtils.isEmpty(volume)) {
+			return null;
+		}
+		
+		String volumeToExtract = volume.trim();
+
+		if (StringUtils.isNumeric(volumeToExtract)){
+			return null;
+		} else {
+			if (StringUtils.isAlphanumeric(volumeToExtract)) {
+				return volumeToExtract.substring(volumeToExtract.length()-1);
+			}
+			
+			return null;
+		}
+	}
+
+	/**
+	 * This method extract volNum from a complete volume string.
+	 * @param volume
+	 * @return
+	 */
+	public static Integer extractVolNum(String volume) {
+		if (StringUtils.isEmpty(volume)) {
+			return null;
+		}
+		
+		String volumeToExtract = volume.trim();
+
+		if (StringUtils.isNumeric(volumeToExtract)){
+			try {
+				return new Integer(volumeToExtract);
+			} catch (NumberFormatException nfx){
+				return null;
+			}
+		} else {
+			if (StringUtils.isAlphanumeric(volumeToExtract)) {
+				try {
+					return new Integer(volumeToExtract.substring(0, volumeToExtract.length()-1));
+				} catch (NumberFormatException nfx){
+					return null;
+				}
+			}
+			
+			return null;
+		}
+	}
+
+	/**
+	 * This method return a string in format volNum + volLetExt.
+	 * 
+	 * @param volNum Volume Number
+	 * @param volLetExt Volume Letter Extension
+	 * @return
+	 */
+	public static String toMDPFormat(Integer volNum, String volLetExt) {
+		String returnValue = ObjectUtils.toString(volNum);
+
+		if (!StringUtils.isEmpty(volLetExt)) {
+			returnValue += volLetExt;
+		}
+
+		return returnValue;
+	}
 	/**
 	 * This method check if a string is in volume Format
 	 * 
@@ -80,54 +151,5 @@ public class VolumeUtils {
 
 		// It 's not a volume format string
 		return Boolean.FALSE;
-	}
-
-	/**
-	 * This method extract volNum from a complete volume string.
-	 * @param volume
-	 * @return
-	 */
-	public static Integer extractVolNum(String volume) {
-		if (StringUtils.isEmpty(volume)) {
-			return null;
-		}
-		
-		String volumeToExtract = volume.trim();
-
-		if (StringUtils.isNumeric(volumeToExtract)){
-			try {
-				return new Integer(volumeToExtract);
-			} catch (NumberFormatException nfx){
-				return null;
-			}
-		} else {
-			if (StringUtils.isAlphanumeric(volumeToExtract)) {
-				try {
-					return new Integer(volumeToExtract.substring(0, volumeToExtract.length()-1));
-				} catch (NumberFormatException nfx){
-					return null;
-				}
-			}
-			
-			return null;
-		}
-	}
-
-	public static String extractVolLetExt(String volume) {
-		if (StringUtils.isEmpty(volume)) {
-			return null;
-		}
-		
-		String volumeToExtract = volume.trim();
-
-		if (StringUtils.isNumeric(volumeToExtract)){
-			return null;
-		} else {
-			if (StringUtils.isAlphanumeric(volumeToExtract)) {
-				return volumeToExtract.substring(volumeToExtract.length()-1);
-			}
-			
-			return null;
-		}
 	}
 }

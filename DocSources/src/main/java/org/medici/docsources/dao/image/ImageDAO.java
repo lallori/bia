@@ -28,7 +28,6 @@
 package org.medici.docsources.dao.image;
 
 import java.util.List;
-
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
@@ -185,4 +184,13 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @throws PersistenceException
 	 */
 	public Image findVolumeSpine(Integer volNum, String volLetExt) throws PersistenceException;
+
+	/**
+	 * This method returns a list of all volume which are digitized. 
+	 * 
+	 * @param volNums Input volNums
+	 * @param volLetExts
+	 * @return List of MDP Volumes (MDP is volNum concatenated with volLetExt)
+	 */
+	public List<String> findVolumesDigitized(List<Integer> volNums, List<String> volLetExts);
 }

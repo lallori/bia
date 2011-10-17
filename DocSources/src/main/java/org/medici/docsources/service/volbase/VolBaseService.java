@@ -350,6 +350,5 @@ public interface VolBaseService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Map<Integer, Boolean> searchVolumesIfDigitized(List<Integer> summaries) throws ApplicationThrowable;
-
+	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
 }

@@ -29,6 +29,7 @@ package org.medici.docsources.service.volbase;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,18 +38,22 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.dao.catalog.CatalogDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
+import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Catalog;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
+import org.medici.docsources.domain.UserHistory.BaseCategory;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
+import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -79,6 +84,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 	private SeriesListDAO seriesListDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
+	@Autowired
+	private UserHistoryDAO userHistoryDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -139,6 +146,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 			volume.setEndDate(DateUtils.getLuceneDate(volume.getEndYear(), volume.getEndMonthNum(), volume.getEndDay()));
 
 			getVolumeDAO().persist(volume);
+			
+			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Create volume", volume.getSummaryId()));
 			
 			return volume;
 		} catch (Throwable th) {
@@ -201,6 +210,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
+
+			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Edit context", volumeToUpdate.getSummaryId()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -224,6 +235,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
+
+			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Edit correspondents", volumeToUpdate.getSummaryId()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -263,6 +276,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
+
+			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Edit description", volumeToUpdate.getSummaryId()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -318,6 +333,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
+
+			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Edit details", volumeToUpdate.getSummaryId()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -331,6 +348,13 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public Volume findLastEntryVolume() throws ApplicationThrowable {
 		try {
+			UserHistory userHistory = getUserHistoryDAO().findLastEntryVolume();
+			
+			if (userHistory != null) {
+				return getVolumeDAO().find(userHistory.getEntityId());
+			}
+			
+			// in case of no user History we extract last volume created on database.
 			return getVolumeDAO().findLastEntryVolume();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -343,7 +367,11 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable {
 		try {
-			return getVolumeDAO().find(summaryId);
+			Volume volume = getVolumeDAO().find(summaryId);
+			
+			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Show volume", volume.getSummaryId()));
+
+			return volume;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -355,7 +383,11 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable {
 		try {
-			return getVolumeDAO().findVolume(volNum, volLetExt);
+			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
+			
+			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Show volume", volume.getSummaryId()));
+
+			return volume;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -672,19 +704,24 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Integer, Boolean> searchVolumesIfDigitized(List<Integer> summaries) throws ApplicationThrowable {
-		Map<Integer, Boolean> volumesDigitized = new HashMap<Integer, Boolean>();
+	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable {
+		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
 		try{
-			for(Integer key : summaries){
-				Volume currentVolume = getVolumeDAO().find(key);
-				Image firstImage = getImageDAO().findVolumeFirstImage(currentVolume.getVolNum(), currentVolume.getVolLetExt());
-				if(firstImage != null){
-					volumesDigitized.put(key, true);
-				}else{
-					volumesDigitized.put(key, false);
-				}
+			// initialize return object with all volumes setted to false
+			for (int i=0; i<volNums.size(); i++) {
+				retValue.put(VolumeUtils.toMDPFormat(volNums.get(i), volLetExts.get(i)), Boolean.FALSE);
 			}
-			return volumesDigitized;
+
+			// One only query...
+			List<String> volumesDigitized = getImageDAO().findVolumesDigitized(volNums, volLetExts);
+
+			// we set to true only volumes which are present in table images...
+			for (String MDP : volumesDigitized) {
+				//  If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+				retValue.put(MDP, Boolean.TRUE);
+			}
+
+			return retValue;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -731,4 +768,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.volumeDAO = volumeDAO;
 	}
 
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
 }

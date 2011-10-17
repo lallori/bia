@@ -96,7 +96,7 @@
 					$('#' + formName).find('#' + fieldName).val("");
 				}
 			} else {
-				if (isAutocompleterForm(formName)) {
+				if (isAutocompleterForm(formName, fieldName)) {
 					searchWord = getSearchWordForAutocompleterField(formName, fieldName);
 					hiddenValue = getHiddenParameterForAutocompleterField(formName, fieldName);
 					resetAutocompleterField(formName, fieldName);
@@ -416,7 +416,7 @@
 	 * This method check if form manage volume.
 	 */
 	function isVolumeForm(formName) {
-		if (formName.indexOf("date") >= 0)
+		if (formName.indexOf("volume") >= 0)
 			return true;
 		else
 			return false;

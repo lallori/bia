@@ -731,18 +731,13 @@ public class AjaxController {
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	private void simpleSearchVolumes(Map<String, Object> model, String searchText, PaginationFilter paginationFilter) {
 		Page page = null;
-		Map<Integer, Boolean> isDigitized = null;
+		Map<String, Boolean> stateVolumesDigitized = new HashMap<String, Boolean>();
 
 		try {
 			page = getSearchService().searchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
+
+			stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
 		} catch (ApplicationThrowable aex) {
-		}
-		
-		try{
-			List<Integer> summaries = (List<Integer>)ListBeanUtils.transformList(page.getList(), "summaryId");
-			isDigitized = getVolBaseService().searchVolumesIfDigitized(summaries);
-		}catch(ApplicationThrowable ath){
-			
 		}
 
 		List resultList = new ArrayList();
@@ -753,7 +748,7 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
 			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
-			if(isDigitized.get(currentVolume.getSummaryId())){
+			if(stateVolumesDigitized.get(currentVolume.getMDP())){
 				singleRow.add("YES");
 			}else{
 				singleRow.add("NO");

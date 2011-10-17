@@ -35,10 +35,13 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.placeexternallinks.PlaceExternalLinksDAO;
 import org.medici.docsources.dao.placegeographiccoordinates.PlaceGeographicCoordinatesDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
+import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.PlaceType;
+import org.medici.docsources.domain.UserHistory;
+import org.medici.docsources.domain.UserHistory.BaseCategory;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +64,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO;
 	@Autowired
 	private PlaceExternalLinksDAO placeExternalLinksDAO;
-
+	@Autowired
+	private UserHistoryDAO userHistoryDAO;
 
 	/**
 	 * @return the placeExternalLinksDAO
@@ -274,6 +278,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place findLastEntryPlace() throws ApplicationThrowable {
 		try {
+			UserHistory userHistory = getUserHistoryDAO().findLastEntryPlace();
+			
+			if (userHistory != null) {
+				return getPlaceDAO().find(userHistory.getEntityId());
+			}
+			
+			// in case of no user History we extract last place created on database.
 			return getPlaceDAO().findLastEntryPlace();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -298,7 +309,11 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place findPlace(Integer placeId) throws ApplicationThrowable {
 		try {
-			return getPlaceDAO().find(placeId);
+			Place place = getPlaceDAO().find(placeId);
+
+			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Show place", place.getPlaceAllId()));
+
+			return place;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -489,6 +504,20 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public void setPlaceGeographicCoordinatesDAO(
 			PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO) {
 		this.placeGeographicCoordinatesDAO = placeGeographicCoordinatesDAO;
+	}
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
 	}
 
 }
