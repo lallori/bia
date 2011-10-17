@@ -1363,5 +1363,130 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		return luceneQuery;
 	}
+	
+	public String toString(){
+		String toString = new String();
+		if(!words.isEmpty()){
+			toString += "Words: ";
+			for(String value : words){
+				toString += value + " ";
+			}
+		}
+		
+		if(!extract.isEmpty()){
+			toString += "AND Extract: ";
+			for(String value : extract){
+				toString += value + " ";
+			}
+		}
+		
+		if(!synopsis.isEmpty()){
+			toString += "AND Synopsis: ";
+			for(String value : synopsis){
+				toString += value + " ";
+			}
+		}
+		
+		if(!person.isEmpty()){
+			toString += "AND Person: ";
+			for(String value : person){
+				toString += value + " ";
+			}
+		}
+		
+		if(!place.isEmpty()){
+			toString += "AND Place: ";
+			for(String value : place){
+				toString += value + " ";
+			}
+		}
+		
+		if(!sender.isEmpty()){
+			toString += "AND Sender: ";
+			for(String value : sender){
+				toString += value + " ";
+			}
+		}
+		
+		if(!from.isEmpty()){
+			toString += ("AND From: ");
+			for(String value : from){
+				toString += (value + " ");
+			}
+		}
+		if(!recipient.isEmpty()){
+			toString += ("AND Recipient: ");
+			for(String value : recipient){
+				toString += (value + " ");
+			}
+		}
+		if(!to.isEmpty()){
+			toString += ("AND To: ");
+			for(String value : to){
+				toString += (value + " ");
+			}
+		}
+		if(!refersTo.isEmpty()){
+			toString += ("AND Refers to: ");
+			for(String value : refersTo){
+				toString += (value + " ");
+			}
+		}
+		if(!topics.isEmpty()){
+			toString += ("AND Topics: ");
+			for(String value : topics){
+				toString += (value + " ");
+			}
+		}
+		if(!datesYear.isEmpty()){
+			toString += ("AND Date Year: ");
+			for(Integer value : datesYear){
+				toString += (value + " ");
+			}
+		}
+		if(!datesMonth.isEmpty()){
+			toString += ("AND Date Month: ");
+			for(Integer value : datesMonth){
+				toString += (value + " ");
+			}
+		}
+		if(!datesDay.isEmpty()){
+			toString += ("AND Date Day: ");
+			for(Integer value : datesDay){
+				toString += (value + " ");
+			}
+		}
+		if(!datesYearBetween.isEmpty()){
+			toString += ("AND Between Date Year: ");
+			for(Integer value : datesYearBetween){
+				toString += (value + " ");
+			}
+		}
+		if(!datesMonthBetween.isEmpty()){
+			toString += ("AND Between Date Month: ");
+			for(Integer value : datesMonthBetween){
+				toString += (value + " ");
+			}
+		}
+		if(!datesDayBetween.isEmpty()){
+			toString += ("AND Between Date Day: ");
+			for(Integer value : datesDayBetween){
+				toString += (value + " ");
+			}
+		}
+		if(!volumes.isEmpty()){
+			toString += ("AND Volumes: ");
+			for(String value : volumes){
+				toString += (value + " ");
+			}
+		}
+		if(!volumesBetween.isEmpty()){
+			toString += ("AND Between Volumes: ");
+			for(String value : volumesBetween){
+				toString += (value + " ");
+			}
+		}
+		return toString;
+	}
 }
 

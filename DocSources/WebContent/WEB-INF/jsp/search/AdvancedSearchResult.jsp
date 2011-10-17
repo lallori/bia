@@ -37,6 +37,9 @@
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)
 					} );
+				},
+				"fnDrawCallback" : function(){
+					$j("#recordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
 				}
 			} );
 
@@ -51,6 +54,12 @@
 			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
 		} );
 	</script>
+	
+	<div class="yourSearchDiv">
+		Your search:
+		<a class="tabLink" href="#">${yourSearch}</a>
+		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span>
+	</div>
 	
 	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
 

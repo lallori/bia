@@ -193,6 +193,7 @@ public class AdvancedSearchController {
 		// Add outputFields;
 		List<String> outputFields = getOutputFields(searchFilter.getSearchType());
 		model.put("outputFields", outputFields);
+		model.put("yourSearch", searchFilter.getFilterData().toString());
 		
 		return new ModelAndView("search/AdvancedSearchResult", model);
 	}
