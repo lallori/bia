@@ -28,7 +28,9 @@
 package org.medici.docsources.service.volbase;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
@@ -665,6 +667,29 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, Boolean> searchVolumesIfDigitized(List<Integer> summaries) throws ApplicationThrowable {
+		Map<Integer, Boolean> volumesDigitized = new HashMap<Integer, Boolean>();
+		try{
+			for(Integer key : summaries){
+				Volume currentVolume = getVolumeDAO().find(key);
+				Image firstImage = getImageDAO().findVolumeFirstImage(currentVolume.getVolNum(), currentVolume.getVolLetExt());
+				if(firstImage != null){
+					volumesDigitized.put(key, true);
+				}else{
+					volumesDigitized.put(key, false);
+				}
+			}
+			return volumesDigitized;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
 
 
 	/**
@@ -705,4 +730,5 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
+
 }

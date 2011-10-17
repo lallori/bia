@@ -28,6 +28,7 @@
 package org.medici.docsources.service.volbase;
 
 import java.util.List;
+import java.util.Map;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -341,5 +342,14 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * This method searches if the volumes are digitized
+	 * 
+	 * @param summaries
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Map<Integer, Boolean> searchVolumesIfDigitized(List<Integer> summaries) throws ApplicationThrowable;
 
 }
