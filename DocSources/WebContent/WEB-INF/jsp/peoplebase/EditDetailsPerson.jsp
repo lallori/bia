@@ -137,7 +137,55 @@
 			$j("#EditParentsPerson").css('visibility', 'hidden');
 			$j("#EditChildrenPerson").css('visibility', 'hidden');
 			$j("#EditSpousesPerson").css('visibility', 'hidden');
-	        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
+	        $j("#EditResearchNotesPerson").css('visibility', 'hidden');
+	        
+	        if($j("#activeStart").val() != ''){
+	        	$j("#bornYear, #bornYearLabel, #bornMonth, #bornMonthLabel, #bornDay, #bornDayLabel").css('visibility', 'hidden');
+	        }else{
+	        	$j("#activeStart, #activeStartLabel").css('visibility', 'hidden');
+	        }
+	        
+	        if($j("#activeEnd").val() != ''){
+	        	$j("#deathYear, #deathYearLabel, #deathMonth, #deathMonthLabel, #deathDay, #deathDayLabel").css('visibility', 'hidden');
+	        }else{
+	        	$j("#activeEnd, #activeEndLabel").css('visibility', 'hidden');
+	        }
+	        
+	        $j("#bornYear").change(function(){
+	        	if($j(this).val() != ''){
+	        		$j("#activeStart").val('');
+	        		$j("#activeStart, #activeStartLabel").css('visibility', 'hidden');
+	        	}else{
+	        		$j("#activeStart, #activeStartLabel").css('visibility', 'visible');
+	        	}
+	        });
+	        
+	        $j("#activeStart").change(function(){
+	        	if($j(this).val() != ''){
+	        		$j("#bornYear, #bornMonth, #bornDay").val('');
+	        		$j("#bornYear, #bornYearLabel, #bornMonth, #bornMonthLabel, #bornDay, #bornDayLabel").css('visibility', 'hidden');
+	        	}else{
+	        		$j("#bornYear, #bornYearLabel, #bornMonth, #bornMonthLabel, #bornDay, #bornDayLabel").css('visibility', 'visible');
+	        	}
+	        });
+	        
+	        $j("#deathYear").change(function(){
+	        	if($j(this).val() != ''){
+	        		$j("#activeEnd").val('');
+	        		$j("#activeEnd, #activeEndLabel").css('visibility', 'hidden');
+	        	}else{
+	        		$j("#activeEnd, #activeEndLabel").css('visibility', 'visible');
+	        	}
+	        });
+	        
+	        $j("#activeEnd").change(function(){
+	        	if($j(this).val() != ''){
+	        		$j("#deathYear, #deathMonth, #deathDay").val('');
+	        		$j("#deathYear, #deathYearLabel, #deathMonth, #deathMonthLabel, #deathDay, #deathDayLabel").css('visibility', 'hidden');
+	        	}else{
+	        		$j("#deathYear, #deathYearLabel, #deathMonth, #deathMonthLabel, #deathDay, #deathDayLabel").css('visibility', 'visible');
+	        	}
+	        });
 	        
 			$j('#bornPlaceAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${SearchBornPlaceURL}',
