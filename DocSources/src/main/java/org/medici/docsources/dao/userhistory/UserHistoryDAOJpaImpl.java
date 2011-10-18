@@ -78,14 +78,14 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	 */
 	@Override
 	public UserHistory findLastEntryDocument() {
-        String queryString = "FROM UserHistory WHERE account=:account and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistory WHERE username=:username and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
-        query.setParameter("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         query.setParameter("baseCategory", BaseCategory.DOCUMENT);
         query.setMaxResults(1);
-        
+
 		List<UserHistory> result = query.getResultList();
 		
 		if (result.size() == 1) {
@@ -100,11 +100,11 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	 */
 	@Override
 	public UserHistory findLastEntryPerson() {
-        String queryString = "FROM UserHistory WHERE account=:account and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistory WHERE username=:username and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
-        query.setParameter("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         query.setParameter("baseCategory", BaseCategory.PEOPLE);
         query.setMaxResults(1);
         
@@ -122,11 +122,11 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	 */
 	@Override
 	public UserHistory findLastEntryPlace() {
-        String queryString = "FROM UserHistory WHERE account=:account and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistory WHERE username=:username and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
-        query.setParameter("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         query.setParameter("baseCategory", BaseCategory.PLACE);
         query.setMaxResults(1);
         
@@ -144,11 +144,11 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	 */
 	@Override
 	public UserHistory findLastEntryVolume() {
-        String queryString = "FROM UserHistory WHERE account=:account and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistory WHERE username=:username and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
-        query.setParameter("account", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         query.setParameter("baseCategory", BaseCategory.VOLUME);
         query.setMaxResults(1);
         
