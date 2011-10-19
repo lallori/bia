@@ -310,5 +310,58 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public String toString(){
+		String toString = new String();
+		if(!names.isEmpty()){
+			toString += "Names: ";
+			for(String value : names){
+				toString += value + " ";
+			}
+		}
+		if(!words.isEmpty()){
+			toString += "AND Words: ";
+			for(String value : words){
+				toString += value + " ";
+			}
+		}
+		if(!datesYear.isEmpty()){
+			toString += ("AND Date Year: ");
+			for(Integer value : datesYear){
+				toString += (value + " ");
+			}
+		}
+		if(!datesMonth.isEmpty()){
+			toString += ("AND Date Month: ");
+			for(Integer value : datesMonth){
+				toString += (value + " ");
+			}
+		}
+		if(!datesDay.isEmpty()){
+			toString += ("AND Date Day: ");
+			for(Integer value : datesDay){
+				toString += (value + " ");
+			}
+		}
+		if(!datesYearBetween.isEmpty()){
+			toString += ("AND Between Date Year: ");
+			for(Integer value : datesYearBetween){
+				toString += (value + " ");
+			}
+		}
+		if(!datesMonthBetween.isEmpty()){
+			toString += ("AND Between Date Month: ");
+			for(Integer value : datesMonthBetween){
+				toString += (value + " ");
+			}
+		}
+		if(!datesDayBetween.isEmpty()){
+			toString += ("AND Between Date Day: ");
+			for(Integer value : datesDayBetween){
+				toString += (value + " ");
+			}
+		}
+		return toString;
+	}
 
 }

@@ -490,5 +490,64 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 
 		return luceneQuery;
 	}
+	
+	public String toString(){
+		String toString = new String();
+		if(!words.isEmpty()){
+			toString += "Words: ";
+			for(String value : words){
+				toString += value + " ";
+			}
+		}
+		if(!datesYear.isEmpty()){
+			toString += ("AND Date Year: ");
+			for(Integer value : datesYear){
+				toString += (value + " ");
+			}
+		}
+		if(!datesMonth.isEmpty()){
+			toString += ("AND Date Month: ");
+			for(Integer value : datesMonth){
+				toString += (value + " ");
+			}
+		}
+		if(!datesDay.isEmpty()){
+			toString += ("AND Date Day: ");
+			for(Integer value : datesDay){
+				toString += (value + " ");
+			}
+		}
+		if(!datesYearBetween.isEmpty()){
+			toString += ("AND Between Date Year: ");
+			for(Integer value : datesYearBetween){
+				toString += (value + " ");
+			}
+		}
+		if(!datesMonthBetween.isEmpty()){
+			toString += ("AND Between Date Month: ");
+			for(Integer value : datesMonthBetween){
+				toString += (value + " ");
+			}
+		}
+		if(!datesDayBetween.isEmpty()){
+			toString += ("AND Between Date Day: ");
+			for(Integer value : datesDayBetween){
+				toString += (value + " ");
+			}
+		}
+		if(!volumes.isEmpty()){
+			toString += ("AND Volumes: ");
+			for(String value : volumes){
+				toString += (value + " ");
+			}
+		}
+		if(!volumesBetween.isEmpty() && volumesBetween.get(0)!= "0"){
+			toString += ("AND Between Volumes: ");
+			for(String value : volumesBetween){
+				toString += (value + " ");
+			}
+		}
+		return toString;
+	}
 }
 
