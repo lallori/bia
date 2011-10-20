@@ -252,6 +252,8 @@
       } else if (!this.isBadQuery(q)) {
         me = this;
         me.options.params.query = q;
+        // we attach loading image...
+        $(this.el).css('background-image', 'url(/DocSources/images/loading_autocomplete.gif)').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
         $.get(this.serviceUrl, me.options.params, function(txt) { me.processResponse(txt); }, 'text');
       }
     },
@@ -309,6 +311,8 @@
 
       this.enabled = true;
       this.container.show();
+      //unload waiting image..
+      $(this.el).css('background-image', '').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
     },
 
     processResponse: function(text) {
