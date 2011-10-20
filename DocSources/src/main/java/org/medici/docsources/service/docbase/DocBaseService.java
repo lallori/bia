@@ -28,6 +28,7 @@
 package org.medici.docsources.service.docbase;
 
 import java.util.List;
+import java.util.Map;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Document;
@@ -489,4 +490,16 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
+	
+	/**
+	 * This method searches if the documents are digitized
+	 * 
+	 * @param volNums
+	 * @param volLetExts
+	 * @param folioNums
+	 * @param folioMods
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
 }

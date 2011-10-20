@@ -120,9 +120,21 @@ public class AjaxController {
 		Page page = null;
 		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 
 		try {
 			page = getSearchService().searchDocuments(searchFilter.getFilterData(), paginationFilter);
+			
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			
+			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -151,16 +163,14 @@ public class AjaxController {
 			else
 				singleRow.add("");
 			
-			if (currentDocument.getMDPAndFolio() != null)
-				try{
-					if(getDocBaseService().checkDocumentDigitized(currentDocument.getVolume().getVolNum(), currentDocument.getVolume().getVolLetExt(), currentDocument.getFolioNum(), currentDocument.getFolioMod())){
-						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
-					}else{
-						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
-					}
-				}catch(ApplicationThrowable ath){
+			if (currentDocument.getMDPAndFolio() != null){
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+				}else{
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 				}
+				
+			}
 			else
 				singleRow.add("");
 
@@ -288,9 +298,13 @@ public class AjaxController {
 		Page page = null;
 		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
+		
+		Map<String, Boolean> stateVolumesDigitized = new HashMap<String, Boolean>();
 
 		try {
 			page = getSearchService().searchVolumes(searchFilter.getFilterData(), paginationFilter);
+			
+			stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -302,16 +316,11 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
 			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
+			if(stateVolumesDigitized.get(currentVolume.getMDP()))
+				singleRow.add("YES");
+			else
+				singleRow.add("NO");
 			
-			try{
-				if(getVolBaseService().checkVolumeDigitized(currentVolume.getSummaryId()))
-					singleRow.add("YES");
-				else
-					singleRow.add("NO");
-			}catch(ApplicationThrowable ath){
-				
-			}
-
 			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
 		}
 		model.put("iEcho", "1");
@@ -565,9 +574,19 @@ public class AjaxController {
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	private void simpleSearchDocuments(Map<String, Object> model, String searchText, PaginationFilter paginationFilter) {
 		Page page = null;
-
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		try {
 			page = getSearchService().searchDocuments(new SimpleSearchDocument(searchText), paginationFilter);
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			
+			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -597,15 +616,12 @@ public class AjaxController {
 				singleRow.add("");
 			
 			if (currentDocument.getMDPAndFolio() != null){
-				try{
-					if(getDocBaseService().checkDocumentDigitized(currentDocument.getVolume().getVolNum(), currentDocument.getVolume().getVolLetExt(), currentDocument.getFolioNum(), currentDocument.getFolioMod())){
-						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
-					}else{
-						singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
-					}
-				}catch(ApplicationThrowable ath){
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+				}else{
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
 				}
+				
 			}
 			else
 				singleRow.add("");

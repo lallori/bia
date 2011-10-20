@@ -193,4 +193,14 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 * @return List of MDP Volumes (MDP is volNum concatenated with volLetExt)
 	 */
 	public List<String> findVolumesDigitized(List<Integer> volNums, List<String> volLetExts);
+	
+	/**
+	 * This method returns a list of all document which are digitized
+	 * @param volNums
+	 * @param volLetExts
+	 * @param folioNums
+	 * @param folioMods
+	 * @return
+	 */
+	public List<String> findDocumentsDigitized(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods);
 }
