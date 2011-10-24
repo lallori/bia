@@ -19,7 +19,7 @@
 			<div class="item">Gender</div> <div class="value">${person.gender}</div>
 		</div>
 		<div class="row">
-			<div class="item">Date of Birth</div> <div class="value">${person.bornDate}</div>
+			<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
 		</div>
 		<div class="row">
 			<div class="item">Birth Place</div><div class="value"><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
@@ -28,7 +28,7 @@
 			<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
 		</div>
 		<div class="row">
-			<div class="item">Date of Death</div> <div class="value">${person.deathDate}</div>
+			<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
 		</div>
 		<div class="row">
 			<div class="item">Death Place</div> <div class="value"><a href="#" id="linkSearch">${person.deathPlace.placeNameFull}</a></div>
