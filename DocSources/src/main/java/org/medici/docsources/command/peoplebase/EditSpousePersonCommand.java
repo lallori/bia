@@ -44,6 +44,7 @@ public class EditSpousePersonCommand {
 	private Integer startYear;
 	private Integer endYear;
 	private String marriageTerm;
+	private String gender;
 	
 	/**
 	 * @param personId the personId to set
@@ -169,5 +170,19 @@ public class EditSpousePersonCommand {
 	 */
 	public void setMarriageTerm(String marriageTerm) {
 		this.marriageTerm = marriageTerm;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public String getGender() {
+		return gender;
 	}
 }

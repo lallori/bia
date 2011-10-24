@@ -400,6 +400,15 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> searchSpouseLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param query
 	 * @return
 	 * @throws ApplicationThrowable

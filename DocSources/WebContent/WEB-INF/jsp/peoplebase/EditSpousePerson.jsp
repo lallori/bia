@@ -30,7 +30,7 @@
 					<form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error">Name</form:label>
 					<form:input id="spouseDescriptionAutoCompleter" path="husbandDescription" cssClass="input_25c" />
 					<form:hidden path="husbandId"/>
-					<form:hidden path="personId"/>
+					<form:hidden path="wifeId"/>
 				</div>
 			</c:if> 
 			<%-- We manage fields for wife --%>
@@ -39,7 +39,7 @@
 					<form:label id="wifeDescriptionLabel" for="wifeDescription" path="wifeDescription" cssErrorClass="error">Name</form:label>
 					<form:input id="spouseDescriptionAutoCompleter" path="wifeDescription" cssClass="input_25c" />
 					<form:hidden path="wifeId"/>
-					<form:hidden path="personId"/>
+					<form:hidden path="husbandId"/>
 				</div>
 			</c:if> 
 
@@ -57,12 +57,21 @@
 				<input type="submit" value="Save" id="save">
 			</div>
 		</fieldset>	
+		
+		<form:hidden path="marriageId" />
+		<form:hidden path="gender"/>
 	</form:form>
+	
+	<c:url var="SearchSpouseLinkableToPersonURL" value="/de/peoplebase/SearchSpouseLinkableToPerson.json">
+		<c:param name="personId" value="${command.personId}" />
+	</c:url>
+	
+	<c:url var="ShowSpouseDetailsURL" value="/de/peoplebase/ShowSpouseDetails.json" />
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			var spouseDescription = $j('#spouseDescriptionAutoCompleter').autocompletePerson({ 
-			    serviceUrl:'${SearchFatherLinkableToPersonURL}',
+			    serviceUrl:'${SearchSpouseLinkableToPersonURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
 			    maxHeight:400,
@@ -70,10 +79,25 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ 
-			    	$j('#parentId').val(data); 
-					$j.get("${ShowFatherDetailsURL}", { personId: "" + data }, function(data) {
-						$j("#bioNotes").val(data.bioNotes);
+			    onSelect: function(value, data){
+			    	$j.get("${ShowSpouseDetailsURL}", { personId: "" + data }, function(data) {
+			    		if(data.gender == 'F'){
+			    			if($j("#gender").val() == 'F'){
+			    				$j('#EditSpousesPersonDiv').block({ message: $j('.differentGender') });
+			    				$j('#spouseDescriptionAutoCompleter').val('');
+								return false;
+			    			}
+				    		$j('#wifeId').val(data.personId);
+				    	}
+						if(data.gender == 'M'){
+							if($j("#gender").val() == 'M'){
+								$j('#EditSpousesPersonDiv').block({ message: $j('.differentGender') });
+								$j('#spouseDescriptionAutoCompleter').val('');
+								return false;
+							}
+				    		$j('#husbandId').val(data.personId);
+				    	}
+						
 					})
 			    }
 			  });
@@ -82,9 +106,21 @@
 				$j('#EditSpousePersonDiv').block({ message: $j('#question') }); 
 				return false;
 			});
+			
+			$j("#EditSpousePersonForm").submit(function (){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+					$j("#EditSpousesPersonDiv").load('${EditSpousesPersonURL}');
+				}})
+				return false;
+			});
 
 		});
 	</script>
+	
+	<div id="questionGender" class="differentGender" style="display:none; cursor: default">
+		<h1>Wrong gender!</h1>
+		<input type="button" id="ok" value="Ok" />
+	</div>
 
 <div id="question" style="display:none; cursor: default"> 
 	<h1>discard changes?</h1> 
@@ -110,6 +146,15 @@
 				
 			return false; 
 		}); 
+		
+		$j("#ok").click(function(){
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j(".differentGender").hide();
+			$j("#EditSpousesPersonDiv").append($j(".differentGender"));
+			$j(".blockUI").remove();
+			return false;
+		});
      
 	});
 </script>

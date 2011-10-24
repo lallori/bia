@@ -179,6 +179,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			// Set marriageId to null to use generator value
 			marriage.setMarriageId(null);
+			marriage.setDateCreated(new Date());
+			marriage.setStartUns(false);
+			marriage.setEndUns(false);
 			
 			getMarriageDAO().persist(marriage);
 
@@ -546,11 +549,11 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			marriageToUpdate.setStartYear(marriage.getStartYear());
 			marriageToUpdate.setStartMonth(marriage.getStartMonth());
 			marriageToUpdate.setStartDay(marriage.getStartDay());
-			marriageToUpdate.setStartUns(marriage.getStartUns());
+			marriageToUpdate.setStartUns(false);
 			marriageToUpdate.setEndYear(marriage.getEndYear());
 			marriageToUpdate.setEndMonth(marriage.getEndMonth());
 			marriageToUpdate.setEndDay(marriage.getEndDay());
-			marriageToUpdate.setEndUns(marriage.getEndUns());
+			marriageToUpdate.setEndUns(false);
 			marriageToUpdate.setMarTerm(marriage.getMarTerm());
 			
 			getMarriageDAO().merge(marriageToUpdate);
@@ -1092,6 +1095,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	@Override
+	public List<People> searchSpouseLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchSpouseLinkableToPerson(query);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1202,4 +1214,5 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
+
 }

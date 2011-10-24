@@ -149,6 +149,7 @@ public class EditSpousePersonController {
 					} else {
 						command.setWifeId(person.getPersonId());
 					}
+					command.setGender(person.getGender().toString());
 
 					command.setStartYear(null);
 					command.setEndYear(null);
@@ -167,6 +168,12 @@ public class EditSpousePersonController {
 					command.setMarriageTerm(marriage.getMarTerm().toString());
 					command.setWifeId(marriage.getWife().getPersonId());
 					command.setHusbandId(marriage.getHusband().getPersonId());
+					if(command.getPersonId().equals(command.getHusbandId())){
+						command.setGender("M");
+					}
+					if(command.getPersonId().equals(command.getWifeId())){
+						command.setGender("F");
+					}
 				} catch (ApplicationThrowable applicationThrowable) {
 					return new ModelAndView("error/EditSpousePerson", model);
 				}

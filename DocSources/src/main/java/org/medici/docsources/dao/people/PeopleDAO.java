@@ -133,5 +133,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public List<People> searchSendersPeople(String searchText) throws PersistenceException;
+	
+	/**
+	 * This method searches for spouse which could be related to a person which contains
+	 * a text parameter (String query)
+	 * 
+	 * @param query Text to be searched
+	 * @return A List<People> of spouses that could be related to a person.
+	 * @throws PersistenceException
+	 */
+	public List<People> searchSpouseLinkableToPerson(String query) throws PersistenceException;
 
 }

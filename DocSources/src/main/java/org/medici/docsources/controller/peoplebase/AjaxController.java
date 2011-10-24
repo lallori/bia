@@ -205,6 +205,34 @@ public class AjaxController {
 	}
 	
 	/**
+	 * This method return a list of ipotetical spouse of a person
+	 * 
+	 * @param personId
+	 * @param query
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/SearchSpouseLinkableToPerson", method = RequestMethod.GET)
+	public ModelAndView searchSpouseLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<People> people = getPeopleBaseService().searchChildLinkableToPerson(personId, query);
+			model.put("query", query);
+			model.put("count", people.size());
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("activeEnds", ListBeanUtils.transformList(people, "activeEnd"));
+			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
 	 * This method returns a list of ipotetical recipients. 
 	 *  
 	 * @param text Text to search in ...
@@ -310,6 +338,23 @@ public class AjaxController {
 			model.put("deathMonth", (person.getDeathMonth() != null ) ? person.getDeathMonth().toString() : "");
 			model.put("deathDay", (person.getDeathDay() != null ) ? person.getDeathDay().toString() : "");
 			model.put("bioNotes", (person.getBioNotes() != null ) ? person.getBioNotes().toString() : "");
+			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	@RequestMapping(value = "/de/peoplebase/ShowSpouseDetails", method = RequestMethod.GET)
+	public ModelAndView showSpouseDetails(@RequestParam("personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person = getPeopleBaseService().findPerson(personId);
+			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
+			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
+			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
 			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

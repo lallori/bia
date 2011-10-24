@@ -397,4 +397,39 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
         	return null;
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> searchSpouseLinkableToPerson(String searchText) throws PersistenceException {
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
+
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
+
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+	        }
+	
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+			// TODO: handle exception
+        	return null;
+		}
+	}
 }
