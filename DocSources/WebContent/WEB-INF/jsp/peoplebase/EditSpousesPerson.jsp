@@ -118,11 +118,29 @@
 				});
 
 				$j(".personIcon").click(function(){
-					var nome = $j(this).parent();
-					nome = $j(nome).find('.input_35c_disabled');
-					$j("#tabs").tabs("add", $j(this).attr("href"), $j(nome).val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
+					var tabName = $j(this).parent();
+					tabName = $j(tabName).find('.input_35c_disabled');
+					
+					var numTab = 0;
+					
+					//Check if already exist a tab with this person
+					var tabExist = false;
+					$j("#tabs ul li a").each(function(){
+						if(!tabExist)
+							numTab++;
+						if(this.text == tabName){
+							tabExist = true;
+						}
+					});
+					
+					if(!tabExist){
+						$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+						$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+						return false;
+					}else{
+						$j("#tabs").tabs("select", numTab-1);
+						return false;
+					}
 				});
 			});
 		</script>

@@ -21,6 +21,10 @@
 	<c:url var="CompareFromURL" value="/src/geobase/ComparePlace.do">
 		<c:param name="placeAllId" value="${document.senderPlace.placeAllId}" />
 	</c:url>
+	
+	<c:url var="CompareToURL" value="/src/geobase/ComparePlace.do">
+		<c:param name="placeAllId" value="${document.recipientPlace.placeAllId}" />
+	</c:url>
 
 	<div id="EditCorrespondentsDocumentDiv" class="background">
 		<div class="title">
@@ -80,9 +84,27 @@
 			});
 			
 			$j(".linkPeople").click(function() {
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-				return false;
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
 			});
 		});
 	</script>
