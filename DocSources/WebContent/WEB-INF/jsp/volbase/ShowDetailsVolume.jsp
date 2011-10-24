@@ -116,20 +116,26 @@
 			//For check if already exsist a tab with volume explorer
 			$j("#ShowVolumeExplorer").click(function(){
 				var tabName = "Volume Explorer ${volume.volNum}${volume.volLetExt}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
 				var tabExist = false;
-
 				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
 					if(this.text == tabName){
 						tabExist = true;
 					}
 				});
 				
 				if(!tabExist){
-					tabName += "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
-            		$j("#tabs").tabs("add", "" + $j(this).attr("href"), tabName);
-            		$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
 				}
-            	return false;
 			});
 		});
 	</script>
