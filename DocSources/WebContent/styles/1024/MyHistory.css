@@ -15,7 +15,7 @@
 	margin:10px auto 0 auto;
 }
 
-#DocsHistory { /* Documents Chronology Div */
+#MyHistoryDiv #DocsHistory { /* Documents Chronology Div */
 	width:330px;
 	height:150px;
 	float:left;
@@ -24,7 +24,17 @@
 	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
 }
 
-#PeopleHistory { /* People Chronology Div */
+#MyHistoryDiv #PeopleHistory { /* People Chronology Div */
+	width:330px;
+	height:150px;
+	float:right;
+	color:#6F6B69;
+	padding:0 10px 40px 10px;
+	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
+	margin-top: 20px;
+}
+
+#MyHistoryDiv #VolumesHistory { /* Volumes Chronology Div */
 	width:330px;
 	height:150px;
 	float:right;
@@ -33,20 +43,10 @@
 	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
 }
 
-#VolumesHistory { /* Volumes Chronology Div */
+#MyHistoryDiv #PlaceHistory { /* Place Chronology Div */
 	width:330px;
 	height:150px;
 	float:left;
-	color:#6F6B69;
-	padding:0 10px 40px 10px;
-	margin:20px 0 20px 0;
-	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
-}
-
-#PlaceHistory { /* Place Chronology Div */
-	width:330px;
-	height:150px;
-	float:right;
 	color:#6F6B69;
 	padding:0 10px 40px 10px;
 	margin:20px 0 20px 0;
@@ -78,7 +78,7 @@
 	display: table;
 	margin:5px 0 10px 0;
 	width:100%;
-	font-size:12px;
+	font-size:11px;
 }
 
 .historyRow {
@@ -90,7 +90,7 @@
 	display: table-row;
 }
 
-.historyItem {
+.historyDate {
 	display: table-cell;
 	width:30%;
 	text-align:left;
@@ -98,17 +98,27 @@
 	font-weight:normal;
 }
 
-.historyItem a {
+.historyDate a {
 	color:#666;
 }
 
-.historyValue {
+.historyAction {
 	display: table-cell;
-	width:70%;
+	width:30%;
+	text-align:center;
+	padding:3px 5px 3px 5px;
+	cursor: default;
+	
+}
+
+.historyItem {
+	display: table-cell;
+	width:40%;
 	font-size:12px;
 	text-align:right;
 	color:#6d5c4d;
 	padding:3px 5px 3px 5px;
+	max-width:50%;
 }
 
 .historyPersonValue a {
