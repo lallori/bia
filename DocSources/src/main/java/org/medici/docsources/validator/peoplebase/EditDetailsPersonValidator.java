@@ -85,6 +85,7 @@ public class EditDetailsPersonValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDetailsPersonCommand modifyPersonCommand = (EditDetailsPersonCommand) object;
 		validatePersonId(modifyPersonCommand.getPersonId(), errors);
+		validateDates(modifyPersonCommand.getBornYear(), modifyPersonCommand.getBornMonth(), modifyPersonCommand.getBornDay(), modifyPersonCommand.getDeathYear(), modifyPersonCommand.getDeathMonth(), modifyPersonCommand.getDeathDay(), errors);
 	}
 
 	/**
@@ -104,6 +105,41 @@ public class EditDetailsPersonValidator implements Validator {
 					}
 				} catch (ApplicationThrowable ath) {
 					
+				}
+			}
+		}
+	}
+	
+	private void validateDates(Integer bornYear, Integer bornMonthNum, Integer bornDay, Integer deathYear, Integer deathMonthNum, Integer deathDay,Errors errors) {
+		if (!errors.hasErrors()) {
+			if (bornYear != null) {
+				if ((bornYear < 1200) || (bornYear > 1700)) {
+					errors.reject("bornYear", "error.bornYear.invalid");
+				}
+			}
+			if (bornMonthNum != null) {
+				if ((bornMonthNum <1) || (bornMonthNum >12)) {
+					errors.reject("bornMonthNum", "error.bornMonthNum.invalid");
+				}
+			}
+			if (bornDay != null) {
+				if ((bornDay < 0) || (bornDay > 31)) {
+					errors.reject("bornDay", "error.bornDay.invalid");
+				}
+			}
+			if (deathYear != null) {
+				if ((deathYear < 1200) || (deathYear > 1700)) {
+					errors.reject("deathYear", "error.deathYear.invalid");
+				}
+			}
+			if (deathMonthNum != null) {
+				if ((deathMonthNum <1) || (deathMonthNum >12)) {
+					errors.reject("deathMonthNum", "error.deathMonthNum.invalid");
+				}
+			}
+			if (deathDay != null) {
+				if ((deathDay < 0) || (deathDay > 31)) {
+					errors.reject("deathDay", "error.deathDay.invalid");
 				}
 			}
 		}

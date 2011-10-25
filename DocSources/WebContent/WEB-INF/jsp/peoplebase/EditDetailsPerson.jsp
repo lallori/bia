@@ -140,15 +140,19 @@
 	        $j("#EditResearchNotesPerson").css('visibility', 'hidden');
 	        
 	        if($j("#activeStart").val() != ''){
-	        	$j("#bornYear, #bornYearLabel, #bornMonth, #bornMonthLabel, #bornDay, #bornDayLabel").css('visibility', 'hidden');
+	        	$j("#bornYear, #bornYearLabel").css('visibility', 'hidden');
 	        }else{
-	        	$j("#activeStart, #activeStartLabel").css('visibility', 'hidden');
+	        	if($j("#bornYear").val() != ''){
+	        		$j("#activeStart, #activeStartLabel").css('visibility', 'hidden');
+	        	}
 	        }
 	        
 	        if($j("#activeEnd").val() != ''){
-	        	$j("#deathYear, #deathYearLabel, #deathMonth, #deathMonthLabel, #deathDay, #deathDayLabel").css('visibility', 'hidden');
+	        	$j("#deathYear, #deathYearLabel").css('visibility', 'hidden');
 	        }else{
-	        	$j("#activeEnd, #activeEndLabel").css('visibility', 'hidden');
+	        	if($j("#deathYear").val() != ''){
+	        		$j("#activeEnd, #activeEndLabel").css('visibility', 'hidden');
+	        	}
 	        }
 	        
 	        $j("#bornYear").change(function(){
@@ -162,10 +166,10 @@
 	        
 	        $j("#activeStart").change(function(){
 	        	if($j(this).val() != ''){
-	        		$j("#bornYear, #bornMonth, #bornDay").val('');
-	        		$j("#bornYear, #bornYearLabel, #bornMonth, #bornMonthLabel, #bornDay, #bornDayLabel").css('visibility', 'hidden');
+	        		$j("#bornYear").val('');
+	        		$j("#bornYear, #bornYearLabel").css('visibility', 'hidden');
 	        	}else{
-	        		$j("#bornYear, #bornYearLabel, #bornMonth, #bornMonthLabel, #bornDay, #bornDayLabel").css('visibility', 'visible');
+	        		$j("#bornYear, #bornYearLabel").css('visibility', 'visible');
 	        	}
 	        });
 	        
@@ -180,10 +184,10 @@
 	        
 	        $j("#activeEnd").change(function(){
 	        	if($j(this).val() != ''){
-	        		$j("#deathYear, #deathMonth, #deathDay").val('');
-	        		$j("#deathYear, #deathYearLabel, #deathMonth, #deathMonthLabel, #deathDay, #deathDayLabel").css('visibility', 'hidden');
+	        		$j("#deathYear").val('');
+	        		$j("#deathYear, #deathYearLabel").css('visibility', 'hidden');
 	        	}else{
-	        		$j("#deathYear, #deathYearLabel, #deathMonth, #deathMonthLabel, #deathDay, #deathDayLabel").css('visibility', 'visible');
+	        		$j("#deathYear, #deathYearLabel").css('visibility', 'visible');
 	        	}
 	        });
 	        
@@ -234,6 +238,7 @@
 			});
 
 			$j('#close').click(function(e) {
+				$j('.autocomplete').remove();
 				$j('#EditDetailsPersonDiv').block({ message: $j('#question') }); 
 	            return false;
 			});
