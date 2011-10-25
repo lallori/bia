@@ -206,7 +206,7 @@
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
-						$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsDocument}');
+						$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
 					}
 		        });
 				return false;
@@ -218,6 +218,7 @@
 			});
 
 			$j('#close').click(function() {
+				$j('.autocomplete').remove();
 				$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question') }); 
 				return false;
 			});

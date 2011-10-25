@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.util.DateUtils;
@@ -309,7 +310,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public void deletePersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
 			EpLink epLinkToDelete = getEpLinkDAO().find(epLink.getEpLinkId(), epLink.getDocument().getEntryId());
+			
+			epLinkToDelete.getDocument().setEpLink(null);
+			epLinkToDelete.getPerson().setEpLink(null);
 			getEpLinkDAO().remove(epLinkToDelete);
+			
+			
 
 			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Unlink person ", epLink.getDocument().getEntryId()));
 		} catch (Throwable th) {
