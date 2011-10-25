@@ -188,7 +188,7 @@ h6 { /* Titles */
 	display: table-row;
 }
 
-.item { /* Sub-fields title cell */
+.item, .firstItem { /* Sub-fields title cell */
 	display: table-cell;
 	width:20%;
 	text-align:left;
@@ -221,7 +221,7 @@ item a{
 	padding:3px 0 3px 0; 
 }
 
-.value { /* Sub-fields value */
+.value, .firstValue { /* Sub-fields value */
 	display: table-cell;
 	width:40%;
 	text-align:left;
@@ -2468,7 +2468,8 @@ a.refreshVolumeExplorer {
 
 #userProfile h3{
 	font-size:14px;
-	margin:0 0 5px -25px;	
+	margin: 0 0 10px 5px;
+	padding: 0;
 }
 
 #userProfile { /* My Profile Div Container */
@@ -2484,10 +2485,9 @@ a.refreshVolumeExplorer {
 }
 
 #bgImgUserProfile { /* User image profile background*/
-	margin:20px 0 0 0;
 	background:url(/DocSources/images/1024/bg_userimage.jpg) no-repeat;
 	width:128px;
-	height:220px;
+	height: 340px;
 	float:left;
 }
 
@@ -2501,24 +2501,24 @@ a.refreshVolumeExplorer {
 #helpProfile { /* Help Div Container */
 	font-size:11px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
-	padding:10px 0 0 15px;
-	width:200px;
-	height:100px;
+	width:220px;
+	height: 150px;
 	float:right;
 }
 
 #helpProfile h1, #aboutmapProfile h1{
 	text-align:center;
 	color:#6D2323;
+	margin: 10px 0 10px 0;
 }
 
 #EditUserProfileDiv { 
 	width:600px;
-	margin:30px 0 0 130px;
+	margin: 0 0 0 120px;
 }
 
 form#EditUserProfileForm { 
-	margin:-32px 0 0 10px;
+	margin: 0px 0 0 20px;
 	width:575px;
 }
 
@@ -2527,10 +2527,19 @@ form#EditUserProfileForm {
 }
 
 #EditUserProfileDiv .list {
-	float:left;
-	width:350px;
-	line-height:20px;
-	margin: -10px 0 0 30px;
+	float: left;
+	width: 300px;
+	line-height: 20px;
+	margin: 0px 0 0 35px;
+}
+
+#EditUserProfileDiv .list .row {
+	height: 38px;
+}
+
+#EditUserProfileDiv .list .row .value,  #EditUserProfileDiv .list .row .item{
+	border-top: 1px solid #E9D5D1;
+	padding-top: 8px;
 }
 
 #helpProfile a, #aboutmapProfile a{	/* Help ancors (User Manual, Download Manual, Help Videos) */
@@ -2538,13 +2547,13 @@ form#EditUserProfileForm {
 	line-height:18px;
 	text-decoration:none;
 	color:#900;
+	margin-left: 15px;
 }
 
 #aboutmapProfile { /* Help Div Container */
 	font-size:11px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
-	padding:10px 0 10px 15px;
-	width:200px;
+	width:220px;
 	height:100px;
 	float:right;
 }
@@ -2560,24 +2569,29 @@ form#EditUserProfileForm {
 
 
 /* Input positions */
-#resume {
-	margin-left:39px;
+
+#countryLabel {
+	margin-left:30px;
+}
+
+#resumeLabel {
+	margin-left: 34px;
+}
+
+#locationLabel {
+	margin-left: 30px;
 }
 
 #interests {
 	margin-left:35px;
 }
 
-#location, #country {
-	margin-left:36px;
-}
-
 #organization {
 	margin-left:9px;
 }
 
-#title {
-	margin-left:58px;
+#titleLabel {
+	margin-left: 51px;
 }
 
 #group {
@@ -2637,7 +2651,7 @@ form#EditUserProfileForm {
 	width:122px;
 	height:23px;
 	float:left;
-	margin:60px 0 0 5px;
+	margin: 97px 0 0 5px;
 	text-decoration:none;
 	color:#6D5C4D;
 	padding:4px 0 0 17px;
