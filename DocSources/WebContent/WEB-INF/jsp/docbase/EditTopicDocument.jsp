@@ -90,6 +90,7 @@
 			  });
 
 			$j('#closeTopic').click(function() { 
+				$j('.autocomplete').remove();
 	            $j('#EditTopicDocumentDiv').block({ message: $j('#question') }); 
 	            return false;
 			});

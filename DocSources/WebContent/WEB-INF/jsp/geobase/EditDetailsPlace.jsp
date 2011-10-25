@@ -121,6 +121,7 @@
 			 
 	        
 			$j('#close').click(function(e) {
+				$j('.autocomplete').remove();
 				$j('#EditDetailsTgnPlaceForm').block({ message: $j('#question') }); 
 	            return false;
 			});			

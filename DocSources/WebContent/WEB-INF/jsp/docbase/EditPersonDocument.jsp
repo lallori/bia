@@ -60,6 +60,7 @@
 			  });
 
 			$j('#closePerson').click(function(e) {
+				$j('.autocomplete').remove();
 				$j('#EditPersonDocumentDiv').block({ message: $j('#questionPerson') }); 
 	            return false;
 			});

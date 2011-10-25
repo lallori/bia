@@ -93,6 +93,7 @@
 			});
 
 			$j('#closeTitle').click(function() {
+				$j('.autocomplete').remove();
 				$j("#EditTitleOrOccupationPersonDiv").block({ message: $j("#question") });
 				return false;
 			});

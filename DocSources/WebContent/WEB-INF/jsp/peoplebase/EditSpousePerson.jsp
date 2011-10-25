@@ -103,6 +103,7 @@
 			  });
 
 			$j('#closeSpouse').click(function() {
+				$j('.autocomplete').remove();
 				$j('#EditSpousePersonDiv').block({ message: $j('#question') }); 
 				return false;
 			});

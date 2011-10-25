@@ -77,6 +77,7 @@
 			  });
 
 			$j('#closeChild').click(function(e) {
+				$j('.autocomplete').remove();
 				$j('#EditChildPersonDiv').block({ message: $j('#question') }); 
 	            return false;
 			});

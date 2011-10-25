@@ -93,6 +93,7 @@
 			  });
 
 			$j('#closeMother').click(function() {
+				$j('.autocomplete').remove();
 				$j('#EditParentPersonDiv').block({ message: $j('#question') }); 
 				return false;
 			});
