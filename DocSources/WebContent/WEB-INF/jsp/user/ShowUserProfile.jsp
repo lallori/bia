@@ -23,8 +23,8 @@
 		<div id="EditUserProfileDiv">
 			<div class="list">
 				<div class="row">
-					<div class="item">Email</div>
-					<div class="value">${userProfile.mail}</div>
+					<div class="firstItem">Email</div>
+					<div class="firstValue">${userProfile.mail}</div>
 				</div>
 				<div class="row">
 					<div class="item">Address</div>
@@ -48,7 +48,7 @@
 				</div>
 				<div class="row">
 					<div class="item">Location</div>
-					<div class="value">Italy, Florence</div>
+					<div class="value">${userProfile.city}</div>
 				</div>
 				<div class="row">
 					<div class="item">Interests</div>

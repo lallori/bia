@@ -106,6 +106,8 @@ public class EditUserProfileController {
 			user.setInterests(command.getInterests());
 			user.setOrganization(command.getOrganization());
 			user.setTitle(command.getTitle());
+			//MD: I don't know if the location is the city
+			user.setCity(command.getLocation());
 			System.out.println(user.getFirstName());
 			
 			try{
@@ -143,6 +145,7 @@ public class EditUserProfileController {
 		command.setInterests(user.getInterests());
 		command.setOrganization(user.getOrganization());
 		command.setTitle(user.getTitle());
+		command.setLocation(user.getCity());
 
 		return new ModelAndView("user/EditUserProfile", model);
 	}
