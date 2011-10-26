@@ -322,6 +322,14 @@
 	<definition name="geobase/ShowExternalLinksPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp" />
 	</definition>
+	
+	<definition name="geobase/ShowRecipientDocumentsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowRecipientDocumentsPlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowSenderDocumentsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowSenderDocumentsPlace.jsp" />
+	</definition>
 
 	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
