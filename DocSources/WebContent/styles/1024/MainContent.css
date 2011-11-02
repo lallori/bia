@@ -314,7 +314,8 @@ fieldset {  /* FORM BACKGROUND */
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
 	background-color:#F2E6E5;
-	padding-left:30px;	
+	padding-left:30px;
+	min-height: 67px;	
 }
 
 legend { /* FORM TITLE */
@@ -358,6 +359,7 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	width:52px;
 	height:22px;
 	border:none;
+	margin-top: 23px;
 }
 
 #button_transparent { /* Close button on bottom left  */
@@ -410,6 +412,7 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	height:23px;
 	border:none;
 	outline:none;
+	margin-top: 23px;
 }
 
 #PeopleCorrespondentsDocumentsForm #AddNewValue {
@@ -975,7 +978,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditParentPersonDiv {
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditParentPersonDiv, #EditResearchNotesPersonDiv {
 	width:485px;
 	margin:10px 0 0 0;
 	min-height:100px;!important
