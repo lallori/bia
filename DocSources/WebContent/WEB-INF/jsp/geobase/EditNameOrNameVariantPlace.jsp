@@ -11,9 +11,17 @@
 		</c:url>
 	</security:authorize>
 	
+	<br />
 	<form:form id="EditNamePlaceForm" method="post" class="edit">
 	<fieldset>
-	<legend><b>NAME or NAME VARIANTS</b></legend>
+		<legend>
+		<c:if test="${command.currentPlaceAllId == 0}"> 
+				<b>ADD NEW NAME</b>
+			</c:if>
+			<c:if test="${command.currentPlaceAllId > 0}">
+				<b>Edit NAME</b>
+			</c:if> 
+		</legend>
 		<div>
 			<form:label for="namePlace" id="namePlaceLabel" path="plName">Name</form:label>
 			<form:input id="namePlace" path="plName" cssClass="input_30c" type="text" />
@@ -40,7 +48,7 @@
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
 
 			$j('#closeName').click(function(e) {
-				$j('#EditNamePlaceDiv').block({ message: $j('#question') }); 
+				$j('#EditNameVariantPlaceDiv').block({ message: $j('#question') }); 
 	            return false;
 			});
 			

@@ -50,6 +50,8 @@
 		</div>
 		
 		</fieldset>
+		
+		<div id="EditNameVariantPlaceDiv"></div>
 	</form:form>
 	
 
@@ -61,7 +63,7 @@
 
 			$j("#EditNamesOrNameVariantsPlace").click(function(){
 				$j(this).next().css('visibility', 'visible');
-				$j("#EditNamePlaceDiv").load($j(this).attr("href"));
+				$j("#EditNameVariantPlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
 
@@ -101,12 +103,12 @@
 			});
 			
 			$j(".editValue").click(function() {
-				$j("#EditNamePlaceDiv").load($j(this).attr("href"));
+				$j("#EditNameVariantPlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
 			
 			$j("#AddNewValue").click(function(){
-				$j("#EditNamePlaceDiv").load($j(this).attr("href"));
+				$j("#EditNameVariantPlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
 		});
