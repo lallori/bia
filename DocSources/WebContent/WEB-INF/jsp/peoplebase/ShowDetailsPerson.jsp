@@ -9,6 +9,14 @@
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
 	</security:authorize>
+	
+	<c:url var="CompareBirthURL" value="/src/geobase/ComparePlace.do">
+		<c:param name="placeAllId" value="${person.bornPlace.placeAllId}" />
+	</c:url>
+	
+	<c:url var="CompareDeathURL" value="/src/geobase/ComparePlace.do">
+		<c:param name="placeAllId" value="${person.deathPlace.placeAllId}" />
+	</c:url>
 
 	<div id="EditDetailsPersonDiv" class="background">
 		<div class="title">
@@ -31,7 +39,7 @@
 				<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Birth Place</div><div class="value"><a href="#" id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+				<div class="item">Birth Place</div><div class="value"><a href="${CompareBirthURL}" id="linkSearch" class="linkSearch">${person.bornPlace.placeNameFull}</a></div>
 			</div>
 			<div class="row">
 				<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
@@ -40,7 +48,7 @@
 				<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Death Place</div> <div class="value"><a href="#" id="linkSearch">${person.deathPlace.placeNameFull}</a></div>
+				<div class="item">Death Place</div> <div class="value"><a href="${CompareDeathURL}" id="linkSearch" class="linkSearch">${person.deathPlace.placeNameFull}</a></div>
 			</div>
 			<div class="row">
 				<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
@@ -62,6 +70,30 @@
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditDetailsPersonDiv").load($j(this).attr("href"));
 				return false;
+			});
+			
+			$j(".linkSearch").click(function() {
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
 			});
 		});
 	</script>
