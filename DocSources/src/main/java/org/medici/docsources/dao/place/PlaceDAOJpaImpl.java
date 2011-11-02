@@ -127,6 +127,21 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 
         return (Place) query.getSingleResult();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place findPrinicipalPlace(Integer geogKey) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM Place WHERE geogkey=:geogkey AND prefflag='P'");
+		query.setParameter("geogkey", geogKey);
+		
+		query.setMaxResults(1);
+		
+		return (Place) query.getSingleResult();
+		
+		
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -379,4 +394,5 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         	return null;
 		}
 	}
+
 }

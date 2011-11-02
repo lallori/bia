@@ -32,8 +32,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
@@ -357,8 +355,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 			else
 				documentToUpdate.setSenderPeople(null);
 			documentToUpdate.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
-			if (document.getSenderPlace().getPlaceAllId() > 0)
-				documentToUpdate.setSenderPlace(getPlaceDAO().find(document.getSenderPlace().getPlaceAllId()));
+			if (document.getSenderPlace().getPlaceAllId() > 0){
+				Place newSenderPlace = getPlaceDAO().find(document.getSenderPlace().getPlaceAllId());
+				if(documentToUpdate.getSenderPlace() != null){
+					documentToUpdate.getSenderPlace().setSenderDocuments(null);
+				}
+				if(newSenderPlace.getPrefFlag().equals("V")){
+					documentToUpdate.setSenderPlace(getPlaceDAO().findPrinicipalPlace(newSenderPlace.getGeogKey()));
+				}else
+					documentToUpdate.setSenderPlace(newSenderPlace);
+			}
 			else
 				documentToUpdate.setSenderPlace(null);
 			documentToUpdate.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
@@ -367,8 +373,17 @@ public class DocBaseServiceImpl implements DocBaseService {
 			else
 				documentToUpdate.setRecipientPeople(null);
 			documentToUpdate.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
-			if (document.getRecipientPlace().getPlaceAllId() > 0)
-				documentToUpdate.setRecipientPlace(getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId()));
+			if (document.getRecipientPlace().getPlaceAllId() > 0){
+				Place newRecipientPlace = getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId());
+				if(documentToUpdate.getRecipientPlace() != null){
+					documentToUpdate.getRecipientPlace().setRecipientDocuments(null);
+				}
+				if(newRecipientPlace.getPrefFlag().equals("V")){
+					documentToUpdate.setRecipientPlace(getPlaceDAO().findPrinicipalPlace(newRecipientPlace.getGeogKey()));
+				}else
+					documentToUpdate.setRecipientPlace(newRecipientPlace);
+//				documentToUpdate.setRecipientPlace(getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId()));
+			}
 			else
 				documentToUpdate.setRecipientPlace(null);
 			documentToUpdate.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());

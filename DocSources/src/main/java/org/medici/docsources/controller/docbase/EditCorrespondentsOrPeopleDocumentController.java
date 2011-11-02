@@ -174,6 +174,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				if (document.getSenderPlace() != null) {
 					command.setSenderPlaceId(document.getSenderPlace().getPlaceAllId());
 					command.setSenderPlaceDescription(document.getSenderPlace().getPlaceNameFull());
+					
 				}
 				command.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
 
@@ -202,6 +203,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			command.setSenderPeopleUnsure(false);
 			command.setSenderPlaceId(null);
 			command.setSenderPlaceDescription("");
+			command.setSenderPlacePrefered(null);
 			command.setSenderPlaceUnsure(false);
 
 			// On Document creation, recipient is empty

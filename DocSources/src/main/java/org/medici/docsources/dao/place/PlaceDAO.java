@@ -68,6 +68,15 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * @throws PersistenceException
 	 */
 	public Place findLastEntryPlace() throws PersistenceException;
+	
+	/**
+	 * This method returns the principal Place
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Place findPrinicipalPlace(Integer geogKey) throws PersistenceException;
 
 	/**
 	 * This method searches for born places which could be related to a person which contains 

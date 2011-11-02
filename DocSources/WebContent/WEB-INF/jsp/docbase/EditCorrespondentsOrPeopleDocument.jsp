@@ -63,6 +63,7 @@
 			
 			<form:hidden path="senderPeopleId"/>
 			<form:hidden path="senderPlaceId"/>
+			<form:hidden path="senderPlacePrefered"/>
 			<form:hidden path="recipientPeopleId"/>
 			<form:hidden path="recipientPlaceId"/>	
 
@@ -162,7 +163,9 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#senderPlaceId').val(data); }
+			    onSelect: function(value, data){ 
+			    	$j('#senderPlaceId').val(data); 
+			    }
 			  });
 			
 			$j('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
