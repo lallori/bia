@@ -1,5 +1,5 @@
 /*
- * ShowLastEntryPlaceController.java
+ * ShowDeathPeoplePlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,68 +32,77 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.domain.EplToLink;
+import org.medici.docsources.command.geobase.ShowDeathPeoplePlaceCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show last entry place".
+ * Controller for action "Show birth people place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/geobase/ShowLastEntryPlace")
-public class ShowLastEntryPlaceController {
+@RequestMapping("/de/geobase/ShowDeathPeoplePlace")
+public class ShowDeathPeoplePlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
-
+	
 	/**
 	 * 
-	 * @param volumeId
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(){
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			Place place = getGeoBaseService().findLastEntryPlace();
-			model.put("place", place);
-			List<Integer> documentsInTopics = new ArrayList<Integer>();
-			for(EplToLink currentTopic : place.getEplToLinks()){
-				if(!documentsInTopics.contains(currentTopic.getDocument().getEntryId()))
-					documentsInTopics.add(currentTopic.getDocument().getEntryId());
-			}
-			model.put("docInTopics", documentsInTopics.size());
-			List<Place> placeNames;
-			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
-			model.put("placeNames", placeNames);
-
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowLastEntryPlace", model);
-		}
-		
-		return new ModelAndView("geobase/ShowPlace", model);
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
 
 	/**
-	 * @param geoBaseService the geoBaseService to set
+	 * 
+	 * @param geoBaseService
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
 	}
 
 	/**
-	 * @return the geoBaseService
+	 * 
+	 * @param placeId
+	 * @param result
+	 * @return
 	 */
-	public GeoBaseService getGeoBaseService() {
-		return geoBaseService;
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowDeathPeoplePlaceCommand command, BindingResult result) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		Place place = new Place();
+		
+		if(command.getPlaceAllId() > 0){
+			try {
+				place = getGeoBaseService().findPlace(command.getPlaceAllId());
+								
+				List<String> outputFields = new ArrayList<String>(3);
+				outputFields.add("Person ID");
+				outputFields.add("Person");
+				outputFields.add("Death Date");
+								
+				model.put("outputFields", outputFields);
+				
+				model.put("placeNameFull", place.getPlaceNameFull());
+				model.put("deathPeople", place.getDeathPeople());
+				
+			} catch (ApplicationThrowable ath) {
+				new ModelAndView("error/ShowDeathPeoplePlace", model);
+			}
+		}
+
+		return new ModelAndView("geobase/ShowDeathPeoplePlace", model);
 	}
 
 }
