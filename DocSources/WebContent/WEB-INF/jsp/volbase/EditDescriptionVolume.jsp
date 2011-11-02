@@ -25,7 +25,7 @@
 			<div>
 				<form:label id="folioCountLabel" for="folioCount" path="folioCount" cssErrorClass="error">Folio Count</form:label>
 				<form:input path="folioCount" cssClass="input_10c"/><form:errors path="ccondition" cssClass="inputerrors"/>
-				<form:label id="oldAlphaIndexLabel" for="oldAlphaIndex" path="oldAlphaIndex" cssErrorClass="error">Alphabetical Index</form:label>
+				<form:label id="oldAlphaIndexLabel" for="oldAlphaIndex" path="oldAlphaIndex" cssErrorClass="error">Index of Names</form:label>
 				<form:select path="oldAlphaIndex" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="oldAlphaIndex" cssClass="inputerrors"/>
 			</div>
 	

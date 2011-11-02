@@ -42,7 +42,7 @@
 				<div class="value">${volume.folioCount}</div>
 			</div>
 			<div class="row">
-				<div class="item">Alphabetical Index</div>
+				<div class="item">Index of Names</div>
 				<div class="value">${volume.oldAlphaIndex ? 'Yes' : 'No'}</div>
 			</div>
 			<div class="row">

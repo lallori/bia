@@ -120,7 +120,8 @@
 				$j(".personIcon").click(function(){
 					var tabName = $j(this).parent();
 					tabName = $j(tabName).find('.input_35c_disabled');
-					
+					tabName = $j(tabName).val();
+					tabName = tabName.substring(0,tabName.indexOf("-"));
 					var numTab = 0;
 					
 					//Check if already exist a tab with this person
