@@ -32,6 +32,7 @@
 			<br/>
 		</c:forEach>
 	</div>
+	</div>
 
 
 	<script type="text/javascript">
