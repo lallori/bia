@@ -31,59 +31,63 @@
 	</c:url>
 
 	<div id="EditDetailsDocumentDiv">
+	<div class="title">
 		<h5>DOCUMENT DETAILS </h5>
-		<div id="CreatedSharePrintDiv">
-			<div id="createdby">CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
-			<a title="Print this record" href="#" id="buttonPrint"></a>
-			<div id="buttonShareLink">
-				<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a>
-				<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span>
-			</div>
 		</div>
+<!-- 		<div id="CreatedSharePrintDiv"> -->
+<%-- 			<div id="createdby">CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div> --%>
+<!-- 			<a title="Print this record" href="#" id="buttonPrint"></a> -->
+<!-- 			<div id="buttonShareLink"> -->
+<!-- 				<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a> -->
+<!-- 				<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 		
-		<div id="DocumentImageDiv">
-			<c:if test="${not empty image}">
-			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>">
-			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a></p>
-			</c:if>
-			<c:if test="${empty image}">
-			<img src="<c:url value="/images/1024/img_document.png"/>" alt="document image" />
-			</c:if>
-		</div>
+<!-- 		<div id="DocumentImageDiv"> -->
+<%-- 			<c:if test="${not empty image}"> --%>
+<%-- 			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>"> --%>
+<%-- 			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a></p> --%>
+<%-- 			</c:if> --%>
+<%-- 			<c:if test="${empty image}"> --%>
+<%-- 			<img src="<c:url value="/images/1024/img_document.png"/>" alt="document image" /> --%>
+<%-- 			</c:if> --%>
+<!-- 		</div> -->
 		
 		<div class="listDetails">
 			<div class="row">
-				<div class="item">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
+				<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 			</div>
 			<div class="row">
-				<div class="item">Volume (MDP)</div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
+				<div class="item60">Volume (MDP)</div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
 			</div>
 			<div class="row">
-				<div class="item">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
+				<div class="item60">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
 			</div>
 			<div class="row">
-				<div class="item">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
+				<div class="item60">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
 			</div>
 			<div class="row">
-				<div class="item">Paginated</div> <div class="value">${document.unpaged}</div>
+				<div class="item60">Paginated</div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
+				<div class="item60">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
 			</div>
 			<div class="row">
-				<div class="item">Modern Date</div> <div class="value">${document.yearModern}</div>
+				<div class="item60">Modern Date</div> <div class="valueHilight">${document.yearModern}</div>
 			</div>
 			<div class="row">
-				<div class="item">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+				<div class="item60">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Date uncertain or approximate</div> <div class="value">${document.dateUns}</div>
+				<div class="item60">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
-				<div class="item">Undated</div> <div class="value">${document.undated}</div>
+				<div class="item60">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
 			</div>
+		</div>
+		<div class="list">
 			<div class="row">
-				<div class="item">Date Notes</div> <div class="value">${document.dateNotes}</div>
+				<div class="item37">Date Notes</div> <div class="value50">${document.dateNotes}</div>
 			</div>
 		</div>
 	</div>
@@ -91,64 +95,84 @@
 	<br />
 	
 	<div id="EditFactCheckDocumentDiv">
+	<div class="title">
 		<h5>FACT CHECK </h5>
+		</div>
 
-		<hr id="lineSeparator"/>
-		<ul>
-			<li>${document.factChecks.addLRes}</li>
-		</ul>
+		<div class="list">
+			<div class="row">
+				<div class="valueHilight">${document.factChecks.addLRes}</div>
+			</div>
+		</div>
 	</div>
 	
+	
 	<div id="EditCorrespondentsOrPeopleDocumentDiv">
+	<div class="title">
 		<h5>CORRESPONDENTS/PEOPLE </h5>
-
-		<hr id="lineSeparator"/>
-		<ul>
-			<li><b>Sender</b> <a class="linkSearch" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></li>
-			<li><b>From</b> <a class="linkSearch" href="">${document.senderPlace.placeNameFull} </a></li>	
-			<li><b>Recipient</b> <a class="linkSearch" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></li>
-			<li><b>To</b> <a class="linkSearch" href="">${document.recipientPlace.placeNameFull}</a></li>	
+	</div>
+		<div class="list">
+			<div class="row">
+				<div class="item">Sender</div> <div class="value80"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
+			</div>
+			<div class="row">
+				<div class="item">From</div> <div class="value80"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
+			</div>	
+			<div class="row">
+				<div class="item">Recipient</div> <div class="value80"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
+			</div>
+			<div class="row">
+				<div class="item">To</div> <div class="value80"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
+			</div>	
 			<br>
-			<li>
-				<b>People</b>
-				<ul>
-				<c:forEach items="${document.epLink}" var="currentPeople">
+			<div class="row">
+				<div class="item">People</div> <div class="value80"></div>
+			</div>	
+			<c:forEach items="${document.epLink}" var="currentPeople">
+				<div class="row">
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-						<c:param name="personId"   value="${currentPeople.people.personId}" />
+						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
-					<li><a class="linkSearch" href="${ComparePersonURL}">${currentPeople.people.mapNameLf}</a></li>
-					<br/>
-				</c:forEach>
-				</ul>
-			</li>
-		</ul>
+					<div class="item">&nbsp;</div><div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
+					
+				</div>
+			</c:forEach>
+			</div>
 	</div>
 
 	<div id="EditExtractOrSynopsisDocumentDiv">
+	<div class="title">
 		<h5>EXTRACT/SYNOPSIS </h5>
+		</div>
 
-		<hr id="lineSeparator"/>
-		<ul>
-			<li><b>Extract:</b></li>
-			<li>${document.synExtract.docExtract}</li>
-		</ul>
-		<ul>
-			<li><b>Synopsis:</b></li>
-			<li>${document.synExtract.synopsis}</li>
-		</ul>
+		<div class="list">
+			<div class="row">
+				<div class="item">Extract</div>
+				<div class="value80" id="extract">${document.synExtract.docExtract}</div>
+			</div>
+			<div class="row">
+				<div class="item">Synopsis</div>
+				<div class="value80" id="synopsis">${document.synExtract.synopsis}</div>
+			</div>
+		</div>
 	</div>
 
 	<div id="EditTopicsDocumentDiv">
+	<div class="title">
 		<h5>TOPICS </h5>
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="EditTopicsDocument" href="${EditTopicsDocumentURL}">edit</a><span id="loading"/>
-	</security:authorize>
-		<hr id="lineSeparator"/>
-		<ul>
-			<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
-				<li><b>Topic:</b> ${currentTopicAndPlace.topic.topicTitle}</li>
-				<li><b>Topic Place:</b> ${currentTopicAndPlace.place.placeNameFull}</li>
-				<br/>
-			</c:forEach>
-		</ul>
+		</div>
+	
+		<div class="list">
+		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
+			<div class="row">
+				<div class="item">Topic:</div>
+				<div class="value80"> ${currentTopicAndPlace.topic.topicTitle}</div>
+			</div>
+			<div class="row">
+				<div class="item">Topic Place:</div>
+				<div class="value80"> ${currentTopicAndPlace.place.placeNameFull}</div>
+			</div>
+			<br/>
+		</c:forEach>
+	</div>
 	</div>

@@ -15,14 +15,14 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${topicsPlace}" var="currentTopic">
-			<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+			<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
 				<c:param name="entryId"   value="${currentTopic.document.entryId}" />
 			</c:url>
 			
 			<tr>
-				<td><a class="searchResult" href="${ShowDocumentURL}">${currentTopic.document.getEntryId()}</a></td>
-				<td><a class="searchResult" href="${ShowDocumentURL}">${currentTopic.topic.topicTitle}</a></td>
-				<td><a class="searchResult" href="${ShowDocumentURL}">${currentTopic.document.docYear} ${currentTopic.document.docMonthNum} ${currentTopic.document.docDay}</a></td>
+				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.document.getEntryId()}</a></td>
+				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.topic.topicTitle}</a></td>
+				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.document.docYear} ${currentTopic.document.docMonthNum} ${currentTopic.document.docDay}</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -48,12 +48,31 @@
 			$j("#showTopicsPlace_filter").remove();
 
 			// We need to remove any previous live function
-			//$j('.searchResult').die();
+			$j('.searchResult').die();
 			// Result links have a specific class style on which we attach click live. 
-			//$j('.searchResult').live('click', function() {
-				//$j("#body_left").load($j(this).attr("href"));
-				//return false;
-			//}); 
+			$j(".searchResult").live('click', function() {
+				var tabName = $j(this).attr("title");
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			}); 
 
 		} );
 	</script>

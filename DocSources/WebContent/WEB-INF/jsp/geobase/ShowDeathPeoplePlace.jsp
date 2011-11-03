@@ -15,13 +15,13 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${deathPeople}" var="currentPerson">
-			<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 				<c:param name="personId"   value="${currentPerson.personId}" />
 			</c:url>
 			<tr>
-				<td><a class="searchResult" href="${ShowPersonURL}">${currentPerson.personId}</a></td>
-				<td><a class="searchResult" href="${ShowPersonURL}">${currentPerson.mapNameLf}</a></td>
-				<td><a class="searchResult" href="${ShowPersonURL}">${currentPerson.deathYear} ${currentPerson.deathMonth} ${currentPerson.deathDay}</a></td>
+				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.personId}</a></td>
+				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.mapNameLf}</a></td>
+				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.deathYear} ${currentPerson.deathMonth} ${currentPerson.deathDay}</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -51,12 +51,31 @@
 			$j("#showDeathPeoplePlace_filter").remove();
 
 			// We need to remove any previous live function
-			//$j('.searchResult').die();
+			$j('.searchResult').die();
 			// Result links have a specific class style on which we attach click live. 
-			//$j('.searchResult').live('click', function() {
-				//$j("#body_left").load($j(this).attr("href"));
-				//return false;
-			//}); 
+			$j(".searchResult").live('click', function() {
+				var tabName = $j(this).attr("title");
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			}); 
 
 		} );
 	</script>

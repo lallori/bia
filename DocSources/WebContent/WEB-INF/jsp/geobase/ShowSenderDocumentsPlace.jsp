@@ -15,18 +15,18 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${senderDocs}" var="currentDocument">
-			<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+			<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
 				<c:param name="entryId"   value="${currentDocument.entryId}" />
 			</c:url>
-			<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 				<c:param name="personId"   value="${currentDocument.senderPeople.personId}" />
 			</c:url>
 			<tr>
-				<td><a class="searchResult" href="${ShowDocumentURL}">${currentDocument.getEntryId()}</a></td>
-				<td><a class="searchResult" href="${ShowDocumentURL}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
-				<td><a class="searchResult" href="${ShowPersonURL}">${currentDocument.getSenderPeople().getPersonId()}</a></td>
-				<td><a class="searchResult" href="${ShowPersonURL}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
-				<td><a class="searchResult" href="${ShowDocumentURL}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
+				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.getEntryId()}</a></td>
+				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
+				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getPersonId()}</a></td>
+				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
+				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -52,12 +52,36 @@
 			$j("#showSenderDocumentsPlace_filter").remove();
 
 			// We need to remove any previous live function
-			//$j('.searchResult').die();
+			$j('.searchResult').die();
 			// Result links have a specific class style on which we attach click live. 
 			//$j('.searchResult').live('click', function() {
 				//$j("#body_left").load($j(this).attr("href"));
 				//return false;
 			//}); 
+			
+			$j(".searchResult").live('click', function() {
+				var tabName = $j(this).attr("title");
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
 
 		} );
 	</script>
