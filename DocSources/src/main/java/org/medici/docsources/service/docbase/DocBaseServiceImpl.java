@@ -356,14 +356,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 				documentToUpdate.setSenderPeople(null);
 			documentToUpdate.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
 			if (document.getSenderPlace().getPlaceAllId() > 0){
-				Place newSenderPlace = getPlaceDAO().find(document.getSenderPlace().getPlaceAllId());
+				/*
 				if(documentToUpdate.getSenderPlace() != null){
 					documentToUpdate.getSenderPlace().setSenderDocuments(null);
+				}*/
+				documentToUpdate.setSenderPlace(getPlaceDAO().find(document.getSenderPlace().getPlaceAllId()));
+				if(documentToUpdate.getSenderPlace().getPrefFlag().equals("V")){
+					documentToUpdate.setSenderPlace(getPlaceDAO().findPrinicipalPlace(documentToUpdate.getSenderPlace().getGeogKey()));
 				}
-				if(newSenderPlace.getPrefFlag().equals("V")){
-					documentToUpdate.setSenderPlace(getPlaceDAO().findPrinicipalPlace(newSenderPlace.getGeogKey()));
-				}else
-					documentToUpdate.setSenderPlace(newSenderPlace);
 			}
 			else
 				documentToUpdate.setSenderPlace(null);
@@ -374,15 +374,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 				documentToUpdate.setRecipientPeople(null);
 			documentToUpdate.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
 			if (document.getRecipientPlace().getPlaceAllId() > 0){
-				Place newRecipientPlace = getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId());
+				/*
 				if(documentToUpdate.getRecipientPlace() != null){
 					documentToUpdate.getRecipientPlace().setRecipientDocuments(null);
+				}*/
+				documentToUpdate.setRecipientPlace(getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId()));
+				if(documentToUpdate.getRecipientPlace().getPrefFlag().equals("V")){
+					documentToUpdate.setRecipientPlace(getPlaceDAO().findPrinicipalPlace(documentToUpdate.getRecipientPlace().getGeogKey()));
 				}
-				if(newRecipientPlace.getPrefFlag().equals("V")){
-					documentToUpdate.setRecipientPlace(getPlaceDAO().findPrinicipalPlace(newRecipientPlace.getGeogKey()));
-				}else
-					documentToUpdate.setRecipientPlace(newRecipientPlace);
-//				documentToUpdate.setRecipientPlace(getPlaceDAO().find(document.getRecipientPlace().getPlaceAllId()));
 			}
 			else
 				documentToUpdate.setRecipientPlace(null);

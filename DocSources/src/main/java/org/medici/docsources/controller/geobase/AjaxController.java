@@ -178,6 +178,48 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
+	
+	/**
+	 * This method returns specific information on sender Place. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/ShowSenderPlaceDetails", method = RequestMethod.GET)
+	public ModelAndView showSenderPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns specific information on recipient Place. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/ShowRecipientPlaceDetails", method = RequestMethod.GET)
+	public ModelAndView showRecipientPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * @param geoBaseService the geoBaseService to set

@@ -51,6 +51,7 @@ public class EditCorrespondentsOrPeopleDocumentCommand {
 	private Integer recipientPlaceId;
 	private String recipientPlaceDescription;
 	private Boolean recipientPlaceUnsure;
+	private String recipientPlacePrefered;
 	private Document document;
 	
 	/**
@@ -261,5 +262,19 @@ public class EditCorrespondentsOrPeopleDocumentCommand {
 	 */
 	public String getSenderPlacePrefered() {
 		return senderPlacePrefered;
+	}
+
+	/**
+	 * @param recipientPlacePrefered the recipientPlacePrefered to set
+	 */
+	public void setRecipientPlacePrefered(String recipientPlacePrefered) {
+		this.recipientPlacePrefered = recipientPlacePrefered;
+	}
+
+	/**
+	 * @return the recipientPlacePrefered
+	 */
+	public String getRecipientPlacePrefered() {
+		return recipientPlacePrefered;
 	}
 }

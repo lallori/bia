@@ -65,7 +65,8 @@
 			<form:hidden path="senderPlaceId"/>
 			<form:hidden path="senderPlacePrefered"/>
 			<form:hidden path="recipientPeopleId"/>
-			<form:hidden path="recipientPlaceId"/>	
+			<form:hidden path="recipientPlaceId"/>
+			<form:hidden path="recipientPlacePrefered"/>	
 
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
@@ -119,6 +120,9 @@
 	<c:url var="searchSenderPlaceURL" value="/de/geobase/SearchSenderPlace.json"/>
 	<c:url var="searchRecipientPeopleURL" value="/de/peoplebase/SearchRecipientPeople.json"/>
 	<c:url var="searchRecipientPlaceURL" value="/de/geobase/SearchRecipientPlace.json"/>
+	
+	<c:url var="ShowSenderPlaceDetailsURL" value="/de/peoplebase/ShowSenderPlaceDetails.json" />
+	<c:url var="ShowRecipientPlaceDetailsURL" value="/de/peoplebase/ShowRecipientPlaceDetails.json" />
 
 
 	<script type="text/javascript">
@@ -164,7 +168,10 @@
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
-			    	$j('#senderPlaceId').val(data); 
+			    	$j('#senderPlaceId').val(data);
+			    	$j.get("${ShowSenderPlaceDetailsURL}", { placeAllId: "" + data }, function(data) {
+			    		$j('#senderPlacePrefered').val(data.prefFlag);
+			    	});
 			    }
 			  });
 			
@@ -189,14 +196,24 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#recipientPlaceId').val(data); }
+			    onSelect: function(value, data){ 
+			    	$j('#recipientPlaceId').val(data);
+			    	$j.get("${ShowRecipientPlaceDetailsURL}", { placeAllId: "" + data }, function(data) {
+			    		$j('#recipientPlacePrefered').val(data.prefFlag);
+			    	});
+			    	}
 			  });
 
-			$j("#save").click(function (){
+			$j("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
+				if($j("#senderPlacePrefered").val() == 'V' || $j("#recipientPlacePrefered").val() == 'V'){
+					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('.notPrincipal') });
+					return false;
+				}else{
 	 			$j.ajax({ type:"POST", url:$j(this).closest('form').attr("action"), data:$j(this).closest('form').serialize(), async:false, success:function(html) { 
 					$j("#EditCorrespondentsDocumentDiv").html(html);
 				}});
 	 			return false;
+				}
 			});
 			
 			$j("#AddNewValue").click(function(){
@@ -266,6 +283,11 @@
 	<input type="button" id="no" value="No" /> 
 </div>
 
+<div id="questionPlace" class="notPrincipal" style="display:none; cursor: default">
+		<h1>Variant Place changed to Principal Place</h1>
+		<input type="button" id="ok" value="Ok" />
+	</div>
+
 <script type="text/javascript">
 	$j(document).ready(function() {
 		$j('#no').click(function() { 
@@ -284,6 +306,18 @@
 				
 			return false; 
 		}); 
+		
+		$j("#ok").click(function(){
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j(".notPrincipal").hide();
+			$j("#EditCorrespondentsDocumentDiv").append($j(".notPrincipal"));
+			$j(".blockUI").remove();
+			$j.ajax({ type:"POST", url:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').attr("action"), data:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').serialize(), async:false, success:function(html) { 
+				$j("#EditCorrespondentsDocumentDiv").html(html);
+			}});
+			return false;
+		});
      
 	});
 </script>
