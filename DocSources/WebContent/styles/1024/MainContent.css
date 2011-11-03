@@ -315,7 +315,7 @@ fieldset {  /* FORM BACKGROUND */
 	border-radius: 4px;	
 	background-color:#F2E6E5;
 	padding-left:30px;
-	min-height: 67px;	
+	min-height: 70px;	
 }
 
 legend { /* FORM TITLE */
@@ -946,6 +946,20 @@ img.transparent {
 	margin: 5px 7px 5px 10px; /* top right bottom left */
 }
 
+.txtarea_search {
+    background-color: #FBF7F4;
+    border: 1px solid #DCC0BA;
+    border-radius: 4px 4px 4px 4px;
+    color: #000000;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 11px;
+    height: 40px;
+    margin: 8px 7px 15px 0;
+    padding: 5px 10px;
+    resize: none;
+    width: 330px;
+}
+
 /* ---------------------------------------------------- */ 
 /*
 /*
@@ -1434,6 +1448,11 @@ input.file {
 	margin-left:26px;
 }
 
+#activeStartMessage:hover {
+	text-decoration:none;
+	coursor:pointer;
+}
+
 #activeEndLabel {
 	margin-left:34px;
 }
@@ -1518,7 +1537,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 }
 
 #preferredRoleLabel {
-	margin-left:310px;
+	margin-left: 316px;
 }
 
 #EditTitlesOccupationsPersonForm #startMonthNumLabel, #EditTitlesOccupationsPersonForm #startDayLabel, #EditTitlesOccupationsPersonForm #endYearLabel, #EditTitlesOccupationsPersonForm #endMonthLabel, #EditTitlesOccupationsPersonForm #endDayLabel, #AddTitlesOccupationsPersonForm #startMonthLabel, #AddTitlesOccupationsPersonForm #startDayLabel, #AddTitlesOccupationsPersonForm #endYearLabel, #AddTitlesOccupationsPersonForm #endMonthLabel, #AddTitlesOccupationsPersonForm #endDayLabel {
@@ -1583,11 +1602,12 @@ a#editValue, .editValue { /* "Edit Value" Button */
 /*
 /* Parents */
 
-a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
+a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a {
 	font-size:11px;
 	text-decoration: underline;
 	color: #B7958F;
 	display:inline;
+	text-align: left;
 }
 
 
@@ -1604,11 +1624,11 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	margin-left:85px;
 }
 
-#volLeTextLabel {
+#EditDetailsVolumeForm #volLeTextLabel {
 	margin-left:7px;
 }
 
-#startMonthNumLabel {
+#EditDetailsVolumeForm #startMonthNumLabel {
 	margin-left:5px;
 }
 
@@ -1616,20 +1636,20 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 	margin-left:4px;
 }
 
-#endYearLabel {
-	margin-left:8px;
-}
-
-#endMonthNumLabel {
-	margin-left:13px;
-}
-
-#endDayLabel {
-	margin-left:12px;
-}
-
 #dateNotesLabel {
 	margin:10px 0 0 0;
+}
+
+#EditDetailsVolumeForm #endYearLabel {
+    margin-left: 8px;
+}
+
+#EditDetailsVolumeForm #endMonthNumLabel {
+    margin-left: 13px;
+}
+
+#EditDetailsVolumeForm #endDayLabel {
+    margin-left: 12px;
 }
 
 
@@ -1655,7 +1675,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link {
 }
 
 #oldAlphaIndexLabel {
-	margin-left: 55px;
+	margin-left: 78px;
 }
 
 #printedDrawingsLabel {
@@ -2431,7 +2451,7 @@ a.refreshVolumeExplorer {
 /* ---- EdtitNameTgn, Map and MapSite --- */
 
 #namePlaceLabel {
-	margin-left:34px;
+	margin-left:30px;
 }
 
 #nameTypeLabel {
@@ -2911,10 +2931,20 @@ form#EditUserProfileForm {
 	background-color:#f6edec;
 }
 
-#advancedSearch #advancedSearch_top { /* Backgraound image on the top of the window */
-	width:250px;
-	height:40px;
-	margin-left:370px;
+#advancedSearch #advancedSearch_top { /* Advances Search window Title */
+    font-size: 16px;
+    font-weight: bold;
+    height: 20px;
+    margin: 10px 0 0 370px;
+    text-align: center;
+    width: 250px;
+}
+
+#customSearchFilterDiv h1.advSearchTitle, #yourSearchFilterDiv h1.advSearchTitle {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 #advancedSearch #body_left { /* LEFT-hand side of the SCREEN */
@@ -2961,7 +2991,6 @@ form#EditUserProfileForm {
 
 #multiOpenAccordion #addSearchFilter { /* Add button */
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
-	padding:3px 0 0 0;
 	font-size:11px;
 	width:52px;
 	height:22px;
@@ -3086,7 +3115,7 @@ form#EditUserProfileForm {
 }
 
 #advancedSearch #body_right .easySearchModeOff { /* Easy Search mode OFF */
-	margin:25px 0 0 50px;
+	margin: 0 0 0 250px;
 	background:url(/DocSources/images/1024/button_easySearchMode_off.png) no-repeat;
 	width:160px;
 	height:50px;
@@ -3095,7 +3124,7 @@ form#EditUserProfileForm {
 }
 
 #advancedSearch #body_right .expertSearchModeOff { /* Easy Search mode OFF */
-	margin:25px 0 0 250px;
+	margin: 0 0 0 250px;
 	background:url(/DocSources/images/1024/button_expertSearchMode_off.png) no-repeat;
 	width:160px;
 	height:50px;
@@ -3111,7 +3140,7 @@ form#EditUserProfileForm {
 
 #yourEasySearchFilterForm, #yourExpertSearchFilterForm {
 	background:url(/DocSources/images/1024/bg_searchFilter.png) no-repeat;
-	margin:55px 0 0 0;
+	margin: 50px 0 0;
 	padding:20px 0 0 60px;
 	width:390px;
 	min-height:450px;
@@ -3254,6 +3283,10 @@ span.categorySearch {
 
 #saveAsLabel, #replaceLabel {
 	font-weight:bold;
+}
+
+h1.advancesSearchTitle {
+	
 }
 
 
@@ -3516,8 +3549,56 @@ table#savedSearchFiltersForm.display {
 	margin-right:5px;
 }
 
-#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel {
+/* ------------- VOLUME SEARCH ------------------ */
+/* Input Label positions */
+
+#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel, #fromVolumeSearchForm #fromLabel, #toVolumeSearchForm #toLabel, #digitizedSearchForm #digitizedLabel, #cypherSearchForm #cypherLabel, #indexSearchForm #indexLabel, #inventarioSearchForm #inventarioLabel {
 	margin-left:7px;
+}
+
+#languagesSearchForm #languagesLabel, #contextSearchForm #contextLabel {
+	margin:0 0 0 7px;
+	float:none;
+}
+
+#languagesSearchForm #frenchLabel, #languagesSearchForm #germanLabel {
+	margin-left:15px;
+}
+
+#languagesSearchForm #italianLabel {
+	margin-left: 25px;
+} 
+
+#languagesSearchForm #spanishLabel {
+	margin-left: 110px;
+}
+
+#languagesSearchForm #latinLabel {
+	margin-left: 25px;
+}
+
+#languagesSearchForm #englishLabel{
+	margin-left: 19px;
+}
+
+#cypherSearchForm #cypherLabel {
+	margin-right: 43px;
+}
+
+#digitizedSearchForm #digitizedLabel {
+	margin-right: 35px;
+}
+
+#toVolumeSearchForm #toLabel {
+	margin-right: 70px;
+}
+
+#fromVolumeSearchForm #fromLabel {
+	margin-right: 53px;
+}
+
+#languagesSearchForm, #digitizedSearchForm {
+	margin-bottom:5px
 }
 
 /* ------------------------------------------------- */
