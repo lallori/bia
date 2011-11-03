@@ -13,7 +13,7 @@
 		</c:url>
 	</security:authorize>
 
-	<form:form id="EditResearchNotesPersonForm" class="edit" method="post" action="${EditResearchNotesURL}">>
+	<form:form id="EditResearchNotesPersonForm" class="edit" method="post" action="${EditResearchNotesURL}">
 		<fieldset>
 			<legend><b>RESEARCH NOTES</b></legend>
 			
