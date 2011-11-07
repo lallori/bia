@@ -7,23 +7,7 @@
 	<div id="customSearchFilterDiv">
 		<div class="customSearchFilterTitle"></div>
 			<div id="multiOpenAccordion">
-			<h1><a>Word search</a></h1>
-			<div>
-				<form id="wordSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-					<input type="text" id="word" name="word" class="input_15c" value="" />
-					in 
-					<select id="wordType" name="wordType" class="selectform_LXlong">
-						<option value="TitlesAndNotes" selected="selected">Volumes Titles and Notes</option>
-						<option value="Titles">Volume Titles</option>
-						<option value="Notes">Notes</option>
-					</select>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
-					<input type="hidden" id="category" value="Word Search">
-				</form>
-			</div>
-
-			<h1><a><i>in</i> Volume</a></h1>
+			<h1><a>Volume</a></h1>
 			<div>
 				<form id="volumeSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -32,15 +16,11 @@
 						<option value="Between">Between</option>
 					</select>
 					<input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
-					<p class="invisibleVol">and</p>
-					<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
+					<input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 					<input type="hidden" id="category" value="Volume">
 				</form>
-			</div>
-
-			<h1><a>Date Range</a></h1>
-			<div>
+				<hr />
 				<form id="dateSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
 					<select id="dateType" name="dateType" class="selectform_Llong">
@@ -65,9 +45,98 @@
 						</c:forEach>
 	                </select>
 	                <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
-				</form>
+	            </form>                	
 			</div>
-		</div>		
+			
+			<h1><a>Volume Description</a></h1>
+			<div>
+				<form id="digitizedSearchForm" method="post" class="edit">
+					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+					<label for="digitized" id="digitizedLabel">Digitized</label> 
+                	<select id="digitized" name="digitized" class="selectform_short">
+                    	<option value="" selected="selected"></option>
+                   		<option value="Yes">Yes</option>
+                    	<option value="No">No</option>
+                	</select>
+                	<input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+                	<input type="hidden" id="category" value="Digitized">
+            	</form>
+            	<form id="languagesSearchForm" method="post" class="edit">
+	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+	                <label for="languages" id="languagesLabel">Languages</label> 
+	                <label for="italian" id="italianLabel"><i>Italian</i></label>
+	                <input type="checkbox" name="italian"\/>
+	                <label for="french" id="frenchLabel"><i>French</i></label>
+	                <input type="checkbox" name="french"\/>
+	                <label for="german" id="germanLabel"><i>German</i></label>
+	                <input type="checkbox" name="german"\/>
+	                <label for="spanish" id="spanishLabel"><i>Spanish</i></label>
+	                <input type="checkbox" name="spanish"\/>
+	                <label for="latin" id="latinLabel"><i>Latin</i></label>
+	                <input type="checkbox" name="latin"\/>
+	                <label for="english" id="englishLabel"><i>English</i></label>
+	                <input type="checkbox" name="english"\/>
+	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+	                <input type="hidden" id="category" value="languages">
+            	</form>
+            	<form id="cypherSearchForm" method="post" class="edit">
+	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+	                <label for="cypher" id="cypherLabel">Cypher</label> 
+	                <select id="cypher" name="cypher" class="selectform_short">
+	                    <option value="" selected="selected"></option>
+	                    <option value="Yes">Yes</option>
+	                    <option value="No">No</option>
+	                </select>
+	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+	                <input type="hidden" id="category" value="Cypher">
+            	</form>
+            	<form id="indexSearchForm" method="post" class="edit">
+	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+	                <label for="index" id="indexLabel">Index of names</label> 
+	                <select id="index" name="index" class="selectform_short">
+	                    <option value="" selected="selected"></option>
+	                    <option value="Yes">Yes</option>
+	                    <option value="No">No</option>
+	                </select>
+	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+	                <input type="hidden" id="category" value="Index">
+	            </form>
+			</div>
+			
+			<h1><a>Correspondents and Context</a></h1>
+			<div>
+				<form id="fromVolumeSearchForm" method="post" class="edit">
+	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+	                <label for="from" id="fromLabel">From</label> 
+	                <textarea id="from" name="from" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
+	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+	                <input type="hidden" id="category" value="From Volume">
+	            </form>
+	            <form id="toVolumeSearchForm" method="post" class="edit">
+	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+	                <label for="to" id="toLabel">To</label> 
+	                <textarea id="to" name="to" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
+	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+	                <input type="hidden" id="category" value="To Volume">
+	            </form>
+	            <form id="contextSearchForm" method="post" class="edit">
+	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+	                <label for="context" id="contextLabel">Context</label> 
+	                <textarea id="context" name="context" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
+	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+	                <input type="hidden" id="category" value="Context">
+	            </form>
+	            <form id="inventarioSearchForm" method="post" class="edit">
+	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+	                <label for="inventario" id="inventarioLabel">Inventario Sommario Description (Italian)</label> 
+	                <textarea id="inventario" name="inventario" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
+	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
+	                <input type="hidden" id="category" value="Inventario">
+	            </form>
+			</div>
+			
+			
+				
 	</div>
 </div>
 
@@ -79,13 +148,10 @@
 		$j("#dateMonthBetween option:eq(0)").attr('selected', 'selected');
 
 		$j("#volumeType").change(function(){
-			if(this.options[1].selected) {
-				$j("#volumeBetween").css('visibility','visible'); 
-				$j(".invisibleVol").css('visibility','visible'); 
-			} else { 
-				$j("#volumeBetween").css('visibility','hidden');
-				$j(".invisibleVol").css('visibility','hidden');
-			}
+			if(this.options[1].selected) 
+				$j('#betweenSearch').css('visibility','visible'); 
+		    else 
+				$j('#betweenSearch').css('visibility','hidden');
 		});	
 
 		$j("#dateType").change(function(){
@@ -127,9 +193,16 @@
 			}
 		});
 
-		$j("#wordSearchForm").advancedSearchForm();
 		$j("#volumeSearchForm").advancedSearchForm();
 		$j("#dateSearchForm").advancedSearchForm();
+		$j("#digitizedSearchForm").advancedSearchForm();
+		$j("#languagesSearchForm").advancedSearchForm();
+		$j("#cypherSearchForm").advancedSearchForm();
+		$j("#indexSearchForm").advancedSearchForm();
+		$j("#fromVolumeSearchForm").advancedSearchForm();
+		$j("#toVolumeSearchForm").advancedSearchForm();
+		$j("#contextSearchForm").advancedSearchForm();
+		$j("#inventarioSearchForm").advancedSearchForm();
 
 		$j('#multiOpenAccordion').multiAccordion({active: [0]});
 	});
