@@ -23,8 +23,14 @@
 			<tr>
 				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.entryId}</a></td>
 				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
-				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
-				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
+				<c:if test="${currentDocument.recipientPeople.personId != 9285 && currentDocument.recipientPeople.personId != 3905}">
+					<td><a class="searchResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
+					<td><a class="searchResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
+				</c:if>
+				<c:if test="${currentDocument.recipientPeople.personId == 9285 || currentDocument.recipientPeople.personId == 3905}">
+					<td><a class="searchResult" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
+					<td><a class="searchResult" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
+				</c:if>
 				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
 			</tr>
 			</c:forEach>

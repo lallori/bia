@@ -23,6 +23,14 @@
 		<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
 			<c:param name="personId"   value="${command.document.recipientPeople.personId}" />
 		</c:url>
+		
+		<c:url var="CompareFromURL" value="/src/geobase/ComparePlace.do">
+			<c:param name="placeAllId" value="${command.document.senderPlace.placeAllId}" />
+		</c:url>
+	
+		<c:url var="CompareToURL" value="/src/geobase/ComparePlace.do">
+			<c:param name="placeAllId" value="${command.document.recipientPlace.placeAllId}" />
+		</c:url>
 	</security:authorize>
 
 	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post" cssClass="edit">
@@ -34,14 +42,24 @@
 				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
 				<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure" cssClass="checkboxPers2"/>
-				<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"></a>
+				<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905}">
+					<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"></a>
+				</c:if>
+				<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905}">
+					<a title="Show this person record" id="personIcon" class="senderLinkPeople"></a>
+				</c:if>
 			</div>
 			<div>	
 				<form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From</form:label>
 				<form:input id="senderPlaceDescriptionAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" />
 				<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure" cssClass="checkboxPers2"/>
-				<a title="Show this place record" id="placeIcon" href="#"></a>
+				<c:if test="${command.document.senderPlace.placeAllId != 53384 && command.document.senderPlace.placeAllId != 55627 && command.document.senderPlace.placeAllId != 54332}">
+					<a title="Show this place record" id="placeIcon" class="senderLinkPlace" href="${CompareFromURL}"></a>
+				</c:if>
+				<c:if test="${command.document.senderPlace.placeAllId == 53384 || command.document.senderPlace.placeAllId == 55627 || command.document.senderPlace.placeAllId == 54332 }">
+					<a title="Show this place record" id="placeIcon" class="senderLinkPlace"></a>
+				</c:if>
 			</div>
 
 			<hr />
@@ -51,14 +69,24 @@
 				<form:input id="recipientPeopleDescriptionAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/>
 				<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure" cssClass="checkboxPers2"/>
-				<a title="Show this person record" id="personIcon" class="linkPeople" href="${CompareRecipientURL}"></a>
+				<c:if test="${command.document.recipientPeople.personId != 9285 && command.document.recipientPeople.personId != 3905}">
+					<a title="Show this person record" id="personIcon" class="recipientLinkPeople" href="${CompareRecipientURL}"></a>
+				</c:if>
+				<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905}">
+					<a title="Show this person record" id="personIcon" class="recipientLinkPeople"></a>
+				</c:if>
 			</div>
 			<div>
 				<form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">From</form:label>
 				<form:input id="recipientPlaceDescriptionAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" />
 				<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPlaceUnsure" path="recipientPlaceUnsure" cssClass="checkboxPers2"/>
-				<a title="Show this place record" id="placeIcon" href="#"></a>
+				<c:if test="${command.document.recipientPlace.placeAllId != 53384 && command.document.recipientPlace.placeAllId != 55627 && command.document.recipientPlace.placeAllId != 54332}">
+					<a title="Show this place record" id="placeIcon" class="recipientLinkPlace" href="${CompareToURL}"></a>
+				</c:if>
+				<c:if test="${command.document.recipientPlace.placeAllId == 53384 || command.document.recipientPlace.placeAllId == 55627 || command.document.recipientPlace.placeAllId == 54332}">
+					<a title="Show this place record" id="placeIcon" class="recipientLinkPlace"></a>
+				</c:if>
 			</div>
 			
 			<form:hidden path="senderPeopleId"/>
@@ -145,15 +173,14 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){
 				    //the following code is for "refresh" the link to view the tab of sender people 
-				    var oldSender = $j('#senderPeopleId').val(); 
-			    	$j('#senderPeopleId').val(data);
-			    	var link = $j('.senderLinkPeople').attr("href");
-			    	if(oldSender == ""){
-				    	link += data;
-			    	}else{			    	
-			    		link = link.replace(oldSender, data);
-			    	} 
-			    	$j('.senderLinkPeople').attr("href", link);
+				   	$j('#senderPeopleId').val(data);
+				    if(data != 9285 && data != 3905){
+			    		var link = '<c:url value="/src/peoplebase/ComparePerson.do?personId=" />';
+			    		link += data;
+			    		$j('.senderLinkPeople').attr("href", link);
+				    }else{
+				    	$j('.senderLinkPeople').removeAttr("href");
+				    }
 			    }			    
 			  });
 
@@ -169,6 +196,13 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
 			    	$j('#senderPlaceId').val(data);
+			    	if(data != 53384 && data != 55627 && data != 54332){
+			    		var link = '<c:url value="/src/geobase/ComparePlace.do?placeAllId=" />';
+			    		link += data;
+			    		$j('.senderLinkPlace').attr("href", link);
+				    }else{
+				    	$j('.senderLinkPlace').removeAttr("href");
+				    }
 			    	$j.get("${ShowSenderPlaceDetailsURL}", { placeAllId: "" + data }, function(data) {
 			    		$j('#senderPlacePrefered').val(data.prefFlag);
 			    	});
@@ -184,7 +218,16 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#recipientPeopleId').val(data); }
+			    onSelect: function(value, data){ 
+			    	$j('#recipientPeopleId').val(data);
+			    	if(data != 9285 && data != 3905){
+			    		var link = '<c:url value="/src/peoplebase/ComparePerson.do?personId=" />';
+			    		link += data;
+			    		$j('.recipientLinkPeople').attr("href", link);
+				    }else{
+				    	$j('.recipientLinkPeople').removeAttr("href");
+				    }
+			    }
 			  });
 
 			$j('#recipientPlaceDescriptionAutoCompleter').autocompletePlace({ 
@@ -198,6 +241,13 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
 			    	$j('#recipientPlaceId').val(data);
+			    	if(data != 53384 && data != 55627 && data != 54332){
+			    		var link = '<c:url value="/src/geobase/ComparePlace.do?placeAllId=" />';
+			    		link += data;
+			    		$j('.recipientLinkPlace').attr("href", link);
+				    }else{
+				    	$j('.recipientLinkPlace').removeAttr("href");
+				    }
 			    	$j.get("${ShowRecipientPlaceDetailsURL}", { placeAllId: "" + data }, function(data) {
 			    		$j('#recipientPlacePrefered').val(data.prefFlag);
 			    	});
@@ -245,6 +295,24 @@
 
 			$j('.senderLinkPeople').click(function() {
 				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#senderPeopleDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				return false;
+			});
+			
+			$j('.senderLinkPlace').click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#senderPlaceDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				return false;
+			});
+			
+			$j('.recipientLinkPeople').click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#recipientPeopleDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				return false;
+			});
+			
+			$j('.recipientLinkPlace').click(function() {
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#recipientPlaceDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});

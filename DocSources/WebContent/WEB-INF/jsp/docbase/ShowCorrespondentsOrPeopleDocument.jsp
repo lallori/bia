@@ -39,10 +39,11 @@
 
 		<div class="list">
 			<div class="row">
+<!-- 				Entries like "person name lost" or "to be entered" should be not clickable -->
 				<c:if test="${document.senderPeople.personId != 9285 && document.senderPeople.personId != 3905}">
 					<div class="item">Sender</div> <div class="value80"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
 				</c:if>
-				<c:if test="${document.recipientPeople.personId == 9285 || document.senderPeople.personId == 3905}">
+				<c:if test="${document.senderPeople.personId == 9285 || document.senderPeople.personId == 3905}">
 					<div class="item">Sender</div> <div class="value80">${document.senderPeople.mapNameLf}</div>
 				</c:if>
 			</div>
@@ -82,7 +83,7 @@
 					<c:if test="${currentPeople.person.personId != 9285 && currentPeople.person.personId != 3905}">
 					<div class="item">&nbsp;</div><div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
 					</c:if>
-					<c:if test="${document.recipientPeople.personId == 9285 || currentPeople.person.personId == 3905}">
+					<c:if test="${currentPeople.person.personId == 9285 || currentPeople.person.personId == 3905}">
 					<div class="item">&nbsp;</div><div class="value80">${currentPeople.person.mapNameLf}</div>
 					</c:if>
 					
