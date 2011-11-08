@@ -49,6 +49,7 @@
 
 			// We need to remove any previous live function
 			$j('.searchResult').die();
+			
 			// Result links have a specific class style on which we attach click live. 
 			$j('.searchResult').live('click', function() {
 				$j("#body_left").load($j(this).attr("href"));

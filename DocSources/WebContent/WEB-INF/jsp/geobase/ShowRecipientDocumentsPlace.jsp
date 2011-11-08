@@ -21,17 +21,17 @@
 				<c:param name="personId"   value="${currentDocument.senderPeople.personId}" />
 			</c:url>
 			<tr>
-				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.entryId}</a></td>
-				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
-				<c:if test="${currentDocument.recipientPeople.personId != 9285 && currentDocument.recipientPeople.personId != 3905}">
-					<td><a class="searchResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
-					<td><a class="searchResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.entryId}</a></td>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
+				<c:if test="${currentDocument.recipientPeople.personId != 9285 && currentDocument.recipientPeople.personId != 3905 && currentDocument.recipientPeople.personId != 198}">
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
 				</c:if>
-				<c:if test="${currentDocument.recipientPeople.personId == 9285 || currentDocument.recipientPeople.personId == 3905}">
-					<td><a class="searchResult" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
-					<td><a class="searchResult" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
+				<c:if test="${currentDocument.recipientPeople.personId == 9285 || currentDocument.recipientPeople.personId == 3905 || currentDocument.recipientPeople.personId == 198}">
+					<td><a class="showResult" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
+					<td><a class="showResult" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
 				</c:if>
-				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -57,9 +57,9 @@
 			$j("#showRecipientDocumentsPlace_filter").remove();
 
 			// We need to remove any previous live function
-			$j('.searchResult').die();
+			$j('.showResult').die();
 			// Result links have a specific class style on which we attach click live. 
-			$j(".searchResult").live('click', function() {
+			$j(".showResult").live('click', function() {
 				var tabName = $j(this).attr("title");
 				var numTab = 0;
 				

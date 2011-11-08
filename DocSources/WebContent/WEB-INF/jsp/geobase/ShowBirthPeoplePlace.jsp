@@ -19,9 +19,16 @@
 				<c:param name="personId"   value="${currentPerson.personId}" />
 			</c:url>
 			<tr>
-				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.personId}</a></td>
-				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.mapNameLf}</a></td>
-				<td><a class="searchResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.bornYear} ${currentPerson.bornMonth} ${currentPerson.bornDay}</a></td>
+				<c:if test="${currentPerson.personId != 9285 && currentPerson.personId != 3905 && currentPerson.personId != 198}">
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.personId}</a></td>
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.mapNameLf}</a></td>
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.bornYear} ${currentPerson.bornMonth} ${currentPerson.bornDay}</a></td>
+				</c:if>
+				<c:if test="${currentPerson.personId == 9285 || currentPerson.personId == 3905 || currentPerson.personId == 198}">
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.personId}</a></td>
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.mapNameLf}</a></td>
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.bornYear} ${currentPerson.bornMonth} ${currentPerson.bornDay}</a></td>
+				</c:if>
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -51,9 +58,9 @@
 			$j("#showBirthPeoplePlace_filter").remove();
 
 			// We need to remove any previous live function
-			$j('.searchResult').die();
+			$j('.showResult').die();
 			// Result links have a specific class style on which we attach click live. 
-			$j(".searchResult").live('click', function() {
+			$j(".showResult").live('click', function() {
 				var tabName = $j(this).attr("title");
 				var numTab = 0;
 				

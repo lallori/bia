@@ -20,9 +20,9 @@
 			</c:url>
 			
 			<tr>
-				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.document.getEntryId()}</a></td>
-				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.topic.topicTitle}</a></td>
-				<td><a class="searchResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.document.docYear} ${currentTopic.document.docMonthNum} ${currentTopic.document.docDay}</a></td>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.document.getEntryId()}</a></td>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.topic.topicTitle}</a></td>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentTopic.document.getMDPAndFolio()}">${currentTopic.document.docYear} ${currentTopic.document.docMonthNum} ${currentTopic.document.docDay}</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -48,9 +48,11 @@
 			$j("#showTopicsPlace_filter").remove();
 
 			// We need to remove any previous live function
-			$j('.searchResult').die();
+			$j('.showResult').die();
+			
+			
 			// Result links have a specific class style on which we attach click live. 
-			$j(".searchResult").live('click', function() {
+			$j(".showResult").live('click', function() {
 				var tabName = $j(this).attr("title");
 				var numTab = 0;
 				
