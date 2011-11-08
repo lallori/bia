@@ -143,13 +143,13 @@
 	        	$j("#activeStartLabel").append("Active Start");
 	        	$j("#bornYear").attr('class', 'input_4c_disabled');
 	        	$j("#bornYear").attr('disabled', 'disabled');
-	        	$j("#bornYearLabel").append('<a class="messageStart" id="activeStartMessage" title="This field is disabled because you have written the Active Start">Year<a/>');
+	        	$j("#bornYearLabel").append('<a class="messageStart" title="This field is disabled because you have written the Active Start">Year<a/>');
 	        }else{
 	        	if($j("#bornYear").val() != ''){
 	        		$j("#bornYearLabel").append("Year");
-	        		$j("#activeStart").attr('class', 'input_4c_disabled');
+	        		$j("#activeStart").attr('class', 'input_10c_disabled');
 	        		$j("#activeStart").attr('disabled', 'disabled');
-	        		$j("#activeStartLabel").append('<a class="messageStart" id="activeStartMessage" title="This field is disabled because you have written the Birth Year">Active Start<a/>');
+	        		$j("#activeStartLabel").append('<a class="messageStart" title="This field is disabled because you have written the Birth Year">Active Start<a/>');
 	        	}else{
 	        		$j("#activeStartLabel").append("Active Start");
 	        		$j("#bornYearLabel").append("Year");
@@ -160,13 +160,13 @@
 	        	$j("#activeEndLabel").append("Active End");
 	        	$j("#deathYear").attr('class', 'input_4c_disabled');
 	        	$j("#deathYear").attr('disabled', 'disabled');
-	        	$j("#deathYearLabel").append('<a class="messageEnd" id="activeEndMessage" title="This field is disabled because you have written the Active End">Year<a/>');
+	        	$j("#deathYearLabel").append('<a class="messageEnd" title="This field is disabled because you have written the Active End">Year<a/>');
 	        }else{
 	        	if($j("#deathYear").val() != ''){
 	        		$j("#deathYearLabel").append("Year");
-	        		$j("#activeEnd").attr('class', 'input_4c_disabled'); 
+	        		$j("#activeEnd").attr('class', 'input_10c_disabled'); 
 					$j("#activeEnd").attr('disabled', 'disabled');
-	        		$j("#activeEndLabel").append('<a class="messageEnd" id="activeEndMessage" title="This field is disabled because you have written the Death Year">Active End<a/>');
+	        		$j("#activeEndLabel").append('<a class="messageEnd" title="This field is disabled because you have written the Death Year">Active End<a/>');
 	        	}else{
 	        		$j("#activeEndLabel").append("Active End");
 	        		$j("#deathYearLabel").append("Year");
@@ -176,12 +176,16 @@
 	        $j("#bornYear").change(function(){
 	        	if($j(this).val() != ''){
 	        		$j("#activeStart").val('');
-	        		$j("#activeStart").attr('class', 'input_4c_disabled');
+	        		$j("#activeStart").attr('class', 'input_10c_disabled');
 	        		$j("#activeStart").attr('disabled', 'disabled');
 	        		$j("#activeStartLabel").text("");
-	        		$j("#activeStartLabel").append('<a class="messageStart">Active Start<a/>');
+	        		$j("#activeStartLabel").append('<a class="messageStart" title="This field is disabled because you have written the Birth Year">Active Start<a/>');
+	        		$j('.messageStart').tooltip({
+	    				track: true,
+	    				fade: 350 
+	    			});
 	        	}else{
-	        		$j("#activeStart").attr('class', 'input_4c');
+	        		$j("#activeStart").attr('class', 'input_10c');
 	        		$j("#activeStart").removeAttr('disabled');
 	        		$j(".messageStart").remove();
 	        		$j("#activeStartLabel").append("Active Start");
@@ -194,7 +198,11 @@
 	        		$j("#bornYear").attr('class', 'input_4c_disabled');
 	        		$j("#bornYear").attr('disabled', 'disabled');
 	        		$j("#bornYearLabel").text("");
-	        		$j("#bornYearLabel").append('<a class="messageStart">Year<a/>');
+	        		$j("#bornYearLabel").append('<a class="messageStart" title="This field is disabled because you have written the Active Start">Year<a/>');
+	        		$j('.messageStart').tooltip({
+	    				track: true,
+	    				fade: 350 
+	    			});
 	        	}else{
 	        		$j("#bornYear").attr('class', 'input_4c');
 	        		$j("#bornYear").removeAttr('disabled');
@@ -206,12 +214,16 @@
 	        $j("#deathYear").change(function(){
 	        	if($j(this).val() != ''){
 	        		$j("#activeEnd").val('');
-	        		$j("#activeEnd").attr('class', 'input_4c_disabled');
+	        		$j("#activeEnd").attr('class', 'input_10c_disabled');
 	        		$j("#activeEnd").attr('disabled', 'disabled');
 	        		$j("#activeEndLabel").text("");
-	        		$j("#activeEndLabel").append('<a class="messageEnd">Active End<a/>');
+	        		$j("#activeEndLabel").append('<a class="messageEnd" title="This field is disabled because you have written the Death Year">Active End<a/>');
+	        		$j('.messageEnd').tooltip({
+	    				track: true,
+	    				fade: 350 
+	    			});
 	        	}else{
-	        		$j("#activeEnd").attr('class', 'input_4c');
+	        		$j("#activeEnd").attr('class', 'input_10c');
 	        		$j("#activeEnd").removeAttr('disabled');
 	        		$j(".messageEnd").remove();
 	        		$j("#activeEndLabel").append("Active End");
@@ -224,7 +236,11 @@
 	        		$j("#deathYear").attr('class', 'input_4c_disabled');
 	        		$j("#deathYear").attr('disabled', 'disabled');
 	        		$j("#deathYearLabel").text("");
-	        		$j("#deathYearLabel").append('<a class="messageEnd">Year<a/>');
+	        		$j("#deathYearLabel").append('<a class="messageEnd" title="This field is disabled because you have written the Active End">Year<a/>');
+	        		$j('.messageEnd').tooltip({
+	    				track: true,
+	    				fade: 350 
+	    			});
 	        	}else{
 	        		$j("#deathYear").attr('class', 'input_4c');
 	        		$j("#deathYear").removeAttr('disabled');
@@ -284,6 +300,17 @@
 				$j('#EditDetailsPersonDiv').block({ message: $j('#question') }); 
 	            return false;
 			});
+			
+			$j('.messageStart').tooltip({
+				track: true,
+				fade: 350 
+			});
+			
+			$j('.messageEnd').tooltip({
+				track: true,
+				fade: 350 
+			}); 
+				
 		});
 	</script>
 
