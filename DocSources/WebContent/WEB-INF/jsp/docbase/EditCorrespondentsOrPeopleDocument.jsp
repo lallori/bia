@@ -42,10 +42,10 @@
 				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
 				<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure" cssClass="checkboxPers2"/>
-				<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905}">
+				<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905 && command.document.senderPeople.personId != 198}">
 					<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"></a>
 				</c:if>
-				<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905}">
+				<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905 || command.document.senderPeople.personId == 198}">
 					<a title="Show this person record" id="personIcon" class="senderLinkPeople"></a>
 				</c:if>
 			</div>
@@ -69,10 +69,10 @@
 				<form:input id="recipientPeopleDescriptionAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/>
 				<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
 				<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure" cssClass="checkboxPers2"/>
-				<c:if test="${command.document.recipientPeople.personId != 9285 && command.document.recipientPeople.personId != 3905}">
+				<c:if test="${command.document.recipientPeople.personId != 9285 && command.document.recipientPeople.personId != 3905 && command.document.recipientPeople.personId != 198}">
 					<a title="Show this person record" id="personIcon" class="recipientLinkPeople" href="${CompareRecipientURL}"></a>
 				</c:if>
-				<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905}">
+				<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905 || command.document.recipientPeople.personId == 198}">
 					<a title="Show this person record" id="personIcon" class="recipientLinkPeople"></a>
 				</c:if>
 			</div>

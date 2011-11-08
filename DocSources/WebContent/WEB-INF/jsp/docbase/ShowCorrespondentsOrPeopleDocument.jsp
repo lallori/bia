@@ -40,10 +40,10 @@
 		<div class="list">
 			<div class="row">
 <!-- 				Entries like "person name lost" or "to be entered" should be not clickable -->
-				<c:if test="${document.senderPeople.personId != 9285 && document.senderPeople.personId != 3905}">
+				<c:if test="${document.senderPeople.personId != 9285 && document.senderPeople.personId != 3905 && document.senderPeople.personId != 198}">
 					<div class="item">Sender</div> <div class="value80"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
 				</c:if>
-				<c:if test="${document.senderPeople.personId == 9285 || document.senderPeople.personId == 3905}">
+				<c:if test="${document.senderPeople.personId == 9285 || document.senderPeople.personId == 3905 || document.senderPeople.personId == 198}">
 					<div class="item">Sender</div> <div class="value80">${document.senderPeople.mapNameLf}</div>
 				</c:if>
 			</div>
@@ -56,10 +56,10 @@
 				</c:if>
 			</div>	
 			<div class="row">
-				<c:if test="${document.recipientPeople.personId != 9285 && document.recipientPeople.personId != 3905}">
+				<c:if test="${document.recipientPeople.personId != 9285 && document.recipientPeople.personId != 3905 && document.recipientPeople.personId != 198}">
 					<div class="item">Recipient</div> <div class="value80"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
 				</c:if>
-				<c:if test="${document.recipientPeople.personId == 9285 || document.recipientPeople.personId == 3905}">
+				<c:if test="${document.recipientPeople.personId == 9285 || document.recipientPeople.personId == 3905 || document.recipientPeople.personId == 198}">
 					<div class="item">Recipient</div> <div class="value80">${document.recipientPeople.mapNameLf}</div>
 				</c:if>
 			</div>
@@ -80,10 +80,10 @@
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
-					<c:if test="${currentPeople.person.personId != 9285 && currentPeople.person.personId != 3905}">
+					<c:if test="${currentPeople.person.personId != 9285 && currentPeople.person.personId != 3905 && currentPeople.person.personId != 198}">
 					<div class="item">&nbsp;</div><div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
 					</c:if>
-					<c:if test="${currentPeople.person.personId == 9285 || currentPeople.person.personId == 3905}">
+					<c:if test="${currentPeople.person.personId == 9285 || currentPeople.person.personId == 3905 || currentPeople.person.personId == 198}">
 					<div class="item">&nbsp;</div><div class="value80">${currentPeople.person.mapNameLf}</div>
 					</c:if>
 					
