@@ -27,10 +27,13 @@
  */
 package org.medici.docsources.controller.geobase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.geobase.ComparePlaceRequestCommand;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -82,6 +85,12 @@ public class ComparePlaceController {
 		Place place = new Place();
 		try {
 			place = getGeoBaseService().findPlace(command.getPlaceAllId());
+			List<Integer> documentsInTopics = new ArrayList<Integer>();
+			for(EplToLink currentTopic : place.getEplToLinks()){
+				if(!documentsInTopics.contains(currentTopic.getDocument().getEntryId()))
+					documentsInTopics.add(currentTopic.getDocument().getEntryId());
+			}
+			model.put("docInTopics", documentsInTopics.size());
 			model.put("place", place);
 		} catch (ApplicationThrowable ath) {
 			new ModelAndView("error/ComparePlace", model);

@@ -105,7 +105,7 @@
 	</div>
 	<div class="list">	
 		<div class="row">
-			<div class="value">6253 Documents on 44 Topics</div>
+			<div class="value">${docInTopics} Documents on ${place.eplToLinks.size()} Topics</div>
 		</div>
 	</div>
 </div>
