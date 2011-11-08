@@ -149,11 +149,13 @@ public class EditMotherPersonController {
 				command.setBornYear(parent.getParent().getBornYear());
 				if (parent.getParent().getBornMonth()!= null){
 					command.setBornMonthNum(parent.getParent().getBornMonth().getMonthNum());
+					command.setBornMonth(parent.getParent().getBornMonth().getMonthName());
 				}
 				command.setBornDay(parent.getParent().getBornDay());
 				command.setDeathYear(parent.getParent().getDeathYear());
 				if (parent.getParent().getDeathMonth() != null) {
 					command.setDeathMonthNum(parent.getParent().getDeathMonth().getMonthNum());
+					command.setDeathMonth(parent.getParent().getDeathMonth().getMonthName());
 				}
 				command.setDeathDay(parent.getParent().getDeathDay());
 

@@ -43,9 +43,11 @@ public class EditFatherPersonCommand {
 	private String fatherDescription;
 	private Integer bornYear;
 	private Integer bornMonthNum;
+	private String bornMonth;
 	private Integer bornDay;
 	private Integer deathYear;
 	private Integer deathMonthNum;
+	private String deathMonth;
 	private Integer deathDay;
 	private String bioNotes;
 	private Gender gender;
@@ -215,5 +217,33 @@ public class EditFatherPersonCommand {
 	 */
 	public Gender getGender() {
 		return gender;
+	}
+
+	/**
+	 * @param bornMonth the bornMonth to set
+	 */
+	public void setBornMonth(String bornMonth) {
+		this.bornMonth = bornMonth;
+	}
+
+	/**
+	 * @return the bornMonth
+	 */
+	public String getBornMonth() {
+		return bornMonth;
+	}
+
+	/**
+	 * @param deathMonth the deathMonth to set
+	 */
+	public void setDeathMonth(String deathMonth) {
+		this.deathMonth = deathMonth;
+	}
+
+	/**
+	 * @return the deathMonth
+	 */
+	public String getDeathMonth() {
+		return deathMonth;
 	}
 }

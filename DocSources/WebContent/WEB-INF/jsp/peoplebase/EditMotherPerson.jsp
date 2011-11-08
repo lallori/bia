@@ -26,7 +26,7 @@
 					<form:label id="bornYearLabel" for="bornYear" path="bornYear">Year</form:label>
 					<form:input path="bornYear" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
 					<form:label id="bornMonthLabel" for="bornMonthNum" path="bornMonthNum">Month</form:label>
-					<form:select id="bornMonthNum" disabled="disabled" path="bornMonthNum" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+					<form:select id="bornMonth" disabled="disabled" path="bornMonth" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 					<form:label id="bornDayLabel" for="bornDay" path="bornDay">Day</form:label>
 					<form:input path="bornDay" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
 				</div>
@@ -36,7 +36,7 @@
 					<form:label id="deathYearLabel" for="deathYear" path="bornYear">Year</form:label>
 					<form:input path="deathYear" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
 					<form:label id="deathMonthLabel" for="deathMonthNum" path="deathMonthNum">Month</form:label>
-					<form:select id="deathMonthNum" disabled="disabled" path="deathMonthNum" cssClass="selectform_disabled"/>
+					<form:select id="deathMonth" disabled="disabled" path="deathMonth" cssClass="selectform_disabled"/>
 					<form:label id="deathDayLabel" for="deathDay" path="deathDay">Day</form:label>
 					<form:input path="deathDay" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
 				</div>
@@ -81,10 +81,10 @@
 			    	$j('#parentId').val(data); 
 					$j.get("${ShowMotherDetailsURL}", { personId: "" + data }, function(data) {
 						$j("#bornYear").val(data.bornYear);
-						$j("#bornMonthNum").append('<option value="' + data.bornMonth + '" selected="selected">' + data.bornMonth + '</option>');
+						$j("#bornMonth").append('<option value="' + data.bornMonth + '" selected="selected">' + data.bornMonth + '</option>');
 						$j("#bornDay").val(data.bornDay);
 						$j("#deathYear").val(data.deathYear);
-						$j("#deathMonthNum").val(data.deathMonth);
+						$j("#deathMonth").append('<option value="' + data.deathMonth + '" selected="selected">' + data.deathMonth + '</option>');
 						$j("#deathDay").val(data.deathDay);
 						$j("#bioNotes").val(data.bioNotes);
 						$j("#gender").val(data.gender);
