@@ -331,6 +331,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowExternalLinksPlace.jsp" />
 	</definition>
 	
+	<definition name="geobase/ShowNamesOrNamesVariantsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowNamesOrNamesVariantsPlace.jsp" />
+	</definition>
+	
 	<definition name="geobase/ShowRecipientDocumentsPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowRecipientDocumentsPlace.jsp" />
 	</definition>
@@ -450,6 +454,10 @@
 
 	<definition name="peoplebase/ShowDetailsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowDocumentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowDocumentsPerson.jsp" />
 	</definition>
 
 	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">

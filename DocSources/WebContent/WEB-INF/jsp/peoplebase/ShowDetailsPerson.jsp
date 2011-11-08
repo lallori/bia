@@ -17,6 +17,10 @@
 	<c:url var="CompareDeathURL" value="/src/geobase/ComparePlace.do">
 		<c:param name="placeAllId" value="${person.deathPlace.placeAllId}" />
 	</c:url>
+	
+	<c:url var="ShowDocumentsPersonURL" value="/de/peoplebase/ShowDocumentsPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
 
 	<div id="EditDetailsPersonDiv" class="background">
 		<div class="title">
@@ -30,7 +34,12 @@
 			<div id="imgPortraitPerson"></div>
 			<p style="text-align:center"><b>Portrait</b></p>
 		</div>
-		
+		<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size() != 0}">
+			<a href="${ShowDocumentsPersonURL}" id="linkSearch" class="test" style="padding: 0 0 15px 30px">Documents indexed to this person: ${person.senderDocuments.size()+person.recipientDocuments.size()}</a>
+		</c:if>
+		<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size() == 0}">
+			<a id="linkSearch" class="test" style="padding: 0 0 15px 30px">Documents indexed to this person: 0</a>
+		</c:if>
 		<div class="listDetails">
 			<div class="row">
 				<div class="item">Gender</div> <div class="value">${person.gender}</div>
@@ -39,7 +48,13 @@
 				<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Birth Place</div><div class="value"><a href="${CompareBirthURL}" id="linkSearch" class="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+				<div class="item">Birth Place</div>
+				<c:if test="${person.bornPlace.placeAllId != 53384 && person.bornPlace.placeAllId != 55627 && person.bornPlace.placeAllId != 54332}">
+					<div class="value"><a href="${CompareBirthURL}" id="linkSearch" class="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+				</c:if>
+				<c:if test="${person.bornPlace.placeAllId == 53384 || person.bornPlace.placeAllId == 55627 || person.bornPlace.placeAllId == 54332 }">
+					<div class="value">${person.bornPlace.placeNameFull}</div>
+				</c:if>
 			</div>
 			<div class="row">
 				<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
@@ -48,7 +63,13 @@
 				<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
 			</div>
 			<div class="row">
-				<div class="item">Death Place</div> <div class="value"><a href="${CompareDeathURL}" id="linkSearch" class="linkSearch">${person.deathPlace.placeNameFull}</a></div>
+				<div class="item">Death Place</div>
+				<c:if test="${person.deathPlace.placeAllId != 53384 && person.deathPlace.placeAllId != 55627 && person.deathPlace.placeAllId != 54332}">
+					<div class="value"><a href="${CompareDeathURL}" id="linkSearch" class="linkSearch">${person.deathPlace.placeNameFull}</a></div>
+				</c:if>
+				<c:if test="${person.deathPlace.placeAllId == 53384 || person.deathPlace.placeAllId == 55627 || person.deathPlace.placeAllId == 54332 }">
+					<div class="value">${person.deathPlace.placeNameFull}</div>
+				</c:if>
 			</div>
 			<div class="row">
 				<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
@@ -88,6 +109,30 @@
 				
 				if(!tabExist){
 					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".test").click(function(){
+				var tabName = "Docs ${person.mapNameLf}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
