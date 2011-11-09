@@ -73,24 +73,26 @@
 			</div>	
 			<br>
 			<div class="row">
-				<div class="item">People</div> <div class="value80"></div>
-			</div>	
+				<div class="item">People</div> 
+				
 			<c:forEach items="${document.epLink}" var="currentPeople">
-				<div class="row">
+			<!-- This is a method to have a value near the item with the text People. -->	
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
 					<c:if test="${currentPeople.person.personId != 9285 && currentPeople.person.personId != 3905 && currentPeople.person.personId != 198}">
-					<div class="item">&nbsp;</div><div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
+					<div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
 					</c:if>
 					<c:if test="${currentPeople.person.personId == 9285 || currentPeople.person.personId == 3905 || currentPeople.person.personId == 198}">
-					<div class="item">&nbsp;</div><div class="value80">${currentPeople.person.mapNameLf}</div>
+					<div class="value80">${currentPeople.person.mapNameLf}</div>
 					</c:if>
-					
+
 				</div>
+				<div class="row">
+					<div class="item">&nbsp</div>
 			</c:forEach>
 			</div>
-		
+		</div>
 	</div>
 	
 	<script type="text/javascript">
