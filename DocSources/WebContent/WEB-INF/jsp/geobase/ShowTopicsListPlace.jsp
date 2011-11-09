@@ -14,7 +14,12 @@
 	</div>
 	<div class="list">	
 		<div class="row">
-			<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${place.eplToLinks.size()} Topics</a></div>
+			<c:if test="${place.eplToLinks.size() != 0}">
+				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${place.eplToLinks.size()} Topics</a></div>
+			</c:if>
+			<c:if test="${place.eplToLinks.size() == 0}">
+				<div class="value"><a id="linkSearch">0 Document on 0 Topic</a></div>
+			</c:if>
 		</div>
 	</div>
 </div>
