@@ -45,7 +45,7 @@
 				<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905 && command.document.senderPeople.personId != 198}">
 					<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"></a>
 				</c:if>
-				<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905 || command.document.senderPeople.personId == 198}">
+				<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905 || command.document.senderPeople.personId == 198 || command.document.senderPeople.personId == null}">
 					<a title="Show this person record" id="personIcon" class="senderLinkPeople"></a>
 				</c:if>
 			</div>
@@ -57,7 +57,7 @@
 				<c:if test="${command.document.senderPlace.placeAllId != 53384 && command.document.senderPlace.placeAllId != 55627 && command.document.senderPlace.placeAllId != 54332}">
 					<a title="Show this place record" id="placeIcon" class="senderLinkPlace" href="${CompareFromURL}"></a>
 				</c:if>
-				<c:if test="${command.document.senderPlace.placeAllId == 53384 || command.document.senderPlace.placeAllId == 55627 || command.document.senderPlace.placeAllId == 54332 }">
+				<c:if test="${command.document.senderPlace.placeAllId == 53384 || command.document.senderPlace.placeAllId == 55627 || command.document.senderPlace.placeAllId == 54332 || command.document.senderPlace.placeAllId == 0}">
 					<a title="Show this place record" id="placeIcon" class="senderLinkPlace"></a>
 				</c:if>
 			</div>
@@ -72,7 +72,7 @@
 				<c:if test="${command.document.recipientPeople.personId != 9285 && command.document.recipientPeople.personId != 3905 && command.document.recipientPeople.personId != 198}">
 					<a title="Show this person record" id="personIcon" class="recipientLinkPeople" href="${CompareRecipientURL}"></a>
 				</c:if>
-				<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905 || command.document.recipientPeople.personId == 198}">
+				<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905 || command.document.recipientPeople.personId == 198 || command.document.recipientPeople.personId == 0}">
 					<a title="Show this person record" id="personIcon" class="recipientLinkPeople"></a>
 				</c:if>
 			</div>
@@ -84,7 +84,7 @@
 				<c:if test="${command.document.recipientPlace.placeAllId != 53384 && command.document.recipientPlace.placeAllId != 55627 && command.document.recipientPlace.placeAllId != 54332}">
 					<a title="Show this place record" id="placeIcon" class="recipientLinkPlace" href="${CompareToURL}"></a>
 				</c:if>
-				<c:if test="${command.document.recipientPlace.placeAllId == 53384 || command.document.recipientPlace.placeAllId == 55627 || command.document.recipientPlace.placeAllId == 54332}">
+				<c:if test="${command.document.recipientPlace.placeAllId == 53384 || command.document.recipientPlace.placeAllId == 55627 || command.document.recipientPlace.placeAllId == 54332 || command.document.recipientPlace.placeAllId == 0}">
 					<a title="Show this place record" id="placeIcon" class="recipientLinkPlace"></a>
 				</c:if>
 			</div>
@@ -103,6 +103,7 @@
 		</fieldset>	
 	</form:form>
 	
+	<div id="PeopleCorrespondentsDocumentDiv">
 	<form:form id="PeopleCorrespondentsDocumentsForm" method="post" cssClass="edit">
 		<fieldset>	
 			<legend><b>PEOPLE</b></legend>
@@ -141,6 +142,7 @@
 			<br>
 		</fieldset>
 	</form:form>
+	</div>
 		
 	<div id="EditPersonDocumentDiv"></div>
 			
@@ -183,6 +185,11 @@
 				    }
 			    }			    
 			  });
+			
+			$j('.senderLinkPeople').click(function(){
+				if($j('#senderPeopleDescriptionAutoCompleter').val() == '')
+					$j('.senderLinkPeople').attr("href", null);
+			});
 
 			
 			$j('#senderPlaceDescriptionAutoCompleter').autocompletePlace({ 
@@ -209,6 +216,11 @@
 			    }
 			  });
 			
+			$j('.senderLinkPlace').click(function(){
+				if($j('#senderPlaceDescriptionAutoCompleter').val() == '')
+					$j('.senderLinkPlace').attr("href", null);
+			});
+			
 			$j('#recipientPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchRecipientPeopleURL}',
 			    minChars:3, 
@@ -229,6 +241,11 @@
 				    }
 			    }
 			  });
+			
+			$j('.recipientLinkPeople').click(function(){
+				if($j('#recipientPeopleDescriptionAutoCompleter').val() == '')
+					$j('.recipientLinkPeople').attr('href', null);
+			});
 
 			$j('#recipientPlaceDescriptionAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchRecipientPlaceURL}',
@@ -253,6 +270,11 @@
 			    	});
 			    	}
 			  });
+			
+			$j('.recipientLinkPlace').click(function(){
+				if($j('#recipientPlaceDescriptionAutoCompleter').val() == '')
+					$j('.recipientLinkPlace').attr('href', null);
+			});
 
 			$j("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
 				if($j("#senderPlacePrefered").val() == 'V' || $j("#recipientPlacePrefered").val() == 'V'){
@@ -272,13 +294,28 @@
 			});
 
 			$j(".deleteIcon").click(function() {
-				$j.get($j(this).attr("href"), function(data) {
+				var temp = $j(this);
+				$j("#PeopleCorrespondentsDocumentDiv").block({ message: $j("#questionPerson")});
+				
+				$j('#personNo').click(function() {
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j("#questionPerson").hide();
+					$j("#PeopleCorrespondentsDocumentDiv").append($j("#questionPerson"));
+					$j(".blockUI").remove();
+					return false; 
+				}); 
+
+				$j('#personYes').click(function() { 
+					$j.get(temp.attr("href"), function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
 						$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
 					}
+					return false;
 		        });
+				});
 				return false;
 			});
 
@@ -352,9 +389,15 @@
 </div>
 
 <div id="questionPlace" class="notPrincipal" style="display:none; cursor: default">
-		<h1>Variant Place changed to Principal Place</h1>
+		<h1>This name place is classified as a Variant Name and will be adjusted to its Preferred Name</h1>
 		<input type="button" id="ok" value="Ok" />
 	</div>
+	
+<div id="questionPerson" style="display:none; cursor: default"> 
+		<h1>Delete this Person entry?</h1> 
+		<input type="button" id="personYes" value="Yes" /> 
+		<input type="button" id="personNo" value="No" /> 
+</div>
 
 <script type="text/javascript">
 	$j(document).ready(function() {
