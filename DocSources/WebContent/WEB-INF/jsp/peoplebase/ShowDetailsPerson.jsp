@@ -30,16 +30,21 @@
 			</security:authorize>
 		</div>
 		<h3>${person.mapNameLf}</h3>
+		
+		<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size() != 0}">
+			<a href="${ShowDocumentsPersonURL}" class="num_docs" title="Click here to view all documents related">${person.senderDocuments.size()+person.recipientDocuments.size()} Documents related</a>
+		</c:if>
+		<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size() == 0}">
+			<a class="num_docs">0 Document related</a>
+		</c:if>
+		<br />
+		<br />
+		
 		<div id="EditPortraitPersonDiv">
 			<div id="imgPortraitPerson"></div>
 			<p style="text-align:center"><b>Portrait</b></p>
 		</div>
-		<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size() != 0}">
-			<a href="${ShowDocumentsPersonURL}" id="linkSearch" class="test" style="padding: 0 0 15px 30px">Documents indexed to this person: ${person.senderDocuments.size()+person.recipientDocuments.size()}</a>
-		</c:if>
-		<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size() == 0}">
-			<a id="linkSearch" class="test" style="padding: 0 0 15px 30px">Documents indexed to this person: 0</a>
-		</c:if>
+		
 		<div class="listDetails">
 			<div class="row">
 				<div class="item">Gender</div> <div class="value">${person.gender}</div>
@@ -117,7 +122,7 @@
 				}
 			});
 			
-			$j(".test").click(function(){
+			$j(".num_docs").click(function(){
 				var tabName = "Docs ${person.mapNameLf}";
 				var numTab = 0;
 				
