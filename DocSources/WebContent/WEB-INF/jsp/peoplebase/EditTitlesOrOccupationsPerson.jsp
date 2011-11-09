@@ -35,10 +35,10 @@
 
 			<div>
 			<c:if test="${currentTitleOrOccupation.preferredRole}">
-				<a title="Preferred Role" class="preferredIconEdit" href="#"></a>
+				<div title="Preferred Role" class="preferredIconEdit"></div>
 			</c:if>
 			<c:if test="${!currentTitleOrOccupation.preferredRole}">
-				<a title="Preferred Role" class="notPreferredIcon" href="#"></a>
+				<div title="Preferred Role" class="notPreferredIcon"></div>
 			</c:if>
       			<input id="firstTitleOcc" name="name_${currentTitleOrOccupation.prfLinkId}" class="input_30c_disabled" type="text" value="${currentTitleOrOccupation.titleOccList.titleOcc}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteTitleOrOccupationPersonURL}"></a>
@@ -85,7 +85,30 @@
 				});*/
 
 				$j(".deleteIcon").click(function() {
+					var toDelete = $j(this);
 					$j('#EditTitlesOrOccupationsPersonDiv').block({ message: $j('#question') }); 
+					
+					$j('#no').click(function() {
+						$j.unblockUI();
+						$j(".blockUI").fadeOut("slow");
+						$j("#question").hide();
+						$j("#EditTitlesOrOccupationsPersonDiv").append($j("#question"));
+						$j(".blockUI").remove();
+						return false; 
+					}); 
+			        
+					$j('#yes').click(function() { 
+						$j.get(toDelete.attr("href"), function(data) {
+							if(data.match(/KO/g)){
+					            var resp = $j('<div></div>').append(data); // wrap response
+							} else {
+								$j("#EditTitlesOrOccupationsPersonDiv").load('${EditTitlesOrOccupationsPersonURL}');
+							}
+				       
+						return false;
+					});
+					});
+					
 					return false;
 				});
 
@@ -107,28 +130,3 @@
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>
-	
-	<script type="text/javascript">
-		$j(document).ready(function() {
-			$j('#no').click(function() {
-				$j.unblockUI();
-				$j(".blockUI").fadeOut("slow");
-				$j("#question").hide();
-				$j("#EditTitlesOrOccupationsPersonDiv").append($j("#question"));
-				$j(".blockUI").remove();
-				return false; 
-			}); 
-	        
-			$j('#yes').click(function() { 
-				$j.get($j(".deleteIcon").attr("href"), function(data) {
-					if(data.match(/KO/g)){
-			            var resp = $j('<div></div>').append(data); // wrap response
-					} else {
-						$j("#EditTitlesOrOccupationsPersonDiv").load('${EditTitlesOrOccupationsPersonURL}');
-					}
-		       
-				return false;
-			}); 	     
-			});
-		});
-	</script>
