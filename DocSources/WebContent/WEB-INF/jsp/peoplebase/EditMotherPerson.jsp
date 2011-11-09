@@ -68,6 +68,9 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#bornMonth, #bornYear, #bornDay").attr("disabled", "disabled");
+			$j("#deathMonth, #deathYear, #deathDay").attr("disabled", "disabled");
+			
 			var motherDescription = $j('#motherAutocompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchMotherLinkableToPersonURL}',
 			    minChars:3, 

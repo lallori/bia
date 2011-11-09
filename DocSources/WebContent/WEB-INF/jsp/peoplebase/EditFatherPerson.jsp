@@ -68,8 +68,8 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#bornMonth").attr("disabled", "disabled");
-			$j("#deathMonth").attr("disabled", "disabled");
+			$j("#bornMonth, #bornYear, #bornDay").attr("disabled", "disabled");
+			$j("#deathMonth, #deathYear, #deathDay").attr("disabled", "disabled");
 			
 			var fatherDescription = $j('#fatherAutocompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchFatherLinkableToPersonURL}',

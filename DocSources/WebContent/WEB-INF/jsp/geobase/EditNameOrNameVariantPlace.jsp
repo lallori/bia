@@ -47,6 +47,8 @@
 			$j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
 
+			$j('#nameType').attr('disabled', 'disabled');
+			
 			$j('#closeName').click(function(e) {
 				$j('#EditNameVariantPlaceDiv').block({ message: $j('#question') }); 
 	            return false;

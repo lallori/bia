@@ -116,13 +116,19 @@ public class EditDetailsPlaceController {
 			try{
 				if(command.getPlaceAllId().equals(0)){
 					place = getGeoBaseService().addNewPlace(place);
+					List<Place> placeNames;
+					placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
+					model.put("placeNames", placeNames);
 					model.put("place", place);
 					return new ModelAndView("geobase/ShowPlace", model);
 				}
 				else{
 					place = getGeoBaseService().editDetailsPlace(place);
+					List<Place> placeNames;
+					placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
+					model.put("placeNames", placeNames);
 					model.put("place", place);
-					return new ModelAndView("geobase/ShowDetailsPlace", model);
+					return new ModelAndView("geobase/ShowPlace", model);
 				}
 			}catch(ApplicationThrowable th){
 				return new ModelAndView("error/EditDetailsPlace", model);

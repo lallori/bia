@@ -4,14 +4,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<div id="geoDiv">
+<div id="geoCompareDiv">
 	<div id="geoTitle">
 	
 	<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
-		<h4>Adding TGN Place Record</h4>
-		<div align="center">
-			<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
-		</div>
+		<h4>TGN Place Record</h4>
 	</c:if>
 	
 	<c:if test="${place.plSource == 'MAPPLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">

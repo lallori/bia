@@ -57,6 +57,8 @@
 
 	<script type="text/javascript"> 
 	    $j(document).ready(function() { 
+	    	$j('#bornYear, #deathYear, #ageAtDeath').attr('disabled', 'disabled');
+	    	
 			var childDescription = $j('#childDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchChildLinkableToPersonURL}',
 			    minChars:3, 

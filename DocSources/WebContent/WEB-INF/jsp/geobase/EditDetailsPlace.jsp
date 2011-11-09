@@ -28,7 +28,7 @@
 				<div>
 					<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
 					<c:if test="${command.plSource != 'TGN'}">
-						<form:input path="geogKey" cssClass="input_35c_disabled"/>
+						<form:input path="geogKey" cssClass="input_35c_disabled" disabled="disabled"/>
 					</c:if>
 					<c:if test="${command.plSource == 'TGN' || command.geogKey >= 1000000}">
 						<form:input path="geogKey" cssClass="input_14c" />
@@ -88,6 +88,8 @@
 	        $j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
 			
+			$j('.input_35c_disabled').attr('disabled', 'disabled');
+			
 			var placeParent = $j('#placeParentAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchPlaceParentURL}',
 			    minChars:3, 
@@ -103,14 +105,14 @@
 			$j("#EditDetailsTgnPlaceForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					if ($j(html).find(".inputerrors").length > 0){
-						$j("#geoDiv").html(html);
+						$j("#body_left").html(html);
 					} else {
 				<c:choose> 
 					<c:when test="${command.placeAllId == 0}"> 
 						$j("#body_left").html(html);
 					</c:when> 
 					<c:otherwise> 
-						$j("#geoDiv").html(html);
+						$j("#body_left").html(html);
 						$j("#EditHierarchyPlaceDiv").load("${ShowHierarchyPlaceURL}");
 					</c:otherwise> 
 				</c:choose> 

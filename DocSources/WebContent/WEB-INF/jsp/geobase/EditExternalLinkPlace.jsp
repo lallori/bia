@@ -16,7 +16,7 @@
 	
 	<form:form id="EditExternalLinkForm" method="post" cssClass="edit">
 		<fieldset>
-		<c:if test="${commad.placeExternalLinksId == 0}">
+		<c:if test="${command.placeExternalLinksId == 0}">
 			<legend><b>ADD EXTERNAL LINK</b></legend>
 		</c:if>
 		<c:if test="${command.placeExternalLinksId > 0 }">
@@ -52,7 +52,7 @@
 			$j("#EditNamesOrNameVariantsPlace").css('visibility', 'hidden');
 			
 			$j('#closeExternalLink').click(function() { 
-	            $j('#EditExtLinkPlaceDiv').block({ message: $j('#question') }); 
+	            $j('#EditExternalLinkDiv').block({ message: $j('#question') }); 
 	            return false;
 			});
 

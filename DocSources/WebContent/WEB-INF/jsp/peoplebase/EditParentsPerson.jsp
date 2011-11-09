@@ -79,9 +79,9 @@
 			</div>
 			
 		</fieldset>	
-		<div id="EditParentPersonDiv"></div>
-	
 	</form:form>
+	
+	<div id="EditParentPersonDiv"></div>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {

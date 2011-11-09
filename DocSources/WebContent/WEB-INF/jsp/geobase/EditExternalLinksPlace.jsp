@@ -48,6 +48,8 @@
 		</fieldset>
 	</form:form>
 	
+	<div id="EditExternalLinkDiv"></div>
+	
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -67,12 +69,12 @@
 			});
 			
 			$j(".editValue").click(function() {
-				$j("#EditExtLinkPlaceDiv").load($j(this).attr("href"));
+				$j("#EditExternalLinkDiv").load($j(this).attr("href"));
 				return false;
 			});
 			
 			$j("#AddNewValue").click(function(){
-				$j("#EditExtLinkPlaceDiv").load($j(this).attr("href"));
+				$j("#EditExternalLinkDiv").load($j(this).attr("href"));
 				return false;
 			});
 
