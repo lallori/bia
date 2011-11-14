@@ -18,7 +18,7 @@
 				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${place.eplToLinks.size()} Topics</a></div>
 			</c:if>
 			<c:if test="${place.eplToLinks.size() == 0}">
-				<div class="value"><a id="linkSearch">0 Document on 0 Topic</a></div>
+				<div class="value">0 Document on 0 Topic</div>
 			</c:if>
 		</div>
 	</div>

@@ -23,7 +23,7 @@
 				<div class="value"><a id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${place.bornedPeople.size()} Birth</a></div>
 			</c:if>
 			<c:if test="${place.bornedPeople.size() == 0}">
-				<div class="value"><a id="linkSearch">0 Birth</a></div>
+				<div class="value">0 Birth</div>
 			</c:if>
 		</div>
 		<div class="row">
@@ -31,7 +31,7 @@
 				<div class="value"><a id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${place.deathPeople.size()} Death</a></div>
 			</c:if>
 			<c:if test="${place.deathPeople.size() == 0}">
-				<div class="value"><a id="linkSearch">0 Death</a></div>
+				<div class="value">0 Death</div>
 			</c:if>
 		</div>
 	</div>
