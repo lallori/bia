@@ -151,8 +151,8 @@
 	<c:url var="searchRecipientPeopleURL" value="/de/peoplebase/SearchRecipientPeople.json"/>
 	<c:url var="searchRecipientPlaceURL" value="/de/geobase/SearchRecipientPlace.json"/>
 	
-	<c:url var="ShowSenderPlaceDetailsURL" value="/de/peoplebase/ShowSenderPlaceDetails.json" />
-	<c:url var="ShowRecipientPlaceDetailsURL" value="/de/peoplebase/ShowRecipientPlaceDetails.json" />
+	<c:url var="ShowSenderPlaceDetailsURL" value="/de/geobase/ShowSenderPlaceDetails.json" />
+	<c:url var="ShowRecipientPlaceDetailsURL" value="/de/geobase/ShowRecipientPlaceDetails.json" />
 
 
 	<script type="text/javascript">
