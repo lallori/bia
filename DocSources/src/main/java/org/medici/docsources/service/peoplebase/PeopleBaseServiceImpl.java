@@ -260,6 +260,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				person.setBornMonth(null);
 			}
 			person.setBornDate(DateUtils.getLuceneDate(person.getBornYear(), person.getBornMonth(), person.getBornDay()));
+			
+			if (!ObjectUtils.toString(person.getBornPlace()).equals("")) {
+				person.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
+				if(person.getBornPlace().getPrefFlag().equals("V")){
+					person.setBornPlace(getPlaceDAO().findPrinicipalPlace(person.getBornPlace().getGeogKey()));
+				}
+			} else {
+				person.setBornPlace(null);
+			}
 
 			if (person.getDeathMonth() != null) {
 				Month month = getMonthDAO().find(person.getDeathMonth().getMonthNum());
@@ -268,6 +277,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				person.setDeathMonth(null);
 			}
 			person.setDeathDate(DateUtils.getLuceneDate(person.getDeathYear(), person.getDeathMonth(), person.getDeathDay()));
+			
+			if (!ObjectUtils.toString(person.getDeathPlace()).equals("")) {
+				person.setDeathPlace(getPlaceDAO().find(person.getDeathPlace().getPlaceAllId()));
+				if(person.getDeathPlace().getPrefFlag().equals("V")){
+					person.setDeathPlace(getPlaceDAO().findPrinicipalPlace(person.getDeathPlace().getGeogKey()));
+				}
+			} else {
+				person.setDeathPlace(null);
+			}
 
 			getPeopleDAO().persist(person);
 
@@ -480,6 +498,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setBornDateBc(person.getBornDateBc());
 			if (!ObjectUtils.toString(person.getBornPlace()).equals("")) {
 				personToUpdate.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
+				if(personToUpdate.getBornPlace().getPrefFlag().equals("V")){
+					personToUpdate.setBornPlace(getPlaceDAO().findPrinicipalPlace(personToUpdate.getBornPlace().getGeogKey()));
+				}
 			} else {
 				personToUpdate.setBornPlace(null);
 			}
@@ -499,6 +520,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setDeathDateBc(person.getDeathDateBc());
 			if (!ObjectUtils.toString(person.getDeathPlace()).equals("")) {
 				personToUpdate.setDeathPlace(getPlaceDAO().find(person.getDeathPlace().getPlaceAllId()));
+				if(personToUpdate.getDeathPlace().getPrefFlag().equals("V")){
+					personToUpdate.setDeathPlace(getPlaceDAO().findPrinicipalPlace(personToUpdate.getDeathPlace().getGeogKey()));
+				}
 			} else {
 				personToUpdate.setDeathPlace(null);
 			}

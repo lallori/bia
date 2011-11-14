@@ -41,6 +41,7 @@ public class EditTopicDocumentCommand {
 	private Integer entryId;
 	private Integer eplToId;
 	private String placeDescription;
+	private String placePrefered;
 	private Integer placeId;
 	private String topicDescription;
 	private Integer topicId;
@@ -145,5 +146,19 @@ public class EditTopicDocumentCommand {
 	 */
 	public void setTopicId(Integer topicId) {
 		this.topicId = topicId;
+	}
+
+	/**
+	 * @param placePrefered the placePrefered to set
+	 */
+	public void setPlacePrefered(String placePrefered) {
+		this.placePrefered = placePrefered;
+	}
+
+	/**
+	 * @return the placePrefered
+	 */
+	public String getPlacePrefered() {
+		return placePrefered;
 	}
 }

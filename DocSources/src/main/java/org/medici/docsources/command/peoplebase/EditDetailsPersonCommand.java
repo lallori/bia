@@ -72,6 +72,8 @@ public class EditDetailsPersonCommand {
 	private Integer bornPlaceId;
 	// Birth Place Description :
 	private String bornPlaceDescription;
+	// Birth Place Prefered Flag :
+	private String bornPlacePrefered;
 	// Birth Active Start: 
 	private String activeStart;
 	//Active End:
@@ -92,6 +94,8 @@ public class EditDetailsPersonCommand {
 	private Integer deathPlaceId;
 	// Death Place Description :
 	private String deathPlaceDescription;
+	// Death Place Prefered Flag :
+	private String deathPlacePrefered;
 	// Death Unsure
 	private Boolean deathPlaceUnsure;
 
@@ -498,6 +502,34 @@ public class EditDetailsPersonCommand {
 
 	public String getActiveEnd() {
 		return activeEnd;
+	}
+
+	/**
+	 * @param bornPlacePrefered the bornPlacePrefered to set
+	 */
+	public void setBornPlacePrefered(String bornPlacePrefered) {
+		this.bornPlacePrefered = bornPlacePrefered;
+	}
+
+	/**
+	 * @return the bornPlacePrefered
+	 */
+	public String getBornPlacePrefered() {
+		return bornPlacePrefered;
+	}
+
+	/**
+	 * @param deathPlacePrefered the deathPlacePrefered to set
+	 */
+	public void setDeathPlacePrefered(String deathPlacePrefered) {
+		this.deathPlacePrefered = deathPlacePrefered;
+	}
+
+	/**
+	 * @return the deathPlacePrefered
+	 */
+	public String getDeathPlacePrefered() {
+		return deathPlacePrefered;
 	}
 
 }

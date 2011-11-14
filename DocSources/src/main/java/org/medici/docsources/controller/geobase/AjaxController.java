@@ -180,12 +180,54 @@ public class AjaxController {
 	}
 	
 	/**
+	 * This method returns specific information on Birth Place. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/geobase/ShowBirthPlaceDetails", method = RequestMethod.GET)
+	public ModelAndView showBirthPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns specific information on Death Place. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/geobase/ShowDeathPlaceDetails", method = RequestMethod.GET)
+	public ModelAndView showDeathPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
 	 * This method returns specific information on sender Place. 
 	 * 
 	 * @param personId
 	 * @return
 	 */
-	@RequestMapping(value = "/de/peoplebase/ShowSenderPlaceDetails", method = RequestMethod.GET)
+	@RequestMapping(value = "/de/geobase/ShowSenderPlaceDetails", method = RequestMethod.GET)
 	public ModelAndView showSenderPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
@@ -206,8 +248,29 @@ public class AjaxController {
 	 * @param personId
 	 * @return
 	 */
-	@RequestMapping(value = "/de/peoplebase/ShowRecipientPlaceDetails", method = RequestMethod.GET)
+	@RequestMapping(value = "/de/geobase/ShowRecipientPlaceDetails", method = RequestMethod.GET)
 	public ModelAndView showRecipientPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns specific information on Place linkable to topic. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/geobase/ShowPlaceLinkableToTopicDocument", method = RequestMethod.GET)
+	public ModelAndView showPlaceLinkableToTopicDocument(@RequestParam("placeAllId") Integer placeAllId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {

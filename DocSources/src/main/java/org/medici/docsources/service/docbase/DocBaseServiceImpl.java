@@ -227,6 +227,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 			if (eplToLink.getPlace() != null) {
 				eplToLink.setPlace(getPlaceDAO().find(eplToLink.getPlace().getPlaceAllId()));
+				if(eplToLink.getPlace().getPrefFlag().equals("V")){
+					eplToLink.setPlace(getPlaceDAO().findPrinicipalPlace(eplToLink.getPlace().getGeogKey()));
+				}
 			} else {
 				eplToLink.setPlace(null);
 			}
@@ -586,6 +589,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 			if (eplToLink.getPlace() != null) {
 				eplToLinkToUpdate.setPlace(getPlaceDAO().find(eplToLink.getPlace().getPlaceAllId()));
+				if(eplToLinkToUpdate.getPlace().getPrefFlag().equals("V")){
+					eplToLinkToUpdate.setPlace(getPlaceDAO().findPrinicipalPlace(eplToLinkToUpdate.getPlace().getGeogKey()));
+				}
 			} else {
 				eplToLinkToUpdate.setPlace(null);
 			}

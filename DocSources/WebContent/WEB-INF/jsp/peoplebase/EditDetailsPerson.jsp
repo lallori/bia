@@ -118,7 +118,9 @@
 				
 					<form:hidden path="personId"/>
 					<form:hidden path="bornPlaceId"/>
-					<form:hidden path="deathPlaceId"/>			
+					<form:hidden path="bornPlacePrefered"/>
+					<form:hidden path="deathPlaceId"/>
+					<form:hidden path="deathPlacePrefered"/>			
 				<div>
 					<input id="close" type="submit" value="Close" title="Do not save changes" class="button" />
 					<input id="save" type="submit" value="Save" class="button"/>
@@ -129,6 +131,9 @@
 
 	<c:url var="SearchBornPlaceURL" value="/de/geobase/SearchBornPlace.json"/>
 	<c:url var="SearchDeathPlaceURL" value="/de/geobase/SearchDeathPlace.json"/>
+	
+	<c:url var="ShowBirthPlaceDetailsURL" value="/de/geobase/ShowBirthPlaceDetails.json" />
+	<c:url var="ShowDeathPlaceDetailsURL" value="/de/geobase/ShowDeathPlaceDetails.json" />
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -259,7 +264,10 @@
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
-			    	$j('#bornPlaceId').val(data); 
+			    	$j('#bornPlaceId').val(data);
+			    	$j.get("${ShowBirthPlaceDetailsURL}", { placeAllId: "" + data }, function(data) {
+			    		$j('#bornPlacePrefered').val(data.prefFlag);
+			    	});
 			    }
 			});
 
@@ -274,10 +282,17 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ 
 			    	$j('#deathPlaceId').val(data); 
+			    	$j.get("${ShowDeathPlaceDetailsURL}", { placeAllId: "" + data }, function(data) {
+			    		$j('#deathPlacePrefered').val(data.prefFlag);
+			    	});
 			    }
 			});
 
 			$j("#EditDetailsPersonForm").submit(function (){
+				if($j("#bornPlacePrefered").val() == 'V' || $j("#deathPlacePrefered").val() == 'V'){
+					$j('#EditDetailsPersonDiv').block({ message: $j('.notPrincipal') });
+					return false;
+				}else{
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					if ($j(html).find(".inputerrors").length > 0){
 						$j("#EditDetailsPersonDiv").html(html);
@@ -293,6 +308,7 @@
 					}
 				}});
 				return false;
+				}
 			});
 
 			$j('#close').click(function(e) {
@@ -315,6 +331,11 @@
 	</script>
 
 
+	<div id="questionPlace" class="notPrincipal" style="display:none; cursor: default">
+		<h1>This name place is classified as a Variant Name and will be adjusted to its Preferred Name</h1>
+		<input type="button" id="ok" value="Ok" />
+	</div>
+	
 	<div id="question" style="display:none; cursor: default"> 
 		<h1>discard changes?</h1> 
 		<input type="button" id="yes" value="Yes" /> 
@@ -339,6 +360,29 @@
 	
 				return false; 
 			}); 
+			
+			$j("#ok").click(function(){
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j(".notPrincipal").hide();
+				$j("#EditDetailsPersonDiv").append($j(".notPrincipal"));
+				$j(".blockUI").remove();
+				$j.ajax({ type:"POST", url:$j("#EditDetailsPersonForm").closest('form').attr("action"), data:$j("#EditDetailsPersonForm").closest('form').serialize(), async:false, success:function(html) { 
+					if ($j(html).find(".inputerrors").length > 0){
+						$j("#EditDetailsPersonDiv").html(html);
+					} else {
+						<c:choose> 
+						<c:when test="${command.personId == 0}"> 
+							$j("#body_left").html(html);
+						</c:when> 
+						<c:otherwise> 
+							$j("#EditDetailsPersonDiv").html(html);
+						</c:otherwise> 
+						</c:choose> 
+					}
+				}});
+				return false;
+			});
 	     
 		});
 	</script>

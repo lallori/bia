@@ -43,6 +43,7 @@
 		<form:hidden path="eplToId"/>
 		<form:hidden path="topicId"/>
 		<form:hidden path="placeId"/>
+		<form:hidden path="placePrefered"/>
 		<form:hidden path="entryId"/>
 	</form:form>
 
@@ -53,6 +54,8 @@
 	<c:url var="searchPlaceLinkableToTopicDocumentURL" value="/de/docbase/SearchPlaceLinkableToTopicDocument.json">
 		<c:param name="entryId" value="${command.entryId}" />
 	</c:url>
+	
+	<c:url var="ShowPlaceLinkableToTopicDocumentURL" value="/de/geobase/ShowPlaceLinkableToTopicDocument.json" />
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -86,7 +89,12 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#placeId').val(data); }
+			    onSelect: function(value, data){ 
+			    	$j('#placeId').val(data);
+			    	$j.get("${ShowPlaceLinkableToTopicDocumentURL}", { placeAllId: "" + data }, function(data) {
+			    		$j('#placePrefered').val(data.prefFlag);
+			    	});
+			    }
 			  });
 
 			$j('#closeTopic').click(function() { 
@@ -106,10 +114,15 @@
 			});
 
 			$j("#EditTopicDocumentForm").submit(function (){
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-					$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
+				if($j("#placePrefered").val() == 'V'){
+					$j('#EditTopicDocumentDiv').block({ message: $j('.notPrincipal') });
+					return false;
+				}else{				
+					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+						$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
 				}})
 				return false;
+				}
 			});
 		});
 	</script>
@@ -118,6 +131,11 @@
 		<h1>discard changes?</h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
+	</div>
+	
+	<div id="questionPlace" class="notPrincipal" style="display:none; cursor: default">
+		<h1>This name place is classified as a Variant Name and will be adjusted to its Preferred Name</h1>
+		<input type="button" id="ok" value="Ok" />
 	</div>
 	
 	<script type="text/javascript">
@@ -138,6 +156,18 @@
 				
 			return false; 
 		}); 
+		
+		$j("#ok").click(function(){
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j(".notPrincipal").hide();
+			$j("#EditTopicDocumentDiv").append($j(".notPrincipal"));
+			$j(".blockUI").remove();
+			$j.ajax({ type:"POST", url:$j("#EditTopicDocumentForm").closest('form').attr("action"), data:$j("#EditTopicDocumentForm").closest('form').serialize(), async:false, success:function(html) { 
+				$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
+			}});
+			return false;
+		});
      
 	});
 </script>
