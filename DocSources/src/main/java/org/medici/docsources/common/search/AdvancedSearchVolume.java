@@ -71,6 +71,14 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<VolumeType> volumesTypes;
 	private List<String> volumes;
 	private List<String> volumesBetween;
+	private Boolean digitized;
+	private List<String> languages;
+	private List<String> cypher;
+	private List<String> index;
+	private List<String> fromVolume;
+	private List<String> toVolume;
+	private List<String> context;
+	private List<String> inventario;
 
 	/**
 	 * 
@@ -79,7 +87,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		super();
 
 		words = new ArrayList<String>(0);
-		wordsTypes = new ArrayList<AdvancedSearchDocument.WordType>(0);
+		wordsTypes = new ArrayList<AdvancedSearchAbstract.WordType>(0);
 		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
 		datesYear = new ArrayList<Integer>(0);
 		datesMonth = new ArrayList<Integer>(0);
@@ -90,6 +98,14 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
+		digitized = new Boolean(false);
+		languages = new ArrayList<String>(0);
+		cypher = new ArrayList<String>(0);
+		index = new ArrayList<String>(0);
+		fromVolume = new ArrayList<String>(0);
+		toVolume = new ArrayList<String>(0);
+		context = new ArrayList<String>(0);
+		inventario = new ArrayList<String>(0);
 	}
 	
 	/**
@@ -177,6 +193,83 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			volumesTypes = new ArrayList<VolumeType>(0);
 			volumes = new ArrayList<String>(0);
 			volumesBetween = new ArrayList<String>(0);
+		}
+		
+		//Digitized
+		if(command.getDigitized() != null){
+			if(command.getDigitized().equals("YES")){
+				digitized = true;
+			}else{
+				digitized = false;
+			}
+		}
+		
+		//Languages
+		if(command.getLanguages() != null && command.getLanguages().size() > 0){
+			languages = new ArrayList<String>(command.getLanguages().size());
+			for(String singleWord : command.getLanguages()){
+				languages.add(singleWord);
+			}
+		}
+		
+		//Cypher TODO
+		
+		//Index TODO
+		
+		//From
+		if(command.getFromVolume() != null && command.getFromVolume().size() > 0){
+			fromVolume = new ArrayList<String>(command.getFromVolume().size());
+			for(String singleWord : command.getFromVolume()){
+				try{
+					fromVolume.add(URIUtil.decode(singleWord, "UTF-8"));
+				}catch(NumberFormatException nex){
+				}catch(URIException e){
+				}
+			}
+		}else{
+			fromVolume = new ArrayList<String>(0);
+		}
+		
+		//To
+		if(command.getToVolume() != null && command.getToVolume().size() > 0){
+			toVolume = new ArrayList<String>(command.getToVolume().size());
+			for(String singleWord : command.getToVolume()){
+				try{
+					toVolume.add(URIUtil.decode(singleWord, "UTF-8"));
+				}catch(NumberFormatException nex){
+				}catch(URIException e){
+				}
+			}
+		}else{
+			toVolume = new ArrayList<String>(0);
+		}
+		
+		//Context
+		if(command.getContext() != null && command.getContext().size() > 0){
+			context = new ArrayList<String>(command.getContext().size());
+			for(String singleWord : command.getContext()){
+				try{
+					context.add(URIUtil.decode(singleWord, "UTF-8"));
+				}catch(NumberFormatException nex){
+				}catch(URIException e){
+				}
+			}
+		}else{
+			context = new ArrayList<String>(0);
+		}
+		
+		//Inventario Sommario
+		if(command.getInventario() != null && command.getInventario().size() > 0){
+			inventario = new ArrayList<String>(command.getInventario().size());
+			for(String singleWord : command.getInventario()){
+				try{
+					inventario.add(URIUtil.decode(singleWord, " "));
+				}catch(NumberFormatException nex){
+				}catch(URIException e){
+				}
+			}
+		}else{
+			inventario = new ArrayList<String>(0);
 		}
 	}
 
@@ -486,6 +579,88 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			if (!volumesQuery.toString().equals("")) {
 				luceneQuery.add(volumesQuery, Occur.MUST);
 			}
+		}
+		
+		//Digitized
+		//TODO: add field digitized to tblVolumes ?
+		
+		//Languages
+		//TODO: (?)
+		if(languages.size() > 0){
+			BooleanQuery languagesQuery = new BooleanQuery();
+			for(int i = 0; i < languages.size(); i++){
+				if(languages.get(i) == null){
+					continue;
+				}else{
+					
+				}
+			}
+		}
+		
+		//Cypher
+		//TODO: ?
+		
+		//Index Of Names
+		//TODO
+		
+		//From
+		if(fromVolume.size() > 0){
+			BooleanQuery fromVolumeQuery = new BooleanQuery();
+			for(int i = 0; i < fromVolume.size(); i++){
+				BooleanQuery singleFromVolumeQuery = new BooleanQuery();
+				String[] wordsSingleFromVolume = StringUtils.split(fromVolume.get(i), " ");
+				for(int j = 0; j < wordsSingleFromVolume.length; j++){
+					TermQuery termQuery = new TermQuery(new Term("senders", wordsSingleFromVolume[j]));
+					singleFromVolumeQuery.add(termQuery, Occur.MUST);
+				}
+				fromVolumeQuery.add(new BooleanClause(singleFromVolumeQuery, Occur.MUST));
+			}
+			luceneQuery.add(new BooleanClause(fromVolumeQuery, Occur.MUST));
+		}
+		
+		//To
+		if(toVolume.size() > 0){
+			BooleanQuery toVolumeQuery = new BooleanQuery();
+			for(int i = 0; i < toVolume.size(); i++){
+				BooleanQuery singleToVolumeQuery = new BooleanQuery();
+				String[] wordsSingleToVolume = StringUtils.split(toVolume.get(i), " ");
+				for(int j = 0; j < wordsSingleToVolume.length; j++){
+					TermQuery termQuery = new TermQuery(new Term("recips", wordsSingleToVolume[j]));
+					singleToVolumeQuery.add(termQuery, Occur.MUST);
+				}
+				toVolumeQuery.add(new BooleanClause(singleToVolumeQuery, Occur.MUST));
+			}
+			luceneQuery.add(new BooleanClause(toVolumeQuery, Occur.MUST));
+		}
+		
+		//Context
+		if(context.size() > 0){
+			BooleanQuery contextQuery = new BooleanQuery();
+			for(int i = 0; i < context.size(); i++){
+				BooleanQuery singleContextQuery = new BooleanQuery();
+				String[] wordsSingleContext = StringUtils.split(context.get(i), " ");
+				for(int j = 0; j < wordsSingleContext.length; j++){
+					TermQuery termQuery = new TermQuery(new Term("ccontext", wordsSingleContext[j]));
+					singleContextQuery.add(termQuery, Occur.MUST);
+				}
+				contextQuery.add(new BooleanClause(singleContextQuery, Occur.MUST));
+			}
+			luceneQuery.add(new BooleanClause(contextQuery, Occur.MUST));
+		}
+		
+		//Inventario
+		if(inventario.size() > 0){
+			BooleanQuery inventarioQuery = new BooleanQuery();
+			for(int i = 0; i < inventario.size(); i++){
+				BooleanQuery singleInventarioQuery = new BooleanQuery();
+				String[] wordsSingleInventario = StringUtils.split(inventario.get(i), " ");
+				for(int j = 0; j < wordsSingleInventario.length; j++){
+					TermQuery termQuery = new TermQuery(new Term("inventarioSommarioDescription", wordsSingleInventario[j]));
+					singleInventarioQuery.add(termQuery, Occur.MUST);
+				}
+				inventarioQuery.add(new BooleanClause(singleInventarioQuery, Occur.MUST));
+			}
+			luceneQuery.add(new BooleanClause(inventarioQuery, Occur.MUST));
 		}
 
 		return luceneQuery;

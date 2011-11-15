@@ -63,6 +63,13 @@ public class AdvancedSearchCommand {
 	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
 	private String searchUUID;
+	
+	private String digitized;
+	private List<String> languages;
+	private List<String> context;
+	private List<String> fromVolume;
+	private List<String> toVolume;
+	private List<String> inventario;
 
 	/**
 	 * 
@@ -394,5 +401,89 @@ public class AdvancedSearchCommand {
 	 */
 	public List<String> getLinkedToPeople() {
 		return linkedToPeople;
+	}
+
+	/**
+	 * @param digitized the digitized to set
+	 */
+	public void setDigitized(String digitized) {
+		this.digitized = digitized;
+	}
+
+	/**
+	 * @return the digitized
+	 */
+	public String getDigitized() {
+		return digitized;
+	}
+
+	/**
+	 * @param languages the languages to set
+	 */
+	public void setLanguages(List<String> languages) {
+		this.languages = languages;
+	}
+
+	/**
+	 * @return the languages
+	 */
+	public List<String> getLanguages() {
+		return languages;
+	}
+
+	/**
+	 * @param context the context to set
+	 */
+	public void setContext(List<String> context) {
+		this.context = context;
+	}
+
+	/**
+	 * @return the context
+	 */
+	public List<String> getContext() {
+		return context;
+	}
+
+	/**
+	 * @param fromVolume the fromVolume to set
+	 */
+	public void setFromVolume(List<String> fromVolume) {
+		this.fromVolume = fromVolume;
+	}
+
+	/**
+	 * @return the fromVolume
+	 */
+	public List<String> getFromVolume() {
+		return fromVolume;
+	}
+
+	/**
+	 * @param toVolume the toVolume to set
+	 */
+	public void setToVolume(List<String> toVolume) {
+		this.toVolume = toVolume;
+	}
+
+	/**
+	 * @return the toVolume
+	 */
+	public List<String> getToVolume() {
+		return toVolume;
+	}
+
+	/**
+	 * @param inventario the inventario to set
+	 */
+	public void setInventario(List<String> inventario) {
+		this.inventario = inventario;
+	}
+
+	/**
+	 * @return the inventario
+	 */
+	public List<String> getInventario() {
+		return inventario;
 	}
 }

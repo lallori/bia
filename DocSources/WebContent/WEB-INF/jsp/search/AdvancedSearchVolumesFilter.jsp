@@ -14,15 +14,6 @@
 		<form id="yourEasySearchFilterForm" action="${AdvancedSearchURL}" method="post">
 			<p><u>Custom Search Filter</u></p>
 			<br />
-			<div id="wordSearchDiv">
-			<c:forEach items="${searchFilter.filterData.words}" varStatus="iterator">
-				<div class="searchFilterDiv">
-					<span class="categorySearch">Word Search in <fmt:message key="search.documents.wordType.${searchFilter.filterData.wordsTypes[iterator.index]}" />: </span><span class="wordSearch">${searchFilter.filterData.words[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${searchFilter.filterData.wordsTypes[iterator.index]}|${fn2:encode(searchFilter.filterData.words[iterator.index])}" name="word">
-				</div>
-				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
-			</c:forEach>
-			</div>
 			<div id="volumeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.volumes}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -33,6 +24,30 @@
 			</c:forEach>
 			</div>
 			<div id="dateSearchDiv">
+			</div>
+			<div id="digitizedSearchDiv">
+			</div>
+			<div id="languagesSearchDiv">
+			</div>
+			<div id="cypherSearchDiv">
+			</div>
+			<div id="indexSearchDiv">
+			</div>
+<%-- 			<c:if test="${(not empty searchFilter.filterData.fromVolume && ((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if> --%>
+			<div id="fromVolumeSearchDiv">
+<%-- 			<c:forEach items="${searchFilter.filterData.fromVolume}" varStatus="iterator"> --%>
+<!-- 				<div class="searchFilterDiv"> -->
+<%-- 					<span class="categorySearch">From: </span><span class="wordSearch">${searchFilter.filterData.fromVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a> --%>
+<%-- 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.fromVolume[iterator.index])}" name="from Volume"> --%>
+<!-- 				</div> -->
+<%-- 				<c:if test="${iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if> --%>
+<%-- 			</c:forEach> --%>
+			</div>
+			<div id="toVolumeSearchDiv">
+			</div>
+			<div id="contextSearchDiv">
+			</div>
+			<div id="inventarioSearchDiv">
 			</div>
 			<br>
 			<br>

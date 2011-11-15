@@ -107,15 +107,15 @@
 			<div>
 				<form id="fromVolumeSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
-	                <label for="from" id="fromLabel">From</label> 
-	                <textarea id="from" name="from" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
+	                <label for="fromVolume" id="fromLabel">From</label> 
+	                <textarea id="fromVolume" name="fromVolume" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
 	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
 	                <input type="hidden" id="category" value="From Volume">
 	            </form>
 	            <form id="toVolumeSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
-	                <label for="to" id="toLabel">To</label> 
-	                <textarea id="to" name="to" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
+	                <label for="toVolume" id="toLabel">To</label> 
+	                <textarea id="toVolume" name="toVolume" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
 	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
 	                <input type="hidden" id="category" value="To Volume">
 	            </form>
