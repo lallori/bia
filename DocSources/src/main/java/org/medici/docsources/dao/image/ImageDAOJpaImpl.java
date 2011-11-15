@@ -579,33 +579,39 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> findVolumesDigitized(List<Integer> volNums, List<String> volLetExts) {
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE ");
         for (int i= 0; i<volNums.size(); i++) {
-        	stringBuffer.append("(volNum=");
-        	stringBuffer.append(volNums.get(i));
-        	stringBuffer.append(" and volLetExt ");
-        	if (StringUtils.isEmpty(volLetExts.get(i))) {
-	        	stringBuffer.append(" is null");
-        	} else {
-	        	stringBuffer.append("='");
-	        	stringBuffer.append(volLetExts.get(i));
-	        	stringBuffer.append("'");
-        	}
-        	stringBuffer.append(" and imageOrder=1) ");
-        	if (i<volNums.size()-1) {
-        		stringBuffer.append(" or "); 
+        	if(volNums.get(i) != null){
+	        	if(stringBuffer.indexOf("volNum") != -1){
+	        		stringBuffer.append(" or ");
+	        	}
+	        	stringBuffer.append("(volNum=");
+	        	stringBuffer.append(volNums.get(i));
+	        	stringBuffer.append(" and volLetExt ");
+	        	if (StringUtils.isEmpty(volLetExts.get(i))) {
+		        	stringBuffer.append(" is null");
+	        	} else {
+		        	stringBuffer.append("='");
+		        	stringBuffer.append(volLetExts.get(i));
+		        	stringBuffer.append("'");
+	        	}
+	        	stringBuffer.append(" and imageOrder=1) ");
         	}
         }
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
-    	
-		List<Image> result = (List<Image>) query.getResultList();
-
-		List<String> returnValues = new ArrayList(0);
-		for (int i=0; i<result.size(); i++) {
-			returnValues.add(VolumeUtils.toMDPFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt()));
-		}
+        List<String> returnValues = new ArrayList<String>(0);
+        
+        if(stringBuffer.indexOf("volNum") != -1){
+	        Query query = getEntityManager().createQuery(stringBuffer.toString());
+	    	
+			List<Image> result = (List<Image>) query.getResultList();
+	
+			for (int i=0; i<result.size(); i++) {
+				returnValues.add(VolumeUtils.toMDPFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt()));
+			}
+        }
 
 		return returnValues;
 	}
@@ -613,6 +619,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> findDocumentsDigitized(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums,	List<String> folioMods) {
 		StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE ");
@@ -639,11 +646,11 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	}
         }
     	
-        List<String> returnValues = new ArrayList(0);
+        List<String> returnValues = new ArrayList<String>(0);
         if(stringBuffer.indexOf("volNum") != -1){
         	Query query = getEntityManager().createQuery(stringBuffer.toString());
 
-        	List<Image> result = query.getResultList();
+        	List<Image> result = (List<Image>) query.getResultList();
 		
         	
         	for (int i=0; i<result.size(); i++) {
