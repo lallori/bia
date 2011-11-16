@@ -3552,7 +3552,7 @@ table#savedSearchFiltersForm.display {
 /* ------------- VOLUME SEARCH ------------------ */
 /* Input Label positions */
 
-#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel, #fromVolumeSearchForm #fromLabel, #toVolumeSearchForm #toLabel, #digitizedSearchForm #digitizedLabel, #cypherSearchForm #cypherLabel, #indexSearchForm #indexLabel, #inventarioSearchForm #inventarioLabel {
+#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel, #fromVolumeSearchForm #fromLabel, #toVolumeSearchForm #toLabel, #digitizedSearchForm #digitizedLabel, #cipherSearchForm #cipherLabel, #indexSearchForm #indexLabel, #inventarioSearchForm #inventarioLabel {
 	margin-left:7px;
 }
 
@@ -3581,7 +3581,7 @@ table#savedSearchFiltersForm.display {
 	margin-left: 19px;
 }
 
-#cypherSearchForm #cypherLabel {
+#cipherSearchForm #cipherLabel {
 	margin-right: 43px;
 }
 
