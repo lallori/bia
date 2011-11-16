@@ -61,7 +61,7 @@
 
 			var searchWord = "";
 			var hiddenValue = "";
-
+			
 			// Manage form with type combobox
 			if (hasSearchType(formName, fieldName)) {
 				//Date form
@@ -107,9 +107,27 @@
 				}
 			}
 			
+			//Manage form type checkbox
+			if(isCheckboxForm(formName)){
+				searchWord = getSearchWordForCheckboxField(formName, fieldName);
+				hiddenValue = getHiddenParameterForCheckboxField(formName, fieldName);
+				resetCheckboxField(formName, fieldName);
+			}
+			
 			console.log("Searching : " + searchWord);
 			console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
 
+			// Some field can't be entered more than once
+			if(fieldName == "digitized" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
+				return false;
+			}
+			if(fieldName == "cipher" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
+				return false;
+			}
+			if(fieldName == "index" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
+				return false;
+			}
+			
 			// We construct new html block with condition and hidden field 
 			var searchFilterDiv = getSearchFilterDiv(formName, fieldName, searchType, searchWord, hiddenValue);
 
@@ -234,6 +252,25 @@
 
 		return hiddenValue;
 	}
+	
+	/**
+	 * This method return hidden parameter for checkbox field
+	 */
+	function getHiddenParameterForCheckboxField(formName, fieldName){
+		var hiddenValue = '';
+		var values = [];
+		$('#' + formName).find('input[type=checkbox]:checked').each(function() {
+		       values.push($(this).val());
+		});
+		for(i = 0; i < values.length; i++){
+			if(i == 0)
+				hiddenValue += values[0];
+			else{
+				hiddenValue += ' ' + values[i];
+			}
+		}
+		return hiddenValue;
+	}
 
 	/**
 	 * This method returns search category.   
@@ -327,6 +364,25 @@
 	}
 	
 	/**
+	 * This function return search word for field languages which is composed by checkbox.
+	 */
+	function getSearchWordForCheckboxField(formName, fieldName){
+		var searchWord = '';
+		var values = [];
+		$('#' + formName).find('input[type=checkbox]:checked').each(function() {
+		       values.push($(this).val());
+		});
+		for(i = 0; i < values.length; i++){
+			if(i == 0)
+				searchWord += values[0];
+			else{
+				searchWord += ' ' + values[i];
+			}
+		}
+		return searchWord;
+	}
+	
+	/**
 	 * This method returns type of this search form.   
 	 */
 	function hasSearchType(formName, fieldName) {
@@ -400,6 +456,16 @@
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * This method check if form is composed of checkbox
+	 */
+	function isCheckboxForm(formName){
+		if($('#' + formName).find('input[type=checkbox]').length > 0)
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -554,6 +620,15 @@
 	 */
 	function resetNormalField(formName, fieldName) {
 		$('#' + formName).find('#' + fieldName).val("");
+	}
+	
+	/**
+	 * This method will reset a checkbox field
+	 */
+	function resetCheckboxField(formName, fieldName){
+		$('#' + formName).find('input[type=checkbox]:checked').each(function() {
+		       $(this).attr('checked', false);
+		});
 	}
 
 }) (jQuery);

@@ -65,30 +65,30 @@
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
 	                <label for="languages" id="languagesLabel">Languages</label> 
 	                <label for="italian" id="italianLabel"><i>Italian</i></label>
-	                <input type="checkbox" name="italian"\/>
+	                <input type="checkbox" name="italian" value="italian"\/>
 	                <label for="french" id="frenchLabel"><i>French</i></label>
-	                <input type="checkbox" name="french"\/>
+	                <input type="checkbox" name="french" value="french"\/>
 	                <label for="german" id="germanLabel"><i>German</i></label>
-	                <input type="checkbox" name="german"\/>
+	                <input type="checkbox" name="german" value="german"\/>
 	                <label for="spanish" id="spanishLabel"><i>Spanish</i></label>
-	                <input type="checkbox" name="spanish"\/>
+	                <input type="checkbox" name="spanish" value="spanish"\/>
 	                <label for="latin" id="latinLabel"><i>Latin</i></label>
-	                <input type="checkbox" name="latin"\/>
+	                <input type="checkbox" name="latin" value="latin"\/>
 	                <label for="english" id="englishLabel"><i>English</i></label>
-	                <input type="checkbox" name="english"\/>
+	                <input type="checkbox" name="english" value="english"\/>
 	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
-	                <input type="hidden" id="category" value="languages">
+	                <input type="hidden" id="category" value="Languages">
             	</form>
-            	<form id="cypherSearchForm" method="post" class="edit">
+            	<form id="cipherSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
-	                <label for="cypher" id="cypherLabel">Cypher</label> 
-	                <select id="cypher" name="cypher" class="selectform_short">
+	                <label for="cipher" id="cipherLabel">Cipher</label> 
+	                <select id="cipher" name="cipher" class="selectform_short">
 	                    <option value="" selected="selected"></option>
 	                    <option value="Yes">Yes</option>
 	                    <option value="No">No</option>
 	                </select>
 	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
-	                <input type="hidden" id="category" value="Cypher">
+	                <input type="hidden" id="category" value="Cipher">
             	</form>
             	<form id="indexSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -197,7 +197,7 @@
 		$j("#dateSearchForm").advancedSearchForm();
 		$j("#digitizedSearchForm").advancedSearchForm();
 		$j("#languagesSearchForm").advancedSearchForm();
-		$j("#cypherSearchForm").advancedSearchForm();
+		$j("#cipherSearchForm").advancedSearchForm();
 		$j("#indexSearchForm").advancedSearchForm();
 		$j("#fromVolumeSearchForm").advancedSearchForm();
 		$j("#toVolumeSearchForm").advancedSearchForm();

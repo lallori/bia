@@ -70,6 +70,8 @@ public class AdvancedSearchCommand {
 	private List<String> fromVolume;
 	private List<String> toVolume;
 	private List<String> inventario;
+	private String cipher;
+	private String index;
 
 	/**
 	 * 
@@ -485,5 +487,33 @@ public class AdvancedSearchCommand {
 	 */
 	public List<String> getInventario() {
 		return inventario;
+	}
+
+	/**
+	 * @param cipher the cipher to set
+	 */
+	public void setCipher(String cipher) {
+		this.cipher = cipher;
+	}
+
+	/**
+	 * @return the cipher
+	 */
+	public String getCipher() {
+		return cipher;
+	}
+
+	/**
+	 * @param index the index to set
+	 */
+	public void setIndex(String index) {
+		this.index = index;
+	}
+
+	/**
+	 * @return the index
+	 */
+	public String getIndex() {
+		return index;
 	}
 }

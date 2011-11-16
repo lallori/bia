@@ -73,8 +73,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<String> volumesBetween;
 	private Boolean digitized;
 	private List<String> languages;
-	private List<String> cypher;
-	private List<String> index;
+	private String cipher;
+	private String index;
 	private List<String> fromVolume;
 	private List<String> toVolume;
 	private List<String> context;
@@ -100,8 +100,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		volumesBetween = new ArrayList<String>(0);
 		digitized = new Boolean(false);
 		languages = new ArrayList<String>(0);
-		cypher = new ArrayList<String>(0);
-		index = new ArrayList<String>(0);
+		cipher = new String();
+		index = new String();
 		fromVolume = new ArrayList<String>(0);
 		toVolume = new ArrayList<String>(0);
 		context = new ArrayList<String>(0);
@@ -207,14 +207,24 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		//Languages
 		if(command.getLanguages() != null && command.getLanguages().size() > 0){
 			languages = new ArrayList<String>(command.getLanguages().size());
-			for(String singleWord : command.getLanguages()){
-				languages.add(singleWord);
-			}
+			languages.addAll(command.getLanguages());
+		}else{
+			languages = new ArrayList<String>(0);
 		}
 		
-		//Cypher TODO
+		//Cypher
+		if(command.getCipher() != null){
+			cipher = new String(command.getCipher());
+		}else{
+			cipher = new String();
+		}
 		
-		//Index TODO
+		//Index
+		if(command.getIndex() != null){
+			index = new String(command.getIndex());
+		}else{
+			index = new String();
+		}
 		
 		//From
 		if(command.getFromVolume() != null && command.getFromVolume().size() > 0){
@@ -585,23 +595,71 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		//TODO: add field digitized to tblVolumes ?
 		
 		//Languages
-		//TODO: (?)
 		if(languages.size() > 0){
 			BooleanQuery languagesQuery = new BooleanQuery();
 			for(int i = 0; i < languages.size(); i++){
-				if(languages.get(i) == null){
-					continue;
-				}else{
-					
+				BooleanQuery singleLanguagesQuery = new BooleanQuery();
+				String[] wordsSingleLanguages = StringUtils.split(languages.get(i), " ");
+				for(int j = 0; j < wordsSingleLanguages.length; j++){
+					TermQuery termQuery;
+					if(wordsSingleLanguages[j].equals("italian")){
+						termQuery = new TermQuery(new Term("italian", "true"));
+						singleLanguagesQuery.add(termQuery, Occur.MUST);
+					}
+					if(wordsSingleLanguages[j].equals("french")){
+						termQuery = new TermQuery(new Term("french", "true"));
+						singleLanguagesQuery.add(termQuery, Occur.MUST);
+					}
+					if(wordsSingleLanguages[j].equals("german")){
+						termQuery = new TermQuery(new Term("german", "true"));
+						singleLanguagesQuery.add(termQuery, Occur.MUST);
+					}
+					if(wordsSingleLanguages[j].equals("spanish")){
+						termQuery = new TermQuery(new Term("spanish", "true"));
+						singleLanguagesQuery.add(termQuery, Occur.MUST);
+					}
+					if(wordsSingleLanguages[j].equals("latin")){
+						termQuery = new TermQuery(new Term("latin", "true"));
+						singleLanguagesQuery.add(termQuery, Occur.MUST);
+					}
+					if(wordsSingleLanguages[j].equals("english")){
+						termQuery = new TermQuery(new Term("english", "true"));
+						singleLanguagesQuery.add(termQuery, Occur.MUST);
+					}
 				}
+				languagesQuery.add(new BooleanClause(singleLanguagesQuery, Occur.MUST));
 			}
+			luceneQuery.add(new BooleanClause(languagesQuery, Occur.MUST));
 		}
 		
 		//Cypher
-		//TODO: ?
+		if(cipher.length() > 0){
+			BooleanQuery cipherQuery = new BooleanQuery();
+			TermQuery cipherTermQuery;
+			if(cipher.equals("Yes")){
+				cipherTermQuery = new TermQuery(new Term("cipher", "true"));
+				cipherQuery.add(cipherTermQuery, Occur.MUST);
+			}else if(cipher.equals("No")){
+				cipherTermQuery = new TermQuery(new Term("cipher", "false"));
+				cipherQuery.add(cipherTermQuery, Occur.MUST);
+			}
+			luceneQuery.add(new BooleanClause(cipherQuery, Occur.MUST));
+		}
+		
 		
 		//Index Of Names
-		//TODO
+		if(index.length() > 0){
+			BooleanQuery indexQuery = new BooleanQuery();
+			TermQuery indexTermQuery;
+			if(index.equals("Yes")){
+				indexTermQuery = new TermQuery(new Term("oldAlphaIndex", "true"));
+				indexQuery.add(indexTermQuery, Occur.MUST);
+			}else if(index.equals("No")){
+				indexTermQuery = new TermQuery(new Term("oldAlphaIndex", "true"));
+				indexQuery.add(indexTermQuery, Occur.MUST);
+			}
+			luceneQuery.add(new BooleanClause(indexQuery, Occur.MUST));
+		}
 		
 		//From
 		if(fromVolume.size() > 0){
@@ -662,6 +720,12 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			}
 			luceneQuery.add(new BooleanClause(inventarioQuery, Occur.MUST));
 		}
+		
+		//test
+//		TermQuery test = new TermQuery(new Term("italian", "true"));
+//		BooleanQuery test2 = new BooleanQuery();
+//		test2.add(test, Occur.MUST);
+//		luceneQuery.add(new BooleanClause(test2, Occur.MUST));
 
 		return luceneQuery;
 	}
