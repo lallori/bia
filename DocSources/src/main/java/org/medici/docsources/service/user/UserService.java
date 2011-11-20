@@ -28,10 +28,12 @@
 package org.medici.docsources.service.user;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
@@ -209,12 +211,20 @@ public interface UserService {
 
 	/**
 	 * 
+	 * @param numberOfHistory
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HashMap<String, List<?>> getMyHistoryReport(Integer numberOfHistory) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param account
 	 * @return
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Boolean isAccountAvailable(String account) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param user
@@ -252,6 +262,38 @@ public interface UserService {
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public void registerUser(User user) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchUserHistoryDocuments(PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchUserHistoryPeople(PaginationFilter paginationFilter)throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchUserHistoryPlace(PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchUserHistoryVolumes(PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

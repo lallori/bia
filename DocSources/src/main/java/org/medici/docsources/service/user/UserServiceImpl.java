@@ -31,12 +31,14 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.ApplicationError;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.activationuser.ActivationUserDAO;
@@ -44,6 +46,10 @@ import org.medici.docsources.dao.country.CountryDAO;
 import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.docsources.dao.personalnotes.PersonalNotesDAO;
 import org.medici.docsources.dao.user.UserDAO;
+import org.medici.docsources.dao.userhistorydocument.UserHistoryDocumentDAO;
+import org.medici.docsources.dao.userhistorypeople.UserHistoryPeopleDAO;
+import org.medici.docsources.dao.userhistoryplace.UserHistoryPlaceDAO;
+import org.medici.docsources.dao.userhistoryvolume.UserHistoryVolumeDAO;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
@@ -73,13 +79,21 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ActivationUserDAO activationUserDAO;
 	@Autowired
-	private CountryDAO countryDao;
+	private CountryDAO countryDAO;
 	@Autowired
 	private PasswordChangeRequestDAO passwordChangeRequestDAO;
 	@Autowired
 	private PersonalNotesDAO personalNotesDAO;
 	@Autowired
 	private UserDAO userDAO; 
+	@Autowired
+	private UserHistoryDocumentDAO userHistoryDocumentDAO;
+	@Autowired
+	private UserHistoryPeopleDAO userHistoryPeopleDAO;
+	@Autowired
+	private UserHistoryPlaceDAO userHistoryPlaceDAO;
+	@Autowired
+	private UserHistoryVolumeDAO userHistoryVolumeDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -212,7 +226,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Country> findCountries(String description) throws ApplicationThrowable {
 		try {
-			return getCountryDao().findByDescription(description);
+			return getCountryDAO().findByDescription(description);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -224,7 +238,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Country findCountry(String countryCode) throws ApplicationThrowable {
 		try {
-			return getCountryDao().find(countryCode);
+			return getCountryDAO().find(countryCode);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -408,10 +422,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * @return the countryDao
+	 * @return the countryDAO
 	 */
-	public CountryDAO getCountryDao() {
-		return countryDao;
+	public CountryDAO getCountryDAO() {
+		return countryDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HashMap<String, List<?>> getMyHistoryReport(Integer numberOfHistory) throws ApplicationThrowable {
+		HashMap<String, List<?>> historyReport = new HashMap<String, List<?>>(4);
+		try {
+			historyReport.put("Document", getUserHistoryDocumentDAO().findHistory(5));
+			historyReport.put("People", getUserHistoryPeopleDAO().findHistory(5));
+			historyReport.put("Place", getUserHistoryPlaceDAO().findHistory(5));
+			historyReport.put("Volume", getUserHistoryVolumeDAO().findHistory(5));
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		return historyReport;
 	}
 
 	/**
@@ -433,6 +465,34 @@ public class UserServiceImpl implements UserService {
 	 */
 	public UserDAO getUserDAO() {
 		return userDAO;
+	}
+
+	/**
+	 * @return the userHistoryDocumentDAO
+	 */
+	public UserHistoryDocumentDAO getUserHistoryDocumentDAO() {
+		return userHistoryDocumentDAO;
+	}
+
+	/**
+	 * @return the userHistoryPeopleDAO
+	 */
+	public UserHistoryPeopleDAO getUserHistoryPeopleDAO() {
+		return userHistoryPeopleDAO;
+	}
+
+	/**
+	 * @return the userHistoryPlaceDAO
+	 */
+	public UserHistoryPlaceDAO getUserHistoryPlaceDAO() {
+		return userHistoryPlaceDAO;
+	}
+
+	/**
+	 * @return the userHistoryVolumeDAO
+	 */
+	public UserHistoryVolumeDAO getUserHistoryVolumeDAO() {
+		return userHistoryVolumeDAO;
 	}
 
 	/**
@@ -532,6 +592,54 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchUserHistoryDocuments(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserHistoryDocumentDAO().findHistory(paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchUserHistoryPeople(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserHistoryPeopleDAO().findHistory(paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchUserHistoryPlace(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserHistoryPlaceDAO().findHistory(paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchUserHistoryVolumes(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserHistoryVolumeDAO().findHistory(paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
 	 * @param activationUserDAO the activationUserDAO to set
 	 */
 	public void setActivationUserDAO(ActivationUserDAO activationUserDAO) {
@@ -540,10 +648,10 @@ public class UserServiceImpl implements UserService {
 
 	/**
 	 * 
-	 * @param countryDao the countryDao to set
+	 * @param countryDAO the countryDAO to set
 	 */
-	public void setCountryDao(CountryDAO countryDao) {
-		this.countryDao = countryDao;
+	public void setCountryDAO(CountryDAO countryDAO) {
+		this.countryDAO = countryDAO;
 	}
 
 	/**
@@ -566,6 +674,34 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+
+	/**
+	 * @param userHistoryDocumentDAO the userHistoryDocumentDAO to set
+	 */
+	public void setUserHistoryDocumentDAO(UserHistoryDocumentDAO userHistoryDocumentDAO) {
+		this.userHistoryDocumentDAO = userHistoryDocumentDAO;
+	}
+
+	/**
+	 * @param userHistoryPeopleDAO the userHistoryPeopleDAO to set
+	 */
+	public void setUserHistoryPeopleDAO(UserHistoryPeopleDAO userHistoryPeopleDAO) {
+		this.userHistoryPeopleDAO = userHistoryPeopleDAO;
+	}
+
+	/**
+	 * @param userHistoryPlaceDAO the userHistoryPlaceDAO to set
+	 */
+	public void setUserHistoryPlaceDAO(UserHistoryPlaceDAO userHistoryPlaceDAO) {
+		this.userHistoryPlaceDAO = userHistoryPlaceDAO;
+	}
+
+	/**
+	 * @param userHistoryVolumeDAO the userHistoryVolumeDAO to set
+	 */
+	public void setUserHistoryVolumeDAO(UserHistoryVolumeDAO userHistoryVolumeDAO) {
+		this.userHistoryVolumeDAO = userHistoryVolumeDAO;
 	}
 
 	/**
