@@ -9,7 +9,7 @@
             /WEB-INF/config/applicationDS.xml,
             /WEB-INF/config/applicationI18n.xml,
             /WEB-INF/config/applicationIIPImage.xml,
-            /WEB-INF/config/applicationMail.xml,
+            /WEB-INF/config/applicationSchedulers.xml,
             /WEB-INF/config/applicationSecurity.xml,
             /WEB-INF/config/applicationServices.xml,
             /WEB-INF/config/applicationTiles.xml,

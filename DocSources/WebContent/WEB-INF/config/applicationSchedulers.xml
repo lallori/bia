@@ -8,9 +8,9 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
     
-	<task:annotation-driven scheduler="mailScheduler" />
+	<task:annotation-driven scheduler="applicationSchedulers" />
 	
-	<task:scheduler id="mailScheduler" pool-size="10"/>
+	<task:scheduler id="applicationSchedulers" pool-size="10"/>
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     	<description>This bean provide functions to send emails.</description>
@@ -39,32 +39,6 @@
 
 	<bean id="resetUserPasswordEmailJob" class="org.medici.docsources.scheduler.ResetUserPasswordEmailJob"/>
 
-<!-- 
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-    	<property name="triggers">
-        	<list>
-				<ref bean="activationUserEmailTrigger" />
-			</list>
-		</property>
-	</bean>
+	<bean id="checkDigitizedVolumeJob" class="org.medici.docsources.scheduler.CheckDigitizedVolumeJob"/>
 
-	<bean id="activationUserEmailTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-	    <property name="jobDetail" ref="activationUserEmailJob" />
-	    <property name="startDelay" value="10000" />
-	    <property name="repeatInterval" value="50000" />
-	</bean>
-
-	<bean name="activationUserEmailJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass" value="org.medici.docsources.scheduler.ActivationUserEmailJob" />
-	</bean>
-
-	<bean id="resetUserPasswordEmailTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-	    <property name="jobDetail" ref="resetUserPasswordEmailJob" />
-	    <property name="startDelay" value="10000" />
-	    <property name="repeatInterval" value="50000" />
-	</bean>
-
-	<bean name="resetUserPasswordEmailJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass" value="org.medici.docsources.scheduler.ResetUserPasswordEmailJob" />
-	</bean>-->
 </beans>
