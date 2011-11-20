@@ -856,4 +856,29 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Integer> findNewDigitizedVolumes() throws PersistenceException {
+		// we need to extract volLetExt equals
+        String hql = "SELECT DISTINCT(b.summaryId) FROM Image a, Volume b WHERE a.volNum=b.volNum and a.volLetExt=b.volLetExt and b.digitized=false";
+
+        Query query = getEntityManager().createQuery(hql);
+
+        List<Integer> result = (List<Integer>) query.getResultList();
+
+		// second query is for volLetExt equal to null
+        hql = "SELECT DISTINCT(b.summaryId) FROM Image a, Volume b WHERE a.volNum=b.volNum and a.volLetExt is null and b.digitized=false";
+
+        query = getEntityManager().createQuery(hql);
+        
+        result.addAll(query.getResultList());
+
+		if (result.isEmpty())
+			return new ArrayList<Integer>(0);
+		
+		return result;
+	}
+
 }
