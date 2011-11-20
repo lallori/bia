@@ -34,9 +34,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.common.ajax.SearchResult;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.docsources.domain.UserHistoryDocument;
+import org.medici.docsources.domain.UserHistoryPeople;
+import org.medici.docsources.domain.UserHistoryPlace;
+import org.medici.docsources.domain.UserHistoryVolume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +68,213 @@ import org.springframework.web.servlet.ModelAndView;
 public class AjaxController {
 	@Autowired
 	private UserService userService;
+
+	/**
+	 * This method will make a check if account passed as parameter is not 
+	 * already present in LDAP Tree.
+	 *  
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping(value = "/user/ajax/IsAccountAvailable", method = RequestMethod.GET)
+	public @ResponseBody String checkAccount(@RequestParam("account") String account) {
+		try {
+			return (getUserService().isAccountAvailable(account)).toString();
+		} catch (ApplicationThrowable aex) {
+			return Boolean.FALSE.toString();
+		}
+	}
+
+	/**
+	 * 
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	private PaginationFilter generatePaginationFilter(SearchType searchType, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @param paginationFilter
+	 */
+	private void myHistoryDocuments(Map<String, Object> model, PaginationFilter paginationFilter) {
+		Page page = null;
+
+		try {
+			page = getUserService().searchUserHistoryDocuments(paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		for (UserHistoryDocument currentUserHistoryDocument : (List<UserHistoryDocument>)page.getList()) {
+			
+			List<Object> singleRow = new ArrayList<Object>();
+			
+			singleRow.add(currentUserHistoryDocument.getDateAndTime());
+			singleRow.add(currentUserHistoryDocument.getAction());
+			singleRow.add(currentUserHistoryDocument.getDocument().getVolume().getMDP());
+
+			if (currentUserHistoryDocument.getDocument().getSenderPeople() != null) {
+				singleRow.add(currentUserHistoryDocument.getDocument().getSenderPeople());
+			} else {
+				singleRow.add("");
+			}
+
+			if (currentUserHistoryDocument.getDocument().getRecipientPeople() != null) {
+				singleRow.add(currentUserHistoryDocument.getDocument().getRecipientPeople());
+			}else {
+				singleRow.add("");
+			}
+			
+			resultList.add(singleRow);
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
+
+	/**
+	 * 
+	 * @param searchType
+	 * @param alias
+	 * @param sortingColumn
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/user/MyHistoryPagination.json", method = RequestMethod.GET)
+	public ModelAndView myHistoryPagination(@RequestParam(value="searchType") SearchType searchType,
+								   		 @RequestParam(value="sSearch") String alias,
+								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
+
+		if (searchType.equals(SearchType.DOCUMENT)) {
+			myHistoryDocuments(model, paginationFilter);
+		} else if (searchType.equals(SearchType.PEOPLE)) {
+			myHistoryPeople(model, paginationFilter);
+		} else if (searchType.equals(SearchType.PLACE)) {
+			myHistoryPlaces(model, paginationFilter);
+		} else if (searchType.equals(SearchType.VOLUME)) {
+			myHistoryVolumes(model, paginationFilter);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * 
+	 * @param model
+	 * @param paginationFilter
+	 */
+	private void myHistoryPeople(Map<String, Object> model, PaginationFilter paginationFilter) {
+		Page page = null;
+
+		try {
+			page = getUserService().searchUserHistoryPeople(paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		for (UserHistoryPeople currentUserHistoryPeople : (List<UserHistoryPeople>)page.getList()) {
+			
+			List<Object> singleRow = new ArrayList<Object>();
+			singleRow.add(currentUserHistoryPeople.getDateAndTime());
+			singleRow.add(currentUserHistoryPeople.getAction());
+			singleRow.add(currentUserHistoryPeople.getPeople().getMapNameLf());
+			singleRow.add(DateUtils.getStringDate(currentUserHistoryPeople.getPeople().getBornYear(), currentUserHistoryPeople.getPeople().getBornMonth(), currentUserHistoryPeople.getPeople().getBornDay()));
+			singleRow.add(DateUtils.getStringDate(currentUserHistoryPeople.getPeople().getDeathYear(), currentUserHistoryPeople.getPeople().getDeathMonth(), currentUserHistoryPeople.getPeople().getDeathDay()));
+			resultList.add(singleRow);
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @param paginationFilter
+	 */
+	private void myHistoryPlaces(Map<String, Object> model, PaginationFilter paginationFilter) {
+		Page page = null;
+
+		try {
+			page = getUserService().searchUserHistoryPlace(paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		for (UserHistoryPlace currentUserHistoryPlace : (List<UserHistoryPlace>)page.getList()) {
+			
+			List<Object> singleRow = new ArrayList<Object>();
+			singleRow.add(currentUserHistoryPlace.getDateAndTime());
+			singleRow.add(currentUserHistoryPlace.getAction());
+			singleRow.add(currentUserHistoryPlace.getPlace().getPlaceNameFull());
+			singleRow.add(currentUserHistoryPlace.getPlace().getPlType());
+			resultList.add(singleRow);
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @param paginationFilter
+	 */
+	private void myHistoryVolumes(Map<String, Object> model, PaginationFilter paginationFilter) {
+		Page page = null;
+
+		try {
+			page = getUserService().searchUserHistoryVolumes(paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		for (UserHistoryVolume currentUserHistoryVolume : (List<UserHistoryVolume>)page.getList()) {
+			
+			List<Object> singleRow = new ArrayList<Object>();
+			singleRow.add(currentUserHistoryVolume.getDateAndTime());
+			singleRow.add(currentUserHistoryVolume.getAction());
+			singleRow.add(currentUserHistoryVolume.getVolume().getMDP());
+			singleRow.add(currentUserHistoryVolume.getVolume().getSerieList().toString());
+			singleRow.add(DateUtils.getStringDate(currentUserHistoryVolume.getVolume().getStartYear(), currentUserHistoryVolume.getVolume().getStartMonthNum(), currentUserHistoryVolume.getVolume().getStartDay()));
+			singleRow.add(DateUtils.getStringDate(currentUserHistoryVolume.getVolume().getEndYear(), currentUserHistoryVolume.getVolume().getEndMonthNum(), currentUserHistoryVolume.getVolume().getEndDay()));
+			resultList.add(singleRow);
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+	}
 
 	/**
 	 * This method calculate password rating. 
@@ -91,29 +306,6 @@ public class AjaxController {
 		}
 
 		return new ModelAndView("responseOK", model);
-	}
-
-	/**
-	 * This method will make a check if account passed as parameter is not 
-	 * already present in LDAP Tree.
-	 *  
-	 * @param account
-	 * @return
-	 */
-	@RequestMapping(value = "/user/ajax/IsAccountAvailable", method = RequestMethod.GET)
-	public @ResponseBody String checkAccount(@RequestParam("account") String account) {
-		try {
-			return (getUserService().isAccountAvailable(account)).toString();
-		} catch (ApplicationThrowable aex) {
-			return Boolean.FALSE.toString();
-		}
-	}
-
-	/**
-	 * @return the userService
-	 */
-	public UserService getUserService() {
-		return userService;
 	}
 
 	/**
