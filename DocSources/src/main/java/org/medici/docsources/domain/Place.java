@@ -217,12 +217,12 @@ public class Place implements Serializable {
 	
 	@Column (name="\"DATEENTERED\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date dateEntered;
 	
 	@Column (name="\"PLACESMEMO\"", columnDefinition="LONGTEXT")
-	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String placesMemo;
 	
 	@Column (name="\"ADDLRES\"", length=1, columnDefinition="TINYINT", nullable=false)
@@ -235,18 +235,23 @@ public class Place implements Serializable {
 	private String termAccent;
 	
 	@Column (name="\"LANGUAGE\"", length=10)
-	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private Integer language;
 	
 	@Column (name="\"OTHER_FLAGS\"", length=50)
-	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String otherFlags;
 	
 	@Column (name="\"GEOGKEY_CHILDREN\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String geogkeyChildren;
 
-    @OneToMany(mappedBy="senderPlace", fetch=FetchType.LAZY)
+	@Column (name="\"LOGICALDELETE\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
+	private Boolean logicalDelete;
+
+	@OneToMany(mappedBy="senderPlace", fetch=FetchType.LAZY)
 	@ContainedIn
     private Set<Document> senderDocuments;
     
@@ -275,7 +280,7 @@ public class Place implements Serializable {
     @IndexedEmbedded
     private Set<PlaceExternalLinks> placeExternalLinks;
     
-    /**
+	/**
 	 * Default constructor.
 	 * 
 	 */
@@ -785,6 +790,20 @@ public class Place implements Serializable {
 	 */
 	public Set<PlaceExternalLinks> getPlaceExternalLinks() {
 		return placeExternalLinks;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 }

@@ -325,6 +325,11 @@ public class People implements Serializable {
 	@DateBridge(resolution=Resolution.DAY) 
 	private Date lastUpdate;
 
+	@Column (name="\"LOGICALDELETE\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
+	private Boolean logicalDelete;
+
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="child")
 	@IndexedEmbedded(depth=1)
 	private Set<Parent> parents;
@@ -375,7 +380,7 @@ public class People implements Serializable {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="wife")
 	@IndexedEmbedded(depth=1)
 	private Set<Marriage> marriagesAsWife;
-
+	
 	/**
 	 * Default Constructor 
 	 */
@@ -1138,6 +1143,20 @@ public class People implements Serializable {
 	 */
 	public Set<Parent> getChildren() {
 		return children;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 	/**

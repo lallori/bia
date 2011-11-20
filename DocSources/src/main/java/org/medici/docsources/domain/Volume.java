@@ -309,7 +309,7 @@ public class Volume implements Serializable {
 	private String folioCount;
 	
 	@Column (name="\"BOUND\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean bound;
 	
@@ -362,7 +362,7 @@ public class Volume implements Serializable {
 	private String otherLang;
 	
 	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean cipher;
 	
@@ -379,20 +379,30 @@ public class Volume implements Serializable {
 	private String staffMemo;
 	
 	@Column (name="\"PRINTEDMATERIAL\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean printedMaterial;
 	
 	@Column (name="\"PRINTEDDRAWINGS\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
-	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean printedDrawings;
 
-    @OneToMany(mappedBy="volume", fetch=FetchType.LAZY)
+	@Column (name="\"LOGICALDELETE\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
+	private Boolean logicalDelete;
+	
+	@Column (name="\"DIGITIZED\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
+	private Boolean digitized;
+	
+	@OneToMany(mappedBy="volume", fetch=FetchType.LAZY)
     @ContainedIn
     private Set<Document> documents;
-    
-    /**
+
+	/**
 	 * Default constructor
 	 * 
 	 */
@@ -1088,6 +1098,35 @@ public class Volume implements Serializable {
 	 */
 	public Boolean getPrintedDrawings() {
 		return printedDrawings;
+	}
+
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
+	 * @param digitized the digitized to set
+	 */
+	public void setDigitized(Boolean digitized) {
+		this.digitized = digitized;
+	}
+
+	/**
+	 * @return the digitized
+	 */
+	public Boolean getDigitized() {
+		return digitized;
 	}
 
 	/**

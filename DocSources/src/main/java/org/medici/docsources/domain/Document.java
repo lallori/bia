@@ -371,6 +371,11 @@ public class Document implements Serializable{
 	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String docTypology;
 
+	@Column (name="\"LOGICALDELETE\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@FieldBridge(impl=BooleanBridge.class)
+	private Boolean logicalDelete;
+
 	//Linked fact Check
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="document", cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="ENTRYID", referencedColumnName = "ENTRYID")
@@ -1110,5 +1115,19 @@ public class Document implements Serializable{
 	 */
 	public String getDocTypology() {
 		return docTypology;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 }
