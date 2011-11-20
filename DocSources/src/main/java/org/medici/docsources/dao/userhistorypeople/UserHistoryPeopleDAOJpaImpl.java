@@ -77,7 +77,7 @@ public class UserHistoryPeopleDAOJpaImpl extends JpaDao<Integer, UserHistoryPeop
 	 */
 	@Override
 	public List<UserHistoryPeople> findHistory(Integer resultSize) {
-        String queryString = "FROM UserHistoryDocument WHERE username=:username ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistoryPeople WHERE username=:username ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
