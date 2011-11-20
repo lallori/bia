@@ -84,7 +84,7 @@ public class UserHistoryVolumeDAOJpaImpl extends JpaDao<Integer, UserHistoryVolu
 	 */
 	@Override
 	public List<UserHistoryVolume> findHistory(Integer resultSize) {
-        String queryString = "FROM UserHistoryPlace WHERE username=:username ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistoryVolume WHERE username=:username ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
