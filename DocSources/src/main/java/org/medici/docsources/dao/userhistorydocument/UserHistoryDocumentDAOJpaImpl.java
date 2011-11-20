@@ -119,7 +119,7 @@ public class UserHistoryDocumentDAOJpaImpl extends JpaDao<Integer, UserHistoryDo
 		Page page = new Page(paginationFilter);
 
 		if (paginationFilter.getTotal() == null) {
-	        String queryString = "SELECT count(1) FROM UserHistoryDocument WHERE username=:username ORDER BY dateAndTime DESC";
+	        String queryString = "SELECT count(username) FROM UserHistoryDocument WHERE username=:username ORDER BY dateAndTime DESC";
 
 	        Query query = getEntityManager().createQuery(queryString);
 	        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
