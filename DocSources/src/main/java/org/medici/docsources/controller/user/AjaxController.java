@@ -95,8 +95,9 @@ public class AjaxController {
 	 * @return
 	 */
 	private PaginationFilter generatePaginationFilter(SearchType searchType, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
-		// TODO Auto-generated method stub
-		return null;
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+		
+		return paginationFilter;
 	}
 
 	/**
@@ -125,17 +126,17 @@ public class AjaxController {
 			List<Object> singleRow = new ArrayList<Object>();
 			
 			singleRow.add(currentUserHistoryDocument.getDateAndTime());
-			singleRow.add(currentUserHistoryDocument.getAction());
+			singleRow.add(currentUserHistoryDocument.getAction().toString());
 			singleRow.add(currentUserHistoryDocument.getDocument().getVolume().getMDP());
 
 			if (currentUserHistoryDocument.getDocument().getSenderPeople() != null) {
-				singleRow.add(currentUserHistoryDocument.getDocument().getSenderPeople());
+				singleRow.add(currentUserHistoryDocument.getDocument().getSenderPeople().toString());
 			} else {
 				singleRow.add("");
 			}
 
 			if (currentUserHistoryDocument.getDocument().getRecipientPeople() != null) {
-				singleRow.add(currentUserHistoryDocument.getDocument().getRecipientPeople());
+				singleRow.add(currentUserHistoryDocument.getDocument().getRecipientPeople().toString());
 			}else {
 				singleRow.add("");
 			}
@@ -161,7 +162,6 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/user/MyHistoryPagination.json", method = RequestMethod.GET)
 	public ModelAndView myHistoryPagination(@RequestParam(value="searchType") SearchType searchType,
-								   		 @RequestParam(value="sSearch") String alias,
 								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -201,7 +201,7 @@ public class AjaxController {
 			
 			List<Object> singleRow = new ArrayList<Object>();
 			singleRow.add(currentUserHistoryPeople.getDateAndTime());
-			singleRow.add(currentUserHistoryPeople.getAction());
+			singleRow.add(currentUserHistoryPeople.getAction().toString());
 			singleRow.add(currentUserHistoryPeople.getPeople().getMapNameLf());
 			singleRow.add(DateUtils.getStringDate(currentUserHistoryPeople.getPeople().getBornYear(), currentUserHistoryPeople.getPeople().getBornMonth(), currentUserHistoryPeople.getPeople().getBornDay()));
 			singleRow.add(DateUtils.getStringDate(currentUserHistoryPeople.getPeople().getDeathYear(), currentUserHistoryPeople.getPeople().getDeathMonth(), currentUserHistoryPeople.getPeople().getDeathDay()));
@@ -232,7 +232,7 @@ public class AjaxController {
 			
 			List<Object> singleRow = new ArrayList<Object>();
 			singleRow.add(currentUserHistoryPlace.getDateAndTime());
-			singleRow.add(currentUserHistoryPlace.getAction());
+			singleRow.add(currentUserHistoryPlace.getAction().toString());
 			singleRow.add(currentUserHistoryPlace.getPlace().getPlaceNameFull());
 			singleRow.add(currentUserHistoryPlace.getPlace().getPlType());
 			resultList.add(singleRow);
@@ -262,7 +262,7 @@ public class AjaxController {
 			
 			List<Object> singleRow = new ArrayList<Object>();
 			singleRow.add(currentUserHistoryVolume.getDateAndTime());
-			singleRow.add(currentUserHistoryVolume.getAction());
+			singleRow.add(currentUserHistoryVolume.getAction().toString());
 			singleRow.add(currentUserHistoryVolume.getVolume().getMDP());
 			singleRow.add(currentUserHistoryVolume.getVolume().getSerieList().toString());
 			singleRow.add(DateUtils.getStringDate(currentUserHistoryVolume.getVolume().getStartYear(), currentUserHistoryVolume.getVolume().getStartMonthNum(), currentUserHistoryVolume.getVolume().getStartDay()));
