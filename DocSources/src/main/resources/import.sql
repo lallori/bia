@@ -227,9 +227,21 @@ update docsources.tblVolumes set endDate=concat('01','01',SUBSTRING(concat('0',e
 update docsources.tblVolumes set endDate=concat('01','01','01') where endYear is null and endMonthNum is null and endDay is null;
 -- Lucene Indexing (END) : Integer Date Fields Population  
 
+-- Logical delete (New boolean field to manage logical delete)
+update docsources.tblDocuments set logicalDelete=0;
+update docsources.tblPeople set logicalDelete=0;
+update docsources.tblPlaces set logicalDelete=0;
+update docsources.tblVolumes set logicalDelete=0;
+
+-- Set Digitized information on volumes to false
+update docsources.tblVolumes set digitized=0;
+-- These 2 updates will set rights digitized. MySQL does not allow to UPDATE or DELETE a table's data if you're simultaneously reading that same data with a subquery, so we use a temporary c1 view 
+update tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt is null) as c1);
+update tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt = b.volLetExt) as c1);
+
 -- COUNTRY DATA ENTRY (Table schema is based on ISO standard 3166 code lists http://www.iso.org/iso/list-en1-semic-3.txt)
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ÅLAND ISLANDS', 'AX');
+INSERT INTO tblCountries (NAME, CODE) VALUES ('ï¿½LAND ISLANDS', 'AX');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ALBANIA', 'AL');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ALGERIA', 'DZ');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AMERICAN SAMOA', 'AS');
@@ -281,7 +293,7 @@ INSERT INTO tblCountries (NAME, CODE) VALUES ('CONGO', 'CG');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('CONGO, THE DEMOCRATIC REPUBLIC OF THE', 'CD');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('COOK ISLANDS', 'CK');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('COSTA RICA', 'CR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CÔTE D''IVOIRE', 'CI');
+INSERT INTO tblCountries (NAME, CODE) VALUES ('Cï¿½TE D''IVOIRE', 'CI');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('CROATIA', 'HR');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('CUBA', 'CU');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('CYPRUS', 'CY');
@@ -407,11 +419,11 @@ INSERT INTO tblCountries (NAME, CODE) VALUES ('POLAND', 'PL');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('PORTUGAL', 'PT');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('PUERTO RICO', 'PR');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('QATAR', 'QA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('RÉUNION', 'RE');
+INSERT INTO tblCountries (NAME, CODE) VALUES ('Rï¿½UNION', 'RE');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('ROMANIA', 'RO');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('RUSSIAN FEDERATION', 'RU');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('RWANDA', 'RW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT BARTHÉLEMY', 'BL');
+INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT BARTHï¿½LEMY', 'BL');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA', 'SH');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT KITTS AND NEVIS', 'KN');
 INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT LUCIA', 'LC');
