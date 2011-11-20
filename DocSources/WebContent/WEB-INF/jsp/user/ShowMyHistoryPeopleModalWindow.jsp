@@ -38,9 +38,9 @@
 					"aoColumns" : [
 					{ sWidth : "40px" },
 					{ sWidth : "40px" },
-					{ sWidth : "50px" },
-					{ sWidth : "150px" },
-					{ sWidth : "150px" },
+					{ sWidth : "170px" },
+					{ sWidth : "80px" },
+					{ sWidth : "80px" },
 					],                           
 				"bDestroy" : true,  
 				"bFilter" : false,
