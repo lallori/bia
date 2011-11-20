@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.volume;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
@@ -61,6 +63,17 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	public Volume findVolume(Integer volNum, String volLetExt) throws PersistenceException;
 
 	/**
+	 * This method searches volumes which contains the parameters set in {@link org.medici.docsources.common.search}
+	 * object and return a result page.
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
 	 * This method searches volumes which contains text input parameter in one of his fields
 	 * and return a result page.
 	 * 
@@ -72,13 +85,11 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
-	 * This method searches volumes which contains the parameters set in {@link org.medici.docsources.common.search}
-	 * object and return a result page.
+	 * This method set digitized information to true to a list of input volumes.
 	 * 
-	 * @param searchContainer
-	 * @param paginationFilter
+	 * @param summaryIds
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	public Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws PersistenceException;
 }

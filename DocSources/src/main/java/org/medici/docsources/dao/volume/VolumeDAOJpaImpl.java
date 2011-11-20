@@ -52,6 +52,7 @@ import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.Search;
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
 
@@ -90,7 +91,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 	 */
 	@Override
 	public Volume findLastEntryVolume() throws PersistenceException {
-         Query query = getEntityManager().createQuery("FROM Volume ORDER BY dateCreated DESC");
+         Query query = getEntityManager().createQuery("FROM Volume WHERE logicalDelete = false ORDER BY dateCreated DESC");
          query.setMaxResults(1);
 
          return (Volume) query.getSingleResult();
@@ -127,6 +128,49 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 
 		return typedQuery.getSingleResult();
 	}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		// We obtain hibernate-search session
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+		// We convert SearchContainer to luceneQuery
+		org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
+		logger.info("Lucene Query " + query.toString()); 
+
+		// We execute search
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Volume.class );
+
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		}
+	
+		// We set pagination  
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+			}
+			fullTextQuery.setSort(new Sort(sortFields));
+		}
+			
+		// We set search result on return method
+		page.setList(fullTextQuery.list());
+
+		return page;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -185,46 +229,14 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		return page;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
-		// We prepare object of return method.
-		Page page = new Page(paginationFilter);
-		
-		// We obtain hibernate-search session
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+	public Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws PersistenceException {
+        String hql = "UPDATE Volume set digitized=true where summaryId in (:summaryIds)";
 
-		// We convert SearchContainer to luceneQuery
-		org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
-		logger.info("Lucene Query " + query.toString()); 
+        Query query = getEntityManager().createQuery(hql);
 
-		// We execute search
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, Volume.class );
+        query.setParameter("summaryIds", summaryIds);
 
-		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
-			page.setTotal(new Long(fullTextQuery.getResultSize()));
-		}
-	
-		// We set pagination  
-		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-		fullTextQuery.setMaxResults(paginationFilter.getLength());
-
-		// We manage sorting (this manages sorting on multiple fields)
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		if (sortingCriterias.size() > 0) {
-			SortField[] sortFields = new SortField[sortingCriterias.size()];
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
-			}
-			fullTextQuery.setSort(new Sort(sortFields));
-		}
-			
-		// We set search result on return method
-		page.setList(fullTextQuery.list());
-
-		return page;
+		return query.executeUpdate();
 	}
 }
