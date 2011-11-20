@@ -29,7 +29,6 @@ package org.medici.docsources.service.volbase;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -45,15 +44,15 @@ import org.medici.docsources.dao.catalog.CatalogDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
-import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.userhistoryvolume.UserHistoryVolumeDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Catalog;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
-import org.medici.docsources.domain.UserHistory.BaseCategory;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
-import org.medici.docsources.domain.UserHistory;
+import org.medici.docsources.domain.UserHistoryVolume;
+import org.medici.docsources.domain.UserHistoryVolume.Action;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -83,9 +82,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
 	private SeriesListDAO seriesListDAO;
 	@Autowired
-	private VolumeDAO volumeDAO;
+	private UserHistoryVolumeDAO userHistoryVolumeDAO;
 	@Autowired
-	private UserHistoryDAO userHistoryDAO;
+	private VolumeDAO volumeDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -147,7 +146,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 			getVolumeDAO().persist(volume);
 			
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Create volume", volume.getSummaryId()));
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Create volume", Action.C, volume));
 			
 			return volume;
 		} catch (Throwable th) {
@@ -197,6 +196,31 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Volume deleteVolume(Integer summaryId) throws ApplicationThrowable {
+		Volume volumeToDelete = null;
+		try {
+			volumeToDelete = getVolumeDAO().find(summaryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		volumeToDelete.setLogicalDelete(Boolean.TRUE);
+
+		try {
+			getVolumeDAO().merge(volumeToDelete);
+
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Delete volume", Action.D, volumeToDelete));
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return volumeToDelete;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Volume editContextVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
 		try {
@@ -211,7 +235,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Edit context", volumeToUpdate.getSummaryId()));
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Edit context", Action.M, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -236,7 +260,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Edit correspondents", volumeToUpdate.getSummaryId()));
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Edit correspondents", Action.M, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -277,7 +301,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Edit description", volumeToUpdate.getSummaryId()));
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Edit description", Action.M, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -334,7 +358,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Edit details", volumeToUpdate.getSummaryId()));
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Edit details", Action.M, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -348,10 +372,10 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public Volume findLastEntryVolume() throws ApplicationThrowable {
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findLastEntryVolume();
+			UserHistoryVolume userHistoryVolume = getUserHistoryVolumeDAO().findLastEntryVolume();
 			
-			if (userHistory != null) {
-				return getVolumeDAO().find(userHistory.getEntityId());
+			if (userHistoryVolume != null) {
+				return userHistoryVolume.getVolume();
 			}
 			
 			// in case of no user History we extract last volume created on database.
@@ -365,11 +389,23 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Integer> findNewDigitizedVolumes() throws ApplicationThrowable {
+		try {
+			return getImageDAO().findNewDigitizedVolumes();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable {
 		try {
 			Volume volume = getVolumeDAO().find(summaryId);
 			
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Show volume", volume.getSummaryId()));
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Show volume", Action.V, volume));
 
 			return volume;
 		} catch (Throwable th) {
@@ -385,13 +421,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
 			
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.VOLUME, "Show volume", volume.getSummaryId()));
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Show volume", Action.V, volume));
 
 			return volume;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
 
 	@Override
 	public Image findVolumeImage(Integer summaryId) throws ApplicationThrowable {
@@ -411,7 +448,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -447,18 +483,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 			} else {
 				return null;
 			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
-		try {
-			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -509,6 +533,18 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+		try {
+			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getImageDAO().findImages(volNum, volLetExt, paginationFilter);
@@ -516,7 +552,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -528,6 +563,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -568,7 +604,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -580,7 +616,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -592,7 +628,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-	
+
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -604,8 +641,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
-
+	
 	/**
 	 * @return the catalogDAO
 	 */
@@ -642,12 +678,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * @return the seriesListDAO
 	 */
 	public SeriesListDAO getSeriesListDAO() {
 		return seriesListDAO;
+	}
+
+	/**
+	 * @return the userHistoryVolumeDAO
+	 */
+	public UserHistoryVolumeDAO getUserHistoryVolumeDAO() {
+		return userHistoryVolumeDAO;
 	}
 
 	/**
@@ -671,30 +714,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 				}
 			}
 			return getImageDAO().findImages(volumeExplorer);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable {
-		try {
-			return getSeriesListDAO().findSeries(alias);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getVolumeDAO().searchVolumes(text, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -726,6 +745,32 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 		
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable {
+		try {
+			return getSeriesListDAO().findSeries(alias);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getVolumeDAO().searchVolumes(text, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 
@@ -762,6 +807,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 
 	/**
+	 * @param userHistoryVolumeDAO the userHistoryVolumeDAO to set
+	 */
+	public void setUserHistoryVolumeDAO(UserHistoryVolumeDAO userHistoryVolumeDAO) {
+		this.userHistoryVolumeDAO = userHistoryVolumeDAO;
+	}
+
+
+	/**
 	 * @param volumeDAO the volumeDAO to set
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
@@ -770,17 +823,40 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 
 	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
+	 * {@inheritDoc}
 	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
+	@Override
+	public Volume undeleteVolume(Integer summaryId) throws ApplicationThrowable {
+		Volume volumeToUnDelete = null;
+		try {
+			volumeToUnDelete = getVolumeDAO().find(summaryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 
+		volumeToUnDelete.setLogicalDelete(Boolean.FALSE);
+
+		try {
+			getVolumeDAO().merge(volumeToUnDelete);
+
+			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Recovered volume", Action.M, volumeToUnDelete));
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return volumeToUnDelete;
+	}
 
 	/**
-	 * @return the userHistoryDAO
+	 * {@inheritDoc}
 	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
+	@Override
+	public Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws ApplicationThrowable {
+		try {
+			return getVolumeDAO().updateNewDigitizedVolume(summaryIds);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
+
 }

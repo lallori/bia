@@ -45,17 +45,17 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.polink.PoLinkDAO;
 import org.medici.docsources.dao.rolecat.RoleCatDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
-import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.userhistorypeople.UserHistoryPeopleDAO;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
-import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.People.Gender;
-import org.medici.docsources.domain.UserHistory.BaseCategory;
 import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.domain.TitleOccsList;
+import org.medici.docsources.domain.UserHistoryPeople;
+import org.medici.docsources.domain.UserHistoryPeople.Action;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +107,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	private TitleOccsListDAO titleOccsListDAO;
 
 	@Autowired
-	private UserHistoryDAO userHistoryDAO;
+	private UserHistoryPeopleDAO userHistoryPeopleDAO;
 	
 	/**
 	 * {@inheritDoc}
@@ -123,7 +123,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			altNameToPersist.setPerson(getPeopleDAO().find(altName.getPerson().getPersonId()));
 			getAltNameDAO().persist(altNameToPersist);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Add new alternative name", altNameToPersist.getPerson().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Add new alternative name", Action.M, altNameToPersist.getPerson()));
 
 			return altNameToPersist.getPerson();
 		} catch (Throwable th) {
@@ -143,7 +143,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getParentDAO().persist(parent);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Add children", parent.getId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Add children", Action.M, parent.getParent()));
 
 			return parent;
 		} catch (Throwable th) {
@@ -163,7 +163,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getParentDAO().persist(parent);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Add father", parent.getId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Add father", Action.M, parent.getParent()));
 
 			return parent;
 		} catch (Throwable th) {
@@ -185,7 +185,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			getMarriageDAO().persist(marriage);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Add marriage", marriage.getHusband().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Add marriage", Action.M,  marriage.getHusband()));
 
 			// TODO : We need to change sign method to inser specific person who invoked the add new Person 
 			return marriage.getHusband();
@@ -206,7 +206,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getParentDAO().persist(parent);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Add mother", parent.getParent().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Add mother", Action.M, parent.getParent()));
 
 			return parent;
 		} catch (Throwable th) {
@@ -260,15 +260,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				person.setBornMonth(null);
 			}
 			person.setBornDate(DateUtils.getLuceneDate(person.getBornYear(), person.getBornMonth(), person.getBornDay()));
-			
-			if (!ObjectUtils.toString(person.getBornPlace()).equals("")) {
-				person.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
-				if(person.getBornPlace().getPrefFlag().equals("V")){
-					person.setBornPlace(getPlaceDAO().findPrinicipalPlace(person.getBornPlace().getGeogKey()));
-				}
-			} else {
-				person.setBornPlace(null);
-			}
 
 			if (person.getDeathMonth() != null) {
 				Month month = getMonthDAO().find(person.getDeathMonth().getMonthNum());
@@ -289,7 +280,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getPeopleDAO().persist(person);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Add person", person.getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Add person", Action.C, person));
 
 			return person;
 		} catch (Throwable th) {
@@ -351,7 +342,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getPoLinkDAO().persist(poLinkToCreate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Add new title or occupation", poLinkToCreate.getPerson().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Add new title or occupation", Action.M, poLinkToCreate.getPerson()));
 
 			return poLinkToCreate.getPerson();
 		} catch (Throwable th) {
@@ -369,7 +360,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getParentDAO().remove(parentToDelete);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Delete child", parentToDelete.getParent().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Delete child", Action.M, parentToDelete.getParent()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -385,7 +376,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			getParentDAO().remove(parentToDelete);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Delete father", parentToDelete.getChild().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Delete father", Action.M, parentToDelete.getChild()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -401,7 +392,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			getParentDAO().remove(parentToDelete);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Delete mother", parentToDelete.getChild().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Delete mother", Action.M, parentToDelete.getChild()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -417,10 +408,35 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			getAltNameDAO().remove(altNameToDelete);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Delete alternative name", altName.getPerson().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Delete alternative name", Action.M, altName.getPerson()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People deletePerson(Integer personId) throws ApplicationThrowable {
+		People personToDelete = null;
+		try {
+			personToDelete = getPeopleDAO().find(personId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		personToDelete.setLogicalDelete(Boolean.TRUE);
+
+		try {
+			getPeopleDAO().merge(personToDelete);
+
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Deleted person", Action.D, personToDelete));
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return personToDelete;
 	}
 
 	/**
@@ -435,7 +451,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			getPoLinkDAO().remove(poLinkToDelete);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Delete title or occupation", poLinkToDelete.getPerson().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Delete title or occupation", Action.M, poLinkToDelete.getPerson()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -455,7 +471,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getParentDAO().merge(parentToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Edit child", parent.getChild().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Edit child", Action.M, parent.getChild()));
 
 			return parentToUpdate;
 		} catch (Throwable th) {
@@ -498,9 +514,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setBornDateBc(person.getBornDateBc());
 			if (!ObjectUtils.toString(person.getBornPlace()).equals("")) {
 				personToUpdate.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
-				if(personToUpdate.getBornPlace().getPrefFlag().equals("V")){
-					personToUpdate.setBornPlace(getPlaceDAO().findPrinicipalPlace(personToUpdate.getBornPlace().getGeogKey()));
-				}
 			} else {
 				personToUpdate.setBornPlace(null);
 			}
@@ -531,7 +544,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getPeopleDAO().merge(personToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Edit details", personToUpdate.getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Edit details", Action.M, personToUpdate));
 
 			return personToUpdate;
 		} catch (Throwable th) {
@@ -553,7 +566,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			getParentDAO().merge(parentToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Edit father", parent.getChild().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Edit father", Action.M, parent.getChild()));
 			return parentToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -582,7 +595,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			getMarriageDAO().merge(marriageToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Edit marriage", marriageToUpdate.getHusband().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Edit marriage", Action.M, marriageToUpdate.getHusband()));
 
 			// TODO : We need to change sign method to inser specific person who invoked the add new Person 
 			return marriage;
@@ -604,7 +617,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			parentToUpdate.setLastUpdate(new Date());
 
 			getParentDAO().merge(parentToUpdate);
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Edit mother", parent.getChild().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Edit mother", Action.M, parent.getChild()));
 
 			return parentToUpdate;
 		} catch (Throwable th) {
@@ -627,7 +640,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			
 			getAltNameDAO().merge(altNameToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Edit alternative name", altName.getPerson().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Edit alternative name", Action.M, altName.getPerson()));
 			return altName.getPerson();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -646,7 +659,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			// We update person object
 			getPeopleDAO().merge(personToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Edit researh notes", person.getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Edit researh notes", Action.M, person));
 			return personToUpdate;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -708,7 +721,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			}
 			getPoLinkDAO().merge(poLinkToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.PEOPLE, "Edit title or occupation", poLink.getPerson().getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Edit title or occupation", Action.M, poLink.getPerson()));
 
 			return poLinkToUpdate.getPerson();
 		} catch (Throwable th) {
@@ -734,10 +747,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public People findLastEntryPerson() throws ApplicationThrowable {
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findLastEntryPlace();
+			UserHistoryPeople userHistoryPeople = getUserHistoryPeopleDAO().findLastEntryPeople();
 			
-			if (userHistory != null) {
-				return getPeopleDAO().find(userHistory.getEntityId());
+			if (userHistoryPeople != null) {
+				return userHistoryPeople.getPeople();
 			}
 			
 			// in case of no user History we extract last person created on database.
@@ -831,7 +844,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			People people = getPeopleDAO().find(personId);
 			
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Show person", people.getPersonId()));
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Show person", Action.V, people));
 
 			return people;
 		} catch (Throwable th) {
@@ -1061,6 +1074,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @return the userHistoryPeopleDAO
+	 */
+	public UserHistoryPeopleDAO getUserHistoryPeopleDAO() {
+		return userHistoryPeopleDAO;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -1226,17 +1246,34 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
+	 * @param userHistoryPeopleDAO the userHistoryPeopleDAO to set
 	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
+	public void setUserHistoryPeopleDAO(UserHistoryPeopleDAO userHistoryPeopleDAO) {
+		this.userHistoryPeopleDAO = userHistoryPeopleDAO;
 	}
 
 	/**
-	 * @return the userHistoryDAO
+	 * {@inheritDoc}
 	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
+	@Override
+	public People undeletePerson(Integer personId) throws ApplicationThrowable {
+		People personToUnDelete = null;
+		try {
+			personToUnDelete = getPeopleDAO().find(personId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 
+		personToUnDelete.setLogicalDelete(Boolean.FALSE);
+
+		try {
+			getPeopleDAO().merge(personToUnDelete);
+
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Recovered person", Action.M, personToUnDelete));
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return personToUnDelete;
+	}
 }

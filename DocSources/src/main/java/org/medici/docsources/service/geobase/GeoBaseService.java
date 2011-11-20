@@ -77,14 +77,23 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Place addNewPlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
-	 * @param place
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
 	 */
-	public void deletePlace(Place place) throws ApplicationThrowable;
-	
+	public Place deletePlace(Integer placeAllId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Place undeletePlace(Integer placeAllId) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param placeExternalLinks
@@ -180,6 +189,18 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexPlace() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexPlaceExternalLinks() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void generateIndexPlaceGeographicCoordinates() throws ApplicationThrowable;
 
 	/**
 	 * 

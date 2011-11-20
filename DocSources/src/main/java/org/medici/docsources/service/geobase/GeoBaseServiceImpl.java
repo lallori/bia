@@ -35,13 +35,13 @@ import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.placeexternallinks.PlaceExternalLinksDAO;
 import org.medici.docsources.dao.placegeographiccoordinates.PlaceGeographicCoordinatesDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
-import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.userhistoryplace.UserHistoryPlaceDAO;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.PlaceType;
-import org.medici.docsources.domain.UserHistory;
-import org.medici.docsources.domain.UserHistory.BaseCategory;
+import org.medici.docsources.domain.UserHistoryPlace;
+import org.medici.docsources.domain.UserHistoryPlace.Action;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,27 +59,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Autowired
 	private PlaceDAO placeDAO;
 	@Autowired
-	private PlaceTypeDAO placeTypeDAO;
+	private PlaceExternalLinksDAO placeExternalLinksDAO;
 	@Autowired
 	private PlaceGeographicCoordinatesDAO placeGeographicCoordinatesDAO;
 	@Autowired
-	private PlaceExternalLinksDAO placeExternalLinksDAO;
+	private PlaceTypeDAO placeTypeDAO;
 	@Autowired
-	private UserHistoryDAO userHistoryDAO;
-
-	/**
-	 * @return the placeExternalLinksDAO
-	 */
-	public PlaceExternalLinksDAO getPlaceExternalLinksDAO() {
-		return placeExternalLinksDAO;
-	}
-
-	/**
-	 * @param placeExternalLinksDAO the placeExternalLinksDAO to set
-	 */
-	public void setPlaceExternalLinksDAO(PlaceExternalLinksDAO placeExternalLinksDAO) {
-		this.placeExternalLinksDAO = placeExternalLinksDAO;
-	}
+	private UserHistoryPlaceDAO userHistoryPlaceDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -115,12 +101,36 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			place.setPlNameFullPlType(place.getPlaceName() + " (" + place.getPlType() + ") / " + place.getPlParent() + " (" + place.getParentType() + ") / " + place.getgParent() + " (" + place.getGpType() + ") / " + place.getGgp() + " (" + place.getGgpType() + ")");
 				
 			getPlaceDAO().persist(place);
+
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Add new place", Action.C, place));
+
 			return place;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place addNewPlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
+			throws ApplicationThrowable {
+		try{
+			placeExternalLinks.setPlaceExternalLinksId(null);
+			placeExternalLinks.setPlace(getPlaceDAO().find(placeExternalLinks.getPlace().getPlaceAllId()));
+			getPlaceExternalLinksDAO().persist(placeExternalLinks);
+			
+			getPlaceDAO().refresh(placeExternalLinks.getPlace());
+			
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Add external link", Action.M, placeExternalLinks.getPlace()));
+
+			return placeExternalLinks.getPlace();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -136,42 +146,37 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			
 			getPlaceDAO().refresh(placeGeographicCoordinates.getPlace());
 			
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Add geographic coordinates", Action.M, placeGeographicCoordinates.getPlace()));
+
 			return placeGeographicCoordinates.getPlace();
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Place addNewPlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
-			throws ApplicationThrowable {
-		try{
-			placeExternalLinks.setPlaceExternalLinksId(null);
-			placeExternalLinks.setPlace(getPlaceDAO().find(placeExternalLinks.getPlace().getPlaceAllId()));
-			getPlaceExternalLinksDAO().persist(placeExternalLinks);
-			
-			getPlaceDAO().refresh(placeExternalLinks.getPlace());
-			
-			return placeExternalLinks.getPlace();
-		}catch(Throwable th){
+	public Place deletePlace(Integer placeAllId) throws ApplicationThrowable {
+		Place placeToDelete = null;
+		try {
+			placeToDelete = getPlaceDAO().find(placeAllId);
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void deletePlace(Place place) throws ApplicationThrowable {
-		try{
-			getPlaceDAO().remove(place);
-		}catch(Throwable th){
+
+		placeToDelete.setLogicalDelete(Boolean.TRUE);
+
+		try {
+			getPlaceDAO().merge(placeToDelete);
+
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Deleted place", Action.D, placeToDelete));
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 		
+		return placeToDelete;
 	}
 	
 	/**
@@ -184,6 +189,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			PlaceExternalLinks placeExternalLinksToDelete = getPlaceExternalLinksDAO().find(placeExternalLinks.getPlace().getPlaceAllId(), placeExternalLinks.getPlaceExternalLinksId());
 			getPlaceExternalLinksDAO().remove(placeExternalLinksToDelete);
 			placeExternalLinksToDelete.getPlace().setPlaceExternalLinks(null);
+
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Delete external link ", Action.M, placeExternalLinksToDelete.getPlace()));
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -230,24 +237,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			place.setPlNameFullPlType(place.getPlaceName() + " (" + place.getPlType() + ") / " + place.getPlParent() + " (" + place.getParentType() + ") / " + place.getgParent() + " (" + place.getGpType() + ") / " + place.getGgp() + " (" + place.getGgpType() + ")");
 			
 			getPlaceDAO().merge(placeToUpdate);
+
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Edit details ", Action.M, placeToUpdate));
+
 			return placeToUpdate;
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
-		try{
-			PlaceGeographicCoordinates placeGeographicCoordinatesToUpdate = getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeGeographicCoordinates.getId());
-			BeanUtils.copyProperties(placeGeographicCoordinatesToUpdate, placeGeographicCoordinates);
-			placeGeographicCoordinatesToUpdate.setId(placeGeographicCoordinates.getId());
-			getPlaceGeographicCoordinatesDAO().merge(placeGeographicCoordinatesToUpdate);
-			
-			return placeGeographicCoordinatesToUpdate.getPlace();
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -266,7 +259,32 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			getPlaceExternalLinksDAO().merge(placeExternalLinksToUpdate);
 			getPlaceDAO().refresh(placeExternalLinksToUpdate.getPlace());
 			
-			return placeExternalLinksToUpdate.getPlace();
+			Place place = placeExternalLinksToUpdate.getPlace();
+			
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Edit external links", Action.M, place));
+
+			return place;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
+		try{
+			PlaceGeographicCoordinates placeGeographicCoordinatesToUpdate = getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeGeographicCoordinates.getId());
+			BeanUtils.copyProperties(placeGeographicCoordinatesToUpdate, placeGeographicCoordinates);
+			placeGeographicCoordinatesToUpdate.setId(placeGeographicCoordinates.getId());
+			getPlaceGeographicCoordinatesDAO().merge(placeGeographicCoordinatesToUpdate);
+			
+			Place place = placeGeographicCoordinatesToUpdate.getPlace();
+			
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Edit geographic coordinates", Action.M, place));
+
+			return place;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -278,10 +296,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place findLastEntryPlace() throws ApplicationThrowable {
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findLastEntryPlace();
+			UserHistoryPlace userHistoryPlace = getUserHistoryPlaceDAO().findLastEntryPlace();
 			
-			if (userHistory != null) {
-				return getPlaceDAO().find(userHistory.getEntityId());
+			if (userHistoryPlace != null) {
+				return userHistoryPlace.getPlace();
 			}
 			
 			// in case of no user History we extract last place created on database.
@@ -302,7 +320,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -311,22 +329,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			Place place = getPlaceDAO().find(placeId);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Show place", place.getPlaceAllId()));
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Show place", Action.V, place));
 
 			return place;
 		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PlaceGeographicCoordinates findPlaceGeographicCoordinates(Integer placeAllId) throws ApplicationThrowable {
-		try{
-			return getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeAllId);
-		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -347,6 +353,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public PlaceGeographicCoordinates findPlaceGeographicCoordinates(Integer placeAllId) throws ApplicationThrowable {
+		try{
+			return getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeAllId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Place> findPlaceNames(Integer geogKey) throws ApplicationThrowable {
 		try{
 			return getPlaceDAO().findByGeogKey(geogKey);
@@ -354,7 +372,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -366,7 +384,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -383,6 +401,30 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void generateIndexPlaceExternalLinks() throws ApplicationThrowable {
+		try {
+			getPlaceExternalLinksDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void generateIndexPlaceGeographicCoordinates() throws ApplicationThrowable {
+		try {
+			getPlaceGeographicCoordinatesDAO().generateIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void generateIndexPlaceType() throws ApplicationThrowable {
 		try {
 			getPlaceTypeDAO().generateIndex();
@@ -390,7 +432,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
+	
 	/**
 	 * @return the placeDAO
 	 */
@@ -399,10 +441,31 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
+	 * @return the placeExternalLinksDAO
+	 */
+	public PlaceExternalLinksDAO getPlaceExternalLinksDAO() {
+		return placeExternalLinksDAO;
+	}
+
+	/**
+	 * @return the placeGeographicCoordinatesDAO
+	 */
+	public PlaceGeographicCoordinatesDAO getPlaceGeographicCoordinatesDAO() {
+		return placeGeographicCoordinatesDAO;
+	}
+	
+	/**
 	 * @return the placeTypeDAO
 	 */
 	public PlaceTypeDAO getPlaceTypeDAO() {
 		return placeTypeDAO;
+	}
+
+	/**
+	 * @return the userHistoryPlaceDAO
+	 */
+	public UserHistoryPlaceDAO getUserHistoryPlaceDAO() {
+		return userHistoryPlaceDAO;
 	}
 	
 	/**
@@ -428,7 +491,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -485,17 +548,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
-	 * @param placeTypeDAO the placeTypeDAO to set
+	 * @param placeExternalLinksDAO the placeExternalLinksDAO to set
 	 */
-	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
-		this.placeTypeDAO = placeTypeDAO;
-	}
-
-	/**
-	 * @return the placeGeographicCoordinatesDAO
-	 */
-	public PlaceGeographicCoordinatesDAO getPlaceGeographicCoordinatesDAO() {
-		return placeGeographicCoordinatesDAO;
+	public void setPlaceExternalLinksDAO(PlaceExternalLinksDAO placeExternalLinksDAO) {
+		this.placeExternalLinksDAO = placeExternalLinksDAO;
 	}
 
 	/**
@@ -507,17 +563,42 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
+	 * @param placeTypeDAO the placeTypeDAO to set
 	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
+	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
+		this.placeTypeDAO = placeTypeDAO;
 	}
 
 	/**
-	 * @return the userHistoryDAO
+	 * @param userHistoryPlaceDAO the userHistoryPlaceDAO to set
 	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
+	public void setUserHistoryPlaceDAO(UserHistoryPlaceDAO userHistoryPlaceDAO) {
+		this.userHistoryPlaceDAO = userHistoryPlaceDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place undeletePlace(Integer placeAllId) throws ApplicationThrowable {
+		Place placeToUndelete = null;
+		try {
+			placeToUndelete = getPlaceDAO().find(placeAllId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		placeToUndelete.setLogicalDelete(Boolean.TRUE);
+
+		try {
+			getPlaceDAO().merge(placeToUndelete);
+
+			getUserHistoryPlaceDAO().persist(new UserHistoryPlace("Recovered place", Action.M, placeToUndelete));
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return placeToUndelete;
 	}
 
 }

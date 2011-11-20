@@ -93,7 +93,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Parent addNewMotherPerson(Parent parent) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param person
@@ -101,7 +101,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People addNewPerson(People person) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param poLink
@@ -137,6 +137,15 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteNamePerson(AltName altName) throws ApplicationThrowable;
+
+	/**
+	 * This method mark a {@link org.medici.docsources.domain.People} as deleted .
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People deletePerson(Integer personId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -414,4 +423,13 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<TitleOccsList> searchTitleOrOccupation(String query) throws ApplicationThrowable;
+
+	/**
+	 * This method mark a {@link org.medici.docsources.domain.People} as available.
+	 * 
+	 * @param personId 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public People undeletePerson(Integer personId) throws ApplicationThrowable;
 }

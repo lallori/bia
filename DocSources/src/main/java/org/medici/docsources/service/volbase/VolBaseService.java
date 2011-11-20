@@ -91,6 +91,16 @@ public interface VolBaseService {
 	public Boolean checkVolumeDigitized(Integer volNum, String volLetExt) throws ApplicationThrowable; 
 
 	/**
+	 * This method mark a volume as deleted {@link org.medici.docsources.domain.Volume}.
+	 * 
+	 * @param summaryId Unique Volume Identifier
+	 * @return {@link org.medici.docsources.domain.Volume}
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public Volume deleteVolume(Integer summaryId) throws ApplicationThrowable;
+	
+	/**
 	 * This method modify context of an existing {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param volume {@link org.medici.docsources.domain.Volume} to be modified
@@ -125,7 +135,6 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable;
-	
 
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.Volume}.
@@ -135,6 +144,15 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume findLastEntryVolume() throws ApplicationThrowable;
+	
+
+	/**
+	 * This method find new digitized volumes.
+	 * 
+	 * @return List of Unique Volume Identifier.
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public List<Integer> findNewDigitizedVolumes() throws ApplicationThrowable;
 
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
@@ -191,22 +209,6 @@ public interface VolBaseService {
 
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
-	 * with specific image type and folio number linked to a 
-	 * {@link org.medici.docsources.domain.Volume} identified by his volume
-	 * number and his letter extension.
-	 * 
-	 * @param volNum Volume number identifier
-	 * @param volLetExt Volume letter extension identifier.
-	 * @param imageType {@link org.medici.docsources.domain.Image$ImageType} identifier
-	 * @param imageProgTypeNum Folio number
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
-	
-	/**
-	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
 	 * unique identifier
 	 * 
@@ -230,7 +232,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
@@ -243,6 +245,22 @@ public interface VolBaseService {
 	 * 
 	 */
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable;
+
+	/**
+	 * This method will search every {@link org.medici.docsources.domain.Image} 
+	 * with specific image type and folio number linked to a 
+	 * {@link org.medici.docsources.domain.Volume} identified by his volume
+	 * number and his letter extension.
+	 * 
+	 * @param volNum Volume number identifier
+	 * @param volLetExt Volume letter extension identifier.
+	 * @param imageType {@link org.medici.docsources.domain.Image$ImageType} identifier
+	 * @param imageProgTypeNum Folio number
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
 
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
@@ -320,6 +338,15 @@ public interface VolBaseService {
 	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable;
 
 	/**
+	 * This method searches if the volumes are digitized
+	 * 
+	 * @param summaries
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
+
+	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 
 	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}
@@ -327,7 +354,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.Volume}
 	 * containing input text and return a specific 
@@ -342,13 +369,24 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
-	 * This method searches if the volumes are digitized
+	 * This method remove delete mark on a {@link org.medici.docsources.domain.Volume}.
 	 * 
-	 * @param summaries
-	 * @return
+	 * @param summaryId Unique Volume Identifier
+	 * @return {@link org.medici.docsources.domain.Volume}
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
 	 */
-	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
+	public Volume undeleteVolume(Integer summaryId) throws ApplicationThrowable;
+
+	/**
+	 * This method set digitized information to true on a list of volumes.
+	 * 
+	 * @param summaryIds List of Unique Volume Identifier.
+	 * @return {@link java.lang.Integer} Number of rows updated
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws ApplicationThrowable;
 }
