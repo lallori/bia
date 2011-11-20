@@ -33,7 +33,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.geobase.DeleteNameOrNameVariantPlaceCommand;
-import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +87,7 @@ public class DeleteNameOrNameVariantPlaceController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			try {
-				Place place = getGeoBaseService().findPlace(command.getPlaceAllId());
-				getGeoBaseService().deletePlace(place);
+				getGeoBaseService().deletePlace(command.getPlaceAllId());
 
 				return new ModelAndView("response/OK", model);
 			} catch (ApplicationThrowable ath) {

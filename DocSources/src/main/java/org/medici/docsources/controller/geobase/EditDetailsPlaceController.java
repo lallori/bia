@@ -124,8 +124,7 @@ public class EditDetailsPlaceController {
 				}
 				else{
 					place = getGeoBaseService().editDetailsPlace(place);
-					List<Place> placeNames;
-					placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
+					List<Place> placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 					model.put("placeNames", placeNames);
 					model.put("place", place);
 					return new ModelAndView("geobase/ShowPlace", model);
