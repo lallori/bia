@@ -74,7 +74,7 @@
         	</c:forEach>
 		</div>
         
-        <a href="<c:url value="/user/ShowMyHistoryPlaces.do"/>" id="morePeople">More<span class="arrow"></span></a>
+        <a href="<c:url value="/user/ShowMyHistoryPeople.do"/>" id="morePeople">More<span class="arrow"></span></a>
     </div>
 	<input id="close" type="submit" title="Close Chronology window" value="Close"/>
 </div>
