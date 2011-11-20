@@ -99,7 +99,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@Override
 	public People findLastEntryPerson() throws PersistenceException {
-        Query query = getEntityManager().createQuery("FROM People ORDER BY dateCreated DESC");
+        Query query = getEntityManager().createQuery("FROM People where logicalDelete = false ORDER BY dateCreated DESC");
         query.setMaxResults(1);
 
         return (People) query.getSingleResult();

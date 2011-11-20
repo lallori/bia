@@ -72,14 +72,4 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 */
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 
-	/**
-	 * This method searches documents which contains text input parameter in one of his fields
-	 * and return a result page.
-	 * 
-	 * @param text text to search
-	 * @param paginationFilter
-	 * @return a result page with the documents found
-	 * @throws PersistenceException
-	 */
-	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException;
 }

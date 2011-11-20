@@ -88,15 +88,26 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Place> findByGeogKey(Integer geogKey) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Place WHERE geogkey=:geogkey AND prefflag='P'");
+		Query query = getEntityManager().createQuery("FROM Place WHERE geogkey=:geogkey AND prefflag='P' AND logicalDelete = false");
 		query.setParameter("geogkey", geogKey);
 		List<Place> result = query.getResultList();
-		query = getEntityManager().createQuery("FROM Place WHERE geogkey=:geogkey AND prefflag='V'");
+		query = getEntityManager().createQuery("FROM Place WHERE geogkey=:geogkey AND prefflag='V' AND logicalDelete = false");
 		query.setParameter("geogkey", geogKey);
 		result.addAll(query.getResultList());
 		
 		return result;
 		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place findLastEntryPlace() throws PersistenceException {
+        Query query = getEntityManager().createQuery("FROM Place WHERE logicalDelete = false ORDER BY dateEntered DESC");
+        query.setMaxResults(1);
+
+        return (Place) query.getSingleResult();
 	}
 	
 	/**
@@ -109,23 +120,12 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			query = getEntityManager().createQuery("FROM Place WHERE plSource=:plSource AND geogkey>=100000 AND geogkey<=400000 ORDER BY geogkey DESC");
 		}
 		if(plSource.equals("MAPSITE")){
-			query = getEntityManager().createQuery("FROM Place WHERE plSource=:plSource AND geogkey>=400000 AND geogkey<=1000000 ORDER BY geogkey DESC");
+			query = getEntityManager().createQuery("FROM Place WHERE plSource=:plSource AND geogkey>=400000 AND geogkey<=1000000 AND logicalDelete = false ORDER BY geogkey DESC");
 		}
 		query.setParameter("plSource", plSource);
 		query.setMaxResults(1);
 		
 		return (Place) query.getSingleResult();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Place findLastEntryPlace() throws PersistenceException {
-        Query query = getEntityManager().createQuery("FROM Place ORDER BY dateEntered DESC");
-        query.setMaxResults(1);
-
-        return (Place) query.getSingleResult();
 	}
 	
 	/**

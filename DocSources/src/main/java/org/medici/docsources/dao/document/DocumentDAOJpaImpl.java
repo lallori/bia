@@ -40,7 +40,6 @@ import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
@@ -96,7 +95,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 */
 	@Override
 	public Document findLastEntryDocument() throws PersistenceException {
-        Query query = getEntityManager().createQuery("FROM Document ORDER BY dateCreated DESC");
+        Query query = getEntityManager().createQuery("FROM Document WHERE logicalDelete = false ORDER BY dateCreated DESC");
         query.setMaxResults(1);
 
         return (Document) query.getSingleResult();
@@ -124,47 +123,6 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		}
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page searchDocuments(String text, PaginationFilter paginationFilter) throws PersistenceException {
-		// We prepare object of return method.
-		Page page = new Page(paginationFilter);
-		// We obtain hibernate-search session
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
-
-		// We set search on fields .
-		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(
-			"volume.serieList.title",
-			"volume.serieList.subTitle1", 
-			"volume.serieList.subTitle2",
-			"senderPeople.mapNameLf", 
-			"senderPeople.poLink.titleOccList.titleOcc",
-			"senderPeople.altName.altName", 
-			"senderPlace.placeName", 
-			"senderPlace.placeNameFull",
-			"recipientPeople.mapNameLf", 
-			"recipientPeople.poLink.titleOccList.titleOcc",
-			"recipientPeople.altName.altName",
-			"recipientPlace.placeName", 
-			"recipientPlace.placeNameFull"
-		).matching(text + "*").createQuery();
-
-		// We execute search
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Document.class );
-
-		// We set pagination  
-		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-		fullTextQuery.setMaxResults(paginationFilter.getLength());
-		
-		// We set search result on return method
-		page.setList(fullTextQuery.list());
-
-		return page;
-	}
-
 	/**
 	 * 
 	 */
