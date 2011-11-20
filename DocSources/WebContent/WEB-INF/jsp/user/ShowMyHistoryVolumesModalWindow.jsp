@@ -4,149 +4,85 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<div id="MyHistoryDiv">
-	<div id="DocsHistory">
-		<div class="title">
-        	<h5>DOCUMENTS</h5>
-        </div>
-        
-        <div class="historyList">
-        	<c:forEach items="${historyReport['Document']}" var="currentHistory" varStatus="status">
-            	${status.count}
-            <div class="historyRowColor">
-                <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
-                <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="#">${currentHistory.document.MDPAndFolio}</a></div>
-			</div>
-        	</c:forEach>
-		</div>
-        
-        <a href="/DocSources/cm/HistoryDocs.html" id="moreDocs">More<span class="arrow"></span></a>
-    </div>
+	<c:url var="MyHistoryPaginationURL" value="/user/MyHistoryPagination.json">
+		<c:param name="searchType" value="VOLUME" />
+	</c:url>
 
-    <div id="VolumesHistory">
-		<div class="title">
-        	<h5>VOLUME</h5>
-        </div>
-        
-        <div class="historyList">
-        	<c:forEach items="${historyReport['Document']}" var="currentHistory" varStatus="status">
-            <div class="historyRowColor">
-                <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
-                <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="#">${currentHistory.action}</a></div>
-			</div>
-        	</c:forEach>
-		</div>
-        
-        <a href="/DocSources/cm/HistoryVol.html" id="moreVolumes">More<span class="arrow"></span></a>
-    </div>
-    
-    <div id="PlaceHistory">
-		<div class="title">
-        	<h5>PLACE</h5>
-        </div>
-        
-        <div class="historyList">
-            <div class="historyRowColor">
-                <div class="historyDate"><a href="#">11/30/2012</a></div>
-                <div class="historyAction" title="Deleted"><a href="#">D</a></div>  
-                <div class="historyItem" title="A Coruña/Galicia/España"><a href="#">A Coruña/Galicia/...</a></div><!-- Massimo 17 caratteri! Se è più lungo vengono i 3 puntini alla fine e nell tag title del div si scrive intero così che l'utente quando fa rollover riesce a leggerlo tutto --> 
-			</div>
-            
-            <div class="historyRow">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Modified">M</div>  
-                <div class="historyItem"><a href="#">$Place Name</a></div> 
-			</div>
-            
-			<div class="historyRowColor">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Viewed">V</div>   
-                <div class="historyItem"><a href="#">$Place Name</a></div> 
-			</div>
-            
-            <div class="historyRow">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Deleted">D</div>   
-                <div class="historyItem"><a href="#">$Place Name</a></div> 
-			</div>
-            
-            <div class="historyRowColor">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Modified">M</div>   
-                <div class="historyItem"><a href="#">$Place Name</a></div> 
-			</div>        
-		</div>
-        
-        <a href="/DocSources/cm/HistoryPla.html" id="morePlaces">More<span class="arrow"></span></a>
-    </div>
-    
-    <div id="PeopleHistory">
-		<div class="title">
-        	<h5>PEOPLE</h5>
-        </div>
-        
-        <div class="historyList">
-            <div class="historyRowColor">
-                <div class="historyDate"><a href="#">11/30/2012</a></div>
-                <div class="historyAction" title="Deleted"><a href="#">D</a></div>   
-                <div class="historyPersonValue" title="Latini, Cosimo di Filippo"><a href="#">Latini, Cosimo di...</a></div><!-- Massimo 17 caratteri! Se è più lungo vengono i 3 puntini alla fine e nell tag title del div si scrive intero così che l'utente quando fa rollover riesce a leggerlo tutto --> 
-			</div>
-            
-            <div class="historyRow">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Modified">M</div>   
-                <div class="historyItem"><a href="#">$Name $Suffix</a></div> 
-			</div>
-            
-			<div class="historyRowColor">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Viewed">V</div>     
-                <div class="historyItem"><a href="#">$Name $Suffix</a></div> 
-			</div>
-            
-            <div class="historyRow">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Deleted">D</div> 
-                <div class="historyItem"><a href="#">$Name $Suffix</a></div> 
-			</div>
-            
-            <div class="historyRowColor">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Modified">M</div>  
-                <div class="historyItem"><a href="#">$Name $Suffix</a></div> 
-			</div>        
-		</div>
-        
-        <a href="/DocSources/cm/HistoryPeop.html" id="morePeople">More<span class="arrow"></span></a>
-    </div>
-	<input id="close" type="submit" title="Close Chronology window" value="Close"/>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="MyDocumentsHistoryTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Action</th>
+            <th>Volume Number</th>
+            <th>Carteggio</th>
+            <th>Volume Start Date</th>
+            <th>Volume End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>                                                                                              
+            <td colspan="5" class="dataTables_empty">Loading data from server</td>                        
+        </tr> 
+    </tbody>
+</table>
+
+<div id="MyHistoryButtons">
+	<a id="closeMyHistory" href="#" title="Close Saved Filters window">Close</a>
+	<a id="goBackToMyHistory" href="<c:url value="/user/ShowMyHistory.do"/>" title="Go Back to My History">Go back</a>
 </div>
 
+<script type="text/javascript" charset="utf-8">                                                           
+	$j(document).ready(function() {                                                                       
+		$j('#MyDocumentsHistoryTable').dataTable( {                                                             
+			"aoColumnDefs": [ { "sWidth": "90%", "aTargets": [ "_all" ] }],    
+			"bAutoWidth" : false,
+				"aoColumns" : [
+				{ sWidth : "40px" },
+				{ sWidth : "40px" },
+				{ sWidth : "50px" },
+				{ sWidth : "150px" },
+				{ sWidth : "150px" },
+				],                           
+			"bDestroy" : true,  
+			"bFilter" : false,
+			"bLengthChange": false,                                                                          
+			"bProcessing": true,                                                                          
+			"bServerSide": true,                                                                          
+			"iDisplayLength": 10,                                                                         
+			"iDisplayStart": 0,                                                                           
+			"oSearch": {"sSearch": ""},                                                                   
+			"sAjaxSource": "${MyHistoryPaginationURL}",                                           
+			"sDom": 'T<"clear">lfrtip',                                                                   
+			"sPaginationType": "full_numbers", 
+			"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+				/* Add some extra data to the sender */                                                   
+				aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+				$j.getJSON( sSource, aoData, function (json) {                                            
+					/* Do whatever additional processing you want on the callback, then tell DataTables */
+					fnCallback(json)                                                                      
+				} );                                                                                      
+			}                                                                                             
+		} );                                                                                              
+																										  
+		// We need to remove any previous live function                                                   
+		$j('.searchResult').die();                                                                        
+		// Result links have a specific class style on which we attach click live.                        
+		$j('.searchResult').live('click', function() {                                                    
+			return false;                                                                                 
+		});                                                                                               
 
+		$j("#goBackToMyHistory").click(function() {															
+			Modalbox.show($j(this).attr("href"), {title: "MY HISTORY", width: 750});
+			return false;
+		});	
+		$j("#closeMyHistory").click(function(){
+			Modalbox.hide(); 
+			return false;
+		});
+	} );                                                                                                  
+</script>
+	
 <script type="text/javascript">
 	$j(document).ready(function() {
-		$j("#moreDocs").click(
-			function() {															
-				Modalbox.show($j(this).attr("href"), {title: "MY DOCUMENTS HISTORY ", width: 750});return false;}
-				);	
-		$j("#morePeople").click(
-			function() {															
-				Modalbox.show($j(this).attr("href"), {title: "MY PEOPLE HISTORY", width: 750});return false;}
-				);	
-									   
-		$j("#moreVolumes").click(
-			function() {															
-				Modalbox.show($j(this).attr("href"), {title: "MY VOLUMES HISTORY", width: 750});return false;}
-				);							   	
-		$j("#morePlaces").click(
-			function() {															
-				Modalbox.show($j(this).attr("href"), {title: "MY PLACE HISTORY", width: 750});return false;}
-				);
-		$j("#close").click(
-			function(){
-				Modalbox.hide(); return false;}
-				);
 	});
 </script>

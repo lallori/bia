@@ -12,7 +12,6 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['Document']}" var="currentHistory" varStatus="status">
-            	${status.count}
             <div class="historyRowColor">
                 <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
@@ -21,7 +20,7 @@
         	</c:forEach>
 		</div>
         
-        <a href="/DocSources/cm/HistoryDocs.html" id="moreDocs">More<span class="arrow"></span></a>
+        <a href="<c:url value="/user/ShowMyHistoryDocuments.do"/>" id="moreDocs">More<span class="arrow"></span></a>
     </div>
 
     <div id="VolumesHistory">
@@ -30,16 +29,16 @@
         </div>
         
         <div class="historyList">
-        	<c:forEach items="${historyReport['Document']}" var="currentHistory" varStatus="status">
+        	<c:forEach items="${historyReport['Volume']}" var="currentHistory" varStatus="status">
             <div class="historyRowColor">
                 <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="#">${currentHistory.action}</a></div>
+                <div class="historyItem"><a href="#">${currentHistory.volume}</a></div>
 			</div>
         	</c:forEach>
 		</div>
         
-        <a href="/DocSources/cm/HistoryVol.html" id="moreVolumes">More<span class="arrow"></span></a>
+        <a href="<c:url value="/user/ShowMyHistoryVolumes.do"/>" id="moreVolumes">More<span class="arrow"></span></a>
     </div>
     
     <div id="PlaceHistory">
@@ -48,38 +47,16 @@
         </div>
         
         <div class="historyList">
+        	<c:forEach items="${historyReport['Place']}" var="currentHistory" varStatus="status">
             <div class="historyRowColor">
-                <div class="historyDate"><a href="#">11/30/2012</a></div>
-                <div class="historyAction" title="Deleted"><a href="#">D</a></div>  
-                <div class="historyItem" title="A Coruña/Galicia/España"><a href="#">A Coruña/Galicia/...</a></div><!-- Massimo 17 caratteri! Se è più lungo vengono i 3 puntini alla fine e nell tag title del div si scrive intero così che l'utente quando fa rollover riesce a leggerlo tutto --> 
+                <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
+                <div class="historyAction" title="Deleted">${currentHistory.action}</div>
+                <div class="historyItem"><a href="#">${currentHistory.place.placeName}</a></div>
 			</div>
-            
-            <div class="historyRow">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Modified">M</div>  
-                <div class="historyItem"><a href="#">$Place Name</a></div> 
-			</div>
-            
-			<div class="historyRowColor">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Viewed">V</div>   
-                <div class="historyItem"><a href="#">$Place Name</a></div> 
-			</div>
-            
-            <div class="historyRow">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Deleted">D</div>   
-                <div class="historyItem"><a href="#">$Place Name</a></div> 
-			</div>
-            
-            <div class="historyRowColor">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Modified">M</div>   
-                <div class="historyItem"><a href="#">$Place Name</a></div> 
-			</div>        
+        	</c:forEach>
 		</div>
         
-        <a href="/DocSources/cm/HistoryPla.html" id="morePlaces">More<span class="arrow"></span></a>
+        <a href="<c:url value="/user/ShowMyHistoryPlaces.do"/>" id="morePlaces">More<span class="arrow"></span></a>
     </div>
     
     <div id="PeopleHistory">
@@ -88,38 +65,16 @@
         </div>
         
         <div class="historyList">
+        	<c:forEach items="${historyReport['People']}" var="currentHistory" varStatus="status">
             <div class="historyRowColor">
-                <div class="historyDate"><a href="#">11/30/2012</a></div>
-                <div class="historyAction" title="Deleted"><a href="#">D</a></div>   
-                <div class="historyPersonValue" title="Latini, Cosimo di Filippo"><a href="#">Latini, Cosimo di...</a></div><!-- Massimo 17 caratteri! Se è più lungo vengono i 3 puntini alla fine e nell tag title del div si scrive intero così che l'utente quando fa rollover riesce a leggerlo tutto --> 
+                <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
+                <div class="historyAction" title="Deleted">${currentHistory.action}</div>
+                <div class="historyItem"><a href="#">${currentHistory.people}</a></div>
 			</div>
-            
-            <div class="historyRow">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Modified">M</div>   
-                <div class="historyItem"><a href="#">$Name $Suffix</a></div> 
-			</div>
-            
-			<div class="historyRowColor">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Viewed">V</div>     
-                <div class="historyItem"><a href="#">$Name $Suffix</a></div> 
-			</div>
-            
-            <div class="historyRow">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Deleted">D</div> 
-                <div class="historyItem"><a href="#">$Name $Suffix</a></div> 
-			</div>
-            
-            <div class="historyRowColor">
-                <div class="historyDate"><a href="#">$Data</a></div>
-                <div class="historyAction" title="Modified">M</div>  
-                <div class="historyItem"><a href="#">$Name $Suffix</a></div> 
-			</div>        
+        	</c:forEach>
 		</div>
         
-        <a href="/DocSources/cm/HistoryPeop.html" id="morePeople">More<span class="arrow"></span></a>
+        <a href="<c:url value="/user/ShowMyHistoryPlaces.do"/>" id="morePeople">More<span class="arrow"></span></a>
     </div>
 	<input id="close" type="submit" title="Close Chronology window" value="Close"/>
 </div>
@@ -127,26 +82,20 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
-		$j("#moreDocs").click(
-			function() {															
-				Modalbox.show($j(this).attr("href"), {title: "MY DOCUMENTS HISTORY ", width: 750});return false;}
-				);	
-		$j("#morePeople").click(
-			function() {															
-				Modalbox.show($j(this).attr("href"), {title: "MY PEOPLE HISTORY", width: 750});return false;}
-				);	
-									   
-		$j("#moreVolumes").click(
-			function() {															
-				Modalbox.show($j(this).attr("href"), {title: "MY VOLUMES HISTORY", width: 750});return false;}
-				);							   	
-		$j("#morePlaces").click(
-			function() {															
-				Modalbox.show($j(this).attr("href"), {title: "MY PLACE HISTORY", width: 750});return false;}
-				);
-		$j("#close").click(
-			function(){
-				Modalbox.hide(); return false;}
-				);
+		$j("#moreDocs").click(function() {															
+			Modalbox.show($j(this).attr("href"), {title: "MY DOCUMENTS HISTORY ", width: 750});return false;
+		});	
+		$j("#morePeople").click(function() {															
+				Modalbox.show($j(this).attr("href"), {title: "MY PEOPLE HISTORY", width: 750});return false;
+		});	
+		$j("#moreVolumes").click(function() {
+			Modalbox.show($j(this).attr("href"), {title: "MY VOLUMES HISTORY", width: 750});return false;
+		});							   	
+		$j("#morePlaces").click(function() {
+			Modalbox.show($j(this).attr("href"), {title: "MY PLACE HISTORY", width: 750});return false;
+		});
+		$j("#close").click(function(){
+			Modalbox.hide(); return false;
+		});
 	});
 </script>
