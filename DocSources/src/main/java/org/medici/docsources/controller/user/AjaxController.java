@@ -27,8 +27,10 @@
  */
 package org.medici.docsources.controller.user;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,6 +115,7 @@ public class AjaxController {
 	 * @param paginationFilter
 	 */
 	private void myHistoryDocuments(Map<String, Object> model, PaginationFilter paginationFilter) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
 
 		try {
@@ -122,10 +125,8 @@ public class AjaxController {
 
 		List<Object> resultList = new ArrayList<Object>();
 		for (UserHistoryDocument currentUserHistoryDocument : (List<UserHistoryDocument>)page.getList()) {
-			
 			List<Object> singleRow = new ArrayList<Object>();
-			
-			singleRow.add(currentUserHistoryDocument.getDateAndTime());
+			singleRow.add(simpleDateFormat.format(currentUserHistoryDocument.getDateAndTime()));
 			singleRow.add(currentUserHistoryDocument.getAction().toString());
 			singleRow.add(currentUserHistoryDocument.getDocument().getVolume().getMDP());
 
@@ -189,7 +190,9 @@ public class AjaxController {
 	 * @param paginationFilter
 	 */
 	private void myHistoryPeople(Map<String, Object> model, PaginationFilter paginationFilter) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
+
 
 		try {
 			page = getUserService().searchUserHistoryPeople(paginationFilter);
@@ -198,9 +201,8 @@ public class AjaxController {
 
 		List<Object> resultList = new ArrayList<Object>();
 		for (UserHistoryPeople currentUserHistoryPeople : (List<UserHistoryPeople>)page.getList()) {
-			
 			List<Object> singleRow = new ArrayList<Object>();
-			singleRow.add(currentUserHistoryPeople.getDateAndTime());
+			singleRow.add(simpleDateFormat.format(currentUserHistoryPeople.getDateAndTime()));
 			singleRow.add(currentUserHistoryPeople.getAction().toString());
 			singleRow.add(currentUserHistoryPeople.getPeople().getMapNameLf());
 			singleRow.add(DateUtils.getStringDate(currentUserHistoryPeople.getPeople().getBornYear(), currentUserHistoryPeople.getPeople().getBornMonth(), currentUserHistoryPeople.getPeople().getBornDay()));
@@ -220,6 +222,7 @@ public class AjaxController {
 	 * @param paginationFilter
 	 */
 	private void myHistoryPlaces(Map<String, Object> model, PaginationFilter paginationFilter) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
 
 		try {
@@ -229,9 +232,8 @@ public class AjaxController {
 
 		List<Object> resultList = new ArrayList<Object>();
 		for (UserHistoryPlace currentUserHistoryPlace : (List<UserHistoryPlace>)page.getList()) {
-			
 			List<Object> singleRow = new ArrayList<Object>();
-			singleRow.add(currentUserHistoryPlace.getDateAndTime());
+			singleRow.add(simpleDateFormat.format(currentUserHistoryPlace.getDateAndTime()));
 			singleRow.add(currentUserHistoryPlace.getAction().toString());
 			singleRow.add(currentUserHistoryPlace.getPlace().getPlaceNameFull());
 			singleRow.add(currentUserHistoryPlace.getPlace().getPlType());
@@ -250,6 +252,7 @@ public class AjaxController {
 	 * @param paginationFilter
 	 */
 	private void myHistoryVolumes(Map<String, Object> model, PaginationFilter paginationFilter) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
 
 		try {
@@ -259,9 +262,8 @@ public class AjaxController {
 
 		List<Object> resultList = new ArrayList<Object>();
 		for (UserHistoryVolume currentUserHistoryVolume : (List<UserHistoryVolume>)page.getList()) {
-			
 			List<Object> singleRow = new ArrayList<Object>();
-			singleRow.add(currentUserHistoryVolume.getDateAndTime());
+			singleRow.add(simpleDateFormat.format(currentUserHistoryVolume.getDateAndTime()));
 			singleRow.add(currentUserHistoryVolume.getAction().toString());
 			singleRow.add(currentUserHistoryVolume.getVolume().getMDP());
 			singleRow.add(currentUserHistoryVolume.getVolume().getSerieList().toString());
