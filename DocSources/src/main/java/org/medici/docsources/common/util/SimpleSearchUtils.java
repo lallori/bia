@@ -131,6 +131,27 @@ public class SimpleSearchUtils {
 	 * @param words
 	 * @return
 	 */
+	public static BooleanQuery constructBooleanQueryOnStringFields(String[] stringFields, String[] words, Occur queryOccur, Occur clauseOccur) {
+		BooleanQuery query = new BooleanQuery();
+		// We add conditions on string fields
+		for (int i=0; i<stringFields.length; i++) {
+			BooleanQuery singleFieldQuery = new BooleanQuery();
+			for (int j=0; j<words.length; j++) {
+				BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term(stringFields[i], words[j].toLowerCase())), clauseOccur);
+				singleFieldQuery.add(booleanClause);
+			}
+			query.add(singleFieldQuery, queryOccur);
+		}
+		
+		return query;
+	}
+
+	/**
+	 * 
+	 * @param stringFields
+	 * @param words
+	 * @return
+	 */
 	public static BooleanQuery constructBooleanQueryOnStringFields(String[] stringFields, String[] words) {
 		BooleanQuery query = new BooleanQuery();
 		// We add conditions on string fields
