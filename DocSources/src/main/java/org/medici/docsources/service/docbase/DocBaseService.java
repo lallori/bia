@@ -137,13 +137,22 @@ public interface DocBaseService {
 	public Document constructDocumentToTranscribe(Integer imageDocumentToCreate, Integer imageDocumentFolioStart) throws ApplicationThrowable;
 
 	/**
+	 * This method mark a {@link org.medici.docsources.domain.Document} as deleted .
 	 * 
-	 * @param document
+	 * @param entryId 
 	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
+	 * @throws ApplicationThrowable
 	 */
-	public void deleteDocument(Document document) throws ApplicationThrowable;
+	public Document deleteDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * This method mark a {@link org.medici.docsources.domain.Document} as available.
+	 * 
+	 * @param entryId 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document undeleteDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * 

@@ -48,21 +48,21 @@ import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.synextract.SynExtractDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
-import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.userhistorydocument.UserHistoryDocumentDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.Image.ImageType;
-import org.medici.docsources.domain.UserHistory.BaseCategory;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.domain.TopicList;
+import org.medici.docsources.domain.UserHistoryDocument;
+import org.medici.docsources.domain.UserHistoryDocument.Action;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,9 +98,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private TopicsListDAO topicsListDAO;
 	@Autowired
-	private VolumeDAO volumeDAO;
+	private UserHistoryDocumentDAO userHistoryDocumentDAO;
 	@Autowired
-	private UserHistoryDAO userHistoryDAO;
+	private VolumeDAO volumeDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -137,7 +137,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getDocumentDAO().persist(document);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Create document", document.getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Create document", Action.C, document));
 
 			return document;
 		} catch (Throwable th) {
@@ -160,7 +160,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document entity state, otherwise synExtract property will be null
 			getDocumentDAO().refresh(synExtract.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Add new extract", synExtract.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Add new extract", Action.M, synExtract.getDocument()));
 
 			return synExtract.getDocument();
 		} catch (Throwable th) {
@@ -179,7 +179,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			factChecks.setDocument(getDocumentDAO().find(factChecks.getDocument().getEntryId()));
 			getFactChecksDAO().persist(factChecks);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Add new fact checks", factChecks.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Add new fact checks", Action.M, factChecks.getDocument()));
 
 			// We need to refresh linked document entity state, otherwise factChecks property will be null
 			getDocumentDAO().refresh(factChecks.getDocument());
@@ -201,7 +201,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getEpLinkDAO().persist(epLink);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Add new person", epLink.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Add new person", Action.M, epLink.getDocument()));
 
 			return epLink.getDocument();
 		} catch (Throwable th) {
@@ -239,7 +239,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document entity state, otherwise eplToLink property will be null
 			getDocumentDAO().refresh(eplToLink.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Add new topic", eplToLink.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Add new topic", Action.M, eplToLink.getDocument()));
 
 			return eplToLink.getDocument();
 		} catch (Throwable th) {
@@ -296,12 +296,25 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteDocument(Document document) throws ApplicationThrowable {
+	public Document deleteDocument(Integer entryId) throws ApplicationThrowable {
+		Document documentToDelete = null;
 		try {
-			getDocumentDAO().remove(document);
+			documentToDelete = getDocumentDAO().find(entryId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
-		}	
+		}
+
+		documentToDelete.setLogicalDelete(Boolean.FALSE);
+
+		try {
+			getDocumentDAO().merge(documentToDelete);
+
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Deleted document", Action.D, documentToDelete));
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return documentToDelete;
 	}
 
 	/**
@@ -311,14 +324,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public void deletePersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
 			EpLink epLinkToDelete = getEpLinkDAO().find(epLink.getEpLinkId(), epLink.getDocument().getEntryId());
-			
+
 			epLinkToDelete.getDocument().setEpLink(null);
 			epLinkToDelete.getPerson().setEpLink(null);
 			getEpLinkDAO().remove(epLinkToDelete);
 			
 			
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Unlink person ", epLink.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Unlink person ", Action.M, epLink.getDocument()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -337,7 +350,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// Tnx to http://stackoverflow.com/questions/4748426/cannot-remove-entity-which-is-target-of-onetoone-relation
 			eplToLinkToDelete.getDocument().setEplToLink(null);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Unlink topic", eplToLink.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Unlink topic", Action.M, eplToLink.getDocument()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}	
@@ -390,7 +403,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 				documentToUpdate.setRecipientPlace(null);
 			documentToUpdate.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
 		
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Edit Correspondents", documentToUpdate.getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit Correspondents", Action.M, documentToUpdate));
 
 			return getDocumentDAO().merge(documentToUpdate);
 		} catch (Throwable th) {
@@ -445,7 +458,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getDocumentDAO().merge(documentToUpdate);
 			
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Edit Details", documentToUpdate.getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit Details", Action.M, documentToUpdate));
 			
 			return documentToUpdate;
 		} catch (Throwable th) {
@@ -472,7 +485,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Edit extract", synExtractToUpdate.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit extract", Action.M, synExtractToUpdate.getDocument()));
 			
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -498,7 +511,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document to refresh entity state, otherwise factchecks property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Edit extract or synopsis", synExtractToUpdate.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit extract or synopsis", Action.M, synExtractToUpdate.getDocument()));
 			
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -517,7 +530,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			factChecksToUpdate.setAddLRes(factChecks.getAddLRes());
 			getFactChecksDAO().merge(factChecksToUpdate);
 			
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Edit fact checks", factChecksToUpdate.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit fact checks", Action.M, factChecksToUpdate.getDocument()));
 
 			return factChecksToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -540,7 +553,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			getEpLinkDAO().merge(epLinkToUpdate);
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Edit person linked", epLinkToUpdate.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit person linked", Action.M, epLinkToUpdate.getDocument()));
 
 			return epLinkToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -565,7 +578,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document to refresh entity state, otherwise synExtract property will be null
 			getDocumentDAO().refresh(synExtractToUpdate.getDocument());
 
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Edit synopsis", synExtractToUpdate.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit synopsis", Action.M, synExtractToUpdate.getDocument()));
 
 			return synExtractToUpdate.getDocument();
 		} catch (Throwable th) {
@@ -601,14 +614,14 @@ public class DocBaseServiceImpl implements DocBaseService {
 			// We need to refresh linked document to refresh entity state, otherwise eplToLink property will be null
 			getDocumentDAO().refresh(eplToLinkToUpdate.getDocument());
 			
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Edit topic linked", eplToLinkToUpdate.getDocument().getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit topic linked", Action.M, eplToLinkToUpdate.getDocument()));
 
 			return eplToLinkToUpdate.getDocument();
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -620,7 +633,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -629,7 +642,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			Document document = getDocumentDAO().find(entryId);
 			
-			getUserHistoryDAO().persist(new UserHistory(BaseCategory.DOCUMENT, "Show document", document.getEntryId()));
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Show document", Action.V, document));
 
 			return document;
 		} catch (Throwable th) {
@@ -783,10 +796,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Document findLastEntryDocument() throws ApplicationThrowable {
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findLastEntryDocument();
+			UserHistoryDocument userHistoryDocument = getUserHistoryDocumentDAO().findLastEntryDocument();
 			
-			if (userHistory != null) {
-				return getDocumentDAO().find(userHistory.getEntityId());
+			if (userHistoryDocument != null) {
+				return userHistoryDocument.getDocument();
 			}
 			
 			// in case of no user History we extract last document created on database.
@@ -962,6 +975,29 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods)	throws ApplicationThrowable {
+		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
+		try{
+			for(int i=0; i<volNums.size();i++){
+				retValue.put(DocumentUtils.toMDPAndFolioFormat(volNums.get(i), volLetExts.get(i), folioNums.get(i), folioMods.get(i)), Boolean.FALSE);
+			}
+			
+			List<String> documentsDigitized = getImageDAO().findDocumentsDigitized(volNums, volLetExts, folioNums, folioMods);
+			
+			for(String MDPFolio : documentsDigitized){
+				retValue.put(MDPFolio, Boolean.TRUE);
+			}
+			return retValue;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
+
+	/**
 	 * @return the epLinkDAO
 	 */
 	public EpLinkDAO getEpLinkDAO() {
@@ -1038,6 +1074,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public TopicsListDAO getTopicsListDAO() {
 		return topicsListDAO;
+	}
+
+	/**
+	 * @return the userHistoryDocumentDAO
+	 */
+	public UserHistoryDocumentDAO getUserHistoryDocumentDAO() {
+		return userHistoryDocumentDAO;
 	}
 
 	/**
@@ -1159,6 +1202,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * @param userHistoryDocumentDAO the userHistoryDocumentDAO to set
+	 */
+	public void setUserHistoryDocumentDAO(UserHistoryDocumentDAO userHistoryDocumentDAO) {
+		this.userHistoryDocumentDAO = userHistoryDocumentDAO;
+	}
+
+	/**
 	 * @param volumeDAO the volumeDAO to set
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
@@ -1166,39 +1216,27 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-
-	/**
-	 * @return the userHistoryDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods)	throws ApplicationThrowable {
-		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
-		try{
-			for(int i=0; i<volNums.size();i++){
-				retValue.put(DocumentUtils.toMDPAndFolioFormat(volNums.get(i), volLetExts.get(i), folioNums.get(i), folioMods.get(i)), Boolean.FALSE);
-			}
-			
-			List<String> documentsDigitized = getImageDAO().findDocumentsDigitized(volNums, volLetExts, folioNums, folioMods);
-			
-			for(String MDPFolio : documentsDigitized){
-				retValue.put(MDPFolio, Boolean.TRUE);
-			}
-			return retValue;
-		}catch(Throwable th){
+	public Document undeleteDocument(Integer entryId) throws ApplicationThrowable {
+		Document documentToUnDelete = null;
+		try {
+			documentToUnDelete = getDocumentDAO().find(entryId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+
+		documentToUnDelete.setLogicalDelete(Boolean.FALSE);
+
+		try {
+			getDocumentDAO().merge(documentToUnDelete);
+
+			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Recovered document", Action.M, documentToUnDelete));
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 		
+		return documentToUnDelete;
 	}
 }
