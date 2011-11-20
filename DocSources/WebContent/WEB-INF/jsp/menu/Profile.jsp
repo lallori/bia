@@ -6,7 +6,7 @@
 
 				<li class="advsearchMenu"><a id="advsearchMenu" href="<c:url value="/src/ChoiceAdvancedSearch.do"/>"></a></li>
 			<security:authorize ifNotGranted="ROLE_GUESTS">
-				<li class="myHistoryMenu"><a id="myHistoryMenu" href="#"></a></li>
+				<li class="myHistoryMenu"><a id="myHistoryMenu" href="<c:url value="/user/ShowMyHistory.do"/>"></a></li>
 				<li class="myprofileMenu"><a id="myprofileMenu" href="<c:url value="/user/ShowUserProfile.do"/>" title="MY PROFILE"></a></li>
 				<li class="messagesMenu"><a id="messagesMenu" href="#"></a></li>
 			</security:authorize>
