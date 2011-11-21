@@ -33,15 +33,15 @@
 			</div>
 			<div id="indexSearchDiv">
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.fromVolume) && ((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+<%-- 			<c:if test="${(not empty searchFilter.filterData.fromVolume) && ((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if> --%>
 			<div id="fromVolumeSearchDiv">
-			<c:forEach items="${searchFilter.filterData.fromVolume}" varStatus="iterator">
-				<div class="searchFilterDiv">
-					<span class="categorySearch">From: </span><span class="wordSearch">${searchFilter.filterData.fromVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.fromVolume[iterator.index])}" name="from Volume">
-				</div>
-				<c:if test="${iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
-			</c:forEach>
+<%-- 			<c:forEach items="${searchFilter.filterData.fromVolume}" varStatus="iterator"> --%>
+<!-- 				<div class="searchFilterDiv"> -->
+<%-- 					<span class="categorySearch">From: </span><span class="wordSearch">${searchFilter.filterData.fromVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a> --%>
+<%-- 					<input type="hidden" value="${fn2:encode(searchFilter.filterData.fromVolume[iterator.index])}" name="from Volume"> --%>
+<!-- 				</div> -->
+<%-- 				<c:if test="${iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if> --%>
+<%-- 			</c:forEach> --%>
 			</div>
 			<div id="toVolumeSearchDiv">
 			</div>
