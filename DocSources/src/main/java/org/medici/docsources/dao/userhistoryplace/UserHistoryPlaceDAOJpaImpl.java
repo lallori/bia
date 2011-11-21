@@ -91,7 +91,7 @@ public class UserHistoryPlaceDAOJpaImpl extends JpaDao<Integer, UserHistoryPlace
 	 */
 	@Override
 	public UserHistoryPlace findLastEntryPlace() {
-        String queryString = "FROM UserHistoryPlace WHERE username=:username and baseCategory =:baseCategory ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistoryPlace WHERE username=:username ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
