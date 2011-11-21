@@ -77,8 +77,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			place.setDateEntered(new Date());
 			place.setAddlRes(false);
+			place.setLogicalDelete(Boolean.FALSE);
 			if(place.getParentPlace() != null){
 				place.setParentPlace(getPlaceDAO().find(place.getParentPlace().getPlaceAllId()));
+				place.setPlParent(place.getParentPlace().getPlaceName());
 				place.setParentType(place.getParentPlace().getPlType());
 				place.setPlParentSubjectId(place.getParentPlace().getGeogKey());
 				place.setPlParentTermId(place.getParentPlace().getPlaceNameId());
@@ -98,7 +100,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			place.setPlParentTermId(place.getParentPlace().getPlaceNameId());
 			place.setPlParentSubjectId(place.getParentPlace().getGeogKey());
 			place.setPlaceNameFull(place.getPlaceName() + " / " + place.getPlParent() + " / " + place.getgParent() + " / " + place.getGgp());
-			place.setPlNameFullPlType(place.getPlaceName() + " (" + place.getPlType() + ") / " + place.getPlParent() + " (" + place.getParentType() + ") / " + place.getgParent() + " (" + place.getGpType() + ") / " + place.getGgp() + " (" + place.getGgpType() + ")");
+			place.setPlNameFullPlType(place.getPlaceName() + " (" + place.getPlType() + ") / " + place.getPlParent() + " (" + place.getParentType() + ") / " + place.getgParent() + " (" + place.getGpType() + ") / " + place.getGgp() + " (" + place.getGgpType() + ") /" + place.getGp2() + " (" + place.getGp2Ttype() + ")");
 				
 			getPlaceDAO().persist(place);
 
@@ -214,6 +216,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			placeToUpdate.setAddlRes(false);
 			if(place.getParentPlace() != null){
 				placeToUpdate.setParentPlace(getPlaceDAO().find(place.getParentPlace().getPlaceAllId()));
+				placeToUpdate.setPlParent(placeToUpdate.getParentPlace().getPlaceName());
 				placeToUpdate.setParentType(placeToUpdate.getParentPlace().getPlType());
 				place.setPlParentSubjectId(place.getParentPlace().getGeogKey());
 				place.setPlParentTermId(place.getParentPlace().getPlaceNameId());
@@ -233,8 +236,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			placeToUpdate.setPlParentTermId(placeToUpdate.getParentPlace().getPlaceNameId());
 			placeToUpdate.setPlParentSubjectId(placeToUpdate.getParentPlace().getGeogKey());
 			
-			place.setPlaceNameFull(place.getPlaceName() + " / " + place.getPlParent() + " / " + place.getgParent() + " / " + place.getGgp());
-			place.setPlNameFullPlType(place.getPlaceName() + " (" + place.getPlType() + ") / " + place.getPlParent() + " (" + place.getParentType() + ") / " + place.getgParent() + " (" + place.getGpType() + ") / " + place.getGgp() + " (" + place.getGgpType() + ")");
+			placeToUpdate.setPlaceNameFull(placeToUpdate.getPlaceName() + " / " + placeToUpdate.getPlParent() + " / " + placeToUpdate.getgParent() + " / " + placeToUpdate.getGgp());
+			placeToUpdate.setPlNameFullPlType(placeToUpdate.getPlaceName() + " (" + placeToUpdate.getPlType() + ") / " + placeToUpdate.getPlParent() + " (" + placeToUpdate.getParentType() + ") / " + placeToUpdate.getgParent() + " (" + placeToUpdate.getGpType() + ") / " + placeToUpdate.getGgp() + " (" + placeToUpdate.getGgpType() + ") /" + placeToUpdate.getGp2() + " (" + placeToUpdate.getGp2Ttype() + ")");
 			
 			getPlaceDAO().merge(placeToUpdate);
 
@@ -588,7 +591,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
-		placeToUndelete.setLogicalDelete(Boolean.TRUE);
+		placeToUndelete.setLogicalDelete(Boolean.FALSE);
 
 		try {
 			getPlaceDAO().merge(placeToUndelete);

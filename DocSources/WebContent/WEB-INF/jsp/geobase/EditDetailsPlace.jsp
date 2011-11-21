@@ -77,6 +77,8 @@
 
 			<form:hidden path="placeAllId"/>
 			<form:hidden path="parentPlaceAllId" />
+			<form:hidden path="geogKey"/>
+			<form:hidden path="plSource"/>
 		</form:form>
 	</div>
 	

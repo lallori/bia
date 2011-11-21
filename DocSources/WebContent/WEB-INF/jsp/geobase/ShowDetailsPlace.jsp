@@ -43,7 +43,7 @@
 		<div class="title">
 			<h5>PLACE DETAILS</h5>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-			<a title="Edit TGN Place Details" href="${EditDetailsPlaceURL}" class="editButton" id="EditDetailsPlace"></a><span id="loading" />
+			<a id="EditDetailsPlace" href="${EditDetailsPlaceURL}" class="editButton"></a><span id="loading" />
 			</security:authorize>
 		</div>
 	
@@ -85,11 +85,11 @@
 	        $j("#EditGeoCoorPlace").css('visibility', 'visible'); 
 			$j("#EditExtLinkPlace").css('visibility', 'visible');
 
-			$j("#EditDetailsPlace").click(function(){
-				$j(this).next().css('visibility', 'visible');
-				$j("#EditDetailsPlaceDiv").load($j(this).attr("href"));
-				return false;
-			});
+// 			$j("#EditDetailsPlace").click(function(){
+// 				$j(this).next().css('visibility', 'visible');
+// 				$j("#EditDetailsPlaceDiv").load($j(this).attr("href"));
+// 				return false;
+// 			});
 		});
 	</script>
 </security:authorize>

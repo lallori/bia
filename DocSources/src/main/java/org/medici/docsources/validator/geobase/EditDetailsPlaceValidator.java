@@ -97,17 +97,22 @@ public class EditDetailsPlaceValidator implements Validator {
 	 */
 	public void validatePlaceAllId(Integer placeAllId, Errors errors) {
 		if (!errors.hasErrors()) {
-			try {
-				if (getGeoBaseService().findPlace(placeAllId) == null) {
-					errors.reject("placeId", "error.placeId.notfound");
+			if(placeAllId > 0){
+				try {
+					if (getGeoBaseService().findPlace(placeAllId) == null) {
+						errors.reject("placeId", "error.placeId.notfound");
+					}
+				} catch (ApplicationThrowable ath) {
 				}
-			} catch (ApplicationThrowable ath) {
 			}
 		}
 	}
 	
 	public void validateGeogKey(Integer geogKey, String plSource, Errors errors){
 		if(!errors.hasErrors()){
+			if(geogKey == null){
+				errors.reject("geogKey", "error.geogKey.notvalid");
+			}
 			if(geogKey != null && plSource != null){
 				if (plSource.equals("TGN") && geogKey < 1000000){
 					errors.reject("geogKey", "error.geogKey.notvalid");

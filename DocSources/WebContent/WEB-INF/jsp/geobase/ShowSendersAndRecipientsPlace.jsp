@@ -19,18 +19,18 @@
 	
 	<div class="list">	
 		<div class="row">
-			<c:if test="${place.senderDocuments.size() != 0}">
+			<c:if test="${place.senderDocuments != null && place.senderDocuments.size() != 0}">
 				<div class="value"><a id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${place.senderDocuments.size()} Senders</a></div>
 			</c:if>
-			<c:if test="${place.senderDocuments.size() == 0}">
+			<c:if test="${place.senderDocuments.size() == 0 || place.senderDocuments == null}">
 				<div class="value">0 Sender</div>
 			</c:if>
 		</div>
 		<div class="row">
-			<c:if test="${place.recipientDocuments.size() != 0}">
+			<c:if test="${place.recipientDocuments != null && place.recipientDocuments.size() != 0}">
 				<div class="value"><a id="linkSearch" class="recipient" href="${ShowRecipientDocumentsPlaceURL}">${place.recipientDocuments.size()} Recipients</a></div>
 			</c:if>
-			<c:if test="${place.recipientDocuments.size() == 0}">
+			<c:if test="${place.recipientDocuments.size() == 0 || place.recipientDocuments == null}">
 				<div class="value">0 Recipient</div>
 			</c:if>
 		</div>
