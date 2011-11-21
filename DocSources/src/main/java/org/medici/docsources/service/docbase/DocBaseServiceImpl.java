@@ -304,7 +304,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 
-		documentToDelete.setLogicalDelete(Boolean.FALSE);
+		documentToDelete.setLogicalDelete(Boolean.TRUE);
 
 		try {
 			getDocumentDAO().merge(documentToDelete);
