@@ -34,8 +34,10 @@
 		<div id="CloseButton">
 			<input id="close" type="submit" title="Close Personal Notes window" onClick="Modalbox.hide(); return false;" value="Close"/>
 		</div>
-	
+		
 		<a id="goBack" href="<c:url value="/de/ShowEntryMenu.do"/>" title="Go Back to Entry Menu">Go back</a>
+	
+		
 	</div>
 		
 	<script>
