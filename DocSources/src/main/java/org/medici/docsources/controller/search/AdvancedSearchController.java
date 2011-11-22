@@ -42,6 +42,9 @@ import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.common.search.AdvancedSearch;
 import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.common.search.AdvancedSearchFactory;
+import org.medici.docsources.common.search.AdvancedSearchPeople;
+import org.medici.docsources.common.search.AdvancedSearchPlace;
+import org.medici.docsources.common.search.AdvancedSearchVolume;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
@@ -134,7 +137,15 @@ public class AdvancedSearchController {
 			searchFilter.setDateCreated(new Date());
 			searchFilter.setDateUpdated(new Date());
 			searchFilter.setId(new Integer(0));
-			searchFilter.setFilterData(new AdvancedSearchDocument());
+			if(searchFilter.getSearchType().equals(SearchType.DOCUMENT)){
+				searchFilter.setFilterData(new AdvancedSearchDocument());
+			}else if(searchFilter.getSearchType().equals(SearchType.VOLUME)){
+				searchFilter.setFilterData(new AdvancedSearchVolume());
+			}else if(searchFilter.getSearchType().equals(SearchType.PEOPLE)){
+				searchFilter.setFilterData(new AdvancedSearchPeople());
+			}else{
+				searchFilter.setFilterData(new AdvancedSearchPlace());
+			}
 			searchFilter.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 			// we update user map
 			searchFilterMap.put(command.getSearchUUID(), searchFilter);
@@ -219,7 +230,7 @@ public class AdvancedSearchController {
 			outputFields = new ArrayList<String>(5);
 			outputFields.add("Name");
 			outputFields.add("Gender");
-			outputFields.add("Date");
+			//outputFields.add("Date");
 			outputFields.add("Born Date");
 			outputFields.add("Death Date");
 		} else if (searchType.equals(SearchType.PLACE)) {

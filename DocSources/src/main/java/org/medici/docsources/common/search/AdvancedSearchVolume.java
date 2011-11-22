@@ -81,6 +81,118 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<String> inventario;
 
 	/**
+	 * @return the digitized
+	 */
+	public Boolean getDigitized() {
+		return digitized;
+	}
+
+	/**
+	 * @param digitized the digitized to set
+	 */
+	public void setDigitized(Boolean digitized) {
+		this.digitized = digitized;
+	}
+
+	/**
+	 * @return the languages
+	 */
+	public List<String> getLanguages() {
+		return languages;
+	}
+
+	/**
+	 * @param languages the languages to set
+	 */
+	public void setLanguages(List<String> languages) {
+		this.languages = languages;
+	}
+
+	/**
+	 * @return the cipher
+	 */
+	public String getCipher() {
+		return cipher;
+	}
+
+	/**
+	 * @param cipher the cipher to set
+	 */
+	public void setCipher(String cipher) {
+		this.cipher = cipher;
+	}
+
+	/**
+	 * @return the index
+	 */
+	public String getIndex() {
+		return index;
+	}
+
+	/**
+	 * @param index the index to set
+	 */
+	public void setIndex(String index) {
+		this.index = index;
+	}
+
+	/**
+	 * @return the fromVolume
+	 */
+	public List<String> getFromVolume() {
+		return fromVolume;
+	}
+
+	/**
+	 * @param fromVolume the fromVolume to set
+	 */
+	public void setFromVolume(List<String> fromVolume) {
+		this.fromVolume = fromVolume;
+	}
+
+	/**
+	 * @return the toVolume
+	 */
+	public List<String> getToVolume() {
+		return toVolume;
+	}
+
+	/**
+	 * @param toVolume the toVolume to set
+	 */
+	public void setToVolume(List<String> toVolume) {
+		this.toVolume = toVolume;
+	}
+
+	/**
+	 * @return the context
+	 */
+	public List<String> getContext() {
+		return context;
+	}
+
+	/**
+	 * @param context the context to set
+	 */
+	public void setContext(List<String> context) {
+		this.context = context;
+	}
+
+	/**
+	 * @return the inventario
+	 */
+	public List<String> getInventario() {
+		return inventario;
+	}
+
+	/**
+	 * @param inventario the inventario to set
+	 */
+	public void setInventario(List<String> inventario) {
+		this.inventario = inventario;
+	}
+
+	/**
 	 * 
 	 */
 	public AdvancedSearchVolume() {
