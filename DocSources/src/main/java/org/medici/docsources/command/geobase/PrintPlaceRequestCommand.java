@@ -1,5 +1,5 @@
 /*
- * ShowPersonRequestCommand.java
+ * PrintPlaceRequestCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,33 +25,50 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.peoplebase;
+package org.medici.docsources.command.geobase;
 
 import javax.validation.constraints.NotNull;
 
 /**
- * Command bean for action "Show Person".
+ * Command bean for action "Print Place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  * @see org.docsources.controller.peoplebase.ShowPersonController
  */
-public class ShowPersonRequestCommand {
+public class PrintPlaceRequestCommand {
 	@NotNull
-	private Integer personId;
+	private Integer placeAllId;
+	@NotNull
+	private String plSource;
 
 	/**
-	 * @param personId the personId to set
+	 * @param placeId the placeId to set
 	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
+	public void setPlaceAllId(Integer placeAllId) {
+		this.placeAllId = placeAllId;
 	}
 
 	/**
-	 * @return the personId
+	 * @return the placeId
 	 */
-	public Integer getPersonId() {
-		return personId;
+	public Integer getPlaceAllId() {
+		return placeAllId;
 	}
-	
+
+	/**
+	 * 
+	 * @param plSource
+	 */
+	public void setPlSource(String plSource) {
+		this.plSource = plSource;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPlSource() {
+		return plSource;
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * ShowPersonRequestCommand.java
+ * PrintPersonRequestCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -30,13 +30,13 @@ package org.medici.docsources.command.peoplebase;
 import javax.validation.constraints.NotNull;
 
 /**
- * Command bean for action "Show Person".
+ * Command bean for action "Print Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  * @see org.docsources.controller.peoplebase.ShowPersonController
  */
-public class ShowPersonRequestCommand {
+public class PrintPersonRequestCommand {
 	@NotNull
 	private Integer personId;
 

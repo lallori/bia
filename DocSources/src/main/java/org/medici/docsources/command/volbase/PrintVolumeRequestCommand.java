@@ -1,5 +1,5 @@
 /*
- * ShowPersonRequestCommand.java
+ * PrintVolumeRequestCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,33 +25,65 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.peoplebase;
+package org.medici.docsources.command.volbase;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * Command bean for action "Show Person".
+ * Command bean for action "Print Volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.docsources.controller.peoplebase.ShowPersonController
+ * @see org.docsources.controller.volbase.ShowVolumeController
  */
-public class ShowPersonRequestCommand {
+public class PrintVolumeRequestCommand {
 	@NotNull
-	private Integer personId;
-
+	private Integer summaryId;
+	@NotNull
+	private Integer volNum;
+	@Size (max=1)
+	private String volLeText;
+	
 	/**
-	 * @param personId the personId to set
+	 * @return the summaryId
 	 */
-	public void setPersonId(Integer personId) {
-		this.personId = personId;
-	}
-
-	/**
-	 * @return the personId
-	 */
-	public Integer getPersonId() {
-		return personId;
+	public Integer getSummaryId() {
+		return summaryId;
 	}
 	
+	/**
+	 * @param summaryId the summaryId to set
+	 */
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
+	}
+	
+	/**
+	 * @return the volNum
+	 */
+	public Integer getVolNum() {
+		return volNum;
+	}
+	
+	/**
+	 * @param volNum the volNum to set
+	 */
+	public void setVolNum(Integer volNum) {
+		this.volNum = volNum;
+	}
+	
+	/**
+	 * @return the volLeText
+	 */
+	public String getVolLeText() {
+		return volLeText;
+	}
+	
+	/**
+	 * @param volLeText the volLeText to set
+	 */
+	public void setVolLeText(String volLeText) {
+		this.volLeText = volLeText;
+	}
 }

@@ -41,6 +41,10 @@
 
 	<definition name="template.place" template="/WEB-INF/templates/place.jsp" />
 
+    <definition name="template.printDOM" template="/WEB-INF/templates/printDOM.jsp">
+    	<put-attribute name="footer" value="/WEB-INF/jsp/fragments/printFooter.jsp" />
+    </definition>
+
     <definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
 
 	<!-- Various definitions -->
@@ -223,6 +227,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicDocument.jsp"/>	
 	</definition>
 	
+	<definition name="docbase/PrintDocument" extends="template.printDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/PrintDocument.jsp"/>	
+	</definition>
+
 	<definition name="docbase/ShowCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
 	</definition>
@@ -313,6 +321,10 @@
 	
 	<definition name="geobase/EditNameOrNameVariantPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditNameOrNameVariantPlace.jsp" />
+	</definition>
+
+	<definition name="geobase/PrintPlace" extends="template.printDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/PrintPlace.jsp"/>	
 	</definition>
 
 	<definition name="geobase/ShowPlace" extends="template.place">
@@ -464,6 +476,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditTitlesOrOccupationsPerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/PrintPerson" extends="template.printDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/PrintPerson.jsp"/>	
+	</definition>
+
 	<definition name="peoplebase/ShowChildrenPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
 	</definition>
@@ -579,6 +595,10 @@
 
 	<definition name="volbase/EditDetailsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditDetailsVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/PrintVolume" extends="template.printDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/PrintVolume.jsp"/>	
 	</definition>
 
 	<definition name="volbase/ShowContextVolume" extends="template.partialDOM">
