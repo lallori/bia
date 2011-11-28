@@ -1,0 +1,140 @@
+body {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:10px;
+	margin:0;
+	padding:0;
+	background-color:#F6EDEC;
+}
+
+#layout {
+	width:670px;
+	margin:0;
+	padding-top:20px;
+}
+
+.print {
+	background-image:url(/DocSources/images/1024/img_print.png);
+	position:absolute;
+	margin:-10px 0 0 540px;
+	height:40px;
+	width:40px;
+}
+
+.pdf {
+	background-image:url(/DocSources/images/1024/img_pdf.png);
+	position:absolute;
+	margin:-10px 0 0 590px;
+	height:40px;
+	width:40px;
+}
+
+.print:hover, .pdf:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
+#top {
+	height:65px;
+	display: none;
+}
+
+#notes {
+	display: none;
+}
+
+#logoMap {
+	width:160px;
+	height:65px;
+	margin:0;
+	float:left;
+	margin-left:30px;
+}
+
+#notes {
+	float:right;
+	margin-right:35px;
+}
+
+#notes p{
+	margin:0;
+	color:#666;
+	text-align:right;
+}
+
+input {
+	margin:-15px 0 0 600px;
+}
+
+h3 {
+	font-size: 14px;
+	font-style: italic;
+	color: #009;
+	text-align: left;
+	margin: 30px 0 30px 25px;
+}
+
+h4 {
+	font-size:12px;
+	text-align:center;
+	font-weight:normal;
+	margin-top:40px;
+	margin-bottom:40px;
+	display: none;
+}
+
+h5 {
+	font-size:12px;
+	text-align:left;
+	font-weight:normal;
+	margin-left:25px;
+	margin-top:0;
+}
+
+h5.first, h3.first {
+	margin-top:40px;
+}
+
+table {
+	margin-left:80px;
+	text-align:justify;
+	width:550px;
+	font-size:10px;
+}
+
+table tr td {
+	vertical-align:top;
+}
+
+.value {
+	color: #6F6B69;
+}
+
+.valueRight{
+	text-align:right;
+	color: #6F6B69;
+}
+
+.valueLeft{
+	text-align:left;
+	color: #6F6B69;
+}
+
+
+hr {
+	background-image:url(/DocSources/images/1024/img_hr_print.jpg);
+	width:400px;
+	height:20px;
+	border:none;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+
+#footer {
+	text-align:center;
+	color:#999;
+	font-size:9px;
+	display: none;
+}
+

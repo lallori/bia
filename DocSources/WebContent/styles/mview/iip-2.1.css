@@ -237,7 +237,7 @@ div.iipmooviewer div.info {
   width: 100%;
   height: 100%;
   font-family: Georgia, "Times New Roman", Times, serif;
-  font-size: 11px;
+  font-size: 10px;
   color: #ccc;
   background: #111;
   display: table;
@@ -257,7 +257,7 @@ div.iipmooviewer div.info div div {
 /*  top: -50%; */
   margin-left: auto;
   margin-right: auto;
-  width: 75%;
+  width: 95%;
   height: auto;
   display: block;
 }
@@ -276,13 +276,16 @@ div.iipmooviewer div.info div a img{
   border: none;
 }
 div.iipmooviewer div.info div h2 {
-  margin-bottom: 20px;
+  margin: -10px 0 7px 0;
   text-align: left;
   letter-spacing: 0.1em;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bold;
 }
 div.iipmooviewer div.info div ul {
-  width: 75%;
+  width: 95%;
   font-size: 11px;
+  text-align: justify;
+  padding-left: 20px;
+  margin-bottom: 0;
 }

@@ -66,7 +66,7 @@
 			if (hasSearchType(formName, fieldName)) {
 				//Date form
 				if (isDateForm(formName)) {
-					if ($(this).find("option:selected").val() == 'Between') {
+					if ($(this).find("option:selected").val() == 'Between' || $(this).find("option:selected").val() == "Lived between") {
 						if (checkDateFieldsBetweenAreEmpty(formName, fieldName)) {
 							return true;
 						}

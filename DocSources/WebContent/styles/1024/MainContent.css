@@ -94,11 +94,11 @@ h6 { /* Titles */
 
 #createdby { /* "Created by ..." Title in ADD NEW DOCUMENT, ADD NEW PERSON, ADD NEW VOLUME */
 	position:absolute;
-	width:170px;
+	width:190px;
 	font-size:10px;
-	top:5px;
-	left:10px;
-	text-align:left;
+	top:35px;
+	right:10px;
+	text-align:right;
 	font-style:italic;
 }
 
@@ -108,13 +108,23 @@ h6 { /* Titles */
 	padding:2px 0 0 5px;
 	width:65px;
 	height:17px;
-	right:25px;
+	right:45px;
 	position:absolute;
 	cursor:pointer;
 }
 
 #buttonPrint {  /* Print this Document Button */
 	background-image:url(/DocSources/images/1024/button_print.png);
+	background-repeat:no-repeat;
+	width:18px;
+	height:18px;
+	position:absolute;
+	right:28px;
+}
+
+#buttonPDF {  /* Print this Document Button */
+	background-image:url(/DocSources/images/1024/button_pdf.png);
+	background-repeat:no-repeat;
 	width:18px;
 	height:18px;
 	position:absolute;
@@ -128,7 +138,7 @@ h6 { /* Titles */
 	width:65px;
 	height:17px;
 	position:absolute;
-	right:88px;
+	right:108px;
 }
 
 #vettingHistory { /* Actions Menu Button */
@@ -139,11 +149,23 @@ h6 { /* Titles */
 	height:17px;
 	position:absolute;
 	text-decoration:none;
-	right:158px;
+	right:178px;
 }
 
-#buttonShareLink:hover, #menuActions:hover, #vettingHistory:hover {
+#showComments { /* Actions Menu Button */
+	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
+	font-size:10px;
+	padding:2px 0 0 10px;
+	width:102px;
+	height:17px;
+	position:absolute;
 	text-decoration:none;
+	right:285px;
+}
+
+#buttonShareLink:hover, #menuActions:hover, #vettingHistory:hover, #showComments:hover {
+	text-decoration:none;
+	cursor:pointer;
 }
 
 
@@ -2126,7 +2148,7 @@ a.refreshVolumeExplorer {
 	width:700px;
 }
 
-#modalBox a:hover{
+#modalBox a:hover, #VolumeExplorerModalLeft a:hover{
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */ !important
@@ -2201,7 +2223,7 @@ a.refreshVolumeExplorer {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
-	margin:10px 0 0 255px;
+	margin:10px 0 0 240px;
 	float:left;
 	width:182px;
 	height:22px;
@@ -2268,6 +2290,61 @@ a.refreshVolumeExplorer {
 	margin-top:140px;
 	color:#900;
 	position:absolute;
+}
+
+/* --------------------------------------- */ 
+/*
+/*
+/*  Modal Box with Comunity Comments */
+
+#VolumeExplorerModalLeft {
+	border-right: 1px solid #BEA08B;
+}
+
+#VolumeExplorerModalLeft iframe.iframeFlipVolumeFullCom {
+	width: 455px;
+	height: 450px;
+	margin: 10px auto 0 20px;
+	border: 1px solid #e6d0c6;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#VolumeExplorerModalLeft #prevNextButtons {
+	margin: 10px 0 10px 145px;
+}
+
+#VolumeExplorerModalLeft {
+	float:left;
+}
+
+#VolumeExplorerModalRight {
+	float:right;
+	width: 520px;
+}
+
+#DocumentDiscussionDiv {
+	overflow:auto;
+	width: 460px;
+}
+
+#DocumentDiscussionDiv h6 {
+	margin-bottom: 60px;
+}
+
+#VolumeExplorerModalLeft #volumeExplorerButtonsDiv {
+	margin-top:20px;
+}
+
+#volumeExplorerButtons #transcribe {
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	margin: 10px 0 0 137px;
+	float:left;
+	width:182px;
+	height:22px;
+	cursor:auto;
 }
 
 /* -------------------------------------- */
@@ -2382,6 +2459,10 @@ a.refreshVolumeExplorer {
 
 #geoDiv {
 	margin-top:30px;
+}
+
+#geoDiv h4{
+	padding-top: 7px;
 }
 
 #createPlace #goBack {
@@ -3647,7 +3728,6 @@ table#savedSearchFiltersForm.display {
 /* -------------------------- COMUNITY COMMENTS ----------------------------- */
 
 .commentDiv { 
-	margin:10px 15px 10px 15px;
 	padding:0 0 5px 0;
 	width:455px;
 	text-align:justify;
@@ -3660,7 +3740,7 @@ table#savedSearchFiltersForm.display {
 	
 }
 
-.commentDiv .commentInfo{
+.commentDiv .commentInfo {
 	width:448px;
 	min-height:35px;
 	padding-left:7px;
@@ -3672,14 +3752,15 @@ table#savedSearchFiltersForm.display {
 	background-repeat:repeat-x;
 }
 
-.commentDiv .commentText{
+.commentDiv .commentText {
 	width:440px;
 	margin-left:7px;
 	margin-bottom:25px;
+	font-size:11px;
 }
 
 .replyCommentDiv {
-	margin:10px 15px 10px 45px;
+	margin: 10px 15px 10px 27px;
 	padding:0 0 5px 0;
 	width:425px;
 	text-align:justify;
@@ -3691,7 +3772,7 @@ table#savedSearchFiltersForm.display {
 	background-repeat:no-repeat;
 }
 
-.replyCommentDiv .commentInfo{
+.replyCommentDiv .commentInfo {
 	width:418px;
 	min-height:35px;
 	padding-left:7px;
@@ -3703,16 +3784,32 @@ table#savedSearchFiltersForm.display {
 	background-repeat:repeat-x;
 }
 
-.replyCommentDiv .commentText{
+.replyCommentDiv .commentText {
 	width:410px;
 	margin-left:7px;
 	margin-bottom:25px;
+	font-size: 11px;
 }
 
-.commentDiv a, .replyCommentDiv a{
+.commentDiv a, .replyCommentDiv a {
 	text-decoration:underline;
-	font-size:11px;
+	font-size:10px;
 	color:#b99c84;
+}
+
+a.showDigitizedDocument{
+	background:url(/DocSources/images/1024/button_bodyleftmenu_xlarge.png) no-repeat;
+	font-size:10px;
+	padding:2px 0 0 10px;
+	width:150px;
+	height:17px;
+	float:right;
+	text-decoration:none;
+	color:#6F6B69;
+}
+
+a.showDigitizedDocument:hover {
+	text-decoration:none;
 }
 
 /* -------------------------------------------------------------------------- */

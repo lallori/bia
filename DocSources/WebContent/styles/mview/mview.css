@@ -34,6 +34,10 @@ html version
 	position:absolute;
 }
 
+#EditPersonalNotesDiv #prevNextButtons.transcribe {
+	margin: 10px 0 0 205px;
+}
+
 #EditPersonalNotesDiv #prevButton img, #EditPersonalNotesDiv #nextButton img, #EditPersonalNotesDiv #personalNotesDiv img, #EditPersonalNotesDiv #exitDiv img{
 	border:none;
 }
@@ -68,6 +72,19 @@ html version
 	filter:alpha(opacity=50); /* IE */ !important
 }
 
+#transcribe a{
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	margin: 25px 0 0 0;
+	float:left;
+	width:182px;
+	height:22px;
+	cursor:auto;
+	text-decoration: none;
+	color: #6F6B69;
+}
+
 
 /* ---- Volume Summary ----- */
 
@@ -82,6 +99,10 @@ html version
 	width:122px;
 	height:22px;
 	font-size:11px;
+}
+
+#volumeSummary.transcribe { /* Volume Summary button on Page Turner Pannel */
+	margin: 45px 0 0 250px;
 }
 
 #volumeSummary:hover { /* Volume Summary button on Rollover */
@@ -159,6 +180,10 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin:15px 0 0 250px;
 }
 
+#EditPersonalNotesDiv #rubricarioMoveTo.transcribe { /* Contains "Rubricario Count" and "Move to rubricario" */
+	margin: 15px 0 0 447px;
+}
+
 #EditPersonalNotesDiv #rubricarioMoveTo #moveToRubricarioForm { /* "Move to Rubricario" FORM */
 	width:155px;
 	display:inline;
@@ -211,6 +236,10 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	width:160px;
 	position:absolute;
 	margin:50px 0 0 240px;
+}
+
+#EditPersonalNotesDiv #folioMoveTo.transcribe { /* Contains "Folio Count" and "Move to folio" */
+	margin: 50px 0 0 437px;
 }
 
 #EditPersonalNotesDiv #folioMoveTo #moveToFolioForm { /* Move to folio FORM */
@@ -274,6 +303,10 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	font-size:11px;
 }
 
+#EditPersonalNotesDiv #personalNotesDiv a.transcribe{
+	margin: 10px 0 0 465px;
+}
+
 
 /* ---------------- */
 /*
@@ -292,6 +325,10 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	font-size:11px;
 }
 
+#EditPersonalNotesDiv #exitDiv a.transcribe{
+	margin: 45px 0 0 465px;
+}
+
 /* ---------------- */
 /*
 /* ---- Lines ----- */
@@ -304,11 +341,27 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	position:absolute;
 }
 
+#EditPersonalNotesDiv #line.transcribe {
+	margin: 8px 0 0 400px;
+}
+
 #EditPersonalNotesDiv #line2 {
 	width:1px;
 	height:65px;
 	background-color:#E6D0C6;
 	margin:8px 0 0 441px;
+	position:absolute;
+}
+
+#EditPersonalNotesDiv #line2.transcribe {
+	margin: 8px 0 0 635px;
+}
+
+#EditPersonalNotesDiv #line3 {
+	width:1px;
+	height:65px;
+	background-color:#E6D0C6;
+	margin: 8px 0 0 193px;
 	position:absolute;
 }
 
