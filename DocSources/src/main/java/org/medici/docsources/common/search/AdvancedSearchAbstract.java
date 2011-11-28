@@ -64,7 +64,7 @@ public abstract class AdvancedSearchAbstract implements AdvancedSearch {
 	 *
 	 */
 	public static enum NameType {
-		AllNameTypes("AllNameTypes"), Apellative("Apellative"), Family("Family"), Given("Given"), Maiden("Maiden"), Married("Married"), Patronymic("Patronymic");
+		AllNameTypes("All Name Types"), Appellative("Appellative"), Family("Family"), Given("Given"), Maiden("Maiden"), Married("Married"), Patronymic("Patronymic");
 		
 		private final String nameType;
 

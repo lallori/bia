@@ -72,6 +72,10 @@ public class AdvancedSearchCommand {
 	private List<String> inventario;
 	private String cipher;
 	private String index;
+	
+	private List<String> nameParts;
+	private List<String> roleCategory;
+	private List<String> occupation;
 
 	/**
 	 * 
@@ -515,5 +519,47 @@ public class AdvancedSearchCommand {
 	 */
 	public String getIndex() {
 		return index;
+	}
+
+	/**
+	 * @param namePerson the namePerson to set
+	 */
+	public void setNameParts(List<String> nameParts) {
+		this.nameParts = nameParts;
+	}
+
+	/**
+	 * @return the namePerson
+	 */
+	public List<String> getNameParts() {
+		return nameParts;
+	}
+
+	/**
+	 * @param occupation the occupation to set
+	 */
+	public void setOccupation(List<String> occupation) {
+		this.occupation = occupation;
+	}
+
+	/**
+	 * @return the occupation
+	 */
+	public List<String> getOccupation() {
+		return occupation;
+	}
+
+	/**
+	 * @param roleCategory the roleCategory to set
+	 */
+	public void setRoleCategory(List<String> roleCategory) {
+		this.roleCategory = roleCategory;
+	}
+
+	/**
+	 * @return the roleCategory
+	 */
+	public List<String> getRoleCategory() {
+		return roleCategory;
 	}
 }

@@ -34,7 +34,16 @@ import java.util.StringTokenizer;
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.NumericRangeQuery;
+import org.apache.lucene.search.PhraseQuery;
+import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.common.util.DateUtils;
@@ -56,11 +65,16 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<String> words;
 	private List<Integer> datesDay;
 	private List<Integer> datesMonth;
-	private List<DateType> datesTypes;
+	private List<String> datesTypes;
 	private List<Integer> datesYear;
 	private List<Integer> datesYearBetween;
 	private List<Integer> datesMonthBetween;
 	private List<Integer> datesDayBetween;
+	private List<Integer> placeId;
+	private List<String> place;
+	private List<String> roleCategories;
+	private List<String> titlesOcc;
+	private List<Integer> titlesOccId;
 
 	/**
 	 * Default constructor.
@@ -68,15 +82,22 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	public AdvancedSearchPeople() {
 		super();
 
+		names = new ArrayList<String>(0);
+		namesTypes = new ArrayList<AdvancedSearchAbstract.NameType>(0);
 		words = new ArrayList<String>(0);
 		wordsTypes = new ArrayList<AdvancedSearchDocument.WordType>(0);
-		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
+		datesTypes = new ArrayList<String>(0);
 		datesYear = new ArrayList<Integer>(0);
 		datesMonth = new ArrayList<Integer>(0);
 		datesDay = new ArrayList<Integer>(0);
 		datesYearBetween = new ArrayList<Integer>(0);
 		datesMonthBetween = new ArrayList<Integer>(0);
 		datesDayBetween = new ArrayList<Integer>(0);
+		placeId = new ArrayList<Integer>(0);
+		place = new ArrayList<String>(0);
+		roleCategories = new ArrayList<String>(0);
+		titlesOcc = new ArrayList<String>(0);
+		titlesOccId = new ArrayList<Integer>(0);
 	}
 
 	/**
@@ -84,22 +105,47 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromAdvancedSearchCommand(AdvancedSearchCommand command) {
+		//Names
+		if((command.getNameParts() != null) && (command.getNameParts().size() > 0)){
+			namesTypes = new ArrayList<NameType>(command.getNameParts().size());
+			names = new ArrayList<String>(command.getNameParts().size());
+			
+			for(String singleWord: command.getNameParts()){
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try{
+					if(stringTokenizer.countTokens() == 2){
+						namesTypes.add(NameType.valueOf(stringTokenizer.nextToken()));
+						names.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					}else{
+						continue;
+					}
+				}catch(URIException e){
+					namesTypes.remove(namesTypes.size()-1);
+				}
+			}
+		}else{
+			namesTypes = new ArrayList<AdvancedSearchAbstract.NameType>(0);
+			names = new ArrayList<String>(0);
+		}
+		
 		//Words
-		if ((command.getWord() != null) && (command.getWord().size() >0)) {
-			wordsTypes = new ArrayList<WordType>(command.getWord().size());
+		if ((command.getWord() != null) && (command.getWord().size() > 0)) {
+			//wordsTypes = new ArrayList<WordType>(command.getWord().size());
 			words = new ArrayList<String>(command.getWord().size());
 			
 			for (String singleWord : command.getWord()) {
-				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				//StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
-					if (stringTokenizer.countTokens() == 2) {
-						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
-						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
-					} else {
-						continue;
-					}
+					//if (stringTokenizer.countTokens() == 2) {
+						//wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
+						//words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						words.add(URIUtil.decode(singleWord, "UTF-8"));
+					//} else {
+					//	continue;
+					//}
 				} catch (URIException e) {
-					wordsTypes.remove(wordsTypes.size()-1);
+					//wordsTypes.remove(wordsTypes.size()-1);
+					words.remove(words.size()-1);
 				}
 			}
 		} else {
@@ -109,7 +155,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 
 		//Date
 		if ((command.getDate() != null) && (command.getDate().size() >0)) {
-			datesTypes = new ArrayList<DateType>(command.getDate().size());
+			datesTypes = new ArrayList<String>(command.getDate().size());
 			datesYear = new ArrayList<Integer>(command.getDate().size());
 			datesMonth = new ArrayList<Integer>(command.getDate().size());
 			datesDay = new ArrayList<Integer>(command.getDate().size());
@@ -120,7 +166,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			for (String singleWord : command.getDate()) {
 				//e.g. After|1222|01|12|1223|12|12
 				String[] fields = StringUtils.splitPreserveAllTokens(singleWord,"|");
-				datesTypes.add(DateType.valueOf(fields[0]));
+				try{
+				datesTypes.add(URIUtil.decode(fields[0], "UTF-8"));
+				}catch(URIException e){}
 				datesYear.add(DateUtils.getDateYearFromString(fields[1]));
 				datesMonth.add(DateUtils.getDateMonthFromString(fields[2]));
 				datesDay.add(DateUtils.getDateDayFromString(fields[3]));
@@ -129,13 +177,95 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				datesDayBetween.add(DateUtils.getDateDayFromString(fields[6]));
 			}
 		} else {
-			datesTypes = new ArrayList<DateType>(0);
+			datesTypes = new ArrayList<String>(0);
 			datesYear = new ArrayList<Integer>(0);
 			datesMonth = new ArrayList<Integer>(0);
 			datesDay = new ArrayList<Integer>(0);
 			datesYearBetween = new ArrayList<Integer>(0);
 			datesMonthBetween = new ArrayList<Integer>(0);
 			datesDayBetween = new ArrayList<Integer>(0);
+		}
+		
+		//Role Categories
+		if((command.getRoleCategory() != null) && (command.getRoleCategory().size() > 0)){
+			roleCategories = new ArrayList<String>(command.getRoleCategory().size());
+			for(String singleWord : command.getRoleCategory()){
+				try{
+					roleCategories.add(URIUtil.decode(singleWord, "UTF-8"));
+				}catch(URIException e){
+					roleCategories.remove(roleCategories.size() - 1);
+				}
+			}
+		}else{
+			roleCategories = new ArrayList<String>(0);
+		}
+		
+		//Occupations
+		if((command.getOccupation() != null) && (command.getOccupation().size() > 0)){
+			titlesOccId = new ArrayList<Integer>(command.getOccupation().size());
+			titlesOcc = new ArrayList<String>(command.getOccupation().size());
+			
+			for(String singleWord : command.getOccupation()){
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try{
+					if(stringTokenizer.countTokens() == 0){
+						continue;
+					}else if(stringTokenizer.countTokens() == 1){
+						titlesOccId.add(new Integer(0));
+						titlesOcc.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					}else if(stringTokenizer.countTokens() == 2){
+						String singleId = stringTokenizer.nextToken();
+						String singleText = stringTokenizer.nextToken();
+						if(NumberUtils.isNumber(singleId)){
+							titlesOccId.add(NumberUtils.createInteger(singleId));
+						}else{
+							titlesOccId.add(new Integer(0));
+						}
+						titlesOcc.add(URIUtil.decode(singleText, "UTF-8"));
+					}
+				}catch(NumberFormatException nex){
+													
+				}catch(URIException e){
+					titlesOccId.remove(titlesOccId.size() - 1);
+				}
+			}
+		}else{
+			titlesOcc = new ArrayList<String>(0);
+			titlesOccId = new ArrayList<Integer>(0);
+		}
+		
+		//Places
+		if((command.getPlace() != null) && (command.getPlace().size() > 0)){
+			placeId = new ArrayList<Integer>(command.getPlace().size());
+			place = new ArrayList<String>(command.getPlace().size());
+			
+			for(String singleWord : command.getPlace()){
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try{
+					if(stringTokenizer.countTokens() == 0){
+						continue;
+					}else if(stringTokenizer.countTokens() == 1){
+						placeId.add(new Integer(0));
+						place.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					}else if(stringTokenizer.countTokens() == 2){
+						String singleId = stringTokenizer.nextToken();
+						String singleText = stringTokenizer.nextToken();
+						if(NumberUtils.isNumber(singleId)){
+							placeId.add(NumberUtils.createInteger(singleId));
+						}else{
+							placeId.add(new Integer(0));
+						}
+						place.add(URIUtil.decode(singleText, "UTF-8"));
+					}
+				}catch(NumberFormatException nex){
+					
+				}catch(URIException e){
+					placeId.remove(placeId.size() - 1);
+				}
+			}
+		}else{
+			placeId = new ArrayList<Integer>(0);
+			place = new ArrayList<String>(0);
 		}
 	}
 	
@@ -174,6 +304,76 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public void setNames(List<String> names) {
 		this.names = names;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public List<Integer> getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @param placeId the placeId to set
+	 */
+	public void setPlaceId(List<Integer> placeId) {
+		this.placeId = placeId;
+	}
+
+	/**
+	 * @return the place
+	 */
+	public List<String> getPlace() {
+		return place;
+	}
+
+	/**
+	 * @param place the place to set
+	 */
+	public void setPlace(List<String> place) {
+		this.place = place;
+	}
+
+	/**
+	 * @param roleCategories the roleCategories to set
+	 */
+	public void setRoleCategories(List<String> roleCategories) {
+		this.roleCategories = roleCategories;
+	}
+
+	/**
+	 * @return the roleCategories
+	 */
+	public List<String> getRoleCategories() {
+		return roleCategories;
+	}
+
+	/**
+	 * @param occupations the occupations to set
+	 */
+	public void setTitlesOcc(List<String> titlesOcc) {
+		this.titlesOcc = titlesOcc;
+	}
+
+	/**
+	 * @return the occupations
+	 */
+	public List<String> getTitlesOcc() {
+		return titlesOcc;
+	}
+
+	/**
+	 * @param titleOccId the titleOccId to set
+	 */
+	public void setTitlesOccId(List<Integer> titlesOccId) {
+		this.titlesOccId = titlesOccId;
+	}
+
+	/**
+	 * @return the titleOccId
+	 */
+	public List<Integer> getTitlesOccId() {
+		return titlesOccId;
 	}
 
 	/**
@@ -235,14 +435,14 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	/**
 	 * @return the datesTypes
 	 */
-	public List<DateType> getDatesTypes() {
+	public List<String> getDatesTypes() {
 		return datesTypes;
 	}
 
 	/**
 	 * @param datesTypes the datesTypes to set
 	 */
-	public void setDatesTypes(List<DateType> datesTypes) {
+	public void setDatesTypes(List<String> datesTypes) {
 		this.datesTypes = datesTypes;
 	}
 
@@ -307,8 +507,201 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public Query toLuceneQuery() {
-		// TODO Auto-generated method stub
-		return null;
+		BooleanQuery luceneQuery = new BooleanQuery();
+		
+		//Names
+		if(names.size() > 0){
+			BooleanQuery namesQuery = new BooleanQuery();
+			for(int i = 0; i < names.size(); i++){
+				if(namesTypes.get(i).equals(NameType.AllNameTypes)){
+					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("altName.altName", names.get(i).toLowerCase())), Occur.MUST);
+					namesQuery.add(booleanClause);
+				}else{
+					BooleanQuery subQuery = new BooleanQuery();
+//					try{
+//						//MultiFieldQueryParser multiField = new MultiFieldQueryParser(Version.LUCENE_31, new String[]{"altName.nameType","altName.altName"}, new StandardAnalyzer(Version.LUCENE_31));
+//						//Query test = multiField.parse(namesTypes.get(i).toString().toLowerCase());
+//						Query test = MultiFieldQueryParser.parse(Version.LUCENE_31, new String[]{namesTypes.get(i).toString().toLowerCase(), names.get(i).toLowerCase() + '*'}, new String[]{"altName.nameType","altName.altName"}, new StandardAnalyzer(Version.LUCENE_31));
+//						
+//						namesQuery.add(test, Occur.MUST);
+//					}catch(Exception e){
+//						
+//					}
+					subQuery.add(new TermQuery(new Term("altName.nameType", namesTypes.get(i).toString().toLowerCase())), Occur.MUST);
+					subQuery.add(new TermQuery(new Term("altName.altName", names.get(i).toLowerCase())), Occur.MUST);
+					namesQuery.add(subQuery, Occur.MUST);
+				}
+			}
+			if(!namesQuery.toString().equals("")){
+				luceneQuery.add(namesQuery, Occur.MUST);
+			}
+		}
+		
+		//Words
+		if(words.size() > 0){
+			BooleanQuery wordsQuery = new BooleanQuery();
+			for(int i = 0; i < words.size(); i++){
+				BooleanQuery subQuery = new BooleanQuery();
+				subQuery.add(new PrefixQuery(new Term("mapNameLf", words.get(i).toLowerCase())), Occur.SHOULD);
+				subQuery.add(new PrefixQuery(new Term("bioNotes", words.get(i).toLowerCase())), Occur.SHOULD);
+				subQuery.add(new PrefixQuery(new Term("staffNotes", words.get(i).toLowerCase())), Occur.SHOULD);
+				wordsQuery.add(subQuery, Occur.MUST);
+			}
+			if(!wordsQuery.toString().equals("")){
+				luceneQuery.add(wordsQuery, Occur.MUST);
+			}
+		}
+		
+		//Dates
+		if(datesTypes.size() > 0){
+			BooleanQuery datesQuery = new BooleanQuery();
+			for(int i = 0; i < datesTypes.size(); i++){
+				if(datesTypes.get(i) == null){
+					continue;
+				}else if(datesTypes.get(i).equals("Born after")){
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("bornDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), DateUtils.MAX_DATE, true, true);
+					datesQuery.add(dateRangeQuery, Occur.MUST);
+				}else if(datesTypes.get(i).equals("Died by")){
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("deathDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), DateUtils.MAX_DATE, true,	true);
+					datesQuery.add(dateRangeQuery, Occur.MUST);
+				}else if(datesTypes.get(i).equals("Lived between")){
+					NumericRangeQuery<Integer> startDateRangeQuery = NumericRangeQuery.newIntRange("bornDate_Sort", 4, DateUtils.MIN_DATE, DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), true, true);
+					datesQuery.add(startDateRangeQuery, Occur.MUST);
+					NumericRangeQuery<Integer> endDateRangeQuery = NumericRangeQuery.newIntRange("deathDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), true, true);
+					datesQuery.add(endDateRangeQuery, Occur.MUST);
+				}else if(datesTypes.get(i).equals("Born/Died on")){
+					//if the month is null we don't consider the day
+					if(datesMonth.get(i) == null){
+						NumericRangeQuery<Integer> bornDateRangeQuery = NumericRangeQuery.newIntRange("bornDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), 1, 1), DateUtils.getLuceneDate(datesYear.get(i), 12, 12), true, true);
+						datesQuery.add(bornDateRangeQuery, Occur.SHOULD);
+						NumericRangeQuery<Integer> deathDateRangeQuery = NumericRangeQuery.newIntRange("deathDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), 1, 1), DateUtils.getLuceneDate(datesYear.get(i), 12, 12), true, true);
+						datesQuery.add(deathDateRangeQuery, Occur.SHOULD);
+					}else{
+						if(datesDay.get(i) == null){
+							NumericRangeQuery<Integer> bornDateRangeQuery = NumericRangeQuery.newIntRange("bornDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), 1), DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), 31), true, true);
+							datesQuery.add(bornDateRangeQuery, Occur.SHOULD);
+							NumericRangeQuery<Integer> deathDateRangeQuery = NumericRangeQuery.newIntRange("deathDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), 1), DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), 31), true, true);
+							datesQuery.add(deathDateRangeQuery, Occur.SHOULD);
+						}else{
+							NumericRangeQuery<Integer> bornDateRangeQuery = NumericRangeQuery.newIntRange("bornDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), true, true);
+							datesQuery.add(bornDateRangeQuery, Occur.SHOULD);
+							NumericRangeQuery<Integer> deathDateRangeQuery = NumericRangeQuery.newIntRange("deathDate_Sort", 4, DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), true, true);
+							datesQuery.add(deathDateRangeQuery, Occur.SHOULD);
+						}
+					}
+					
+				}
+			}
+			if(!datesQuery.toString().equals("")){
+				luceneQuery.add(datesQuery, Occur.MUST);
+			}
+		}
+		
+		//Role Categories
+		if(roleCategories.size() > 0){
+			BooleanQuery roleCatQuery = new BooleanQuery();
+			
+			
+			for(int i = 0; i < roleCategories.size(); i++){
+				BooleanQuery singleRoleCatQuery = new BooleanQuery();
+				if(roleCategories.get(i).equals("ARTISTS and ARTISANS") || roleCategories.get(i).equals("CORPORATE BODIES") || roleCategories.get(i).equals("ECCLESIASTICS") || roleCategories.get(i).equals("HEADS of STATE") || roleCategories.get(i).equals("MILITARY and NAVAL PERSONNEL") || roleCategories.get(i).equals("NOBLES") || roleCategories.get(i).equals("PROFESSIONS") || roleCategories.get(i).equals("SCHOLARLY and LITERARY") || roleCategories.get(i).equals("STATE and COURT PERSONNEL") || roleCategories.get(i).equals("UNASSIGNED")){
+					/*String[] wordSingleRoleCat = StringUtils.split(roleCategories.get(i), " ");
+					for(int j = 0; j < wordSingleRoleCat.length; j++){
+						if(j == 0){
+							TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMajor", wordSingleRoleCat[j].toLowerCase()));
+							singleRoleCatQuery.add(termQuery, Occur.MUST);
+						}else{
+							if(j != wordSingleRoleCat.length -1){
+							TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMajor", wordSingleRoleCat[j].toLowerCase()));
+							singleRoleCatQuery.add(termQuery, Occur.SHOULD);
+							}else{
+								PrefixQuery prefixQuery = new PrefixQuery(new Term("poLink.titleOccList.roleCat.roleCatMajor", wordSingleRoleCat[j].toLowerCase()));
+								singleRoleCatQuery.add(prefixQuery, Occur.SHOULD);
+							}
+						}
+					}*/
+					PhraseQuery phraseQuery = new PhraseQuery();
+					phraseQuery.add(new Term("poLink.titleOccList.roleCat.roleCatMajor", roleCategories.get(i).toLowerCase() + "*"));
+					roleCatQuery.add(phraseQuery, Occur.MUST);
+					//roleCatQuery.add(new BooleanClause(singleRoleCatQuery , Occur.MUST));
+				}else{
+					String[] wordSingleRoleCat = StringUtils.split(roleCategories.get(i), " ");
+					for(int j = 0; j < wordSingleRoleCat.length; j++){
+						if(j == 0){
+							TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMinor", wordSingleRoleCat[j].toLowerCase()));
+							singleRoleCatQuery.add(termQuery, Occur.MUST);
+						}else{
+							if(j != wordSingleRoleCat.length -1){
+							TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMinor", wordSingleRoleCat[j].toLowerCase()));
+							singleRoleCatQuery.add(termQuery, Occur.SHOULD);
+							}else{
+								PrefixQuery prefixQuery = new PrefixQuery(new Term("poLink.titleOccList.roleCat.roleCatMinor", wordSingleRoleCat[j].toLowerCase()));
+								singleRoleCatQuery.add(prefixQuery, Occur.SHOULD);
+							}
+						}
+					}
+					roleCatQuery.add(new BooleanClause(singleRoleCatQuery , Occur.MUST));
+				}
+				
+			}
+			if(!roleCatQuery.toString().equals("")){
+				luceneQuery.add(roleCatQuery, Occur.MUST);
+			}
+		}
+		
+		//Occupations
+		if(titlesOccId.size() > 0){
+			BooleanQuery titleOccIdQuery = new BooleanQuery();
+			BooleanQuery titleOccQuery = new BooleanQuery();
+			
+			for(int i = 0; i < titlesOccId.size(); i++){
+				if(titlesOccId.get(i) > 0){
+					titleOccIdQuery.add(new BooleanClause(new TermQuery(new Term("poLink.titleOccList.titleOccId", titlesOccId.get(i).toString())), Occur.MUST));					
+				}else{
+					titleOccQuery.add(new BooleanClause(new PrefixQuery(new Term("poLink.titleOccList.titleOcc", titlesOcc.get(i).toLowerCase())), Occur.MUST));
+				}
+			}
+			if(!titleOccIdQuery.toString().equals("")){
+				luceneQuery.add(titleOccIdQuery, Occur.MUST);
+			}
+			if(!titleOccQuery.toString().equals("")){
+				luceneQuery.add(titleOccQuery, Occur.MUST);
+			}
+		}
+		
+		//Places
+		if(placeId.size() > 0){
+			BooleanQuery placeIdQuery = new BooleanQuery();
+			BooleanQuery placeQuery = new BooleanQuery();
+			
+			for(int i = 0; i < placeId.size(); i++){
+				if(placeId.get(i) > 0){
+					BooleanQuery singlePlaceIdQuery = new BooleanQuery();
+					BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("bornPlace.placeAllId", placeId.get(i).toString())), Occur.SHOULD);
+					singlePlaceIdQuery.add(booleanClause);
+					booleanClause = new BooleanClause(new TermQuery(new Term("deathPlace.placeAllId", placeId.get(i).toString())), Occur.SHOULD);
+					singlePlaceIdQuery.add(booleanClause);
+					placeIdQuery.add(singlePlaceIdQuery, Occur.MUST);
+				}else{
+					BooleanQuery singlePlaceQuery = new BooleanQuery();
+					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("bornPlace.placeName", place.get(i).toLowerCase())), Occur.SHOULD);
+					singlePlaceQuery.add(booleanClause);
+					booleanClause = new BooleanClause(new PrefixQuery(new Term("deathPlace.placeName", place.get(i).toLowerCase())), Occur.SHOULD);
+					singlePlaceQuery.add(booleanClause);
+					placeQuery.add(singlePlaceQuery, Occur.MUST);
+				}
+			}
+			if(!placeIdQuery.toString().equals("")){
+				luceneQuery.add(placeIdQuery, Occur.MUST);
+			}
+			if(!placeQuery.toString().equals("")){
+				luceneQuery.add(placeQuery, Occur.MUST);
+			}
+		}
+		
+		
+		
+		return luceneQuery;
 	}
 	
 	public String toString(){

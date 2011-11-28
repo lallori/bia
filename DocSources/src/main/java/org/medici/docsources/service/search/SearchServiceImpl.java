@@ -38,6 +38,7 @@ import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.searchfilter.SearchFilterDAO;
+import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Month;
@@ -72,6 +73,23 @@ public class SearchServiceImpl implements SearchService {
 
 	@Autowired
 	private SearchFilterDAO searchFilterDAO;
+	
+	@Autowired
+	private TitleOccsListDAO titleOccsListDAO;
+
+	/**
+	 * @return the titleOccsListDAO
+	 */
+	public TitleOccsListDAO getTitleOccsListDAO() {
+		return titleOccsListDAO;
+	}
+
+	/**
+	 * @param titleOccsListDAO the titleOccsListDAO to set
+	 */
+	public void setTitleOccsListDAO(TitleOccsListDAO titleOccsListDAO) {
+		this.titleOccsListDAO = titleOccsListDAO;
+	}
 
 	@Autowired
 	private TopicsListDAO topicsListDAO;
@@ -287,6 +305,15 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	@Override
+	public Page searchTitleOrOccupation(Search searchContainer,	PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getTitleOccsListDAO().searchTitleOrOccupation(searchContainer, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -360,4 +387,5 @@ public class SearchServiceImpl implements SearchService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
+
 }

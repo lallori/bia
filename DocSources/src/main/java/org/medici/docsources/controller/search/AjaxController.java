@@ -42,6 +42,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SimpleSearchDocument;
 import org.medici.docsources.common.search.SimpleSearchPeople;
 import org.medici.docsources.common.search.SimpleSearchPlace;
+import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
 import org.medici.docsources.common.search.SimpleSearchTopic;
 import org.medici.docsources.common.search.SimpleSearchVolume;
 import org.medici.docsources.common.util.DateUtils;
@@ -50,6 +51,7 @@ import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.RoleCat;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.Volume;
@@ -529,6 +531,38 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
+	
+	/**
+	 * This method returns a list of ipotetical recipients. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing recipients.
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/src/SearchTitleOrOccupation", method = RequestMethod.GET)
+	public ModelAndView searchTitleOrOccupation(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
+			paginationFilter.addSortingCriteria("titleOcc", "DESC");
+			
+			Page page  = getSearchService().searchTitleOrOccupation(new SimpleSearchTitleOrOccupation(query), paginationFilter);
+			model.put("query", query);
+			model.put("count", page.getTotal());
+			model.put("data", ListBeanUtils.transformList(page.getList(), "titleOccId"));
+			model.put("suggestions", ListBeanUtils.transformList(page.getList(), "titleOcc"));
+			// transformList does not support nested property, so we need to extract list of RoleCat, then we can extract every single field.
+			List<RoleCat> roleCatList = (List<RoleCat>) ListBeanUtils.transformList(page.getList(), "roleCat");
+			model.put("rolesCatMajor", ListBeanUtils.transformList(roleCatList, "roleCatMajor"));
+			model.put("rolesCatMinor", ListBeanUtils.transformList(roleCatList, "roleCatMinor"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
 
 	/**
 	 * This method returns a list of topics linkable to document. Result does not

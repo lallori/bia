@@ -27,11 +27,55 @@
  */
 package org.medici.docsources.command.search;
 
+import java.util.List;
+
+import org.medici.docsources.domain.SearchFilter.SearchType;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
 public class AdvancedSearchPeopleCommand {
+	private Integer idSearchFilter;
+	private SearchType searchType;
+	private List<String> namePerson;
+	
+	/**
+	 * @param idSearchFilter the idSearchFilter to set
+	 */
+	public void setIdSearchFilter(Integer idSearchFilter) {
+		this.idSearchFilter = idSearchFilter;
+	}
+	/**
+	 * @return the idSearchFilter
+	 */
+	public Integer getIdSearchFilter() {
+		return idSearchFilter;
+	}
+	/**
+	 * @param searchType the searchType to set
+	 */
+	public void setSearchType(SearchType searchType) {
+		this.searchType = searchType;
+	}
+	/**
+	 * @return the searchType
+	 */
+	public SearchType getSearchType() {
+		return searchType;
+	}
+	/**
+	 * @param word the word to set
+	 */
+	public void setNamePerson(List<String> namePerson) {
+		this.namePerson = namePerson;
+	}
+	/**
+	 * @return the word
+	 */
+	public List<String> getNamePerson() {
+		return namePerson;
+	}
 
 }

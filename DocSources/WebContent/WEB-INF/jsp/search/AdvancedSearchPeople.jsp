@@ -51,117 +51,106 @@
 			</select>
 			<input id="dateYear" name="dateYear" class="input_4c" type="text" value="year" maxlength="4"/>
 			<select id="dateMonth" name="dateMonth" class="selectform">
-				<option value="January">January</option>
-				<option value="February">February</option>
-				<option value="March">March</option>
-				<option value="April">April</option>
-				<option value="May">May</option>
-				<option value="June">June</option>
-				<option value="July">July</option>
-				<option value="August">August</option>
-				<option value="September">September</option>
-				<option value="October">October</option>
-				<option value="November">November</option>
-				<option value="December">December</option>
-				<option value="month" selected="selected">month</option>
+			<c:forEach items="${months}" var="month">
+				<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
+			</c:forEach>
 			</select>
-			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="day" maxlength="2"/>
+			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2"/>
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="addDateRange">
 			<input type="hidden" id="category" value="Date">
 			<p class="invisible">and</p>
-			<input id="dateYearBetween" name="dateYear" class="input_4c" type="text" value="yyyy" maxlength="4" />
-            <select id="dateMonthBetween" name="dateMonth" class="selectform">
-            	<option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-                <option value="mm" selected="selected">mm</option>
+			<input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" />
+            <select id="dateMonthBetween" name="dateMonthBetween" class="selectform">
+            <c:forEach items="${months}" var="month">
+				<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
+			</c:forEach>
             </select>
-            <input id="dateDayBetween" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2"/>
+            <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2"/>
 		</form>
 	</div>
 
-	<h1><a>Gender</a></h1>
+	<h1><a>Occupation</a></h1>
 	<div>
-		<form id="genderSearchForm" method="post" class="edit">
+		<form id="roleCategorySearchForm" method="post" class="edit">
+		Role Categories
+			<select id="roleCategorySelect" name="roleCategorySelect" class="selectform_XXXlong">
+                    <option value="Select a Role Category" selected="selected">Select a Role Category</option>
+                        <option value="ARTISTS and ARTISANS">ARTISTS and ARTISANS</option>
+                        <option value="Actors/Dancers">Actors/Dancers</option>
+                        <option value="Architects/Engineers">Architects/Engineers</option>
+                        <option value="Armorers/Weapon Makers">Armorers/Weapon Makers</option>
+                        <option value="Cloth Weavers/Embroiderers">Cloth Weavers/Embroiderers</option>
+                        <option value="Clothing Makers">Clothing Makers</option>
+                        <option value="Gold/Silver Workers">Gold/Silver Workers</option>
+                        <option value="Jewelers/Hard Stone Workers">Jewelers/Hard Stone Workers</option>
+                        <option value="Musicians/Singers/Instrument Makers">Musicians/Singers/Instrument Makers</option>
+                        <option value="Painters">Painters</option>
+                        <option value="Printmakers">Printmakers</option>
+                        <option value="Sculptors">Sculptors</option>
+                        <option value="Tapestry Weavers">Tapestry Weavers</option>
+                        <option value="Woodworkers">Woodworkers</option>
+                        <option value="Artists and Artisans Other">Artists and Artisans Other</option>
+                        <option value="CORPORATE BODIES">CORPORATE BODIES</option>
+                        <option value="Religious">Religious</option>
+                        <option value="Secular">Secular</option>
+                        <option value="Corporate Bodies Other">Corporate Bodies Other</option>
+                        <option value="ECCLESIASTICS">ECCLESIASTICS</option>
+                        <option value="Beatified/Saints">Beatified/Saints</option>
+                        <option value="Bishops/Archbishops">Bishops/Archbishops</option>
+                        <option value="Cardinals">Cardinals</option>
+                        <option value="Members of Religious Orders">Members of Religious Orders</option>
+                        <option value="Popes">Popes</option>
+                        <option value="Ecclesiastics Other">Ecclesiastics Other</option>
+                        <option value="HEADS of STATE">HEADS of STATE</option>
+                        <option value="Emperors-Empresses/Kings-Queens">Emperors-Empresses/Kings-Queens</option>
+                        <option value="Sovereign Dukes-Duchesses/Grand Dukes-Duchesses">Sovereign Dukes-Duchesses/Grand Dukes-Duchesses</option>
+                        <option value="Viceroys-Vicereines/Governors">Viceroys-Vicereines/Governors</option>
+                        <option value="Heads of State Other">Heads of State Other</option>
+                        <option value="MILITARY and NAVAL PERSONNEL">MILITARY and NAVAL PERSONNEL</option>
+                        <option value="Captains">Captains</option>
+                        <option value="Colonels">Colonels</option>
+                        <option value="Generals/Admirals">Generals/Admirals</option>
+                        <option value="Lieutenants/Ensigns">Lieutenants/Ensigns</option>
+                        <option value="Military and Naval Personnel Other">Military and Naval Personnel Other</option>
+                        <option value="NOBLES">NOBLES</option>
+                        <option value="Barons-Baronesses">Barons-Baronesses</option>
+                        <option value="Counts-Countesses">Counts-Countesses</option>
+                        <option value="Dukes-Duchesses/Archdukes-Archduchesses">Dukes-Duchesses/Archdukes-Archduchesses</option>
+                        <option value="Marquises-Marchionesses">Marquises-Marchionesses</option>
+                        <option value="Members Chivalric Orders">Members Chivalric Orders</option>
+                        <option value="Princes-Princesses">Princes-Princesses</option>
+                        <option value="Nobles OTHER">Nobles OTHER</option>
+                        <option value="PROFESSIONS">PROFESSIONS</option>
+                        <option value="Bankers/Merchants">Bankers/Merchants</option>
+                        <option value="Lawyers/Notaries">Lawyers/Notaries</option>
+                        <option value="Medical Practitioners">Medical Practitioners</option>
+                        <option value="Professions OTHER">Professions OTHER</option>
+                        <option value="SCHOLARLY and LITERARY">SCHOLARLY and LITERARY</option>
+                        <option value="Poets/Writers">Poets/Writers</option>
+                        <option value="Printers/Booksellers">Printers/Booksellers</option>
+                        <option value="Scholarly/Learned">Scholarly/Learned</option>
+                        <option value="Scholarly and Literary Other">Scholarly and Literary Other</option>
+                        <option value="STATE and COURT PERSONNEL">STATE and COURT PERSONNEL</option>
+                        <option value="Civic/Local/Regional Administrators">Civic/Local/Regional Administrators</option>
+                        <option value="Courtiers">Courtiers</option>
+                        <option value="Diplomats">Diplomats</option>
+                        <option value="Judges/Magistrates">Judges/Magistrates</option>
+                        <option value="Secretaries/Ministers">Secretaries/Ministers</option>
+                        <option value="State and Court Personnel Other">State and Court Personnel Other</option>
+                        <option value="UNASSIGNED">UNASSIGNED</option>
+                        <option value="Unassigned">Unassigned</option>
+            </select>
+            <input type="hidden" id="roleCategory" name="roleCategory" type="text" value=""/>
+            <input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="hidden" id="category" value="Role Category">
+		</form>
+		
+		<form id="occupationSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="The subjects of some biographical entries are categorized as 'Groups', with the 'Gender' specified as 'X'. This includes entities such as academies and confraternities (even if their membership was made up of a single gender), and families when they are mentioned collectively in a document.">?</a>
-			<select id="genderType" name="genderType" class="selectform_Xlong">
-				<option value="Select a Role Category" selected="selected">Select a Role Category</option>
-				<option value="ARTISTS and ARTISANS">ARTISTS and ARTISANS</option>
-				<option value="Actors/Dancers">Actors/Dancers</option>
-				<option value="Architects/Engineers">Architects/Engineers</option>
-				<option value="Armorers/Weapon Makers">Armorers/Weapon Makers</option>
-				<option value="Cloth Weavers/Embroiderers">Cloth Weavers/Embroiderers</option>
-				<option value="Clothing Makers">Clothing Makers</option>
-				<option value="Gold/Silver Workers">Gold/Silver Workers</option>
-				<option value="Jewelers/Hard Stone Workers">Jewelers/Hard Stone Workers</option>
-				<option value="Musicians/Singers/Instrument Makers">Musicians/Singers/Instrument Makers</option>
-				<option value="Painters">Painters</option>
-				<option value="Printmakers">Printmakers</option>
-				<option value="Sculptors">Sculptors</option>
-				<option value="Tapestry Weavers">Tapestry Weavers</option>
-				<option value="Woodworkers">Woodworkers</option>
-				<option value="Artists and Artisans Other">Artists and Artisans Other</option>
-				<option value="CORPORATE BODIES">CORPORATE BODIES</option>
-				<option value="Religious">Religious</option>
-				<option value="Secular">Secular</option>
-				<option value="Corporate Bodies Other">Corporate Bodies Other</option>
-				<option value="M.3">ECCLESIASTICS</option>
-				<option value="49">Beatified/Saints</option>
-				<option value="16">Bishops/Archbishops</option>
-				<option value="15">Cardinals</option>
-				<option value="61">Members of Religious Orders</option>
-				<option value="14">Popes</option>
-				<option value="47">Ecclesiastics Other</option>
-				<option value="M.4">HEADS of STATE</option>
-				<option value="2">Emperors-Empresses/Kings-Queens</option>
-				<option value="6">Sovereign Dukes-Duchesses/Grand Dukes-Duchesses</option>
-				<option value="35">Viceroys-Vicereines/Governors</option>
-				<option value="46">Heads of State Other</option>
-				<option value="M.10">MILITARY and NAVAL PERSONNEL</option>
-				<option value="64">Captains</option>
-				<option value="63">Colonels</option>
-				<option value="62">Generals/Admirals</option>
-				<option value="65">Lieutenants/Ensigns</option>
-				<option value="66">Military and Naval Personnel Other</option>
-				<option value="M.5">NOBLES</option>
-				<option value="39">Barons-Baronesses</option>
-				<option value="13">Counts-Countesses</option>
-				<option value="11">Dukes-Duchesses/Archdukes-Archduchesses</option>
-				<option value="36">Marquises-Marchionesses</option>
-				<option value="50">Members Chivalric Orders</option>
-				<option value="10">Princes-Princesses</option>
-				<option value="42">Nobles OTHER</option>
-				<option value="M.6">PROFESSIONS</option>
-				<option value="32">Bankers/Merchants</option>
-				<option value="51">Lawyers/Notaries</option>
-				<option value="30">Medical Practitioners</option>
-				<option value="72">Professions OTHER</option>
-				<option value="M.7">SCHOLARLY and LITERARY</option>
-				<option value="67">Poets/Writers</option>
-				<option value="53">Printers/Booksellers</option>
-				<option value="31">Scholarly/Learned</option>
-				<option value="73">Scholarly and Literary Other</option>
-				<option value="M.8">STATE and COURT PERSONNEL</option>
-				<option value="54">Civic/Local/Regional Administrators</option>
-				<option value="55">Courtiers</option>
-				<option value="19">Diplomats</option>
-				<option value="68">Judges/Magistrates</option>
-				<option value="18">Secretaries/Ministers</option>
-				<option value="56">State and Court Personnel Other</option>
-				<option value="M.9">UNASSIGNED</option>
-				<option value="1">Unassigned</option>
-			</select>
+			<input id="occupation" name="occupation" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
-			<input type="hidden" id="category" value="Gender">
+			<input type="hidden" id="category" value="Occupation">
+			<input type="hidden" id="occupationId" value="">
 		</form>
 	</div>
 	
@@ -172,18 +161,27 @@
 			<input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 			<input type="hidden" id="category" value="Place">
+			<input type="hidden" id="placeId" value="">
 		</form>
 	</div>
 </div>
 </div>
 
+<c:url var="searchPlaceURL" value="/src/SearchPlace.json"/>
+<c:url var="searchTitleOrOccupationURL" value="/src/SearchTitleOrOccupation.json"/>
+
 <script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#dateMonth option:eq(0)").text("mm");
+		$j("#dateMonth option:eq(0)").attr('selected', 'selected');
+		$j("#dateMonthBetween option:eq(0)").text("mm");
+		$j("#dateMonthBetween option:eq(0)").attr('selected', 'selected');
 
 		$j('#namePartsSearchForm').advancedSearchForm();
 		$j('#wordSearchForm').advancedSearchForm();
 		$j('#dateSearchForm').advancedSearchForm();
-		$j('#genderSearchForm').advancedSearchForm();
+		$j('#roleCategorySearchForm').advancedSearchForm();
+		$j('#occupationSearchForm').advancedSearchForm();
 		$j('#placeSearchForm').advancedSearchForm();		
 
 		
@@ -230,6 +228,37 @@
 					  this.value=''
 					  }
 				 });
+		 
+		 $j("#roleCategorySelect").change(function(){
+			 $j("#roleCategory").val($j(this).val());
+			 return false;
+		 });
+		 
+		 $j("#place").autocompletePlace({
+				serviceUrl: '${searchPlaceURL}',
+				minChars: 3,
+				delimiter: null,
+				maxHeight: 400,
+				width: 450,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+					$j('#placeId').val(data);
+				}
+			});	
+		 
+		 $j("#occupation").AutocompleteTitle({
+			 	serviceUrl:'${searchTitleOrOccupationURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ $j('#occupationId').val(data); }
+		 })
 		
 	});
 </script>
