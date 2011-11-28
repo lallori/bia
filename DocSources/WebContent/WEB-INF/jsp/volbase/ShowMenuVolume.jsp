@@ -14,13 +14,16 @@
 		<c:url var="ShowShareLinkVolumeURL" value="/src/volbase/ShowShareLinkVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
+		<c:url var="PrintVolumeURL" value="/src/volbase/PrintVolume.do">
+			<c:param name="summaryId" value="${volume.summaryId}" />
+		</c:url>
 	</security:authorize>
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${volume.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${volume.dateCreated}" /></div>
 		<a id="vettingHistory" href="${ShowVettingChronologyVolumeURL}">Vetting History</a>
 		<a id="menuActions" href="${ShowMenuActionsVolumeURL}">Actions</a>
-		<a id="buttonPrint" title="Print this record" href="#"></a>
+		<a id="buttonPrint" title="Print this record" href="${PrintVolumeURL}"></a>
 		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
@@ -35,6 +38,11 @@
 				track: true,
 				fade: 350 
 		});
+		
+		$j("#buttonPrint").click(
+				function() {										
+					window.open('${PrintVolumeURL}','PRINT VOLUME','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+					});
 
 	});
 	</script>

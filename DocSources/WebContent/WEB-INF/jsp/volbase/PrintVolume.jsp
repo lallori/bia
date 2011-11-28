@@ -53,7 +53,7 @@
              <td width="150" class="value">${volume.folioCount}</td>
 
              <td width="100">Index of Names</td>
-             <td width="50" class="valueRight">Yes${volume.oldAlphaIndex ? 'Yes' : 'No'}td>
+             <td width="50" class="valueRight">${volume.oldAlphaIndex ? 'Yes' : 'No'}</td>
          </tr>
          <tr> 
              <td width="70">Printed material</td>

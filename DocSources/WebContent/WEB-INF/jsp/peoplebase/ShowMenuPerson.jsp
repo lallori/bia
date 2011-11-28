@@ -14,13 +14,16 @@
 		<c:url var="ShowShareLinkPersonURL" value="/src/peoplebase/ShowShareLinkPerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
+		<c:url var="PrintPersonURL" value="/src/peoplebase/PrintPerson.do">
+			<c:param name="personId" value="${person.personId}" />
+		</c:url>
 	</security:authorize>
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${person.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${person.dateCreated}" /></div>
 		<a id="vettingHistory" href="${ShowVettingChronologyPersonURL}">Vetting History</a>
 		<a id="menuActions" href="${ShowMenuActionsPersonURL}">Actions</a>
-		<a id="buttonPrint" title="Print this record" href="#"></a>
+		<a id="buttonPrint" title="Print this record" href="${PrintPersonURL}"></a>
 		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
@@ -35,6 +38,11 @@
 			track: true,
 			fade: 350 
 		});
+		
+		$j("#buttonPrint").click(
+				function() {										
+					window.open('${PrintPersonURL}','PRINT PERSON','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+					});
 
 	});
 	</script>

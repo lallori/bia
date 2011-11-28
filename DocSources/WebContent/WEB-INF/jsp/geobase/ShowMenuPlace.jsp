@@ -14,13 +14,16 @@
 		<c:url var="ShowShareLinkPlaceURL" value="/src/peoplebase/ShowShareLinkPlace.do">
 			<c:param name="placeAllId"   value="${place.placeAllId}" />
 		</c:url>
+		<c:url var="PrintPlaceURL" value="/src/geobase/PrintPlace.do">
+			<c:param name="placeAllId" value="${place.placeAllId}" />
+		</c:url>
 	</security:authorize>
 
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">CREATED BY ${place.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${place.dateEntered}" /></div>
 		<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
 		<a id="menuActions" href="${ShowMenuActionsPlaceURL}">Actions</a>
-		<a id="buttonPrint" title="Print this record" href="#"></a>
+		<a id="buttonPrint" title="Print this record" href="${PrintPlaceURL}"></a>
 		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
@@ -35,6 +38,11 @@
 			track: true,
 			fade: 350 
 		});
+		
+		$j("#buttonPrint").click(
+				function() {										
+					window.open('${PrintPlaceURL}','PRINT PLACE','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+					});
 
 	});
 	</script>
