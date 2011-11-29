@@ -17,7 +17,7 @@
 	    </tr>
 	    <tr>
 	      <td width="25%">Citation Text</td>
-	      <td width="70%" colspan="3" class="value">Archivio di Stato di Firenze, Mediceo del Principato 1583 folio ${document.folioNum} / ${document.folioMod}. (Entry ${document.entryId} in the Documentary Sources database)</td>
+	      <td width="70%" colspan="3" class="value">Archivio di Stato di Firenze, Mediceo del Principato ${document.volume.MDP} folio ${document.folioNum} / ${document.folioMod}. (Entry ${document.entryId} in the Documentary Sources database)</td>
 	      
 	    </tr>
 	</table> 

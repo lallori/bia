@@ -59,7 +59,13 @@
 	</c:url>
 
 <div id="EditPersonalNotesDiv">
-	<div id="prevNextButtons">
+	<div id="transcribe">
+		<a href="#" class="transcribe" title="Transcribe this document">Transcribe this document</a>
+	</div>
+	
+	<div id="line3"></div>
+	
+	<div id="prevNextButtons" class="transcribe">
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
 	    	<a class="previousPage">Previous folio</a>
@@ -81,11 +87,11 @@
 		</div>
 	</div>
 
-	<a id="volumeSummary" href="#">Volume Summary</a>
+	<a id="volumeSummary" href="#" class="transcribe">Volume Summary</a>
 
-	<div id="line"></div>
+	<div id="line" class="transcribe"></div>
 	
-	<div id="rubricarioMoveTo">
+	<div id="rubricarioMoveTo" class="transcribe">
 		<form:form id="moveToRubricarioForm" method="post" class="edit">
 			<label id="imageProgTypeNumLabel" class="rubricarioLabel" for="imageProgTypeNum">Move to <i>Index of Names</i> folio</label>
 			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
@@ -104,7 +110,7 @@
 			<form:hidden path="modeEdit" value="${command.modeEdit}" />
 		</form:form>
 	</div>
-	<div id="folioMoveTo">
+	<div id="folioMoveTo" class="transcribe">
 		<form:form id="moveToFolioForm" method="post" class="edit">
 			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio </label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
@@ -124,7 +130,7 @@
 		</form:form>
 	</div>
 	
-	<div id="line2"></div>
+	<div id="line2" class="transcribe"></div>
 	
 	<div id="personalNotesDiv">
 		<a id="personalNotesButton" href="#">Personal Notes</a>

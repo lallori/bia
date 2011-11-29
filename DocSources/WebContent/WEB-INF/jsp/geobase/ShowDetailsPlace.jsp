@@ -18,13 +18,13 @@
 	<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
 		<c:if test="${place.placeAllId == 0}">
 			<h4>Adding TGN Place Record</h4>
-			<div align="center">
+			<div style="margin-left:8px">
 				<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
 			</div>
 		</c:if>
 		<c:if test="${place.placeAllId != 0}">
 			<h4>Editing TGN Place Record</h4>
-			<div align="center">
+			<div style="margin-left:8px">
 				<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
 			</div>
 		</c:if>
