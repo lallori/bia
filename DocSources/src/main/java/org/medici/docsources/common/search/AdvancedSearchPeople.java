@@ -40,7 +40,6 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.NumericRangeQuery;
-import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
@@ -545,6 +544,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				subQuery.add(new PrefixQuery(new Term("mapNameLf", words.get(i).toLowerCase())), Occur.SHOULD);
 				subQuery.add(new PrefixQuery(new Term("bioNotes", words.get(i).toLowerCase())), Occur.SHOULD);
 				subQuery.add(new PrefixQuery(new Term("staffNotes", words.get(i).toLowerCase())), Occur.SHOULD);
+				subQuery.add(new PrefixQuery(new Term("altName.altName", words.get(i).toLowerCase())), Occur.SHOULD);
 				wordsQuery.add(subQuery, Occur.MUST);
 			}
 			if(!wordsQuery.toString().equals("")){
@@ -605,42 +605,55 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			for(int i = 0; i < roleCategories.size(); i++){
 				BooleanQuery singleRoleCatQuery = new BooleanQuery();
 				if(roleCategories.get(i).equals("ARTISTS and ARTISANS") || roleCategories.get(i).equals("CORPORATE BODIES") || roleCategories.get(i).equals("ECCLESIASTICS") || roleCategories.get(i).equals("HEADS of STATE") || roleCategories.get(i).equals("MILITARY and NAVAL PERSONNEL") || roleCategories.get(i).equals("NOBLES") || roleCategories.get(i).equals("PROFESSIONS") || roleCategories.get(i).equals("SCHOLARLY and LITERARY") || roleCategories.get(i).equals("STATE and COURT PERSONNEL") || roleCategories.get(i).equals("UNASSIGNED")){
-					/*String[] wordSingleRoleCat = StringUtils.split(roleCategories.get(i), " ");
+					String[] wordSingleRoleCat = StringUtils.split(roleCategories.get(i), " ");
 					for(int j = 0; j < wordSingleRoleCat.length; j++){
 						if(j == 0){
 							TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMajor", wordSingleRoleCat[j].toLowerCase()));
 							singleRoleCatQuery.add(termQuery, Occur.MUST);
+							roleCatQuery.add(singleRoleCatQuery, Occur.MUST);
+							singleRoleCatQuery = new BooleanQuery();
 						}else{
-							if(j != wordSingleRoleCat.length -1){
-							TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMajor", wordSingleRoleCat[j].toLowerCase()));
-							singleRoleCatQuery.add(termQuery, Occur.SHOULD);
-							}else{
-								PrefixQuery prefixQuery = new PrefixQuery(new Term("poLink.titleOccList.roleCat.roleCatMajor", wordSingleRoleCat[j].toLowerCase()));
-								singleRoleCatQuery.add(prefixQuery, Occur.SHOULD);
+							//Discard the words "and" or "of"
+							if(wordSingleRoleCat[j].length() > 3){
+								if(j != wordSingleRoleCat.length -1){
+									TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMajor", wordSingleRoleCat[j].toLowerCase()));
+									singleRoleCatQuery.add(termQuery, Occur.MUST);
+									roleCatQuery.add(singleRoleCatQuery, Occur.MUST);
+									singleRoleCatQuery = new BooleanQuery();
+								}else{
+									PrefixQuery prefixQuery = new PrefixQuery(new Term("poLink.titleOccList.roleCat.roleCatMajor", wordSingleRoleCat[j].toLowerCase()));
+									singleRoleCatQuery.add(prefixQuery, Occur.SHOULD);
+									roleCatQuery.add(singleRoleCatQuery, Occur.MUST);
+									singleRoleCatQuery = new BooleanQuery();
+								}
 							}
 						}
-					}*/
-					PhraseQuery phraseQuery = new PhraseQuery();
-					phraseQuery.add(new Term("poLink.titleOccList.roleCat.roleCatMajor", roleCategories.get(i).toLowerCase() + "*"));
-					roleCatQuery.add(phraseQuery, Occur.MUST);
-					//roleCatQuery.add(new BooleanClause(singleRoleCatQuery , Occur.MUST));
+					}
 				}else{
 					String[] wordSingleRoleCat = StringUtils.split(roleCategories.get(i), " ");
 					for(int j = 0; j < wordSingleRoleCat.length; j++){
 						if(j == 0){
 							TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMinor", wordSingleRoleCat[j].toLowerCase()));
 							singleRoleCatQuery.add(termQuery, Occur.MUST);
+							roleCatQuery.add(singleRoleCatQuery, Occur.MUST);
+							singleRoleCatQuery = new BooleanQuery();
 						}else{
-							if(j != wordSingleRoleCat.length -1){
-							TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMinor", wordSingleRoleCat[j].toLowerCase()));
-							singleRoleCatQuery.add(termQuery, Occur.SHOULD);
-							}else{
-								PrefixQuery prefixQuery = new PrefixQuery(new Term("poLink.titleOccList.roleCat.roleCatMinor", wordSingleRoleCat[j].toLowerCase()));
-								singleRoleCatQuery.add(prefixQuery, Occur.SHOULD);
+							//Discard the words "and" or "of"
+							if(wordSingleRoleCat[j].length() > 3){
+								if(j != wordSingleRoleCat.length -1){
+									TermQuery termQuery = new TermQuery(new Term("poLink.titleOccList.roleCat.roleCatMinor", wordSingleRoleCat[j].toLowerCase()));
+									singleRoleCatQuery.add(termQuery, Occur.MUST);
+									roleCatQuery.add(singleRoleCatQuery, Occur.MUST);
+									singleRoleCatQuery = new BooleanQuery();
+								}else{
+									PrefixQuery prefixQuery = new PrefixQuery(new Term("poLink.titleOccList.roleCat.roleCatMinor", wordSingleRoleCat[j].toLowerCase()));
+									singleRoleCatQuery.add(prefixQuery, Occur.MUST);
+									roleCatQuery.add(singleRoleCatQuery, Occur.MUST);
+									singleRoleCatQuery = new BooleanQuery();
+							}
 							}
 						}
 					}
-					roleCatQuery.add(new BooleanClause(singleRoleCatQuery , Occur.MUST));
 				}
 				
 			}
