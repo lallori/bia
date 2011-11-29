@@ -40,6 +40,7 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.NumericRangeQuery;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
@@ -1220,12 +1221,16 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				// 1 - BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("synExtract.docExtract", extract.get(i).toLowerCase())), Occur.MUST);
 				// 1 - luceneQuery.add(booleanClause);
 				// Extract: mi dice anchora che io dia el grano ==> +(+(+synExtract.docExtract:mi +synExtract.docExtract:dice +synExtract.docExtract:anchora +synExtract.docExtract:che +synExtract.docExtract:io +synExtract.docExtract:dia +synExtract.docExtract:el +synExtract.docExtract:grano))
+				
 				String[] wordsSingleExtract = StringUtils.split(extract.get(i), " ");
 				for (int j=0; j<wordsSingleExtract.length; j++) {
 					TermQuery termQuery = new TermQuery(new Term("synExtract.docExtract", wordsSingleExtract[j]));
 					singleExtractQuery.add(termQuery, Occur.MUST);
+					extractQuery.add(singleExtractQuery, Occur.MUST);
+					singleExtractQuery = new BooleanQuery();
 				}
-				extractQuery.add(new BooleanClause(singleExtractQuery, Occur.MUST));
+
+				//extractQuery.add(new BooleanClause(singleExtractQuery, Occur.MUST));
 			}
 			luceneQuery.add(new BooleanClause(extractQuery, Occur.MUST));
 		}
@@ -1242,8 +1247,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				for (int j=0; j<wordsSingleSynopsis.length; j++) {
 					TermQuery termQuery = new TermQuery(new Term("synExtract.synopsis", wordsSingleSynopsis[j]));
 					singleSynopsisQuery.add(termQuery, Occur.MUST);
+					synopsisQuery.add(singleSynopsisQuery, Occur.MUST);
+					singleSynopsisQuery = new BooleanQuery();
 				}
-				synopsisQuery.add(new BooleanClause(singleSynopsisQuery, Occur.MUST));
+				//synopsisQuery.add(new BooleanClause(singleSynopsisQuery, Occur.MUST));
 			}
 			luceneQuery.add(new BooleanClause(synopsisQuery, Occur.MUST));
 		}
