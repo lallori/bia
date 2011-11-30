@@ -46,8 +46,10 @@ import org.medici.docsources.common.search.AdvancedSearchPeople;
 import org.medici.docsources.common.search.AdvancedSearchPlace;
 import org.medici.docsources.common.search.AdvancedSearchVolume;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +91,8 @@ public class AdvancedSearchController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		SearchFilter searchFilter = null;
 		List<Month> months = null;
+		List<PlaceType> placeTypes = null;
+		List<TopicList> topicsList = null;
 
 		try {
 			months = getSearchService().getMonths();
@@ -160,6 +164,14 @@ public class AdvancedSearchController {
 		} else if (searchFilter.getSearchType().equals(SearchType.PEOPLE)) {
 			return new ModelAndView("search/AdvancedSearchPeople", model);
 		} else if (searchFilter.getSearchType().equals(SearchType.PLACE)) {
+			try{
+				placeTypes = getSearchService().getPlaceTypes();
+				model.put("placeTypes", placeTypes);
+				topicsList = getSearchService().getTopicsList();
+				model.put("topicsList", topicsList);
+			}catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/AdvancedSearchPlaces", model);
+			}
 			return new ModelAndView("search/AdvancedSearchPlaces", model);
 		} else {
 			return new ModelAndView("search/AdvancedSearchVolumes", model);

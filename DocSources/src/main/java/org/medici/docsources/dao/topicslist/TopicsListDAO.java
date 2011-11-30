@@ -46,6 +46,13 @@ import org.medici.docsources.domain.TopicList;
 public interface TopicsListDAO extends Dao<Integer, TopicList> {
 
 	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<TopicList> findTopicsList() throws PersistenceException;
+	
+	/**
 	 * This method searches for topics which could be related to a document which contains 
 	 * a text parameter (String alias) and returns a list of {@link org.medici.docsources.domain.TopicList}.
 	 * 

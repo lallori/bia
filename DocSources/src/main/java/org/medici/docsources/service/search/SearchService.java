@@ -33,7 +33,9 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -156,4 +158,18 @@ public interface SearchService {
 	 * @return
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<PlaceType> getPlaceTypes() throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<TopicList> getTopicsList() throws ApplicationThrowable;
 }

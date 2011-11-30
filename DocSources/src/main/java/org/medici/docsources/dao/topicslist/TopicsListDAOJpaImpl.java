@@ -32,6 +32,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.log4j.Logger;
@@ -87,6 +88,17 @@ public class TopicsListDAOJpaImpl extends JpaDao<Integer, TopicList> implements 
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TopicList> findTopicsList() throws PersistenceException {
+		Query query = getEntityManager().createQuery("from TopicList");
+		
+		return query.getResultList();
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

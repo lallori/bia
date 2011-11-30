@@ -37,13 +37,16 @@ import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
+import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.dao.searchfilter.SearchFilterDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -70,26 +73,15 @@ public class SearchServiceImpl implements SearchService {
 
 	@Autowired
 	private PlaceDAO placeDAO;
+	
+	@Autowired
+	private PlaceTypeDAO placeTypeDAO;
 
 	@Autowired
 	private SearchFilterDAO searchFilterDAO;
 	
 	@Autowired
 	private TitleOccsListDAO titleOccsListDAO;
-
-	/**
-	 * @return the titleOccsListDAO
-	 */
-	public TitleOccsListDAO getTitleOccsListDAO() {
-		return titleOccsListDAO;
-	}
-
-	/**
-	 * @param titleOccsListDAO the titleOccsListDAO to set
-	 */
-	public void setTitleOccsListDAO(TitleOccsListDAO titleOccsListDAO) {
-		this.titleOccsListDAO = titleOccsListDAO;
-	}
 
 	@Autowired
 	private TopicsListDAO topicsListDAO;
@@ -170,6 +162,34 @@ public class SearchServiceImpl implements SearchService {
 	public PlaceDAO getPlaceDAO() {
 		return placeDAO;
 	}
+	
+	/**
+	 * @param placeTypeDAO the placeTypeDAO to set
+	 */
+	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
+		this.placeTypeDAO = placeTypeDAO;
+	}
+
+	/**
+	 * @return the placeTypeDAO
+	 */
+	public PlaceTypeDAO getPlaceTypeDAO() {
+		return placeTypeDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<PlaceType> getPlaceTypes() throws ApplicationThrowable {
+		try{
+			List<PlaceType> placeTypes = getPlaceTypeDAO().findPlaceTypes();
+			
+			return placeTypes;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -188,6 +208,24 @@ public class SearchServiceImpl implements SearchService {
 	 */
 	public SearchFilterDAO getSearchFilterDAO() {
 		return searchFilterDAO;
+	}
+	
+	@Override
+	public List<TopicList> getTopicsList() throws ApplicationThrowable {
+		try{
+			List<TopicList> topicsList = getTopicsListDAO().findTopicsList();
+			
+			return topicsList;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * @return the titleOccsListDAO
+	 */
+	public TitleOccsListDAO getTitleOccsListDAO() {
+		return titleOccsListDAO;
 	}
 
 	/**
@@ -373,6 +411,13 @@ public class SearchServiceImpl implements SearchService {
 	public void setSearchFilterDAO(SearchFilterDAO searchFilterDAO) {
 		this.searchFilterDAO = searchFilterDAO;
 	}
+	
+	/**
+	 * @param titleOccsListDAO the titleOccsListDAO to set
+	 */
+	public void setTitleOccsListDAO(TitleOccsListDAO titleOccsListDAO) {
+		this.titleOccsListDAO = titleOccsListDAO;
+	}
 
 	/**
 	 * @param topicsListDAO the topicsListDAO to set
@@ -387,5 +432,4 @@ public class SearchServiceImpl implements SearchService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
-
 }
