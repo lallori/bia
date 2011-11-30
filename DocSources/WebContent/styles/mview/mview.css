@@ -102,7 +102,7 @@ html version
 }
 
 #volumeSummary.transcribe { /* Volume Summary button on Page Turner Pannel */
-	margin: 45px 0 0 250px;
+	margin: 45px 0 0 57px;
 }
 
 #volumeSummary:hover { /* Volume Summary button on Rollover */
