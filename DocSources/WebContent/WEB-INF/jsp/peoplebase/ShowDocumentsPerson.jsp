@@ -71,6 +71,35 @@
 				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
 			</tr>
 			</c:forEach>
+			
+			<c:forEach items="${PersonDocs}" var="currentDocument">
+			<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
+				<c:param name="entryId"   value="${currentDocument.entryId}" />
+			</c:url>
+			<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
+				<c:param name="personId"   value="${currentDocument.senderPeople.personId}" />
+			</c:url>
+			<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
+				<c:param name="personId" value="${currentDocument.recipientPeople.personId}" />
+			</c:url>
+			<tr>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.getEntryId()}</a></td>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
+				<c:if test="${currentDocument.senderPeople.personId != 9285 && currentDocument.senderPeople.personId != 3905 && currentDocument.senderPeople.personId != 198}">
+					<td><a class="showResult" href="${ComparePersonURL}" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
+				</c:if>
+				<c:if test="${currentDocument.senderPeople.personId == 9285 || currentDocument.senderPeople.personId == 3905 || currentDocument.senderPeople.personId == 198}">
+					<td><a class="showResult" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
+				</c:if>
+				<c:if test="${currentDocument.recipientPeople.personId != 9285 && currentDocument.recipientPeople.personId != 3905 && currentDocument.recipientPeople.personId != 198}">
+					<td><a class="showResult" href="${CompareRecipientURL}" title="${currentDocument.getRecipientPeople().getMapNameLf()}">${currentDocument.getRecipientPeople().getMapNameLf()}</a></td>
+				</c:if>
+				<c:if test="${currentDocument.recipientPeople.personId == 9285 || currentDocument.recipientPeople.personId == 3905 || currentDocument.recipientPeople.personId == 198}">
+					<td><a class="showResult" title="${currentDocument.getRecipientPeople().getMapNameLf()}">${currentDocument.getRecipientPeople().getMapNameLf()}</a></td>
+				</c:if>
+				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
+			</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	

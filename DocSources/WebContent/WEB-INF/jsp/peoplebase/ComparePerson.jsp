@@ -9,6 +9,16 @@
 		<h5>PERSON DETAILS</h5>
 	</div>
 	<h3>${person.mapNameLf}</h3>
+	
+	<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size()+person.epLink.size() != 0}">
+		<a href="${ShowDocumentsPersonURL}" class="num_docs" title="Click here to view all documents related">${person.senderDocuments.size()+person.recipientDocuments.size()+person.epLink.size()} Documents related</a>
+	</c:if>
+	<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size()+person.epLink.size() == 0}">
+		<a class="num_docs">0 Document related</a>
+	</c:if>
+	<br />
+	<br />
+	
 	<div id="EditPortraitPersonDiv">
 		<div id="imgPortraitPerson"></div>
 		<p style="text-align:center"><b>Portrait</b></p>

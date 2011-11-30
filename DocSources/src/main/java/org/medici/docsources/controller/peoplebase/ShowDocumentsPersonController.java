@@ -29,9 +29,14 @@ package org.medici.docsources.controller.peoplebase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import org.medici.docsources.command.peoplebase.ShowDocumentsPersonCommand;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -99,6 +104,11 @@ public class ShowDocumentsPersonController {
 				model.put("mapNameLf", person.getMapNameLf());
 				model.put("SenderDocs", person.getSenderDocuments());
 				model.put("RecipientDocs", person.getRecipientDocuments());
+				Set<Document> personDocs = new HashSet<Document>();
+				for(EpLink epLink : person.getEpLink()){
+					personDocs.add(epLink.getDocument());
+				}
+				model.put("PersonDocs", personDocs);
 				
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowDocumentsPerson", model);
