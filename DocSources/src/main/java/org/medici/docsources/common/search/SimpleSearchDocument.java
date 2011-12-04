@@ -93,11 +93,9 @@ public class SimpleSearchDocument implements SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
-		if (alias != null)
-			return getAlias();
-		else
-			return "";
+	public javax.persistence.Query toJPAQuery() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -113,7 +111,7 @@ public class SimpleSearchDocument implements SimpleSearch {
 
 		String[] stringFields = new String[]{
 			"volume.serieList.title",
-			"volume.serieList.subTitle1",
+			"volume.serieList.subTitle1"/*,
 			"volume.serieList.subTitle2 ",
 			"senderPeople.mapNameLf", 
 			"senderPeople.poLink.titleOccList.titleOcc",
@@ -128,7 +126,7 @@ public class SimpleSearchDocument implements SimpleSearch {
 			"synExtract.docExtract",
 			"synExtract.synopsis",
 			"factChecks.addLRes",
-			"eplToLink.place.placeNameFull"
+			"eplToLink.place.placeNameFull"*/
 		};
 		
 		String[] numericFields = new String[]{
@@ -156,9 +154,11 @@ public class SimpleSearchDocument implements SimpleSearch {
 		
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
 		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words);
+
 		if (!stringQuery.toString().equals("")) {
 			booleanQuery.add(stringQuery,Occur.SHOULD);
 		}
+		/*
 		Query numericQuery = SimpleSearchUtils.constructBooleanQueryOnNumericFields(numericFields, words);
 		if (!numericQuery.toString().equals("")) {
 			booleanQuery.add(numericQuery,Occur.SHOULD);
@@ -179,8 +179,18 @@ public class SimpleSearchDocument implements SimpleSearch {
 		if (!volumeQuery.toString().equals("")) {
 			booleanQuery.add(volumeQuery, Occur.SHOULD);
 		}
-		
+		*/
 		return booleanQuery;
 	}
-}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		if (alias != null)
+			return getAlias();
+		else
+			return "";
+	}
+}

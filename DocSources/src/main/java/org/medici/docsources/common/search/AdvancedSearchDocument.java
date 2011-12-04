@@ -40,7 +40,6 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.NumericRangeQuery;
-import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
@@ -60,36 +59,36 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	private static final long serialVersionUID = 8279978012929495622L;
 
-	private List<String> words;
-	private List<WordType> wordsTypes;
+	private List<Integer> datesDay;
+	private List<Integer> datesDayBetween;
+	private List<Integer> datesMonth;
+	private List<Integer> datesMonthBetween;
+	private List<DateType> datesTypes;
+	private List<Integer> datesYear;
+	private List<Integer> datesYearBetween;
 	private List<String> extract;
-	private List<String> synopsis;
+	private List<String> from;
+	private List<Integer> fromId;
 	private List<String> person;
 	private List<Integer> personId;
 	private List<String> place;
 	private List<Integer> placeId;
-	private List<String> sender;
-	private List<Integer> senderId;
-	private List<String> from;
-	private List<Integer> fromId;
 	private List<String> recipient;
 	private List<Integer> recipientId;
-	private List<String> to;
-	private List<Integer> toId;
 	private List<String> refersTo;
 	private List<Integer> refersToId;
+	private List<String> sender;
+	private List<Integer> senderId;
+	private List<String> synopsis;
+	private List<String> to;
+	private List<Integer> toId;
 	private List<String> topics;
 	private List<Integer> topicsId;
-	private List<DateType> datesTypes;
-	private List<Integer> datesYear;
-	private List<Integer> datesMonth;
-	private List<Integer> datesDay;
-	private List<Integer> datesYearBetween;
-	private List<Integer> datesMonthBetween;
-	private List<Integer> datesDayBetween;
 	private List<String> volumes;
 	private List<String> volumesBetween;
 	private List<VolumeType> volumesTypes;
+	private List<String> words;
+	private List<WordType> wordsTypes;
 
 	/**
 	 * 
@@ -127,6 +126,216 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
+	}
+
+	/**
+	 * @return the datesDay
+	 */
+	public List<Integer> getDatesDay() {
+		return datesDay;
+	}
+
+	/**
+	 * @return the datesDayBetween
+	 */
+	public List<Integer> getDatesDayBetween() {
+		return datesDayBetween;
+	}
+	
+	/**
+	 * @return the datesMonth
+	 */
+	public List<Integer> getDatesMonth() {
+		return datesMonth;
+	}
+
+	/**
+	 * @return the datesMonthBetween
+	 */
+	public List<Integer> getDatesMonthBetween() {
+		return datesMonthBetween;
+	}
+
+	/**
+	 * @return the datesType
+	 */
+	public List<DateType> getDatesTypes() {
+		return datesTypes;
+	}
+
+	/**
+	 * @return the datesYear
+	 */
+	public List<Integer> getDatesYear() {
+		return datesYear;
+	}
+
+	/**
+	 * @return the datesYearBetween
+	 */
+	public List<Integer> getDatesYearBetween() {
+		return datesYearBetween;
+	}
+
+	/**
+	 * @return the extract
+	 */
+	public List<String> getExtract() {
+		return extract;
+	}
+
+	/**
+	 * @return the from
+	 */
+	public List<String> getFrom() {
+		return from;
+	}
+
+	/**
+	 * @return the fromId
+	 */
+	public List<Integer> getFromId() {
+		return fromId;
+	}
+
+	/**
+	 * @return the person
+	 */
+	public List<String> getPerson() {
+		return person;
+	}
+
+	/**
+	 * @return the personId
+	 */
+	public List<Integer> getPersonId() {
+		return personId;
+	}
+
+	/**
+	 * @return the place
+	 */
+	public List<String> getPlace() {
+		return place;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public List<Integer> getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @return the recipient
+	 */
+	public List<String> getRecipient() {
+		return recipient;
+	}
+
+	/**
+	 * @return the recipientId
+	 */
+	public List<Integer> getRecipientId() {
+		return recipientId;
+	}
+
+	/**
+	 * @return the refersTo
+	 */
+	public List<String> getRefersTo() {
+		return refersTo;
+	}
+
+	/**
+	 * @return the refersToId
+	 */
+	public List<Integer> getRefersToId() {
+		return refersToId;
+	}
+
+	/**
+	 * @return the sender
+	 */
+	public List<String> getSender() {
+		return sender;
+	}
+
+	/**
+	 * @return the senderId
+	 */
+	public List<Integer> getSenderId() {
+		return senderId;
+	}
+
+	/**
+	 * @return the synopsis
+	 */
+	public List<String> getSynopsis() {
+		return synopsis;
+	}
+	
+	/**
+	 * @return the to
+	 */
+	public List<String> getTo() {
+		return to;
+	}
+	
+	/**
+	 * @return the toId
+	 */
+	public List<Integer> getToId() {
+		return toId;
+	}
+	
+	/**
+	 * @return the topics
+	 */
+	public List<String> getTopics() {
+		return topics;
+	}
+	
+	/**
+	 * @return the topicsId
+	 */
+	public List<Integer> getTopicsId() {
+		return topicsId;
+	}
+	
+	/**
+	 * @return the volumes
+	 */
+	public List<String> getVolumes() {
+		return volumes;
+	}
+
+	/**
+	 * @return the volumesBetween
+	 */
+	public List<String> getVolumesBetween() {
+		return volumesBetween;
+	}
+
+	/**
+	 * @return the volumesType
+	 */
+	public List<VolumeType> getVolumesTypes() {
+		return volumesTypes;
+	}
+
+	/**
+	 * @return the words
+	 */
+	public List<String> getWords() {
+		return words;
+	}
+
+	/**
+	 * @return the wordsTypes
+	 */
+	public List<WordType> getWordsTypes() {
+		return wordsTypes;
 	}
 
 	/**
@@ -568,110 +777,19 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		wordsTypes.add(WordType.SynopsisAndExtract);
 		words.add(command.getText());
 	}
-	
+
 	/**
-	 * @return the words
+	 * @param datesDay the datesDay to set
 	 */
-	public List<String> getWords() {
-		return words;
+	public void setDatesDay(List<Integer> datesDay) {
+		this.datesDay = datesDay;
 	}
 
 	/**
-	 * @param words the words to set
+	 * @param datesDayBetween the datesDayBetween to set
 	 */
-	public void setWords(List<String> words) {
-		this.words = words;
-	}
-
-	/**
-	 * @return the wordsTypes
-	 */
-	public List<WordType> getWordsTypes() {
-		return wordsTypes;
-	}
-
-	/**
-	 * @param wordsTypes the wordsTypes to set
-	 */
-	public void setWordsTypes(List<WordType> wordsTypes) {
-		this.wordsTypes = wordsTypes;
-	}
-
-	/**
-	 * @return the volumes
-	 */
-	public List<String> getVolumes() {
-		return volumes;
-	}
-
-	/**
-	 * @param volumes the volumes to set
-	 */
-	public void setVolumes(List<String> volumes) {
-		this.volumes = volumes;
-	}
-
-	/**
-	 * @return the volumesBetween
-	 */
-	public List<String> getVolumesBetween() {
-		return volumesBetween;
-	}
-
-	/**
-	 * @param volumesBetween the volumesBetween to set
-	 */
-	public void setVolumesBetween(List<String> volumesBetween) {
-		this.volumesBetween = volumesBetween;
-	}
-
-	/**
-	 * @return the volumesType
-	 */
-	public List<VolumeType> getVolumesTypes() {
-		return volumesTypes;
-	}
-
-	/**
-	 * @param volumesType the volumesType to set
-	 */
-	public void setVolumesTypes(List<VolumeType> volumesTypes) {
-		this.volumesTypes = volumesTypes;
-	}
-
-	/**
-	 * @return the datesType
-	 */
-	public List<DateType> getDatesTypes() {
-		return datesTypes;
-	}
-
-	/**
-	 * @param datesType the datesType to set
-	 */
-	public void setDatesTypes(List<DateType> datesTypes) {
-		this.datesTypes = datesTypes;
-	}
-
-	/**
-	 * @return the datesYear
-	 */
-	public List<Integer> getDatesYear() {
-		return datesYear;
-	}
-
-	/**
-	 * @param datesYear the datesYear to set
-	 */
-	public void setDatesYear(List<Integer> datesYear) {
-		this.datesYear = datesYear;
-	}
-
-	/**
-	 * @return the datesMonth
-	 */
-	public List<Integer> getDatesMonth() {
-		return datesMonth;
+	public void setDatesDayBetween(List<Integer> datesDayBetween) {
+		this.datesDayBetween = datesDayBetween;
 	}
 
 	/**
@@ -682,66 +800,31 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the datesDay
-	 */
-	public List<Integer> getDatesDay() {
-		return datesDay;
-	}
-
-	/**
-	 * @param datesDay the datesDay to set
-	 */
-	public void setDatesDay(List<Integer> datesDay) {
-		this.datesDay = datesDay;
-	}
-
-	/**
-	 * @return the datesYearBetween
-	 */
-	public List<Integer> getDatesYearBetween() {
-		return datesYearBetween;
-	}
-	
-	/**
-	 * @param datesYearBetween the datesYearBetween to set
-	 */
-	public void setDatesYearBetween(List<Integer> datesYearBetween) {
-		this.datesYearBetween = datesYearBetween;
-	}
-	
-	/**
-	 * @return the datesMonthBetween
-	 */
-	public List<Integer> getDatesMonthBetween() {
-		return datesMonthBetween;
-	}
-	
-	/**
 	 * @param datesMonthBetween the datesMonthBetween to set
 	 */
 	public void setDatesMonthBetween(List<Integer> datesMonthBetween) {
 		this.datesMonthBetween = datesMonthBetween;
 	}
-	
+
 	/**
-	 * @return the datesDayBetween
+	 * @param datesType the datesType to set
 	 */
-	public List<Integer> getDatesDayBetween() {
-		return datesDayBetween;
-	}
-	
-	/**
-	 * @param datesDayBetween the datesDayBetween to set
-	 */
-	public void setDatesDayBetween(List<Integer> datesDayBetween) {
-		this.datesDayBetween = datesDayBetween;
+	public void setDatesTypes(List<DateType> datesTypes) {
+		this.datesTypes = datesTypes;
 	}
 
 	/**
-	 * @return the extract
+	 * @param datesYear the datesYear to set
 	 */
-	public List<String> getExtract() {
-		return extract;
+	public void setDatesYear(List<Integer> datesYear) {
+		this.datesYear = datesYear;
+	}
+
+	/**
+	 * @param datesYearBetween the datesYearBetween to set
+	 */
+	public void setDatesYearBetween(List<Integer> datesYearBetween) {
+		this.datesYearBetween = datesYearBetween;
 	}
 
 	/**
@@ -752,150 +835,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the synopsis
-	 */
-	public List<String> getSynopsis() {
-		return synopsis;
-	}
-
-	/**
-	 * @param synopsis the synopsis to set
-	 */
-	public void setSynopsis(List<String> synopsis) {
-		this.synopsis = synopsis;
-	}
-
-	/**
-	 * @return the topics
-	 */
-	public List<String> getTopics() {
-		return topics;
-	}
-
-	/**
-	 * @param topics the topics to set
-	 */
-	public void setTopics(List<String> topics) {
-		this.topics = topics;
-	}
-
-	/**
-	 * @return the topicsId
-	 */
-	public List<Integer> getTopicsId() {
-		return topicsId;
-	}
-
-	/**
-	 * @param topicsId the topicsId to set
-	 */
-	public void setTopicsId(List<Integer> topicsId) {
-		this.topicsId = topicsId;
-	}
-
-	/**
-	 * @return the person
-	 */
-	public List<String> getPerson() {
-		return person;
-	}
-
-	/**
-	 * @param person the person to set
-	 */
-	public void setPerson(List<String> person) {
-		this.person = person;
-	}
-
-	/**
-	 * @return the personId
-	 */
-	public List<Integer> getPersonId() {
-		return personId;
-	}
-
-	/**
-	 * @param personId the personId to set
-	 */
-	public void setPersonId(List<Integer> personId) {
-		this.personId = personId;
-	}
-
-	/**
-	 * @return the place
-	 */
-	public List<String> getPlace() {
-		return place;
-	}
-
-	/**
-	 * @param place the place to set
-	 */
-	public void setPlace(List<String> place) {
-		this.place = place;
-	}
-
-	/**
-	 * @return the placeId
-	 */
-	public List<Integer> getPlaceId() {
-		return placeId;
-	}
-
-	/**
-	 * @param placeId the placeId to set
-	 */
-	public void setPlaceId(List<Integer> placeId) {
-		this.placeId = placeId;
-	}
-
-	/**
-	 * @return the sender
-	 */
-	public List<String> getSender() {
-		return sender;
-	}
-
-	/**
-	 * @param sender the sender to set
-	 */
-	public void setSender(List<String> sender) {
-		this.sender = sender;
-	}
-
-	/**
-	 * @return the senderId
-	 */
-	public List<Integer> getSenderId() {
-		return senderId;
-	}
-
-	/**
-	 * @param senderId the senderId to set
-	 */
-	public void setSenderId(List<Integer> senderId) {
-		this.senderId = senderId;
-	}
-
-	/**
-	 * @return the from
-	 */
-	public List<String> getFrom() {
-		return from;
-	}
-
-	/**
 	 * @param from the from to set
 	 */
 	public void setFrom(List<String> from) {
 		this.from = from;
-	}
-
-	/**
-	 * @return the fromId
-	 */
-	public List<Integer> getFromId() {
-		return fromId;
 	}
 
 	/**
@@ -906,10 +849,31 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the recipient
+	 * @param person the person to set
 	 */
-	public List<String> getRecipient() {
-		return recipient;
+	public void setPerson(List<String> person) {
+		this.person = person;
+	}
+
+	/**
+	 * @param personId the personId to set
+	 */
+	public void setPersonId(List<Integer> personId) {
+		this.personId = personId;
+	}
+
+	/**
+	 * @param place the place to set
+	 */
+	public void setPlace(List<String> place) {
+		this.place = place;
+	}
+
+	/**
+	 * @param placeId the placeId to set
+	 */
+	public void setPlaceId(List<Integer> placeId) {
+		this.placeId = placeId;
 	}
 
 	/**
@@ -920,52 +884,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the recipientId
-	 */
-	public List<Integer> getRecipientId() {
-		return recipientId;
-	}
-
-	/**
 	 * @param recipientId the recipientId to set
 	 */
 	public void setRecipientId(List<Integer> recipientId) {
 		this.recipientId = recipientId;
-	}
-
-	/**
-	 * @return the to
-	 */
-	public List<String> getTo() {
-		return to;
-	}
-
-	/**
-	 * @param to the to to set
-	 */
-	public void setTo(List<String> to) {
-		this.to = to;
-	}
-
-	/**
-	 * @return the toId
-	 */
-	public List<Integer> getToId() {
-		return toId;
-	}
-
-	/**
-	 * @param toId the toId to set
-	 */
-	public void setToId(List<Integer> toId) {
-		this.toId = toId;
-	}
-
-	/**
-	 * @return the refersTo
-	 */
-	public List<String> getRefersTo() {
-		return refersTo;
 	}
 
 	/**
@@ -983,14 +905,100 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the refersToId
+	 * @param sender the sender to set
 	 */
-	public List<Integer> getRefersToId() {
-		return refersToId;
+	public void setSender(List<String> sender) {
+		this.sender = sender;
 	}
 
 	/**
-	 * This method return a Lucene Query object. 
+	 * @param senderId the senderId to set
+	 */
+	public void setSenderId(List<Integer> senderId) {
+		this.senderId = senderId;
+	}
+
+	/**
+	 * @param synopsis the synopsis to set
+	 */
+	public void setSynopsis(List<String> synopsis) {
+		this.synopsis = synopsis;
+	}
+
+	/**
+	 * @param to the to to set
+	 */
+	public void setTo(List<String> to) {
+		this.to = to;
+	}
+
+	/**
+	 * @param toId the toId to set
+	 */
+	public void setToId(List<Integer> toId) {
+		this.toId = toId;
+	}
+
+	/**
+	 * @param topics the topics to set
+	 */
+	public void setTopics(List<String> topics) {
+		this.topics = topics;
+	}
+
+	/**
+	 * @param topicsId the topicsId to set
+	 */
+	public void setTopicsId(List<Integer> topicsId) {
+		this.topicsId = topicsId;
+	}
+
+	/**
+	 * @param volumes the volumes to set
+	 */
+	public void setVolumes(List<String> volumes) {
+		this.volumes = volumes;
+	}
+
+	/**
+	 * @param volumesBetween the volumesBetween to set
+	 */
+	public void setVolumesBetween(List<String> volumesBetween) {
+		this.volumesBetween = volumesBetween;
+	}
+
+	/**
+	 * @param volumesType the volumesType to set
+	 */
+	public void setVolumesTypes(List<VolumeType> volumesTypes) {
+		this.volumesTypes = volumesTypes;
+	}
+
+	/**
+	 * @param words the words to set
+	 */
+	public void setWords(List<String> words) {
+		this.words = words;
+	}
+
+	/**
+	 * @param wordsTypes the wordsTypes to set
+	 */
+	public void setWordsTypes(List<WordType> wordsTypes) {
+		this.wordsTypes = wordsTypes;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public javax.persistence.Query toJPAQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	public Query toLuceneQuery() {
 		BooleanQuery luceneQuery = new BooleanQuery();
@@ -1370,7 +1378,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 
 		return luceneQuery;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public String toString(){
 		String toString = new String();
 		if(!words.isEmpty()){

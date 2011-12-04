@@ -34,7 +34,6 @@ import java.util.StringTokenizer;
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
@@ -225,6 +224,15 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public javax.persistence.Query toJPAQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Query toLuceneQuery() {
 		BooleanQuery luceneQuery = new BooleanQuery();
 		
@@ -290,7 +298,6 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			BooleanQuery linkedToPeopleQuery = new BooleanQuery();
 			for(int i = 0; i < linkedToPeople.size(); i++){
 				if(linkedToPeople.get(i).equals("Sender Location")){
-					BooleanQuery singleLinkedToPeopleQuery = new BooleanQuery();
 					QueryParser query = new QueryParser(Version.LUCENE_31, "senderDocuments.senderPlace.placeName", new StandardAnalyzer(Version.LUCENE_31));
 					query.setAllowLeadingWildcard(true);
 					try {

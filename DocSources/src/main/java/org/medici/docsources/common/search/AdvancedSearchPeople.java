@@ -58,22 +58,22 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
 
-	private List<NameType> namesTypes;
-	private List<String> names;
-	private List<WordType> wordsTypes;
-	private List<String> words;
 	private List<Integer> datesDay;
+	private List<Integer> datesDayBetween;
 	private List<Integer> datesMonth;
+	private List<Integer> datesMonthBetween;
 	private List<String> datesTypes;
 	private List<Integer> datesYear;
 	private List<Integer> datesYearBetween;
-	private List<Integer> datesMonthBetween;
-	private List<Integer> datesDayBetween;
-	private List<Integer> placeId;
+	private List<String> names;
+	private List<NameType> namesTypes;
 	private List<String> place;
+	private List<Integer> placeId;
 	private List<String> roleCategories;
 	private List<String> titlesOcc;
 	private List<Integer> titlesOccId;
+	private List<String> words;
+	private List<WordType> wordsTypes;
 
 	/**
 	 * Default constructor.
@@ -97,6 +97,118 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		roleCategories = new ArrayList<String>(0);
 		titlesOcc = new ArrayList<String>(0);
 		titlesOccId = new ArrayList<Integer>(0);
+	}
+
+	/**
+	 * @return the datesDay
+	 */
+	public List<Integer> getDatesDay() {
+		return datesDay;
+	}
+	
+	/**
+	 * @return the datesDayBetween
+	 */
+	public List<Integer> getDatesDayBetween() {
+		return datesDayBetween;
+	}
+	
+	/**
+	 * @return the datesMonth
+	 */
+	public List<Integer> getDatesMonth() {
+		return datesMonth;
+	}
+
+	/**
+	 * @return the datesMonthBetween
+	 */
+	public List<Integer> getDatesMonthBetween() {
+		return datesMonthBetween;
+	}
+
+	/**
+	 * @return the datesTypes
+	 */
+	public List<String> getDatesTypes() {
+		return datesTypes;
+	}
+
+	/**
+	 * @return the datesYear
+	 */
+	public List<Integer> getDatesYear() {
+		return datesYear;
+	}
+
+	/**
+	 * @return the datesYearBetween
+	 */
+	public List<Integer> getDatesYearBetween() {
+		return datesYearBetween;
+	}
+
+	/**
+	 * @return the names
+	 */
+	public List<String> getNames() {
+		return names;
+	}
+
+	/**
+	 * @return the namesTypes
+	 */
+	public List<NameType> getNamesTypes() {
+		return namesTypes;
+	}
+
+	/**
+	 * @return the place
+	 */
+	public List<String> getPlace() {
+		return place;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public List<Integer> getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @return the roleCategories
+	 */
+	public List<String> getRoleCategories() {
+		return roleCategories;
+	}
+
+	/**
+	 * @return the occupations
+	 */
+	public List<String> getTitlesOcc() {
+		return titlesOcc;
+	}
+
+	/**
+	 * @return the titleOccId
+	 */
+	public List<Integer> getTitlesOccId() {
+		return titlesOccId;
+	}
+
+	/**
+	 * @return the words
+	 */
+	public List<String> getWords() {
+		return words;
+	}
+
+	/**
+	 * @return the wordsTypes
+	 */
+	public List<WordType> getWordsTypes() {
+		return wordsTypes;
 	}
 
 	/**
@@ -267,7 +379,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			place = new ArrayList<String>(0);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -275,139 +387,6 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
 		wordsTypes.add(WordType.TitlesAndNotes);
 		words.add(command.getText());
-	}
-	
-	/**
-	 * @return the namesTypes
-	 */
-	public List<NameType> getNamesTypes() {
-		return namesTypes;
-	}
-
-	/**
-	 * @param namesTypes the namesTypes to set
-	 */
-	public void setNamesTypes(List<NameType> namesTypes) {
-		this.namesTypes = namesTypes;
-	}
-
-	/**
-	 * @return the names
-	 */
-	public List<String> getNames() {
-		return names;
-	}
-
-	/**
-	 * @param names the names to set
-	 */
-	public void setNames(List<String> names) {
-		this.names = names;
-	}
-
-	/**
-	 * @return the placeId
-	 */
-	public List<Integer> getPlaceId() {
-		return placeId;
-	}
-
-	/**
-	 * @param placeId the placeId to set
-	 */
-	public void setPlaceId(List<Integer> placeId) {
-		this.placeId = placeId;
-	}
-
-	/**
-	 * @return the place
-	 */
-	public List<String> getPlace() {
-		return place;
-	}
-
-	/**
-	 * @param place the place to set
-	 */
-	public void setPlace(List<String> place) {
-		this.place = place;
-	}
-
-	/**
-	 * @param roleCategories the roleCategories to set
-	 */
-	public void setRoleCategories(List<String> roleCategories) {
-		this.roleCategories = roleCategories;
-	}
-
-	/**
-	 * @return the roleCategories
-	 */
-	public List<String> getRoleCategories() {
-		return roleCategories;
-	}
-
-	/**
-	 * @param occupations the occupations to set
-	 */
-	public void setTitlesOcc(List<String> titlesOcc) {
-		this.titlesOcc = titlesOcc;
-	}
-
-	/**
-	 * @return the occupations
-	 */
-	public List<String> getTitlesOcc() {
-		return titlesOcc;
-	}
-
-	/**
-	 * @param titleOccId the titleOccId to set
-	 */
-	public void setTitlesOccId(List<Integer> titlesOccId) {
-		this.titlesOccId = titlesOccId;
-	}
-
-	/**
-	 * @return the titleOccId
-	 */
-	public List<Integer> getTitlesOccId() {
-		return titlesOccId;
-	}
-
-	/**
-	 * @return the wordsTypes
-	 */
-	public List<WordType> getWordsTypes() {
-		return wordsTypes;
-	}
-
-	/**
-	 * @param wordsTypes the wordsTypes to set
-	 */
-	public void setWordsTypes(List<WordType> wordsTypes) {
-		this.wordsTypes = wordsTypes;
-	}
-
-	/**
-	 * @return the words
-	 */
-	public List<String> getWords() {
-		return words;
-	}
-
-	/**
-	 * @param words the words to set
-	 */
-	public void setWords(List<String> words) {
-		this.words = words;
-	}
-
-	/**
-	 * @return the datesDay
-	 */
-	public List<Integer> getDatesDay() {
-		return datesDay;
 	}
 
 	/**
@@ -418,10 +397,10 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the datesMonth
+	 * @param datesDayBetween the datesDayBetween to set
 	 */
-	public List<Integer> getDatesMonth() {
-		return datesMonth;
+	public void setDatesDayBetween(List<Integer> datesDayBetween) {
+		this.datesDayBetween = datesDayBetween;
 	}
 
 	/**
@@ -432,10 +411,10 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the datesTypes
+	 * @param datesMonthBetween the datesMonthBetween to set
 	 */
-	public List<String> getDatesTypes() {
-		return datesTypes;
+	public void setDatesMonthBetween(List<Integer> datesMonthBetween) {
+		this.datesMonthBetween = datesMonthBetween;
 	}
 
 	/**
@@ -446,24 +425,10 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the datesYear
-	 */
-	public List<Integer> getDatesYear() {
-		return datesYear;
-	}
-
-	/**
 	 * @param datesYear the datesYear to set
 	 */
 	public void setDatesYear(List<Integer> datesYear) {
 		this.datesYear = datesYear;
-	}
-
-	/**
-	 * @return the datesYearBetween
-	 */
-	public List<Integer> getDatesYearBetween() {
-		return datesYearBetween;
 	}
 
 	/**
@@ -474,33 +439,77 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
-	 * @return the datesMonthBetween
+	 * @param names the names to set
 	 */
-	public List<Integer> getDatesMonthBetween() {
-		return datesMonthBetween;
+	public void setNames(List<String> names) {
+		this.names = names;
 	}
 
 	/**
-	 * @param datesMonthBetween the datesMonthBetween to set
+	 * @param namesTypes the namesTypes to set
 	 */
-	public void setDatesMonthBetween(List<Integer> datesMonthBetween) {
-		this.datesMonthBetween = datesMonthBetween;
+	public void setNamesTypes(List<NameType> namesTypes) {
+		this.namesTypes = namesTypes;
 	}
 
 	/**
-	 * @return the datesDayBetween
+	 * @param place the place to set
 	 */
-	public List<Integer> getDatesDayBetween() {
-		return datesDayBetween;
+	public void setPlace(List<String> place) {
+		this.place = place;
 	}
 
 	/**
-	 * @param datesDayBetween the datesDayBetween to set
+	 * @param placeId the placeId to set
 	 */
-	public void setDatesDayBetween(List<Integer> datesDayBetween) {
-		this.datesDayBetween = datesDayBetween;
+	public void setPlaceId(List<Integer> placeId) {
+		this.placeId = placeId;
 	}
 
+	/**
+	 * @param roleCategories the roleCategories to set
+	 */
+	public void setRoleCategories(List<String> roleCategories) {
+		this.roleCategories = roleCategories;
+	}
+
+	/**
+	 * @param occupations the occupations to set
+	 */
+	public void setTitlesOcc(List<String> titlesOcc) {
+		this.titlesOcc = titlesOcc;
+	}
+
+	/**
+	 * @param titleOccId the titleOccId to set
+	 */
+	public void setTitlesOccId(List<Integer> titlesOccId) {
+		this.titlesOccId = titlesOccId;
+	}
+
+	/**
+	 * @param words the words to set
+	 */
+	public void setWords(List<String> words) {
+		this.words = words;
+	}
+
+	/**
+	 * @param wordsTypes the wordsTypes to set
+	 */
+	public void setWordsTypes(List<WordType> wordsTypes) {
+		this.wordsTypes = wordsTypes;
+	}
+
+	/**
+	 * This method return a JPA Query object. 
+	 */
+	@Override
+	public javax.persistence.Query toJPAQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -716,7 +725,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		
 		return luceneQuery;
 	}
-	
+
 	public String toString(){
 		String toString = new String();
 		if(!names.isEmpty()){
@@ -769,5 +778,4 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		}
 		return toString;
 	}
-
 }

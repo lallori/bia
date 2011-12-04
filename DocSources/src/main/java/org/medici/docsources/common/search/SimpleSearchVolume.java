@@ -93,13 +93,14 @@ public class SimpleSearchVolume implements SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
-		if (alias != null)
-			return getAlias();
-		else
-			return "";
+	public javax.persistence.Query toJPAQuery() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Query toLuceneQuery() {
 		BooleanQuery booleanQuery = new BooleanQuery();
@@ -165,5 +166,15 @@ public class SimpleSearchVolume implements SimpleSearch {
 
 		return booleanQuery;
 	}
-}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		if (alias != null)
+			return getAlias();
+		else
+			return "";
+	}
+}

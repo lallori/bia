@@ -579,6 +579,15 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public javax.persistence.Query toJPAQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	/**
 	 * This method return a Lucene Query object. 
 	 */

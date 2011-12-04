@@ -93,11 +93,9 @@ public class SimpleSearchPeople implements SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
-		if (alias != null)
-			return getAlias();
-		else
-			return "";
+	public javax.persistence.Query toJPAQuery() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -137,10 +135,16 @@ public class SimpleSearchPeople implements SimpleSearch {
 
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 
-		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words);
+		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.MUST);
+		Query stringQuery2 = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.SHOULD);
+
+		booleanQuery.add(stringQuery,Occur.MUST);
+		booleanQuery.add(stringQuery2,Occur.MUST);
+		
+		
 		if (!stringQuery.toString().equals("")) {
 			booleanQuery.add(stringQuery,Occur.SHOULD);
-		}
+		}/*
 		Query numericQuery = SimpleSearchUtils.constructBooleanQueryOnNumericFields(numericFields, words);
 		if (!numericQuery.toString().equals("")) {
 			booleanQuery.add(numericQuery,Occur.SHOULD);
@@ -156,9 +160,19 @@ public class SimpleSearchPeople implements SimpleSearch {
 		Query dayQuery = SimpleSearchUtils.constructBooleanQueryOnDayFields(dayFields, words);
 		if (!dayQuery.toString().equals("")) {
 			booleanQuery.add(dayQuery,Occur.SHOULD);
-		}
+		}*/
 
 		return booleanQuery;	
 	}
-}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		if (alias != null)
+			return getAlias();
+		else
+			return "";
+	}
+}

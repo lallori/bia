@@ -29,8 +29,6 @@ package org.medici.docsources.common.search;
 
 import java.io.Serializable;
 
-import org.apache.lucene.search.Query;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -42,5 +40,11 @@ public interface Search extends Serializable {
 	 * 
 	 * @return
 	 */
-	public Query toLuceneQuery();
+	public org.apache.lucene.search.Query toLuceneQuery();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public javax.persistence.Query toJPAQuery();
 }
