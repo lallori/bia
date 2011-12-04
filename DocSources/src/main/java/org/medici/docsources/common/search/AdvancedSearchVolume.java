@@ -33,6 +33,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.index.Term;
@@ -47,6 +48,7 @@ import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.VolumeUtils;
+
 
 /**
  * 
@@ -210,7 +212,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
-		digitized = new Boolean(false);
+		digitized = null;
 		languages = new ArrayList<String>(0);
 		cipher = new String();
 		index = new String();
@@ -309,7 +311,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		
 		//Digitized
 		if(command.getDigitized() != null){
-			if(command.getDigitized().equals("YES")){
+			if(command.getDigitized().equals("Yes")){
 				digitized = true;
 			}else{
 				digitized = false;
@@ -703,8 +705,19 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			}
 		}
 		
-		//Digitized
-		//TODO: add field digitized to tblVolumes ?
+		// Digitized is a new field on tblVolumes 
+		if (!ObjectUtils.toString(digitized).equals("")) {
+			BooleanQuery digitizedQuery = new BooleanQuery();
+			TermQuery digitizedTermQuery;
+			if (digitized.equals(Boolean.TRUE)) {
+				digitizedTermQuery = new TermQuery(new Term("digitized", "true"));
+				digitizedQuery.add(digitizedTermQuery, Occur.MUST);
+			} else {
+				digitizedTermQuery = new TermQuery(new Term("digitized", "false"));
+				digitizedQuery.add(digitizedTermQuery, Occur.MUST);
+			}
+			luceneQuery.add(new BooleanClause(digitizedQuery, Occur.MUST));
+		}
 		
 		//Languages
 		if(languages.size() > 0){
