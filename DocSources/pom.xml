@@ -5,7 +5,7 @@
 	<artifactId>DocSources</artifactId>
 	<packaging>war</packaging>
 	<name>DocSources</name>
-	<version>0.0.8-alpha</version>
+	<version>1.0</version>
 	<url>http://java.net/jira/browse/DOCSOURCES</url>
 	<issueManagement>
 		<system>JIRA</system>
@@ -110,6 +110,7 @@
 		<hibernate.version>3.6.0.Final</hibernate.version>
 		<hibernatesearch.version>3.4.0.Final</hibernatesearch.version>
 		<hibernatevalidator.version>4.1.0.Final</hibernatevalidator.version>
+		<oscache.version>3.6.0.Final</oscache.version>
 		<jpa.version>2.0-cr-1</jpa.version>
 		<jstl.version>1.1.2</jstl.version>
 		<mysql.version>5.1.17</mysql.version>
@@ -486,21 +487,21 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jbosscache</artifactId>
-			<version>${hibernate.version}</version>
+			<version>${oscache.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-oscache</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-proxool</artifactId>
-			<version>${hibernate.version}</version>
+			<version>${oscache.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-swarmcache</artifactId>
+			<version>${oscache.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-proxool</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>

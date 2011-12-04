@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>org.medici.docsources</groupId>
 			<artifactId>DocSources</artifactId>
-			<version>0.0.8-alpha</version>
+			<version>1.0</version>
 			<classifier>classes</classifier>
 			<scope>compile</scope>
 		</dependency>
