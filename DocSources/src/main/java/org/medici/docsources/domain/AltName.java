@@ -118,10 +118,9 @@ public class AltName implements Serializable{
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String altName;
 
-	@Column (name="\"NAMETYPE\"", length=50, nullable=true)
-	@Enumerated(EnumType.STRING)
+	@Column (name="\"NAMETYPE\"", length=50)
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
-	private NameType nameType;
+	private String nameType;
 
 	@Column (name="\"NOTES\"", columnDefinition="LONGTEXT")
 	@Field(index=Index.TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
@@ -212,14 +211,14 @@ public class AltName implements Serializable{
 	/**
 	 * @return the nameType
 	 */
-	public NameType getNameType() {
+	public String getNameType() {
 		return nameType;
 	}
 	
 	/**
 	 * @param nameType the nameType to set
 	 */
-	public void setNameType(NameType nameType) {
+	public void setNameType(String nameType) {
 		this.nameType = nameType;
 	}
 	

@@ -96,7 +96,7 @@ public class EditNamePersonController {
 			AltName altName = new AltName(command.getNameId(), command.getPersonId());
 			altName.setAltName(command.getAltName());
 			altName.setNamePrefix(command.getNamePrefix());
-			altName.setNameType(NameType.valueOf(command.getNameType()));
+			altName.setNameType(NameType.valueOf(command.getNameType()).toString());
 
 			try {
 				if (command.getNameId().equals(0)) {
