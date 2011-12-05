@@ -31,6 +31,10 @@ import java.io.Serializable;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.Search;
+
 /**
  * 
  * @param <K>
@@ -81,5 +85,14 @@ public interface Dao<K, E> extends Serializable {
 	 * @param entity
 	 * @throws PersistenceException
 	 */
-	public void refresh(E entity) throws PersistenceException;	
+	public void refresh(E entity) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;	
 }

@@ -36,6 +36,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
@@ -311,4 +312,47 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		}
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	public Page searchMYSQL(org.medici.docsources.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(1) " + searchContainer.toJPAQuery();
+	        
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+
+		String objectsQuery = searchContainer.toJPAQuery();
+        
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		query = getEntityManager().createQuery(objectsQuery + orderBySQL.toString());
+		// We set pagination  
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+
+		// We set search result on return method
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 }
