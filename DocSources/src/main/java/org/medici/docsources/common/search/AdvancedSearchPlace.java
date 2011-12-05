@@ -224,7 +224,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public javax.persistence.Query toJPAQuery() {
+	public String toJPAQuery() {
 		// TODO Auto-generated method stub
 		return null;
 	}

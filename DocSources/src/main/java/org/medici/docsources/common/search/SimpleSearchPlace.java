@@ -95,7 +95,7 @@ public class SimpleSearchPlace implements SimpleSearch {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public javax.persistence.Query toJPAQuery() {
+	public String toJPAQuery() {
 		// TODO Auto-generated method stub
 		return null;
 	}

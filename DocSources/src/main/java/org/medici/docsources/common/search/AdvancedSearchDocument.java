@@ -992,9 +992,448 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public javax.persistence.Query toJPAQuery() {
-		// TODO Auto-generated method stub
-		return null;
+	public String toJPAQuery() {
+		StringBuffer jpaQuery = new StringBuffer("FROM Document WHERE ");
+
+		if (words.size()>0) {
+			StringBuffer wordsQuery = new StringBuffer("(");
+			for (int i=0; i<words.size(); i++) {
+				if (wordsQuery.length()>1) {
+					wordsQuery.append(" AND ");
+				}
+				if (wordsTypes.get(i).equals(WordType.Extract)) {
+					wordsQuery.append("(synExtract.docExtract like '%");
+					wordsQuery.append(words.get(i).toLowerCase());
+					wordsQuery.append("%')");
+				} else if (wordsTypes.get(i).equals(WordType.Synopsis)) {
+					wordsQuery.append("(synExtract.synopsis like '%");
+					wordsQuery.append(words.get(i).toLowerCase());
+					wordsQuery.append("%')");
+				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
+					wordsQuery.append("((synExtract.docExtract like '%");
+					wordsQuery.append(words.get(i).toLowerCase());
+					wordsQuery.append("%') and ");
+					wordsQuery.append("(synExtract.synopsis like '%");
+					wordsQuery.append(words.get(i).toLowerCase());
+					wordsQuery.append("%'))");
+				}
+			}
+			wordsQuery.append(")");
+			if (!wordsQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(wordsQuery);
+			}
+		}
+
+		// person;
+		if (personId.size() >0) {
+			StringBuffer personIdQuery = new StringBuffer("(");
+			StringBuffer personQuery = new StringBuffer("(");
+			for (int i=0; i<personId.size(); i++) {
+				if (personId.get(i) > 0) {
+					if (personIdQuery.length()>1) {
+						personIdQuery.append(" AND ");
+					}
+					
+					personIdQuery.append("(epLink.person.personId=");
+					personIdQuery.append(personId.get(i).toString());
+					personIdQuery.append(" or senderPeople.personId=");
+					personIdQuery.append(personId.get(i).toString());
+					personIdQuery.append(" or recipientPeople.personId=");
+					personIdQuery.append(personId.get(i).toString());
+					personIdQuery.append(")");
+				} else {
+					if (personQuery.length()>1) {
+						personQuery.append(" AND ");
+					}
+					
+					personQuery.append("(epLink.person.mapNameLf like '%");
+					personQuery.append(person.get(i).toLowerCase());
+					personQuery.append("%' or altName.altName like '%'");
+					personQuery.append(person.get(i).toLowerCase());
+					personQuery.append("%')");
+				}
+			}
+			personIdQuery.append(")");
+			personQuery.append(")");
+			if (!personIdQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(personIdQuery);
+			}
+			if (!personQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(personQuery);
+			}
+		}
+
+		// place;
+		if (placeId.size() >0) {
+			StringBuffer placeIdQuery = new StringBuffer("(");
+			StringBuffer placeQuery = new StringBuffer("(");
+			for (int i=0; i<placeId.size(); i++) {
+				if (placeId.get(i) > 0) {
+					if (placeIdQuery.length()>1) {
+						placeIdQuery.append(" AND ");
+					}
+					
+					placeIdQuery.append("(senderPlace.placeAllId=");
+					placeIdQuery.append(placeId.get(i).toString());
+					placeIdQuery.append(" or recipientPlace.placeAllId=");
+					placeIdQuery.append(placeId.get(i).toString());
+					placeIdQuery.append(" or eplToLink.place.placeAllId=");
+					placeIdQuery.append(placeId.get(i).toString());
+					placeIdQuery.append(")");
+				} else {
+					if (placeQuery.length()>1) {
+						placeQuery.append(" AND ");
+					}
+					
+					placeQuery.append("(senderPlace.placeName like '%");
+					placeQuery.append(place.get(i).toLowerCase());
+					placeQuery.append("%' or recipientPlace.placeName like '%'");
+					placeQuery.append(place.get(i).toLowerCase());
+					placeQuery.append("%' or eplToLink.place.placeName like '%'");
+					placeQuery.append(place.get(i).toLowerCase());
+					placeQuery.append("%')");
+				}
+			}
+			placeIdQuery.append(")");
+			placeQuery.append(")");
+			if (!placeIdQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(placeIdQuery);
+			}
+			if (!placeQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(placeQuery);
+			}
+		}
+		
+		//sender
+		if (senderId.size() >0) {
+			StringBuffer senderIdQuery = new StringBuffer("(");
+			StringBuffer senderQuery = new StringBuffer("(");
+			for (int i=0; i<senderId.size(); i++) {
+				if (senderId.get(i) > 0) {
+					if (senderIdQuery.length()>1) {
+						senderIdQuery.append(" AND ");
+					}
+					
+					senderIdQuery.append("(senderPeople.personId=");
+					senderIdQuery.append(senderId.get(i).toString());
+					senderIdQuery.append(")");
+				} else {
+					if (senderQuery.length()>1) {
+						senderQuery.append(" AND ");
+					}
+					
+					senderQuery.append("(senderPeople.mapNameLf like '%");
+					senderQuery.append(sender.get(i).toLowerCase());
+					senderQuery.append("%')");
+				}
+			}
+			senderIdQuery.append(")");
+			senderQuery.append(")");
+			if (!senderIdQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(senderIdQuery);
+			}
+			if (!senderQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(senderQuery);
+			}
+		}
+
+		// from;
+		if (fromId.size() >0) {
+			StringBuffer fromIdQuery = new StringBuffer("(");
+			StringBuffer fromQuery = new StringBuffer("(");
+			for (int i=0; i<fromId.size(); i++) {
+				if (fromId.get(i) > 0) {
+					if (fromIdQuery.length()>1) {
+						fromIdQuery.append(" AND ");
+					}
+					
+					fromIdQuery.append("(senderPlace.placeAllId=");
+					fromIdQuery.append(fromId.get(i).toString());
+					fromIdQuery.append(")");
+				} else {
+					if (fromQuery.length()>1) {
+						fromQuery.append(" AND ");
+					}
+					
+					fromQuery.append("(senderPlace.placeNameFull like '%");
+					fromQuery.append(from.get(i).toLowerCase());
+					fromQuery.append("%')");
+				}
+			}
+			fromIdQuery.append(")");
+			fromQuery.append(")");
+			if (!fromIdQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(fromIdQuery);
+			}
+			if (!fromQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(fromQuery);
+			}
+		}
+
+		// recipient;
+		if (recipient.size() >0) {
+			StringBuffer recipientIdQuery = new StringBuffer("(");
+			StringBuffer recipientQuery = new StringBuffer("(");
+			for (int i=0; i<recipientId.size(); i++) {
+				if (recipientId.get(i) > 0) {
+					if (recipientIdQuery.length()>1) {
+						recipientQuery.append(" AND ");
+					}
+					
+					recipientIdQuery.append("(recipientPeople.personId=");
+					recipientIdQuery.append(recipientId.get(i).toString());
+					recipientIdQuery.append(")");
+				} else {
+					if (recipientQuery.length()>1) {
+						recipientQuery.append(" AND ");
+					}
+					
+					recipientQuery.append("(recipientPeople.mapNameLf like '%");
+					recipientQuery.append(recipient.get(i).toLowerCase());
+					recipientQuery.append("%')");
+				}
+			}
+			recipientIdQuery.append(")");
+			recipientQuery.append(")");
+			if (!recipientIdQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(recipientIdQuery);
+			}
+			if (!recipientQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(recipientQuery);
+			}
+		}
+
+		// to;
+		if (to.size() >0) {
+			StringBuffer toIdQuery = new StringBuffer("(");
+			StringBuffer toQuery = new StringBuffer("(");
+			for (int i=0; i<toId.size(); i++) {
+				if (toId.get(i) > 0) {
+					if (toIdQuery.length()>1) {
+						toIdQuery.append(" AND ");
+					}
+					
+					toIdQuery.append("(recipientPlace.placeAllId=");
+					toIdQuery.append(toId.get(i).toString());
+					toIdQuery.append(")");
+				} else {
+					if (toQuery.length()>0) {
+						toQuery.append(" AND ");
+					}
+					
+					toQuery.append("(recipientPlace.placeNameFull like '%");
+					toQuery.append(from.get(i).toLowerCase());
+					toQuery.append("%')");
+				}
+			}
+			toIdQuery.append(")");
+			toQuery.append(")");
+			if (!toIdQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(toIdQuery);
+			}
+			if (!toQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(toQuery);
+			}
+		}
+
+		//refersTo
+		if (refersTo.size() >0) {
+			StringBuffer refersToIdQuery = new StringBuffer("(");
+			StringBuffer refersToQuery = new StringBuffer("(");
+			for (int i=0; i<refersToId.size(); i++) {
+				if (refersToId.get(i) > 0) {
+					if (refersToIdQuery.length()>1) {
+						refersToIdQuery.append(" AND ");
+					}
+					
+					refersToIdQuery.append("(epLink.person.personId=");
+					refersToIdQuery.append(recipientId.get(i).toString());
+					refersToIdQuery.append(")");
+				} else {
+					if (refersToQuery.length()>0) {
+						refersToQuery.append(" AND ");
+					}
+					
+					refersToQuery.append("(epLink.person.mapNameLf like '%");
+					refersToQuery.append(recipient.get(i).toLowerCase());
+					refersToQuery.append("%')");
+				}
+			}
+			refersToIdQuery.append(")");
+			refersToQuery.append(")");
+			if (!refersToIdQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(refersToIdQuery);
+			}
+			if (!refersToQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(refersToQuery);
+			}
+		}
+
+		// Extract
+		if (extract.size()>0) {
+			StringBuffer extractQuery = new StringBuffer("(");
+			for (int i=0; i<extract.size(); i++) {
+				String[] wordsSingleExtract = StringUtils.split(extract.get(i), " ");
+				for (int j=0; j<wordsSingleExtract.length; j++) {
+					extractQuery.append("(synExtract.docExtract like '%");
+					extractQuery.append(wordsSingleExtract[j]);
+					extractQuery.append("%')");
+					if (j< (wordsSingleExtract.length-1)) {
+						extractQuery.append(" AND ");
+					}
+				}
+			}
+			extractQuery.append(")");
+			if (!extractQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(extractQuery);
+			}
+		}
+		
+		// synopsis;
+		if (synopsis.size() >0) {
+			StringBuffer synopsisQuery = new StringBuffer("(");
+			for (int i=0; i<synopsis.size(); i++) {
+				String[] wordsSingleSynopsis = StringUtils.split(synopsis.get(i), " ");
+				for (int j=0; j<wordsSingleSynopsis.length; j++) {
+					synopsisQuery.append("(synExtract.synopsis like '%");
+					synopsisQuery.append(wordsSingleSynopsis[j]);
+					synopsisQuery.append("%')");
+					if (j< (wordsSingleSynopsis.length-1)) {
+						synopsisQuery.append(" AND ");
+					}
+				}
+			}
+			synopsisQuery.append(")");
+			if (!synopsisQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(synopsisQuery);
+			}
+		}
+
+		// topics;
+		if (topicsId.size() >0) {
+			StringBuffer topicsIdQuery = new StringBuffer("(");
+			StringBuffer topicsQuery = new StringBuffer("(");
+			for (int i=0; i<topicsId.size(); i++) {
+				if (topicsId.get(i) > 0) {
+					if (topicsIdQuery.length()>1) {
+						topicsIdQuery.append(" AND ");
+					}
+					
+					topicsIdQuery.append("(eplToLink.topic.topicId=");
+					topicsIdQuery.append(placeId.get(i).toString());
+					topicsIdQuery.append(")");
+				} else {
+					if (topicsQuery.length()>1) {
+						topicsQuery.append(" AND ");
+					}
+					
+					topicsQuery.append("(eplToLink.topic.topicTitle like '%");
+					topicsQuery.append(place.get(i).toLowerCase());
+					topicsQuery.append("%')");
+				}
+			}
+			topicsIdQuery.append(")");
+			topicsQuery.append(")");
+			if (!topicsIdQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(topicsIdQuery);
+			}
+			if (!topicsQuery.toString().equals("")) {
+				jpaQuery.append(" AND ");
+				jpaQuery.append(topicsQuery);
+			}
+		}
+
+		// Date
+		if (datesTypes.size()>0) {
+			StringBuffer datesQuery = new StringBuffer("(");
+			for (int i=0; i<datesTypes.size(); i++) {
+				if (datesTypes.get(i) == null) {
+					continue;
+				} 
+				
+				if (datesQuery.length()>1) {
+					datesQuery.append(" AND ");
+				}
+
+				if (datesTypes.get(i).equals(DateType.After)) {
+					datesQuery.append("(docDate>");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")");
+				} else if (datesTypes.get(i).equals(DateType.Before)) {
+					datesQuery.append("(docDate<");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")");
+				}else if (datesTypes.get(i).equals(DateType.Between)) {
+					datesQuery.append("(docDate>");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(" AND docDate<");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")");
+				}
+			}
+			if (!datesQuery.toString().equals("")) {
+				jpaQuery.append(datesQuery);
+			}
+		}
+
+		// Volume
+		if (volumes.size()>0) {
+			StringBuffer volumesQuery = new StringBuffer("(");
+			for (int i=0; i<volumes.size(); i++) {
+				if (VolumeUtils.isVolumeFormat(volumes.get(i))) {
+					if (volumesQuery.length()>1) {
+						volumesQuery.append(" AND ");
+					}
+
+					if (volumesTypes.get(i).equals(VolumeType.Exactly)) {
+						if (StringUtils.isNumeric(volumes.get(i))) {
+							volumesQuery.append("(volume.volNum=");
+							volumesQuery.append(volumes.get(i));
+							volumesQuery.append(")");
+						} else {
+							volumesQuery.append("(volume.volNum=");
+							volumesQuery.append(volumes.get(i));
+							volumesQuery.append(" AND volume.volLetExt='");
+							volumesQuery.append(VolumeUtils.extractVolNum(volumes.get(i)).toString());
+							volumesQuery.append("')");
+						}
+					} else if (volumesTypes.get(i).equals(VolumeType.Between)) {
+						volumesQuery.append("(volume.volNum>=");
+						volumesQuery.append(volumes.get(i));
+						volumesQuery.append(" AND volume.volNum<=");
+						volumesQuery.append(volumesBetween.get(i));
+						volumesQuery.append(")");
+					}
+				} else {
+					// if volume value is not in volume format we discard it!
+					continue;
+				}
+			}
+			volumesQuery.append(")");
+			if (!volumesQuery.toString().equals("")) {
+				jpaQuery.append(volumesQuery);
+			}
+		}
+
+		return jpaQuery.toString();
 	}
 	
 	/**
@@ -1131,7 +1570,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					fromIdQuery.add(singleFromIdQuery, Occur.MUST);
 				} else {
 					BooleanQuery singleFromQuery = new BooleanQuery(); 
-					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("senderPeople.mapNameLf", from.get(i).toLowerCase())), Occur.SHOULD);
+					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("senderPlace.placeNameFull", from.get(i).toLowerCase())), Occur.SHOULD);
 					singleFromQuery.add(booleanClause);
 					fromQuery.add(singleFromQuery, Occur.MUST);
 				}
@@ -1300,7 +1739,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					continue;
 				} else if (datesTypes.get(i).equals(DateType.After)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							DateUtils.MAX_DATE, 
 							true, 
@@ -1308,7 +1747,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.add(dateRangeQuery, Occur.MUST); 
 				} else if (datesTypes.get(i).equals(DateType.Before)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
+					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
 							DateUtils.MIN_DATE,
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							true, 
@@ -1316,13 +1755,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.add(dateRangeQuery, Occur.MUST); 
 				}else if (datesTypes.get(i).equals(DateType.Between)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
-					NumericRangeQuery<Integer> startDateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
+					NumericRangeQuery<Integer> startDateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), 
 							true, 
 							true);
 					datesQuery.add(startDateRangeQuery, Occur.MUST); 
-					NumericRangeQuery<Integer> endDateRangeQuery = NumericRangeQuery.newIntRange("endDate_Sort", 4, 
+					NumericRangeQuery<Integer> endDateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 
 							DateUtils.getLuceneDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)), 
 							true, 

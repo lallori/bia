@@ -35,7 +35,6 @@ import java.io.Serializable;
  *
  */
 public interface Search extends Serializable {
-
 	/**
 	 * 
 	 * @return
@@ -46,5 +45,5 @@ public interface Search extends Serializable {
 	 * 
 	 * @return
 	 */
-	public javax.persistence.Query toJPAQuery();
+	public String toJPAQuery();
 }
