@@ -20,7 +20,7 @@
 							Modalbox.show($j(this).attr("href"), {title: "MY HISTORY", width: 750, height: 500});return false;
 						});	
 						$j("#myprofileMenu").click(function() {
-							Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 750, height: 430});return false;}																	
+							Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 760, height: 440});return false;}																	
 						);	
 						$j("#messagesMenu").click(function() {															
 							Modalbox.show($j(this).attr("href"), {title: "MESSAGES", width: 750, height: 350});return false;}

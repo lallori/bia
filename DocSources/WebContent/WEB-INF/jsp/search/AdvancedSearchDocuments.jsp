@@ -95,7 +95,7 @@
 			<div>
 				<form id="extractSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="That text will explain...">?</a>
-					<label for="extract" id="extractLabel">Extract</label>
+					<label for="extract" id="extractLabel">Extract</label><br />
 					<textarea id="extract" name="extract" class="txtadvsearch"></textarea>
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 					<input type="hidden" id="category" value="Extract">
@@ -103,7 +103,7 @@
 				<br />
 				<form id="synopsisSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="That text will explain...">?</a>
-					<label for="synopsis" id="synopsisLabel">Synopsis</label>
+					<label for="synopsis" id="synopsisLabel">Synopsis</label><br />
 					<textarea id="synopsis" name="synopsis" class="txtadvsearch"></textarea>
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
 					<input type="hidden" id="category" value="Synopsys">
