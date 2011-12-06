@@ -31,11 +31,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.PersonUtils;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
+import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.marriage.MarriageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
@@ -78,6 +81,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	
 	@Autowired
 	private BioRefLinkDAO bioRefLinkDAO;
+	
+	@Autowired
+	private DocumentDAO documentDAO;
 	
 	@Autowired 
 	private EpLinkDAO epLinkDAO;
@@ -1025,6 +1031,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
+	}
+
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	/**
 	 * @return the epLinkDAO
 	 */
 	public EpLinkDAO getEpLinkDAO() {
@@ -1305,5 +1325,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}
 		
 		return personToUnDelete;
+	}
+
+	@Override
+	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().searchDocumentsRelated(personToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 }

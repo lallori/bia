@@ -29,10 +29,14 @@ package org.medici.docsources.controller.peoplebase;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.medici.docsources.command.peoplebase.ShowPersonRequestCommand;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -88,8 +92,14 @@ public class ShowPersonController {
 		if(command.getPersonId() > 0){
 			try {
 				person = getPeopleBaseService().findPerson(command.getPersonId());
+				Set<Document> related = new HashSet<Document>();
+				related.addAll(person.getSenderDocuments());
+				related.addAll(person.getRecipientDocuments());
+				for(EpLink current : person.getEpLink()){
+					related.add(current.getDocument());
+				}
 				
-
+				model.put("docsRelated", related.size());
 				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 				model.put("marriages", marriages);
 			} catch (ApplicationThrowable ath) {

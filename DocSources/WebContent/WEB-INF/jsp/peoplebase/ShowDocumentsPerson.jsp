@@ -4,102 +4,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ShowDocumentsRelatedPersonURL" value="/de/peoplebase/ShowDocumentsRelatedPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		Documents indexed to "${mapNameLf}"
 	</div>
 	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDocumentsPerson">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDocumentsPersonId${personId}">
 		<thead>
 			<tr></tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${SenderDocs}" var="currentDocument">
-			<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
-				<c:param name="entryId"   value="${currentDocument.entryId}" />
-			</c:url>
-			<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId"   value="${currentDocument.senderPeople.personId}" />
-			</c:url>
-			<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId" value="${currentDocument.recipientPeople.personId}" />
-			</c:url>
-			<tr>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.getEntryId()}</a></td>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
-				<c:if test="${currentDocument.senderPeople.personId != 9285 && currentDocument.senderPeople.personId != 3905 && currentDocument.senderPeople.personId != 198}">
-					<td><a class="showResult" href="${ComparePersonURL}" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.senderPeople.personId == 9285 || currentDocument.senderPeople.personId == 3905 || currentDocument.senderPeople.personId == 198}">
-					<td><a class="showResult" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.recipientPeople.personId != 9285 && currentDocument.recipientPeople.personId != 3905 && currentDocument.recipientPeople.personId != 198}">
-					<td><a class="showResult" href="${CompareRecipientURL}" title="${currentDocument.getRecipientPeople().getMapNameLf()}">${currentDocument.getRecipientPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.recipientPeople.personId == 9285 || currentDocument.recipientPeople.personId == 3905 || currentDocument.recipientPeople.personId == 198}">
-					<td><a class="showResult" title="${currentDocument.getRecipientPeople().getMapNameLf()}">${currentDocument.getRecipientPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
-			</tr>
-			</c:forEach>
-			
-			<c:forEach items="${RecipientDocs}" var="currentDocument">
-			<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
-				<c:param name="entryId"   value="${currentDocument.entryId}" />
-			</c:url>
-			<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId"   value="${currentDocument.senderPeople.personId}" />
-			</c:url>
-			<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId" value="${currentDocument.recipientPeople.personId}" />
-			</c:url>
-			<tr>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.getEntryId()}</a></td>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
-				<c:if test="${currentDocument.senderPeople.personId != 9285 && currentDocument.senderPeople.personId != 3905 && currentDocument.senderPeople.personId != 198}">
-					<td><a class="showResult" href="${ComparePersonURL}" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.senderPeople.personId == 9285 || currentDocument.senderPeople.personId == 3905 || currentDocument.senderPeople.personId == 198}">
-					<td><a class="showResult" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.recipientPeople.personId != 9285 && currentDocument.recipientPeople.personId != 3905 && currentDocument.recipientPeople.personId != 198}">
-					<td><a class="showResult" href="${CompareRecipientURL}" title="${currentDocument.getRecipientPeople().getMapNameLf()}">${currentDocument.getRecipientPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.recipientPeople.personId == 9285 || currentDocument.recipientPeople.personId == 3905 || currentDocument.recipientPeople.personId == 198}">
-					<td><a class="showResult" title="${currentDocument.getRecipientPeople().getMapNameLf()}">${currentDocument.getRecipientPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
-			</tr>
-			</c:forEach>
-			
-			<c:forEach items="${PersonDocs}" var="currentDocument">
-			<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
-				<c:param name="entryId"   value="${currentDocument.entryId}" />
-			</c:url>
-			<c:url var="CompareSenderURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId"   value="${currentDocument.senderPeople.personId}" />
-			</c:url>
-			<c:url var="CompareRecipientURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId" value="${currentDocument.recipientPeople.personId}" />
-			</c:url>
-			<tr>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.getEntryId()}</a></td>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
-				<c:if test="${currentDocument.senderPeople.personId != 9285 && currentDocument.senderPeople.personId != 3905 && currentDocument.senderPeople.personId != 198}">
-					<td><a class="showResult" href="${ComparePersonURL}" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.senderPeople.personId == 9285 || currentDocument.senderPeople.personId == 3905 || currentDocument.senderPeople.personId == 198}">
-					<td><a class="showResult" title="${currentDocument.getSenderPeople().getMapNameLf()}">${currentDocument.getSenderPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.recipientPeople.personId != 9285 && currentDocument.recipientPeople.personId != 3905 && currentDocument.recipientPeople.personId != 198}">
-					<td><a class="showResult" href="${CompareRecipientURL}" title="${currentDocument.getRecipientPeople().getMapNameLf()}">${currentDocument.getRecipientPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.recipientPeople.personId == 9285 || currentDocument.recipientPeople.personId == 3905 || currentDocument.recipientPeople.personId == 198}">
-					<td><a class="showResult" title="${currentDocument.getRecipientPeople().getMapNameLf()}">${currentDocument.getRecipientPeople().getMapNameLf()}</a></td>
-				</c:if>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
-			</tr>
-			</c:forEach>
+
 		</tbody>
 	</table>
 	
@@ -110,17 +26,31 @@
 			
 			
 			//dynamic field management
-			$j("#showDocumentsPerson > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#showDocumentsPersonId${personId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#showDocumentsPerson').dataTable( {
+			$j('#showDocumentsPersonId${personId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
+				"bProcessing": true,
+				"bServerSide": true,
+				"iDisplayLength": 10,
+				"iDisplayStart": 0,
+				"oSearch": {"sSearch": "${personId}"},
+				"sAjaxSource": "${ShowDocumentsRelatedPersonURL}",
 				"sDom": 'T<"clear">lfrtip',
-				"sPaginationType": "full_numbers"
+				"sPaginationType": "full_numbers",
+				"fnServerData": function ( sSource, aoData, fnCallback ) {
+					/* Add some extra data to the sender */
+					aoData.push( { "name": "more_data", "value": "xxx" } );
+					$j.getJSON( sSource, aoData, function (json) { 
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)
+					}); 					
+				}
 			});
 			
-			$j("#showDocumentsPerson_length").css('margin', '0 0 0 0');
-			$j("#showDocumentsPerson_filter").remove();
+			$j("#showDocumentsPersonId${personId}_length").css('margin', '0 0 0 0');
+			$j("#showDocumentsPersonId${personId}_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.showResult').die();

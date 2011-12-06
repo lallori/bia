@@ -71,5 +71,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

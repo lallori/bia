@@ -27,11 +27,19 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.lucene.search.SortField;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.RoleCat;
 import org.medici.docsources.domain.TitleOccsList;
@@ -361,5 +369,112 @@ public class AjaxController {
 		}
 
 		return new ModelAndView("responseOK", model);
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/peoplebase/ShowDocumentsRelatedPerson.json", method = RequestMethod.GET)
+	public ModelAndView ShowDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		
+		try{
+			page = getPeopleBaseService().searchDocumentsRelated(alias, paginationFilter);
+		}catch(ApplicationThrowable aex){
+			
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null)
+				singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null)
+				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			
+			if (currentDocument.getSenderPlace() != null)
+				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null)
+				singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");				
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * 
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	private PaginationFilter generatePaginationFilter(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+				case 0:
+					paginationFilter.addSortingCriteria("mapNameLf_Sort", sortingDirection);
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("gender", sortingDirection);
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("bornYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("bornMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("bornDay_Sort", sortingDirection, SortField.INT);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("deathYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("deathMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("deathDay_Sort", sortingDirection, SortField.INT);
+					break;
+				case 4:
+					paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection);
+					break;
+				default:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+			}		
+		}
+		
+		return paginationFilter;
 	}
 }

@@ -29,14 +29,10 @@ package org.medici.docsources.controller.peoplebase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.medici.docsources.command.peoplebase.ShowDocumentsPersonCommand;
-import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -92,23 +88,18 @@ public class ShowDocumentsPersonController {
 			try {
 				person = getPeopleBaseService().findPerson(command.getPersonId());
 								
-				List<String> outputFields = new ArrayList<String>(5);
-				outputFields.add("Doc ID");
-				outputFields.add("Date");
+				List<String> outputFields = new ArrayList<String>(6);
 				outputFields.add("Sender");
 				outputFields.add("Recipient");
-				outputFields.add("Volume/Folio");
+				outputFields.add("Date");
+				outputFields.add("Sender Location");
+				outputFields.add("Recipient Location");
+				outputFields.add("Volume / Folio");
 				
 				model.put("outputFields", outputFields);
 
 				model.put("mapNameLf", person.getMapNameLf());
-				model.put("SenderDocs", person.getSenderDocuments());
-				model.put("RecipientDocs", person.getRecipientDocuments());
-				Set<Document> personDocs = new HashSet<Document>();
-				for(EpLink epLink : person.getEpLink()){
-					personDocs.add(epLink.getDocument());
-				}
-				model.put("PersonDocs", personDocs);
+				model.put("personId", person.getPersonId());
 				
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowDocumentsPerson", model);

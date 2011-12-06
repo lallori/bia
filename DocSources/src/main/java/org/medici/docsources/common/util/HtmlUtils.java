@@ -141,6 +141,32 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
+	public static List<String> showDocumentRelated(List<String> inputList, Integer entryId) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		String anchorBegin = "<a class=\"showResult\" href=\"";
+		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		anchorBegin += "/src/docbase/ShowDocument.do?entryId=";
+		anchorBegin += entryId;
+		anchorBegin += "\">";
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
 
 	/**
 	 * 

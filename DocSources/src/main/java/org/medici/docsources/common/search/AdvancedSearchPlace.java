@@ -226,7 +226,101 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	@Override
 	public String toJPAQuery() {
 		// TODO Auto-generated method stub
-		return null;
+		StringBuffer jpaQuery = new StringBuffer("FROM Place WHERE ");
+		
+		//Place Name
+		if(placesName.size() > 0){
+			StringBuffer placesNameQuery = new StringBuffer("(");
+			for(int i = 0; i < placesName.size(); i++){
+				if(placesNameQuery.length() > 1){
+					placesNameQuery.append(" AND ");
+				}
+				placesNameQuery.append("((placeNameFull like '%");
+				placesNameQuery.append(placesName.get(i).toLowerCase());
+				placesNameQuery.append("%') or ");
+				placesNameQuery.append("(termAccent like '%");
+				placesNameQuery.append(placesName.get(i).toLowerCase());
+				placesNameQuery.append("%'))");
+			}
+			placesNameQuery.append(")");
+			if(!placesNameQuery.toString().equals("")){
+				if(jpaQuery.length() > 17){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(placesNameQuery);
+			}
+		}
+		
+		//Place Type
+		if(placeType.size() > 0){
+			StringBuffer placeTypeQuery = new StringBuffer("(");
+			for(int i = 0; i < placeType.size(); i++){
+				if(placeTypeQuery.length() > 1){
+					placeTypeQuery.append(" AND ");
+				}
+				placeTypeQuery.append("(plType like '%");
+				placeTypeQuery.append(placeType.get(i).toLowerCase());
+				placeTypeQuery.append("%')");
+			}
+			placeTypeQuery.append(")");
+			if(!placeTypeQuery.toString().equals("")){
+				if(jpaQuery.length() > 17){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(placeTypeQuery);
+			}
+		}
+		
+		//Linked to topics
+		if(linkedToTopicsId.size() > 0){
+			StringBuffer linkedToTopicsIdQuery = new StringBuffer("(");
+			for(int i = 0; i < linkedToTopicsId.size(); i++){
+				if(linkedToTopicsIdQuery.length() > 1){
+					linkedToTopicsIdQuery.append(" AND ");
+				}
+				linkedToTopicsIdQuery.append("(placeAllId IN (SELECT place.placeAllId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicId=");
+				linkedToTopicsIdQuery.append(linkedToTopicsId.get(i).toString());
+				linkedToTopicsIdQuery.append("))");
+			}
+			linkedToTopicsIdQuery.append(")");
+			if(!linkedToTopicsIdQuery.toString().equals("")){
+				if(jpaQuery.length() > 17){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(linkedToTopicsIdQuery);
+			}
+		}
+		
+		//Linked to people
+		if(linkedToPeople.size() > 0){
+			StringBuffer linkedToPeopleQuery = new StringBuffer("(");
+			for(int i = 0; i < linkedToPeople.size(); i++){
+				if(linkedToPeopleQuery.length() > 1){
+					linkedToPeopleQuery.append(" AND ");
+				}
+				if(linkedToPeople.get(i).equals("Sender Location")){
+					linkedToPeopleQuery.append("(placeAllId IN (SELECT senderPlace.placeAllId FROM Document WHERE senderPlace is not null))");
+				}
+				if(linkedToPeople.get(i).equals("Recipient Location")){
+					linkedToPeopleQuery.append("(placeAllId IN (SELECT recipientPlace.placeAllId FROM Document WHERE recipientPlace is not null))");
+				}
+				if(linkedToPeople.get(i).equals("Birth Place")){
+					linkedToPeopleQuery.append("(placeAllId IN (SELECT bornPlace.placeAllId FROM People WHERE bornPlace is not null))");
+				}
+				if(linkedToPeople.get(i).equals("Death Place")){
+					linkedToPeopleQuery.append("(placeAllId IN (SELECT deathPlace.placeAllId FROM People WHERE deathPlace is not null))");
+				}
+			}
+			linkedToPeopleQuery.append(")");
+			if(!linkedToPeopleQuery.toString().equals("")){
+				if(jpaQuery.length() > 17){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(linkedToPeopleQuery);
+			}
+		}
+		
+		return jpaQuery.toString();
 	}
 
 	/**

@@ -1337,7 +1337,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					topicsIdQuery.append("(eplToLink.topic.topicId=");
-					topicsIdQuery.append(placeId.get(i).toString());
+					topicsIdQuery.append(topicsId.get(i).toString());
 					topicsIdQuery.append(")");
 				} else {
 					if (topicsQuery.length()>1) {
@@ -1345,14 +1345,14 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					topicsQuery.append("(eplToLink.topic.topicTitle like '%");
-					topicsQuery.append(place.get(i).toLowerCase());
+					topicsQuery.append(topics.get(i).toLowerCase());
 					topicsQuery.append("%')");
 				}
 			}
 			topicsIdQuery.append(")");
 			topicsQuery.append(")");
 			if (!topicsIdQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+				//jpaQuery.append(" AND ");
 				jpaQuery.append(topicsIdQuery);
 			}
 			if (!topicsQuery.toString().equals("")) {

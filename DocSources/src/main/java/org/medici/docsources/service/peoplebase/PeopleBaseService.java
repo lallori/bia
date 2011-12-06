@@ -29,6 +29,8 @@ package org.medici.docsources.service.peoplebase;
 
 import java.util.List;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
@@ -432,4 +434,6 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People undeletePerson(Integer personId) throws ApplicationThrowable;
+	
+	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

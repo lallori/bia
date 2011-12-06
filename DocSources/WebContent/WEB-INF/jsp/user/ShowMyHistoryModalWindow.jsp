@@ -12,7 +12,7 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['Document']}" var="currentHistory" varStatus="status">
-            <div class="historyRowColor">
+            <div class="historyRow">
                 <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
                 <div class="historyItem"><a href="#">${currentHistory.document.MDPAndFolio}</a></div>
@@ -30,7 +30,7 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['Volume']}" var="currentHistory" varStatus="status">
-            <div class="historyRowColor">
+            <div class="historyRow">
                 <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
                 <div class="historyItem"><a href="#">${currentHistory.volume}</a></div>
@@ -48,7 +48,7 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['Place']}" var="currentHistory" varStatus="status">
-            <div class="historyRowColor">
+            <div class="historyRow">
                 <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
                 <div class="historyItem"><a href="#">${currentHistory.place.placeName}</a></div>
@@ -66,10 +66,15 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['People']}" var="currentHistory" varStatus="status">
-            <div class="historyRowColor">
+            <div class="historyRow">
                 <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="#">${currentHistory.people}</a></div>
+                <c:if test="${currentHistory.people.mapNameLf.length() <= 20}">
+                	<div class="historyItem"><a href="#">${currentHistory.people}</a></div>
+                </c:if>
+                <c:if test="${currentHistory.people.mapNameLf.length() > 20}">
+                	<div class="historyItem"><a href="#">${currentHistory.people.mapNameLf.substring(0,16)}...</a></div>
+                </c:if>
 			</div>
         	</c:forEach>
 		</div>
