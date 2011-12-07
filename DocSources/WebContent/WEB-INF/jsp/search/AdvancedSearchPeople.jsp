@@ -182,7 +182,7 @@
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>
 			<input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="placeAdd" disabled="disabled">
 			<input type="hidden" id="category" value="Place">
 			<input type="hidden" id="placeId" value="">
 		</form>
@@ -270,9 +270,18 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".placeAdd").removeAttr("disabled");
 					$j('#placeId').val(data);
 				}
 			});	
+		 
+		 $j("#place").change(function(){
+				$j(".placeAdd").attr("disabled","disabled");
+			});
+		 
+		 $j(".placeAdd").click(function(){
+			 $j(this).attr("disabled","disabled");
+		 });
 		 
 		 $j("#occupation").AutocompleteTitle({
 			 	serviceUrl:'${searchTitleOrOccupationURL}',

@@ -29,7 +29,7 @@
 					<a class="helpIcon" title="General Person Search: search here for documents related to person name either if it is a sender, a recipient and/or referenced in a document.">?</a>
 					<label for="person" id="personLabel">Person</label> 
 					<input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="personAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Person">
 					<input type="hidden" id="personId" value="">
 				</form>
@@ -38,7 +38,7 @@
 					<a class="helpIcon" title="General Place Search: search here for a document realated to place either if it is attached to a sender, a recipient and/or to a document topic.">?</a>
 					<label for="place" id="placeLabel">Place</label> 
 					<input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="placeAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Place">
 					<input type="hidden" id="placeId" value="">
 				</form>
@@ -49,7 +49,7 @@
 					<a class="helpIcon" title="Search documents sent FROM Person/Organization.">?</a>
 					<label for="sender" id="senderLabel">Sender</label> 
 					<input type="text" id="sender" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="senderAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Sender">
 					<input type="hidden" id="senderId" value="">
 				</form>
@@ -58,7 +58,7 @@
 					<a class="helpIcon" title="Search documents sent FROM Place/Location.">?</a>
 					<label for="from" id="fromLabel">From</label> 
 					<input type="text" id="from" name="from" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="formAdd" disabled="disabled">
 					<input type="hidden" id="category" value="From">
 					<input type="hidden" id="fromId" value="">
 				</form>
@@ -67,7 +67,7 @@
 					<a class="helpIcon" title="Search documents sent TO Person/Organization.">?</a>
 					<label for="recipientSearch" id="recipientSearchLabel">Recipient</label> 
 					<input type="text" id="recipient" name="recipient" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="recipientAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Recipient">
 					<input type="hidden" id="recipientId" value="">
 				</form>
@@ -76,7 +76,7 @@
 					<a class="helpIcon" title="Search documents sent Place/Location.">?</a>
 					<label for="to" id="toSearchLabel">To</label> 
 					<input type="text" id="to" name="to" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="toAdd" disabled="disabled">
 					<input type="hidden" id="category" value="To">
 					<input type="hidden" id="toId" value="">
 				</form>
@@ -85,7 +85,7 @@
 					<a class="helpIcon" title="Search documents in which this Person's name is mentioned.">?</a>
 					<label for="refersTo" id="refersToLabel">Refers to</label> 
 					<input type="text" id="refersTo" name="refersTo" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="refersTo" disabled="disabled">
 					<input type="hidden" id="category" value="Referers To">
 					<input type="hidden" id="refersToId" value="">
 				</form>
@@ -115,7 +115,7 @@
 				<form id="topicSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
 					<input type="text" id="topic" name="topic" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="topicAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Topics">
 					<input type="hidden" id="topicId" value="">
 				</form>
@@ -253,9 +253,19 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".personAdd").removeAttr("disabled");
 					$j('#personId').val(data);
 				}
-			});	
+			});
+			
+			$j("#person").change(function(){
+				$j(".personAdd").attr("disabled","disabled");
+			});
+			
+			$j(".personAdd").click(function(){
+				$j(this).attr("disabled","disabled");
+			});
+			
 			$j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
@@ -266,9 +276,19 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".placeAdd").removeAttr("disabled");
 					$j('#placeId').val(data);
 				}
 			});	
+			
+			$j("#place").change(function(){
+				$j(".placeAdd").attr("disabled","disabled");
+			});
+			
+			$j(".placeAdd").click(function(){
+				$j(this).attr("disabled","disabled");
+			});
+			
 			$j("#sender").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
@@ -279,9 +299,19 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".senderAdd").removeAttr("disabled");
 					$j('#senderId').val(data);
 				}
-			});	
+			});
+			
+			$j("#sender").change(function(){
+				$j(".senderAdd").attr("disabled","disabled");
+			});
+			
+			$j(".senderAdd").click(function(){
+				$j(this).attr("disabled","disabled");
+			});
+			
 			$j("#from").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
@@ -292,9 +322,19 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".fromAdd").removeAttr("disabled");
 					$j('#fromId').val(data);
 				}
-			});	
+			});
+			
+			$j("#from").change(function(){
+				$j(".fromAdd").attr("disabled","disabled");
+			});
+			
+			$j(".fromAdd").click(function(){
+				$j(this).attr("disabled","disabled");	
+			});
+			
 			$j("#recipient").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
@@ -305,9 +345,18 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".recipientAdd").removeAttr("disabled");
 					$j('#recipientId').val(data);
 				}
 			});	
+			
+			$j("#recipient").change(function(){
+				$j(".recipientAdd").attr("disabled","disabled");
+			});
+			
+			$j(".recipientAdd").click(function(){
+				$j(this).attr("disabled","disabled");
+			});
 			$j("#to").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
@@ -318,9 +367,19 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".toAdd").removeAttr("disabled");
 					$j('#toId').val(data);
 				}
 			});	
+			
+			$j("#to").change(function(){
+				$j(".toAdd").attr("disabled","disabled");
+			});
+			
+			$j(".toAdd").click(function(){
+				$j(this).attr("disabled","disabled");
+			});
+			
 			$j("#refersTo").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
@@ -331,9 +390,19 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".refersToAdd").removeAttr("disabled");
 					$j('#refersToId').val(data);
 				}
 			});
+			
+			$j("#refersTo").change(function(){
+				$j(".refersToAdd").attr("disabled","disabled");
+			});
+			
+			$j(".refersToAdd").click(function(){
+				$j(this).attr("disabled","disabled");
+			});
+			
 			$j("#topic").autocompleteGeneral({
 				serviceUrl: '${searchTopicURL}',
 				minChars: 1,
@@ -344,9 +413,19 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".topicAdd").removeAttr("disabled");
 					$j('#topicId').val(data);
 				}
 			});	
+			
+			$j("#topic").change(function(){
+				$j(".topicAdd").attr("disabled","disabled");
+			});
+			
+			$j(".topicAdd").click(function(){
+				$j(this).attr("disabled","disabled");
+			});
+			
 		});
 
 	</script>
