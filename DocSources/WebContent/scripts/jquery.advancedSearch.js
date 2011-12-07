@@ -117,6 +117,11 @@
 			console.log("Searching : " + searchWord);
 			console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
 
+			// If the searchWord is null, can't be inserted to the filter
+			if(searchWord == null || searchWord == ""){
+				return false;
+			}
+			
 			// Some field can't be entered more than once
 			if(fieldName == "digitized" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
 				return false;
@@ -125,6 +130,9 @@
 				return false;
 			}
 			if(fieldName == "index" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
+				return false;
+			}
+			if(fieldName == "volume" && $("#" + fieldName + "SearchDiv").find(".searchFilterDiv").length > 0){
 				return false;
 			}
 			
