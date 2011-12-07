@@ -52,12 +52,22 @@
 			});
 			
 			$j("#refine${command.searchUUID}").open({width: 960, height: 680, scrollbars: "yes"});
+			
+			$j("#tabLink").click(function(){
+				Modalbox.show('<h1>This Search:</h1><br /><br /><p>${yourSearch}</p><br /><input type=\"submit\" id=\"closeModal\" title=\"Close This Search window\" value=\"Close\"\ onclick=\'Modalbox.hide()\' style=\"margin: 55px 0 0 335px; position: absolute;\" />', {title: "THIS SEARCH", width: 750, height: 190});return false;
+			});
+			
 		} );
 	</script>
 	
 	<div class="yourSearchDiv">
 		Your search:
-		<a class="tabLink" href="#">${yourSearch}</a>
+		<c:if test="${yourSearch.length() > 45}">
+			<a class="tabLink" id="tabLink" href="#">${yourSearch.substring(0,41)}...</a>
+		</c:if>
+		<c:if test="${yourSearch.length() <= 45}">
+			<a class="tabLink" href="#">${yourSearch}</a>
+		</c:if>
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span>
 	</div>
 	
@@ -74,4 +84,3 @@
 			</tr>
 		</tbody>
 	</table>
-

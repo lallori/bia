@@ -867,59 +867,192 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	public String toString(){
 		String toString = new String();
 		if(!words.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
 			toString += "Words: ";
-			for(String value : words){
-				toString += value + " ";
+			for(int i = 0; i < words.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += words.get(i) + " ";
 			}
 		}
 		if(!datesYear.isEmpty()){
-			toString += ("AND Date Year: ");
-			for(Integer value : datesYear){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Date Year: ");
+			for(int i = 0; i < datesYear.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesYear.get(i) + " ");
 			}
 		}
 		if(!datesMonth.isEmpty()){
-			toString += ("AND Date Month: ");
-			for(Integer value : datesMonth){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Date Month: ");
+			for(int i = 0; i < datesMonth.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesMonth.get(i) + " ");
 			}
 		}
 		if(!datesDay.isEmpty()){
-			toString += ("AND Date Day: ");
-			for(Integer value : datesDay){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Date Day: ");
+			for(int i = 0; i < datesDay.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesDay.get(i) + " ");
 			}
 		}
 		if(!datesYearBetween.isEmpty()){
-			toString += ("AND Between Date Year: ");
-			for(Integer value : datesYearBetween){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Date Year: ");
+			for(int i = 0; i < datesYearBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesYearBetween.get(i) + " ");
 			}
 		}
 		if(!datesMonthBetween.isEmpty()){
-			toString += ("AND Between Date Month: ");
-			for(Integer value : datesMonthBetween){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Date Month: ");
+			for(int i = 0; i < datesMonthBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesMonthBetween.get(i) + " ");
 			}
 		}
 		if(!datesDayBetween.isEmpty()){
-			toString += ("AND Between Date Day: ");
-			for(Integer value : datesDayBetween){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Date Day: ");
+			for(int i = 0; i < datesDayBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesDayBetween.get(i) + " ");
 			}
 		}
 		if(!volumes.isEmpty()){
-			toString += ("AND Volumes: ");
-			for(String value : volumes){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Volumes: ");
+			for(int i = 0; i < volumes.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (volumes.get(i) + " ");
 			}
 		}
-		if(!volumesBetween.isEmpty() && volumesBetween.get(0)!= "0"){
-			toString += ("AND Between Volumes: ");
-			for(String value : volumesBetween){
-				toString += (value + " ");
+		if(!volumesBetween.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Volumes: ");
+			for(int i = 0; i < volumesBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (volumesBetween.get(i) + " ");
 			}
 		}
+		if(!ObjectUtils.toString(digitized).equals("")){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Digitized: " + digitized + " ";
+		}
+		if(!languages.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Languages: ");
+			for(int i = 0; i < languages.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (languages.get(i) + " ");
+			}
+		}
+		if(!cipher.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Cypher: " + cipher + " ";
+		}
+		if(!index.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Index: " + index + " ";
+		}
+		if(!fromVolume.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("From Volume: ");
+			for(int i = 0; i < fromVolume.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (fromVolume.get(i) + " ");
+			}
+		}
+		if(!toVolume.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("To Volume: ");
+			for(int i = 0; i < toVolume.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (toVolume.get(i) + " ");
+			}
+		}
+		if(!context.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Context: ");
+			for(int i = 0; i < context.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (context.get(i) + " ");
+			}
+		}
+		if(!inventario.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Inventario: ");
+			for(int i = 0; i < inventario.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (inventario.get(i) + " ");
+			}
+		}
+			
 		return toString;
 	}
 }

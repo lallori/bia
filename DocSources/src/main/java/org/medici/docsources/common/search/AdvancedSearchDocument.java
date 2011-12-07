@@ -1824,123 +1824,237 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	public String toString(){
 		String toString = new String();
 		if(!words.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
 			toString += "Words: ";
-			for(String value : words){
-				toString += value + " ";
+			for(int i = 0; i < words.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += words.get(i) + " ";
 			}
 		}
 		
 		if(!extract.isEmpty()){
-			toString += "AND Extract: ";
-			for(String value : extract){
-				toString += value + " ";
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Extract: ";
+			for(int i = 0; i < extract.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += extract.get(i) + " ";
 			}
 		}
 		
 		if(!synopsis.isEmpty()){
-			toString += "AND Synopsis: ";
-			for(String value : synopsis){
-				toString += value + " ";
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Synopsis: ";
+			for(int i = 0; i < synopsis.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += synopsis.get(i) + " ";
 			}
 		}
 		
 		if(!person.isEmpty()){
-			toString += "AND Person: ";
-			for(String value : person){
-				toString += value + " ";
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Person: ";
+			for(int i = 0; i < person.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += person.get(i) + " ";
 			}
 		}
 		
 		if(!place.isEmpty()){
-			toString += "AND Place: ";
-			for(String value : place){
-				toString += value + " ";
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Place: ";
+			for(int i = 0; i < place.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += place.get(i) + " ";
 			}
 		}
 		
 		if(!sender.isEmpty()){
-			toString += "AND Sender: ";
-			for(String value : sender){
-				toString += value + " ";
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Sender: ";
+			for(int i = 0; i < sender.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += sender.get(i) + " ";
 			}
 		}
 		
 		if(!from.isEmpty()){
-			toString += ("AND From: ");
-			for(String value : from){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("From: ");
+			for(int i = 0; i < from.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (from.get(i) + " ");
 			}
 		}
 		if(!recipient.isEmpty()){
-			toString += ("AND Recipient: ");
-			for(String value : recipient){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Recipient: ");
+			for(int i = 0; i < recipient.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (recipient.get(i) + " ");
 			}
 		}
 		if(!to.isEmpty()){
-			toString += ("AND To: ");
-			for(String value : to){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("To: ");
+			for(int i = 0; i < to.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (to.get(i) + " ");
 			}
 		}
 		if(!refersTo.isEmpty()){
-			toString += ("AND Refers to: ");
-			for(String value : refersTo){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Refers to: ");
+			for(int i = 0; i < refersTo.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (refersTo.get(i) + " ");
 			}
 		}
 		if(!topics.isEmpty()){
-			toString += ("AND Topics: ");
-			for(String value : topics){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Topics: ");
+			for(int i = 0; i < topics.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (topics.get(i) + " ");
 			}
 		}
 		if(!datesYear.isEmpty()){
-			toString += ("AND Date Year: ");
-			for(Integer value : datesYear){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Date Year: ");
+			for(int i = 0; i < datesYear.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesYear.get(i) + " ");
 			}
 		}
 		if(!datesMonth.isEmpty()){
-			toString += ("AND Date Month: ");
-			for(Integer value : datesMonth){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Date Month: ");
+			for(int i = 0; i < datesMonth.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesMonth.get(i) + " ");
 			}
 		}
 		if(!datesDay.isEmpty()){
-			toString += ("AND Date Day: ");
-			for(Integer value : datesDay){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Date Day: ");
+			for(int i = 0; i < datesDay.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesDay.get(i) + " ");
 			}
 		}
 		if(!datesYearBetween.isEmpty()){
-			toString += ("AND Between Date Year: ");
-			for(Integer value : datesYearBetween){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Date Year: ");
+			for(int i = 0; i < datesYearBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesYearBetween.get(i) + " ");
 			}
 		}
 		if(!datesMonthBetween.isEmpty()){
-			toString += ("AND Between Date Month: ");
-			for(Integer value : datesMonthBetween){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Date Month: ");
+			for(int i = 0; i < datesMonthBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesMonthBetween.get(i) + " ");
 			}
 		}
 		if(!datesDayBetween.isEmpty()){
-			toString += ("AND Between Date Day: ");
-			for(Integer value : datesDayBetween){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Date Day: ");
+			for(int i = 0; i < datesDayBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (datesDayBetween.get(i) + " ");
 			}
 		}
 		if(!volumes.isEmpty()){
-			toString += ("AND Volumes: ");
-			for(String value : volumes){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Volumes: ");
+			for(int i = 0; i < volumes.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (volumes.get(i) + " ");
 			}
 		}
 		if(!volumesBetween.isEmpty()){
-			toString += ("AND Between Volumes: ");
-			for(String value : volumesBetween){
-				toString += (value + " ");
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Volumes: ");
+			for(int i = 0; i < volumesBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (volumesBetween.get(i) + " ");
 			}
 		}
 		return toString;

@@ -63,6 +63,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	private List<String> placesName;
 	private List<String> placeType;
 	private List<Integer> linkedToTopicsId;
+	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
 	
 
@@ -75,6 +76,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		placesName = new ArrayList<String>(0);
 		placeType = new ArrayList<String>(0);
 		linkedToTopicsId = new ArrayList<Integer>(0);
+		linkedToTopics = new ArrayList<String>(0);
 		linkedToPeople = new ArrayList<String>(0);
 		
 	}
@@ -125,13 +127,15 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 						continue;
 					}else if(stringTokenizer.countTokens() == 2){
 						String singleId = stringTokenizer.nextToken();
-						stringTokenizer.nextToken();
+						String singleText = stringTokenizer.nextToken();
 						
 						if(NumberUtils.isNumber(singleId)){
 							linkedToTopicsId.add(NumberUtils.createInteger(singleId));
 						}
+						linkedToTopics.add(URIUtil.decode(singleText, "UTF-8"));
 					}
 				}catch(NumberFormatException nex){
+				}catch(URIException e){
 				}
 			}
 		}else{
@@ -190,6 +194,20 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getLinkedToTopicsId() {
 		return linkedToTopicsId;
+	}
+
+	/**
+	 * @param linkedToTopics the linkedToTopics to set
+	 */
+	public void setLinkedToTopics(List<String> linkedToTopics) {
+		this.linkedToTopics = linkedToTopics;
+	}
+
+	/**
+	 * @return the linkedToTopics
+	 */
+	public List<String> getLinkedToTopics() {
+		return linkedToTopics;
 	}
 
 	/**
@@ -410,6 +428,67 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 		
 		return luceneQuery;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String toString(){
+		String toString = new String();
+		
+		if(!placesName.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Places Name: ";
+			for(int i = 0; i < placesName.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += placesName.get(i) + " ";
+			}
+		}
+		
+		if(!placeType.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Place Type: ";
+			for(int i = 0; i < placeType.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += placeType.get(i) + " ";
+			}
+		}
+		
+		if(!linkedToTopics.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Linked to Topics: ";
+			for(int i = 0; i < linkedToTopics.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += linkedToTopics.get(i) + " ";
+			}
+		}
+		
+		if(!linkedToPeople.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Linked to People: ";
+			for(int i = 0; i < linkedToPeople.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += linkedToPeople.get(i) + " ";
+			}
+		}
+		
+		return toString;
 	}
 }
 
