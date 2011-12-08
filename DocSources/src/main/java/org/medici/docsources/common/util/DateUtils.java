@@ -89,6 +89,17 @@ public class DateUtils {
 	 * @param day
 	 * @return
 	 */
+	public static Integer getNumberDate(Integer year, Integer month, Integer day) {
+		return getLuceneDate(year, month, day);
+	}
+
+	/**
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
 	public static Integer getLuceneDate(Integer year, Integer month, Integer day) {
 		StringBuffer stringBuffer = new StringBuffer("");
 		
