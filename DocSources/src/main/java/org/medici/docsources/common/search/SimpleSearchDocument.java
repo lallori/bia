@@ -110,8 +110,8 @@ public class SimpleSearchDocument implements SimpleSearch {
 		}
 
 		String[] stringFields = new String[]{
-			"volume.serieList.title",
-			"volume.serieList.subTitle1"/*,
+			/*"volume.serieList.title",
+			"volume.serieList.subTitle1",
 			"volume.serieList.subTitle2 ",
 			"senderPeople.mapNameLf", 
 			"senderPeople.poLink.titleOccList.titleOcc",
@@ -122,9 +122,9 @@ public class SimpleSearchDocument implements SimpleSearch {
 			"recipientPeople.altName.altName",
 			"recipientPlace.placeNameFull",
 			"epLink.person.mapNameLf",
-			"epLink.person.altName.altName",
+			"epLink.person.altName.altName",*/
 			"synExtract.docExtract",
-			"synExtract.synopsis",
+			"synExtract.synopsis"/*,
 			"factChecks.addLRes",
 			"eplToLink.place.placeNameFull"*/
 		};
