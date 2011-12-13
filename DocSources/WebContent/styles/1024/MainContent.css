@@ -96,7 +96,7 @@ h6 { /* Titles */
 	position:absolute;
 	width:190px;
 	font-size:10px;
-	top:35px;
+	top: 27px;
 	right:10px;
 	text-align:right;
 	font-style:italic;
@@ -105,12 +105,13 @@ h6 { /* Titles */
 #buttonShareLink { /* Share/Link Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
 	font-size:10px;
-	padding:2px 0 0 5px;
+	padding:2px 0 0 0;
 	width:65px;
 	height:17px;
-	right:45px;
+	right:49px;
 	position:absolute;
 	cursor:pointer;
+	text-align:center;
 }
 
 #buttonPrint {  /* Print this Document Button */
@@ -134,22 +135,24 @@ h6 { /* Titles */
 #menuActions { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
 	font-size:10px;
-	padding:2px 0 0 12px;
+	padding: 2px 0 0;
 	width:65px;
 	height:17px;
 	position:absolute;
-	right:108px;
+	right:119px;
+	text-align: center;
 }
 
 #vettingHistory { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
 	font-size:10px;
-	padding:2px 0 0 10px;
+	padding:2px 0 0 0;
 	width:102px;
 	height:17px;
 	position:absolute;
 	text-decoration:none;
-	right:178px;
+	right:185px;
+	text-align:center;
 }
 
 #showComments { /* Actions Menu Button */
@@ -1366,11 +1369,6 @@ input.file {
 
 #topicDescriptionLabel {
 	margin-left:33px;
-	margin-right: 16px;
-}
-
-#topicPlaceLabel {
-	margin-right:16px;
 }
 
 #topicLabel {
@@ -1630,6 +1628,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	color: #B7958F;
 	display:inline;
 	text-align: left;
+	cursor: pointer;
 }
 
 
@@ -1799,10 +1798,11 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 #prevNextButtons #previousPage a{
 	float:left;
 	background:url(/DocSources/images/1024/button_arrow_left.png) no-repeat;
-	padding:4px 0 0 10px;
+	padding: 4px 0 0 5px;
 	width:90px;
 	height:22px;
 	font-size:11px;
+	text-align: center;
 }
 
 #prevNextButtons #nextPage a{
@@ -1896,7 +1896,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	height:22px;
 	background-image:url(/DocSources/images/1024/button_mini.png);
 	font-size:11px;
-	padding:2px 0 0 2px;
+	padding:0 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -1997,7 +1997,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	height:22px;
 	background-image:url(/DocSources/images/1024/button_mini.png);
 	font-size:11px;
-	padding:2px 0 0 2px;
+	padding:0 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -2054,8 +2054,9 @@ a#volumeSummary {
 	background-image:url(/DocSources/images/1024/button_medium.png);
 	background-repeat:no-repeat;
 	font-size:11px;
-	padding:4px 0 0 6px;
+	padding:4px 0 0 0;
 	cursor:pointer;
+	text-align:center;
 }
 
 #volumeSummaryWindow {
@@ -2316,11 +2317,13 @@ a.refreshVolumeExplorer {
 
 #VolumeExplorerModalLeft {
 	float:left;
+	margin-top: 15px;
 }
 
 #VolumeExplorerModalRight {
 	float:right;
 	width: 520px;
+	margin-top: 15px;
 }
 
 #DocumentDiscussionDiv {
@@ -2346,6 +2349,26 @@ a.refreshVolumeExplorer {
 	height:22px;
 	cursor:auto;
 }
+
+/* --------------------------------------- */ 
+/*
+/*
+/*  Modal Box Reply */
+
+#ReplyForm #close {
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	width:122px;
+	height:23px;
+	float:left;
+	text-decoration:none;
+	color:#6D5C4D;
+	text-align:center;
+}
+
+#ReplyForm #save {
+	margin: 25px auto auto 242px;
+}
+
 
 /* -------------------------------------- */
 /*
@@ -2993,7 +3016,7 @@ form#EditUserProfileForm {
 }
 
 #advancedSearchModal #CloseButton{ /* Close Advanced Search Button */
-	margin:235px 0 0 340px;
+	margin: 220px 0 0 340px;
 	position:absolute;
 }
 
