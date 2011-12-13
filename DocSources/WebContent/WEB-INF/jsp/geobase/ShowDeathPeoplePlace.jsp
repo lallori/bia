@@ -5,32 +5,18 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	
+	<c:url var="ShowDeathPeoplePlaceURL" value="/de/geobase/ShowDeathPeoplePlace.json"></c:url>
+	
 	<div class="yourSearchDiv">
 		Death in "${placeNameFull}"
 	</div>
 	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDeathPeoplePlace">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDeathPeoplePlaceAllId${placeAllId}">
 		<thead>
 			<tr></tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${deathPeople}" var="currentPerson">
-			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId"   value="${currentPerson.personId}" />
-			</c:url>
-			<tr>
-				<c:if test="${currentPerson.personId != 9285 && currentPerson.personId != 3905 && currentPerson.personId != 198}">
-					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.personId}</a></td>
-					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.mapNameLf}</a></td>
-					<td><a class="showResult" href="${ComparePersonURL}" title="${currentPerson.mapNameLf}">${currentPerson.deathYear} ${currentPerson.deathMonth} ${currentPerson.deathDay}</a></td>
-				</c:if>
-				<c:if test="${currentPerson.personId == 9285 || currentPerson.personId == 3905 || currentPerson.personId == 198}">
-					<td><a class="showResult" title="${currentPerson.mapNameLf}">${currentPerson.personId}</a></td>
-					<td><a class="showResult" title="${currentPerson.mapNameLf}">${currentPerson.mapNameLf}</a></td>
-					<td><a class="showResult" title="${currentPerson.mapNameLf}">${currentPerson.deathYear} ${currentPerson.deathMonth} ${currentPerson.deathDay}</a></td>
-				</c:if>
-			</tr>
-			</c:forEach>
+
 		</tbody>
 	</table>
 	
@@ -41,25 +27,40 @@
 			
 			
 			//dynamic field management
-			$j("#showDeathPeoplePlace > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#showDeathPeoplePlaceAllId${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#showDeathPeoplePlace').dataTable( {
-				"aoColumns": [
-				              { "sWidth": "20%" },
-				              { "sWidth": "80%" },
-				              { "sWidth": "80%" }
-				              ],
+			$j('#showDeathPeoplePlaceAllId${placeAllId}').dataTable( {
+				"aoColumnDefs": [
+					              { "sWidth": "20%" },
+					              { "sWidth": "80%" },
+					              { "sWidth": "80%" }
+					              ], 
 				"bDestroy" : true,
+				"bProcessing": true,
+				"bServerSide": true,
+				"iDisplayLength": 10,
+				"iDisplayStart": 0,
+				"oSearch": {"sSearch": "${placeAllId}"},
+				"sAjaxSource": "${ShowDeathPeoplePlaceURL}",
 				"sDom": 'T<"clear">lfrtip',
-				"sPaginationType": "full_numbers"
+				"sPaginationType": "full_numbers",
+				"fnServerData": function ( sSource, aoData, fnCallback ) {
+					/* Add some extra data to the sender */
+					aoData.push( { "name": "more_data", "value": "xxx" } );
+					$j.getJSON( sSource, aoData, function (json) { 
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)
+					}); 					
+				}
 			});
 			
-			$j("#showDeathPeoplePlace_length").css('margin', '0 0 0 0');
-			$j("#showDeathPeoplePlace_filter").remove();
+			$j("#showDeathPeoplePlaceAllId${placeAllId}_length").css('margin', '0 0 0 0');
+			$j("#showDeathPeoplePlaceAllId${placeAllId}_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.showResult').die();
-			// Result links have a specific class style on which we attach click live. 
+			 
+			
 			$j(".showResult").live('click', function() {
 				var tabName = $j(this).attr("title");
 				var numTab = 0;
@@ -82,7 +83,7 @@
 					$j("#tabs").tabs("select", numTab-1);
 					return false;
 				}
-			}); 
+			});
 
 		} );
 	</script>

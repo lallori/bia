@@ -95,7 +95,7 @@ public class ShowTopicsPlaceController {
 				model.put("outputFields", outputFields);
 				
 				model.put("placeNameFull", place.getPlaceNameFull());
-				model.put("topicsPlace", place.getEplToLinks());
+				model.put("placeAllId", place.getPlaceAllId());
 				
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowTopicsPlace", model);

@@ -14,10 +14,10 @@
 	</div>
 	<div class="list">	
 		<div class="row">
-			<c:if test="${place.eplToLinks != null && place.eplToLinks.size() != 0}">
-				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${place.eplToLinks.size()} Topics</a></div>
+			<c:if test="${topicsPlace != null && topicsPlace != 0}">
+				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a></div>
 			</c:if>
-			<c:if test="${place.eplToLinks.size() == 0 || place.eplToLinks == null}">
+			<c:if test="${topicsPlace == 0 || topicsPlace == null}">
 				<div class="value">0 Document on 0 Topic</div>
 			</c:if>
 		</div>

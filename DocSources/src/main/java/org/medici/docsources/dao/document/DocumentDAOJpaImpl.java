@@ -100,6 +100,30 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 
         return (Document) query.getSingleResult();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPlace.placeAllId =:placeAllId");
+		query.setParameter("placeAllId", placeAllId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPlace.placeAllId =:placeAllId");
+		query.setParameter("placeAllId", placeAllId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
 
 	/**
 	 * 
@@ -200,5 +224,77 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		return page;
 		
+	}
+
+	@Override
+	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM Document WHERE (senderPlace.placeAllId=" + placeToSearch + ")");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+
+	@Override
+	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM Document WHERE (recipientPlace.placeAllId=" + placeToSearch + ")");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 }

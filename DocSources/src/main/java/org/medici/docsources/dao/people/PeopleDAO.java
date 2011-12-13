@@ -53,6 +53,22 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public People findLastEntryPerson() throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfBirthInPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfDeathInPlace(Integer placeAllId) throws PersistenceException;
 
 	/**
 	 * This method generate Hibernate search index.
@@ -143,5 +159,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public List<People> searchSpouseLinkableToPerson(String query) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+
 
 }

@@ -60,6 +60,22 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Document findLastEntryDocument() throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException;
 
 	/**
 	 * This method searches documents which contains the parameters set in {@link org.medici.docsources.common.search}
@@ -72,6 +88,31 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 */
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
 	
+	/**
+	 * 
+	 * @param personToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

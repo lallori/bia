@@ -27,12 +27,10 @@
  */
 package org.medici.docsources.controller.geobase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -65,12 +63,12 @@ public class ShowLastEntryPlaceController {
 		try {
 			Place place = getGeoBaseService().findLastEntryPlace();
 			model.put("place", place);
-			List<Integer> documentsInTopics = new ArrayList<Integer>();
-			for(EplToLink currentTopic : place.getEplToLinks()){
-				if(!documentsInTopics.contains(currentTopic.getDocument().getEntryId()))
-					documentsInTopics.add(currentTopic.getDocument().getEntryId());
-			}
-			model.put("docInTopics", documentsInTopics.size());
+			model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(place.getPlaceAllId()));
+			model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(place.getPlaceAllId()));
+			model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(place.getPlaceAllId()));
+			model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(place.getPlaceAllId()));
+			model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(place.getPlaceAllId()));
+			model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
 			List<Place> placeNames;
 			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 			model.put("placeNames", placeNames);

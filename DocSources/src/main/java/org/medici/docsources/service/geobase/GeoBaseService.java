@@ -29,6 +29,8 @@ package org.medici.docsources.service.geobase;
 
 import java.util.List;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
@@ -146,6 +148,53 @@ public interface GeoBaseService {
 	
 	/**
 	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfBirthInPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfDeathInPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfDocumentsInTopicsPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfTopicsPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param peopleId
 	 * @return
 	 */
@@ -183,7 +232,8 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<PlaceType> findPlaceTypes() throws ApplicationThrowable;
-
+	
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
@@ -208,6 +258,15 @@ public interface GeoBaseService {
 	 */
 	public void generateIndexPlaceType() throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param query
@@ -255,4 +314,31 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchSendersPlace(String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchTopicsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

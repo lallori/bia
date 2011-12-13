@@ -27,11 +27,21 @@
  */
 package org.medici.docsources.controller.geobase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.lucene.search.SortField;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -222,6 +232,222 @@ public class AjaxController {
 	}
 	
 	/**
+	 * This method performs a simple search on people dictionary.
+	 * 
+	 * @param model
+	 * @param searchText
+	 * @param firstRecord
+	 * @param length
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/geobase/ShowBirthPeoplePlace.json", method = RequestMethod.GET)
+	public ModelAndView ShowBirthPeoplePlace(@RequestParam(value="sSearch") String alias,
+			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
+			 								  @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		Page page = null;
+
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		try {
+			page = getGeoBaseService().searchBirthPeoplePlace(alias, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (People currentPerson : (List<People>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentPerson.getMapNameLf());
+			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
+			//Dates column must be filled with a string concatenation
+			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
+		}
+		model.put("iEcho", "" + 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+		return new ModelAndView("responseOK", model);
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/geobase/ShowSenderDocumentsPlace.json", method = RequestMethod.GET)
+	public ModelAndView ShowSenderDocumentsPlace(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		
+		try{
+			page = getGeoBaseService().searchSenderDocumentsPlace(alias, paginationFilter);
+		}catch(ApplicationThrowable aex){
+			
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null)
+				singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null)
+				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			
+			if (currentDocument.getSenderPlace() != null)
+				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null)
+				singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");				
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/geobase/ShowRecipientDocumentsPlace.json", method = RequestMethod.GET)
+	public ModelAndView ShowRecipientDocumentsPlace(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		
+		try{
+			page = getGeoBaseService().searchRecipientDocumentsPlace(alias, paginationFilter);
+		}catch(ApplicationThrowable aex){
+			
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null)
+				singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null)
+				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			
+			if (currentDocument.getSenderPlace() != null)
+				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null)
+				singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");				
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/geobase/ShowTopicsPlace.json", method = RequestMethod.GET)
+	public ModelAndView ShowTopicsPlace(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		
+		try{
+			page = getGeoBaseService().searchTopicsPlace(alias, paginationFilter);
+		}catch(ApplicationThrowable aex){
+			
+		}
+		
+		List resultList = new ArrayList();
+		for (EplToLink currentEplToLink : (List<EplToLink>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentEplToLink.getDocument() != null)
+				singleRow.add(currentEplToLink.getDocument().getEntryId().toString());
+			else
+				singleRow.add("");
+			
+			if (currentEplToLink.getTopic() != null)
+				singleRow.add(currentEplToLink.getTopic().getTopicTitle());
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDate(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+			
+			
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
 	 * This method returns specific information on sender Place. 
 	 * 
 	 * @param personId
@@ -296,6 +522,50 @@ public class AjaxController {
 	 */
 	public GeoBaseService getGeoBaseService() {
 		return geoBaseService;
+	}
+	
+	/**
+	 * 
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	private PaginationFilter generatePaginationFilter(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+				case 0:
+					paginationFilter.addSortingCriteria("mapNameLf_Sort", sortingDirection);
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("gender", sortingDirection);
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("bornYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("bornMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("bornDay_Sort", sortingDirection, SortField.INT);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("deathYear_Sort", sortingDirection, SortField.INT);
+					//Month is an entity, so we don't have field with suffix _Sort
+					paginationFilter.addSortingCriteria("deathMonthNum.monthNum", sortingDirection, SortField.INT);
+					paginationFilter.addSortingCriteria("deathDay_Sort", sortingDirection, SortField.INT);
+					break;
+				case 4:
+					paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection);
+					break;
+				default:
+					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					break;
+			}		
+		}
+		
+		return paginationFilter;
 	}
 
 }

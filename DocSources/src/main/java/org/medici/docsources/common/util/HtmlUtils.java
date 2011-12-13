@@ -196,6 +196,29 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+	
+	public static List<String> showPeopleRelated(List<String> inputList, Integer personId){
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"showResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/peoplebase/ShowPerson.do?personId=");
+		anchorBegin.append(personId);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
+			stringBuffer.append(inputList.get(i));
+			stringBuffer.append(hrefEnd);
+			retValue.add(stringBuffer.toString());
+		}
+		
+		return retValue;
+	}
 
 	/**
 	 * 

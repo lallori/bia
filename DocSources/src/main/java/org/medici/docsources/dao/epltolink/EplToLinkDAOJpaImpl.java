@@ -32,6 +32,10 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.EplToLink;
 import org.springframework.stereotype.Repository;
@@ -95,5 +99,64 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		} else {
 			return result.get(0);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfDocumentInTopicsByPlace(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("Select count(distinct document.entryId) from EplToLink where place.placeAllId=:placeAllId");
+		query.setParameter("placeAllId", placeAllId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT DISTINCT COUNT(eplToId) FROM EplToLink where place.placeAllId=:placeAllId");
+		query.setParameter("placeAllId", placeAllId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
+	@Override
+	public Page searchTopicsPlace(String placeToSearch,	PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM EplToLink WHERE (place.placeAllId=" + placeToSearch + ")");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 }

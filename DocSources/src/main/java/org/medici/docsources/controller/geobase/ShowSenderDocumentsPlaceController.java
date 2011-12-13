@@ -87,17 +87,18 @@ public class ShowSenderDocumentsPlaceController {
 			try {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
 								
-				List<String> outputFields = new ArrayList<String>(5);
-				outputFields.add("Doc ID");
-				outputFields.add("Date");
-				outputFields.add("Sender ID");
+				List<String> outputFields = new ArrayList<String>(6);
 				outputFields.add("Sender");
-				outputFields.add("Volume/Folio");
+				outputFields.add("Recipient");
+				outputFields.add("Date");
+				outputFields.add("Sender Location");
+				outputFields.add("Recipient Location");
+				outputFields.add("Volume / Folio");
 				
 				model.put("outputFields", outputFields);
 				
 				model.put("placeNameFull", place.getPlaceNameFull());
-				model.put("senderDocs", place.getSenderDocuments());
+				model.put("placeAllId", place.getPlaceAllId());
 				
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowSenderDocumentsPlace", model);

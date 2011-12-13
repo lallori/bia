@@ -104,6 +104,25 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
         return (People) query.getSingleResult();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfBirthInPlace(Integer placeAllId)	throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId");
+		query.setParameter("placeAllId", placeAllId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
+	@Override
+	public Integer findNumberOfDeathInPlace(Integer placeAllId)	throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId");
+		query.setParameter("placeAllId", placeAllId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
 
 	/**
 	 * @return the logger
@@ -431,5 +450,41 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			// TODO: handle exception
         	return null;
 		}
+	}
+
+	@Override
+	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ")");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 }

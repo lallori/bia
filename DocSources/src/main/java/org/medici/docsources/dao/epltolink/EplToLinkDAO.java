@@ -31,6 +31,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.EplToLink;
 
@@ -41,6 +43,7 @@ import org.medici.docsources.domain.EplToLink;
  */
 public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 
+		
 	/**
 	 * This method searches a topic linked to a document identified by his entryId
 	 * and by a document identifier. 
@@ -61,5 +64,31 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @throws PersistenceException
 	 */
 	public List<EplToLink> findByEntryId(Integer entryId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * This method find the number of documents in topics with a specified place.
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfDocumentInTopicsByPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchTopicsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

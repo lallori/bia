@@ -87,15 +87,16 @@ public class ShowDeathPeoplePlaceController {
 			try {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
 								
-				List<String> outputFields = new ArrayList<String>(3);
-				outputFields.add("Person ID");
-				outputFields.add("Person");
+				List<String> outputFields = new ArrayList<String>(5);
+				outputFields.add("Name");
+				outputFields.add("Gender");
+				outputFields.add("Born Date");
 				outputFields.add("Death Date");
 								
 				model.put("outputFields", outputFields);
 				
 				model.put("placeNameFull", place.getPlaceNameFull());
-				model.put("deathPeople", place.getDeathPeople());
+				model.put("placeAllId", place.getPlaceAllId());
 				
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowDeathPeoplePlace", model);

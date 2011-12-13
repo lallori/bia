@@ -19,18 +19,18 @@
 	
 	<div class="list">	
 		<div class="row">
-			<c:if test="${place.bornedPeople != null && place.bornedPeople.size() != 0}">
-				<div class="value"><a id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${place.bornedPeople.size()} Birth</a></div>
+			<c:if test="${birthPlace != null && birthPlace != 0}">
+				<div class="value"><a id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Birth</a></div>
 			</c:if>
-			<c:if test="${place.bornedPeople.size() == 0 || place.bornedPeople == null}">
+			<c:if test="${birthPlace == 0 || birthPlace == null}">
 				<div class="value">0 Birth</div>
 			</c:if>
 		</div>
 		<div class="row">
-			<c:if test="${place.deathPeople != null && place.deathPeople.size() != 0}">
-				<div class="value"><a id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${place.deathPeople.size()} Death</a></div>
+			<c:if test="${deathPlace != null && deathPlace != 0}">
+				<div class="value"><a id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Death</a></div>
 			</c:if>
-			<c:if test="${place.deathPeople.size() == 0 || place.deathPeople == null}">
+			<c:if test="${deathPlace == 0 || deathPlace == null}">
 				<div class="value">0 Death</div>
 			</c:if>
 		</div>

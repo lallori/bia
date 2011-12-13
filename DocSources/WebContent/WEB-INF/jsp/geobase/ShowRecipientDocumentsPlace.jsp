@@ -4,36 +4,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ShowRecipientDocumentsPlaceURL" value="/de/geobase/ShowRecipientDocumentsPlace.json"></c:url>
+	
 	<div class="yourSearchDiv">
 		Recipients To "${placeNameFull}"
 	</div>
 	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showRecipientDocumentsPlace">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showRecipientDocumentsPlaceAllId${placeAllId}">
 		<thead>
 			<tr></tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${recipientDocs}" var="currentDocument">
-			<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do">
-				<c:param name="entryId"   value="${currentDocument.entryId}" />
-			</c:url>
-			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-				<c:param name="personId"   value="${currentDocument.senderPeople.personId}" />
-			</c:url>
-			<tr>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.entryId}</a></td>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}">${currentDocument.docYear} ${currentDocument.docMonthNum} ${currentDocument.docDay}</a></td>
-				<c:if test="${currentDocument.recipientPeople.personId != 9285 && currentDocument.recipientPeople.personId != 3905 && currentDocument.recipientPeople.personId != 198}">
-					<td><a class="showResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
-					<td><a class="showResult" href="${ComparePersonURL}" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
-				</c:if>
-				<c:if test="${currentDocument.recipientPeople.personId == 9285 || currentDocument.recipientPeople.personId == 3905 || currentDocument.recipientPeople.personId == 198}">
-					<td><a class="showResult" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.personId}</a></td>
-					<td><a class="showResult" title="${currentDocument.recipientPeople.mapNameLf}">${currentDocument.recipientPeople.mapNameLf}</a></td>
-				</c:if>
-				<td><a class="showResult" href="${CompareDocumentURL}" title="${currentDocument.getMDPAndFolio()}"><b>${currentDocument.getMDPAndFolio()}</b></a></td>
-			</tr>
-			</c:forEach>
+
 		</tbody>
 	</table>
 	
@@ -42,23 +24,37 @@
 
 		$j(document).ready(function() {
 			
-			
 			//dynamic field management
-			$j("#showRecipientDocumentsPlace > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#showRecipientDocumentsPlaceAllId${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#showRecipientDocumentsPlace').dataTable( {
+			$j('#showRecipientDocumentsPlaceAllId${placeAllId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
+				"bProcessing": true,
+				"bServerSide": true,
+				"iDisplayLength": 10,
+				"iDisplayStart": 0,
+				"oSearch": {"sSearch": "${placeAllId}"},
+				"sAjaxSource": "${ShowRecipientDocumentsPlaceURL}",
 				"sDom": 'T<"clear">lfrtip',
-				"sPaginationType": "full_numbers"
+				"sPaginationType": "full_numbers",
+				"fnServerData": function ( sSource, aoData, fnCallback ) {
+					/* Add some extra data to the sender */
+					aoData.push( { "name": "more_data", "value": "xxx" } );
+					$j.getJSON( sSource, aoData, function (json) { 
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)
+					}); 					
+				}
 			});
 			
-			$j("#showRecipientDocumentsPlace_length").css('margin', '0 0 0 0');
-			$j("#showRecipientDocumentsPlace_filter").remove();
+			$j("#showRecipientDocumentsPlaceAllId${placeAllId}_length").css('margin', '0 0 0 0');
+			$j("#showRecipientDocumentsPlaceAllId${placeAllId}_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.showResult').die();
-			// Result links have a specific class style on which we attach click live. 
+			 
+			
 			$j(".showResult").live('click', function() {
 				var tabName = $j(this).attr("title");
 				var numTab = 0;
@@ -82,7 +78,6 @@
 					return false;
 				}
 			});
-
 
 		} );
 	</script>
