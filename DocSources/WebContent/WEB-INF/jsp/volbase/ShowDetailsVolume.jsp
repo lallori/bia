@@ -38,9 +38,15 @@
 			<a id="ShowVolumeExplorer" href="${ShowExplorerVolumeURL}">Show in Volume Explorer</a>
 		</div>
 		</c:if>
-		<c:if test="${empty image}">
+		<c:if test="${empty image && volume.digitized == false}">
 			<div id="SpineVolumeNotDigitDiv">
 				<img src="<c:url value="/images/1024/img_volumespinedefault.png"/>">
+				<b>Volume Spine</b>
+			</div>
+		</c:if>
+		<c:if test="${empty image && volume.digitized == true}">
+			<div id="SpineVolumeNotDigitDiv">
+				<img src="<c:url value="/images/1024/img_volumespinenotavailable.png"/>">
 				<b>Volume Spine</b>
 			</div>
 		</c:if>
