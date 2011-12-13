@@ -28,9 +28,13 @@
 package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
+import org.medici.docsources.common.search.AdvancedSearchAbstract.WordType;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.common.util.SimpleSearchUtils;
 
@@ -94,8 +98,26 @@ public class SimpleSearchDocument implements SimpleSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
+		StringBuffer jpaQuery = new StringBuffer("FROM Document ");
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		
+		if (words.length >0) {
+			jpaQuery.append(" WHERE ");
+		}
+
+		for (int i=0; i<words.length; i++) {
+			jpaQuery.append("((synExtract.docExtract like '%");
+			jpaQuery.append(words[i]);
+			jpaQuery.append("%') or ");
+			jpaQuery.append("(synExtract.synopsis like '%");
+			jpaQuery.append(words[i]);
+			jpaQuery.append("%'))");
+			if (i<(words.length-1)) {
+				jpaQuery.append(" and ");
+			}
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return jpaQuery.toString();
 	}
 
 	/**
