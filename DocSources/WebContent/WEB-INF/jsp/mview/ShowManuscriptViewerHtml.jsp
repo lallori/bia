@@ -12,7 +12,7 @@
 				server: '${IIPImageServerURL}',
 				prefix: '${ImagePrefixURL}',
 				image: '${image}',
-				credit: 'Folio n. ${image.imageProgTypeNum} ${image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}', 
+				credit: "${image.imageType == 'C' ? 'Folio n.': ''} ${image.imageType == 'R' ? 'Index of Names n.' : ''} ${image.imageProgTypeNum} ${image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
 				scale: 0.0,
 				navigation: true,
 				showNavWindow: true,

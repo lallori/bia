@@ -33,7 +33,7 @@
 					server: '${ReverseProxyIIPImage}',
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
-					credit: "Folio n. ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
+					credit: "${documentExplorer.image.imageType == 'C' ? 'Folio n.' : ''} ${documentExplorer.image.imageType == 'R' ? 'Index of Names n.' : ''} ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
 					scale: 0.0,
 					navigation: true,
 					showNavWindow: true,
