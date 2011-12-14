@@ -11,6 +11,8 @@
 
 /* ------------------------------------------------- TAG ------------------------------------------------- */ 
 
+
+
 html {
 	height: 100%;
 }
@@ -155,7 +157,7 @@ a {
 #searchForm { /* Search Form Container */
 	width:200px;
 	height:80px;
-	margin:10px 0 0 40px;
+	margin: 10px 0 0 20px;
 	position:absolute;
 	font-size:11px;
 }
@@ -191,6 +193,32 @@ a {
 
 #searchType {
 	width:95px;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */ 
+/*
+/*
+/* --------------------------------------- DIGITIZATION MODULE (#top_top) --------------------------------------- */
+
+#digitizationModule {
+	background-image:url(/DocSources/images/1024/button_lastentry.png);
+	background-repeat:no-repeat;
+	text-decoration:none;
+	width:100px;
+	top:10px;
+	height:85px;
+	padding-left:10px;
+	position: absolute;
+	margin: 0 0 0 190px;
+}
+
+#digitizationModule:hover {
+	ms-transform:translate(0,-5px);
+	-moz-transform:translate(0,-5px);
+	-webkit-transform:translate(0,-5px);
+	-o-transform:translate(0,-5px);
+	transform:translate(0,-5px);
+	cursor:pointer;
 }
 
 

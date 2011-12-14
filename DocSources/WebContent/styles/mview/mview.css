@@ -72,23 +72,39 @@ html version
 	filter:alpha(opacity=50); /* IE */ !important
 }
 
-#transcribe a{
+a.transcribe {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
-	margin: 25px 0 0 0;
+	margin: 10px 0 0 0;
 	float:left;
 	width:182px;
 	height:22px;
 	cursor:auto;
 	text-decoration: none;
 	color: #6F6B69;
+	position:absolute;
+}
+
+.transcribeMessage {
+	color:#F00;
+	position:absolute;
+	text-align:center;
+	margin-top: 10px;
+	width: 180px;
+}
+
+
+/* ---- Show Allready Transcribed Document ----- */
+
+#showAlreadyTranscribed.transcribe { /* Volume Summary button on Page Turner Panel */
+	margin: 45px 0 0 0px;
 }
 
 
 /* ---- Volume Summary ----- */
 
-#volumeSummary { /* Volume Summary button on Page Turner Pannel */
+#volumeSummary { /* Volume Summary button on Page Turner Panel */
 	margin:45px 0 0 37px;
 	position:absolute;
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
@@ -102,7 +118,7 @@ html version
 }
 
 #volumeSummary.transcribe { /* Volume Summary button on Page Turner Pannel */
-	margin: 45px 0 0 57px;
+	margin: 45px 0 0 235px;
 }
 
 #volumeSummary:hover { /* Volume Summary button on Rollover */
@@ -304,7 +320,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #EditPersonalNotesDiv #personalNotesDiv a.transcribe{
-	margin: 10px 0 0 465px;
+	margin: 10px 0 0 645px;
 }
 
 
@@ -326,7 +342,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #EditPersonalNotesDiv #exitDiv a.transcribe{
-	margin: 45px 0 0 465px;
+	margin: 45px 0 0 645px;
 }
 
 /* ---------------- */
@@ -373,7 +389,6 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	float:left;
 	display:inline;
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
-	padding:2px 0 0 0;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -387,7 +402,6 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	float:right;	
 	display:inline;
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
-	padding:2px 0 0 0;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -405,7 +419,6 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	float:left;
 	display:inline;
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
-	padding:2px 0 0 0;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -419,7 +432,6 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	float:right;	
 	display:inline;
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
-	padding:2px 0 0 0;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
