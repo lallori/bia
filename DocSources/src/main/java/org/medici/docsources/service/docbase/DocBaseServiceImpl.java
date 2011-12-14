@@ -126,6 +126,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			document.setRecipientPeopleUnsure(false);
 			document.setRecipientPlaceUnsure(false);
 			document.setGraphic(false);
+			document.setLogicalDelete(false);
 
 			if (document.getDocMonthNum() != null) {
 				Month month = getMonthDAO().find(document.getDocMonthNum().getMonthNum());
