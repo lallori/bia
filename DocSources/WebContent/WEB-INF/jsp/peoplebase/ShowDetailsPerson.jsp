@@ -31,10 +31,10 @@
 		</div>
 		<h3>${person.mapNameLf}</h3>
 		
-		<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size()+person.epLink.size() != 0}">
+		<c:if test="${docsRelated != 0}">
 			<a href="${ShowDocumentsPersonURL}" class="num_docs" title="Click here to view all documents related">${docsRelated} Documents related</a>
 		</c:if>
-		<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size()+person.epLink.size() == 0}">
+		<c:if test="${docsRelated == 0}">
 			<a class="num_docs">0 Document related</a>
 		</c:if>
 		<br />

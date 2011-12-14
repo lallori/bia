@@ -795,6 +795,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfDocumentsRelated(Integer personId)throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().findNumberOfDocumentsRelated(personId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1331,6 +1343,24 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{
 			return getDocumentDAO().searchDocumentsRelated(personToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public Page searchTitlesOrOccupationsPeoplePerson(String titleOccToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchTitlesOrOccupationsPeople(titleOccToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public Page searchRoleCatPeoplePerson(String roleCatToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchRoleCatPeople(roleCatToSearch, paginationFilter);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

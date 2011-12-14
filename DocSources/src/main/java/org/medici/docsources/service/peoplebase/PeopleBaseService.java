@@ -275,6 +275,14 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfDocumentsRelated(Integer personId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param id
 	 * @return
 	 * @throws ApplicationThrowable
@@ -436,4 +444,8 @@ public interface PeopleBaseService {
 	public People undeletePerson(Integer personId) throws ApplicationThrowable;
 	
 	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	public Page searchTitlesOrOccupationsPeoplePerson(String titleOccToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	public Page searchRoleCatPeoplePerson(String roleCatToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

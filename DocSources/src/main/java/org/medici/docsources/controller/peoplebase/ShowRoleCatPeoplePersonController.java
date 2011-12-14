@@ -1,5 +1,5 @@
 /*
- * ShowPersonController.java
+ * ShowRoleCatPeoplePersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,18 +27,14 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.medici.docsources.command.peoplebase.ShowPersonRequestCommand;
-import org.medici.docsources.domain.Marriage;
-import org.medici.docsources.domain.People;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+
+import org.medici.docsources.command.peoplebase.ShowRoleCatPeoplePersonCommand;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,61 +43,63 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show Person".
+ * Controller for action "Show role categories people".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/peoplebase/ShowPerson")
-public class ShowPersonController {
+@RequestMapping("/de/peoplebase/ShowRoleCatPeoplePerson")
+public class ShowRoleCatPeoplePersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
-
+	
+	
 	/**
-	 * 
-	 * @return
-	 */
-	public PeopleBaseService getPeopleBaseService() {
-		return peopleBaseService;
-	}
-
-	/**
-	 * 
-	 * @param peopleBaseService
+	 * @param peopleBaseService the peopleBaseService to set
 	 */
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
 		this.peopleBaseService = peopleBaseService;
 	}
 
+
+	/**
+	 * @return the peopleBaseService
+	 */
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
+	}
+
+
 	/**
 	 * 
-	 * @param peopleId
+	 * @param placeId
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowPersonRequestCommand command, BindingResult result){
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowRoleCatPeoplePersonCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		People person = new People();
 
-		if(command.getPersonId() > 0){
-			try {
-				person = getPeopleBaseService().findPerson(command.getPersonId());
-								
-				model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
-				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
-				model.put("marriages", marriages);
-			} catch (ApplicationThrowable ath) {
-				new ModelAndView("error/ShowPerson", model);
-			}
-		} else {
-			person.setPersonId(0);
-			person.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
-			person.setDateCreated(new Date());
-		}
 		
-		model.put("person", person);
+		
+		if(command.getRoleCatId() > 0){
+			
+				
+				List<String> outputFields = new ArrayList<String>(5);
+				outputFields.add("Name");
+				outputFields.add("Gender");
+				outputFields.add("Born Date");
+				outputFields.add("Death Date");
+				
+				model.put("outputFields", outputFields);
 
-		return new ModelAndView("peoplebase/ShowPerson", model);
+				
+				model.put("roleCatId", command.getRoleCatId());
+				
+			
+		}
+
+		return new ModelAndView("peoplebase/ShowRoleCatPeoplePerson", model);
 	}
+
 }

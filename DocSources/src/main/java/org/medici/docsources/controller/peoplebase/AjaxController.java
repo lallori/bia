@@ -435,6 +435,92 @@ public class AjaxController {
 	}
 	
 	/**
+	 * This method performs a simple search on people dictionary.
+	 * 
+	 * @param model
+	 * @param searchText
+	 * @param firstRecord
+	 * @param length
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/peoplebase/ShowRoleCatPeoplePerson.json", method = RequestMethod.GET)
+	public ModelAndView ShowRoleCatPeoplePerson(@RequestParam(value="sSearch") String alias,
+			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
+			 								  @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		Page page = null;
+
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		try {
+			page = getPeopleBaseService().searchRoleCatPeoplePerson(alias, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (People currentPerson : (List<People>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentPerson.getMapNameLf());
+			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
+			//Dates column must be filled with a string concatenation
+			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
+		}
+		
+		model.put("iEcho", "" + 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method performs a simple search on people dictionary.
+	 * 
+	 * @param model
+	 * @param searchText
+	 * @param firstRecord
+	 * @param length
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/peoplebase/ShowTitlesOrOccupationsPeoplePerson.json", method = RequestMethod.GET)
+	public ModelAndView ShowTitlesOrOccupationsPeoplePerson(@RequestParam(value="sSearch") String alias,
+			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
+			 								  @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		Page page = null;
+
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		try {
+			page = getPeopleBaseService().searchTitlesOrOccupationsPeoplePerson(alias, paginationFilter);
+		} catch (ApplicationThrowable aex) {
+		}
+
+		List resultList = new ArrayList();
+		for (People currentPerson : (List<People>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentPerson.getMapNameLf());
+			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
+			//Dates column must be filled with a string concatenation
+			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
+		}
+		
+		model.put("iEcho", "" + 1);
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
 	 * 
 	 * @param searchType
 	 * @param sortingColumnNumber

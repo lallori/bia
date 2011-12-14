@@ -76,6 +76,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public void generateIndex() throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * This method searches for children which could be related to a person which contains 
@@ -88,6 +97,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 */
 	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchDeathPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
 	/**
 	 * This method searches for fathers which could be related to a person which contains 
 	 * a text parameter (String query).
@@ -141,6 +159,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException;
 
 	/**
+	 * 
+	 * @param roleCatToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchRoleCatPeople(String roleCatToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
 	 * This method searches for senders which could be related to a document which contains 
 	 * a text parameter (String searchText).
 	 * 
@@ -162,12 +189,10 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	
 	/**
 	 * 
-	 * @param placeToSearch
+	 * @param titleOccToSearch
 	 * @param paginationFilter
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-
-
+	public Page searchTitlesOrOccupationsPeople(String titleOccToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 }

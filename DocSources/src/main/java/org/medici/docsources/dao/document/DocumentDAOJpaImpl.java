@@ -105,6 +105,18 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT entryId) FROM Document WHERE (senderPeople.personId=:personId OR recipientPeople.personId=:personId OR entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=:personId))");
+		query.setParameter("personId", personId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPlace.placeAllId =:placeAllId");
 		query.setParameter("placeAllId", placeAllId);

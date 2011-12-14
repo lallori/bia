@@ -134,6 +134,45 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ")");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<People> searchChildLinkableToPerson(Integer personId, String searchText) throws PersistenceException {
@@ -164,6 +203,45 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			// TODO: handle exception
         	return null;
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchDeathPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ")");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 
 	/**
@@ -354,6 +432,45 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchRoleCatPeople(String roleCatToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.roleCat.roleCatId=" + roleCatToSearch + ")");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+	
+	/**
 	 * This method search senders using jpa implementation.
 	 * 
 	 * @param alias
@@ -452,12 +569,15 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page searchTitlesOrOccupationsPeople(String titleOccToSearch, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ")");
+		String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOccId=" + titleOccToSearch + ")");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
