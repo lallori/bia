@@ -135,9 +135,9 @@
 		</c:forEach>
 			<br>			
 			<div>
+				<input id="close" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
 				<a id="AddNewValue" title="Add new person" href="${AddPersonURL}">Add</a>
 			</div>
-			<img src="/DocSources/images/1024/img_transparent.png">
 			<br>
 			<br>
 		</fieldset>
@@ -328,6 +328,14 @@
 				$j('.autocomplete').remove();
 				$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question') }); 
 				return false;
+			});
+			
+			$j('.closeForm').click(function(){
+				$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
+				}});
+					
+				return false; 
 			});
 
 			$j('.senderLinkPeople').click(function() {

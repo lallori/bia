@@ -9,7 +9,7 @@
 			<legend><b>VOLUME DETAILS</b></legend>
 			<div>
 				<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error"><i>Carteggio</i></form:label>
-				<form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_30c" />
+				<form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_40c" />
 			</div>
 
 			<div>

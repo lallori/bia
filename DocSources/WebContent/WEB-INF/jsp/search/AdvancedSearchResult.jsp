@@ -66,7 +66,7 @@
 			<a class="tabLink" id="tabLink" href="#">${yourSearch.substring(0,41)}...</a>
 		</c:if>
 		<c:if test="${yourSearch.length() <= 45}">
-			<a class="tabLink" href="#">${yourSearch}</a>
+			${yourSearch}
 		</c:if>
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span>
 	</div>

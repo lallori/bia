@@ -29,7 +29,7 @@
 		</div>
 		
 		<div>
-			<form:label for="link" id="linkLabel" path="externalLink">Link:</form:label>
+			<form:label for="link" id="linkLabel" path="externalLink">Link</form:label>
 			<form:input id="link" path="externalLink" class="input_39c" type="text" />
 		</div>
 		
