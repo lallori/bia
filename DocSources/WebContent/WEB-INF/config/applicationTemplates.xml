@@ -511,6 +511,10 @@
 		<put-attribute name="researchNotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/ShowRoleCatPeoplePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowRoleCatPeoplePerson.jsp"/>
+	</definition>
+	
 	<definition name="peoplebase/ShowResearchNotesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>	
 	</definition>
@@ -521,6 +525,10 @@
 
 	<definition name="peoplebase/ShowTitlesOrOccupationsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowTitlesOrOccupationsPeoplePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPeoplePerson.jsp"/>
 	</definition>
 
 	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
