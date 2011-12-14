@@ -269,6 +269,15 @@ public interface GeoBaseService {
 	
 	/**
 	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchDeathPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param query
 	 * @return
 	 * @throws ApplicationThrowable

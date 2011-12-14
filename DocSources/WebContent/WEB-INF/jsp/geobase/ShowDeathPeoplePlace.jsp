@@ -30,11 +30,7 @@
 			$j("#showDeathPeoplePlaceAllId${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
 			$j('#showDeathPeoplePlaceAllId${placeAllId}').dataTable( {
-				"aoColumnDefs": [
-					              { "sWidth": "20%" },
-					              { "sWidth": "80%" },
-					              { "sWidth": "80%" }
-					              ], 
+				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,

@@ -30,9 +30,9 @@
 
 			$j('#showTopicsPlaceAllId${placeAllId}').dataTable( {
 				"aoColumnDefs": [
-					              { "sWidth": "20%" },
-					              { "sWidth": "80%" },
-					              { "sWidth": "80%" }
+					              { "sWidth": "20%" , "aTargets": [ "_all" ]},
+					              { "sWidth": "80%" , "aTargets": [ "_all" ]},
+					              { "sWidth": "80%" , "aTargets": [ "_all" ]}
 					              ], 
 				"bDestroy" : true,
 				"bProcessing": true,

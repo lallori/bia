@@ -154,11 +154,13 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		String anchorBegin = "<a class=\"showResult\" href=\"";
-		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
-		anchorBegin += "/src/docbase/ShowDocument.do?entryId=";
-		anchorBegin += entryId;
-		anchorBegin += "\">";
+		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
+		anchorBegin.append(inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().length() - 4));
+		anchorBegin.append("\" class=\"showResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
+		anchorBegin.append(entryId);
+		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
 		
 		for (int i=0; i<inputList.size(); i++) {
@@ -203,9 +205,11 @@ public class HtmlUtils {
 
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"showResult\" href=\"");
+		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
+		anchorBegin.append(inputList.get(0));
+		anchorBegin.append("\" class=\"showResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		anchorBegin.append("/src/peoplebase/ShowPerson.do?personId=");
+		anchorBegin.append("/src/peoplebase/ComparePerson.do?personId=");
 		anchorBegin.append(personId);
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";

@@ -622,6 +622,30 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchBirthPeoplePlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchDeathPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchDeathPeoplePlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Place> searchPlaceParent(String query) throws ApplicationThrowable{
 		try{
 			return getPlaceDAO().searchPlaceParent(query);
@@ -751,19 +775,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchTopicsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{
 			return getEplToLinkDAO().searchTopicsPlace(placeToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	@Override
-	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getPeopleDAO().searchBirthPeoplePlace(placeToSearch, paginationFilter);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
