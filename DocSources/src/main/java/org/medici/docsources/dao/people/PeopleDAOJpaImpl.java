@@ -109,8 +109,30 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart!=NULL");
+		query.setParameter("placeAllId", placeAllId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfActiveEndInPlace(Integer placeAllId)	throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId AND activeEnd!=NULL");
+		query.setParameter("placeAllId", placeAllId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer findNumberOfBirthInPlace(Integer placeAllId)	throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart=NULL");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
@@ -118,7 +140,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
 	@Override
 	public Integer findNumberOfDeathInPlace(Integer placeAllId)	throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId AND activeEnd=NULL");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
@@ -130,6 +152,84 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	public Logger getLogger() {
 		return logger;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ") AND activeStart!=NULL");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ") AND activeEnd!=NULL");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -139,7 +239,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ")");
+		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ") AND activeStart=NULL");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -213,7 +313,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ")");
+		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ") AND activeEnd=NULL");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -279,6 +379,45 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM People WHERE personId IN (SELECT person.personId FROM org.medici.docsources.domain.AltName WHERE altName.altName like '" + familyToSearch + "' AND altName.nameType like 'Family')");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

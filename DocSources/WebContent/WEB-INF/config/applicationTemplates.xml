@@ -339,6 +339,14 @@
 		<put-attribute name="hierarchy" value="/WEB-INF/jsp/geobase/ShowHierarchyPlace.jsp" />		
 	</definition>
 	
+	<definition name="geobase/ShowActiveStartPeoplePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowActiveStartPeoplePlace.jsp" />
+	</definition>
+	
+	<definition name="geobase/ShowActiveEndPeoplePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowActiveEndPeoplePlace.jsp" />
+	</definition>
+	
 	<definition name="geobase/ShowBirthPeoplePlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowBirthPeoplePlace.jsp" />
 	</definition>
@@ -490,6 +498,10 @@
 	
 	<definition name="peoplebase/ShowDocumentsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowDocumentsPerson.jsp" />
+	</definition>
+	
+	<definition name="peoplebase/ShowFamilyPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowFamilyPerson.jsp" />
 	</definition>
 
 	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">

@@ -60,6 +60,22 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
+	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfActiveEndInPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Integer findNumberOfBirthInPlace(Integer placeAllId) throws PersistenceException;
 	
 	/**
@@ -76,6 +92,24 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public void generateIndex() throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 
@@ -116,6 +150,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 */
 	public List<People> searchFatherLinkableToPerson(String query) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param familyToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
 	/**
 	 * This method searches for mothers which could be related to a person which contains 
 	 * a text parameter (String query).

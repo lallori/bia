@@ -152,6 +152,22 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfActiveEndInPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public Integer findNumberOfBirthInPlace(Integer placeAllId) throws ApplicationThrowable;
 	
 	/**
@@ -258,6 +274,24 @@ public interface GeoBaseService {
 	 */
 	public void generateIndexPlaceType() throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param placeToSearch

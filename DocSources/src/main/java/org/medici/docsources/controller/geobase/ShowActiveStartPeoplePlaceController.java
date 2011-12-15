@@ -1,5 +1,5 @@
 /*
- * ShowLastEntryPlaceController.java
+ * ShowActiveStartPeoplePlaceController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,73 +27,83 @@
  */
 package org.medici.docsources.controller.geobase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.command.geobase.ShowActiveStartPeoplePlaceCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show last entry place".
+ * Controller for action "Show active start people place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/geobase/ShowLastEntryPlace")
-public class ShowLastEntryPlaceController {
+@RequestMapping("/de/geobase/ShowActiveStartPeoplePlace")
+public class ShowActiveStartPeoplePlaceController {
 	@Autowired
 	private GeoBaseService geoBaseService;
-
+	
 	/**
 	 * 
-	 * @param volumeId
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(){
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			Place place = getGeoBaseService().findLastEntryPlace();
-			model.put("place", place);
-			model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(place.getPlaceAllId()));
-			model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(place.getPlaceAllId()));
-			model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(place.getPlaceAllId()));
-			model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(place.getPlaceAllId()));
-			model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(place.getPlaceAllId()));
-			model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
-			model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
-			model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
-			List<Place> placeNames;
-			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
-			model.put("placeNames", placeNames);
-
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowLastEntryPlace", model);
-		}
-		
-		return new ModelAndView("geobase/ShowPlace", model);
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
 
 	/**
-	 * @param geoBaseService the geoBaseService to set
+	 * 
+	 * @param geoBaseService
 	 */
 	public void setGeoBaseService(GeoBaseService geoBaseService) {
 		this.geoBaseService = geoBaseService;
 	}
 
 	/**
-	 * @return the geoBaseService
+	 * 
+	 * @param placeId
+	 * @param result
+	 * @return
 	 */
-	public GeoBaseService getGeoBaseService() {
-		return geoBaseService;
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowActiveStartPeoplePlaceCommand command, BindingResult result) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		Place place = new Place();
+		
+		if(command.getPlaceAllId() > 0){
+			try {
+				place = getGeoBaseService().findPlace(command.getPlaceAllId());
+								
+				List<String> outputFields = new ArrayList<String>(5);
+				outputFields.add("Name");
+				outputFields.add("Gender");
+				outputFields.add("Born Date");
+				outputFields.add("Death Date");
+								
+				model.put("outputFields", outputFields);
+				
+				model.put("placeNameFull", place.getPlaceNameFull());
+				model.put("placeAllId", place.getPlaceAllId());
+				
+			} catch (ApplicationThrowable ath) {
+				new ModelAndView("error/ShowActiveStartPeoplePlace", model);
+			}
+		}
+
+		return new ModelAndView("geobase/ShowActiveStartPeoplePlace", model);
 	}
 
 }

@@ -339,6 +339,30 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().findNumberOfActiveStartInPlace(placeAllId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfActiveEndInPlace(Integer placeAllId)	throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().findNumberOfActiveEndInPlace(placeAllId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer findNumberOfBirthInPlace(Integer placeAllId)	throws ApplicationThrowable {
 		try{
 			return getPeopleDAO().findNumberOfBirthInPlace(placeAllId);
@@ -592,6 +616,30 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public UserHistoryPlaceDAO getUserHistoryPlaceDAO() {
 		return userHistoryPlaceDAO;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchActiveStartPeoplePlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchActiveEndPeoplePlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 	
 	/**

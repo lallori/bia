@@ -87,16 +87,15 @@ public class ShowPlaceController {
 		if(command.getPlaceAllId() > 0){
 			try {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
-				//List<Integer> documentsInTopics = new ArrayList<Integer>();
-				//for(EplToLink currentTopic : place.getEplToLinks()){
-				//	documentsInTopics.add(currentTopic.getDocument().getEntryId());
-				//}
+				
 				model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(command.getPlaceAllId()));
 				model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(command.getPlaceAllId()));
 				model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(command.getPlaceAllId()));
 				model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(command.getPlaceAllId()));
 				model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(command.getPlaceAllId()));
+				model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(command.getPlaceAllId()));
 				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
+				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowPlace", model);
 			}
