@@ -225,7 +225,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try{
 					if(stringTokenizer.countTokens() == 2){
-						namesTypes.add(NameType.valueOf(stringTokenizer.nextToken()));
+						namesTypes.add(NameType.valueOf(stringTokenizer.nextToken().replace(" ", "")));
 						names.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
 					}else{
 						continue;
