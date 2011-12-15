@@ -136,7 +136,7 @@
 					window.opener.$j("#tabs").tabs("load" , index);
 				} else {
 					//otherwise it's in a new search so we add a new tab.
-					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Advanced Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Person Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
 				}
 				return false;
