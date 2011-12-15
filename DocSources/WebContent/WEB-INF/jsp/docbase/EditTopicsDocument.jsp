@@ -51,6 +51,8 @@
 			
 		</fieldset>	
 		<div id="EditTopicDocumentDiv"></div>
+		
+		</form:form>
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
@@ -61,16 +63,44 @@
 		        $j("#EditDocumentInModal").css('visibility', 'hidden');
 		        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 		        
-		        $j(".deleteIcon").click(function() {
-					$j.get(this.href, function(data) {
-						if(data.match(/KO/g)){
-				            var resp = $j('<div></div>').append(data); // wrap response
-						} else {
-							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
-						}
-			        });
-					return false;
+// 		        $j(".deleteIcon").click(function() {
+// 					$j.get(this.href, function(data) {
+// 						if(data.match(/KO/g)){
+// 				            var resp = $j('<div></div>').append(data); // wrap response
+// 						} else {
+// 							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
+// 						}
+// 			        });
+// 					return false;
+// 				});
+
+				$j(".deleteIcon").click(function() {
+				var temp = $j(this);
+				$j("#EditTopicsDocumentDiv").block({ message: $j("#question")});
+
+				$j('#no').click(function() {
+					$j.unblockUI();
+					$j(".blockUI").fadeOut("slow");
+					$j("#question").hide();
+					$j("#EditTopicsDocumentDiv").append($j("#question"));
+					$j(".blockUI").remove();
+					return false; 
+				}); 
+
+				$j('#yes').click(function() { 
+					$j.get(temp.attr("href"), function(data) {
+					if(data.match(/KO/g)){
+			            var resp = $j('<div></div>').append(data); // wrap response
+					} else {
+						$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
+					}
+					
+					return false; 
+				}); 	
+									     
 				});
+				return false;
+			});
 
 				$j(".editValue").click(function() {
 					$j("#EditTopicDocumentDiv").load($j(this).attr("href"));
@@ -96,4 +126,9 @@
 				});
 			});
 		</script>
-	</form:form>
+	
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>Delete this Topic entry?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
+	</div>
