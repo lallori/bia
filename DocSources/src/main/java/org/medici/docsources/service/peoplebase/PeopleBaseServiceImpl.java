@@ -1365,4 +1365,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
+	@Override
+	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchFamilyPerson(familyToSearch, paginationFilter);
+			}catch(Throwable th){
+				throw new ApplicationThrowable(th);
+			}
+	}
 }

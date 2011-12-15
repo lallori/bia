@@ -9,7 +9,7 @@
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
 	</security:authorize>
-
+	
 	<div id="EditNamesPersonDiv" class="background">
 		<div class="title">
 			<h5>NAMES </h5>
@@ -22,8 +22,16 @@
 		<div class="list">
 			<c:forEach items="${person.altName}" var="currentName">
 				<div class="row">
-					<div class="item">${currentName.nameType}</div> 
-					<div class="value"><a id="linkSearch" href="#">${currentName.namePrefix} ${currentName.altName}</a></div> 
+					<div class="item">${currentName.nameType}</div>
+					<c:if test="${currentName.nameType == 'Family' }">
+					<c:url var="ShowFamilyPersonURL" value="/de/peoplebase/ShowFamilyPerson.do">
+						<c:param name="altName" value="${currentName.altName}" />
+					</c:url>
+						<div class="value"><a class="linkSearch" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
+					</c:if>
+					<c:if test="${currentName.nameType != 'Family' }"> 
+						<div class="value">${currentName.namePrefix} ${currentName.altName}</div>
+					</c:if> 
 				</div>
 			</c:forEach>
 		</div>	
@@ -44,6 +52,7 @@
 				$j("#EditNamesPersonDiv").load($j(this).attr("href"));
 				return false;
 			});
+			
 		});
 	</script>
 </security:authorize>

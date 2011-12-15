@@ -385,6 +385,15 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param familyToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param personId
 	 * @param query
 	 * @return
