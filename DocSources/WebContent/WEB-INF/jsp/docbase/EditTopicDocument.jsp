@@ -114,14 +114,18 @@
 			});
 
 			$j("#EditTopicDocumentForm").submit(function (){
-				if($j("#placePrefered").val() == 'V'){
-					$j('#EditTopicDocumentDiv').block({ message: $j('.notPrincipal') });
+				if($j("#topicDescriptionAutocompleter").val() == undefined || $j("placeDescriptionAutocompleter").val() == undefined){
 					return false;
-				}else{				
-					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
-						$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
-				}})
-				return false;
+				}else{
+					if($j("#placePrefered").val() == 'V'){
+						$j('#EditTopicDocumentDiv').block({ message: $j('.notPrincipal') });
+						return false;
+					}else{				
+						$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+							$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
+					}})
+					return false;
+					}
 				}
 			});
 		});
