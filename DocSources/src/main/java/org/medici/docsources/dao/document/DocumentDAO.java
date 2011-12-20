@@ -44,6 +44,17 @@ import org.medici.docsources.domain.Document;
 public interface DocumentDAO extends Dao<Integer, Document> {
 
 	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param folioNum
+	 * @param folioMod
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
+	
+	/**
 	 * This method searches a single document identified by his volume.
 	 * 
 	 * @param summaryId number of volume to search

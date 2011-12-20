@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.common.util.ListBeanUtils;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.TopicList;
@@ -65,7 +66,7 @@ public class AjaxController {
 	 * 
 	 */
 	@RequestMapping(value = "/src/docbase/CheckDocumentDigitized", method = RequestMethod.GET)
-	public ModelAndView checkVolumeDigitized(	@RequestParam(value="entryId", required=false) Integer entryId,
+	public ModelAndView checkDocumentDigitized(	@RequestParam(value="entryId", required=false) Integer entryId,
 												@RequestParam(value="volNum", required=false) Integer volNum, 
 												@RequestParam(value="volLetExt", required=false) String volLetExt,
 												@RequestParam(value="folioNum", required=false) Integer folioNum,
@@ -87,11 +88,33 @@ public class AjaxController {
 		
 		model.put("entryId", entryId.toString());
 		model.put("folioNum", folioNum.toString());
-		model.put("folioMod", folioMod.toString());
+		if(folioMod != null)
+			model.put("folioMod", folioMod.toString());
 		model.put("volNum", volNum.toString()); 
+		if(volLetExt != null)
 		model.put("volLetExt", volLetExt.toString());
 
 		return new ModelAndView("responseOK", model);
+	}
+	
+	@RequestMapping(value = "/src/docbase/FindDocument", method = RequestMethod.GET)
+	public ModelAndView findDocument(	@RequestParam(value="volNum", required=false) Integer volNum, 
+									@RequestParam(value="volLetExt", required=false) String volLetExt,
+									@RequestParam(value="folioNum", required=false) Integer folioNum,
+									@RequestParam(value="folioMod", required=false) String folioMod) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try{
+			Document document = getDocBaseService().findDocument(volNum, volLetExt, folioNum, folioMod);
+			if(document != null){
+				model.put("entryId", document.getEntryId());
+			}else{
+				model.put("entryId", "");
+			}			
+		}catch(ApplicationThrowable th){
+			model.put("entryId", "");
+		}
+		return new ModelAndView("responseOK", model);		
 	}
 
 	/**

@@ -93,6 +93,7 @@
 			</div>
 		</fieldset>	
 		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
+
 	</form:form>
 
 	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
@@ -100,6 +101,8 @@
 	</c:url>
 
 	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do"/>
+	
+	<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do" />
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -140,6 +143,69 @@
 				);
 	 		}
 			$j("#volume").change(showVolumeExplorer);
+			
+			var alreadyDigitized = function(){
+				$j.get('<c:url value="/src/docbase/FindDocument.json" />', { volNum: $j("#volume").val(), folioNum: $j("#folioNum").val(), folioMod: $j("#folioMod").val() },
+						function(data){
+							if (data.entryId != "") {
+								if ($j("#alreadyDigitized").length == 0) {
+										$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\">This document has already been digitized. Click <a class=\"compareDoc\" href=\"${CompareDocumentURL}?entryId=" + data.entryId +  " \">here</a> to view.<br></span>");
+										$j('.compareDoc').click(function(){
+											var tabName = "Doc " + $j("#volume").val() + "/" + $j("#folioNum").val();
+											var numTab = 0;
+											
+											//Check if already exist a tab with this person
+											var tabExist = false;
+											$j("#tabs ul li a").each(function(){
+												if(!tabExist)
+													numTab++;
+												if(this.text == tabName){
+													tabExist = true;
+												}
+											});
+											
+											if(!tabExist){
+												$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+												$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+												return false;
+											}else{
+												$j("#tabs").tabs("select", numTab-1);
+												return false;
+											}
+										});
+								}
+								$j("#save").attr("disabled","true");
+								return data.entryId;
+							} else {
+								if ($j("#alreadyDigitized").length > 0) {
+									$j("#alreadyDigitized").remove();
+								}
+								$j("#save").removeAttr("disabled");
+								
+								return data.entryId
+								
+// 								var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+// 		            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+// 		                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
+// 		                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+		                    	
+		                    	/*$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
+									function(data){
+										$j("#body_right").html(data);
+										return true;
+									}
+								);*/
+							}
+						}
+					);
+			}
+			$j("#folioNum").change(alreadyDigitized);
+			$j("#folioMod").change(alreadyDigitized);
+			
+			
+			
+			//$j("#folioNum").change(folioNotExist);
+			//$j("#folioMod").change(folioNotExist);
 
 			if ($j("#transcribeFolioNum").val().length>0) {
 				$j("#EditDetailsDocument").volumeExplorer( {
@@ -158,7 +224,7 @@
 					} else {
 				<c:choose> 
 					<c:when test="${command.entryId == 0}"> 
-						$j("#body_left").html(html);
+						$j("#EditDetailsDocumentDiv").html(html);
 					</c:when> 
 					<c:otherwise> 
 						$j("#EditDetailsDocumentDiv").html(html);
@@ -174,8 +240,37 @@
 				$j('#EditDetailsDocumentForm').block({ message: $j('#question') }); 
 				return false;
 			});
+	        
+	        $j('.compareDoc').click(function(){
+				var tabName = "Doc " + $j("#volume").val() + "/" + $j("#folioNum").val();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+	        
       
 		});
+		
+		
+		
+		
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 

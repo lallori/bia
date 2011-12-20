@@ -1240,4 +1240,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 		
 		return documentToUnDelete;
 	}
+
+	@Override
+	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().findDocument(volNum, volLetExt, folioNum, folioMod);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 }

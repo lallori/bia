@@ -309,4 +309,19 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		return page;
 	}
+
+	@Override
+	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
+		StringBuffer toFind = new StringBuffer("FROM Document WHERE volume.volNum=" + volNum);
+		if(volLetExt != null){
+			toFind.append(" AND volume.volLetExt like " + volLetExt);
+		}
+		toFind.append(" AND folioNum=" + folioNum);
+		if(folioMod != null && folioMod != ""){
+			toFind.append(" AND folioMod like " + folioMod);
+		}
+		Query query = getEntityManager().createQuery(toFind.toString());
+		query.setMaxResults(1);
+		return (Document) query.getSingleResult();
+	}
 }

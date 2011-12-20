@@ -266,6 +266,18 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
+	
+	/**
+	 * This method searches an existing document by the volume and folio numbers.
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param folioNum
+	 * @param folioMod
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
 
 	/**
 	 * 
