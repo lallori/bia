@@ -219,14 +219,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         try  {
         	String searchTextWithWildCard = searchText.toLowerCase() + "*";
 	        org.apache.lucene.search.Query queryPlace = parserMapNameLf.parse(searchTextWithWildCard);
+	        org.apache.lucene.search.Query queryPlaceTest = parserMapNameLf.parse(searchText.toLowerCase());
 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
+	        final FullTextQuery fullTextQueryTest = fullTextSession.createFullTextQuery(queryPlaceTest, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
 			fullTextQuery.setProjection(outputFields);
+			fullTextQueryTest.setProjection(outputFields);
+			
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
-
-			return fullTextQuery.list();
+			fullTextQueryTest.setResultTransformer(Transformers.aliasToBean(Place.class));
+			List<Place> result = fullTextQueryTest.list();
+			result.addAll(fullTextQuery.list());
+			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
         	return null;
