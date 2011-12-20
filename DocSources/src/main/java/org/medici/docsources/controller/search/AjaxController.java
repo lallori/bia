@@ -408,19 +408,19 @@ public class AjaxController {
 			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 				switch (sortingColumnNumber) {
 					case 0:
-						paginationFilter.addSortingCriteria("placeNameFull_Sort", sortingDirection);
+						paginationFilter.addSortingCriteria("placeNameFull", sortingDirection);
 						break;
 					case 1:
-						paginationFilter.addSortingCriteria("plType_Sort", sortingDirection);
+						paginationFilter.addSortingCriteria("plType", sortingDirection);
 						break;
 					case 2:
-						paginationFilter.addSortingCriteria("parentPlace.placeName_Sort", sortingDirection);
+						paginationFilter.addSortingCriteria("parentPlace.placeName", sortingDirection);
 						break;
 					case 3:
-						paginationFilter.addSortingCriteria("parentType_Sort", sortingDirection);
+						paginationFilter.addSortingCriteria("parentType", sortingDirection);
 						break;
 					default:
-						paginationFilter.addSortingCriteria("placeNameFull_Sort", sortingDirection);
+						paginationFilter.addSortingCriteria("placeNameFull", sortingDirection);
 						break;
 				}
 			}

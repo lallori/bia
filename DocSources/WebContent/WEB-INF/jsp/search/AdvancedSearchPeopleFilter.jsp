@@ -17,8 +17,8 @@
 			<div id="namePartsSearchDiv">
 			<c:forEach items="${searchFilter.filterData.names}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Name Search in <fmt:message key="search.documents.wordType.${searchFilter.filterData.nameTypes[iterator.index]}" />: </span><span class="wordSearch">${searchFilter.filterData.names[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${searchFilter.filterData.nameTypes[iterator.index]}|${fn2:encode(searchFilter.filterData.names[iterator.index])}" name="word">
+					<span class="categorySearch">Name Parts in <fmt:message key="${searchFilter.filterData.namesTypes[iterator.index]}" />: </span><span class="wordSearch">${searchFilter.filterData.names[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${searchFilter.filterData.namesTypes[iterator.index]}|${fn2:encode(searchFilter.filterData.names[iterator.index])}" name="word">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
