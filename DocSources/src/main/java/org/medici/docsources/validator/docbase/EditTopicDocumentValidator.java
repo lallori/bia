@@ -104,6 +104,8 @@ public class EditTopicDocumentValidator implements Validator {
 	private void validateTopic(Integer entryId, Integer eplToId, Integer topicId, String topicDescription, Integer placeId, String placeDescription, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "eplToId", "error.epLinkId.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "topicDescription", "error.topicDescription.null");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "placeDescription", "error.placeDescription.null");
 
 		if (!errors.hasErrors()) {
 			try {

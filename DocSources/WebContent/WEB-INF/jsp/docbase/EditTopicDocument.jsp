@@ -114,9 +114,7 @@
 			});
 
 			$j("#EditTopicDocumentForm").submit(function (){
-				if($j("#topicDescriptionAutocompleter").val() == undefined || $j("placeDescriptionAutocompleter").val() == undefined){
-					return false;
-				}else{
+				
 					if($j("#placePrefered").val() == 'V'){
 						$j('#EditTopicDocumentDiv').block({ message: $j('.notPrincipal') });
 						return false;
@@ -126,7 +124,7 @@
 					}})
 					return false;
 					}
-				}
+				
 			});
 		});
 	</script>
