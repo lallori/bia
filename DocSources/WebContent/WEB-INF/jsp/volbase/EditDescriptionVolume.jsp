@@ -122,6 +122,43 @@
 			}});
 			return false;
 		});
+        
+        var warningFolio = function (){
+			if($j("#volume").val() != ""){
+			$j.get('<c:url value="/src/docbase/CheckVolumeFolio.json" />', { summaryId: "${command.summaryId}" },
+				function(data){
+					if (data.folioMax != "") {
+						if ($j("#folioNotCorrect").length == 0) {
+							if(parseInt($j("#folioCount").val(),10) < parseInt(data.folioMax,10)){
+								$j("#close").before("<span class=\"inputerrorsFolioNotCorrect\" id=\"folioNotCorrect\">WARNING: one or more documents in this volume have folio number set higher that the folio count total that you are entering. You cannot set folio count to 300 if a document has been set to 306.  Save is disabled.<br></span>");
+								$j("#save").attr("disabled","true");
+							}
+						}else {
+							if ($j("#folioNotCorrect").length > 0 && parseInt(data.folioMax,10) <= parseInt($j("#folioCount").val(),10)) {
+								$j("#folioNotCorrect").remove();
+							}
+							$j("#save").removeAttr("disabled");
+						
+					} 
+						
+						/*var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
+                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);*/
+                    	
+                    	/*$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
+							function(data){
+								$j("#body_right").html(data);
+								return true;
+							}
+						);*/
+					}
+				}
+			);
+			}
+ 		}
+        
+        $j('#folioCount').change(warningFolio);
 	});
 </script>
 

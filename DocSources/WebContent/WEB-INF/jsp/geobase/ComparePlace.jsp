@@ -4,6 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
+	<c:param name="placeAllId" value="${place.placeAllId}" />	
+</c:url>
+
+<div>
+	<a href="${ShowPlaceURL}" id="editLink">Click here to edit this place</a>
+</div>
 <div id="geoCompareDiv">
 	<div id="geoTitle">
 	
@@ -85,10 +92,20 @@
 	
 	<div class="list">	
 		<div class="row">
-			<div class="value">${place.senderDocuments.size()} Senders</div>
+			<c:if test="${senderPlace != null && senderPlace != 0}">
+				<div class="value">${senderPlace} Senders</div>
+			</c:if>
+			<c:if test="${senderPlace == 0 || senderPlace == null}">
+				<div class="value">0 Sender</div>
+			</c:if>
 		</div>
 		<div class="row">
-			<div class="value">${place.recipientDocuments.size()} Recipients</div>
+			<c:if test="${recipientPlace != null && recipientPlace != 0}">
+				<div class="value">${recipientPlace} Recipients</div>
+			</c:if>
+			<c:if test="${recipientPlace == 0 || recipientPlace == null}">
+				<div class="value">0 Recipient</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -102,7 +119,12 @@
 	</div>
 	<div class="list">	
 		<div class="row">
-			<div class="value">${docInTopics} Documents on ${place.eplToLinks.size()} Topics</div>
+			<c:if test="${topicsPlace != null && topicsPlace != 0}">
+				<div class="value">${docInTopics} Documents on ${topicsPlace} Topics</div>
+			</c:if>
+			<c:if test="${topicsPlace == 0 || topicsPlace == null}">
+				<div class="value">0 Document on 0 Topic</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -117,10 +139,10 @@
 	
 	<div class="list">	
 		<div class="row">
-			<div class="value">${place.bornedPeople.size()} Birth</div>
+			<div class="value">${birthPlace} Birth      ${activeStartPlace} Active Start</div>
 		</div>
 		<div class="row">
-			<div class="value">${place.deathPeople.size()} Death</div>
+			<div class="value">${deathPlace} Death      ${activeEndPlace} Active End</div>
 		</div>
 	</div>
 </div>
@@ -194,3 +216,14 @@
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function(){
+			$j("#editLink").click(function(){
+				$j("#body_left").load($j(this).attr("href"));
+				var selected = $j("#tabs").tabs('option', 'selected');
+				$j("#tabs").tabs('remove', selected);
+				return false;
+			});
+		});
+	</script>

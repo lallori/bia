@@ -45,6 +45,14 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 
 	/**
 	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Document checkVolumeFolio(Integer summaryId) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param volNum
 	 * @param volLetExt
 	 * @param folioNum

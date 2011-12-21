@@ -323,7 +323,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		Query query = null;
 		// We set size of result.
 		if (paginationFilter.getTotal() == null) {
-			String countQuery = "SELECT COUNT(1) " + searchContainer.toJPAQuery();
+			String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
 	        
 			query = getEntityManager().createQuery(countQuery);
 			page.setTotal(new Long((Long) query.getSingleResult()));

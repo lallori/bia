@@ -4,6 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+		<c:param name="entryId" value="${document.entryId}" />
+	</c:url>
+	
 	<c:url var="ShareDocumentURL" value="/de/docbase/ShowDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
@@ -30,7 +34,11 @@
 		<c:param name="flashVersion"   value="true" />
 	</c:url>
 
-	<div id="EditDetailsDocumentDiv">
+	<div>
+		<a href="${ShowDocumentURL}" id="editLink">Click here to edit this document</a>
+	</div>
+	
+	<div id="EditDetailsDocumentDiv" class="background">
 	<div class="title">
 		<h5>DOCUMENT DETAILS </h5>
 		</div>
@@ -94,7 +102,7 @@
 	
 	<br />
 	
-	<div id="EditFactCheckDocumentDiv">
+	<div id="EditFactCheckDocumentDiv" class="background">
 	<div class="title">
 		<h5>FACT CHECK </h5>
 		</div>
@@ -107,7 +115,7 @@
 	</div>
 	
 	
-	<div id="EditCorrespondentsOrPeopleDocumentDiv">
+	<div id="EditCorrespondentsOrPeopleDocumentDiv" class="background">
 	<div class="title">
 		<h5>CORRESPONDENTS/PEOPLE </h5>
 	</div>
@@ -140,7 +148,7 @@
 			</div>
 	</div>
 
-	<div id="EditExtractOrSynopsisDocumentDiv">
+	<div id="EditExtractOrSynopsisDocumentDiv" class="background">
 	<div class="title">
 		<h5>EXTRACT/SYNOPSIS </h5>
 		</div>
@@ -157,7 +165,7 @@
 		</div>
 	</div>
 
-	<div id="EditTopicsDocumentDiv">
+	<div id="EditTopicsDocumentDiv" class="background">
 	<div class="title">
 		<h5>TOPICS </h5>
 		</div>
@@ -176,3 +184,14 @@
 		</c:forEach>
 	</div>
 	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function(){
+			$j("#editLink").click(function(){
+				$j("#body_left").load($j(this).attr("href"));
+				var selected = $j("#tabs").tabs('option', 'selected');
+				$j("#tabs").tabs('remove', selected);
+				return false;
+			});
+		});
+	</script>

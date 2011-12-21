@@ -523,4 +523,12 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document checkVolumeFolio(Integer summaryId) throws ApplicationThrowable;
 }

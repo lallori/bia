@@ -324,4 +324,16 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		query.setMaxResults(1);
 		return (Document) query.getSingleResult();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document checkVolumeFolio(Integer summaryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM Document WHERE volume.summaryId=:summaryId ORDER BY folioNum DESC");
+		query.setParameter("summaryId", summaryId);
+		
+		query.setMaxResults(1);
+		return (Document) query.getSingleResult();
+	}
 }

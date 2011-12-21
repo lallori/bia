@@ -1249,4 +1249,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
+	@Override
+	public Document checkVolumeFolio(Integer summaryId)	throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().checkVolumeFolio(summaryId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 }

@@ -138,8 +138,6 @@
 				<input id="close" type="submit" value="Close" title="Do not save changes" class="closeForm"/>
 				<a id="AddNewValue" title="Add new person" href="${AddPersonURL}">Add</a>
 			</div>
-			<br>
-			<br>
 		</fieldset>
 	</form:form>
 	</div>

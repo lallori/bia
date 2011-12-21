@@ -84,6 +84,7 @@ public class ComparePersonController {
 		try {
 			People person = getPeopleBaseService().findPerson(command.getPersonId());
 			model.put("person", person);
+			model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 
 			List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 			model.put("marriages", marriages);

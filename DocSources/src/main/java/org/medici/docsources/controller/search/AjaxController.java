@@ -57,6 +57,7 @@ import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.medici.docsources.service.search.SearchService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,9 @@ public class AjaxController {
 	
 	@Autowired
 	private DocBaseService docBaseService;
+	
+	@Autowired
+	private PeopleBaseService peopleBaseService;
 
 	/**
 	 * @param docBaseService the docBaseService to set
@@ -94,6 +98,20 @@ public class AjaxController {
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
+	}
+
+	/**
+	 * @param peopleBaseService the peopleBaseService to set
+	 */
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
+	}
+
+	/**
+	 * @return the peopleBaseService
+	 */
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
 	}
 
 	/**
@@ -245,6 +263,11 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			try {
+				singleRow.add(getPeopleBaseService().findNumberOfDocumentsRelated(currentPerson.getPersonId()).toString());
+			} catch (ApplicationThrowable e) {
+				
+			}
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
 		model.put("iEcho", "" + 1);
@@ -728,6 +751,11 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			try {
+				singleRow.add(getPeopleBaseService().findNumberOfDocumentsRelated(currentPerson.getPersonId()).toString());
+			} catch (ApplicationThrowable e) {
+				
+			}
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
 		model.put("iEcho", "" + 1);

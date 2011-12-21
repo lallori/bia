@@ -97,6 +97,23 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 	
+	@RequestMapping(value = "/src/docbase/CheckVolumeFolio", method = RequestMethod.GET)
+	public ModelAndView checkVolumeFolio(	@RequestParam(value="summaryId", required=false) Integer summaryId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try{
+			Document document = getDocBaseService().checkVolumeFolio(summaryId);
+			if(document != null){
+				model.put("folioMax", document.getFolioNum());
+			}else{
+				model.put("folioMax", "");
+			}			
+		}catch(ApplicationThrowable th){
+			model.put("folioMax", "");
+		}
+		return new ModelAndView("responseOK", model);		
+	}
+	
 	@RequestMapping(value = "/src/docbase/FindDocument", method = RequestMethod.GET)
 	public ModelAndView findDocument(	@RequestParam(value="volNum", required=false) Integer volNum, 
 									@RequestParam(value="volLetExt", required=false) String volLetExt,

@@ -4,16 +4,24 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
+	<c:param name="personId" value="${person.personId}" />
+</c:url>
+
+<div>
+	<a href="${ShowPersonURL}" id="editLink">Click here to edit this person</a>
+</div>
+
 <div id="EditDetailsPersonDiv" class="background">
 	<div class="title">
 		<h5>PERSON DETAILS</h5>
 	</div>
 	<h3>${person.mapNameLf}</h3>
 	
-	<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size()+person.epLink.size() != 0}">
-		<a href="${ShowDocumentsPersonURL}" class="num_docs" title="Click here to view all documents related">${person.senderDocuments.size()+person.recipientDocuments.size()+person.epLink.size()} Documents related</a>
+	<c:if test="${docsRelated != 0}">
+		<span class="num_docs">${docsRelated} Documents related</span>
 	</c:if>
-	<c:if test="${person.senderDocuments.size()+person.recipientDocuments.size()+person.epLink.size() == 0}">
+	<c:if test="${docsRelated == 0}">
 		<a class="num_docs">0 Document related</a>
 	</c:if>
 	<br />
@@ -155,3 +163,14 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+		$j(document).ready(function(){
+			$j("#editLink").click(function(){
+				$j("#body_left").load($j(this).attr("href"));
+				var selected = $j("#tabs").tabs('option', 'selected');
+				$j("#tabs").tabs('remove', selected);
+				return false;
+			});
+		});
+	</script>

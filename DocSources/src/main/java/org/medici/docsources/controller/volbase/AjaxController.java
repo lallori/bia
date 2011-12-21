@@ -134,6 +134,7 @@ public class AjaxController {
 			model.put("volNum", (volNum != null) ? volNum.toString() : "");
 			model.put("volLetExt", (volLetExt != null) ? volLetExt.toString() : "");
 			model.put("summaryId", "");
+			model.put("folioCount", "");
 		}
 
 		return new ModelAndView("responseOK", model);
@@ -153,6 +154,10 @@ public class AjaxController {
 			model.put("volNum", volume.getVolNum().toString());
 			model.put("volLetExt", (volume.getVolLetExt()!= null) ? volume.getVolLetExt().toString() : "");
 			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
+			if(volume.getFolioCount() != null)
+				model.put("folioCount", volume.getFolioCount());
+			else
+				model.put("folioCount", "");
 		} catch (ApplicationThrowable aex) {
 			model.put("volume", (inputVolume != null) ? inputVolume : "");
 			model.put("summaryId", "");

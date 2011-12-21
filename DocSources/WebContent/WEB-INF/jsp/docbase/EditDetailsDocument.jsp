@@ -202,10 +202,43 @@
 			$j("#folioNum").change(alreadyDigitized);
 			$j("#folioMod").change(alreadyDigitized);
 			
+			var folioNotExist = function (){
+				if($j("#volume").val() != ""){
+				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },
+					function(data){
+						if (data.folioCount != "") {
+							if ($j("#folioNotExist").length == 0) {
+								if(parseInt($j("#folioNum").val(),10) > parseInt(data.folioCount,10)){
+									$j("#close").before("<span class=\"inputerrorsFolioNotExist\" id=\"folioNotExist\">This folio number is higher than the folio count total of the volume. Save is disabled.<br></span>");
+									$j("#save").attr("disabled","true");
+								}
+							}else {
+								if ($j("#folioNotExist").length > 0 && parseInt(data.folioCount,10) >= parseInt($j("#folioNum").val(),10)) {
+									$j("#folioNotExist").remove();
+								}
+								$j("#save").removeAttr("disabled");
+							
+						} 
+							
+							/*var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+	            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
+	                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
+	                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);*/
+	                    	
+	                    	/*$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
+								function(data){
+									$j("#body_right").html(data);
+									return true;
+								}
+							);*/
+						}
+					}
+				);
+				}
+	 		}
 			
-			
-			//$j("#folioNum").change(folioNotExist);
-			//$j("#folioMod").change(folioNotExist);
+			$j("#folioNum").change(folioNotExist);
+			$j("#folioMod").change(folioNotExist);
 
 			if ($j("#transcribeFolioNum").val().length>0) {
 				$j("#EditDetailsDocument").volumeExplorer( {
