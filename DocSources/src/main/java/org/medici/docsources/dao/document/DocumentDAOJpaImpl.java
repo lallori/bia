@@ -105,18 +105,6 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT entryId) FROM Document WHERE (senderPeople.personId=:personId OR recipientPeople.personId=:personId OR entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=:personId))");
-		query.setParameter("personId", personId);
-		
-		Long result = (Long) query.getSingleResult();
-		return new Integer(result.intValue());
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPlace.placeAllId =:placeAllId");
 		query.setParameter("placeAllId", placeAllId);
@@ -206,7 +194,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE (senderPeople.personId=" + personToSearch + " or recipientPeople.personId=" + personToSearch + "or entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=" + personToSearch + ")" + ")");
+		String toSearch = new String("FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=" + personToSearch + ")" + ")");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;

@@ -971,7 +971,14 @@ var IIP = new Class({
 		// For panoramic images, use a large navigation window
 		if (tx > 2 * ty)
 			thumb_width = this.view.w / 2;
-
+		
+		
+		// MEDICI ARCHIVE PROJECT START
+		// Navigation window in Manuscript Transcriber
+		if (this.view.w > 1000)
+			thumb_width = this.view.w / 8;
+		// MEDICI ARCHIVE PROJECT END
+		
 		// if( (ty/tx)*thumb_width > this.view.h*0.5 ) thumb_width =
 		// Math.round( this.view.h * 0.5 * tx/ty );
 
@@ -1409,6 +1416,7 @@ var IIP = new Class({
 
 		var toolbar = new Element('div', {
 			'class' : 'toolbar',
+			'html' : '<span>NAVIGATION TOOLBAR</span>',
 			'events' : {
 				dblclick : function(source) {
 					document.id(source).getElement('div.navbuttons')
@@ -1416,7 +1424,7 @@ var IIP = new Class({
 				}.pass(this.source)
 			}
 		});
-		toolbar.store('tip:text', '* Drag to move<br/>* Double Click to show/hide navigation buttons');
+		toolbar.store('tip:text', '* Click and Drag to move<br/><br/>* Double Click to show/hide navigation buttons');
 		toolbar.inject(navcontainer);
 
 		// Create our navigation div and inject it inside our frame if
@@ -1866,7 +1874,7 @@ var IIP = new Class({
 		navcontainer.setStyles({
 			'top' : 10,
 			'left' : document.id(this.source).getSize().x
-					- navcontainer.getSize().x - 10
+					- navcontainer.getSize().x 
 		});
 
 		// Resize our navigation window image

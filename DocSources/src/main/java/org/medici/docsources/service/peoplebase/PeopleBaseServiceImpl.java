@@ -28,7 +28,9 @@
 package org.medici.docsources.service.peoplebase;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
@@ -802,7 +804,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public Integer findNumberOfDocumentsRelated(Integer personId)throws ApplicationThrowable {
 		try{
-			return getDocumentDAO().findNumberOfDocumentsRelated(personId);
+			return getEpLinkDAO().findNumberOfDocumentsRelated(personId);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -1373,5 +1375,22 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			}catch(Throwable th){
 				throw new ApplicationThrowable(th);
 			}
+	}
+
+	@Override
+	public Map<Integer, Integer> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable {
+		Map<Integer, Integer> retValue = new HashMap<Integer, Integer>();
+		try{
+			
+			List<Integer> docsRel= getEpLinkDAO().findNumbersOfDocumentsRelated(personIds);
+			
+			for(int i=0; i < personIds.size(); i++){
+				retValue.put(personIds.get(i), docsRel.get(i));
+			}
+			return retValue;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
 	}
 }

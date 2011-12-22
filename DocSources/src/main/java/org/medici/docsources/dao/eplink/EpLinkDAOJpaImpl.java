@@ -27,7 +27,9 @@
  */
 package org.medici.docsources.dao.eplink;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -94,6 +96,61 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 		} else {
 			return result.get(0);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public EpLink findByEntryIdAndRole(Integer entryId, String docRole)	throws PersistenceException {
+		Query query = getEntityManager().createQuery("from EpLink where document.entryId=:entryId AND docRole like :docRole");
+		query.setParameter("entryId", entryId);
+		query.setParameter("docRole", docRole);
+		
+		List<EpLink> result = query.getResultList();
+		if(result.size() == 0){
+			return null;
+		}else{
+			return result.get(0);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT entryId) FROM EpLink WHERE person.personId=:personId))");
+		query.setParameter("personId", personId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
+	@Override
+	public List<Integer> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException {
+		StringBuffer stringBuffer = new StringBuffer("SELECT COUNT(document.entryId) FROM EpLink WHERE");
+		for(int i=0; i < personIds.size(); i++){
+			if(stringBuffer.indexOf("personId") != -1){
+    			stringBuffer.append(" or ");
+    		}
+			stringBuffer.append("(person.personId=");
+        	stringBuffer.append(personIds.get(i) + ")");
+		}
+		stringBuffer.append(" group by person.personId");
+		
+		List<Integer> returnValues = new ArrayList<Integer>();
+		List<Long> tempValues = new ArrayList<Long>();
+		if(stringBuffer.indexOf("personId") != -1){
+			Query query = getEntityManager().createQuery(stringBuffer.toString());
+			tempValues = (List<Long>) query.getResultList();
+		}
+		for(Long temp : tempValues){
+			returnValues.add(temp.intValue());
+		}
+		
+		return returnValues;
 	}
 
 }

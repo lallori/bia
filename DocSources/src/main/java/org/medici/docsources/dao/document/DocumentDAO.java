@@ -82,14 +82,6 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	
 	/**
 	 * 
-	 * @param personId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException;
-	
-	/**
-	 * 
 	 * @param placeAllId
 	 * @return
 	 * @throws PersistenceException

@@ -28,6 +28,7 @@
 package org.medici.docsources.service.peoplebase;
 
 import java.util.List;
+import java.util.Map;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -280,6 +281,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Integer findNumberOfDocumentsRelated(Integer personId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personIds
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<Integer, Integer> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable;
 	
 	/**
 	 * 

@@ -263,11 +263,7 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
-			try {
-				singleRow.add(getPeopleBaseService().findNumberOfDocumentsRelated(currentPerson.getPersonId()).toString());
-			} catch (ApplicationThrowable e) {
-				
-			}
+			
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
 		model.put("iEcho", "" + 1);
@@ -737,9 +733,15 @@ public class AjaxController {
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	private void simpleSearchPeople(Map<String, Object> model, String searchText, PaginationFilter paginationFilter) {
 		Page page = null;
-
+		List<Integer> personIds = new ArrayList<Integer>();
+		Map<Integer,Integer> documentsRelated = new HashMap<Integer, Integer>();
 		try {
 			page = getSearchService().searchPeople(new SimpleSearchPeople(searchText), paginationFilter);
+			for(People currentPerson : (List<People>)page.getList()){
+				personIds.add(currentPerson.getPersonId());
+			}
+			documentsRelated = getPeopleBaseService().findNumbersOfDocumentsRelated(personIds);
+			
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -751,11 +753,8 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
-			try {
-				singleRow.add(getPeopleBaseService().findNumberOfDocumentsRelated(currentPerson.getPersonId()).toString());
-			} catch (ApplicationThrowable e) {
-				
-			}
+			//singleRow.add(documentsRelated.get(currentPerson.getPersonId()).toString());
+			
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
 		model.put("iEcho", "" + 1);

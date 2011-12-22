@@ -18,3 +18,4 @@
 				<li><b>5</b> new places and/or locations have been entered</li>
 			</ul>				
 	</div>
+	

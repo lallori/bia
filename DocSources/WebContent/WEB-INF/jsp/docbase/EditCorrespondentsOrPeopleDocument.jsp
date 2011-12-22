@@ -113,6 +113,7 @@
 			</div>
 			<br />
 		<c:forEach items="${command.document.epLink}" var="currentPersonLinked">
+			<c:if test="${currentPersonLinked.docRole!= 'S' && currentPersonLinked.docRole != 'R'}">
 			<c:url var="EditPersonDocumentURL" value="/de/docbase/EditPersonDocument.do">
 				<c:param name="entryId" value="${currentPersonLinked.document.entryId}" />
 				<c:param name="epLinkId" value="${currentPersonLinked.epLinkId}" />
@@ -132,6 +133,7 @@
 					</c:url>
 				<a title="Show this person record" id="personIcon" href="${ComparePersonURL}" class="linkPeople"></a>
 			</div>
+			</c:if>
 		</c:forEach>
 			<br>			
 			<div>

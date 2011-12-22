@@ -367,8 +367,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			// fill fields of correspondents section
 			documentToUpdate.setLastUpdate(new Date());
-			if (document.getSenderPeople().getPersonId() > 0)
-				documentToUpdate.setSenderPeople(getPeopleDAO().find(document.getSenderPeople().getPersonId()));
+			if (document.getSenderPeople().getPersonId() > 0){
+				People sender = getPeopleDAO().find(document.getSenderPeople().getPersonId());
+				documentToUpdate.setSenderPeople(sender);
+				if(document.getSenderPeople().getPersonId() != 198 && document.getSenderPeople().getPersonId() != 3905 && document.getSenderPeople().getPersonId() != 9285){
+					EpLink epLinkSender = getEpLinkDAO().findByEntryIdAndRole(document.getEntryId(), "S");
+					if(epLinkSender == null){
+						epLinkSender = new EpLink(null);
+						epLinkSender.setDateCreated(new Date());
+						epLinkSender.setDocRole("S");
+						epLinkSender.setDocument(documentToUpdate);
+						epLinkSender.setPerson(sender);
+						epLinkSender.setAssignUnsure(false);
+						epLinkSender.setPortrait(false);
+						getEpLinkDAO().persist(epLinkSender);
+					}else{
+						epLinkSender.setPerson(sender);
+						getEpLinkDAO().merge(epLinkSender);
+					}
+				}
+			}
 			else
 				documentToUpdate.setSenderPeople(null);
 			documentToUpdate.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
@@ -385,8 +403,26 @@ public class DocBaseServiceImpl implements DocBaseService {
 			else
 				documentToUpdate.setSenderPlace(null);
 			documentToUpdate.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
-			if (document.getRecipientPeople().getPersonId() > 0)
-				documentToUpdate.setRecipientPeople(getPeopleDAO().find(document.getRecipientPeople().getPersonId()));
+			if (document.getRecipientPeople().getPersonId() > 0){
+				People recipient = getPeopleDAO().find(document.getRecipientPeople().getPersonId());
+				documentToUpdate.setRecipientPeople(recipient);
+				if(document.getRecipientPeople().getPersonId() != 198 && document.getRecipientPeople().getPersonId() != 3905 && document.getRecipientPeople().getPersonId() != 9285){
+					EpLink epLinkSender = getEpLinkDAO().findByEntryIdAndRole(document.getEntryId(), "R");
+					if(epLinkSender == null){
+						epLinkSender = new EpLink(null);
+						epLinkSender.setDateCreated(new Date());
+						epLinkSender.setDocRole("R");
+						epLinkSender.setDocument(documentToUpdate);
+						epLinkSender.setPerson(recipient);
+						epLinkSender.setAssignUnsure(false);
+						epLinkSender.setPortrait(false);
+						getEpLinkDAO().persist(epLinkSender);
+					}else{
+						epLinkSender.setPerson(recipient);
+						getEpLinkDAO().merge(epLinkSender);
+					}
+				}
+			}
 			else
 				documentToUpdate.setRecipientPeople(null);
 			documentToUpdate.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());

@@ -77,6 +77,7 @@
 				
 			<c:forEach items="${document.epLink}" var="currentPeople">
 			<!-- This is a method to have a value near the item with the text People. -->	
+					<c:if test="${currentPeople.docRole!= 'S' && currentPeople.docRole != 'R'}">
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
@@ -86,10 +87,12 @@
 					<c:if test="${currentPeople.person.personId == 9285 || currentPeople.person.personId == 3905 || currentPeople.person.personId == 198}">
 					<div class="value80">${currentPeople.person.mapNameLf}</div>
 					</c:if>
+					
 
 				</div>
 				<div class="row">
 					<div class="item">&nbsp</div>
+				</c:if>
 			</c:forEach>
 			</div>
 		</div>

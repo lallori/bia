@@ -48,14 +48,18 @@
 
 		<c:if test="${not empty image}">
 			<div id="DocumentImageDigitDiv">
-				<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
-				<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}"></a><br>
-				<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview on the right screen"></a>
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
+					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}"></a><br>
+					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview on the right screen"></a>
+				</security:authorize>
 			</div>
 		</c:if>
 		<c:if test="${empty image}">
 			<div id="DocumentImageNotDigitDiv">
-				<img src="<c:url value="/images/1024/img_toBeDigitizedDocument.png"/>" title="To be digitized" width="120px" height="160px">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+					<img src="<c:url value="/images/1024/img_toBeDigitizedDocument.png"/>" title="To be digitized" width="120px" height="160px">
+				</security:authorize>
 			</div>
 		</c:if>
 		
