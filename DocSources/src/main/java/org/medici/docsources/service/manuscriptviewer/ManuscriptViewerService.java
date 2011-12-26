@@ -123,34 +123,17 @@ public interface ManuscriptViewerService {
 	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable;
 
 	/**
-	 * This method will search first {@link org.medici.docsources.domain.Image} 
-	 * linked to a  {@link org.medici.docsources.domain.Volume} identified by his volume
-	 * summaryId.
 	 * 
 	 * @param summaryId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Image findVolumeImage(Integer summaryId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param summaryId
+	 * @param volNum
+	 * @param volLetExt
 	 * @param imageType
 	 * @param imageProgTypeNum
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Image findVolumeImage(Integer summaryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param summaryId
 	 * @param imageOrder
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Image findVolumeImage(Integer summaryId, Integer imageOrder) throws ApplicationThrowable;
+	public Image findVolumeImage(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable;
 
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
@@ -180,19 +163,6 @@ public interface ManuscriptViewerService {
 	
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
-	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
-	 * volume number and his letter extension.
-	 * 
-	 * @param volNum Volume number identifier
-	 * @param volLetExt Volume letter extension identifier.
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable;
-
-	/**
-	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * with specific image type and folio number linked to a 
 	 * {@link org.medici.docsources.domain.Volume} identified by his volume
 	 * number and his letter extension.
@@ -205,7 +175,7 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
-	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
+	public List<Image> findVolumeImages(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable;
 
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 

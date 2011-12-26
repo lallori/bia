@@ -579,7 +579,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 				}
 			} else if (volumeExplorer.getSummaryId() == null && volumeExplorer.getVolNum() != null) {
 				Volume volume = getVolumeDAO().findVolume(volumeExplorer.getVolNum(), volumeExplorer.getVolLetExt());
-				volumeExplorer.setSummaryId(volume.getSummaryId());
+				if (volume != null) {
+					volumeExplorer.setSummaryId(volume.getSummaryId());
+				}
 			}
 			return getImageDAO().findImages(volumeExplorer);
 		} catch (Throwable th) {

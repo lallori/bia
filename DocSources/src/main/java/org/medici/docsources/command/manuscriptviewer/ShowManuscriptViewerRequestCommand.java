@@ -43,7 +43,7 @@ public class ShowManuscriptViewerRequestCommand {
 	private Integer summaryId;
 	private Integer volNum;
 	@Size (max=1)
-	private String volLeText;
+	private String volLetExt;
 	private Integer imageId;
 	private String imageName;
 	private ImageType imageType;
@@ -97,17 +97,17 @@ public class ShowManuscriptViewerRequestCommand {
 	}
 	
 	/**
-	 * @return the volLeText
+	 * @return the volLetExt
 	 */
-	public String getVolLeText() {
-		return volLeText;
+	public String getVolLetExt() {
+		return volLetExt;
 	}
 	
 	/**
 	 * @param volLeText the volLeText to set
 	 */
-	public void setVolLeText(String volLeText) {
-		this.volLeText = volLeText;
+	public void setVolLeText(String volLetExt) {
+		this.volLetExt = volLetExt;
 	}
 	
 	/**

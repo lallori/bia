@@ -90,7 +90,7 @@ public class ShowExplorerVolumeValidator implements Validator {
 		
 		if (showExplorerVolumeCommand.getImageProgTypeNum() != null) {
 			try {
-				if (getManuscriptViewerService().findVolumeImages(showExplorerVolumeCommand.getVolNum(), showExplorerVolumeCommand.getVolLetExt(), showExplorerVolumeCommand.getImageType(), showExplorerVolumeCommand.getImageProgTypeNum()) == null) {
+				if (getManuscriptViewerService().findVolumeImages(null, showExplorerVolumeCommand.getVolNum(), showExplorerVolumeCommand.getVolLetExt(), showExplorerVolumeCommand.getImageType(), showExplorerVolumeCommand.getImageProgTypeNum(), null) == null) {
 					if (showExplorerVolumeCommand.getImageType().equals(ImageType.R)) {
 						errors.rejectValue("imageProgTypeNum", "error.rubricario.notfound", new Object[]{showExplorerVolumeCommand.getImageProgTypeNum()}, null);
 					}

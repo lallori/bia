@@ -126,7 +126,13 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		if (!StringUtils.isEmpty(volLetExt))
 			typedQuery.setParameter("volLetExt", volLetExt);
 
-		return typedQuery.getSingleResult();
+		List<Volume> result = typedQuery.getResultList();
+		
+		if (result.size() == 1) {
+			return result.get(0);
+		} else {
+			return null;
+		}
 	}
 	/**
 	 * {@inheritDoc}

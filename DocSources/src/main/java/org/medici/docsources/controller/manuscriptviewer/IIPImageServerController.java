@@ -45,6 +45,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -400,6 +401,12 @@ public class IIPImageServerController {
 				// Flushing request
 				httpServletResponse.getOutputStream().flush();
 			}
+	    } catch (IIOException iioException) {
+	    	if (iioException.getMessage().equals("Unsupported Image Type")) {
+	    		logger.error("Unsupported Image Type " + imageFile);
+	    	} else {
+	    		logger.error(iioException);
+	    	}
 	    } catch (Throwable throwable) {
 			logger.error(throwable);
 	    } finally {

@@ -209,64 +209,31 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * 
 	 */
 	@Override
-	public Image findVolumeImage(Integer summaryId) throws ApplicationThrowable {
-		try {
-			Volume volume = getVolumeDAO().find(summaryId);
-			if (volume != null) {
-				List<Image> images = getImageDAO().findVolumeImages(volume.getVolNum(), volume.getVolLetExt());
-				if (images.size() > 0) {
-					return images.get(0);
+	public Image findVolumeImage(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable {
+		if (summaryId != null && volNum == null) {
+			try {
+				Volume volume = getVolumeDAO().find(summaryId);
+				if (volume != null) {
+					return getImageDAO().findVolumeImage(volume.getVolNum(), volume.getVolLetExt(), imageOrder);
 				} else {
 					return null;
 				}
-			} else {
-				return null;
+			} catch (Throwable th) {
+				throw new ApplicationThrowable(th);
 			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
 		}
-	}
+		if ((summaryId == null) && (imageOrder==null) && (imageProgTypeNum == null) && (volNum != null)) {
+			return getImageDAO().findVolumeFirstImage(volNum, volLetExt);
+		} else if (imageProgTypeNum != null) {
+			return getImageDAO().findImage(volNum, volLetExt, imageType, imageProgTypeNum);
+		} else if (imageOrder != null) {
+			return getImageDAO().findVolumeImage(volNum, volLetExt, imageOrder);
+		}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Image findVolumeImage(Integer summaryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
-		try {
-			Volume volume = getVolumeDAO().find(summaryId);
-			if (volume != null) {
-				List<Image> images = getImageDAO().findVolumeImages(volume.getVolNum(), volume.getVolLetExt(), imageType, imageProgTypeNum);
-				if (images.size() > 0) {
-					return images.get(0);
-				} else {
-					return null;
-				}
-			} else {
-				return null;
-			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Image findVolumeImage(Integer summaryId, Integer imageOrder) throws ApplicationThrowable {
-		try {
-			Volume volume = getVolumeDAO().find(summaryId);
-			if (volume != null) {
-				return getImageDAO().findVolumeImage(volume.getVolNum(), volume.getVolLetExt(), imageOrder);
-			} else {
-				return null;
-			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
+		return null;	
 	}
 
 	/**
@@ -277,12 +244,29 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		try {
 			Volume volume = getVolumeDAO().find(summaryId);
 			
-			return findVolumeImages(volume.getVolNum(), volume.getVolLetExt());
+			return findVolumeImages(null, volume.getVolNum(), volume.getVolLetExt(), null, null, null);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Image> findVolumeImages(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable {
+		if ((summaryId == null) && (imageOrder==null) && (imageProgTypeNum == null) && (volNum != null)) {
+			return getImageDAO().findImages(volNum, volLetExt);
+		} else if (imageProgTypeNum != null) {
+			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+		} else if (imageOrder != null) {
+			return getImageDAO().findVolumeImages(volNum, volLetExt, imageOrder);
+		}
+
+		return null;
+	}
+
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -297,31 +281,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable {
-		try {
-			return getImageDAO().findImages(volNum, volLetExt);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
-		try {
-			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -333,7 +293,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -345,7 +305,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * @return the documentDAO
 	 */

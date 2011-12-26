@@ -645,6 +645,29 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return result;
 	}
 
+	@Override
+	public List<Image> findVolumeImages(Integer volNum, String volLetExt, Integer imageOrder) {
+		StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volLetExt))
+        	stringBuffer.append("=:volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" and imageOrder=:imageOrder");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volNum);
+        if (!StringUtils.isEmpty(volLetExt)) {
+        	query.setParameter("volLetExt", volLetExt);
+        }
+    	query.setParameter("imageOrder", imageOrder);
+		List<Image> result = (List<Image>) query.getResultList();
+
+		if (result.isEmpty())
+			return null;
+		
+		return result;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

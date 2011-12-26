@@ -95,22 +95,35 @@ public class ShowManuscriptViewerController {
 			// we set default image as empty string, so we need only to update the record.
 			model.put("image", "");
 
-			//If the request is made with imageName, we don't need to query database
+			// If the request is made with entryId, we are asking a document
 			if (!ObjectUtils.toString(command.getEntryId()).equals("")) {
 				if ((!ObjectUtils.toString(command.getImageOrder()).equals(""))) {
 					image = getManuscriptViewerService().findDocumentImage(command.getEntryId(), command.getImageOrder());
 				} else {
 					image = getManuscriptViewerService().findDocumentImage(command.getEntryId(), command.getImageType(), command.getImageProgTypeNum());
 				}
-			} else if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
-				if ((!ObjectUtils.toString(command.getImageOrder()).equals(""))) {
-					image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getImageOrder());
-				} else if ((!ObjectUtils.toString(command.getImageProgTypeNum()).equals(""))) {
-					image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getImageType(), command.getImageProgTypeNum());
-				} else {
-					image = getManuscriptViewerService().findVolumeImage(command.getSummaryId());
-				}
-			}
+			} else {
+				image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getVolNum(), command.getVolLetExt(), command.getImageType(), command.getImageProgTypeNum(), command.getImageOrder());
+
+				/*// Otherwise if summaryId is present we are asking an existing volume  
+				if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
+					if ((!ObjectUtils.toString(command.getImageOrder()).equals(""))) {
+					} else if ((!ObjectUtils.toString(command.getImageProgTypeNum()).equals(""))) {
+						image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getImageType(), command.getImageProgTypeNum());
+					} else {
+						image = getManuscriptViewerService().findVolumeImage(command.getSummaryId());
+					}
+				} else  {
+					// otherwise we are asking a new digitized volume
+					if ((!ObjectUtils.toString(command.getImageOrder()).equals(""))) {
+						image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getImageOrder());
+					} else if ((!ObjectUtils.toString(command.getImageProgTypeNum()).equals(""))) {
+						image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getImageType(), command.getImageProgTypeNum());
+					} else {
+						image = getManuscriptViewerService().findVolumeImage(command.getSummaryId());
+					}
+				}*/
+			} 
 
 			model.put("image", image);
 		} catch (ApplicationThrowable ath) {
