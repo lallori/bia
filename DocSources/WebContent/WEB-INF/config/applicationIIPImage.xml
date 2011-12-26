@@ -18,7 +18,7 @@
 				<prop key="iipimage.fcgi.path">/fcgi-bin/iipsrv.fcgi</prop>
 				<!-- This property describes iipimage version server (values 0.9.8 or 0.9.8)-->
 				<prop key="iipimage.version">0.9.9</prop>
-				<prop key="iipimage.image.path">C:/data/tiled_mdp/</prop>
+				<prop key="iipimage.image.path">/data/tiled_mdp/</prop>
 			</props>
 		</property>
 	</bean>
