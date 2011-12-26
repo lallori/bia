@@ -53,8 +53,10 @@
                 $(this).find('input').each(function() {
                 	parameters += $(this).attr('id') + '=' + $(this).val() + '&';
                 });
-				$.get(functionParams["searchUrl"], parameters,
-					function(data){
+				$.get(functionParams["searchUrl"], parameters, function(data){
+					if (data.error != '') {
+						$j('#notFound').dialog('open');
+					} else {
 						$("#targetframe").html('');
 						var credit = 'Folio n. ' + data.imageProgTypeNum;
 						
@@ -89,7 +91,7 @@
 							$("#next").attr('href', data.nextPage);
 						}
 					}
-				);
+				});
 
             });
         });

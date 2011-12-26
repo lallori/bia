@@ -145,6 +145,10 @@
 		</c:if> 
 	</div>
 
+	<div id="notFound" title="Alert" style="display:none">
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This folio is not present/missing/not available. Check the volume summary.</p>
+	</div>
+	
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${SearchAjaxURL}', imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
@@ -205,6 +209,17 @@
 				}
 			});
 
+			$j("#notFound").dialog({
+				resizable: false,
+				height:140,
+				modal: true,
+				autoOpen : false,
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				}
+			});
+			
 			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open');
 				return false;
