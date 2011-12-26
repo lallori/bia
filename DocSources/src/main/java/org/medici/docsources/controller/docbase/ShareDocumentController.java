@@ -35,6 +35,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -53,6 +54,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShareDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
 	 * 
@@ -77,7 +80,7 @@ public class ShareDocumentController {
 			Document document = getDocBaseService().findDocument(command.getEntryId());
 			model.put("document", document);
 	
-			Image image = getDocBaseService().findDocumentImageThumbnail(document);
+			Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 			model.put("image", image);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShareDocument", model);
@@ -92,5 +95,19 @@ public class ShareDocumentController {
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

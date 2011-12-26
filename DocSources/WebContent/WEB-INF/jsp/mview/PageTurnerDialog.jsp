@@ -7,6 +7,7 @@
 	<c:url var="SearchAjaxURL" value="/src/mview/SearchCarta.json"/>
 	
 	<c:url var="IIPImageServerURL" value="/mview/IIPImageServer.do"/>
+
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 	
 	<c:url var="PersonalNotesDialogURL" value="/src/mview/EditPersonalNotesDialog.do"/>

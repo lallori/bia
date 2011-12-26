@@ -38,7 +38,7 @@ import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,21 +54,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller("ManuscriptViewerAjaxController")
 public class AjaxController {
 	@Autowired
-	private DocBaseService docBaseService;
+	private ManuscriptViewerService manuscriptViewerService;
 
-	/**
-	 * @param docBaseService the docBaseService to set
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
-
-	/**
-	 * @return the docBaseService
-	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
 	/**
 	 * 
 	 * @param entryId Document identifier
@@ -153,7 +140,7 @@ public class AjaxController {
 		documentExplorer.setTotalGuardia(totalGuardia);
 
 		try {
-			documentExplorer = getDocBaseService().getDocumentExplorer(documentExplorer);
+			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 			
 			if (documentExplorer.getImage().getImageName() != null) {
 				model.put("entryId", documentExplorer.getEntryId());
@@ -185,5 +172,19 @@ public class AjaxController {
 		}
 			
 		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

@@ -145,6 +145,50 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<String> findDocumentsDigitized(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums,	List<String> folioMods) {
+		StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE ");
+        for(int i=0;i<volNums.size();i++){
+        	if(folioNums.get(i)!= null){
+        		if(stringBuffer.indexOf("volNum") != -1){
+        			stringBuffer.append(" or ");
+        		}
+	        	stringBuffer.append("(volNum=");
+	        	stringBuffer.append(volNums.get(i));
+	        	stringBuffer.append(" and volLetExt ");
+	        	if (StringUtils.isEmpty(volLetExts.get(i))) {
+		        	stringBuffer.append("is null");
+	        	} else {
+		        	stringBuffer.append("='");
+		        	stringBuffer.append(volLetExts.get(i));
+		        	stringBuffer.append("'");
+	        	}
+		
+		    	stringBuffer.append(" and imageName like '%_C_");
+		    	
+		    	stringBuffer.append(ImageUtils.formatFolioNumber(folioNums.get(i), folioMods.get(i)));
+		    	stringBuffer.append("_%.tif')");
+        	}
+        }
+    	
+        List<String> returnValues = new ArrayList<String>(0);
+        if(stringBuffer.indexOf("volNum") != -1){
+        	Query query = getEntityManager().createQuery(stringBuffer.toString());
+
+        	List<Image> result = (List<Image>) query.getResultList();
+		
+        	
+        	for (int i=0; i<result.size(); i++) {
+        		returnValues.add(DocumentUtils.toMDPAndFolioFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt(), ImageUtils.extractFolioNumber(result.get(i).getImageName()), ImageUtils.extractFolioExtension(result.get(i).getImageName())));
+        	}
+        }
+		return returnValues;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public Image findImage(Integer volNum, String volLetExt, ImageType imageType, Integer folioNum) throws PersistenceException {
         StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");
         if (!StringUtils.isEmpty(volLetExt))
@@ -388,6 +432,31 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public List<Integer> findNewDigitizedVolumes() throws PersistenceException {
+		// we need to extract volLetExt equals
+        String hql = "SELECT DISTINCT(b.summaryId) FROM Image a, Volume b WHERE a.volNum=b.volNum and a.volLetExt=b.volLetExt and b.digitized=false";
+
+        Query query = getEntityManager().createQuery(hql);
+
+        List<Integer> result = (List<Integer>) query.getResultList();
+
+		// second query is for volLetExt equal to null
+        hql = "SELECT DISTINCT(b.summaryId) FROM Image a, Volume b WHERE a.volNum=b.volNum and a.volLetExt is null and b.digitized=false";
+
+        query = getEntityManager().createQuery(hql);
+        
+        result.addAll(query.getResultList());
+
+		if (result.isEmpty())
+			return new ArrayList<Integer>(0);
+		
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Image findVolumeFirstImage(Integer volNum, String volLetExt) throws PersistenceException {
@@ -546,7 +615,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
 		return query.getResultList();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -613,50 +682,6 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 			}
         }
 
-		return returnValues;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<String> findDocumentsDigitized(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums,	List<String> folioMods) {
-		StringBuffer stringBuffer = new StringBuffer("FROM Image WHERE ");
-        for(int i=0;i<volNums.size();i++){
-        	if(folioNums.get(i)!= null){
-        		if(stringBuffer.indexOf("volNum") != -1){
-        			stringBuffer.append(" or ");
-        		}
-	        	stringBuffer.append("(volNum=");
-	        	stringBuffer.append(volNums.get(i));
-	        	stringBuffer.append(" and volLetExt ");
-	        	if (StringUtils.isEmpty(volLetExts.get(i))) {
-		        	stringBuffer.append("is null");
-	        	} else {
-		        	stringBuffer.append("='");
-		        	stringBuffer.append(volLetExts.get(i));
-		        	stringBuffer.append("'");
-	        	}
-		
-		    	stringBuffer.append(" and imageName like '%_C_");
-		    	
-		    	stringBuffer.append(ImageUtils.formatFolioNumber(folioNums.get(i), folioMods.get(i)));
-		    	stringBuffer.append("_%.tif')");
-        	}
-        }
-    	
-        List<String> returnValues = new ArrayList<String>(0);
-        if(stringBuffer.indexOf("volNum") != -1){
-        	Query query = getEntityManager().createQuery(stringBuffer.toString());
-
-        	List<Image> result = (List<Image>) query.getResultList();
-		
-        	
-        	for (int i=0; i<result.size(); i++) {
-        		returnValues.add(DocumentUtils.toMDPAndFolioFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt(), ImageUtils.extractFolioNumber(result.get(i).getImageName()), ImageUtils.extractFolioExtension(result.get(i).getImageName())));
-        	}
-        }
 		return returnValues;
 	}
 
@@ -854,31 +879,6 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				}
 			}
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Integer> findNewDigitizedVolumes() throws PersistenceException {
-		// we need to extract volLetExt equals
-        String hql = "SELECT DISTINCT(b.summaryId) FROM Image a, Volume b WHERE a.volNum=b.volNum and a.volLetExt=b.volLetExt and b.digitized=false";
-
-        Query query = getEntityManager().createQuery(hql);
-
-        List<Integer> result = (List<Integer>) query.getResultList();
-
-		// second query is for volLetExt equal to null
-        hql = "SELECT DISTINCT(b.summaryId) FROM Image a, Volume b WHERE a.volNum=b.volNum and a.volLetExt is null and b.digitized=false";
-
-        query = getEntityManager().createQuery(hql);
-        
-        result.addAll(query.getResultList());
-
-		if (result.isEmpty())
-			return new ArrayList<Integer>(0);
-		
-		return result;
 	}
 
 }

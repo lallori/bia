@@ -34,6 +34,7 @@ import org.medici.docsources.command.manuscriptviewer.ShowManuscriptViewerReques
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,6 +56,8 @@ public class ShowManuscriptViewerController {
 	private DocBaseService docBaseService;
 	@Autowired
 	private VolBaseService volBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
 	 * @return the docBaseService
@@ -95,17 +98,17 @@ public class ShowManuscriptViewerController {
 			//If the request is made with imageName, we don't need to query database
 			if (!ObjectUtils.toString(command.getEntryId()).equals("")) {
 				if ((!ObjectUtils.toString(command.getImageOrder()).equals(""))) {
-					image = getDocBaseService().findDocumentImage(command.getEntryId(), command.getImageOrder());
+					image = getManuscriptViewerService().findDocumentImage(command.getEntryId(), command.getImageOrder());
 				} else {
-					image = getDocBaseService().findDocumentImage(command.getEntryId(), command.getImageType(), command.getImageProgTypeNum());
+					image = getManuscriptViewerService().findDocumentImage(command.getEntryId(), command.getImageType(), command.getImageProgTypeNum());
 				}
 			} else if (!ObjectUtils.toString(command.getSummaryId()).equals("")) {
 				if ((!ObjectUtils.toString(command.getImageOrder()).equals(""))) {
-					image = getVolBaseService().findVolumeImage(command.getSummaryId(), command.getImageOrder());
+					image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getImageOrder());
 				} else if ((!ObjectUtils.toString(command.getImageProgTypeNum()).equals(""))) {
-					image = getVolBaseService().findVolumeImage(command.getSummaryId(), command.getImageType(), command.getImageProgTypeNum());
+					image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getImageType(), command.getImageProgTypeNum());
 				} else {
-					image = getVolBaseService().findVolumeImage(command.getSummaryId());
+					image = getManuscriptViewerService().findVolumeImage(command.getSummaryId());
 				}
 			}
 
@@ -125,5 +128,19 @@ public class ShowManuscriptViewerController {
 	 */
 	public void setVolBaseService(VolBaseService volBaseService) {
 		this.volBaseService = volBaseService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

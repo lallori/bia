@@ -125,6 +125,14 @@ public interface DocBaseService {
 	public Boolean checkDocumentDigitized(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document checkVolumeFolio(Integer summaryId) throws ApplicationThrowable;
+
+	/**
 	 * This method will return a new {@link org.medici.docsources.domain.Document} constructed 
 	 * in runtime, from which, user can follow to editing new document.
 	 * 
@@ -144,15 +152,6 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Document deleteDocument(Integer entryId) throws ApplicationThrowable;
-
-	/**
-	 * This method mark a {@link org.medici.docsources.domain.Document} as available.
-	 * 
-	 * @param entryId 
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Document undeleteDocument(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -279,75 +278,6 @@ public interface DocBaseService {
 	 */
 	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
 
-	/**
-	 * 
-	 * @param entryId
-	 * @param imageType
-	 * @param imageProgTypeNum
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Image findDocumentImage(Integer entryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param entryId
-	 * @param imageOrder
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Image findDocumentImage(Integer entryId, Integer imageOrder) throws ApplicationThrowable;
-
-	/**
-	 * This method will search every {@link org.medici.docsources.domain.Image} 
-	 * with specific image type and folio number linked to a 
-	 * {@link org.medici.docsources.domain.Volume} identified by his volume
-	 * number and his letter extension.
-	 * 
-	 * @param volNum Volume number identifier
-	 * @param volLetExt Volume letter extension identifier.
-	 * @param imageType {@link org.medici.docsources.domain.Image$ImageType} identifier
-	 * @param imageProgTypeNum Folio number
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public Image findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
-
-	/**
-	 * This method searches document's images linked to a specific document.
-	 * 
-	 * @param entryId Document
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public List<Image> findDocumentImages(Integer entryId) throws ApplicationThrowable;
-
-	/**
-	 * This method will search every {@link org.medici.docsources.domain.Image} 
-	 * with specific image type and folio number linked to a 
-	 * {@link org.medici.docsources.domain.Volume} identified by his volume
-	 * number and his letter extension.
-	 * 
-	 * @param volNum Volume number identifier
-	 * @param volLetExt Volume letter extension identifier.
-	 * @param imageType {@link org.medici.docsources.domain.Image$ImageType} identifier
-	 * @param imageProgTypeNum Folio number
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public List<Image> findDocumentImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param document
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -464,13 +394,16 @@ public interface DocBaseService {
 	public void generateIndexTopicList() throws ApplicationThrowable;
 
 	/**
+	 * This method searches if the documents are digitized
 	 * 
-	 * @param pageTurner
+	 * @param volNums
+	 * @param volLetExts
+	 * @param folioNums
+	 * @param folioMods
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
 	 */
-	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable;
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
 
 	/**
 	 * Extracts all months available.
@@ -501,7 +434,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<Place> searchPlaceLinkableToTopicDocument(Integer entryId, String query) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param entryId
@@ -513,22 +446,11 @@ public interface DocBaseService {
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
 	
 	/**
-	 * This method searches if the documents are digitized
+	 * This method mark a {@link org.medici.docsources.domain.Document} as available.
 	 * 
-	 * @param volNums
-	 * @param volLetExts
-	 * @param folioNums
-	 * @param folioMods
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param summaryId
+	 * @param entryId 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Document checkVolumeFolio(Integer summaryId) throws ApplicationThrowable;
+	public Document undeleteDocument(Integer entryId) throws ApplicationThrowable;
 }

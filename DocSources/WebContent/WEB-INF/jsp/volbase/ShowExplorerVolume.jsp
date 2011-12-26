@@ -4,26 +4,32 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="explorerVolumeModalWindow" value="/src/volbase/ShowExplorerVolume.do">
-			<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
-			<c:param name="volNum" value="${volumeExplorer.volNum}" />
-			<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
-			<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
-			<c:param name="total" value="${volumeExplorer.total}" />
-			<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-			<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
-			<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-			<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
-			<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="false"/>
-			<c:param name="modalWindow" value="true"/>
-		</c:url>
-
-	</security:authorize>
+	<c:url var="explorerVolumeModalWindowURL" value="/src/volbase/ShowExplorerVolume.do">
+		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
+		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+		<c:param name="total" value="${volumeExplorer.total}" />
+		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+		<c:param name="flashVersion" value="false"/>
+		<c:param name="modalWindow" value="true"/>
+	</c:url>
 	
+	<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
+		<c:param name="summaryId"   value="${volumeExplorer.summaryId}" />
+		<c:param name="volNum"   value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt"   value="${volumeExplorer.volLetExt}" />
+		<c:param name="flashVersion"   value="false" />
+	</c:url>
+
 	<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
 		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
 		<c:param name="flashVersion"	value="${command.flashVersion}" />
 		<c:param name="showHelp" value="true" />
@@ -188,7 +194,15 @@
 		<br />
 			
 		<div>
-			<a id="flipItInFullScreen" href="${explorerVolumeModalWindow}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a>
+			<!--<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<a id="flipItInFullScreen" href="${explorerVolumeModalWindowURL}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a>
+			</security:authorize>
+			<security:authorize ifAnyGranted="ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
+				<a id="ShowManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">ManuscriptViewer Mode</a>
+			</security:authorize>-->
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
+				<a id="ShowManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER">ManuscriptViewer Mode</a>
+			</security:authorize>
 			<a id="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
 		</div>
@@ -206,6 +220,8 @@
 					bg_alpha : 0.5,
 					piro_scroll : true
 				});
+
+				$j("#ShowManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 
 				$j(".previousPage").click(function(){
 					// we change selected tab url, 

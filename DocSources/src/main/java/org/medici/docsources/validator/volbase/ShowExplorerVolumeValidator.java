@@ -30,6 +30,7 @@ package org.medici.docsources.validator.volbase;
 import org.medici.docsources.command.volbase.ShowExplorerVolumeCommand;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -44,6 +45,8 @@ import org.springframework.validation.Validator;
 public class ShowExplorerVolumeValidator implements Validator {
 	@Autowired
 	private VolBaseService volBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
 	 * 
@@ -87,7 +90,7 @@ public class ShowExplorerVolumeValidator implements Validator {
 		
 		if (showExplorerVolumeCommand.getImageProgTypeNum() != null) {
 			try {
-				if (getVolBaseService().findVolumeImages(showExplorerVolumeCommand.getVolNum(), showExplorerVolumeCommand.getVolLetExt(), showExplorerVolumeCommand.getImageType(), showExplorerVolumeCommand.getImageProgTypeNum()) == null) {
+				if (getManuscriptViewerService().findVolumeImages(showExplorerVolumeCommand.getVolNum(), showExplorerVolumeCommand.getVolLetExt(), showExplorerVolumeCommand.getImageType(), showExplorerVolumeCommand.getImageProgTypeNum()) == null) {
 					if (showExplorerVolumeCommand.getImageType().equals(ImageType.R)) {
 						errors.rejectValue("imageProgTypeNum", "error.rubricario.notfound", new Object[]{showExplorerVolumeCommand.getImageProgTypeNum()}, null);
 					}
@@ -99,5 +102,19 @@ public class ShowExplorerVolumeValidator implements Validator {
 				
 			}
 		}
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

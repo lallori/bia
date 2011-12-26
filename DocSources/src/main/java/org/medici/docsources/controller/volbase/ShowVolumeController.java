@@ -36,6 +36,7 @@ import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,6 +57,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShowVolumeController {
 	@Autowired
 	private VolBaseService volBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
 	 * 
@@ -81,7 +84,7 @@ public class ShowVolumeController {
 		if (command.getSummaryId() > 0) {
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
-				Image image = getVolBaseService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
 				model.put("image", image);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
@@ -104,5 +107,19 @@ public class ShowVolumeController {
 	 */
 	public void setVolBaseService(VolBaseService volBaseService) {
 		this.volBaseService = volBaseService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

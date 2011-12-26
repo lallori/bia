@@ -32,11 +32,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.command.volbase.PrintVolumeRequestCommand;
-import org.medici.docsources.command.volbase.ShowVolumeRequestCommand;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +48,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show volume".
+ * Controller for action "Print volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -57,6 +57,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class PrintVolumeController {
 	@Autowired
 	private VolBaseService volBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
 	 * 
@@ -82,7 +84,7 @@ public class PrintVolumeController {
 		if (command.getSummaryId() > 0) {
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
-				Image image = getVolBaseService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
 				model.put("image", image);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/PrintVolume", model);
@@ -105,5 +107,19 @@ public class PrintVolumeController {
 	 */
 	public void setVolBaseService(VolBaseService volBaseService) {
 		this.volBaseService = volBaseService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

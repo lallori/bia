@@ -27,6 +27,10 @@
     	<description>Service that manages mail.</description>
     </bean>
 
+    <bean id="manuscriptViewerService" class="org.medici.docsources.service.manuscriptviewer.ManuscriptViewerServiceImpl">
+    	<description>Service that manages manuscript informations.</description>
+    </bean>
+    
     <bean id="peopleBaseService" class="org.medici.docsources.service.peoplebase.PeopleBaseServiceImpl">
     	<description>Service that manages peoples informations.</description>
     </bean>

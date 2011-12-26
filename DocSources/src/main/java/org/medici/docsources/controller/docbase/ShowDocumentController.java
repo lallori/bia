@@ -37,6 +37,7 @@ import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -57,6 +58,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShowDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
 	 * 
@@ -83,7 +86,7 @@ public class ShowDocumentController {
 				document = getDocBaseService().findDocument(command.getEntryId());
 				
 	
-				Image image = getDocBaseService().findDocumentImageThumbnail(document);
+				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 				model.put("image", image);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowDocument", model);
@@ -106,5 +109,19 @@ public class ShowDocumentController {
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

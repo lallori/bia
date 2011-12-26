@@ -218,7 +218,7 @@
 								}
 								$j("#save").removeAttr("disabled");
 							
-						} 
+							} 
 							
 							/*var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
 	            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
@@ -237,8 +237,8 @@
 				}
 	 		}
 			
-			$j("#folioNum").change(folioNotExist);
-			$j("#folioMod").change(folioNotExist);
+			/*$j("#folioNum").change(folioNotExist);
+			$j("#folioMod").change(folioNotExist);*/
 
 			if ($j("#transcribeFolioNum").val().length>0) {
 				$j("#EditDetailsDocument").volumeExplorer( {

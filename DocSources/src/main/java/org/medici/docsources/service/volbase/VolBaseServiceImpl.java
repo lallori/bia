@@ -429,141 +429,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
-
-	@Override
-	public Image findVolumeImage(Integer summaryId) throws ApplicationThrowable {
-		try {
-			Volume volume = getVolumeDAO().find(summaryId);
-			if (volume != null) {
-				List<Image> images = getImageDAO().findVolumeImages(volume.getVolNum(), volume.getVolLetExt());
-				if (images.size() > 0) {
-					return images.get(0);
-				} else {
-					return null;
-				}
-			} else {
-				return null;
-			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Image findVolumeImage(Integer summaryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
-		try {
-			Volume volume = getVolumeDAO().find(summaryId);
-			if (volume != null) {
-				List<Image> images = getImageDAO().findVolumeImages(volume.getVolNum(), volume.getVolLetExt(), imageType, imageProgTypeNum);
-				if (images.size() > 0) {
-					return images.get(0);
-				} else {
-					return null;
-				}
-			} else {
-				return null;
-			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Image findVolumeImage(Integer summaryId, Integer imageOrder) throws ApplicationThrowable {
-		try {
-			Volume volume = getVolumeDAO().find(summaryId);
-			if (volume != null) {
-				return getImageDAO().findVolumeImage(volume.getVolNum(), volume.getVolLetExt(), imageOrder);
-			} else {
-				return null;
-			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable {
-		try {
-			Volume volume = getVolumeDAO().find(summaryId);
-			
-			return findVolumeImages(volume.getVolNum(), volume.getVolLetExt());
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			// We extract volume to obtains its volNum and VolLetExt so we can use only one method.
-			Volume volume = getVolumeDAO().find(summaryId);
-
-			return getImageDAO().findImages(volume.getVolNum(), volume.getVolLetExt(), paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Image> findVolumeImages(Integer volNum, String volLetExt) throws ApplicationThrowable {
-		try {
-			return getImageDAO().findImages(volNum, volLetExt);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Image> findVolumeImages(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
-		try {
-			return getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getImageDAO().findImages(volNum, volLetExt, paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Image findVolumeImageSpine(Integer volNum, String volLetExt) throws ApplicationThrowable {
-		try {
-			return getImageDAO().findVolumeSpine(volNum, volLetExt);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -712,6 +577,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 					volumeExplorer.setVolNum(volume.getVolNum());
 					volumeExplorer.setVolLetExt(volume.getVolLetExt());
 				}
+			} else if (volumeExplorer.getSummaryId() == null && volumeExplorer.getVolNum() != null) {
+				Volume volume = getVolumeDAO().findVolume(volumeExplorer.getVolNum(), volumeExplorer.getVolLetExt());
+				volumeExplorer.setSummaryId(volume.getSummaryId());
 			}
 			return getImageDAO().findImages(volumeExplorer);
 		} catch (Throwable th) {

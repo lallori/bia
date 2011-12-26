@@ -37,6 +37,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -55,6 +56,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class EditDocumentInManuscriptViewerController {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
 	 * 
@@ -78,7 +81,7 @@ public class EditDocumentInManuscriptViewerController {
 		documentExplorer.setTotalGuardia(command.getTotalGuardia());
 
 		try {
-			documentExplorer = getDocBaseService().getDocumentExplorer(documentExplorer);
+			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
 
 			Document document = getDocBaseService().findDocument(command.getEntryId());
 			model.put("document", document);
@@ -88,6 +91,20 @@ public class EditDocumentInManuscriptViewerController {
 
 		
 		return new ModelAndView("mview/EditDocumentInManuscriptViewerHtml", model);
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 
 	/**

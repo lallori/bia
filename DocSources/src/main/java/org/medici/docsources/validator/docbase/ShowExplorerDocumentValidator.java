@@ -31,6 +31,7 @@ import org.medici.docsources.command.docbase.ShowExplorerDocumentCommand;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -44,11 +45,21 @@ import org.springframework.validation.Validator;
 public class ShowExplorerDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 
+	/**
+	 * 
+	 * @param docBaseService
+	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
 	}
@@ -79,7 +90,7 @@ public class ShowExplorerDocumentValidator implements Validator {
 		
 		if (showExplorerDocumentCommand.getImageProgTypeNum() != null) {
 			try {
-				if (getDocBaseService().findDocumentImages(showExplorerDocumentCommand.getVolNum(), showExplorerDocumentCommand.getVolLetExt(), showExplorerDocumentCommand.getImageType(), showExplorerDocumentCommand.getImageProgTypeNum()) == null) {
+				if (getManuscriptViewerService().findDocumentImages(showExplorerDocumentCommand.getVolNum(), showExplorerDocumentCommand.getVolLetExt(), showExplorerDocumentCommand.getImageType(), showExplorerDocumentCommand.getImageProgTypeNum()) == null) {
 					if (showExplorerDocumentCommand.getImageType().equals(ImageType.R)) {
 						errors.rejectValue("imageProgTypeNum", "error.rubricario.notfound", new Object[]{showExplorerDocumentCommand.getImageProgTypeNum()}, null);
 					}
@@ -91,5 +102,19 @@ public class ShowExplorerDocumentValidator implements Validator {
 				
 			}
 		}
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

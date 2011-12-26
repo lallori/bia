@@ -42,6 +42,7 @@ import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,6 +64,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class EditDetailsDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 	@Autowired(required = false)
 	@Qualifier("editDetailsDocumentValidator")
 	private Validator validator;
@@ -134,7 +137,7 @@ public class EditDetailsDocumentController {
 					document = getDocBaseService().addNewDocument(document);
 					model.put("document", document);
 
-					Image image = getDocBaseService().findDocumentImageThumbnail(document);
+					Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 					model.put("image", image);
 
 					return new ModelAndView("docbase/ShowDocument", model);
@@ -142,7 +145,7 @@ public class EditDetailsDocumentController {
 					document = getDocBaseService().editDetailsDocument(document);
 					model.put("document", document);
 
-					Image image = getDocBaseService().findDocumentImageThumbnail(document);
+					Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 					model.put("image", image);
 					
 					return new ModelAndView("docbase/ShowDetailsDocument", model);
@@ -244,5 +247,19 @@ public class EditDetailsDocumentController {
 	 */
 	public void setValidator(Validator validator) {
 		this.validator = validator;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }
