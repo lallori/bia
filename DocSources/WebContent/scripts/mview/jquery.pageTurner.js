@@ -54,7 +54,7 @@
                 	parameters += $(this).attr('id') + '=' + $(this).val() + '&';
                 });
 				$.get(functionParams["searchUrl"], parameters, function(data){
-					if (data.error != '') {
+					if (data.error) {
 						$j('#notFound').dialog('open');
 					} else {
 						$("#targetframe").html('');
