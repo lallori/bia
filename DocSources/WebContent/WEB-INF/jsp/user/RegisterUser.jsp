@@ -6,11 +6,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-			<script type='text/javascript' src='<c:url value="/scripts/jquery-1.4.2.js"/>'></script>
-			<script type='text/javascript' src='<c:url value="/scripts/jquery.autocomplete.js"/>'></script>
-	
-			<link rel="stylesheet" href="<c:url value="/styles/popup.css" />" type="text/css" media="screen, projection">
-			<link rel="stylesheet" href="<c:url value="/styles/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
+			<link rel="stylesheet" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />" type="text/css" media="screen, projection">
 
 			<div id="registrationForm">
 				<form:form method="post">
