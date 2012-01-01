@@ -77,6 +77,8 @@ public class Image implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column (name="\"imageRectoVerso\"", length=1, nullable=false)
 	private ImageRectoVerso imageRectoVerso;
+	@Column (name="\"missedNumbering\"", length=45, nullable=false)
+	private String missedNumbering;
 	@Column (name="\"imageOrder\"", length=5, nullable=false)
 	private Integer imageOrder;
 	@Column (name="\"imageProgTypeNum\"", length=5, nullable=false)
@@ -171,6 +173,20 @@ public class Image implements Serializable {
 	 */
 	public ImageRectoVerso getImageRectoVerso() {
 		return imageRectoVerso;
+	}
+
+	/**
+	 * @param missedNumbering the missedNumbering to set
+	 */
+	public void setMissedNumbering(String missedNumbering) {
+		this.missedNumbering = missedNumbering;
+	}
+
+	/**
+	 * @return the missedNumbering
+	 */
+	public String getMissedNumbering() {
+		return missedNumbering;
 	}
 
 	/**

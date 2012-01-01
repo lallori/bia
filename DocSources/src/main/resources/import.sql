@@ -112,7 +112,8 @@ update docsources.tblDocuments set recipID = null where recipID not in (select p
 update docsources.tblDocuments set sendLocplall = null where sendLocplall not in (select placeAllId from tblPlaces);
 -- Recipient place linked to invalid place (Foreign Keys Checks)
 update docsources.tblDocuments set recipLocplall = null where recipLocplall not in (select placeAllId from tblPlaces);
-
+-- FolioMod must be setted to null instead of empty string
+update tblDocuments set folioMod=null where folioMod='';
 
 -- IMAGES
 -- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
@@ -238,6 +239,9 @@ update docsources.tblVolumes set digitized=0;
 -- These 2 updates will set rights digitized. MySQL does not allow to UPDATE or DELETE a table's data if you're simultaneously reading that same data with a subquery, so we use a temporary c1 view 
 update tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt is null) as c1);
 update tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt = b.volLetExt) as c1);
+
+-- Adjusting missedNumbering in table Images
+update tblImages set missedNumbering = substr(imageName,12,3) where length(imageName)>16;
 
 -- COUNTRY DATA ENTRY (Table schema is based on ISO standard 3166 code lists http://www.iso.org/iso/list-en1-semic-3.txt)
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');

@@ -22,15 +22,6 @@ div.navcontainer div.toolbar {
   cursor: move;
   width: 100%;
   opacity: 0.8;
-  font-family:Georgia, Times New Roman, Times, serif; 
-  color:#6d5c4d; 
-  font-size:9px; 
-  font-weight:bold;
-  -moz-border-radius: 6px;
-border-top-left-radius:6px;
-border-top-right-radius:6px;
-border-bottom-left-radius:0px;
-border-bottom-right-radius:0px;
 }
 
 div.navcontainer div.toolbar:hover { opacity: 1.0 }

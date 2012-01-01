@@ -32,10 +32,12 @@
     $.pageTurnerForm = {};
 
     $.pageTurnerForm.defaultParams = {
-        "searchUrl":  "",   // Show scrollbars?
-        "IIPImageServer": "/mview/ReverseProxyIIPImage.do",
-        "imagePrefix": "/DocSources/images/mview", 
-        "status":      "no"     // Show the status bar?
+        "searchUrl":  "/DocSources/src/mview/SearchCarta.json",
+        "getLinkedDocumentUrl":  "/DocSources/src/mview/GetLinkedDocument.json",
+        "IIPImageServer": "/DocSources/mview/ReverseProxyIIPImage.do",
+        "imagePrefix": "/DocSources/images/mview",
+        "status":      "no",
+        "canTranscribe":  "false"
     };
 
     $.fn.pageTurnerForm = function (params) {
@@ -53,13 +55,17 @@
                 $(this).find('input').each(function() {
                 	parameters += $(this).attr('id') + '=' + $(this).val() + '&';
                 });
-				$.get(functionParams["searchUrl"], parameters, function(data){
+				
+                $.get(functionParams["searchUrl"], parameters, function(data){
 					if (data.error) {
 						$j('#notFound').dialog('open');
 					} else {
 						$("#targetframe").html('');
 						var credit = 'Folio n. ' + data.imageProgTypeNum;
 						
+						if (data.missedNumbering) {
+							credit += ' ' + data.missedNumbering;
+						}
 						if (data.imageRectoVerso == 'R') {
 							credit += ' Recto';
 						} else {
@@ -93,6 +99,44 @@
 					}
 				});
 
+                $.get(functionParams["getLinkedDocumentUrl"], parameters, function(data){
+					// We set currentImage
+					currentImage = data.imageId;
+
+					if (transcribing == false) {
+						if (data.error == 'wrongType') {
+	    					$j("#unvailableTranscribe").css('visibility', 'visible');
+	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
+	    					$j("#showAlreadyTranscribed").removeAttr('href');
+	    					$j("#readyToTranscribe").css('visibility', 'hidden');
+	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+	    				} else if (data.linkedDocument == 'true') {
+	    					$j("#alreadyTranscribe").css('visibility', 'visible');
+	    					$j("#showAlreadyTranscribed").css('visibility', 'visbile');
+	    					$j("#showAlreadyTranscribed").attr('href', data.showLinkedDocument);
+	    					$j("#unvailableTranscribe").css('visibility', 'hidden');
+	    					$j("#readyToTranscribe").css('visibility', 'hidden');
+	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+	    				} else if (data.linkedDocument == 'false') {
+	    					// Only users with special role can transcribe new document. 
+	    					if (functionParams["canTranscribe"] =='true') {
+	    						$j("#readyToTranscribe").css('visibility', 'visible');
+	    					}
+	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
+	    					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+	    					$j("#showAlreadyTranscribed").removeAttr('href');
+	    					$j("#unvailableTranscribe").css('visibility', 'hidden');
+	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+	    				} else {
+	    					$j("#unvailableTranscribe").css('visibility', 'hidden');
+	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
+	    					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+	    					$j("#showAlreadyTranscribed").removeAttr('href');
+	    					$j("#readyToTranscribe").css('visibility', 'hidden');
+	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+	    				}
+					}
+    			});
             });
         });
 
@@ -102,9 +146,12 @@
     $.pageTurnerPage = {};
 
     $.pageTurnerPage.defaultParams = {
-    	"targetFrame":  "targetframe",
-    	"IIPImageServer": "/mview/ProxyIIPImage.do",
-    	"imagePrefix": "/DocSources/images/mview"
+        "searchUrl":  "/DocSources/src/mview/SearchCarta.json",
+        "getLinkedDocumentUrl":  "/DocSources/src/mview/GetLinkedDocument.json",
+        "IIPImageServer": "/DocSources/mview/ReverseProxyIIPImage.do",
+        "imagePrefix": "/DocSources/images/mview",
+        "status":      "no",
+        "canTranscribe":  "false"
     };
 
     $.fn.pageTurnerPage = function (params) {
@@ -117,10 +164,18 @@
             $(this).click(function (event) {
                 // Prevent the browser's default onClick handler
                 event.preventDefault();
-                
-				$.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
+
+                // We extract parameter from page link...
+                var parameters = $j(this).attr("href").substring($j(this).attr("href").indexOf("?"));
+
+                $.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
 					$("#targetframe").html('');
 					var credit = 'Folio n. ' + data.imageProgTypeNum;
+					
+					if (data.missedNumbering) {
+						credit += ' ' + data.missedNumbering;
+					}
+
 					if (data.imageRectoVerso == 'R') {
 						credit += ' Recto';
 					} else {
@@ -150,12 +205,50 @@
 					} else {
 						$("#next").attr('href', data.nextPage);
 					}
-					}
-				});
+
+					$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data){
+						// We set currentImage
+						currentImage = data.imageId;
+
+						if (transcribing == false) {
+							if (data.error == 'wrongType') {
+		    					$j("#unvailableTranscribe").css('visibility', 'visible');
+		    					$j("#alreadyTranscribe").css('visibility', 'hidden');
+		    					$j("#showAlreadyTranscribed").removeAttr('href');
+		    					$j("#readyToTranscribe").css('visibility', 'hidden');
+		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+		    				} else if (data.linkedDocument == 'true') {
+		    					$j("#alreadyTranscribe").css('visibility', 'visible');
+		    					$j("#showAlreadyTranscribed").css('visibility', 'visbile');
+		    					$j("#showAlreadyTranscribed").attr('href', data.showLinkedDocument);
+		    					$j("#unvailableTranscribe").css('visibility', 'hidden');
+		    					$j("#readyToTranscribe").css('visibility', 'hidden');
+		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+		    				} else if (data.linkedDocument == 'false') {
+		    					// Only users with special role can transcribe new document. 
+		    					if (functionParams["canTranscribe"] =='true') {
+		    						$j("#readyToTranscribe").css('visibility', 'visible');
+		    					}
+		    					$j("#alreadyTranscribe").css('visibility', 'hidden');
+		    					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+		    					$j("#showAlreadyTranscribed").removeAttr('href');
+		    					$j("#unvailableTranscribe").css('visibility', 'hidden');
+		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+		    				} else {
+		    					$j("#unvailableTranscribe").css('visibility', 'hidden');
+		    					$j("#alreadyTranscribe").css('visibility', 'hidden');
+		    					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+		    					$j("#showAlreadyTranscribed").removeAttr('href');
+		    					$j("#readyToTranscribe").css('visibility', 'hidden');
+		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+		    				}
+						}
+	    			});
+
+				}});
             });
         });
 
         return $;
     };
-
 })(jQuery);

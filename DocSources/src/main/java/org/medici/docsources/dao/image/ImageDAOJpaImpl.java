@@ -432,6 +432,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Integer> findNewDigitizedVolumes() throws PersistenceException {
 		// we need to extract volLetExt equals
@@ -645,6 +646,10 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Image> findVolumeImages(Integer volNum, String volLetExt, Integer imageOrder) {
 		StringBuffer stringBuffer = new StringBuffer(" FROM Image WHERE volNum=:volNum and volLetExt ");

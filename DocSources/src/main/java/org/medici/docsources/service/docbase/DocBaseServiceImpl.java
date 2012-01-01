@@ -32,6 +32,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
@@ -109,7 +111,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public Document addNewDocument(Document document) throws ApplicationThrowable {
 		try {
 			document.setEntryId(null);
-			
+
 			// We need to attach the correct volume istance by database extraction.
 			document.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
 			//Setting fields that are defined as nullable = false
@@ -135,6 +137,17 @@ public class DocBaseServiceImpl implements DocBaseService {
 				document.setDocMonthNum(null);
 			}
 			document.setDocDate(DateUtils.getLuceneDate(document.getDocYear(), document.getDocMonthNum(), document.getDocDay()));
+
+			// We set InsertLet to null if it's an empty string. 
+			if (ObjectUtils.toString(document.getInsertLet()).equals("")){
+				document.setInsertLet(null);
+			} else {
+				document.setInsertLet(document.getInsertLet());
+			}
+			// We set FolioMod to null if it's an empty string. 
+			if (ObjectUtils.toString(document.getFolioMod()).equals("")) {
+				document.setFolioMod(null);
+			}
 
 			getDocumentDAO().persist(document);
 
@@ -462,10 +475,20 @@ public class DocBaseServiceImpl implements DocBaseService {
 			documentToUpdate.setVolume(getVolumeDAO().findVolume(document.getVolume().getVolNum(), document.getVolume().getVolLetExt()));
 			// Insert/Part: 
 			documentToUpdate.setInsertNum(document.getInsertNum());
-			documentToUpdate.setInsertLet(document.getInsertLet());
+			// We set InsertLet to null if it's an empty string. 
+			if (ObjectUtils.toString(document.getInsertLet()).equals("")){
+				documentToUpdate.setInsertLet(null);
+			} else {
+				documentToUpdate.setInsertLet(document.getInsertLet());
+			}
 			// Folio Start:
 			documentToUpdate.setFolioNum(document.getFolioNum());
-			documentToUpdate.setFolioMod(document.getFolioMod().toString());
+			// We set FolioMod to null if it's an empty string. 
+			if (ObjectUtils.toString(document.getFolioMod()).equals("")) {
+				documentToUpdate.setFolioMod(null);
+			} else {
+				documentToUpdate.setFolioMod(document.getFolioMod());
+			}
 			// Transcribe Folio Start:
 			documentToUpdate.setTranscribeFolioNum(document.getTranscribeFolioNum());
 			documentToUpdate.setTranscribeFolioMod(document.getTranscribeFolioMod().toString());

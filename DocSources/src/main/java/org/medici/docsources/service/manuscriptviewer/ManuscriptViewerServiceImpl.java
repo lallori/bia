@@ -28,49 +28,23 @@
 package org.medici.docsources.service.manuscriptviewer;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.util.DateUtils;
-import org.medici.docsources.common.util.PersonUtils;
-import org.medici.docsources.dao.altname.AltNameDAO;
-import org.medici.docsources.dao.bibliot.BiblioTDAO;
-import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
+import org.medici.docsources.common.util.ImageUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
-import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.image.ImageDAO;
-import org.medici.docsources.dao.marriage.MarriageDAO;
-import org.medici.docsources.dao.month.MonthDAO;
-import org.medici.docsources.dao.parent.ParentDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
-import org.medici.docsources.dao.polink.PoLinkDAO;
-import org.medici.docsources.dao.rolecat.RoleCatDAO;
-import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
-import org.medici.docsources.dao.userhistorypeople.UserHistoryPeopleDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
-import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.Marriage;
-import org.medici.docsources.domain.Month;
-import org.medici.docsources.domain.Parent;
-import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.domain.Image.ImageType;
-import org.medici.docsources.domain.People.Gender;
-import org.medici.docsources.domain.PoLink;
-import org.medici.docsources.domain.TitleOccsList;
-import org.medici.docsources.domain.UserHistoryPeople;
-import org.medici.docsources.domain.UserHistoryPeople.Action;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -96,56 +70,38 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Image findDocumentImage(Integer entryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
+	public Image findDocumentImage(Integer entryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable {
 		try {
-			Document document = getDocumentDAO().find(entryId);
-			
-			if (document != null) {
-
-				List<Image> images = getImageDAO().findVolumeImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageType, imageProgTypeNum);
-				if (images.size() > 0) {
-					return images.get(0);
-				} else 
+			if ((entryId != null) && (imageProgTypeNum != null)) {
+				Document document = getDocumentDAO().find(entryId);
+				
+				if (document != null) {
+	
+					List<Image> images = getImageDAO().findVolumeImages(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageType, imageProgTypeNum);
+					if (images.size() > 0) {
+						return images.get(0);
+					} else 
+						return null;
+				} else {
 					return null;
+				}
+			} else if ((entryId != null) && (imageOrder != null)) {
+				Document document = getDocumentDAO().find(entryId);
+				
+				if (document != null) {
+					return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
+				} else {
+					return null;
+				}
 			} else {
+				List<Image> images = getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
+				
+				if (images.size()>0) {
+					return images.get(0);
+				}
+				
 				return null;
 			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Image findDocumentImage(Integer entryId, Integer imageOrder) throws ApplicationThrowable {
-		try {
-			Document document = getDocumentDAO().find(entryId);
-			
-			if (document != null) {
-				return getImageDAO().findVolumeImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), imageOrder);
-			} else {
-				return null;
-			}
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Image findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable {
-		try {
-			List<Image> images = getImageDAO().findVolumeImages(volNum, volLetExt, imageType, imageProgTypeNum);
-			
-			if (images.size()>0) {
-				return images.get(0);
-			}
-			
-			return null;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -209,7 +165,27 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable {
+		try {
+			Integer folioNum = ImageUtils.extractFolioNumber(image.getImageName());
+			String folioMod = ImageUtils.extractFolioExtension(image.getImageName());
+			Document document = getDocumentDAO().findDocumentByFolioStart(volNum, volLetExt, folioNum, folioMod);
+			if (document != null) {
+				return document.getEntryId();
+			} else {
+				return null;
+			}
+
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Image findVolumeImage(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable {
@@ -235,7 +211,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 
 		return null;	
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -249,7 +225,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -266,7 +242,6 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		return null;
 	}
 
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -281,7 +256,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -344,6 +319,23 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	public ImageDAO getImageDAO() {
 		return imageDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ImageType getImageType(Integer volNum, String volLetExt, Integer imageOrder) throws ApplicationThrowable {
+		try {
+			Image image = getImageDAO().findVolumeImage(volNum, volLetExt, imageOrder);
+			if (image != null) {
+				return image.getImageType();
+			}
+			
+			return null;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
 	}
 
 	/**

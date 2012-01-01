@@ -30,8 +30,11 @@ package org.medici.docsources.controller.manuscriptviewer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.manuscriptviewer.PageTurnerCommand;
-import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.domain.Image;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -49,21 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value={"/src/mview/PageTurnerDialog", "/de/mview/PageTurnerDialog"})
 public class PageTurnerDialogController {
 	@Autowired
-	private DocBaseService docBaseService;
-
-	/**
-	 * @return the docBaseService
-	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
-
-	/**
-	 * @param docBaseService the docBaseService to set
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
+	private ManuscriptViewerService manuscriptViewerService;
 
 	/**
 	 * 
@@ -73,6 +62,30 @@ public class PageTurnerDialogController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") PageTurnerCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		Image image = null;
+
+		try {
+			// we set default image as empty string, so we need only to update the record.
+			model.put("image", "");
+
+			// If the request is made with entryId, we are asking a document
+			if (!ObjectUtils.toString(command.getEntryId()).equals("")) {
+				image = getManuscriptViewerService().findDocumentImage(command.getEntryId(), null, null, command.getImageType(), command.getImageProgTypeNum(), command.getImageOrder());
+			} else {
+				image = getManuscriptViewerService().findVolumeImage(command.getSummaryId(), command.getVolNum(), command.getVolLetExt(), command.getImageType(), command.getImageProgTypeNum(), command.getImageOrder());
+			} 
+
+			model.put("image", image);
+		} catch (ApplicationThrowable ath) {
+		}
+		
+		try {
+			// We check if this image has a document linked...
+			Integer entryId = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), image);
+			model.put("entryId", entryId);
+		}catch (ApplicationThrowable applicationThrowable) {
+			model.put("entryId", null);
+		}
 
 		if (command.getModeEdit()) {
 			model.put("caller", "/de/mview/EditDocumentInManuscriptViewer.do");
@@ -81,5 +94,19 @@ public class PageTurnerDialogController {
 		}
 		
 		return new ModelAndView("mview/PageTurnerDialog", model);
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

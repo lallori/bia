@@ -23,10 +23,17 @@
 		<c:param name="summaryId"   value="${volumeExplorer.summaryId}" />
 		<c:param name="volNum"   value="${volumeExplorer.volNum}" />
 		<c:param name="volLetExt"   value="${volumeExplorer.volLetExt}" />
+		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+		<c:param name="total" value="${volumeExplorer.total}" />
+		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
 		<c:param name="flashVersion"   value="false" />
 	</c:url>
 
-	<c:url var="manuscriptViewer" value="/src/ShowManuscriptViewer.do">
+	<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
 		<c:param name="summaryId" value="${volumeExplorer.summaryId}"/>
 		<c:param name="volNum" value="${volumeExplorer.volNum}" />
 		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
@@ -112,7 +119,7 @@
 		</div>
 
 		<div id="flipDiv">
-			<iframe class="iframeFlipVolume" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewer}" style="z-index:0"></iframe>
+			<iframe class="iframeFlipVolume" scrolling="no" marginheight="0" marginwidth="0" src="${manuscriptViewerURL}" style="z-index:0"></iframe>
 		</div>	
 		
 		<div id="prevNextButtons">
@@ -221,8 +228,6 @@
 					piro_scroll : true
 				});
 
-				$j("#ShowManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
-
 				$j(".previousPage").click(function(){
 					// we change selected tab url, 
 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
@@ -285,5 +290,7 @@
 					$dialogVolumeSummary.dialog('open');
 					return false;
 				});
+
+				$j("#ShowManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 			});
 		</script>

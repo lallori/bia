@@ -33,6 +33,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
@@ -85,6 +86,57 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Document checkVolumeFolio(Integer summaryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM Document WHERE volume.summaryId=:summaryId ORDER BY folioNum DESC");
+		query.setParameter("summaryId", summaryId);
+		
+		query.setMaxResults(1);
+		return (Document) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
+		StringBuffer stringBuffer = new StringBuffer("FROM Document WHERE volume.volNum=" + volNum);
+		if(ObjectUtils.toString(volLetExt).equals("")){
+			stringBuffer.append(" AND volume.volLetExt is null ");
+		} else {
+			stringBuffer.append(" AND volume.volLetExt = '");
+			stringBuffer.append(volLetExt);
+			stringBuffer.append("' ");
+		}
+		stringBuffer.append(" AND folioNum=");
+		stringBuffer.append(folioNum);
+		if(ObjectUtils.toString(folioMod).equals("")){
+			stringBuffer.append(" AND folioMod is null");
+		} else {
+			stringBuffer.append(" AND folioMod = '");
+			stringBuffer.append(folioMod);
+			stringBuffer.append("' ");
+		}
+		Query query = getEntityManager().createQuery(stringBuffer.toString());
+
+		if (query.getResultList().size() ==0) { 
+			return null;
+		} else {
+			return (Document) query.getResultList().get(0);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
+		return this.findDocument(volNum, volLetExt, folioNum, folioMod);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Document findDocumentByVolumeId(Integer volumeId) throws PersistenceException {
 		// TODO Auto-generated method stub
 		return null;
@@ -105,20 +157,20 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPlace.placeAllId =:placeAllId");
+	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPlace.placeAllId =:placeAllId");
 		query.setParameter("placeAllId", placeAllId);
 		
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPlace.placeAllId =:placeAllId");
+	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPlace.placeAllId =:placeAllId");
 		query.setParameter("placeAllId", placeAllId);
 		
 		Long result = (Long) query.getSingleResult();
@@ -146,7 +198,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			logger.error(throwable);
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -227,42 +279,6 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	}
 
 	@Override
-	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
-		Page page = new Page(paginationFilter);
-		
-		Query query = null;
-		String toSearch = new String("FROM Document WHERE (senderPlace.placeAllId=" + placeToSearch + ")");
-		
-		if(paginationFilter.getTotal() == null){
-			String countQuery = "SELECT COUNT(*) " + toSearch;
-			query = getEntityManager().createQuery(countQuery);
-			page.setTotal(new Long((Long) query.getSingleResult()));
-		}
-		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
-			}
-		}
-		
-		query = getEntityManager().createQuery(toSearch);
-		
-		query.setFirstResult(paginationFilter.getFirstRecord());
-		query.setMaxResults(paginationFilter.getLength());
-		
-		page.setList(query.getResultList());
-		
-		return page;
-	}
-
-	@Override
 	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		
@@ -299,29 +315,38 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	}
 
 	@Override
-	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
-		StringBuffer toFind = new StringBuffer("FROM Document WHERE volume.volNum=" + volNum);
-		if(volLetExt != null){
-			toFind.append(" AND volume.volLetExt like " + volLetExt);
-		}
-		toFind.append(" AND folioNum=" + folioNum);
-		if(folioMod != null && folioMod != ""){
-			toFind.append(" AND folioMod like " + folioMod);
-		}
-		Query query = getEntityManager().createQuery(toFind.toString());
-		query.setMaxResults(1);
-		return (Document) query.getSingleResult();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Document checkVolumeFolio(Integer summaryId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("FROM Document WHERE volume.summaryId=:summaryId ORDER BY folioNum DESC");
-		query.setParameter("summaryId", summaryId);
+	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
 		
-		query.setMaxResults(1);
-		return (Document) query.getSingleResult();
+		Query query = null;
+		String toSearch = new String("FROM Document WHERE (senderPlace.placeAllId=" + placeToSearch + ")");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				}
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 }

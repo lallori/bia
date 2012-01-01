@@ -49,26 +49,30 @@
             });
 			$.get(functionParams["searchUrl"], parameters,
 				function(data){
-					$("#targetframe").html('');
-					
-					iip = new IIP( "targetframe", {
-						server: functionParams["proxyIIPImage"],
-						image: data.imageCompleteName,
-						credit: '&copy; copyright or information message', 
-						zoom: 1,
-						showNavButtons: true,
-						render: 'random'
-					});
-
-					if (data.previousPage == '') {
-						$("#previous").removeAttr('href');
+					if (data.error) {
+						$j('#notFound').dialog('open');
 					} else {
-						$("#previous").attr('href', data.previousPage);
-					}
-					if (data.nextPage == '') {
-						$("#next").removeAttr('href');
-					} else {
-						$("#next").attr('href', data.nextPage);
+						$("#targetframe").html('');
+						
+						iip = new IIP( "targetframe", {
+							server: functionParams["proxyIIPImage"],
+							image: data.imageCompleteName,
+							credit: '&copy; copyright or information message', 
+							zoom: 1,
+							showNavButtons: true,
+							render: 'random'
+						});
+	
+						if (data.previousPage == '') {
+							$("#previous").removeAttr('href');
+						} else {
+							$("#previous").attr('href', data.previousPage);
+						}
+						if (data.nextPage == '') {
+							$("#next").removeAttr('href');
+						} else {
+							$("#next").attr('href', data.nextPage);
+						}
 					}
 				}
 			);

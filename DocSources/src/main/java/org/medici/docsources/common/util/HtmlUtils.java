@@ -56,7 +56,7 @@ public class HtmlUtils {
 
 		StringBuffer stringBuffer = new StringBuffer(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
 		stringBuffer.append("?entryId=");
-		stringBuffer.append(documentExplorer.getEntryId());
+		stringBuffer.append((documentExplorer.getEntryId()!= null) ? documentExplorer.getEntryId() : "");
 		stringBuffer.append("&volNum=");
 		stringBuffer.append(documentExplorer.getVolNum());
 		stringBuffer.append("&volLetExt=");
@@ -93,7 +93,7 @@ public class HtmlUtils {
 
 		StringBuffer stringBuffer = new StringBuffer(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getRequestURI());
 		stringBuffer.append("?entryId=");
-		stringBuffer.append(documentExplorer.getEntryId());
+		stringBuffer.append((documentExplorer.getEntryId()!= null) ? documentExplorer.getEntryId() : "");
 		stringBuffer.append("&volNum=");
 		stringBuffer.append(documentExplorer.getVolNum());
 		stringBuffer.append("&volLetExt=");
@@ -142,6 +142,23 @@ public class HtmlUtils {
 		return retValue;
 	}
 	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
+	public static String showDocument(Integer entryId) {
+		if (entryId == null)
+			return "";
+
+		String url = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		url += "/src/docbase/ShowDocument.do?entryId=";
+		url += entryId;
+
+		return url;
+	}
+
 	/**
 	 * 
 	 * @param inputList

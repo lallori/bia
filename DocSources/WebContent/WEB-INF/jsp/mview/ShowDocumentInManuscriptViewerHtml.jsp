@@ -33,7 +33,7 @@
 					server: '${ReverseProxyIIPImage}',
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
-					credit: "${documentExplorer.image.imageType == 'C' ? 'Folio n.' : ''} ${documentExplorer.image.imageType == 'R' ? 'Index of Names n.' : ''} ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
+					credit: "${documentExplorer.image.imageType == 'C' ? 'Folio n.' : ''} ${documentExplorer.image.imageType == 'R' ? 'Index of Names n.' : ''} ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.missedNumbering} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
 					scale: 0.0,
 					navigation: true,
 					showNavWindow: true,
@@ -43,13 +43,13 @@
 					zoom: 3
 				});
 
-				var $dialogExplorer = $j('<div></div>')
+				var $pageTurner = $j('<div></div>')
 				.dialog({                                                                                                                                                                   
 					autoOpen: true,
 					resizable: false,
-					width: 605,
+					width: 800,
 					height: 110,
-					minWidth: 605,
+					minWidth: 800,
 					minHeight: 110,                                                                                                                                                         
 					title: 'Page Turner',
 					position: ['right','bottom'],                                                                                                                                                       

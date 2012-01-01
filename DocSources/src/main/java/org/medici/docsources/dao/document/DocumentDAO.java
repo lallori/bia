@@ -63,6 +63,15 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
 	
 	/**
+	 * 
+	 * @param folioNum
+	 * @param folioMod
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
+
+	/**
 	 * This method searches a single document identified by his volume.
 	 * 
 	 * @param summaryId number of volume to search
@@ -70,7 +79,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Document findDocumentByVolumeId(Integer summaryId) throws PersistenceException;
-
+	
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Document} 
 	 * created on database.
@@ -86,16 +95,16 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException;
-	
+	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException;
+
 	/**
 	 * 
 	 * @param placeAllId
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException;
-
+	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException;
+	
 	/**
 	 * This method searches documents which contains the parameters set in {@link org.medici.docsources.common.search}
 	 * object and return a result page.
@@ -123,8 +132,8 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-	
+	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+
 	/**
 	 * 
 	 * @param placeToSearch
@@ -132,6 +141,6 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

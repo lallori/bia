@@ -55,6 +55,11 @@ Joana Amill <joana.amill@gmail.com>
 			var extractChanged=false;
 			var synopsisChanged=false;
 			var personalNotesChanged=false;
+
+			var transcribing=false;
+			var currentImage='';
+			var imageDocumentToCreate=0;
+			var imageDocumentFolioStart=0;
 		</script>
 		<tiles:insertAttribute name="manuscriptviewer" />
 	</head>

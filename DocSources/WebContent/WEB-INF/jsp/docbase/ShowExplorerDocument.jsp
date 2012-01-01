@@ -4,30 +4,42 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="explorerDocumentModalWindowURL" value="/src/docbase/ShowExplorerDocument.do">
-			<c:param name="entryId" value="${documentExplorer.entryId}" />
-			<c:param name="volNum" value="${documentExplorer.volNum}" />
-			<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
-			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
-			<c:param name="total" value="${documentExplorer.total}" />
-			<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
-			<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
-			<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
-			<c:param name="totalOther" value="${documentExplorer.totalOther}" />
-			<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
-			<c:param name="flashVersion" value="false"/>
-			<c:param name="modalWindow" value="true"/>
-		</c:url>
+	<c:url var="explorerDocumentModalWindowURL" value="/src/docbase/ShowExplorerDocument.do">
+		<c:param name="entryId" value="${documentExplorer.entryId}" />
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+		<c:param name="total" value="${documentExplorer.total}" />
+		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
+		<c:param name="flashVersion" value="false"/>
+		<c:param name="modalWindow" value="true"/>
+	</c:url>
 
-		<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
-			<c:param name="entryId" value="${documentExplorer.entryId}"/>
-			<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
-			<c:param name="flashVersion"   value="false" />
-			<c:param name="showHelp" value="true" />
-			<c:param name="showThumbnail" value="true" />
-		</c:url>
-	</security:authorize>
+	<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
+		<c:param name="summaryId"   value="${documentExplorer.summaryId}" />
+		<c:param name="volNum"   value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt"   value="${documentExplorer.volLetExt}" />
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+		<c:param name="total" value="${documentExplorer.total}" />
+		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
+		<c:param name="flashVersion"   value="false" />
+	</c:url>
+	
+	<c:url var="manuscriptViewerURL" value="/src/ShowManuscriptViewer.do">
+		<c:param name="entryId" value="${documentExplorer.entryId}"/>
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+		<c:param name="flashVersion"   value="false" />
+		<c:param name="showHelp" value="true" />
+		<c:param name="showThumbnail" value="true" />
+	</c:url>
 	
 	<c:url var="ShowExplorerDocumentURL" value="/src/docbase/ShowExplorerDocument.do" />
 	
@@ -184,7 +196,10 @@
 		<br />
 			
 		<div>
-			<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a>
+			<!-- <a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a> -->
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
+				<a id="ShowManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER">ManuscriptViewer Mode</a>
+			</security:authorize>
 			<a id="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPageURL}">Refresh</a>
 		</div>
@@ -253,6 +268,8 @@
 					$dialogVolumeSummary.dialog('open');
 					return false;
 				});
+
+				$j("#ShowManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 			});
 		</script>
 		

@@ -820,7 +820,7 @@ public class AjaxController {
 		List resultList = new ArrayList();
 		for (Volume currentVolume : (List<Volume>)page.getList()) {
 			List singleRow = new ArrayList();
-			singleRow.add(currentVolume.getSerieList().toString());
+			singleRow.add((currentVolume.getSerieList() == null) ? "" : currentVolume.getSerieList().toString());
 			singleRow.add(currentVolume.getMDP());
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));

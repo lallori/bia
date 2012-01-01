@@ -36,6 +36,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.springframework.context.ApplicationContextException;
 
 /**
  * This interface is designed to work on {@link org.medici.docsources.domain.People} 
@@ -55,37 +56,15 @@ public interface ManuscriptViewerService {
 	/**
 	 * 
 	 * @param entryId
+	 * @param volNum
+	 * @param volLetExt
 	 * @param imageType
 	 * @param imageProgTypeNum
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Image findDocumentImage(Integer entryId, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param entryId
 	 * @param imageOrder
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Image findDocumentImage(Integer entryId, Integer imageOrder) throws ApplicationThrowable;
-
-	/**
-	 * This method will search every {@link org.medici.docsources.domain.Image} 
-	 * with specific image type and folio number linked to a 
-	 * {@link org.medici.docsources.domain.Volume} identified by his volume
-	 * number and his letter extension.
-	 * 
-	 * @param volNum Volume number identifier
-	 * @param volLetExt Volume letter extension identifier.
-	 * @param imageType {@link org.medici.docsources.domain.Image$ImageType} identifier
-	 * @param imageProgTypeNum Folio number
-	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Image}
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public Image findDocumentImage(Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum) throws ApplicationThrowable;
+	public Image findDocumentImage(Integer entryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable;
 
 	/**
 	 * This method searches document's images linked to a specific document.
@@ -130,11 +109,25 @@ public interface ManuscriptViewerService {
 	 * @param imageType
 	 * @param imageProgTypeNum
 	 * @param imageOrder
+	 * @param image
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findLinkedDocument(Integer volNum, String volLetExt, Image image) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @param volNum
+	 * @param volLetExt
+	 * @param imageType
+	 * @param imageProgTypeNum
+	 * @param imageOrder
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public Image findVolumeImage(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
@@ -146,20 +139,6 @@ public interface ManuscriptViewerService {
 	 * 
 	 */
 	public List<Image> findVolumeImages(Integer summaryId) throws ApplicationThrowable;
-	
-	/**
-	 * This method searches for existing {@link org.medici.docsources.domain.Image}
-	 * using a {@link org.medici.docsources.common.pagination.Page} object result
-	 * based on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
-	 * 
-	 * @param summaryId Unique Volume Identifier
-	 * @param paginationFilter {@link org.medici.docsources.common.pagination.PaginationFilter} 
-	 *        with search parameters
-	 * @return {@link org.medici.docsources.common.pagination.Page}
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 * 
-	 */
-	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
@@ -178,6 +157,20 @@ public interface ManuscriptViewerService {
 	public List<Image> findVolumeImages(Integer summaryId, Integer volNum, String volLetExt, ImageType imageType, Integer imageProgTypeNum, Integer imageOrder) throws ApplicationThrowable;
 
 	/**
+	 * This method searches for existing {@link org.medici.docsources.domain.Image}
+	 * using a {@link org.medici.docsources.common.pagination.Page} object result
+	 * based on {@link org.medici.docsources.common.pagination.PaginationFilter} input object.
+	 * 
+	 * @param summaryId Unique Volume Identifier
+	 * @param paginationFilter {@link org.medici.docsources.common.pagination.PaginationFilter} 
+	 *        with search parameters
+	 * @return {@link org.medici.docsources.common.pagination.Page}
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public Page findVolumeImages(Integer summaryId, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
 	 * This method will search every {@link org.medici.docsources.domain.Image} 
 	 * linked to a {@link org.medici.docsources.domain.Volume} identified by his
 	 * volume number and his letter extension.
@@ -191,6 +184,7 @@ public interface ManuscriptViewerService {
 	 */
 	public Page findVolumeImages(Integer volNum, String volLetExt, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
+
 	/**
 	 * 
 	 * @param volNum
@@ -200,7 +194,6 @@ public interface ManuscriptViewerService {
 	 */
 	public Image findVolumeImageSpine(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
-
 	/**
 	 * 
 	 * @param pageTurner
@@ -209,4 +202,14 @@ public interface ManuscriptViewerService {
 	 * 
 	 */
 	public DocumentExplorer getDocumentExplorer(DocumentExplorer pageTurner) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param imageOrder
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ImageType getImageType(Integer volNum, String volLetExt, Integer imageOrder) throws ApplicationThrowable;
 }

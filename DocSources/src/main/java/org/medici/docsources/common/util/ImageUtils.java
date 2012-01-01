@@ -77,21 +77,17 @@ public class ImageUtils {
 	 * @param volume
 	 * @return
 	 */
-	public static String extractFolioExtension(String volume) {
-		String volumeToExtract = volume.trim();
-		if (StringUtils.isEmpty(volumeToExtract)) {
+	public static String extractFolioExtension(String fileName) {
+		String folio = fileName.trim();
+		if (StringUtils.isEmpty(folio)) {
 			return null;
 		}
-		
-		if (StringUtils.isNumeric(volumeToExtract)){
-			return null;
-		} else {
-			if (StringUtils.isAlphanumeric(volumeToExtract)) {
-				return volumeToExtract.substring(volumeToExtract.length()-1);
-			}
-			
+		if (StringUtils.countMatches(folio, "_") != 4) {
 			return null;
 		}
+
+		// If we have 4 underscore, we have mod information :
+		return StringUtils.substringBetween(StringUtils.substringBetween(folio, "_C_", ".tif"), "_", "_");
 	}
 
 	/**

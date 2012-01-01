@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="PageTurnerDialogURL" value="/src/mview/PageTurnerDialog.do"/>
+
 	<c:url var="SearchAjaxURL" value="/src/mview/SearchCarta.json"/>
 	
 	<c:url var="IIPImageServerURL" value="/mview/IIPImageServer.do"/>
@@ -17,12 +19,19 @@
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 	</c:url>
 	
+	<c:url var="GetLinkedDocumentURL" value="/src/mview/GetLinkedDocument.json">
+		<c:param name="volNum" value="${command.volNum}" />
+		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="imageOrder" value="${command.imageOrder}" />
+		<c:param name="imageName" value="${image}" />
+		<c:param name="imageType" value="${image.imageType}" />
+	</c:url>
 
 	<c:url var="currentPage" value="${caller}">
 		<c:param name="entryId" value="${command.entryId}" />
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
-		<c:param name="imageOrder" value="${command.imageOrder + 1}" />
+		<c:param name="imageOrder" value="${command.imageOrder}" />
 		<c:param name="total" value="${command.total}" />
 		<c:param name="totalRubricario" value="${command.totalRubricario}" />
 		<c:param name="totalCarta" value="${command.totalCarta}" />
@@ -45,7 +54,7 @@
 		<c:param name="nextPage" value="true" />
 	</c:url>
 
-	<c:url var="previousPage" value="${caller}">
+	<c:url var="previousPage" value="/src/mview/SearchCarta.json">
 		<c:param name="entryId" value="${command.entryId}" />
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -60,13 +69,24 @@
 	</c:url>
 
 <div id="EditPersonalNotesDiv">
-	<div id="prevNextButtons">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<div id="transcribeDiv">
+		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcribe is available only for carta.</span>
+		<span id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</span>
+		<a id="showAlreadyTranscribed" href="#" title="Show this document record" class="transcribe" style="visibility: hidden;">Show this document record</a>
+		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Transcribe this document</a>
+		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Choice This Folio Start</a>
+	</div>
+	</security:authorize>	  
+	<div id="line3"></div>
+
+	<div id="prevNextButtons" class="transcribe">
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
-	    	<a class="previousPage">Previous folio</a>
+	    	<a id="previous" class="previousPage">Previous folio</a>
 		</c:if>
 		<c:if test="${command.imageOrder > 1}">
-			<a id="previous" href="${previousPage}" class="previousPage">Previous folio</a>
+			<a id="previous" class="previousPage" href="${previousPage}" >Previous folio</a>
 		</c:if>
 		</div>
 		<div id="folio" title="Warning!" style="display:none"> 
@@ -77,17 +97,19 @@
 			<a id="next" class="nextPage">Next folio</a>
 		</c:if>
 		<c:if test="${command.imageOrder < command.total}">
-			<a id="next" href="${nextPage}" class="nextPage">Next folio</a>
+			<a id="next" class="nextPage" href="${nextPage}">Next folio</a>
 		</c:if>
 		</div>
 	</div>
 
-	<a id="volumeSummary" href="#">Volume Summary</a>
+	<div>
+		<a id="volumeSummary" href="#">Volume Summary</a>
+	</div>
 
-	<div id="line"></div>
+	<div id="line" class="transcribe"></div>
 	
-	<div id="rubricarioMoveTo">
-		<form:form id="moveToRubricarioForm" method="post" class="edit">
+	<div id="rubricarioMoveTo" class="transcribe">
+		<form:form id="moveToRubricarioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
 			<label id="imageProgTypeNumLabel" class="rubricarioLabel" for="imageProgTypeNum">Move to <i>Index of Names</i> folio</label>
 			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
 			<input id="goR" type="submit"  value="Go"/>
@@ -105,8 +127,8 @@
 			<form:hidden path="modeEdit" value="${command.modeEdit}" />
 		</form:form>
 	</div>
-	<div id="folioMoveTo">
-		<form:form id="moveToFolioForm" method="post" class="edit">
+	<div id="folioMoveTo" class="transcribe">
+		<form:form id="moveToFolioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
 			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio </label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
 			<input id="go" type="submit" value="Go"/>
@@ -125,14 +147,14 @@
 		</form:form>
 	</div>
 	
-	<div id="line2"></div>
+	<div id="line2" class="transcribe"></div>
 	
 	<div id="personalNotesDiv">
-		<a id="personalNotesButton" href="#">Personal Notes</a>
+		<a id="personalNotesButton" href="#" class="transcribe">Personal Notes</a>
 	</div>
 	
 	<div id="exitDiv">
-		<a id="exitButton" href="#" onClick="$j('#exit').dialog('open');">Exit</a>
+		<a id="exitButton" href="#" class="transcribe" onClick="$j('#exit').dialog('open');">Exit</a>
 	</div>
 </div>
 
@@ -148,13 +170,47 @@
 	<div id="notFound" title="Alert" style="display:none">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This folio is not present/missing/not available. Check the volume summary.</p>
 	</div>
-	
+
+	<form:form id="transcribeForm" class="edit">
+		<input type="hidden" id="transcribeImage" value="" />
+		<input type="hidden" id="startImage" value="" />
+	</form:form>
+
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#moveToFolioForm").pageTurnerForm({searchUrl: '${SearchAjaxURL}', imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
-			$j("#rubricarioMoveTo").pageTurnerForm({searchUrl: '${SearchAjaxURL}', imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
-			$j("#previous").pageTurnerPage({imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
-			$j("#next").pageTurnerPage({imagePrefix: '${ImagePrefixURL}', IIPImageServer: '${IIPImageServerURL}'});
+			$j("#moveToFolioForm").pageTurnerForm({
+				searchUrl: '${SearchAjaxURL}', 
+				imagePrefix: '${ImagePrefixURL}', 
+				IIPImageServer: '${IIPImageServerURL}', 
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				canTranscribe: 'true'
+				</security:authorize>
+			});
+			
+			$j("#rubricarioMoveTo").pageTurnerForm({
+				searchUrl: '${SearchAjaxURL}',
+				imagePrefix: '${ImagePrefixURL}',
+				IIPImageServer: '${IIPImageServerURL}',
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				canTranscribe: 'true'
+				</security:authorize>
+			});
+			$j("#previous").pageTurnerPage({
+				searchUrl: '${SearchAjaxURL}',
+				imagePrefix: '${ImagePrefixURL}',
+				IIPImageServer: '${IIPImageServerURL}',
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				canTranscribe: 'true'
+				</security:authorize>
+			});
+			$j("#next").pageTurnerPage({
+				searchUrl: '${SearchAjaxURL}',
+				imagePrefix: '${ImagePrefixURL}',
+				IIPImageServer: '${IIPImageServerURL}',
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				canTranscribe: 'true'
+				</security:authorize>
+			});
 			
 			var $dialogPersonalNotes = $j('<div id="DialogPersonalNotesDiv"></div>').dialog({                                                                                                                                                                   
 				autoOpen: false,
@@ -243,6 +299,67 @@
 					$dialogPersonalNotes.dialog("open")
 					return false;
 				}
+			});
+			
+
+			$j.ajax({ type:"GET", url:"${GetLinkedDocumentURL}", async:false, success:function(data) {
+				// We set currentImage
+				currentImage = data.imageId;
+				if (data.error == 'wrongType') {
+					$j("#unvailableTranscribe").css('visibility', 'visible');
+					$j("#alreadyTranscribe").css('visibility', 'hidden');
+					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+					$j("#readyToTranscribe").css('visibility', 'hidden');
+					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+				} else if (data.linkedDocument == 'true') {
+					$j("#alreadyTranscribe").css('visibility', 'visible');
+					$j("#showAlreadyTranscribed").css('visibility', 'visbile');
+					$j("#unvailableTranscribe").css('visibility', 'hidden');
+					$j("#readyToTranscribe").css('visibility', 'hidden');
+					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+				} else if (data.linkedDocument == 'false') {
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+					$j("#readyToTranscribe").css('visibility', 'visible');
+					</security:authorize>
+					$j("#alreadyTranscribe").css('visibility', 'hidden');
+					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+					$j("#unvailableTranscribe").css('visibility', 'hidden');
+					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+				} else {
+					$j("#unvailableTranscribe").css('visibility', 'hidden');
+					$j("#alreadyTranscribe").css('visibility', 'hidden');
+					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+					$j("#readyToTranscribe").css('visibility', 'hidden');
+					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+				}
+			}});
+
+			
+			$j('#readyToTranscribe').click(function() {
+				$j("#choiceThisFolioStart").css('visibility', 'visible');
+				$j("#readyToTranscribe").css('visibility', 'hidden');
+				transcribing=true;
+				imageDocumentToCreate=currentImage;
+				return false;
+			});
+			
+			$j('#choiceThisFolioStart').click(function() {
+				$j("#choiceThisFolioStart").css('visibility', 'visible');
+				$j("#readyToTranscribe").css('visibility', 'hidden');
+				imageDocumentFolioStart=currentImage;
+				var urlToTranscribe = "/DocSources/de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart;
+				window.opener.$j("#body_left").load(urlToTranscribe);
+				$j("#choiceThisFolioStart").css('visibility', 'hidden');
+				window.blur();
+				window.opener.focus();
+				return false;
+			});
+			
+			$j('#showAlreadyTranscribed').click(function() {
+				window.opener.$j("#body_left").load($j('#showAlreadyTranscribed').attr('href'));
+				window.blur();
+				window.opener.focus();
+				return false;
 			});
 		});
 	</script>

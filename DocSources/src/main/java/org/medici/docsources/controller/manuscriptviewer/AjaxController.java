@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.util.HtmlUtils;
@@ -85,6 +86,59 @@ public class AjaxController {
 		} catch (ApplicationThrowable ath) {
 		}
 		*/	
+		return new ModelAndView("responseOK", model);
+	}
+
+	@RequestMapping(value = {"/src/mview/GetLinkedDocument.json", "/de/mview/GetLinkedDocument.json"}, method = RequestMethod.GET)
+	public ModelAndView findLinkedDocument(@RequestParam(value="entryId", required=false) Integer entryId,
+			@RequestParam(value="volNum", required=false) Integer volNum,
+			@RequestParam(value="volLetExt", required=false) String volLetExt,
+			@RequestParam(value="imageType", required=false) String imageType,
+			@RequestParam(value="imageProgTypeNum", required=false) Integer imageProgTypeNum,
+			@RequestParam(value="imageOrder", required=false) Integer imageOrder,
+			@RequestParam(value="imageName", required=false) String imageName,
+			@RequestParam(value="total", required=false) Long total,
+			@RequestParam(value="totalRubricario", required=false) Long totalRubricario,
+			@RequestParam(value="totalCarta", required=false) Long totalCarta,
+			@RequestParam(value="totalAppendix", required=false) Long totalAppendix,
+			@RequestParam(value="totalOther", required=false) Long totalOther,
+			@RequestParam(value="totalGuardia", required=false) Long totalGuardia,
+			@RequestParam(value="modeEdit", required=false) Boolean modeEdit, 
+			HttpServletRequest request) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Integer documentId = null;
+			Image image = new Image();
+			if (entryId != null) {
+				documentId = entryId;
+			} else {
+				if ((!ObjectUtils.toString(imageType).equals(""))  && (!imageType.equals("C"))){
+						model.put("error", "wrongType");
+				} else {
+					// We extract image
+					image = getManuscriptViewerService().findVolumeImage(null, volNum, volLetExt, (imageType!=null) ? ImageType.valueOf(imageType) : null, imageProgTypeNum, imageOrder);
+					
+					// We check if this image has a document linked...
+					if (image != null) {
+						documentId = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image);
+					}
+				}
+			}			
+
+			model.put("linkedDocument", (documentId != null) ? "true" : "false");
+			model.put("entryId", documentId );
+			model.put("showLinkedDocument", HtmlUtils.showDocument(documentId));
+			model.put("imageName", image.getImageName());
+			model.put("imageId", image.getImageId());
+		}catch (ApplicationThrowable applicationThrowable) {
+			model.put("entryId", null);
+			model.put("linkedDocument", "false");
+			model.put("showLinkedDocument", "");
+			model.put("imageName", "");
+			model.put("imageId", "");
+		}
+		
 		return new ModelAndView("responseOK", model);
 	}
 
@@ -148,6 +202,9 @@ public class AjaxController {
 				model.put("volLetExt", documentExplorer.getVolLetExt());
 				model.put("imageType", documentExplorer.getImage().getImageType());
 				model.put("imageName", documentExplorer.getImage().getImageName());
+				if (documentExplorer.getImage().getMissedNumbering() != null) { 
+					model.put("missedNumbering", documentExplorer.getImage().getMissedNumbering());
+				}
 				model.put("imageCompleteName", documentExplorer.getImage().toString());
 				model.put("imageProgTypeNum", documentExplorer.getImage().getImageProgTypeNum());
 				model.put("imageRectoVerso", documentExplorer.getImage().getImageRectoVerso());
