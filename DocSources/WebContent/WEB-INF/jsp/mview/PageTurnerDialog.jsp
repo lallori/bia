@@ -352,6 +352,7 @@
 				$j("#choiceThisFolioStart").css('visibility', 'hidden');
 				window.blur();
 				window.opener.focus();
+				window.close();
 				return false;
 			});
 			

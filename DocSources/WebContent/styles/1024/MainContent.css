@@ -2055,7 +2055,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /* ---- Volume Summary --- */
 
 a#volumeSummary {
-	margin: 0 0 0 190px;
+	margin: 0 0 0 60px;
 	position:absolute;
 	width:122px;
 	height:22px;
@@ -2137,7 +2137,7 @@ a#volumeSummary {
 /* ---- Refresh --- */
 
 a.refreshVolumeExplorer {
-	margin: 0 0 0 355px;
+	margin: 0 0 0 210px;
 	position:absolute;
 	width:122px;
 	height:22px;
