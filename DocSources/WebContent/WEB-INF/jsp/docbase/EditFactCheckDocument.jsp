@@ -17,6 +17,7 @@
 
 			<form:hidden path="entryId"/>
 			<form:hidden path="vetId"/>
+			<input type="hidden" value="" id="modify" />
 		</fieldset>	
 	</form:form>
 
@@ -33,10 +34,23 @@
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
+	        
+	        $j("#EditFactCheckDocumentForm :input").change(function(){
+				$j("#modify").val(1); //set the hidden field if an element is modified
+				return false;
+			});
 
 	        $j('#close').click(function() {
-				$j('#EditFactCheckDocumentDiv').block({ message: $j('#question') }); 
-				return false;
+	        	if($j("#modify").val() == 1){
+					$j('#EditFactCheckDocumentDiv').block({ message: $j('#question') }); 
+					return false;
+	        	}else{
+	        		$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+	    				$j("#body_left").html(html);
+	    			}});
+	    				
+	    			return false;
+	        	}
 			});
       
 			$j("#EditFactCheckDocumentForm").submit(function (){

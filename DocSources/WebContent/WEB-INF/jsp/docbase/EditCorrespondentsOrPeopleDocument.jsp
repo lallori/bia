@@ -99,7 +99,8 @@
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
-			</div>			
+			</div>
+			<input type="hidden" value="" id="modify" />			
 		</fieldset>	
 	</form:form>
 	
@@ -163,6 +164,11 @@
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
+	        
+	        $j("#EditCorrespondentsOrPeopleDocumentForm :input").change(function(){
+				$j("#modify").val(1); //set the hidden field if an element is modified
+				return false;
+			});
 
 			$j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchSenderPeopleURL}',
@@ -326,8 +332,16 @@
 
 			$j('#close').click(function() {
 				$j('.autocomplete').remove();
-				$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question') }); 
-				return false;
+				if($j("#modify").val() == 1){
+					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question') }); 
+					return false;
+				}else{
+					$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+						$j("#body_left").html(html);
+					}});
+						
+					return false;
+				}
 			});
 			
 			$j('.closeForm').click(function(){

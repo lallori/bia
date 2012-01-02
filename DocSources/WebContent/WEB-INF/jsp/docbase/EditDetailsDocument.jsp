@@ -91,6 +91,7 @@
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
+			<input type="hidden" value="" id="modify" />
 		</fieldset>	
 		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
 
@@ -103,6 +104,8 @@
 	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do"/>
 	
 	<c:url var="CompareDocumentURL" value="/src/docbase/CompareDocument.do" />
+	
+	<c:url var="ShowDocumentAlreadyURL" value="/src/docbase/ShowDocument.do" />
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -112,6 +115,11 @@
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
+	        
+	        $j("#EditDetailsDocumentForm :input").change(function(){
+				$j("#modify").val(1); //set the hidden field if an element is modified
+				return false;
+			});
 
 			var showVolumeExplorer = function (){
 				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },
@@ -149,29 +157,33 @@
 						function(data){
 							if (data.entryId != "") {
 								if ($j("#alreadyDigitized").length == 0) {
-										$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\">This document has already been digitized. Click <a class=\"compareDoc\" href=\"${CompareDocumentURL}?entryId=" + data.entryId +  " \">here</a> to view.<br></span>");
+										$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\"><font color=\"#FF0000\">This document has already been digitized. Click <a class=\"compareDoc\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  " \">here</a> to view.<br></font></span>");
 										$j('.compareDoc').click(function(){
 											var tabName = "Doc " + $j("#volume").val() + "/" + $j("#folioNum").val();
 											var numTab = 0;
 											
 											//Check if already exist a tab with this person
-											var tabExist = false;
-											$j("#tabs ul li a").each(function(){
-												if(!tabExist)
-													numTab++;
-												if(this.text == tabName){
-													tabExist = true;
-												}
-											});
+// 											var tabExist = false;
+// 											$j("#tabs ul li a").each(function(){
+// 												if(!tabExist)
+// 													numTab++;
+// 												if(this.text == tabName){
+// 													tabExist = true;
+// 												}
+// 											});
 											
-											if(!tabExist){
-												$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-												$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-												return false;
-											}else{
-												$j("#tabs").tabs("select", numTab-1);
-												return false;
-											}
+// 											if(!tabExist){
+// 												$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+// 												$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+// 												return false;
+// 											}else{
+// 												$j("#tabs").tabs("select", numTab-1);
+// 												return false;
+// 											}
+											$j.ajax({ url: '${ShowDocumentAlreadyURL}?entryId=' + data.entryId, cache: false, success:function(html) { 
+												$j("#body_left").html(html);
+											}});
+											return false;
 										});
 								}
 								$j("#save").attr("disabled","true");
@@ -269,9 +281,17 @@
 			});
 
 	        $j('#close').click(function() {
-	        	// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-				$j('#EditDetailsDocumentForm').block({ message: $j('#question') }); 
-				return false;
+	        	if($j("#modify").val() == 1){
+	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+					$j('#EditDetailsDocumentForm').block({ message: $j('#question') }); 
+					return false;
+	        	}else{
+	        		$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
+	    				$j("#body_left").html(html);
+	    			}});
+	    				
+	    			return false; 
+	        	}	        		
 			});
 	        
 	        $j('.compareDoc').click(function(){
