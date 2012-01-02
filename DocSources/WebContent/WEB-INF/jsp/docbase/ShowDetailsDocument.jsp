@@ -149,7 +149,7 @@
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
-				var tabName = "Vol Exp ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}";
+				var tabName = "Volume Explorer ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}";
 				
 				//Check if already exist a tab with this document in volume explorer
 				var numTab = 0;
