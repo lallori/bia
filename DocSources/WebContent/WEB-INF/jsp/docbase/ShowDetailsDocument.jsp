@@ -50,7 +50,7 @@
 			<div id="DocumentImageDigitDiv">
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
-					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer></a><br>
+					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a><br>
 					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
 				</security:authorize>
 			</div>
