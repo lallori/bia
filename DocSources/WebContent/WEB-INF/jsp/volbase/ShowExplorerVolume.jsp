@@ -205,7 +205,7 @@
 				<a id="flipItInFullScreen" href="${explorerVolumeModalWindowURL}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a>
 			</security:authorize>
 			<security:authorize ifAnyGranted="ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
-				<a id="ShowManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">ManuscriptViewer Mode</a>
+				<a id="ShowManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">Show in Fullscreen mode</a>
 			</security:authorize>-->
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
 				<a id="ShowManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER">ManuscriptViewer Mode</a>
