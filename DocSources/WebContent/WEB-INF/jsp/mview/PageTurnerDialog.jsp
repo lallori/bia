@@ -71,9 +71,9 @@
 <div id="EditPersonalNotesDiv">
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div id="transcribeDiv">
-		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcribe is available only for carta.</span>
+		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
 		<span id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</span>
-		<a id="showAlreadyTranscribed" href="#" title="Show this document record" class="transcribe" style="visibility: hidden;">Show this document record</a>
+		<a id="showAlreadyTranscribed" href="#" title="Show this document record" class="transcribe" style="visibility: hidden;">Show this document record and transcription</a>
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Transcribe this document</a>
 		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Choose this as "Start folio"</a>
 	</div>
