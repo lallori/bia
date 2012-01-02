@@ -18,7 +18,7 @@
 						<option value="Synopsis">Document Synopsis</option>
 						<option value="Extract">Document Extract</option>				
 					</select>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add to search" title="Add this word search to your search filter">
 					<input type="hidden" id="category" value="Word Search">
 				</form>
 			</div>
