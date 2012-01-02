@@ -75,7 +75,7 @@
 		<span id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</span>
 		<a id="showAlreadyTranscribed" href="#" title="Show this document record" class="transcribe" style="visibility: hidden;">Show this document record</a>
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Transcribe this document</a>
-		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Choice This Folio Start</a>
+		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Choose this as "Start folio"</a>
 	</div>
 	</security:authorize>	  
 	<div id="line3"></div>
