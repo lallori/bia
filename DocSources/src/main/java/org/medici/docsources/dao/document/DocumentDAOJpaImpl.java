@@ -116,6 +116,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			stringBuffer.append(folioMod);
 			stringBuffer.append("' ");
 		}
+		stringBuffer.append(" AND logicalDelete=false");
 		Query query = getEntityManager().createQuery(stringBuffer.toString());
 
 		if (query.getResultList().size() ==0) { 
@@ -131,15 +132,6 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	@Override
 	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
 		return this.findDocument(volNum, volLetExt, folioNum, folioMod);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Document findDocumentByVolumeId(Integer volumeId) throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**

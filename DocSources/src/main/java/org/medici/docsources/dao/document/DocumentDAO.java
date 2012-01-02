@@ -72,15 +72,6 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
 
 	/**
-	 * This method searches a single document identified by his volume.
-	 * 
-	 * @param summaryId number of volume to search
-	 * @return Document searched by his volume
-	 * @throws PersistenceException
-	 */
-	public Document findDocumentByVolumeId(Integer summaryId) throws PersistenceException;
-	
-	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Document} 
 	 * created on database.
 	 * 
