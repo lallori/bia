@@ -23,7 +23,7 @@
 				<option value="Married">Married</option>
 				<option value="Patronymic">Patronymic</option> 
 			</select>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Name Parts">
 		</form>	
 	</div>
@@ -33,7 +33,7 @@
 		<form id="wordSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
 			<input id="word" name="word" class="input_20c" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Word Search">
 		</form>
 	</div>
@@ -56,7 +56,7 @@
 			</c:forEach>
 			</select>
 			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2"/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="addDateRange">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="addDateRange">
 			<input type="hidden" id="category" value="Date">
 			<p class="invisible">and</p>
 			<input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" />
@@ -161,7 +161,7 @@
                         </optgroup>
             </select>
             <input type="hidden" id="roleCategory" name="roleCategory" type="text" value=""/>
-            <input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+            <input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Role Category">
 		</form>
 		
@@ -171,7 +171,7 @@
 		<form id="occupationSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Use this autocomplater textfield to find a particular title or occupation name. Plase note that a most of titles or occupations  are written in their own language, so try using the  appropriate language rather than English or Italian.">?</a>
 			<input id="occupation" name="occupation" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Occupation">
 			<input type="hidden" id="occupationId" value="">
 		</form>
@@ -182,7 +182,7 @@
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>
 			<input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="placeAdd" disabled="disabled">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd" disabled="disabled">
 			<input type="hidden" id="category" value="Place">
 			<input type="hidden" id="placeId" value="">
 		</form>

@@ -15,7 +15,7 @@
 			<input id="placeName" name="placeName" class="input_20c" type="text" value=""/>
 <!-- 			<label for="stressSense" id="placeNameType">Stress sense</label> -->
 <!-- 			<input type="checkbox" name="stressSense" class="checkbox4"/> -->
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Place Name">
 		</form>
 	</div>
@@ -31,7 +31,7 @@
 				</c:forEach>
 			</select>
 			<input type="hidden" id="placeType" name="placeType" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Place Type">
 		</form>
 	</div>
@@ -48,7 +48,7 @@
 			</select>
 			<input type="hidden" id="linkedToTopics" name="linkedToTopics" type="text" value=""/>
 			<input type="hidden" id="linkedToTopicsId" name="linkedToTopicsId" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Linked to Topics">
 		</form>
 	</div>
@@ -65,7 +65,7 @@
 				<option value="Death Place">Death Place</option>
 			</select>
 			<input type="hidden" id="linkedToPeople" name="linkedToPeople" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Linked to People">
 		</form>
 	</div>

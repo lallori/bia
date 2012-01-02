@@ -17,7 +17,7 @@
 					</select>
 					<input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
 					<input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 					<input type="hidden" id="category" value="Volume">
 				</form>
 				<hr />
@@ -35,7 +35,7 @@
 						</c:forEach>
 					</select>
 					<input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter" class="addDateRange">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="addDateRange">
 					<input type="hidden" id="category" value="Date">
 					<p class="invisible">and</p>
 	                <input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
