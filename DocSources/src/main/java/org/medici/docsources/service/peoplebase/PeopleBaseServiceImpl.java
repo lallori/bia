@@ -285,6 +285,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			} else {
 				person.setDeathPlace(null);
 			}
+			person.setLogicalDelete(Boolean.FALSE);
 
 			getPeopleDAO().persist(person);
 
