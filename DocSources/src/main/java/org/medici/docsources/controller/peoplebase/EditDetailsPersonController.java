@@ -126,7 +126,7 @@ public class EditDetailsPersonController {
 				person.setBornPlaceUnsure(command.getBornPlaceUnsure());
 			}
 			
-			if(!command.getActiveStart().equals(""))
+			if(command.getActiveStart()!= null && !command.getActiveStart().equals(""))
 				person.setActiveStart(command.getActiveStart());
 			else
 				person.setActiveStart(null);
@@ -145,7 +145,7 @@ public class EditDetailsPersonController {
 				person.setDeathPlaceUnsure(command.getDeathPlaceUnsure());
 			}
 			
-			if(!command.getActiveEnd().equals(""))
+			if(command.getActiveEnd()!= null && !command.getActiveEnd().equals(""))
 				person.setActiveEnd(command.getActiveEnd());
 			else
 				person.setActiveEnd(null);
@@ -160,6 +160,7 @@ public class EditDetailsPersonController {
 				} else {
 					person = getPeopleBaseService().editDetailsPerson(person);
 					model.put("person", person);
+					model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 
 					return new ModelAndView("peoplebase/ShowDetailsPerson", model);
 				}
