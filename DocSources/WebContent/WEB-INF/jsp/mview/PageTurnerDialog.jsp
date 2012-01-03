@@ -67,13 +67,17 @@
 		<c:param name="totalGuardia" value="${command.totalGuardia}" />
 		<c:param name="previousPage" value="true" />
 	</c:url>
+	
+	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
+			<c:param name="entryId"   value="${command.entryId}" />
+		</c:url>
 
 <div id="EditPersonalNotesDiv">
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div id="transcribeDiv">
 		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
-		<span id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</span>
-		<a id="showAlreadyTranscribed" href="#" title="Show this document record" class="transcribe" style="visibility: hidden;">Show this document record and transcription</a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden;"><span id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</span></a>
+<!-- 		<a id="showAlreadyTranscribed" href="#" title="Show this document record" class="transcribe" style="visibility: hidden;">Show this document record and transcription</a> -->
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Transcribe this document</a>
 		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Choose this as "Start folio"</a>
 	</div>
@@ -313,7 +317,7 @@
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 				} else if (data.linkedDocument == 'true') {
 					$j("#alreadyTranscribe").css('visibility', 'visible');
-					$j("#showAlreadyTranscribed").css('visibility', 'visbile');
+					$j("#showAlreadyTranscribed").css('visibility', 'visible');
 					$j("#unvailableTranscribe").css('visibility', 'hidden');
 					$j("#readyToTranscribe").css('visibility', 'hidden');
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
@@ -360,6 +364,7 @@
 				window.opener.$j("#body_left").load($j('#showAlreadyTranscribed').attr('href'));
 				window.blur();
 				window.opener.focus();
+				window.close();
 				return false;
 			});
 		});

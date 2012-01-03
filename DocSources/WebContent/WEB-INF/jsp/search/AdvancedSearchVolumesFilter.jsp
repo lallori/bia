@@ -23,21 +23,29 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
+			<c:if test="${(not empty searchFilter.filterData.datesTypes) &&((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="dateSearchDiv">
 			<c:forEach items="${searchFilter.filterData.datesTypes}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch"><fmt:message key="search.documents.dateType.${searchFilter.filterData.datesTypes[iterator.index]}" />: </span>
-					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Written After'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
-					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Written Before'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
-					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Written Between'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}, ${searchFilter.filterData.datesYearBetween[iterator.index]} ${months[searchFilter.filterData.datesMonthBetween[iterator.index]]} ${searchFilter.filterData.datesDayBetween[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
+					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'After'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
+					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Before'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
+					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Between'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}, ${searchFilter.filterData.datesYearBetween[iterator.index]} ${months[searchFilter.filterData.datesMonthBetween[iterator.index]]} ${searchFilter.filterData.datesDayBetween[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
 					<input type="hidden" value="${searchFilter.filterData.datesTypes[iterator.index]}|${searchFilter.filterData.datesYear[iterator.index]}|${months[searchFilter.filterData.datesMonth[iterator.index]]}|${searchFilter.filterData.datesDay[iterator.index]}| ${searchFilter.filterData.datesYearBetween[iterator.index]}|${months[searchFilter.filterData.datesMonthBetween[iterator.index]]}|${searchFilter.filterData.datesDayBetween[iterator.index]}" name="date">					
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
+			<c:if test="${(searchFilter.filterData.digitized != null) &&((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.datesTypes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="digitizedSearchDiv">
+			<c:if test="${(searchFilter.filterData.digitized != null)}">
+				<div class="searchFilterDiv">
+					<span class="categorySearch">Digitized: </span><span class="wordSearch"><c:if test="${searchFilter.filterData.digitized == true}">Yes</c:if><c:if test="${searchFilter.filterData.digitized == false}">No</c:if></span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${fn2:encode(searchFilter.filterData.digitized.toString()) }" name="digitized">
+				</div>
+			</c:if>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.languages) && ((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvcancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.languages) && ((not empty searchFilter.filterData.volumes))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="languagesSearchDiv">
 			<c:forEach items="${searchFilter.filterData.languages}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -162,10 +170,12 @@
 					window.opener.$j("#tabs").tabs("url", index, formSubmitURL);
 					window.opener.$j("#tabs").tabs("select", index);
 					window.opener.$j("#tabs").tabs("load" , index);
+					window.close();
 				} else {
 					//otherwise it's in a new search so we add a new tab.
 					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Volume Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+					window.close();
 				}
 				return false;
 			});

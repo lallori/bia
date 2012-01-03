@@ -134,10 +134,12 @@
 					window.opener.$j("#tabs").tabs("url", index, formSubmitURL);
 					window.opener.$j("#tabs").tabs("select", index);
 					window.opener.$j("#tabs").tabs("load" , index);
+					window.close();
 				} else {
 					//otherwise it's in a new search so we add a new tab.
 					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Person Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+					window.close();
 				}
 				return false;
 			});

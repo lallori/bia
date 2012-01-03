@@ -387,7 +387,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			inventario = new ArrayList<String>(command.getInventario().size());
 			for(String singleWord : command.getInventario()){
 				try{
-					inventario.add(URIUtil.decode(singleWord, " "));
+					inventario.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
 				}catch(URIException e){
 				}

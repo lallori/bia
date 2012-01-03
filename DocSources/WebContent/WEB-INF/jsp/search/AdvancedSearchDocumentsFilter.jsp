@@ -23,6 +23,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
+			<c:if test="${(not empty searchFilter.filterData.person) && (not empty searchFilter.filterData.words)}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="personSearchDiv">
 			<c:forEach items="${searchFilter.filterData.person}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -86,7 +87,7 @@
 			<div id="refersToSearchDiv">
 			<c:forEach items="${searchFilter.filterData.refersTo}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">From: </span><span class="wordSearch">${searchFilter.filterData.refersTo[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch">Refers To: </span><span class="wordSearch">${searchFilter.filterData.refersTo[iterator.index]}</span><a class="remove" href="#">(remove)</a>
 					<input type="hidden" value="${searchFilter.filterData.refersToId[iterator.index]}|${fn2:encode(searchFilter.filterData.refersTo[iterator.index])}" name="refersTo">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
@@ -122,6 +123,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
+			<c:if test="${(not empty searchFilter.filterData.datesTypes) && ((not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.person) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.sender) || (not empty searchFilter.filterData.from) || (not empty searchFilter.filterData.recipient) || (not empty searchFilter.filterData.to) || (not empty searchFilter.filterData.refersTo) || (not empty searchFilter.filterData.extract) || (not empty searchFilter.filterData.synopsis) || (not empty searchFilter.filterData.topics))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="dateSearchDiv">
 			<c:forEach items="${searchFilter.filterData.datesTypes}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -203,10 +205,12 @@
 					window.opener.$j("#tabs").tabs("url", index, formSubmitURL);
 					window.opener.$j("#tabs").tabs("select", index);
 					window.opener.$j("#tabs").tabs("load" , index);
+					window.close()
 				} else {
 					//otherwise it's in a new search so we add a new tab.
 					window.opener.$j("#tabs").tabs("add", formSubmitURL, "Document Search</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+					window.close();
 				}
 				return false;
 			});

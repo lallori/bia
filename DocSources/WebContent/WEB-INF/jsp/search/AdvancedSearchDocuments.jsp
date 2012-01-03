@@ -58,7 +58,7 @@
 					<a class="helpIcon" title="Search documents sent FROM Place/Location.">?</a>
 					<label for="from" id="fromLabel">From</label> 
 					<input type="text" id="from" name="from" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="formAdd" disabled="disabled">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="fromAdd" disabled="disabled">
 					<input type="hidden" id="category" value="From">
 					<input type="hidden" id="fromId" value="">
 				</form>
@@ -85,7 +85,7 @@
 					<a class="helpIcon" title="Search documents in which this Person's name is mentioned.">?</a>
 					<label for="refersTo" id="refersToLabel">Refers to</label> 
 					<input type="text" id="refersTo" name="refersTo" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="refersTo" disabled="disabled">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="refersToAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Referers To">
 					<input type="hidden" id="refersToId" value="">
 				</form>
