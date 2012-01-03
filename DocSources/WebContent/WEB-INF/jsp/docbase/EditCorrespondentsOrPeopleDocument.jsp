@@ -200,7 +200,7 @@
 			
 			$j('#senderPlaceDescriptionAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchSenderPlaceURL}',
-			    minChars:5, 
+			    minChars:3, 
 			    delimiter: null, // regex or character
 			    maxHeight:400,
 			    width:400,
@@ -255,7 +255,7 @@
 
 			$j('#recipientPlaceDescriptionAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchRecipientPlaceURL}',
-			    minChars:5, 
+			    minChars:3, 
 			    delimiter: null, // regex or character
 			    maxHeight:400,
 			    width:400,
