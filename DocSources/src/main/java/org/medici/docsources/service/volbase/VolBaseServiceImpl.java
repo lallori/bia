@@ -143,6 +143,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 			volume.setStartDate(DateUtils.getLuceneDate(volume.getStartYear(), volume.getStartMonthNum(), volume.getStartDay()));
 			volume.setEndDate(DateUtils.getLuceneDate(volume.getEndYear(), volume.getEndMonthNum(), volume.getEndDay()));
+			volume.setLogicalDelete(Boolean.FALSE);
+			volume.setDigitized(Boolean.FALSE);
 
 			getVolumeDAO().persist(volume);
 			
