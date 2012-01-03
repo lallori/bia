@@ -273,6 +273,34 @@ public class HtmlUtils {
 	/**
 	 * 
 	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
+	public static List<String> showTopicsDocumentRelated(List<String> inputList, Integer entryId) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
+		anchorBegin.append(inputList.get(0));
+		anchorBegin.append("\" class=\"showResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
+		anchorBegin.append(entryId);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
 	 * @param summaryId
 	 * @return
 	 */

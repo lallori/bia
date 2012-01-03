@@ -88,7 +88,7 @@ public class ShowTopicsPlaceController {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
 								
 				List<String> outputFields = new ArrayList<String>(3);
-				outputFields.add("Doc ID");
+				outputFields.add("Doc Volume / Folio");
 				outputFields.add("Topic");
 				outputFields.add("Date");
 								

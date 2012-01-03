@@ -551,7 +551,7 @@ public class AjaxController {
 		for (EplToLink currentEplToLink : (List<EplToLink>)page.getList()) {
 			List singleRow = new ArrayList();
 			if (currentEplToLink.getDocument() != null)
-				singleRow.add(currentEplToLink.getDocument().getEntryId().toString());
+				singleRow.add(currentEplToLink.getDocument().getMDPAndFolio());
 			else
 				singleRow.add("");
 			
@@ -563,7 +563,7 @@ public class AjaxController {
 			singleRow.add(DateUtils.getStringDate(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
 			
 			
-			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
+			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
 		}
 
 		model.put("iEcho", "1");
