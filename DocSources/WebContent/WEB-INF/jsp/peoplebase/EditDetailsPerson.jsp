@@ -116,11 +116,19 @@
 				</div>
 				
 				
-					<form:hidden path="personId"/>
-					<form:hidden path="bornPlaceId"/>
-					<form:hidden path="bornPlacePrefered"/>
-					<form:hidden path="deathPlaceId"/>
-					<form:hidden path="deathPlacePrefered"/>			
+				<form:hidden path="personId"/>
+				<form:hidden path="bornPlaceId"/>
+				<form:hidden path="bornPlacePrefered"/>
+				<form:hidden path="deathPlaceId"/>
+				<form:hidden path="deathPlacePrefered"/>			
+
+				<form:errors path="bornYear" cssClass="inputerrors" htmlEscape="false"/>
+				<form:errors path="bornMonth" cssClass="inputerrors" htmlEscape="false"/>
+				<form:errors path="bornDay" cssClass="inputerrors" htmlEscape="false"/>
+				<form:errors path="deathYear" cssClass="inputerrors" htmlEscape="false"/>
+				<form:errors path="deathMonth" cssClass="inputerrors" htmlEscape="false"/>
+				<form:errors path="deathDay" cssClass="inputerrors" htmlEscape="false"/>
+
 				<div>
 					<input id="close" type="submit" value="Close" title="Do not save changes" class="button" />
 					<input id="save" type="submit" value="Save" class="button"/>

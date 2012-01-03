@@ -119,7 +119,7 @@ public class EditDetailsPersonValidator implements Validator {
 			}
 			if (bornMonthNum != null) {
 				if ((bornMonthNum <1) || (bornMonthNum >12)) {
-					errors.reject("bornMonthNum", "error.bornMonthNum.invalid");
+					errors.reject("bornMonth", "error.bornMonthNum.invalid");
 				}
 			}
 			if (bornDay != null) {
@@ -134,7 +134,7 @@ public class EditDetailsPersonValidator implements Validator {
 			}
 			if (deathMonthNum != null) {
 				if ((deathMonthNum <1) || (deathMonthNum >12)) {
-					errors.reject("deathMonthNum", "error.deathMonthNum.invalid");
+					errors.reject("deathMonth", "error.deathMonthNum.invalid");
 				}
 			}
 			if (deathDay != null) {
