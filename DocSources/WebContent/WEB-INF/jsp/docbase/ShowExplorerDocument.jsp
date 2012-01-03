@@ -20,7 +20,7 @@
 	</c:url>
 
 	<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
-		<c:param name="summaryId"   value="${documentExplorer.summaryId}" />
+		<c:param name="entryId"   value="${documentExplorer.entryId}" />
 		<c:param name="volNum"   value="${documentExplorer.volNum}" />
 		<c:param name="volLetExt"   value="${documentExplorer.volLetExt}" />
 		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
