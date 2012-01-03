@@ -1149,7 +1149,9 @@ var IIP = new Class({
 		// In order to add keyboard events to the div, we need to give
 		// it a tabindex and focus it
 		container.set('tabindex', 0);
-		container.focus();
+		// MEDICI ARCHIVE PROJECT START
+		//container.focus();
+		// MEDICI ARCHIVE PROJECT END
 		container.addEvent('keydown', this.key.bind(this));
 
 		// Focus and defocus when we move into and out of the div
@@ -1517,8 +1519,13 @@ var IIP = new Class({
 					this.zoomIn.bind(this));
 			navbuttons.getElement('img.zoomOut').addEvent('click',
 					this.zoomOut.bind(this));
+			// MEDICI ARCHIVE START
 			navbuttons.getElement('img.reset').addEvent('click',
 					this.reload.bind(this));
+			//navbuttons.getElement('img.reset').addEvent('click',
+			//		this.rotate(this.orientation+(45%360)));
+			// MEDICI ARCHIVE END
+
 
 			// Needed as IE<9 doesn't take CSS opacity into account
 			if (Browser.ie && (Browser.version < 9)) {
