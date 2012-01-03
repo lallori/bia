@@ -28,7 +28,6 @@
 package org.medici.docsources.service.peoplebase;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -276,6 +275,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				person.setDeathMonth(null);
 			}
 			person.setDeathDate(DateUtils.getLuceneDate(person.getDeathYear(), person.getDeathMonth(), person.getDeathDay()));
+			
+			if (!ObjectUtils.toString(person.getBornPlace()).equals("")) {
+				person.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
+				if(person.getBornPlace().getPrefFlag().equals("V")){
+					person.setBornPlace(getPlaceDAO().findPrinicipalPlace(person.getBornPlace().getGeogKey()));
+				}
+			} else {
+				person.setBornPlace(null);
+			}
 			
 			if (!ObjectUtils.toString(person.getDeathPlace()).equals("")) {
 				person.setDeathPlace(getPlaceDAO().find(person.getDeathPlace().getPlaceAllId()));
@@ -537,7 +545,10 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			personToUpdate.setBornDateBc(person.getBornDateBc());
 			if (!ObjectUtils.toString(person.getBornPlace()).equals("")) {
 				personToUpdate.setBornPlace(getPlaceDAO().find(person.getBornPlace().getPlaceAllId()));
-			} else {
+				if(personToUpdate.getBornPlace().getPrefFlag().equals("V")){
+					personToUpdate.setBornPlace(getPlaceDAO().findPrinicipalPlace(personToUpdate.getBornPlace().getGeogKey()));
+				}
+			}else {
 				personToUpdate.setBornPlace(null);
 			}
 			personToUpdate.setActiveStart(person.getActiveStart());
@@ -1379,19 +1390,12 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	@Override
-	public Map<Integer, Integer> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable {
-		Map<Integer, Integer> retValue = new HashMap<Integer, Integer>();
+	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable {
 		try{
-			
-			List<Integer> docsRel= getEpLinkDAO().findNumbersOfDocumentsRelated(personIds);
-			
-			for(int i=0; i < personIds.size(); i++){
-				retValue.put(personIds.get(i), docsRel.get(i));
-			}
-			return retValue;
+			Map<Integer, Long> docsRel= getEpLinkDAO().findNumbersOfDocumentsRelated(personIds);
+			return docsRel;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
-		}
-		
+		}		
 	}
 }

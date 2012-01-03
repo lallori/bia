@@ -288,7 +288,7 @@ public interface PeopleBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Integer, Integer> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable;
+	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable;
 	
 	/**
 	 * 
