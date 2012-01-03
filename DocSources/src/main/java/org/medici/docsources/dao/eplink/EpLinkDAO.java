@@ -28,6 +28,7 @@
 package org.medici.docsources.dao.eplink;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -86,6 +87,6 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<Integer> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException;
+	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException;
 
 }

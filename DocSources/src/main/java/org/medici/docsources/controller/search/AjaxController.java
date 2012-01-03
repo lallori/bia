@@ -249,9 +249,16 @@ public class AjaxController {
 		Page page = null;
 		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
+		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
+		List<Integer> personIds = new ArrayList<Integer>();
 		
 		try {
 			page = getSearchService().searchPeople(searchFilter.getFilterData(), paginationFilter);
+			
+			for(People currentPerson : (List<People>)page.getList()){
+				personIds.add(currentPerson.getPersonId());
+			}
+			documentsRelated = getPeopleBaseService().findNumbersOfDocumentsRelated(personIds);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -263,6 +270,10 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			if(documentsRelated.containsKey(currentPerson.getPersonId()))
+				singleRow.add(documentsRelated.get(currentPerson.getPersonId()).toString());
+			else
+				singleRow.add("0");
 			
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}
@@ -286,7 +297,7 @@ public class AjaxController {
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 
 		try {
-			page = getSearchService().searchPlaces(searchFilter.getFilterData(), paginationFilter);
+			page = getSearchService().searchAdvancedPlaces(searchFilter.getFilterData(), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -734,7 +745,7 @@ public class AjaxController {
 	private void simpleSearchPeople(Map<String, Object> model, String searchText, PaginationFilter paginationFilter) {
 		Page page = null;
 		List<Integer> personIds = new ArrayList<Integer>();
-		Map<Integer,Integer> documentsRelated = new HashMap<Integer, Integer>();
+		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		try {
 			page = getSearchService().searchPeople(new SimpleSearchPeople(searchText), paginationFilter);
 			for(People currentPerson : (List<People>)page.getList()){
@@ -753,7 +764,10 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
-			//singleRow.add(documentsRelated.get(currentPerson.getPersonId()).toString());
+			if(documentsRelated.containsKey(currentPerson.getPersonId()))
+				singleRow.add(documentsRelated.get(currentPerson.getPersonId()).toString());
+			else
+				singleRow.add("0");
 			
 			resultList.add(HtmlUtils.showPeople(singleRow, currentPerson.getPersonId()));
 		}

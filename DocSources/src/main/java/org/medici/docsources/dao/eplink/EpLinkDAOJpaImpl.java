@@ -27,7 +27,8 @@
  */
 package org.medici.docsources.dao.eplink;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -128,11 +129,14 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 		return new Integer(result.intValue());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public List<Integer> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException {
-		StringBuffer stringBuffer = new StringBuffer("SELECT COUNT(document.entryId) FROM EpLink WHERE");
+	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException {
+		StringBuffer stringBuffer = new StringBuffer("SELECT person.personId, COUNT(document.entryId) FROM EpLink WHERE");
 		for(int i=0; i < personIds.size(); i++){
-			if(stringBuffer.indexOf("personId") != -1){
+			if(stringBuffer.indexOf("=") != -1){
     			stringBuffer.append(" or ");
     		}
 			stringBuffer.append("(person.personId=");
@@ -140,15 +144,17 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 		}
 		stringBuffer.append(" group by person.personId");
 		
-		List<Integer> returnValues = new ArrayList<Integer>();
-		List<Long> tempValues = new ArrayList<Long>();
-		if(stringBuffer.indexOf("personId") != -1){
+		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
+		List tempValues;
+		if(stringBuffer.indexOf("=") != -1){
 			Query query = getEntityManager().createQuery(stringBuffer.toString());
-			tempValues = (List<Long>) query.getResultList();
+			tempValues = query.getResultList();
+			for(Iterator i = tempValues.iterator(); i.hasNext();){
+				Object [] data = (Object []) i.next();
+				returnValues.put((Integer)data[0], (Long)data[1]);
+			}
 		}
-		for(Long temp : tempValues){
-			returnValues.add(temp.intValue());
-		}
+		
 		
 		return returnValues;
 	}
