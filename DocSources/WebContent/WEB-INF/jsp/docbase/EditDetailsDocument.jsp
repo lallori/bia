@@ -157,7 +157,7 @@
 						function(data){
 							if (data.entryId != "") {
 								if ($j("#alreadyDigitized").length == 0) {
-										$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\"><font color=\"#FF0000\">This document has already been digitized. Click <a class=\"compareDoc\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  " \">here</a> to view.<br></font></span>");
+										$j("#close").before("<span class=\"inputerrorsAlreadyDigitized\" id=\"alreadyDigitized\"><font color=\"#FF0000\">This document has already been digitized. Click <a class=\"compareDoc\" style=\"color:red\" href=\"${ShowDocumentAlreadyURL}?entryId=" + data.entryId +  "\"><u>here</u></a> to view.<br></font></span>");
 										$j('.compareDoc').click(function(){
 											var tabName = "Doc " + $j("#volume").val() + "/" + $j("#folioNum").val();
 											var numTab = 0;
@@ -269,7 +269,7 @@
 					} else {
 				<c:choose> 
 					<c:when test="${command.entryId == 0}"> 
-						$j("#EditDetailsDocumentDiv").html(html);
+						$j("#body_left").html(html);
 					</c:when> 
 					<c:otherwise> 
 						$j("#EditDetailsDocumentDiv").html(html);
