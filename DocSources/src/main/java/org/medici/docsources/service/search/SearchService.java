@@ -106,6 +106,15 @@ public interface SearchService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
+	public Page searchAdvancedPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**

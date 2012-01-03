@@ -307,6 +307,18 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchAdvancedPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getPlaceDAO().searchMYSQL(searchContainer, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -338,7 +350,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getPlaceDAO().searchMYSQL(searchContainer, paginationFilter);
+			return getPlaceDAO().searchPlaces(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
