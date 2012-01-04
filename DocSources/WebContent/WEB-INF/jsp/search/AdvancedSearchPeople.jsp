@@ -49,7 +49,7 @@
 				<option value="Lived between">Lived between</option>
 				<option value="Born/Died on">Born/Died on</option>
 			</select>
-			<input id="dateYear" name="dateYear" class="input_4c" type="text" value="year" maxlength="4"/>
+			<input id="dateYear" name="dateYear" class="input_4c" type="text" value="yyyy" maxlength="4"/>
 			<select id="dateMonth" name="dateMonth" class="selectform">
 			<c:forEach items="${months}" var="month">
 				<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
