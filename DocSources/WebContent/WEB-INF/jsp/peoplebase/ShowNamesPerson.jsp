@@ -41,7 +41,7 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsPerson").css('visibility', 'visible');
-	        $j("#EditTitlesOccupationsPerson").css('visibility', 'visible'); 
+	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'visible'); 
 			$j("#EditParentsPerson").css('visibility', 'visible');
 			$j("#EditChildrenPerson").css('visibility', 'visible');
 			$j("#EditSpousesPerson").css('visibility', 'visible');
