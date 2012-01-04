@@ -9,7 +9,7 @@
 </c:url>
 
 <div>
-	<a href="${ShowPersonURL}" id="editLink">Click here to edit this person</a>
+	<a href="${ShowPersonURL}" id="editLink${person.personId}">Click here to edit this person</a>
 </div>
 
 <div id="EditDetailsPersonDiv" class="background">
@@ -166,7 +166,7 @@
 
 <script type="text/javascript">
 		$j(document).ready(function(){
-			$j("#editLink").click(function(){
+			$j("#editLink${person.personId}").click(function(){
 				$j("#body_left").load($j(this).attr("href"));
 				var selected = $j("#tabs").tabs('option', 'selected');
 				$j("#tabs").tabs('remove', selected);

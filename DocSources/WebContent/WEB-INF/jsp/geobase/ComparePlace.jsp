@@ -9,7 +9,7 @@
 </c:url>
 
 <div>
-	<a href="${ShowPlaceURL}" id="editLink">Click here to edit this place</a>
+	<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}">Click here to edit this place</a>
 </div>
 <div id="geoCompareDiv">
 	<div id="geoTitle">
@@ -219,7 +219,7 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function(){
-			$j("#editLink").click(function(){
+			$j("#editLink${place.placeAllId}").click(function(){
 				$j("#body_left").load($j(this).attr("href"));
 				var selected = $j("#tabs").tabs('option', 'selected');
 				$j("#tabs").tabs('remove', selected);
