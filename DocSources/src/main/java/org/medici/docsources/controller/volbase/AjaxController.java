@@ -151,13 +151,19 @@ public class AjaxController {
 
 		try {
 			Volume volume = getVolBaseService().findVolume(VolumeUtils.extractVolNum(inputVolume), VolumeUtils.extractVolLetExt(inputVolume));
-			model.put("volNum", volume.getVolNum().toString());
-			model.put("volLetExt", (volume.getVolLetExt()!= null) ? volume.getVolLetExt().toString() : "");
-			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
-			if(volume.getFolioCount() != null)
-				model.put("folioCount", volume.getFolioCount());
-			else
-				model.put("folioCount", "");
+			if(volume != null){
+				model.put("volNum", volume.getVolNum().toString());
+				model.put("volLetExt", (volume.getVolLetExt()!= null) ? volume.getVolLetExt().toString() : "");
+				model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
+				if(volume.getFolioCount() != null)
+					model.put("folioCount", volume.getFolioCount());
+				else
+					model.put("folioCount", "");
+			}
+			else{
+				model.put("volume", (inputVolume != null) ? inputVolume : "");
+				model.put("summaryId", "");
+			}
 		} catch (ApplicationThrowable aex) {
 			model.put("volume", (inputVolume != null) ? inputVolume : "");
 			model.put("summaryId", "");

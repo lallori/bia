@@ -126,7 +126,7 @@
 					function(data){
 						if (data.summaryId == "") {
 							if ($j("#volNotExist").length == 0) {
-								$j("#close").before("<span class=\"inputerrorsVolumeNotExist\" id=\"volNotExist\">Volume is not present, you cannot create this document. Save is disabled.<br></span>");
+								$j("#close").before("<span class=\"inputerrorsVolumeNotExist\" id=\"volNotExist\" style=\"color:red\">Volume is not present, you cannot create this document. Save is disabled.<br></span>");
 							}
 							$j("#save").attr("disabled","true");
 						} else {
