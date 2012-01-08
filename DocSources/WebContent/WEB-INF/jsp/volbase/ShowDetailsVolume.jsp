@@ -4,10 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShareVolumeURL" value="/src/volbase/ShowVolume.do">
-		<c:param name="summaryId"   value="${volume.summaryId}" />
-	</c:url>
-
 	<c:url var="checkVolumeDigitizedURL" value="/src/volbase/CheckVolumeDigitized.json">
 		<c:param name="volNum"   value="${volume.volNum}" />
 		<c:param name="volLetExt"   value="${volume.volLetExt}" />
@@ -93,25 +89,6 @@
 				showExplorerVolumeURL	: "${ShowExplorerVolumeURL}",
 				target 					: $j("#body_right") 
 			});  
-
-			$j("#buttonShareLink").click(function() {
-				window.open('${ShareVolumeURL}','ADD NEW PERSON','width=490,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
-			});
-
-			$j("#buttonShareLink").hover(function(){
-				var iconName = $j(this).find("img").attr("src");
-				var origen =  $j(this).find("img").attr("src");
-				$j(this).find("img").attr("src");
-				$j(this).find("span").attr({"style": 'display:inline'});
-				$j(this).find("span").animate({opacity: 1, top: "-60"}, {queue:false, duration:400});
-			}, function(){
-				var iconName = $j(this).find("img").attr("src");
-				var origen =  $j(this).find("img").attr("src");
-				$j(this).find("img").attr("src");
-				$j(this).find("span").animate({opacity: 0, top: "-50"}, {queue:false, duration:400, complete: function(){
-					$j(this).attr({"style": 'display:none'});
-				}});
-			});
 
 			$j("#EditDetailsVolume").click(function(){
 				$j(this).next().css('visibility', 'visible');

@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.volbase;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,11 +35,9 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.volume.VolumeSummary;
-import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
-import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -239,6 +238,12 @@ public interface VolBaseService {
 	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void optimizeIndexVolume() throws ApplicationThrowable;
+	
+	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 
 	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}
@@ -246,7 +251,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.Volume}
 	 * containing input text and return a specific 
@@ -271,6 +276,13 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume undeleteVolume(Integer summaryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param fromDate
+	 * @throws ApplicationThrowable
+	 */
+	public void updateIndexVolume(Date fromDate) throws ApplicationThrowable;
 
 	/**
 	 * This method set digitized information to true on a list of volumes.

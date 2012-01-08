@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.document;
 
+import java.util.Date;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.common.pagination.Page;
@@ -133,5 +135,12 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+
+	/**
+	 * This method is used to update lucene index by removing and inserting document from a specific date. 
+	 * @param fromDate Delete date
+	 * @throws PersistenceException
+	 */
+	public void updateIndex(Date fromDate) throws PersistenceException;
 
 }

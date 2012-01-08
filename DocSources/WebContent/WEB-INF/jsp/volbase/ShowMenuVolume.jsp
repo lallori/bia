@@ -11,7 +11,7 @@
 		<c:url var="ShowMenuActionsVolumeURL" value="/de/volbase/ShowMenuActionsVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
-		<c:url var="ShowShareLinkVolumeURL" value="/src/volbase/ShowShareLinkVolume.do">
+		<c:url var="ShareVolumeURL" value="/src/volbase/ShareVolume.do">
 			<c:param name="summaryId"   value="${volume.summaryId}" />
 		</c:url>
 		<c:url var="PrintVolumeURL" value="/src/volbase/PrintVolume.do">
@@ -25,25 +25,22 @@
 		<a id="menuActions" href="${ShowMenuActionsVolumeURL}">Actions</a>
 		<a id="buttonPrint" title="Print this record" href="${PrintVolumeURL}"></a>
 		<a id="buttonPDF" href="#" title="Save this record as PDF"></a>
-		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
+		<a id="buttonShareLink" href="${ShareVolumeURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
-		$j("#buttonShareLink").click(
-				function() {										
-					window.open('${ShowShareLinkVolumeURL}','SHARE VOLUME','width=510,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
-				});
-			
-		$j('#buttonShareLink').tooltip({
-				track: true,
-				fade: 350 
+		$j("#buttonShareLink").click(function() {
+			window.open($j(this).attr("href"),'SHARE VOLUME','width=510,height=700,screenX=0,screenY=0,scrollbars=yes');
+			return false;
 		});
+			
+		$j('#buttonShareLink').tooltip({ track: true, fade: 350 });
 		
-		$j("#buttonPrint").click(
-				function() {										
-					window.open('${PrintVolumeURL}','PRINT VOLUME','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
-					});
+		$j("#buttonPrint").click(function() {
+			window.open($j(this).attr("href"),'PRINT VOLUME','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');
+			return false;
+		});
 
 	});
 	</script>

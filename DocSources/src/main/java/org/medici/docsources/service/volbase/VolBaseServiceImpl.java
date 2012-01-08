@@ -48,7 +48,6 @@ import org.medici.docsources.dao.userhistoryvolume.UserHistoryVolumeDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Catalog;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.UserHistoryVolume;
@@ -619,6 +618,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void optimizeIndexVolume() throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -693,7 +701,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.volumeDAO = volumeDAO;
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -718,6 +725,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		return volumeToUnDelete;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void updateIndexVolume(Date fromDate) throws ApplicationThrowable {
+		try {
+			getVolumeDAO().updateIndex(fromDate);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
 
 	/**
 	 * {@inheritDoc}

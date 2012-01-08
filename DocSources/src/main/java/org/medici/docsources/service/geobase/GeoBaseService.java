@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.geobase;
 
+import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
@@ -62,6 +63,15 @@ public interface GeoBaseService {
 	public Place addNewPlace(Place inputPlace) throws ApplicationThrowable;
 	
 	/**
+	 * Links a {@link org.medici.docsources.domain.PlaceExternalLinks} entry to an existing {@link org.medici.docsources.domain.Place}.
+	 * 
+	 * @param placeExternalLinks the {@link org.medici.docsources.domain.PlaceExternalLinks} to be linked.
+	 * @return {@link org.medici.docsources.domain.Place} entity. 
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Place addNewPlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
+	
+	/**
 	 * Adds a new {@link org.medici.docsources.domain.PlaceGeographicCoordinates} entry to an existing
 	 * {@link org.medici.docsources.domain.Place}
 	 * 
@@ -70,15 +80,6 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Place addNewPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) throws ApplicationThrowable;
-	
-	/**
-	 * Links a {@link org.medici.docsources.domain.PlaceExternalLinks} entry to an existing {@link org.medici.docsources.domain.Place}.
-	 * 
-	 * @param placeExternalLinks the {@link org.medici.docsources.domain.PlaceExternalLinks} to be linked.
-	 * @return {@link org.medici.docsources.domain.Place} entity. 
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public Place addNewPlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -90,19 +91,11 @@ public interface GeoBaseService {
 
 	/**
 	 * 
-	 * @param placeAllId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Place undeletePlace(Integer placeAllId) throws ApplicationThrowable;
-
-	/**
-	 * 
 	 * @param placeExternalLinks
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public void deletePlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param place
@@ -110,14 +103,6 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Place editDetailsPlace(Place place) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param placeGeographicCoordinates
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) throws ApplicationThrowable;
 	
 	/**
 	 * This method modify External Link of an existing
@@ -128,6 +113,14 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Place editPlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeGeographicCoordinates
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates) throws ApplicationThrowable;
 	
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.Place}.
@@ -152,7 +145,7 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws ApplicationThrowable;
+	public Integer findNumberOfActiveEndInPlace(Integer placeAllId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -160,7 +153,7 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Integer findNumberOfActiveEndInPlace(Integer placeAllId) throws ApplicationThrowable;
+	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -192,7 +185,7 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws ApplicationThrowable;
+	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -200,7 +193,7 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws ApplicationThrowable;
+	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -215,6 +208,14 @@ public interface GeoBaseService {
 	 * @return
 	 */
 	public Place findPlace(Integer placeId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return {@link org.medici.docsources.domain.PlaceExternalLinks}
+	 * @throws ApplicationThrowable
+	 */
+	public PlaceExternalLinks findPlaceExternalLinks(Integer placeAllId, Integer placeExternalLinksId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -227,20 +228,12 @@ public interface GeoBaseService {
 	
 	/**
 	 * 
-	 * @param placeAllId
-	 * @return {@link org.medici.docsources.domain.PlaceExternalLinks}
-	 * @throws ApplicationThrowable
-	 */
-	public PlaceExternalLinks findPlaceExternalLinks(Integer placeAllId, Integer placeExternalLinksId) throws ApplicationThrowable;
-	
-	
-	/**
-	 * 
 	 * @param geogKey
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public List<Place> findPlaceNames(Integer geogKey) throws ApplicationThrowable;
+	
 	
 	/**
 	 * 
@@ -249,13 +242,13 @@ public interface GeoBaseService {
 	 */
 	public List<PlaceType> findPlaceTypes() throws ApplicationThrowable;
 	
-	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexPlace() throws ApplicationThrowable;
-
+	
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
@@ -276,13 +269,10 @@ public interface GeoBaseService {
 
 	/**
 	 * 
-	 * @param placeToSearch
-	 * @param paginationFilter
-	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+	public void optimizeIndexPlace() throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param placeToSearch
@@ -299,7 +289,24 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Place> searchBornPlace(String query) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -309,14 +316,6 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchDeathPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param query
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<Place> searchBornPlace(String query) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -344,12 +343,30 @@ public interface GeoBaseService {
 
 	/**
 	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param query
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchRecipientsPlace(String query) throws ApplicationThrowable;
-
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param query
@@ -365,23 +382,20 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param placeToSearch
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param placeToSearch
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
 	public Page searchTopicsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Place undeletePlace(Integer placeAllId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param fromDate
+	 * @throws ApplicationThrowable
+	 */
+	public void updateIndexPlace(Date fromDate) throws ApplicationThrowable;
 }

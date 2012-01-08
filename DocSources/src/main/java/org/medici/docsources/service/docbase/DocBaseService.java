@@ -27,10 +27,10 @@
  */
 package org.medici.docsources.service.docbase;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
@@ -41,7 +41,6 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.domain.TopicList;
-import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -417,6 +416,12 @@ public interface DocBaseService {
 
 	/**
 	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void optimizeIndexDocument() throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param entryId
 	 * @param query
 	 * @return
@@ -424,7 +429,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<People> searchPersonLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param entryId
@@ -444,7 +449,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method mark a {@link org.medici.docsources.domain.Document} as available.
 	 * 
@@ -453,4 +458,18 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Document undeleteDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param fromDate
+	 * @throws ApplicationThrowable
+	 */
+	public void updateIndexDocument(Date fromDate) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param fromDate
+	 * @throws ApplicationThrowable
+	 */
+	public void updateIndexTopicList(Date fromDate) throws ApplicationThrowable;
 }

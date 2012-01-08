@@ -76,6 +76,9 @@
   <listener>
     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
   </listener>
+  <listener>
+    <listener-class>org.medici.docsources.listener.DocSourcesListener</listener-class>
+  </listener>
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

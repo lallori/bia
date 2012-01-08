@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.peoplebase;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -385,12 +386,27 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void optimizeIndexPeople() throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param personId
 	 * @param query
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -400,7 +416,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param personId
@@ -426,6 +442,15 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param roleCatToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchRoleCatPeoplePerson(String roleCatToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -443,7 +468,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchSpouseLinkableToPerson(Integer personId, String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param query
@@ -451,6 +476,15 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<TitleOccsList> searchTitleOrOccupation(String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param titleOccToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchTitlesOrOccupationsPeoplePerson(String titleOccToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method mark a {@link org.medici.docsources.domain.People} as available.
@@ -460,10 +494,11 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People undeletePerson(Integer personId) throws ApplicationThrowable;
-	
-	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
-	public Page searchTitlesOrOccupationsPeoplePerson(String titleOccToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
-	public Page searchRoleCatPeoplePerson(String roleCatToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param fromDate
+	 * @throws ApplicationThrowable
+	 */
+	public void updateIndexPeople(Date fromDate) throws ApplicationThrowable;
 }

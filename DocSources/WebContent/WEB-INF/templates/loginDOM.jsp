@@ -19,9 +19,10 @@
 		<script>
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
-				/*if (location.pathname != "<c:url value="/LoginUser.do"/>" ) {
-					window.location = "<c:url value="/"/>";
-				}*/
+				// This control is to redirect on top.location if this page in loaded in a div
+			    if (top.location.href.indexOf('LoginUser.do') == -1) {
+			        top.location.href = "<c:url value="/LoginUser.do"/>";
+			    }
 		    });
 			var RecaptchaOptions = {
 			   theme : 'clean'

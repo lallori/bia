@@ -814,18 +814,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfDocumentsRelated(Integer personId)throws ApplicationThrowable {
-		try{
-			return getEpLinkDAO().findNumberOfDocumentsRelated(personId);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Marriage findMarriagePerson(Integer marriageId) throws ApplicationThrowable {
 		try {
 			return getMarriageDAO().find(marriageId);
@@ -870,6 +858,31 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			return getMarriageDAO().findMarriagesPerson(personId, gender);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfDocumentsRelated(Integer personId)throws ApplicationThrowable {
+		try{
+			return getEpLinkDAO().findNumberOfDocumentsRelated(personId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable {
+		try{
+			Map<Integer, Long> docsRel= getEpLinkDAO().findNumbersOfDocumentsRelated(personIds);
+			return docsRel;
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}		
 	}
@@ -1064,13 +1077,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
-	 * @param documentDAO the documentDAO to set
-	 */
-	public void setDocumentDAO(DocumentDAO documentDAO) {
-		this.documentDAO = documentDAO;
-	}
-
-	/**
 	 * @return the epLinkDAO
 	 */
 	public EpLinkDAO getEpLinkDAO() {
@@ -1160,12 +1166,45 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void optimizeIndexPeople() throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
 		try {
 			return getPeopleDAO().searchChildLinkableToPerson(personId, query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().searchDocumentsRelated(personToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchFamilyPerson(familyToSearch, paginationFilter);
+			}catch(Throwable th){
+				throw new ApplicationThrowable(th);
+			}
 	}
 
 	/**
@@ -1208,6 +1247,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchRoleCatPeoplePerson(String roleCatToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchRoleCatPeople(roleCatToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<People> searchSendersPeople(String query) throws ApplicationThrowable {
 		try {
 			return getPeopleDAO().searchSendersPeople(query);
@@ -1215,7 +1266,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	@Override
 	public List<People> searchSpouseLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
 		try{
@@ -1233,6 +1284,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			return getTitleOccsListDAO().searchTitleOrOccupationLinkableToPerson(query);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchTitlesOrOccupationsPeoplePerson(String titleOccToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchTitlesOrOccupationsPeople(titleOccToSearch, paginationFilter);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1256,6 +1319,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setBioRefLinkDAO(BioRefLinkDAO bioRefLinkDAO) {
 		this.bioRefLinkDAO = bioRefLinkDAO;
+	}
+
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
 	}
 
 	/**
@@ -1353,48 +1423,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		return personToUnDelete;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getDocumentDAO().searchDocumentsRelated(personToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	@Override
-	public Page searchTitlesOrOccupationsPeoplePerson(String titleOccToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getPeopleDAO().searchTitlesOrOccupationsPeople(titleOccToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	@Override
-	public Page searchRoleCatPeoplePerson(String roleCatToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getPeopleDAO().searchRoleCatPeople(roleCatToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	@Override
-	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getPeopleDAO().searchFamilyPerson(familyToSearch, paginationFilter);
-			}catch(Throwable th){
-				throw new ApplicationThrowable(th);
-			}
-	}
-
-	@Override
-	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable {
-		try{
-			Map<Integer, Long> docsRel= getEpLinkDAO().findNumbersOfDocumentsRelated(personIds);
-			return docsRel;
-		}catch(Throwable th){
+	public void updateIndexPeople(Date fromDate) throws ApplicationThrowable {
+		try {
+			getPeopleDAO().updateIndex(fromDate);
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}		
 	}

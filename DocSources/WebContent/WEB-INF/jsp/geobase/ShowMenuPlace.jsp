@@ -8,10 +8,10 @@
 		<c:url var="ShowVettingChronologyPlaceURL" value="/de/peoplebase/ShowVettingChronologyPlace.do">
 			<c:param name="placeAllId"   value="${place.placeAllId}" />
 		</c:url>
-		<c:url var="ShowMenuActionsPlaceURL" value="/de/peoplebase/ShowMenuActionsPlace.do">
+		<c:url var="ShowMenuActionsPlaceURL" value="/de/geobase/ShowMenuActionsPlace.do">
 			<c:param name="placeAllId"   value="${place.placeAllId}" />
 		</c:url>
-		<c:url var="ShowShareLinkPlaceURL" value="/src/peoplebase/ShowShareLinkPlace.do">
+		<c:url var="SharePlaceURL" value="/src/geobase/SharePlace.do">
 			<c:param name="placeAllId"   value="${place.placeAllId}" />
 		</c:url>
 		<c:url var="PrintPlaceURL" value="/src/geobase/PrintPlace.do">
@@ -25,25 +25,20 @@
 		<a id="menuActions" href="${ShowMenuActionsPlaceURL}">Actions</a>
 		<a id="buttonPrint" title="Print this record" href="${PrintPlaceURL}"></a>
 		<a id="buttonPDF" href="#" title="Save this record as PDF"></a>
-		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
+		<a id="buttonShareLink" href="${SharePlaceURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
-		$j("#buttonShareLink").click(
-				function() {										
-					window.open('${ShowShareLinkPlaceURL}','SHARE PERSON','width=510,height=700,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
-					});
-	
-		$j('#buttonShareLink').tooltip({
-			track: true,
-			fade: 350 
+		$j("#buttonShareLink").click(function() {
+			window.open($j(this).attr("href"),'SHARE PERSON','width=510,height=700,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
 		});
+	
+		$j('#buttonShareLink').tooltip({track: true, fade: 350 });
 		
-		$j("#buttonPrint").click(
-				function() {										
-					window.open('${PrintPlaceURL}','PRINT PLACE','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
-					});
+		$j("#buttonPrint").click(function() {	
+			window.open($j(this).attr("href"),'PRINT PLACE','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+		});
 
 	});
 	</script>

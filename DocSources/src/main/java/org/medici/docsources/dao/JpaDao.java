@@ -31,6 +31,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -43,11 +44,16 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.hibernate.CacheMode;
+import org.hibernate.LockMode;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.SearchFactory;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.medici.docsources.common.pagination.Page;
@@ -66,8 +72,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public abstract class JpaDao<K, E> implements Dao<K, E> {
-	private final Logger logger = Logger.getLogger(this.getClass());
-
 	/**
 	 * 
 	 */
@@ -78,6 +82,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	private final Logger logger = Logger.getLogger(this.getClass());
+
 	/**
 	 * 
 	 */
@@ -85,97 +91,6 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	public JpaDao() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
-	}
-
-	/**
-	 * 
-	 */
-	public E find(K id) throws PersistenceException {
-		return getEntityManager().find(entityClass, id);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	/**
-	 * 
-	 */
-	public E merge(E entity) throws PersistenceException {
-		return getEntityManager().merge(entity);
-	}
-
-	/**
-	 * 
-	 */
-	public void persist(E entity) throws PersistenceException {
-		getEntityManager().persist(entity);
-	}
-
-	/**
-	 * 
-	 */
-	public void remove(E entity) throws PersistenceException {
-		getEntityManager().remove(entity);
-	}
-
-	/**
-	 * 
-	 */
-	public void refresh(E entity) throws PersistenceException {
-		getEntityManager().refresh(entity);
-	}
-
-	/**
-	 * 
-	 * @param entityManager
-	 */
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
-
-	public Page search(org.medici.docsources.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
-		// We prepare object of return method.
-		Page page = new Page(paginationFilter);
-		
-		// We obtain hibernate-search session
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-
-		// We convert AdvancedSearchContainer to luceneQuery
-		org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
-		logger.info("Lucene Query " + query.toString()); 
-
-		// We execute search
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, People.class );
-	
-		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
-			page.setTotal(new Long(fullTextQuery.getResultSize()));
-		}
-
-		// We set pagination  
-		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
-		fullTextQuery.setMaxResults(paginationFilter.getLength());
-
-		// We manage sorting (this manages sorting on multiple fields)
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		if (sortingCriterias.size() > 0) {
-			SortField[] sortFields = new SortField[sortingCriterias.size()];
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
-			}
-			fullTextQuery.setSort(new Sort(sortFields));
-		}
-		
-		// We set search result on return method
-		page.setList(fullTextQuery.list());
-		
-		return page;
 	}
 
 	/**
@@ -245,7 +160,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 
 		return fullTextQuery; 
 	}
-	
+
 	/**
 	 * This method extract a projection of a fullTextQuery.
 	 * @param fullTextQuery
@@ -292,6 +207,26 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 
 	/**
 	 * 
+	 */
+	public E find(K id) throws PersistenceException {
+		return getEntityManager().find(entityClass, id);
+	}
+
+	/**
+	 * 
+	 * @param total
+	 * @param resultNumber
+	 * @param fullTextSession
+	 */
+	protected void flushingFullTextSession(Long total, Integer resultNumber, FullTextSession fullTextSession) {
+		logger.info("Initiating Lucene Index Flush... ");
+	    fullTextSession.flushToIndexes();
+	    fullTextSession.clear();
+		logger.info("Finished the Lucene Index Flush...  Total records on index " + resultNumber + "/" + total);
+	}
+
+	/**
+	 * 
 	 * @throws PersistenceException
 	 */
 	public void generateIndex() throws PersistenceException {
@@ -302,14 +237,96 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 			FullTextSession fullTextSession = Search.getFullTextSession(session);
 
 			fullTextSession.createIndexer( entityClass )
-			.batchSizeToLoadObjects( 50 )
-			.cacheMode( CacheMode.NORMAL )
-			.threadsToLoadObjects( 8 )
-			.threadsForSubsequentFetching( 5 )
+			.batchSizeToLoadObjects( 30 )
+			.threadsForSubsequentFetching( 8 )
+			.threadsToLoadObjects( 4 )
+			.threadsForIndexWriter( 3 )
+			.cacheMode( CacheMode.IGNORE )
 			.startAndWait();
+			/*.batchSizeToLoadObjects( 50 )
+			.threadsForSubsequentFetching( 5 )
+			.threadsToLoadObjects( 8 )
+			.cacheMode( CacheMode.NORMAL )
+			.startAndWait();*/
 		} catch (Throwable throwable) {
 			logger.error(throwable);
 		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+
+	/**
+	 * 
+	 */
+	public E merge(E entity) throws PersistenceException {
+		return getEntityManager().merge(entity);
+	}
+
+	/**
+	 * 
+	 */
+	public void persist(E entity) throws PersistenceException {
+		getEntityManager().persist(entity);
+	}
+
+	/**
+	 * 
+	 */
+	public void refresh(E entity) throws PersistenceException {
+		getEntityManager().refresh(entity);
+	}
+	
+	/**
+	 * 
+	 */
+	public void remove(E entity) throws PersistenceException {
+		getEntityManager().remove(entity);
+	}
+
+	public Page search(org.medici.docsources.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		// We obtain hibernate-search session
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+		// We convert AdvancedSearchContainer to luceneQuery
+		org.apache.lucene.search.Query query = searchContainer.toLuceneQuery();
+		logger.info("Lucene Query " + query.toString()); 
+
+		// We execute search
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( query, People.class );
+	
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(fullTextQuery.getResultSize()));
+		}
+
+		// We set pagination  
+		fullTextQuery.setFirstResult(paginationFilter.getFirstRecord());
+		fullTextQuery.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		if (sortingCriterias.size() > 0) {
+			SortField[] sortFields = new SortField[sortingCriterias.size()];
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				sortFields[i] = new SortField(sortingCriterias.get(i).getColumn(), sortingCriterias.get(i).getColumnType(), (sortingCriterias.get(i).getOrder().equals(Order.ASC) ? true : false));
+			}
+			fullTextQuery.setSort(new Sort(sortFields));
+		}
+		
+		// We set search result on return method
+		page.setList(fullTextQuery.list());
+		
+		return page;
 	}
 
 	/**
@@ -354,5 +371,118 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		page.setList(query.getResultList());
 		
 		return page;
+	}
+
+	/**
+	 * 
+	 * @param entityManager
+	 */
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	/**
+	 * 
+	 */
+	public void optimizeIndex() throws PersistenceException {
+		Session session = null;
+		FullTextSession fullTextSession = null;
+		ScrollableResults results = null;
+		try {
+			EntityManager entityManager = getEntityManager();
+			session = ((HibernateEntityManager) entityManager).getSession();
+			session = session.getSessionFactory().openSession();
+			fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+			
+			logger.info("Initiating Lucene Index Optimze...");
+	        SearchFactory searchFactory = fullTextSession.getSearchFactory();
+	        searchFactory.optimize(entityClass);
+	        logger.info("Finished Lucene Index Optimze");
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+		} finally{
+	        if (results != null) {
+	        	results.close();
+	        }
+	        if (fullTextSession.isOpen()) {
+	        	fullTextSession.close();
+	        }
+	        if (session.isOpen()) {
+	        	session.close();
+	        }
+		}
+	}
+		
+	/**
+	 * 
+	 * @param fromDate
+	 * @throws PersistenceException
+	 */
+	public void updateIndex(Date fromDate) throws PersistenceException {
+		Session session = null;
+		FullTextSession fullTextSession = null;
+		ScrollableResults results = null;
+		try {
+			EntityManager entityManager = getEntityManager();
+			session = ((HibernateEntityManager) entityManager).getSession();
+			session = session.getSessionFactory().openSession();
+			fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+			
+			Query queryTotal = entityManager.createQuery("SELECT count(*) FROM " + entityClass + " where lastUpdate>=:lastUpdate");
+			queryTotal.setParameter("lastUpdate", fromDate);
+			Long total = (Long) queryTotal.getSingleResult();
+			logger.info("Total Entities to be updated : " + total);
+
+			if (total > 0) {
+				Integer numberOfElements = 50;
+				Integer numberOfElementsBeforeGC = 1000;
+				org.hibernate.Query query = session.createQuery("FROM " + entityClass + "  where lastUpdate>=:lastUpdate");
+				query.setParameter("lastUpdate", fromDate);
+				
+				Transaction tx = fullTextSession.beginTransaction();
+				query.setReadOnly(true);
+		        query.setLockMode("a", LockMode.NONE);
+		        results = query.scroll(ScrollMode.FORWARD_ONLY);
+		        Integer resultNumber=0;
+		        while (results.next()) {
+		        	Object entityClass = (Object) results.get(0);
+				    fullTextSession.delete(entityClass);
+				    fullTextSession.index(entityClass);
+				    resultNumber++;
+
+					if (resultNumber%numberOfElements==0) {
+						flushingFullTextSession(total, resultNumber, fullTextSession);
+					}
+					
+					if (resultNumber%numberOfElementsBeforeGC ==0) {
+						System.gc();
+						logger.info("Invoked Garbage collector to prevent OutOfMemory Errors");
+					}
+				}
+		        
+		        flushingFullTextSession(total, resultNumber, fullTextSession);
+			    tx.commit();
+
+				logger.info("Initiating Lucene Index Optimze...");
+		        SearchFactory searchFactory = fullTextSession.getSearchFactory();
+		        searchFactory.optimize(entityClass);
+		        logger.info("Finished Lucene Index Optimze");
+			} else {
+				logger.info("No Entities found to be indexed.");
+			}
+			logger.info("Indexing documents terminated without errors.");
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+		} finally{
+	        if (results != null) {
+	        	results.close();
+	        }
+	        if (fullTextSession.isOpen()) {
+	        	fullTextSession.close();
+	        }
+	        if (session.isOpen()) {
+	        	session.close();
+	        }
+		}
 	}
 }

@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.EpLinkUtils;
@@ -57,7 +56,6 @@ import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
@@ -277,6 +275,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}
 		
 		return digitized;
+	}
+
+	@Override
+	public Document checkVolumeFolio(Integer summaryId)	throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().checkVolumeFolio(summaryId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -645,7 +652,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -681,7 +688,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -706,6 +713,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			return document;
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().findDocument(volNum, volLetExt, folioNum, folioMod);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -812,7 +828,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1012,6 +1028,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void optimizeIndexDocument() throws ApplicationThrowable {
+		try {
+			getDocumentDAO().optimizeIndex();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<People> searchPersonLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable {
 		try {
 			List<EpLink> epLinkList = getEpLinkDAO().findByEntryId(entryId);
@@ -1158,21 +1186,24 @@ public class DocBaseServiceImpl implements DocBaseService {
 		return documentToUnDelete;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable {
-		try{
-			return getDocumentDAO().findDocument(volNum, volLetExt, folioNum, folioMod);
-		}catch(Throwable th){
+	public void updateIndexDocument(Date fromDate) throws ApplicationThrowable {
+		try {
+			getDocumentDAO().updateIndex(fromDate);
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
-		}
+		}		
 	}
 
 	@Override
-	public Document checkVolumeFolio(Integer summaryId)	throws ApplicationThrowable {
-		try{
-			return getDocumentDAO().checkVolumeFolio(summaryId);
-		}catch(Throwable th){
+	public void updateIndexTopicList(Date fromDate) throws ApplicationThrowable {
+		try {
+			//getDocumentDAO().updateIndex(fromDate);
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
-		}
+		}	
 	}
 }

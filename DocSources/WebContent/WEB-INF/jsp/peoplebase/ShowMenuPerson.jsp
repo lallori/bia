@@ -11,7 +11,7 @@
 		<c:url var="ShowMenuActionsPersonURL" value="/de/peoplebase/ShowMenuActionsPerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
-		<c:url var="ShowShareLinkPersonURL" value="/src/peoplebase/ShowShareLinkPerson.do">
+		<c:url var="SharePersonURL" value="/src/peoplebase/SharePerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
 		<c:url var="PrintPersonURL" value="/src/peoplebase/PrintPerson.do">
@@ -25,25 +25,20 @@
 		<a id="menuActions" href="${ShowMenuActionsPersonURL}">Actions</a>
 		<a id="buttonPrint" title="Print this record" href="${PrintPersonURL}"></a>
 		<a id="buttonPDF" href="#" title="Save this record as PDF"></a>
-		<a id="buttonShareLink" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
+		<a id="buttonShareLink" href="${SharePersonURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
-		$j("#buttonShareLink").click(
-				function() {										
-					window.open('${ShowShareLinkPersonURL}','SHARE PERSON','width=510,height=700,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
-					});
-	
-		$j('#buttonShareLink').tooltip({
-			track: true,
-			fade: 350 
+		$j("#buttonShareLink").click(function() {
+			window.open($j(this).attr("href"),'SHARE PERSON','width=510,height=700,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
 		});
+	
+		$j('#buttonShareLink').tooltip({track: true, fade: 350 });
 		
-		$j("#buttonPrint").click(
-				function() {										
-					window.open('${PrintPersonURL}','PRINT PERSON','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
-					});
+		$j("#buttonPrint").click(function() {	
+			window.open($j(this).attr("href"),'PRINT PERSON','width=687,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
+		});
 
 	});
 	</script>

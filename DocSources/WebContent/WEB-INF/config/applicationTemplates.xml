@@ -13,7 +13,7 @@
     </definition>
         
     <definition name="template.document" template="/WEB-INF/templates/document.jsp"/>
-
+    
     <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp"/>
 
     <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
@@ -38,15 +38,17 @@
 	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp" />
 
     <definition name="template.person" template="/WEB-INF/templates/person.jsp" />
-
+    
 	<definition name="template.place" template="/WEB-INF/templates/place.jsp" />
-
+	
     <definition name="template.printDOM" template="/WEB-INF/templates/printDOM.jsp">
     	<put-attribute name="footer" value="/WEB-INF/jsp/fragments/printFooter.jsp" />
     </definition>
 
-    <definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
+    <definition name="template.shareDOM" template="/WEB-INF/templates/shareDOM.jsp"/>
 
+    <definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
+    
 	<!-- Various definitions -->
 	<definition name="error/ActivateUser" extends="template.loginDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
@@ -231,6 +233,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/PrintDocument.jsp"/>	
 	</definition>
 
+	<definition name="docbase/ShareDocument" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShareDocument.jsp"/>	
+	</definition>
+
 	<definition name="docbase/ShowCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
 	</definition>
@@ -327,6 +333,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/PrintPlace.jsp"/>	
 	</definition>
 
+	<definition name="geobase/SharePlace" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/SharePlace.jsp"/>	
+	</definition>
+	
 	<definition name="geobase/ShowPlace" extends="template.place">
 		<put-attribute name="menu" value="/WEB-INF/jsp/geobase/ShowMenuPlace.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
@@ -504,6 +514,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowFamilyPerson.jsp" />
 	</definition>
 
+	<definition name="peoplebase/SharePerson" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/SharePerson.jsp"/>	
+	</definition>
+
 	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
 	</definition>
@@ -621,6 +635,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/PrintVolume.jsp"/>	
 	</definition>
 
+	<definition name="volbase/ShareVolume" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShareVolume.jsp"/>	
+	</definition>
+	
 	<definition name="volbase/ShowContextVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowContextVolume.jsp"/>
 	</definition>

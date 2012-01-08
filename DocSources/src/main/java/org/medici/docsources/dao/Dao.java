@@ -28,6 +28,7 @@
 package org.medici.docsources.dao;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.PersistenceException;
 
@@ -68,17 +69,16 @@ public interface Dao<K, E> extends Serializable {
 
 	/**
 	 * 
-	 * @param entity
 	 * @throws PersistenceException
 	 */
-	public void persist(E entity) throws PersistenceException;
+	public void optimizeIndex() throws PersistenceException;
 
 	/**
 	 * 
 	 * @param entity
 	 * @throws PersistenceException
 	 */
-	public void remove(E entity) throws PersistenceException;	
+	public void persist(E entity) throws PersistenceException;	
 
 	/**
 	 * 
@@ -89,10 +89,24 @@ public interface Dao<K, E> extends Serializable {
 
 	/**
 	 * 
+	 * @param entity
+	 * @throws PersistenceException
+	 */
+	public void remove(E entity) throws PersistenceException;	
+
+	/**
+	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;	
+	public Page searchMYSQL(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param fromDate
+	 * @throws PersistenceException
+	 */
+	public void updateIndex(Date fromDate) throws PersistenceException;
 }

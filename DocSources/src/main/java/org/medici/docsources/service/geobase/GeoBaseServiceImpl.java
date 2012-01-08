@@ -62,9 +62,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class GeoBaseServiceImpl implements GeoBaseService {
 	@Autowired
-	private EplToLinkDAO eplToLinkDAO;
-	@Autowired
 	private DocumentDAO documentDAO;
+	@Autowired
+	private EplToLinkDAO eplToLinkDAO;
 	@Autowired
 	private PeopleDAO peopleDAO;
 	@Autowired
@@ -339,9 +339,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws ApplicationThrowable {
+	public Integer findNumberOfActiveEndInPlace(Integer placeAllId)	throws ApplicationThrowable {
 		try{
-			return getPeopleDAO().findNumberOfActiveStartInPlace(placeAllId);
+			return getPeopleDAO().findNumberOfActiveEndInPlace(placeAllId);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -351,9 +351,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfActiveEndInPlace(Integer placeAllId)	throws ApplicationThrowable {
+	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws ApplicationThrowable {
 		try{
-			return getPeopleDAO().findNumberOfActiveEndInPlace(placeAllId);
+			return getPeopleDAO().findNumberOfActiveStartInPlace(placeAllId);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -397,9 +397,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId)throws ApplicationThrowable {
+	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws ApplicationThrowable {
 		try{
-			return getDocumentDAO().findNumberOfSenderDocumentsPlace(placeAllId);
+			return getDocumentDAO().findNumberOfRecipientDocumentsPlace(placeAllId);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -409,9 +409,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws ApplicationThrowable {
+	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId)throws ApplicationThrowable {
 		try{
-			return getDocumentDAO().findNumberOfRecipientDocumentsPlace(placeAllId);
+			return getDocumentDAO().findNumberOfSenderDocumentsPlace(placeAllId);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -542,20 +542,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 	
 	/**
-	 * @return the eplToLinkDAO
-	 */
-	public EplToLinkDAO getEplToLinkDAO() {
-		return eplToLinkDAO;
-	}
-
-	/**
-	 * @param eplToLinkDAO the eplToLinkDAO to set
-	 */
-	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
-		this.eplToLinkDAO = eplToLinkDAO;
-	}
-
-	/**
 	 * @return the documentDAO
 	 */
 	public DocumentDAO getDocumentDAO() {
@@ -563,10 +549,10 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
-	 * @param documentDAO the documentDAO to set
+	 * @return the eplToLinkDAO
 	 */
-	public void setDocumentDAO(DocumentDAO documentDAO) {
-		this.documentDAO = documentDAO;
+	public EplToLinkDAO getEplToLinkDAO() {
+		return eplToLinkDAO;
 	}
 
 	/**
@@ -574,13 +560,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
-	}
-
-	/**
-	 * @param peopleDAO the peopleDAO to set
-	 */
-	public void setPeopleDAO(PeopleDAO peopleDAO) {
-		this.peopleDAO = peopleDAO;
 	}
 
 	/**
@@ -603,7 +582,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public PlaceGeographicCoordinatesDAO getPlaceGeographicCoordinatesDAO() {
 		return placeGeographicCoordinatesDAO;
 	}
-	
+
 	/**
 	 * @return the placeTypeDAO
 	 */
@@ -617,19 +596,16 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public UserHistoryPlaceDAO getUserHistoryPlaceDAO() {
 		return userHistoryPlaceDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getPeopleDAO().searchActiveStartPeoplePlace(placeToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
+	public void optimizeIndexPlace() throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -641,7 +617,31 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchActiveStartPeoplePlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchBirthPeoplePlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -650,6 +650,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			return getPlaceDAO().searchBornPlace(query);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchDeathPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getPeopleDAO().searchDeathPeoplePlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -670,30 +682,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchBirthPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getPeopleDAO().searchBirthPeoplePlace(placeToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page searchDeathPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getPeopleDAO().searchDeathPeoplePlace(placeToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<Place> searchPlaceParent(String query) throws ApplicationThrowable{
 		try{
 			return getPlaceDAO().searchPlaceParent(query);
@@ -701,7 +689,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -710,6 +698,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			return getPlaceDAO().searchPlaces(text);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().searchRecipientDocumentsPlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -730,12 +730,57 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().searchSenderDocumentsPlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Place> searchSendersPlace(String query) throws ApplicationThrowable {
 		try {
 			return getPlaceDAO().searchSendersPlace(query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchTopicsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getEplToLinkDAO().searchTopicsPlace(placeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	/**
+	 * @param eplToLinkDAO the eplToLinkDAO to set
+	 */
+	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
+		this.eplToLinkDAO = eplToLinkDAO;
+	}
+
+	/**
+	 * @param peopleDAO the peopleDAO to set
+	 */
+	public void setPeopleDAO(PeopleDAO peopleDAO) {
+		this.peopleDAO = peopleDAO;
 	}
 
 	/**
@@ -803,33 +848,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getDocumentDAO().searchSenderDocumentsPlace(placeToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getDocumentDAO().searchRecipientDocumentsPlace(placeToSearch, paginationFilter);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page searchTopicsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try{
-			return getEplToLinkDAO().searchTopicsPlace(placeToSearch, paginationFilter);
+	public void updateIndexPlace(Date fromDate) throws ApplicationThrowable {
+		try {
+			getPlaceDAO().updateIndex(fromDate);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.document;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -37,10 +38,14 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
-import org.hibernate.CacheMode;
+import org.hibernate.LockMode;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
+import org.hibernate.search.SearchFactory;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
@@ -173,21 +178,153 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * 
 	 * @throws PersistenceException
 	 */
-	public void generateIndex() throws PersistenceException {
+	@Override
+	public void updateIndex(Date fromDate) throws PersistenceException {
+		Session session = null;
+		FullTextSession fullTextSession = null;
+		ScrollableResults results = null;
 		try {
 			EntityManager entityManager = getEntityManager();
-			Session session = ((HibernateEntityManager) entityManager).getSession();
+			session = ((HibernateEntityManager) entityManager).getSession();
 			session = session.getSessionFactory().openSession();
-			FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+			fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+			
+			Query queryTotal = entityManager.createQuery("SELECT count(entryId) FROM Document where lastUpdate>=:lastUpdate");
+			queryTotal.setParameter("lastUpdate", fromDate);
+			Long total = (Long) queryTotal.getSingleResult();
+			logger.info("Total Entities to be updated : " + total);
 
-			fullTextSession.createIndexer( Document.class )
-			.batchSizeToLoadObjects( 10 )
-			.cacheMode( CacheMode.IGNORE )
-			.threadsToLoadObjects( 5 )
-			.threadsForSubsequentFetching( 5 )
-			.startAndWait();
+			if (total > 0) {
+				Integer numberOfElements = 50;
+				Integer numberOfElementsBeforeGC = 1000;
+				org.hibernate.Query query = session.createQuery("FROM Document where lastUpdate>=:lastUpdate");
+				query.setParameter("lastUpdate", fromDate);
+				
+				Transaction tx = fullTextSession.beginTransaction();
+				query.setReadOnly(true);
+		        query.setLockMode("a", LockMode.NONE);
+		        results = query.scroll(ScrollMode.FORWARD_ONLY);
+		        Integer resultNumber=0;
+		        while (results.next()) {
+		            Document document = (Document) results.get(0);
+				    fullTextSession.delete(document);
+				    fullTextSession.index(document);
+				    resultNumber++;
+
+					if (resultNumber%numberOfElements==0) {
+						flushingFullTextSession(total, resultNumber, fullTextSession);
+					}
+					
+					if (resultNumber%numberOfElementsBeforeGC ==0) {
+						System.gc();
+						logger.info("Invoked Garbage collector to prevent OutOfMemory Errors");
+					}
+				}
+		        
+		        flushingFullTextSession(total, resultNumber, fullTextSession);
+
+		        
+/*				logger.info("Initiating Lucene Index Optimze...");
+		        SearchFactory searchFactory = fullTextSession.getSearchFactory();
+		        searchFactory.optimize(Document.class);
+*/
+		        logger.info("Finished Lucene Index Optimze");
+
+			    tx.commit();
+			} else {
+				logger.info("No Entities found to be indexed.");
+			}
+			logger.info("Indexing documents terminated without errors.");
 		} catch (Throwable throwable) {
 			logger.error(throwable);
+		} finally{
+	        if (results != null) {
+	        	results.close();
+	        }
+	        /*if (fullTextSession.isOpen()) {
+	        	fullTextSession.close();
+	        }*/
+	        if (session.isOpen()) {
+	        	session.close();
+	        }
+		}
+	}
+
+	/**
+	 * 
+	 * @throws PersistenceException
+	 */
+	public void generateIndex() throws PersistenceException {
+		Session session = null;
+		FullTextSession fullTextSession = null;
+		ScrollableResults results = null;
+		try {
+			EntityManager entityManager = getEntityManager();
+			session = ((HibernateEntityManager) entityManager).getSession();
+			session = session.getSessionFactory().openSession();
+			fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+			
+			Long total = (Long) entityManager.createQuery("SELECT count(entryId) FROM Document").getSingleResult();
+			logger.info("Total Entities to be indexed : " + total);
+
+			if (total > 0) {
+				Transaction tx = fullTextSession.beginTransaction();
+				fullTextSession.purgeAll(Document.class);
+				tx.commit();
+				logger.info("Removed all documents.");
+				Integer numberOfElements = 100;
+
+				Integer numberOfElementsBeforeGC = 1000;
+				String queryJPA = "FROM Document ORDER BY entryId asc";
+
+				org.hibernate.Query query = session.createQuery(queryJPA);
+				tx = fullTextSession.beginTransaction();
+				query.setReadOnly(true);
+		        query.setLockMode("a", LockMode.NONE);
+		        results = query.scroll(ScrollMode.FORWARD_ONLY);
+		        Integer resultNumber=0;
+		        while (results.next()) {
+		            Document document = (Document) results.get(0);
+				    fullTextSession.index(document);
+				    resultNumber++;
+
+					if (resultNumber%numberOfElements==0) {
+						logger.info("Initiating Lucene Index Flush... ");
+					    fullTextSession.flushToIndexes();
+					    fullTextSession.clear();
+						logger.info("Finished the Lucene Index Flush...  Total records on index " + resultNumber + "/" + total);
+					}
+					
+					if (resultNumber%numberOfElementsBeforeGC ==0) {
+						System.gc();
+						logger.info("Invoked Garbage collector to prevent OutOfMemory Errors");
+					}
+				}
+		        
+			    fullTextSession.flushToIndexes();
+			    fullTextSession.clear();
+			    tx.commit();
+
+				logger.info("Initiating Lucene Index Optimze...");
+		        SearchFactory searchFactory = fullTextSession.getSearchFactory();
+		        searchFactory.optimize(Document.class);
+		        logger.info("Finished Lucene Index Optimze");
+			} else {
+				logger.info("No Entities found to be indexed.");
+			}
+			logger.info("Indexing documents terminated without errors.");
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+		} finally{
+	        if (results != null) {
+	        	results.close();
+	        }
+	        if (fullTextSession != null) {
+	        	fullTextSession.close();
+	        }
+	        if (session != null) {
+	        	session.close();
+	        }
 		}
 	}
 
