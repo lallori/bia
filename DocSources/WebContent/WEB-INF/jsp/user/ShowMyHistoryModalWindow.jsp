@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -12,10 +13,11 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['Document']}" var="currentHistory" varStatus="status">
+        	<c:url var="showURL" value="/src/docbase/ShowDocument.do?entryId=${currentHistory.document.entryId}"/>
             <div class="historyRow">
-                <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
+                <div class="historyDate"><a href="${showURL}" class="showHistory"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="#">${currentHistory.document.MDPAndFolio}</a></div>
+                <div class="historyItem"><a href="${showURL}" class="showHistory">${currentHistory.document.MDPAndFolio}</a></div>
 			</div>
         	</c:forEach>
 		</div>
@@ -30,10 +32,11 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['Volume']}" var="currentHistory" varStatus="status">
+        	<c:url var="showURL" value="/src/volbase/ShowVolume.do?summaryId=${currentHistory.volume.summaryId}"/>
             <div class="historyRow">
-                <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
+                <div class="historyDate"><a href="${showURL}" class="showHistory"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="#">${currentHistory.volume}</a></div>
+                <div class="historyItem"><a href="${showURL}" class="showHistory">${currentHistory.volume}</a></div>
 			</div>
         	</c:forEach>
 		</div>
@@ -48,10 +51,11 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['Place']}" var="currentHistory" varStatus="status">
+        		<c:url var="showURL" value="/src/geobase/ShowPlace.do?placeAllId=${currentHistory.place.placeAllId}"/>
             <div class="historyRow">
-                <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
+                <div class="historyDate"><a href="${showURL}" class="showHistory"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="#">${currentHistory.place.placeName}</a></div>
+                <div class="historyItem"><a href="${showURL}" class="showHistory">${currentHistory.place.placeName}</a></div>
 			</div>
         	</c:forEach>
 		</div>
@@ -66,14 +70,15 @@
         
         <div class="historyList">
         	<c:forEach items="${historyReport['People']}" var="currentHistory" varStatus="status">
+        	<c:url var="showURL" value="/src/peoplebase/ShowPerson.do?personId=${currentHistory.people.personId}"/>
             <div class="historyRow">
-                <div class="historyDate"><a href="#"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
+                <div class="historyDate"><a href="${showURL}" class="showHistory"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
                 <div class="historyAction" title="Deleted">${currentHistory.action}</div>
                 <c:if test="${currentHistory.people.mapNameLf.length() <= 20}">
-                	<div class="historyItem"><a href="#">${currentHistory.people}</a></div>
+                	<div class="historyItem"><a href="${showURL}" class="showHistory">${currentHistory.people}</a></div>
                 </c:if>
                 <c:if test="${currentHistory.people.mapNameLf.length() > 20}">
-                	<div class="historyItem"><a href="#">${currentHistory.people.mapNameLf.substring(0,16)}...</a></div>
+                	<div class="historyItem"><a href="${showURL}" class="showHistory">${fn:substring(currentHistory.people.mapNameLf,0,16)}...</a></div>
                 </c:if>
 			</div>
         	</c:forEach>
@@ -98,6 +103,11 @@
 		});							   	
 		$j("#morePlaces").click(function() {
 			Modalbox.show($j(this).attr("href"), {title: "MY PLACE HISTORY", width: 750});return false;
+		});
+		$j(".showHistory").click(function() {
+			$j("#body_left").load($j(this).attr("href"));
+			Modalbox.hide(); 
+			return false;
 		});
 		$j("#close").click(function(){
 			Modalbox.hide(); return false;
