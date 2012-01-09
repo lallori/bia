@@ -66,7 +66,15 @@
 		<c:forEach items="${person.altName}" var="currentName">
 			<div class="row">
 				<div class="item">${currentName.nameType}</div> 
-				<div class="value"><a id="linkSearch" href="#">${currentName.namePrefix} ${currentName.altName}</a></div> 
+				<c:if test="${currentName.nameType == 'Family' }">
+					<c:url var="ShowFamilyPersonURL" value="/de/peoplebase/ShowFamilyPerson.do">
+						<c:param name="altName" value="${currentName.altName}" />
+					</c:url>
+						<div class="value"><a class="linkSearch" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
+				</c:if>
+				<c:if test="${currentName.nameType != 'Family' }"> 
+					<div class="value">${currentName.namePrefix} ${currentName.altName}</div>
+				</c:if>  
 			</div>
 		</c:forEach>
 	</div>	
@@ -80,17 +88,23 @@
 	
 	<div class="list">
 		<c:forEach items="${person.poLink}" var="currentPoLink">
-		<div class="row">
-			<c:if test="${currentPoLink.preferredRole}">
-				<a class="value5" title="Preferred Role" id="preferredRoleIcon" href="#"></a>
-			</c:if>
-			<c:if test="${!currentPoLink.preferredRole}">
-				<div class="value5"></div>
-			</c:if>
-			<div class="value60"><a class="linkSearch" href="#"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br />
-			<a class="linkSearch" href="#">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div>
-			<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
-		</div>
+				<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/de/peoplebase/ShowTitlesOrOccupationsPeoplePerson.do">
+					<c:param name="titleOccId" value="${currentPoLink.titleOccList.titleOccId}" />
+				</c:url>
+				<c:url var="ShowRoleCatPeoplePersonURL" value="/de/peoplebase/ShowRoleCatPeoplePerson.do">
+					<c:param name="roleCatId" value="${currentPoLink.titleOccList.roleCat.roleCatId}" />
+				</c:url>
+				<div class="row">
+					<c:if test="${currentPoLink.preferredRole}">
+						<div class="value5" title="Preferred Role" id="preferredRoleIcon"></div>
+					</c:if>
+					<c:if test="${!currentPoLink.preferredRole}">
+						<div class="value5"></div>
+					</c:if>
+					<div class="value60"><a class="linkSearch" href="${ShowTitlesOrOccupationsPeoplePersonURL}"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
+					<a class="linkSearch" href="${ShowRoleCatPeoplePersonURL}">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
+					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
+				</div>
 		</c:forEach>
 	</div>
 </div>
@@ -102,23 +116,29 @@
 	</div>
 	<div class="list">
 		<div class="row">
-			<div class="item">Father</div> 
-	<c:forEach items="${person.parents}" var="currentParent">
-		<c:if test="${currentParent.parent.gender == 'M'}">
-			<div class="value"><a href="#">${currentParent.parent}</a></div> 
-			<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
-		</c:if>				
-	</c:forEach>
-		</div>
-		<div class="row">
-			<div class="item">Mother</div> 
-	<c:forEach items="${person.parents}" var="currentParent">
-		<c:if test="${currentParent.parent.gender == 'F'}">
-			<div class="value"><a href="#">${currentParent.parent}</a></div> 
-			<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
-		</c:if>				
-	</c:forEach>
-		</div>
+				<div class="item">Father</div> 
+		<c:forEach items="${person.parents}" var="currentParent">
+			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+				<c:param name="personId"   value="${currentParent.parent.personId}" />
+			</c:url>
+			<c:if test="${currentParent.parent.gender == 'M'}">
+				<div class="value"><a class="linkParent" href="${ComparePersonURL}">${currentParent.parent}</a></div> 
+				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+			</c:if>				
+		</c:forEach>
+			</div>
+			<div class="row">
+				<div class="item">Mother</div> 
+		<c:forEach items="${person.parents}" var="currentParent">
+			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+				<c:param name="personId"   value="${currentParent.parent.personId}" />
+			</c:url>
+			<c:if test="${currentParent.parent.gender == 'F'}">
+				<div class="value"><a class="linkParent" href="${ComparePersonURL}">${currentParent.parent}</a></div> 
+				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+			</c:if>				
+		</c:forEach>
+			</div>
 	</div>
 </div>
 
@@ -128,10 +148,13 @@
 	</div>
 	<div class="list">
 	<c:forEach items="${person.children}" var="currentChild">
-		<div class="row">
-			<div class="value"><a href="#">${currentChild.child}</a></div>
-			<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
-		</div>
+				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+					<c:param name="personId"   value="${currentChild.child.personId}" />
+				</c:url>
+				<div class="row">
+					<div class="value"><a class="linkChild" href="${ComparePersonURL}">${currentChild.child}</a></div> 
+					<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
+				</div>
 	</c:forEach>
 	</div>
 </div>
@@ -142,11 +165,23 @@
 	</div>
 	<div class="list">
 	<c:forEach items="${marriages}" var="currentMarriage">
-		<div class="row">
-			<div class="value"><a class="linkSpouse">${currentMarriage.wife}</a></div>
-			<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
-		</div>
-	</c:forEach>
+				<div class="row">
+					<c:if test="${person.personId == currentMarriage.husband.personId}">
+						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+							<c:param name="personId"   value="${currentMarriage.wife.personId}" />
+						</c:url>
+						<div class="value"><a class="linkSpouse" href="${ComparePersonURL}">${currentMarriage.wife}</a></div> 
+						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
+					</c:if>
+					<c:if test="${person.personId == currentMarriage.wife.personId}">
+						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+							<c:param name="personId"   value="${currentMarriage.husband.personId}" />
+						</c:url>
+						<div class="value"><a class="linkSpouse" href="${ComparePersonURL}">${currentMarriage.husband}</a></div> 
+						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.husband.deathYear}</div>
+					</c:if>
+				</div>
+			</c:forEach>
 	</div>
 </div>
 
@@ -171,6 +206,102 @@
 				var selected = $j("#tabs").tabs('option', 'selected');
 				$j("#tabs").tabs('remove', selected);
 				return false;
+			});
+			
+			$j(".linkSearch").click(function() {
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".linkParent").click(function() {
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".linkChild").click(function() {
+	        	var tabName = $j(this).text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".linkSpouse").click(function(){
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
 			});
 		});
 	</script>
