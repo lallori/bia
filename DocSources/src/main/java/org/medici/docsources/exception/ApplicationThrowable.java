@@ -105,6 +105,12 @@ public class ApplicationThrowable extends Throwable {
 						return ApplicationError.RECORD_NOT_FOUND_ERROR;
 					}
 				}
+			//MD: Inserted new exception
+			} else if (getCause().getClass().getName()
+					.endsWith("BridgeException")) {
+				if (getCause().getMessage() != null) {
+					return ApplicationError.GENERIC_ERROR;
+				}
 			} else if (getCause().getClass().getName()
 					.endsWith("ldap.CommunicationException")) {
 				return ApplicationError.LDAP_SERVER_NOT_RESPONDING_ERROR;
