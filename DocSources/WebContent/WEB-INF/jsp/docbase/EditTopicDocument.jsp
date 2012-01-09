@@ -98,7 +98,7 @@
 			  });
 
 			$j('#closeTopic').click(function() { 
-				$j('.autocomplete').remove();
+				$j('.autocomplete').attr('visibility', 'hidden');
 	            $j('#EditTopicDocumentDiv').block({ message: $j('#question') }); 
 	            return false;
 			});
@@ -148,6 +148,7 @@
 			$j("#question").hide();
 			$j("#EditTopicDocumentDiv").append($j("#question"));
 			$j(".blockUI").remove();
+			$j('.autocomplete').attr('visibility', 'visible');
 			return false; 
 		}); 
         
