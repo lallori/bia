@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.EditChildPersonCommand;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,26 @@ public class EditChildPersonValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditChildPersonCommand editChildPersonCommand = (EditChildPersonCommand) object;
 		validatePersonId(editChildPersonCommand.getId(), errors);
+		validateDates(editChildPersonCommand.getParentId(), editChildPersonCommand.getChildId(), errors);
+		
+	}
+	
+	public void validateDates(Integer parentId, Integer childId, Errors errors){
+		if(!errors.hasErrors()){
+			try{
+				People parent = getPeopleBaseService().findPerson(parentId);
+				People child = getPeopleBaseService().findPerson(childId);
+				
+				if(child.getDeathDate() < parent.getBornDate()){
+					errors.reject("deathDate", "error.deathDate.notVaild");
+				}
+				if(child.getBornDate() > parent.getDeathDate()){
+					errors.reject("bornDate", "error.bornDate.notValid");
+				}
+			}catch(ApplicationThrowable ath){
+				
+			}
+		}
 	}
 
 	/**

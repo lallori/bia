@@ -113,7 +113,7 @@ public class EditDetailsPersonValidator implements Validator {
 	private void validateDates(Integer bornYear, Integer bornMonthNum, Integer bornDay, Integer deathYear, Integer deathMonthNum, Integer deathDay,Errors errors) {
 		if (!errors.hasErrors()) {
 			if (bornYear != null) {
-				if ((bornYear < 1200) || (bornYear > 1700)) {
+				if ((bornYear < 1200) || (bornYear > 1750)) {
 					errors.reject("bornYear", "error.bornYear.invalid");
 				}
 			}
@@ -128,7 +128,7 @@ public class EditDetailsPersonValidator implements Validator {
 				}
 			}
 			if (deathYear != null) {
-				if ((deathYear < 1200) || (deathYear > 1700)) {
+				if ((deathYear < 1200) || (deathYear > 1850)) {
 					errors.reject("deathYear", "error.deathYear.invalid");
 				}
 			}
