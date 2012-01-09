@@ -30,6 +30,10 @@ package org.medici.docsources.indexer;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.event.FlushEventListener;
+import org.hibernate.impl.SessionFactoryImpl;
+import org.hibernate.search.event.FullTextIndexEventListener;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -37,6 +41,7 @@ import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 public class DocSourcesIndexer {
 
@@ -105,14 +110,28 @@ public class DocSourcesIndexer {
 			}
 		} 
 		
-		/** 
-		 * It's very important to close Spring Application Context otherwise 
+		/* 
+		 * It's very important to cleanup FullTextIndexEventListener, otherwise 
 		 * Hibernate search Indexer will leave lock files on entity.
-		 * We cast Application Context to ConfigurableApplicationContext, because  
-		 * first class does not implement a close function, but ConfigurableApplicationContext
-		 * (which extends ApplicationContext NDR) implements this function.
+		 * 
+		 * Fix code get on hibernate forum : 
+		 * https://forum.hibernate.org/viewtopic.php?f=9&t=993557#p2413625
+		 * 
+		 * But we have a problem retrieving hibernate configuration, resolved
+		 * with this trick :
+		 * 
+		 * http://forum.springsource.org/showthread.php?16998-Trying-to-get-Hibernate-SessionFactory-and-Configuration&p=29712#post29712
+		 * 
 		 */
-		// ((ConfigurableApplicationContext) ctx).close();
+		LocalSessionFactoryBean  lsfb = (LocalSessionFactoryBean) ctx.getBean("&sessionFactory");
+		Configuration configuration = lsfb.getConfiguration();
+		
+		for (FlushEventListener fl : configuration.getEventListeners().getFlushEventListeners()) {
+		   if (fl instanceof FullTextIndexEventListener) {
+		      ((FullTextIndexEventListener) fl).cleanup();
+		   }
+		}
+
 		logger.info("Indexing end (total index time " + (System.currentTimeMillis() - startTime) + ".");    		
 	}
 	

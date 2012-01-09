@@ -48,6 +48,7 @@
                 <prop key="hibernate.cache.use_query_cache">true</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.search.default.locking_strategy">org.apache.lucene.store.SingleInstanceLockFactory</prop>
             </props>
         </property>
 	</bean>
