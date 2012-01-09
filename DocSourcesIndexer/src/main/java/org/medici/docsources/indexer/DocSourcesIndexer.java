@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.indexer;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -41,8 +43,8 @@ public class DocSourcesIndexer {
 	private static Logger logger = Logger.getLogger(DocSourcesIndexer.class);
 	
 	public static void main(String[] args) {
-		if ((args ==null) || (args.length == 0)) {
-			System.out.println("usage {documents|volumes|people|places|all}");
+		if ((args ==null) || (args.length != 2)) {
+			System.out.println("usage {documents|volumes|people|places|all} {create|update|optimize}");
 			return;
 		} 
 		
@@ -53,20 +55,64 @@ public class DocSourcesIndexer {
 		Long startTime = System.currentTimeMillis();
 
 		if (args[0].equals("all")) {
-			docSourcesIndexer.indexVolumes(ctx);
-			docSourcesIndexer.indexDocuments(ctx);
-			docSourcesIndexer.indexPeople(ctx);
-			docSourcesIndexer.indexPlaces(ctx);
+			if (args[1].equals("create")) {
+				docSourcesIndexer.createIndexVolumes(ctx);
+				docSourcesIndexer.createIndexDocuments(ctx);
+				docSourcesIndexer.createIndexPeople(ctx);
+				docSourcesIndexer.createIndexPlaces(ctx);
+			} else if (args[1].equals("update")) {
+				docSourcesIndexer.updateIndexVolumes(ctx);
+				docSourcesIndexer.updateIndexDocuments(ctx);
+				docSourcesIndexer.updateIndexPeople(ctx);
+				docSourcesIndexer.updateIndexPlaces(ctx);
+			} else if (args[1].equals("optimize")) {
+				docSourcesIndexer.optimizeIndexVolumes(ctx);
+				docSourcesIndexer.optimizeIndexDocuments(ctx);
+				docSourcesIndexer.optimizeIndexPeople(ctx);
+				docSourcesIndexer.optimizeIndexPlaces(ctx);
+			}
 		} else if (args[0].equals("documents")) {
-			docSourcesIndexer.indexDocuments(ctx);
+			if (args[1].equals("create")) {
+				docSourcesIndexer.createIndexDocuments(ctx);
+			} else if (args[1].equals("update")) {
+				docSourcesIndexer.updateIndexDocuments(ctx);
+			} else if (args[1].equals("optimize")) {
+				
+			}
 		} else if (args[0].equals("people")) {
-			docSourcesIndexer.indexPeople(ctx);
+			if (args[1].equals("create")) {
+				docSourcesIndexer.createIndexPeople(ctx);
+			} else if (args[1].equals("update")) {
+				docSourcesIndexer.updateIndexPeople(ctx);
+			} else if (args[1].equals("optimize")) {
+				
+			}
 		} else if (args[0].equals("places")) {
-			docSourcesIndexer.indexPlaces(ctx);
+			if (args[1].equals("create")) {
+				docSourcesIndexer.createIndexPlaces(ctx);
+			} else if (args[1].equals("update")) {
+				docSourcesIndexer.updateIndexPlaces(ctx);
+			} else if (args[1].equals("optimize")) {
+				
+			}
 		} else if (args[0].equals("volumes")) {
-			docSourcesIndexer.indexVolumes(ctx);
+			if (args[1].equals("create")) {
+				docSourcesIndexer.createIndexVolumes(ctx);
+			} else if (args[1].equals("update")) {
+				docSourcesIndexer.updateIndexVolumes(ctx);
+			} else if (args[1].equals("optimize")) {
+				
+			}
 		} 
 		
+		/** 
+		 * It's very important to close Spring Application Context otherwise 
+		 * Hibernate search Indexer will leave lock files on entity.
+		 * We cast Application Context to ConfigurableApplicationContext, because  
+		 * first class does not implement a close function, but ConfigurableApplicationContext
+		 * (which extends ApplicationContext NDR) implements this function.
+		 */
+		// ((ConfigurableApplicationContext) ctx).close();
 		logger.info("Indexing end (total index time " + (System.currentTimeMillis() - startTime) + ".");    		
 	}
 	
@@ -74,16 +120,16 @@ public class DocSourcesIndexer {
 	 * 
 	 * @param ctx
 	 */
-	private void indexDocuments(ApplicationContext ctx) {
+	private void createIndexDocuments(ApplicationContext ctx) {
        	try {
-    		logger.info("Indexing documents start");
+    		logger.info("Create index documents start");
         	DocBaseService docBaseService = (DocBaseService) ctx.getBean("docBaseService");
 	
     		docBaseService.generateIndexTopicList();
     		docBaseService.generateIndexDocument();
-    		logger.info("Indexing documents stop");
+    		logger.info("Create index documents stop");
 		} catch (ApplicationThrowable ath) {
-			ath.printStackTrace();
+			logger.error("", ath);
 		}
 	}
 
@@ -91,28 +137,9 @@ public class DocSourcesIndexer {
 	 * 
 	 * @param ctx
 	 */
-	private void indexPlaces(ApplicationContext ctx) {
+	private void createIndexPeople(ApplicationContext ctx) {
        	try {
-    		logger.info("Indexing places start");
-        	GeoBaseService geoBaseService = (GeoBaseService) ctx.getBean("geoBaseService");
-	
-    		geoBaseService.generateIndexPlace();
-    		geoBaseService.generateIndexPlaceExternalLinks();
-    		geoBaseService.generateIndexPlaceGeographicCoordinates();
-    		geoBaseService.generateIndexPlaceType();
-    		logger.info("Indexing places stop");
-		} catch (ApplicationThrowable ath) {
-			ath.printStackTrace();
-		}
-	}
-
-	/**
-	 * 
-	 * @param ctx
-	 */
-	private void indexPeople(ApplicationContext ctx) {
-       	try {
-    		logger.info("Indexing people start");
+    		logger.info("Create index people start");
         	PeopleBaseService peopleBaseService = (PeopleBaseService) ctx.getBean("peopleBaseService");
 	
     		peopleBaseService.generateIndexPeople();
@@ -120,9 +147,9 @@ public class DocSourcesIndexer {
     		peopleBaseService.generateIndexTitleOccsList();
     		peopleBaseService.generateIndexRoleCat();
     		peopleBaseService.generateIndexAltName();
-    		logger.info("Indexing people stop");
+    		logger.info("Create index people stop");
 		} catch (ApplicationThrowable ath) {
-			ath.printStackTrace();
+			logger.error("", ath);
 		}
 	}
 
@@ -130,17 +157,180 @@ public class DocSourcesIndexer {
 	 * 
 	 * @param ctx
 	 */
-	private void indexVolumes(ApplicationContext ctx) {
+	private void createIndexPlaces(ApplicationContext ctx) {
        	try {
-    		logger.info("Indexing volumes start");
+    		logger.info("Create index places start");
+        	GeoBaseService geoBaseService = (GeoBaseService) ctx.getBean("geoBaseService");
+	
+    		geoBaseService.generateIndexPlace();
+    		geoBaseService.generateIndexPlaceExternalLinks();
+    		geoBaseService.generateIndexPlaceGeographicCoordinates();
+    		geoBaseService.generateIndexPlaceType();
+    		logger.info("Create index places stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	private void createIndexVolumes(ApplicationContext ctx) {
+       	try {
+    		logger.info("Create index volumes start");
 	    	VolBaseService volBaseService = (VolBaseService) ctx.getBean("volBaseService");
 	
 			volBaseService.generateIndexMonth();
 			volBaseService.generateIndexSerieList();
 	    	volBaseService.generateIndexVolume();
-			logger.info("Indexing volumes stop");
+			logger.info("Create index volumes stop");
 		} catch (ApplicationThrowable ath) {
-			ath.printStackTrace();
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	private void optimizeIndexDocuments(ApplicationContext ctx) {
+       	try {
+    		logger.info("Optimize index documents start");
+        	DocBaseService docBaseService = (DocBaseService) ctx.getBean("docBaseService");
+	
+    		docBaseService.optimizeIndexDocument();
+    		logger.info("Optimize index documents stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	private void optimizeIndexPeople(ApplicationContext ctx) {
+       	try {
+    		logger.info("Optimize index people start");
+        	PeopleBaseService peopleBaseService = (PeopleBaseService) ctx.getBean("peopleBaseService");
+	
+    		peopleBaseService.optimizeIndexPeople();
+    		logger.info("Optimize index people stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	private void optimizeIndexPlaces(ApplicationContext ctx) {
+		try {
+			logger.info("Optimize index places start");
+	    	GeoBaseService geoBaseService = (GeoBaseService) ctx.getBean("geoBaseService");
+	
+			geoBaseService.optimizeIndexPlace();
+			logger.info("Optimize index places stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	private void optimizeIndexVolumes(ApplicationContext ctx) {
+       	try {
+    		logger.info("Optimize index volumes start");
+	    	VolBaseService volBaseService = (VolBaseService) ctx.getBean("volBaseService");
+	
+	    	volBaseService.optimizeIndexVolume();
+			logger.info("Optimize index volumes stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	@SuppressWarnings("deprecation")
+	private void updateIndexDocuments(ApplicationContext ctx) {
+       	try {
+       		Date today = new Date(System.currentTimeMillis());
+       		Date fromDate = new Date(today.getYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+    		logger.info("Update index documents start");
+        	DocBaseService docBaseService = (DocBaseService) ctx.getBean("docBaseService");
+	
+    		docBaseService.generateIndexTopicList();
+    		docBaseService.updateIndexDocument(fromDate);
+    		logger.info("Update index documents stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	private void updateIndexPeople(ApplicationContext ctx) {
+       	try {
+       		Date fromDate = new Date();
+    		logger.info("Update index people start");
+        	PeopleBaseService peopleBaseService = (PeopleBaseService) ctx.getBean("peopleBaseService");
+	
+    		peopleBaseService.updateIndexPeople(fromDate);
+    		peopleBaseService.generateIndexParents();
+    		peopleBaseService.generateIndexTitleOccsList();
+    		peopleBaseService.generateIndexRoleCat();
+    		peopleBaseService.generateIndexAltName();
+    		logger.info("Update index people stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	private void updateIndexPlaces(ApplicationContext ctx) {
+		try {
+			Date fromDate = new Date();
+    		logger.info("Update index places start");
+        	GeoBaseService geoBaseService = (GeoBaseService) ctx.getBean("geoBaseService");
+	
+    		geoBaseService.updateIndexPlace(fromDate);
+    		geoBaseService.generateIndexPlaceExternalLinks();
+    		geoBaseService.generateIndexPlaceGeographicCoordinates();
+    		geoBaseService.generateIndexPlaceType();
+    		logger.info("Update index places stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
+		}
+	}
+
+	/**
+	 * 
+	 * @param ctx
+	 */
+	private void updateIndexVolumes(ApplicationContext ctx) {
+       	try {
+       		Date fromDate = new Date();
+    		logger.info("Update index volumes start");
+	    	VolBaseService volBaseService = (VolBaseService) ctx.getBean("volBaseService");
+	
+			volBaseService.generateIndexMonth();
+			volBaseService.generateIndexSerieList();
+	    	volBaseService.updateIndexVolume(fromDate);
+			logger.info("Update index volumes stop");
+		} catch (ApplicationThrowable ath) {
+			logger.error("", ath);
 		}
 	}
 }
