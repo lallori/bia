@@ -396,8 +396,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 						epLinkSender = new EpLink(null);
 						epLinkSender.setDateCreated(new Date());
 						epLinkSender.setDocRole("S");
-						epLinkSender.setDocument(documentToUpdate);
-						epLinkSender.setPerson(sender);
+						epLinkSender.setDocument(new Document(documentToUpdate.getEntryId()));
+						epLinkSender.setPerson(new People(sender.getPersonId()));
 						epLinkSender.setAssignUnsure(false);
 						epLinkSender.setPortrait(false);
 						getEpLinkDAO().persist(epLinkSender);
