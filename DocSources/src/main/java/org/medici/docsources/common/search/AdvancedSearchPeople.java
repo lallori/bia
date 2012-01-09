@@ -507,7 +507,215 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	@Override
 	public String toJPAQuery() {
 		// TODO Auto-generated method stub
-		return null;
+		StringBuffer jpaQuery = new StringBuffer("FROM People WHERE ");
+		
+		//Names
+		if(names.size() > 0){
+			StringBuffer namesQuery = new StringBuffer("(");
+			for(int i = 0; i < names.size(); i++){
+				if(namesQuery.length() > 1){
+					namesQuery.append(" AND ");
+				}
+				if(namesTypes.get(i).equals(NameType.AllNameTypes)){
+					namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
+					namesQuery.append(names.get(i).toLowerCase());
+					namesQuery.append("%')");
+				}else{
+					namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
+					namesQuery.append(names.get(i).toLowerCase());
+					namesQuery.append("%' AND nameType like '");
+					namesQuery.append(namesTypes.get(i).toString().toLowerCase());
+					namesQuery.append("')");
+				}
+			}
+			namesQuery.append(")");
+			if(!namesQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(namesQuery);
+			}
+			
+		}
+		
+		//Words
+		if(words.size() > 0){
+			StringBuffer wordsQuery = new StringBuffer("(");
+			for(int i = 0; i < words.size(); i++){
+				if(wordsQuery.length() > 1){
+					wordsQuery.append(" AND ");
+				}
+				wordsQuery.append("((mapNameLf like '%");
+				wordsQuery.append(words.get(i).toLowerCase());
+				wordsQuery.append("%') OR ");
+				wordsQuery.append("((bioNotes like '%");
+				wordsQuery.append(words.get(i).toLowerCase());
+				wordsQuery.append("%') OR ");
+				wordsQuery.append("(staffNotes like '%");
+				wordsQuery.append(words.get(i).toLowerCase());
+				wordsQuery.append("%') OR ");
+				wordsQuery.append("((mapNameLf like '%");
+				wordsQuery.append(words.get(i).toLowerCase());
+				wordsQuery.append("%') OR ");
+				wordsQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
+				wordsQuery.append(names.get(i).toLowerCase());
+				wordsQuery.append("%'))");
+			}
+			wordsQuery.append(")");
+			if(!wordsQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(wordsQuery);
+			}			
+		}
+		
+		//Dates
+		if(datesTypes.size() > 0){
+			StringBuffer datesQuery = new StringBuffer("(");
+			for(int i = 0; i < datesTypes.size(); i++){
+				if(datesTypes.get(i) == null){
+					continue;
+				}
+				if(datesQuery.length() > 1){
+					datesQuery.append(" AND ");
+				}
+				if(datesTypes.get(i).equals("Born after")){
+					datesQuery.append("(bornDate>");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")");
+				}else if(datesTypes.get(i).equals("Died by")){
+					datesQuery.append("(deathDate>");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")");
+				}else if(datesTypes.get(i).equals("Lived between")){
+					datesQuery.append("(bornDate<");
+					datesQuery.append(DateUtils.getNumberDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					datesQuery.append(" AND deathDate>");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(" AND deathDate<");
+					datesQuery.append(DateUtils.getNumberDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					datesQuery.append(")");
+				}else if(datesTypes.get(i).equals("Born/Died on")){
+					if(datesMonth.get(i) == null){
+						datesQuery.append("(bornYear=");
+						datesQuery.append(datesYear.get(i));
+						datesQuery.append(" OR deathYear=");
+						datesQuery.append(datesYear.get(i));
+						datesQuery.append(")");
+					}else{
+						if(datesDay.get(i)==null){
+							datesQuery.append("((bornYear=");
+							datesQuery.append(datesYear.get(i));
+							datesQuery.append(" AND bornMonth.monthNum=");
+							datesQuery.append(datesMonth.get(i));
+							datesQuery.append(") OR (deathYear=");
+							datesQuery.append(datesYear.get(i));
+							datesQuery.append(" AND deathMonth.monthNum=");
+							datesQuery.append(datesMonth.get(i));
+							datesQuery.append("))");
+						}else{
+							datesQuery.append("(bornDate=");
+							datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+							datesQuery.append("OR deathDate=");
+							datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+							datesQuery.append(")");
+						}
+					}
+				}
+			}
+			datesQuery.append(")");
+			if(!datesQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(datesQuery);
+			}			
+		}
+		
+		//Role Categories
+		if(roleCategories.size() > 0){
+			StringBuffer roleCatQuery = new StringBuffer("(");
+			for(int i = 0; i < roleCategories.size(); i++){
+				if(roleCatQuery.length() > 1){
+					roleCatQuery.append(" AND ");
+				}
+				if(roleCategories.get(i).equals("ARTISTS and ARTISANS") || roleCategories.get(i).equals("CORPORATE BODIES") || roleCategories.get(i).equals("ECCLESIASTICS") || roleCategories.get(i).equals("HEADS of STATE") || roleCategories.get(i).equals("MILITARY and NAVAL PERSONNEL") || roleCategories.get(i).equals("NOBLES") || roleCategories.get(i).equals("PROFESSIONS") || roleCategories.get(i).equals("SCHOLARLY and LITERARY") || roleCategories.get(i).equals("STATE and COURT PERSONNEL") || roleCategories.get(i).equals("UNASSIGNED")){
+					roleCatQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.roleCat.roleCatMajor like '%");
+					roleCatQuery.append(roleCategories.get(i));
+					roleCatQuery.append("%'))");
+				}else{
+					roleCatQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.roleCat.roleCatMinor like '%");
+					roleCatQuery.append(roleCategories.get(i));
+					roleCatQuery.append("%'))");
+				}
+			}
+			roleCatQuery.append(")");
+			if(!roleCatQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(roleCatQuery);
+			}	
+		}
+		
+		//Occupations
+		if(titlesOccId.size() > 0){
+			StringBuffer titleOccIdQuery = new StringBuffer("(");
+			for(int i = 0; i < titlesOccId.size(); i++){
+				if(titleOccIdQuery.length() > 1){
+					titleOccIdQuery.append(" AND ");
+				}
+				if(titlesOccId.get(i) > 0){
+					titleOccIdQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOccId=");
+					titleOccIdQuery.append(titlesOccId.get(i));
+					titleOccIdQuery.append("))");
+				}else{
+					titleOccIdQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOcc like '%");
+					titleOccIdQuery.append(titlesOcc.get(i));
+					titleOccIdQuery.append("%'))");
+				}
+			}
+			titleOccIdQuery.append(")");
+			if(!titleOccIdQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(titleOccIdQuery);
+			}
+		}
+		
+		//Places
+		if(placeId.size() > 0){
+			StringBuffer placeIdQuery = new StringBuffer("(");
+			for(int i = 0; i < placeId.size(); i++){
+				if(placeIdQuery.length() > 1){
+					placeIdQuery.append(" AND ");
+				}
+				if(placeId.get(i) > 0){
+					placeIdQuery.append("(bornPlace.placeAllId=");
+					placeIdQuery.append(placeId.get(i));
+					placeIdQuery.append(" OR deathPlace.placeAllId=");
+					placeIdQuery.append(placeId.get(i));
+					placeIdQuery.append(")");
+				}else{
+					placeIdQuery.append("(bornPlace.placeName like '%");
+					placeIdQuery.append(place.get(i));
+					placeIdQuery.append("%' OR deathPlace.placeName like '%");
+					placeIdQuery.append(place.get(i));
+					placeIdQuery.append("%' )");
+				}
+			}
+			placeIdQuery.append(")");
+			if(!placeIdQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(placeIdQuery);
+			}
+		}
+		
+		return jpaQuery.toString();
 	}
 	
 	/**
