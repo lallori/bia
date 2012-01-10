@@ -32,10 +32,10 @@
     <error-code>404</error-code>
     <location>/WEB-INF/templates/404.jsp</location>
   </error-page>
-  <error-page>
+  <!-- <error-page>
     <error-code>500</error-code>
     <location>/WEB-INF/templates/500.jsp</location>
-  </error-page>
+  </error-page>-->
   <error-page>
     <error-code>503</error-code>
     <location>/WEB-INF/templates/503.jsp</location>
