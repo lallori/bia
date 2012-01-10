@@ -12,3 +12,9 @@
 		<h2>Error HTTP 500: Internal server error.</h2>
 		<p>Error processing flow.</p><br />
 	</div>
+	
+	<!--
+	<c:forEach items="${exception.stackTrace}" var="element">
+    	<c:out value="${element}">
+	</c:forEach>-->
+	
