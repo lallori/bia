@@ -30,12 +30,12 @@ html version
 
 #EditPersonalNotesDiv #prevNextButtons {
 	width:185px;
-	margin-top:10px;
+	margin-top:8px;
 	position:absolute;
 }
 
 #EditPersonalNotesDiv #prevNextButtons.transcribe {
-	margin: 10px 0 0 205px;
+	margin: 8px 0 0 205px;
 }
 
 #EditPersonalNotesDiv #prevButton img, #EditPersonalNotesDiv #nextButton img, #EditPersonalNotesDiv #personalNotesDiv img, #EditPersonalNotesDiv #exitDiv img{
@@ -80,6 +80,7 @@ a.transcribe {
 	float:left;
 	width:182px;
 	height:22px;
+	cursor:auto;
 	text-decoration: none;
 	color: #6F6B69;
 	position:absolute;
@@ -88,23 +89,27 @@ a.transcribe {
 .transcribeMessage {
 	color:#F00;
 	position:absolute;
+	margin-top: 8px;
+	text-decoration:none;
+	background:url(/DocSources/images/1024/button_large_higher.png) no-repeat;
+	padding:4px 0 0 0;
 	text-align:center;
-	margin-top: 10px;
-	width: 180px;
+	width:182px;
+	height:36px;
 }
 
 
 /* ---- Show Allready Transcribed Document ----- */
 
 #showAlreadyTranscribed.transcribe { /* Volume Summary button on Page Turner Panel */
-	margin: 45px 0 0 0px;
+	margin: 47px 0 0 0px;
 }
 
 
 /* ---- Volume Summary ----- */
 
 #volumeSummary { /* Volume Summary button on Page Turner Panel */
-	margin:45px 0 0 37px;
+	margin:47px 0 0 37px;
 	position:absolute;
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	padding:4px 0 0 0;
@@ -117,7 +122,7 @@ a.transcribe {
 }
 
 #volumeSummary.transcribe { /* Volume Summary button on Page Turner Pannel */
-	margin: 45px 0 0 235px;
+	margin: 47px 0 0 235px;
 }
 
 #volumeSummary:hover { /* Volume Summary button on Rollover */
@@ -192,11 +197,11 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditPersonalNotesDiv #rubricarioMoveTo { /* Contains "Rubricario Count" and "Move to rubricario" */
 	width:170px;
 	position:absolute;
-	margin:15px 0 0 250px;
+	margin:13px 0 0 250px;
 }
 
 #EditPersonalNotesDiv #rubricarioMoveTo.transcribe { /* Contains "Rubricario Count" and "Move to rubricario" */
-	margin: 15px 0 0 447px;
+	margin: 13px 0 0 447px;
 }
 
 #EditPersonalNotesDiv #rubricarioMoveTo #moveToRubricarioForm { /* "Move to Rubricario" FORM */
@@ -306,7 +311,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 /* ---- Personal Notes ----- */
 
 #EditPersonalNotesDiv #personalNotesDiv a{
-	margin:10px 0 0 455px;
+	margin:8px 0 0 455px;
 	position:absolute;
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	padding:4px 0 0 0;
@@ -319,7 +324,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #EditPersonalNotesDiv #personalNotesDiv a.transcribe{
-	margin: 10px 0 0 645px;
+	margin: 8px 0 0 645px;
 }
 
 
@@ -328,7 +333,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 /* ---- Exit ----- */
 
 #EditPersonalNotesDiv #exitDiv a{
-	margin:45px 0 0 455px;
+	margin:47px 0 0 455px;
 	position:absolute;
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	padding:4px 0 0 0;
@@ -341,7 +346,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #EditPersonalNotesDiv #exitDiv a.transcribe{
-	margin: 45px 0 0 645px;
+	margin: 47px 0 0 645px;
 }
 
 /* ---------------- */

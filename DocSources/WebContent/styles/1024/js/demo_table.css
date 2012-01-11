@@ -124,8 +124,14 @@ table.display {
      */
 }
 
-table.display#MyDocumentsHistoryTable, table.display#MyPeopleHistoryTable, table.display#MyVolumeHistoryTable, table.display#MyPlaceHistoryTable{
-	margin: 20px 0 10px 10px;
+table.display#MyDocumentsHistoryTable, table.display#MyPeopleHistoryTable, table.display#MyVolumesHistoryTable, table.display#MyPlacesHistoryTable{
+	margin: 0;
+	width:330px;
+	min-width:330px;
+}
+
+table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, table.display#AllVolumesHistoryTable, table.display#AllPlacesHistoryTable, table.display#ResearchHistoryTable{
+	margin: 0 0 10px 10px;
 	width:710px;
 }
 
@@ -134,8 +140,7 @@ table.display#MyDocumentsHistoryTable, table.display#MyPeopleHistoryTable, table
 }
 
 table.display thead th {
-    padding: 3px 18px 3px 10px;
-    border-bottom: 1px solid #E6D0C6;
+    padding: 3px 18px 5px 10px;
     font-weight: bold;
     cursor: pointer;
     * cursor: hand;
@@ -231,13 +236,17 @@ table.display tr.even.gradeU {
 
 
 tr.odd {
-    background-color: #EAD9D6;
+    background-color: #EFE0DE;
 }
 
 tr.even {
     background-color: #F6EDEC;
 }
 
+
+tr.odd:hover, tr.odd td.sorting_1:hover, tr.even:hover, tr.even td.sorting_1:hover  {
+    background-color: #b0addd;
+}
 
 
 

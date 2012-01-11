@@ -16,7 +16,7 @@ h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLAC
 	padding:0 0 15px 30px;
 	font-size:14px;
 	font-style:italic;
-	color:#009;
+	color:#666EA4;
 }
 
 h3.place { /* PLACE NAME */
@@ -310,6 +310,7 @@ item a{
 /* Bottom Div Containers */
 #EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv {
 	margin-bottom:30px;!important
+	min-height:100px;!important
 }
 
 
@@ -330,6 +331,12 @@ item a{
 /* -------------------------------------------------- EDIT ------------------------------------------------- */
 /* Common elements in Edit Forms */
 
+/*
+form div {
+	margin-top:5px;
+	margin-bottom:0;
+}
+*/
 
 .edit { /* Edit FORM class */
 	font-size:11px;
@@ -608,6 +615,10 @@ img.transparent {
 
 .input_28c { /* input for 28 characters approx. */ 
 	width: 245px;
+}
+
+.input_29c { /* input for 28 characters approx. */ 
+	width: 268px;
 }
 
 .input_30c { /* input for 30 characters approx. */ 
@@ -1022,33 +1033,38 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditResearchNotesPersonDiv {
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm {
 	width:485px;
 	margin:10px 0 0 0;
 	min-height:100px;!important
 }
 
+#CreateNewPersonRecordForm, #CreateNewTitlesOccupationsForm  {
+	padding:7px 5px 5px 5px;
+}
+
+
 /* Body left Details Divs */
-#body_left #EditDetailsDocumentDiv, #body_left #EditDetailsPersonDiv, #body_left #EditDetailsVolumeDiv, #body_left #EditDetailsVolumeDiv {
+#body_left #EditDetailsDocumentDiv, #body_left #EditDetailsPersonDiv {
 	margin-top:30px;
 	min-height:100px;!important
 }
 
-#EditDetailsDocumentDiv, #EditDetailsVolumeDiv {
-	margin-top:10px;
-	min-height:100px;!important
+#body_left #EditDetailsVolumeDiv {
+	margin-top:30px;
+	min-height:240px;!important
 }
 
-#body_left #EditDetailsPlaceDiv, #body_right #EditDetailsPlaceDiv  {
+#body_left #EditDetailsPlaceDiv, #body_right #EditDetailsPlaceDiv, #body_right #EditDetailsDocumentDiv  {
 	width:485px;
 	margin-top:0px;
 	min-height:100px;!important
 }
 
 /* Body right (Tabs) Details Divs */
-#body_right #EditDetailsPersonDiv, #body_right #EditDetailsDocumentDiv, #body_right #EditDetailsPlaceDiv  {
+#body_right #EditDetailsPersonDiv, #body_right #EditDetailsPlaceDiv  {
 	width:485px;
-	margin:-3px 0 0 3px;
+	margin: 5px 0 0 3px;
 	min-height:100px;!important
 }
 
@@ -1089,6 +1105,9 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	height:100%;
 }
 
+
+/* Volume Details Display items */
+
 #EditPortraitPersonDiv {
 	z-index:1;
 	margin:0 0 0 340px;
@@ -1100,22 +1119,62 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	color:#6F6B69;
 }
 
-#SpineVolumeNotDigitDiv {
+#EditDetailsVolumeDiv h3 {
+	max-width: 290px;
+}
+
+#SpineVolumeDiv {
     float:right;
+	margin-right:23px;
     z-index:1;
     height:160px;
-    width: 130px;
+    width: 120px;
     text-align:center;
 	font-size:10px;
+}
+
+#SpineVolumeDiv img, #SpineVolumeDigitDiv img {
+	border-radius: 4px;
 }
 
 #SpineVolumeDigitDiv {
     float:right;
     z-index:1;
     height:160px;
-    width:150px;
+    width: 120px;
     text-align:center;
 	font-size:10px;
+    margin-right: 23px;
+}
+
+#SpineVolumeDiv p,  #SpineVolumeDigitDiv p{
+   margin-top:5px;
+}
+
+#SpineVolumeDiv span {
+    color: #C0272D;
+    height: 60px;
+    position: absolute;
+    margin: 55px 0 0 0;
+    width: 70px;
+	font-size:10px;
+	text-shadow:1px 1px 1px #999;
+}
+
+#SpineVolumeDiv #ShowVolumeInVolumeExplorer { /* Bottom right icon  */
+	width:50px;
+	height:55px;
+	background:url(/DocSources/images/1024/button_showManuscViewerVol.png) bottom no-repeat;
+	cursor:pointer;
+	float:right;
+}
+
+#SpineVolumeDiv #ShowVolumeInManuscriptViewer { /* Bottom left icon  */
+	width:50px;
+	height:55px;
+	background:url(/DocSources/images/1024/button_openVolExplorerVol.png) bottom no-repeat;
+	cursor:pointer;
+	float:left;
 }
 
 /* ---------------------------------------------------- */ 
@@ -1175,6 +1234,21 @@ input.file {
     text-align:center;
 }
 
+#DocumentImageDigitDiv span {
+    color: #C0272D;
+    height: 60px;
+    position: absolute;
+    margin-top: 65px;
+    width: 70px;
+	text-shadow:1px 1px 1px #999;
+	font-size:10px;
+	text-align:center;
+}
+
+#DocumentImageDigitDiv span:hover {
+	cursor:default;
+}
+
 #ShowDocumentInManuscriptViewer { /* Bottom left icon  */
 	width:50px;
 	height:55px;
@@ -1208,7 +1282,7 @@ input.file {
 }
 
 #DocYearLabel, #dateUndatedLabel {
-	margin-left:58px;
+	margin-left:56px;
 }
 
 #unpagedLabel{
@@ -1232,7 +1306,7 @@ input.file {
 }
 
 #senderPlaceDescriptionLabel, #recipientPlaceDescriptionLabel  {
-	margin-left:22px;
+	margin-left:23px;
 }
 
 #senderPeopleDescriptionLabel {
@@ -1416,6 +1490,11 @@ input.file {
 .num_docs {
 	margin-left:30px;
 	color:#900;
+	font-size:11px;
+}
+
+a.num_docs {
+	cursor:pointer;
 }
 
 #imgPortraitPerson { /* User image profile */
@@ -1623,6 +1702,19 @@ a#editValue, .editValue { /* "Edit Value" Button */
 
 /* -------------------------------------- */
 /*
+/* ------------ Create New Title/Occupation ----------- */
+
+#ordByMinorLabel {
+	margin-left: 25px;
+}
+
+#ordByMayorLabel {
+	margin-left: 22px;
+}
+
+
+/* -------------------------------------- */
+/*
 /* ------------ Relationships ----------- */
 /*
 /* Parents */
@@ -1634,6 +1726,26 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	display:inline;
 	text-align: left;
 	cursor: pointer;
+}
+
+/* -------------------------------------- */
+/*
+/* ------------ Compare Person Record ----------- */
+
+.buttonLarge { /* Clik here to edit this person */
+	width:182px;
+	height:22px;
+	position:absolute;
+	margin: 0 0 0 303px;
+	background-image:url(/DocSources/images/1024/button_large.png);
+	background-repeat:no-repeat;
+	font-size:11px;
+	padding:4px 0 0 0;
+	text-align:center;
+}
+
+.buttonLarge:hover {
+	text-decoration:none;
 }
 
 
@@ -1693,19 +1805,23 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #conditionLabel {
-	margin-left:9px;
+	margin-left: 37px;
 }
 
 #boundLabel {
-	margin-left:29px;
+	margin-left: 57px;
 }
 
 #folsNumbrdLabel {
-	margin-left:111px;
+	margin-left: 82px;
+}
+
+#folioCountLabel {
+	margin-left: 28px;
 }
 
 #oldAlphaIndexLabel {
-	margin-left: 78px;
+	margin-left: 48px;
 }
 
 #printedDrawingsLabel {
@@ -1765,7 +1881,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	height:300px;
 	margin-top:10px;
 	z-index:-1;
-	border: 1px solid #DCC0BA;
+	border: 1px solid;
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
 }
@@ -2028,7 +2144,29 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 /* ---------------- */
 /*
-/*  Fullscreen Mode */
+/*  Fullscreen Mode -- Open pirobox window */
+
+.showFullscreenMode { /* "Move to folio" <input> GO button ID  */
+	width:182px;
+	height:22px;
+	position:absolute;
+	margin-left:20px;
+	display:inline;
+	background-image:url(/DocSources/images/1024/button_large.png);
+	background-repeat:no-repeat;
+	font-size:11px;
+	padding:4px 0 0 15px;
+}
+
+.pirobox_gall1 {
+	height:22px;
+}
+
+#flipItInFullScreen:hover, #volumeSummary:hover, .refreshVolumeExplorer:hover, .showFullscreenMode:hover {
+	text-decoration:none;
+}
+
+/*  Show in Fullscreen Mode -- Open mview window */
 
 #flipItInFullScreen { /* "Move to folio" <input> GO button ID  */
 	width:122px;
@@ -2042,20 +2180,12 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	padding:4px 0 0 15px;
 }
 
-.pirobox_gall1 {
-	height:22px;
-}
-
-#flipItInFullScreen:hover, #volumeSummary:hover, .refreshVolumeExplorer:hover {
-	text-decoration:none;
-}
-
 /* ---------------- */
 /*
 /* ---- Volume Summary --- */
 
 a#volumeSummary {
-	margin: 0 0 0 60px;
+	margin: 0 0 0 218px;
 	position:absolute;
 	width:122px;
 	height:22px;
@@ -2137,7 +2267,7 @@ a#volumeSummary {
 /* ---- Refresh --- */
 
 a.refreshVolumeExplorer {
-	margin: 0 0 0 210px;
+	margin: 0 0 0 355px;
 	position:absolute;
 	width:122px;
 	height:22px;
@@ -2258,7 +2388,7 @@ a.refreshVolumeExplorer {
 }
 
 #modalBox #gobackvolumeDiv{
-	margin-left:465px;
+	margin-left:491px;
 }
 
 #gobackvolumeDiv .gobackvolume{
@@ -2352,7 +2482,7 @@ a.refreshVolumeExplorer {
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
-	margin: 10px 0 0 137px;
+	margin: 10px 0 0 258px;
 	float:left;
 	width:182px;
 	height:22px;
@@ -2658,6 +2788,10 @@ form#EditUserProfileForm {
 	width:575px;
 }
 
+form#EditUserProfileForm div { 
+	margin: 0;
+}
+
 #EditUserProfileForm fieldset { 
 	padding-left:20px;
 }
@@ -2790,7 +2924,8 @@ form#EditUserProfileForm {
 	margin: 97px 0 0 5px;
 	text-decoration:none;
 	color:#6D5C4D;
-	padding:4px 0 0 17px;
+	padding:4px 0 0 0;
+	text-align:center;
 }
 
 #userProfile #EditUserProfile {
@@ -2801,7 +2936,8 @@ form#EditUserProfileForm {
 	margin:10px 0 0 5px;
 	text-decoration:none;
 	color:#6D5C4D;
-	padding:4px 0 0 27px;
+	padding:4px 0 0 0;
+	text-align:center;
 }
 
 #userProfile #CloseUserProfile {
@@ -2812,7 +2948,8 @@ form#EditUserProfileForm {
 	margin:10px 0 0 5px;
 	text-decoration:none;
 	color:#6D5C4D;
-	padding:4px 0 0 24px;
+	padding:4px 0 0 0;
+	text-align:center;
 }
 
 #PersonalNotesButton:hover, #EditUserProfile:hover, #CloseUserProfile:hover {
@@ -2840,11 +2977,12 @@ form#EditUserProfileForm {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 15px;
+	padding:4px 0 0 0;
 	font-size:11px;
 	width:52px;
 	height:22px;
 	border:none;
+	text-align:center;
 }
 
 #modalBox #editCleanClose #cleanAll {
@@ -2854,11 +2992,12 @@ form#EditUserProfileForm {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 10px;
+	padding:4px 0 0 0;
 	font-size:11px;
 	width:52px;
 	height:22px;
 	border:none;
+	text-align:center;
 }
 
 #modalBox #editCleanClose #close {
@@ -2868,11 +3007,12 @@ form#EditUserProfileForm {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 12px;
+	padding:4px 0 0 0;
 	font-size:11px;
 	width:52px;
 	height:22px;
 	border:none;
+	text-align:center;
 }
 
 #modalBox #editCleanClose #goBack {
@@ -2882,11 +3022,12 @@ form#EditUserProfileForm {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 5px;
+	padding:4px 0 0 0;
 	font-size:11px;
 	width:52px;
 	height:22px;
 	border:none;
+	text-align:center;
 }
 
 
@@ -2912,33 +3053,34 @@ form#EditUserProfileForm {
 }
 
 #closesavePersonalNotes {
-	margin:5px 0 0 250px;
+	margin: 5px 0 0 230px;
 	width:140px;
 	float:left;
 }
-
 
 #closesavePersonalNotes #close{
 	margin:0 0 0 10px;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	float:right;
-	padding:4px 0 0 12px;
+	padding:4px 0 0 0;
 	font-size:11px;
 	width:52px;
 	height:22px;
+	text-align:center;
 }
 
 #closesavePersonalNotes #goBack{
-	margin:0;
+	margin: 0 0 0 20px;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	padding:4px 0 0 5px;
+	padding:4px 0 0 0;
 	float:left;
 	font-size:11px;
 	width:52px;
 	height:22px;
 	border:none;
+	text-align:center;
 }
 
 #EditPersonalNotesForm #savePersonalNotes {
@@ -2948,10 +3090,9 @@ form#EditUserProfileForm {
 	font-size:11px;
 	width:52px;
 	height:22px;
-	margin:5px 0 0 0;
+	margin: 5px 0 0 15px;
 	border:none;
 	cursor:pointer;
-	
 }
 
 /* -------------------------------------------------------------------------- */
@@ -3033,6 +3174,7 @@ form#EditUserProfileForm {
 	opacity:0.5; /* Chrome, Safari */
 	-moz-opacity: 0.5; /* Firefox */
 	filter:alpha(opacity=0); /* IE */
+	text-decoration:none;
 }
 
 /*
@@ -3053,10 +3195,17 @@ form#EditUserProfileForm {
     width: 250px;
 }
 
-#customSearchFilterDiv h1.advSearchTitle, #yourSearchFilterDiv h1.advSearchTitle {
+#customSearchFilterDiv h1.advSearchTitle {
     font-size: 14px;
     font-style: italic;
-    margin-bottom: 20px;
+    margin: 20px 0 20px 0;
+    text-align: center;
+}
+
+#yourSearchFilterDiv h1.advSearchTitle {
+    font-size: 14px;
+    font-style: italic;
+    margin: 20px 0 20px 60px;
     text-align: center;
 }
 
@@ -3074,7 +3223,7 @@ form#EditUserProfileForm {
 	width:400px;
 	min-height:500px;
 	border:none;
-	margin:0 0 0 500px;
+	margin: 0 0 0 489px;
 	position:absolute;
 	font-size:11px;
 	z-index:2;
@@ -3146,7 +3295,7 @@ form#EditUserProfileForm {
 
 #tooltip {
 	position: absolute;
-	z-index: 3000;
+	z-index: 30000;
 	border: 1px solid #2e83ff;
 	background-color: #ebf3ff; 
 	padding:3px 5px 3px 5px;
@@ -3252,8 +3401,8 @@ form#EditUserProfileForm {
 }
 
 #yourEasySearchFilterForm, #yourExpertSearchFilterForm {
-	background:url(/DocSources/images/1024/bg_searchFilter.png) no-repeat;
-	margin: 50px 0 0;
+	background:url(/DocSources/images/1024/bg_searchFilter.jpg) no-repeat;
+	margin: 0;
 	padding:20px 0 0 60px;
 	width:390px;
 	min-height:450px;
@@ -3313,7 +3462,7 @@ span.categorySearch {
 }
 
 .saveAsButton { /* Save As Button */
-	margin:5px 0 0 5px;
+	margin: 65px 0 0 30px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
@@ -3328,7 +3477,7 @@ span.categorySearch {
 }
 
 .saveButton { /* Save Button */
-	margin:5px 0 0 62px;
+	margin: 65px 0 0 85px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
@@ -3343,7 +3492,7 @@ span.categorySearch {
 }
 
 #advsearch { /* Search Button */
-	margin:5px auto auto 120px;
+	margin: 25px auto auto 160px;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
@@ -3636,6 +3785,7 @@ table#savedSearchFiltersForm.display {
 	font-size:11px;
 	padding:5px 10px 5px 10px;
 	margin: 5px 0px 5px 0px;
+	border-radius: 4px;
 }
 
 #personLabel {
@@ -3662,10 +3812,14 @@ table#savedSearchFiltersForm.display {
 	margin-right:5px;
 }
 
+#extractLabel, #synopsisLabel {
+	margin-left: 5px;
+}
+
 /* ------------- VOLUME SEARCH ------------------ */
 /* Input Label positions */
 
-#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel, #fromVolumeSearchForm #fromLabel, #toVolumeSearchForm #toLabel, #digitizedSearchForm #digitizedLabel, #cypherSearchForm #cypherLabel, #indexSearchForm #indexLabel, #inventarioSearchForm #inventarioLabel {
+#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel, #fromVolumeSearchForm #fromLabel, #toVolumeSearchForm #toLabel, #digitizedSearchForm #digitizedLabel, #cipherSearchForm #cipherLabel, #indexSearchForm #indexLabel, #inventarioSearchForm #inventarioLabel, #extractLabel, #synopsisLabel {
 	margin-left:7px;
 }
 
@@ -3694,8 +3848,8 @@ table#savedSearchFiltersForm.display {
 	margin-left: 19px;
 }
 
-#cypherSearchForm #cypherLabel {
-	margin-right: 43px;
+#cipherSearchForm #cipherLabel {
+	margin-right: 47px;
 }
 
 #digitizedSearchForm #digitizedLabel {
@@ -3922,11 +4076,14 @@ ul#network a {
 /* -------------------------------------------------------------------------- */
 /*
 /*
-/* -------------------------- DIGITIZATION MODAL ---------------------------- */
+/* -------------------------------------------------------------- DIGITIZATION MODULE ------------------------------------------------------------- */
+\
+/* ---------------- Modal Window ------------- */
 
 #digitizationModalDiv #close {
-	margin:25px 0 0 130px;
 	position:absolute;
+	margin-top:25px;
+	margin-left:130px;
 }
 
 #digitizationModalDiv a.helpIcon{ /* Help symbol "?" */
@@ -3982,4 +4139,169 @@ ul#network a {
 #digitizationModalDiv #BrowseFilzeDiv {
 	width:300px;
 	margin:20px 0 0 20px;
+}
+
+/* ------------------------------------ CREATE NEW CATALOG DESCRIPTION ------------------------------------ */
+
+/*------------------------------- Menu Buttons -------------------------------------*/
+
+#printTiff, #printJpeg, #printPdf { /* Actions Menu Button */
+	background:url(/DocSources/images/1024/button_bodyleftmenu_xlarge.png) no-repeat;
+	font-size:10px;
+	padding:2px 0 0 0;
+	width:140px;
+	height:17px;
+	position:absolute;
+	text-decoration:none;
+	text-align:center;
+}
+
+#printTiff {
+	right:295px;
+}
+
+#printJpeg {
+	right: 150px;
+}
+
+#printPdf {
+	right: 5px;
+}
+
+/*------------------------------- Edit/Display Divs -------------------------------------*/
+
+#EditSchedoneDetailsDiv .helpIcon, #EditEditTiffImagesForm .helpIcon, #EditEditJpegImagesForm .helpIcon, #EditEditPdfImagesForm .helpIcon{
+	margin-right: 5px;
+}
+
+#EditSchedoneDetailsDiv, #EditTiffImagesDiv, #EditJpegImagesDiv, #EditPdfImagesDiv {
+	width:485px;
+	margin:10px 0 0 0;
+	min-height:100px;!important
+}
+
+#EditSchedoneDetailsDiv {
+	margin-top: 40px;
+}
+
+/* Schedone details */
+#dimensioniBaseLabel {
+	margin-right: 13px;
+}
+
+#carteMancantiLabel {
+	margin-right: 14px;
+}
+
+#cartulazioneLabel {
+	margin-right: 34px;
+}
+
+#supportoLabel {
+	margin-right: 56px;
+}
+
+#legaturaLabel {
+	margin-right: 55px;
+}
+
+#dateEstremeLabel {
+	margin-right: 31px;
+}
+
+#unitaLabel {
+	margin-right: 57px;
+}
+
+#serieLabel {
+	margin-right: 77px;
+}
+
+#fondoLabel {
+	margin-right: 71px;
+}
+
+#istitutoLabel {
+	margin-right: 63px;
+}
+
+#tipoRipresaLabel {
+	margin-right: 25px;
+}
+
+#coloreImmagineLabel {
+	margin-right: 8px;
+}
+
+#risoluzioneLabel {
+	margin-right: 44px;
+}
+
+#daRipresaLabel {
+	margin-right: 50px;
+}
+
+#operatoreLabel {
+	margin-right: 51px;
+}
+
+#responsabileFotoriproduzioneLabel {
+	 margin-right: 21px;
+}
+
+/* TIFF images */
+
+#formatoLabel {
+	margin-right: 39px;
+}
+
+#compressioneLabel {
+	margin-right: 10px;
+}
+
+#numeroImmaginiLabel {
+	margin-right: 65px;
+}
+
+#dimensioneMediaImmaginiLabel {
+	margin-right: 42px;
+}
+
+#dimensioneTotaleImmaginiLabel {
+	margin-right: 45px;
+}
+
+/* ------------------------------------ ADD NEW DIGITIZED VOLUME ------------------------------------ */
+
+#AddNewDigitizedVolumeDiv {
+	min-height:100px;
+}
+
+#AddNewDigitizedVolumeDiv p {
+	margin: 5px 0 15px 30px;
+}
+
+#AddNewDigitizedVolumeDiv span {
+	margin: 5px 0 15px 30px;
+	color:#F00;
+}
+
+#AddNewDigitizedVolumeDiv .item {
+	padding: 10px 0 10px 0;
+}
+
+#AddNewDigitizedVolumeDiv .activate {
+	background-image: url("/DocSources/images/1024/button_bodyleftmenu_medium.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: inline;
+    font-size: 11px;
+    height: 17px;
+    padding-top: 2px;
+    position: absolute;
+	margin: -13px;
+    text-align: center;
+    width: 65px;
+	text-decoration:none;
+	color: #6D5C4D;
 }

@@ -132,7 +132,7 @@ a {
 	font-size:11px;
 	z-index:1;
 	margin-bottom:100px;
-	border-right:1px solid #BEA08B;
+	border-right:1px solid #DCC0BA;
 
 }
 	
@@ -144,7 +144,7 @@ a {
 	position:absolute;
 	margin-left:500px;
 	font-size:11px;
-	border-left:1px solid #BEA08B;
+	border-left:1px solid #DCC0BA;
 	min-height: 520px;
 
 }
