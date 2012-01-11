@@ -32,7 +32,6 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.event.FlushEventListener;
-import org.hibernate.impl.SessionFactoryImpl;
 import org.hibernate.search.event.FullTextIndexEventListener;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
