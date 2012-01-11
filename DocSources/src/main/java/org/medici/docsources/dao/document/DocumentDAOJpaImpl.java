@@ -178,82 +178,6 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * 
 	 * @throws PersistenceException
 	 */
-	@Override
-	public void updateIndex(Date fromDate) throws PersistenceException {
-		Session session = null;
-		FullTextSession fullTextSession = null;
-		ScrollableResults results = null;
-		try {
-			EntityManager entityManager = getEntityManager();
-			session = ((HibernateEntityManager) entityManager).getSession();
-			session = session.getSessionFactory().openSession();
-			fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
-			
-			Query queryTotal = entityManager.createQuery("SELECT count(entryId) FROM Document where lastUpdate>=:lastUpdate");
-			queryTotal.setParameter("lastUpdate", fromDate);
-			Long total = (Long) queryTotal.getSingleResult();
-			logger.info("Total Entities to be updated : " + total);
-
-			if (total > 0) {
-				Integer numberOfElements = 50;
-				Integer numberOfElementsBeforeGC = 1000;
-				org.hibernate.Query query = session.createQuery("FROM Document where lastUpdate>=:lastUpdate");
-				query.setParameter("lastUpdate", fromDate);
-				
-				Transaction tx = fullTextSession.beginTransaction();
-				query.setReadOnly(true);
-		        query.setLockMode("a", LockMode.NONE);
-		        results = query.scroll(ScrollMode.FORWARD_ONLY);
-		        Integer resultNumber=0;
-		        while (results.next()) {
-		            Document document = (Document) results.get(0);
-				    fullTextSession.delete(document);
-				    fullTextSession.index(document);
-				    resultNumber++;
-
-					if (resultNumber%numberOfElements==0) {
-						flushingFullTextSession(total, resultNumber, fullTextSession);
-					}
-					
-					if (resultNumber%numberOfElementsBeforeGC ==0) {
-						System.gc();
-						logger.info("Invoked Garbage collector to prevent OutOfMemory Errors");
-					}
-				}
-		        
-		        flushingFullTextSession(total, resultNumber, fullTextSession);
-
-		        
-/*				logger.info("Initiating Lucene Index Optimze...");
-		        SearchFactory searchFactory = fullTextSession.getSearchFactory();
-		        searchFactory.optimize(Document.class);
-*/
-		        logger.info("Finished Lucene Index Optimze");
-
-			    tx.commit();
-			} else {
-				logger.info("No Entities found to be indexed.");
-			}
-			logger.info("Indexing documents terminated without errors.");
-		} catch (Throwable throwable) {
-			logger.error(throwable);
-		} finally{
-	        if (results != null) {
-	        	results.close();
-	        }
-	        /*if (fullTextSession.isOpen()) {
-	        	fullTextSession.close();
-	        }*/
-	        if (session.isOpen()) {
-	        	session.close();
-	        }
-		}
-	}
-
-	/**
-	 * 
-	 * @throws PersistenceException
-	 */
 	public void generateIndex() throws PersistenceException {
 		Session session = null;
 		FullTextSession fullTextSession = null;
@@ -330,6 +254,35 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 
 	/**
 	 * 
+	 * @param entity
+	 * @throws PersistenceException
+	 */
+	/*public void persist(Document document) throws PersistenceException {
+		Transaction tx = null;
+		EntityManager entityManager = getEntityManager();
+	    entityManager.persist(document);
+
+	    try {
+			Session session = ((HibernateEntityManager) entityManager).getSession();
+			//session = session.getSessionFactory().openSession();
+			FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+		    tx = fullTextSession.beginTransaction();
+		    fullTextSession.index(document);
+		    tx.commit();
+	    }catch (Throwable th) {
+	    	if (tx != null) {
+	    		if (tx.isActive()) {
+	    			tx.rollback();
+	    		}
+	    	}
+	    } finally{
+	    	
+	    }
+
+	}*/
+
+	/**
+	 * 
 	 */
 	@Override
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
@@ -370,6 +323,9 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		return page;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
@@ -407,6 +363,9 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
@@ -443,6 +402,9 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		return page;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
@@ -477,5 +439,81 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		page.setList(query.getResultList());
 		
 		return page;
+	}
+
+	/**
+	 * 
+	 * @throws PersistenceException
+	 */
+	@Override
+	public void updateIndex(Date fromDate) throws PersistenceException {
+		Session session = null;
+		FullTextSession fullTextSession = null;
+		ScrollableResults results = null;
+		try {
+			EntityManager entityManager = getEntityManager();
+			session = ((HibernateEntityManager) entityManager).getSession();
+			session = session.getSessionFactory().openSession();
+			fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+			
+			Query queryTotal = entityManager.createQuery("SELECT count(entryId) FROM Document where lastUpdate>=:lastUpdate");
+			queryTotal.setParameter("lastUpdate", fromDate);
+			Long total = (Long) queryTotal.getSingleResult();
+			logger.info("Total Entities to be updated : " + total);
+
+			if (total > 0) {
+				Integer numberOfElements = 50;
+				Integer numberOfElementsBeforeGC = 1000;
+				org.hibernate.Query query = session.createQuery("FROM Document where lastUpdate>=:lastUpdate");
+				query.setParameter("lastUpdate", fromDate);
+				
+				Transaction tx = fullTextSession.beginTransaction();
+				query.setReadOnly(true);
+		        query.setLockMode("a", LockMode.NONE);
+		        results = query.scroll(ScrollMode.FORWARD_ONLY);
+		        Integer resultNumber=0;
+		        while (results.next()) {
+		            Document document = (Document) results.get(0);
+				    fullTextSession.delete(document);
+				    fullTextSession.index(document);
+				    resultNumber++;
+
+					if (resultNumber%numberOfElements==0) {
+						flushingFullTextSession(total, resultNumber, fullTextSession);
+					}
+					
+					if (resultNumber%numberOfElementsBeforeGC ==0) {
+						System.gc();
+						logger.info("Invoked Garbage collector to prevent OutOfMemory Errors");
+					}
+				}
+		        
+		        flushingFullTextSession(total, resultNumber, fullTextSession);
+
+		        
+/*				logger.info("Initiating Lucene Index Optimze...");
+		        SearchFactory searchFactory = fullTextSession.getSearchFactory();
+		        searchFactory.optimize(Document.class);
+*/
+		        logger.info("Finished Lucene Index Optimze");
+
+			    tx.commit();
+			} else {
+				logger.info("No Entities found to be indexed.");
+			}
+			logger.info("Indexing documents terminated without errors.");
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+		} finally{
+	        if (results != null) {
+	        	results.close();
+	        }
+	        /*if (fullTextSession.isOpen()) {
+	        	fullTextSession.close();
+	        }*/
+	        if (session.isOpen()) {
+	        	session.close();
+	        }
+		}
 	}
 }
