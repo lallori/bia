@@ -517,15 +517,18 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					namesQuery.append(" AND ");
 				}
 				if(namesTypes.get(i).equals(NameType.AllNameTypes)){
+					namesQuery.append("(mapNameLf like '%");
+					namesQuery.append(names.get(i).toLowerCase());
+					namesQuery.append("%' OR ");
 					namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
 					namesQuery.append(names.get(i).toLowerCase());
-					namesQuery.append("%')");
+					namesQuery.append("%')))");
 				}else{
 					namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
 					namesQuery.append(names.get(i).toLowerCase());
 					namesQuery.append("%' AND nameType like '");
 					namesQuery.append(namesTypes.get(i).toString().toLowerCase());
-					namesQuery.append("')");
+					namesQuery.append("'))");
 				}
 			}
 			namesQuery.append(")");
