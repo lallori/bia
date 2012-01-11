@@ -85,6 +85,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditParentsPersonForm");
+			
 			$j("#EditDetailsPerson").css('visibility', 'hidden');
 			$j("#EditNamesPerson").css('visibility', 'hidden');
 	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
@@ -118,18 +120,19 @@
 
 			$j(".deleteIcon").click(function(){
 				var temp = $j(this);
-				$j('#EditParentsPersonDiv').block({ message: $j('#question') });
+				$j('#EditParentsPersonDiv').block({ message: $j('.question') });
 
-				$j('#no').click(function() {
+				$j('.no').click(function() {
 					$j.unblockUI();
 					$j(".blockUI").fadeOut("slow");
-					$j("#question").hide();
-					$j("#EditParentsPersonDiv").append($j("#question"));
+					$j(".question").hide();
+					$j("#EditParentsPersonDiv").append($j(".question"));
 					$j(".blockUI").remove();
+					$j("#EditParentsPersonDiv").load('${EditParentsPersonURL}');
 					return false; 
 				}); 
 		        
-				$j('#yes').click(function() { 
+				$j('.yes').click(function() { 
 					$j.get(temp.attr("href"), function(data) {
 						if(data.match(/KO/g)){
 				            var resp = $j('<div></div>').append(data); // wrap response
@@ -173,8 +176,8 @@
 		});
 	</script>
 	
-	<div id="question" style="display:none; cursor: default"> 
+	<div class="question" style="display:none; cursor: default"> 
 		<h1>Delete this Parent entry?</h1> 
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" /> 
+		<input type="button" class="yes" value="Yes" /> 
+		<input type="button" class="no" value="No" /> 
 	</div>

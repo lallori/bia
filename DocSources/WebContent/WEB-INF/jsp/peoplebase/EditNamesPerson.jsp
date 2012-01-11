@@ -52,6 +52,8 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditNamesPersonForm");
+			
 			$j("#EditDetailsPerson").css('visibility', 'hidden');
 	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
 			$j("#EditParentsPerson").css('visibility', 'hidden');

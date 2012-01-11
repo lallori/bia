@@ -37,6 +37,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditExtractOrSynopsisDocumentForm");
+			
 	        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
 	        $j("#EditCorrespondentsDocument").css('visibility', 'hidden'); 
 	        $j("#EditDocumentInManuscriptTranscriber").css('visibility', 'hidden');

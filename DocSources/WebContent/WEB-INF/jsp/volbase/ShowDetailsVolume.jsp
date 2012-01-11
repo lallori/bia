@@ -31,7 +31,7 @@
 		<div id="SpineVolumeDigitDiv">
 			<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 			<b>Volume Spine</b><br>
-			<a id="ShowVolumeExplorer" href="${ShowExplorerVolumeURL}">Show in Volume Explorer</a>
+			<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen">Show in Volume Explorer</a>
 		</div>
 		</c:if>
 		<c:if test="${empty image && volume.digitized == false}">
@@ -97,7 +97,7 @@
 			});
 			
 			//For check if already exsist a tab with volume explorer
-			$j("#ShowVolumeExplorer").click(function(){
+			$j("#ShowVolumeInVolumeExplorer").click(function(){
 				var tabName = "Volume Explorer ${volume.volNum}${volume.volLetExt}";
 				var numTab = 0;
 				

@@ -145,6 +145,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditDetailsPersonForm");
+			
 			$j("#EditNamesPerson").css('visibility', 'hidden');
 	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
 			$j("#EditParentsPerson").css('visibility', 'hidden');

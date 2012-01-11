@@ -59,6 +59,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditTopicDocumentForm");
+			
 			var topicDescription = $j('#topicDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
 			    minChars:1, 

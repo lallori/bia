@@ -61,6 +61,8 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
+		$j.scrollTo("#EditResearchNotesPersonForm");
+		
 		$j('#no').click(function() { 
 			$j.unblockUI();
 			$j(".blockUI").fadeOut("slow");

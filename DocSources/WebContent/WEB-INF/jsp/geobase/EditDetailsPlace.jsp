@@ -86,6 +86,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditDetailsTgnPlaceForm");
+			
 			$j("#EditNamePlace").css('visibility', 'hidden');
 	        $j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');

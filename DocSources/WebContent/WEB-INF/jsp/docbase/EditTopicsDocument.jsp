@@ -56,6 +56,8 @@
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
+				$j.scrollTo("#EditTopicsDocumentForm");
+				
 		        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
 		        $j("#EditCorrespondentsDocument").css('visibility', 'hidden'); 
 		        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
@@ -76,23 +78,25 @@
 
 				$j(".deleteIcon").click(function() {
 				var temp = $j(this);
-				$j("#EditTopicsDocumentDiv").block({ message: $j("#question")});
+				$j("#EditTopicsDocumentDiv").block({ message: $j(".question")});
 
-				$j('#no').click(function() {
+				$j('.no').click(function() {
 					$j.unblockUI();
 					$j(".blockUI").fadeOut("slow");
-					$j("#question").hide();
-					$j("#EditTopicsDocumentDiv").append($j("#question"));
+					$j(".question").hide();
+					$j("#EditTopicsDocumentDiv").append($j(".question"));
 					$j(".blockUI").remove();
+					$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
 					return false; 
 				}); 
 
-				$j('#yes').click(function() { 
+				$j('.yes').click(function() { 
 					$j.get(temp.attr("href"), function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
 						$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
+						return false;
 					}
 					
 					return false; 
@@ -127,8 +131,8 @@
 			});
 		</script>
 	
-	<div id="question" style="display:none; cursor: default"> 
+	<div class="question" style="display:none; cursor: default"> 
 		<h1>Delete this Topic entry?</h1> 
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" /> 
+		<input type="button" class="yes" value="Yes" /> 
+		<input type="button" class="no" value="No" /> 
 	</div>

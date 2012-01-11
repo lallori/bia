@@ -47,6 +47,8 @@
 
 	<script type="text/javascript"> 
 	    $j(document).ready(function() { 
+	    	$j.scrollTo("#EditPersonDocumentForm");
+	    	
 			var peopleDescription = $j('#personDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchPersonLinkableToDocumentURL}',
 			    minChars:3, 

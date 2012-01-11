@@ -109,6 +109,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditDetailsDocumentForm");
+			
 	        $j("#EditCorrespondentsDocument").css('visibility', 'hidden');
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden');
 	        $j("#EditDocumentInManuscriptTranscriber").css('visibility', 'hidden');

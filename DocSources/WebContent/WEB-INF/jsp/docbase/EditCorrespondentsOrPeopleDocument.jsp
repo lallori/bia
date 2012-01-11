@@ -158,6 +158,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditCorrespondentsOrPeopleDocumentForm");
+			
 	        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden'); 
 	        $j("#EditDocumentInManuscriptTranscriber").css('visibility', 'hidden');
@@ -301,23 +303,25 @@
 
 			$j(".deleteIcon").click(function() {
 				var temp = $j(this);
-				$j("#PeopleCorrespondentsDocumentDiv").block({ message: $j("#questionPerson")});
+				$j("#PeopleCorrespondentsDocumentDiv").block({ message: $j(".questionPerson")});
 				
-				$j('#personNo').click(function() {
+				$j('.personNo').click(function() {
 					$j.unblockUI();
 					$j(".blockUI").fadeOut("slow");
-					$j("#questionPerson").hide();
-					$j("#PeopleCorrespondentsDocumentDiv").append($j("#questionPerson"));
+					$j(".questionPerson").hide();
+					$j("#PeopleCorrespondentsDocumentDiv").append($j(".questionPerson"));
 					$j(".blockUI").remove();
+					$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
 					return false; 
 				}); 
 
-				$j('#personYes').click(function() { 
+				$j('.personYes').click(function() { 
 					$j.get(temp.attr("href"), function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
 						$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
+						return false;
 					}
 					return false;
 		        });
@@ -415,10 +419,10 @@
 		<input type="button" id="ok" value="Ok" />
 	</div>
 	
-<div id="questionPerson" style="display:none; cursor: default"> 
+<div class="questionPerson" style="display:none; cursor: default"> 
 		<h1>Delete this Person entry?</h1> 
-		<input type="button" id="personYes" value="Yes" /> 
-		<input type="button" id="personNo" value="No" /> 
+		<input type="button" class="personYes" value="Yes" /> 
+		<input type="button" class="personNo" value="No" /> 
 </div>
 
 <script type="text/javascript">

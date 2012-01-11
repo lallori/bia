@@ -76,6 +76,8 @@
 	
 		<script type="text/javascript">
 			$j(document).ready(function() {
+				$j.scrollTo("#EditSpousesPersonForm");
+				
 				$j("#EditDetailsPerson").css('visibility', 'hidden');
 				$j("#EditNamesPerson").css('visibility', 'hidden');
 		        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
@@ -102,7 +104,7 @@
 				});*/
 
 				$j(".deleteIcon").click(function() {
-					$j("#EditSpousesPersonDiv").block({ message: $j("#question") });
+					$j("#EditSpousesPersonDiv").block({ message: $j(".question") });
 					return false;
 				});
 
@@ -147,10 +149,10 @@
 		</script>
 	</form:form>
 	
-	<div id="question" style="display:none; cursor: default"> 
+	<div class="question" style="display:none; cursor: default"> 
 		<h1>Delete this Spouse entry?</h1> 
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" /> 
+		<input type="button" class="yes" value="Yes" /> 
+		<input type="button" class="no" value="No" /> 
 	</div>
 	
 	<script type="text/javascript">

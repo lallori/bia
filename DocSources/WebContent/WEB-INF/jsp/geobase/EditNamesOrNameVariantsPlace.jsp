@@ -57,6 +57,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditNamesOrNameVariantsPlaceForm");
+			
 			$j("#EditDetailsPlace").css('visibility', 'hidden');
 			$j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
@@ -76,23 +78,25 @@
 			
 			$j(".deleteIcon").click(function() {
 				var temp = $j(this);
-				$j("#EditNamePlaceDiv").block({ message: $j("#question")});
+				$j("#EditNamePlaceDiv").block({ message: $j(".question")});
 
-				$j('#no').click(function() {
+				$j('.no').click(function() {
 					$j.unblockUI();
 					$j(".blockUI").fadeOut("slow");
-					$j("#question").hide();
-					$j("#EditNamePlaceDiv").append($j("#question"));
+					$j(".question").hide();
+					$j("#EditNamePlaceDiv").append($j(".question"));
 					$j(".blockUI").remove();
+					$j("#EditNamePlaceDiv").load('${EditNamesOrNameVariantsPlaceURL}');
 					return false; 
 				}); 
 
-				$j('#yes').click(function() { 
+				$j('.yes').click(function() { 
 					$j.get(temp.attr("href"), function(data) {
 					if(data.match(/KO/g)){
 			            var resp = $j('<div></div>').append(data); // wrap response
 					} else {
 						$j("#EditNamePlaceDiv").load('${EditNamesOrNameVariantsPlaceURL}');
+						return false;
 					}
 					
 					return false; 
@@ -114,8 +118,8 @@
 		});
 	</script>
 	
-	<div id="question" style="display:none; cursor: default"> 
+	<div class="question" style="display:none; cursor: default"> 
 		<h1>Delete this Variant Place entry?</h1> 
-		<input type="button" id="yes" value="Yes" /> 
-		<input type="button" id="no" value="No" /> 
+		<input type="button" class="yes" value="Yes" /> 
+		<input type="button" class="no" value="No" /> 
 	</div>

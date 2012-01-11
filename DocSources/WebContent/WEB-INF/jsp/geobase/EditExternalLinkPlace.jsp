@@ -47,6 +47,8 @@
 		
 <script type="text/javascript">
 		$j(document).ready(function() {
+			$j.scrollTo("#EditExternalLinkForm");
+			
 			$j("#EditDetailsPlace").css('visibility', 'hidden');
 			$j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditNamesOrNameVariantsPlace").css('visibility', 'hidden');
