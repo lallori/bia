@@ -27,6 +27,9 @@
  */
 package org.medici.docsources.common.volume;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -46,13 +49,15 @@ public class FoliosInformations {
 	// Total guardia
 	private Long totalAppendix;	
 	// Total number of missing Folios
-	private Integer missingFolios;
-	
-	/**
-	 * @return the total
-	 */
-	public Long getTotal() {
-		return total;
+	private Integer totalMissingFolios;
+	// List of missed Numbering Folios
+	private List<Integer> missingNumberingFolios;
+	// List of missed Numbering Folios
+	private List<String> misnumberedFolios;
+
+	public FoliosInformations() {
+		setMissingNumberingFolios(new ArrayList<Integer>(0));
+		setMisnumberedFolios(new ArrayList<String>(0));
 	}
 
 	/**
@@ -63,10 +68,10 @@ public class FoliosInformations {
 	}
 
 	/**
-	 * @return the totalRubricario
+	 * @return the total
 	 */
-	public Long getTotalRubricario() {
-		return totalRubricario;
+	public Long getTotal() {
+		return total;
 	}
 
 	/**
@@ -77,10 +82,10 @@ public class FoliosInformations {
 	}
 
 	/**
-	 * @return the totalCarta
+	 * @return the totalRubricario
 	 */
-	public Long getTotalCarta() {
-		return totalCarta;
+	public Long getTotalRubricario() {
+		return totalRubricario;
 	}
 
 	/**
@@ -91,10 +96,10 @@ public class FoliosInformations {
 	}
 
 	/**
-	 * @return the totalOther
+	 * @return the totalCarta
 	 */
-	public Long getTotalOther() {
-		return totalOther;
+	public Long getTotalCarta() {
+		return totalCarta;
 	}
 
 	/**
@@ -105,10 +110,10 @@ public class FoliosInformations {
 	}
 
 	/**
-	 * @return the totalGuardia
+	 * @return the totalOther
 	 */
-	public Long getTotalGuardia() {
-		return totalGuardia;
+	public Long getTotalOther() {
+		return totalOther;
 	}
 
 	/**
@@ -119,10 +124,10 @@ public class FoliosInformations {
 	}
 
 	/**
-	 * @return the totalAppendix
+	 * @return the totalGuardia
 	 */
-	public Long getTotalAppendix() {
-		return totalAppendix;
+	public Long getTotalGuardia() {
+		return totalGuardia;
 	}
 
 	/**
@@ -133,16 +138,52 @@ public class FoliosInformations {
 	}
 
 	/**
-	 * @param missingFolios the missingFolios to set
+	 * @return the totalAppendix
 	 */
-	public void setMissingFolios(Integer missingFolios) {
-		this.missingFolios = missingFolios;
+	public Long getTotalAppendix() {
+		return totalAppendix;
 	}
-	
+
 	/**
-	 * @return the missingFolios
+	 * @param totalMissingFolios the totalMissingFolios to set
 	 */
-	public Integer getMissingFolios() {
-		return missingFolios;
+	public void setTotalMissingFolios(Integer totalMissingFolios) {
+		this.totalMissingFolios = totalMissingFolios;
 	}
+
+	/**
+	 * @return the totalMissingFolios
+	 */
+	public Integer getTotalMissingFolios() {
+		return totalMissingFolios;
+	}
+
+	/**
+	 * @param misnumberedFolios the misnumberedFolios to set
+	 */
+	public void setMisnumberedFolios(List<String> misnumberedFolios) {
+		this.misnumberedFolios = misnumberedFolios;
+	}
+
+	/**
+	 * @return the misnumberedFolios
+	 */
+	public List<String> getMisnumberedFolios() {
+		return misnumberedFolios;
+	}
+
+	/**
+	 * @param missingNumberingFolios the missingNumberingFolios to set
+	 */
+	public void setMissingNumberingFolios(List<Integer> missingNumberingFolios) {
+		this.missingNumberingFolios = missingNumberingFolios;
+	}
+
+	/**
+	 * @return the missingNumberingFolios
+	 */
+	public List<Integer> getMissingNumberingFolios() {
+		return missingNumberingFolios;
+	}
+
 }

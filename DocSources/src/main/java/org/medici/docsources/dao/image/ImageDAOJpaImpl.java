@@ -524,7 +524,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	stringBuffer.append(" = :volLetExt");
         else
         	stringBuffer.append(" is null");
-    	stringBuffer.append(" group by imageType, imageRectoVerso");
+    	stringBuffer.append(" GROUP BY imageType, imageRectoVerso");
     	
         Query query = getEntityManager().createQuery(stringBuffer.toString());
         query.setParameter("volNum", volNum);
@@ -540,7 +540,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		foliosInformations.setTotalAppendix(new Long(0));
 		foliosInformations.setTotalOther(new Long(0));
 		foliosInformations.setTotalGuardia(new Long(0));
-		
+		foliosInformations.setTotalMissingFolios(0);
 		// We set new partial-total values 
 		for (int i=0; i<result.size(); i++) {
 			// This is an array defined as [ImageType, Count by ImageType]
@@ -568,7 +568,52 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 				}
 			}
 		}
-		
+
+		// Calculating missing folios start
+		stringBuffer = new StringBuffer("SELECT distinct(imageProgTypeNum) FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volLetExt))
+        	stringBuffer.append(" = :volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" order by imageProgTypeNum ASC");
+    	
+        query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volNum);
+        if (!StringUtils.isEmpty(volLetExt)) {
+        	query.setParameter("volLetExt", volLetExt);
+        }
+		List<Integer> foliosOnVolume = (List<Integer>)query.getResultList();
+
+		for (long i=1; i<=foliosInformations.getTotalCarta(); i++) {
+			for (int j=0; j<foliosOnVolume.size(); j++) {
+				if (foliosOnVolume.get(j) == i) {
+					break;
+				} else if (foliosOnVolume.get(j) > i) {
+					foliosInformations.setTotalMissingFolios(foliosInformations.getTotalMissingFolios()+1);
+					foliosInformations.getMissingNumberingFolios().add(foliosOnVolume.get(j));
+					break;
+				}
+			}
+				
+		}
+		// Calculating missing folios end
+
+		//Extracting misnumbered Folios...
+		stringBuffer = new StringBuffer("SELECT concat(imageProgTypeNum, missedNumbering) FROM Image WHERE volNum=:volNum and volLetExt ");
+        if (!StringUtils.isEmpty(volLetExt))
+        	stringBuffer.append(" = :volLetExt");
+        else
+        	stringBuffer.append(" is null");
+    	stringBuffer.append(" and missedNumbering is not null ORDER BY imageProgTypeNum ASC");
+    	
+        query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("volNum", volNum);
+        if (!StringUtils.isEmpty(volLetExt)) {
+        	query.setParameter("volLetExt", volLetExt);
+        }
+
+		foliosInformations.setMisnumberedFolios((List<String>)query.getResultList());
+
 		return foliosInformations;
 	}
 

@@ -33,8 +33,7 @@ import javax.validation.Valid;
 import org.medici.docsources.command.manuscriptviewer.ShowSummaryVolumeDialogCommand;
 import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
-import org.medici.docsources.service.volbase.VolBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -52,9 +51,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/src/mview/ShowSummaryVolumeDialog")
 public class ShowSummaryVolumeDialogController {
 	@Autowired
-	private DocBaseService docBaseService;
-	@Autowired
-	private VolBaseService volBaseService;
+	private ManuscriptViewerService manuscriptViewerService;
+
 
 	/**
 	 * 
@@ -67,7 +65,7 @@ public class ShowSummaryVolumeDialogController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			VolumeSummary volumeSummary = getVolBaseService().findVolumeSummmary(command.getVolNum(), command.getVolLetExt());
+			VolumeSummary volumeSummary = getManuscriptViewerService().findVolumeSummmary(command.getVolNum(), command.getVolLetExt());
 			model.put("volumeSummary", volumeSummary);
 			
 			return new ModelAndView("mview/ShowSummaryVolumeDialog", model);
@@ -77,30 +75,16 @@ public class ShowSummaryVolumeDialogController {
 	}
 
 	/**
-	 * @param docBaseService the docBaseService to set
+	 * @param manuscriptViewerService the manuscriptViewerService to set
 	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
+	public void setManuscriptViewerService(ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
 	}
 
 	/**
-	 * @return the docBaseService
+	 * @return the manuscriptViewerService
 	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
-
-	/**
-	 * @param volBaseService the volBaseService to set
-	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
-	}
-
-	/**
-	 * @return the volBaseService
-	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 }

@@ -29,6 +29,7 @@ package org.medici.docsources.common.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
   * Utility class to provides custom jstl functions.
@@ -36,22 +37,43 @@ import java.net.URLEncoder;
  *
  */
 public final class JSTLFunctions {
-     private JSTLFunctions() {}
+    private JSTLFunctions() {}
 
-     /**
-      * This method encodes a string in UTF-8 charset.
-      * 
-      * @param stringToEncode String to be encoded.
-      * @return input string encoded.
-      */
-     public static String encode(String stringToEncode) {
-    	 if (stringToEncode == null)
-    		 return "";
+    /**
+     * This method encodes a string in UTF-8 charset.
+     * 
+     * @param stringToEncode String to be encoded.
+     * @return input string encoded.
+     */
+    public static String encode(String stringToEncode) {
+    	if (stringToEncode == null)
+    		return "";
+     
+    	try {
+    		return URLEncoder.encode(stringToEncode, "UTF-8");
+    	} catch (UnsupportedEncodingException unsupportedEncodingException) {
+    		return "unsupportedEncodingException";
+    	}
+     }
+     
+    /**
+     * This method encodes a string in UTF-8 charset.
+     * 
+     * @param stringToEncode String to be encoded.
+     * @return input string encoded.
+     */
+    public static String toString(List<Object> list) {
+    	if (list == null)
+    		return "";
     	 
-		try {
-			return URLEncoder.encode(stringToEncode, "UTF-8");
-		} catch (UnsupportedEncodingException unsupportedEncodingException) {
-			return "unsupportedEncodingException";
-		}
+    	StringBuffer stringBuffer = new StringBuffer("");
+    	for (int i=0; i<list.size(); i++) {
+    		stringBuffer.append(list.get(i));
+    		if (i<(list.size()-1)) {
+    			stringBuffer.append(", ");
+    		}
+    	}
+    	
+    	return stringBuffer.toString();
      }
 }

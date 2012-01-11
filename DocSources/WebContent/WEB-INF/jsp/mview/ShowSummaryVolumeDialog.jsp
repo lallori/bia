@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn2" uri="http://docsources.medici.org/jsp:jstl" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -10,19 +11,35 @@
 		<div class="list">
 			<div class="row">
 				<div class="item">Folio count</div> 
-				<div class="value"><b>454</b></div> 
+				<div class="value"><b>${volumeSummary.total}</b></div> 
 			</div>
 			<div class="row">
 				<div class="item"><i>Index of Names</i> count</div> 
-				<div class="value"><b>21</b></div> 
+				<div class="value"><b>${volumeSummary.totalRubricario}</b></div> 
+			</div>
+			<div class="row">
+				<div class="item"><i>Index of Folio</i> count</div> 
+				<div class="value"><b>${volumeSummary.totalCarta}</b></div> 
+			</div>
+			<div class="row">
+				<div class="item"><i>Index of Appendix</i> count</div> 
+				<div class="value"><b>${volumeSummary.totalAppendix}</b></div> 
+			</div>
+			<div class="row">
+				<div class="item"><i>Index of Guardia</i> count</div> 
+				<div class="value"><b>${volumeSummary.totalGuardia}</b></div> 
+			</div>
+			<div class="row">
+				<div class="item"><i>Index of Other</i> count</div> 
+				<div class="value"><b>${volumeSummary.totalOther}</b></div> 
 			</div>
 			<div class="row">
 				<div class="item">Missing Folios</div> 
-				<div class="valueMissingFolios">33</div> 
+				<div class="valueMissingFolios">${volumeSummary.totalMissingFolios}</div> 
 			</div>
 			<div class="row">
 				<div class="item">Misnumbered folios <br />(bis, ter, quater, etc.)</div> 
-				<div class="value"><b>63bis, 119bis, 133bis, 149bis, 181bis, 212bis, 255bis, 309bis, 362bis, 381bis., 119bis, 133bis, 149bis, 181bis, 212bis, 255bis, 309bis, 362bis, 381bis63bis, 119bis, 133bis, 149bis, 181bis, 212bis, 255bis, 309bis, 362bis, 381bis.</b></div> 
+				<div class="value"><b>${fn2:toString(volumeSummary.misnumberedFolios)}</b></div> 
 			</div>
 			
 			<div class="row">
@@ -39,11 +56,11 @@
 			</div>
 			<div class="row">
 				<div class="item">Width (mm)</div> 
-				<div class="value">230</div> 
+				<div class="value">${volumeSummary.width}</div> 
 			</div>
 			<div class="row">
 				<div class="item">Height (mm)</div> 
-				<div class="value">295</div> 
+				<div class="value">${volumeSummary.height}</div> 
 			</div>
 		</div>
 	</div>

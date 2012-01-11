@@ -15,4 +15,9 @@
         <function-signature>java.lang.String encode(java.lang.String)</function-signature>
     </function>
 
+    <function>
+        <name>toString</name>
+        <function-class>org.medici.docsources.common.util.JSTLFunctions</function-class>
+        <function-signature>java.lang.String toString(java.util.List)</function-signature>
+    </function>
 </taglib>

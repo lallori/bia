@@ -56,9 +56,11 @@ public class VolumeSummary {
 	// Total guardia
 	private Long totalAppendix;	
 	// Total number of missing Folios
-	private Integer missingFolios;
-	// List of missed Numbering Folios
-	private List<Integer> missedNumberingFolios;
+	private Integer totalMissingFolios;
+	// List of missing Folios
+	private List<Integer> missingFolios;
+	// List of misnumbered Folios
+	private List<String> misnumberedFolios;
 	// Description of cartulazione
 	private String cartulazione;
 	// Note to cartulazione
@@ -211,33 +213,33 @@ public class VolumeSummary {
 	}
 
 	/**
-	 * @return the missingFolios
+	 * @param totalMissingFolios the totalMissingFolios to set
 	 */
-	public Integer getMissingFolios() {
-		return missingFolios;
+	public void setTotalMissingFolios(Integer totalMissingFolios) {
+		this.totalMissingFolios = totalMissingFolios;
+	}
+
+	/**
+	 * @return the totalMissingFolios
+	 */
+	public Integer getTotalMissingFolios() {
+		return totalMissingFolios;
 	}
 	
 	/**
-	 * @param missingFolios the missingFolios to set
+	 * @param misnumberedFolios the misnumberedFolios to set
 	 */
-	public void setMissingFolios(Integer missingFolios) {
-		this.missingFolios = missingFolios;
+	public void setMisnumberedFolios(List<String> misnumberedFolios) {
+		this.misnumberedFolios = misnumberedFolios;
 	}
-	
+
 	/**
-	 * @return the missedNumberingFolios
+	 * @return the misnumberedFolios
 	 */
-	public List<Integer> getMissedNumberingFolios() {
-		return missedNumberingFolios;
+	public List<String> getMisnumberedFolios() {
+		return misnumberedFolios;
 	}
-	
-	/**
-	 * @param missedNumberingFolios the missedNumberingFolios to set
-	 */
-	public void setMissedNumberingFolios(List<Integer> missedNumberingFolios) {
-		this.missedNumberingFolios = missedNumberingFolios;
-	}
-	
+
 	/**
 	 * @return the cartulazione
 	 */
@@ -306,5 +308,19 @@ public class VolumeSummary {
 	 */
 	public void setHeight(Integer height) {
 		this.height = height;
+	}
+
+	/**
+	 * @param missingFolios the missingFolios to set
+	 */
+	public void setMissingFolios(List<Integer> missingFolios) {
+		this.missingFolios = missingFolios;
+	}
+
+	/**
+	 * @return the missingFolios
+	 */
+	public List<Integer> getMissingFolios() {
+		return missingFolios;
 	}
 }
