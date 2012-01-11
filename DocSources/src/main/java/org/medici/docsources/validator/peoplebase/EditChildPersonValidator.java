@@ -85,7 +85,7 @@ public class EditChildPersonValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditChildPersonCommand editChildPersonCommand = (EditChildPersonCommand) object;
 		validatePersonId(editChildPersonCommand.getId(), errors);
-		validateDates(editChildPersonCommand.getParentId(), editChildPersonCommand.getChildId(), errors);
+//		validateDates(editChildPersonCommand.getParentId(), editChildPersonCommand.getChildId(), errors);
 		
 	}
 	
