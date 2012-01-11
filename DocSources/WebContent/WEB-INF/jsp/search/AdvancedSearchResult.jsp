@@ -40,6 +40,32 @@
 				},
 				"fnDrawCallback" : function(){
 					$j("#recordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					$j("tr.odd").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.odd").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+								return false;
+							}
+					);
+					$j("tr.even").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.even").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+								return false;
+							}
+					);
 				}
 			} );
 

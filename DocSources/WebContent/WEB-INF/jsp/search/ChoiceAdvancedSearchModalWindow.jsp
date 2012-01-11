@@ -21,13 +21,13 @@
 	
 	<script>
 	$j(document).ready(function() {
-		$j("#documentSearch").open({width: 960, height: 680, scrollbars: "yes"});
+		$j("#documentSearch").open({width: 960, height: 350, scrollbars: "yes"});
 	    
-		$j("#personSearch").open({width: 980, height: 680, scrollbars: "yes"});
+		$j("#personSearch").open({width: 980, height: 350, scrollbars: "yes"});
 		
-		$j("#volumeSearch").open({width: 980, height: 680, scrollbars: "yes"});
+		$j("#volumeSearch").open({width: 980, height: 350, scrollbars: "yes"});
 				
-		$j("#placeSearch").open({width: 980, height: 680, scrollbars: "yes"});		
+		$j("#placeSearch").open({width: 980, height: 350, scrollbars: "yes"});		
 
 		$j("#savedFilters").click(function(){
 			Modalbox.show($j(this).attr("href"), {title: "SAVED SEARCH FILTERS", width: 750});

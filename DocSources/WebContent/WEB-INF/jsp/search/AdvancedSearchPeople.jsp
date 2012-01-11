@@ -5,8 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div id="customSearchFilterDiv">
-	<div class="customSearchFilterTitle"></div>
-
+	<h1 class="advSearchTitle">Create your custom search filter</h1>
 <div id="multiOpenAccordion">
 	<h1><a>Name Parts</a></h1>
 	<div>

@@ -9,7 +9,7 @@
 </c:url>
 
 <div>
-	<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}">Click here to edit this place</a>
+	<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}" class="buttonLarge">Click here to edit this place</a>
 </div>
 <div id="geoCompareDiv">
 	<div id="geoTitle">

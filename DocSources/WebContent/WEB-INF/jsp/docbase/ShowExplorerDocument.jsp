@@ -198,7 +198,7 @@
 		<div>
 			<!-- <a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a> -->
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
-				<a id="ShowManuscriptViewer${documentExplorer.entryId}" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER">Show in Fullscreen mode</a>
+				<a id="ShowManuscriptViewer${documentExplorer.entryId}" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="showFullscreenMode">Show in Fullscreen mode</a>
 			</security:authorize>
 			<a id="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPageURL}">Refresh</a>

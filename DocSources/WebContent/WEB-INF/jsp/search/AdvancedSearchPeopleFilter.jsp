@@ -9,8 +9,8 @@
 	<c:url var="SaveUserSearchFilterURL" value="/src/SaveUserSearchFilter.do"/>
 
 	<div id="yourSearchFilterDiv">
-		<div class="yourSearchFilterTitle"></div>
-		<div class="easySearchModeOn"></div>
+		<h1 class="advSearchTitle">Your search filter</h1>
+		
 		<form id="yourEasySearchFilterForm" action="${AdvancedSearchURL}" method="post">
 			<p><u>Custom Search Filter</u></p>
 			<br />
