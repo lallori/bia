@@ -37,6 +37,8 @@ import org.medici.docsources.service.mail.MailService;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class implements the scheduler to perform send mail to users who
@@ -57,6 +59,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
+@Transactional(readOnly=true)
 public class ResetUserPasswordEmailJob {
 	@Autowired
 	private MailService mailService;
@@ -67,6 +70,7 @@ public class ResetUserPasswordEmailJob {
 	 * 
 	 * Scheduled is defined in milliseconds
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(fixedRate=600000)
 	public void execute() {
 		MDC.put("username", "threademail");

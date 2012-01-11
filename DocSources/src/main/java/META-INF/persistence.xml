@@ -7,13 +7,13 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
 			<!-- Properties for manage entity versioning -->
-			<property name="hibernate.ejb.event.post-insert" value="org.hibernate.ejb.event.EJB3PostInsertEventListener,org.hibernate.envers.event.AuditEventListener" />
-			<property name="hibernate.ejb.event.post-update" value="org.hibernate.ejb.event.EJB3PostUpdateEventListener,org.hibernate.envers.event.AuditEventListener" />
-			<property name="hibernate.ejb.event.post-delete" value="org.hibernate.ejb.event.EJB3PostDeleteEventListener,org.hibernate.envers.event.AuditEventListener" />
+			<!-- <property name="hibernate.ejb.event.post-insert" value="org.hibernate.envers.event.AuditEventListener" />
+			<property name="hibernate.ejb.event.post-update" value="org.hibernate.envers.event.AuditEventListener" />
+			<property name="hibernate.ejb.event.post-delete" value="org.hibernate.envers.event.AuditEventListener" />
 			<property name="hibernate.ejb.event.pre-collection-update" value="org.hibernate.envers.event.AuditEventListener" />
 			<property name="hibernate.ejb.event.pre-collection-remove" value="org.hibernate.envers.event.AuditEventListener" />
 			<property name="hibernate.ejb.event.post-collection-recreate" value="org.hibernate.envers.event.AuditEventListener" />
-
+ -->
 			<property name="org.hibernate.envers.default_schema" value="docsources_audit"/>
 
 			<!-- prints in log4j sql -->
@@ -22,7 +22,8 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 
 			<property name="hibernate.search.default.exclusive_index_use" value="true"/> 
-			<property name="hibernate.search.default.directory_provider" value="filesystem"/> 
+			<property name="hibernate.search.default.directory_provider" value="filesystem"/>
+			<property name="org.hibernate.search.store.LockFactoryFactory" value="single"/> 
 			<property name="hibernate.search.default.indexBase" value="/data/indexes"/> 
 		</properties>
 	</persistence-unit>

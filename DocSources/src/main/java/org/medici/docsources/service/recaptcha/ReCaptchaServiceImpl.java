@@ -34,6 +34,7 @@ import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.medici.docsources.support.recaptcha.ReCaptchaConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -41,6 +42,7 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Service
+@Transactional(readOnly=true)
 public class ReCaptchaServiceImpl implements ReCaptchaService {
 	@Autowired
 	private ReCaptcha reCaptcha;

@@ -48,6 +48,11 @@
                 <prop key="hibernate.cache.use_query_cache">true</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.generate_statistics">true</prop>
+                <!-- <prop key="hibernate.search.default.exclusive_index_use">true</prop> 
+				<prop key="hibernate.search.default.directory_provider">filesystem</prop>
+				<prop key="org.hibernate.search.store.LockFactoryFactor">"single</prop>
+				<prop key="hibernate.search.default.indexBase">/data/indexes</prop>--> 
+                
             </props>
         </property>
 	</bean>
@@ -62,6 +67,7 @@
     </bean>
 
  	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-    
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

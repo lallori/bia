@@ -68,6 +68,8 @@ import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class is the default implementation of service responsible for every 
@@ -76,6 +78,7 @@ import org.springframework.stereotype.Service;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
+@Transactional(readOnly=true)
 public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private DocumentDAO documentDAO;
@@ -105,6 +108,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document addNewDocument(Document document) throws ApplicationThrowable {
 		try {
@@ -160,6 +164,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document addNewExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
@@ -183,6 +188,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document addNewFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
 		try {
@@ -205,6 +211,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document addNewPersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
@@ -224,6 +231,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
 		try {
@@ -316,6 +324,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document deleteDocument(Integer entryId) throws ApplicationThrowable {
 		Document documentToDelete = null;
@@ -341,6 +350,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deletePersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
@@ -361,6 +371,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
 		try {
@@ -380,6 +391,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document editCorrespondentsDocument(Document document) throws ApplicationThrowable {
 		try {
@@ -471,6 +483,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document editDetailsDocument(Document document) throws ApplicationThrowable {
 		try {
@@ -536,6 +549,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document editExtractDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
@@ -563,6 +577,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document editExtractOrSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
@@ -589,6 +604,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document editFactChecksDocument(FactChecks factChecks) throws ApplicationThrowable {
 		try {
@@ -608,6 +624,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document editPersonDocument(EpLink epLink) throws ApplicationThrowable {
 		try {
@@ -631,6 +648,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable {
 		try {
@@ -656,6 +674,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable {
 		try {
@@ -832,6 +851,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexDocument() throws ApplicationThrowable {
 		try {
@@ -844,6 +864,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexEpLink() throws ApplicationThrowable {
 		try {
@@ -856,6 +877,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexEplToLink() throws ApplicationThrowable {
 		try {
@@ -868,6 +890,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexFactChecks() throws ApplicationThrowable {
 		try {
@@ -880,6 +903,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexSynExtract() throws ApplicationThrowable {
 		try {
@@ -892,6 +916,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexTopicList() throws ApplicationThrowable {
 		try {
@@ -1164,6 +1189,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Document undeleteDocument(Integer entryId) throws ApplicationThrowable {
 		Document documentToUnDelete = null;
@@ -1189,6 +1215,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateIndexDocument(Date fromDate) throws ApplicationThrowable {
 		try {
@@ -1198,6 +1225,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 		}		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateIndexTopicList(Date fromDate) throws ApplicationThrowable {
 		try {

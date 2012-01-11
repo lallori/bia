@@ -34,6 +34,8 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class implements the scheduler to perform set digitized information on 
@@ -42,6 +44,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
+@Transactional(readOnly=true)
 public class CheckDigitizedVolumeJob {
 	@Autowired
 	private VolBaseService volBaseService;
@@ -49,6 +52,7 @@ public class CheckDigitizedVolumeJob {
 	/**
 	 * 
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Scheduled(fixedRate=600000)
 	public void execute() {
 		MDC.put("username", "threademail");

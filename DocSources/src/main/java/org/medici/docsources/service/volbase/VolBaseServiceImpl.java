@@ -38,15 +38,12 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.VolumeUtils;
-import org.medici.docsources.common.volume.FoliosInformations;
-import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.dao.catalog.CatalogDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.userhistoryvolume.UserHistoryVolumeDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
-import org.medici.docsources.domain.Catalog;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
@@ -58,6 +55,8 @@ import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class is the default implementation of service responsible for every 
@@ -71,6 +70,7 @@ import org.springframework.stereotype.Service;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
+@Transactional(readOnly=true)
 public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
 	private CatalogDAO catalogDAO;
@@ -88,6 +88,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Volume addNewVolume(Volume volume) throws ApplicationThrowable {
 		try {
@@ -196,6 +197,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Volume deleteVolume(Integer summaryId) throws ApplicationThrowable {
 		Volume volumeToDelete = null;
@@ -221,6 +223,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Volume editContextVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
@@ -246,6 +249,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Volume editCorrespondentsVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
@@ -272,6 +276,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Volume editDescriptionVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
@@ -313,6 +318,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable {
 		Volume volumeToUpdate = null;
@@ -433,47 +439,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public VolumeSummary findVolumeSummmary(Integer volNum, String volLetExt) throws ApplicationThrowable {
-		try {
-			VolumeSummary volumeSummary = new VolumeSummary();
-			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
-			if (volume != null) {
-				volumeSummary.setSummaryId(volume.getSummaryId());
-				volumeSummary.setVolNum(volume.getVolNum());
-				volumeSummary.setVolLetExt(volume.getVolLetExt());
-				if(volume.getSerieList() != null){
-					volumeSummary.setCarteggio(volume.getSerieList().toString());
-				}
-				FoliosInformations foliosInformations = getImageDAO().findVolumeFoliosInformations(volume.getVolNum(), volume.getVolLetExt());
-				if (foliosInformations != null) {
-					volumeSummary.setTotal(foliosInformations.getTotal());
-					volumeSummary.setTotalRubricario(foliosInformations.getTotalRubricario());
-					volumeSummary.setTotalCarta(foliosInformations.getTotalRubricario());
-					volumeSummary.setTotalGuardia(foliosInformations.getTotalGuardia());
-					volumeSummary.setTotalAppendix(foliosInformations.getTotalAppendix());
-					volumeSummary.setTotalOther(foliosInformations.getTotalOther());
-					volumeSummary.setMissingFolios(foliosInformations.getMissingFolios());
-				}
-				
-				Catalog catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
-				if (catalog != null) {
-					volumeSummary.setCartulazione(catalog.getCartulazione());
-					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
-					//volumeSummary.setHeight(catalog.getNumeroTotaleImmagini());
-					//volumeSummary.setWidth(
-				}
-			}
-			
-			return volumeSummary;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}	
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexMonth() throws ApplicationThrowable {
 		try {
@@ -486,6 +452,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexSerieList() throws ApplicationThrowable {
 		try {
@@ -499,6 +466,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexVolume() throws ApplicationThrowable {
 		try {
@@ -621,6 +589,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void optimizeIndexVolume() throws ApplicationThrowable {
 		// TODO Auto-generated method stub
@@ -704,6 +673,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Volume undeleteVolume(Integer summaryId) throws ApplicationThrowable {
 		Volume volumeToUnDelete = null;
@@ -729,6 +699,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateIndexVolume(Date fromDate) throws ApplicationThrowable {
 		try {
@@ -742,6 +713,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws ApplicationThrowable {
 		try {

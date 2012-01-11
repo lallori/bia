@@ -32,11 +32,11 @@ import java.util.List;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.volume.VolumeSummary;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.springframework.context.ApplicationContextException;
 
 /**
  * This interface is designed to work on {@link org.medici.docsources.domain.People} 
@@ -193,6 +193,15 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public Image findVolumeImageSpine(Integer volNum, String volLetExt) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public VolumeSummary findVolumeSummmary(Integer volNum, String volLetExt) throws ApplicationThrowable;
 
 	/**
 	 * 

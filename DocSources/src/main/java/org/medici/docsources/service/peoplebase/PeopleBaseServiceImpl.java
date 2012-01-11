@@ -65,6 +65,8 @@ import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class is the default implementation of service responsible for every 
@@ -73,6 +75,7 @@ import org.springframework.stereotype.Service;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
+@Transactional(readOnly=true)
 public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired
 	private AltNameDAO altNameDAO;
@@ -119,6 +122,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People addNewAltNamePerson(AltName altName) throws ApplicationThrowable {
 		try {
@@ -141,6 +145,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Parent addNewChildPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -161,6 +166,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Parent addNewFatherPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -181,6 +187,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable {
 		try {
@@ -204,6 +211,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Parent addNewMotherPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -224,6 +232,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People addNewPerson(People person) throws ApplicationThrowable {
 		try {
@@ -308,6 +317,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People addNewTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable {
 		try {
@@ -370,6 +380,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteChildFromPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -389,6 +400,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteFatherFromPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -408,6 +420,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteMotherFromPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -427,6 +440,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteNamePerson(AltName altName) throws ApplicationThrowable {
 		try {
@@ -445,6 +459,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People deletePerson(Integer personId) throws ApplicationThrowable {
 		People personToDelete = null;
@@ -470,6 +485,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable {
 		try {
@@ -488,6 +504,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Parent editChildPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -513,6 +530,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People editDetailsPerson(People person) throws ApplicationThrowable {
 		try {
@@ -589,6 +607,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Parent editFatherPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -613,6 +632,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Marriage editMarriagePerson(Marriage marriage) throws ApplicationThrowable {
 		try {
@@ -648,6 +668,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Parent editMotherPerson(Parent parent) throws ApplicationThrowable {
 		try {
@@ -673,6 +694,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People editNamePerson(AltName altName) throws ApplicationThrowable {
 		try {
@@ -697,6 +719,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People editResearchNotesPerson(People person) throws ApplicationThrowable {
 		try {
@@ -716,6 +739,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People editTitleOrOccupationPerson(PoLink poLink) throws ApplicationThrowable {
 		try {
@@ -955,6 +979,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexBiblioT() throws ApplicationThrowable {
 		try {
@@ -967,6 +992,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexBioRefLink() throws ApplicationThrowable {
 		try {
@@ -979,6 +1005,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexEpLink() throws ApplicationThrowable {
 		try {
@@ -991,6 +1018,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexParents() throws ApplicationThrowable {
 		try {
@@ -1003,6 +1031,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexPeople() throws ApplicationThrowable {
 		try {
@@ -1015,6 +1044,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexPoLink() throws ApplicationThrowable {
 		try {
@@ -1027,6 +1057,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexRoleCat() throws ApplicationThrowable {
 		try {
@@ -1039,6 +1070,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexTitleOccsList() throws ApplicationThrowable {
 		try {
@@ -1401,6 +1433,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public People undeletePerson(Integer personId) throws ApplicationThrowable {
 		People personToUnDelete = null;
@@ -1426,6 +1459,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateIndexPeople(Date fromDate) throws ApplicationThrowable {
 		try {

@@ -52,6 +52,8 @@ import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class is the default implementation of service responsible for every 
@@ -60,6 +62,7 @@ import org.springframework.stereotype.Service;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
+@Transactional(readOnly=true)
 public class GeoBaseServiceImpl implements GeoBaseService {
 	@Autowired
 	private DocumentDAO documentDAO;
@@ -81,6 +84,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Place addNewPlace(Place place) throws ApplicationThrowable {
 		try{
@@ -126,6 +130,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Place addNewPlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
 			throws ApplicationThrowable {
@@ -147,6 +152,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Place addNewPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
 		try{
@@ -170,6 +176,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Place deletePlace(Integer placeAllId) throws ApplicationThrowable {
 		Place placeToDelete = null;
@@ -195,6 +202,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deletePlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
 			throws ApplicationThrowable {
@@ -213,6 +221,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Place editDetailsPlace(Place place) throws ApplicationThrowable {
 		try{
@@ -263,6 +272,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Place editPlaceExternalLinks(PlaceExternalLinks placeExternalLinks)
 			throws ApplicationThrowable {
@@ -286,6 +296,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
 		try{
@@ -496,6 +507,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexPlace() throws ApplicationThrowable {
 		try {
@@ -508,6 +520,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexPlaceExternalLinks() throws ApplicationThrowable {
 		try {
@@ -520,6 +533,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexPlaceGeographicCoordinates() throws ApplicationThrowable {
 		try {
@@ -532,6 +546,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void generateIndexPlaceType() throws ApplicationThrowable {
 		try {
@@ -822,6 +837,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Place undeletePlace(Integer placeAllId) throws ApplicationThrowable {
 		Place placeToUndelete = null;
@@ -847,6 +863,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void updateIndexPlace(Date fromDate) throws ApplicationThrowable {
 		try {

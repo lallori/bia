@@ -34,11 +34,15 @@ import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.ImageUtils;
+import org.medici.docsources.common.volume.FoliosInformations;
+import org.medici.docsources.common.volume.VolumeSummary;
+import org.medici.docsources.dao.catalog.CatalogDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.Catalog;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
@@ -46,6 +50,7 @@ import org.medici.docsources.domain.Image.ImageType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class is the default implementation of service responsible for every 
@@ -54,7 +59,10 @@ import org.springframework.stereotype.Service;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
+@Transactional(readOnly=true)
 public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
+	@Autowired
+	private CatalogDAO catalogDAO;
 	@Autowired
 	private DocumentDAO documentDAO;
 	@Autowired
@@ -281,6 +289,53 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 		}
 	}
 
+	@Override
+	public VolumeSummary findVolumeSummmary(Integer volNum, String volLetExt) throws ApplicationThrowable {
+		try {
+			VolumeSummary volumeSummary = new VolumeSummary();
+			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
+			if (volume != null) {
+				volumeSummary.setSummaryId(volume.getSummaryId());
+				volumeSummary.setVolNum(volume.getVolNum());
+				volumeSummary.setVolLetExt(volume.getVolLetExt());
+				if(volume.getSerieList() != null){
+					volumeSummary.setCarteggio(volume.getSerieList().toString());
+				}
+				FoliosInformations foliosInformations = getImageDAO().findVolumeFoliosInformations(volume.getVolNum(), volume.getVolLetExt());
+				if (foliosInformations != null) {
+					volumeSummary.setTotal(foliosInformations.getTotal());
+					volumeSummary.setTotalRubricario(foliosInformations.getTotalRubricario());
+					volumeSummary.setTotalCarta(foliosInformations.getTotalCarta());
+					volumeSummary.setTotalGuardia(foliosInformations.getTotalGuardia());
+					volumeSummary.setTotalAppendix(foliosInformations.getTotalAppendix());
+					volumeSummary.setTotalOther(foliosInformations.getTotalOther());
+					volumeSummary.setTotalMissingFolios(foliosInformations.getTotalMissingFolios());
+					volumeSummary.setMissingFolios(foliosInformations.getMissingNumberingFolios());
+					volumeSummary.setMisnumberedFolios(foliosInformations.getMisnumberedFolios());
+				}
+				
+				Catalog catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
+				if (catalog != null) {
+					volumeSummary.setCartulazione(catalog.getCartulazione());
+					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
+					//volumeSummary.setHeight(catalog.getNumeroTotaleImmagini());
+					//volumeSummary.setWidth(catalog.getNumeroTotaleImmagini());
+				}
+			}
+			
+			return volumeSummary;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * @return the catalogDAO
+	 */
+	public CatalogDAO getCatalogDAO() {
+		return catalogDAO;
+	}
+
 	/**
 	 * @return the documentDAO
 	 */
@@ -357,6 +412,13 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
+	}
+
+	/**
+	 * @param catalogDAO the catalogDAO to set
+	 */
+	public void setCatalogDAO(CatalogDAO catalogDAO) {
+		this.catalogDAO = catalogDAO;
 	}
 
 	/**

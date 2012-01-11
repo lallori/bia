@@ -32,12 +32,15 @@ import org.medici.docsources.domain.Catalog;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
+@Transactional(readOnly=true)
 public class CatalogServiceImpl implements CatalogService {
 	@Autowired
 	private CatalogDAO catalogDAO;
@@ -58,9 +61,10 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	/**
-	 * 
-	 * @param catalog
+	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public void save(Catalog catalog) throws ApplicationThrowable {
 		try {
 			if ((catalog.getId() != null) && (catalog.getId() > 0)) {

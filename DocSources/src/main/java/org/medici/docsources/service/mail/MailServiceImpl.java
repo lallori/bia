@@ -42,6 +42,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation for MailService. 
@@ -53,6 +55,7 @@ import org.springframework.stereotype.Service;
  * 
  */
 @Service
+@Transactional(readOnly=true)
 public class MailServiceImpl implements MailService {
 	@Autowired
 	private ActivationUserDAO activationUserDAO;
@@ -104,6 +107,8 @@ public class MailServiceImpl implements MailService {
 	/**
 	 * 
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public Boolean sendActivationMail(ActivationUser activationUser, User user) {
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
@@ -126,6 +131,8 @@ public class MailServiceImpl implements MailService {
 	/**
 	 * 
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public Boolean sendUserPasswordResetMail(PasswordChangeRequest passwordChangeRequest, User user) {
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
