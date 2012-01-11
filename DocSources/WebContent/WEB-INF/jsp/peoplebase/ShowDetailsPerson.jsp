@@ -58,7 +58,7 @@
 			<div class="row">
 				<div class="item">Birth Place</div>
 				<c:if test="${person.bornPlace.placeAllId != 53384 && person.bornPlace.placeAllId != 55627 && person.bornPlace.placeAllId != 54332}">
-					<div class="value"><a href="${CompareBirthURL}" id="linkSearch" class="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+					<div class="value"><a class="linkSearch" href="${CompareBirthURL}">${person.bornPlace.placeNameFull}</a></div>
 				</c:if>
 				<c:if test="${person.bornPlace.placeAllId == 53384 || person.bornPlace.placeAllId == 55627 || person.bornPlace.placeAllId == 54332 }">
 					<div class="value">${person.bornPlace.placeNameFull}</div>
@@ -73,7 +73,7 @@
 			<div class="row">
 				<div class="item">Death Place</div>
 				<c:if test="${person.deathPlace.placeAllId != 53384 && person.deathPlace.placeAllId != 55627 && person.deathPlace.placeAllId != 54332}">
-					<div class="value"><a href="${CompareDeathURL}" id="linkSearch" class="linkSearch">${person.deathPlace.placeNameFull}</a></div>
+					<div class="value"><a class="linkSearch" href="${CompareDeathURL}">${person.deathPlace.placeNameFull}</a></div>
 				</c:if>
 				<c:if test="${person.deathPlace.placeAllId == 53384 || person.deathPlace.placeAllId == 55627 || person.deathPlace.placeAllId == 54332 }">
 					<div class="value">${person.deathPlace.placeNameFull}</div>

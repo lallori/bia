@@ -8,6 +8,14 @@
 	<c:param name="personId" value="${person.personId}" />
 </c:url>
 
+<c:url var="CompareBirthURL" value="/src/geobase/ComparePlace.do">
+	<c:param name="placeAllId" value="${person.bornPlace.placeAllId}" />
+</c:url>
+
+<c:url var="CompareDeathURL" value="/src/geobase/ComparePlace.do">
+	<c:param name="placeAllId" value="${person.deathPlace.placeAllId}" />
+</c:url>
+
 <div>
 	<a href="${ShowPersonURL}" id="editLink${person.personId}" class="buttonLarge">Click here to edit this person</a>
 </div>
@@ -40,7 +48,7 @@
 			<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
 		</div>
 		<div class="row">
-			<div class="item">Birth Place</div><div class="value"><a id="linkSearch">${person.bornPlace.placeNameFull}</a></div>
+			<div class="item">Birth Place</div><div class="value"><a class="linkSearch" href="${CompareBirthURL}">${person.bornPlace.placeNameFull}</a></div>
 		</div>
 		<div class="row">
 			<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
@@ -49,7 +57,7 @@
 			<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
 		</div>
 		<div class="row">
-			<div class="item">Death Place</div> <div class="value"><a id="linkSearch">${person.deathPlace.placeNameFull}</a></div>
+			<div class="item">Death Place</div> <div class="value"><a class="linkSearch" href="${CompareDeathURL}">${person.deathPlace.placeNameFull}</a></div>
 		</div>
 		<div class="row">
 			<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
@@ -67,7 +75,7 @@
 			<div class="row">
 				<div class="item">${currentName.nameType}</div> 
 				<c:if test="${currentName.nameType == 'Family' }">
-					<c:url var="ShowFamilyPersonURL" value="/de/peoplebase/ShowFamilyPerson.do">
+					<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.do">
 						<c:param name="altName" value="${currentName.altName}" />
 					</c:url>
 						<div class="value"><a class="linkSearch" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
@@ -88,10 +96,10 @@
 	
 	<div class="list">
 		<c:forEach items="${person.poLink}" var="currentPoLink">
-				<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/de/peoplebase/ShowTitlesOrOccupationsPeoplePerson.do">
+				<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson.do">
 					<c:param name="titleOccId" value="${currentPoLink.titleOccList.titleOccId}" />
 				</c:url>
-				<c:url var="ShowRoleCatPeoplePersonURL" value="/de/peoplebase/ShowRoleCatPeoplePerson.do">
+				<c:url var="ShowRoleCatPeoplePersonURL" value="/src/peoplebase/ShowRoleCatPeoplePerson.do">
 					<c:param name="roleCatId" value="${currentPoLink.titleOccList.roleCat.roleCatId}" />
 				</c:url>
 				<div class="row">

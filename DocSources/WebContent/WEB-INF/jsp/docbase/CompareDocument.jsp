@@ -12,17 +12,11 @@
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
 	
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-		</c:url>
+	<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+		<c:param name="flashVersion"   value="false" />
+	</c:url>
 
-		<c:url var="ShowDocumentInManuscriptViewerURL" value="/src/mview/ShowDocumentInManuscriptViewer.do">
-			<c:param name="entryId"   value="${document.entryId}" />
-			<c:param name="flashVersion"   value="false" />
-		</c:url>
-	</security:authorize>
-	
 	<c:url var="ShowDocumentExplorerURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 		<c:param name="volNum"   value="${document.volume.volNum}" />
