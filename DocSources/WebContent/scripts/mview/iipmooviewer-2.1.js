@@ -1073,9 +1073,19 @@ var IIP = new Class({
 					},
 					'html' : '<div><div><h2><a href="http://iipimage.sourceforge.net"><img src="'
 							+ this.prefix
-							+ 'iip.32x32.png"/></a>IIPMooViewer</h2>IIPImage HTML5 Ajax High Resolution Image Viewer - Version '
+							+ 'iip.32x32.png"/></a>Based on IIPMooViewer '
 							+ this.version
-							+ '<br/><ul><li>To navigate within image: drag image within main window or drag zone within the navigation window or click an area within navigation window</li><li>To zoom in: double click with the mouse or use the mouse scroll wheel or simply press the "+" key</li><li>To zoom out: shift double click with the mouse or use the mouse wheel or press the "-" key</li><li>To move the navigation window: drag navigation window toolbar</li><li>To show / hide navigation window: press the "h" key</li><li>To show / hide navigation buttons: double click navigation window toolbar</li><li>To resize to full screen: press the "f" key<li>To highlight any annotations: press the "a" key</li><li>To rotate image clockwise: press the "r" key, anti-clockwise: press shift and "r"</li></ul><br/>For more information visit <a href="http://iipimage.sourceforge.net">http://iipimage.sourceforge.net</a></div></div>'
+							+ '</h2>Modified by The Medici Archive Project <br/>\
+							<ul><li>To navigate within image: drag image within main window or drag zone within the navigation window or click an area within navigation window</li>\
+							<li>To zoom in: double click with the mouse or use the mouse scroll wheel or simply press the "+" key</li>\
+							<li>To zoom out: shift double click with the mouse or use the mouse wheel or press the "-" key</li>\
+							<li>To move the navigation window: drag navigation window toolbar</li>\
+							<li>To show / hide navigation window: press the "h" key</li>\
+							<li>To show / hide navigation buttons: double click navigation window toolbar</li>\
+							<li>To resize to full screen: press the "f" key<li>To highlight any annotations: press the "a" key</li>\
+							<li>To rotate image clockwise: press the "r" key, anti-clockwise: press shift and "r"</li>\
+							</ul><br/>For more information visit:<ul><li> <a href="http://iipimage.sourceforge.net">http://iipimage.sourceforge.net</a></li>\
+							<li><a href="http://www.medici.org">http://www.medici.org</a></li></div></div>'
 				}).inject(container);
 
 		// Use a lexical closure rather than binding to pass this to
@@ -1426,8 +1436,11 @@ var IIP = new Class({
 				}.pass(this.source)
 			}
 		});
-		toolbar.store('tip:text', '* Click and Drag to move<br/><br/>* Double Click to show/hide navigation buttons<br/>* Press h to hide the whole window');
+		// MEDICI ARCHIVE PROJECT START
+		toolbar.store('tip:text', '<ul><li>- Click and Drag to move</li>\
+										<li>- Press h to hide the whole window</li>');
 		toolbar.inject(navcontainer);
+		// MEDICI ARCHIVE PROJECT END
 
 		// Create our navigation div and inject it inside our frame if
 		// requested
