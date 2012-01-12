@@ -34,8 +34,12 @@
 				<div class="value"><b>${volumeSummary.totalOther}</b></div> 
 			</div>
 			<div class="row">
-				<div class="item">Missing Folios</div> 
+				<div class="item">Missing Folios count</div> 
 				<div class="valueMissingFolios">${volumeSummary.totalMissingFolios}</div> 
+			</div>
+			<div class="row">
+				<div class="item">Missing Folios </div> 
+				<div class="value"><b>${fn2:toString(volumeSummary.missingFolios)}</b></div> 
 			</div>
 			<div class="row">
 				<div class="item">Misnumbered folios <br />(bis, ter, quater, etc.)</div> 
