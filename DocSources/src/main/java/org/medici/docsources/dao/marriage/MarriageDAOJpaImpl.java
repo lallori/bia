@@ -1,5 +1,5 @@
 /*
- * MarriageDAOJpaImpl.java
+  * MarriageDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -100,11 +100,11 @@ public class MarriageDAOJpaImpl extends JpaDao<Integer, Marriage> implements Mar
 	public Marriage findMarriagePerson(Integer marriageId, Integer personId, Gender gender) throws PersistenceException {
         String queryJPQL = "FROM Marriage WHERE marriageId = :marriageId";
         if ((gender == null) || (gender.equals(Gender.X))) {
-        	queryJPQL += "husband.personId = :husbandId or wife.personId = :wifeId ";
+        	queryJPQL += " AND (husband.personId = :husbandId or wife.personId = :wifeId) ";
         } else if (gender.equals(Gender.M)) {
-        	queryJPQL += "husband.personId = :husbandId";
+        	queryJPQL += " AND (husband.personId = :husbandId)";
         } else if (gender.equals(Gender.F)) {
-        	queryJPQL += "wife.personId = :wifeId";
+        	queryJPQL += " AND (wife.personId = :wifeId)";
         }
     	
         Query query = getEntityManager().createQuery(queryJPQL);

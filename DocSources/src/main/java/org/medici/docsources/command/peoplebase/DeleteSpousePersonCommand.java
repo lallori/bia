@@ -36,6 +36,9 @@ package org.medici.docsources.command.peoplebase;
  */
 public class DeleteSpousePersonCommand {
 	private Integer personId;
+	private Integer marriageId;
+	private Integer wifeId;
+	private Integer husbandId;
 
 	/**
 	 * This method returns personId property.
@@ -54,5 +57,47 @@ public class DeleteSpousePersonCommand {
 	 */
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+
+	/**
+	 * @param marriageId the marriageId to set
+	 */
+	public void setMarriageId(Integer marriageId) {
+		this.marriageId = marriageId;
+	}
+
+	/**
+	 * @return the marriageId
+	 */
+	public Integer getMarriageId() {
+		return marriageId;
+	}
+
+	/**
+	 * @param wifeId the wifeId to set
+	 */
+	public void setWifeId(Integer wifeId) {
+		this.wifeId = wifeId;
+	}
+
+	/**
+	 * @return the wifeId
+	 */
+	public Integer getWifeId() {
+		return wifeId;
+	}
+
+	/**
+	 * @param husbandId the husbandId to set
+	 */
+	public void setHusbandId(Integer husbandId) {
+		this.husbandId = husbandId;
+	}
+
+	/**
+	 * @return the husbandId
+	 */
+	public Integer getHusbandId() {
+		return husbandId;
 	}
 }

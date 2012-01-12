@@ -32,7 +32,10 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.peoplebase.DeleteChildPersonCommand;
+import org.medici.docsources.command.peoplebase.DeleteSpousePersonCommand;
+import org.medici.docsources.domain.Marriage;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,7 +54,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/peoplebase/DeleteSpouseDocument")
+@RequestMapping("/de/peoplebase/DeleteSpousePerson")
 public class DeleteSpousePersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
@@ -83,15 +86,30 @@ public class DeleteSpousePersonController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeleteChildPersonCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") DeleteSpousePersonCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
-			return new ModelAndView("error/DeletePersonDocument");
+			return new ModelAndView("error/DeleteSpousePerson");
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-
-			return new ModelAndView("response/OK", model);
+			
+			Marriage marriage = new Marriage(command.getMarriageId());
+			if(command.getHusbandId() != null){
+				marriage.setHusband(new People(command.getHusbandId()));
+				marriage.setWife(new People(command.getPersonId()));
+			}else{
+				marriage.setWife(new People(command.getWifeId()));
+				marriage.setHusband(new People(command.getPersonId()));
+			}
+			
+			try{
+				getPeopleBaseService().deleteSpouseFromPerson(marriage);
+				
+				return new ModelAndView("response/OK", model);
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("response/KO", model);
+			}
 		}
 	}
 

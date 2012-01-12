@@ -153,6 +153,13 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param marriage
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteSpouseFromPerson(Marriage marriage) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param poLink
 	 * @throws ApplicationThrowable
 	 */

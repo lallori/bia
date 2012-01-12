@@ -27,8 +27,8 @@
  */
 package org.medici.docsources.validator.peoplebase;
 
-import org.medici.docsources.command.peoplebase.DeleteNamePersonCommand;
-import org.medici.docsources.domain.AltName;
+import org.medici.docsources.command.peoplebase.DeleteSpousePersonCommand;
+import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ public class DeleteSpousePersonValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(DeleteNamePersonCommand.class);
+		return givenClass.equals(DeleteSpousePersonCommand.class);
 	}
 
 	/**
@@ -82,8 +82,8 @@ public class DeleteSpousePersonValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		DeleteNamePersonCommand deleteNamePersonCommand = (DeleteNamePersonCommand) object;
-		validateName(deleteNamePersonCommand.getNameId(), deleteNamePersonCommand.getPersonId(), errors);
+		DeleteSpousePersonCommand deleteSpousePersonCommand = (DeleteSpousePersonCommand) object;
+		validateMarriage(deleteSpousePersonCommand.getMarriageId(), deleteSpousePersonCommand.getPersonId(), errors);
 	}
 
 	/**
@@ -92,17 +92,17 @@ public class DeleteSpousePersonValidator implements Validator {
 	 * @param personId
 	 * @param errors
 	 */
-	public void validateName(Integer nameId, Integer personId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nameId", "error.nameId.null");
+	public void validateMarriage(Integer marriageId, Integer personId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "marriageId", "error.marriageId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				AltName altName = getPeopleBaseService().findAltNamePerson(personId, nameId); 
-				if (altName == null) {
-					errors.reject("nameId", "error.nameId.notfound");
+				Marriage marriage = getPeopleBaseService().findMarriagePerson(marriageId, personId); 
+				if (marriage == null) {
+					errors.reject("marriageId", "error.marriageId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
-				errors.reject("nameId", "error.nameId.notfound");
+				errors.reject("marriageId", "error.marriageId.notfound");
 			}
 		}
 	}

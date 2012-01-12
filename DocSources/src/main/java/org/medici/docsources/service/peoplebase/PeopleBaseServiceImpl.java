@@ -481,6 +481,27 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		
 		return personToDelete;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void deleteSpouseFromPerson(Marriage marriage) throws ApplicationThrowable {
+		try{
+			Marriage marriageToDelete = getMarriageDAO().find(marriage.getMarriageId());
+			
+			getMarriageDAO().remove(marriageToDelete);
+			
+			getPeopleDAO().merge(getPeopleDAO().find(marriageToDelete.getHusband().getPersonId()));
+			getPeopleDAO().merge(getPeopleDAO().find(marriageToDelete.getWife().getPersonId()));
+			
+			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Delete spouse", Action.M, marriageToDelete.getHusband()));
+			
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
