@@ -1426,7 +1426,7 @@ var IIP = new Class({
 				}.pass(this.source)
 			}
 		});
-		toolbar.store('tip:text', '* Click and Drag to move<br/><br/>* Double Click to show/hide navigation buttons');
+		toolbar.store('tip:text', '* Click and Drag to move<br/><br/>* Double Click to show/hide navigation buttons<br/>* Press h to hide the whole window');
 		toolbar.inject(navcontainer);
 
 		// Create our navigation div and inject it inside our frame if
