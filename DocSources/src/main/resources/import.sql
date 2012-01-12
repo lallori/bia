@@ -237,11 +237,15 @@ update docsources.tblVolumes set logicalDelete=0;
 -- Set Digitized information on volumes to false
 update docsources.tblVolumes set digitized=0;
 -- These 2 updates will set rights digitized. MySQL does not allow to UPDATE or DELETE a table's data if you're simultaneously reading that same data with a subquery, so we use a temporary c1 view 
-update tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt is null) as c1);
-update tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt = b.volLetExt) as c1);
+update docsources.tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt is null) as c1);
+update docsources.tblVolumes set digitized=true where summaryId in (select summaryId from (select distinct(summaryId) from tblImages a, tblVolumes b where a.volNum = b.volnum and a.volLetExt = b.volLetExt) as c1);
 
 -- Adjusting missedNumbering in table Images
-update tblImages set missedNumbering = substr(imageName,12,3) where length(imageName)>16;
+update docsources.tblImages set missedNumbering = substr(imageName,12,3) where length(imageName)>16;
+
+-- Adjusting active fields in People to permit use of projection with Hibernate-Search
+update docsources.tblPeople set activeStart = null where activeStart = '';
+update docsources.tblPeople set activeEnd = null where activeEnd = '';
 
 -- COUNTRY DATA ENTRY (Table schema is based on ISO standard 3166 code lists http://www.iso.org/iso/list-en1-semic-3.txt)
 INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');

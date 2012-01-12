@@ -302,6 +302,19 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			} else {
 				person.setDeathPlace(null);
 			}
+
+			if (ObjectUtils.toString(person.getActiveStart()).equals("")){
+				person.setActiveStart(null);
+			} else {
+				person.setActiveStart(person.getActiveStart());
+			}
+
+			if (ObjectUtils.toString(person.getActiveEnd()).equals("")){
+				person.setActiveEnd(null);
+			} else {
+				person.setActiveEnd(person.getActiveEnd());
+			}
+
 			person.setLogicalDelete(Boolean.FALSE);
 
 			getPeopleDAO().persist(person);
@@ -590,8 +603,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			}else {
 				personToUpdate.setBornPlace(null);
 			}
-			personToUpdate.setActiveStart(person.getActiveStart());
 			personToUpdate.setBornPlaceUnsure(person.getBornPlaceUnsure());
+			
+			if (ObjectUtils.toString(person.getActiveStart()).equals("")){
+				personToUpdate.setActiveStart(null);
+			} else {
+				personToUpdate.setActiveStart(person.getActiveStart());
+			}
 
 			// Death Information
 			personToUpdate.setDeathYear(person.getDeathYear());
@@ -612,8 +630,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			} else {
 				personToUpdate.setDeathPlace(null);
 			}
-			personToUpdate.setActiveEnd(person.getActiveEnd());
 			personToUpdate.setDeathPlaceUnsure(person.getDeathPlaceUnsure());
+
+			if (ObjectUtils.toString(person.getActiveEnd()).equals("")){
+				personToUpdate.setActiveEnd(null);
+			} else {
+				personToUpdate.setActiveEnd(person.getActiveEnd());
+			}
 
 			getPeopleDAO().merge(personToUpdate);
 
