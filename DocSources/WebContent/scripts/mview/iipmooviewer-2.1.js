@@ -1084,8 +1084,8 @@ var IIP = new Class({
 							<li>To show / hide navigation buttons: double click navigation window toolbar</li>\
 							<li>To resize to full screen: press the "f" key<li>To highlight any annotations: press the "a" key</li>\
 							<li>To rotate image clockwise: press the "r" key, anti-clockwise: press shift and "r"</li>\
-							</ul><br/>For more information visit:<ul><li> <a href="http://iipimage.sourceforge.net">http://iipimage.sourceforge.net</a></li>\
-							<li><a href="http://www.medici.org">http://www.medici.org</a></li></div></div>'
+							</ul><br/>For more information visit:<a href="http://iipimage.sourceforge.net">http://iipimage.sourceforge.net</a> and\
+							<a href="http://www.medici.org">http://www.medici.org</a></div></div>'
 				}).inject(container);
 
 		// Use a lexical closure rather than binding to pass this to
@@ -1437,8 +1437,8 @@ var IIP = new Class({
 			}
 		});
 		// MEDICI ARCHIVE PROJECT START
-		toolbar.store('tip:text', '<ul><li>- Click and Drag to move</li>\
-										<li>- Press h to hide the whole window</li>');
+		toolbar.store('tip:text', '<ul><li>Click and Drag to move</li>\
+										<li>Press "h" key to hide this nav window</li>');
 		toolbar.inject(navcontainer);
 		// MEDICI ARCHIVE PROJECT END
 
