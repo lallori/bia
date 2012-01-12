@@ -135,6 +135,6 @@ public class LogDAOAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 */
 	private void appendThrowable(StringBuffer stringBuffer, Throwable throwable) {
 		stringBuffer.append(" - Exception : ");
-		stringBuffer.append(throwable.toString());
+		stringBuffer.append(throwable.getStackTrace());
 	}
 }
