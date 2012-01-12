@@ -544,16 +544,16 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
-			paginationFilter.addSortingCriteria("placeNameFull_Sort", "DESC");
+//			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
+//			paginationFilter.addSortingCriteria("placeNameFull_Sort", "DESC");
 
-			Page page = getSearchService().searchPlaces(new SimpleSearchPlace(query), paginationFilter);
+			List<Place> places = getSearchService().searchPlaces(query);
 			model.put("query", query);
-			model.put("count", page.getTotal());
-			model.put("data", ListBeanUtils.transformList(page.getList(), "placeAllId"));
-			model.put("suggestions", ListBeanUtils.transformList(page.getList(), "placeNameFull"));
-			model.put("prefFlags", ListBeanUtils.transformList(page.getList(), "prefFlag"));
-			model.put("plTypes", ListBeanUtils.transformList(page.getList(), "plType"));
+			model.put("count", places.size());
+			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
+			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
+			model.put("prefFlags", ListBeanUtils.transformList(places, "prefFlag"));
+			model.put("plTypes", ListBeanUtils.transformList(places, "plType"));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
