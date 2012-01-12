@@ -102,7 +102,7 @@
 			});
 
 			$j("#EditMotherPersonForm").submit(function (){
-				if($j("#gender").val() != 'F'){
+				if($j("#gender").val() == 'M' || $j("#gender").val() == 'X'){
 					$j('#EditParentPersonDiv').block({ message: $j('.differentGender') });
 					return false;
 				}else{

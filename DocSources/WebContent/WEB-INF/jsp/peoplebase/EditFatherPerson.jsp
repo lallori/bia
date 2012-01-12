@@ -71,6 +71,7 @@
 			$j("#bornMonth, #bornYear, #bornDay").attr("disabled", "disabled");
 			$j("#deathMonth, #deathYear, #deathDay").attr("disabled", "disabled");
 			
+						
 			var fatherDescription = $j('#fatherAutocompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchFatherLinkableToPersonURL}',
 			    minChars:3, 
@@ -102,7 +103,7 @@
 			});
 			
 			$j("#EditFatherPersonForm").submit(function (){
-				if($j("#gender").val() != 'M'){
+				if($j("#gender").val() == 'F' || $j("#gender").val() == 'X'){
 					$j('#EditParentPersonDiv').block({ message: $j('.differentGender') });
 					return false;
 				}else{
