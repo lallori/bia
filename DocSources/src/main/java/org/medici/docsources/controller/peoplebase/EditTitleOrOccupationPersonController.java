@@ -97,7 +97,7 @@ public class EditTitleOrOccupationPersonController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			PoLink poLink = new PoLink(command.getPrfLinkId());
-			poLink.setTitleOcc(new TitleOccsList(command.getTitleOccId()));
+			poLink.setTitleOcc(new TitleOccsList(command.getTitleOccIdNew()));
 			poLink.setPerson(new People(command.getPersonId()));
 			poLink.setPreferredRole(command.getPreferredRole());
 			poLink.setStartYear(command.getStartYear());
@@ -153,7 +153,7 @@ public class EditTitleOrOccupationPersonController {
 
 			if (command.getPrfLinkId().equals(0)) {
 				
-				command.setTitleOccId(null);
+				command.setTitleOccIdNew(null);
 				command.setTitleOrOccupationDescription(null);
 				command.setStartYear(null);
 				command.setStartMonthNum(null);
@@ -168,7 +168,7 @@ public class EditTitleOrOccupationPersonController {
 
 					if (poLink.getTitleOccList() != null) {
 						command.setTitleOrOccupationDescription(poLink.getTitleOccList().getTitleOcc());
-						command.setTitleOccId(poLink.getTitleOccList().getTitleOccId());
+						command.setTitleOccIdNew(poLink.getTitleOccList().getTitleOccId());
 						command.setPreferredRole(poLink.getPreferredRole());
 						command.setStartYear(poLink.getStartYear());
 						if (poLink.getStartMonthNum() != null) {

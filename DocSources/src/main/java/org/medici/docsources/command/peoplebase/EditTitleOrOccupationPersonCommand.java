@@ -37,7 +37,7 @@ package org.medici.docsources.command.peoplebase;
 public class EditTitleOrOccupationPersonCommand {
 	private Integer prfLinkId;
 	private Integer personId;
-	private Integer titleOccId;
+	private Integer titleOccIdNew;
 	private String titleOrOccupationDescription;
 	private Boolean preferredRole;
 	private Integer startDay;
@@ -82,15 +82,15 @@ public class EditTitleOrOccupationPersonCommand {
 	/**
 	 * @return the titleOccId
 	 */
-	public Integer getTitleOccId() {
-		return titleOccId;
+	public Integer getTitleOccIdNew() {
+		return titleOccIdNew;
 	}
 	
 	/**
 	 * @param titleOccId the titleOccId to set
 	 */
-	public void setTitleOccId(Integer titleOccId) {
-		this.titleOccId = titleOccId;
+	public void setTitleOccIdNew(Integer titleOccIdNew) {
+		this.titleOccIdNew = titleOccIdNew;
 	}
 	
 	/**

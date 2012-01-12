@@ -62,7 +62,7 @@
 				<form:checkbox path="endUns" cssClass="checkboxPers3" id="endUns1"/>
 			</div>
 			
-			<form:hidden path="titleOccId" />
+			<form:hidden path="titleOccIdNew" />
 			<form:hidden path="personId" />
 			<form:hidden path="prfLinkId" />
 			
@@ -89,7 +89,7 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#titleOccId').val(data); }
+			    onSelect: function(value, data){ $j('#titleOccIdNew').val(data); }
 			});
 
 			$j('#closeTitle').click(function() {
