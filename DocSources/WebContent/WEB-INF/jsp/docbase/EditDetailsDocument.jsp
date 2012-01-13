@@ -9,7 +9,7 @@
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
-	
+	<div id="loadingDiv"></div>
 	<c:url var="editDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do"/>
 	
 	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentURL}" method="post" cssClass="edit">
@@ -281,6 +281,11 @@
 				}});
 				return false;
 			});
+			
+			$j("#save").click(function(){
+				$j("#loadingDiv").css('visibility', 'visible');
+					return false;
+				});
 
 	        $j('#close').click(function() {
 	        	if($j("#modify").val() == 1){
@@ -353,6 +358,6 @@
 				
 			return false; 
 		}); 
-     
+     	
 	});
 </script>
