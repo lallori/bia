@@ -9,10 +9,11 @@
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
-	<div id="loadingDiv"></div>
+	
 	<c:url var="editDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do"/>
 	
 	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentURL}" method="post" cssClass="edit">
+		<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>DOCUMENT DETAILS</b></legend>
 			<div>
@@ -117,6 +118,11 @@
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
+	        
+	        $j("#save").click(function(){
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        	$j("#loadingDiv").css('height', $j("#EditDetailsDocumentDiv").attr("height"));
+				});
 	        
 	        $j("#EditDetailsDocumentForm :input").change(function(){
 				$j("#modify").val(1); //set the hidden field if an element is modified
@@ -282,10 +288,7 @@
 				return false;
 			});
 			
-			$j("#save").click(function(){
-				$j("#loadingDiv").css('visibility', 'visible');
-					return false;
-				});
+			
 
 	        $j('#close').click(function() {
 	        	if($j("#modify").val() == 1){
