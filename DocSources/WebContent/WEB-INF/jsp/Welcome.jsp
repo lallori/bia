@@ -10,12 +10,11 @@
 			<ul>
 				<li>you have <b>23</b> new messages</li>
 	
-				<li><b>1</b> new digitized volume has been uploaded</li>
+				<li><b>1</b> new volumes have been entered</li>
 				<li><b>12</b> new documents have been entered</li>
-				<li><b>13</b> documents have been vetted</li>
-				<li><b>15</b> new people have been entered</li>
+				<li><b>1</b> new people have been entered</li>
+				<li><b>1</b>  new places and/or locations have been entered</li>
 	
-				<li><b>5</b> new places and/or locations have been entered</li>
 			</ul>				
 	</div>
 	
