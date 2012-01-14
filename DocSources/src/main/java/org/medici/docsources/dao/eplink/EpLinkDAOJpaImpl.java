@@ -72,18 +72,6 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings({ "unchecked" })
-	@Override
-	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("from EpLink where document.entryId=:entryId");
-		query.setParameter("entryId", entryId);
-		
-		return query.getResultList();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public EpLink find(Integer epLinkId, Integer entryId) throws PersistenceException {
@@ -102,6 +90,37 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings({ "unchecked" })
+	@Override
+	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from EpLink where document.entryId=:entryId");
+		query.setParameter("entryId", entryId);
+		
+		return query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public EpLink findByEntryIdAndPersonId(Integer entryId, Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("from EpLink where document.entryId=:entryId AND person.personId=:personId");
+		query.setParameter("entryId", entryId);
+		query.setParameter("personId", personId);
+		
+		List<EpLink> result = (List<EpLink>) query.getResultList();
+
+		if (result.size() == 1) {
+			return result.get(0);
+		}
+
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public EpLink findByEntryIdAndRole(Integer entryId, String docRole)	throws PersistenceException {
@@ -116,7 +135,7 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 			return result.get(0);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

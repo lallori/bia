@@ -42,6 +42,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
@@ -255,4 +256,24 @@ public class EpLink implements Serializable{
 		return true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer("");
+
+		if (!ObjectUtils.toString(getPerson()).equals("")) {
+			stringBuffer.append(getPerson());
+		}
+
+		if (getAssignUnsure()) {
+			stringBuffer.append(" [unsure]");
+		}
+		if (getPortrait()) {
+			stringBuffer.append(" [portrait]");
+		}
+		
+		return stringBuffer.toString();
+	}
 }

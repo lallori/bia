@@ -44,16 +44,6 @@ import org.medici.docsources.domain.EpLink;
 public interface EpLinkDAO extends Dao<Integer, EpLink> {
 
 	/**
-	 * This method searches every people linked to a document identified by
-	 * his entryId.
-	 * 
-	 * @param entryId Document identifier.
-	 * @return List of people found
-	 * @throws PersistenceException
-	 */
-	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException;
-
-	/**
 	 * This method searches a person linked to a document identified by his entryId
 	 * and by a document identifier.
 	 * 
@@ -63,6 +53,25 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @throws PersistenceException
 	 */
 	public EpLink find(Integer epLinkId, Integer entryId) throws PersistenceException;
+
+	/**
+	 * This method searches every people linked to a document identified by
+	 * his entryId.
+	 * 
+	 * @param entryId Document identifier.
+	 * @return List of people found
+	 * @throws PersistenceException
+	 */
+	public List<EpLink> findByEntryId(Integer entryId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param entryId
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public EpLink findByEntryIdAndPersonId(Integer entryId, Integer personId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -80,7 +89,7 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @throws PersistenceException
 	 */
 	public Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param personIds
