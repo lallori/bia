@@ -237,28 +237,16 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShareDocument.jsp"/>	
 	</definition>
 
+	<definition name="docbase/ShowConfirmDeleteDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowConfirmDeleteDocument.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowConfirmUndeleteDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowConfirmUndeleteDocument.jsp"/>
+	</definition>
+
 	<definition name="docbase/ShowCorrespondentsOrPeopleDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
-	</definition>
-	
-	<definition name="docbase/ShowDetailsDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
-	</definition>
-	
-	<definition name="docbase/ShowFactCheckDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
-	</definition>
-	
-	<definition name="docbase/ShowExtractOrSynopsisDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
-	</definition>
-	
-	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
-	</definition>
-	
-	<definition name="docbase/ShowTopicDescriptionModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicDescriptionModalWindow.jsp"/>
 	</definition>
 	
 	<definition name="docbase/ShowDocument" extends="template.document">
@@ -270,6 +258,10 @@
 		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
 	</definition>
 	
+	<definition name="docbase/ShowDetailsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
+	</definition>
+	
 	<definition name="docbase/ShowExplorerDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExplorerDocument.jsp"/>
 	</definition>
@@ -278,6 +270,26 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExplorerDocumentModalWindow.jsp"/>
 	</definition>
 
+	<definition name="docbase/ShowExtractOrSynopsisDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowFactCheckDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowMenuActionsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuActionsDocument.jsp"/>
+	</definition>
+
+	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowTopicDescriptionModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicDescriptionModalWindow.jsp"/>
+	</definition>
+	
 	<definition name="docbase/ShowVettingChronologyDocumentModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowVettingChronologyDocumentModalWindow.jsp"/>
 	</definition>
@@ -337,6 +349,18 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/SharePlace.jsp"/>	
 	</definition>
 	
+	<definition name="geobase/ShowConfirmDeletePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowConfirmDeletePlace.jsp"/>
+	</definition>
+
+	<definition name="geobase/ShowConfirmUndeletePlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowConfirmUndeletePlace.jsp"/>
+	</definition>
+
+	<definition name="geobase/ShowMenuActionsPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowMenuActionsPlace.jsp"/>
+	</definition>
+
 	<definition name="geobase/ShowPlace" extends="template.place">
 		<put-attribute name="menu" value="/WEB-INF/jsp/geobase/ShowMenuPlace.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
@@ -502,6 +526,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/ShowConfirmDeletePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowConfirmDeletePerson.jsp"/>
+	</definition>
+
+	<definition name="peoplebase/ShowConfirmUndeletePerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowConfirmUndeletePerson.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/ShowDetailsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowDetailsPerson.jsp"/>
 	</definition>
@@ -516,6 +548,10 @@
 
 	<definition name="peoplebase/SharePerson" extends="template.shareDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/SharePerson.jsp"/>	
+	</definition>
+
+	<definition name="peoplebase/ShowMenuActionsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowMenuActionsPerson.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">
@@ -643,6 +679,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowContextVolume.jsp"/>
 	</definition>
 
+	<definition name="volbase/ShowConfirmDeleteVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowConfirmDeleteVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowConfirmUndeleteVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowConfirmUndeleteVolume.jsp"/>
+	</definition>
+
 	<definition name="volbase/ShowCorrespondentsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowCorrespondentsVolume.jsp"/>
 	</definition>
@@ -661,6 +705,10 @@
 
 	<definition name="volbase/ShowExplorerVolumeModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolumeModalWindow.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowMenuActionsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowMenuActionsVolume.jsp"/>
 	</definition>
 
 	<definition name="volbase/ShowVolume" extends="template.volume">

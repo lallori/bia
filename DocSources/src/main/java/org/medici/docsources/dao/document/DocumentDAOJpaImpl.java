@@ -103,6 +103,17 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Long countDocumentsLinkedToAVolume(Integer summaryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE volume.summaryId =:summaryId");
+		query.setParameter("summaryIdId", summaryId);
+		
+		return (Long) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
 		StringBuffer stringBuffer = new StringBuffer("FROM Document WHERE volume.volNum=" + volNum);
 		if(ObjectUtils.toString(volLetExt).equals("")){
@@ -138,7 +149,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
 		return this.findDocument(volNum, volLetExt, folioNum, folioMod);
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -149,7 +160,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 
         return (Document) query.getSingleResult();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -173,6 +184,35 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
+
+	/**
+	 * 
+	 * @param entity
+	 * @throws PersistenceException
+	 */
+	/*public void persist(Document document) throws PersistenceException {
+		Transaction tx = null;
+		EntityManager entityManager = getEntityManager();
+	    entityManager.persist(document);
+
+	    try {
+			Session session = ((HibernateEntityManager) entityManager).getSession();
+			//session = session.getSessionFactory().openSession();
+			FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+		    tx = fullTextSession.beginTransaction();
+		    fullTextSession.index(document);
+		    tx.commit();
+	    }catch (Throwable th) {
+	    	if (tx != null) {
+	    		if (tx.isActive()) {
+	    			tx.rollback();
+	    		}
+	    	}
+	    } finally{
+	    	
+	    }
+
+	}*/
 
 	/**
 	 * 
@@ -251,35 +291,6 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	        }
 		}
 	}
-
-	/**
-	 * 
-	 * @param entity
-	 * @throws PersistenceException
-	 */
-	/*public void persist(Document document) throws PersistenceException {
-		Transaction tx = null;
-		EntityManager entityManager = getEntityManager();
-	    entityManager.persist(document);
-
-	    try {
-			Session session = ((HibernateEntityManager) entityManager).getSession();
-			//session = session.getSessionFactory().openSession();
-			FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
-		    tx = fullTextSession.beginTransaction();
-		    fullTextSession.index(document);
-		    tx.commit();
-	    }catch (Throwable th) {
-	    	if (tx != null) {
-	    		if (tx.isActive()) {
-	    			tx.rollback();
-	    		}
-	    	}
-	    } finally{
-	    	
-	    }
-
-	}*/
 
 	/**
 	 * 

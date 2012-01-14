@@ -77,6 +77,8 @@ public class AdvancedSearchCommand {
 	private List<String> roleCategory;
 	private List<String> occupation;
 
+	private Boolean logicalDelete;
+
 	/**
 	 * 
 	 */
@@ -561,5 +563,19 @@ public class AdvancedSearchCommand {
 	 */
 	public List<String> getRoleCategory() {
 		return roleCategory;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 }

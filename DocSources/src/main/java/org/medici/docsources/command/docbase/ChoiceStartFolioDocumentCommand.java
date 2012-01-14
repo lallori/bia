@@ -1,5 +1,5 @@
 /*
- * ShowExplorerVolumeRequestCommand.java
+ * ChoiceStartFolioDocumentCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 

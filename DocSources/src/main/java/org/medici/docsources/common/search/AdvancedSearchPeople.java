@@ -74,6 +74,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<Integer> titlesOccId;
 	private List<String> words;
 	private List<WordType> wordsTypes;
+	private Boolean logicalDelete;
 
 	/**
 	 * Default constructor.
@@ -97,6 +98,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		roleCategories = new ArrayList<String>(0);
 		titlesOcc = new ArrayList<String>(0);
 		titlesOccId = new ArrayList<Integer>(0);
+		logicalDelete = Boolean.FALSE;
 	}
 
 	/**
@@ -499,6 +501,20 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public void setWordsTypes(List<WordType> wordsTypes) {
 		this.wordsTypes = wordsTypes;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 	/**

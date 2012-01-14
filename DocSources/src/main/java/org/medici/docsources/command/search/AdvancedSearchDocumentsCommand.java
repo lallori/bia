@@ -53,6 +53,7 @@ public class AdvancedSearchDocumentsCommand {
 	private List<String> recipient;
 	private List<String> to;
 	private List<String> refersTo;
+	private Boolean logicalDelete;
 	private String searchUUID;
 	
 	/**
@@ -277,5 +278,19 @@ public class AdvancedSearchDocumentsCommand {
 	 */
 	public String getSearchUUID() {
 		return searchUUID;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 }

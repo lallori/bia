@@ -1,5 +1,5 @@
 /*
- * DeletePersonDocumentValidator.java
+ * DeletePersonValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,57 +25,51 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.validator.docbase;
+package org.medici.docsources.validator.peoplebase;
 
-import java.util.Set;
-
-import org.medici.docsources.command.docbase.DeletePersonDocumentCommand;
-import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.command.peoplebase.DeletePersonCommand;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Delete Person Document".
+ * Validator bean for action "Delete Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class DeletePersonDocumentValidator implements Validator {
+public class DeletePersonValidator implements Validator {
 	@Autowired
-	private DocBaseService docBaseService;
+	private PeopleBaseService peopleBaseService;
 
 	/**
-	 * x
-	 * 
-	 * @return
+	 * @param peopleBaseService the peopleBaseService to set
 	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
 	}
 
 	/**
-	 * 
-	 * @param docBaseService
+	 * @return the peopleBaseService
 	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
 	}
 
-	/**
+		/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only DeletePersonDocumentCommand.
+	 * validator supports only ModifyDocumentCommand.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(DeletePersonDocumentCommand.class);
+		return givenClass.equals(DeletePersonCommand.class);
 	}
 
 	/**
@@ -88,8 +82,8 @@ public class DeletePersonDocumentValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		DeletePersonDocumentCommand deletePersonDocumentCommand = (DeletePersonDocumentCommand) object;
-		validateEpLink(deletePersonDocumentCommand.getEpLinkId(), deletePersonDocumentCommand.getEntryId(), errors);
+		DeletePersonCommand deletePersonCommand = (DeletePersonCommand) object;
+		validateDeleteOperation(deletePersonCommand.getPersonId(), errors);
 	}
 
 	/**
@@ -97,24 +91,20 @@ public class DeletePersonDocumentValidator implements Validator {
 	 * @param documentId
 	 * @param errors
 	 */
-	public void validateEpLink(Integer epLinkId, Integer entryId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "epLinkId", "error.epLinkId.null");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
+	public void validateDeleteOperation(Integer personId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
 
 		if (!errors.hasErrors()) {
 			try {
-				Document document = getDocBaseService().findDocument(entryId); 
-				if (document == null) {
-					errors.reject("entryId", "error.entryId.notfound");
+				People person = getPeopleBaseService().findPerson(personId); 
+				if (person == null) {
+					errors.reject("personId", "error.personId.notfound");
 				} else {
-					Set<EpLink> linkedPeople = document.getEpLink();
-					
-					if (linkedPeople == null) {
-						errors.reject("epLinkId", "error.epLinkId.notfound");
+					if (person.getRecipientDocuments().size()>0) {
+						errors.reject("recipientDocuments", "error.recipientDocuments.found");
 					}
-
-					if (!linkedPeople.contains(new EpLink(epLinkId))) {
-						errors.reject("epLinkId", "error.epLinkId.notfound");
+					if (person.getSenderDocuments().size()>0) {
+						errors.reject("recipientDocuments", "error.recipientDocuments.found");
 					}
 				}
 			} catch (ApplicationThrowable ath) {

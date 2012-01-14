@@ -39,6 +39,7 @@ import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.dao.catalog.CatalogDAO;
+import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
@@ -74,6 +75,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
 	private CatalogDAO catalogDAO;
+	@Autowired
+	private DocumentDAO documetDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	@Autowired
@@ -197,6 +200,24 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public boolean checkVolumeHasLinkedDocuments(Integer summaryId) throws ApplicationThrowable {
+		Boolean linkedDocuments = Boolean.FALSE;
+		try {
+			Long count = getDocumetDAO().countDocumentsLinkedToAVolume(summaryId);
+			if (count>0 ) {
+				linkedDocuments = Boolean.TRUE;
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		return linkedDocuments;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public Volume deleteVolume(Integer summaryId) throws ApplicationThrowable {
@@ -219,7 +240,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		return volumeToDelete;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -245,7 +266,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 		return volumeToUpdate;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -435,7 +456,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -448,7 +469,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-	
+
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -461,8 +483,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -484,19 +505,26 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 	
 	/**
+	 * @return the documetDAO
+	 */
+	public DocumentDAO getDocumetDAO() {
+		return documetDAO;
+	}
+	
+	/**
 	 * @return the imageDAO
 	 */
 	public ImageDAO getImageDAO() {
 		return imageDAO;
 	}
-	
+
 	/**
 	 * @return the monthDAO
 	 */
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -526,7 +554,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public UserHistoryVolumeDAO getUserHistoryVolumeDAO() {
 		return userHistoryVolumeDAO;
 	}
-
+	
 	/**
 	 * @return the volumeDAO
 	 */
@@ -557,7 +585,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -585,6 +614,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 		
 	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -632,6 +662,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 
 	/**
+	 * @param documetDAO the documetDAO to set
+	 */
+	public void setDocumetDAO(DocumentDAO documetDAO) {
+		this.documetDAO = documetDAO;
+	}
+
+
+	/**
 	 * @param imageDAO the imageDAO to set
 	 */
 	public void setImageDAO(ImageDAO imageDAO) {
@@ -646,14 +684,12 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.monthDAO = monthDAO;
 	}
 
-
 	/**
 	 * @param seriesListDAO the seriesListDAO to set
 	 */
 	public void setSeriesListDAO(SeriesListDAO seriesListDAO) {
 		this.seriesListDAO = seriesListDAO;
 	}
-
 
 	/**
 	 * @param userHistoryVolumeDAO the userHistoryVolumeDAO to set
@@ -669,6 +705,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -695,6 +732,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		return volumeToUnDelete;
 	}
+
 
 	/**
 	 * {@inheritDoc}

@@ -5,6 +5,10 @@
        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
 	<!-- Document base Validator -->
+	<bean id="deleteDocumentValidator" class="org.medici.docsources.validator.docbase.DeleteDocumentValidator">
+        <description>Delete a Document Validator.</description>
+	</bean>
+
 	<bean id="deletePersonDocumentValidator" class="org.medici.docsources.validator.docbase.DeletePersonDocumentValidator">
         <description>Delete Linked People to a Document Validator.</description>
 	</bean>
@@ -55,6 +59,10 @@
 	</bean>
 	
 	<!-- Geo base Validators -->
+	<bean id="deletePlaceValidator" class="org.medici.docsources.validator.geobase.DeletePlaceValidator">
+        <description>Delete a Place Validator.</description>
+	</bean>
+
 	<bean id="deleteExternalLinkPlaceValidator" class="org.medici.docsources.validator.geobase.DeleteExternalLinkPlaceValidator">
 		<description>Delete External Link Place Validator.</description>
 	</bean>
@@ -94,6 +102,10 @@
 
 	<bean id="deleteNamePersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteNamePersonValidator">
         <description>Delete Name Person Validator.</description>
+	</bean>
+
+	<bean id="deletePersonValidator" class="org.medici.docsources.validator.peoplebase.DeletePersonValidator">
+        <description>Delete a Person Validator.</description>
 	</bean>
 
 	<bean id="deleteSpousePersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteSpousePersonValidator">
@@ -137,6 +149,10 @@
 	</bean>
 
 	<!-- Volume base Validators-->
+	<bean id="deleteVolumeValidator" class="org.medici.docsources.validator.volbase.DeleteVolumeValidator">
+        <description>Delete a Volume Validator.</description>
+	</bean>
+
 	<bean id="editContextVolumeValidator" class="org.medici.docsources.validator.volbase.EditContextVolumeValidator">
         <description>Edit Context Volume Validator.</description> 
 	</bean>

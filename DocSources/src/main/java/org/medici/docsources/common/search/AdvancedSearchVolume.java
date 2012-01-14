@@ -81,6 +81,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<String> toVolume;
 	private List<String> context;
 	private List<String> inventario;
+	private Boolean logicalDelete;
 
 	/**
 	 * @return the digitized
@@ -195,6 +196,20 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
 	 * 
 	 */
 	public AdvancedSearchVolume() {
@@ -220,6 +235,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		toVolume = new ArrayList<String>(0);
 		context = new ArrayList<String>(0);
 		inventario = new ArrayList<String>(0);
+		logicalDelete = Boolean.FALSE;
 	}
 	
 	/**

@@ -89,6 +89,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<VolumeType> volumesTypes;
 	private List<String> words;
 	private List<WordType> wordsTypes;
+	private Boolean logicalDelete;
 
 	/**
 	 * 
@@ -126,6 +127,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
+		logicalDelete = Boolean.FALSE;
 	}
 
 	/**
@@ -986,6 +988,20 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	public void setWordsTypes(List<WordType> wordsTypes) {
 		this.wordsTypes = wordsTypes;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 	/**

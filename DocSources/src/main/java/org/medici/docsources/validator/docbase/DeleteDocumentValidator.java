@@ -1,5 +1,5 @@
 /*
- * DeletePersonDocumentValidator.java
+ * DeletePersonValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,11 +27,8 @@
  */
 package org.medici.docsources.validator.docbase;
 
-import java.util.Set;
-
-import org.medici.docsources.command.docbase.DeletePersonDocumentCommand;
+import org.medici.docsources.command.docbase.DeleteDocumentCommand;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +37,12 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Delete Person Document".
+ * Validator bean for action "Delete Document".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class DeletePersonDocumentValidator implements Validator {
+public class DeleteDocumentValidator implements Validator {
 	@Autowired
 	private DocBaseService docBaseService;
 
@@ -68,14 +65,14 @@ public class DeletePersonDocumentValidator implements Validator {
 
 	/**
 	 * Indicates whether the given class is supported by this converter. This
-	 * validator supports only DeletePersonDocumentCommand.
+	 * validator supports only DeleteDocumentCommand.
 	 * 
 	 * @param givenClass the class to test for support
 	 * @return true if supported; false otherwise
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(DeletePersonDocumentCommand.class);
+		return givenClass.equals(DeleteDocumentCommand.class);
 	}
 
 	/**
@@ -88,8 +85,8 @@ public class DeletePersonDocumentValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		DeletePersonDocumentCommand deletePersonDocumentCommand = (DeletePersonDocumentCommand) object;
-		validateEpLink(deletePersonDocumentCommand.getEpLinkId(), deletePersonDocumentCommand.getEntryId(), errors);
+		DeleteDocumentCommand deleteDocumentCommand = (DeleteDocumentCommand) object;
+		validateDeleteOperation(deleteDocumentCommand.getEntryId(), errors);
 	}
 
 	/**
@@ -97,8 +94,7 @@ public class DeletePersonDocumentValidator implements Validator {
 	 * @param documentId
 	 * @param errors
 	 */
-	public void validateEpLink(Integer epLinkId, Integer entryId, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "epLinkId", "error.epLinkId.null");
+	public void validateDeleteOperation(Integer entryId, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "entryId", "error.entryId.null");
 
 		if (!errors.hasErrors()) {
@@ -107,14 +103,8 @@ public class DeletePersonDocumentValidator implements Validator {
 				if (document == null) {
 					errors.reject("entryId", "error.entryId.notfound");
 				} else {
-					Set<EpLink> linkedPeople = document.getEpLink();
-					
-					if (linkedPeople == null) {
-						errors.reject("epLinkId", "error.epLinkId.notfound");
-					}
-
-					if (!linkedPeople.contains(new EpLink(epLinkId))) {
-						errors.reject("epLinkId", "error.epLinkId.notfound");
+					if (document.getEpLink().size()>0) {
+						errors.reject("epLinkId", "error.epLink.found");
 					}
 				}
 			} catch (ApplicationThrowable ath) {

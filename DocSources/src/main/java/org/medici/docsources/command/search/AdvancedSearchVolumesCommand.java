@@ -49,6 +49,7 @@ public class AdvancedSearchVolumesCommand {
 	private List<String> inventario;
 	private String cipher;
 	private String index;
+	private Boolean logicalDelete;
 	
 	/**
 	 * @return the idSearchFilter
@@ -193,6 +194,22 @@ public class AdvancedSearchVolumesCommand {
 	 */
 	public void setIndex(String index) {
 		this.index = index;
+	}
+
+	/**
+	 * 
+	 * @param logicalDelete
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 }

@@ -89,6 +89,16 @@ public interface VolBaseService {
 	public Boolean checkVolumeDigitized(Integer volNum, String volLetExt) throws ApplicationThrowable; 
 
 	/**
+	 * This method checks if {@link org.medici.docsources.domain.Volume} identified 
+	 * by his summaryId has some linked documents.
+	 * 
+	 * @param summaryId Unique Volume Identifier
+	 * @return Boolean, true if volume has linked documents, otherwise false.
+	 * @throws ApplicationThrowable
+	 */
+	public boolean checkVolumeHasLinkedDocuments(Integer summaryId) throws ApplicationThrowable;
+	
+	/**
 	 * This method mark a volume as deleted {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param summaryId Unique Volume Identifier
@@ -97,7 +107,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume deleteVolume(Integer summaryId) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method modify context of an existing {@link org.medici.docsources.domain.Volume}.
 	 * 
@@ -133,6 +143,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable;
+	
 
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.Volume}.
@@ -142,7 +153,6 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume findLastEntryVolume() throws ApplicationThrowable;
-	
 
 	/**
 	 * This method find new digitized volumes.
@@ -226,13 +236,13 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void optimizeIndexVolume() throws ApplicationThrowable;
-	
+
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 

@@ -65,7 +65,8 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	private List<Integer> linkedToTopicsId;
 	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
-	
+	private Boolean logicalDelete;
+
 
 	/**
 	 * 
@@ -78,7 +79,7 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		linkedToTopicsId = new ArrayList<Integer>(0);
 		linkedToTopics = new ArrayList<String>(0);
 		linkedToPeople = new ArrayList<String>(0);
-		
+		logicalDelete = Boolean.FALSE;
 	}
 
 	/**
@@ -236,6 +237,20 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	 */
 	public List<String> getPlaceType() {
 		return placeType;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 	/**
