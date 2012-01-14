@@ -88,9 +88,9 @@
 				.dialog({
 					autoOpen: true,
 					resizable: false,
-					width: 605,
+					width: 800,
 					height: 110,
-					minWidth: 605,
+					minWidth: 800,
 					minHeight: 110,                                                                                                                                                         
 					title: 'PAGE TURNER',
 					position: ['right','bottom'],                                                                                                                                                       
