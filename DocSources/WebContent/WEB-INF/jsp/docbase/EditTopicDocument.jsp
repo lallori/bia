@@ -15,9 +15,9 @@
 	</c:url>
 	
 	<br>
+<!--- Loading div when saving the form -->
+<div id="loadingDiv"></div>
 	<form:form id="EditTopicDocumentForm" cssClass="edit">
-	<!--- Loading div when saving the form -->
-	<div id="loadingDiv"></div>
 		<fieldset>
 			<c:if test="${command.eplToId == 0}">  
 				<legend><b>ADD NEW TOPIC</b></legend>

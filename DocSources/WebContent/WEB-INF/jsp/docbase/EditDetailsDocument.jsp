@@ -12,10 +12,10 @@
 	
 	<c:url var="editDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do"/>
 	
+<!--- Loading div when saving the form -->
+<div id="loadingDiv"></div>
 	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentURL}" method="post" cssClass="edit">
-		<!--- Loading div when saving the form -->
-		<div id="loadingDiv"></div>
-		<fieldset>
+	<fieldset>
 			<legend><b>DOCUMENT DETAILS</b></legend>
 			<div>
 				<form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID ${command.entryId}</form:label>

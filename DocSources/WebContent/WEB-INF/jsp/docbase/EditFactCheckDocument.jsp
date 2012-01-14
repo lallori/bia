@@ -4,9 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<!--- Loading div when saving the form -->
+<div id="loadingDiv"></div>
 	<form:form id="EditFactCheckDocumentForm" method="post" cssClass="edit">
-	<!--- Loading div when saving the form -->
-	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>FACT CHECK</b></legend>
 				

@@ -14,6 +14,8 @@
 	</security:authorize>
 	<br>
 	<form:form id="EditTitleOrOccupationPersonForm" method="post" cssClass="edit">
+	<!--- Loading div when saving the form -->
+	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.prfLinkId}"> 
@@ -80,6 +82,13 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			
+			// Must create control for null field
+			//$j("#save").click(function(){
+	        //	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	       	// 	$j("#loadingDiv").css('visibility', 'visible');
+	        //});
+			
 			var titleOrOccupationDescription = $j('#titleAutocomplete').AutocompleteTitle({ 
 			    serviceUrl:'${SearchTitleOrOccupationURL}',
 			    minChars:3, 

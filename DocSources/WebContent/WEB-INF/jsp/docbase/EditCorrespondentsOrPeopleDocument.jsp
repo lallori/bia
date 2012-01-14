@@ -32,8 +32,8 @@
 			<c:param name="placeAllId" value="${command.document.recipientPlace.placeAllId}" />
 		</c:url>
 	</security:authorize>
-	<!--- Loading div when saving the form -->
-	<div id="loadingDiv"></div>
+<!--- Loading div when saving the form -->
+<div id="loadingDiv"></div>
 	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post" cssClass="edit">
 
 		<fieldset>

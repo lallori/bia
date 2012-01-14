@@ -14,6 +14,8 @@
 	</security:authorize>
 	<div>
 		<form:form id="EditDetailsPersonForm" cssClass="edit" method="post">
+		<!--- Loading div when saving the form -->
+		<div id="loadingDiv"></div>
 			<fieldset>
 			<legend><b>PERSON DETAILS</b></legend>
 				<div>
@@ -153,6 +155,11 @@
 			$j("#EditChildrenPerson").css('visibility', 'hidden');
 			$j("#EditSpousesPerson").css('visibility', 'hidden');
 	        $j("#EditResearchNotesPerson").css('visibility', 'hidden');
+	        
+	        $j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
 	        
 	        if($j("#activeStart").val() != ''){
 	        	$j("#activeStartLabel").append("Active Start");

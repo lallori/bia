@@ -10,9 +10,9 @@
 		</c:url>
 	</security:authorize>
 	<br>
+<!--- Loading div when saving the form -->
+<div id="loadingDiv"></div>
 	<form:form id="EditPersonDocumentForm" cssClass="edit">
-	<!--- Loading div when saving the form -->
-	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.personId}"> 

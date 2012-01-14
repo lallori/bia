@@ -9,10 +9,9 @@
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
-
+<!--- Loading div when saving the form -->
+<div id="loadingDiv"></div>
 	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
-	<!--- Loading div when saving the form -->
-	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>EXTRACT/SYNOPSIS</b></legend>
 			
