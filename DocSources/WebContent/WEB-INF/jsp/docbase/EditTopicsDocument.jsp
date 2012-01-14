@@ -16,7 +16,7 @@
 			<c:param name="entryId"   value="${document.entryId}" />
 		</c:url>
 	</security:authorize>
-
+		
 	<form:form id="EditTopicsDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>TOPICS</b></legend>

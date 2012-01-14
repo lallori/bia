@@ -16,6 +16,8 @@
 	
 	<br>
 	<form:form id="EditTopicDocumentForm" cssClass="edit">
+	<!--- Loading div when saving the form -->
+	<div id="loadingDiv"></div>
 		<fieldset>
 			<c:if test="${command.eplToId == 0}">  
 				<legend><b>ADD NEW TOPIC</b></legend>
@@ -59,7 +61,12 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j.scrollTo("#EditTopicDocumentForm");
+			//$j.scrollTo("#EditTopicDocumentForm");
+			
+			$j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	     	});
 			
 			var topicDescription = $j('#topicDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
@@ -98,6 +105,7 @@
 			    	});
 			    }
 			  });
+			
 
 			$j('#closeTopic').click(function() { 
 				$j('.autocomplete').attr('visibility', 'hidden');

@@ -5,6 +5,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<form:form id="EditFactCheckDocumentForm" method="post" cssClass="edit">
+	<!--- Loading div when saving the form -->
+	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>FACT CHECK</b></legend>
 				
@@ -41,6 +43,11 @@
 				$j("#modify").val(1); //set the hidden field if an element is modified
 				return false;
 			});
+	        
+	        $j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
 
 	        $j('#close').click(function() {
 	        	if($j("#modify").val() == 1){

@@ -13,6 +13,7 @@
 	<c:url var="editDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do"/>
 	
 	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentURL}" method="post" cssClass="edit">
+		<!--- Loading div when saving the form -->
 		<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>DOCUMENT DETAILS</b></legend>
@@ -120,9 +121,9 @@
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
 	        
 	        $j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
-	        	$j("#loadingDiv").css('height', $j("#EditDetailsDocumentDiv").attr("height"));
-				});
+	        });
 	        
 	        $j("#EditDetailsDocumentForm :input").change(function(){
 				$j("#modify").val(1); //set the hidden field if an element is modified

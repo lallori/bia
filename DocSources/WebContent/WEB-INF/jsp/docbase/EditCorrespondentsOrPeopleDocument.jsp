@@ -32,11 +32,12 @@
 			<c:param name="placeAllId" value="${command.document.recipientPlace.placeAllId}" />
 		</c:url>
 	</security:authorize>
-
+	<!--- Loading div when saving the form -->
+	<div id="loadingDiv"></div>
 	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post" cssClass="edit">
 
 		<fieldset>
-		<legend><b>CORRESPONDENTS </b></legend>
+		<legend><b>CORRESPONDENTS</b></legend>
 			<div>
 				<form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender</form:label>
 				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
@@ -171,6 +172,11 @@
 				$j("#modify").val(1); //set the hidden field if an element is modified
 				return false;
 			});
+	        
+	        $j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
 
 			$j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchSenderPeopleURL}',

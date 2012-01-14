@@ -11,6 +11,8 @@
 	</security:authorize>
 	<br>
 	<form:form id="EditPersonDocumentForm" cssClass="edit">
+	<!--- Loading div when saving the form -->
+	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.personId}"> 
@@ -47,7 +49,13 @@
 
 	<script type="text/javascript"> 
 	    $j(document).ready(function() { 
-	    	$j.scrollTo("#EditPersonDocumentForm");
+	    	//$j.scrollTo("#EditPersonDocumentForm");
+	    	
+	    	$j("#save").click(function(){
+	        	//$j("#loadingDiv").css('height', $j(this).parent().height());
+	        	//$j("#loadingDiv").css('visibility', 'visible');
+	        	alert("a");
+	     	});
 	    	
 			var peopleDescription = $j('#personDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchPersonLinkableToDocumentURL}',
