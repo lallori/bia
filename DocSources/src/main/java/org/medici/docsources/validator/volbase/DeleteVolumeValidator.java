@@ -98,10 +98,10 @@ public class DeleteVolumeValidator implements Validator {
 			try {
 				Volume volume = getVolBaseService().findVolume(summaryId); 
 				if (volume == null) {
-					errors.reject("personId", "error.personId.notfound");
+					errors.reject("summaryId", "error.summaryId.notfound");
 				} else {
 					if (getVolBaseService().checkVolumeHasLinkedDocuments(summaryId)) {
-						errors.reject("summaryId", "error.linkedDocuments.found");
+						errors.reject("summaryId", "error.deleteVolume.linkedDocuments.found");
 					}
 				}
 			} catch (ApplicationThrowable ath) {

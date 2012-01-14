@@ -101,10 +101,10 @@ public class DeletePlaceValidator implements Validator {
 					errors.reject("placeAllId", "error.placeAllId.notfound");
 				} else {
 					if (place.getBornedPeople().size()>0) {
-						errors.reject("bornedPeople", "error.bornedPeople.found");
+						errors.reject("placeAllId", "error.deletePlace.bornedPeople.found");
 					}
 					if (place.getDeathPeople().size()>0) {
-						errors.reject("deathPeople", "error.deathPeople.found");
+						errors.reject("placeAllId", "error.deletePlace.deathPeople.found");
 					}
 				}
 			} catch (ApplicationThrowable ath) {

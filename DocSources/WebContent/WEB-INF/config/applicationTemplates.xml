@@ -741,5 +741,21 @@
     <definition name="500" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/error/500.jsp"/>
     </definition>
+
+	<definition name="error/DeleteDocument" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/DeleteDocument.jsp"/>
+    </definition>
+
+	<definition name="error/DeletePlace" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/DeletePlace.jsp"/>
+    </definition>
+
+	<definition name="error/deletePerson" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/DeletePerson.jsp"/>
+    </definition>
+
+	<definition name="error/DeleteVolume" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/error/DeleteVolume.jsp"/>
+    </definition>
 	<!-- Errors END -->
 </tiles-definitions>

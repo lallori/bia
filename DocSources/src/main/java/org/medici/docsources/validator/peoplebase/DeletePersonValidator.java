@@ -101,10 +101,10 @@ public class DeletePersonValidator implements Validator {
 					errors.reject("personId", "error.personId.notfound");
 				} else {
 					if (person.getRecipientDocuments().size()>0) {
-						errors.reject("recipientDocuments", "error.recipientDocuments.found");
+						errors.reject("personId", "error.deletePerson.recipientDocuments.found");
 					}
 					if (person.getSenderDocuments().size()>0) {
-						errors.reject("recipientDocuments", "error.recipientDocuments.found");
+						errors.reject("personId", "error.deletePerson.senderDocuments.found");
 					}
 				}
 			} catch (ApplicationThrowable ath) {

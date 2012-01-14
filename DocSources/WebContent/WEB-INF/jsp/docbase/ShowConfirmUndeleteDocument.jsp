@@ -4,12 +4,19 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="UndeleteDocumentURL" value="/de/docbase/UndeleteDocument.do">
+		<c:param name="entryId"   value="${command.entryId}" />
+	</c:url>
+	<c:url var="ShowMenuActionsDocumentURL" value="/de/docbase/ShowMenuActionsDocument.do">
+		<c:param name="entryId"   value="${command.entryId}" />
+	</c:url>
+
 	<div id="DeleteThisRecordDiv">
 		<h1>Are you sure you want to undelete this record?</h1>
 		
-		<a id="yes" href="/DocSources/de/docbase/YesDeleteThisRecord.html">YES</a>
+		<a id="yes" href="${UndeleteDocumentURL}">YES</a>
 	
-		<a id="no" href="/DocSources/de/docbase/ActionsMenu.html">NO</a>
+		<a id="no" href="${ShowMenuActionsDocumentURL}">NO</a>
 			
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
@@ -22,7 +29,7 @@
 			});
 			
 			$j("#no").click(function() {			
-				Modalbox.hide();
+				Modalbox.show($j(this).attr("href"), {title: "DOCUMENT ACTIONS MENU", width: 750, height: 150});
 				return false;
 			});
 

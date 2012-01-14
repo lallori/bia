@@ -104,7 +104,10 @@ public class DeleteDocumentValidator implements Validator {
 					errors.reject("entryId", "error.entryId.notfound");
 				} else {
 					if (document.getEpLink().size()>0) {
-						errors.reject("epLinkId", "error.epLink.found");
+						errors.reject("entryId", "error.deleteDocument.people.found");
+					}
+					if (document.getEplToLink().size()>0) {
+						errors.reject("entryId", "error.deleteDocument.topics.found");
 					}
 				}
 			} catch (ApplicationThrowable ath) {
