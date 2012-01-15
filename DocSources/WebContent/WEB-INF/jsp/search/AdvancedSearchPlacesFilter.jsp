@@ -57,7 +57,6 @@
 		<br />
 		<input type="submit" title="Search" value="Search" id="advsearch">
 		<a class="saveButton" href="#">Save</a>
-		<a class="saveAsButton" href="#">Save as</a>
 			
 		<input type="hidden" name="idSearchFilter" value="${command.idSearchFilter}">
 		<input type="hidden" name="searchUUID" value="${command.searchUUID}">
@@ -90,7 +89,7 @@
 				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
 			});
 
-			$j('.saveAsButton').click(function(){
+			$j('.saveButton').click(function(){
 				if ($dialogSaveAs.dialog("isOpen")) {
 					$dialogSaveAs.dialog("close");
 					return false;

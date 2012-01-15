@@ -22,6 +22,11 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			console.log($j("#yourEasySearchFilterForm").serialize());
+			$j("#saveAsForm").submit(function() {
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					$j("#saveAsDiv").html(html);
+				}});
+				return false;
+			});
 		});
 	</script>
