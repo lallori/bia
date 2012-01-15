@@ -143,7 +143,17 @@ public class PaginationFilter {
 	        return order;
 	    }
 	    
-    }
+	    public String toStringJPQL(){
+	    	if (!ObjectUtils.toString(order).equals("")) {
+	    		if (order.equalsIgnoreCase("ascending")) {
+	    			return "ASC";
+	    		} else {
+	    			return "DESC";
+	    		}
+	    	}
+	        return "";
+	    }
+	}
 
 	/**
 	 * 
