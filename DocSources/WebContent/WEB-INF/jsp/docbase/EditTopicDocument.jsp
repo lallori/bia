@@ -15,8 +15,8 @@
 	</c:url>
 	
 	<br>
-<!--- Loading div when saving the form -->
-<div id="loadingDiv"></div>
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
 	<form:form id="EditTopicDocumentForm" cssClass="edit">
 		<fieldset>
 			<c:if test="${command.eplToId == 0}">  
@@ -64,7 +64,7 @@
 			//$j.scrollTo("#EditTopicDocumentForm");
 			
 			$j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	     	});
 			

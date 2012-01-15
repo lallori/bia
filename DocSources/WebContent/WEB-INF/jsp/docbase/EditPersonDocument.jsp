@@ -10,8 +10,8 @@
 		</c:url>
 	</security:authorize>
 	<br>
-<!--- Loading div when saving the form -->
-<div id="loadingDiv"></div>
+<%-- Loading div when saving the form  --%>
+<div id="loadingDiv2"></div>
 	<form:form id="EditPersonDocumentForm" cssClass="edit">
 		<fieldset>
 			<legend>
@@ -52,8 +52,8 @@
 	    	//$j.scrollTo("#EditPersonDocumentForm");
 	    	
 	    	$j("#save").click(function(){
-	        	//$j("#loadingDiv").css('height', $j(this).parent().height());
-	        	//$j("#loadingDiv").css('visibility', 'visible');
+	        	$j("#loadingDiv").css('height', $j(this).parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
 	        	alert("a");
 	     	});
 	    	

@@ -32,8 +32,8 @@
 			<c:param name="placeAllId" value="${command.document.recipientPlace.placeAllId}" />
 		</c:url>
 	</security:authorize>
-<!--- Loading div when saving the form -->
-<div id="loadingDiv"></div>
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
 	<form:form id="EditCorrespondentsOrPeopleDocumentForm" method="post" cssClass="edit">
 
 		<fieldset>
@@ -146,8 +146,7 @@
 	</form:form>
 	</div>
 		
-	<div id="EditPersonDocumentDiv"></div>
-			
+	<div id="EditPersonDocumentDiv"></div>		
 	<c:url var="searchSenderPeopleURL" value="/de/peoplebase/SearchSenderPeople.json"/>
 	<c:url var="searchSenderPlaceURL" value="/de/geobase/SearchSenderPlace.json"/>
 	<c:url var="searchRecipientPeopleURL" value="/de/peoplebase/SearchRecipientPeople.json"/>
@@ -174,7 +173,7 @@
 			});
 	        
 	        $j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        });
 

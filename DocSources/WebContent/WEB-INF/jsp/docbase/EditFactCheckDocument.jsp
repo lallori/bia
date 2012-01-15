@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<!--- Loading div when saving the form -->
+<%-- Loading div when saving the form --%>
 <div id="loadingDiv"></div>
 	<form:form id="EditFactCheckDocumentForm" method="post" cssClass="edit">
 		<fieldset>
@@ -45,7 +45,7 @@
 			});
 	        
 	        $j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        });
 

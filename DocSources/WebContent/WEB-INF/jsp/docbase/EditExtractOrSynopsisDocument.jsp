@@ -9,7 +9,7 @@
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
 	</security:authorize>
-<!--- Loading div when saving the form -->
+<%-- Loading div when saving the form --%>
 <div id="loadingDiv"></div>
 	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
 		<fieldset>
@@ -53,7 +53,7 @@
 			});
 	        
 	        $j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        });
 

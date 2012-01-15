@@ -11,9 +11,8 @@
 	</security:authorize>
 	
 	<c:url var="editDetailsDocumentURL" value="/de/docbase/EditDetailsDocument.do"/>
-	
-<!--- Loading div when saving the form -->
-<div id="loadingDiv"></div>
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
 	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentURL}" method="post" cssClass="edit">
 	<fieldset>
 			<legend><b>DOCUMENT DETAILS</b></legend>
@@ -121,12 +120,13 @@
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
 	        
 	        $j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        });
 	        
+	        
 	        $j("#EditDetailsDocumentForm :input").change(function(){
-				$j("#modify").val(1); //set the hidden field if an element is modified
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 				return false;
 			});
 
@@ -309,7 +309,7 @@
 				var tabName = "Doc " + $j("#volume").val() + "/" + $j("#folioNum").val();
 				var numTab = 0;
 				
-				//Check if already exist a tab with this person
+				<%-- Check if already exist a tab with this person --%>
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
 					if(!tabExist)
