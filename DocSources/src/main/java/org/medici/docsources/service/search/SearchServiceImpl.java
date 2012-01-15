@@ -167,13 +167,6 @@ public class SearchServiceImpl implements SearchService {
 	}
 	
 	/**
-	 * @param placeTypeDAO the placeTypeDAO to set
-	 */
-	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
-		this.placeTypeDAO = placeTypeDAO;
-	}
-
-	/**
 	 * @return the placeTypeDAO
 	 */
 	public PlaceTypeDAO getPlaceTypeDAO() {
@@ -212,6 +205,13 @@ public class SearchServiceImpl implements SearchService {
 	public SearchFilterDAO getSearchFilterDAO() {
 		return searchFilterDAO;
 	}
+
+	/**
+	 * @return the titleOccsListDAO
+	 */
+	public TitleOccsListDAO getTitleOccsListDAO() {
+		return titleOccsListDAO;
+	}
 	
 	@Override
 	public List<TopicList> getTopicsList() throws ApplicationThrowable {
@@ -224,13 +224,6 @@ public class SearchServiceImpl implements SearchService {
 		}
 	}
 	
-	/**
-	 * @return the titleOccsListDAO
-	 */
-	public TitleOccsListDAO getTitleOccsListDAO() {
-		return titleOccsListDAO;
-	}
-
 	/**
 	 * @return the topicsListDAO
 	 */
@@ -269,6 +262,18 @@ public class SearchServiceImpl implements SearchService {
 	public Page getUserSearchFilters(PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getSearchFilterDAO().findUserSearchFilters(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getUserSearchFilters(PaginationFilter paginationFilter, SearchType searchType) throws ApplicationThrowable {
+		try {
+			return getSearchFilterDAO().findUserSearchFilters(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername(), paginationFilter, searchType);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -433,12 +438,19 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	/**
+	 * @param placeTypeDAO the placeTypeDAO to set
+	 */
+	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
+		this.placeTypeDAO = placeTypeDAO;
+	}
+	
+	/**
 	 * @param searchFilterDAO the searchFilterDAO to set
 	 */
 	public void setSearchFilterDAO(SearchFilterDAO searchFilterDAO) {
 		this.searchFilterDAO = searchFilterDAO;
 	}
-	
+
 	/**
 	 * @param titleOccsListDAO the titleOccsListDAO to set
 	 */

@@ -36,6 +36,7 @@ import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -65,11 +66,31 @@ public interface SearchService {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<PlaceType> getPlaceTypes() throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param searchFilter
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public SearchFilter getSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<TopicList> getTopicsList() throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -84,7 +105,7 @@ public interface SearchService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<SearchFilter> getUserSearchFilters() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param paginationFilter
@@ -95,19 +116,19 @@ public interface SearchService {
 
 	/**
 	 * 
+	 * @param paginationFilter
+	 * @param searchType
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page getUserSearchFilters(PaginationFilter paginationFilter, SearchType searchType) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param searchFilter
 	 * @throws ApplicationThrowable
 	 */
 	public void replaceSearchFilter(SearchFilter searchFilter) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param searchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public Page searchAdvancedPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -116,8 +137,17 @@ public interface SearchService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchAdvancedPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param searchContainer
@@ -135,7 +165,7 @@ public interface SearchService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param query
@@ -143,7 +173,7 @@ public interface SearchService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchPlaces(String query) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param searchContainer
@@ -170,24 +200,4 @@ public interface SearchService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @return
-	 */
-	public List<Month> getMonths() throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<PlaceType> getPlaceTypes() throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public List<TopicList> getTopicsList() throws ApplicationThrowable;
 }
