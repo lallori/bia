@@ -13,6 +13,8 @@
 	</security:authorize>
 
 	<form:form id="EditMotherPersonForm" action="${EditMotherPersonURL}" method="post" cssClass="edit">
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>	
 		<fieldset>
 			<legend>
 				<b>MOTHER</b></legend>
@@ -70,6 +72,11 @@
 		$j(document).ready(function() {
 			$j("#bornMonth, #bornYear, #bornDay").attr("disabled", "disabled");
 			$j("#deathMonth, #deathYear, #deathDay").attr("disabled", "disabled");
+			
+			$j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
 			
 			var motherDescription = $j('#motherAutocompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchMotherLinkableToPersonURL}',

@@ -13,7 +13,7 @@
 	</security:authorize>
 
 	<form:form id="EditFatherPersonForm" action="${EditFatherPersonURL}" method="post" cssClass="edit">
-	<!--- Loading div when saving the form -->
+	<%-- Loading div when saving the form --%>
 	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend>
@@ -73,11 +73,10 @@
 			$j("#bornMonth, #bornYear, #bornDay").attr("disabled", "disabled");
 			$j("#deathMonth, #deathYear, #deathDay").attr("disabled", "disabled");
 			
-			// Must create a control not to provide an empty field.
-			//$j("#save").click(function(){
-	        //	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
-	        //	$j("#loadingDiv").css('visibility', 'visible');
-	        //});
+			$j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
 						
 			var fatherDescription = $j('#fatherAutocompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchFatherLinkableToPersonURL}',

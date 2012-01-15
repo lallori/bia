@@ -17,6 +17,8 @@
 	</security:authorize>
 	<br>
 	<form:form id="EditChildPersonForm" action="${EditChildPersonURL}" method="post" cssClass="edit">
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>		
 		<fieldset>
 			<legend>
 			<c:if test="${empty command.childId}"> 
@@ -58,6 +60,11 @@
 	<script type="text/javascript"> 
 	    $j(document).ready(function() { 
 	    	$j('#bornYear, #deathYear, #ageAtDeath').attr('disabled', 'disabled');
+	    	
+	    	$j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
 	    	
 			var childDescription = $j('#childDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchChildLinkableToPersonURL}',

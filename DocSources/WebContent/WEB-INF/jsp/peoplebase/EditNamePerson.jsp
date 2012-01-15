@@ -12,6 +12,9 @@
 		</c:url>
 	</security:authorize>
 	<br>
+	
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
 	<form:form id="EditNamePersonForm" action="${EditNamePersonURL}" method="post" cssClass="edit">
 		<fieldset>
 			<legend>
@@ -34,6 +37,7 @@
 				<input id="closePerson" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
+			<input type="hidden" value="" id="modify" />
 		</fieldset>	
 
 		<form:hidden path="nameId"/>
@@ -41,11 +45,39 @@
 	</form:form>
 
 	<script type="text/javascript"> 
-	    $j(document).ready(function() { 
-			$j('#closePerson').click(function(e) {
-				$j('#EditNamePersonDiv').block({ message: $j('#question') }); 
-	            return false;
+	    $j(document).ready(function() {
+	    	
+	    	$j("#EditNamePersonForm :input").change(function(){
+					$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+					return false;
 			});
+	    	
+	    	
+	    	$j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
+	    	
+	    	
+			$j('#closePerson').click(function(e) {
+// FAR FUNZIONARE ANCHE QUI				
+//				if($j("#modify").val() == 1){
+//	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+//					$j('#EditNamePersonForm').block({ message: $j('#question') }); 
+//					return false;
+//	        	}else{
+//	        		$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
+//	    			$j("#body_left").html(html);
+//	    			}});
+//				}
+				$j('#EditNamePersonForm').block({ message: $j('#question') });
+	            return false;
+	            
+			});
+			
+			
+    				
+    			
 
 			$j("#EditNamePersonForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {

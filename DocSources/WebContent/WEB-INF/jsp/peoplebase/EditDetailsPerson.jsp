@@ -14,7 +14,7 @@
 	</security:authorize>
 	<div>
 		<form:form id="EditDetailsPersonForm" cssClass="edit" method="post">
-		<!--- Loading div when saving the form -->
+		<%-- Loading div when saving the form --%>
 		<div id="loadingDiv"></div>
 			<fieldset>
 			<legend><b>PERSON DETAILS</b></legend>
@@ -135,6 +135,7 @@
 					<input id="close" type="submit" value="Close" title="Do not save changes" class="button" />
 					<input id="save" type="submit" value="Save" class="button"/>
 				</div>
+				<input type="hidden" value="" id="modify" />
 			</fieldset>	
 		</form:form>
 	</div>
@@ -157,9 +158,14 @@
 	        $j("#EditResearchNotesPerson").css('visibility', 'hidden');
 	        
 	        $j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j(this).parent().parent().height());
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 	        });
+	        
+	        $j("#EditDetailsPersonForm :input").change(function(){
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+				return false;
+			});
 	        
 	        if($j("#activeStart").val() != ''){
 	        	$j("#activeStartLabel").append("Active Start");
@@ -330,7 +336,16 @@
 
 			$j('#close').click(function(e) {
 				$j('.autocomplete').remove();
-				$j('#EditDetailsPersonDiv').block({ message: $j('#question') }); 
+
+				if($j("#modify").val() == 1){
+	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+					$j('#EditDetailsPersonDiv').block({ message: $j('#question') }); ; 
+					return false;
+	        	}else{
+	        		$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
+	    			$j("#body_left").html(html);
+	    			}});
+				}
 	            return false;
 			});
 			

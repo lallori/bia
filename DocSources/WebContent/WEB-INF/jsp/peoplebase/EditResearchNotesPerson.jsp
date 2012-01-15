@@ -14,6 +14,8 @@
 	</security:authorize>
 
 	<form:form id="EditResearchNotesPersonForm" class="edit" method="post" action="${EditResearchNotesURL}">
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>RESEARCH NOTES</b></legend>
 			
@@ -27,7 +29,7 @@
 				<input id="close" type="submit" value="Close" title="Do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
-			
+			<input type="hidden" value="" id="modify" />
 		</fieldset>	
 	</form:form>
 	<script type="text/javascript">
@@ -38,10 +40,28 @@
 	        $j("#EditParentsPerson").css('visibility', 'hidden');
 	        $j("#EditChildrenPerson").css('visibility', 'hidden');
 	        $j("#EditSpousesPerson").css('visibility', 'hidden');
-
-	        $j('#close').click(function() {
-				$j('#EditResearchNotesPersonDiv').block({ message: $j('#question') }); 
+	        
+	        $j("#EditResearchNotesPersonForm :input").change(function(){
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 				return false;
+			});
+
+	        $j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
+	        
+	        $j('#close').click(function() {
+	        	if($j("#modify").val() == 1){
+	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+					$j('#EditResearchNotesPersonDiv').block({ message: $j('#question') }); ; 
+					return false;
+	        	}else{
+	        		$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
+	    			$j("#body_left").html(html);
+	    			}});
+				}
+	         	return false;
 			});
 	        
 	        $j("#EditResearchNotesPersonForm").submit(function (){
