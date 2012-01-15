@@ -29,6 +29,8 @@ package org.medici.docsources.command.search;
 
 import java.util.List;
 
+import org.medici.docsources.common.search.AdvancedSearchAbstract.NameType;
+import org.medici.docsources.common.search.AdvancedSearchAbstract.WordType;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
 /**
@@ -55,19 +57,35 @@ public class SaveUserSearchFilterCommand {
 	private List<String> recipient;
 	private List<String> to;
 	private List<String> refersTo;
-	
-	/**
-	 * @param searchType the searchType to set
-	 */
-	public void setSearchType(SearchType searchType) {
-		this.searchType = searchType;
-	}
+	private List<Integer> datesDay;
+	private List<Integer> datesDayBetween;
+	private List<Integer> datesMonth;
+	private List<Integer> datesMonthBetween;
+	private List<String> datesTypes;
+	private List<Integer> datesYear;
+	private List<Integer> datesYearBetween;
+	private List<String> names;
+	private List<NameType> namesTypes;
+	private List<Integer> placeId;
+	private List<String> roleCategories;
+	private List<String> titlesOcc;
+	private List<Integer> titlesOccId;
+	private List<String> words;
+	private List<WordType> wordsTypes;
+	private String digitized;
+	private List<String> languages;
+	private List<String> context;
+	private List<String> fromVolume;
+	private List<String> toVolume;
+	private List<String> inventario;
+	private String cipher;
+	private String index;
 
 	/**
-	 * @return the searchType
+	 * @return the idSearchFilter
 	 */
-	public SearchType getSearchType() {
-		return searchType;
+	public Integer getIdSearchFilter() {
+		return idSearchFilter;
 	}
 
 	/**
@@ -78,18 +96,31 @@ public class SaveUserSearchFilterCommand {
 	}
 
 	/**
-	 * @return the idSearchFilter
+	 * @return the searchType
 	 */
-	public Integer getIdSearchFilter() {
-		return idSearchFilter;
+	public SearchType getSearchType() {
+		return searchType;
 	}
 
+	/**
+	 * @param searchType the searchType to set
+	 */
+	public void setSearchType(SearchType searchType) {
+		this.searchType = searchType;
+	}
 
 	/**
-	 * @param saveAs the saveAs to set
+	 * @return the saveType
 	 */
-	public void setSaveAs(String saveAs) {
-		this.saveAs = saveAs;
+	public SaveType getSaveType() {
+		return saveType;
+	}
+
+	/**
+	 * @param saveType the saveType to set
+	 */
+	public void setSaveType(SaveType saveType) {
+		this.saveType = saveType;
 	}
 
 	/**
@@ -100,10 +131,10 @@ public class SaveUserSearchFilterCommand {
 	}
 
 	/**
-	 * @param idSearchFilterToReplace the idSearchFilterToReplace to set
+	 * @param saveAs the saveAs to set
 	 */
-	public void setIdSearchFilterToReplace(Integer idSearchFilterToReplace) {
-		this.idSearchFilterToReplace = idSearchFilterToReplace;
+	public void setSaveAs(String saveAs) {
+		this.saveAs = saveAs;
 	}
 
 	/**
@@ -111,6 +142,13 @@ public class SaveUserSearchFilterCommand {
 	 */
 	public Integer getIdSearchFilterToReplace() {
 		return idSearchFilterToReplace;
+	}
+
+	/**
+	 * @param idSearchFilterToReplace the idSearchFilterToReplace to set
+	 */
+	public void setIdSearchFilterToReplace(Integer idSearchFilterToReplace) {
+		this.idSearchFilterToReplace = idSearchFilterToReplace;
 	}
 
 	/**
@@ -126,156 +164,168 @@ public class SaveUserSearchFilterCommand {
 	public void setWord(List<String> word) {
 		this.word = word;
 	}
-	
+
 	/**
 	 * @return the volume
 	 */
 	public List<String> getVolume() {
 		return volume;
 	}
-	
+
 	/**
 	 * @param volume the volume to set
 	 */
 	public void setVolume(List<String> volume) {
 		this.volume = volume;
 	}
-	
+
 	/**
 	 * @return the date
 	 */
 	public List<String> getDate() {
 		return date;
 	}
-	
+
 	/**
 	 * @param date the date to set
 	 */
 	public void setDate(List<String> date) {
 		this.date = date;
 	}
-	
+
 	/**
 	 * @return the extract
 	 */
 	public List<String> getExtract() {
 		return extract;
 	}
-	
+
 	/**
 	 * @param extract the extract to set
 	 */
 	public void setExtract(List<String> extract) {
 		this.extract = extract;
 	}
-	
+
 	/**
 	 * @return the synopsis
 	 */
 	public List<String> getSynopsis() {
 		return synopsis;
 	}
-	
+
 	/**
 	 * @param synopsis the synopsis to set
 	 */
 	public void setSynopsis(List<String> synopsis) {
 		this.synopsis = synopsis;
 	}
-	
+
 	/**
 	 * @return the topic
 	 */
 	public List<String> getTopic() {
 		return topic;
 	}
-	
+
 	/**
 	 * @param topic the topic to set
 	 */
 	public void setTopic(List<String> topic) {
 		this.topic = topic;
 	}
-	
+
 	/**
 	 * @return the person
 	 */
 	public List<String> getPerson() {
 		return person;
 	}
-	
+
 	/**
 	 * @param person the person to set
 	 */
 	public void setPerson(List<String> person) {
 		this.person = person;
 	}
+
 	/**
 	 * @return the place
 	 */
 	public List<String> getPlace() {
 		return place;
 	}
+
 	/**
 	 * @param place the place to set
 	 */
 	public void setPlace(List<String> place) {
 		this.place = place;
 	}
+
 	/**
 	 * @return the sender
 	 */
 	public List<String> getSender() {
 		return sender;
 	}
+
 	/**
 	 * @param sender the sender to set
 	 */
 	public void setSender(List<String> sender) {
 		this.sender = sender;
 	}
+
 	/**
 	 * @return the from
 	 */
 	public List<String> getFrom() {
 		return from;
 	}
+
 	/**
 	 * @param from the from to set
 	 */
 	public void setFrom(List<String> from) {
 		this.from = from;
 	}
+
 	/**
 	 * @return the recipient
 	 */
 	public List<String> getRecipient() {
 		return recipient;
 	}
+
 	/**
 	 * @param recipient the recipient to set
 	 */
 	public void setRecipient(List<String> recipient) {
 		this.recipient = recipient;
 	}
+
 	/**
 	 * @return the to
 	 */
 	public List<String> getTo() {
 		return to;
 	}
+
 	/**
 	 * @param to the to to set
 	 */
 	public void setTo(List<String> to) {
 		this.to = to;
 	}
+
 	/**
 	 * @return the refersTo
 	 */
 	public List<String> getRefersTo() {
 		return refersTo;
 	}
+
 	/**
 	 * @param refersTo the refersTo to set
 	 */
@@ -284,17 +334,325 @@ public class SaveUserSearchFilterCommand {
 	}
 
 	/**
-	 * @param saveType the saveType to set
+	 * @return the datesDay
 	 */
-	public void setSaveType(SaveType saveType) {
-		this.saveType = saveType;
+	public List<Integer> getDatesDay() {
+		return datesDay;
 	}
 
 	/**
-	 * @return the saveType
+	 * @param datesDay the datesDay to set
 	 */
-	public SaveType getSaveType() {
-		return saveType;
+	public void setDatesDay(List<Integer> datesDay) {
+		this.datesDay = datesDay;
+	}
+
+	/**
+	 * @return the datesDayBetween
+	 */
+	public List<Integer> getDatesDayBetween() {
+		return datesDayBetween;
+	}
+
+	/**
+	 * @param datesDayBetween the datesDayBetween to set
+	 */
+	public void setDatesDayBetween(List<Integer> datesDayBetween) {
+		this.datesDayBetween = datesDayBetween;
+	}
+
+	/**
+	 * @return the datesMonth
+	 */
+	public List<Integer> getDatesMonth() {
+		return datesMonth;
+	}
+
+	/**
+	 * @param datesMonth the datesMonth to set
+	 */
+	public void setDatesMonth(List<Integer> datesMonth) {
+		this.datesMonth = datesMonth;
+	}
+
+	/**
+	 * @return the datesMonthBetween
+	 */
+	public List<Integer> getDatesMonthBetween() {
+		return datesMonthBetween;
+	}
+
+	/**
+	 * @param datesMonthBetween the datesMonthBetween to set
+	 */
+	public void setDatesMonthBetween(List<Integer> datesMonthBetween) {
+		this.datesMonthBetween = datesMonthBetween;
+	}
+
+	/**
+	 * @return the datesTypes
+	 */
+	public List<String> getDatesTypes() {
+		return datesTypes;
+	}
+
+	/**
+	 * @param datesTypes the datesTypes to set
+	 */
+	public void setDatesTypes(List<String> datesTypes) {
+		this.datesTypes = datesTypes;
+	}
+
+	/**
+	 * @return the datesYear
+	 */
+	public List<Integer> getDatesYear() {
+		return datesYear;
+	}
+
+	/**
+	 * @param datesYear the datesYear to set
+	 */
+	public void setDatesYear(List<Integer> datesYear) {
+		this.datesYear = datesYear;
+	}
+
+	/**
+	 * @return the datesYearBetween
+	 */
+	public List<Integer> getDatesYearBetween() {
+		return datesYearBetween;
+	}
+
+	/**
+	 * @param datesYearBetween the datesYearBetween to set
+	 */
+	public void setDatesYearBetween(List<Integer> datesYearBetween) {
+		this.datesYearBetween = datesYearBetween;
+	}
+
+	/**
+	 * @return the names
+	 */
+	public List<String> getNames() {
+		return names;
+	}
+
+	/**
+	 * @param names the names to set
+	 */
+	public void setNames(List<String> names) {
+		this.names = names;
+	}
+
+	/**
+	 * @return the namesTypes
+	 */
+	public List<NameType> getNamesTypes() {
+		return namesTypes;
+	}
+
+	/**
+	 * @param namesTypes the namesTypes to set
+	 */
+	public void setNamesTypes(List<NameType> namesTypes) {
+		this.namesTypes = namesTypes;
+	}
+
+	/**
+	 * @return the placeId
+	 */
+	public List<Integer> getPlaceId() {
+		return placeId;
+	}
+
+	/**
+	 * @param placeId the placeId to set
+	 */
+	public void setPlaceId(List<Integer> placeId) {
+		this.placeId = placeId;
+	}
+
+	/**
+	 * @return the roleCategories
+	 */
+	public List<String> getRoleCategories() {
+		return roleCategories;
+	}
+
+	/**
+	 * @param roleCategories the roleCategories to set
+	 */
+	public void setRoleCategories(List<String> roleCategories) {
+		this.roleCategories = roleCategories;
+	}
+
+	/**
+	 * @return the titlesOcc
+	 */
+	public List<String> getTitlesOcc() {
+		return titlesOcc;
+	}
+
+	/**
+	 * @param titlesOcc the titlesOcc to set
+	 */
+	public void setTitlesOcc(List<String> titlesOcc) {
+		this.titlesOcc = titlesOcc;
+	}
+
+	/**
+	 * @return the titlesOccId
+	 */
+	public List<Integer> getTitlesOccId() {
+		return titlesOccId;
+	}
+
+	/**
+	 * @param titlesOccId the titlesOccId to set
+	 */
+	public void setTitlesOccId(List<Integer> titlesOccId) {
+		this.titlesOccId = titlesOccId;
+	}
+
+	/**
+	 * @return the words
+	 */
+	public List<String> getWords() {
+		return words;
+	}
+
+	/**
+	 * @param words the words to set
+	 */
+	public void setWords(List<String> words) {
+		this.words = words;
+	}
+
+	/**
+	 * @return the wordsTypes
+	 */
+	public List<WordType> getWordsTypes() {
+		return wordsTypes;
+	}
+
+	/**
+	 * @param wordsTypes the wordsTypes to set
+	 */
+	public void setWordsTypes(List<WordType> wordsTypes) {
+		this.wordsTypes = wordsTypes;
+	}
+
+	/**
+	 * @return the digitized
+	 */
+	public String getDigitized() {
+		return digitized;
+	}
+
+	/**
+	 * @param digitized the digitized to set
+	 */
+	public void setDigitized(String digitized) {
+		this.digitized = digitized;
+	}
+
+	/**
+	 * @return the languages
+	 */
+	public List<String> getLanguages() {
+		return languages;
+	}
+
+	/**
+	 * @param languages the languages to set
+	 */
+	public void setLanguages(List<String> languages) {
+		this.languages = languages;
+	}
+
+	/**
+	 * @return the context
+	 */
+	public List<String> getContext() {
+		return context;
+	}
+
+	/**
+	 * @param context the context to set
+	 */
+	public void setContext(List<String> context) {
+		this.context = context;
+	}
+
+	/**
+	 * @return the fromVolume
+	 */
+	public List<String> getFromVolume() {
+		return fromVolume;
+	}
+
+	/**
+	 * @param fromVolume the fromVolume to set
+	 */
+	public void setFromVolume(List<String> fromVolume) {
+		this.fromVolume = fromVolume;
+	}
+
+	/**
+	 * @return the toVolume
+	 */
+	public List<String> getToVolume() {
+		return toVolume;
+	}
+
+	/**
+	 * @param toVolume the toVolume to set
+	 */
+	public void setToVolume(List<String> toVolume) {
+		this.toVolume = toVolume;
+	}
+
+	/**
+	 * @return the inventario
+	 */
+	public List<String> getInventario() {
+		return inventario;
+	}
+
+	/**
+	 * @param inventario the inventario to set
+	 */
+	public void setInventario(List<String> inventario) {
+		this.inventario = inventario;
+	}
+
+	/**
+	 * @return the cipher
+	 */
+	public String getCipher() {
+		return cipher;
+	}
+
+	/**
+	 * @param cipher the cipher to set
+	 */
+	public void setCipher(String cipher) {
+		this.cipher = cipher;
+	}
+
+	/**
+	 * @return the index
+	 */
+	public String getIndex() {
+		return index;
+	}
+
+	/**
+	 * @param index the index to set
+	 */
+	public void setIndex(String index) {
+		this.index = index;
 	}
 
 	/**
