@@ -52,10 +52,11 @@ import org.medici.docsources.common.search.AdvancedSearch;
 @Entity
 @Table ( name = "\"tblSearchFilter\"" ) 
 public class SearchFilter implements Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2001847076255349765L;
+	private static final long serialVersionUID = 7879646812872287396L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -232,7 +233,7 @@ public class SearchFilter implements Serializable {
 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
 	 *
 	 */
-	public static enum SearchType {
+	public static enum SearchType implements Serializable {
 		VOLUME("VOLUME"), DOCUMENT("DOCUMENT"), PEOPLE("PEOPLE"), PLACE("PLACE");
 		
 		private final String searchType;
