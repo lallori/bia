@@ -75,58 +75,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller("SearchAjaxController")
 public class AjaxController {
 	@Autowired
-	private SearchService searchService;
-	
-	@Autowired
-	private VolBaseService volBaseService;
-	
-	@Autowired
 	private DocBaseService docBaseService;
 	
 	@Autowired
 	private PeopleBaseService peopleBaseService;
-
-	/**
-	 * @param docBaseService the docBaseService to set
-	 */
-	public void setDocBaseService(DocBaseService docBaseService) {
-		this.docBaseService = docBaseService;
-	}
-
-	/**
-	 * @return the docBaseService
-	 */
-	public DocBaseService getDocBaseService() {
-		return docBaseService;
-	}
-
-	/**
-	 * @param peopleBaseService the peopleBaseService to set
-	 */
-	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
-		this.peopleBaseService = peopleBaseService;
-	}
-
-	/**
-	 * @return the peopleBaseService
-	 */
-	public PeopleBaseService getPeopleBaseService() {
-		return peopleBaseService;
-	}
-
-	/**
-	 * @return the volBaseService
-	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
-	}
-
-	/**
-	 * @param volBaseService the volBaseService to set
-	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
-	}
+	
+	@Autowired
+	private SearchService searchService;
+	
+	@Autowired
+	private VolBaseService volBaseService;
 
 	/**
 	 * 
@@ -496,10 +454,63 @@ public class AjaxController {
 	}
 
 	/**
+	 * 
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	private PaginationFilter generatePaginationUserSearchFilter(String searchType, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		switch (sortingColumnNumber) {
+			case 0:
+				paginationFilter.addSortingCriteria("filterName", sortingDirection);
+				break;
+			case 1:
+				paginationFilter.addSortingCriteria("totalResult", sortingDirection);
+				break;
+			case 2:
+				paginationFilter.addSortingCriteria("searchType", sortingDirection);
+				break;
+			case 3:
+				paginationFilter.addSortingCriteria("dateUpdated", sortingDirection);
+				break;
+			default:
+				break;
+		}
+
+		return paginationFilter;
+	}
+
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
+	}
+
+	/**
+	 * @return the peopleBaseService
+	 */
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
+	}
+
+	/**
 	 * @return the searchService
 	 */
 	public SearchService getSearchService() {
 		return searchService;
+	}
+
+	/**
+	 * @return the volBaseService
+	 */
+	public VolBaseService getVolBaseService() {
+		return volBaseService;
 	}
 
 	/**
@@ -561,7 +572,7 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
 	/**
 	 * This method returns a list of ipotetical recipients. 
 	 *  
@@ -593,7 +604,6 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
-
 	/**
 	 * This method returns a list of topics linkable to document. Result does not
 	 * contains topics already linked to document. 
@@ -620,12 +630,34 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
+	
+	/**
+	 * @param docBaseService the docBaseService to set
+	 */
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+
+
+	/**
+	 * @param peopleBaseService the peopleBaseService to set
+	 */
+	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+		this.peopleBaseService = peopleBaseService;
+	}
 
 	/**
 	 * @param searchService the searchService to set
 	 */
 	public void setSearchService(SearchService searchService) {
 		this.searchService = searchService;
+	}
+
+	/**
+	 * @param volBaseService the volBaseService to set
+	 */
+	public void setVolBaseService(VolBaseService volBaseService) {
+		this.volBaseService = volBaseService;
 	}
 
 	/**
@@ -698,7 +730,7 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 	}
-
+	
 	/**
 	 * 
 	 * @param searchType
@@ -732,7 +764,7 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
 	/**
 	 * This method performs a simple search on people dictionary.
 	 * 
@@ -861,12 +893,16 @@ public class AjaxController {
 	 * @param httpSession
 	 * @param paginationFilter
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void userSearchFiltersAll(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	private void userSearchFilters(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter, SearchType searchType) {
 		Page page = null;
 
 		try {
-			page = getSearchService().getUserSearchFilters(paginationFilter);
+			if (searchType == null) {
+				page = getSearchService().getUserSearchFilters(paginationFilter);
+			} else {
+				page = getSearchService().getUserSearchFilters(paginationFilter, searchType);
+			}
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -887,11 +923,6 @@ public class AjaxController {
 		model.put("aaData", resultList);
 	}
 
-	private void userSearchFiltersDocuments(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
 	 * 
 	 * @param searchType
@@ -904,42 +935,29 @@ public class AjaxController {
 	 */
 	@RequestMapping(value = "/src/UserSearchFiltersPagination.json", method = RequestMethod.GET)
 	public ModelAndView userSearchFiltersPagination(HttpSession httpSession,
-											@RequestParam(value="searchType", required=false) SearchType searchType,
+											@RequestParam(value="searchType", required=false) String searchType,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
+		PaginationFilter paginationFilter = generatePaginationUserSearchFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
 
 		if (searchType == null){
-			userSearchFiltersAll(model, httpSession, paginationFilter);
-		} else if (searchType.equals(SearchType.DOCUMENT)) {
-			userSearchFiltersDocuments(model, httpSession, paginationFilter);
-		} else if (searchType.equals(SearchType.PEOPLE)) {
-			userSearchFiltersPeople(model, httpSession, paginationFilter);
-		} else if (searchType.equals(SearchType.PLACE)) {
-			userSearchFiltersPlaces(model, httpSession, paginationFilter);
-		} else if (searchType.equals(SearchType.VOLUME)) {
-			userSearchFiltersVolumes(model, httpSession, paginationFilter);
+			userSearchFilters(model, httpSession, paginationFilter, null);
+		} else if (searchType.equals("all")) {
+			userSearchFilters(model, httpSession, paginationFilter, null);
+		} else if (searchType.equals("document")) {
+			userSearchFilters(model, httpSession, paginationFilter, SearchType.DOCUMENT);
+		} else if (searchType.equals("people")) {
+			userSearchFilters(model, httpSession, paginationFilter, SearchType.PEOPLE);
+		} else if (searchType.equals("place")) {
+			userSearchFilters(model, httpSession, paginationFilter, SearchType.PLACE);
+		} else if (searchType.equals("volume")) {
+			userSearchFilters(model, httpSession, paginationFilter, SearchType.VOLUME);
 		}
 
 		return new ModelAndView("responseOK", model);
-	}
-
-	private void userSearchFiltersPeople(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void userSearchFiltersPlaces(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void userSearchFiltersVolumes(Map<String, Object> model, HttpSession httpSession, PaginationFilter paginationFilter) {
-		// TODO Auto-generated method stub
-		
 	}
 }

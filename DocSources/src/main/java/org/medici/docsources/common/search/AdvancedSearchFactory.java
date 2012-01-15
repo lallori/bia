@@ -59,47 +59,27 @@ public class AdvancedSearchFactory {
 	 * @throws Exception
 	 */
 	public static AdvancedSearch create(SaveUserSearchFilterCommand command) {
-		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
-			AdvancedSearchDocumentsCommand advancedSearchDocumentsCommand = new AdvancedSearchDocumentsCommand();
-			try {
-				BeanUtils.copyProperties(advancedSearchDocumentsCommand, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
-			//advancedSearchDocument.initFromAdvancedSearchDocumentsCommand(advancedSearchDocumentsCommand);
-			return advancedSearchDocument;
-		} else if (command.getSearchType().equals(SearchType.PEOPLE)) {
-			AdvancedSearchPeopleCommand advancedSearchPeopleCommand = new AdvancedSearchPeopleCommand();
-			try {
-				BeanUtils.copyProperties(advancedSearchPeopleCommand, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-			AdvancedSearchPeople advancedSearchPeople = new AdvancedSearchPeople();
-			//advancedSearchPeople.initFromAdvancedSearchPeopleCommand(advancedSearchPeopleCommand);
-			return advancedSearchPeople;
-		} else if (command.getSearchType().equals(SearchType.PLACE)) {
-			AdvancedSearchPlacesCommand advancedSearchPlacesCommand = new AdvancedSearchPlacesCommand();
-			try {
-				BeanUtils.copyProperties(advancedSearchPlacesCommand, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
-			//advancedSearchPlace.initFromAdvancedSearchPlacesCommand(advancedSearchPlacesCommand);
-			return advancedSearchPlace;
-		} else {
-			AdvancedSearchVolumesCommand advancedSearchVolumesCommand = new AdvancedSearchVolumesCommand();
-			try {
-				BeanUtils.copyProperties(advancedSearchVolumesCommand, command);
-			} catch (IllegalAccessException iaex) {
-			} catch (InvocationTargetException itex) {
-			}
-			AdvancedSearchVolume advancedSearchVolume = new AdvancedSearchVolume();
-			//advancedSearchVolume.initFromAdvancedSearchVolumesCommand(advancedSearchVolumesCommand);
-			return advancedSearchVolume;
+		AdvancedSearch advancedSearch = null;
+		AdvancedSearchCommand advancedSearchCommand = new AdvancedSearchCommand();
+		try {
+			BeanUtils.copyProperties(advancedSearchCommand, command);
+		} catch (IllegalAccessException iaex) {
+		} catch (InvocationTargetException itex) {
 		}
+
+		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
+			advancedSearch = new AdvancedSearchDocument();
+		} else if (command.getSearchType().equals(SearchType.PEOPLE)) {
+			advancedSearch = new AdvancedSearchPeople();
+		} else if (command.getSearchType().equals(SearchType.PLACE)) {
+			advancedSearch = new AdvancedSearchPlace();
+		} else {
+			advancedSearch = new AdvancedSearchVolume();
+		}
+		
+		advancedSearch.initFromAdvancedSearchCommand(advancedSearchCommand);
+
+		return advancedSearch;
 	}
 
 	public static AdvancedSearch create(AdvancedSearchCommand command) {

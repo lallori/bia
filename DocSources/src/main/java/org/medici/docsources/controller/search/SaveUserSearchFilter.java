@@ -80,7 +80,11 @@ public class SaveUserSearchFilter {
 			Map<String, Object> model = new HashMap<String, Object>();
 			try {
 				SearchFilter searchFilter = new SearchFilter();
-				searchFilter.setId(command.getIdSearchFilter());
+				if (command.getSaveType().equals(SaveType.newSearch)) {
+					searchFilter.setId(command.getIdSearchFilter());
+				} else {
+					searchFilter.setId(command.getIdSearchFilterToReplace());
+				}
 				searchFilter.setFilterName(command.getSaveAs());
 				searchFilter.setSearchType(command.getSearchType());
 				searchFilter.setFilterData(AdvancedSearchFactory.create(command));
@@ -92,7 +96,7 @@ public class SaveUserSearchFilter {
 				}
 			} catch(ApplicationThrowable applicationThrowable) {
 			}
-			return new ModelAndView("",model);
+			return new ModelAndView("response/SaveSearchFilterOK",model);
 		}
 	}	
 
