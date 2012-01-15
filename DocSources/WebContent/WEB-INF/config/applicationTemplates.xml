@@ -777,6 +777,13 @@
 	<definition name="response/UndeleteVolumeKO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteVolumeKO.jsp"/>
 	</definition>
+	
+	<definition name="response/SaveSearchFilterOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/SaveSearchFilterOK.jsp"/>
+	</definition>
+	<definition name="response/SaveSearchFilterKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/SaveSearchFilterKO.jsp"/>
+	</definition>
 	<!-- Generic Response END -->
 
 	<!-- Errors START -->
