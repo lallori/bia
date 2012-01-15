@@ -360,8 +360,6 @@ public class DocBaseServiceImpl implements DocBaseService {
 			epLinkToDelete.getPerson().setEpLink(null);
 			getEpLinkDAO().remove(epLinkToDelete);
 			
-			
-
 			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Unlink person ", Action.M, epLink.getDocument()));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
@@ -399,7 +397,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 
 			// fill fields of correspondents section
 			documentToUpdate.setLastUpdate(new Date());
-			if (document.getSenderPeople().getPersonId() > 0){
+			if ((!document.getSenderPeople().getMapNameLf().equals("")) && (document.getSenderPeople().getPersonId() >0)){
 				People sender = getPeopleDAO().find(document.getSenderPeople().getPersonId());
 				documentToUpdate.setSenderPeople(sender);
 				if(document.getSenderPeople().getPersonId() != 198 && document.getSenderPeople().getPersonId() != 3905 && document.getSenderPeople().getPersonId() != 9285){
@@ -418,9 +416,19 @@ public class DocBaseServiceImpl implements DocBaseService {
 						getEpLinkDAO().merge(epLinkSender);
 					}
 				}
+			} else {
+				if ((document.getSenderPeople().getPersonId() >0)) {
+					// We need to remove epLink before setting null sender...
+					EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(documentToUpdate.getEntryId(), document.getSenderPeople().getPersonId());
+					epLinkToDelete.getDocument().setEpLink(null);
+					epLinkToDelete.getPerson().setEpLink(null);
+					getEpLinkDAO().remove(epLinkToDelete);
+					getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Unlink person ", Action.M, epLinkToDelete.getDocument()));
+					documentToUpdate.setSenderPeople(null);
+					documentToUpdate.setSenderPeopleUnsure(Boolean.FALSE);
+				}
 			}
-			else
-				documentToUpdate.setSenderPeople(null);
+				
 			documentToUpdate.setSenderPeopleUnsure(document.getSenderPeopleUnsure());
 			if (document.getSenderPlace().getPlaceAllId() > 0){
 				/*
@@ -435,7 +443,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 			else
 				documentToUpdate.setSenderPlace(null);
 			documentToUpdate.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
-			if (document.getRecipientPeople().getPersonId() > 0){
+			
+			if ((!document.getRecipientPeople().getMapNameLf().equals(""))  && (document.getRecipientPeople().getPersonId() >0)) { 
 				People recipient = getPeopleDAO().find(document.getRecipientPeople().getPersonId());
 				documentToUpdate.setRecipientPeople(recipient);
 				if(document.getRecipientPeople().getPersonId() != 198 && document.getRecipientPeople().getPersonId() != 3905 && document.getRecipientPeople().getPersonId() != 9285){
@@ -454,9 +463,19 @@ public class DocBaseServiceImpl implements DocBaseService {
 						getEpLinkDAO().merge(epLinkSender);
 					}
 				}
+			} else {
+				if (document.getRecipientPeople().getPersonId() >0) {
+					// We need to remove epLink before setting null recipient...
+					EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(documentToUpdate.getEntryId(), document.getRecipientPeople().getPersonId());
+					epLinkToDelete.getDocument().setEpLink(null);
+					epLinkToDelete.getPerson().setEpLink(null);
+					getEpLinkDAO().remove(epLinkToDelete);
+					getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Unlink person ", Action.M, epLinkToDelete.getDocument()));
+					documentToUpdate.setRecipientPeople(null);
+					documentToUpdate.setRecipientPeopleUnsure(Boolean.FALSE);
+				}
 			}
-			else
-				documentToUpdate.setRecipientPeople(null);
+
 			documentToUpdate.setRecipientPeopleUnsure(document.getRecipientPeopleUnsure());
 			if (document.getRecipientPlace().getPlaceAllId() > 0){
 				/*
@@ -467,9 +486,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 				if(documentToUpdate.getRecipientPlace().getPrefFlag().equals("V")){
 					documentToUpdate.setRecipientPlace(getPlaceDAO().findPrinicipalPlace(documentToUpdate.getRecipientPlace().getGeogKey()));
 				}
-			}
-			else
+			} else {
 				documentToUpdate.setRecipientPlace(null);
+			}
 			documentToUpdate.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
 		
 			getUserHistoryDocumentDAO().persist(new UserHistoryDocument("Edit Correspondents", Action.M, documentToUpdate));

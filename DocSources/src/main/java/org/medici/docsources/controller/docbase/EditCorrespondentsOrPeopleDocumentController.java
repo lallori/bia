@@ -98,14 +98,19 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			
 			Document document = new Document();
 			document.setEntryId(command.getEntryId());
-			// If desccription is empty we construct an emptyPeople so in service method it will be set to null
-			if (ObjectUtils.toString(command.getSenderPeopleDescription()).equals("")) {
+
+			if (!ObjectUtils.toString(command.getSenderPeopleId()).equals("")) {
+				document.setSenderPeople(new People(command.getSenderPeopleId()));
+			} else {
 				document.setSenderPeople(new People(0));
+			}
+			document.getSenderPeople().setMapNameLf(command.getSenderPeopleDescription());
+			if (ObjectUtils.toString(command.getSenderPeopleDescription()).equals("")) {
 				document.setSenderPeopleUnsure(false);
 			} else {
-				document.setSenderPeople(new People(command.getSenderPeopleId()));
 				document.setSenderPeopleUnsure(command.getSenderPeopleUnsure());
 			}
+
 			if (ObjectUtils.toString(command.getSenderPlaceDescription()).equals("")) {
 				document.setSenderPlace(new Place(0));
 				document.setSenderPlaceUnsure(false);
@@ -113,13 +118,19 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				document.setSenderPlace(new Place(command.getSenderPlaceId()));
 				document.setSenderPlaceUnsure(command.getSenderPlaceUnsure());
 			}
-			if (ObjectUtils.toString(command.getRecipientPeopleDescription()).equals("")) {
+
+			if (!ObjectUtils.toString(command.getRecipientPeopleId()).equals("")) {
+				document.setRecipientPeople(new People(command.getRecipientPeopleId()));
+			} else {
 				document.setRecipientPeople(new People(0));
+			}
+			document.getRecipientPeople().setMapNameLf(command.getRecipientPeopleDescription());
+			if (ObjectUtils.toString(command.getRecipientPeopleDescription()).equals("")) {
 				document.setRecipientPeopleUnsure(false);
 			} else {
-				document.setRecipientPeople(new People(command.getRecipientPeopleId()));
-				document.setRecipientPeopleUnsure(command.getRecipientPeopleUnsure());
+				document.setRecipientPeopleUnsure(command.getRecipientPlaceUnsure());
 			}
+
 			if (ObjectUtils.toString(command.getRecipientPlaceDescription()).equals("")) {
 				document.setRecipientPlace(new Place(0));
 				document.setRecipientPlaceUnsure(false);
