@@ -479,7 +479,7 @@ public class AjaxController {
 						paginationFilter.addSortingCriteria("endDay_Sort", sortingDirection, SortField.INT);
 						break;
 					case 4:
-						paginationFilter.addSortingCriteria("digitized_Sort", sortingDirection, SortField.STRING);
+						paginationFilter.addSortingCriteria("digitized", sortingDirection, SortField.STRING);
 						paginationFilter.addSortingCriteria("volNum_Sort", sortingDirection, SortField.INT);
 						paginationFilter.addSortingCriteria("volLetExt_Sort", sortingDirection, SortField.STRING);
 						break;
@@ -822,12 +822,14 @@ public class AjaxController {
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	private void simpleSearchVolumes(Map<String, Object> model, String searchText, PaginationFilter paginationFilter) {
 		Page page = null;
-		Map<String, Boolean> stateVolumesDigitized = new HashMap<String, Boolean>();
+		// Lorenzo Pasquinelli : Now digitized information on volume is a property of volume entity ... We can comment next code
+		//Map<String, Boolean> stateVolumesDigitized = new HashMap<String, Boolean>();
 
 		try {
 			page = getSearchService().searchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
 
-			stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
+			// Lorenzo Pasquinelli : Now digitized information on volume is a property of volume entity ... We can comment next code
+			// stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
 		} catch (ApplicationThrowable aex) {
 		}
 
@@ -839,9 +841,9 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
 			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
-			if(stateVolumesDigitized.get(currentVolume.getMDP())){
+			if(currentVolume.getDigitized().equals(Boolean.TRUE)) {
 				singleRow.add("YES");
-			}else{
+			 }else {
 				singleRow.add("NO");
 			}
 			resultList.add(HtmlUtils.showVolume(singleRow, currentVolume.getSummaryId()));
