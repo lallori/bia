@@ -27,22 +27,15 @@
  */
 package org.medici.docsources.dao.searchfilter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -78,6 +71,20 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public SearchFilter findUserSearchFilter(String username, Integer idSearchFilter) throws PersistenceException {
+		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username and id=:id");
+		
+		Query query = getEntityManager().createQuery(jpql.toString());
+		query.setParameter("username", username);
+		query.setParameter("id", idSearchFilter);
+		
+		return (SearchFilter) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SearchFilter> findUserSearchFilters(String username) throws PersistenceException {
@@ -92,24 +99,17 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("rawtypes")
 	@Override
 	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
 
 		if (paginationFilter.getTotal() == null) {
-			CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-			CriteriaQuery<Long> criteriaQueryCount = criteriaBuilder.createQuery(Long.class);
-			Root<SearchFilter> rootCount = criteriaQueryCount.from(SearchFilter.class);
-			criteriaQueryCount.select(criteriaBuilder.count(rootCount));
+			String jpql = "SELECT count(username) from SearchFilter where username=:username";
+			Query query = getEntityManager().createQuery(jpql);
+			query.setParameter("username", username);
 
-			List<Predicate> predicates = new ArrayList<Predicate>();
-	        predicates.add(criteriaBuilder.equal((Expression) rootCount.get("username"), username));
-	        criteriaQueryCount.where(criteriaBuilder.or(predicates.toArray(new Predicate[]{})));
-	        
-	        TypedQuery typedQueryCount = getEntityManager().createQuery(criteriaQueryCount);
-			page.setTotal(new Long((Long)typedQueryCount.getSingleResult()));
+			page.setTotal((Long) query.getSingleResult());
 		}
 
 		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username ");
@@ -118,7 +118,8 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 			jpql.append("order by ");
 			for (int i=0; i<paginationFilter.getSortingCriterias().size(); i++) {
 				jpql.append(paginationFilter.getSortingCriterias().get(i).getColumn());
-				jpql.append(paginationFilter.getSortingCriterias().get(i).getOrder()); 
+				jpql.append(" ");
+				jpql.append(paginationFilter.getSortingCriterias().get(i).getOrder().toStringJPQL());
 			}
 		}
 		
@@ -135,13 +136,37 @@ public class SearchFilterDAOJpaImpl extends JpaDao<String, SearchFilter> impleme
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SearchFilter findUserSearchFilter(String username, Integer idSearchFilter) throws PersistenceException {
-		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username and id=:id");
+	public Page findUserSearchFilters(String username, PaginationFilter paginationFilter, SearchType searchType) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+
+		if (paginationFilter.getTotal() == null) {
+			String jpql = "SELECT count(username) from SearchFilter where username=:username and searchType=:searchType ";
+			Query query = getEntityManager().createQuery(jpql);
+			query.setParameter("username", username);
+			query.setParameter("searchType", searchType);
+
+			page.setTotal((Long) query.getSingleResult());
+		}
+
+		StringBuffer jpql = new StringBuffer("from SearchFilter where username=:username and searchType=:searchType ");
+		
+		if (paginationFilter.getSortingCriterias().size() > 0) {
+			jpql.append("order by ");
+			for (int i=0; i<paginationFilter.getSortingCriterias().size(); i++) {
+				jpql.append(paginationFilter.getSortingCriterias().get(i).getColumn());
+				jpql.append(" ");
+				jpql.append(paginationFilter.getSortingCriterias().get(i).getOrder().toStringJPQL());
+			}
+		}
 		
 		Query query = getEntityManager().createQuery(jpql.toString());
 		query.setParameter("username", username);
-		query.setParameter("id", idSearchFilter);
+		query.setParameter("searchType", searchType);
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		page.setList(query.getResultList());
 		
-		return (SearchFilter) query.getSingleResult();
+		return page;
 	}
 }
