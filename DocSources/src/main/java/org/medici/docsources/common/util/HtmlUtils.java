@@ -162,6 +162,32 @@ public class HtmlUtils {
 	/**
 	 * 
 	 * @param inputList
+	 * @param idFilter
+	 * @return
+	 */
+	public static List<String> showUserSearchFilter(List<Object> inputList, Integer idSearchFilter) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/AdvancedSearch.do?idSearchFilter=");
+		anchorBegin.append(idSearchFilter);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i).toString() + hrefEnd);
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
 	 * @param entryId
 	 * @return
 	 */

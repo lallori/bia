@@ -914,8 +914,7 @@ public class AjaxController {
 			singleRow.add(currentFilter.getSearchType());
 			singleRow.add(DateFormatUtils.format(currentFilter.getDateUpdated(), "MM/dd/yyyy"));
 
-			//resultList.add(HtmlUtils.showAdvancedSearchResult(singleRow, currentFilter.getId()));
-			resultList.add(singleRow);
+			resultList.add(HtmlUtils.showUserSearchFilter(singleRow, currentFilter.getId()));
 		}
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());
