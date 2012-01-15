@@ -46,8 +46,7 @@
 			$j('.searchResult').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.searchResult').live('click', function() {
-				alert($j(this));
-				$j(this).open({width: 960, height: 350, scrollbars: "yes"});
+				$j('.searchResult').open({width: 960, height: 350, scrollbars: "yes"});
 				return false;
 			}); 
 		} );
