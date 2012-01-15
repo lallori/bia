@@ -113,9 +113,9 @@ public class DeleteDocumentController {
 			try {
 				getDocBaseService().deleteDocument(command.getEntryId());
 
-				return new ModelAndView("response/OK", model);
+				return new ModelAndView("response/DeleteDocumentOK", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("response/KO", model);
+				return new ModelAndView("response/DeleteDocumentKO", model);
 			}
 		}
 	}

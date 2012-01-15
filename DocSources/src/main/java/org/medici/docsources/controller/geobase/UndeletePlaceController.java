@@ -72,9 +72,9 @@ public class UndeletePlaceController {
 		try {
 			getGeoBaseService().deletePlace(command.getPlaceAllId());
 
-			return new ModelAndView("response/OK", model);
+			return new ModelAndView("response/UndeletePlaceOK", model);
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("response/KO", model);
+			return new ModelAndView("response/UneletePlaceKO", model);
 		}
 	}
 

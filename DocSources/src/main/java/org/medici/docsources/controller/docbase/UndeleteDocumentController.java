@@ -92,9 +92,9 @@ public class UndeleteDocumentController {
 		try {
 			getDocBaseService().undeleteDocument(command.getEntryId());
 
-			return new ModelAndView("response/OK", model);
+			return new ModelAndView("response/UndeleteDocumentOK", model);
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("response/KO", model);
+			return new ModelAndView("response/UndeleteDocumentKO", model);
 		}
 	}
 }

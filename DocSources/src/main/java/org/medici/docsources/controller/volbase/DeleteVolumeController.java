@@ -94,9 +94,9 @@ public class DeleteVolumeController {
 			try {
 				getVolBaseService().deleteVolume(command.getSummaryId());
 
-				return new ModelAndView("response/OK", model);
+				return new ModelAndView("response/DeleteVolumeOK", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("response/KO", model);
+				return new ModelAndView("response/DeleteVolumeKO", model);
 			}
 		}
 	}

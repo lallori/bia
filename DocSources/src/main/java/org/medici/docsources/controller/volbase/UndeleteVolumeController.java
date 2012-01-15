@@ -94,9 +94,9 @@ public class UndeleteVolumeController {
 			try {
 				getVolBaseService().deleteVolume(command.getSummaryId());
 
-				return new ModelAndView("response/OK", model);
+				return new ModelAndView("response/UndeletePersonOK", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("response/KO", model);
+				return new ModelAndView("response/UndeletePersonKO", model);
 			}
 		}
 	}

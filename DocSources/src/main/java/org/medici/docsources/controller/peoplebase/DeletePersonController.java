@@ -94,9 +94,9 @@ public class DeletePersonController {
 			try {
 				getPeopleBaseService().deletePerson(command.getPersonId());
 
-				return new ModelAndView("response/OK", model);
+				return new ModelAndView("response/DeletePersonOK", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("response/KO", model);
+				return new ModelAndView("response/DeletePersonKO", model);
 			}
 		}
 	}

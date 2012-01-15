@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.people;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -300,8 +301,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
 			return fullTextQuery.list();
         } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
+        	logger.error("Unable to parse query with text " + searchText, parseException);
+        	return new ArrayList<People>(0);
 		}
 	}
 	
@@ -374,8 +375,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
 			return fullTextQuery.list();
         } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
+        	logger.error("Unable to parse query with text " + searchText, parseException);
+        	return new ArrayList<People>(0);
 		}
 	}
 
@@ -448,8 +449,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
 			return fullTextQuery.list();
         } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
+        	logger.error("Unable to parse query with text " + searchText, parseException);
+        	return new ArrayList<People>(0);
 		}
 	}
 
@@ -528,8 +529,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 
 			return fullTextQuery.list();
         } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
+        	logger.error("Unable to parse query with text " + searchText, parseException);
+        	return new ArrayList<People>(0);
 		}
 	}
 
@@ -565,8 +566,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			fullTextQuery.toString();
 			return fullTextQuery.list();
         } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
+        	logger.error("Unable to parse query with text " + searchText, parseException);
+        	return new ArrayList<People>(0);
 		}
 	}
 
@@ -668,8 +669,8 @@ Page page = new Page(paginationFilter);
 			
 			return fullTextQuery.list();
         } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
+        	logger.error("Unable to parse query with text " + searchText, parseException);
+        	return new ArrayList<People>(0);
 		}
 	}
 
@@ -703,8 +704,8 @@ Page page = new Page(paginationFilter);
 
 			return fullTextQuery.list();
         } catch (ParseException parseException) {
-			// TODO: handle exception
-        	return null;
+        	logger.error("Unable to parse query with text " + searchText, parseException);
+        	return new ArrayList<People>(0);
 		}
 	}
 

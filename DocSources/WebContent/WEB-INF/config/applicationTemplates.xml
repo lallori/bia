@@ -727,6 +727,56 @@
 	<definition name="response/KO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/KO.jsp"/>
 	</definition>
+
+	<definition name="response/DeleteDocumentOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteDocumentOK.jsp"/>
+	</definition>
+	<definition name="response/DeleteDocumentKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteDocumentKO.jsp"/>
+	</definition>
+	<definition name="response/DeletePlaceOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePlaceOK.jsp"/>
+	</definition>
+	<definition name="response/DeletePlaceKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePlaceKO.jsp"/>
+	</definition>
+	<definition name="response/DeletePersonOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePersonOK.jsp"/>
+	</definition>
+	<definition name="response/DeletePersonKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePersonKO.jsp"/>
+	</definition>
+	<definition name="response/DeleteVolumeOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteVolumeOK.jsp"/>
+	</definition>
+	<definition name="response/DeleteVolumeKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteVolumeKO.jsp"/>
+	</definition>
+
+	<definition name="response/UndeleteDocumentOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteDocumentOK.jsp"/>
+	</definition>
+	<definition name="response/UndeleteDocumentKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteDocumentKO.jsp"/>
+	</definition>
+	<definition name="response/UndeletePlaceOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeletePlaceOK.jsp"/>
+	</definition>
+	<definition name="response/UndeletePlaceKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeletePlaceKO.jsp"/>
+	</definition>
+	<definition name="response/UndeletePersonOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeletePersonOK.jsp"/>
+	</definition>
+	<definition name="response/UndeletePersonKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeletePersonKO.jsp"/>
+	</definition>
+	<definition name="response/UndeleteVolumeOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteVolumeOK.jsp"/>
+	</definition>
+	<definition name="response/UndeleteVolumeKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/UndeleteVolumeKO.jsp"/>
+	</definition>
 	<!-- Generic Response END -->
 
 	<!-- Errors START -->

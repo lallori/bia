@@ -71,9 +71,9 @@ public class UndeletePersonController {
 		try {
 			getPeopleBaseService().deletePerson(command.getPersonId());
 
-			return new ModelAndView("response/OK", model);
+			return new ModelAndView("response/UndeletePersonOK", model);
 		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("response/KO", model);
+			return new ModelAndView("response/UndeletePersonKO", model);
 		}
 	}
 
