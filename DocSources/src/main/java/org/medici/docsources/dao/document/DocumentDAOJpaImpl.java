@@ -105,7 +105,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	@Override
 	public Long countDocumentsLinkedToAVolume(Integer summaryId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE volume.summaryId =:summaryId");
-		query.setParameter("summaryIdId", summaryId);
+		query.setParameter("summaryId", summaryId);
 		
 		return (Long) query.getSingleResult();
 	}
