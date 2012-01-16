@@ -1071,9 +1071,9 @@ var IIP = new Class({
 							this.fade(0);
 						}
 					},
-					'html' : '<div><div><h2><a href="http://iipimage.sourceforge.net" target="_blank"><img src="'
+					'html' : '<div><div><h2><img src="'
 							+ this.prefix
-							+ 'iip.32x32.png"/></a>Based on IIPMooViewer '
+							+ 'iip.32x32.png"/>Based on IIPMooViewer '
 							+ this.version
 							+ '</h2><br/>\
 							<ul><li>To navigate within image: drag image within main window or drag zone within the navigation window or click an area within navigation window</li>\
