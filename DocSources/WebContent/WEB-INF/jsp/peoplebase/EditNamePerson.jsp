@@ -61,17 +61,16 @@
 	    	
 			$j('#closePerson').click(function(e) {
 // FAR FUNZIONARE ANCHE QUI				
-//				if($j("#modify").val() == 1){
-//	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-//					$j('#EditNamePersonForm').block({ message: $j('#question') }); 
-//					return false;
-//	        	}else{
-//	        		$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
-//	    			$j("#body_left").html(html);
-//	    			}});
-//				}
-				$j('#EditNamePersonForm').block({ message: $j('#question') });
-	            return false;
+				if($j("#modify").val() == 1){
+	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+					$j('#EditNamePersonDiv').block({ message: $j('#question') }); 
+				return false;
+		       	}else{
+		       		$j.ajax({ url: '${EditNamesPersonURL}', cache: false, success:function(html) { 
+						$j("#EditNamesPersonDiv").html(html);
+					}});
+				}
+				return false;
 	            
 			});
 			
