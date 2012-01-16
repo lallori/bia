@@ -749,8 +749,10 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			BooleanQuery namesQuery = new BooleanQuery();
 			for(int i = 0; i < names.size(); i++){
 				if(namesTypes.get(i).equals(NameType.AllNameTypes)){
-					BooleanClause booleanClause = new BooleanClause(new PrefixQuery(new Term("altName.altName", names.get(i).toLowerCase())), Occur.MUST);
-					namesQuery.add(booleanClause);
+					BooleanQuery subQuery = new BooleanQuery();
+					subQuery.add(new PrefixQuery(new Term("mapNameLf", namesTypes.get(i).toString().toLowerCase())),Occur.MUST);
+					subQuery.add(new PrefixQuery(new Term("altName.altName", names.get(i).toLowerCase())), Occur.MUST);
+					namesQuery.add(subQuery, Occur.MUST);
 				}else{
 					BooleanQuery subQuery = new BooleanQuery();
 //					try{
