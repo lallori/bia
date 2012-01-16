@@ -30,7 +30,7 @@
     
     <div>	
         <label for="browse" id="browseLabel">Browse</label>
-        <input id="browse" name="browse" class="input_33c" type="file" value="" size="40"/><span>(Portrait image)</span>
+        <input id="browse" name="browse" class="input_33c" type="file" value="" size="30"/><span>(Portrait image)</span>
     </div>
 	
 	<div>
@@ -62,7 +62,7 @@
 		<form:label for="interests" id="interestsLabel" path="interests">Interests</form:label>
 		<form:input id="interests" path="interests" cssClass="input_20c" /><form:errors path="interests" />
 		<label for="resume" id="resumeLabel">Resume</label>
-		<input id="resume" name="resume" class="input_20c" type="file" value="" size="20"/>
+		<input id="resume" name="resume" class="input_20c" type="file" value="" size="14"/>
 	</div>
 	
 		<input id="close" type="submit" value="Close" title="Do not save changes" />

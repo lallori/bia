@@ -9,5 +9,5 @@
 					<p class="usersuccess">Your username is <b>${user.account}</b><br/><br/>An e-mail has been sent to the e-mail address you provided in the previous form.<br/><br/>To access the system, please check your email account and confirm your registration.</p>  		
 			</div>
 
-			<div id="stemma"></div>
+			
 			

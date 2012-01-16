@@ -10,4 +10,4 @@
 					<a href="<c:url value="/"/>"><img src="<c:url value="/images/button_login.jpg"/>" alt="Login"/></a></p>
 			</div>
 
-			<div id="stemma"></div>
+			

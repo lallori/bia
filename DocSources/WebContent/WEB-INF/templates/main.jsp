@@ -106,7 +106,10 @@
 			if (navigator.appVersion.indexOf("Mac")!=-1)
 				document.write('<link href="/DocSources/styles/1024/MainContent_mac.css" rel="stylesheet" type="text/css">');
 			
-			 if (navigator.appVersion.indexOf("Linux")!=-2)
+			if (navigator.appVersion.indexOf("Linux")!=-1)
+				document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">','<link href="/DocSources/styles/1024/Template_linux.css" rel="stylesheet" type="text/css">');
+			 
+			 if (navigator.appVersion.indexOf("X11")!=-1)
 				 document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">','<link href="/DocSources/styles/1024/Template_linux.css" rel="stylesheet" type="text/css">');
 			
 		</script>

@@ -7,9 +7,10 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 			<div id="usersuccess">
+					<h1>CONGRATULATIONS!</h1>
 					<p class="activsuccess">Your account has been created.<br/><br/>
 					<a href="<c:url value="/"/>"><img src="<c:url value="/images/button_login.jpg"/>" alt="Login"/></a></p>
 			</div>
 
-			<div id="stemma"></div>
+			
 			

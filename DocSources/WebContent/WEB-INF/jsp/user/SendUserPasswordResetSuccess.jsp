@@ -8,4 +8,4 @@
 				<p class="usersuccess">An e-mail has been sent to the e-mail address you provided in the previous form.<br/><br/>To access the system, please check your email account and confirm your password reset.</p>  		
 			</div>
 
-			<div id="stemma"></div>
+			
