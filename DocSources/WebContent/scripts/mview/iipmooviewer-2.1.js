@@ -1071,11 +1071,11 @@ var IIP = new Class({
 							this.fade(0);
 						}
 					},
-					'html' : '<div><div><h2><a href="http://iipimage.sourceforge.net"><img src="'
+					'html' : '<div><div><h2><a href="http://iipimage.sourceforge.net" target="_blank"><img src="'
 							+ this.prefix
 							+ 'iip.32x32.png"/></a>Based on IIPMooViewer '
 							+ this.version
-							+ '</h2>Modified by The Medici Archive Project <br/>\
+							+ '</h2><br/>\
 							<ul><li>To navigate within image: drag image within main window or drag zone within the navigation window or click an area within navigation window</li>\
 							<li>To zoom in: double click with the mouse or use the mouse scroll wheel or simply press the "+" key</li>\
 							<li>To zoom out: shift double click with the mouse or use the mouse wheel or press the "-" key</li>\
