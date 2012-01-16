@@ -1084,8 +1084,8 @@ var IIP = new Class({
 							<li>To show / hide navigation buttons: double click navigation window toolbar</li>\
 							<li>To resize to full screen: press the "f" key<li>To highlight any annotations: press the "a" key</li>\
 							<li>To rotate image clockwise: press the "r" key, anti-clockwise: press shift and "r"</li>\
-							</ul><br/>For more information visit:<a href="http://iipimage.sourceforge.net">http://iipimage.sourceforge.net</a> and\
-							<a href="http://www.medici.org">http://www.medici.org</a></div></div>'
+							</ul><br/>For more information visit: <a href="http://iipimage.sourceforge.net" target="_blank">http://iipimage.sourceforge.net</a> and\
+							<a href="http://www.medici.org" target="_blank">http://www.medici.org</a></div></div>'
 				}).inject(container);
 
 		// Use a lexical closure rather than binding to pass this to
