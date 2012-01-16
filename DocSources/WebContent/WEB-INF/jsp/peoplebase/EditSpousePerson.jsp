@@ -59,6 +59,7 @@
 		</fieldset>	
 		
 		<form:hidden path="marriageId" />
+		<form:hidden path="personId" />
 		<form:hidden path="gender"/>
 	</form:form>
 	

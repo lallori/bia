@@ -33,6 +33,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
@@ -85,6 +86,7 @@ public class EditChildPersonValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditChildPersonCommand editChildPersonCommand = (EditChildPersonCommand) object;
 		validatePersonId(editChildPersonCommand.getId(), errors);
+		validateChildId(editChildPersonCommand.getChildId(), errors);
 //		validateDates(editChildPersonCommand.getParentId(), editChildPersonCommand.getChildId(), errors);
 		
 	}
@@ -119,6 +121,28 @@ public class EditChildPersonValidator implements Validator {
 					if (getPeopleBaseService().findParent(id) == null) {
 						errors.reject("personId", "error.personId.notfound");
 					}
+				}
+			} catch (ApplicationThrowable ath) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param errors
+	 */
+	public void validateChildId(Integer id, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "childId", "error.childId.null");
+		if (!errors.hasErrors()) {
+			try {
+				if (id != null && id > 0) {
+					if (getPeopleBaseService().findPerson(id) == null) {
+						errors.reject("childId", "error.childId.notfound");
+					}
+				}else{
+					errors.reject("childId", "error.childId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
 				

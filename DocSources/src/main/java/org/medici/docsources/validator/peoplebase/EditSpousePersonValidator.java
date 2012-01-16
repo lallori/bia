@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.EditSpousePersonCommand;
+import org.medici.docsources.common.util.ValidationUtils;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,8 @@ public class EditSpousePersonValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditSpousePersonCommand editSpousePersonCommand = (EditSpousePersonCommand) object;
 		validatePersonId(editSpousePersonCommand.getPersonId(), errors);
+		validateHusbandId(editSpousePersonCommand.getHusbandId(), errors);
+		validateWifeId(editSpousePersonCommand.getWifeId(), errors);
 	}
 
 	/**
@@ -92,10 +95,58 @@ public class EditSpousePersonValidator implements Validator {
 	 * @param errors
 	 */
 	public void validatePersonId(Integer peopleId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "personId", "error.personId.null");
+		
 		if (!errors.hasErrors()) {
 			try {
 				if (getPeopleBaseService().findPerson(peopleId) == null) {
 					errors.reject("personId", "error.personId.notfound");
+				}
+			} catch (ApplicationThrowable ath) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param husbandId
+	 * @param errors
+	 */
+	public void validateHusbandId(Integer husbandId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "husbandId", "error.husbandId.null");
+		
+		if (!errors.hasErrors()) {
+			try {
+				if(husbandId != null && husbandId > 0){
+					if (getPeopleBaseService().findPerson(husbandId) == null) {
+						errors.reject("husbandId", "error.husbandId.notfound");
+					}
+				}else{
+					errors.reject("husbandId", "error.husbandId.notfound");
+				}
+			} catch (ApplicationThrowable ath) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param wifeId
+	 * @param errors
+	 */
+	public void validateWifeId(Integer wifeId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "wifeId", "error.wifeId.null");
+		
+		if (!errors.hasErrors()) {
+			try {
+				if(wifeId != null && wifeId > 0){
+					if (getPeopleBaseService().findPerson(wifeId) == null) {
+						errors.reject("wifeId", "error.wifeId.notfound");
+					}
+				}else{
+					errors.reject("wifeId", "error.wifeId.notfound");
 				}
 			} catch (ApplicationThrowable ath) {
 				

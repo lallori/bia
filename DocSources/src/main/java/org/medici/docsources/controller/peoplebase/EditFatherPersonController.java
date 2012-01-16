@@ -143,20 +143,22 @@ public class EditFatherPersonController {
 			try {
 				Parent parent = getPeopleBaseService().findParent(command.getId());
 				
-				command.setFatherDescription(parent.getParent().toString());
-				command.setBioNotes(parent.getParent().getBioNotes());
-				command.setBornYear(parent.getParent().getBornYear());
-				if (parent.getParent().getBornMonth()!= null){
-					command.setBornMonthNum(parent.getParent().getBornMonth().getMonthNum());
-					command.setBornMonth(parent.getParent().getBornMonth().getMonthName());
+				if(parent != null){
+					command.setFatherDescription(parent.getParent().toString());
+					command.setBioNotes(parent.getParent().getBioNotes());
+					command.setBornYear(parent.getParent().getBornYear());
+					if (parent.getParent().getBornMonth()!= null){
+						command.setBornMonthNum(parent.getParent().getBornMonth().getMonthNum());
+						command.setBornMonth(parent.getParent().getBornMonth().getMonthName());
+					}
+					command.setBornDay(parent.getParent().getBornDay());
+					command.setDeathYear(parent.getParent().getDeathYear());
+					if (parent.getParent().getDeathMonth() != null) {
+						command.setDeathMonthNum(parent.getParent().getDeathMonth().getMonthNum());
+						command.setDeathMonth(parent.getParent().getDeathMonth().getMonthName());
+					}
+					command.setDeathDay(parent.getParent().getDeathDay());
 				}
-				command.setBornDay(parent.getParent().getBornDay());
-				command.setDeathYear(parent.getParent().getDeathYear());
-				if (parent.getParent().getDeathMonth() != null) {
-					command.setDeathMonthNum(parent.getParent().getDeathMonth().getMonthNum());
-					command.setDeathMonth(parent.getParent().getDeathMonth().getMonthName());
-				}
-				command.setDeathDay(parent.getParent().getDeathDay());
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditFatherPerson", model);
 			}

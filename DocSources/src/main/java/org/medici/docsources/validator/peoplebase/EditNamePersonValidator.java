@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.EditNamePersonCommand;
+import org.medici.docsources.common.util.ValidationUtils;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,7 @@ public class EditNamePersonValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditNamePersonCommand editNamePersonCommand = (EditNamePersonCommand) object;
 		validatePersonId(editNamePersonCommand.getPersonId(), errors);
+		validateAltName(editNamePersonCommand.getAltName(), errors);
 	}
 
 	/**
@@ -101,5 +103,9 @@ public class EditNamePersonValidator implements Validator {
 				
 			}
 		}
+	}
+	
+	public void validateAltName(String altName, Errors errors){
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "altName", "error.altName.null");
 	}
 }

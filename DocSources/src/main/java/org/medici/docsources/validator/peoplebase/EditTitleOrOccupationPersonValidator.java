@@ -28,6 +28,7 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.medici.docsources.command.peoplebase.EditTitleOrOccupationPersonCommand;
+import org.medici.docsources.common.util.ValidationUtils;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,7 @@ public class EditTitleOrOccupationPersonValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditTitleOrOccupationPersonCommand editTitleOrOccupationPersonCommand = (EditTitleOrOccupationPersonCommand) object;
 		validatePersonId(editTitleOrOccupationPersonCommand.getPersonId(), errors);
+		validateTitleId(editTitleOrOccupationPersonCommand.getTitleOccIdNew(), errors);
 	}
 
 	/**
@@ -99,6 +101,21 @@ public class EditTitleOrOccupationPersonValidator implements Validator {
 				}
 			} catch (ApplicationThrowable ath) {
 				
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param titleOccId
+	 * @param errors
+	 */
+	public void validateTitleId(Integer titleId, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "titleOccIdNew", "error.titleOccIdNew.null");
+		
+		if (!errors.hasErrors()) {
+			if(titleId == null){
+				errors.reject("titleId", "error.titleOccIdNew.notfound");
 			}
 		}
 	}
