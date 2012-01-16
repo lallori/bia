@@ -70,14 +70,32 @@
 			});
 
 	        $j(".deleteIcon").click(function() {
-				$j.get(this.href, function(data) {
-					if(data.match(/KO/g)){
-			            var resp = $j('<div></div>').append(data); // wrap response
-					} else {
-						$j("#EditNamesPersonDiv").load('${EditNamesPersonURL}');
-					}
-		        });
-				return false;
+	        	var toDelete = $j(this);
+	        	$j("#EditNamesPersonDiv").block({ message: $j(".question")});
+	        	
+	        	$j('.no').click(function(){
+	        		$j.unblockUI();
+	        		$j(".blockUI").fadeOut("slow");
+					$j(".question").hide();
+					$j("#EditNamesPersonDiv").append($j(".question"));
+					$j(".blockUI").remove();
+					$j("#EditNamesPersonDiv").load('${EditNamesPersonURL}');
+					return false; 
+	        	});
+	        	
+	        	$j(".yes").click(function(){
+	        		$j.get(toDelete.attr("href"), function(data) {
+						if(data.match(/KO/g)){
+			            	var resp = $j('<div></div>').append(data); // wrap response
+						} else {
+							$j("#EditNamesPersonDiv").load('${EditNamesPersonURL}');
+							return false;
+						}
+						return false;
+		        	});
+					
+	        	});
+	        	return false;
 			});
 
 			$j(".editValue").click(function() {
@@ -91,3 +109,9 @@
 			});
 		});
 	</script>
+	
+	<div class="question" style="display:none; cursor: default"> 
+		<h1>Are you sure you want to delete this name variant?</h1> 
+		<input type="button" class="yes" value="Yes" /> 
+		<input type="button" class="no" value="No" /> 
+	</div>
