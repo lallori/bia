@@ -750,7 +750,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			for(int i = 0; i < names.size(); i++){
 				if(namesTypes.get(i).equals(NameType.AllNameTypes)){
 					BooleanQuery subQuery = new BooleanQuery();
-					subQuery.add(new PrefixQuery(new Term("mapNameLf", namesTypes.get(i).toString().toLowerCase())),Occur.MUST);
+					subQuery.add(new PrefixQuery(new Term("mapNameLf", names.get(i).toString().toLowerCase())),Occur.MUST);
 					subQuery.add(new PrefixQuery(new Term("altName.altName", names.get(i).toLowerCase())), Occur.MUST);
 					namesQuery.add(subQuery, Occur.MUST);
 				}else{
@@ -764,7 +764,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 //					}catch(Exception e){
 //						
 //					}
-					subQuery.add(new TermQuery(new Term("mapNameLf", namesTypes.get(i).toString().toLowerCase())),Occur.MUST);
+					subQuery.add(new TermQuery(new Term("mapNameLf", names.get(i).toString().toLowerCase())),Occur.MUST);
 					subQuery.add(new TermQuery(new Term("altName.nameType", namesTypes.get(i).toString().toLowerCase())), Occur.MUST);
 					subQuery.add(new TermQuery(new Term("altName.altName", names.get(i).toLowerCase())), Occur.MUST);
 					namesQuery.add(subQuery, Occur.MUST);
