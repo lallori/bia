@@ -762,6 +762,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 //					}catch(Exception e){
 //						
 //					}
+					subQuery.add(new TermQuery(new Term("mapNameLf", namesTypes.get(i).toString().toLowerCase())),Occur.MUST);
 					subQuery.add(new TermQuery(new Term("altName.nameType", namesTypes.get(i).toString().toLowerCase())), Occur.MUST);
 					subQuery.add(new TermQuery(new Term("altName.altName", names.get(i).toLowerCase())), Occur.MUST);
 					namesQuery.add(subQuery, Occur.MUST);
