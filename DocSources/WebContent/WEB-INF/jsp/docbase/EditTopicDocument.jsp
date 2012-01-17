@@ -61,7 +61,7 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			//$j.scrollTo("#EditTopicDocumentForm");
+			$j.scrollTo("#EditTopicsDocumentDiv");
 			
 			$j("#save").click(function(){
 	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
