@@ -154,7 +154,9 @@ public class EditDetailsPersonController {
 			try {
 				if (command.getPersonId().equals(0)) {
 					person = getPeopleBaseService().addNewPerson(person);
+					
 					model.put("person", person);
+					model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 
 					return new ModelAndView("peoplebase/ShowPerson", model);
 				} else {

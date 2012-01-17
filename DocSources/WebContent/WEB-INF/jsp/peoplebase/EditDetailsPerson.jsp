@@ -11,6 +11,9 @@
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
+		<c:url var="ShowNamesPersonURL" value="/src/peoplebase/ShowNamesPerson.do">
+			<c:param name="personId" value="${command.personId}" />
+		</c:url>
 	</security:authorize>
 	<div>
 		<form:form id="EditDetailsPersonForm" cssClass="edit" method="post">
@@ -326,6 +329,7 @@
 					</c:when> 
 					<c:otherwise> 
 						$j("#EditDetailsPersonDiv").html(html);
+						$j("#EditNamesPersonDiv").load("${ShowNamesPersonURL}");
 					</c:otherwise> 
 				</c:choose> 
 					}
@@ -414,6 +418,7 @@
 						</c:when> 
 						<c:otherwise> 
 							$j("#EditDetailsPersonDiv").html(html);
+							$j("#EditNamesPersonDiv").load("${ShowNamesPersonURL}");
 						</c:otherwise> 
 						</c:choose> 
 					}

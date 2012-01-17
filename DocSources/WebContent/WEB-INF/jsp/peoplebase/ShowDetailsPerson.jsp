@@ -8,6 +8,9 @@
 		<c:url var="EditDetailsPersonURL" value="/de/peoplebase/EditDetailsPerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
+		<c:url var="ShowNamesPersonURL" value="/src/peoplebase/ShowNamesPerson.do">
+			<c:param name="personId" value="${person.personId}" />
+		</c:url>
 	</security:authorize>
 	
 	<c:url var="CompareBirthURL" value="/src/geobase/ComparePlace.do">
@@ -87,13 +90,19 @@
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
-		$j(document).ready(function() {
+		$j(document).ready(function() {			
 			$j("#EditNamesPerson").css('visibility', 'visible');
 	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'visible'); 
 			$j("#EditParentsPerson").css('visibility', 'visible');
 			$j("#EditChildrenPerson").css('visibility', 'visible');
 			$j("#EditSpousesPerson").css('visibility', 'visible');
 	        $j("#EditResearchNotesPerson").css('visibility', 'visible'); 
+	        
+	        <c:choose> 
+				<c:when test="${person.personId != 0}"> 
+	        		$j("#EditNamesPersonDiv").load("${ShowNamesPersonURL}");
+	        	</c:when>
+	        </c:choose>
 
 			$j("#EditDetailsPerson").click(function(){
 				$j(this).next().css('visibility', 'visible');
