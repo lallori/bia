@@ -70,15 +70,15 @@ public class PersonUtils {
 		}
 		if (!ObjectUtils.toString(people.getLastPrefix()).equals("")) {
 			stringBuffer.append(people.getLastPrefix());
-			stringBuffer.append(" "); 
-		}
-		if (!ObjectUtils.toString(people.getPostLast()).equals("")) {
-			stringBuffer.append(people.getPostLast());
-			stringBuffer.append(" "); 
+			stringBuffer.append(" ("); 
 		}
 		if (!ObjectUtils.toString(people.getPostLastPrefix()).equals("")) {
 			stringBuffer.append(people.getPostLastPrefix());
 			stringBuffer.append(" "); 
+		}
+		if (!ObjectUtils.toString(people.getPostLast()).equals("")) {
+			stringBuffer.append(people.getPostLast());
+			stringBuffer.append(") "); 
 		}
 		
 		return stringBuffer.toString();
