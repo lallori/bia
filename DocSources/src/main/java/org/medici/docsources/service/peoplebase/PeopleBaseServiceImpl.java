@@ -28,8 +28,10 @@
 package org.medici.docsources.service.peoplebase;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
@@ -51,6 +53,7 @@ import org.medici.docsources.dao.rolecat.RoleCatDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.dao.userhistorypeople.UserHistoryPeopleDAO;
 import org.medici.docsources.domain.AltName;
+import org.medici.docsources.domain.AltName.NameType;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Parent;
@@ -316,8 +319,23 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			}
 
 			person.setLogicalDelete(Boolean.FALSE);
+			
+			//Code for create altNames
+			AltName given = new AltName();
+			given.setAltName(person.getFirst());
+			given.setNameType(NameType.Given.toString());
+			
+			AltName family = new AltName();
+			family.setAltName(person.getLast());
+			family.setNameType(NameType.Family.toString());
 
 			getPeopleDAO().persist(person);
+			
+			given.setPerson(getPeopleDAO().findLastEntryPerson());
+			getAltNameDAO().persist(given);
+			
+			family.setPerson(getPeopleDAO().findLastEntryPerson());
+			getAltNameDAO().persist(family);
 
 			getUserHistoryPeopleDAO().persist(new UserHistoryPeople("Add person", Action.C, person));
 
@@ -569,8 +587,38 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public People editDetailsPerson(People person) throws ApplicationThrowable {
 		try {
 			People personToUpdate = getPeopleDAO().find(person.getPersonId());
+			
+			Set<AltName> altNames = personToUpdate.getAltName();
 
 			// fill fields to update person details section
+			if(!personToUpdate.getFirst().equals(person.getFirst())){
+				AltName current;
+				Boolean found = Boolean.FALSE;
+				Iterator<AltName> iterator = altNames.iterator();
+				while(iterator.hasNext() && !found){
+					current = iterator.next();
+					if(current.getAltName().equals(personToUpdate.getFirst()) && current.getNameType().equals(NameType.Given.toString())){
+						current.setAltName(person.getFirst());
+						found = Boolean.TRUE;
+					}
+					getAltNameDAO().merge(current);
+				}
+			}
+			
+			if(!personToUpdate.getLast().equals(person.getLast())){
+				AltName current;
+				Boolean found = Boolean.FALSE;
+				Iterator<AltName> iterator = altNames.iterator();
+				while(iterator.hasNext() && !found){
+					current = iterator.next();
+					if(current.getAltName().equals(personToUpdate.getLast()) && current.getNameType().equals(NameType.Family.toString())){
+						current.setAltName(person.getLast());
+						found = Boolean.TRUE;
+					}
+					getAltNameDAO().merge(current);
+				}
+			}
+			
 			personToUpdate.setFirst(person.getFirst());
 			personToUpdate.setSucNum(person.getSucNum());
 			personToUpdate.setMidPrefix(person.getMidPrefix());
