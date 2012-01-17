@@ -190,7 +190,7 @@ public interface SearchService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Page searchTopics(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public List<TopicList> searchTopics(String query, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

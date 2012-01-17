@@ -54,6 +54,7 @@ import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.RoleCat;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -618,11 +619,11 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			Page page = getSearchService().searchTopics(new SimpleSearchTopic(query), new PaginationFilter(0, Integer.MAX_VALUE));
+			List<TopicList> topics = getSearchService().searchTopics(query, new PaginationFilter(0, Integer.MAX_VALUE));
 			model.put("query", query);
-			model.put("count", page.getTotal());
-			model.put("data", ListBeanUtils.transformList(page.getList(), "topicId"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(page.getList(), "topicTitle", " ", " ", Boolean.TRUE));
+			model.put("count", topics.size());
+			model.put("data", ListBeanUtils.transformList(topics, "topicId"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(topics, "topicTitle", " ", " ", Boolean.TRUE));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

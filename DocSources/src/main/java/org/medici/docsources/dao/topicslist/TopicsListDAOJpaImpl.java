@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.topicslist;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,12 +38,15 @@ import javax.persistence.Query;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.WildcardQuery;
+import org.apache.lucene.util.Version;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.transform.Transformers;
@@ -51,7 +55,9 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.Search;
+import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.TopicList;
 import org.springframework.stereotype.Repository;
 
@@ -108,6 +114,15 @@ public class TopicsListDAOJpaImpl extends JpaDao<Integer, TopicList> implements 
 		String[] outputFields = new String[]{"topicId", "topicTitle"};
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 		
+		/*QueryParser parserTopicTitle = new QueryParser(Version.LUCENE_30, "topicTitle", fullTextSession.getSearchFactory().getAnalyzer("topicListAnalyzer"));
+		try{
+		org.apache.lucene.search.Query queryMapNameLf = parserTopicTitle.parse(alias.toLowerCase() + "*");
+		BooleanQuery booleanQuery = new BooleanQuery();
+		booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		for (String singleWord:words) {
+        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+        }*/
 		BooleanQuery booleanQuery = new BooleanQuery();
 		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
 		
@@ -126,6 +141,10 @@ public class TopicsListDAOJpaImpl extends JpaDao<Integer, TopicList> implements 
 		Collections.sort(listTopics, fieldCompare );
 
 		return listTopics; 
+		/*} catch (ParseException parseException) {
+        	logger.error("Unable to parse query with text " + alias, parseException);
+        	return new ArrayList<TopicList>(0);
+		}*/
 	}
 
 	/**

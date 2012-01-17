@@ -27,12 +27,14 @@
  */
 package org.medici.docsources.service.search;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
+import org.medici.docsources.common.util.EplToLinkUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
@@ -42,6 +44,7 @@ import org.medici.docsources.dao.searchfilter.SearchFilterDAO;
 import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
@@ -389,9 +392,10 @@ public class SearchServiceImpl implements SearchService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchTopics(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public List<TopicList> searchTopics(String query, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getTopicsListDAO().searchTopics(searchContainer, paginationFilter);
+			List<EplToLink> eplToLinkList = new ArrayList<EplToLink>(0);
+			return getTopicsListDAO().searchTopicLinkableToDocument(EplToLinkUtils.getTopicIdList(eplToLinkList), query);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
