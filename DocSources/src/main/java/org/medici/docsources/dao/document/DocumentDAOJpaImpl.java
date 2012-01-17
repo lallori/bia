@@ -187,35 +187,6 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 
 	/**
 	 * 
-	 * @param entity
-	 * @throws PersistenceException
-	 */
-	/*public void persist(Document document) throws PersistenceException {
-		Transaction tx = null;
-		EntityManager entityManager = getEntityManager();
-	    entityManager.persist(document);
-
-	    try {
-			Session session = ((HibernateEntityManager) entityManager).getSession();
-			//session = session.getSessionFactory().openSession();
-			FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
-		    tx = fullTextSession.beginTransaction();
-		    fullTextSession.index(document);
-		    tx.commit();
-	    }catch (Throwable th) {
-	    	if (tx != null) {
-	    		if (tx.isActive()) {
-	    			tx.rollback();
-	    		}
-	    	}
-	    } finally{
-	    	
-	    }
-
-	}*/
-
-	/**
-	 * 
 	 * @throws PersistenceException
 	 */
 	public void generateIndex() throws PersistenceException {
@@ -319,6 +290,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
 
 		// We manage sorting (this manages sorting on multiple fields)
+		paginationFilter = this.generatePaginationFilterForHibernateSearch(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		if (sortingCriterias.size() > 0) {
 			SortField[] sortFields = new SortField[sortingCriterias.size()];

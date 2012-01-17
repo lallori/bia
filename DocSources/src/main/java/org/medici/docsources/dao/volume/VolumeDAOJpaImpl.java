@@ -52,7 +52,6 @@ import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.Search;
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
 
@@ -162,6 +161,7 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
 
 		// We manage sorting (this manages sorting on multiple fields)
+		paginationFilter = this.generatePaginationFilterForHibernateSearch(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		if (sortingCriterias.size() > 0) {
 			SortField[] sortFields = new SortField[sortingCriterias.size()];

@@ -482,6 +482,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
 
 		// We manage sorting (this manages sorting on multiple fields)
+		paginationFilter = this.generatePaginationFilterForHibernateSearch(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		if (sortingCriterias.size() > 0) {
 			SortField[] sortFields = new SortField[sortingCriterias.size()];
@@ -576,7 +577,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@Override
 	public Page searchRoleCatPeople(String roleCatToSearch, PaginationFilter paginationFilter) throws PersistenceException {
-Page page = new Page(paginationFilter);
+		Page page = new Page(paginationFilter);
 		
 		Query query = null;
 		String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.roleCat.roleCatId=" + roleCatToSearch + ")");

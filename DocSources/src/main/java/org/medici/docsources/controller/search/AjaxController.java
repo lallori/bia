@@ -34,16 +34,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SimpleSearchDocument;
 import org.medici.docsources.common.search.SimpleSearchPeople;
 import org.medici.docsources.common.search.SimpleSearchPlace;
 import org.medici.docsources.common.search.SimpleSearchTitleOrOccupation;
-import org.medici.docsources.common.search.SimpleSearchTopic;
 import org.medici.docsources.common.search.SimpleSearchVolume;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.HtmlUtils;
@@ -181,7 +178,7 @@ public class AjaxController {
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, searchType);
 
 		if (searchType.equals(SearchType.DOCUMENT)) {
 			advancedSearchDocuments(model, httpSession, paginationFilter, searchUUID);
@@ -318,140 +315,6 @@ public class AjaxController {
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
-	}
-
-	/**
-	 * 
-	 * @param searchType
-	 * @param sortingColumnNumber
-	 * @param sortingDirection
-	 * @param firstRecord
-	 * @param length
-	 * @return
-	 */
-	private PaginationFilter generatePaginationFilter(SearchType searchType, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
-
-		if (searchType.equals(SearchType.DOCUMENT)) {
-			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
-				switch (sortingColumnNumber) {
-					case 0:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection, SortField.STRING);
-						break;
-					case 1:
-						paginationFilter.addSortingCriteria("recipientPeople.mapNameLf_Sort", sortingDirection, SortField.STRING);
-						break;
-					case 2:
-						paginationFilter.addSortingCriteria("docYear_Sort", sortingDirection, SortField.INT);
-						//Month is an entity, so we don't have field with suffix _Sort
-						paginationFilter.addSortingCriteria("docMonthNum.monthNum", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("docDay_Sort", sortingDirection, SortField.INT);
-						break;
-					case 3:
-						paginationFilter.addSortingCriteria("senderPlace.placeName_Sort", sortingDirection, SortField.STRING);
-						break;
-					case 4:
-						paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection, SortField.STRING);
-						break;
-					case 5:
-						paginationFilter.addSortingCriteria("volume.volNum_Sort", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("volume.volLetExt_Sort", sortingDirection, SortField.STRING);
-						paginationFilter.addSortingCriteria("folioNum_Sort", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("folioMod_Sort", sortingDirection, SortField.STRING);
-						break;
-					default:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
-						break;
-				}
-			}
-		} else if (searchType.equals(SearchType.PEOPLE)) {
-			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
-				switch (sortingColumnNumber) {
-					case 0:
-						paginationFilter.addSortingCriteria("mapNameLf_Sort", sortingDirection);
-						break;
-					case 1:
-						paginationFilter.addSortingCriteria("gender", sortingDirection);
-						break;
-					case 2:
-						paginationFilter.addSortingCriteria("bornYear_Sort", sortingDirection, SortField.INT);
-						//Month is an entity, so we don't have field with suffix _Sort
-						paginationFilter.addSortingCriteria("bornMonthNum.monthNum", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("bornDay_Sort", sortingDirection, SortField.INT);
-						break;
-					case 3:
-						paginationFilter.addSortingCriteria("deathYear_Sort", sortingDirection, SortField.INT);
-						//Month is an entity, so we don't have field with suffix _Sort
-						paginationFilter.addSortingCriteria("deathMonthNum.monthNum", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("deathDay_Sort", sortingDirection, SortField.INT);
-						break;
-					case 4:
-						paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection);
-						break;
-					default:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
-						break;
-				}		
-			}
-		} else if (searchType.equals(SearchType.PLACE)) {
-			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
-				switch (sortingColumnNumber) {
-					case 0:
-						paginationFilter.addSortingCriteria("placeNameFull", sortingDirection);
-						break;
-					case 1:
-						paginationFilter.addSortingCriteria("plType", sortingDirection);
-						break;
-					case 2:
-						paginationFilter.addSortingCriteria("parentPlace.placeName", sortingDirection);
-						break;
-					case 3:
-						paginationFilter.addSortingCriteria("parentType", sortingDirection);
-						break;
-					default:
-						paginationFilter.addSortingCriteria("placeNameFull", sortingDirection);
-						break;
-				}
-			}
-		} else if (searchType.equals(SearchType.VOLUME)) {
-			if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
-				switch (sortingColumnNumber) {
-					case 0:
-						paginationFilter.addSortingCriteria("serieList.title_Sort", sortingDirection, SortField.STRING);
-						paginationFilter.addSortingCriteria("serieList.subTitle1_Sort", sortingDirection, SortField.STRING);
-						paginationFilter.addSortingCriteria("serieList.subTitle2_Sort", sortingDirection, SortField.STRING);
-						break;
-					case 1:
-						paginationFilter.addSortingCriteria("volNum_Sort", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("volLetExt_Sort", sortingDirection, SortField.STRING);
-						break;
-					case 2:
-						paginationFilter.addSortingCriteria("startYear_Sort", sortingDirection, SortField.INT);
-						//Month is an entity, so we don't have field with suffix _Sort
-						paginationFilter.addSortingCriteria("startMonthNum.monthNum", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("startDay_Sort", sortingDirection, SortField.INT);
-						break;
-					case 3:
-						paginationFilter.addSortingCriteria("endYear_Sort", sortingDirection, SortField.INT);
-						//Month is an entity, so we don't have field with suffix _Sort
-						paginationFilter.addSortingCriteria("endMonthNum.monthNum", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("endDay_Sort", sortingDirection, SortField.INT);
-						break;
-					case 4:
-						paginationFilter.addSortingCriteria("digitized", sortingDirection, SortField.STRING);
-						paginationFilter.addSortingCriteria("volNum_Sort", sortingDirection, SortField.INT);
-						paginationFilter.addSortingCriteria("volLetExt_Sort", sortingDirection, SortField.STRING);
-						break;
-					default:
-						paginationFilter.addSortingCriteria("serieList.title_Sort", sortingDirection, SortField.STRING);
-						paginationFilter.addSortingCriteria("serieList.subTitle1_Sort", sortingDirection, SortField.STRING);
-						paginationFilter.addSortingCriteria("serieList.subTitle2_Sort", sortingDirection, SortField.STRING);
-						break;
-				}
-			}
-		}
-
-		return paginationFilter;
 	}
 
 	/**
@@ -751,7 +614,7 @@ public class AjaxController {
 									     @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, searchType);
 
 		if (searchType.equals(SearchType.DOCUMENT)) {
 			simpleSearchDocuments(model, alias, paginationFilter);
