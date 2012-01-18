@@ -366,11 +366,11 @@ public class People implements Serializable {
 	private Set<PrcLink> prcLink;
 	
 	@OneToMany(mappedBy="senderPeople", fetch=FetchType.LAZY)
-	@ContainedIn
+	//@ContainedIn
     private Set<Document> senderDocuments;
 
     @OneToMany(mappedBy="recipientPeople", fetch=FetchType.LAZY)
-	@ContainedIn
+	//@ContainedIn
     private Set<Document> recipientDocuments;
 
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="husband")
