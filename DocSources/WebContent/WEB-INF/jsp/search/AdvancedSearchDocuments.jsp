@@ -253,7 +253,9 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".personAdd").attr("disabled");
 					$j(".personAdd").removeAttr("disabled");
+					$j(".personAdd").prop("disabled", false);
 					$j('#personId').val(data);
 				}
 			});
@@ -262,9 +264,9 @@
 				$j(".personAdd").attr("disabled","disabled");
 			});
 			
-			$j(".personAdd").click(function(){
+			/*$j(".personAdd").click(function(){
 				$j(this).attr("disabled","disabled");
-			});
+			});*/
 			
 			$j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
