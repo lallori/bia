@@ -34,12 +34,15 @@ import org.medici.docsources.domain.HistoryLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
+@Transactional(readOnly=true)
 public class LogServiceImpl implements LogService {
 	@Autowired
 	private HistoryLogDAO historyLogDAO;
@@ -65,6 +68,7 @@ public class LogServiceImpl implements LogService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void traceHistoryLog(HistoryLog historyLog) throws ApplicationThrowable {
 		try {
 			getHistoryLogDAO().persist(historyLog);
@@ -77,6 +81,7 @@ public class LogServiceImpl implements LogService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	public void traceAccessLog(AccessLog accessLog) throws ApplicationThrowable {
 		try {
 			getAccessLogDAO().persist(accessLog);
