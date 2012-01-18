@@ -20,6 +20,10 @@
         <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
     </definition>
 
+    <definition name="template.registerDOM" template="/WEB-INF/templates/registerDOM.jsp">
+        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
+    </definition>
+
 	<definition name="template.main" template="/WEB-INF/templates/main.jsp">
 		<put-attribute name="searchForm" value="/WEB-INF/jsp/menu/SearchForm.jsp" />
 		<put-attribute name="lastEntryMenu" value="/WEB-INF/jsp/menu/LastEntry.jsp" />
@@ -50,7 +54,7 @@
     <definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
     
 	<!-- Various definitions -->
-	<definition name="error/ActivateUser" extends="template.loginDOM">
+	<definition name="error/ActivateUser" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
     </definition>
 
@@ -83,39 +87,39 @@
     	<put-attribute name="main" value="/WEB-INF/jsp/Welcome.jsp"/>
     </definition>
 
-    <definition name="user/ActivateUserSuccess" extends="template.loginDOM">
+    <definition name="user/ActivateUserSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ActivateUserSuccess.jsp"/>
     </definition>
 
-    <definition name="user/RegisterUser" extends="template.loginDOM">
+    <definition name="user/RegisterUser" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUser.jsp"/>
     </definition>
 
-    <definition name="user/RegisterUserSuccess" extends="template.loginDOM">
+    <definition name="user/RegisterUserSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/RegisterUserSuccess.jsp"/>
     </definition>
 
-	<definition name="user/ResetUserPassword" extends="template.loginDOM">
+	<definition name="user/ResetUserPassword" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPassword.jsp"/>
     </definition>
     
-    <definition name="user/ResetUserPasswordSuccess" extends="template.loginDOM">
+    <definition name="user/ResetUserPasswordSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ResetUserPasswordSuccess.jsp"/>
     </definition>
     
-	<definition name="user/SendUserActivationCode" extends="template.loginDOM">
+	<definition name="user/SendUserActivationCode" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserActivationCode.jsp"/>
 	</definition>
 
-	<definition name="user/SendUserActivationCodeSuccess" extends="template.loginDOM">
+	<definition name="user/SendUserActivationCodeSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserActivationCodeSuccess.jsp"/>
 	</definition>
 
-	<definition name="user/SendUserPasswordReset" extends="template.loginDOM">
+	<definition name="user/SendUserPasswordReset" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordReset.jsp"/>
 	</definition>
 	
-	<definition name="user/SendUserPasswordResetSuccess" extends="template.loginDOM">
+	<definition name="user/SendUserPasswordResetSuccess" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/SendUserPasswordResetSuccess.jsp"/>
 	</definition>
     <!-- Authentication Module END -->
