@@ -70,13 +70,14 @@ public class PersonUtils {
 		}
 		if (!ObjectUtils.toString(people.getLastPrefix()).equals("")) {
 			stringBuffer.append(people.getLastPrefix());
-			stringBuffer.append(" ("); 
-		}
-		if (!ObjectUtils.toString(people.getPostLastPrefix()).equals("")) {
-			stringBuffer.append(people.getPostLastPrefix());
 			stringBuffer.append(" "); 
 		}
 		if (!ObjectUtils.toString(people.getPostLast()).equals("")) {
+			stringBuffer.append("(");
+			if (!ObjectUtils.toString(people.getPostLastPrefix()).equals("")) {
+				stringBuffer.append(people.getPostLastPrefix());
+				stringBuffer.append(" "); 
+			}
 			stringBuffer.append(people.getPostLast());
 			stringBuffer.append(") "); 
 		}
