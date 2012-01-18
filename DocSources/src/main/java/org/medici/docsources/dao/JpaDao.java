@@ -657,11 +657,15 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 				orderBySQL.append(sortingCriterias.get(i).getColumn());
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
+				} else {
+					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 			}
 		}
-		query = getEntityManager().createQuery(objectsQuery + orderBySQL.toString());
+		
+		String jpql = objectsQuery + orderBySQL.toString();
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql );
 		// We set pagination  
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
