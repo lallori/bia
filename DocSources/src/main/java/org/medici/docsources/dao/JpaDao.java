@@ -40,6 +40,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
@@ -61,6 +62,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -255,12 +257,271 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 
 	/**
 	 * 
+	 * @param paginationFilter
+	 * @param searchType
+	 * @return
+	 */
+	protected PaginationFilter generatePaginationFilterForHibernateSearch(PaginationFilter paginationFilter) {
+
+		if (paginationFilter.getSearchType().equals(SearchType.DOCUMENT)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("recipientPeople.mapNameLf_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("docYear_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix _Sort
+						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("docDay_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("senderPlace.placeName_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 4:  
+						paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 5:
+						paginationFilter.addSortingCriteria("volume.volNum_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("volume.volLetExt_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("folioNum_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("folioMod_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					default:
+						paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", paginationFilter.getSortingDirection());
+						break;
+				}
+			}
+		} else if (paginationFilter.getSearchType().equals(SearchType.PEOPLE)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("mapNameLf_Sort", paginationFilter.getSortingDirection());
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("gender", paginationFilter.getSortingDirection());
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("bornYear_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix _Sort
+						paginationFilter.addSortingCriteria("bornMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("bornDay_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("deathYear_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix _Sort
+						paginationFilter.addSortingCriteria("deathMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("deathDay_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 4:
+						paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", paginationFilter.getSortingDirection());
+						break;
+					default:
+						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection());
+						break;
+				}		
+			}
+		} else if (paginationFilter.getSearchType().equals(SearchType.PLACE)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("placeNameFull", paginationFilter.getSortingDirection());
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("plType", paginationFilter.getSortingDirection());
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("parentPlace.placeName", paginationFilter.getSortingDirection());
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("parentType", paginationFilter.getSortingDirection());
+						break;
+					default:
+						paginationFilter.addSortingCriteria("placeNameFull", paginationFilter.getSortingDirection());
+						break;
+				}
+			}
+		} else if (paginationFilter.getSearchType().equals(SearchType.VOLUME)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("serieList.title_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.subTitle1_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.subTitle2_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("volNum_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("volLetExt_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("startYear_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix _Sort
+						paginationFilter.addSortingCriteria("startMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("startDay_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("endYear_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix _Sort
+						paginationFilter.addSortingCriteria("endMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("endDay_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 4:
+						paginationFilter.addSortingCriteria("digitized", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("volNum_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("volLetExt_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					default:
+						paginationFilter.addSortingCriteria("serieList.title_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.subTitle1_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.subTitle2_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+				}
+			}
+		}
+
+		return paginationFilter;
+	}
+
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @param searchType
+	 * @return
+	 */
+	protected PaginationFilter generatePaginationFilterMYSQL(PaginationFilter paginationFilter) {
+		if (paginationFilter.getSearchType().equals(SearchType.DOCUMENT)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("docYear", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix 
+						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("docDay", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("senderPlace.placeName", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 4:  
+						paginationFilter.addSortingCriteria("recipientPlace.placeName", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 5:
+						paginationFilter.addSortingCriteria("volume.volNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("volume.volLetExt", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("folioNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("folioMod", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					default:
+						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection());
+						break;
+				}
+			}
+		} else if (paginationFilter.getSearchType().equals(SearchType.PEOPLE)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("mapNameLf", paginationFilter.getSortingDirection());
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("gender", paginationFilter.getSortingDirection());
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("bornYear", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix 
+						paginationFilter.addSortingCriteria("bornMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("bornDay", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("deathYear", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix 
+						paginationFilter.addSortingCriteria("deathMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("deathDay", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 4:
+						paginationFilter.addSortingCriteria("recipientPlace.placeName", paginationFilter.getSortingDirection());
+						break;
+					default:
+						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection());
+						break;
+				}		
+			}
+		} else if (paginationFilter.getSearchType().equals(SearchType.PLACE)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("placeNameFull", paginationFilter.getSortingDirection());
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("plType", paginationFilter.getSortingDirection());
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("parentPlace.placeName", paginationFilter.getSortingDirection());
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("parentType", paginationFilter.getSortingDirection());
+						break;
+					default:
+						paginationFilter.addSortingCriteria("placeNameFull", paginationFilter.getSortingDirection());
+						break;
+				}
+			}
+		} else if (paginationFilter.getSearchType().equals(SearchType.VOLUME)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("serieList.title", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.subTitle1", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.subTitle2", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("startYear", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix 
+						paginationFilter.addSortingCriteria("startMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("startDay", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 3:
+						paginationFilter.addSortingCriteria("endYear", paginationFilter.getSortingDirection(), SortField.INT);
+						//Month is an entity, so we don't have field with suffix 
+						paginationFilter.addSortingCriteria("endMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("endDay", paginationFilter.getSortingDirection(), SortField.INT);
+						break;
+					case 4:
+						paginationFilter.addSortingCriteria("digitized", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+					default:
+						paginationFilter.addSortingCriteria("serieList.title", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.subTitle1", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.subTitle2", paginationFilter.getSortingDirection(), SortField.STRING);
+						break;
+				}
+			}
+		}
+
+		return paginationFilter;
+	}
+
+
+	/**
+	 * 
 	 * @return
 	 */
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
-
 
 	/**
 	 * 
@@ -269,6 +530,38 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		return getEntityManager().merge(entity);
 	}
 
+	/**
+	 * 
+	 */
+	public void optimizeIndex() throws PersistenceException {
+		Session session = null;
+		FullTextSession fullTextSession = null;
+		ScrollableResults results = null;
+		try {
+			EntityManager entityManager = getEntityManager();
+			session = ((HibernateEntityManager) entityManager).getSession();
+			session = session.getSessionFactory().openSession();
+			fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
+			
+			logger.info("Initiating Lucene Index Optimze...");
+	        SearchFactory searchFactory = fullTextSession.getSearchFactory();
+	        searchFactory.optimize(entityClass);
+	        logger.info("Finished Lucene Index Optimze");
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+		} finally{
+	        if (results != null) {
+	        	results.close();
+	        }
+	        if (fullTextSession.isOpen()) {
+	        	fullTextSession.close();
+	        }
+	        if (session.isOpen()) {
+	        	session.close();
+	        }
+		}
+	}
+	
 	/**
 	 * 
 	 */
@@ -282,7 +575,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	public void refresh(E entity) throws PersistenceException {
 		getEntityManager().refresh(entity);
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -290,6 +583,13 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		getEntityManager().remove(entity);
 	}
 
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Page search(org.medici.docsources.common.search.Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException {
 		// We prepare object of return method.
 		Page page = new Page(paginationFilter);
@@ -347,7 +647,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		}
 
 		String objectsQuery = searchContainer.toJPAQuery();
-        
+
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if (sortingCriterias.size() > 0) {
@@ -372,7 +673,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		
 		return page;
 	}
-
+		
 	/**
 	 * 
 	 * @param entityManager
@@ -381,38 +682,6 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		this.entityManager = entityManager;
 	}
 
-	/**
-	 * 
-	 */
-	public void optimizeIndex() throws PersistenceException {
-		Session session = null;
-		FullTextSession fullTextSession = null;
-		ScrollableResults results = null;
-		try {
-			EntityManager entityManager = getEntityManager();
-			session = ((HibernateEntityManager) entityManager).getSession();
-			session = session.getSessionFactory().openSession();
-			fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
-			
-			logger.info("Initiating Lucene Index Optimze...");
-	        SearchFactory searchFactory = fullTextSession.getSearchFactory();
-	        searchFactory.optimize(entityClass);
-	        logger.info("Finished Lucene Index Optimze");
-		} catch (Throwable throwable) {
-			logger.error(throwable);
-		} finally{
-	        if (results != null) {
-	        	results.close();
-	        }
-	        if (fullTextSession.isOpen()) {
-	        	fullTextSession.close();
-	        }
-	        if (session.isOpen()) {
-	        	session.close();
-	        }
-		}
-	}
-		
 	/**
 	 * 
 	 * @param fromDate
