@@ -1036,7 +1036,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			wordsQuery.append(")");
 			if (!wordsQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(wordsQuery);
 			}
 		}
@@ -1051,9 +1053,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						personIdQuery.append(" AND ");
 					}
 					
-					personIdQuery.append("(epLink.person.personId=");
+					personIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=");
 					personIdQuery.append(personId.get(i).toString());
-					personIdQuery.append(" or senderPeople.personId=");
+					personIdQuery.append(") or senderPeople.personId=");
 					personIdQuery.append(personId.get(i).toString());
 					personIdQuery.append(" or recipientPeople.personId=");
 					personIdQuery.append(personId.get(i).toString());
@@ -1063,21 +1065,26 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						personQuery.append(" AND ");
 					}
 					
-					personQuery.append("(epLink.person.mapNameLf like '%");
+					personQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.mapNameLf like '%");
 					personQuery.append(person.get(i).toLowerCase());
-					personQuery.append("%' or altName.altName like '%'");
+					personQuery.append("%')"); 
+					/*personQuery.append("%') or altName.altName like '%'");
 					personQuery.append(person.get(i).toLowerCase());
-					personQuery.append("%')");
+					personQuery.append("%')");*/
 				}
 			}
 			personIdQuery.append(")");
 			personQuery.append(")");
-			if (!personIdQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!personIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(personIdQuery);
 			}
-			if (!personQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!personQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(personQuery);
 			}
 		}
@@ -1096,9 +1103,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					placeIdQuery.append(placeId.get(i).toString());
 					placeIdQuery.append(" or recipientPlace.placeAllId=");
 					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append(" or eplToLink.place.placeAllId=");
+					placeIdQuery.append(" or entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeAllId=");
 					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append(")");
+					placeIdQuery.append("))");
 				} else {
 					if (placeQuery.length()>1) {
 						placeQuery.append(" AND ");
@@ -1108,19 +1115,23 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					placeQuery.append(place.get(i).toLowerCase());
 					placeQuery.append("%' or recipientPlace.placeName like '%'");
 					placeQuery.append(place.get(i).toLowerCase());
-					placeQuery.append("%' or eplToLink.place.placeName like '%'");
+					placeQuery.append("%' or entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeName like '%'");
 					placeQuery.append(place.get(i).toLowerCase());
-					placeQuery.append("%')");
+					placeQuery.append("%'))");
 				}
 			}
 			placeIdQuery.append(")");
 			placeQuery.append(")");
-			if (!placeIdQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!placeIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(placeIdQuery);
 			}
-			if (!placeQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!placeQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(placeQuery);
 			}
 		}
@@ -1150,12 +1161,16 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			senderIdQuery.append(")");
 			senderQuery.append(")");
-			if (!senderIdQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!senderIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(senderIdQuery);
 			}
-			if (!senderQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!senderQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(senderQuery);
 			}
 		}
@@ -1185,12 +1200,16 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			fromIdQuery.append(")");
 			fromQuery.append(")");
-			if (!fromIdQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!fromIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(fromIdQuery);
 			}
-			if (!fromQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!fromQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(fromQuery);
 			}
 		}
@@ -1220,12 +1239,16 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			recipientIdQuery.append(")");
 			recipientQuery.append(")");
-			if (!recipientIdQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!recipientIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(recipientIdQuery);
 			}
-			if (!recipientQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!recipientQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(recipientQuery);
 			}
 		}
@@ -1255,12 +1278,16 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			toIdQuery.append(")");
 			toQuery.append(")");
-			if (!toIdQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!toIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(toIdQuery);
 			}
-			if (!toQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!toQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(toQuery);
 			}
 		}
@@ -1275,27 +1302,31 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						refersToIdQuery.append(" AND ");
 					}
 					
-					refersToIdQuery.append("(epLink.person.personId=");
-					refersToIdQuery.append(recipientId.get(i).toString());
-					refersToIdQuery.append(")");
+					refersToIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=");
+					refersToIdQuery.append(refersToId.get(i).toString());
+					refersToIdQuery.append("))");
 				} else {
 					if (refersToQuery.length()>0) {
 						refersToQuery.append(" AND ");
 					}
 					
-					refersToQuery.append("(epLink.person.mapNameLf like '%");
-					refersToQuery.append(recipient.get(i).toLowerCase());
-					refersToQuery.append("%')");
+					refersToQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.mapNameLf like '%");
+					refersToQuery.append(refersTo.get(i).toLowerCase());
+					refersToQuery.append("%'))");
 				}
 			}
 			refersToIdQuery.append(")");
 			refersToQuery.append(")");
-			if (!refersToIdQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!refersToIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(refersToIdQuery);
 			}
-			if (!refersToQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+			if (!refersToQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(refersToQuery);
 			}
 		}
@@ -1316,7 +1347,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			extractQuery.append(")");
 			if (!extractQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(extractQuery);
 			}
 		}
@@ -1337,7 +1370,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			synopsisQuery.append(")");
 			if (!synopsisQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(synopsisQuery);
 			}
 		}
@@ -1352,27 +1387,31 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						topicsIdQuery.append(" AND ");
 					}
 					
-					topicsIdQuery.append("(eplToLink.topic.topicId=");
+					topicsIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicId=");
 					topicsIdQuery.append(topicsId.get(i).toString());
-					topicsIdQuery.append(")");
+					topicsIdQuery.append("))");
 				} else {
 					if (topicsQuery.length()>1) {
 						topicsQuery.append(" AND ");
 					}
 					
-					topicsQuery.append("(eplToLink.topic.topicTitle like '%");
+					topicsQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicTitle like '%");
 					topicsQuery.append(topics.get(i).toLowerCase());
-					topicsQuery.append("%')");
+					topicsQuery.append("%'))");
 				}
 			}
 			topicsIdQuery.append(")");
 			topicsQuery.append(")");
 			if (!topicsIdQuery.toString().equals("")) {
-				//jpaQuery.append(" AND ");
+				if(jpaQuery.length() > 20){
+				//	jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(topicsIdQuery);
 			}
 			if (!topicsQuery.toString().equals("")) {
-				jpaQuery.append(" AND ");
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(topicsQuery);
 			}
 		}
@@ -1405,6 +1444,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.append(")");
 				}
 			}
+			datesQuery.append(")");
 			if (!datesQuery.toString().equals("")) {
 				jpaQuery.append(datesQuery);
 			}

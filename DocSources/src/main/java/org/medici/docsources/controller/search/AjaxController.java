@@ -101,7 +101,7 @@ public class AjaxController {
 		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 
 		try {
-			page = getSearchService().searchDocuments(searchFilter.getFilterData(), paginationFilter);
+			page = getSearchService().searchAdvancedDocuments(searchFilter.getFilterData(), paginationFilter);
 			
 			for(Document currentDocument : (List<Document>)page.getList()){
 				volNums.add(currentDocument.getVolume().getVolNum());
@@ -209,7 +209,7 @@ public class AjaxController {
 		List<Integer> personIds = new ArrayList<Integer>();
 		
 		try {
-			page = getSearchService().searchPeople(searchFilter.getFilterData(), paginationFilter);
+			page = getSearchService().searchAdvancedPeople(searchFilter.getFilterData(), paginationFilter);
 			
 			for(People currentPerson : (List<People>)page.getList()){
 				personIds.add(currentPerson.getPersonId());
@@ -290,7 +290,7 @@ public class AjaxController {
 		Map<String, Boolean> stateVolumesDigitized = new HashMap<String, Boolean>();
 
 		try {
-			page = getSearchService().searchVolumes(searchFilter.getFilterData(), paginationFilter);
+			page = getSearchService().searchAdvancedVolumes(searchFilter.getFilterData(), paginationFilter);
 			
 			stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
 		} catch (ApplicationThrowable aex) {

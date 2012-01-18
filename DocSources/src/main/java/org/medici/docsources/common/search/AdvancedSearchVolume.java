@@ -596,8 +596,282 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public String toJPAQuery() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer jpaQuery = new StringBuffer("FROM Volume WHERE ");
+		
+		// Volume
+		if(volumes.size() > 0){
+			StringBuffer volumesQuery = new StringBuffer("(");
+			for(int i = 0; i < volumes.size(); i++){
+				if(VolumeUtils.isVolumeFormat(volumes.get(i))){
+					if(volumesQuery.length() > 1){
+						volumesQuery.append(" AND ");
+					}
+					
+					if(volumesTypes.get(i).equals(VolumeType.Exactly)){
+						if(StringUtils.isNumeric(volumes.get(i))){
+							volumesQuery.append("(volNum=");
+							volumesQuery.append(volumes.get(i));
+							volumesQuery.append(")");
+						}else{
+							volumesQuery.append("(volNum=");
+							volumesQuery.append(volumes.get(i));
+							volumesQuery.append(" AND volLetExt='");
+							volumesQuery.append(VolumeUtils.extractVolLetExt(volumes.get(i)));
+							volumesQuery.append("')");
+						}
+					}else if(volumesTypes.get(i).equals(VolumeType.Between)){
+						volumesQuery.append("(volNum>=");
+						volumesQuery.append(volumes.get(i));
+						volumesQuery.append(" AND volNum<=");
+						volumesQuery.append(volumesBetween.get(i));
+						volumesQuery.append(")");
+					}
+				}else{
+					continue;
+				}
+			}
+			volumesQuery.append(")");
+			if(!volumesQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(volumesQuery);
+			}
+		}
+		
+		// Date
+		if(datesTypes.size() > 0){
+			StringBuffer datesQuery = new StringBuffer("(");
+			for(int i=0; i < datesTypes.size(); i++){
+				if(datesTypes.get(i) == null){
+					continue;
+				}
+				if(datesQuery.length() > 1){
+					datesQuery.append(" AND ");
+				}
+				
+				if(datesTypes.get(i).equals(DateType.After)){
+					datesQuery.append("(startDate>");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")");
+				}else if(datesTypes.get(i).equals(DateType.Before)){
+					datesQuery.append("(startDate<");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")");
+				}else if(datesTypes.get(i).equals(DateType.Between)){
+					datesQuery.append("(startDate>");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(" AND startDate<");
+					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")");
+				}
+			}
+			datesQuery.append(")");
+			if(!datesQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(datesQuery);
+			}
+		}
+		
+		//Digitized
+		if(!ObjectUtils.toString(digitized).equals("")){
+			StringBuffer digitizedQuery = new StringBuffer("(");
+			if(digitized.equals(Boolean.TRUE)){
+				digitizedQuery.append("(digitized=true)");
+			}else if(digitized.equals(Boolean.FALSE)){
+				digitizedQuery.append("(digitized=false)");
+			}
+			digitizedQuery.append(")");
+			if(!digitizedQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(digitizedQuery);
+			}
+		}
+		
+		//Languages
+		if(languages.size() > 0){
+			StringBuffer languagesQuery = new StringBuffer("(");
+			for(int i = 0; i < languages.size(); i++){
+				if(languagesQuery.length() > 1){
+					languagesQuery.append(" AND ");
+				}
+				String[] worldSingleLanguages = StringUtils.split(languages.get(i), " ");
+				for(int j = 0; j < worldSingleLanguages.length; j++){
+					if(j > 0){
+						languagesQuery.append(" AND ");
+					}
+					if(worldSingleLanguages[j].equals("italian")){
+						languagesQuery.append("(italian=true)");
+					}
+					if(worldSingleLanguages[j].equals("french")){
+						languagesQuery.append("(french=true)");
+					}
+					if(worldSingleLanguages[j].equals("german")){
+						languagesQuery.append("(german=true)");
+					}
+					if(worldSingleLanguages[j].equals("spanish")){
+						languagesQuery.append("(spanish=true)");
+					}
+					if(worldSingleLanguages[j].equals("latin")){
+						languagesQuery.append("(latin=true)");
+					}
+					if(worldSingleLanguages[j].equals("english")){
+						languagesQuery.append("(english=true)");
+					}
+				}
+			}
+			languagesQuery.append(")");
+			if(!languagesQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(languagesQuery);
+			}
+		}
+		
+		// Cipher
+		if(cipher.length() > 0){
+			StringBuffer cipherQuery = new StringBuffer("(");
+			if(cipher.equals("Yes")){
+				cipherQuery.append("(cipher=true)");
+			}else if(cipher.equals("No")){
+				cipherQuery.append("(cipher=false)");
+			}
+			cipherQuery.append(")");
+			if(!cipherQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(cipherQuery);
+			}
+		}
+		
+		// Index of Names
+		if(index.length() > 0){
+			StringBuffer indexQuery = new StringBuffer("(");
+			if(index.equals("Yes")){
+				indexQuery.append("(oldAlphaIndex=true)");
+			}else if(index.equals("No")){
+				indexQuery.append("(oldAlphaIndex=false)");
+			}
+			indexQuery.append(")");
+			if(!indexQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(indexQuery);
+			}
+		}
+		
+		// From
+		if(fromVolume.size() > 0){
+			StringBuffer fromVolumeQuery = new StringBuffer("(");
+			for(int i = 0; i < fromVolume.size(); i++){
+				if(fromVolumeQuery.length() > 1){
+					fromVolumeQuery.append(" AND ");
+				}
+				String[] wordsSingleFromVolume = StringUtils.split(fromVolume.get(i), " ");
+				for(int j = 0; j < wordsSingleFromVolume.length; j++){
+					if(j > 0){
+						fromVolumeQuery.append(" AND ");
+					}
+					fromVolumeQuery.append("(senders like '%");
+					fromVolumeQuery.append(wordsSingleFromVolume[j]);
+					fromVolumeQuery.append("%')");
+				}
+			}
+			fromVolumeQuery.append(")");
+			if(!fromVolumeQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(fromVolumeQuery);
+			}
+		}
+		
+		// To
+		if(toVolume.size() > 0){
+			StringBuffer toVolumeQuery = new StringBuffer("(");
+			for(int i = 0; i < toVolume.size(); i++){
+				if(toVolumeQuery.length() > 1){
+					toVolumeQuery.append(" AND ");
+				}
+				String[] wordsSingleToVolume = StringUtils.split(toVolume.get(i), " ");
+				for(int j = 0; j < wordsSingleToVolume.length; j++){
+					if(j > 0){
+						toVolumeQuery.append(" AND ");
+					}
+					toVolumeQuery.append("(recips like '%");
+					toVolumeQuery.append(wordsSingleToVolume[j]);
+					toVolumeQuery.append("%')");
+				}
+			}
+			toVolumeQuery.append(")");
+			if(!toVolumeQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(toVolumeQuery);
+			}
+		}
+		
+		// Context
+		if(context.size() > 0){
+			StringBuffer contextQuery = new StringBuffer("(");
+			for(int i = 0; i < context.size(); i++){
+				if(contextQuery.length() > 1){
+					contextQuery.append(" AND ");
+				}
+				String[] wordsSingleContext = StringUtils.split(context.get(i), " ");
+				for(int j = 0; j < wordsSingleContext.length; j++){
+					if(j > 0){
+						contextQuery.append(" AND ");
+					}
+					contextQuery.append("(ccontext like '%");
+					contextQuery.append(wordsSingleContext[j]);
+					contextQuery.append("%')");
+				}
+			}
+			contextQuery.append(")");
+			if(!contextQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(contextQuery);
+			}
+		}
+		
+		// Inventario
+		if(inventario.size() > 0){
+			StringBuffer inventarioQuery = new StringBuffer("(");
+			for(int i = 0; i < inventario.size(); i++){
+				if(inventarioQuery.length() > 1){
+					inventarioQuery.append(" AND ");
+				}
+				String[] wordsSingleInventario = StringUtils.split(inventario.get(i), " ");
+				for(int j = 0; j < wordsSingleInventario.length; j++){
+					if(j > 0){
+						inventarioQuery.append(" AND ");
+					}
+					inventarioQuery.append("(inventarioSommarioDescription like '%");
+					inventarioQuery.append(wordsSingleInventario[j]);
+					inventarioQuery.append("%')");
+				}
+			}
+			inventarioQuery.append(")");
+			if(!inventarioQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(inventarioQuery);
+			}
+		}
+		
+		return jpaQuery.toString();
 	}
 
 	/**
