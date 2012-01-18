@@ -36,11 +36,11 @@
 			</c:url>
 			
 			<div>
-				<input id="name_${currentName.placeAllId}" name="name_${currentName.placeAllId}" class="input_35c_disabled" type="text" value="${currentName.placeName}" disabled="disabled" />
+				<input id="name_${currentName.placeAllId}" name="name_${currentName.placeAllId}" class="input_40c_disabled" type="text" value="${currentName.placeName}" disabled="disabled" />
 				<c:if test="${currentName.prefFlag != 'P' && currentName.placeAllId != command.placeAllId}">
 					<a class="deleteIcon" title="Delete this entry" href="${DeleteNameOrNameVariantsPlaceURL}"></a>
 				</c:if>
-				<a class="editValue" href="${EditNameOrNameVariantPlaceURL}">edit value</a>
+				<a class="editValue" href="${EditNameOrNameVariantPlaceURL}" title="Edit this entry"></a>
 			</div>
 		</c:forEach>
 	

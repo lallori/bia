@@ -34,9 +34,9 @@
 			</c:url>
 		
 		<div>
-			<input id="externalLink_${currentExternalLink.placeExternalLinksId}" name="externalLink_${currentExternalLink.placeExternalLinksId}" class="input_35c_disabled" type="text" value="${currentExternalLink.description}" disabled="disabled" />
+			<input id="externalLink_${currentExternalLink.placeExternalLinksId}" name="externalLink_${currentExternalLink.placeExternalLinksId}" class="input_40c_disabled" type="text" value="${currentExternalLink.description}" disabled="disabled" />
 			<a href="${DeleteExternalLink}" class="deleteIcon" title="Delete this entry"></a>
-			<a id="editValue" class="editValue" href="${EditExternalLink}">edit value</a>
+			<a id="editValue" class="editValue" href="${EditExternalLink}" title="Edit this entry"></a>
 		</div>
 		</c:forEach>
 		

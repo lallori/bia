@@ -127,9 +127,9 @@
 			</c:url>
 
 			<div>
-				<input id="people_${currentPersonLinked.epLinkId}" name="people" class="input_28c_disabled" type="text" value="${currentPersonLinked.person.mapNameLf}" disabled="disabled"/>
+				<input id="people_${currentPersonLinked.epLinkId}" name="people" class="input_35c_disabled" type="text" value="${currentPersonLinked.person.mapNameLf}" disabled="disabled"/>
 				<a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentURL}"></a>
-				<a class="editValue" href="${EditPersonDocumentURL}">edit value</a>
+				<a class="editValue" href="${EditPersonDocumentURL}" title="Edit this entry"></a>
 				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentPersonLinked.person.personId}" />
 					</c:url>
@@ -387,7 +387,7 @@
 
 			$j('.linkPeople').click(function() {
 				var tabName = $j(this).parent();
-				tabName = $j(tabName).find('.input_28c_disabled');
+				tabName = $j(tabName).find('.input_35c_disabled');
 				
 				var numTab = 0;
 				

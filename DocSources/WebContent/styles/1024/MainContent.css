@@ -109,7 +109,7 @@ h6 { /* Titles */
 	padding:2px 0 0 0;
 	width:65px;
 	height:17px;
-	right:49px;
+	right: 57px;
 	position:absolute;
 	cursor:pointer;
 	text-align:center;
@@ -140,7 +140,7 @@ h6 { /* Titles */
 	width:65px;
 	height:17px;
 	position:absolute;
-	right:119px;
+	right: 132px;
 	text-align: center;
 }
 
@@ -152,7 +152,7 @@ h6 { /* Titles */
 	height:17px;
 	position:absolute;
 	text-decoration:none;
-	right:188px;
+	right: 206px;
 	text-align:center;
 }
 
@@ -164,8 +164,24 @@ h6 { /* Titles */
 	height:17px;
 	position:absolute;
 	text-decoration:none;
-	right:295px;
+	right: 317px;
 	text-align:center;
+}
+
+#lastRecord {
+	width: 35px;
+	height: 25px;
+	position: absolute;
+	margin-left: 5px;
+	background:url(/DocSources/images/1024/button_lastRecord.png) no-repeat;
+}
+
+#nextRecord {
+	width: 35px;
+	height: 25px;
+	position: absolute;
+	margin-left: 35px;
+	background:url(/DocSources/images/1024/button_nextRecord.png) no-repeat;
 }
 
 #buttonShareLink:hover, #menuActions:hover, #vettingHistory:hover, #showComments:hover {
@@ -254,7 +270,6 @@ item a{
 	text-align:left;
 	color:#6d5c4d;
 	padding:3px 0 3px 5px;
-	text-align:justify;
 }
 
 .valueHilight { /* Sub-fields red colored (Fact Check on Document Base) */
@@ -263,7 +278,6 @@ item a{
 	text-align:left;
 	color:#C0272D;
 	padding:3px 0 3px 5px;
-	text-align:justify;
 }
 
 .value5 { /* Sub-fields value 5% large */
@@ -278,7 +292,6 @@ item a{
 	text-align:left;
 	color:#6d5c4d;
 	padding:3px 0 3px 5px;
-	text-align:justify;
 }
 
 .value60 { /* Sub-fields value 60% large */
@@ -287,7 +300,6 @@ item a{
 	text-align:left;
 	color:#6d5c4d;
 	padding:3px 0 3px 5px;
-	text-align:justify;
 }
 
 .value80 { /* Sub-fields value 80% large */
@@ -296,7 +308,6 @@ item a{
 	text-align:left;
 	color:#6d5c4d;
 	padding:3px 0 3px 5px; 
-	text-align:justify;
 }
 
 .info{ /* Sub-fields dates value on People Base (Titles&Occupations, Parents, Children, Spouses */
@@ -357,7 +368,6 @@ form div {
     height:100%;
     position:absolute;
 }
-
 
 .edit { /* Edit FORM class */
 	font-size:11px;
@@ -429,7 +439,7 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	visibility:hidden;
 }
 
-#save { /* Save button on bottom right  */
+#save, .save { /* Save button on bottom right  */
 	margin:5px auto auto 310px;
 	padding:0;
 	cursor:pointer;
@@ -606,6 +616,14 @@ img.transparent {
 	width: 45px;
 }
 
+.input_7c { /* input for 8 characters */ 
+	width: 65px;
+}
+
+.input_8c { /* input for 8 characters */ 
+	width: 75px;
+}
+
 .input_10c { /* input for 10 characters approx. */ 
 	width: 95px;
 }
@@ -690,9 +708,9 @@ img.transparent {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 5px; 
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 	cursor:default; !important
 }
 
@@ -703,9 +721,9 @@ img.transparent {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 0px; 
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 	cursor:default; 
 }
 
@@ -716,9 +734,9 @@ img.transparent {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 5px; 
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 	cursor:default; 
 }
 
@@ -729,9 +747,22 @@ img.transparent {
 	color: #000000;
 	padding-left:7px;
 	margin: 5px 7px 5px 5px; 
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
+	cursor:default; 
+}
+
+.input_20c_disabled {  /* input for 10 characters */ 
+	width: 192px; 
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:7px;
+	margin: 5px 7px 5px 5px; 
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 	cursor:default; 
 }
 
@@ -741,9 +772,9 @@ img.transparent {
 	background-color: #fbf7f4;
 	color: #000000;
 	margin: 5px 7px 5px 0; 
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 	cursor:default;
 }
 
@@ -753,9 +784,9 @@ img.transparent {
 	background-color: #fbf7f4;
 	color: #000000;
 	margin: 5px 7px 5px 0; 
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 	cursor:default;
 }
 
@@ -766,9 +797,35 @@ img.transparent {
 	color: #000000;
 	padding-left:10px;
 	margin: 5px 7px 5px 5px; 
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
+	cursor:default;
+}
+
+.input_37c_disabled { /* input for 10 characters */ 
+	width: 305px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 7px 5px 5px; 
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
+	cursor:default;
+}
+
+.input_40c_disabled { /* input for 10 characters */ 
+	width: 325px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	padding-left:10px;
+	margin: 5px 7px 5px 5px; 
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 	cursor:default;
 }
 
@@ -892,9 +949,9 @@ img.transparent {
 	margin: 5px 7px 5px 5px; 
 	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 }
 
 .selectform_long_disabled{ /* dropdown menu class  disabled*/
@@ -905,9 +962,9 @@ img.transparent {
 	margin: 5px 7px 5px 5px; 
 	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 }
 
 /* ---------------------------------------------------- */ 
@@ -943,9 +1000,9 @@ img.transparent {
 	resize: none;
 	padding:5px 10px 5px 10px;
 	margin: 5px 7px 5px 0px; /* top right bottom left */
-	opacity:0.3; /* FireFox, Chrome, Safari */
-	-moz-opacity: 0.3;
-	filter:alpha(opacity=30); /* IE */ !important
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 }
 
 .txtarea_medium { 
@@ -1012,6 +1069,7 @@ img.transparent {
     background-color: #FBF7F4;
     border: 1px solid #DCC0BA;
     border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px;
     color: #000000;
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 11px;
@@ -1054,7 +1112,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm {
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditUserControlForm, #EditEmailControlDiv {
 	width:485px;
 	margin:10px 0 0 0;
 	min-height:100px;!important
@@ -1066,7 +1124,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 
 /* Body left Details Divs */
-#body_left #EditDetailsDocumentDiv, #body_left #EditDetailsPersonDiv {
+#body_left #EditDetailsDocumentDiv, #body_left #EditDetailsPersonDiv  {
 	margin-top:30px;
 	min-height:100px;!important
 }
@@ -1126,7 +1184,6 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	height:100%;
 }
 
-
 /* Volume Details Display items */
 
 #EditPortraitPersonDiv {
@@ -1144,7 +1201,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	max-width: 290px;
 }
 
-#SpineVolumeDiv {
+#SpineVolumeDiv, #SpineVolumeNotDigitDiv, #SpineVolumeDigitDiv  {
     float:right;
 	margin-right:23px;
     z-index:1;
@@ -1152,27 +1209,18 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
     width: 120px;
     text-align:center;
 	font-size:10px;
+	margin-right: 23px;
 }
 
 #SpineVolumeDiv img, #SpineVolumeDigitDiv img {
 	border-radius: 4px;
 }
 
-#SpineVolumeDigitDiv {
-    float:right;
-    z-index:1;
-    height:160px;
-    width: 120px;
-    text-align:center;
-	font-size:10px;
-    margin-right: 23px;
-}
-
-#SpineVolumeDiv p,  #SpineVolumeDigitDiv p{
+#SpineVolumeDiv p,  #SpineVolumeDigitDiv p, #SpineVolumeNotDigitDiv p{
    margin-top:5px;
 }
 
-#SpineVolumeDiv span {
+#SpineVolumeDiv span, #SpineVolumeDigitDiv span, #SpineVolumeNotDigitDiv span {
     color: #C0272D;
     height: 60px;
     position: absolute;
@@ -1182,7 +1230,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	text-shadow:1px 1px 1px #999;
 }
 
-#SpineVolumeDiv #ShowVolumeInVolumeExplorer { /* Bottom right icon  */
+#SpineVolumeDiv #ShowVolumeInVolumeExplorer, #SpineVolumeDigitDiv #ShowVolumeInVolumeExplorer, #SpineVolumeNotDigitDiv #ShowVolumeInVolumeExplorer { /* Bottom right icon  */
 	width:50px;
 	height:55px;
 	background:url(/DocSources/images/1024/button_showManuscViewerVol.png) bottom no-repeat;
@@ -1190,7 +1238,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	float:right;
 }
 
-#SpineVolumeDiv #ShowVolumeInManuscriptViewer { /* Bottom left icon  */
+#SpineVolumeDiv #ShowVolumeInManuscriptViewer, #SpineVolumeDigitDiv #ShowVolumeInManuscriptViewer, #SpineVolumeNotDigitDiv #ShowVolumeInManuscriptViewer { /* Bottom left icon  */
 	width:50px;
 	height:55px;
 	background:url(/DocSources/images/1024/button_openVolExplorerVol.png) bottom no-repeat;
@@ -1264,6 +1312,7 @@ input.file {
 	text-shadow:1px 1px 1px #999;
 	font-size:10px;
 	text-align:center;
+	moz-margin-left: 25px;
 }
 
 #DocumentImageDigitDiv span:hover {
@@ -1338,25 +1387,39 @@ input.file {
 	margin-left:20px;
 }
 
-#personIcon, .personIcon { /* Show this person record icon */
-	width:14px;
-	height:14px;
+#PeopleCorrespondentsDocumentsForm #personIcon, #PeopleCorrespondentsDocumentsForm .personIcon { /* Show this person record icon inside #PeopleCorrespondentsDocumentsForm */
+	width:20px;
+	height:20px;
 	display:inline;
 	position:absolute;
-	margin:5px 0 0 10px;
-	background-image:url(/DocSources/images/1024/button_person.gif);
+	margin:5px 0 0 79px;
+	background-image:url(/DocSources/images/1024/button_person.png);
 	cursor:pointer;
 	background-color:transparent;
 	border:none;
 }
 
-#placeIcon, .placeIcon { /* Show this place record icon */
-	width:15px;
-	height:14px;
+#EditCorrespondentsOrPeopleDocumentForm #personIcon, #EditCorrespondentsOrPeopleDocumentForm .personIcon { /* Show this person record icon inside #EditCorrespondentsOrPeopleDocumentForm */
+	width:20px;
+	height:20px;
 	display:inline;
-	margin:5px 0 0 15px;
 	position:absolute;
-	background-image:url(/DocSources/images/1024/button_flag.png);
+	margin: 5px 0 0 15px;
+	background-image:url(/DocSources/images/1024/button_person.png);
+	cursor:pointer;
+	background-color:transparent;
+	border:none;
+}
+
+
+
+#placeIcon, .placeIcon { /* Show this place record icon */
+	width:20px;
+	height:20px;
+	display:inline;
+	margin: 3px 0 0 15px;
+	position:absolute;
+	background-image:url(/DocSources/images/1024/button_place.png);
 	background-repeat:no-repeat;
 	cursor:pointer;
 	background-color:transparent;
@@ -1364,8 +1427,8 @@ input.file {
 }
 
 #deleteIcon, .deleteIcon { /* Delete this entry icon */
-	width:17px;
-	height:17px;
+	width:20px;
+	height:20px;
 	display:inline;
 	position:absolute;
 	margin:5px 0 0 5px;
@@ -1460,11 +1523,11 @@ input.file {
 
 .topicDescription { /* "Show Topic Description" Button */
 	background-image:url(/DocSources/images/1024/button_topic.png);
-	width:12px;
-	height:12px;
+	width:20px;
+	height:20px;
 	position:absolute;
 	background-repeat:no-repeat;
-	margin:5px 0 0 10px;
+	margin: 5px 0 0 79px;
 }
 
 #topicDescriptionLabel {
@@ -1607,10 +1670,12 @@ a.num_docs {
 }
 
 a#editValue, .editValue { /* "Edit Value" Button */
-	font-size:11px;
-	margin-left:35px;
-	text-decoration: underline;
-	color: #B7958F;
+	background-image: url(/DocSources/images/1024/button_edit.png);
+	width: 20px;
+	height: 20px;
+	background-repeat: no-repeat;
+	margin: 5px 0 0 42px;
+	position: absolute;
 }
 
 #AddNamesPerson, #AddChildPerson, #AddExtLinkTgnPlace, #AddExtLinkMapPlace, #AddExtLinkMapSitePlace, #AddNameMapSitePlace, #AddNameMapPlace, #AddNameTgnPlace { /* "Add New ..." Button */
@@ -1768,7 +1833,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 .buttonLarge:hover {
 	text-decoration:none;
 }
-
 
 /* -------------------------------------- */
 /*
@@ -2813,6 +2877,11 @@ form#EditUserProfileForm div {
 	margin: 0;
 }
 
+form#EditUserProfileForm span{ 
+	float: right;
+    margin: 10px 23px 0 0;
+}
+
 #EditUserProfileForm fieldset { 
 	padding-left:20px;
 }
@@ -3482,7 +3551,8 @@ span.categorySearch {
 	color:#063;
 }
 
-.saveAsButton { /* Save As Button */
+/* Save As Button 
+.saveAsButton { 
 	margin: 65px 0 0 30px;
 	position:absolute;
 	cursor:pointer;
@@ -3496,32 +3566,35 @@ span.categorySearch {
 	border:none;
 	outline:none;
 }
+*/
 
 .saveButton { /* Save Button */
-	margin: 65px 0 0 85px;
+	margin: 35px 0 0 112px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:4px 0 0 12px; 
+	padding:4px 0 0 0; 
 	background-repeat:no-repeat;
-	width:59px;
+	width:52px;
 	height:23px;
 	border:none;
 	outline:none;
+	text-align:center;
 }
 
 #advsearch { /* Search Button */
-	margin: 25px auto auto 160px;
+	margin: 25px auto auto 190px;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:0 0 0 2px; 
+	padding:0 0 0 0; 
 	width:52px;
 	height:22px;
 	border:none;
+	text-align:center;
 }
 
 #advsearch:hover, .saveButton:hover, .saveAsButton:hover {
@@ -4017,7 +4090,6 @@ a.showDigitizedDocument{
 	margin-right: 10px;
 }
 
-
 a.showDigitizedDocument:hover {
 	text-decoration:none;
 }
@@ -4098,7 +4170,7 @@ ul#network a {
 /*
 /*
 /* -------------------------------------------------------------- DIGITIZATION MODULE ------------------------------------------------------------- */
-\
+
 /* ---------------- Modal Window ------------- */
 
 #digitizationModalDiv #close {
@@ -4326,3 +4398,173 @@ ul#network a {
 	text-decoration:none;
 	color: #6D5C4D;
 }
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* -------------------------------------------------------------- ADMINISTRATION MODULE ------------------------------------------------------------- */
+
+/* ---------------- Modal Window ------------- */
+
+#administrationModalDiv #close {
+	position:absolute;
+	margin-top: 120px;
+	margin-left: 98px;
+}
+
+#administrationModalDiv #UserManagement, #administrationModalDiv #ReportsRevisions, #administrationModalDiv #SystemManagement{
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:182px;
+	height:22px;
+	margin:-5px 0 0 10px;
+}
+
+#administrationModalDiv #UserManagement:hover, #administrationModalDiv #ReportsRevisions:hover, #administrationModalDiv #SystemManagement:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	text-decoration:none;
+	filter:alpha(opacity=50); /* IE */ !important
+}
+
+#administrationModalDiv #SystemManagementDiv {
+	width:200px;
+	margin:15px 0 0 25px;
+	position:absolute;
+}
+
+#administrationModalDiv #UserManagementDiv {
+	width:200px;
+	margin:50px 0 0 25px;
+	position:absolute;
+}
+
+#administrationModalDiv #ReportsRevisionsDiv {
+	width:200px;
+	margin:85px 0 0 25px;
+	position:absolute;
+}
+
+
+/* ---------------- User Search Form (body_left) ------------- */
+
+#SystemManagementForm {
+	width: 485px;
+}
+
+#SystemManagementForm .save {
+	margin:5px auto auto 0;
+}
+
+.search { /* Save button on bottom right  */
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	width:52px;
+	height:22px;
+	border:none;
+	text-align:center;
+	margin: 20px 0 7px 310px;
+}
+
+#fullNameLabel {
+	margin-left: 19px;
+}
+
+#userNameLabel {
+	margin-left: 16px;
+}
+
+h3.systemManagement {
+	margin-top: 15px;
+	font-style: normal;
+	text-align: center;
+}
+
+/* ---------------- User Search Table (body_right) ------------- */
+
+.SystemManagement{
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:122px;
+	height:22px;
+	margin: 10px 0 10px 371px;
+}
+
+.SystemManagement:hover, .userButton:hover{
+	text-decoration:none;
+}
+
+.userButton{
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:122px;
+	height:22px;
+	margin: 60px 0 10px 371px;
+}
+
+
+
+
+/* Edit Details Document Gif animata loading  */
+#prova {
+	z-index:999;
+	width:485px;
+	height:483px;
+	position:absolute;
+	background:url(/DocSources/images/1024/loading_div.gif) no-repeat;
+	opacity:0.4;
+}
+
+/* ---------------- User Control Form ------------- */
+
+#EditUserControlForm #userNameLabel {
+	margin-left: 10px;
+}
+
+#firstNameLabel {
+	margin-left: 5px;
+}
+
+#lastNameLabel {
+	margin-left: 8px;
+}
+
+#groupPoliciesLabel {
+	margin-left: 63px;
+}
+
+#newPasswordLabel {
+	margin-left: 60px;
+}
+
+#forcePswdChangeLabel {
+	margin-left: 9px;
+}
+
+#lockAccountLabel {
+	margin-left: 72px;
+}
+
+#passwordExpiresLabel {
+	margin-left: 58px;
+}
+
+#unmaskLabel {
+	margin-left: 33px;
+}
+
+
+/* ---------------- Email Control ------------- */
+
+#emailDisplayLabel {
+	margin-left: ;
+}
+

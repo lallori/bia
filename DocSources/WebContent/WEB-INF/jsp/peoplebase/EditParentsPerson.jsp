@@ -30,13 +30,13 @@
 			<div>
 				Father
 			<c:if test="${not empty father}">
-      			<input id="father" name="father" class="input_28c_disabled" type="text" value="${father.parent}" disabled="disabled" />
+      			<input id="father" name="father" class="input_30c_disabled" type="text" value="${father.parent}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteFatherPersonURL}"></a>
       		</c:if>
 			<c:if test="${empty father}">
-      			<input id="father" name="father" class="input_28c_disabled" type="text" value="" disabled="disabled" />
+      			<input id="father" name="father" class="input_30c_disabled" type="text" value="" disabled="disabled" />
       		</c:if>
-				<a class="editValue" class="editValue" href="${EditFatherPersonURL}">edit value</a>
+				<a class="editValue" class="editValue" href="${EditFatherPersonURL}" title="Edit this entry"></a>
 				<c:if test="${not empty father}">
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${father.parent.personId}" />
@@ -59,13 +59,13 @@
 			<div>
 				Mother 
 			<c:if test="${not empty mother}">
-      			<input id="mother" name="mother" class="input_28c_disabled" type="text" value="${mother.parent}" disabled="disabled" />
+      			<input id="mother" name="mother" class="input_30c_disabled" type="text" value="${mother.parent}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteMotherPersonURL}"></a>
       		</c:if>
 			<c:if test="${empty mother}">
-      			<input id="mother" name="mother" class="input_28c_disabled" type="text" value="" disabled="disabled" />
+      			<input id="mother" name="mother" class="input_30c_disabled" type="text" value="" disabled="disabled" />
       		</c:if>
-				<a class="editValue" class="editValue" href="${EditMotherPersonURL}">edit value</a>
+				<a class="editValue" class="editValue" href="${EditMotherPersonURL}" title="Edit this entry"></a>
 				<c:if test="${not empty mother}">
 				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 					<c:param name="personId"   value="${mother.parent.personId}" />
@@ -148,7 +148,7 @@
 
 			$j(".personIcon").click(function(){
 				var tabName = $j(this).parent();
-				tabName = $j(tabName).find('.input_28c_disabled');
+				tabName = $j(tabName).find('.input_30c_disabled');
 				tabName = $j(tabName).val();
 				
 				var numTab = 0;

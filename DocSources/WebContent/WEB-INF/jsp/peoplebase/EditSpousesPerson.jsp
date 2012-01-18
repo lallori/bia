@@ -45,13 +45,13 @@
 
 			<div>
 				<c:if test="${command.personId == currentMarriage.husband.personId}">
-      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_35c_disabled" type="text" value="${currentMarriage.wife} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.wife.deathYear}" disabled="disabled" />
+      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_40c_disabled" type="text" value="${currentMarriage.wife} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.wife.deathYear}" disabled="disabled" />
 				</c:if> 
 				<c:if test="${command.personId == currentMarriage.wife.personId}">
-      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_35c_disabled" type="text" value="${currentMarriage.husband} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.husband.deathYear}" disabled="disabled" />
+      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_40c_disabled" type="text" value="${currentMarriage.husband} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.husband.deathYear}" disabled="disabled" />
 				</c:if> 
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteSpousePersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditSpousePersonURL}">edit value</a>
+				<a class="editValue" class="editValue" href="${EditSpousePersonURL}" title="Edit this entry"></a>
 				<c:if test="${command.personId == currentMarriage.husband.personId}">
 					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 						<c:param name="personId"   value="${currentMarriage.wife.personId}" />
@@ -145,7 +145,7 @@
 
 				$j(".personIcon").click(function(){
 					var tabName = $j(this).parent();
-					tabName = $j(tabName).find('.input_35c_disabled');
+					tabName = $j(tabName).find('.input_40c_disabled');
 					tabName = $j(tabName).val();
 					tabName = tabName.substring(0,tabName.indexOf("-"));
 					var numTab = 0;

@@ -39,9 +39,9 @@
 				</c:url>
 
 			<div>
-      			<input id="child_${currentChild.id}" name="child_${currentChild.id}" class="input_35c_disabled" type="text" value="${currentChild.child.mapNameLf}" disabled="disabled" />
+      			<input id="child_${currentChild.id}" name="child_${currentChild.id}" class="input_40c_disabled" type="text" value="${currentChild.child.mapNameLf}" disabled="disabled" />
 				<a class="deleteIcon" title="Delete this entry" href="${DeleteChildPersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditChildPersonURL}">edit value</a>
+				<a class="editValue" class="editValue" href="${EditChildPersonURL}" title="Edit this entry"></a>
 				<a href="${ComparePersonURL }" class="personIcon" title="Show this person record"></a>
 			</div>
 		</c:forEach>
@@ -129,7 +129,7 @@
 
 			$j(".personIcon").click(function(){
 				var tabName = $j(this).parent();
-				tabName = $j(tabName).find('.input_35c_disabled');
+				tabName = $j(tabName).find('.input_40c_disabled');
 				tabName = $j(tabName).val();
 				var numTab = 0;
 				

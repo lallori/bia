@@ -264,9 +264,6 @@
 				$j(".personAdd").attr("disabled","disabled");
 			});
 			
-			/*$j(".personAdd").click(function(){
-				$j(this).attr("disabled","disabled");
-			});*/
 			
 			$j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
@@ -280,6 +277,8 @@
 				onSelect: function(value, data){
 					$j(".placeAdd").removeAttr("disabled");
 					$j('#placeId').val(data);
+					$j(".placeAdd").attr("disabled");
+					$j(".palceAdd").prop("disabled", false);
 				}
 			});	
 			
@@ -287,9 +286,6 @@
 				$j(".placeAdd").attr("disabled","disabled");
 			});
 			
-			$j(".placeAdd").click(function(){
-				$j(this).attr("disabled","disabled");
-			});
 			
 			$j("#sender").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
@@ -303,6 +299,8 @@
 				onSelect: function(value, data){
 					$j(".senderAdd").removeAttr("disabled");
 					$j('#senderId').val(data);
+					$j(".senderAdd").attr("disabled");
+					$j(".senderAdd").prop("disabled", false);
 				}
 			});
 			
@@ -310,9 +308,6 @@
 				$j(".senderAdd").attr("disabled","disabled");
 			});
 			
-			$j(".senderAdd").click(function(){
-				$j(this).attr("disabled","disabled");
-			});
 			
 			$j("#from").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
@@ -326,15 +321,13 @@
 				onSelect: function(value, data){
 					$j(".fromAdd").removeAttr("disabled");
 					$j('#fromId').val(data);
+					$j(".fromAdd").attr("disabled");
+					$j(".fromAdd").prop("disabled", false);
 				}
 			});
 			
 			$j("#from").change(function(){
 				$j(".fromAdd").attr("disabled","disabled");
-			});
-			
-			$j(".fromAdd").click(function(){
-				$j(this).attr("disabled","disabled");	
 			});
 			
 			$j("#recipient").autocompletePerson({
@@ -349,6 +342,8 @@
 				onSelect: function(value, data){
 					$j(".recipientAdd").removeAttr("disabled");
 					$j('#recipientId').val(data);
+					$j(".recipientAdd").attr("disabled");
+					$j(".recipientAdd").prop("disabled", false);
 				}
 			});	
 			
@@ -356,9 +351,6 @@
 				$j(".recipientAdd").attr("disabled","disabled");
 			});
 			
-			$j(".recipientAdd").click(function(){
-				$j(this).attr("disabled","disabled");
-			});
 			$j("#to").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
@@ -371,15 +363,13 @@
 				onSelect: function(value, data){
 					$j(".toAdd").removeAttr("disabled");
 					$j('#toId').val(data);
+					$j(".toAdd").attr("disabled");
+					$j(".toAdd").prop("disabled", false);
 				}
 			});	
 			
 			$j("#to").change(function(){
 				$j(".toAdd").attr("disabled","disabled");
-			});
-			
-			$j(".toAdd").click(function(){
-				$j(this).attr("disabled","disabled");
 			});
 			
 			$j("#refersTo").autocompletePerson({
@@ -394,15 +384,13 @@
 				onSelect: function(value, data){
 					$j(".refersToAdd").removeAttr("disabled");
 					$j('#refersToId').val(data);
+					$j(".refersToAdd").attr("disabled");
+					$j(".refersToAdd").prop("disabled", false);
 				}
 			});
 			
 			$j("#refersTo").change(function(){
 				$j(".refersToAdd").attr("disabled","disabled");
-			});
-			
-			$j(".refersToAdd").click(function(){
-				$j(this).attr("disabled","disabled");
 			});
 			
 			$j("#topic").autocompleteGeneral({
@@ -417,15 +405,13 @@
 				onSelect: function(value, data){
 					$j(".topicAdd").removeAttr("disabled");
 					$j('#topicId').val(data);
+					$j(".topicAdd").attr("disabled");
+					$j(".topicAdd").prop("disabled", false);
 				}
 			});	
 			
 			$j("#topic").change(function(){
 				$j(".topicAdd").attr("disabled","disabled");
-			});
-			
-			$j(".topicAdd").click(function(){
-				$j(this).attr("disabled","disabled");
 			});
 			
 		});
