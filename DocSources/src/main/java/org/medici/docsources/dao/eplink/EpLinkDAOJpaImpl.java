@@ -111,7 +111,7 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 		
 		List<EpLink> result = (List<EpLink>) query.getResultList();
 
-		if (result.size() == 1) {
+		if (result.size() >= 1) {
 			return result.get(0);
 		}
 
@@ -151,6 +151,7 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws PersistenceException {
 		StringBuffer stringBuffer = new StringBuffer("SELECT person.personId, COUNT(document.entryId) FROM EpLink WHERE");
