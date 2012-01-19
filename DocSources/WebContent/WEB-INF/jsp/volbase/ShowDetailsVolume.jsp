@@ -31,7 +31,7 @@
 		<div id="SpineVolumeDigitDiv">
 			<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 			<b>Volume Spine</b><br>
-			<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen">Show in Volume Explorer</a>
+			<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
 		</div>
 		</c:if>
 		<c:if test="${empty image && volume.digitized == false}">

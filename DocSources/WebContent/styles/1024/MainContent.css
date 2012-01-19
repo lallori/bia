@@ -1125,12 +1125,12 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 /* Body left Details Divs */
 #body_left #EditDetailsDocumentDiv, #body_left #EditDetailsPersonDiv  {
-	margin-top:30px;
+	margin-top:45px;
 	min-height:100px;!important
 }
 
 #body_left #EditDetailsVolumeDiv {
-	margin-top:30px;
+	margin-top: 45px;
 	min-height:240px;!important
 }
 
@@ -1375,8 +1375,12 @@ input.file {
 	margin-left:23px;
 }
 
-#senderPlaceDescriptionLabel, #recipientPlaceDescriptionLabel  {
+#senderPlaceDescriptionLabel  {
 	margin-left:23px;
+}
+
+#recipientPlaceDescriptionLabel  {
+	margin-left:40px;
 }
 
 #senderPeopleDescriptionLabel {
@@ -1843,11 +1847,15 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /*
 /* --------------- EditDetailsVolume --------------- */
 
+#startYearLabel {
+	margin-left: 3px;
+}
+
 #volNumLabel {
 	margin-left:85px;
 }
 
-#EditDetailsVolumeForm #volLeTextLabel {
+#EditDetailsVolumeForm #volLetExtLabel {
 	margin-left:7px;
 }
 
@@ -3493,7 +3501,7 @@ form#EditUserProfileForm span{
 #yourEasySearchFilterForm, #yourExpertSearchFilterForm {
 	background:url(/DocSources/images/1024/bg_searchFilter.jpg) no-repeat;
 	margin: 0;
-	padding:20px 0 0 60px;
+	padding: 5px 0 0 60px;
 	width:390px;
 	min-height:450px;
 }
@@ -3533,7 +3541,7 @@ span.categorySearch {
 	margin-right:5px;
 }
 
-#wordSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #topicsSearchDiv .searchFilterDiv a, #wordSearchDiv .searchFilterDiv a, #extractSearchDiv .searchFilterDiv a, #synopsisSearchDiv .searchFilterDiv a, #personSearchDiv .searchFilterDiv a, #placeSearchDiv .searchFilterDiv a, #senderSearchDiv .searchFilterDiv a, #fromSearchDiv .searchFilterDiv a, #recipientSearchDiv .searchFilterDiv a, #toSearchDiv .searchFilterDiv a, #refersToSearchDiv .searchFilterDiv a, dateSearchDiv, #topicSearchDiv .searchFilterDiv a, #dateSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a{
+#wordSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #topicsSearchDiv .searchFilterDiv a, #wordSearchDiv .searchFilterDiv a, #extractSearchDiv .searchFilterDiv a, #synopsisSearchDiv .searchFilterDiv a, #personSearchDiv .searchFilterDiv a, #placeSearchDiv .searchFilterDiv a, #senderSearchDiv .searchFilterDiv a, #fromSearchDiv .searchFilterDiv a, #recipientSearchDiv .searchFilterDiv a, #toSearchDiv .searchFilterDiv a, #refersToSearchDiv .searchFilterDiv a, dateSearchDiv, #topicSearchDiv .searchFilterDiv a, #dateSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a, #digitizedSearchDiv .searchFilterDiv a, #languagesSearchDiv .searchFilterDiv a, #cipherSearchDiv .searchFilterDiv a, #indexSearchDiv .searchFilterDiv a, #fromVolumeSearchDiv .searchFilterDiv a, #toVolumeSearchDiv .searchFilterDiv a, #contextSearchDiv .searchFilterDiv a, #inventarioSearchDiv .searchFilterDiv a, #namePartsSearchDiv .searchFilterDiv a, #roleCategorySearchDiv .searchFilterDiv a, #occupationSearchDiv .searchFilterDiv a{
 	font-size:11px;
 	color:#900;
 }
