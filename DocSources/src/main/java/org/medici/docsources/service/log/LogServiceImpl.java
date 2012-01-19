@@ -27,10 +27,8 @@
  */
 package org.medici.docsources.service.log;
 
-import org.medici.docsources.dao.historylog.HistoryLogDAO;
 import org.medici.docsources.dao.accesslog.AccessLogDAO;
 import org.medici.docsources.domain.AccessLog;
-import org.medici.docsources.domain.HistoryLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,37 +43,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class LogServiceImpl implements LogService {
 	@Autowired
-	private HistoryLogDAO historyLogDAO;
-	@Autowired
 	private AccessLogDAO accessLogDAO;
 
-	/**
-	 * @return the historyLogDAO
-	 */
-	public HistoryLogDAO getHistoryLogDAO() {
-		return historyLogDAO;
-	}
-
-	/**
-	 * @param historyLogDAO
-	 *            the historyLogDAO to set
-	 */
-	public void setHistoryLogDAO(HistoryLogDAO historyLogDAO) {
-		this.historyLogDAO = historyLogDAO;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	public void traceHistoryLog(HistoryLog historyLog) throws ApplicationThrowable {
-		try {
-			getHistoryLogDAO().persist(historyLog);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
 
 	/**
 	 * {@inheritDoc}

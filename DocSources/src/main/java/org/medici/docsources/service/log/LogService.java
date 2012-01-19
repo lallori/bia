@@ -28,7 +28,6 @@
 package org.medici.docsources.service.log;
 
 import org.medici.docsources.domain.AccessLog;
-import org.medici.docsources.domain.HistoryLog;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -36,14 +35,6 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface LogService {
-
-	/**
-	 * 
-	 * @param historyLog
-	 * @throws ApplicationThrowable
-	 */
-	public void traceHistoryLog(HistoryLog historyLog) throws ApplicationThrowable;
-
 	/**
 	 * 
 	 * @param historyLog
