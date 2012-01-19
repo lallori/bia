@@ -113,7 +113,7 @@
 		<oscache.version>3.6.0.Final</oscache.version>
 		<jpa.version>2.0-cr-1</jpa.version>
 		<jstl.version>1.1.2</jstl.version>
-		<mysql.version>5.1.17</mysql.version>
+		<mysql.version>5.1.9</mysql.version>
 		<recaptcha4j.version>0.0.7</recaptcha4j.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<springdao.version>2.0.8</springdao.version>
@@ -410,7 +410,7 @@
 			<version>1.2.15</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.sanselan</groupId>
+			<groupId>org.apache.sanselan</groupId>
 		    <artifactId>sanselan</artifactId>
 		    <version>0.97-incubator</version>
 		</dependency>
@@ -502,7 +502,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-proxool</artifactId>
-			<version>${hibernate.version}</version>
+			<version>${oscache.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
