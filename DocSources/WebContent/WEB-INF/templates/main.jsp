@@ -83,6 +83,8 @@
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script> -->
 
 		<script type="text/javascript">
+			history.go = function(){};
+
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
 				$j.ajaxSetup ({
