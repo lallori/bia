@@ -31,12 +31,13 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
 
+import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserHistoryDocument;
+import org.medici.docsources.domain.UserHistoryDocument.Action;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -47,10 +48,11 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.UserHistory
+ * @see org.medici.docsources.domain.LastHistory
  */
 @Repository
 public class UserHistoryDocumentDAOJpaImpl extends JpaDao<Integer, UserHistoryDocument> implements UserHistoryDocumentDAO {
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -75,6 +77,7 @@ public class UserHistoryDocumentDAOJpaImpl extends JpaDao<Integer, UserHistoryDo
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserHistoryDocument> findHistory(Integer resultSize) {
         String queryString = "FROM UserHistoryDocument WHERE username=:username ORDER BY dateAndTime DESC";
@@ -90,6 +93,7 @@ public class UserHistoryDocumentDAOJpaImpl extends JpaDao<Integer, UserHistoryDo
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public UserHistoryDocument findLastEntryDocument() {
         String queryString = "FROM UserHistoryDocument WHERE username=:username ORDER BY dateAndTime DESC";
@@ -113,9 +117,6 @@ public class UserHistoryDocumentDAOJpaImpl extends JpaDao<Integer, UserHistoryDo
 	 */
 	@Override
 	public Page findHistory(PaginationFilter paginationFilter) throws PersistenceException {
-		// Create criteria objects
-		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-
 		Page page = new Page(paginationFilter);
 
 		if (paginationFilter.getTotal() == null) {
@@ -135,5 +136,35 @@ public class UserHistoryDocumentDAOJpaImpl extends JpaDao<Integer, UserHistoryDo
 		page.setList(query.getResultList());
 
 		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void persist(UserHistoryDocument entity) throws PersistenceException {
+		try {
+			UserHistoryDocument lastUserHistoryDocument = findLastEntryDocument();
+			
+			if (lastUserHistoryDocument != null) {
+				// if document is not the same, we persist action 
+				if (!lastUserHistoryDocument.getDocument().getEntryId().equals(entity.getDocument().getEntryId())) {
+					super.persist(entity);
+				} else {
+					// if document is not the same, we persist action
+					if ((lastUserHistoryDocument.getAction().equals(Action.V)) && (entity.getAction().equals(Action.M))) {
+						super.persist(entity);
+					} else if ((lastUserHistoryDocument.getAction().equals(Action.V)) && (entity.getAction().equals(Action.D))) {
+						super.persist(entity);
+					}
+					//otherwise we dont' persist
+				}
+			} else {
+				//this case is for first access
+				super.persist(entity);
+			}
+		} catch (PersistenceException persistenceException) {
+			logger.error("Exception during persisting history", persistenceException);
+		}
 	}
 }

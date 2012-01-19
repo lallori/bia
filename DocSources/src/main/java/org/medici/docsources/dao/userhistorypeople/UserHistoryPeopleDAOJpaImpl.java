@@ -31,12 +31,13 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
 
+import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserHistoryPeople;
+import org.medici.docsources.domain.UserHistoryDocument.Action;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -47,10 +48,11 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.UserHistory
+ * @see org.medici.docsources.domain.LastHistory
  */
 @Repository
 public class UserHistoryPeopleDAOJpaImpl extends JpaDao<Integer, UserHistoryPeople> implements UserHistoryPeopleDAO {
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -75,6 +77,7 @@ public class UserHistoryPeopleDAOJpaImpl extends JpaDao<Integer, UserHistoryPeop
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserHistoryPeople> findHistory(Integer resultSize) {
         String queryString = "FROM UserHistoryPeople WHERE username=:username ORDER BY dateAndTime DESC";
@@ -90,6 +93,7 @@ public class UserHistoryPeopleDAOJpaImpl extends JpaDao<Integer, UserHistoryPeop
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public UserHistoryPeople findLastEntryPeople() {
         String queryString = "FROM UserHistoryPeople WHERE username=:username ORDER BY dateAndTime DESC";
@@ -134,4 +138,33 @@ public class UserHistoryPeopleDAOJpaImpl extends JpaDao<Integer, UserHistoryPeop
 		return page;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void persist(UserHistoryPeople entity) throws PersistenceException {
+		try {
+			UserHistoryPeople lastUserHistoryPeople = findLastEntryPeople();
+			
+			if (lastUserHistoryPeople != null) {
+				// if document is not the same, we persist action 
+				if (!lastUserHistoryPeople.getPeople().getPersonId().equals(entity.getPeople().getPersonId())) {
+					super.persist(entity);
+				} else {
+					// if document is not the same, we persist action
+					if ((lastUserHistoryPeople.getAction().equals(Action.V)) && (entity.getAction().equals(Action.M))) {
+						super.persist(entity);
+					} else if ((lastUserHistoryPeople.getAction().equals(Action.V)) && (entity.getAction().equals(Action.D))) {
+						super.persist(entity);
+					}
+					//otherwise we dont' persist
+				}
+			} else {
+				//this case is for first access
+				super.persist(entity);
+			}
+		} catch (PersistenceException persistenceException) {
+			logger.error("Exception during persisting history", persistenceException);
+		}
+	}
 }

@@ -32,10 +32,12 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserHistoryPlace;
+import org.medici.docsources.domain.UserHistoryDocument.Action;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -50,6 +52,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserHistoryPlaceDAOJpaImpl extends JpaDao<Integer, UserHistoryPlace> implements UserHistoryPlaceDAO {
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -74,6 +77,7 @@ public class UserHistoryPlaceDAOJpaImpl extends JpaDao<Integer, UserHistoryPlace
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserHistoryPlace> findHistory(Integer resultSize) {
         String queryString = "FROM UserHistoryPlace WHERE username=:username ORDER BY dateAndTime DESC";
@@ -89,6 +93,7 @@ public class UserHistoryPlaceDAOJpaImpl extends JpaDao<Integer, UserHistoryPlace
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public UserHistoryPlace findLastEntryPlace() {
         String queryString = "FROM UserHistoryPlace WHERE username=:username ORDER BY dateAndTime DESC";
@@ -130,5 +135,36 @@ public class UserHistoryPlaceDAOJpaImpl extends JpaDao<Integer, UserHistoryPlace
 		query.setMaxResults(paginationFilter.getLength());
 		page.setList(query.getResultList());
 
-		return page;	}
+		return page;	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void persist(UserHistoryPlace entity) throws PersistenceException {
+		try {
+			UserHistoryPlace lastUserHistoryPlace = findLastEntryPlace();
+			
+			if (lastUserHistoryPlace != null) {
+				// if document is not the same, we persist action 
+				if (!lastUserHistoryPlace.getPlace().getPlaceAllId().equals(entity.getPlace().getPlaceAllId())) {
+					super.persist(entity);
+				} else {
+					// if document is not the same, we persist action
+					if ((lastUserHistoryPlace.getAction().equals(Action.V)) && (entity.getAction().equals(Action.M))) {
+						super.persist(entity);
+					} else if ((lastUserHistoryPlace.getAction().equals(Action.V)) && (entity.getAction().equals(Action.D))) {
+						super.persist(entity);
+					}
+					//otherwise we dont' persist
+				}
+			} else {
+				//this case is for first access
+				super.persist(entity);
+			}
+		} catch (PersistenceException persistenceException) {
+			logger.error("Exception during persisting history", persistenceException);
+		}
+	}
 }

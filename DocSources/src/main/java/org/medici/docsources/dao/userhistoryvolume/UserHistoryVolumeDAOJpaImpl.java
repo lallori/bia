@@ -27,23 +27,17 @@
  */
 package org.medici.docsources.dao.userhistoryvolume;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
+import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserHistoryVolume;
-import org.medici.docsources.domain.Volume;
+import org.medici.docsources.domain.UserHistoryDocument.Action;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -58,6 +52,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserHistoryVolumeDAOJpaImpl extends JpaDao<Integer, UserHistoryVolume> implements UserHistoryVolumeDAO {
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * 
@@ -82,6 +77,7 @@ public class UserHistoryVolumeDAOJpaImpl extends JpaDao<Integer, UserHistoryVolu
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserHistoryVolume> findHistory(Integer resultSize) {
         String queryString = "FROM UserHistoryVolume WHERE username=:username ORDER BY dateAndTime DESC";
@@ -97,6 +93,7 @@ public class UserHistoryVolumeDAOJpaImpl extends JpaDao<Integer, UserHistoryVolu
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public UserHistoryVolume findLastEntryVolume() {
         String queryString = "FROM UserHistoryVolume WHERE username=:username ORDER BY dateAndTime DESC";
@@ -139,5 +136,35 @@ public class UserHistoryVolumeDAOJpaImpl extends JpaDao<Integer, UserHistoryVolu
 		page.setList(query.getResultList());
 
 		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void persist(UserHistoryVolume entity) throws PersistenceException {
+		try {
+			UserHistoryVolume lastUserHistoryVolume = findLastEntryVolume();
+			
+			if (lastUserHistoryVolume != null) {
+				// if document is not the same, we persist action 
+				if (!lastUserHistoryVolume.getVolume().getSummaryId().equals(entity.getVolume().getSummaryId())) {
+					super.persist(entity);
+				} else {
+					// if document is not the same, we persist action
+					if ((lastUserHistoryVolume.getAction().equals(Action.V)) && (entity.getAction().equals(Action.M))) {
+						super.persist(entity);
+					} else if ((lastUserHistoryVolume.getAction().equals(Action.V)) && (entity.getAction().equals(Action.D))) {
+						super.persist(entity);
+					}
+					//otherwise we dont' persist
+				}
+			} else {
+				//this case is for first access
+				super.persist(entity);
+			}
+		} catch (PersistenceException persistenceException) {
+			logger.error("Exception during persisting history", persistenceException);
+		}
 	}
 }
