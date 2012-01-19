@@ -651,7 +651,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
-		if (sortingCriterias.size() > 0) {
+		/*if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
 				orderBySQL.append(sortingCriterias.get(i).getColumn());
@@ -661,7 +661,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				}
 			}
-		}
+		}*/
 		
 		String jpql = objectsQuery + orderBySQL.toString();
 		logger.info("JPQL Query : " + jpql);
