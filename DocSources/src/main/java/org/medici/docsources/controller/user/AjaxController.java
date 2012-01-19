@@ -30,7 +30,6 @@ package org.medici.docsources.controller.user;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +113,7 @@ public class AjaxController {
 	 * @param model
 	 * @param paginationFilter
 	 */
+	@SuppressWarnings("unchecked")
 	private void myHistoryDocuments(Map<String, Object> model, PaginationFilter paginationFilter) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
@@ -189,6 +189,7 @@ public class AjaxController {
 	 * @param model
 	 * @param paginationFilter
 	 */
+	@SuppressWarnings("unchecked")
 	private void myHistoryPeople(Map<String, Object> model, PaginationFilter paginationFilter) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
@@ -221,6 +222,7 @@ public class AjaxController {
 	 * @param model
 	 * @param paginationFilter
 	 */
+	@SuppressWarnings("unchecked")
 	private void myHistoryPlaces(Map<String, Object> model, PaginationFilter paginationFilter) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
@@ -251,6 +253,7 @@ public class AjaxController {
 	 * @param model
 	 * @param paginationFilter
 	 */
+	@SuppressWarnings("unchecked")
 	private void myHistoryVolumes(Map<String, Object> model, PaginationFilter paginationFilter) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
