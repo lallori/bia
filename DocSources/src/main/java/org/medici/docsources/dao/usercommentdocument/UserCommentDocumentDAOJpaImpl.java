@@ -45,7 +45,7 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.UserHistory
+ * @see org.medici.docsources.domain.LastHistory
  */
 @Repository
 public class UserCommentDocumentDAOJpaImpl extends JpaDao<Integer, UserCommentDocument> implements UserCommentDocumentDAO {
