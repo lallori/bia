@@ -33,8 +33,7 @@
 					server: '${ReverseProxyIIPImage}',
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
-					credit: "${documentExplorer.image.imageType == 'C' ? 'Folio n.' : ''} ${documentExplorer.image.imageType == 'R' ? 'Index of Names n.' : ''} ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.missedNumbering} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
-					scale: 0.0,
+					credit: "${documentExplorer.image.imageType == 'C' ? 'folio: ' : ''} ${documentExplorer.image.imageType == 'R' ? 'Index of Names' : ''} ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}",
 					navigation: true,
 					showNavWindow: true,
 					showNavImage: true, // this property hide navigation image

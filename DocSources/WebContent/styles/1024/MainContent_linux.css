@@ -168,6 +168,22 @@ h6 { /* Titles */
 	text-align:center;
 }
 
+#lastRecord {
+	width: 35px;
+	height: 25px;
+	position: absolute;
+	margin-left: 5px;
+	background:url(/DocSources/images/1024/button_lastRecord.png) no-repeat;
+}
+
+#nextRecord {
+	width: 35px;
+	height: 25px;
+	position: absolute;
+	margin-left: 35px;
+	background:url(/DocSources/images/1024/button_nextRecord.png) no-repeat;
+}
+
 #buttonShareLink:hover, #menuActions:hover, #vettingHistory:hover, #showComments:hover {
 	text-decoration:none;
 	cursor:pointer;
@@ -278,7 +294,6 @@ item a{
 	text-align:left;
 	color:#6d5c4d;
 	padding:3px 0 3px 5px;
-	text-align:justify;
 }
 
 .value60 { /* Sub-fields value 60% large */
@@ -287,7 +302,6 @@ item a{
 	text-align:left;
 	color:#6d5c4d;
 	padding:3px 0 3px 5px;
-	text-align:justify;
 }
 
 .value80 { /* Sub-fields value 80% large */
@@ -296,7 +310,6 @@ item a{
 	text-align:left;
 	color:#6d5c4d;
 	padding:3px 0 3px 5px; 
-	text-align:justify;
 }
 
 .info{ /* Sub-fields dates value on People Base (Titles&Occupations, Parents, Children, Spouses */
@@ -337,6 +350,26 @@ form div {
 	margin-bottom:0;
 }
 */
+
+#loadingDiv { /* Animated Gif that shows up when saving each edit section */
+    background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
+    visibility: hidden;
+    z-index:999;
+    opacity:0.4;
+    width:485px;
+    height:100%;
+    position:absolute;
+}
+
+#loadingDiv2 { /* Animated Gif that shows up when saving each edit section when two sections are open simultanously */
+    background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
+    visibility: hidden;
+    z-index:999;
+    opacity:0.4;
+    width:485px;
+    height:100%;
+    position:absolute;
+}
 
 .edit { /* Edit FORM class */
 	font-size:11px;
@@ -408,7 +441,7 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	visibility:hidden;
 }
 
-#save { /* Save button on bottom right  */
+#save, .save { /* Save button on bottom right  */
 	margin:5px auto auto 310px;
 	padding:0;
 	cursor:pointer;
@@ -583,6 +616,14 @@ img.transparent {
 
 .input_5c { /* input for 5 characters */ 
 	width: 45px;
+}
+
+.input_7c { /* input for 8 characters */ 
+	width: 65px;
+}
+
+.input_8c { /* input for 8 characters */ 
+	width: 75px;
 }
 
 .input_10c { /* input for 10 characters approx. */ 
@@ -1124,7 +1165,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	max-width: 290px;
 }
 
-#SpineVolumeDiv {
+#SpineVolumeDiv, #SpineVolumeNotDigitDiv, #SpineVolumeDigitDiv  {
     float:right;
 	margin-right:23px;
     z-index:1;
@@ -1132,27 +1173,18 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
     width: 120px;
     text-align:center;
 	font-size:10px;
+	margin-right: 23px;
 }
 
 #SpineVolumeDiv img, #SpineVolumeDigitDiv img {
 	border-radius: 4px;
 }
 
-#SpineVolumeDigitDiv {
-    float:right;
-    z-index:1;
-    height:160px;
-    width: 120px;
-    text-align:center;
-	font-size:10px;
-    margin-right: 23px;
-}
-
-#SpineVolumeDiv p,  #SpineVolumeDigitDiv p{
+#SpineVolumeDiv p,  #SpineVolumeDigitDiv p, #SpineVolumeNotDigitDiv p{
    margin-top:5px;
 }
 
-#SpineVolumeDiv span {
+#SpineVolumeDiv span, #SpineVolumeDigitDiv span, #SpineVolumeNotDigitDiv span {
     color: #C0272D;
     height: 60px;
     position: absolute;
@@ -1162,7 +1194,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	text-shadow:1px 1px 1px #999;
 }
 
-#SpineVolumeDiv #ShowVolumeInVolumeExplorer { /* Bottom right icon  */
+#SpineVolumeDiv #ShowVolumeInVolumeExplorer, #SpineVolumeDigitDiv #ShowVolumeInVolumeExplorer, #SpineVolumeNotDigitDiv #ShowVolumeInVolumeExplorer { /* Bottom right icon  */
 	width:50px;
 	height:55px;
 	background:url(/DocSources/images/1024/button_showManuscViewerVol.png) bottom no-repeat;
@@ -1170,7 +1202,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	float:right;
 }
 
-#SpineVolumeDiv #ShowVolumeInManuscriptViewer { /* Bottom left icon  */
+#SpineVolumeDiv #ShowVolumeInManuscriptViewer, #SpineVolumeDigitDiv #ShowVolumeInManuscriptViewer, #SpineVolumeNotDigitDiv #ShowVolumeInManuscriptViewer { /* Bottom left icon  */
 	width:50px;
 	height:55px;
 	background:url(/DocSources/images/1024/button_openVolExplorerVol.png) bottom no-repeat;
@@ -1244,6 +1276,8 @@ input.file {
 	text-shadow:1px 1px 1px #999;
 	font-size:10px;
 	text-align:center;
+	margin-left:25px;
+	moz-margin-left: 25px;
 }
 
 #DocumentImageDigitDiv span:hover {
@@ -2797,6 +2831,11 @@ a.refreshVolumeExplorer {
 	margin: 0 0 0 120px;
 }
 
+form#EditUserProfileForm span{ 
+	float: right;
+    margin: 10px 23px 0 0;
+}
+
 form#EditUserProfileForm { 
 	margin: 0px 0 0 20px;
 	width:575px;
@@ -2804,6 +2843,11 @@ form#EditUserProfileForm {
 
 form#EditUserProfileForm div { 
 	margin: 0;
+}
+
+form#EditUserProfileForm span{ 
+	float: right;
+    margin: 10px 23px 0 0;
 }
 
 #EditUserProfileForm fieldset { 
@@ -3475,7 +3519,8 @@ span.categorySearch {
 	color:#063;
 }
 
-.saveAsButton { /* Save As Button */
+/* Save As Button 
+.saveAsButton { 
 	margin: 65px 0 0 30px;
 	position:absolute;
 	cursor:pointer;
@@ -3489,32 +3534,34 @@ span.categorySearch {
 	border:none;
 	outline:none;
 }
+*/
 
 .saveButton { /* Save Button */
-	margin: 65px 0 0 85px;
+	margin: 35px 0 0 112px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:4px 0 0 12px; 
+	padding:4px 0 0 0; 
 	background-repeat:no-repeat;
-	width:59px;
+	width:52px;
 	height:23px;
 	border:none;
 	outline:none;
+	text-align:center;
 }
 
 #advsearch { /* Search Button */
-	margin: 25px auto auto 160px;
+	margin: 35px auto auto 190px;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:0 0 0 2px; 
 	width:52px;
 	height:22px;
 	border:none;
+	text-align:center;
 }
 
 #advsearch:hover, .saveButton:hover, .saveAsButton:hover {
@@ -4327,3 +4374,174 @@ ul#network a {
 	text-decoration:none;
 	color: #6D5C4D;
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* -------------------------------------------------------------- ADMINISTRATION MODULE ------------------------------------------------------------- */
+
+/* ---------------- Modal Window ------------- */
+
+#administrationModalDiv #close {
+	position:absolute;
+	margin-top: 120px;
+	margin-left: 98px;
+}
+
+#administrationModalDiv #UserManagement, #administrationModalDiv #ReportsRevisions, #administrationModalDiv #SystemManagement{
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:182px;
+	height:22px;
+	margin:-5px 0 0 10px;
+}
+
+#administrationModalDiv #UserManagement:hover, #administrationModalDiv #ReportsRevisions:hover, #administrationModalDiv #SystemManagement:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	text-decoration:none;
+	filter:alpha(opacity=50); /* IE */ !important
+}
+
+#administrationModalDiv #SystemManagementDiv {
+	width:200px;
+	margin:15px 0 0 25px;
+	position:absolute;
+}
+
+#administrationModalDiv #UserManagementDiv {
+	width:200px;
+	margin:50px 0 0 25px;
+	position:absolute;
+}
+
+#administrationModalDiv #ReportsRevisionsDiv {
+	width:200px;
+	margin:85px 0 0 25px;
+	position:absolute;
+}
+
+
+/* ---------------- User Search Form (body_left) ------------- */
+
+#SystemManagementForm {
+	width: 485px;
+}
+
+#SystemManagementForm .save {
+	margin:5px auto auto 0;
+}
+
+.search { /* Save button on bottom right  */
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	width:52px;
+	height:22px;
+	border:none;
+	text-align:center;
+	margin: 20px 0 7px 310px;
+}
+
+#fullNameLabel {
+	margin-left: 19px;
+}
+
+#userNameLabel {
+	margin-left: 16px;
+}
+
+h3.systemManagement {
+	margin-top: 15px;
+	font-style: normal;
+	text-align: center;
+}
+
+/* ---------------- User Search Table (body_right) ------------- */
+
+.SystemManagement{
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:122px;
+	height:22px;
+	margin: 10px 0 10px 371px;
+}
+
+.SystemManagement:hover, .userButton:hover{
+	text-decoration:none;
+}
+
+.userButton{
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:122px;
+	height:22px;
+	margin: 60px 0 10px 371px;
+}
+
+
+
+
+/* Edit Details Document Gif animata loading  */
+#prova {
+	z-index:999;
+	width:485px;
+	height:483px;
+	position:absolute;
+	background:url(/DocSources/images/1024/loading_div.gif) no-repeat;
+	opacity:0.4;
+}
+
+/* ---------------- User Control Form ------------- */
+
+#EditUserControlForm #userNameLabel {
+	margin-left: 10px;
+}
+
+#firstNameLabel {
+	margin-left: 5px;
+}
+
+#lastNameLabel {
+	margin-left: 8px;
+}
+
+#groupPoliciesLabel {
+	margin-left: 63px;
+}
+
+#newPasswordLabel {
+	margin-left: 60px;
+}
+
+#forcePswdChangeLabel {
+	margin-left: 9px;
+}
+
+#lockAccountLabel {
+	margin-left: 72px;
+}
+
+#passwordExpiresLabel {
+	margin-left: 58px;
+}
+
+#unmaskLabel {
+	margin-left: 33px;
+}
+
+
+/* ---------------- Email Control ------------- */
+
+#emailDisplayLabel {
+	margin-left: ;
+}
+

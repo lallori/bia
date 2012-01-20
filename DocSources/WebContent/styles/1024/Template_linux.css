@@ -71,6 +71,7 @@ a {
 	position:absolute;
 	background:url(/DocSources/images/1024/img_map.png) no-repeat;
 	background-color:transparent;
+	z-index:999;
 }
 
 #top_top { /* SEARCH FORM and LAST ENTRY MENU Container */
@@ -96,7 +97,6 @@ a {
 	height:23px;
 	margin-top:158px;
 	position:absolute;
-	z-index:-1 !important; 
 	background-image:url(/DocSources/images/1024/bg_userinterface.png);
 }
 
@@ -157,7 +157,7 @@ a {
 #searchForm { /* Search Form Container */
 	width:200px;
 	height:80px;
-	margin: 10px 0 0 20px;
+	margin: 10px 0 0 17px;
 	position:absolute;
 	font-size:12px;
 }
@@ -201,7 +201,7 @@ a {
 /* --------------------------------------- DIGITIZATION MODULE (#top_top) --------------------------------------- */
 
 #digitizationModule {
-	background-image:url(/DocSources/images/1024/button_lastentry.png);
+	background-image:url(/DocSources/images/1024/button_digitizationModule.png);
 	background-repeat:no-repeat;
 	text-decoration:none;
 	width:100px;
@@ -329,12 +329,24 @@ a {
 /*
 /* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
 
+#administrationModule { /* Administration Module */
+	margin: 5px 0 0 289px;
+	position: absolute;
+	font-size: 10px;
+}
+
+
+
 #top_bottom p{ /* top_bottom (Who am I?) */
 	color:#FFF;
 	margin-top:5px;
 	float:right;
 	padding-right:30px;
 	font-size:10px;
+}
+
+#top_bottom p:hover{ 
+	cursor:default;
 }
 
 /* ------------- */

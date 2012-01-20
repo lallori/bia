@@ -88,10 +88,10 @@
 	<div id="prevNextButtons" class="transcribe">
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
-	    	<a id="previous" class="previousPage">Previous folio</a>
+	    	<a title="Previous Folio"></a>
 		</c:if>
 		<c:if test="${command.imageOrder > 1}">
-			<a id="previous" class="previousPage" href="${previousPage}" >Previous folio</a>
+			<a href="${previousPage}" onclick="$j('#folio').dialog('open');" title="Previous Folio"></a>
 		</c:if>
 		</div>
 		<div id="folio" title="Warning!" style="display:none"> 
@@ -99,42 +99,27 @@
 		</div> 
 		<div id="nextButton">
 		<c:if test="${command.imageOrder == command.total}">
-			<a id="next" class="nextPage">Next folio</a>
+			<a title="Previous Folio"></a>
 		</c:if>
 		<c:if test="${command.imageOrder < command.total}">
-			<a id="next" class="nextPage" href="${nextPage}">Next folio</a>
+			<a href="${nextPage}" onclick="$j('#folio').dialog('open');" title="Next Folio"></a>
 		</c:if>
 		</div>
 	</div>
+	
+	<div>
+    	<a id="indexNames" href="/DocSources/de/volbase/moveToRubricario.do" onclick="$j('#indexNamesWindow').dialog('open');" class="transcribe" title="Index of Names"></a>
+    </div>
 
 	<div>
-		<a id="volumeSummary" href="#" class="transcribe">Volume Summary</a>
+		<a id="volumeSummary" href="#" class="transcribe" title="Volume Summary"></a>
 	</div>
 
 	<div id="line" class="transcribe"></div>
 	
-	<div id="rubricarioMoveTo" class="transcribe">
-		<form:form id="moveToRubricarioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
-			<label id="imageProgTypeNumLabel" class="rubricarioLabel" for="imageProgTypeNum">Move to <i>Index of Names</i> folio</label>
-			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
-			<input id="goR" type="submit"  value="Go"/>
-			<form:hidden path="entryId" />
-			<form:hidden path="volNum" />
-			<form:hidden path="volLetExt" />
-			<form:hidden path="imageType" value="R"/>
-			<form:hidden path="imageOrder" />
-			<form:hidden path="total" value="${command.total}" />
-			<form:hidden path="totalRubricario" value="${command.totalRubricario}" />
-			<form:hidden path="totalCarta" value="${command.totalCarta}" />
-			<form:hidden path="totalAppendix" value="${command.totalAppendix}" />
-			<form:hidden path="totalOther" value="${command.totalOther}" />
-			<form:hidden path="totalGuardia" value="${command.totalGuardia}" />
-			<form:hidden path="modeEdit" value="${command.modeEdit}" />
-		</form:form>
-	</div>
 	<div id="folioMoveTo" class="transcribe">
 		<form:form id="moveToFolioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
-			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio </label>
+			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">folio </label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
 			<input id="go" type="submit" value="Go"/>
 			<form:hidden path="entryId" />
@@ -155,7 +140,7 @@
 	<div id="line2" class="transcribe"></div>
 	
 	<div id="personalNotesDiv">
-		<a id="personalNotesButton" href="#" class="transcribe">Personal Notes</a>
+		<a href="#" onclick="$j('#notes').dialog('open');" class="transcribe" title="Personal Notes"></a>
 	</div>
 	
 	<div id="exitDiv">

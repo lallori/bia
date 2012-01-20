@@ -12,8 +12,7 @@
 				server: '${IIPImageServerURL}',
 				prefix: '${ImagePrefixURL}',
 				image: '${image}',
-				credit: "${image.imageType == 'C' ? 'Folio n.': ''} ${image.imageType == 'R' ? 'Index of Names n.' : ''} ${image.imageProgTypeNum} ${image.missedNumbering} ${image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
-				scale: 0.0,
+				credit: "${image.imageType == 'C' ? 'folio: ': ''} ${image.imageType == 'R' ? 'Index of Names n.' : ''} ${image.imageProgTypeNum} ${image.missedNumbering} ${image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
 				navigation: true,
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image

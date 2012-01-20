@@ -265,7 +265,7 @@
 				//on-click-button
 				.find(".ui-dialog-titlebar-maximize")
 					.toggle(settings.maximize)
-					.css({ "right" : settings.maximize ? "1.4em" : "-9999em" })
+					.css({ "right" : settings.maximize ? "20px" : "-9999em" })
 					.click(function(e){
 						e.preventDefault();
 						$(self).dialogExtend("maximize");
@@ -273,7 +273,7 @@
 				.end()
 				.find(".ui-dialog-titlebar-minimize")
 					.toggle(settings.minimize)
-					.css({ "right" : settings.maximize ? "2.5em" : settings.minimize ? "1.4em" : "-9999em" })
+					.css({ "right" : settings.maximize ? "20px" : settings.minimize ? "20px" : "-9999em" })
 					.click(function(e){
 						e.preventDefault();
 						$(self).dialogExtend("minimize");
@@ -535,7 +535,7 @@
 				.end()
 				.find(".ui-dialog-titlebar-restore")
 					.toggle( $(self).data("dialog-state") != "normal" && ( settings.maximize || settings.minimize ) )
-					.css({ "right" : $(self).data("dialog-state") == "maximized" ? "1.4em" : $(self).data("dialog-state") == "minimized" ? !settings.maximize ? "1.4em" : "2.5em" : "-9999em" })
+					.css({ "right" : $(self).data("dialog-state") == "maximized" ? "1.4em" : $(self).data("dialog-state") == "minimized" ? !settings.maximize ? "20px" : "20px" : "-9999em" })
 				.end();
 			//maintain chainability
 			return self;

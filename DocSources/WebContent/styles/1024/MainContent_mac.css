@@ -16,7 +16,7 @@ h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLAC
 	padding:0 0 15px 30px;
 	font-size:14px;
 	font-style:italic;
-	color:#009;
+	color:#666EA4;
 }
 
 h3.place { /* PLACE NAME */
@@ -172,6 +172,22 @@ h6 { /* Titles */
 	text-align:center;
 }
 
+#lastRecord {
+	width: 35px;
+	height: 25px;
+	position: absolute;
+	margin-left: 5px;
+	background:url(/DocSources/images/1024/button_lastRecord.png) no-repeat;
+}
+
+#nextRecord {
+	width: 35px;
+	height: 25px;
+	position: absolute;
+	margin-left: 35px;
+	background:url(/DocSources/images/1024/button_nextRecord.png) no-repeat;
+}
+
 #buttonShareLink:hover, #menuActions:hover, #vettingHistory:hover, #showComments:hover {
 	text-decoration:none;
 	cursor:pointer;
@@ -316,6 +332,7 @@ item a{
 /* Bottom Div Containers */
 #EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv {
 	margin-bottom:30px;!important
+	min-height:100px;!important
 }
 
 
@@ -339,6 +356,26 @@ item a{
 form div {
 	margin-top:5px;
 	margin-bottom:0;
+}
+
+#loadingDiv { /* Animated Gif that shows up when saving each edit section */
+    background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
+    visibility: hidden;
+    z-index:999;
+    opacity:0.4;
+    width:485px;
+    height:100%;
+    position:absolute;
+}
+
+#loadingDiv2 { /* Animated Gif that shows up when saving each edit section when two sections are open simultanously */
+    background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
+    visibility: hidden;
+    z-index:999;
+    opacity:0.4;
+    width:485px;
+    height:100%;
+    position:absolute;
 }
 
 .edit { /* Edit FORM class */
@@ -411,8 +448,7 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	visibility:hidden;
 }
 
-
-#save { /* Save button on bottom right  */
+#save, .save { /* Save button on bottom right  */
 	margin:5px auto auto 310px;
 	padding:0;
 	cursor:pointer;
@@ -454,6 +490,10 @@ input[type="submit"]:hover, input[type="image"]:hover{
 
 #PeopleCorrespondentsDocumentsForm #AddNewValue {
 	margin: 5px auto 7px 312px;
+}
+
+#PeopleCorrespondentsDocumentsForm #close {
+	margin-top: 5px;
 }
 
 #AddNewValue:hover, .AddNewValue:hover, .Add:hover  {
@@ -585,6 +625,14 @@ img.transparent {
 	width: 45px;
 }
 
+.input_7c { /* input for 8 characters */ 
+	width: 65px;
+}
+
+.input_8c { /* input for 8 characters */ 
+	width: 75px;
+}
+
 .input_10c { /* input for 10 characters approx. */ 
 	width: 95px;
 }
@@ -615,6 +663,10 @@ img.transparent {
 
 .input_28c { /* input for 28 characters approx. */ 
 	width: 245px;
+}
+
+.input_29c { /* input for 28 characters approx. */ 
+	width: 268px;
 }
 
 .input_30c { /* input for 30 characters approx. */ 
@@ -1035,6 +1087,10 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	min-height:100px;!important
 }
 
+#CreateNewPersonRecordForm, #CreateNewTitlesOccupationsForm  {
+	padding:7px 5px 5px 5px;
+}
+
 /* Body left Details Divs */
 #body_left #EditDetailsDocumentDiv, #body_left #EditDetailsPersonDiv, #body_left #EditDetailsVolumeDiv, #body_left #EditDetailsVolumeDiv {
 	margin-top:30px;
@@ -1096,6 +1152,8 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	height:100%;
 }
 
+/* Volume Details Display items */
+
 #EditPortraitPersonDiv {
 	z-index:1;
 	margin:0 0 0 340px;
@@ -1107,22 +1165,53 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	color:#6F6B69;
 }
 
-#SpineVolumeNotDigitDiv {
-    float:right;
-    z-index:1;
-    height:160px;
-    width:130px;
-    text-align:center;
-	font-size:10px;
+#EditDetailsVolumeDiv h3 {
+	max-width: 290px;
 }
 
-#SpineVolumeDigitDiv {
+#SpineVolumeDiv, #SpineVolumeNotDigitDiv, #SpineVolumeDigitDiv  {
     float:right;
+	margin-right:23px;
     z-index:1;
     height:160px;
-    width:150px;
+    width: 120px;
     text-align:center;
 	font-size:10px;
+	margin-right: 23px;
+}
+
+#SpineVolumeDiv img, #SpineVolumeDigitDiv img {
+	border-radius: 4px;
+}
+
+#SpineVolumeDiv p,  #SpineVolumeDigitDiv p, #SpineVolumeNotDigitDiv p{
+   margin-top:5px;
+}
+
+#SpineVolumeDiv span, #SpineVolumeDigitDiv span, #SpineVolumeNotDigitDiv span {
+    color: #C0272D;
+    height: 60px;
+    position: absolute;
+    margin: 55px 0 0 0;
+    width: 70px;
+	font-size:10px;
+	text-shadow:1px 1px 1px #999;
+}
+
+#SpineVolumeDiv #ShowVolumeInVolumeExplorer, #SpineVolumeDigitDiv #ShowVolumeInVolumeExplorer, #SpineVolumeNotDigitDiv #ShowVolumeInVolumeExplorer { /* Bottom right icon  */
+	width:50px;
+	height:55px;
+	background:url(/DocSources/images/1024/button_showManuscViewerVol.png) bottom no-repeat;
+	cursor:pointer;
+	float:right;
+}
+
+#SpineVolumeDiv #ShowVolumeInManuscriptViewer, #SpineVolumeDigitDiv #ShowVolumeInManuscriptViewer, #SpineVolumeNotDigitDiv #ShowVolumeInManuscriptViewer { /* Bottom left icon  */
+	width:50px;
+	height:55px;
+	background:url(/DocSources/images/1024/button_openVolExplorerVol.png) bottom no-repeat;
+	cursor:pointer;
+	float:left;
 }
 
 /* ---------------------------------------------------- */ 
@@ -1182,6 +1271,22 @@ input.file {
     text-align:center;
 }
 
+#DocumentImageDigitDiv span {
+    color: #C0272D;
+    height: 60px;
+    position: absolute;
+    margin-top: 65px;
+    width: 70px;
+	text-shadow:1px 1px 1px #999;
+	font-size:10px;
+	text-align:center;
+	moz-margin-left: 25px;
+}
+
+#DocumentImageDigitDiv span:hover {
+	cursor:default;
+}
+
 #ShowDocumentInManuscriptViewer { /* Bottom left icon  */
 	width:50px;
 	height:55px;
@@ -1214,7 +1319,7 @@ input.file {
 	margin-left:19px;
 }
 
-#DocYearLabel{
+#DocYearLabel, #dateUndatedLabel{
 	margin-left:49px;
 }
 
@@ -1427,6 +1532,11 @@ input.file {
 .num_docs {
 	margin-left:30px;
 	color:#900;
+	font-size:11px;
+}
+
+a.num_docs {
+	cursor:pointer;
 }
 
 #imgPortraitPerson { /* User image profile */
@@ -1456,7 +1566,7 @@ input.file {
 	margin-left: 30px;
 }
 
-#postLastPrefixLabel {
+#postLastPrefixLabel, #bornDateBcLabel {
 	margin-left:17px;
 }
 
@@ -1488,7 +1598,7 @@ input.file {
 	margin-left:20px;
 }
 
-#activeStartLabel{
+#activeStartLabel, #midPrefixLabel{
 	margin-left:30px;
 }
 
@@ -1646,6 +1756,19 @@ a#editValue, .editValue { /* "Edit Value" Button */
 
 /* -------------------------------------- */
 /*
+/* ------------ Create New Title/Occupation ----------- */
+
+#ordByMinorLabel {
+	margin-left: 25px;
+}
+
+#ordByMayorLabel {
+	margin-left: 22px;
+}
+
+
+/* -------------------------------------- */
+/*
 /* ------------ Relationships ----------- */
 /*
 /* Parents */
@@ -1659,6 +1782,25 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	cursor: pointer;
 }
 
+/* -------------------------------------- */
+/*
+/* ------------ Compare Person Record ----------- */
+
+.buttonLarge { /* Clik here to edit this person */
+	width:182px;
+	height:22px;
+	position:absolute;
+	margin: 0 0 0 303px;
+	background-image:url(/DocSources/images/1024/button_large.png);
+	background-repeat:no-repeat;
+	font-size:11px;
+	padding:4px 0 0 0;
+	text-align:center;
+}
+
+.buttonLarge:hover {
+	text-decoration:none;
+}
 
 /* -------------------------------------- */
 /*
@@ -2090,6 +2232,20 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 #flipItInFullScreen:hover, #volumeSummary:hover, .refreshVolumeExplorer:hover {
 	text-decoration:none;
+}
+
+/*  Show in Fullscreen Mode -- Open mview window */
+
+#flipItInFullScreen { /* "Move to folio" <input> GO button ID  */
+	width:122px;
+	height:22px;
+	position:absolute;
+	margin-left:20px;
+	display:inline;
+	background-image:url(/DocSources/images/1024/button_medium.png);
+	background-repeat:no-repeat;
+	font-size:11px;
+	padding:4px 0 0 15px;
 }
 
 /* ---------------- */
@@ -2704,6 +2860,11 @@ form#EditUserProfileForm div {
 	margin: 0;
 }
 
+form#EditUserProfileForm span{ 
+	float: right;
+    margin: 10px 23px 0 0;
+}
+
 #EditUserProfileForm fieldset { 
 	padding-left:20px;
 }
@@ -3086,6 +3247,7 @@ form#EditUserProfileForm div {
 	opacity:0.5; /* Chrome, Safari */
 	-moz-opacity: 0.5; /* Firefox */
 	filter:alpha(opacity=0); /* IE */
+	text-decoration:none;
 }
 
 /*
@@ -3106,10 +3268,17 @@ form#EditUserProfileForm div {
     width: 250px;
 }
 
-#customSearchFilterDiv h1.advSearchTitle, #yourSearchFilterDiv h1.advSearchTitle {
+#customSearchFilterDiv h1.advSearchTitle {
     font-size: 14px;
     font-style: italic;
-    margin-bottom: 20px;
+    margin: 20px 0 20px 0;
+    text-align: center;
+}
+
+#yourSearchFilterDiv h1.advSearchTitle {
+    font-size: 14px;
+    font-style: italic;
+    margin: 20px 0 20px 60px;
     text-align: center;
 }
 
@@ -3365,8 +3534,9 @@ span.categorySearch {
 	color:#063;
 }
 
-.saveAsButton { /* Save As Button */
-	margin:5px 0 0 5px;
+/* Save As Button 
+.saveAsButton { 
+	margin: 65px 0 0 30px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
@@ -3379,32 +3549,35 @@ span.categorySearch {
 	border:none;
 	outline:none;
 }
+*/
 
 .saveButton { /* Save Button */
-	margin:5px 0 0 62px;
+	margin: 35px 0 0 112px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:4px 0 0 12px; 
+	padding:4px 0 0 0; 
 	background-repeat:no-repeat;
-	width:59px;
+	width:52px;
 	height:23px;
 	border:none;
 	outline:none;
+	text-align:center;
 }
 
 #advsearch { /* Search Button */
-	margin:5px auto auto 120px;
+	margin: 25px auto auto 190px;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:0 0 0 2px; 
+	padding:0 0 0 0; 
 	width:52px;
 	height:22px;
 	border:none;
+	text-align:center;
 }
 
 #advsearch:hover, .saveButton:hover, .saveAsButton:hover {
@@ -3689,6 +3862,7 @@ table#savedSearchFiltersForm.display {
 	font-size:11px;
 	padding:5px 10px 5px 10px;
 	margin: 5px 0px 5px 0px;
+	border-radius: 4px;
 }
 
 #personLabel {
@@ -3899,6 +4073,8 @@ a.showDigitizedDocument{
 	float:right;
 	text-decoration:none;
 	color:#6F6B69;
+	text-align: center;
+	margin-right: 10px;
 }
 
 a.showDigitizedDocument:hover {
@@ -3975,6 +4151,74 @@ ul#network a {
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */
+}
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* -------------------------------------------------------------- DIGITIZATION MODULE ------------------------------------------------------------- */
+
+/* ---------------- Modal Window ------------- */
+
+#digitizationModalDiv #close {
+	position:absolute;
+	margin-top:25px;
+	margin-left:130px;
+}
+
+#digitizationModalDiv a.helpIcon{ /* Help symbol "?" */
+	border: 1px solid #6D5C4D;
+	color:  #6D5C4D; 
+	font-size: 12px; 
+	background-color: #DCC0BA; 
+	padding-left: 5px; 
+	padding-right: 4px; 
+	font-weight:bold;
+	text-decoration:none;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	cursor:default;
+}
+
+#digitizationModalDiv a:hover.helpIcon { /* Help symbol "?" */
+	border: 1px solid #2e83ff;
+	color:  #363636; 
+	background-color: #ebf3ff; 
+	opacity:0.9; /* Chrome, Safari */
+	-moz-opacity: 0.9; /* FireFox */
+	filter:alpha(opacity=90); /* IE */
+}
+
+#digitizationModalDiv #CreateCatalog, #digitizationModalDiv #AddNewFilza, #digitizationModalDiv #BrowseFilze{
+	background:url(/DocSources/images/1024/button_Xlarge.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:255px;
+	height:22px;
+	margin:-5px 0 0 10px;
+}
+
+#digitizationModalDiv #CreateCatalog:hover, #digitizationModalDiv #AddNewFilza:hover, #digitizationModalDiv #BrowseFilze:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	text-decoration:none;
+	filter:alpha(opacity=50); /* IE */ !important
+}
+
+#digitizationModalDiv #CreateCatalogDiv {
+	width:300px;
+	margin:20px 0 0 20px;
+}
+
+#digitizationModalDiv #AddNewFilzaDiv {
+	width:300px;
+	margin:20px 0 0 20px;
+}
+
+#digitizationModalDiv #BrowseFilzeDiv {
+	width:300px;
+	margin:20px 0 0 20px;
 }
 
 /* ------------------------------------ CREATE NEW CATALOG DESCRIPTION ------------------------------------ */
@@ -4145,3 +4389,174 @@ ul#network a {
 	text-decoration:none;
 	color: #6D5C4D;
 }
+
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* -------------------------------------------------------------- ADMINISTRATION MODULE ------------------------------------------------------------- */
+
+/* ---------------- Modal Window ------------- */
+
+#administrationModalDiv #close {
+	position:absolute;
+	margin-top: 120px;
+	margin-left: 98px;
+}
+
+#administrationModalDiv #UserManagement, #administrationModalDiv #ReportsRevisions, #administrationModalDiv #SystemManagement{
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:182px;
+	height:22px;
+	margin:-5px 0 0 10px;
+}
+
+#administrationModalDiv #UserManagement:hover, #administrationModalDiv #ReportsRevisions:hover, #administrationModalDiv #SystemManagement:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	text-decoration:none;
+	filter:alpha(opacity=50); /* IE */ !important
+}
+
+#administrationModalDiv #SystemManagementDiv {
+	width:200px;
+	margin:15px 0 0 25px;
+	position:absolute;
+}
+
+#administrationModalDiv #UserManagementDiv {
+	width:200px;
+	margin:50px 0 0 25px;
+	position:absolute;
+}
+
+#administrationModalDiv #ReportsRevisionsDiv {
+	width:200px;
+	margin:85px 0 0 25px;
+	position:absolute;
+}
+
+
+/* ---------------- User Search Form (body_left) ------------- */
+
+#SystemManagementForm {
+	width: 485px;
+}
+
+#SystemManagementForm .save {
+	margin:5px auto auto 0;
+}
+
+.search { /* Save button on bottom right  */
+	padding:0;
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	width:52px;
+	height:22px;
+	border:none;
+	text-align:center;
+	margin: 20px 0 7px 310px;
+}
+
+#fullNameLabel {
+	margin-left: 19px;
+}
+
+#userNameLabel {
+	margin-left: 16px;
+}
+
+h3.systemManagement {
+	margin-top: 15px;
+	font-style: normal;
+	text-align: center;
+}
+
+/* ---------------- User Search Table (body_right) ------------- */
+
+.SystemManagement{
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:122px;
+	height:22px;
+	margin: 10px 0 10px 371px;
+}
+
+.SystemManagement:hover, .userButton:hover{
+	text-decoration:none;
+}
+
+.userButton{
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:122px;
+	height:22px;
+	margin: 60px 0 10px 371px;
+}
+
+
+
+
+/* Edit Details Document Gif animata loading  */
+#prova {
+	z-index:999;
+	width:485px;
+	height:483px;
+	position:absolute;
+	background:url(/DocSources/images/1024/loading_div.gif) no-repeat;
+	opacity:0.4;
+}
+
+/* ---------------- User Control Form ------------- */
+
+#EditUserControlForm #userNameLabel {
+	margin-left: 10px;
+}
+
+#firstNameLabel {
+	margin-left: 5px;
+}
+
+#lastNameLabel {
+	margin-left: 8px;
+}
+
+#groupPoliciesLabel {
+	margin-left: 63px;
+}
+
+#newPasswordLabel {
+	margin-left: 60px;
+}
+
+#forcePswdChangeLabel {
+	margin-left: 9px;
+}
+
+#lockAccountLabel {
+	margin-left: 72px;
+}
+
+#passwordExpiresLabel {
+	margin-left: 58px;
+}
+
+#unmaskLabel {
+	margin-left: 33px;
+}
+
+
+/* ---------------- Email Control ------------- */
+
+#emailDisplayLabel {
+	margin-left: ;
+}
+

@@ -67,6 +67,7 @@
 .dataTables_info {
     width: 60%;
     float: left;
+	font-size:90%;
 }
 
 .dataTables_paginate {
@@ -310,6 +311,7 @@ td.details {
     width: 400px;
     height: 22px;
     line-height: 22px;
+	font-size:90%;
 }
 
 .paging_full_numbers span.paginate_button,

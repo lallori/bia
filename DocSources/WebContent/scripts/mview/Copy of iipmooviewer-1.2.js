@@ -440,7 +440,7 @@ var IIP = new Class({
   },
 
   /* Scroll resulting from a drag of the navigation window
-  
+   */
   scrollNavigation: function( e ) {
 
     var xmove = 0;
@@ -478,13 +478,13 @@ var IIP = new Class({
 
 
   /* Scroll from a target drag event
-   
+   */
   scroll: function() {
     var xmove =  - $('target').offsetLeft;
     var ymove =  - $('target').offsetTop;
     this.scrollTo( xmove, ymove );
   },
- */
+
 
 
   /* Check our scroll bounds
@@ -533,10 +533,10 @@ var IIP = new Class({
     }
 
     // For double clicks
-    //else if( event.shift ){
-     // this.zoomOut();
-   // }
-    //else this.zoomIn();
+    else if( event.shift ){
+      this.zoomOut();
+    }
+    else this.zoomIn();
 
   },
 
@@ -687,7 +687,7 @@ var IIP = new Class({
 		 onComplete: this.requestImages.bind(this)
 	       }
     } );
-    //new TargetDrag( el, {onComplete: this.scroll.bind(this)} );
+    new TargetDrag( el, {onComplete: this.scroll.bind(this)} );
 
 
     el.injectInside( this.source );
@@ -859,14 +859,14 @@ var IIP = new Class({
       onStart: function() {
 	  this.navpos = [$('zone').offsetLeft, $('zone').offsetTop-10];
       }.bind(this),
-      //onComplete: this.scrollNavigation.bindWithEvent(this)
+      onComplete: this.scrollNavigation.bindWithEvent(this)
     });
 
     // Add our events
-    //$('navigation').addEvent( 'click', this.scrollNavigation.bindWithEvent(this) );
-    //$('navigation').addEvent( 'mousewheel', this.zoom.bindWithEvent(this) );
-    //$('zone').addEvent( 'mousewheel', this.zoom.bindWithEvent(this) );
-    //$('zone').addEvent( 'dblclick', this.zoom.bindWithEvent(this) );
+    $('navigation').addEvent( 'click', this.scrollNavigation.bindWithEvent(this) );
+    $('navigation').addEvent( 'mousewheel', this.zoom.bindWithEvent(this) );
+    $('zone').addEvent( 'mousewheel', this.zoom.bindWithEvent(this) );
+    $('zone').addEvent( 'dblclick', this.zoom.bindWithEvent(this) );
 
   },
 
@@ -888,7 +888,7 @@ var IIP = new Class({
     // If we're done with loading, fade out the load bar
     if( this.nTilesLoaded == this.nTilesToLoad ){
       // Fade out our progress bar and loading animation in a chain
-      $('target').setStyle( 'cursor', 'default' );
+      $('target').setStyle( 'cursor', 'move' );
       $('loadBarContainer').fade('out');
     }
 
