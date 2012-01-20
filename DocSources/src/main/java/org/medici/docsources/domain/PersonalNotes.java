@@ -111,7 +111,7 @@ public class PersonalNotes implements Serializable {
 	@Override
 	public String toString() {
 		if (getAccount() == null) {
-			return null;
+			return "";
 		}
 		
 		return getAccount();
