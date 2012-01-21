@@ -174,9 +174,6 @@
 	</bean>
 	
 	<!-- Search Validators -->
-	<bean id="advancedSearchDocumentsValidator" class="org.medici.docsources.validator.search.AdvancedSearchDocumentsValidator">
-		<description>Advanced Search Document Validator.</description>
-	</bean>
 	<bean id="saveUserSearchFilterValidator" class="org.medici.docsources.validator.search.SaveUserSearchFilterValidator">
 	    <description>Save Search Validator.</description>
 	</bean>
