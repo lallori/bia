@@ -68,6 +68,22 @@
 		<c:param name="previousPage" value="true" />
 	</c:url>
 	
+	<c:url var="indexOfNamesURL" value="/src/mview/PageTurnerDialog.do">
+		<c:param name="entryId" value="${command.entryId}" />
+		<c:param name="volNum" value="${command.volNum}" />
+		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="imageType" value="R" />
+		<c:param name="imageOrder" value="${1}" />
+		<c:param name="total" value="${command.total}" />
+		<c:param name="totalRubricario" value="${command.totalRubricario}" />
+		<c:param name="totalCarta" value="${command.totalCarta}" />
+		<c:param name="totalAppendix" value="${command.totalAppendix}" />
+		<c:param name="totalOther" value="${command.totalOther}" />
+		<c:param name="totalGuardia" value="${command.totalGuardia}" />
+		<c:param name="modeEdit" value="${command.modeEdit}" />
+		<c:param name="goR" value="Go" />
+	</c:url>
+	
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
@@ -88,10 +104,10 @@
 	<div id="prevNextButtons" class="transcribe">
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
-	    	<a title="Previous Folio"></a>
+	    	<a id="previous" title="Previous Folio"></a>
 		</c:if>
 		<c:if test="${command.imageOrder > 1}">
-			<a href="${previousPage}" onclick="$j('#folio').dialog('open');" title="Previous Folio"></a>
+			<a id="previous" href="${previousPage}" title="Previous Folio"></a>
 		</c:if>
 		</div>
 		<div id="folio" title="Warning!" style="display:none"> 
@@ -99,20 +115,20 @@
 		</div> 
 		<div id="nextButton">
 		<c:if test="${command.imageOrder == command.total}">
-			<a title="Previous Folio"></a>
+			<a id="next" title="Previous Folio"></a>
 		</c:if>
 		<c:if test="${command.imageOrder < command.total}">
-			<a href="${nextPage}" onclick="$j('#folio').dialog('open');" title="Next Folio"></a>
+			<a id="next" href="${nextPage}" title="Next Folio"></a>
 		</c:if>
 		</div>
 	</div>
 	
 	<div>
-    	<a id="indexNames" href="/DocSources/de/volbase/moveToRubricario.do" onclick="$j('#indexNamesWindow').dialog('open');" class="transcribe" title="Index of Names"></a>
+    	<a id="indexNames" href="${indexOfNamesURL}" class="transcribe" title="Index of Names"></a>
     </div>
 
 	<div>
-		<a id="volumeSummary" href="#" class="transcribe" title="Volume Summary"></a>
+		<a id="volumeSummary" href="${VolumeSummaryDialogURL}" class="transcribe" title="Volume Summary"></a>
 	</div>
 
 	<div id="line" class="transcribe"></div>
@@ -140,7 +156,7 @@
 	<div id="line2" class="transcribe"></div>
 	
 	<div id="personalNotesDiv">
-		<a href="#" onclick="$j('#notes').dialog('open');" class="transcribe" title="Personal Notes"></a>
+		<a id="personalNotesButton" href="#" class="transcribe" title="Personal Notes"></a>
 	</div>
 	
 	<div id="exitDiv">
@@ -176,8 +192,8 @@
 				canTranscribe: 'true'
 				</security:authorize>
 			});
-			
-			$j("#rubricarioMoveTo").pageTurnerForm({
+
+			$j("#indexNames").pageTurnerPage({
 				searchUrl: '${SearchAjaxURL}',
 				imagePrefix: '${ImagePrefixURL}',
 				IIPImageServer: '${IIPImageServerURL}',
