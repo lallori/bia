@@ -71,61 +71,54 @@ public class ApplicationThrowable extends Throwable {
 	private ApplicationError throawbleToApplicationError() {
 		if (getCause() != null) {
 
-			if (this.getCause().getClass().getName()
-					.endsWith("RollbackException")) {
+			if (this.getCause().getClass().getName().endsWith("RollbackException")) {
 				if (this.getCause().getCause() != null) {
-					if (this.getCause().getCause().toString()
-							.contains("ConstraintViolationException")) {
+					if (this.getCause().getCause().toString().contains("ConstraintViolationException")) {
 						return ApplicationError.UNIQUE_CONSTRAINT_VIOLATED_ERROR;
 					}
 
-					return ApplicationError.UNKNOWN_DB_ERROR;
+					return ApplicationError.DB_UNKNOWN_ERROR;
 				} else {
-					return ApplicationError.UNKNOWN_DB_ERROR;
+					return ApplicationError.DB_UNKNOWN_ERROR;
 				}
-			} else if (getCause().getClass().getName()
-					.endsWith("PersistenceException")) {
-				return ApplicationError.UNKNOWN_DB_ERROR;
-			} else if (getCause().getClass().getName()
-					.endsWith("EntityNotFoundException")) {
+			} else if (getCause().getClass().getName().endsWith("PersistenceException")) {
+				return ApplicationError.DB_UNKNOWN_ERROR;
+			} else if (getCause().getClass().getName().endsWith("EntityNotFoundException")) {
 				return ApplicationError.RECORD_NOT_FOUND_ERROR;
-			} else if (getCause().getClass().getName()
-					.endsWith("NoResultException")) {
+			} else if (getCause().getClass().getName().endsWith("NoResultException")) {
 				return ApplicationError.RECORD_NOT_FOUND_ERROR;
-			} else if (getCause().getClass().getName()
-					.endsWith("DataAccessException")) {
+			} else if (getCause().getClass().getName().endsWith("DataAccessException")) {
 				if (getCause().getMessage().indexOf("Connection") != -1)
 					return ApplicationError.DB_CONNECTION_LOST_ERROR;
-
 				return ApplicationError.GENERIC_ERROR;
-			} else if (getCause().getClass().getName()
-					.endsWith("IllegalArgumentException")) {
+			} else if (getCause().getClass().getName().endsWith("InvalidDataAccessApiUsageException")) {
+				if (getCause().getMessage().indexOf("QuerySyntaxException") != -1)
+					return ApplicationError.DB_INCORRECT_SQL_ERROR;
+				return ApplicationError.GENERIC_ERROR;
+			} else if (getCause().getClass().getName().endsWith("IllegalArgumentException")) {
 				if (getCause().getMessage() != null) {
 					if (getCause().getMessage().contains("no enum")) {
 						return ApplicationError.RECORD_NOT_FOUND_ERROR;
 					}
 				}
 			//MD: Inserted new exception
-			} else if (getCause().getClass().getName()
-					.endsWith("BridgeException")) {
+			} else if (getCause().getClass().getName().endsWith("BridgeException")) {
 				if (getCause().getMessage() != null) {
 					return ApplicationError.GENERIC_ERROR;
 				}
-			} else if (getCause().getClass().getName()
-					.endsWith("ldap.CommunicationException")) {
+			} else if (getCause().getClass().getName().endsWith("ldap.CommunicationException")) {
 				return ApplicationError.LDAP_SERVER_NOT_RESPONDING_ERROR;
-			} else if (getCause().getClass().getName()
-					.endsWith("ldap.NameNotFoundException")) {
+			} else if (getCause().getClass().getName().endsWith("ldap.NameNotFoundException")) {
 				return ApplicationError.LDAP_NAME_NOT_FOUND_ERROR;
-			} else if (getCause().getClass().getName()
-					.endsWith("NullPointerException")) {
+				
+			} else if (getCause().getClass().getName().endsWith("NullPointerException")) {
 				if (getCause().getMessage() != null) {
 					if (getCause().getMessage().contains("no enum")) {
 						return ApplicationError.RECORD_NOT_FOUND_ERROR;
 					}
 				}
 
-				return ApplicationError.UNKNOWN_DB_ERROR;
+				return ApplicationError.DB_UNKNOWN_ERROR;
 			} else if (getCause().getClass().getName().endsWith("Error")) {
 				logger.error("An error is occured.", getCause());
 			} else {
