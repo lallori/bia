@@ -34,16 +34,6 @@ Joana Amill <joana.amill@gmail.com>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.3.2.1.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.1.js"/>"/></script>
 		
-		<script type="text/javascript">
-			var $j = jQuery.noConflict();
-
-			$j(document).ready(function() {
-				$j.ajaxSetup ({
-					// Disable caching of AJAX responses
-					cache: false
-				});
-			});
-		</script>
 		<tiles:insertAttribute name="manuscriptviewer" />
 	</head>
 
