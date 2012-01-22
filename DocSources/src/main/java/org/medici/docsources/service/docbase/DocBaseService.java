@@ -132,6 +132,15 @@ public interface DocBaseService {
 	public Document checkVolumeFolio(Integer summaryId) throws ApplicationThrowable;
 
 	/**
+	 * This method searches an existing document by his entryId.
+	 * 
+	 * @param entryId 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document compareDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
 	 * This method will return a new {@link org.medici.docsources.domain.Document} constructed 
 	 * in runtime, from which, user can follow to editing new document.
 	 * 

@@ -46,16 +46,14 @@ import org.medici.docsources.dao.country.CountryDAO;
 import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.docsources.dao.personalnotes.PersonalNotesDAO;
 import org.medici.docsources.dao.user.UserDAO;
-import org.medici.docsources.dao.userhistorydocument.UserHistoryDocumentDAO;
-import org.medici.docsources.dao.userhistorypeople.UserHistoryPeopleDAO;
-import org.medici.docsources.dao.userhistoryplace.UserHistoryPlaceDAO;
-import org.medici.docsources.dao.userhistoryvolume.UserHistoryVolumeDAO;
+import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,13 +85,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO userDAO; 
 	@Autowired
-	private UserHistoryDocumentDAO userHistoryDocumentDAO;
-	@Autowired
-	private UserHistoryPeopleDAO userHistoryPeopleDAO;
-	@Autowired
-	private UserHistoryPlaceDAO userHistoryPlaceDAO;
-	@Autowired
-	private UserHistoryVolumeDAO userHistoryVolumeDAO;
+	private UserHistoryDAO userHistoryDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -435,10 +427,10 @@ public class UserServiceImpl implements UserService {
 	public HashMap<String, List<?>> getMyHistoryReport(Integer numberOfHistory) throws ApplicationThrowable {
 		HashMap<String, List<?>> historyReport = new HashMap<String, List<?>>(4);
 		try {
-			historyReport.put("Document", getUserHistoryDocumentDAO().findHistory(5));
-			historyReport.put("People", getUserHistoryPeopleDAO().findHistory(5));
-			historyReport.put("Place", getUserHistoryPlaceDAO().findHistory(5));
-			historyReport.put("Volume", getUserHistoryVolumeDAO().findHistory(5));
+			historyReport.put("Document", getUserHistoryDAO().findHistory(Category.DOCUMENT, 5));
+			historyReport.put("People", getUserHistoryDAO().findHistory(Category.PEOPLE, 5));
+			historyReport.put("Place", getUserHistoryDAO().findHistory(Category.PLACE, 5));
+			historyReport.put("Volume", getUserHistoryDAO().findHistory(Category.VOLUME, 5));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -468,31 +460,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * @return the userHistoryDocumentDAO
+	 * @return the userHistoryDAO
 	 */
-	public UserHistoryDocumentDAO getUserHistoryDocumentDAO() {
-		return userHistoryDocumentDAO;
-	}
-
-	/**
-	 * @return the userHistoryPeopleDAO
-	 */
-	public UserHistoryPeopleDAO getUserHistoryPeopleDAO() {
-		return userHistoryPeopleDAO;
-	}
-
-	/**
-	 * @return the userHistoryPlaceDAO
-	 */
-	public UserHistoryPlaceDAO getUserHistoryPlaceDAO() {
-		return userHistoryPlaceDAO;
-	}
-
-	/**
-	 * @return the userHistoryVolumeDAO
-	 */
-	public UserHistoryVolumeDAO getUserHistoryVolumeDAO() {
-		return userHistoryVolumeDAO;
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
 	}
 
 	/**
@@ -595,9 +566,9 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchUserHistoryDocuments(PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getUserHistoryDocumentDAO().findHistory(paginationFilter);
+			return getUserHistoryDAO().findHistory(paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -607,33 +578,9 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchUserHistoryPeople(PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public Page searchUserHistory(Category category, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getUserHistoryPeopleDAO().findHistory(paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page searchUserHistoryPlace(PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getUserHistoryPlaceDAO().findHistory(paginationFilter);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page searchUserHistoryVolumes(PaginationFilter paginationFilter) throws ApplicationThrowable {
-		try {
-			return getUserHistoryVolumeDAO().findHistory(paginationFilter);
+			return getUserHistoryDAO().findHistory(category, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -677,31 +624,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * @param userHistoryDocumentDAO the userHistoryDocumentDAO to set
+	 * @param userHistoryDAO the userHistoryDAO to set
 	 */
-	public void setUserHistoryDocumentDAO(UserHistoryDocumentDAO userHistoryDocumentDAO) {
-		this.userHistoryDocumentDAO = userHistoryDocumentDAO;
-	}
-
-	/**
-	 * @param userHistoryPeopleDAO the userHistoryPeopleDAO to set
-	 */
-	public void setUserHistoryPeopleDAO(UserHistoryPeopleDAO userHistoryPeopleDAO) {
-		this.userHistoryPeopleDAO = userHistoryPeopleDAO;
-	}
-
-	/**
-	 * @param userHistoryPlaceDAO the userHistoryPlaceDAO to set
-	 */
-	public void setUserHistoryPlaceDAO(UserHistoryPlaceDAO userHistoryPlaceDAO) {
-		this.userHistoryPlaceDAO = userHistoryPlaceDAO;
-	}
-
-	/**
-	 * @param userHistoryVolumeDAO the userHistoryVolumeDAO to set
-	 */
-	public void setUserHistoryVolumeDAO(UserHistoryVolumeDAO userHistoryVolumeDAO) {
-		this.userHistoryVolumeDAO = userHistoryVolumeDAO;
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
 	}
 
 	/**

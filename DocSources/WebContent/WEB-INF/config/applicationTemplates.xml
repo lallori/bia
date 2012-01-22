@@ -159,23 +159,15 @@
         <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryModalWindow.jsp"/>
     </definition>
 	
-	<definition name="user/ShowMyHistoryDocumentsModalWindow" extends="template.partialDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryDocumentsModalWindow.jsp"/>
+	<definition name="user/ShowMyHistoryReportModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryReportModalWindow.jsp"/>
     </definition>
 
-	<definition name="user/ShowMyHistoryPeopleModalWindow" extends="template.partialDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryPeopleModalWindow.jsp"/>
+	<definition name="user/ShowMyHistoryByCategoryModalWindow" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryByCategoryModalWindow.jsp"/>
     </definition>
-
-	<definition name="user/ShowMyHistoryPlacesModalWindow" extends="template.partialDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryPlacesModalWindow.jsp"/>
-    </definition>
-	
-	<definition name="user/ShowMyHistoryVolumesModalWindow" extends="template.partialDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/ShowMyHistoryVolumesModalWindow.jsp"/>
-    </definition>
-		
-   	<definition name="user/ShowUserProfile" extends="template.partialDOM">
+    
+    <definition name="user/ShowUserProfile" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/ShowUserProfile.jsp"/>
     </definition>
 

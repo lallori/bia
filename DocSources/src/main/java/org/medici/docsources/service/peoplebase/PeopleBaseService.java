@@ -116,6 +116,13 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param personId
+	 * @return
+	 */
+	public People comparePerson(Integer personId) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param child
 	 * @throws ApplicationThrowable
 	 */
@@ -150,14 +157,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People deletePerson(Integer personId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param marriage
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteSpouseFromPerson(Marriage marriage) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param poLink
@@ -281,7 +288,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Marriage> findMarriagesPerson(Integer personId, Gender gender) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param personId
@@ -297,7 +304,7 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> personIds) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param id

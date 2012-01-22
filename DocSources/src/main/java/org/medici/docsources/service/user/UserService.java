@@ -39,6 +39,7 @@ import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -269,31 +270,16 @@ public interface UserService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchUserHistoryDocuments(PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
+	 * @param category
 	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchUserHistoryPeople(PaginationFilter paginationFilter)throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Page searchUserHistoryPlace(PaginationFilter paginationFilter) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Page searchUserHistoryVolumes(PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchUserHistory(Category category, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

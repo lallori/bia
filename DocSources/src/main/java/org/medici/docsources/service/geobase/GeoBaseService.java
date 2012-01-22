@@ -83,6 +83,13 @@ public interface GeoBaseService {
 
 	/**
 	 * 
+	 * @param peopleId
+	 * @return
+	 */
+	public Place comparePlace(Integer placeId) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param placeAllId
 	 * @return
 	 * @throws ApplicationThrowable
@@ -95,7 +102,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public void deletePlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param place
@@ -202,13 +209,14 @@ public interface GeoBaseService {
 	 */
 	public Integer findNumberOfTopicsPlace(Integer placeAllId) throws ApplicationThrowable;
 	
+	
 	/**
 	 * 
 	 * @param peopleId
 	 * @return
 	 */
 	public Place findPlace(Integer placeId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param placeAllId

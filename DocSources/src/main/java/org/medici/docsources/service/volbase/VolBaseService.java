@@ -99,6 +99,17 @@ public interface VolBaseService {
 	public boolean checkVolumeHasLinkedDocuments(Integer summaryId) throws ApplicationThrowable;
 	
 	/**
+	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
+	 * by his unique identifier.
+	 * 
+	 * @param summaryId Unique Volume Identifier
+	 * @return {@link org.medici.docsources.domain.Volume}
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public Volume compareVolume(Integer summaryId) throws ApplicationThrowable;
+
+	/**
 	 * This method mark a volume as deleted {@link org.medici.docsources.domain.Volume}.
 	 * 
 	 * @param summaryId Unique Volume Identifier
@@ -134,6 +145,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume editDescriptionVolume(Volume volume) throws ApplicationThrowable;
+	
 
 	/**
 	 * This method modify details of an existing {@link org.medici.docsources.domain.Volume}.
@@ -143,7 +155,6 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume editDetailsVolume(Volume volume) throws ApplicationThrowable;
-	
 
 	/**
 	 * This method last entry {@link org.medici.docsources.domain.Volume}.

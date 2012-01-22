@@ -70,10 +70,6 @@ public class DocSourcesListener implements ServletContextListener {
 	 */
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		getLogger().info("Initiating Application Context close...");
-		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContextEvent.getServletContext());
-		((ConfigurableApplicationContext) webApplicationContext).close();
-		getLogger().info("Finished Application Context close"); 
 		getLogger().info("DocSources STOPPED");
 	}
 

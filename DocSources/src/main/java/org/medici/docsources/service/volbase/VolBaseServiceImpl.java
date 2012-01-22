@@ -43,13 +43,14 @@ import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
-import org.medici.docsources.dao.userhistoryvolume.UserHistoryVolumeDAO;
+import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
-import org.medici.docsources.domain.UserHistoryVolume;
-import org.medici.docsources.domain.UserHistoryVolume.Action;
+import org.medici.docsources.domain.UserHistory;
+import org.medici.docsources.domain.UserHistory.Action;
+import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -84,7 +85,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
 	private SeriesListDAO seriesListDAO;
 	@Autowired
-	private UserHistoryVolumeDAO userHistoryVolumeDAO;
+	private UserHistoryDAO userHistoryDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
 
@@ -151,7 +152,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 			getVolumeDAO().persist(volume);
 			
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Create volume", Action.C, volume));
+			getUserHistoryDAO().persist(new UserHistory("Create volume", Action.CREATE, Category.VOLUME, volume));
 			
 			return volume;
 		} catch (Throwable th) {
@@ -215,6 +216,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 		return linkedDocuments;
 	}
 
+	@Override
+	public Volume compareVolume(Integer summaryId) throws ApplicationThrowable {
+		try {
+			Volume volume = getVolumeDAO().find(summaryId);
+			
+			getUserHistoryDAO().persist(new UserHistory("Compare volume", Action.COMPARE, Category.VOLUME, volume));
+
+			return volume;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -233,14 +247,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToDelete);
 
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Delete volume", Action.D, volumeToDelete));
+			getUserHistoryDAO().persist(new UserHistory("Delete volume", Action.DELETE, Category.VOLUME, volumeToDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 		
 		return volumeToDelete;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -260,7 +274,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Edit context", Action.M, volumeToUpdate));
+			getUserHistoryDAO().persist(new UserHistory("Edit context", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -286,7 +300,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Edit correspondents", Action.M, volumeToUpdate));
+			getUserHistoryDAO().persist(new UserHistory("Edit correspondents", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -328,7 +342,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Edit description", Action.M, volumeToUpdate));
+			getUserHistoryDAO().persist(new UserHistory("Edit description", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -386,7 +400,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUpdate);
 
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Edit details", Action.M, volumeToUpdate));
+			getUserHistoryDAO().persist(new UserHistory("Edit details", Action.MODIFY, Category.VOLUME, volumeToUpdate));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -400,10 +414,10 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public Volume findLastEntryVolume() throws ApplicationThrowable {
 		try {
-			UserHistoryVolume userHistoryVolume = getUserHistoryVolumeDAO().findLastEntryVolume();
+			UserHistory userHistory = getUserHistoryDAO().findLastEntry(Category.VOLUME);
 			
-			if (userHistoryVolume != null) {
-				return userHistoryVolume.getVolume();
+			if (userHistory != null) {
+				return userHistory.getVolume();
 			}
 			
 			// in case of no user History we extract last volume created on database.
@@ -433,14 +447,14 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			Volume volume = getVolumeDAO().find(summaryId);
 			
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Show volume", Action.V, volume));
+			getUserHistoryDAO().persist(new UserHistory("Show volume", Action.VIEW, Category.VOLUME, volume));
 
 			return volume;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -449,14 +463,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
 			
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Show volume", Action.V, volume));
+			getUserHistoryDAO().persist(new UserHistory("Show volume", Action.VIEW, Category.VOLUME, volume));
 
 			return volume;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -469,8 +484,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -510,7 +524,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public DocumentDAO getDocumetDAO() {
 		return documetDAO;
 	}
-	
+
 	/**
 	 * @return the imageDAO
 	 */
@@ -547,20 +561,21 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public SeriesListDAO getSeriesListDAO() {
 		return seriesListDAO;
 	}
-
-	/**
-	 * @return the userHistoryVolumeDAO
-	 */
-	public UserHistoryVolumeDAO getUserHistoryVolumeDAO() {
-		return userHistoryVolumeDAO;
-	}
 	
+	/**
+	 * @return the UserHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+
 	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -676,7 +691,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.imageDAO = imageDAO;
 	}
 
-
 	/**
 	 * @param monthDAO the monthDAO to set
 	 */
@@ -691,11 +705,12 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.seriesListDAO = seriesListDAO;
 	}
 
+
 	/**
-	 * @param userHistoryVolumeDAO the userHistoryVolumeDAO to set
+	 * @param userHistoryDAO the userHistoryDAO to set
 	 */
-	public void setUserHistoryVolumeDAO(UserHistoryVolumeDAO userHistoryVolumeDAO) {
-		this.userHistoryVolumeDAO = userHistoryVolumeDAO;
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
 	}
 
 
@@ -725,7 +740,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			getVolumeDAO().merge(volumeToUnDelete);
 
-			getUserHistoryVolumeDAO().persist(new UserHistoryVolume("Recovered volume", Action.M, volumeToUnDelete));
+			getUserHistoryDAO().persist(new UserHistory("Recovered volume", Action.MODIFY, Category.VOLUME, volumeToUnDelete));
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
