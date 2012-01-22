@@ -543,7 +543,7 @@ public class IIPImageServerController {
         			throw new ImageReadException("Can't find rows per strip field.");
         		int rowsPerStrip = rowsPerStripField.getIntValue();
 
-        		TiffImageData.Strips strips = new TiffImageData.Strips(data, rowsPerStrip);
+        		// DEAD STORE!!! TiffImageData.Strips strips = new TiffImageData.Strips(data, rowsPerStrip);
         	} else
         	{
         		TiffField tileWidthField = tiffDirectory.findField(TiffTagConstants.TIFF_TAG_TILE_WIDTH);
