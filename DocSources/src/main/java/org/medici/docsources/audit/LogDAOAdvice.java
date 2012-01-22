@@ -30,6 +30,7 @@
 package org.medici.docsources.audit;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.util.ClassUtils;
@@ -135,6 +136,6 @@ public class LogDAOAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 */
 	private void appendThrowable(StringBuffer stringBuffer, Throwable throwable) {
 		stringBuffer.append(" - Exception : ");
-		stringBuffer.append(throwable.getStackTrace());
+		stringBuffer.append(Arrays.toString(throwable.getStackTrace()));
 	}
 }

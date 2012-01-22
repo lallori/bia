@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.common.pagination;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,13 +40,26 @@ public class Page {
 	private Integer lastRecordNumber;
 	private Integer pageSize;
 	private List<?> results;
-	private Long total;
+	private Long total;	
+	
+	/**
+	 * @return the pageSize
+	 */
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	/**
+	 * @param pageSize the pageSize to set
+	 */
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 	
 	/**
 	 * 
 	 * @param inputListResult
 	 * @param page
-	 * @param pageSize
 	 */
 	public Page(List<?> list, Integer firstRecordNumber, Integer lastRecordNumber) {
 		this.setTotal(new Long(list.size()));
@@ -57,7 +71,6 @@ public class Page {
 	 * @param list
 	 * @param totalResult
 	 * @param page
-	 * @param pageSize
 	 */
 	public Page(List<?> list, Long totalResult, Integer firstRecordNumber, Integer lastRecordNumber) {
 		this.setTotal(totalResult);
@@ -66,15 +79,20 @@ public class Page {
 		this.lastRecordNumber = lastRecordNumber;
 	}
 
+	/**
+	 * 
+	 * @param paginationFilter
+	 */
+	@SuppressWarnings("rawtypes")
 	public Page(PaginationFilter paginationFilter) {
 		if (paginationFilter == null) {
-			setTotal(null);
-			results = null;
+			setTotal(new Long(0));
+			results = new ArrayList(0);
 			firstRecordNumber = null;
 			lastRecordNumber = null;
 		} else {
 			setTotal(paginationFilter.getTotal());
-			results = null;
+			results = new ArrayList(0);
 			firstRecordNumber = paginationFilter.getFirstRecord();
 			lastRecordNumber = paginationFilter.getLength();
 		}
@@ -105,6 +123,10 @@ public class Page {
 		return total;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isNextPage() {
 		return results.size() > pageSize;
 	}

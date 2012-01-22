@@ -253,6 +253,7 @@ public class AjaxController {
 		try {
 			page = getGeoBaseService().searchActiveStartPeoplePlace(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -296,6 +297,7 @@ public class AjaxController {
 		try {
 			page = getGeoBaseService().searchActiveEndPeoplePlace(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -339,6 +341,7 @@ public class AjaxController {
 		try {
 			page = getGeoBaseService().searchBirthPeoplePlace(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -382,6 +385,7 @@ public class AjaxController {
 		try {
 			page = getGeoBaseService().searchDeathPeoplePlace(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -418,7 +422,7 @@ public class AjaxController {
 		try{
 			page = getGeoBaseService().searchSenderDocumentsPlace(alias, paginationFilter);
 		}catch(ApplicationThrowable aex){
-			
+			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList();
@@ -481,7 +485,7 @@ public class AjaxController {
 		try{
 			page = getGeoBaseService().searchRecipientDocumentsPlace(alias, paginationFilter);
 		}catch(ApplicationThrowable aex){
-			
+			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList();
@@ -544,7 +548,7 @@ public class AjaxController {
 		try{
 			page = getGeoBaseService().searchTopicsPlace(alias, paginationFilter);
 		}catch(ApplicationThrowable aex){
-			
+			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList();

@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.common.ajax;
 
+import java.io.Serializable;
+
 import org.medici.docsources.common.util.ClassUtils;
 
 /**
@@ -34,7 +36,12 @@ import org.medici.docsources.common.util.ClassUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class UploadInfoBean {
+public class UploadInfoBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8700480935790345762L;
+	
 	private Long bytes_total;
 	private Long bytes_uploaded;
 	private Integer est_sec;

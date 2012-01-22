@@ -76,7 +76,7 @@ public class CompareDocumentController {
 
 		try {
 			// Details
-			Document document = getDocBaseService().findDocument(command.getEntryId());
+			Document document = getDocBaseService().compareDocument(command.getEntryId());
 			model.put("document", document);
 	
 			Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);

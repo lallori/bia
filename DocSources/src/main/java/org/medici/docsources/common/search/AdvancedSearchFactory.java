@@ -31,10 +31,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
-import org.medici.docsources.command.search.AdvancedSearchDocumentsCommand;
-import org.medici.docsources.command.search.AdvancedSearchPeopleCommand;
-import org.medici.docsources.command.search.AdvancedSearchPlacesCommand;
-import org.medici.docsources.command.search.AdvancedSearchVolumesCommand;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.domain.SearchFilter.SearchType;

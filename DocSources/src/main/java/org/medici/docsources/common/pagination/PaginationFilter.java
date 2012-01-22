@@ -13,18 +13,7 @@ import org.medici.docsources.domain.SearchFilter.SearchType;
   *
   */
 public class PaginationFilter {
-	private Integer firstRecord;
-	private Integer length;
-	private SearchType searchType;
-	private Integer sortingColumn;
-	
-	private List<SortingCriteria> sortingCriterias;
-	
-	private String sortingDirection;
-	
-	private Long total;
-
- 	/**
+	/**
  	 * 
  	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  	 *
@@ -58,7 +47,7 @@ public class PaginationFilter {
  	        return "";
  	    }
  	}
- 	/**
+	/**
  	 * 
  	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  	 *
@@ -101,6 +90,17 @@ public class PaginationFilter {
              return order;
          }
      }
+	private Integer firstRecord;
+	private Integer length;
+	
+	private SearchType searchType;
+	
+	private Integer sortingColumn;
+	
+	private List<SortingCriteria> sortingCriterias;
+
+ 	private String sortingDirection;
+ 	private Long total;
 
      /**
       * 
@@ -116,6 +116,21 @@ public class PaginationFilter {
      }
 
      /**
+      * 
+      * @param firstRecord2
+      * @param length2
+      * @param sortingColumnNumber
+      * @param sortingDirection2
+      */
+     public PaginationFilter(Integer firstRecord, Integer length, Integer sortingColumnNumber, String sortingDirection) {
+         this.firstRecord = firstRecord;
+         this.length = length;
+         this.setSortingColumn(sortingColumnNumber);
+         this.setSortingDirection(sortingDirection);
+         this.sortingCriterias = new ArrayList<SortingCriteria>();
+	}
+
+     /**
  	 * 
  	 * @param firstRecord
  	 * @param length
@@ -129,7 +144,7 @@ public class PaginationFilter {
          this.setSearchType(searchType);
          this.sortingCriterias = new ArrayList<SortingCriteria>();
      }
-
+     
      /**
       * 
       * @param firstRecord
@@ -143,8 +158,8 @@ public class PaginationFilter {
 
          this.sortingCriterias = new ArrayList<SortingCriteria>();
      }
-     
-     /**
+
+	/**
       * 
       * @param field
       * @param order
