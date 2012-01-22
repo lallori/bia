@@ -1,5 +1,5 @@
 /*
- * ShowMyHistoryController.java
+ù * ShowMyHistoryController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -28,10 +28,7 @@
 package org.medici.docsources.controller.user;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,15 +57,6 @@ public class ShowMyHistoryController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm() {
 		Map<String, Object> model = new HashMap<String, Object>();
-
-		HashMap<String, List<?>> historyReport = null;
-		try {
-			historyReport = getUserService().getMyHistoryReport(5);
-		} catch (ApplicationThrowable ath) {
-			historyReport = new HashMap<String, List<?>>(5);
-		}
-		
-		model.put("historyReport", historyReport);		
 
 		return new ModelAndView("user/ShowMyHistoryModalWindow", model);
 	}

@@ -261,7 +261,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 	 * @param searchType
 	 * @return
 	 */
-	protected PaginationFilter generatePaginationFilterForHibernateSearch(PaginationFilter paginationFilter) {
+	protected PaginationFilter generatePaginationFilterHibernateSearch(PaginationFilter paginationFilter) {
 
 		if (paginationFilter.getSearchType().equals(SearchType.DOCUMENT)) {
 			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
@@ -396,28 +396,28 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
 				switch (paginationFilter.getSortingColumn()) {
 					case 0:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection());
 						break;
 					case 1:
-						paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", paginationFilter.getSortingDirection());
 						break;
 					case 2:
-						paginationFilter.addSortingCriteria("docYear", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("docYear", paginationFilter.getSortingDirection());
 						//Month is an entity, so we don't have field with suffix 
-						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("docDay", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("docDay", paginationFilter.getSortingDirection());
 						break;
 					case 3:
-						paginationFilter.addSortingCriteria("senderPlace.placeName", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("senderPlace.placeName", paginationFilter.getSortingDirection());
 						break;
 					case 4:  
-						paginationFilter.addSortingCriteria("recipientPlace.placeName", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("recipientPlace.placeName", paginationFilter.getSortingDirection());
 						break;
 					case 5:
-						paginationFilter.addSortingCriteria("volume.volNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("volume.volLetExt", paginationFilter.getSortingDirection(), SortField.STRING);
-						paginationFilter.addSortingCriteria("folioNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("folioMod", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("volume.volNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("volume.volLetExt", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("folioNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("folioMod", paginationFilter.getSortingDirection());
 						break;
 					default:
 						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection());
@@ -434,16 +434,16 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("gender", paginationFilter.getSortingDirection());
 						break;
 					case 2:
-						paginationFilter.addSortingCriteria("bornYear", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("bornYear", paginationFilter.getSortingDirection());
 						//Month is an entity, so we don't have field with suffix 
-						paginationFilter.addSortingCriteria("bornMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("bornDay", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("bornMonthNum.monthNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("bornDay", paginationFilter.getSortingDirection());
 						break;
 					case 3:
-						paginationFilter.addSortingCriteria("deathYear", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("deathYear", paginationFilter.getSortingDirection());
 						//Month is an entity, so we don't have field with suffix 
-						paginationFilter.addSortingCriteria("deathMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("deathDay", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("deathMonthNum.monthNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("deathDay", paginationFilter.getSortingDirection());
 						break;
 					case 4:
 						paginationFilter.addSortingCriteria("recipientPlace.placeName", paginationFilter.getSortingDirection());
@@ -477,35 +477,35 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
 				switch (paginationFilter.getSortingColumn()) {
 					case 0:
-						paginationFilter.addSortingCriteria("serieList.title", paginationFilter.getSortingDirection(), SortField.STRING);
-						paginationFilter.addSortingCriteria("serieList.subTitle1", paginationFilter.getSortingDirection(), SortField.STRING);
-						paginationFilter.addSortingCriteria("serieList.subTitle2", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.title", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("serieList.subTitle1", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("serieList.subTitle2", paginationFilter.getSortingDirection());
 						break;
 					case 1:
-						paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection());
 						break;
 					case 2:
-						paginationFilter.addSortingCriteria("startYear", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("startYear", paginationFilter.getSortingDirection());
 						//Month is an entity, so we don't have field with suffix 
-						paginationFilter.addSortingCriteria("startMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("startDay", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("startMonthNum.monthNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("startDay", paginationFilter.getSortingDirection());
 						break;
 					case 3:
-						paginationFilter.addSortingCriteria("endYear", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("endYear", paginationFilter.getSortingDirection());
 						//Month is an entity, so we don't have field with suffix 
-						paginationFilter.addSortingCriteria("endMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("endDay", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("endMonthNum.monthNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("endDay", paginationFilter.getSortingDirection());
 						break;
 					case 4:
-						paginationFilter.addSortingCriteria("digitized", paginationFilter.getSortingDirection(), SortField.STRING);
-						paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection(), SortField.INT);
-						paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("digitized", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection());
 						break;
 					default:
-						paginationFilter.addSortingCriteria("serieList.title", paginationFilter.getSortingDirection(), SortField.STRING);
-						paginationFilter.addSortingCriteria("serieList.subTitle1", paginationFilter.getSortingDirection(), SortField.STRING);
-						paginationFilter.addSortingCriteria("serieList.subTitle2", paginationFilter.getSortingDirection(), SortField.STRING);
+						paginationFilter.addSortingCriteria("serieList.title", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("serieList.subTitle1", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("serieList.subTitle2", paginationFilter.getSortingDirection());
 						break;
 				}
 			}

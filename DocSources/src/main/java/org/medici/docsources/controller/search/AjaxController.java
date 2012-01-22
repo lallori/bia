@@ -112,6 +112,7 @@ public class AjaxController {
 			
 			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -216,6 +217,7 @@ public class AjaxController {
 			}
 			documentsRelated = getPeopleBaseService().findNumbersOfDocumentsRelated(personIds);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -255,6 +257,7 @@ public class AjaxController {
 		try {
 			page = getSearchService().searchAdvancedPlaces(searchFilter.getFilterData(), paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -294,6 +297,7 @@ public class AjaxController {
 			
 			stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -548,6 +552,7 @@ public class AjaxController {
 			
 			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -650,6 +655,7 @@ public class AjaxController {
 			documentsRelated = getPeopleBaseService().findNumbersOfDocumentsRelated(personIds);
 			
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -688,6 +694,7 @@ public class AjaxController {
 		try {
 			page = getSearchService().searchPlaces(new SimpleSearchPlace(searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -727,6 +734,7 @@ public class AjaxController {
 			// Lorenzo Pasquinelli : Now digitized information on volume is a property of volume entity ... We can comment next code
 			// stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -768,6 +776,7 @@ public class AjaxController {
 				page = getSearchService().getUserSearchFilters(paginationFilter, searchType);
 			}
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();

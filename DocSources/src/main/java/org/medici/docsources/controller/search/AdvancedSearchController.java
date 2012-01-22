@@ -132,6 +132,18 @@ public class AdvancedSearchController {
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/AdvancedSearch", model);
 			}
+		} else if ((command.getIdSearchFilter()!=null) && (command.getIdSearchFilter()>0)){
+			// if searchUUID is not presentt, it's a new search
+			command.setSearchUUID(UUID.randomUUID().toString());
+			try {
+				searchFilter = getSearchService().getUserSearchFilter(command.getIdSearchFilter());
+				// we update user map
+				searchFilterMap.put(command.getSearchUUID(), searchFilter);
+				// we update information in session
+				session.setAttribute("searchFilterMap", searchFilterMap);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/AdvancedSearch", model);
+			}
 		} else {
 			// if searchUUID is not presentt, it's a new search
 			command.setSearchUUID(UUID.randomUUID().toString());

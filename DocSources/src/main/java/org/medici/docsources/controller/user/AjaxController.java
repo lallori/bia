@@ -34,18 +34,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.common.ajax.SearchResult;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.User;
-import org.medici.docsources.domain.SearchFilter.SearchType;
-import org.medici.docsources.domain.UserHistoryDocument;
-import org.medici.docsources.domain.UserHistoryPeople;
-import org.medici.docsources.domain.UserHistoryPlace;
-import org.medici.docsources.domain.UserHistoryVolume;
+import org.medici.docsources.domain.UserHistory;
+import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,21 +83,6 @@ public class AjaxController {
 	}
 
 	/**
-	 * 
-	 * @param searchType
-	 * @param sortingColumnNumber
-	 * @param sortingDirection
-	 * @param firstRecord
-	 * @param length
-	 * @return
-	 */
-	private PaginationFilter generatePaginationFilter(SearchType searchType, Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
-		
-		return paginationFilter;
-	}
-
-	/**
 	 * @return the userService
 	 */
 	public UserService getUserService() {
@@ -110,104 +91,134 @@ public class AjaxController {
 
 	/**
 	 * 
-	 * @param model
-	 * @param paginationFilter
-	 */
-	@SuppressWarnings("unchecked")
-	private void myHistoryDocuments(Map<String, Object> model, PaginationFilter paginationFilter) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		Page page = null;
-
-		try {
-			page = getUserService().searchUserHistoryDocuments(paginationFilter);
-		} catch (ApplicationThrowable aex) {
-		}
-
-		List<Object> resultList = new ArrayList<Object>();
-		for (UserHistoryDocument currentUserHistoryDocument : (List<UserHistoryDocument>)page.getList()) {
-			List<Object> singleRow = new ArrayList<Object>();
-			singleRow.add(simpleDateFormat.format(currentUserHistoryDocument.getDateAndTime()));
-			singleRow.add(currentUserHistoryDocument.getAction().toString());
-			singleRow.add(currentUserHistoryDocument.getDocument().getVolume().getMDP());
-
-			if (currentUserHistoryDocument.getDocument().getSenderPeople() != null) {
-				singleRow.add(currentUserHistoryDocument.getDocument().getSenderPeople().toString());
-			} else {
-				singleRow.add("");
-			}
-
-			if (currentUserHistoryDocument.getDocument().getRecipientPeople() != null) {
-				singleRow.add(currentUserHistoryDocument.getDocument().getRecipientPeople().toString());
-			}else {
-				singleRow.add("");
-			}
-			
-			resultList.add(singleRow);
-		}
-
-		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
-	}
-
-	/**
-	 * 
-	 * @param searchType
-	 * @param alias
-	 * @param sortingColumn
+	 * @param sortingColumnNumber
 	 * @param sortingDirection
 	 * @param firstRecord
 	 * @param length
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/user/MyHistoryPagination.json", method = RequestMethod.GET)
-	public ModelAndView myHistoryPagination(@RequestParam(value="searchType") SearchType searchType,
-								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+	public ModelAndView myHistoryPagination(@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		PaginationFilter paginationFilter = generatePaginationFilter(searchType, sortingColumnNumber, sortingDirection, firstRecord, length);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 
-		if (searchType.equals(SearchType.DOCUMENT)) {
-			myHistoryDocuments(model, paginationFilter);
-		} else if (searchType.equals(SearchType.PEOPLE)) {
-			myHistoryPeople(model, paginationFilter);
-		} else if (searchType.equals(SearchType.PLACE)) {
-			myHistoryPlaces(model, paginationFilter);
-		} else if (searchType.equals(SearchType.VOLUME)) {
-			myHistoryVolumes(model, paginationFilter);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		Page page = null;
+
+
+		try {
+			page = getUserService().searchUserHistory(paginationFilter);
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
+
+		List<Object> resultList = new ArrayList<Object>();
+		for (UserHistory currentUserHistory : (List<UserHistory>)page.getList()) {
+			List<Object> singleRow = new ArrayList<Object>();
+			singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			singleRow.add(currentUserHistory.getCategory().toString());
+			singleRow.add(currentUserHistory.getAction().toString());
+			if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
+				singleRow.add(currentUserHistory.getDocument().getMDPAndFolio());
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+			}  else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
+				singleRow.add("");
+				singleRow.add(currentUserHistory.getVolume().getMDP());
+				singleRow.add("");
+				singleRow.add("");
+			} else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
+				singleRow.add("");
+			} else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add("");
+				singleRow.add(currentUserHistory.getPerson().getMapNameLf());
+			}
+			resultList.add(singleRow);
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
 	/**
 	 * 
-	 * @param model
-	 * @param paginationFilter
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private void myHistoryPeople(Map<String, Object> model, PaginationFilter paginationFilter) {
+	@RequestMapping(value = "/user/MyHistoryByCategoryPagination.json", method = RequestMethod.GET)
+	public ModelAndView myHistoryReportByCategoryPagination(@RequestParam(value="category") Category category,
+	   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+	   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+	   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+		     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		Page page = null;
 
-
 		try {
-			page = getUserService().searchUserHistoryPeople(paginationFilter);
+			page = getUserService().searchUserHistory(category, paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List<Object> resultList = new ArrayList<Object>();
-		for (UserHistoryPeople currentUserHistoryPeople : (List<UserHistoryPeople>)page.getList()) {
+		for (UserHistory currentUserHistory : (List<UserHistory>)page.getList()) {
 			List<Object> singleRow = new ArrayList<Object>();
-			singleRow.add(simpleDateFormat.format(currentUserHistoryPeople.getDateAndTime()));
-			singleRow.add(currentUserHistoryPeople.getAction().toString());
-			singleRow.add(currentUserHistoryPeople.getPeople().getMapNameLf());
-			singleRow.add(DateUtils.getStringDate(currentUserHistoryPeople.getPeople().getBornYear(), currentUserHistoryPeople.getPeople().getBornMonth(), currentUserHistoryPeople.getPeople().getBornDay()));
-			singleRow.add(DateUtils.getStringDate(currentUserHistoryPeople.getPeople().getDeathYear(), currentUserHistoryPeople.getPeople().getDeathMonth(), currentUserHistoryPeople.getPeople().getDeathDay()));
+			singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			singleRow.add(currentUserHistory.getAction().toString());
+			if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
+				singleRow.add(currentUserHistory.getDocument().getVolume().getMDP());
+
+				if (currentUserHistory.getDocument().getSenderPeople() != null) {
+					singleRow.add(currentUserHistory.getDocument().getSenderPeople().toString());
+				} else {
+					singleRow.add("");
+				}
+
+				if (currentUserHistory.getDocument().getRecipientPeople() != null) {
+					singleRow.add(currentUserHistory.getDocument().getRecipientPeople().toString());
+				}else {
+					singleRow.add("");
+				}
+				
+				resultList.add(singleRow);
+			}  else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
+				singleRow.add(currentUserHistory.getVolume().getMDP());
+				singleRow.add(currentUserHistory.getVolume().getSerieList().toString());
+				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getStartYear(), currentUserHistory.getVolume().getStartMonthNum(), currentUserHistory.getVolume().getStartDay()));
+				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getEndYear(), currentUserHistory.getVolume().getEndMonthNum(), currentUserHistory.getVolume().getEndDay()));
+				singleRow.add(currentUserHistory.getVolume().getDigitized());
+			} else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
+				singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
+				singleRow.add(currentUserHistory.getPlace().getPlType());
+			} else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
+				singleRow.add(currentUserHistory.getPerson().getMapNameLf());
+				singleRow.add(DateUtils.getStringDate(currentUserHistory.getPerson().getBornYear(), currentUserHistory.getPerson().getBornMonth(), currentUserHistory.getPerson().getBornDay()));
+				singleRow.add(DateUtils.getStringDate(currentUserHistory.getPerson().getDeathYear(), currentUserHistory.getPerson().getDeathMonth(), currentUserHistory.getPerson().getDeathDay()));
+			}
 			resultList.add(singleRow);
 		}
 
@@ -215,70 +226,7 @@ public class AjaxController {
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
-	}
-
-	/**
-	 * 
-	 * @param model
-	 * @param paginationFilter
-	 */
-	@SuppressWarnings("unchecked")
-	private void myHistoryPlaces(Map<String, Object> model, PaginationFilter paginationFilter) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		Page page = null;
-
-		try {
-			page = getUserService().searchUserHistoryPlace(paginationFilter);
-		} catch (ApplicationThrowable aex) {
-		}
-
-		List<Object> resultList = new ArrayList<Object>();
-		for (UserHistoryPlace currentUserHistoryPlace : (List<UserHistoryPlace>)page.getList()) {
-			List<Object> singleRow = new ArrayList<Object>();
-			singleRow.add(simpleDateFormat.format(currentUserHistoryPlace.getDateAndTime()));
-			singleRow.add(currentUserHistoryPlace.getAction().toString());
-			singleRow.add(currentUserHistoryPlace.getPlace().getPlaceNameFull());
-			singleRow.add(currentUserHistoryPlace.getPlace().getPlType());
-			resultList.add(singleRow);
-		}
-
-		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
-	}
-
-	/**
-	 * 
-	 * @param model
-	 * @param paginationFilter
-	 */
-	@SuppressWarnings("unchecked")
-	private void myHistoryVolumes(Map<String, Object> model, PaginationFilter paginationFilter) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		Page page = null;
-
-		try {
-			page = getUserService().searchUserHistoryVolumes(paginationFilter);
-		} catch (ApplicationThrowable aex) {
-		}
-
-		List<Object> resultList = new ArrayList<Object>();
-		for (UserHistoryVolume currentUserHistoryVolume : (List<UserHistoryVolume>)page.getList()) {
-			List<Object> singleRow = new ArrayList<Object>();
-			singleRow.add(simpleDateFormat.format(currentUserHistoryVolume.getDateAndTime()));
-			singleRow.add(currentUserHistoryVolume.getAction().toString());
-			singleRow.add(currentUserHistoryVolume.getVolume().getMDP());
-			singleRow.add(currentUserHistoryVolume.getVolume().getSerieList().toString());
-			singleRow.add(DateUtils.getStringDate(currentUserHistoryVolume.getVolume().getStartYear(), currentUserHistoryVolume.getVolume().getStartMonthNum(), currentUserHistoryVolume.getVolume().getStartDay()));
-			singleRow.add(DateUtils.getStringDate(currentUserHistoryVolume.getVolume().getEndYear(), currentUserHistoryVolume.getVolume().getEndMonthNum(), currentUserHistoryVolume.getVolume().getEndDay()));
-			resultList.add(singleRow);
-		}
-
-		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
+		return new ModelAndView("responseOK", model);
 	}
 
 	/**
@@ -319,7 +267,7 @@ public class AjaxController {
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings({ "unused", "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/user/ajax/PaginationUser.do", method = RequestMethod.GET)
 	public String searchPagination(@RequestParam("sSearch") String alias, Model model) {
 		List<User> searchResults = null;
@@ -346,7 +294,7 @@ public class AjaxController {
 		pagedListHolder.setPage(page);
 		int pageSize = 10;
 		pagedListHolder.setPageSize(pageSize);
-		SearchResult userSearchPagination = new SearchResult(searchResults, 1, 10);
+		//SearchResult userSearchPagination = new SearchResult(searchResults, 1, 10);
 		//model.addAttribute(userSearchPagination);
 		List test = new ArrayList();
 		for (int i=0; i<10; i++) {

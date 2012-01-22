@@ -386,7 +386,7 @@ public class AjaxController {
 		try{
 			page = getPeopleBaseService().searchDocumentsRelated(alias, paginationFilter);
 		}catch(ApplicationThrowable aex){
-			
+			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList();
@@ -456,6 +456,7 @@ public class AjaxController {
 		try {
 			page = getPeopleBaseService().searchFamilyPerson(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -499,6 +500,7 @@ public class AjaxController {
 		try {
 			page = getPeopleBaseService().searchRoleCatPeoplePerson(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();
@@ -542,6 +544,7 @@ public class AjaxController {
 		try {
 			page = getPeopleBaseService().searchTitlesOrOccupationsPeoplePerson(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
 		}
 
 		List resultList = new ArrayList();

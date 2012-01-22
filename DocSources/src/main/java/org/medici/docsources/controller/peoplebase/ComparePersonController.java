@@ -82,7 +82,7 @@ public class ComparePersonController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			People person = getPeopleBaseService().findPerson(command.getPersonId());
+			People person = getPeopleBaseService().comparePerson(command.getPersonId());
 			model.put("person", person);
 			model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 

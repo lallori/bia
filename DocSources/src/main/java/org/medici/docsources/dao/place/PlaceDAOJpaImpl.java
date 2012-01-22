@@ -313,7 +313,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		fullTextQuery.setMaxResults(paginationFilter.getLength());
 
 		// We manage sorting (this manages sorting on multiple fields)
-		paginationFilter = this.generatePaginationFilterForHibernateSearch(paginationFilter);
+		paginationFilter = this.generatePaginationFilterHibernateSearch(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		if (sortingCriterias.size() > 0) {
 			SortField[] sortFields = new SortField[sortingCriterias.size()];

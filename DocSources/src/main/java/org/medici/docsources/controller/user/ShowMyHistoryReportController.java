@@ -1,5 +1,5 @@
 /*
- * ShowMyHistoryPlacesController.java
+ù * ShowMyHistoryController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -28,8 +28,10 @@
 package org.medici.docsources.controller.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,14 +40,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to view user operations history on places.
+ * Controller to view a report of user history.
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/user/ShowMyHistoryPlaces")
-public class ShowMyHistoryPlacesController {
+@RequestMapping("/user/ShowMyHistoryReport")
+public class ShowMyHistoryReportController {
 	@Autowired
 	private UserService userService;
 	
@@ -59,7 +61,16 @@ public class ShowMyHistoryPlacesController {
 	public ModelAndView setupForm() {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		return new ModelAndView("user/ShowMyHistoryPlacesModalWindow", model);
+		HashMap<String, List<?>> historyReport = null;
+		try {
+			historyReport = getUserService().getMyHistoryReport(5);
+		} catch (ApplicationThrowable ath) {
+			historyReport = new HashMap<String, List<?>>(5);
+		}
+		
+		model.put("historyReport", historyReport);		
+
+		return new ModelAndView("user/ShowMyHistoryReportModalWindow", model);
 	}
 
 	/**
