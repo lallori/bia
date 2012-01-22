@@ -86,7 +86,8 @@ public class ResetUserPasswordEmailJob {
 			}
 			
 		} catch (Throwable th) {
-			new ApplicationThrowable(th);
+			th.printStackTrace();
+			return;
 		}
 	}
 
