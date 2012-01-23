@@ -90,6 +90,8 @@ public class ShowTitlesOrOccupationsPeoplePersonController {
 				outputFields.add("Gender");
 				outputFields.add("Born Date");
 				outputFields.add("Death Date");
+				outputFields.add("Start Date");
+				outputFields.add("End Date");
 				
 				model.put("outputFields", outputFields);
 

@@ -32,6 +32,7 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.PoLink;
 import org.springframework.stereotype.Repository;
@@ -102,5 +103,24 @@ public class PoLinkDAOJpaImpl extends JpaDao<Integer, PoLink> implements PoLinkD
 			singleResult.setPreferredRole(Boolean.FALSE);
 			getEntityManager().merge(singleResult);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws PersistenceException {
+		StringBuffer query = new StringBuffer("from PoLink WHERE titleOccList.titleOccId=:titleOccId AND (");
+		for(int i = 0; i < peopleIds.size(); i++){
+			query.append("person.personId=" + peopleIds.get(i));
+			if(i != peopleIds.size()-1){
+				query.append(" OR ");
+			}
+		}
+		Query toQuery = getEntityManager().createQuery(query.toString() + ")");
+		toQuery.setParameter("titleOccId", Integer.parseInt(alias));
+		
+		return toQuery.getResultList();
 	}
 }

@@ -28,6 +28,7 @@
 package org.medici.docsources.service.peoplebase;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1576,5 +1577,22 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable {
+		try{
+			Map<Integer, PoLink> result = new HashMap<Integer, PoLink>();
+			List<PoLink> occupations = getPoLinkDAO().getOccupationsDetails(alias, peopleIds);
+			for(PoLink currentOccupation : occupations){
+				result.put(currentOccupation.getPerson().getPersonId(), currentOccupation);
+			}
+			return result;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 }

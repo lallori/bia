@@ -393,6 +393,14 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param peopleIds
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<Integer, PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */

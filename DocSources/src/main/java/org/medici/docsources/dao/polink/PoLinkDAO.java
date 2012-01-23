@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.polink;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.dao.Dao;
@@ -56,5 +58,13 @@ public interface PoLinkDAO extends Dao<Integer, PoLink> {
 	 * @throws PersistenceException
 	 */
 	public void resetPreferredRoleForPersonTitles(Integer prfLinkId, Integer personId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param peopleIds
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws PersistenceException;
 
 }

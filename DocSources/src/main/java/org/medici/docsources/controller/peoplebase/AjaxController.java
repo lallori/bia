@@ -41,6 +41,7 @@ import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.domain.RoleCat;
 import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -539,10 +540,18 @@ public class AjaxController {
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Page page = null;
+		List<Integer> peopleIds = new ArrayList<Integer>(); 
+		Map<Integer, PoLink> occupations = new HashMap<Integer, PoLink>();
 
-		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 		try {
 			page = getPeopleBaseService().searchTitlesOrOccupationsPeoplePerson(alias, paginationFilter);
+			
+			for(People currentPerson : (List<People>)page.getList()){
+				peopleIds.add(currentPerson.getPersonId());
+			}
+			
+			occupations = getPeopleBaseService().getOccupationsDetails(alias, peopleIds);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -555,6 +564,14 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			PoLink currentOccupation = occupations.get(currentPerson.getPersonId());
+			if(currentOccupation != null){
+				singleRow.add(DateUtils.getStringDate(currentOccupation.getStartYear(), currentOccupation.getStartMonthNum(), currentOccupation.getStartDay()));
+				singleRow.add(DateUtils.getStringDate(currentOccupation.getEndYear(), currentOccupation.getEndMonthNum(), currentOccupation.getEndDay()));
+			}else{
+				singleRow.add("");
+				singleRow.add("");
+			}
 			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
 		}
 		
