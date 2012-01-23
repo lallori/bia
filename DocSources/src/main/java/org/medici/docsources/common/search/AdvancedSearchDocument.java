@@ -1028,7 +1028,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
 					wordsQuery.append("((synExtract.docExtract like '%");
 					wordsQuery.append(words.get(i).toLowerCase());
-					wordsQuery.append("%') and ");
+					wordsQuery.append("%') or ");
 					wordsQuery.append("(synExtract.synopsis like '%");
 					wordsQuery.append(words.get(i).toLowerCase());
 					wordsQuery.append("%'))");
@@ -1485,6 +1485,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			volumesQuery.append(")");
 			if (!volumesQuery.toString().equals("")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(volumesQuery);
 			}
 		}
