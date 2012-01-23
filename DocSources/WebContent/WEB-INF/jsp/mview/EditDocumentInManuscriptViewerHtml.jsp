@@ -87,7 +87,7 @@
 				.dialog({
 					autoOpen: true,
 					resizable: false,
-					width: 490,
+					width: 465,
 					height: 110,
 					minWidth: 490,
 					minHeight: 110,                                                                                                                                                         
