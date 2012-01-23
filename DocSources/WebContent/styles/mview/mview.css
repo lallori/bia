@@ -44,7 +44,7 @@ html version
 
 #EditPersonalNotesDiv #prevButton a {
 	float:left;
-	background:url(/DocSources/images/1024/button_lastRecord_pageTurner.png) no-repeat;
+	background:url(/DocSources/images/mview/button_lastRecord_pageTurner.png) no-repeat;
 	padding:4px 0 0 4px;
 	text-align:center;
 	text-decoration:none;
@@ -56,7 +56,7 @@ html version
 
 #EditPersonalNotesDiv #nextButton a {
 	float:right;
-	background:url(/DocSources/images/1024/button_nextRecord_pageTurner.png) no-repeat;
+	background:url(/DocSources/images/mview/button_nextRecord_pageTurner.png) no-repeat;
 	width:35px;
 	height:22px;
 	font-size:11px;
@@ -73,7 +73,7 @@ html version
 }
 
 a.transcribe {
-	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	background:url(/DocSources/images/mview/button_large.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	margin: 10px 0 0 0;
@@ -110,7 +110,7 @@ a.transcribe {
 #volumeSummary { /* Volume Summary button on Page Turner Panel */
 	margin:7px 0 0 37px;
 	position:absolute;
-	background:url(/DocSources/images/1024/button_volumeSummary.png) no-repeat;
+	background:url(/DocSources/images/mview/button_volumeSummary.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -193,7 +193,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #indexNames { /* Index of Names button on Page Turner Panel */
 	margin:7px 0 0 37px;
 	position:absolute;
-	background:url(/DocSources/images/1024/button_indexOfNames.png) no-repeat;
+	background:url(/DocSources/images/mview/button_indexOfNames.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -259,7 +259,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin:-5px 0 0 140px;
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/1024/button_mini.png);
+	background-image:url(/DocSources/images/mview/button_mini.png);
 	font-size:11px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
@@ -317,7 +317,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin: -5px 0 0 110px;
 	width:22px;
 	height:22px;
-	background-image:url(/DocSources/images/1024/button_mini.png);
+	background-image:url(/DocSources/images/mview/button_mini.png);
 	font-size:11px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
@@ -335,7 +335,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditPersonalNotesDiv #personalNotesDiv a{
 	margin:8px 0 0 455px;
 	position:absolute;
-	background:url(/DocSources/images/1024/button_personalNotes.png) no-repeat;
+	background:url(/DocSources/images/mview/button_personalNotes.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -357,7 +357,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #exitDiv a{
 	margin:47px 0 0 455px;
 	position:absolute;
-	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	background:url(/DocSources/images/mview/button_small.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -407,7 +407,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditExtractDocumentDiv #saveExtract {
 	float:left;
 	display:inline;
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(/DocSources/images/mview/button_medium.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -420,7 +420,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditExtractDocumentDiv #saveAndEditSynopsis {
 	float:right;	
 	display:inline;
-	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	background:url(/DocSources/images/mview/button_large.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -437,7 +437,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditSynopsisDocumentDiv #saveSynopsis {
 	float:left;
 	display:inline;
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(/DocSources/images/mview/button_medium.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -450,7 +450,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #EditSynopsisDocumentDiv #saveSynopsisExit {
 	float:right;	
 	display:inline;
-	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	background:url(/DocSources/images/mview/button_large.png) no-repeat;
 	text-align:center;
 	text-decoration:none;
 	color:#6F6B69;
@@ -467,7 +467,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #DialogPersonalNotesDiv #saveNotes {
 	float:left;
 	display:inline;
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(/DocSources/images/mview/button_medium.png) no-repeat;
 	padding:2px 0 0 0;
 	text-align:center;
 	text-decoration:none;
@@ -482,7 +482,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 #DialogPersonalNotesDiv #cleanNotes {
 	float:right;	
 	display:inline;
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	background:url(/DocSources/images/mview/button_medium.png) no-repeat;
 	padding: 4px 0 0 0;
 	text-align:center;
 	text-decoration:none;
