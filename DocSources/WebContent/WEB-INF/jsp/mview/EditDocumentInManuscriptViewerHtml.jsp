@@ -89,7 +89,7 @@
 					resizable: false,
 					width: 465,
 					height: 110,
-					minWidth: 490,
+					minWidth: 465,
 					minHeight: 110,                                                                                                                                                         
 					title: 'PAGE TURNER',
 					position: ['right','bottom'],                                                                                                                                                       
