@@ -104,22 +104,22 @@
 					currentImage = data.imageId;
 
 					if (transcribing == false) {
-						if (data.error == 'wrongType') {
-	    					$j("#unvailableTranscribe").css('visibility', 'visible');
+						if (data.error == 'wrongType' || data.imageType == 'R') {
+							$j("#unvailableTranscribe").css('visibility', 'visible');
 	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
 	    					$j("#showAlreadyTranscribed").removeAttr('href');
 	    					$j("#readyToTranscribe").css('visibility', 'hidden');
 	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 	    				} else if (data.linkedDocument == 'true') {
 	    					$j("#alreadyTranscribe").css('visibility', 'visible');
-	    					$j("#showAlreadyTranscribed").css('visibility', 'visbile');
+	    					$j("#showAlreadyTranscribed").css('visibility', 'visible');
 	    					$j("#showAlreadyTranscribed").attr('href', data.showLinkedDocument);
 	    					$j("#unvailableTranscribe").css('visibility', 'hidden');
 	    					$j("#readyToTranscribe").css('visibility', 'hidden');
 	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 	    				} else if (data.linkedDocument == 'false') {
 	    					// Only users with special role can transcribe new document. 
-	    					if (functionParams["canTranscribe"] =='true') {
+	    					if (functionParams["canTranscribe"] =='true' && data.imageType != "R") {
 	    						$j("#readyToTranscribe").css('visibility', 'visible');
 	    					}
 	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
@@ -219,7 +219,7 @@
 		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 		    				} else if (data.linkedDocument == 'true') {
 		    					$j("#alreadyTranscribe").css('visibility', 'visible');
-		    					$j("#showAlreadyTranscribed").css('visibility', 'visbile');
+		    					$j("#showAlreadyTranscribed").css('visibility', 'visible');
 		    					$j("#showAlreadyTranscribed").attr('href', data.showLinkedDocument);
 		    					$j("#unvailableTranscribe").css('visibility', 'hidden');
 		    					$j("#readyToTranscribe").css('visibility', 'hidden');

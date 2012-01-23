@@ -123,6 +123,9 @@ public class AjaxController {
 					if (image != null) {
 						documentId = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image);
 					}
+					if(image.getImageType() != null && image.getImageType().equals(ImageType.R)){
+						model.put("imageType", "R");
+					}
 				}
 			}			
 
@@ -131,6 +134,8 @@ public class AjaxController {
 			model.put("showLinkedDocument", HtmlUtils.showDocument(documentId));
 			model.put("imageName", image.getImageName());
 			model.put("imageId", image.getImageId());
+			if(image.getImageType() != null && image.getImageType().equals("R"))
+				model.put("imageType", "R");
 		}catch (ApplicationThrowable applicationThrowable) {
 			model.put("entryId", null);
 			model.put("linkedDocument", "false");

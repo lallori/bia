@@ -68,7 +68,7 @@
 		<c:param name="previousPage" value="true" />
 	</c:url>
 	
-	<c:url var="indexOfNamesURL" value="/src/mview/PageTurnerDialog.do">
+	<c:url var="indexOfNamesURL" value="/src/mview/SearchCarta.json">
 		<c:param name="entryId" value="${command.entryId}" />
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volLetExt" value="${command.volLetExt}" />
@@ -81,7 +81,6 @@
 		<c:param name="totalOther" value="${command.totalOther}" />
 		<c:param name="totalGuardia" value="${command.totalGuardia}" />
 		<c:param name="modeEdit" value="${command.modeEdit}" />
-		<c:param name="goR" value="Go" />
 	</c:url>
 	
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
@@ -311,7 +310,7 @@
 			$j.ajax({ type:"GET", url:"${GetLinkedDocumentURL}", async:false, success:function(data) {
 				// We set currentImage
 				currentImage = data.imageId;
-				if (data.error == 'wrongType') {
+				if (data.error == 'wrongType' || data.imageType == 'R') {
 					$j("#unvailableTranscribe").css('visibility', 'visible');
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
