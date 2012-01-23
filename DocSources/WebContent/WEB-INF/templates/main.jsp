@@ -82,6 +82,14 @@
 		<!-- <script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script> -->
 
+		<!--<script type="text/javascript">
+	           window.onbeforeunload = function() {
+	               return "If you leave this page you will exit the Software Platform.";
+	           };
+		</script>-->
+		
+
+
 		<script type="text/javascript">
 			history.go = function(){};
 
