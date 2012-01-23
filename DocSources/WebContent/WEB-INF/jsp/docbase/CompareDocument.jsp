@@ -45,7 +45,7 @@
 	</c:url>
 
 	<div>
-		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="buttonLarge">Click here to edit this document</a>
+		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="buttonLarge">Edit this Document</a>
 	</div>
 	
 	<div id="EditDetailsDocumentDiv" class="background">
