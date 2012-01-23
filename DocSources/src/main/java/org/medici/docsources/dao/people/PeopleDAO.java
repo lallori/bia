@@ -179,6 +179,15 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * This method searches for person entities which contains the parameters set in query
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<People> searchPeople(String searchText) throws PersistenceException;
 
 	/**
 	 * This method searches for person entities which could be related to a document which contains 

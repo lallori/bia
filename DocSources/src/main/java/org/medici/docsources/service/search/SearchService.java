@@ -33,6 +33,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
@@ -184,6 +185,14 @@ public interface SearchService {
 	 */
 	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> searchPeople(String query) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param searchContainer

@@ -46,6 +46,7 @@ import org.medici.docsources.dao.topicslist.TopicsListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
@@ -387,6 +388,18 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			return getPeopleDAO().searchPeople(searchContainer, paginationFilter);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<People> searchPeople(String query) throws ApplicationThrowable{
+		try{
+			return getPeopleDAO().searchPeople(query);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

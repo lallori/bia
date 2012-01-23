@@ -392,18 +392,18 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
-			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
-			paginationFilter.addSortingCriteria("mapNameLf_Sort", "DESC");
+//			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
+//			paginationFilter.addSortingCriteria("mapNameLf_Sort", "DESC");
 
-			Page page = getSearchService().searchPeople(new SimpleSearchPeople(query), paginationFilter);
+			List<People> people = getSearchService().searchPeople(query);
 			model.put("query", query);
-			model.put("count", page.getTotal());
-			model.put("data", ListBeanUtils.transformList(page.getList(), "personId"));
-			model.put("suggestions", ListBeanUtils.transformList(page.getList(), "mapNameLf"));
-			model.put("activeStarts", ListBeanUtils.transformList(page.getList(), "activeStart"));
-			model.put("activeEnds", ListBeanUtils.transformList(page.getList(), "activeEnd"));
-			model.put("bornYears", ListBeanUtils.transformList(page.getList(), "bornYear"));
-			model.put("deathYears", ListBeanUtils.transformList(page.getList(), "deathYear"));
+			model.put("count", people.size());
+			model.put("data", ListBeanUtils.transformList(people, "personId"));
+			model.put("suggestions", ListBeanUtils.transformList(people, "mapNameLf"));
+			model.put("activeStarts", ListBeanUtils.transformList(people, "activeStart"));
+			model.put("activeEnds", ListBeanUtils.transformList(people, "activeEnd"));
+			model.put("bornYears", ListBeanUtils.transformList(people, "bornYear"));
+			model.put("deathYears", ListBeanUtils.transformList(people, "deathYear"));
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
