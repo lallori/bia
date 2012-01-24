@@ -124,7 +124,17 @@ public class TopicsListDAOJpaImpl extends JpaDao<Integer, TopicList> implements 
         	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
         }*/
 		BooleanQuery booleanQuery = new BooleanQuery();
-		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", alias.trim().toLowerCase() + "*")), BooleanClause.Occur.SHOULD)); 
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		String singleWord;
+		for(int i = 0; i < words.length; i++){
+			singleWord = words[i];
+			if(i == 0){
+				booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.MUST));
+			}
+			else{
+				booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+			}
+		}
 		
 		for (int i=0; i<topicIdList.size(); i++) {
 			booleanQuery.add(new BooleanClause(new TermQuery(new Term("topicId", topicIdList.get(i).toString())), BooleanClause.Occur.MUST_NOT));
@@ -137,8 +147,8 @@ public class TopicsListDAOJpaImpl extends JpaDao<Integer, TopicList> implements 
 
 		List<TopicList> listTopics = fullTextQuery.list();
 		
-		Comparator fieldCompare = new BeanComparator( "topicTitle" );
-		Collections.sort(listTopics, fieldCompare );
+//		Comparator fieldCompare = new BeanComparator( "topicTitle" );
+//		Collections.sort(listTopics, fieldCompare );
 
 		return listTopics; 
 		/*} catch (ParseException parseException) {
