@@ -165,6 +165,18 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer findNumberOfDocumentsRelatedVolume(Integer summaryId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE summaryId =:summaryId");
+		query.setParameter("summaryId", summaryId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPlace.placeAllId =:placeAllId");
 		query.setParameter("placeAllId", placeAllId);
