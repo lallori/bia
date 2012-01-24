@@ -16,7 +16,7 @@
 						<option value="Between">Between</option>
 					</select>
 					<input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
-					<input id="betweenSearch" name="betweenSearch" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
+					<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
 					<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 					<input type="hidden" id="category" value="Volume">
 				</form>
@@ -149,9 +149,9 @@
 
 		$j("#volumeType").change(function(){
 			if(this.options[1].selected) 
-				$j('#betweenSearch').css('visibility','visible'); 
+				$j('#volumeBetween').css('visibility','visible'); 
 		    else 
-				$j('#betweenSearch').css('visibility','hidden');
+				$j('#volumeBetween').css('visibility','hidden');
 		});	
 
 		$j("#dateType").change(function(){
