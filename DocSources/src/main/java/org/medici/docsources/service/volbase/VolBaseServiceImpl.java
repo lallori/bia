@@ -463,10 +463,24 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			Volume volume = getVolumeDAO().findVolume(volNum, volLetExt);
 			
-			getUserHistoryDAO().persist(new UserHistory("Show volume", Action.VIEW, Category.VOLUME, volume));
+			if(volume != null){
+				getUserHistoryDAO().persist(new UserHistory("Show volume", Action.VIEW, Category.VOLUME, volume));
+			}
 
 			return volume;
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findVolumeDocumentsRelated(Integer summaryId) throws ApplicationThrowable {
+		try{
+			return getDocumetDAO().findNumberOfDocumentsRelatedVolume(summaryId);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

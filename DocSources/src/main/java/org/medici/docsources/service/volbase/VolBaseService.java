@@ -195,6 +195,14 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findVolumeDocumentsRelated(Integer summaryId) throws ApplicationThrowable;
 
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Month}.
