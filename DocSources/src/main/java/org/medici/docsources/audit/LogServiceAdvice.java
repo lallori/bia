@@ -32,6 +32,7 @@ package org.medici.docsources.audit;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.util.ClassUtils;
 import org.springframework.aop.AfterReturningAdvice;
@@ -136,7 +137,6 @@ public class LogServiceAdvice implements AfterReturningAdvice, ThrowsAdvice {
 	 */
 	private void appendThrowable(StringBuffer stringBuffer, Throwable throwable) {
 		stringBuffer.append(" - Exception : ");
-		stringBuffer.append(Arrays.toString(throwable.getStackTrace()));
-
+		stringBuffer.append(ExceptionUtils.getStackTrace(throwable));
 	}
 }
