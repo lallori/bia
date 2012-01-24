@@ -23,7 +23,7 @@
 				</form>
 			</div>
 			
-			<<h1 id="peoplePlaces"><a><i>search on</i> People &amp; Places</a></h1>
+			<h1 id="peoplePlaces"><a><i>search on</i> People &amp; Places</a></h1>
 		    <div>
 		    	<form id="personSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="General Person Search: search here for documents related to person name either if it is a sender, a recipient and/or referenced in a document.">?</a>
