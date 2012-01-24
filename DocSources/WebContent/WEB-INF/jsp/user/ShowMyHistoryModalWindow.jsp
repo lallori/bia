@@ -37,7 +37,7 @@
 
 	<script type="text/javascript" charset="utf-8">                                                           
 			$j(document).ready(function() {                                                                       
-				$j('#ResearchHistoryTable').dataTable( {                                                             
+				$j('#researchHistoryTable').dataTable( {                                                             
 					"aoColumnDefs": [ { "sWidth": "90%", "aTargets": [ "_all" ] }],    
 					"bAutoWidth" : false,
 						"aoColumns" : [
@@ -74,7 +74,9 @@
 				$j('.searchResult').die();                                                                        
 				// Result links have a specific class style on which we attach click live.                        
 				$j('.searchResult').live('click', function() {                                                    
-					return false;                                                                                 
+					$j("#body_left").load($j(this).attr("href"));
+					Modalbox.hide();
+					return false;
 				});                                                                                               
 			} );                                                                                                  
 	</script>
@@ -82,10 +84,12 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#categoryHistory").click(function() {															
-				Modalbox.show($j(this).attr("href"), {title: "CATEGORY VIEW", width: 750});return false;}
-			);	
+				Modalbox.show($j(this).attr("href"), {title: "CATEGORY VIEW", width: 750});
+				return false;
+			});	
 			$j("#closeMyHistory").click(function(){
-				Modalbox.hide(); return false;}
-			);
+				Modalbox.hide();
+				return false;
+			});
 		});
 	</script>

@@ -58,6 +58,8 @@
 				$j('.searchResult').die();                                                                        
 				// Result links have a specific class style on which we attach click live.                        
 				$j('.searchResult').live('click', function() {                                                    
+					$j("#body_left").load($j(this).attr("href"));
+					Modalbox.hide();
 					return false;                                                                                 
 				});                                                                                               
 			} );                                                                                                  
@@ -65,13 +67,13 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#categoryHistory").click(
-				function() {															
-					Modalbox.show($j(this).attr("href"), {title: "CATEGORY VIEW", width: 750});return false;}
-					);	
-			$j("#closeMyHistory").click(
-				function(){
-					Modalbox.hide(); return false;}
-					);
+			$j("#categoryHistory").click(function() {															
+				Modalbox.show($j(this).attr("href"), {title: "CATEGORY VIEW", width: 750});
+				return false;
+			});	
+			$j("#closeMyHistory").click(function(){
+				Modalbox.hide(); 
+				return false;
+			});
 		});
 	</script>

@@ -37,6 +37,7 @@ import java.util.Map;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.User;
@@ -119,7 +120,7 @@ public class AjaxController {
 
 		List<Object> resultList = new ArrayList<Object>();
 		for (UserHistory currentUserHistory : (List<UserHistory>)page.getList()) {
-			List<Object> singleRow = new ArrayList<Object>();
+			List<String> singleRow = new ArrayList<String>();
 			singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			singleRow.add(currentUserHistory.getCategory().toString());
 			singleRow.add(currentUserHistory.getAction().toString());
@@ -128,23 +129,26 @@ public class AjaxController {
 				singleRow.add("");
 				singleRow.add("");
 				singleRow.add("");
+				resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getDocument().getEntryId()));
 			}  else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
 				singleRow.add("");
 				singleRow.add(currentUserHistory.getVolume().getMDP());
 				singleRow.add("");
 				singleRow.add("");
+				resultList.add(HtmlUtils.showVolume(singleRow, currentUserHistory.getVolume().getSummaryId()));
 			} else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 				singleRow.add("");
 				singleRow.add("");
 				singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
 				singleRow.add("");
+				resultList.add(HtmlUtils.showPlace(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
 			} else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
 				singleRow.add("");
 				singleRow.add("");
 				singleRow.add("");
 				singleRow.add(currentUserHistory.getPerson().getMapNameLf());
+				resultList.add(HtmlUtils.showPeople(singleRow, currentUserHistory.getPerson().getPersonId()));
 			}
-			resultList.add(singleRow);
 		}
 
 		model.put("iEcho", "1");
@@ -186,7 +190,7 @@ public class AjaxController {
 
 		List<Object> resultList = new ArrayList<Object>();
 		for (UserHistory currentUserHistory : (List<UserHistory>)page.getList()) {
-			List<Object> singleRow = new ArrayList<Object>();
+			List<String> singleRow = new ArrayList<String>();
 			singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			singleRow.add(currentUserHistory.getAction().toString());
 			if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
@@ -204,22 +208,24 @@ public class AjaxController {
 					singleRow.add("");
 				}
 				
-				resultList.add(singleRow);
+				resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getDocument().getEntryId()));
 			}  else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
 				singleRow.add(currentUserHistory.getVolume().getMDP());
 				singleRow.add(currentUserHistory.getVolume().getSerieList().toString());
 				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getStartYear(), currentUserHistory.getVolume().getStartMonthNum(), currentUserHistory.getVolume().getStartDay()));
 				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getEndYear(), currentUserHistory.getVolume().getEndMonthNum(), currentUserHistory.getVolume().getEndDay()));
-				singleRow.add(currentUserHistory.getVolume().getDigitized());
+				singleRow.add(currentUserHistory.getVolume().getDigitized().toString());
+				resultList.add(HtmlUtils.showVolume(singleRow, currentUserHistory.getVolume().getSummaryId()));
 			} else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 				singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
 				singleRow.add(currentUserHistory.getPlace().getPlType());
+				resultList.add(HtmlUtils.showPlace(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
 			} else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
 				singleRow.add(currentUserHistory.getPerson().getMapNameLf());
 				singleRow.add(DateUtils.getStringDate(currentUserHistory.getPerson().getBornYear(), currentUserHistory.getPerson().getBornMonth(), currentUserHistory.getPerson().getBornDay()));
 				singleRow.add(DateUtils.getStringDate(currentUserHistory.getPerson().getDeathYear(), currentUserHistory.getPerson().getDeathMonth(), currentUserHistory.getPerson().getDeathDay()));
+				resultList.add(HtmlUtils.showPeople(singleRow, currentUserHistory.getPerson().getPersonId()));
 			}
-			resultList.add(singleRow);
 		}
 
 		model.put("iEcho", "1");
