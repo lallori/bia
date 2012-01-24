@@ -1059,7 +1059,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					personIdQuery.append(personId.get(i).toString());
 					personIdQuery.append(" or recipientPeople.personId=");
 					personIdQuery.append(personId.get(i).toString());
-					personIdQuery.append(")");
+					personIdQuery.append("");
 				} else {
 					if (personQuery.length()>1) {
 						personQuery.append(" AND ");
@@ -1389,7 +1389,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					
 					topicsIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicId=");
 					topicsIdQuery.append(topicsId.get(i).toString());
-					topicsIdQuery.append("))");
+					topicsIdQuery.append(")");
 				} else {
 					if (topicsQuery.length()>1) {
 						topicsQuery.append(" AND ");
@@ -1402,13 +1402,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			topicsIdQuery.append(")");
 			topicsQuery.append(")");
-			if (!topicsIdQuery.toString().equals("")) {
+			if (!topicsIdQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
-				//	jpaQuery.append(" AND ");
+					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(topicsIdQuery);
 			}
-			if (!topicsQuery.toString().equals("")) {
+			if (!topicsQuery.toString().equals("()")) {
 				if(jpaQuery.length() > 20){
 					jpaQuery.append(" AND ");
 				}
