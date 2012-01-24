@@ -129,8 +129,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 			if (volume.getStartMonthNum() != null) {
 				Month month = getMonthDAO().find(volume.getStartMonthNum().getMonthNum());
-				volume.setEndMonth(month.getMonthName());
-				volume.setEndMonthNum(month);
+				volume.setStartMonth(month.getMonthName());
+				volume.setStartMonthNum(month);
 			} else {
 				volume.setStartMonth(null);
 				volume.setStartMonthNum(null);
