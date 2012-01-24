@@ -176,8 +176,7 @@
 }
 
 #MyHistoryButtons {
-    margin-left: 332px;
-    width: 379px;
+    width: 723px;
 }
 
 #closeMyHistory {
@@ -189,7 +188,7 @@
 	padding:4px 0 0 12px;
 	width:52px;
 	height:22px;
-	margin-left: 10px;
+	margin-left: 200px;
 }
 
 #generalHistory {
@@ -215,6 +214,18 @@
     width: 122px;
 }
 
+#eraseHistory {
+    background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+	float:left;
+    font-size: 11px;
+    height: 22px;
+    margin-left: 12px;
+    padding: 4px 0 0;
+    text-align: center;
+    width: 122px;
+}
+
 #goBackToMyHistory {
 	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
@@ -226,7 +237,7 @@
     width: 52px;
 }
 
-a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#categoryHistory:hover {
+a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#categoryHistory:hover, #eraseHistory:hover {
 	text-decoration:none;
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
@@ -235,7 +246,7 @@ a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#cat
 
 /* ------------------- Data Table ----------------- */ 
 
-#dataTableDiv {
+#researchHistoryTableDiv {
 	height:390px !important;
 	height /**/: 400px;
 	overflow:auto !important;
@@ -243,7 +254,7 @@ a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#cat
 	margin-bottom:40px;
 }
 
-#dataTableDiv .dataTables_info {
+#researchHistoryTableDiv .dataTables_info {
     color: #666666;
     float: left;
     font-size: 10px;

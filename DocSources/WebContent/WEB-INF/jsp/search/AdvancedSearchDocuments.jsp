@@ -6,8 +6,8 @@
 
 	<div id="customSearchFilterDiv">
 		<h1 class="advSearchTitle">Create your custom search filter</h1>
-		<div id="multiOpenAccordion">
-			<h1><a>Word search</a></h1>
+		<div id="accordion">
+			<h1 id="wordSearch"><a>Word search</a></h1>
 			<div>
 				<form id="wordSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
@@ -23,7 +23,7 @@
 				</form>
 			</div>
 			
-			<h1><a><i>search on</i> People &amp; Places</a></h1>
+			<<h1 id="peoplePlaces"><a><i>search on</i> People &amp; Places</a></h1>
 		    <div>
 		    	<form id="personSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="General Person Search: search here for documents related to person name either if it is a sender, a recipient and/or referenced in a document.">?</a>
@@ -91,7 +91,7 @@
 				</form>
 		    </div>
 		
-			<h1><a><i>in</i> Extract and/or Synopsis</a></h1>
+			<h1 id="extractSynopsis"><a><i>in</i> Extract and/or Synopsis</a></h1>
 			<div>
 				<form id="extractSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="That text will explain...">?</a>
@@ -110,7 +110,7 @@
 				</form>
 			</div>
 			
-			<h1><a><i>with</i> Topics</a></h1>
+			<h1 id="topics"><a><i>with</i> Topics</a></h1>
 			<div>
 				<form id="topicSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
@@ -121,7 +121,7 @@
 				</form>
 			</div>
 
-			<h1><a>Date Range</a></h1>
+			<h1 id="dateRange"><a>Date Range</a></h1>
 			<div>
 				<form id="dateSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
@@ -150,7 +150,7 @@
 				</form>
 			</div>
 			
-			<h1><a><i>in</i> Volume</a></h1>
+			<h1 id="volume"><a><i>in</i> Volume</a></h1>
 			<div>
 				<form id="volumeSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -242,7 +242,10 @@
 			$j("#dateSearchForm").advancedSearchForm();
 			$j("#volumeSearchForm").advancedSearchForm();
 
-			$j('#multiOpenAccordion').multiAccordion({active: [0]});
+			$j('#accordion').accordion({
+				active: false, 
+				autoHeight: false
+				});
 			$j("#person").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
@@ -412,6 +415,37 @@
 			
 			$j("#topic").change(function(){
 				$j(".topicAdd").attr("disabled","disabled");
+			});
+			
+			$j('#wordSearch').click(function(){
+					$j.scrollTo({top:'0px',left:'0px'}, 800 );
+					$j("#yourSearchFilterDiv").animate({"top": "0px"}, "slow");
+					return false;
+			});
+			$j('#peoplePlaces').click(function(){
+					$j.scrollTo({top:'113px',left:'0px'}, 800 );
+					$j("#yourSearchFilterDiv").animate({"top": "70px"}, "slow");
+					return false;
+			});
+			$j('#extractSynopsis').click(function(){
+					$j.scrollTo({top:'140px',left:'0px'}, 800 );
+					$j("#yourSearchFilterDiv").animate({"top": "100px"}, "slow");
+					return false;
+			});
+			$j('#topics').click(function(){
+					$j.scrollTo({top:'168px',left:'0px'}, 800 );
+					$j("#yourSearchFilterDiv").animate({"top": "125px"}, "slow");
+					return false;
+			});
+			$j('#dateRange').click(function(){
+					$j.scrollTo({top:'195px',left:'0px'}, 800 );
+					$j("#yourSearchFilterDiv").animate({"top": "150px"}, "slow");
+					return false;
+			});
+			$j('#volume').click(function(){
+					$j.scrollTo({top:'222px',left:'0px'}, 800 );
+					$j("#yourSearchFilterDiv").animate({"top": "180px"}, "slow");
+					return false;
 			});
 			
 		});

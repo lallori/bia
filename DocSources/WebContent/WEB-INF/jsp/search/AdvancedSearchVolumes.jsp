@@ -6,8 +6,8 @@
 
 	<div id="customSearchFilterDiv">
 		<h1 class="advSearchTitle">Create your custom search filter</h1>
-			<div id="multiOpenAccordion">
-			<h1><a>Volume</a></h1>
+			<div id="accordion">
+			<h1 id="volume"><a>Volume</a></h1>
 			<div>
 				<form id="volumeSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -48,7 +48,7 @@
 	            </form>                	
 			</div>
 			
-			<h1><a>Volume Description</a></h1>
+			<h1 id="volumeDesc"><a>Volume Description</a></h1>
 			<div>
 				<form id="digitizedSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -103,7 +103,7 @@
 	            </form>
 			</div>
 			
-			<h1><a>Correspondents and Context</a></h1>
+			<h1 id="coorCont"><a>Coorespondents and Context</a></h1>
 			<div>
 				<form id="fromVolumeSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -203,7 +203,24 @@
 		$j("#toVolumeSearchForm").advancedSearchForm();
 		$j("#contextSearchForm").advancedSearchForm();
 		$j("#inventarioSearchForm").advancedSearchForm();
-
-		$j('#multiOpenAccordion').multiAccordion({active: [0]});
+		$j('#accordion').accordion({
+			active: false, 
+			autoHeight: false
+			});
+		$j('#volume').click(function(){
+			$j.scrollTo({top:'0px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "0px"}, "slow");
+			return false;
+		});
+		$j('#volumeDesc').click(function(){
+			$j.scrollTo({top:'113px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "70px"}, "slow");
+			return false;
+		});
+		$j('#coorCont').click(function(){
+			$j.scrollTo({top:'140px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "100px"}, "slow");
+			return false;
+		});
 	});
 </script>

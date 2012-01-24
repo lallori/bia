@@ -3354,7 +3354,7 @@ form#EditUserProfileForm span{
 }
 
 
-#multiOpenAccordion #addSearchFilter { /* Add button */
+#accordion #addSearchFilter { /* Add button */
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
 	width:52px;
@@ -3503,7 +3503,7 @@ form#EditUserProfileForm span{
 	filter:alpha(opacity=50); /* IE */
 }
 
-#yourEasySearchFilterForm, #yourExpertSearchFilterForm {
+#yourEasySearchFilterForm {
 	background:url(/DocSources/images/1024/bg_searchFilter.jpg) no-repeat;
 	margin: 0;
 	padding: 5px 0 0 60px;
@@ -3582,7 +3582,7 @@ span.categorySearch {
 */
 
 .saveButton { /* Save Button */
-	margin: 35px 0 0 112px;
+	margin: 25px 0 0 0px;
 	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
@@ -3598,7 +3598,8 @@ span.categorySearch {
 }
 
 #advsearch { /* Search Button */
-	margin: 25px auto auto 190px;
+	margin: 25px auto auto 297px;
+	position:absolute;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;

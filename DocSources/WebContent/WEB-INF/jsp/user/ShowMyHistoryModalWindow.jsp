@@ -8,8 +8,9 @@
 	<c:url var="ShowMyHistoryReportURL" value="/user/ShowMyHistoryReport.do" />
 
 	<c:url var="MyHistoryPaginationURL" value="/user/MyHistoryPagination.json" />
-
-	<table cellpadding="0" cellspacing="0" border="0" class="display" id="ResearchHistoryTable">
+	
+	<div id="researchHistoryTableDiv">
+	<table cellpadding="0" cellspacing="0" border="0" class="display" id="researchHistoryTable">
 	    <thead>
 	        <tr>
 	            <th>Date</th>
@@ -27,6 +28,7 @@
 	        </tr> 
 	    </tbody>
 	</table>
+	</div>
 	
 	<div id="MyHistoryButtons">
 	    <a id="closeMyHistory" href="#" title="Close My History window">Close</a>

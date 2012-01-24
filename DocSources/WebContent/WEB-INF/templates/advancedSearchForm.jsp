@@ -38,7 +38,7 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.dialogextend.min.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.tooltip.js"/>"></script>
-		
+		<script type="text/javascript" src="<c:url value="/scripts/jquery.scrollTo.js"/>"></script>		
 		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();

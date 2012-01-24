@@ -7,8 +7,8 @@
 <div id="customSearchFilterDiv">
 	<h1 class="advSearchTitle">Create your custom search filter</h1>
 
-<div id="multiOpenAccordion">
-	<h1><a>Place Name</a></h1>
+<div id="accordion">
+	<h1 id="placeName"><a>Place Name</a></h1>
 	<div>
 		<form id="placeNameSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="You can search here for place names in many languages (without accents).">?</a>
@@ -20,7 +20,7 @@
 		</form>
 	</div>
 	
-	<h1><a>Place Type</a></h1>
+	<h1 id="placeType"><a>Place Type</a></h1>
 	<div>
 		<form id="placeTypeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="These Place Types are assigned to geographical place names in the Getty Thesaurus of Geographic Names. Most places in the Documentary Sources database are of the type 'Inhabited Place' (that is to say, cities, towns and villages.)">?</a>
@@ -36,7 +36,7 @@
 		</form>
 	</div>
 	
-	<h1><a>Linked to Topics</a></h1>
+	<h1 id="linkedTopics"><a>Linked to Topics</a></h1>
 	<div>
 		<form id="linkedToTopicsSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Most documents are indexed to one or more Topic Categories, and each Topic is indexed to the related Places. By selecting a Topic, you will create a list here of the places that are associated with that topic in the indexed documents. For example, selecting the Topic 'Music and Musical Instruments' will produce a list of places that are linked to documents mentioning Music and Musical Instruments. This allows you to select those relevant to your research.">?</a>
@@ -53,7 +53,7 @@
 		</form>
 	</div>
 
-	<h1><a>Linked to People</a></h1>
+	<h1 id="linkedPeople"><a>Linked to People</a></h1>
 	<div>
 		<form id="linkedToPeopleSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="You can refine your Places search by specifying 'Sender Location', 'Recipient Location', 'Birth Place', or 'Death Place'. The resulting hit list will include a link to the biographical records for the people who meet your criteria.">?</a>
@@ -78,9 +78,10 @@
 		$j('#placeTypeSearchForm').advancedSearchForm();
 		$j('#linkedToTopicsSearchForm').advancedSearchForm();
 		$j('#linkedToPeopleSearchForm').advancedSearchForm(); 
-
-		$j('#multiOpenAccordion').multiAccordion({active: [0]});
-		
+		$j('#accordion').accordion({
+			active: false, 
+			autoHeight: false
+			});		
 		$j("#placeTypeSelect").change(function(){
 			 if($j(this).val() != "Select a Place Type"){
 			 	$j("#placeType").val($j(this).val());
@@ -110,5 +111,25 @@
 				 $j("#linkedToPeople").val("");
 			 return false;
 		 });
+		$j('#placeName').click(function(){
+			$j.scrollTo({top:'0px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "0px"}, "slow");
+			return false;
+		});
+		$j('#placeType').click(function(){
+			$j.scrollTo({top:'113px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "70px"}, "slow");
+			return false;
+		});
+		$j('#linkedTopics').click(function(){
+			$j.scrollTo({top:'140px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "100px"}, "slow");
+			return false;
+		});
+		$j('#linkedPeople').click(function(){
+			$j.scrollTo({top:'168px',left:'0px'}, 800 );
+			$j("#yourSearchFilterDiv").animate({"top": "125px"}, "slow");
+			return false;
+		});
 	});
 </script>

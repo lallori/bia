@@ -6,8 +6,8 @@
 
 <div id="customSearchFilterDiv">
 	<h1 class="advSearchTitle">Create your custom search filter</h1>
-<div id="multiOpenAccordion">
-	<h1><a>Name Parts</a></h1>
+<div id="accordion">
+	<h1 id="nameParts"><a>Name Parts</a></h1>
 	<div>
 		<form id="namePartsSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Names are broken down into their component parts in order to help identify individuals who may have been referred to by a variety of names. Each person therefore has various distinct name records in order to track 'Given Names', 'Appellatives', 'Family Names', 'Married Names' and 'Patronymics'. You should enter name parts without modifiers (e.g. Agnolo instead of d'Agnolo or di Agnolo). You can select a specific name type to further limit the name search. Women's 'maiden' names are categorized as 'Family' names.">?</a>
@@ -27,17 +27,7 @@
 		</form>	
 	</div>
 	
-	<h1><a>Word Search</a></h1>
-	<div>
-		<form id="wordSearchForm" method="post" class="edit">
-			<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-			<input id="word" name="word" class="input_20c" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
-			<input type="hidden" id="category" value="Word Search">
-		</form>
-	</div>
-	
-	<h1><a>Date Range</a></h1>
+	<h1 id="dateRange"><a>Date Range</a></h1>
 	<div>
 		<form id="dateSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
@@ -68,7 +58,7 @@
 		</form>
 	</div>
 
-	<h1><a>Title/Occupation</a></h1>
+	<h1 id="titleOccupation"><a>Title/Occupation</a></h1>
 	<div>
 		<form id="roleCategorySearchForm" method="post" class="edit">
 			<a class="helpIcon" title="The subjects of some biographical entries are categorized as 'Groups', with the 'Gender' specified as 'X'. This includes entities such as academies and confraternities (even if their membership was made up of a single gender), and families when they are mentioned collectively in a document.">?</a>
@@ -176,7 +166,7 @@
 		</form>
 	</div>
 	
-	<h1><a>Place</a></h1>
+	<h1 id="place"><a>Place</a></h1>
 	<div>
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>
@@ -186,6 +176,16 @@
 			<input type="hidden" id="placeId" value="">
 		</form>
 	</div>
+	
+	<h1 id="researchNotes"><a><i>in </i>Research Notes</a></h1>
+	<div>
+		<form id="researchNotesForm" method="post" class="edit">
+			<a class="helpIcon" title="Search here for words (in English) that appear in the Research Notes field.">?</a>
+			<input id="word" name="word" class="input_20c" type="text" value=""/>
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+			<input type="hidden" id="category" value="Research Notes">
+		</form>
+	</div>	
 </div>
 </div>
 
@@ -205,10 +205,10 @@
 		$j('#roleCategorySearchForm').advancedSearchForm();
 		$j('#occupationSearchForm').advancedSearchForm();
 		$j('#placeSearchForm').advancedSearchForm();		
-
-		
-		$j('#multiOpenAccordion').multiAccordion({active: [0]});
-
+		$j('#accordion').accordion({
+			active: false, 
+			autoHeight: false
+			});
 		$j("#dateType").change(function(){
 			if(this.options[3].selected) { 
 				$j('#dateYearBetween').css('visibility','visible');
@@ -293,6 +293,30 @@
 			    noCache: true, //default is false, set to true to disable caching
 			    onSelect: function(value, data){ $j('#occupationId').val(data); }
 		 })
-		
+		$j('#nameParts').click(function(){
+			 $j.scrollTo({top:'0px',left:'0px'}, 800 );
+			 $j("#yourSearchFilterDiv").animate({"top": "0px"}, "high");
+			 return false;
+		});
+		$j('#dateRange').click(function(){
+			 $j.scrollTo({top:'113px',left:'0px'}, 800 );
+			 $j("#yourSearchFilterDiv").animate({"top": "70px"}, "high");
+			 return false;
+		});
+		$j('#titleOccupation').click(function(){
+			 $j.scrollTo({top:'140px',left:'0px'}, 800 );
+			 $j("#yourSearchFilterDiv").animate({"top": "100px"}, "high");
+			 return false;
+		});
+		$j('#place').click(function(){
+			 $j.scrollTo({top:'168px',left:'0px'}, 800 );
+			 $j("#yourSearchFilterDiv").animate({"top": "125px"}, "high");
+			 return false;
+		});
+		$j('#researchNotes').click(function(){
+			 $j.scrollTo({top:'195px',left:'0px'}, 800 );
+			 $j("#yourSearchFilterDiv").animate({"top": "150px"}, "high");
+			 return false;
+		});
 	});
 </script>
