@@ -5,6 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<form:form id="EditDetailsVolumeForm" method="post" cssClass="edit">
+		<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>VOLUME DETAILS</b></legend>
 			<div>
@@ -85,6 +86,11 @@
 	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden'); 
 	        $j("#EditDescriptionVolume").css('visibility', 'hidden'); 
 			$j("#EditDetailsVolume").css('visibility', 'hidden'); 
+			
+			$j("#save").click(function(){
+		       	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+		       	$j("#loadingDiv").css('visibility', 'visible');
+		    });
 
 	        // We disable
 			<c:if test="${command.summaryId != 0}"> 

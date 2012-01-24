@@ -660,6 +660,18 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchDocumentsRelated(String volumeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumetDAO().searchDocumentsRelatedVolume(volumeToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable {
 		try {
 			return getSeriesListDAO().findSeries(alias);

@@ -6,6 +6,7 @@
 
 	<form:form id="EditContextVolumeForm" method="post" cssClass="edit">
 		<fieldset>
+			<div id="loadingDiv"></div>
 			<legend><b>CONTEXT</b></legend>
 			<div><form:label for="ccontext" id="ccontextLabel" path="ccontext">Context</form:label></div>
 			<div><form:textarea path="ccontext" cssClass="txtarea_medium"/><form:errors path="ccontext" cssClass="inputerrors"/></div>
@@ -31,6 +32,11 @@
 	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden'); 
 	        $j("#EditDescriptionVolume").css('visibility', 'hidden'); 
 			$j("#EditDetailsVolume").css('visibility', 'hidden'); 
+			
+			 $j("#save").click(function(){
+		        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+		        	$j("#loadingDiv").css('visibility', 'visible');
+		        });
 
 			$j('#close').click(function() {
 	            $j('#EditContextVolumeDiv').block({ message: $j('#question') }); 

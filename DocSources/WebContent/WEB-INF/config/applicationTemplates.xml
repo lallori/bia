@@ -694,6 +694,10 @@
 	<definition name="volbase/ShowDetailsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowDetailsVolume.jsp"/>
 	</definition>
+	
+	<definition name="volbase/ShowDocumentsVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowDocumentsVolume.jsp" />
+	</definition>
 
 	<definition name="volbase/ShowExplorerVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowExplorerVolume.jsp"/>

@@ -17,6 +17,10 @@
 	<c:url var="EditDetailsVolumeURL" value="/de/volbase/EditDetailsVolume.do">
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
+	
+	<c:url var="ShowDocumentsVolumeURL" value="/de/peoplebase/ShowDocumentsVolume.do">
+		<c:param name="summaryId" value="${volume.summaryId}" />
+	</c:url>
 		
 	
 	<div id="EditDetailsVolumeDiv" class="background">
@@ -52,6 +56,15 @@
 		</div> -->
 		
 		<h3>${volume.serieList}</h3>
+		<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
+			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Documents related</a>
+		</c:if>
+		<c:if test="${volDocsRelated == 0}">
+			<a class="num_docs">0 Documents related</a>
+		</c:if>
+		<c:if test="${volDocsRelated == 1}">
+			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Document related</a>
+		</c:if>
 		<div class="listDetails">
 			<div class="row">
 				<div class="item">Volume/Filza (MDP)</div>
@@ -99,6 +112,30 @@
 			//For check if already exsist a tab with volume explorer
 			$j("#ShowVolumeInVolumeExplorer").click(function(){
 				var tabName = "Volume Explorer ${volume.volNum}${volume.volLetExt}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".num_docs").click(function(){
+				var tabName = "Docs Volume ${volume.summaryId}";
 				var numTab = 0;
 				
 				//Check if already exist a tab with this person

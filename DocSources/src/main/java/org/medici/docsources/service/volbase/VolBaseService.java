@@ -262,6 +262,17 @@ public interface VolBaseService {
 	 */
 	public void optimizeIndexVolume() throws ApplicationThrowable;
 
+	
+	/**
+	 * 
+	 * @param volumeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchDocumentsRelated(String volumeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 

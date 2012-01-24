@@ -75,6 +75,7 @@ public class ShowLastEntryVolumeController {
 			Volume volume = getVolBaseService().findLastEntryVolume();
 			model.put("volume", volume);
 
+			model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
 			Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
 			model.put("image", image);
 		} catch (ApplicationThrowable ath) {

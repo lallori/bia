@@ -5,6 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<form:form id="EditCorrespondentsVolumeForm" method="post" class="edit">
+		<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>CORRESPONDENTS</b></legend>
 			<div style="margin-top:5px"><form:label id="sendersLabel" for="senders" path="senders" cssErrorClass="error">From</form:label></div>
@@ -30,6 +31,11 @@
 	        $j("#EditCorrespondentsVolume").css('visibility', 'hidden'); 
 	        $j("#EditDescriptionVolume").css('visibility', 'hidden'); 
 			$j("#EditDetailsVolume").css('visibility', 'hidden'); 
+			
+			$j("#save").click(function(){
+		       	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+		       	$j("#loadingDiv").css('visibility', 'visible');
+		    });
 
 			$j('#close').click(function() {
 	            $j('#EditCorrespondentsVolumeDiv').block({ message: $j('#question') }); 

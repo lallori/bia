@@ -6,6 +6,7 @@
 
 <div>
 	<form:form id="EditDescriptionVolumeForm" method="post" cssClass="edit">
+		<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>DESCRIPTION</b></legend>
 			<div><form:label id="orgNotesLabel" for="orgNotes" path="orgNotes" cssErrorClass="error">Organizational Criteria</form:label></div>
@@ -104,6 +105,11 @@
 			$j("#modify").val(1); //set the hidden field if an element is modified
 			return false;
 		});
+		
+		$j("#save").click(function(){
+	       	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	       	$j("#loadingDiv").css('visibility', 'visible');
+	    });
 
 		$j('#close').click(function() {
 			//if no change, the question isn't displayed

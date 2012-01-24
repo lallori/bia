@@ -27,12 +27,18 @@
  */
 package org.medici.docsources.controller.volbase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.common.util.VolumeUtils;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -191,6 +197,69 @@ public class AjaxController {
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/volbase/ShowDocumentsRelatedVolume.json", method = RequestMethod.GET)
+	public ModelAndView ShowDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+		
+		try{
+			page = getVolBaseService().searchDocumentsRelated(alias, paginationFilter);
+		}catch(ApplicationThrowable aex){
+			page = new Page(paginationFilter);
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null)
+				singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null)
+				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			
+			if (currentDocument.getSenderPlace() != null)
+				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null)
+				singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");				
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
 
 		return new ModelAndView("responseOK", model);
 	}
