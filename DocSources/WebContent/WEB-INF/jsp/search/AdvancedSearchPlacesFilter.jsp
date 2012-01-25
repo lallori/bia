@@ -38,7 +38,7 @@
 		<c:forEach items="${searchFilter.filterData.linkedToTopics}" varStatus="iterator">
 			<div class="searchFilterDiv">
 				<span class="categorySearch">Linked to Topics: </span><span class="wordSearch">${searchFilter.filterData.linkedToTopics[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-				<input type="hidden" value="${fn2:encode(searchFilter.filterData.linkedToTopics[iterator.index])}" name="linkedToTopics" />
+				<input type="hidden" value="${searchFilter.filterData.linkedToTopicsId[iterator.index]}|${searchFilter.filterData.linkedToTopics[iterator.index]}" name="linkedToTopics" />
 			</div>
 			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 		</c:forEach>
@@ -48,7 +48,7 @@
 		<c:forEach items="${searchFilter.filterData.linkedToPeople}" varStatus="iterator">
 			<div class="searchFilterDiv">
 				<span class="categorySearch">Linked To People: </span><span class="wordSearch">${searchFilter.filterData.linkedToPeople[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-				<input type="hidden" value="${fn2:encode(searchFilter.filterData.linkedToPeople[iterator.index])}" name="linkedToPeople" />
+				<input type="hidden" value="${searchFilter.filterData.linkedToPeople[iterator.index]}" name="linkedToPeople" />
 			</div>
 			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 		</c:forEach>
