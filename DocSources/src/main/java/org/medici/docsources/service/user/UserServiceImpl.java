@@ -57,6 +57,8 @@ import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -73,6 +75,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
+@Transactional(readOnly=true)
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private ActivationUserDAO activationUserDAO;
@@ -161,6 +164,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public PersonalNotes editPersonalNotes(String account, PersonalNotes personalNotes) throws ApplicationThrowable {
 		PersonalNotes personalNotesToUpdate = null;
