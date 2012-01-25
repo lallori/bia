@@ -76,6 +76,7 @@ public class AdvancedSearchCommand {
 	private List<String> nameParts;
 	private List<String> roleCategory;
 	private List<String> occupation;
+	private List<String> researchNotes;
 
 	private Boolean logicalDelete;
 
@@ -577,5 +578,19 @@ public class AdvancedSearchCommand {
 	 */
 	public Boolean getLogicalDelete() {
 		return logicalDelete;
+	}
+
+	/**
+	 * @param researchNotes the researchNotes to set
+	 */
+	public void setResearchNotes(List<String> researchNotes) {
+		this.researchNotes = researchNotes;
+	}
+
+	/**
+	 * @return the researchNotes
+	 */
+	public List<String> getResearchNotes() {
+		return researchNotes;
 	}
 }

@@ -78,6 +78,16 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
+			<c:if test="${(not empty searchFilter.filterData.researchNotes) && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titlesOcc) || (not empty searchFilter.filterData.place)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<div id="researchNotesSearchDiv">
+			<c:forEach items="${searchFilter.filterData.researchNotes}" varStatus="iterator">
+				<div class="searchFilterDiv">
+					<span class="categorySearch">Research Notes: </span><span class="wordSearch">${searchFilter.filterData.researchNotes[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${searchFilter.filterData.researchNotes[iterator.index]}" name="researchNotes"/>
+				</div>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			</c:forEach>
+			</div>
 			<br />
 			<br />
 			<a class="saveButton" href="#">Save</a>

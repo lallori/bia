@@ -74,6 +74,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<Integer> titlesOccId;
 	private List<String> words;
 	private List<WordType> wordsTypes;
+	private List<String> researchNotes;
 	private Boolean logicalDelete;
 
 	/**
@@ -99,6 +100,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		titlesOcc = new ArrayList<String>(0);
 		titlesOccId = new ArrayList<Integer>(0);
 		logicalDelete = Boolean.FALSE;
+		researchNotes = new ArrayList<String>(0);
 	}
 
 	/**
@@ -176,6 +178,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getPlaceId() {
 		return placeId;
+	}
+
+	/**
+	 * @return the researchNotes
+	 */
+	public List<String> getResearchNotes() {
+		return researchNotes;
 	}
 
 	/**
@@ -380,6 +389,21 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			placeId = new ArrayList<Integer>(0);
 			place = new ArrayList<String>(0);
 		}
+		
+		//Research Notes
+		if ((command.getResearchNotes() != null) && (command.getResearchNotes().size() > 0)) {
+			researchNotes = new ArrayList<String>(command.getResearchNotes().size());
+			
+			for (String singleWord : command.getResearchNotes()) {
+				try {
+					researchNotes.add(URIUtil.decode(singleWord, "UTF-8"));
+				} catch (URIException e) {
+					researchNotes.remove(researchNotes.size()-1);
+				}
+			}
+		} else {
+			researchNotes = new ArrayList<String>(0);
+		}
 	}
 
 	/**
@@ -466,6 +490,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public void setPlaceId(List<Integer> placeId) {
 		this.placeId = placeId;
+	}
+
+	/**
+	 * @param researchNotes the researchNotes to set
+	 */
+	public void setResearchNotes(List<String> researchNotes) {
+		this.researchNotes = researchNotes;
 	}
 
 	/**
@@ -731,6 +762,26 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(placeIdQuery);
+			}
+		}
+		
+		//ResearchNotes
+		if(researchNotes.size() > 0){
+			StringBuffer researchNotesQuery = new StringBuffer("(");
+			for(int i = 0; i < researchNotes.size(); i++){
+				if(researchNotesQuery.length() > 1){
+					researchNotesQuery.append(" AND ");
+				}
+				researchNotesQuery.append("(bioNotes like '%");
+				researchNotesQuery.append(researchNotes.get(i).toLowerCase());
+				researchNotesQuery.append("%')");
+			}
+			researchNotesQuery.append(")");
+			if(!researchNotesQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(researchNotesQuery);
 			}
 		}
 		

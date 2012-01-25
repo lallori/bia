@@ -166,7 +166,7 @@
 		</form>
 	</div>
 	
-	<h1 id="place"><a>Place</a></h1>
+	<h1 id="placeSearch"><a>Place</a></h1>
 	<div>
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>
@@ -179,9 +179,9 @@
 	
 	<h1 id="researchNotes"><a><i>in </i>Research Notes</a></h1>
 	<div>
-		<form id="researchNotesForm" method="post" class="edit">
+		<form id="researchNotesSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Search here for words (in English) that appear in the Research Notes field.">?</a>
-			<input id="word" name="word" class="input_20c" type="text" value=""/>
+			<input id="researchNotes" name="researchNotes" class="input_20c" type="text" value=""/>
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
 			<input type="hidden" id="category" value="Research Notes">
 		</form>
@@ -204,7 +204,9 @@
 		$j('#dateSearchForm').advancedSearchForm();
 		$j('#roleCategorySearchForm').advancedSearchForm();
 		$j('#occupationSearchForm').advancedSearchForm();
-		$j('#placeSearchForm').advancedSearchForm();		
+		$j('#placeSearchForm').advancedSearchForm();	
+		$j('#researchNotesSearchForm').advancedSearchForm();
+		
 		$j('#accordion').accordion({
 			active: false, 
 			autoHeight: false
@@ -308,7 +310,7 @@
 			 $j("#yourSearchFilterDiv").animate({"top": "100px"}, "high");
 			 return false;
 		});
-		$j('#place').click(function(){
+		$j('#placeSearch').click(function(){
 			 $j.scrollTo({top:'168px',left:'0px'}, 800 );
 			 $j("#yourSearchFilterDiv").animate({"top": "125px"}, "high");
 			 return false;
