@@ -7,7 +7,7 @@
 	<div id="customSearchFilterDiv">
 		<h1 class="advSearchTitle">Create your custom search filter</h1>
 			<div id="accordion">
-			<h1 id="volume"><a>Volume</a></h1>
+			<h1 id="volumeSearch"><a>Volume</a></h1>
 			<div>
 				<form id="volumeSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -103,21 +103,21 @@
 	            </form>
 			</div>
 			
-			<h1 id="coorCont"><a>Coorespondents and Context</a></h1>
+			<h1 id="coorCont"><a>Correspondents and Context</a></h1>
 			<div>
 				<form id="fromVolumeSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
 	                <label for="fromVolume" id="fromLabel">From</label> 
 	                <textarea id="fromVolume" name="fromVolume" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
 	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
-	                <input type="hidden" id="category" value="From Volume">
+	                <input type="hidden" id="category" value="From">
 	            </form>
 	            <form id="toVolumeSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
 	                <label for="toVolume" id="toLabel">To</label> 
 	                <textarea id="toVolume" name="toVolume" class="txtarea_search"></textarea><!-- no autocompleter but word search -->
 	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
-	                <input type="hidden" id="category" value="To Volume">
+	                <input type="hidden" id="category" value="To">
 	            </form>
 	            <form id="contextSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -139,6 +139,8 @@
 				
 	</div>
 </div>
+
+<c:url var="searchVolumeURL" value="/src/SearchVolume.json"/>
 
 <script type="text/javascript">
 	$j(document).ready(function() {
@@ -207,7 +209,7 @@
 			active: false, 
 			autoHeight: false
 			});
-		$j('#volume').click(function(){
+		$j('#volumeSearch').click(function(){
 			$j.scrollTo({top:'0px',left:'0px'}, 800 );
 			$j("#yourSearchFilterDiv").animate({"top": "0px"}, "slow");
 			return false;
@@ -221,6 +223,34 @@
 			$j.scrollTo({top:'140px',left:'0px'}, 800 );
 			$j("#yourSearchFilterDiv").animate({"top": "100px"}, "slow");
 			return false;
+		});
+		
+		$j("#volume").autocompleteGeneral({
+			serviceUrl: '${searchVolumeURL}',
+			minChars: 1,
+			delimiter: null,
+			maxHeight: 400,
+			width: 200,
+			zIndex: 9999,
+			deferRequestBy: 0,
+			noCache: true,
+			onSelect: function(value, data){
+				
+			}
+		});
+		
+		$j("#volumeBetween").autocompleteGeneral({
+			serviceUrl: '${searchVolumeURL}',
+			minChars: 1,
+			delimiter: null,
+			maxHeight: 400,
+			width: 200,
+			zIndex: 9999,
+			deferRequestBy: 0,
+			noCache: true,
+			onSelect: function(value, data){
+				
+			}
 		});
 	});
 </script>

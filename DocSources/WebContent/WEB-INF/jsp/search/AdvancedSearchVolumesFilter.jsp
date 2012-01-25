@@ -50,7 +50,7 @@
 			<c:forEach items="${searchFilter.filterData.languages}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">Languages: </span><span class="wordSearch">${searchFilter.filterData.languages[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.languages[iterator.index])}" name="languages">
+					<input type="hidden" value="${searchFilter.filterData.languages[iterator.index]}" name="languages">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
@@ -78,7 +78,7 @@
 			<c:forEach items="${searchFilter.filterData.fromVolume}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">From: </span><span class="wordSearch">${searchFilter.filterData.fromVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.fromVolume[iterator.index])}" name="from Volume">
+					<input type="hidden" value="${fn2:encode(searchFilter.filterData.fromVolume[iterator.index])}" name="fromVolume">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
@@ -88,7 +88,7 @@
 			<c:forEach items="${searchFilter.filterData.toVolume}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">To: </span><span class="wordSearch">${searchFilter.filterData.toVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.toVolume[iterator.index])}" name="to Volume">
+					<input type="hidden" value="${fn2:encode(searchFilter.filterData.toVolume[iterator.index])}" name="toVolume">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
