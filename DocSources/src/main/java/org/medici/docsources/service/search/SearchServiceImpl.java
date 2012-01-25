@@ -52,6 +52,7 @@ import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.domain.SearchFilter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.TopicList;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -458,6 +459,18 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			return getVolumeDAO().searchVolumes(searchContainer, paginationFilter);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Volume> searchVolumes(String query,	PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getVolumeDAO().searchVolumes(query);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

@@ -118,7 +118,7 @@
 			<c:forEach items="${searchFilter.filterData.topics}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">Topic: </span><span class="wordSearch">${searchFilter.filterData.topics[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${searchFilter.filterData.topicsId[iterator.index]}|${fn2:encode(searchFilter.filterData.topics[iterator.index])}" name="refersTo">
+					<input type="hidden" value="${searchFilter.filterData.topicsId[iterator.index]}|${fn2:encode(searchFilter.filterData.topics[iterator.index])}" name="topic">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>

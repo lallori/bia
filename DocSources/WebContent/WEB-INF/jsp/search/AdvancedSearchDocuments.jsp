@@ -110,7 +110,7 @@
 				</form>
 			</div>
 			
-			<h1 id="topics"><a><i>with</i> Topics</a></h1>
+			<h1 id="topicsSearch"><a><i>with</i> Topics</a></h1>
 			<div>
 				<form id="topicSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
@@ -150,7 +150,7 @@
 				</form>
 			</div>
 			
-			<h1 id="volume"><a><i>in</i> Volume</a></h1>
+			<h1 id="volumeSearch"><a><i>in</i> Volume</a></h1>
 			<div>
 				<form id="volumeSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -158,9 +158,9 @@
 						<option value="Exactly" selected="selected">Exactly</option>
 						<option value="Between">Between</option>
 					</select>
-					<input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
+					<input type="text" id="volume"  name="volume" class="input_5c"/><!-- AUTOCOMPLETE -->
 					<p class="invisibleVol">and</p>
-					<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
+					<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" style="visibility:hidden"/>
 					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
 					<input type="hidden" id="category" value="Volume">
 				</form>
@@ -171,6 +171,7 @@
 	<c:url var="searchTopicURL" value="/src/SearchTopic.json"/>
 	<c:url var="searchPersonURL" value="/src/SearchPerson.json"/>
 	<c:url var="searchPlaceURL" value="/src/SearchPlace.json"/>
+	<c:url var="searchVolumeURL" value="/src/SearchVolume.json"/>
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -413,6 +414,32 @@
 				}
 			});	
 			
+			$j("#volume").autocompleteGeneral({
+				serviceUrl: '${searchVolumeURL}',
+				minChars: 1,
+				delimiter: null,
+				maxHeight: 400,
+				width: 200,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+				}
+			});
+			
+			$j("#volumeBetween").autocompleteGeneral({
+				serviceUrl: '${searchVolumeURL}',
+				minChars: 1,
+				delimiter: null,
+				maxHeight: 400,
+				width: 200,
+				zIndex: 9999,
+				deferRequestBy: 0,
+				noCache: true,
+				onSelect: function(value, data){
+				}
+			});
+			
 			$j("#topic").change(function(){
 				$j(".topicAdd").attr("disabled","disabled");
 			});
@@ -432,7 +459,7 @@
 					$j("#yourSearchFilterDiv").animate({"top": "100px"}, "slow");
 					return false;
 			});
-			$j('#topics').click(function(){
+			$j('#topicsSearch').click(function(){
 					$j.scrollTo({top:'168px',left:'0px'}, 800 );
 					$j("#yourSearchFilterDiv").animate({"top": "125px"}, "slow");
 					return false;
@@ -442,7 +469,7 @@
 					$j("#yourSearchFilterDiv").animate({"top": "150px"}, "slow");
 					return false;
 			});
-			$j('#volume').click(function(){
+			$j('#volumeSearch').click(function(){
 					$j.scrollTo({top:'222px',left:'0px'}, 800 );
 					$j("#yourSearchFilterDiv").animate({"top": "180px"}, "slow");
 					return false;

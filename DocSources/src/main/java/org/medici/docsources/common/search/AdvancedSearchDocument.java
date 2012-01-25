@@ -374,6 +374,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			person = new ArrayList<String>(command.getPerson().size());
 			
 			for (String singleWord : command.getPerson()) {
+				//This is for refine search when the URLencoder change the space in "+"
+				singleWord = singleWord.replace("+", "%20");
+				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if (stringTokenizer.countTokens() == 0) {
@@ -414,6 +417,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			place = new ArrayList<String>(command.getPlace().size());
 			
 			for (String singleWord : command.getPlace()) {
+				//This is for refine search when the URLencoder change the space in "+"
+				singleWord = singleWord.replace("+", "%20");
+				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if (stringTokenizer.countTokens() == 0) {
@@ -678,6 +684,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			topics = new ArrayList<String>(command.getTopic().size());
 			
 			for (String singleWord : command.getTopic()) {
+				singleWord = singleWord.replace("+", "%20");
+				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if (stringTokenizer.countTokens() == 0) {
@@ -1446,6 +1454,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			}
 			datesQuery.append(")");
 			if (!datesQuery.toString().equals("")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
 				jpaQuery.append(datesQuery);
 			}
 		}

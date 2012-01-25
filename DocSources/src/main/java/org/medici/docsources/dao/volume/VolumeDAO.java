@@ -83,6 +83,15 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @throws PersistenceException
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Volume> searchVolumes(String query) throws PersistenceException;
 
 	/**
 	 * This method set digitized information to true to a list of input volumes.

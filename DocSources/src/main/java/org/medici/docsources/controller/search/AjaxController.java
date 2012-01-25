@@ -500,6 +500,31 @@ public class AjaxController {
 	}
 	
 	/**
+	 * This method returns a list of volume numbers. 
+	 *  
+	 * @param query Search string filled by user
+	 * 
+	 * @return ModelAndView containing linkable topics.
+	 */
+	@RequestMapping(value = "/src/SearchVolume", method = RequestMethod.GET)
+	public ModelAndView searchVolume(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<Volume> volumes = getSearchService().searchVolumes(query, new PaginationFilter(0, Integer.MAX_VALUE));
+			model.put("query", query);
+			model.put("count", volumes.size());
+			model.put("data", ListBeanUtils.transformList(volumes, "volNum"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(volumes, "volNum", " ", " ", Boolean.TRUE));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
 	 * @param docBaseService the docBaseService to set
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
