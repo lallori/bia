@@ -43,7 +43,7 @@
 					$j('#EditDetailsVolumeForm').block({ message: $j('#question') }); 
 					return false;
 	        	}else{
-	        		$j.ajax({ url: '${ShowVolumeURL}', cache: false, success:function(html) { 
+	        		$j.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
 	    				$j("#body_left").html(html);
 	    			}});
 	    				
