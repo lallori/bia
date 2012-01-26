@@ -19,6 +19,7 @@
 				<input id="save" type="submit" value="Save"/>
 			</div>
 			<form:hidden path="summaryId"/>
+			<input type="hidden" value="" id="modify" />
 		</fieldset>
 	</form:form>
 
@@ -38,10 +39,18 @@
 		        	$j("#loadingDiv").css('visibility', 'visible');
 		        });
 
-			$j('#close').click(function() {
-	            $j('#EditContextVolumeDiv').block({ message: $j('#question') }); 
-				return false;
-			});
+			 $j('#close').click(function() {
+		        	if($j("#modify").val() == 1){
+						$j('#EditContextVolumeForm').block({ message: $j('#question') }); 
+						return false;
+		        	}else{
+		        		$j.ajax({ url: '${ShowVolumeURL}', cache: false, success:function(html) { 
+		    				$j("#body_left").html(html);
+		    			}});
+		    				
+		    			return false; 
+		        	}	        		
+				});
 	        
 			$j("#EditContextVolumeForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 

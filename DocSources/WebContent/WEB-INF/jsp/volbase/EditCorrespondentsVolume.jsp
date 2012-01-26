@@ -18,6 +18,7 @@
 				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
 			</div>
 			<form:hidden path="summaryId"/>
+			<input type="hidden" value="" id="modify" />
 		</fieldset>
 	</form:form>
 
@@ -38,8 +39,16 @@
 		    });
 
 			$j('#close').click(function() {
-	            $j('#EditCorrespondentsVolumeDiv').block({ message: $j('#question') }); 
-				return false;
+	        	if($j("#modify").val() == 1){
+					$j('#EditDetailsVolumeForm').block({ message: $j('#question') }); 
+					return false;
+	        	}else{
+	        		$j.ajax({ url: '${ShowVolumeURL}', cache: false, success:function(html) { 
+	    				$j("#body_left").html(html);
+	    			}});
+	    				
+	    			return false; 
+	        	}	        		
 			});
 	        
 			$j("#EditCorrespondentsVolumeForm").submit(function (){

@@ -112,7 +112,6 @@
 	    });
 
 		$j('#close').click(function() {
-			//if no change, the question isn't displayed
 			if($j("#modify").val() == 1)
             	$j('#EditDescriptionVolumeDiv').block({ message: $j('#question') });
 			else

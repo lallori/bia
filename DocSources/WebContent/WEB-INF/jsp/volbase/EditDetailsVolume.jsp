@@ -5,6 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<form:form id="EditDetailsVolumeForm" method="post" cssClass="edit">
+		<%-- Loading div when saving the form --%>
 		<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>VOLUME DETAILS</b></legend>
@@ -67,6 +68,7 @@
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" />
 			</div>
+			<input type="hidden" value="" id="modify" />
 		</fieldset>	
 	</form:form>
 
@@ -142,8 +144,16 @@
 			});
 
 			$j('#close').click(function() {
-	            $j('#EditDetailsVolumeDiv').block({ message: $j('#question') }); 
-				return false;
+	        	if($j("#modify").val() == 1){
+					$j('#EditDetailsVolumeForm').block({ message: $j('#question') }); 
+					return false;
+	        	}else{
+	        		$j.ajax({ url: '${ShowVolumeURL}', cache: false, success:function(html) { 
+	    				$j("#body_left").html(html);
+	    			}});
+	    				
+	    			return false; 
+	        	}	        		
 			});
 	        
 			$j("#buttonShareLink").click(function() {
