@@ -108,7 +108,7 @@ public class Catalog {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="\"DATA_RIPRESA\"", length=50)
 	private Date data_ripresa;
-	@Column (name="\"OEPRATORE\"", length=50)
+	@Column (name="\"OPERATORE\"", length=50)
 	private String operatore;
 	
 	/**
