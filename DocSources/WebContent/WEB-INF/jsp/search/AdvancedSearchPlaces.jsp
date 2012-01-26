@@ -80,7 +80,8 @@
 		$j('#linkedToPeopleSearchForm').advancedSearchForm(); 
 		$j('#accordion').accordion({
 			active: false, 
-			autoHeight: false
+			autoHeight: false,
+			collapsible:true
 			});		
 		$j("#placeTypeSelect").change(function(){
 			 if($j(this).val() != "Select a Place Type"){

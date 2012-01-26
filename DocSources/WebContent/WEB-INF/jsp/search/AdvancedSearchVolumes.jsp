@@ -207,7 +207,8 @@
 		$j("#inventarioSearchForm").advancedSearchForm();
 		$j('#accordion').accordion({
 			active: false, 
-			autoHeight: false
+			autoHeight: false,
+			collapsible:true
 			});
 		$j('#volumeSearch').click(function(){
 			$j.scrollTo({top:'0px',left:'0px'}, 800 );

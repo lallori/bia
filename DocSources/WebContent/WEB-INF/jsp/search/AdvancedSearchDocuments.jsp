@@ -245,7 +245,8 @@
 
 			$j('#accordion').accordion({
 				active: false, 
-				autoHeight: false
+				autoHeight: false,
+				collapsible:true
 				});
 			$j("#person").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',

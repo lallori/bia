@@ -209,7 +209,8 @@
 		
 		$j('#accordion').accordion({
 			active: false, 
-			autoHeight: false
+			autoHeight: false,
+			collapsible:true
 			});
 		$j("#dateType").change(function(){
 			if(this.options[3].selected) { 
