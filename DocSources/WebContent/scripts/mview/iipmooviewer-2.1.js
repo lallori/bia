@@ -1071,7 +1071,7 @@ var IIP = new Class({
 							this.fade(0);
 						}
 					},
-					'html' : '<div><div><h2><img widht="18" heigh="18" src="'
+					'html' : '<div><div><h2><img width="18" height="18" src="'
 							+ this.prefix
 							+ 'iip.32x32.png"/>'
 							//+ this.version
