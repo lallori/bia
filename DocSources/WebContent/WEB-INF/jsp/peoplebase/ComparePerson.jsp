@@ -17,7 +17,7 @@
 </c:url>
 
 <div>
-	<a href="${ShowPersonURL}" id="editLink${person.personId}" class="buttonLarge">Edit this Person</a>
+	<a href="${ShowPersonURL}" id="editLink${person.personId}" class="buttonMedium">Edit this Person</a>
 </div>
 
 <div id="EditDetailsPersonDiv" class="background">
