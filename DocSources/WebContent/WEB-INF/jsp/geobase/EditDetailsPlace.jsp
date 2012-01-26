@@ -18,6 +18,9 @@
 	</security:authorize>
 	
 	<div>
+	
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
 		<form:form id="EditDetailsTgnPlaceForm" cssClass="edit" method="post" action="${EditDetailsPlaceURL}">
 			<fieldset>
 				<legend><b>PLACE DETAILS</b></legend>
@@ -73,6 +76,7 @@
 					<input type="submit" title="Do not save changes" value="Close" id="close">
 					<input type="submit" value="Save" id="save">
 				</div>
+				<input type="hidden" value="" id="modify" />
 			</fieldset>	
 
 			<form:hidden path="placeAllId"/>
@@ -91,6 +95,25 @@
 			$j("#EditNamePlace").css('visibility', 'hidden');
 	        $j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
+			
+			$j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
+			
+			$j('#close').click(function() {
+	        	if($j("#modify").val() == 1){
+					$j('#EditDetailsPlaceForm').block({ message: $j('#question') }); 
+					return false;
+	        	}else{
+	        		$j.ajax({ url: '${ShowPlaceURL}', cache: false, success:function(html) { 
+	    				$j("#body_left").html(html);
+	    			}});
+	    				
+	    			return false; 
+	        	}	        		
+			});
+			
 			
 			$j('.input_35c_disabled').attr('disabled', 'disabled');
 			

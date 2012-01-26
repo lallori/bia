@@ -14,6 +14,8 @@
 		</c:url>
 	</security:authorize>
 	
+<%-- Loading div when saving the form --%>
+<div id="loadingDiv"></div>
 	<form:form id="EditGeoCoorPlaceForm" method="post" cssClass="edit" action="${EditGeographicCoordinatesPlaceURL}">
 		<fieldset>
 		<legend><b>GEOGRAPHIC COORDINATES</b></legend>
@@ -38,7 +40,7 @@
 			<input id="close" type="submit" value="Close" title="Do not save changes"/>
 			<input type="submit" value="Save" id="save">
 		</div>
-		
+		<input type="hidden" value="" id="modify" />
 		</fieldset>
 	</form:form>
 	
@@ -50,6 +52,24 @@
 			$j("#EditDetailsPlace").css('visibility', 'hidden');
 			$j("#EditNamesOrNameVariantsPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
+			
+			$j("#save").click(function(){
+	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
+	        });
+			
+			$j('#close').click(function() {
+	        	if($j("#modify").val() == 1){
+					$j('#EditDetailsPlaceForm').block({ message: $j('#question') }); 
+					return false;
+	        	}else{
+	        		$j.ajax({ url: '${ShowPlaceURL}', cache: false, success:function(html) { 
+	    				$j("#body_left").html(html);
+	    			}});
+	    				
+	    			return false; 
+	        	}	        		
+			});
 
 			$j("#EditGeoCoorPlace").click(function(){
 				$j(this).next().css('visibility', 'visible');
