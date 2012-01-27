@@ -155,9 +155,9 @@ a {
 /* ---------------------------------------- SEARCH FORM (#top_top) --------------------------------------- */
 
 #searchForm { /* Search Form Container */
-	width:200px;
+	width: 250px;
 	height:80px;
-	margin: 10px 0 0 17px;
+	margin: 17px 0 0 17px;
 	position:absolute;
 	font-size:11px;
 }
@@ -177,14 +177,16 @@ a {
 }
 
 #search { /* Search button */
-	margin-left: 138px;
-	border:none;
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/1024/button_mini.png);
+	font-size:11px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
 	background-color:transparent;
-	margin-top:-1px;
-	background-image:url(/DocSources/images/1024/button_search.png);
-	width:50px;
-	height:13px;
+	border:none;
 	cursor:pointer;
+	margin: 5px 0 0 0;
 }
 
 a.helpIcon { /* Help symbol "?" */
@@ -213,39 +215,13 @@ a:hover.helpIcon { /* Help symbol "?" */
 
 
 #text {
-	width: 155px;
+	width: 177px;
+	margin: 5px 4px 0 5px;
 }
 
 #searchType {
-	width:95px;
+	width: 145px;
 }
-
-/* ------------------------------------------------------------------------------------------------------- */ 
-/*
-/*
-/* --------------------------------------- DIGITIZATION MODULE (#top_top) --------------------------------------- */
-
-#digitizationModule {
-	background-image:url(/DocSources/images/1024/button_digitizationModule.png);
-	background-repeat:no-repeat;
-	text-decoration:none;
-	width:100px;
-	top:10px;
-	height:85px;
-	padding-left:10px;
-	position: absolute;
-	margin: 0 0 0 190px;
-}
-
-#digitizationModule:hover {
-	ms-transform:translate(0,-5px);
-	-moz-transform:translate(0,-5px);
-	-webkit-transform:translate(0,-5px);
-	-o-transform:translate(0,-5px);
-	transform:translate(0,-5px);
-	cursor:pointer;
-}
-
 
 /* ------------------------------------------------------------------------------------------------------- */ 
 /*
@@ -355,13 +331,33 @@ a:hover.helpIcon { /* Help symbol "?" */
 /* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
 
 #administrationModule { /* Administration Module */
-	margin: 5px 0 0 289px;
+	margin: 6px 0 0 16px;
 	position: absolute;
 	font-size: 10px;
 }
 
 #administrationModule:hover { /* Administration Module */
 	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important	
+}
+
+/* --------------------------------- DIGITIZATION MODULE (#top_top) --------------------------------------- */
+
+#digitizationModule {
+	background-repeat:no-repeat;
+	text-decoration:none;
+	position: absolute;
+	margin: 6px 0 0 156px;
+	font-size: 10px;
+}
+
+#digitizationModule:hover { /* Administration Module */
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important	
 }
 
 #top_bottom p{ /* top_bottom (Who am I?) */

@@ -13,10 +13,10 @@
 										<option value="PEOPLE">People</option>
 										<option value="PLACE">Places</option>
 								</select>
-						<br/>
+						<a class="helpIcon" title="Documents">?</a>
+  						<br/>
 						for <input id="text" name="text" type="text" value=""/>
-						<br/>
-						<input id="search" type="submit" value="" title="submit form"/>
+						<input id="search" type="submit" title="submit form" value="Go"/>
 					</form>
 				</div>
 				<script type="text/javascript">

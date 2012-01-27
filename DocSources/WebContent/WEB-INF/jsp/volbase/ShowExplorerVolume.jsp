@@ -102,18 +102,18 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
+				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
+				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
@@ -125,80 +125,26 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPage}" class="previousPage">Previous folio</a>
+				<a id="previousPage" href="${previousPage}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${volumeExplorer.image.imageOrder == volumeExplorer.total }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${volumeExplorer.image.imageOrder < volumeExplorer.total }">
-				<a id="nextPage" href="${nextPage}" class="nextPage">Next folio</a>
+				<a id="nextPage" href="${nextPage}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
-		<br />
-		<br />
 		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
 	<c:if test="${volumeExplorer.totalRubricario > 0}">
-		<br />
 				
-		<div id="rubricarioMoveTo">
-			<div id="rubricarioCountForm">
-				<b>Index of Names folio count:</b> <label for="rubricarioCount" id="rubricarioCount">${volumeExplorer.totalRubricario}</label>
-			</div>
-		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToRubricarioForm">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
-				<input id="goR" type="submit" value="Go" />
-				<form:hidden path="summaryId" />
-				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
-				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
-				<form:hidden path="imageType" value="R"/>
-				<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
-				<form:hidden path="total" value="${volumeExplorer.total}" />
-				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
-				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
-				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="false" />
-			</form:form>
-		</div>
 	</c:if>
 
-		<br/>
-		<br/>
-		
-		<div id="folioMoveTo">
-			<div id="folioCountForm"> 
-				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
-			</div>
-		
-			<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
-				<input id="go" type="submit" value="Go" />
-				<form:hidden path="summaryId" />
-				<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
-				<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
-				<form:hidden path="imageType" value="C"/>
-				<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
-				<form:hidden path="total" value="${volumeExplorer.total}" />
-				<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
-				<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
-				<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
-				<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
-				<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="false" />
-			</form:form>
-		</div>
-
-		<br />
 			
 		<div>
 			<!--<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -212,12 +158,32 @@
 			</security:authorize>
 			<a id="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
+			<a title="Index of Names" class="transcribe" href="#" id="indexNames"></a>
 		</div>
-
-		<div align="center">
-			
+		
+		<div id="folioMoveTo">
+			<div id="folioCountForm"> 
+			<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 		</div>
-		</div>
+		
+		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
+			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
+			<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
+			<input id="go" type="submit" value="Go" />
+			<form:hidden path="summaryId" />
+			<form:hidden path="volNum" value="${volumeExplorer.volNum}"/>
+			<form:hidden path="volLetExt" value="${volumeExplorer.volLetExt}"/>
+			<form:hidden path="imageType" value="C"/>
+			<form:hidden path="imageOrder" value="${volumeExplorer.image.imageOrder}"/>
+			<form:hidden path="total" value="${volumeExplorer.total}" />
+			<form:hidden path="totalRubricario" value="${volumeExplorer.totalRubricario}" />
+			<form:hidden path="totalCarta" value="${volumeExplorer.totalCarta}" />
+			<form:hidden path="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+			<form:hidden path="totalOther" value="${volumeExplorer.totalOther}" />
+			<form:hidden path="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+			<form:hidden path="flashVersion" value="false" />
+		</form:form>
+		
 		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j('.piro_overlay,.piro_html').remove(); // trick to resolve scroll bug with pirobox

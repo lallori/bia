@@ -546,10 +546,10 @@ img.transparent {
 	font-size:10px;
 	text-align:right;
 	padding:1px 4px 1px 4px;
-	margin-right:8px;
-	float:right;
+	margin: -21px 9px 0 0;
 	width:auto;
 	border:1px solid #900;
+	float: right;
 }
 
 -- margin da -65px a -64px
@@ -1229,7 +1229,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
     color: #C0272D;
     height: 60px;
     position: absolute;
-    margin: 55px 0 0 0;
+    margin: 55px 0 0 25px;
     width: 70px;
 	font-size:10px;
 	text-shadow:1px 1px 1px #999;
@@ -1318,6 +1318,7 @@ input.file {
 	font-size:10px;
 	text-align:center;
 	moz-margin-left: 25px;
+	margin-left: 25px;
 }
 
 #DocumentImageDigitDiv span:hover {
@@ -2013,28 +2014,23 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /* Previous / Next */
 
 #prevNextButtons {
-	margin:10px 0 10px 160px;
-	width: 205px;
+	margin: 7px 0 7px 205px;
+	width: 92px;
 	z-index:2;
 }
 
 #prevNextButtons #previousPage a{
 	float:left;
-	background:url(/DocSources/images/1024/button_arrow_left.png) no-repeat;
-	padding: 4px 0 0 5px;
-	width:90px;
-	height:22px;
-	font-size:11px;
-	text-align: center;
+	background:url(/DocSources/images/1024/button_lastRecord_pageTurner.png) no-repeat;
+	width:35px;
+	height: 26px;
 }
 
 #prevNextButtons #nextPage a{
 	float:right;
-	background:url(/DocSources/images/1024/button_arrow_right.png) no-repeat;
-	padding:4px 0 0 15px;
-	width:90px;
-	height:22px;
-	font-size:11px;
+	background:url(/DocSources/images/1024/button_nextRecord_pageTurner.png) no-repeat;
+	width:35px;
+	height: 26px;
 }
 
 #prevNextButtons #previousPage a:hover, #prevNextButtons #nextPage a:hover {
@@ -2146,7 +2142,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 #folioMoveTo { /* Contains "Folio Count" and "Move to folio" */
 	width:465px;
-	margin:0 0 0 20px;
+	margin: 45px 0 0 20px;
 }
 
 #folioModalMoveTo { /* Contains "Folio Count" and "Move to folio" */
@@ -2172,7 +2168,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #moveToFolioForm { /* Move to folio FORM */
-	width:150px;
+	width: 120px;
 	display:inline;
 	color:#6d5c4d;
 	float:right;
@@ -2188,8 +2184,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 .folioLabel { /* "Move to folio" <label> ID  */
-	font-size:10px;
-	margin:0 0 0 13px;
+	font-size: 11px;
+	margin: 0 0 0 44px;
 	position:absolute;
 	color:#6d5c4d;
 }
@@ -2205,7 +2201,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	margin:-3px 0 0 80px;
 	position:absolute;
 	width: 30px;
-	font-size:10px;
+	font-size: 11px;
 }
 
 .input_4cFolioModal { /* "Move to folio" <input> ID  */
@@ -2247,13 +2243,13 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 .showFullscreenMode { /* "Move to folio" <input> GO button ID  */
 	width:182px;
 	height:22px;
-	position:absolute;
-	margin-left:20px;
+	margin: 10px 0 20px 16px;
 	display:inline;
 	background-image:url(/DocSources/images/1024/button_large.png);
 	background-repeat:no-repeat;
 	font-size:11px;
 	padding:4px 0 0 15px;
+	float: left;
 }
 
 .pirobox_gall1 {
@@ -2283,8 +2279,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /* ---- Volume Summary --- */
 
 a#volumeSummary {
-	margin: 0 0 0 218px;
-	position:absolute;
 	width:122px;
 	height:22px;
 	display:inline;
@@ -2294,6 +2288,8 @@ a#volumeSummary {
 	padding:4px 0 0 0;
 	cursor:pointer;
 	text-align:center;
+	float: left;
+	margin: 10px 0 20px 13px;
 }
 
 #volumeSummaryWindow {
@@ -2365,17 +2361,33 @@ a#volumeSummary {
 /* ---- Refresh --- */
 
 a.refreshVolumeExplorer {
-	margin: 0 0 0 355px;
-	position:absolute;
-	width:122px;
+	width:55px;
 	height:22px;
 	display:inline;
-	background-image:url(/DocSources/images/1024/button_medium.png);
+	background-image:url(/DocSources/images/1024/button_small.png);
 	background-repeat:no-repeat;
 	font-size:11px;
 	padding-top:4px;
 	text-align:center;
 	cursor:pointer;
+	float: left;
+	margin: 10px 0 20px 27px;
+}
+
+/* ---------------- */
+/* ---- Index of names --- */
+
+#indexNames { /* Index of Names button on Page Turner Panel */
+	background:url(/DocSources/images/mview/button_indexOfNames.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:35px;
+	height:35px;
+	font-size:11px;
+	float:right;
+	margin: 3px 5px 20px 0;
 }
 
 /* ---------------- */

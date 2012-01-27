@@ -262,3 +262,41 @@ a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#cat
     width: 60%;
 }
 
+
+/* ------------------- Erase History ----------------- */
+
+.yes, .close {
+	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: left;
+    font-size: 11px;
+    height: 22px;
+	padding: 4px 0 0;
+	text-align: center;
+    width: 52px;
+}
+
+.no, .goBack {
+	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: right;
+    font-size: 11px;
+    height: 22px;
+	padding: 4px 0 0;
+	text-align: center;
+    width: 52px;
+}
+
+.yesNoButtons {
+	width:150px; 
+	margin-left: 68px;
+	margin-top:15px
+}
+
+.yes:hover, .no:hover, .close:hover, .goBack:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+	text-decoration:none;
+}
+

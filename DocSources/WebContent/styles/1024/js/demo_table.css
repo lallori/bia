@@ -131,7 +131,7 @@ table.display#MyDocumentsHistoryTable, table.display#MyPeopleHistoryTable, table
 	min-width:330px;
 }
 
-table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, table.display#AllVolumesHistoryTable, table.display#AllPlacesHistoryTable, table.display#ResearchHistoryTable{
+table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, table.display#AllVolumesHistoryTable, table.display#AllPlacesHistoryTable, table.display#researchHistoryTable{
 	margin: 0 0 10px 10px;
 	width:710px;
 }
