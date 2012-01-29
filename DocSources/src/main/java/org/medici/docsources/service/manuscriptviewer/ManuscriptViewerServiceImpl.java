@@ -159,10 +159,9 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public Image findDocumentImageThumbnail(Document document) throws ApplicationThrowable {
 		try {
 			if (document != null) {
+				// We extract only image based on folioNum 
 				if ((document.getFolioNum() != null) && (document.getFolioNum() > 0)) {
 					return getImageDAO().findImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt(), ImageType.C, document.getFolioNum());
-				} else {
-					return getImageDAO().findVolumeFirstImage(document.getVolume().getVolNum(), document.getVolume().getVolLetExt());
 				}
 			}
 			
