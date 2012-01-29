@@ -113,21 +113,25 @@ public class IIPImageServerController {
 		try {
 			// Reading complete tiff information
 			imageInputStream = ImageIO.createImageInputStream(imageFile);
-			Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
-			ImageReader reader = readers.next(); 
-			reader.setInput(imageInputStream, true,true); 
+			if (imageInputStream != null) {
+				Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
+				ImageReader reader = readers.next(); 
+				reader.setInput(imageInputStream, true,true); 
+	
+				// Reading image position requested
+				Integer imageFullIndex = NumberUtils.createInteger(httpServletRequest.getParameter("full"));
+				// Positioning at correct page
+				BufferedImage pageImage = reader.read(imageFullIndex);
+				//preparing image for output
+			    ImageIO.write(pageImage, "jpeg", byteArrayOutputStream);
+			    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+			    //writing image to output
+			    httpServletResponse.setContentType("image/jpeg");
+				IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
+			} else {
+				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
+			}
 
-			// Reading image position requested
-			Integer imageFullIndex = NumberUtils.createInteger(httpServletRequest.getParameter("full"));
-			// Positioning at correct page
-			BufferedImage pageImage = reader.read(imageFullIndex);
-			//preparing image for output
-		    ImageIO.write(pageImage, "jpeg", byteArrayOutputStream);
-		    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-		    //writing image to output
-		    httpServletResponse.setContentType("image/jpeg");
-			IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
-			
 			// Flushing request
 			httpServletResponse.getOutputStream().flush();
 	    } catch (Throwable throwable) {
@@ -169,6 +173,7 @@ public class IIPImageServerController {
 	 */
 	private void generateInformationsTiledImage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		File imageFile = new File(getProperties().getProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
+		ImageInputStream imageInputStream = null; 
         Integer imageWidth = new Integer(0);
         Integer imageHeight = new Integer(0);
         Integer tileWidth = new Integer(0);
@@ -177,21 +182,32 @@ public class IIPImageServerController {
 		  
 		try {
 			// Reading complete tiff information
-			ImageInputStream imageStream = ImageIO.createImageInputStream(imageFile);
-			Iterator<ImageReader> readers = ImageIO.getImageReaders(imageStream);
-			if (readers.hasNext()) {
-				ImageReader reader = readers.next(); 
-				reader.setInput(imageStream,false,true);
-				tileWidth = reader.getTileWidth(0);
-				tileHeight = reader.getTileHeight(0);
-				imageWidth = reader.getWidth(0);
-		        imageHeight = reader.getHeight(0);
-		        //Last level is not readable, I don't know why but i remove this
-		        resolutionNumber = reader.getNumImages(true);
+			imageInputStream = ImageIO.createImageInputStream(imageFile);
+			if (imageInputStream != null) {
+				Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
+				if (readers.hasNext()) {
+					ImageReader reader = readers.next(); 
+					reader.setInput(imageInputStream,false,true);
+					tileWidth = reader.getTileWidth(0);
+					tileHeight = reader.getTileHeight(0);
+					imageWidth = reader.getWidth(0);
+			        imageHeight = reader.getHeight(0);
+			        //Last level is not readable, I don't know why but i remove this
+			        resolutionNumber = reader.getNumImages(true);
+				}
+			} else {
+				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
 			}
 	    } catch (Throwable throwable) {
 			logger.error(throwable);
 	    } finally {
+			try {
+				if (imageInputStream != null) {
+					imageInputStream.close();
+				}
+			} catch (IOException ioException) {
+			}
+
 	    	try {
 	    		httpServletResponse.setContentType("text/plain");
 				ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
@@ -233,31 +249,35 @@ public class IIPImageServerController {
 		try {
 			// Reading complete tiff information
 			imageInputStream = ImageIO.createImageInputStream(imageFile);
-			Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
-			if (readers.hasNext()) {
-				ImageReader reader = readers.next(); 
-				reader.setInput(imageInputStream,false,true);
-				tileWidth = reader.getTileWidth(0);
-				tileHeight = reader.getTileHeight(0);
-				imageWidth = reader.getWidth(0);
-		        imageHeight = reader.getHeight(0);
-		        //Last level is not readable, I don't know why but i remove this
-		        resolutionNumber = reader.getNumImages(true)-1;
-		        // Calculate of image position, final -1 is beacause index start from 0 and not from 1
-		        convertedPageImage = resolutionNumber - pageImage;
-		        // We read our specific tile 
-				ImageReadParam param = reader.getDefaultReadParam(); 
-				param.setSourceRegion(new Rectangle(new Point(xCoordinate*tileWidth, yCoordinate * tileHeight), new Dimension(tileWidth, tileHeight))); 
-				BufferedImage subImage = reader.read(convertedPageImage,param);
-				//preparing image for output
-			    ImageIO.write(subImage, "jpeg", byteArrayOutputStream);
-			    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-			    //writing image to output
-			    httpServletResponse.setContentType("image/jpeg");
-				IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
-				
-				// Flushing request
-				httpServletResponse.getOutputStream().flush();
+			if (imageInputStream != null) {
+				Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
+				if (readers.hasNext()) {
+					ImageReader reader = readers.next(); 
+					reader.setInput(imageInputStream,false,true);
+					tileWidth = reader.getTileWidth(0);
+					tileHeight = reader.getTileHeight(0);
+					imageWidth = reader.getWidth(0);
+			        imageHeight = reader.getHeight(0);
+			        //Last level is not readable, I don't know why but i remove this
+			        resolutionNumber = reader.getNumImages(true)-1;
+			        // Calculate of image position, final -1 is beacause index start from 0 and not from 1
+			        convertedPageImage = resolutionNumber - pageImage;
+			        // We read our specific tile 
+					ImageReadParam param = reader.getDefaultReadParam(); 
+					param.setSourceRegion(new Rectangle(new Point(xCoordinate*tileWidth, yCoordinate * tileHeight), new Dimension(tileWidth, tileHeight))); 
+					BufferedImage subImage = reader.read(convertedPageImage,param);
+					//preparing image for output
+				    ImageIO.write(subImage, "jpeg", byteArrayOutputStream);
+				    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+				    //writing image to output
+				    httpServletResponse.setContentType("image/jpeg");
+					IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
+					
+					// Flushing request
+					httpServletResponse.getOutputStream().flush();
+				}
+			} else {
+				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
 			}
 	    } catch (Throwable throwable) {
 			logger.error(throwable);
@@ -346,60 +366,60 @@ public class IIPImageServerController {
 		try {
 			// Reading complete tiff information
 			imageInputStream = ImageIO.createImageInputStream(imageFile);
-			if (imageInputStream == null) {
-				logger.error("Image not found in directory " + imageFile.toString());
-			}
-
-			Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
-			if (readers.hasNext()) {
-				ImageReader reader = readers.next(); 
-				reader.setInput(imageInputStream,true,true);
-				BufferedImage page = reader.read(2); 
-				
-				if (page != null) {
-					RenderedOp thubmnailImage = null;
-			        try {
-			            double resizeFactor = thumbnailWidth/page.getWidth();
-			            
-			            if (resizeFactor < 1) {
-			            	 ParameterBlock paramBlock = new ParameterBlock();
-			            	 paramBlock.addSource(page); // The source image
-			            	 paramBlock.add(resizeFactor); // The xScale
-			            	 paramBlock.add(resizeFactor); // The yScale
-			            	 paramBlock.add(0.0); // The x translation
-			            	 paramBlock.add(0.0); // The y translation
-			            	 RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-			            	 thubmnailImage = JAI.create("SubsampleAverage", paramBlock, qualityHints);			            	 
-			            } else if (resizeFactor > 1) {
-			            	thubmnailImage = ScaleDescriptor.create(page, (float) resizeFactor, (float) resizeFactor, 0.0f, 0.0f, Interpolation.getInstance(Interpolation.INTERP_BICUBIC), null);
-			            }
-
-			            if ((thumbnailFormat != null) && (thumbnailFormat.toLowerCase().equals("jpeg"))) {
-				            // replaced statement to control jpeg quality 
-				            // ImageIO.write(thubmnailImage, "jpeg", byteArrayOutputStream);
-				            JPEGEncodeParam jpgparam = new JPEGEncodeParam();
-				            jpgparam.setQuality(imageQuality);
-				            ImageEncoder enc = ImageCodec.createImageEncoder("jpeg", byteArrayOutputStream, jpgparam);
-				            enc.encode(thubmnailImage);
-			            } else {
-			            	logger.error("Unmanaged thumbnail format " + thumbnailFormat);
-			            }
-		            } catch (IOException ioException) {
-		                logger.error(ioException);
-		            } finally {
-			            //is.close();
-			        }
+			if (imageInputStream != null) {
+				Iterator<ImageReader> readers = ImageIO.getImageReaders(imageInputStream);
+				if (readers.hasNext()) {
+					ImageReader reader = readers.next(); 
+					reader.setInput(imageInputStream,true,true);
+					BufferedImage page = reader.read(2); 
+					
+					if (page != null) {
+						RenderedOp thubmnailImage = null;
+				        try {
+				            double resizeFactor = thumbnailWidth/page.getWidth();
+				            
+				            if (resizeFactor < 1) {
+				            	 ParameterBlock paramBlock = new ParameterBlock();
+				            	 paramBlock.addSource(page); // The source image
+				            	 paramBlock.add(resizeFactor); // The xScale
+				            	 paramBlock.add(resizeFactor); // The yScale
+				            	 paramBlock.add(0.0); // The x translation
+				            	 paramBlock.add(0.0); // The y translation
+				            	 RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+				            	 thubmnailImage = JAI.create("SubsampleAverage", paramBlock, qualityHints);			            	 
+				            } else if (resizeFactor > 1) {
+				            	thubmnailImage = ScaleDescriptor.create(page, (float) resizeFactor, (float) resizeFactor, 0.0f, 0.0f, Interpolation.getInstance(Interpolation.INTERP_BICUBIC), null);
+				            }
+	
+				            if ((thumbnailFormat != null) && (thumbnailFormat.toLowerCase().equals("jpeg"))) {
+					            // replaced statement to control jpeg quality 
+					            // ImageIO.write(thubmnailImage, "jpeg", byteArrayOutputStream);
+					            JPEGEncodeParam jpgparam = new JPEGEncodeParam();
+					            jpgparam.setQuality(imageQuality);
+					            ImageEncoder enc = ImageCodec.createImageEncoder("jpeg", byteArrayOutputStream, jpgparam);
+					            enc.encode(thubmnailImage);
+				            } else {
+				            	logger.error("Unmanaged thumbnail format " + thumbnailFormat);
+				            }
+			            } catch (IOException ioException) {
+			                logger.error(ioException);
+			            } finally {
+				            //is.close();
+				        }
+					}
+	
+					//preparing image for output
+				    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+	
+				    //writing image to output
+				    httpServletResponse.setContentType("image/jpeg");
+					IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
+	
+					// Flushing request
+					httpServletResponse.getOutputStream().flush();
 				}
-
-				//preparing image for output
-			    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-
-			    //writing image to output
-			    httpServletResponse.setContentType("image/jpeg");
-				IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
-
-				// Flushing request
-				httpServletResponse.getOutputStream().flush();
+			} else {
+				logger.error("File " + imageFile.toString() + " is not present on filesystem.");
 			}
 	    } catch (IIOException iioException) {
 	    	if (iioException.getMessage().equals("Unsupported Image Type")) {
@@ -555,25 +575,7 @@ public class IIPImageServerController {
         		if (null == tileLengthField)
         			throw new ImageReadException("Can't find tile length field.");
         		int tileLength = tileLengthField.getIntValue();
-
-        		//TiffImageData.Tiles tile = new TiffImageData.Tiles(data, tileWidth, tileLength);
         	}
-        	
-        	/**
-	        	for (Iterator<TiffImageMetadata.Item> iterator = metadata.getItems().iterator(); iterator.hasNext();) {
-	        		TiffImageMetadata.Item item = iterator.next();
-	        		
-	        		if (item.getKeyword().equals("Image Width")) {
-	        			imageWidth = item.getText().toString();
-	        		} else if (item.getKeyword().equals("Image Height")) {
-	        			imageHeight = item.getText().toString();
-	        		} else if (item.getKeyword().equals("Tile Width")) {
-	        			tileWidth = item.getText().toString();
-	        		} else if (item.getKeyword().equals("Tile Length")) {
-	        			tileLength = item.getText().toString();
-	        		}
-	        	}
-**/
 	    } catch (ImageReadException imageReadException) {
 			logger.error("ImageReadException", imageReadException);
 	    } catch (IOException ioException) {
@@ -590,7 +592,6 @@ public class IIPImageServerController {
 				ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 				servletOutputStream.println("IIP:1.0");
 				servletOutputStream.println("Max-Size:" + imageWidth + " " + imageHeight);
-				//servletOutputStream.println("Tile-size:" + tileWidth + " " + tileLength);
 				servletOutputStream.println("Resolution-number:6");
 	
 				httpServletResponse.getOutputStream().flush();
