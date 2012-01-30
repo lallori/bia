@@ -1,5 +1,5 @@
 /*
- * SearchDataController.java
+ * SimpleSearchController.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -35,7 +35,6 @@ import java.util.UUID;
 
 import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
-import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -139,14 +138,14 @@ public class SimpleSearchController {
 			outputFields.add("Sender Location");
 			outputFields.add("Recipient Location");
 			outputFields.add("Volume / Folio");
-		} else if (simpleSearchPerimeter.equals(SearchType.PEOPLE)) {
+		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PEOPLE)) {
 			outputFields = new ArrayList<String>(5);
 			outputFields.add("Name");
 			outputFields.add("Gender");
 			outputFields.add("Born Date");
 			outputFields.add("Death Date");
 			outputFields.add("Documents Related");
-		} else if (simpleSearchPerimeter.equals(SearchType.PLACE)) {
+		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PLACE)) {
 			outputFields = new ArrayList<String>(4);
 			outputFields.add("Place Name");
 			outputFields.add("Place Type");
