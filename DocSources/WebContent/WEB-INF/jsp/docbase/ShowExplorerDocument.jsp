@@ -108,23 +108,21 @@
 	</c:url>	
 	
 	<div id="ShowDocumentExplorer">
-		
-		
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${documentExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage">Previous folio</a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage">Next folio</a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
@@ -136,55 +134,41 @@
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${documentExplorer.image.imageOrder == 1}">
-				<a id="previousPage">Previous folio</a>
+				<a id="previousPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder > 1}">
-				<a id="previousPage" href="${previousPageURL}" class="previousPage">Previous folio</a>
+				<a id="previousPage" href="${previousPageURL}" class="previousPage"></a>
 			</c:if>
 			</div>
 			<div id="nextPage">
 			<c:if test="${documentExplorer.image.imageOrder == documentExplorer.total }">
-				<a id="nextPage">Next folio</a>
+				<a id="nextPage"></a>
 			</c:if>
 			<c:if test="${documentExplorer.image.imageOrder < documentExplorer.total }">
-				<a id="nextPage" href="${nextPageURL}" class="nextPage">Next folio</a>
+				<a id="nextPage" href="${nextPageURL}" class="nextPage"></a>
 			</c:if>
 			</div>
 		</div>
-		<br />
-		<br />
 		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
-	<c:if test="${documentExplorer.totalRubricario > 0}">
-		<br/>
-
-				
-		<div id="rubricarioMoveTo">
-			<div id="rubricarioCountForm">
-				<b>Index of Names Count:</b> <label for="rubricarioCount" id="rubricarioCount">${documentExplorer.totalRubricario}</label>
-			</div>
 		
-			<form:form id="moveToRubricarioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToRubricarioForm">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="rubricarioLabel">Move to <i>Index of Names</i> folio</label>
-				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cRucricario" type="text" value="" />
-				<input id="goR" type="submit" value="Go" />
-				<form:hidden path="volNum" />
-				<form:hidden path="volLetExt" />
-				<form:hidden path="imageType" value="R"/>
-				<form:hidden path="imageOrder" value="${documentExplorer.image.imageOrder}"/>
-				<form:hidden path="entryId" value="${documentExplorer.entryId}" />
-				<form:hidden path="total" value="${documentExplorer.total}" />
-				<form:hidden path="totalRubricario" value="${documentExplorer.totalRubricario}" />
-				<form:hidden path="totalCarta" value="${documentExplorer.totalCarta}" />
-				<form:hidden path="totalAppendix" value="${documentExplorer.totalAppendix}" />
-				<form:hidden path="totalOther" value="${documentExplorer.totalOther}" />
-				<form:hidden path="totalGuardia" value="${documentExplorer.totalGuardia}" />
-				<form:hidden path="flashVersion" value="false" />
-			</form:form>
-		</div>
-	</c:if>
+		
 
-		<br/>
-		<br/>
+
+		<div>
+			<%-- 
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a>
+			</security:authorize>
+			--%>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
+				<a id="ShowManuscriptViewer${documentExplorer.entryId}" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="showFullscreenMode">Show in Fullscreen mode</a>
+			</security:authorize>
+			<a id="volumeSummary" href="#">Volume Summary</a>
+			<a class="refreshVolumeExplorer" href="${currentPageURL}">Refresh</a>
+			<c:if test="${documentExplorer.totalRubricario > 0}">
+				<a id="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
+			</c:if>
+		</div>
 		
 		<div id="folioMoveTo">
 			<div id="folioCountForm"> 
@@ -192,7 +176,7 @@
 			</div>
 		
 			<form:form id="moveToFolioForm" action="${ShowExplorerDocumentURL}" cssClass="editMoveToFolioForm">
-				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Move to folio</label>
+				<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
 				<input id="imageProgTypeNum" name="imageProgTypeNum" class="input_4cFolio" type="text" value="" />
 				<input id="go" type="submit" value="Go" />
 				<form:hidden path="volNum" />
@@ -209,18 +193,7 @@
 				<form:hidden path="flashVersion" value="false" />
 			</form:form>
 		</div>
-
-		<br />
 			
-		<div>
-			<!-- <a id="flipItInFullScreen" href="${explorerDocumentModalWindowURL}" title="DOCUMENT EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a> -->
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
-				<a id="ShowManuscriptViewer${documentExplorer.entryId}" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="showFullscreenMode">Show in Fullscreen mode</a>
-			</security:authorize>
-			<a id="volumeSummary" href="#">Volume Summary</a>
-			<a class="refreshVolumeExplorer" href="${currentPageURL}">Refresh</a>
-		</div>
-	</div>
 		<script type="text/javascript">
 			$j(document).ready(function() {
 				$j('.piro_overlay,.piro_html').remove(); // trick to resolve scroll bug with pirobox
@@ -251,10 +224,11 @@
 					return false;
 				});
 				
-		        $j(".editMoveToRubricarioForm").submit(function (){
+				$j(".indexNames").click(function (){
+					alert("asdadssa");
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
-					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+		        	$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 		        

@@ -158,30 +158,30 @@
 			</div>
 		</div>
 		<form:form><form:errors path="imageProgTypeNum" id="folio.errors" cssClass="inputerrors"/></form:form>
-	<c:if test="${volumeExplorer.totalRubricario > 0}">
-				
-	</c:if>
-
-			
+	
 		<div>
-			<!--<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<%-- 
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				<a id="flipItInFullScreen" href="${explorerVolumeModalWindowURL}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">Fullscreen Mode</a>
 			</security:authorize>
 			<security:authorize ifAnyGranted="ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
 				<a id="ShowManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="pirobox" rel="content-full-full">Show in Fullscreen mode</a>
-			</security:authorize>-->
+			</security:authorize> 
+			--%>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
 				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="showFullscreenMode">Show in Fullscreen mode</a>
 			</security:authorize>
 			<a id="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
-			<a id="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
+			<c:if test="${volumeExplorer.totalRubricario > 0}">
+				<a id="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
+			</c:if>
 		</div>
 		
 		<div id="folioMoveTo">
 			<div id="folioCountForm"> 
-			<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
-		</div>
+				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
+			</div>
 		
 		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
 			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">Folio:</label>
@@ -235,11 +235,10 @@
 					return false;
 				});
 
-		        $j(".editMoveToRubricarioForm").submit(function (){
+		        $j(".indexNames").click(function (){
+		        	document.write("asdadssa");
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
-		        	// we change selected tab url
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
-		        	// we force tab reload 
 		        	$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
