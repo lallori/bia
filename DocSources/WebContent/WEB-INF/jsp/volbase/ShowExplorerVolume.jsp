@@ -236,7 +236,6 @@
 				});
 
 		        $j(".indexNames").click(function (){
-		        	document.write("asdadssa");
 		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
 		        	$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
