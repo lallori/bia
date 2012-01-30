@@ -34,7 +34,7 @@
 		<c:if test="${not empty image}">
 		<div id="SpineVolumeDigitDiv">
 			<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
-			<b>Volume Spine</b><br>
+			<b>Volume Spine</b>
 			<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
 		</div>
 		</c:if>
