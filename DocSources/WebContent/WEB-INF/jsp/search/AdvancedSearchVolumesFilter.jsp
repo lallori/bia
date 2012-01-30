@@ -17,8 +17,10 @@
 			<div id="volumeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.volumes}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Volume in <fmt:message key="search.documents.volumeType.${searchFilter.filterData.volumesTypes[iterator.index]}" />: </span><span class="wordSearch">${searchFilter.filterData.volumes[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${searchFilter.filterData.volumesTypes[iterator.index]}|${searchFilter.filterData.volumes[iterator.index]}|${searchFilter.filterData.volumesBetween[iterator.index]}" name="refersTo">
+					<span class="categorySearch">Volume in <fmt:message key="search.documents.volumeType.${searchFilter.filterData.volumesTypes[iterator.index]}" />: </span>
+					<c:if test="${searchFilter.filterData.volumesTypes[iterator.index] == 'Exactly'}"><span class="wordSearch">${searchFilter.filterData.volumes[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
+					<c:if test="${searchFilter.filterData.volumesTypes[iterator.index] == 'Between'}"><span class="wordSearch">${searchFilter.filterData.volumes[iterator.index]}, ${searchFilter.filterData.volumesBetween[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
+					<input type="hidden" value="${searchFilter.filterData.volumesTypes[iterator.index]}|${searchFilter.filterData.volumes[iterator.index]}|${searchFilter.filterData.volumesBetween[iterator.index]}" name="volume">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>

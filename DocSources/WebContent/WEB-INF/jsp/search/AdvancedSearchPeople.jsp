@@ -15,7 +15,7 @@
 			in
 			<select id="namePartsType" name="namePartsType" class="selectform_Mlong">
 				<option value="All Name Types" selected="selected">All Name Types</option>
-				<option value="Apellative">Apellative</option>
+				<option value="Appellative">Appellative</option>
 				<option value="Family">Family</option>
 				<option value="Given">Given</option>
 				<option value="Maiden">Maiden</option>
@@ -34,7 +34,7 @@
 			<select id="dateType" name="dateType" class="selectform_Llong">
 				<option value="Any" selected="selected">Any</option>
 				<option value="Born after">Born after</option>
-				<option value="Died by">Died by</option>
+				<option value="Dead by">Dead by</option>
 				<option value="Lived between">Lived between</option>
 				<option value="Born/Died on">Born/Died on</option>
 			</select>
@@ -288,7 +288,7 @@
 		 $j("#occupation").AutocompleteTitle({
 			 	serviceUrl:'${searchTitleOrOccupationURL}',
 			    minChars:3, 
-			    delimiter: /(,|;)\s*/, // regex or character
+			    delimiter: null, // /(,|;)\s*/, // regex or character
 			    maxHeight:400,
 			    width:600,
 			    zIndex: 9999,

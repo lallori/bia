@@ -40,7 +40,7 @@
 					<span class="categorySearch">${searchFilter.filterData.datesTypes[iterator.index]}: </span>
 					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Any'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
 					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Born after'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
-					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Died by'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
+					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Dead by'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
 					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Lived between'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}, ${searchFilter.filterData.datesYearBetween[iterator.index]} ${months[searchFilter.filterData.datesMonthBetween[iterator.index]]} ${searchFilter.filterData.datesDayBetween[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
 					<c:if test="${searchFilter.filterData.datesTypes[iterator.index] == 'Born/Died on'}"><span class="wordSearch">${searchFilter.filterData.datesYear[iterator.index]} ${months[searchFilter.filterData.datesMonth[iterator.index]]} ${searchFilter.filterData.datesDay[iterator.index]}</span><a class="remove" href="#">(remove)</a></c:if>
 					<input type="hidden" value="${searchFilter.filterData.datesTypes[iterator.index]}|${searchFilter.filterData.datesYear[iterator.index]}|${months[searchFilter.filterData.datesMonth[iterator.index]]}|${searchFilter.filterData.datesDay[iterator.index]}|${searchFilter.filterData.datesYearBetween[iterator.index]}|${months[searchFilter.filterData.datesMonthBetween[iterator.index]]}|${searchFilter.filterData.datesDayBetween[iterator.index]}" name="date">					
@@ -53,7 +53,7 @@
 			<c:forEach items="${searchFilter.filterData.roleCategories}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">Role Category: </span><span class="wordSearch">${searchFilter.filterData.roleCategories[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.roleCategories[iterator.index])}" name="role Category"/>
+					<input type="hidden" value="${fn2:encode(searchFilter.filterData.roleCategories[iterator.index])}" name="roleCategory"/>
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
