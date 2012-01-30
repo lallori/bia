@@ -235,10 +235,9 @@
 					return false;
 				});
 
-		        $j(".indexNames").click(function (){
-		        	var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
-		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), formSubmitURL);
-		        	$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
+		        $j("#indexNames").click(function (){
+		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href")); 
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 		        
