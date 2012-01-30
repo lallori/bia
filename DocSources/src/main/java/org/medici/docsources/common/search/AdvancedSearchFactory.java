@@ -33,6 +33,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
+import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
 /**
@@ -118,15 +119,19 @@ public class AdvancedSearchFactory {
 	 * @return
 	 */
 	public static AdvancedSearch create(SimpleSearchCommand command) {
-		if (command.getSearchType().equals(SearchType.DOCUMENT)) {
+		if (command.getSimpleSearchPerimeter().equals(SimpleSearchPerimeter.EXTRACT)) {
 			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
 			advancedSearchDocument.initFromSimpleSearchCommand(command);
 			return advancedSearchDocument;
-		} else if (command.getSearchType().equals(SearchType.PEOPLE)) {
+		} if (command.getSimpleSearchPerimeter().equals(SimpleSearchPerimeter.SYNOPSIS)) {
+			AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
+			advancedSearchDocument.initFromSimpleSearchCommand(command);
+			return advancedSearchDocument;
+		} else if (command.getSimpleSearchPerimeter().equals(SimpleSearchPerimeter.PEOPLE)) {
 			AdvancedSearchPeople advancedSearchPeople = new AdvancedSearchPeople();
 			advancedSearchPeople.initFromSimpleSearchCommand(command);
 			return advancedSearchPeople;
-		} else if (command.getSearchType().equals(SearchType.PLACE)) {
+		} else if (command.getSimpleSearchPerimeter().equals(SimpleSearchPerimeter.PLACE)) {
 			AdvancedSearchPlace advancedSearchPlace = new AdvancedSearchPlace();
 			advancedSearchPlace.initFromSimpleSearchCommand(command);
 			return advancedSearchPlace;

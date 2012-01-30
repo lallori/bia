@@ -6,9 +6,9 @@
 
 				<div id="searchForm">
 					<form id="SearchForm" action="<c:url value="/src/SimpleSearch.do"/>" method="post">
-						Search in <select id="searchType" name="searchType" class="select">
-										<option value="DOCUMENT" selected>Document Extracts</option>
-										<option value="DOCUMENT" selected>Document Synopses</option>
+						Search in <select id="simpleSearchPerimeter" name="simpleSearchPerimeter" class="select">
+										<option value="EXTRACT" selected>Document Extracts</option>
+										<option value="SYNOPSIS" selected>Document Synopses</option>
 										<option value="VOLUME">Volumes</option>
 										<option value="PEOPLE">People</option>
 										<option value="PLACE">Places</option>

@@ -28,6 +28,7 @@
 package org.medici.docsources.common.search;
 
 import java.io.Serializable;
+import org.apache.lucene.search.Query;
 
 /**
  * 
@@ -39,7 +40,7 @@ public interface Search extends Serializable {
 	 * 
 	 * @return
 	 */
-	public org.apache.lucene.search.Query toLuceneQuery();
+	public Query toLuceneQuery();
 	
 	/**
 	 * 

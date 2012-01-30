@@ -52,7 +52,9 @@ public enum ApplicationError {
 	DB_INCORRECT_SQL_ERROR("013"),
 
 	/** SERVICE ERRORS 100 - 101 **/
-	USER_NOT_FOUND_ERROR("100");
+	USER_NOT_FOUND_ERROR("100"),
+	USER_NAME_NOT_FOUND_ERROR("101");
+	
 
 	private final String errorCode;
 

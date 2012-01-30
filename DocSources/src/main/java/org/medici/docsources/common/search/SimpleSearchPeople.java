@@ -39,7 +39,7 @@ import org.medici.docsources.common.util.SimpleSearchUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class SimpleSearchPeople implements SimpleSearch {
+public class SimpleSearchPeople extends SimpleSearch {
 	/**
 	 * 
 	 */
@@ -112,25 +112,6 @@ public class SimpleSearchPeople implements SimpleSearch {
 		String[] stringFields = new String[]{			
 			"mapNameLf", 
 			"altName.altName", 
-		};
-
-		String[] numericFields = new String[]{
-			"personId"
-		};
-		
-		String[] yearFields = new String[]{
-			"bornYear",
-			"deathYear"
-		};
-
-		String[] monthFields = new String[]{
-			"bornMonth.monthNum", 
-			"deathMonth.monthNum" 
-		};
-		
-		String[] dayFields = new String[]{
-			"bornDay",
-			"deathDay"
 		};
 
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);

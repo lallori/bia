@@ -28,13 +28,9 @@
 package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
-import org.medici.docsources.common.search.AdvancedSearchAbstract.WordType;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.common.util.SimpleSearchUtils;
 
@@ -43,13 +39,15 @@ import org.medici.docsources.common.util.SimpleSearchUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class SimpleSearchDocument implements SimpleSearch {
+public class SimpleSearchDocument extends SimpleSearch {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5135090884608784944L;
 	
 	private String alias; 
+
+	private SimpleSearchPerimeter simpleSearchPerimeter;
 
 	/**
 	 * 
@@ -62,9 +60,10 @@ public class SimpleSearchDocument implements SimpleSearch {
 	 * 
 	 * @param text
 	 */
-	public SimpleSearchDocument(String text) {
+	public SimpleSearchDocument(SimpleSearchPerimeter simpleSearchPerimeter, String text) {
 		super();
 		if (!StringUtils.isEmpty(text)) {
+			setSimpleSearchPerimeter(simpleSearchPerimeter);
 			setAlias(text.toLowerCase());
 		}
 	}
@@ -77,12 +76,20 @@ public class SimpleSearchDocument implements SimpleSearch {
 	}
 
 	/**
+	 * @return the simpleSearchPerimeter
+	 */
+	public SimpleSearchPerimeter getSimpleSearchPerimeter() {
+		return simpleSearchPerimeter;
+	}
+
+	/**
 	 * 
 	 * @param command
 	 */
-	public void initFromText(String text) {
+	public void initFromText(SimpleSearchPerimeter simpleSearchPerimeter, String text) {
 		if (!StringUtils.isEmpty(text)) {
 			setAlias(text.toLowerCase());
+			setSimpleSearchPerimeter(simpleSearchPerimeter);
 		}
 	}
 
@@ -91,6 +98,13 @@ public class SimpleSearchDocument implements SimpleSearch {
 	 */
 	public void setAlias(String alias) {
 		this.alias = alias;
+	}
+
+	/**
+	 * @param simpleSearchPerimeter the simpleSearchPerimeter to set
+	 */
+	public void setSimpleSearchPerimeter(SimpleSearchPerimeter simpleSearchPerimeter) {
+		this.simpleSearchPerimeter = simpleSearchPerimeter;
 	}
 
 	/**
@@ -132,46 +146,10 @@ public class SimpleSearchDocument implements SimpleSearch {
 		}
 
 		String[] stringFields = new String[]{
-			/*"volume.serieList.title",
-			"volume.serieList.subTitle1",
-			"volume.serieList.subTitle2 ",
-			"senderPeople.mapNameLf", 
-			"senderPeople.poLink.titleOccList.titleOcc",
-			"senderPeople.altName.altName", 
-			"senderPlace.placeNameFull",
-			"recipientPeople.mapNameLf", 
-			"recipientPeople.poLink.titleOccList.titleOcc",
-			"recipientPeople.altName.altName",
-			"recipientPlace.placeNameFull",
-			"epLink.person.mapNameLf",
-			"epLink.person.altName.altName",*/
 			"synExtract.docExtract",
-			"synExtract.synopsis"/*,
-			"factChecks.addLRes",
-			"eplToLink.place.placeNameFull"*/
+			"synExtract.synopsis"
 		};
 		
-		String[] numericFields = new String[]{
-			"entryId",
-			"folioNum"
-		};
-		
-		String[] yearFields = new String[]{
-			"docYear",
-		};
-
-		String[] monthFields = new String[]{
-			"docMonthNum.monthNum"
-		};
-		
-		String[] dayFields = new String[]{
-			"docDay"
-		};
-
-		String[] volumeFields = new String[]{
-			"volume"
-		};
-
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 		
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
@@ -180,28 +158,7 @@ public class SimpleSearchDocument implements SimpleSearch {
 		if (!stringQuery.toString().equals("")) {
 			booleanQuery.add(stringQuery,Occur.SHOULD);
 		}
-		/*
-		Query numericQuery = SimpleSearchUtils.constructBooleanQueryOnNumericFields(numericFields, words);
-		if (!numericQuery.toString().equals("")) {
-			booleanQuery.add(numericQuery,Occur.SHOULD);
-		}
-		Query yearQuery = SimpleSearchUtils.constructBooleanQueryOnYearFields(yearFields, words);
-		if (!yearQuery.toString().equals("")) {
-			booleanQuery.add(yearQuery,Occur.SHOULD);
-		}
-		Query monthQuery = SimpleSearchUtils.constructBooleanQueryOnMonthFields(monthFields, words);
-		if (!monthQuery.toString().equals("")) {
-			booleanQuery.add(monthQuery,Occur.SHOULD);
-		}
-		Query dayQuery = SimpleSearchUtils.constructBooleanQueryOnDayFields(dayFields, words);
-		if (!dayQuery.toString().equals("")) {
-			booleanQuery.add(dayQuery,Occur.SHOULD);
-		}
-		Query volumeQuery = SimpleSearchUtils.constructBooleanQueryOnVolumeFields(volumeFields, words);
-		if (!volumeQuery.toString().equals("")) {
-			booleanQuery.add(volumeQuery, Occur.SHOULD);
-		}
-		*/
+
 		return booleanQuery;
 	}
 

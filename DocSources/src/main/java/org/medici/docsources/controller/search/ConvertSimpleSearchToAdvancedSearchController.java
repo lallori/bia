@@ -87,7 +87,7 @@ public class ConvertSimpleSearchToAdvancedSearchController {
 		HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
 
 		// if search filter is not present in request, user make a new search filter 
-		searchFilter = new SearchFilter(command.getSearchType());
+		searchFilter = new SearchFilter(command.getSimpleSearchPerimeter());
 		searchFilter.setDateCreated(new Date());
 		searchFilter.setDateUpdated(new Date());
 
@@ -102,7 +102,7 @@ public class ConvertSimpleSearchToAdvancedSearchController {
 		session.setAttribute("searchFilterMap", searchFilterMap);
 
 		// Generate command for output page. 
-		AdvancedSearchCommand advancedSearchCommand = new AdvancedSearchCommand(advancedSearch, command.getSearchType(), command.getSearchUUID());
+		AdvancedSearchCommand advancedSearchCommand = new AdvancedSearchCommand(advancedSearch, command.getSimpleSearchPerimeter(), command.getSearchUUID());
 		model.put("command", advancedSearchCommand);
 
 		if (searchFilter.getSearchType().equals(SearchType.DOCUMENT)) {

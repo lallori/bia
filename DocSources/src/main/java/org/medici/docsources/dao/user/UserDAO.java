@@ -84,7 +84,7 @@ public interface UserDAO {
 	 * 
 	 * @param user the {@link org.medici.docsources.domain.User} object to update.
 	 */
-	public void merge(User user);
+	public User merge(User user);
 
 	/**
 	 * This method persists the input {@link org.medici.docsources.domain.User} 
@@ -126,5 +126,5 @@ public interface UserDAO {
 	 * @param account a {@link java.lang.String} object.
 	 * @param user a {@link java.util.List} object
 	 */
-	public void removeUserRoles(String account, List<User.UserRole> userRoles);
+	public void removeUserRoles(String account, List<UserRole> userRoles);
 }

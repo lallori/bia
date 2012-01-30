@@ -37,6 +37,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.common.search.SimpleSearchDocument;
 import org.medici.docsources.common.search.SimpleSearchPeople;
 import org.medici.docsources.common.search.SimpleSearchPlace;
@@ -561,21 +562,11 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	private void simpleSearchDocuments(Map<String, Object> model, String searchText, PaginationFilter paginationFilter) {
+	private void simpleSearchDocuments(Map<String, Object> model, SimpleSearchPerimeter simpleSearchPerimeter, String searchText, PaginationFilter paginationFilter) {
 		Page page = null;
-		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
-		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
-		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
+
 		try {
-			page = getSearchService().searchDocuments(new SimpleSearchDocument(searchText), paginationFilter);
-			for(Document currentDocument : (List<Document>)page.getList()){
-				volNums.add(currentDocument.getVolume().getVolNum());
-				volLetExts.add(currentDocument.getVolume().getVolLetExt());
-				folioNums.add(currentDocument.getFolioNum());
-				folioMods.add(currentDocument.getFolioMod());
-			}
-			
-			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
+			page = getSearchService().searchDocuments(new SimpleSearchDocument(simpleSearchPerimeter, searchText), paginationFilter);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -606,7 +597,7 @@ public class AjaxController {
 				singleRow.add("");
 			
 			if (currentDocument.getMDPAndFolio() != null){
-				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+				if(currentDocument.getVolume().getDigitized()){
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
 				}else{
 					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
@@ -636,7 +627,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/src/SimpleSearchPagination.json", method = RequestMethod.GET)
-	public ModelAndView simpleSearchPagination(@RequestParam(value="searchType") SearchType searchType, 
+	public ModelAndView simpleSearchPagination(@RequestParam(value="simpleSearchPerimeter") SimpleSearchPerimeter simpleSearchPerimeter, 
 								   		 @RequestParam(value="sSearch") String alias,
 								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -644,15 +635,17 @@ public class AjaxController {
 									     @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, searchType);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, simpleSearchPerimeter);
 
-		if (searchType.equals(SearchType.DOCUMENT)) {
-			simpleSearchDocuments(model, alias, paginationFilter);
-		} else if (searchType.equals(SearchType.PEOPLE)) {
+		if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
+			simpleSearchDocuments(model, simpleSearchPerimeter, alias, paginationFilter);
+		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
+			simpleSearchDocuments(model, simpleSearchPerimeter, alias, paginationFilter);
+		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PEOPLE)) {
 			simpleSearchPeople(model, alias, paginationFilter);
-		} else if (searchType.equals(SearchType.PLACE)) {
+		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PLACE)) {
 			simpleSearchPlaces(model, alias, paginationFilter);
-		} else if (searchType.equals(SearchType.VOLUME)) {
+		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.VOLUME)) {
 			simpleSearchVolumes(model, alias, paginationFilter);
 		}
 

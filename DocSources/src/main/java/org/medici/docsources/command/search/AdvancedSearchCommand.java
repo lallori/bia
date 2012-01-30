@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
 
@@ -102,6 +103,34 @@ public class AdvancedSearchCommand {
 		
 		setSearchType(searchType);
 		setSearchUUID(searchUUID);
+	}
+
+	/**
+	 * 
+	 * @param advancedSearch
+	 * @param simpleSearchPerimeter
+	 * @param searchUUID2
+	 */
+	public AdvancedSearchCommand(AdvancedSearch advancedSearch, SimpleSearchPerimeter simpleSearchPerimeter, String searchUUID2) {
+		try {
+			BeanUtils.copyProperties(this, advancedSearch);
+		} catch (IllegalAccessException iaex) {
+		} catch (InvocationTargetException itex) {
+		}
+
+		setSearchUUID(searchUUID);
+
+		if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
+       	 this.setSearchType(SearchType.DOCUMENT);
+        } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
+       	 this.setSearchType(SearchType.DOCUMENT);
+        } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PEOPLE)) {
+       	 this.setSearchType(SearchType.PEOPLE);
+        } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PLACE)) {
+       	 this.setSearchType(SearchType.PLACE);
+        } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.VOLUME)) {
+       	 this.setSearchType(SearchType.VOLUME);
+        }
 	}
 
 	/**

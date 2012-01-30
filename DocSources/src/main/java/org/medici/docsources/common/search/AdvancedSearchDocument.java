@@ -45,6 +45,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.command.search.SimpleSearchCommand;
+import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 
@@ -784,8 +785,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
-		wordsTypes.add(WordType.SynopsisAndExtract);
-		words.add(command.getText());
+		if (command.getSimpleSearchPerimeter().equals(SimpleSearchPerimeter.EXTRACT)) {
+			wordsTypes.add(WordType.Extract);
+			words.add(command.getText());
+		} else 	if (command.getSimpleSearchPerimeter().equals(SimpleSearchPerimeter.SYNOPSIS)) {
+			wordsTypes.add(WordType.Synopsis);
+			words.add(command.getText());
+		}
 	}
 
 	/**

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.lucene.search.SortField;
+import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 
  /**
@@ -144,8 +145,36 @@ public class PaginationFilter {
          this.setSearchType(searchType);
          this.sortingCriterias = new ArrayList<SortingCriteria>();
      }
-     
+
      /**
+      * 
+      * @param firstRecord2
+      * @param length2
+      * @param sortingColumnNumber
+      * @param sortingDirection2
+      * @param simpleSearchPerimeter
+      */
+     public PaginationFilter(Integer firstRecord, Integer length, Integer sortingColumn, String sortingDirection, SimpleSearchPerimeter simpleSearchPerimeter) {
+         this.firstRecord = firstRecord;
+         this.length = length;
+         this.setSortingColumn(sortingColumn);
+         this.setSortingDirection(sortingDirection);
+         this.sortingCriterias = new ArrayList<SortingCriteria>();
+         if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
+        	 this.setSearchType(SearchType.DOCUMENT);
+         } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
+        	 this.setSearchType(SearchType.DOCUMENT);
+         } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PEOPLE)) {
+        	 this.setSearchType(SearchType.PEOPLE);
+         } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PLACE)) {
+        	 this.setSearchType(SearchType.PLACE);
+         } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.VOLUME)) {
+        	 this.setSearchType(SearchType.VOLUME);
+         }
+
+	}
+
+	/**
       * 
       * @param firstRecord
       * @param length

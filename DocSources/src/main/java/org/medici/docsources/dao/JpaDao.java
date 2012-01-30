@@ -245,11 +245,6 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 			.threadsForIndexWriter( 3 )
 			.cacheMode( CacheMode.IGNORE )
 			.startAndWait();
-			/*.batchSizeToLoadObjects( 50 )
-			.threadsForSubsequentFetching( 5 )
-			.threadsToLoadObjects( 8 )
-			.cacheMode( CacheMode.NORMAL )
-			.startAndWait();*/
 		} catch (Throwable throwable) {
 			logger.error(throwable);
 		}

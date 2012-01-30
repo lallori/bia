@@ -1,5 +1,5 @@
 /*
- * SimpleSearchCommand.java
+ * DocSourcesJpaUserDetailsImpl.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,59 +25,43 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.search;
+package org.medici.docsources.security;
 
-import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
+import org.medici.docsources.dao.user.UserDAO;
+import org.medici.docsources.domain.User;
+import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class SimpleSearchCommand {
-	private SimpleSearchPerimeter simpleSearchPerimeter;
-	private String text;
-	private String searchUUID;
-
-	/**
-	 * @param simpleSearchPerimeter the simple search perimeter to set
-	 */
-	public void setSimpleSearchPerimeter(SimpleSearchPerimeter simpleSearchPerimeter) {
-		this.simpleSearchPerimeter = simpleSearchPerimeter;
-	}
+public class DocSourcesJpaUserDetailsImpl implements UserDetailsService {
+	private UserDAO userDAO;
 	
-	/**
-	 * @return the simpleSearchPerimeter
-	 */
-	public SimpleSearchPerimeter getSimpleSearchPerimeter() {
-		return simpleSearchPerimeter;
-	}
-	
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-	
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		return text;
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+		User user = getUserDAO().findUser(username);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
-	 * @param searchUUID the searchUUID to set
+	 * @param userDAO the userDAO to set
 	 */
-	public void setSearchUUID(String searchUUID) {
-		this.searchUUID = searchUUID;
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 	/**
-	 * @return the searchUUID
+	 * @return the userDAO
 	 */
-	public String getSearchUUID() {
-		return searchUUID;
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
+	
+
 }

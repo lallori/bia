@@ -61,7 +61,14 @@
 						$j('#notFound').dialog('open');
 					} else {
 						$("#targetframe").html('');
-						var credit = 'Folio n. ' + data.imageProgTypeNum;
+						var credit = '';
+						
+						if (data.imageTyèe == 'R') {
+							credit += 'Index Of Name n. '; 
+						} else {
+							credit += 'Folio n. ';
+						}
+						credit+=data.imageProgTypeNum;
 						
 						if (data.missedNumbering) {
 							credit += ' ' + data.missedNumbering;
@@ -170,7 +177,14 @@
 
                 $.ajax({ type:"GET", url:$j(this).attr("href"), async:false, success:function(data) {
 					$("#targetframe").html('');
-					var credit = 'Folio n. ' + data.imageProgTypeNum;
+					var credit = '';
+					
+					if (data.imageTyèe == 'R') {
+						credit += 'Index Of Name n. '; 
+					} else {
+						credit += 'Folio n. ';
+					}
+					credit+=data.imageProgTypeNum;
 					
 					if (data.missedNumbering) {
 						credit += ' ' + data.missedNumbering;

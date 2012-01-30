@@ -42,6 +42,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import org.medici.docsources.common.search.Search;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -91,7 +92,8 @@ public class UserHistory implements Serializable {
 	@Column (name="\"searchData\"", nullable=true)
 	@Lob
 	private Search searchData;
-
+	@Column (name="\"LOGICALDELETE\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean logicalDelete;
 	/**
 	 * Default Constructor
 	 */
@@ -111,6 +113,7 @@ public class UserHistory implements Serializable {
 		this.setDescription(description);
 		this.setAction(action);
 		this.setCategory(category);
+		this.setLogicalDelete(Boolean.FALSE);
 		
 		if (category.equals(Category.DOCUMENT)) {
 			setDocument((Document)object);
@@ -299,6 +302,20 @@ public class UserHistory implements Serializable {
 		} else {		
 			return "";
 		}
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
 	}
 
 	/**

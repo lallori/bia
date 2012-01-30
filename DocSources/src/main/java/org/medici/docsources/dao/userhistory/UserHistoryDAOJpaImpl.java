@@ -94,10 +94,68 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Integer deleteMyHistory() throws PersistenceException {
+        String updateString = "UPDATE UserHistory set logicaldelete=true WHERE username=:username and logicalDelete=false";
+
+        Query query = getEntityManager().createQuery(updateString);
+
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        
+		return query.executeUpdate();	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer deleteMyHistory(Category category) throws PersistenceException {
+        String updateString = "UPDATE UserHistory set logicaldelete=true WHERE username=:username and category=:category and logicalDelete=false";
+
+        Query query = getEntityManager().createQuery(updateString);
+
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("category", category); 
+        
+		return query.executeUpdate();	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer deleteUserHistory(String username) throws PersistenceException {
+        String updateString = "UPDATE UserHistory set logicaldelete=true WHERE username=:username and logicalDelete=false";
+
+        Query query = getEntityManager().createQuery(updateString);
+
+        query.setParameter("username", username);
+        
+		return query.executeUpdate();	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer deleteUserHistory(String username, Category category) throws PersistenceException {
+        String updateString = "UPDATE UserHistory set logicaldelete=true WHERE username=:username and category=:category and logicalDelete=false";
+
+        Query query = getEntityManager().createQuery(updateString);
+
+        query.setParameter("username", username);
+        query.setParameter("category", category); 
+        
+		return query.executeUpdate();	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserHistory> findHistory(Category category, Integer resultSize) throws PersistenceException {
-        String queryString = "FROM UserHistory WHERE username=:username and category=:category ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistory WHERE username=:username and category=:category and logicalDelete=false ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
@@ -116,7 +174,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		Page page = new Page(paginationFilter);
 
 		if (paginationFilter.getTotal() == null) {
-	        String queryString = "SELECT count(username) FROM UserHistory WHERE username=:username and category=:category";
+	        String queryString = "SELECT count(username) FROM UserHistory WHERE username=:username and category=:category and logicalDelete=false ";
 
 	        Query query = getEntityManager().createQuery(queryString);
 	        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
@@ -124,7 +182,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 			page.setTotal(new Long((Long)query.getSingleResult()));
 		}
 
-        String objectsQuery = "FROM UserHistory WHERE username=:username and category=:category ";
+        String objectsQuery = "FROM UserHistory WHERE username=:username and category=:category and logicalDelete=false ";
 
         paginationFilter = generatePaginationFilterMYSQL(category, paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
@@ -159,7 +217,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserHistory> findHistory(Integer resultSize) {
-        String queryString = "FROM UserHistory WHERE username=:username ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistory WHERE username=:username and logicalDelete=false ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
@@ -168,7 +226,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
         
 		return query.getResultList();
 	}
-	
+
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -177,14 +235,14 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		Page page = new Page(paginationFilter);
 
 		if (paginationFilter.getTotal() == null) {
-	        String queryString = "SELECT count(username) FROM UserHistory WHERE username=:username";
+	        String queryString = "SELECT count(username) FROM UserHistory WHERE username=:username and logicalDelete=false ";
 
 	        Query query = getEntityManager().createQuery(queryString);
 	        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 			page.setTotal(new Long((Long)query.getSingleResult()));
 		}
 
-        String objectsQuery = "FROM UserHistory WHERE username=:username";
+        String objectsQuery = "FROM UserHistory WHERE username=:username and logicalDelete=false ";
 
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
@@ -219,7 +277,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	@SuppressWarnings("unchecked")
 	@Override
 	public UserHistory findLastEntry() throws PersistenceException {
-        String queryString = "FROM UserHistory WHERE username=:username ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistory WHERE username=:username and logicalDelete=false ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
@@ -241,7 +299,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	@SuppressWarnings("unchecked")
 	@Override
 	public UserHistory findLastEntry(Category category) {
-        String queryString = "FROM UserHistory WHERE username=:username and category=:category ORDER BY dateAndTime DESC";
+        String queryString = "FROM UserHistory WHERE username=:username and category=:category and logicalDelete=false ORDER BY dateAndTime DESC";
 
         Query query = getEntityManager().createQuery(queryString);
 
@@ -525,6 +583,64 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 		} catch (PersistenceException persistenceException) {
 			logger.error("Exception during persisting history", persistenceException);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer restoreMyHistory() throws PersistenceException {
+        String updateString = "UPDATE UserHistory set logicaldelete=true WHERE username=:username and logicalDelete=true";
+
+        Query query = getEntityManager().createQuery(updateString);
+
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        
+		return query.executeUpdate();	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer restoreMyHistory(Category category) throws PersistenceException {
+        String updateString = "UPDATE UserHistory set logicaldelete=true WHERE username=:username and category=:category and logicalDelete=true";
+
+        Query query = getEntityManager().createQuery(updateString);
+
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("category", category); 
+        
+		return query.executeUpdate();	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer restoreUserHistory(String username) throws PersistenceException {
+        String updateString = "UPDATE UserHistory set logicaldelete=true WHERE username=:username and logicalDelete=true";
+
+        Query query = getEntityManager().createQuery(updateString);
+
+        query.setParameter("username", username);
+        
+		return query.executeUpdate();	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer restoreUserHistory(String username, Category category) throws PersistenceException {
+        String updateString = "UPDATE UserHistory set logicaldelete=true WHERE username=:username and category=:category and logicalDelete=true";
+
+        Query query = getEntityManager().createQuery(updateString);
+
+        query.setParameter("username", username);
+        query.setParameter("category", category); 
+        
+		return query.executeUpdate();	
 	}
 
 	/**

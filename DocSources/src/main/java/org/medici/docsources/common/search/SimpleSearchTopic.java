@@ -39,7 +39,7 @@ import org.medici.docsources.common.util.SimpleSearchUtils;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class SimpleSearchTopic implements SimpleSearch {
+public class SimpleSearchTopic implements Search {
 	/**
 	 * 
 	 */

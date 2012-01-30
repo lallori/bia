@@ -56,6 +56,7 @@ import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,7 +86,8 @@ public class UserServiceImpl implements UserService {
 	private PasswordChangeRequestDAO passwordChangeRequestDAO;
 	@Autowired
 	private PersonalNotesDAO personalNotesDAO;
-	@Autowired
+	@Autowired(required = false)
+	@Qualifier("userDaoLdapImpl")
 	private UserDAO userDAO; 
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
@@ -156,6 +158,30 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void deleteMyHistory() throws ApplicationThrowable {
+		try {
+			getUserHistoryDAO().deleteMyHistory();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteMyHistory(Category category) throws ApplicationThrowable {
+		try {
+			getUserHistoryDAO().deleteMyHistory(category);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void deleteUser(User user) throws ApplicationThrowable {
 		try {
 			getUserDAO().remove(user);
@@ -163,7 +189,34 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteUserHistory(String username) throws ApplicationThrowable {
+		try {
+			getUserHistoryDAO().deleteUserHistory(username);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteUserHistory(String username, Category category) throws ApplicationThrowable {
+		try {
+			getUserHistoryDAO().deleteUserHistory(username, category);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public PersonalNotes editPersonalNotes(String account, PersonalNotes personalNotes) throws ApplicationThrowable {
@@ -480,8 +533,7 @@ public class UserServiceImpl implements UserService {
 		} catch (Throwable th) {
 			ApplicationThrowable applicationException = new ApplicationThrowable(
 					th);
-			if (applicationException.getApplicationError().equals(
-					ApplicationError.LDAP_NAME_NOT_FOUND_ERROR))
+			if (applicationException.getApplicationError().equals(ApplicationError.USER_NAME_NOT_FOUND_ERROR))
 				return Boolean.TRUE;
 			else
 				throw applicationException;
@@ -570,9 +622,45 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public void restoreMyHistory() throws ApplicationThrowable {
 		try {
-			return getUserHistoryDAO().findHistory(paginationFilter);
+			getUserHistoryDAO().restoreMyHistory();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void restoreMyHistory(Category category) throws ApplicationThrowable {
+		try {
+			getUserHistoryDAO().restoreMyHistory(category);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void restoreUserHistory(String username) throws ApplicationThrowable {
+		try {
+			getUserHistoryDAO().restoreUserHistory(username);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void restoreUserHistory(String username, Category category) throws ApplicationThrowable {
+		try {
+			getUserHistoryDAO().restoreUserHistory(username, category);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -585,6 +673,18 @@ public class UserServiceImpl implements UserService {
 	public Page searchUserHistory(Category category, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getUserHistoryDAO().findHistory(category, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getUserHistoryDAO().findHistory(paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

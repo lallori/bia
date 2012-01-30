@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.medici.docsources.command.search.SimpleSearchCommand;
+import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -108,21 +109,21 @@ public class SimpleSearchController {
 		model.put("searchUUID", uuid.toString());
 
 		// Add outputFields;
-		List<String> outputFields = getOutputFields(command.getSearchType());
+		List<String> outputFields = getOutputFields(command.getSimpleSearchPerimeter());
 		model.put("outputFields", outputFields);
 		return new ModelAndView("search/SimpleSearchResult",model);
 	}
 
 	/**
-	 * This method return a list of output fields by searchType
-	 * @param searchType
+	 * This method return a list of output fields by simpleSearchPerimeter
+	 * @param simpleSearchPerimeter
 	 * @return
 	 */
-	private List<String> getOutputFields(SearchType searchType) {
+	private List<String> getOutputFields(SimpleSearchPerimeter simpleSearchPerimeter) {
 		List<String> outputFields = null;
 
 		// Search operation is made by View with a jquery plugin to contextualized AjaxController
-		if (searchType.equals(SearchType.DOCUMENT)) {
+		if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
 			outputFields = new ArrayList<String>(6);
 			outputFields.add("Sender");
 			outputFields.add("Recipient");
@@ -130,14 +131,22 @@ public class SimpleSearchController {
 			outputFields.add("Sender Location");
 			outputFields.add("Recipient Location");
 			outputFields.add("Volume / Folio");
-		} else if (searchType.equals(SearchType.PEOPLE)) {
+		} else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
+			outputFields = new ArrayList<String>(6);
+			outputFields.add("Sender");
+			outputFields.add("Recipient");
+			outputFields.add("Date");
+			outputFields.add("Sender Location");
+			outputFields.add("Recipient Location");
+			outputFields.add("Volume / Folio");
+		} else if (simpleSearchPerimeter.equals(SearchType.PEOPLE)) {
 			outputFields = new ArrayList<String>(5);
 			outputFields.add("Name");
 			outputFields.add("Gender");
 			outputFields.add("Born Date");
 			outputFields.add("Death Date");
 			outputFields.add("Documents Related");
-		} else if (searchType.equals(SearchType.PLACE)) {
+		} else if (simpleSearchPerimeter.equals(SearchType.PLACE)) {
 			outputFields = new ArrayList<String>(4);
 			outputFields.add("Place Name");
 			outputFields.add("Place Type");

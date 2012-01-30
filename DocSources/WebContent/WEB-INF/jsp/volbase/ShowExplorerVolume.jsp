@@ -98,6 +98,23 @@
 		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
 	</c:url> 
 	
+	<c:url var="indexOfNamesURL" value="/src/volbase/ShowExplorerVolume.do">
+		<c:param name="summaryId" value="${command.summaryId}"/>
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
+		<c:param name="imageType" value="R" />
+		<c:param name="imageProgTypeNum" value="1" />
+		<c:param name="total" value="${volumeExplorer.total}" />
+		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+		<c:param name="flashVersion" value="false" />
+		<c:param name="showHelp" value="false" />
+		<c:param name="showThumbnail" value="false" />
+	</c:url>	
+	
 	<div id="ShowVolumeExplorer">
 		<div id="prevNextButtons">
 			<div id="previousPage">
@@ -158,7 +175,7 @@
 			</security:authorize>
 			<a id="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
-			<a title="Index of Names" class="transcribe" href="#" id="indexNames"></a>
+			<a id="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
 		</div>
 		
 		<div id="folioMoveTo">
@@ -254,6 +271,13 @@
 				
 				$j("#volumeSummary").click(function(){
 					$dialogVolumeSummary.dialog('open');
+					return false;
+				});
+
+				$j("#indexNames").click(function(){
+					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
+					// we force tab reload 
+					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
 				});
 

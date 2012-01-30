@@ -114,17 +114,21 @@ public class AjaxController {
 				documentId = entryId;
 			} else {
 				if ((!ObjectUtils.toString(imageType).equals(""))  && (!imageType.equals("C"))){
-						model.put("error", "wrongType");
+					model.put("error", "wrongType");
 				} else {
 					// We extract image
 					image = getManuscriptViewerService().findVolumeImage(null, volNum, volLetExt, (imageType!=null) ? ImageType.valueOf(imageType) : null, imageProgTypeNum, imageOrder);
 					
-					// We check if this image has a document linked...
 					if (image != null) {
-						documentId = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image);
-					}
-					if(image.getImageType() != null && image.getImageType().equals(ImageType.R)){
-						model.put("imageType", "R");
+						if ((!ObjectUtils.toString(image.getImageType()).equals(""))  && (!image.getImageType().equals(ImageType.C))){
+							model.put("error", "wrongType");
+						} else {
+							// We check if this image has a document linked...
+							documentId = getManuscriptViewerService().findLinkedDocument(volNum, volLetExt, image);
+						}
+						model.put("imageName", image.getImageName());
+						model.put("imageId", image.getImageId());
+						model.put("imageType", image.getImageType());
 					}
 				}
 			}			
@@ -132,10 +136,6 @@ public class AjaxController {
 			model.put("linkedDocument", (documentId != null) ? "true" : "false");
 			model.put("entryId", documentId );
 			model.put("showLinkedDocument", HtmlUtils.showDocument(documentId));
-			model.put("imageName", image.getImageName());
-			model.put("imageId", image.getImageId());
-			if(image.getImageType() != null && image.getImageType().equals("R"))
-				model.put("imageType", "R");
 		}catch (ApplicationThrowable applicationThrowable) {
 			model.put("entryId", null);
 			model.put("linkedDocument", "false");

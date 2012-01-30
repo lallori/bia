@@ -160,7 +160,7 @@ public class UserDaoLdapImpl implements UserDAO {
 	}
 
 	/**
-	 * This class makes a mapping between context attribute cn and UserRole
+	 * This class makes a mapping between context attribute cn and Authority
 	 * enum. It's used to istantiate UserRoles generated from the subTree
 	 * containing application group policy.
 	 * 
@@ -359,12 +359,9 @@ public class UserDaoLdapImpl implements UserDAO {
 	}
 
 	/**
-	 * 
-	 * @param userRole
-	 * @param context
+	 * {@inheritDoc}
 	 */
-	protected void mapUserRoleToContext(UserRole userRole,
-			DirContextOperations context) {
+	protected void mapUserRoleToContext(UserRole userRole, DirContextOperations context) {
 		context.setAttributeValues("objectclass", new String[] { "top", "groupOfNames" });
 	}
 
@@ -451,13 +448,20 @@ public class UserDaoLdapImpl implements UserDAO {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void merge(User user) {
+	public User merge(User user) {
 		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), user.getAccount()));
 		mapUserToContext(user, context);
 		getLdapTemplate().modifyAttributes(context);
+		return user;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void persist(User user) {
 		DirContextAdapter context = new DirContextAdapter();
@@ -493,7 +497,7 @@ public class UserDaoLdapImpl implements UserDAO {
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
 	public void removeAllUserRoles(String account) {
 		if (account == null)
@@ -511,8 +515,7 @@ public class UserDaoLdapImpl implements UserDAO {
 	}
 
 	/**
-	 * @param account
-	 * @param userRoles
+	 * {@inheritDoc}
 	 */
 	public void removeUserRoles(String account, List<User.UserRole> userRoles) {
 		if ((account == null) || (userRoles == null))

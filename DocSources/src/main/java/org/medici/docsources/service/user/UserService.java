@@ -92,12 +92,44 @@ public interface UserService {
 	public void addPasswordChangeRequest(User user, String remoteAddress) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMyHistory() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param category
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMyHistory(Category category) throws ApplicationThrowable;
+
+	/**
 	 * Removes specified user from persistent layer.
 	 * 
 	 * @param user the {@link org.medici.docsources.domain.User} object to be removed.
 	 * @throws org.medici.docsources.exception.ApplicationThrowable application throwable throwed if an error is occured.
 	 */
 	public void deleteUser(User user) throws ApplicationThrowable;
+
+	/**
+	 * This is an admin function. If you want to delete your history log please
+	 * see deleteMyHistory methods.
+	 * 
+	 * @param username
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteUserHistory(String username) throws ApplicationThrowable;
+
+	/**
+	 * This is an admin function. If you want to delete your history log please
+	 * see deleteMyHistory methods.
+	 * 
+	 * @param username
+	 * @param category
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteUserHistory(String username, Category category) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -107,7 +139,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public PersonalNotes editPersonalNotes(String account, PersonalNotes personalNotes) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method will find an activation user entity.
 	 * 
@@ -187,7 +219,6 @@ public interface UserService {
 	 */
 	public User findUser(User user) throws ApplicationThrowable;
 
-
 	/**
 	 * Given in input an user containing search fields conditions, this method
 	 * will returns {@link java.util.List} of User object that match with the search
@@ -217,7 +248,8 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public HashMap<String, List<?>> getMyHistoryReport(Integer numberOfHistory) throws ApplicationThrowable;
-	
+
+
 	/**
 	 * 
 	 * @param account
@@ -244,7 +276,7 @@ public interface UserService {
 	 *          - 3, password contains alphabetic chars and letters;
 	 */
 	public Integer ratePassword(String password);
-
+	
 	/**
 	 * This method implements business logic for register a new user.<br>
 	 * The input user must be completed, with following informations :<br>
@@ -266,11 +298,31 @@ public interface UserService {
 
 	/**
 	 * 
-	 * @param paginationFilter
-	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public void restoreMyHistory() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param category
+	 * @throws ApplicationThrowable
+	 */
+	public void restoreMyHistory(Category category) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param username
+	 * @throws ApplicationThrowable
+	 */
+	public void restoreUserHistory(String username) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param username
+	 * @param category
+	 * @throws ApplicationThrowable
+	 */
+	public void restoreUserHistory(String username, Category category) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -280,6 +332,14 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchUserHistory(Category category, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

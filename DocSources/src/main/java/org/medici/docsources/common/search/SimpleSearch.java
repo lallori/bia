@@ -27,10 +27,32 @@
  */
 package org.medici.docsources.common.search;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public interface SimpleSearch extends Search {
+public abstract class SimpleSearch implements Search {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2202182527085038993L;
+
+	public static enum SimpleSearchPerimeter implements Serializable {
+		EXTRACT("EXTRACT"), SYNOPSIS("SYNOPSIS"), VOLUME("VOLUME"), PEOPLE("PEOPLE"), PLACE("PLACE");
+		
+		private final String searchType;
+
+	    private SimpleSearchPerimeter(String value) {
+	    	searchType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return searchType;
+	    }
+	}
 }

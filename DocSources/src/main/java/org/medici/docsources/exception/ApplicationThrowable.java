@@ -109,7 +109,7 @@ public class ApplicationThrowable extends Throwable {
 			} else if (getCause().getClass().getName().endsWith("ldap.CommunicationException")) {
 				return ApplicationError.LDAP_SERVER_NOT_RESPONDING_ERROR;
 			} else if (getCause().getClass().getName().endsWith("ldap.NameNotFoundException")) {
-				return ApplicationError.LDAP_NAME_NOT_FOUND_ERROR;
+				return ApplicationError.USER_NAME_NOT_FOUND_ERROR;
 				
 			} else if (getCause().getClass().getName().endsWith("NullPointerException")) {
 				if (getCause().getMessage() != null) {

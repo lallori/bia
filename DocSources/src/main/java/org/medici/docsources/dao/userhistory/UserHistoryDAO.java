@@ -45,13 +45,30 @@ import org.medici.docsources.domain.UserHistory.Category;
 public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 
 	/**
-	 * This method will return a list with size "resultSize", of user history on document base. 
 	 * 
-	 * @param resultSize
-	 * @return
 	 * @throws PersistenceException
 	 */
-	public List<UserHistory> findHistory(Integer resultSize) throws PersistenceException;
+	public Integer deleteMyHistory() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param category
+	 * @throws PersistenceException
+	 */
+	public Integer deleteMyHistory(Category category) throws PersistenceException;
+
+	/**
+	 * 
+	 * @throws PersistenceException
+	 */
+	public Integer deleteUserHistory(String username) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param category
+	 * @throws PersistenceException
+	 */
+	public Integer deleteUserHistory(String username, Category category) throws PersistenceException;
 
 	/**
 	 * This method will return a list with size "resultSize", of user history on document base. 
@@ -62,6 +79,32 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @throws PersistenceException
 	 */
 	public List<UserHistory> findHistory(Category category, Integer resultSize) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findHistory(Category category, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * This method will return a list with size "resultSize", of user history on document base. 
+	 * 
+	 * @param resultSize
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<UserHistory> findHistory(Integer resultSize) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findHistory(PaginationFilter paginationFilter) throws PersistenceException;
+
 
 	/**
 	 * 
@@ -78,21 +121,36 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @throws PersistenceException
 	 */
 	public UserHistory findLastEntry(Category category) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page findHistory(PaginationFilter paginationFilter) throws PersistenceException;
-
 
 	/**
 	 * 
-	 * @param paginationFilter
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page findHistory(Category category, PaginationFilter paginationFilter) throws PersistenceException;
+	public Integer restoreMyHistory() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param category
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer restoreMyHistory(Category category) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer restoreUserHistory(String username) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param username
+	 * @param category
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer restoreUserHistory(String username, Category category) throws PersistenceException;
 }

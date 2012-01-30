@@ -5,12 +5,12 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="SimpleSearchPaginationURL" value="/src/SimpleSearchPagination.json">
-		<c:param name="searchType" value="${command.searchType}" />
+		<c:param name="simpleSearchPerimeter" value="${command.simpleSearchPerimeter}" />
 	</c:url>
 
 	<c:url var="AdvancedSearchRefineURL" value="/src/ConvertSimpleSearchToAdvancedSearch.do">
 		<c:param name="searchUUID" value="${command.searchUUID}"></c:param>
-		<c:param name="searchType" value="${command.searchType}" />
+		<c:param name="simpleSearchPerimeter" value="${command.simpleSearchPerimeter}" />
 		<c:param name="text" value="${command.text}" />
 	</c:url>
 

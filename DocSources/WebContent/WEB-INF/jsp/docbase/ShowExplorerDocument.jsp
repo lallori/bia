@@ -90,6 +90,23 @@
 		<c:param name="volLetExt" value="${command.volLetExt}" />
 	</c:url> 
 	
+	<c:url var="indexOfNamesURL" value="/src/volbase/ShowExplorerVolume.do">
+		<c:param name="summaryId" value="${command.summaryId}"/>
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
+		<c:param name="imageType" value="R" />
+		<c:param name="imageProgTypeNum" value="1" />
+		<c:param name="total" value="${documentExplorer.total}" />
+		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
+		<c:param name="flashVersion" value="false" />
+		<c:param name="showHelp" value="false" />
+		<c:param name="showThumbnail" value="false" />
+	</c:url>	
+	
 	<div id="ShowDocumentExplorer">
 		
 		

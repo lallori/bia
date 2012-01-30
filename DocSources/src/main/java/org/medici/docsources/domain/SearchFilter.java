@@ -42,6 +42,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 
 /**
  * SearchFilter entity.
@@ -114,6 +115,26 @@ public class SearchFilter implements Serializable {
 		super();
 		
 		setSearchType(searchType);
+	}
+
+	/**
+	 * 
+	 * @param simpleSearchPerimeter
+	 */
+	public SearchFilter(SimpleSearchPerimeter simpleSearchPerimeter) {
+		super();
+		
+		 if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
+        	 this.setSearchType(SearchType.DOCUMENT);
+         } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)) {
+        	 this.setSearchType(SearchType.DOCUMENT);
+         } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PEOPLE)) {
+        	 this.setSearchType(SearchType.PEOPLE);
+         } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.PLACE)) {
+        	 this.setSearchType(SearchType.PLACE);
+         } else if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.VOLUME)) {
+        	 this.setSearchType(SearchType.VOLUME);
+         }
 	}
 
 	/**
