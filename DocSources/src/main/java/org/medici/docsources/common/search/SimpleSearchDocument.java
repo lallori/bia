@@ -113,24 +113,33 @@ public class SimpleSearchDocument extends SimpleSearch {
 	@Override
 	public String toJPAQuery() {
 		StringBuffer jpaQuery = new StringBuffer("FROM Document ");
+		
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 		
 		if (words.length >0) {
 			jpaQuery.append(" WHERE ");
 		}
-
-		for (int i=0; i<words.length; i++) {
-			jpaQuery.append("((synExtract.docExtract like '%");
-			jpaQuery.append(words[i]);
-			jpaQuery.append("%') or ");
-			jpaQuery.append("(synExtract.synopsis like '%");
-			jpaQuery.append(words[i]);
-			jpaQuery.append("%'))");
-			if (i<(words.length-1)) {
-				jpaQuery.append(" and ");
+		
+		if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)){
+			for(int i = 0; i < words.length; i++){
+				jpaQuery.append("(synExtract.docExtract like '%");
+				jpaQuery.append(words[i]);
+				jpaQuery.append("%')");
+				if(i < words.length-1){
+					jpaQuery.append(" AND ");
+				}
+			}
+		}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)){
+			for(int i = 0; i < words.length; i++){
+				jpaQuery.append("(synExtract.synopsis like '%");
+				jpaQuery.append(words[i]);
+				jpaQuery.append("%')");
+				if(i < words.length-1){
+					jpaQuery.append(" AND ");
+				}
 			}
 		}
-		// TODO Auto-generated method stub
+		
 		return jpaQuery.toString();
 	}
 
@@ -145,15 +154,22 @@ public class SimpleSearchDocument extends SimpleSearch {
 			return booleanQuery;
 		}
 
-		String[] stringFields = new String[]{
-			"synExtract.docExtract",
+		String[] stringFieldExtract = new String[]{
+			"synExtract.docExtract"
+		};
+		
+		String[] stringFieldSynopsis = new String[]{
 			"synExtract.synopsis"
 		};
 		
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 		
 		//E.g. (recipientPeople.mapNameLf: (+cosimo +medici +de) )
-		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words);
+		Query stringQuery = null;
+		if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT))
+			stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFieldExtract, words);
+		else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS))
+			stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFieldSynopsis, words);
 
 		if (!stringQuery.toString().equals("")) {
 			booleanQuery.add(stringQuery,Occur.SHOULD);

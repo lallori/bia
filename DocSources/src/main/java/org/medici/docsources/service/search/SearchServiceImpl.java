@@ -375,7 +375,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getDocumentDAO().searchDocuments(searchContainer, paginationFilter);
+			return getDocumentDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
