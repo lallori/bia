@@ -1067,13 +1067,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						personIdQuery.append(" AND ");
 					}
 					
-					personIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=");
+					personIdQuery.append("(entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=");
 					personIdQuery.append(personId.get(i).toString());
 					personIdQuery.append(") or senderPeople.personId=");
 					personIdQuery.append(personId.get(i).toString());
 					personIdQuery.append(" or recipientPeople.personId=");
 					personIdQuery.append(personId.get(i).toString());
-					personIdQuery.append("");
+					personIdQuery.append(")");
 				} else {
 					if (personQuery.length()>1) {
 						personQuery.append(" AND ");
@@ -1454,7 +1454,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.append("(docDate>");
 					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(" AND docDate<");
-					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(DateUtils.getNumberDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
 					datesQuery.append(")");
 				}
 			}

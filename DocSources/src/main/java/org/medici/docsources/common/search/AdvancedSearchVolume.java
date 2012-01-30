@@ -662,7 +662,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					datesQuery.append("(startDate>");
 					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(" AND startDate<");
-					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(DateUtils.getNumberDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
 					datesQuery.append(")");
 				}
 			}

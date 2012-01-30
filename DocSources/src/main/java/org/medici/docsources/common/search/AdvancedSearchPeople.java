@@ -631,13 +631,25 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					datesQuery.append(" AND ");
 				}
 				if(datesTypes.get(i).equals("Born after")){
-					datesQuery.append("(bornDate>");
-					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(")");
-				}else if(datesTypes.get(i).equals("Died by")){
-					datesQuery.append("(deathDate>");
-					datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(")");
+					if(datesMonth.get(i) != null){
+						datesQuery.append("(bornDate>");
+						datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+						datesQuery.append(")");
+					}else{
+						datesQuery.append("(bornYear>");
+						datesQuery.append(datesYear.get(i));
+						datesQuery.append(")");
+					}
+				}else if(datesTypes.get(i).equals("Dead by")){
+					if(datesMonth.get(i) != null){
+						datesQuery.append("(deathDate<=");
+						datesQuery.append(DateUtils.getNumberDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+						datesQuery.append(")");
+					}else{
+						datesQuery.append("(deathYear<=");
+						datesQuery.append(datesYear.get(i));
+						datesQuery.append(")");
+					}
 				}else if(datesTypes.get(i).equals("Lived between")){
 					datesQuery.append("(bornDate<");
 					datesQuery.append(DateUtils.getNumberDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
