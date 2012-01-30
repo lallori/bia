@@ -2377,7 +2377,7 @@ a.refreshVolumeExplorer {
 /* ---------------- */
 /* ---- Index of names --- */
 
-#indexNames { /* Index of Names button on Page Turner Panel */
+.indexNames { /* Index of Names button on Page Turner Panel */
 	background:url(/DocSources/images/mview/button_indexOfNames.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
