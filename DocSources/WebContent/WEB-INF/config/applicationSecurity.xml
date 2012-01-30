@@ -26,6 +26,7 @@
         <security:intercept-url pattern="/de/**"    				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS" />
         <security:intercept-url pattern="/dev/**"   				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS" />
         <security:intercept-url pattern="/devd/**"  				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS" />
+        <security:intercept-url pattern="/digitization/**"   		access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
         <security:intercept-url pattern="/src/**"   				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
         <security:intercept-url pattern="/mview/**" 				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS" />
         <security:intercept-url pattern="/cm/**"    				access="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS" />
