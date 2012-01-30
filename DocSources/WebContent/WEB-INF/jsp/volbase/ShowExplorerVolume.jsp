@@ -174,7 +174,7 @@
 			<a id="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
 			<c:if test="${volumeExplorer.totalRubricario > 0}">
-				<a id="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
+				<a id="indexNames${volumeExplorer.summaryId}" class="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
 			</c:if>
 		</div>
 		
@@ -235,7 +235,7 @@
 					return false;
 				});
 
-		        $j("#indexNames").click(function (){
+				$j(".indexNames").click(function (){
 		        	$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href")); 
 					$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 					return false;
