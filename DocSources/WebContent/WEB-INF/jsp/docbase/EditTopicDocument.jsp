@@ -63,11 +63,6 @@
 		$j(document).ready(function() {
 			$j.scrollTo("#EditTopicsDocumentDiv");
 			
-			$j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
-	        	$j("#loadingDiv").css('visibility', 'visible');
-	     	});
-			
 			var topicDescription = $j('#topicDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
 			    minChars:1, 
@@ -122,12 +117,26 @@
 				Modalbox.show(this.href, {title: this.title, width: 750});
 				return false;
 			});
+			
+			$j("#placeDescriptionAutoCompleter").change(function(){
+				if($j("#placeNotExist").length > 0){
+					$j("#placeNotExist").remove();
+				}
+			});
 
 			$j("#EditTopicDocumentForm").submit(function (){
+				if($j("#placeDescriptionAutoCompleter").val() == '' || $j("#placeId").val() == ''){
+					if($j("#placeNotExist").length <= 0){
+						$j("#closeTopic").before("<span class=\"inputerrorsPlaceNotExist\" id=\"placeNotExist\" style=\"color:red\">Place is not present, you cannot create this topic. Save is disabled.<br></span>");
+					}
+					return false;
+				}
 				if($j("#placePrefered").val() == 'V'){
 					$j('#EditTopicDocumentDiv').block({ message: $j('.notPrincipal') });
 					return false;
-				}else{				
+				}else{
+					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+		        	$j("#loadingDiv").css('visibility', 'visible');
 					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 						$j("#EditTopicsDocumentDiv").load('${EditTopicsDocumentURL}');
 					}})
