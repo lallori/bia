@@ -9,6 +9,9 @@
 
 	<c:url var="MyHistoryPaginationURL" value="/user/MyHistoryPagination.json" />
 	
+	<c:url var="EraseMyHistoryURL" value="/user/EraseMyHistory.do" />
+	
+	
 	<div id="researchHistoryTableDiv">
 	<table cellpadding="0" cellspacing="0" border="0" class="display" id="researchHistoryTable">
 	    <thead>
@@ -31,6 +34,7 @@
 	</div>
 	
 	<div id="MyHistoryButtons">
+		<a id="eraseHistory" href="/DocSources/cm/EraseHistory.html">Erase History</a>
 	    <a id="closeMyHistory" href="#" title="Close My History window">Close</a>
 	    <a id="categoryHistory" href="${ShowMyHistoryReportURL}">Category View</a>
 	</div>
@@ -91,5 +95,9 @@
 				Modalbox.hide();
 				return false;
 			});
+			$j("#eraseHistory").click(
+				function() {
+				Modalbox.show($j(this).attr("href"), {title: "ERASE HISTORY", width: 300, height: 100});return false;}
+			);
 		});
 	</script>
