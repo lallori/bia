@@ -437,12 +437,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 				if ((document.getSenderPeople().getPersonId() >0)) {
 					// We need to remove epLink before setting null sender...
 					EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(documentToUpdate.getEntryId(), document.getSenderPeople().getPersonId());
-					epLinkToDelete.getDocument().setEpLink(null);
-					epLinkToDelete.getPerson().setEpLink(null);
-					getEpLinkDAO().remove(epLinkToDelete);
-					getUserHistoryDAO().persist(new UserHistory("Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+					if(epLinkToDelete != null){
+						epLinkToDelete.getDocument().setEpLink(null);
+						epLinkToDelete.getPerson().setEpLink(null);
+						getEpLinkDAO().remove(epLinkToDelete);
+						getUserHistoryDAO().persist(new UserHistory("Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+					}
 					documentToUpdate.setSenderPeople(null);
 					documentToUpdate.setSenderPeopleUnsure(Boolean.FALSE);
+				}else{
+					document.setSenderPeople(null);
 				}
 			}
 				
@@ -484,12 +488,16 @@ public class DocBaseServiceImpl implements DocBaseService {
 				if (document.getRecipientPeople().getPersonId() >0) {
 					// We need to remove epLink before setting null recipient...
 					EpLink epLinkToDelete = getEpLinkDAO().findByEntryIdAndPersonId(documentToUpdate.getEntryId(), document.getRecipientPeople().getPersonId());
-					epLinkToDelete.getDocument().setEpLink(null);
-					epLinkToDelete.getPerson().setEpLink(null);
-					getEpLinkDAO().remove(epLinkToDelete);
-					getUserHistoryDAO().persist(new UserHistory("Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+					if(epLinkToDelete != null){
+						epLinkToDelete.getDocument().setEpLink(null);
+						epLinkToDelete.getPerson().setEpLink(null);
+						getEpLinkDAO().remove(epLinkToDelete);
+						getUserHistoryDAO().persist(new UserHistory("Unlink person ", Action.MODIFY, Category.DOCUMENT, epLinkToDelete.getDocument()));
+					}
 					documentToUpdate.setRecipientPeople(null);
 					documentToUpdate.setRecipientPeopleUnsure(Boolean.FALSE);
+				}else{
+					document.setRecipientPeople(null);
 				}
 			}
 
@@ -560,7 +568,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 				Month month = getMonthDAO().find(document.getDocMonthNum().getMonthNum());
 				documentToUpdate.setDocMonthNum(month);
 			} else {
-				document.setDocMonthNum(null);
+				documentToUpdate.setDocMonthNum(null);
 			}
 			documentToUpdate.setDocDate(DateUtils.getLuceneDate(documentToUpdate.getDocYear(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
 			documentToUpdate.setDocDay(document.getDocDay());
