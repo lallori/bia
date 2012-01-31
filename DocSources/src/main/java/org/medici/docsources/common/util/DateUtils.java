@@ -53,6 +53,37 @@ public class DateUtils {
 		
 		return NumberUtils.createInteger(nextToken);
 	}
+	
+	public static String getDateForSQLQuery(Integer year, Integer month, Integer day){
+		StringBuffer stringBuffer = new StringBuffer("");
+		StringBuffer dateFormat = new StringBuffer("");
+		stringBuffer.append("STR_TO_DATE('");
+		if(year != null){
+			stringBuffer.append(year);
+			dateFormat.append("%Y");
+		}
+		if(month != null){
+			if(stringBuffer.length() > 13){
+				stringBuffer.append(",");
+				dateFormat.append(",");
+			}
+			stringBuffer.append(month);
+			dateFormat.append("%m");
+		}
+		if(day != null){
+			if(stringBuffer.length() > 13){
+				stringBuffer.append(",");
+				dateFormat.append(",");
+			}
+			stringBuffer.append(day);
+			dateFormat.append("%d");
+		}
+		stringBuffer.append("','");
+		stringBuffer.append(dateFormat);
+		stringBuffer.append("')");
+		
+		return stringBuffer.toString();
+	}
 
 	/**
 	 * 

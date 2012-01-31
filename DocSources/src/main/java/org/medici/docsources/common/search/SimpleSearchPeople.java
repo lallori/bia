@@ -94,8 +94,26 @@ public class SimpleSearchPeople extends SimpleSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer jpaQuery = new StringBuffer("FROM People ");
+		
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		
+		if(words.length > 0){
+			jpaQuery.append(" WHERE ");
+		}
+		
+		for(int i = 0; i < words.length; i++){
+			jpaQuery.append("((mapNameLf like '%");
+			jpaQuery.append(words[i]);
+			jpaQuery.append("%') OR personId IN(SELECT person FROM org.medici.docsources.domain.AltName WHERE altName like '%");
+			jpaQuery.append(words[i]);
+			jpaQuery.append("%'))");
+			if(i < words.length-1){
+				jpaQuery.append(" AND ");
+			}
+		}
+		
+		return jpaQuery.toString();
 	}
 
 	/**
@@ -116,11 +134,11 @@ public class SimpleSearchPeople extends SimpleSearch {
 
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 
-		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.SHOULD, Occur.MUST);
-		Query stringQuery2 = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.SHOULD);
+		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.MUST);
+		//Query stringQuery2 = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.SHOULD);
 
 		booleanQuery.add(stringQuery,Occur.SHOULD);
-		booleanQuery.add(stringQuery2,Occur.SHOULD);
+		//booleanQuery.add(stringQuery2,Occur.SHOULD);
 		
 		
 		if (!stringQuery.toString().equals("")) {
