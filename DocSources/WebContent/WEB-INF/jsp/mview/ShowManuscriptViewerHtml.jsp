@@ -19,6 +19,11 @@
 				showNavButtons: true,
 				winResize: true,
 				zoom: 2,
+				scale: 0
 			});
+			
+			
+					
+		
 
 		</script>

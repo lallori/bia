@@ -37,7 +37,8 @@
         "IIPImageServer": "/DocSources/mview/ReverseProxyIIPImage.do",
         "imagePrefix": "/DocSources/images/mview",
         "status":      "no",
-        "canTranscribe":  "false"
+        "canTranscribe":  "false",
+        "scale": "0"
     };
 
     $.fn.pageTurnerForm = function (params) {
@@ -84,7 +85,7 @@
 							image: data.imageCompleteName,
 							prefix: functionParams["imagePrefix"],
 							credit: credit, 
-							scale: 20.0,
+							scale: 0,
 							navigation: true,
 							showNavWindow: true,
 							showNavImage: true, // this property hide navigation image
@@ -158,7 +159,8 @@
         "IIPImageServer": "/DocSources/mview/ReverseProxyIIPImage.do",
         "imagePrefix": "/DocSources/images/mview",
         "status":      "no",
-        "canTranscribe":  "false"
+        "canTranscribe":  "false",
+        "scale": "0"
     };
 
     $.fn.pageTurnerPage = function (params) {
@@ -201,7 +203,7 @@
 						image: data.imageCompleteName,
 						prefix: functionParams["imagePrefix"],
 						credit: credit, 
-						scale: 20.0,
+						scale: 0,
 						navigation: true,
 						showNavWindow: true,
 						showNavImage: true, // this property hide navigation image

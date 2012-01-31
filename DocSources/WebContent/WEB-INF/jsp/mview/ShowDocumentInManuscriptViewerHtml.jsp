@@ -39,7 +39,8 @@
 					showNavImage: true, // this property hide navigation image
 					showNavButtons: true,
 					winResize: true,
-					zoom: 3
+					zoom: 3,
+					scale: 0
 				});
 
 				var $pageTurner = $j('<div></div>')
