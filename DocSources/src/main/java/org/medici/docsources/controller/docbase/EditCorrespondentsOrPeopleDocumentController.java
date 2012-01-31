@@ -99,7 +99,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			Document document = new Document();
 			document.setEntryId(command.getEntryId());
 
-			if (!ObjectUtils.toString(command.getSenderPeopleId()).equals("")) {
+			if (!ObjectUtils.toString(command.getSenderPeopleId()).equals("") || !ObjectUtils.toString(command.getSenderPeopleDescription()).equals("")) {
 				document.setSenderPeople(new People(command.getSenderPeopleId()));
 			} else {
 				document.setSenderPeople(new People(0));
@@ -119,7 +119,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				document.setSenderPlaceUnsure(command.getSenderPlaceUnsure());
 			}
 
-			if (!ObjectUtils.toString(command.getRecipientPeopleId()).equals("")) {
+			if (!ObjectUtils.toString(command.getRecipientPeopleId()).equals("") || !ObjectUtils.toString(command.getRecipientPeopleDescription()).equals("")) {
 				document.setRecipientPeople(new People(command.getRecipientPeopleId()));
 			} else {
 				document.setRecipientPeople(new People(0));
