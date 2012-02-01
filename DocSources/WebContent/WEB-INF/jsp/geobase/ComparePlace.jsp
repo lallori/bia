@@ -8,6 +8,14 @@
 	<c:param name="placeAllId" value="${place.placeAllId}" />	
 </c:url>
 
+<c:url var="ShowSenderDocumentsPlaceURL" value="/de/geobase/ShowSenderDocumentsPlace.do">
+	<c:param name="placeAllId" value="${place.placeAllId}" />
+</c:url>
+
+<c:url var="ShowRecipientDocumentsPlaceURL" value="/de/geobase/ShowRecipientDocumentsPlace.do">
+	<c:param name="placeAllId" value="${place.placeAllId}" />
+</c:url>
+
 <div>
 	<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}" class="buttonMedium">Edit this Place</a>
 </div>
@@ -93,7 +101,8 @@
 	<div class="list">	
 		<div class="row">
 			<c:if test="${senderPlace != null && senderPlace != 0}">
-				<div class="value">${senderPlace} Senders</div>
+				<%-- <div class="value">${senderPlace} Senders</div> --%>
+				<div class="value"><a id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a></div>
 			</c:if>
 			<c:if test="${senderPlace == 0 || senderPlace == null}">
 				<div class="value">0 Sender</div>
@@ -225,5 +234,29 @@
 				$j("#tabs").tabs('remove', selected);
 				return false;
 			});
+			
+			$j(".linkSearch").click(function() {
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			 });
 		});
 	</script>
