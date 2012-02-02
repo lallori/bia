@@ -2,7 +2,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
+		<head>
 		<base href="${pageContext.request.contextPath}"></base>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>the MEDICI ARCHIVE PROJECT</title>
@@ -82,11 +82,11 @@
 		<!-- <script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script> -->
 
-		<!--<script type="text/javascript">
+		<script type="text/javascript">
 	           window.onbeforeunload = function() {
-	               return "If you leave this page you will exit the Software Platform.";
+	               return "If you leave this page you will exit the Software Platform";
 	           };
-		</script>-->
+		</script>
 		
 
 

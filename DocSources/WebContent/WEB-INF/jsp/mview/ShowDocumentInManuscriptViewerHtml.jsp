@@ -21,6 +21,12 @@
 		<c:param name="modeEdit" value="false" />
 	</c:url>
 		
+		<%-- <script>
+           window.onbeforeunload = function() {
+               return "Are you sure you want to leave the Manuscript Transcriber? Changes will be lost.";
+           };
+    	</script> --%>
+		
 		<script type="text/javascript">
 			var $j = jQuery.noConflict();
 			$j(document).ready(function() {
