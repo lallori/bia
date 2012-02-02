@@ -19,7 +19,12 @@
 			<div>
 				<form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID ${command.entryId}</form:label>
 				<form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error">Volume (MDP)</form:label>
-				<form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/>
+				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS">
+					<form:input id="volume" disabled="true" path="volume" cssClass="input_5c"  maxlength="5"/>
+				</security:authorize> 
+				<security:authorize ifNotGranted="ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+					<form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/>
+				</security:authorize>
 			</div>
 
 			<div>
