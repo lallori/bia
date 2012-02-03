@@ -272,7 +272,9 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
+					$j(".placeAdd").attr("disabled");
 					$j(".placeAdd").removeAttr("disabled");
+					$j(".placeAdd").prop("disabled",false);
 					$j('#placeId').val(data);
 				}
 			});	
