@@ -78,7 +78,7 @@
 					<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.do">
 						<c:param name="altName" value="${currentName.altName}" />
 					</c:url>
-						<div class="value"><a class="linkSearch" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
+						<div class="value"><a class="linkFamily" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
 				</c:if>
 				<c:if test="${currentName.nameType != 'Family' }"> 
 					<div class="value">${currentName.namePrefix} ${currentName.altName}</div>
@@ -264,7 +264,7 @@
 				}
 			});
 			
-			$j(".linkChild").click(function() {
+			$j(".linkChild, .linkFamily").click(function() {
 	        	var tabName = $j(this).text();
 				var numTab = 0;
 				

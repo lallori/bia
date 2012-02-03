@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	
-	<c:url var="ShowFamilyPersonURL" value="/de/peoplebase/ShowFamilyPerson.json"></c:url>
+	<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		Family "${family}"
