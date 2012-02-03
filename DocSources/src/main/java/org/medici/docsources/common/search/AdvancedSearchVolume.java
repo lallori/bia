@@ -419,8 +419,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
-		wordsTypes.add(WordType.TitlesAndNotes);
-		words.add(command.getText());
+//		wordsTypes.add(WordType.TitlesAndNotes);
+//		words.add(command.getText());
+		context.add(command.getText());
 	}
 
 	/**

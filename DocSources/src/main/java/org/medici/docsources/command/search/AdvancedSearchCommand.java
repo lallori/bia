@@ -118,7 +118,7 @@ public class AdvancedSearchCommand {
 		} catch (InvocationTargetException itex) {
 		}
 
-		setSearchUUID(searchUUID);
+		setSearchUUID(searchUUID2);
 
 		if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {
        	 this.setSearchType(SearchType.DOCUMENT);

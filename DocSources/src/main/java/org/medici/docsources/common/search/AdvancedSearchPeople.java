@@ -411,8 +411,10 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	@Override
 	public void initFromSimpleSearchCommand(SimpleSearchCommand command) {
-		wordsTypes.add(WordType.TitlesAndNotes);
-		words.add(command.getText());
+//		wordsTypes.add(WordType.TitlesAndNotes);
+//		words.add(command.getText());
+		namesTypes.add(NameType.AllNameTypes);
+		names.add(command.getText());
 	}
 
 	/**
