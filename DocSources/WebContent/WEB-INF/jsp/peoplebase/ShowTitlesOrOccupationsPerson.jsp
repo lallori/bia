@@ -21,10 +21,10 @@
 		</div>
 		<div class="list">
 			<c:forEach items="${person.poLink}" var="currentPoLink">
-				<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/de/peoplebase/ShowTitlesOrOccupationsPeoplePerson.do">
+				<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson.do">
 					<c:param name="titleOccId" value="${currentPoLink.titleOccList.titleOccId}" />
 				</c:url>
-				<c:url var="ShowRoleCatPeoplePersonURL" value="/de/peoplebase/ShowRoleCatPeoplePerson.do">
+				<c:url var="ShowRoleCatPeoplePersonURL" value="/src/peoplebase/ShowRoleCatPeoplePerson.do">
 					<c:param name="roleCatId" value="${currentPoLink.titleOccList.roleCat.roleCatId}" />
 				</c:url>
 				<div class="row">
@@ -34,8 +34,8 @@
 					<c:if test="${!currentPoLink.preferredRole}">
 						<div class="value5"></div>
 					</c:if>
-					<div class="value60"><a class="linkSearch" href="${ShowTitlesOrOccupationsPeoplePersonURL}"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
-					<a class="linkSearch" href="${ShowRoleCatPeoplePersonURL}">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
+					<div class="value60"><a class="linkOccupation" href="${ShowTitlesOrOccupationsPeoplePersonURL}"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
+					<a class="linkOccupation" href="${ShowRoleCatPeoplePersonURL}">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
 					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
 				</div>
 			</c:forEach>
@@ -57,6 +57,30 @@
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditTitlesOrOccupationsPersonDiv").load($j(this).attr("href"));
 				return false;
+			});
+
+			$j(".linkOccupation").click(function() {
+	        	var tabName = $j(this).text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
 			});
 		});
 	</script>
