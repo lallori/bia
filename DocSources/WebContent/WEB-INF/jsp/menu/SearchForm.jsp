@@ -27,25 +27,40 @@
 						});
 						
 						$j("#simpleSearchPerimeter").change(function(){
-							if($j(this).find('option:selected').val() == 'EXTRACT' || $j(this).find('option:selected').val() == 'SYNOPSIS'){
-								$j(".helpIcon").attr('title', 'Documents');
+							
+							if($j(this).find('option:selected').val() == 'EXTRACT'){
+								$j(".helpIcon").attr('title', 'Perform your search in Document Extracts');
+								$j('.helpIcon').tooltip({
+									track: true,
+									fade: 350 
+								});
 							}
+							
+							if($j(this).find('option:selected').val() == 'SYNOPSIS'){
+								$j(".helpIcon").attr('title', 'Perform your search in Document Synopses');
+								$j('.helpIcon').tooltip({
+									track: true,
+									fade: 350 
+								});
+							}
+							
+							
 							if($j(this).find('option:selected').val() == 'VOLUME'){
-								$j(".helpIcon").attr('title', 'Volumes');
+								$j(".helpIcon").attr('title', 'Which Volume fields are we looking into?');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 
 								});
 							}
 							if($j(this).find('option:selected').val() == 'PEOPLE'){
-								$j(".helpIcon").attr('title', 'People');
+								$j(".helpIcon").attr('title', 'Which Person fields are we looking into?');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 
 								});
 							}
 							if($j(this).find('option:selected').val() == 'PLACE'){
-								$j(".helpIcon").attr('title', 'Places');
+								$j(".helpIcon").attr('title', 'Which Place fields are we looking into?');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 
