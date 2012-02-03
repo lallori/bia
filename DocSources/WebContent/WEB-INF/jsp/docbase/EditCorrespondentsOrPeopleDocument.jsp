@@ -172,12 +172,7 @@
 				return false;
 			});
 	        
-	        $j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
-	        	$j("#loadingDiv").css('visibility', 'visible');
-	        });
-
-			$j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
+	        $j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchSenderPeopleURL}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
@@ -290,14 +285,20 @@
 			});
 
 			$j("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
+				if($j("#senderPeopleId").val() == $j("#recipientPeopleId").val()){
+					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('.questionSendRecip') });
+					return false;
+				}
 				if($j("#senderPlacePrefered").val() == 'V' || $j("#recipientPlacePrefered").val() == 'V'){
 					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('.notPrincipal') });
 					return false;
 				}else{
-	 			$j.ajax({ type:"POST", url:$j(this).closest('form').attr("action"), data:$j(this).closest('form').serialize(), async:false, success:function(html) { 
-					$j("#EditCorrespondentsDocumentDiv").html(html);
-				}});
-	 			return false;
+					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+		        	$j("#loadingDiv").css('visibility', 'visible');
+	 				$j.ajax({ type:"POST", url:$j(this).closest('form').attr("action"), data:$j(this).closest('form').serialize(), async:false, success:function(html) { 
+						$j("#EditCorrespondentsDocumentDiv").html(html);
+					}});
+	 				return false;
 				}
 			});
 			
@@ -430,6 +431,12 @@
 		<input type="button" class="personNo" value="No" /> 
 </div>
 
+<div class="questionSendRecip" style="display:none; cursor: default">
+	<h1>The sender and recipient are the same. Is this correct?</h1>
+	<input type="button" class="sendRecipYes" value="Yes" />
+	<input type="button" class="sendRecipNo" value="No" />
+</div>
+
 <script type="text/javascript">
 	$j(document).ready(function() {
 		$j('#no').click(function() { 
@@ -460,6 +467,33 @@
 			}});
 			return false;
 		});
+
+		$j('.sendRecipNo').click(function() {
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j(".questionSendRecip").hide();
+			$j("#EditCorrespondentsDocumentDiv").append($j(".questionSendRecip"));
+			$j(".blockUI").remove();
+			//$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
+			return false; 
+		}); 
+
+		$j('.sendRecipYes').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j(".questionSendRecip").hide();
+			$j("#EditCorrespondentsDocumentDiv").append($j(".questionSendRecip"));
+			$j(".blockUI").remove();
+			if($j("#senderPlacePrefered").val() == 'V' || $j("#recipientPlacePrefered").val() == 'V'){
+				$j('#EditCorrespondentsDocumentDiv').block({ message: $j('.notPrincipal') });
+				return false;
+			}else{
+				$j.ajax({ type:"POST", url:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').attr("action"), data:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').serialize(), async:false, success:function(html) { 
+					$j("#EditCorrespondentsDocumentDiv").html(html);
+				}});
+				return false;
+			}
+        });
      
 	});
 </script>
