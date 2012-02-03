@@ -2142,7 +2142,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 #folioMoveTo { /* Contains "Folio Count" and "Move to folio" */
 	width:465px;
-	margin: 45px 0 0 20px;
+	margin: 88px 0 0 20px;
+	position: absolute;
 }
 
 #folioModalMoveTo { /* Contains "Folio Count" and "Move to folio" */
@@ -2151,10 +2152,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #folioCountForm { /* "Folio Count" FORM */
-	display:inline;
 	color:#6d5c4d;
-	margin-top:10px;
-	position:relative;
+	float: left;
 	font-size:10px;
 }
 
@@ -2168,8 +2167,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #moveToFolioForm { /* Move to folio FORM */
-	width: 120px;
-	display:inline;
+	width: 110px;
 	color:#6d5c4d;
 	float:right;
 	font-size:10px;
@@ -2185,7 +2183,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 .folioLabel { /* "Move to folio" <label> ID  */
 	font-size: 11px;
-	margin: 0 0 0 44px;
+	margin: 0;
 	position:absolute;
 	color:#6d5c4d;
 }
@@ -2198,7 +2196,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 .input_4cFolio { /* "Move to folio" <input> ID  */
-	margin:-3px 0 0 80px;
+	margin: -3px 0 0 35px;
 	position:absolute;
 	width: 30px;
 	font-size: 11px;
@@ -2211,7 +2209,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #go { /* "Move to rubricario" <input> GO button ID  */
-	margin:-4px 0 0 120px;
+	margin: -4px 0 0 80px;
 	width:22px;
 	height:22px;
 	background-image:url(/DocSources/images/1024/button_mini.png);
@@ -2561,12 +2559,16 @@ a.refreshVolumeExplorer {
 }
 
 #VolumeExplorerModalLeft #prevNextButtons {
-	margin: 10px 0 10px 145px;
+	margin: 10px 0 10px 196px;
 }
 
 #VolumeExplorerModalLeft {
 	float:left;
 	margin-top: 15px;
+}
+
+#VolumeExplorerModalLeft #moveToFolioForm {
+	width: 111px;
 }
 
 #VolumeExplorerModalRight {
