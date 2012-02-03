@@ -209,7 +209,7 @@ public class EditDetailsDocumentController {
 			command.setDocDay(document.getDocDay());
 			command.setYearModern(document.getYearModern());
 			command.setDateUns(document.getDateUns());
-			//command.setDateUndated(document.getDa);
+			command.setDateUndated(document.getUndated());
 			command.setDateNotes(document.getDateNotes());
 		} else {
 			// On Document creation, the research is always the current user.
