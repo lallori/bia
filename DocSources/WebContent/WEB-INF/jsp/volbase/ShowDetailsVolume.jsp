@@ -111,7 +111,7 @@
 			
 			//For check if already exsist a tab with volume explorer
 			$j("#ShowVolumeInVolumeExplorer").click(function(){
-				var tabName = "Volume Explorer ${volume.volNum}${volume.volLetExt}";
+				var tabName = "Explore Volume ${volume.volNum}${volume.volLetExt}";
 				var numTab = 0;
 				
 				//Check if already exist a tab with this person
@@ -135,7 +135,8 @@
 			});
 			
 			$j(".num_docs").click(function(){
-				var tabName = "Docs Volume ${volume.summaryId}";
+				//var tabName = "Docs Volume ${volume.summaryId}";
+				var tabName = "Docs Volume ${volume.volNum}${volume.volLetExt}";
 				var numTab = 0;
 				
 				//Check if already exist a tab with this person

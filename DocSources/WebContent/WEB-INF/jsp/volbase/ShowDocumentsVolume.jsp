@@ -7,7 +7,8 @@
 	<c:url var="ShowDocumentsRelatedVolumeURL" value="/de/volbase/ShowDocumentsRelatedVolume.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Documents indexed to volume ${volNum}
+	<div class="num_docs">Documents indexed to Volume ${volNum}</div>
+	<br>	
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDocumentsSummaryId${summaryId}">
