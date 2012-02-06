@@ -444,7 +444,7 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/peoplebase/ShowFamilyPerson.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/peoplebase/ShowFamilyPerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowFamilyPerson(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
