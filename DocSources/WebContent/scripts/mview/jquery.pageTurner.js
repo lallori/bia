@@ -38,7 +38,8 @@
         "imagePrefix": "/DocSources/images/mview",
         "status":      "no",
         "canTranscribe":  "false",
-        "scale": "0"
+        "scale": "0",
+        "fullScreen" : "false"
     };
 
     $.fn.pageTurnerForm = function (params) {
@@ -64,20 +65,38 @@
 						$("#targetframe").html('');
 						var credit = '';
 						
-						if (data.imageTyèe == 'R') {
-							credit += 'Index Of Name n. '; 
+						if (functionParams["fullScreen"] =='true'){
+							if (data.imageTyèe == 'R') {
+								credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;'; 
+							} else {
+								credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+							}
+							credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+							
+							if (data.missedNumbering) {
+								credit += '' + data.missedNumbering;
+							}
+							if (data.imageRectoVerso == 'R') {
+								credit += '</span>' + ' recto' + '</span>';
+							} else {
+								credit += '</span>' + ' verso' + '</span>';
+							}
 						} else {
-							credit += 'Folio n. ';
-						}
-						credit+=data.imageProgTypeNum;
-						
-						if (data.missedNumbering) {
-							credit += ' ' + data.missedNumbering;
-						}
-						if (data.imageRectoVerso == 'R') {
-							credit += ' Recto';
-						} else {
-							credit += ' Verso';
+							if (data.imageTyèe == 'R') {
+								credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;'; 
+							} else {
+								credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+							}
+							credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+							
+							if (data.missedNumbering) {
+								credit += '' + data.missedNumbering;
+							}
+							if (data.imageRectoVerso == 'R') {
+								credit += '</span>' + ' recto' + '</span>';
+							} else {
+								credit += '</span>' + ' verso' + '</span>';
+							}
 						}
 
 						iip = new IIP( "targetframe", {
@@ -160,7 +179,8 @@
         "imagePrefix": "/DocSources/images/mview",
         "status":      "no",
         "canTranscribe":  "false",
-        "scale": "0"
+        "scale": "0",
+        "fullScreen" : "false"
     };
 
     $.fn.pageTurnerPage = function (params) {
@@ -181,21 +201,38 @@
 					$("#targetframe").html('');
 					var credit = '';
 					
-					if (data.imageTyèe == 'R') {
-						credit += 'Index Of Name n. '; 
+					if (functionParams["fullScreen"] =='true'){
+						if (data.imageTyèe == 'R') {
+							credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;'; 
+						} else {
+							credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+						}
+						credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+						
+						if (data.missedNumbering) {
+							credit += '' + data.missedNumbering;
+						}
+						if (data.imageRectoVerso == 'R') {
+							credit += '</span>' + ' recto' + '</span>';
+						} else {
+							credit += '</span>' + ' verso' + '</span>';
+						}
 					} else {
-						credit += 'Folio n. ';
-					}
-					credit+=data.imageProgTypeNum;
-					
-					if (data.missedNumbering) {
-						credit += ' ' + data.missedNumbering;
-					}
-
-					if (data.imageRectoVerso == 'R') {
-						credit += ' Recto';
-					} else {
-						credit += ' Verso';
+						if (data.imageTyèe == 'R') {
+							credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;'; 
+						} else {
+							credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+						}
+						credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+						
+						if (data.missedNumbering) {
+							credit += '' + data.missedNumbering;
+						}
+						if (data.imageRectoVerso == 'R') {
+							credit += '</span>' + ' recto' + '</span>';
+						} else {
+							credit += '</span>' + ' verso' + '</span>';
+						}
 					}
 					
 					iip = new IIP( "targetframe", {
