@@ -12,7 +12,14 @@
 				server: '${IIPImageServerURL}',
 				prefix: '${ImagePrefixURL}',
 				image: '${image}',
-				credit: "${image.imageType == 'C' ? 'folio: ': ''} ${image.imageType == 'R' ? 'Index of Names n.' : ''} ${image.imageProgTypeNum} ${image.missedNumbering} ${image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", 
+				<%-- credit: "${image.imageType == 'C' ? 'folio: ': ''} ${image.imageType == 'R' ? 'Index of Names n.' : ''} ${image.imageProgTypeNum} ${image.missedNumbering} ${image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", --%>
+				credit: '<span style=\'font-size:12px\'>' +
+							"${image.imageType == 'C' ? 'folio &nbsp;&nbsp;': ''} ${image.imageType == 'R' ? 'index of names &nbsp;' : ''}" +
+							'<span style=\'font-size:18px\'>' +
+							"${image.imageProgTypeNum} ${image.missedNumbering}" + 
+							'</span>' +
+							"${image.imageRectoVerso == 'R' ? 'recto' : 'verso'}" +
+						'</span>',
 				navigation: true,
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image
