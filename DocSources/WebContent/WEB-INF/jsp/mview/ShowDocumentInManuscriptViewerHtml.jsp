@@ -45,8 +45,8 @@
 								'<span style=\'font-size:22px\'>' +
 									"${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.missedNumbering}" +
 								'</span>' +
-								"${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}" +
-							'</span>',					
+								"${documentExplorer.image.imageRectoVerso == 'R' ? 'recto' : 'verso'}" +
+								'</span>',					
 					navigation: true,
 					showNavWindow: true,
 					showNavImage: true, // this property hide navigation image
@@ -65,7 +65,7 @@
 					minWidth: 470,
 					minHeight: 110,                                                                                                                                                         
 					title: 'Page Turner',
-					position: ['right','bottom'],                                                                                                                                                       
+					position: ['left','middle'],                                                                                                                                                       
 					closeOnEscape: false,
 					maximized:false,
 					

@@ -33,7 +33,14 @@
 				server: '${IIPImageServer}',
 				prefix: '${ImagePrefixURL}',
 				image: '${documentExplorer.image}',
-				credit: "${documentExplorer.image.imageType == 'C' ? 'folio: ' : ''} ${documentExplorer.image.imageType == 'R' ? 'Index of Names' : ''} ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}",
+				<%-- credit: "${documentExplorer.image.imageType == 'C' ? 'folio: ' : ''} ${documentExplorer.image.imageType == 'R' ? 'Index of Names' : ''} ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", --%>
+				credit: '<span style=\'font-size:16px\'>' +
+							"${documentExplorer.image.imageType == 'C' ? 'folio &nbsp;&nbsp;' : ''} ${documentExplorer.image.imageType == 'R' ? 'index of names &nbsp;' : ''}" +
+							'<span style=\'font-size:22px\'>' +
+							"${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.missedNumbering}" +
+							'</span>' +
+							"${documentExplorer.image.imageRectoVerso == 'R' ? 'recto' : 'verso'}" +
+							'</span>',	
 				navigation: true,
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image
@@ -92,7 +99,7 @@
 					minWidth: 470,
 					minHeight: 110,                                                                                                                                                         
 					title: 'PAGE TURNER',
-					position: ['right','bottom'],                                                                                                                                                       
+					position: ['right','middle'],                                                                                                                                                       
 					closeOnEscape: false,
 					maximized:false,
 					
