@@ -286,7 +286,9 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("folioMod_Sort", paginationFilter.getSortingDirection(), SortField.STRING);
 						break;
 					default:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("docYear_Sort", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection(), SortField.INT);
+						paginationFilter.addSortingCriteria("docDay_Sort", paginationFilter.getSortingDirection(), SortField.INT);
 						break;
 				}
 			}
@@ -323,7 +325,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
 				switch (paginationFilter.getSortingColumn()) {
 					case 0:
-						paginationFilter.addSortingCriteria("placeNameFull", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("placeNameFull_Sort", paginationFilter.getSortingDirection());
 						break;
 					case 1:
 						paginationFilter.addSortingCriteria("plType", paginationFilter.getSortingDirection());
@@ -335,7 +337,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("parentType", paginationFilter.getSortingDirection());
 						break;
 					default:
-						paginationFilter.addSortingCriteria("placeNameFull", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("placeNameFull_Sort", paginationFilter.getSortingDirection());
 						break;
 				}
 			}
@@ -415,7 +417,9 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("folioMod", paginationFilter.getSortingDirection());
 						break;
 					default:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("docYear", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("docDay", paginationFilter.getSortingDirection());
 						break;
 				}
 			}
@@ -642,8 +646,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		}
 
 		String objectsQuery = searchContainer.toJPAQuery();
-
 		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if (sortingCriterias.size() > 0) {
