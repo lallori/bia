@@ -680,13 +680,13 @@ public class Document implements Serializable{
 			returnValue += getVolume().getMDP();
 		}
 		if(getFolioNum() != null){
-			returnValue += "/" + getFolioNum().toString();
+			returnValue += " / " + getFolioNum().toString();
 			if(getFolioMod() != null){
-				returnValue += getFolioMod();
+				returnValue += " " + getFolioMod();
 			}
 		}
 		else{
-			returnValue += "/NNF";
+			returnValue += " / NNF";
 		}
 		
 		return returnValue;
