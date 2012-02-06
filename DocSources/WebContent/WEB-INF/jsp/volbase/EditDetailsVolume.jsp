@@ -70,7 +70,7 @@
 			</div>
 			<input type="hidden" value="" id="modify" />
 		</fieldset>	
-	</form:form>
+	</form:form>	
 
 	<c:url var="searchSeriesListUrl" value="/de/volbase/SearchSeriesList.json"/>
 
@@ -93,12 +93,14 @@
 		       	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 		       	$j("#loadingDiv").css('visibility', 'visible');
 		    });
-
-	        // We disable
-			<c:if test="${command.summaryId != 0}"> 
-				$j("#volNum").attr("disabled","true");
-				$j("#volLetExt").attr("disabled","true");
-	        </c:if>
+	        
+			<%-- We disable editing an already entered volume number if not Administrator  --%>
+	        <security:authorize ifNotGranted="ROLE_ADMINISTRATORS">
+				<c:if test="${command.summaryId != 0}"> 
+					$j("#volNum").attr("disabled","true");
+					$j("#volLetExt").attr("disabled","true");
+    			</c:if>
+			</security:authorize>
 
 			var showVolumeExplorer = function (){
 				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val() },

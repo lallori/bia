@@ -19,12 +19,7 @@
 			<div>
 				<form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID ${command.entryId}</form:label>
 				<form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error">Volume (MDP)</form:label>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS">
-					<form:input id="volume" disabled="true" path="volume" cssClass="input_5c"  maxlength="5"/>
-				</security:authorize> 
-				<security:authorize ifNotGranted="ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-					<form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/>
-				</security:authorize>
+				<form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/>
 			</div>
 
 			<div>
@@ -134,6 +129,13 @@
 				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 				return false;
 			});
+	        
+	        <%-- We disable editing an already entered document volume number if not Administrator  --%>
+	        <security:authorize ifNotGranted="ROLE_ADMINISTRATORS">
+				<c:if test="${command.entryId != 0}"> 
+					$j("#volume").attr("disabled","true");
+    			</c:if>
+			</security:authorize>
 
 			var showVolumeExplorer = function (){
 				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volume: $j("#volume").val() },
@@ -154,12 +156,12 @@
 	                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
 	                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 	                    	
-	                    	/*$j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
+	                    	<%-- $j.get('<c:url value="/src/volbase/ShowExplorerVolume.do" />', { summaryId: data.summaryId, flashVersion : false },
 								function(data){
 									$j("#body_right").html(data);
 									return true;
 								}
-							);*/
+							); --%>
 						}
 					}
 				);
