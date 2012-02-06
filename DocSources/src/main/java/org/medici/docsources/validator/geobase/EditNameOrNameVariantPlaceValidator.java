@@ -29,6 +29,7 @@ package org.medici.docsources.validator.geobase;
 
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
 import org.medici.docsources.command.geobase.EditNameOrNameVariantPlaceCommand;
+import org.medici.docsources.common.util.ValidationUtils;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,7 @@ public class EditNameOrNameVariantPlaceValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditNameOrNameVariantPlaceCommand editNameOrNameVariantPlaceCommand = (EditNameOrNameVariantPlaceCommand) object;
 		validatePlaceAllId(editNameOrNameVariantPlaceCommand.getPlaceAllId(), errors);
+		validateName(editNameOrNameVariantPlaceCommand.getPlName(), errors);
 	}
 
 	/**
@@ -101,6 +103,10 @@ public class EditNameOrNameVariantPlaceValidator implements Validator {
 			} catch (ApplicationThrowable ath) {
 			}
 		}
+	}
+	
+	public void validateName(String name, Errors errors){
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "plName", "error.plName.null");
 	}
 	
 	

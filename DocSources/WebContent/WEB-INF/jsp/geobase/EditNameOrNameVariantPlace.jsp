@@ -55,6 +55,9 @@
 			});
 			
 			$j("#EditNamePlaceForm").submit(function (){
+				if($j("#namePlace").val() == ""){
+					return false;
+				}
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 					$j("#EditNamePlaceDiv").load('${EditNamesOrNamesVariantsPlaceURL}');
 				}})
