@@ -133,6 +133,10 @@
 				tabName = $j(tabName).val();
 				var numTab = 0;
 				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){

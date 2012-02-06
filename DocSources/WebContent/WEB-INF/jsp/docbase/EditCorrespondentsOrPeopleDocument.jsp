@@ -285,7 +285,7 @@
 			});
 
 			$j("#EditCorrespondentsOrPeopleDocumentForm").submit(function (){
-				if($j("#senderPeopleId").val() == $j("#recipientPeopleId").val()){
+				if($j("#senderPeopleId, #recipientPeopleId").val() != "" && $j("#senderPeopleId").val() == $j("#recipientPeopleId").val()){
 					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('.questionSendRecip') });
 					return false;
 				}
@@ -363,25 +363,49 @@
 			});
 
 			$j('.senderLinkPeople').click(function() {
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#senderPeopleDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				var tabName = $j("#senderPeopleDescriptionAutoCompleter").val();
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
 			
 			$j('.senderLinkPlace').click(function() {
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#senderPlaceDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				var tabName = $j("#senderPlaceDescriptionAutoCompleter").val();
+					
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
 			
 			$j('.recipientLinkPeople').click(function() {
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#recipientPeopleDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				var tabName = $j("#recipientPeopleDescriptionAutoCompleter").val();
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
 			
 			$j('.recipientLinkPlace').click(function() {
-				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j("#recipientPlaceDescriptionAutoCompleter").val() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				var tabName = $j("#recipientPlaceDescriptionAutoCompleter").val();
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
+				$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 				$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 				return false;
 			});
@@ -389,6 +413,10 @@
 			$j('.linkPeople').click(function() {
 				var tabName = $j(this).parent();
 				tabName = $j(tabName).find('.input_35c_disabled');
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
 				
 				var numTab = 0;
 				
