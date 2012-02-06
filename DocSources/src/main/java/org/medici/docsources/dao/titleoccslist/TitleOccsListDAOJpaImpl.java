@@ -148,12 +148,13 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(new BooleanClause(queryTitleOcc, BooleanClause.Occur.SHOULD));
+			booleanQuery.add(new BooleanClause(queryTitleOcc, BooleanClause.Occur.MUST));
 			booleanQuery.add(new BooleanClause(queryRoleCatMajor, BooleanClause.Occur.SHOULD));
 			booleanQuery.add(new BooleanClause(queryRoleCatMinor, BooleanClause.Occur.SHOULD));
 	
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, TitleOccsList.class );
-			fullTextQuery.setSort(new Sort(new SortField("titleOcc", SortField.STRING)));
+			
+			//fullTextQuery.setSort(new Sort(new SortField("titleOcc", SortField.STRING)));
 			// Projection permits to extract only a subset of domain class, tuning application.
 			//fullTextQuery.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
