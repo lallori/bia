@@ -8,18 +8,64 @@
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
 	
 		<script type="text/javascript">
+				var credit = '';	
+				if ("${image.imageType}" == 'R') {
+					credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
+					
+					credit+= '<span style=\'font-size:22px\'>' + "${image.imageProgTypeNum}";
+					
+					if ("${image.missedNumbering}") {
+						credit += ' ' + "${image.missedNumbering}";
+					}
+
+					if ("${image.imageRectoVerso}" == 'R') {
+						credit += '</span>' + ' recto' + '</span>';
+					} else {
+						credit += '</span>' + ' verso' + '</span>';
+					}
+				} 
+				
+				else if ("${image.imageType}" == 'C') {
+					credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+					
+					credit+= '<span style=\'font-size:22px\'>' + "${image.imageProgTypeNum}";
+					
+					if ("${image.missedNumbering}") {
+						credit += ' ' + "${image.missedNumbering}";
+					}
+
+					if ("${image.imageRectoVerso}" == 'R') {
+						credit += '</span>' + ' recto' + '</span>';
+					} else {
+						credit += '</span>' + ' verso' + '</span>';
+					}
+				} 
+				
+				else if ("${image.imageType}" == 'A') {
+					credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+					
+					credit+= '<span style=\'font-size:22px\'>' + "${image.imageProgTypeNum}";
+					
+					if ("${image.missedNumbering}") {
+						credit += ' ' + "${image.missedNumbering}";
+					}
+
+					if ("${image.imageRectoVerso}" == 'R') {
+						credit += '</span>' + ' recto' + '</span>';
+					} else {
+						credit += '</span>' + ' verso' + '</span>';
+					}
+				}
+            
+            	else {
+            		var credit = ' ';
+            	}
+			
 			iip = new IIP( "targetframe", {
 				server: '${IIPImageServerURL}',
 				prefix: '${ImagePrefixURL}',
 				image: '${image}',
-				<%-- credit: "${image.imageType == 'C' ? 'folio: ': ''} ${image.imageType == 'R' ? 'Index of Names n.' : ''} ${image.imageProgTypeNum} ${image.missedNumbering} ${image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", --%>
-				credit: '<span style=\'font-size:12px\'>' +
-							"${image.imageType == 'C' ? 'folio &nbsp;&nbsp;': ''} ${image.imageType == 'R' ? 'index of names &nbsp;' : ''}" +
-							'<span style=\'font-size:18px\'>' +
-							"${image.imageProgTypeNum} ${image.missedNumbering}" + 
-							'</span>' +
-							"${image.imageRectoVerso == 'R' ? 'recto' : 'verso'}" +
-						'</span>',
+				credit: credit,
 				navigation: true,
 				showNavWindow: true,
 				showNavImage: true, // this property hide navigation image
@@ -27,10 +73,6 @@
 				winResize: true,
 				zoom: 2,
 				scale: 0
-			});
-			
-			
-					
-		
+			});				
 
 		</script>

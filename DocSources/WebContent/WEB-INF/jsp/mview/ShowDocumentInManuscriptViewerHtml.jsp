@@ -35,18 +35,64 @@
 					cache: false
 				});
 
+				var credit = '';	
+				if ("${documentExplorer.image.imageType}" == 'R') {
+					credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
+					
+					credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
+					
+					if ("${documentExplorer.image.missedNumbering}") {
+						credit += ' ' + "${documentExplorer.image.missedNumbering}";
+					}
+		
+					if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
+						credit += '</span>' + ' recto' + '</span>';
+					} else {
+						credit += '</span>' + ' verso' + '</span>';
+					}
+				} 
+				
+				else if ("${documentExplorer.image.imageType}" == 'C') {
+					credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+					
+					credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
+					
+					if ("${documentExplorer.image.missedNumbering}") {
+						credit += ' ' + "${documentExplorer.image.missedNumbering}";
+					}
+		
+					if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
+						credit += '</span>' + ' recto' + '</span>';
+					} else {
+						credit += '</span>' + ' verso' + '</span>';
+					}
+				} 
+				
+				else if ("${documentExplorer.image.imageType}" == 'A') {
+					credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+					
+					credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
+					
+					if ("${documentExplorer.image.missedNumbering}") {
+						credit += ' ' + "${documentExplorer.image.missedNumbering}";
+					}
+		
+					if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
+						credit += '</span>' + ' recto' + '</span>';
+					} else {
+						credit += '</span>' + ' verso' + '</span>';
+					}
+				}
+		    
+		    	else {
+		    		var credit = ' ';
+		    	}
+				
 				iip = new IIP( "targetframe", {
 					server: '${ReverseProxyIIPImage}',
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
-					<%-- credit: "${documentExplorer.image.imageType == 'C' ? 'folio: ' : ''} ${documentExplorer.image.imageType == 'R' ? 'Index of Names' : ''} ${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.imageRectoVerso == 'R' ? 'Recto' : 'Verso'}", --%>
-					credit: '<span style=\'font-size:16px\'>' +
-								"${documentExplorer.image.imageType == 'C' ? 'folio &nbsp;&nbsp;' : ''} ${documentExplorer.image.imageType == 'R' ? 'index of names &nbsp;' : ''}" +
-								'<span style=\'font-size:22px\'>' +
-									"${documentExplorer.image.imageProgTypeNum} ${documentExplorer.image.missedNumbering}" +
-								'</span>' +
-								"${documentExplorer.image.imageRectoVerso == 'R' ? 'recto' : 'verso'}" +
-								'</span>',					
+					credit: credit,					
 					navigation: true,
 					showNavWindow: true,
 					showNavImage: true, // this property hide navigation image
