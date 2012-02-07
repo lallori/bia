@@ -67,6 +67,8 @@
 						if (data.imageType == 'R') {
 							credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
 							
+							credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+							
 							if (data.missedNumbering) {
 								credit += ' ' + data.missedNumbering;
 							}
@@ -78,8 +80,10 @@
 							}
 						} 
 						
-						if (data.imageType == 'C') {
+						else if (data.imageType == 'C') {
 							credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+							
+							credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
 							
 							if (data.missedNumbering) {
 								credit += ' ' + data.missedNumbering;
@@ -90,9 +94,27 @@
 							} else {
 								credit += '</span>' + ' verso' + '</span>';
 							}
-						} else {
-							var credit = '';
 						} 
+						
+						else if (data.imageType == 'A') {
+							credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+							
+							credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+							
+							if (data.missedNumbering) {
+								credit += ' ' + data.missedNumbering;
+							}
+
+							if (data.imageRectoVerso == 'R') {
+								credit += '</span>' + ' recto' + '</span>';
+							} else {
+								credit += '</span>' + ' verso' + '</span>';
+							}
+						}
+	                
+	                	else {
+	                		var credit = ' ';
+	                	} 
 						
 
 						iip = new IIP( "targetframe", {
