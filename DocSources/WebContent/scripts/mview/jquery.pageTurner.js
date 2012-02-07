@@ -116,7 +116,6 @@
 	                		var credit = ' ';
 	                	} 
 						
-						credit += ' ' + data.imageType;
 
 						iip = new IIP( "targetframe", {
 							server: functionParams["IIPImageServer"],
@@ -271,7 +270,6 @@
                 		var credit = ' ';
                 	}
 					
-					credit += ' ' + data.imageType;
 					
 					iip = new IIP( "targetframe", {
 						server: functionParams["IIPImageServer"],
