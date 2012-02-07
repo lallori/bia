@@ -22,32 +22,32 @@
 			<fieldset>
 			<legend><b>PERSON DETAILS</b></legend>
 				<div>
-					<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error" title="First or Given Name"><u>First Name</u></form:label>
+					<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error" title="First or Given Name"><u>Given Name</u></form:label>
 					<form:input path="first" id="first" cssClass="input_20c" />
 					<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error" title="Succession Number. E.g., 'I' in Cosimo I de'Medici">Succes. Number</form:label>
 					<form:input path="sucNum" id="sucNum" cssClass="input_5c" maxlength="5"/>
 				</div>
 				
 				<div>
-					<form:label for="midPrefix" id="midPrefixLabel" path="midPrefix" cssErrorClass="error" title="Prefix for Middle Display Name">Prefix Pre-Id</form:label>
+					<form:label for="midPrefix" id="midPrefixLabel" path="midPrefix" cssErrorClass="error" title="Prefix for Middle Display Name">Prefix</form:label>
 					<form:input path="midPrefix" id="midPrefix" cssClass="input_5c" maxlength="5"/>
 		
-					<form:label for="middle" id="middleLabel" path="middle" cssErrorClass="error" title="Middle Display Name">Pre-Id</form:label>
+					<form:label for="middle" id="middleLabel" path="middle" cssErrorClass="error" title="Middle Display Name">Patronymic</form:label>
 					<form:input path="middle" id="middle" cssClass="input_20c" />
 				</div>
 				
 				<div>
-					<form:label for="lastPrefix" id="lastPrefixLabel" path="lastPrefix" cssErrorClass="error" title="Prefix for Last/ID Name e.g. 'degli''">Prefix Lastname</form:label>
+					<form:label for="lastPrefix" id="lastPrefixLabel" path="lastPrefix" cssErrorClass="error" title="Prefix for Family Name e.g. 'degli''">Prefix</form:label>
 					<form:input path="lastPrefix" id="lastPrefix" cssClass="input_5c" maxlength="5"/>
 		
-					<form:label for="last" id="lastLabel" path="last" cssErrorClass="error" title="Last or Identification Display Name - Required Entry"><u>Lastname</u></form:label>
+					<form:label for="last" id="lastLabel" path="last" cssErrorClass="error" title="Last or Identification Display Name - Required Entry"><u>Family Name</u></form:label>
 					<form:input path="last" id="last" cssClass="input_20c" />
 				</div>
 				
 				<div>
-					<form:label for="postLastPrefix" id="postLastPrefixLabel" path="postLastPrefix" cssErrorClass="error" title="Prefix for PostLast  Name">Prefix Post-Id</form:label>
+					<form:label for="postLastPrefix" id="postLastPrefixLabel" path="postLastPrefix" cssErrorClass="error" title="Prefix for Appellative">Prefix</form:label>
 					<form:input path="postLastPrefix" id="postLastPrefix" cssClass="input_5c" maxlength="5"/>
-					<form:label for="postLast" id="postLastLabel" path="postLast" cssErrorClass="error" title="Post-ID Display Name">Post-Id</form:label>
+					<form:label for="postLast" id="postLastLabel" path="postLast" cssErrorClass="error" title="Post-ID Display Name">Appellative</form:label>
 					<form:input path="postLast" id="postLast" cssClass="input_20c"/>
 				</div>
 				
