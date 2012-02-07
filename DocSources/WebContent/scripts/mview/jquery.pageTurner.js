@@ -65,20 +65,35 @@
 						var credit = '';
 						
 						if (data.imageType == 'R') {
-							credit += 'Index Of Name n. '; 
-						} else {
-							credit += 'Folio n. ';
-						}
-						credit+=data.imageProgTypeNum;
+							credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
+							
+							if (data.missedNumbering) {
+								credit += ' ' + data.missedNumbering;
+							}
+
+							if (data.imageRectoVerso == 'R') {
+								credit += '</span>' + ' recto' + '</span>';
+							} else {
+								credit += '</span>' + ' verso' + '</span>';
+							}
+						} 
 						
-						if (data.missedNumbering) {
-							credit += ' ' + data.missedNumbering;
-						}
-						if (data.imageRectoVerso == 'R') {
-							credit += ' Recto';
+						if (data.imageType == 'C') {
+							credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+							
+							if (data.missedNumbering) {
+								credit += ' ' + data.missedNumbering;
+							}
+
+							if (data.imageRectoVerso == 'R') {
+								credit += '</span>' + ' recto' + '</span>';
+							} else {
+								credit += '</span>' + ' verso' + '</span>';
+							}
 						} else {
-							credit += ' Verso';
-						}
+							var credit = '';
+						} 
+						
 
 						iip = new IIP( "targetframe", {
 							server: functionParams["IIPImageServer"],
@@ -182,21 +197,56 @@
 					var credit = '';
 					
 					if (data.imageType == 'R') {
-						credit += 'Index Of Name n. '; 
-					} else {
-						credit += 'Folio n. ';
-					}
-					credit+=data.imageProgTypeNum;
-					
-					if (data.missedNumbering) {
-						credit += ' ' + data.missedNumbering;
-					}
+						credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
+						
+						credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+						
+						if (data.missedNumbering) {
+							credit += ' ' + data.missedNumbering;
+						}
 
-					if (data.imageRectoVerso == 'R') {
-						credit += ' Recto';
-					} else {
-						credit += ' Verso';
+						if (data.imageRectoVerso == 'R') {
+							credit += '</span>' + ' recto' + '</span>';
+						} else {
+							credit += '</span>' + ' verso' + '</span>';
+						}
+					} 
+					
+					else if (data.imageType == 'C') {
+						credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
+						
+						credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+						
+						if (data.missedNumbering) {
+							credit += ' ' + data.missedNumbering;
+						}
+
+						if (data.imageRectoVerso == 'R') {
+							credit += '</span>' + ' recto' + '</span>';
+						} else {
+							credit += '</span>' + ' verso' + '</span>';
+						}
+					} 
+					
+					else if (data.imageType == 'A') {
+						credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
+						
+						credit+= '<span style=\'font-size:22px\'>' + data.imageProgTypeNum;
+						
+						if (data.missedNumbering) {
+							credit += ' ' + data.missedNumbering;
+						}
+
+						if (data.imageRectoVerso == 'R') {
+							credit += '</span>' + ' recto' + '</span>';
+						} else {
+							credit += '</span>' + ' verso' + '</span>';
+						}
 					}
+                
+                	else {
+                		var credit = ' ';
+                	}
 					
 					iip = new IIP( "targetframe", {
 						server: functionParams["IIPImageServer"],
