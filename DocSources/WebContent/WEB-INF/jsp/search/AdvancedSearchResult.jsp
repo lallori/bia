@@ -18,8 +18,25 @@
 			//dynamic field management
 			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
+			var test;
+			<c:choose>
+				<c:when test="${command.searchType.toString() == 'PEOPLE'}">
+					test = [[0, "desc"]];
+				</c:when>			
+				<c:when test="${command.searchType.toString() == 'DOCUMENT'}">
+					test = [[2, "desc"]];
+				</c:when>
+				<c:when test="${command.searchType.toString() == 'VOLUME'}">
+					test = [[1, "desc"]];
+				</c:when>
+				<c:when test="${command.searchType.toString() == 'PLACE'}">
+					test = [[0, "desc"]];
+				</c:when>
+			</c:choose>
+			
 			$j('#${command.searchUUID}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
+				"aaSorting": test,
 				"bDestroy" : true,
 				"bFilter" : false,
 				"bProcessing": true,

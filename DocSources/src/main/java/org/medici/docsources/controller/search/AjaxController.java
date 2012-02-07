@@ -185,21 +185,10 @@ public class AjaxController {
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
-								   		 	@RequestParam(value="iDisplayLength") Integer length,
-								   		 	@RequestParam(value="sEcho", required=false) Integer echo) {
+								   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if(echo == 1){
-			if(searchType.equals(SearchType.DOCUMENT)){
-				sortingColumnNumber = 2;
-			}else if(searchType.equals(SearchType.VOLUME)){
-				sortingColumnNumber = 1;
-			}else if(searchType.equals(SearchType.PEOPLE)){
-				sortingColumnNumber = 0;
-			}else if(searchType.equals(SearchType.PLACE)){
-				sortingColumnNumber = 0;
-			}
-		}
+		
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, searchType);
 
 		if (searchType.equals(SearchType.DOCUMENT)) {
@@ -660,25 +649,9 @@ public class AjaxController {
 								   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length,
-									     @RequestParam(value="sEcho", required=false) Integer echo) {
+									     @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if(echo == 1){
-			if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT) || simpleSearchPerimeter.equals(SimpleSearchPerimeter.SYNOPSIS)){
-				sortingColumnNumber = 2;
-			}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.VOLUME)){
-				sortingColumnNumber = 1;
-				sortingDirection = "desc";
-			}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.PEOPLE)){
-				sortingColumnNumber = 0;
-				sortingDirection = "desc";
-			}else if(simpleSearchPerimeter.equals(SimpleSearchPerimeter.PLACE)){
-				sortingColumnNumber = 0;
-				sortingDirection = "desc";
-			}
-		}
-		
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, simpleSearchPerimeter);
 
 		if (simpleSearchPerimeter.equals(SimpleSearchPerimeter.EXTRACT)) {

@@ -55,13 +55,13 @@ public class DocumentUtils {
 			returnValue += volLetExt;
 		}
 		if(folioNum != null){
-			returnValue += "/" + folioNum.toString();
+			returnValue += " / " + folioNum.toString();
 			if(folioMod != null){
-				returnValue += folioMod;
+				returnValue += " " + folioMod;
 			}
 		}
 		else{
-			returnValue += "/NNF";
+			returnValue += " / NNF";
 		}
 		
 		return returnValue;
