@@ -22,7 +22,7 @@
 			<fieldset>
 			<legend><b>PERSON DETAILS</b></legend>
 				<div>
-					<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error" title="First or Given Name"><u>Given Name</u></form:label>
+					<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error" title="First or Given Name"><u>First Name</u></form:label>
 					<form:input path="first" id="first" cssClass="input_20c" />
 					<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error" title="Succession Number. E.g., 'I' in Cosimo I de'Medici">Succes. Number</form:label>
 					<form:input path="sucNum" id="sucNum" cssClass="input_5c" maxlength="5"/>
