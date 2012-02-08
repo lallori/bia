@@ -87,7 +87,7 @@
 						$j("#body_left").html(html);
 					</c:when> 
 					<c:otherwise> 
-						$j("#EditGeoCoorPlaceDiv").html(html);
+						$j("#body_left").html(html);
 					</c:otherwise> 
 				</c:choose> 
 					}
