@@ -115,7 +115,7 @@ public class EditGeographicCoordinatesPlaceController {
 				}
 				model.put("place", place);
 
-				return new ModelAndView("geobase/ShowGeographicCoordinatesPlace", model);
+				return new ModelAndView("geobase/ShowPlace", model);
 			}catch(ApplicationThrowable th){
 				return new ModelAndView("error/ShowGeographicCoordinatesPlace", model);
 			}
