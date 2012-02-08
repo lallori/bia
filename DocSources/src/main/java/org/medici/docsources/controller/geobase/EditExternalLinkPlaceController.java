@@ -90,7 +90,11 @@ public class EditExternalLinkPlaceController {
 
 			PlaceExternalLinks placeExternalLinks = new PlaceExternalLinks(command.getPlaceExternalLinksId());
 			placeExternalLinks.setPlace(new Place(command.getPlaceAllId()));
-			placeExternalLinks.setExternalLink(command.getExternalLink());
+			String link = command.getExternalLink();
+			if(!link.startsWith("http") || !link.startsWith("HTTP")){
+				link = "http://" + link;
+			}
+			placeExternalLinks.setExternalLink(link);
 			placeExternalLinks.setDescription(command.getDescription());
 			
 			try{
