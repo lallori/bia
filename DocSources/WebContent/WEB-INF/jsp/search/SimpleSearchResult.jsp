@@ -28,7 +28,7 @@
 					test = [[0, "desc"]];
 				</c:when>			
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
-					test = [[2, "desc"]];
+					test = [[2, "asc"]];
 				</c:when>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'VOLUME'}">
 					test = [[1, "desc"]];

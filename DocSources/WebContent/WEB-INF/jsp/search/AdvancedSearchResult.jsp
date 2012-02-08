@@ -24,7 +24,7 @@
 					test = [[0, "desc"]];
 				</c:when>			
 				<c:when test="${command.searchType.toString() == 'DOCUMENT'}">
-					test = [[2, "desc"]];
+					test = [[2, "asc"]];
 				</c:when>
 				<c:when test="${command.searchType.toString() == 'VOLUME'}">
 					test = [[1, "desc"]];
