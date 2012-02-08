@@ -50,36 +50,35 @@ public class PersonUtils {
 		StringBuffer stringBuffer = new StringBuffer();
 		if (!ObjectUtils.toString(people.getLast()).equals("")) {
 			stringBuffer.append(people.getLast());
-			stringBuffer.append(", ");
+			stringBuffer.append(",");
 		}
 		if (!ObjectUtils.toString(people.getFirst()).equals("")) {
-			stringBuffer.append(people.getFirst());
-			stringBuffer.append(" "); 
+			stringBuffer.append(" ");
+			stringBuffer.append(people.getFirst()); 
 		}
 		if (!ObjectUtils.toString(people.getSucNum()).equals("")) {
-			stringBuffer.append(people.getSucNum());
-			stringBuffer.append(" "); 
+			stringBuffer.append(" ");
+			stringBuffer.append(people.getSucNum()); 
 		}
 		if (!ObjectUtils.toString(people.getMidPrefix()).equals("")) {
-			stringBuffer.append(people.getMidPrefix());
-			stringBuffer.append(" "); 
+			stringBuffer.append(" ");
+			stringBuffer.append(people.getMidPrefix()); 
 		}
 		if (!ObjectUtils.toString(people.getMiddle()).equals("")) {
-			stringBuffer.append(people.getMiddle());
-			stringBuffer.append(" "); 
+			stringBuffer.append(" ");
+			stringBuffer.append(people.getMiddle()); 
 		}
 		if (!ObjectUtils.toString(people.getLastPrefix()).equals("")) {
-			stringBuffer.append(people.getLastPrefix());
-			stringBuffer.append(" "); 
+			stringBuffer.append(" ");
+			stringBuffer.append(people.getLastPrefix()); 
 		}
 		if (!ObjectUtils.toString(people.getPostLast()).equals("")) {
-			stringBuffer.append("(");
+			stringBuffer.append(" (");
 			if (!ObjectUtils.toString(people.getPostLastPrefix()).equals("")) {
 				stringBuffer.append(people.getPostLastPrefix());
-				stringBuffer.append(" "); 
 			}
 			stringBuffer.append(people.getPostLast());
-			stringBuffer.append(") "); 
+			stringBuffer.append(")"); 
 		}
 		
 		return stringBuffer.toString();

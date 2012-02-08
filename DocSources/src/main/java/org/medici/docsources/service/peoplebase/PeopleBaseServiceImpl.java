@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.peoplebase;
 
+import java.text.Normalizer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -330,14 +331,26 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			AltName family = new AltName();
 			family.setAltName(person.getLast());
 			family.setNameType(NameType.Family.toString());
+			
+			AltName searchName = new AltName();
+			searchName.setAltName(Normalizer.normalize(person.getMapNameLf(), Normalizer.Form.NFD));
+			searchName.setAltName(searchName.getAltName().replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
+			searchName.setAltName(searchName.getAltName().replace(",", ""));
+			searchName.setAltName(searchName.getAltName().toUpperCase());
+			searchName.setNameType(NameType.SearchName.toString());
 
 			getPeopleDAO().persist(person);
 			
-			given.setPerson(getPeopleDAO().findLastEntryPerson());
+			person = getPeopleDAO().findLastEntryPerson();
+			
+			given.setPerson(person);
 			getAltNameDAO().persist(given);
 			
-			family.setPerson(getPeopleDAO().findLastEntryPerson());
+			family.setPerson(person);
 			getAltNameDAO().persist(family);
+			
+			searchName.setPerson(person);
+			getAltNameDAO().persist(searchName);
 
 			getUserHistoryDAO().persist(new UserHistory("Add person", Action.CREATE, Category.PEOPLE, person));
 
@@ -618,8 +631,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 					if(current.getAltName().equals(personToUpdate.getFirst()) && current.getNameType().equals(NameType.Given.toString())){
 						current.setAltName(person.getFirst());
 						found = Boolean.TRUE;
-					}
-					getAltNameDAO().merge(current);
+						getAltNameDAO().merge(current);
+					}					
 				}
 			}
 			
@@ -632,8 +645,30 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 					if(current.getAltName().equals(personToUpdate.getLast()) && current.getNameType().equals(NameType.Family.toString())){
 						current.setAltName(person.getLast());
 						found = Boolean.TRUE;
+						getAltNameDAO().merge(current);
 					}
-					getAltNameDAO().merge(current);
+				}
+			}
+			
+			if(!personToUpdate.getMapNameLf().equals(PersonUtils.generateMapNameLf(person))){
+				AltName current;
+				Boolean found = Boolean.FALSE;
+				Iterator<AltName> iterator = altNames.iterator();
+				String toCompare = personToUpdate.getMapNameLf();
+				toCompare = Normalizer.normalize(toCompare, Normalizer.Form.NFD);
+				toCompare = toCompare.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+				toCompare = toCompare.replace(",", "");
+				toCompare = toCompare.toUpperCase();
+				while(iterator.hasNext() && !found){
+					current = iterator.next();
+					if(current.getAltName().equals(toCompare) && current.getNameType().equals(NameType.SearchName.toString())){
+						current.setAltName(Normalizer.normalize(PersonUtils.generateMapNameLf(person), Normalizer.Form.NFD));
+						current.setAltName(current.getAltName().replaceAll("\\p{InCombiningDiacriticalMarks}+", ""));
+						current.setAltName(current.getAltName().replace(",", ""));
+						current.setAltName(current.getAltName().toUpperCase());
+						found = Boolean.TRUE;
+						getAltNameDAO().merge(current);
+					}					
 				}
 			}
 			
