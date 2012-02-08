@@ -45,5 +45,10 @@
 			return false;
 		});
 		
+		$j("#MB_close").click(function(){
+			Modalbox.hide();
+			return false;
+		})
+		
 	});
 	</script>

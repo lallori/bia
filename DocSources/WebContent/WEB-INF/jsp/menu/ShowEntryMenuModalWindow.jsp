@@ -42,6 +42,11 @@
 					Modalbox.show($j(this).attr("href"), {title: "ADD NEW PLACE", width: 750, height: 450})
 					;return false;
 				});
+				
+				$j("#MB_close").click(function(){
+					Modalbox.hide();
+					return false;
+				})
 			});
 		</script>
 	</security:authorize>
