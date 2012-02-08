@@ -56,7 +56,6 @@ import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.AnalyzerDefs;
 import org.hibernate.search.annotations.CharFilterDef;
-import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -252,26 +251,26 @@ public class Place implements Serializable {
 	private Boolean logicalDelete;
 
 	@OneToMany(mappedBy="senderPlace", fetch=FetchType.LAZY)
-	@ContainedIn
+	//@ContainedIn
     private Set<Document> senderDocuments;
     
     @OneToMany(mappedBy="recipientPlace", fetch=FetchType.LAZY)
-	@ContainedIn
+	//@ContainedIn
     private Set<Document> recipientDocuments;
 
     @OneToMany(mappedBy="bornPlace", fetch=FetchType.LAZY)
-	@ContainedIn
+	//@ContainedIn
     private Set<People> bornedPeople;
     
     @OneToMany(mappedBy="deathPlace", fetch=FetchType.LAZY)
-	@ContainedIn
+	//@ContainedIn
     private Set<People> deathPeople;
 
     @OneToMany(mappedBy="place", fetch=FetchType.LAZY)
-	@ContainedIn
+	//@ContainedIn
     private Set<EplToLink> eplToLinks;
     
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch=FetchType.LAZY, mappedBy="place", cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="PLACEALLID", referencedColumnName="PALCEALLID")
     @IndexedEmbedded
     private PlaceGeographicCoordinates placeGeographicCoordinates;
