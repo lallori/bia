@@ -393,6 +393,17 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param volNums
+	 * @param volLetExts
+	 * @param folioNums
+	 * @param folioMods
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param peopleIds
 	 * @return
 	 * @throws ApplicationThrowable

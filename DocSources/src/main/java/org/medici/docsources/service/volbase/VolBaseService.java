@@ -229,6 +229,17 @@ public interface VolBaseService {
 	public void generateIndexVolume() throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param volNums
+	 * @param volLetExts
+	 * @param folioNums
+	 * @param folioMods
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
+	
+	/**
 	 * This method extracts all months available.
 	 *  
 	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Month}

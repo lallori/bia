@@ -30,7 +30,7 @@
 					test = [[1, "desc"]];
 				</c:when>
 				<c:when test="${command.searchType.toString() == 'PLACE'}">
-					test = [[0, "desc"]];
+					test = [[0, "asc"]];
 				</c:when>
 			</c:choose>
 			

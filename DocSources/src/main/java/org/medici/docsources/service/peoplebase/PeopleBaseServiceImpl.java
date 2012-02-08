@@ -39,12 +39,14 @@ import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.PersonUtils;
 import org.medici.docsources.dao.altname.AltNameDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
+import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.marriage.MarriageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.parent.ParentDAO;
@@ -97,6 +99,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	
 	@Autowired 
 	private EpLinkDAO epLinkDAO;
+	
+	@Autowired
+	private ImageDAO imageDAO;
 	
 	@Autowired
 	private MarriageDAO marriageDAO;
@@ -1252,12 +1257,38 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
 	}
+	
+	@Override
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
+		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
+		try{
+			for(int i=0; i<volNums.size();i++){
+				retValue.put(DocumentUtils.toMDPAndFolioFormat(volNums.get(i), volLetExts.get(i), folioNums.get(i), folioMods.get(i)), Boolean.FALSE);
+			}
+			
+			List<String> documentsDigitized = getImageDAO().findDocumentsDigitized(volNums, volLetExts, folioNums, folioMods);
+			
+			for(String MDPFolio : documentsDigitized){
+				retValue.put(MDPFolio, Boolean.TRUE);
+			}
+			return retValue;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @return the epLinkDAO
 	 */
 	public EpLinkDAO getEpLinkDAO() {
 		return epLinkDAO;
+	}
+
+	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
 	}
 
 	/**
@@ -1510,6 +1541,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
 		this.epLinkDAO = epLinkDAO;
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
 	}
 
 	/**

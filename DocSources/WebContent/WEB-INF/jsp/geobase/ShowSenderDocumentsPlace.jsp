@@ -29,7 +29,8 @@
 			$j("#showSenderDocumentsPlaceAllId${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
 			$j('#showSenderDocumentsPlaceAllId${placeAllId}').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
+				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }],
+				"aaSorting": [[2, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,

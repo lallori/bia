@@ -31,6 +31,7 @@
 
 			$j('#showTitlesOrOccupationsPeopleTitleOccId${titleOccId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
+				"aaSorting": [[0, "desc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,

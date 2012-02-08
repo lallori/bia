@@ -37,6 +37,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.dao.catalog.CatalogDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
@@ -538,6 +539,28 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public DocumentDAO getDocumetDAO() {
 		return documetDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
+		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
+		try{
+			for(int i=0; i<volNums.size();i++){
+				retValue.put(DocumentUtils.toMDPAndFolioFormat(volNums.get(i), volLetExts.get(i), folioNums.get(i), folioMods.get(i)), Boolean.FALSE);
+			}
+			
+			List<String> documentsDigitized = getImageDAO().findDocumentsDigitized(volNums, volLetExts, folioNums, folioMods);
+			
+			for(String MDPFolio : documentsDigitized){
+				retValue.put(MDPFolio, Boolean.TRUE);
+			}
+			return retValue;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @return the imageDAO
@@ -801,5 +824,4 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 }

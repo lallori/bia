@@ -24,7 +24,7 @@
 	<div>
 		<form id="placeTypeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="These Place Types are assigned to geographical place names in the Getty Thesaurus of Geographic Names. Most places in the Documentary Sources database are of the type 'Inhabited Place' (that is to say, cities, towns and villages.)">?</a>
-			<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_Mlong">
+			<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_XXXlong">
 				<option value="Select a Place Type" selected="selected">Select a Place Type</option>
 				<c:forEach items="${placeTypes}" var="placeType">
 					<option value="${placeType}">${placeType}</option>
@@ -40,7 +40,7 @@
 	<div>
 		<form id="linkedToTopicsSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Most documents are indexed to one or more Topic Categories, and each Topic is indexed to the related Places. By selecting a Topic, you will create a list here of the places that are associated with that topic in the indexed documents. For example, selecting the Topic 'Music and Musical Instruments' will produce a list of places that are linked to documents mentioning Music and Musical Instruments. This allows you to select those relevant to your research.">?</a>
-			<select id="linkedToTopicsSelect" name="linkedToTopicsSelect" class="selectform_Mlong">
+			<select id="linkedToTopicsSelect" name="linkedToTopicsSelect" class="selectform_XXlong">
 				<option value="Select a Topic" selected="selected">Select a Topic</option>
 				<c:forEach items="${topicsList}" var="topicList">
 					<option value="${topicList.topicId}">${topicList}</option>
@@ -57,7 +57,7 @@
 	<div>
 		<form id="linkedToPeopleSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="You can refine your Places search by specifying 'Sender Location', 'Recipient Location', 'Birth Place', or 'Death Place'. The resulting hit list will include a link to the biographical records for the people who meet your criteria.">?</a>
-			<select id="linkedToPeopleSelect" name="linkedToPeopleSelect" class="selectform_Mlong">
+			<select id="linkedToPeopleSelect" name="linkedToPeopleSelect" class="selectform_MXlong">
 				<option value="Select a Link Type" selected="selected">Select a Link Type</option>
 				<option value="Sender Location">Sender Location</option>
 				<option value="Recipient Location">Recipient Location</option>

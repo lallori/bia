@@ -170,6 +170,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -209,6 +211,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -247,6 +251,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			query = getEntityManager().createQuery(countQuery);
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
@@ -322,6 +328,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -395,6 +403,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			query = getEntityManager().createQuery(countQuery);
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
@@ -623,6 +633,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -631,12 +643,13 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 				orderBySQL.append(sortingCriterias.get(i).getColumn());
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
+				}else{
+					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -761,6 +774,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -769,12 +784,13 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 				orderBySQL.append(sortingCriterias.get(i).getColumn());
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
+				}else{
+					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());

@@ -31,6 +31,7 @@
 
 			$j('#showRoleCatPeopleId${roleCatId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
+				"aaSorting": [[0, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,

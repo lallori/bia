@@ -29,6 +29,7 @@ package org.medici.docsources.service.geobase;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -275,6 +276,17 @@ public interface GeoBaseService {
 	 */
 	public void generateIndexPlaceType() throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param volNums
+	 * @param volLetExts
+	 * @param folioNums
+	 * @param folioMods
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable

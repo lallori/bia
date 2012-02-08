@@ -334,6 +334,8 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -342,12 +344,13 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 				orderBySQL.append(sortingCriterias.get(i).getColumn());
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
+				}else{
+					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -373,7 +376,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			query = getEntityManager().createQuery(countQuery);
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
-		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -382,12 +385,13 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 				orderBySQL.append(sortingCriterias.get(i).getColumn());
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
+				}else{
+					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -413,6 +417,8 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -421,12 +427,13 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 				orderBySQL.append(sortingCriterias.get(i).getColumn());
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
+				}else{
+					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -452,6 +459,8 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if(sortingCriterias.size() > 0){
@@ -460,12 +469,13 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 				orderBySQL.append(sortingCriterias.get(i).getColumn());
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
+				}else{
+					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());

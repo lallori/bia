@@ -31,6 +31,7 @@
 
 			$j('#showDocumentsSummaryId${summaryId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
+				"aaSorting": [[2, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,

@@ -28,13 +28,17 @@
 package org.medici.docsources.service.geobase;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
+import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.placeexternallinks.PlaceExternalLinksDAO;
@@ -69,6 +73,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private DocumentDAO documentDAO;
 	@Autowired
 	private EplToLinkDAO eplToLinkDAO;
+	@Autowired
+	private ImageDAO imageDAO;
 	@Autowired
 	private PeopleDAO peopleDAO;
 	@Autowired
@@ -157,18 +163,25 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place addNewPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
 		try{
-			placeGeographicCoordinates.setId(null);
-			placeGeographicCoordinates.setPlace(getPlaceDAO().find(placeGeographicCoordinates.getPlace().getPlaceAllId()));
-			placeGeographicCoordinates.setId(placeGeographicCoordinates.getPlace().getPlaceAllId());
+			PlaceGeographicCoordinates placeGeographicCoordinatesToPersist = new PlaceGeographicCoordinates(null);
+			placeGeographicCoordinatesToPersist.setPlace(getPlaceDAO().find(placeGeographicCoordinates.getPlace().getPlaceAllId()));
+			placeGeographicCoordinatesToPersist.setDegreeLatitude(placeGeographicCoordinates.getDegreeLatitude());
+			placeGeographicCoordinatesToPersist.setMinuteLatitude(placeGeographicCoordinates.getMinuteLatitude());
+			placeGeographicCoordinatesToPersist.setSecondLatitude(placeGeographicCoordinates.getSecondLatitude());
+			placeGeographicCoordinatesToPersist.setDirectionLatitude(placeGeographicCoordinates.getDirectionLatitude());
+			placeGeographicCoordinatesToPersist.setDegreeLongitude(placeGeographicCoordinates.getDegreeLongitude());
+			placeGeographicCoordinatesToPersist.setMinuteLongitude(placeGeographicCoordinates.getMinuteLongitude());
+			placeGeographicCoordinatesToPersist.setSecondLongitude(placeGeographicCoordinates.getSecondLongitude());
+			placeGeographicCoordinatesToPersist.setDirectionLongitude(placeGeographicCoordinates.getDirectionLongitude());
 			
-			getPlaceGeographicCoordinatesDAO().persist(placeGeographicCoordinates);
+			getPlaceGeographicCoordinatesDAO().persist(placeGeographicCoordinatesToPersist);
 			
 			
-			getPlaceDAO().refresh(placeGeographicCoordinates.getPlace());
+			//getPlaceDAO().refresh(placeGeographicCoordinates.getPlace());
 			
-			getUserHistoryDAO().persist(new UserHistory("Add geographic coordinates", Action.MODIFY, Category.PLACE, placeGeographicCoordinates.getPlace()));
+			getUserHistoryDAO().persist(new UserHistory("Add geographic coordinates", Action.MODIFY, Category.PLACE, placeGeographicCoordinatesToPersist.getPlace()));
 
-			return placeGeographicCoordinates.getPlace();
+			return placeGeographicCoordinatesToPersist.getPlace();
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -579,12 +592,38 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
 	}
+	
+	@Override
+	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
+		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
+		try{
+			for(int i=0; i<volNums.size();i++){
+				retValue.put(DocumentUtils.toMDPAndFolioFormat(volNums.get(i), volLetExts.get(i), folioNums.get(i), folioMods.get(i)), Boolean.FALSE);
+			}
+			
+			List<String> documentsDigitized = getImageDAO().findDocumentsDigitized(volNums, volLetExts, folioNums, folioMods);
+			
+			for(String MDPFolio : documentsDigitized){
+				retValue.put(MDPFolio, Boolean.TRUE);
+			}
+			return retValue;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @return the eplToLinkDAO
 	 */
 	public EplToLinkDAO getEplToLinkDAO() {
 		return eplToLinkDAO;
+	}
+
+	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
 	}
 
 	/**
@@ -806,6 +845,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
 		this.eplToLinkDAO = eplToLinkDAO;
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
 	}
 
 	/**

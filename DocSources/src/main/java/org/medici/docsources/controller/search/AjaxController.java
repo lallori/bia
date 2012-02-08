@@ -273,7 +273,7 @@ public class AjaxController {
 		List resultList = new ArrayList();
 		for (Place currentPlace : (List<Place>)page.getList()) {
 			List singleRow = new ArrayList();
-			singleRow.add(currentPlace.getPlaceNameFull());
+			singleRow.add(currentPlace.getPlaceName() + " / " + currentPlace.getPlParent());
 			singleRow.add(currentPlace.getPlType());
 			singleRow.add(currentPlace.getParentPlace().getPlaceName());
 			singleRow.add(currentPlace.getParentType());
@@ -735,7 +735,7 @@ public class AjaxController {
 		List resultList = new ArrayList();
 		for (Place currentPlace : (List<Place>)page.getList()) {
 			List singleRow = new ArrayList();
-			singleRow.add(currentPlace.getPlaceNameFull());
+			singleRow.add(currentPlace.getPlaceName() + " / " + currentPlace.getPlParent());
 			singleRow.add(currentPlace.getPlType());
 			singleRow.add(currentPlace.getParentPlace().getPlaceName());
 			singleRow.add(currentPlace.getParentType());

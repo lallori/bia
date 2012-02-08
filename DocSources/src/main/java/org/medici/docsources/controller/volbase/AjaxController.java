@@ -39,6 +39,7 @@ import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -136,11 +137,13 @@ public class AjaxController {
 			model.put("volNum", volNum.toString());
 			model.put("volLetExt", volLetExt.toString());
 			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
+			model.put("volumeDigitized", volume.getDigitized());
 		} catch (ApplicationThrowable aex) {
 			model.put("volNum", (volNum != null) ? volNum.toString() : "");
 			model.put("volLetExt", (volLetExt != null) ? volLetExt.toString() : "");
 			model.put("summaryId", "");
 			model.put("folioCount", "");
+			model.put("volumeDigitized", "false");
 		}
 
 		return new ModelAndView("responseOK", model);
@@ -165,14 +168,17 @@ public class AjaxController {
 					model.put("folioCount", volume.getFolioCount());
 				else
 					model.put("folioCount", "");
+				model.put("volumeDigitized", volume.getDigitized());
 			}
 			else{
 				model.put("volume", (inputVolume != null) ? inputVolume : "");
 				model.put("summaryId", "");
+				model.put("volumeDigitized", "false");
 			}
 		} catch (ApplicationThrowable aex) {
 			model.put("volume", (inputVolume != null) ? inputVolume : "");
 			model.put("summaryId", "");
+			model.put("volumeDigitized", "false");
 		}
 
 		return new ModelAndView("responseOK", model);
@@ -211,10 +217,22 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		Page page = null;
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		
 		try{
 			page = getVolBaseService().searchDocumentsRelated(alias, paginationFilter);
+			
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			
+			stateDocumentsDigitized = getVolBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
 		}catch(ApplicationThrowable aex){
 			page = new Page(paginationFilter);
 		}
@@ -234,18 +252,28 @@ public class AjaxController {
 
 			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			
-			if (currentDocument.getSenderPlace() != null)
-				singleRow.add(currentDocument.getSenderPlace().getPlaceName());
-			else
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPlace() != null)
-				singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
-			else
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}else
 				singleRow.add("");
 			
 			if (currentDocument.getMDPAndFolio() != null){
-				singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");				
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+				}else{
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+				}				
 			}
 			else
 				singleRow.add("");
