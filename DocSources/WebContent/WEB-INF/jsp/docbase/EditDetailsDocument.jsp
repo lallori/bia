@@ -37,7 +37,7 @@
 			<div>	
 				<form:label id="unpagedLabel" for="unpaged" path="unpaged" cssErrorClass="error">Unpaginated</form:label>
 				<form:checkbox id="unpaged" path="unpaged" class="checkboxPers2"/>
-				<form:label id="contDiscLabel" for="contDisc" path="contDisc" cssErrorClass="error">Disc. Cont'd</form:label>
+				<form:label id="contDiscLabel" for="contDisc" path="contDisc" cssErrorClass="error">Nonconsecutive</form:label>
 				<form:checkbox id="contDisc" path="contDisc" class="checkboxPers1"/>
 			</div>
 			

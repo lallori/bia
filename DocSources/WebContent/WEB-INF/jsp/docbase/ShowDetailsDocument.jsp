@@ -80,6 +80,9 @@
 				<div class="item60">Paginated</div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
 			</div>
 			<div class="row">
+				<div class="item60">Nonconsecutive</div> <div class="value">${document.contDisc ? 'Yes' : 'NO'}</div>
+			</div>
+			<div class="row">
 				<div class="item60">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
 			</div>
 			<div class="row">
