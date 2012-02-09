@@ -1599,51 +1599,47 @@ a.num_docs {
 }
 
 #sucNumLabel {
-	margin-left: 9px;
-}
-
-#firstLabel {
-	margin-left: 7px;
+	margin-left: 6px;
 }
 
 #midPrefixLabel {
-	margin-left: 37px;
+	margin-left:31px;
 }
 
 #middleLabel {
-	margin-left: 33px;
+	margin-left: 29px;
 }
 
 #lastPrefixLabel {
-	margin-left: 37px;
+	margin-left:31px;
 }
 
 #lastLabel {
-	margin-left: 24px;
+	margin-left: 19px;
 }
 
 #postLastPrefixLabel {
-	margin-left: 37px;
+	margin-left:31px;
 }
 
 #postLastLabel {
-	margin-left: 35px;
+	margin-left: 31px;
 }
 
 #genderLabel {
-	margin-left: 28px;
-}
-
-#bornYearLabel {
-	margin-left: 28px;
-}
-
-#bornApproxLabel, #deathApproxLabel {
-	margin-left: 56px;
+	margin-left:23px;
 }
 
 #bornDateBcLabel, #deathDateBcLabel {
 	margin-left: 18px;
+}
+
+#bornYearLabel {
+	margin-left:28px;
+}
+
+#bornApproxLabel, #deathApproxLabel {
+margin-left: 56px;
 }
 
 #bornPlaceDescriptionLabel, #deathPlaceDescriptionLabel {
@@ -1664,7 +1660,7 @@ a.num_docs {
 }
 
 #deathYearLabel {
-	margin-left: 25px;
+	margin-left:27px;
 }
 
 #linkLabel  {
@@ -1788,6 +1784,13 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin-left:27px;
 }
 
+#bornYearLabel {
+	margin-left:28px;
+}
+
+#deathYearLabel {
+	margin-left:25px;
+}
 
 #deathMonthLabel, #deathDayLabel, #bornMonthLabel, #bornDayLabel {
 	margin-left:19px;
