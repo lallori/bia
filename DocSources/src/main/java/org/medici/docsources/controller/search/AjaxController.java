@@ -119,13 +119,21 @@ public class AjaxController {
 		List resultList = new ArrayList();
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList();
-			if (currentDocument.getSenderPeople() != null)
-				singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
 			else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPeople() != null)
-				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
 			else
 				singleRow.add("");
 
@@ -583,13 +591,21 @@ public class AjaxController {
 		List resultList = new ArrayList();
 		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList();
-			if (currentDocument.getSenderPeople() != null)
-				singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
 			else
 				singleRow.add("");
 			
-			if (currentDocument.getRecipientPeople() != null)
-				singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
 			else
 				singleRow.add("");
 
