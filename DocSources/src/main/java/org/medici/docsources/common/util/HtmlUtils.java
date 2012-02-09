@@ -198,7 +198,7 @@ public class HtmlUtils {
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
 		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
-		anchorBegin.append(inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().length() - 4));
+		anchorBegin.append(inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
 		anchorBegin.append("\" class=\"showResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
