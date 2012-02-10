@@ -28,6 +28,7 @@
 package org.medici.docsources.dao.people;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -86,6 +87,14 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 */
 	public Integer findNumberOfDeathInPlace(Integer placeAllId) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param placeAllIds
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Map<Integer, Long> findNumbersOfPeopleRelatedPlace(List<Integer> placeAllIds) throws PersistenceException;
+	
 	/**
 	 * This method generate Hibernate search index.
 	 * 

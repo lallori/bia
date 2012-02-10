@@ -28,7 +28,10 @@
 package org.medici.docsources.dao.people;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -139,12 +142,64 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		return new Integer(result.intValue());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Integer findNumberOfDeathInPlace(Integer placeAllId)	throws PersistenceException {
 		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE deathPlace.placeAllId =:placeAllId AND activeEnd=NULL");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Map<Integer, Long> findNumbersOfPeopleRelatedPlace(List<Integer> placeAllIds) throws PersistenceException {
+		StringBuffer stringBufferBorn = new StringBuffer("SELECT bornPlace.placeAllId, COUNT(personId) FROM People WHERE");
+		StringBuffer stringBufferDeath = new StringBuffer("SELECT deathPlace.placeAllId, COUNT(personId) FROM People WHERE");
+		for(int i=0; i < placeAllIds.size(); i++){
+			if(stringBufferBorn.indexOf("=") != -1){
+    			stringBufferBorn.append(" or ");
+    		}
+			if(stringBufferDeath.indexOf("=") != -1){
+				stringBufferDeath.append(" or ");
+			}
+			stringBufferBorn.append("(bornPlace.placeAllId=");
+        	stringBufferBorn.append(placeAllIds.get(i) + ")");
+        	stringBufferDeath.append("(deathPlace.placeAllId=");
+        	stringBufferDeath.append(placeAllIds.get(i) + ")");
+		}
+		stringBufferBorn.append(" group by bornPlace.placeAllId");
+		stringBufferDeath.append("group by deathPlace.placeAllId");
+		
+		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
+		List tempValuesBorn;
+		if(stringBufferBorn.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBufferBorn.toString());
+			tempValuesBorn = query.getResultList();
+			for(Iterator i = tempValuesBorn.iterator(); i.hasNext();){
+				Object [] data = (Object []) i.next();
+				returnValues.put((Integer)data[0], (Long)data[1]);
+			}
+		}
+		List tempValuesDeath;
+		if(stringBufferDeath.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBufferDeath.toString());
+			tempValuesDeath = query.getResultList();
+			for(Iterator i = tempValuesDeath.iterator(); i.hasNext();){
+				Object [] data = (Object []) i.next();
+				if(returnValues.containsKey((Integer)data[0])){
+					data[1] = (Long) returnValues.remove((Integer)data[0]) + (Long) data[1];
+				}
+				returnValues.put((Integer)data[0], (Long)data[1]);
+			}
+		}
+		
+		return returnValues;
 	}
 
 	/**

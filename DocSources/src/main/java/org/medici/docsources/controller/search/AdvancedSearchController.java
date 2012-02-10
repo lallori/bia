@@ -262,7 +262,7 @@ public class AdvancedSearchController {
 			outputFields = new ArrayList<String>(4);
 			outputFields.add("Place Name");
 			outputFields.add("Place Type");
-			outputFields.add("Parent Name");
+			outputFields.add("People Related");
 			outputFields.add("Type");
 		} else {
 			outputFields = new ArrayList<String>(5);

@@ -438,6 +438,19 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Map<Integer, Long> findNumbersOfPeopleRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
+		try{
+			Map<Integer, Long> docsRel = getPeopleDAO().findNumbersOfPeopleRelatedPlace(placeAllIds);
+			return docsRel;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws ApplicationThrowable {
 		try{
 			return getDocumentDAO().findNumberOfRecipientDocumentsPlace(placeAllId);

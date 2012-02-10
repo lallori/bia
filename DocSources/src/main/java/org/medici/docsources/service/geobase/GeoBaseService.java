@@ -189,6 +189,14 @@ public interface GeoBaseService {
 	
 	/**
 	 * 
+	 * @param placeAllIds
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<Integer, Long> findNumbersOfPeopleRelated(List<Integer> placeAllIds) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param placeAllId
 	 * @return
 	 * @throws ApplicationThrowable

@@ -35,6 +35,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.hibernate.id.IdentityGenerator.GetGeneratedKeysDelegate;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
@@ -56,6 +57,7 @@ import org.medici.docsources.domain.TopicList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.geobase.GeoBaseService;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.medici.docsources.service.search.SearchService;
 import org.medici.docsources.service.volbase.VolBaseService;
@@ -75,6 +77,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class AjaxController {
 	@Autowired
 	private DocBaseService docBaseService;
+	
+	@Autowired
+	private GeoBaseService geoBaseService;
 	
 	@Autowired
 	private PeopleBaseService peopleBaseService;
@@ -271,9 +276,17 @@ public class AjaxController {
 		Page page = null;
 		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
+		Map<Integer, Long> peopleRelated = new HashMap<Integer, Long>();
+		List<Integer> placeAllIds = new ArrayList<Integer>();
 
 		try {
 			page = getSearchService().searchAdvancedPlaces(searchFilter.getFilterData(), paginationFilter);
+			
+			for(Place currentPlace : (List<Place>)page.getList()){
+				placeAllIds.add(currentPlace.getPlaceAllId());
+			}
+			
+			peopleRelated = getGeoBaseService().findNumbersOfPeopleRelated(placeAllIds);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -283,7 +296,10 @@ public class AjaxController {
 			List singleRow = new ArrayList();
 			singleRow.add(currentPlace.getPlaceName() + " / " + currentPlace.getPlParent());
 			singleRow.add(currentPlace.getPlType());
-			singleRow.add(currentPlace.getParentPlace().getPlaceName());
+			if(peopleRelated.containsKey(currentPlace.getPlaceAllId()))
+				singleRow.add(peopleRelated.get(currentPlace.getPlaceAllId()).toString());
+			else
+				singleRow.add("0");
 			singleRow.add(currentPlace.getParentType());
 
 			resultList.add(HtmlUtils.showPlace(singleRow, currentPlace.getPlaceAllId()));
@@ -376,6 +392,10 @@ public class AjaxController {
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
+	}
+
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
 	}
 
 	/**
@@ -549,6 +569,10 @@ public class AjaxController {
 		this.docBaseService = docBaseService;
 	}
 
+
+	public void setGeoBaseService(GeoBaseService geoBaseService) {
+		this.geoBaseService = geoBaseService;
+	}
 
 	/**
 	 * @param peopleBaseService the peopleBaseService to set
@@ -741,9 +765,18 @@ public class AjaxController {
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	private void simpleSearchPlaces(Map<String, Object> model, String searchText, PaginationFilter paginationFilter) {
 		Page page = null;
+		
+		Map<Integer, Long> peopleRelated = new HashMap<Integer, Long>();
+		List<Integer> placeAllIds = new ArrayList<Integer>();
 
 		try {
 			page = getSearchService().searchPlaces(new SimpleSearchPlace(searchText), paginationFilter);
+			
+			for(Place currentPlace : (List<Place>)page.getList()){
+				placeAllIds.add(currentPlace.getPlaceAllId());
+			}
+			
+			peopleRelated = getGeoBaseService().findNumbersOfPeopleRelated(placeAllIds);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -753,7 +786,10 @@ public class AjaxController {
 			List singleRow = new ArrayList();
 			singleRow.add(currentPlace.getPlaceName() + " / " + currentPlace.getPlParent());
 			singleRow.add(currentPlace.getPlType());
-			singleRow.add(currentPlace.getParentPlace().getPlaceName());
+			if(peopleRelated.containsKey(currentPlace.getPlaceAllId()))
+				singleRow.add(peopleRelated.get(currentPlace.getPlaceAllId()).toString());
+			else
+				singleRow.add("0");
 			singleRow.add(currentPlace.getParentType());
 
 			resultList.add(HtmlUtils.showPlace(singleRow, currentPlace.getPlaceAllId()));
