@@ -135,7 +135,8 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
         QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "titleOcc", fullTextSession.getSearchFactory().getAnalyzer("titleOccsListAnalyzer"));
 
         try  {
-	        org.apache.lucene.search.Query queryTitleOcc = parserMapNameLf.parse(searchText.toLowerCase() + "*");
+	        org.apache.lucene.search.Query queryTitleOcc = parserMapNameLf.parse(searchText.toLowerCase());
+        	org.apache.lucene.search.Query queryTitleOccWithWildCard = parserMapNameLf.parse(searchText.toLowerCase() + "*");
 	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
 
 	        org.apache.lucene.search.PhraseQuery queryRoleCatMajor = new PhraseQuery();
@@ -148,19 +149,21 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 	        }
 
 			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(new BooleanClause(queryTitleOcc, BooleanClause.Occur.MUST));
+			booleanQuery.add(new BooleanClause(queryTitleOccWithWildCard, BooleanClause.Occur.MUST));
 			booleanQuery.add(new BooleanClause(queryRoleCatMajor, BooleanClause.Occur.SHOULD));
 			booleanQuery.add(new BooleanClause(queryRoleCatMinor, BooleanClause.Occur.SHOULD));
 	
-			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, TitleOccsList.class );
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(queryTitleOcc, TitleOccsList.class);
+			final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery( booleanQuery, TitleOccsList.class );
 			
 			//fullTextQuery.setSort(new Sort(new SortField("titleOcc", SortField.STRING)));
 			// Projection permits to extract only a subset of domain class, tuning application.
 			//fullTextQuery.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			//fullTextQuery.setResultTransformer(Transformers.aliasToBean(TitleOccsList.class));
-
-			return fullTextQuery.list();
+			List<TitleOccsList> result = fullTextQuery.list();
+			result.addAll(fullTextQueryWithWildCard.list());
+			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
         	return null;
