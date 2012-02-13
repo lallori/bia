@@ -37,6 +37,17 @@
 	<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
 		<h4>MAP Site or Subsite</h4>
 	</c:if>
+	
+	<c:if test="${place.prefFlag == 'V'}">
+		<br />
+		<div style="margin-left:8px">
+				<c:forEach items="${placeNames}" var="currentName">
+					<c:if test="${currentName.prefFlag == 'P'}">
+						<p><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
+					</c:if>
+				</c:forEach>
+		</div>
+	</c:if>
 	</div>
 	
 	<div class="background" id="EditDetailsPlaceDiv">

@@ -26,7 +26,15 @@
 				<div class="row">
 					<c:if test="${currentName.prefFlag == 'P'}">
 						<div class="item">Principal</div>
-						<div class="value">${currentName.placeName}</div>
+						<c:if test="${currentName.placeAllId != place.placeAllId}">
+							<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
+								<c:param name="placeAllId" value="${currentName.placeAllId}" />
+							</c:url>
+							<div class="value"><a class="linkPlace" href="${ShowPlaceURL}">${currentName.placeName}</a></div>
+						</c:if>
+						<c:if test="${currentName.placeAllId == place.placeAllId}">
+							<div class="value">${currentName.placeName}</div>
+						</c:if>
 					</c:if>
 					<c:if test="${currentName.prefFlag == 'V'}">
 						<div class="item">Variant</div>
@@ -52,6 +60,11 @@
 				$j("#EditNamePlaceDiv").load($j(this).attr("href"));
 				return false;
 			});
+			
+			$j(".linkPlace").click(function(){
+				$j("#body_left").load($j(this).attr("href"));
+				return false;
+			}); 
 		});
 	</script>
 </security:authorize>
