@@ -283,7 +283,7 @@
 					$j(".placeAdd").removeAttr("disabled");
 					$j('#placeId').val(data);
 					$j(".placeAdd").attr("disabled");
-					$j(".palceAdd").prop("disabled", false);
+					$j(".placeAdd").prop("disabled", false);
 				}
 			});	
 			

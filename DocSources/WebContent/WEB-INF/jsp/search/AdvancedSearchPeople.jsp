@@ -272,20 +272,16 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-					$j(".placeAdd").attr("disabled");
 					$j(".placeAdd").removeAttr("disabled");
-					$j(".placeAdd").prop("disabled",false);
 					$j('#placeId').val(data);
+					$j(".placeAdd").attr("disabled");
+					$j(".placeAdd").prop("disabled", false);
 				}
 			});	
 		 
 		 $j("#place").change(function(){
 				$j(".placeAdd").attr("disabled","disabled");
 			});
-		 
-		 $j(".placeAdd").click(function(){
-			 $j(this).attr("disabled","disabled");
-		 });
 		 
 		 $j("#occupation").AutocompleteTitle({
 			 	serviceUrl:'${searchTitleOrOccupationURL}',
