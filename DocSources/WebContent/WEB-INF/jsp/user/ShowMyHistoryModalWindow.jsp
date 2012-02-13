@@ -42,7 +42,8 @@
 	<script type="text/javascript" charset="utf-8">                                                           
 			$j(document).ready(function() {                                                                       
 				$j('#researchHistoryTable').dataTable( {                                                             
-					"aoColumnDefs": [ { "sWidth": "90%", "aTargets": [ "_all" ] }],    
+					"aoColumnDefs": [ { "sWidth": "90%", "aTargets": [ "_all" ] }],   
+					"aaSorting": [[0, "desc"]],
 					"bAutoWidth" : false,
 						"aoColumns" : [
 						{ sWidth : "40px" },
