@@ -107,7 +107,7 @@
 	
 	<div class="yourSearchDiv">
 		Your search:
-		<a class="tabLink" href="#">${command.text}</a>
+		<font color="red">${command.text}</font>
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span>
 	</div>
 
