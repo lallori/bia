@@ -55,6 +55,11 @@
 
 			$j(".linkFamily").click(function() {
 	        	var tabName = $j(this).text();
+	        	var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+	        	if(is_chrome){
+	        		//For remove whitespaces at start/end of a string
+	        		tabName = tabName.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	        	}
 				var numTab = 0;
 				
 				//Check if already exist a tab with this person

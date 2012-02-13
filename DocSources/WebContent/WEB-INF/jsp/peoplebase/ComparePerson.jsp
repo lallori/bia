@@ -78,7 +78,7 @@
 					<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.do">
 						<c:param name="altName" value="${currentName.altName}" />
 					</c:url>
-						<div class="value"><a class="linkFamily" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
+						<div class="value"><a class="linkFamilyCompare" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
 				</c:if>
 				<c:if test="${currentName.nameType != 'Family' }"> 
 					<div class="value">${currentName.namePrefix} ${currentName.altName}</div>
@@ -220,6 +220,9 @@
 				var tabName = $j(this).text();
 				var numTab = 0;
 				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
@@ -244,6 +247,9 @@
 				var tabName = $j(this).text();
 				var numTab = 0;
 				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
@@ -264,9 +270,46 @@
 				}
 			});
 			
-			$j(".linkChild, .linkFamily").click(function() {
+			$j(".linkChild").click(function() {
 	        	var tabName = $j(this).text();
 				var numTab = 0;
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".linkFamilyCompare").click(function() {
+	        	var tabName = $j(this).text();
+	        	var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+	        	if(is_chrome){
+	        		//For remove whitespaces at start/end of a string
+	        		tabName = tabName.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	        	}
+
+				var numTab = 0;
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
 				
 				//Check if already exist a tab with this person
 				var tabExist = false;
@@ -292,6 +335,9 @@
 				var tabName = $j(this).text();
 				var numTab = 0;
 				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
