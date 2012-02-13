@@ -434,18 +434,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		}
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<Integer, Long> findNumbersOfPeopleRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
-		try{
-			Map<Integer, Long> docsRel = getPeopleDAO().findNumbersOfPeopleRelatedPlace(placeAllIds);
-			return docsRel;
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
-	}
+	
 	
 	/**
 	 * {@inheritDoc}
@@ -478,6 +467,32 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public Integer findNumberOfTopicsPlace(Integer placeAllId) throws ApplicationThrowable {
 		try{
 			return getEplToLinkDAO().findNumberOfTopicsByPlaceAllId(placeAllId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
+		try{
+			Map<Integer, Long> docsRel = getDocumentDAO().findNumbersOfDocumentsRelatedPlace(placeAllIds);
+			return docsRel;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, Long> findNumbersOfPeopleRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
+		try{
+			Map<Integer, Long> peopleRel = getPeopleDAO().findNumbersOfPeopleRelatedPlace(placeAllIds);
+			return peopleRel;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

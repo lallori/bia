@@ -28,7 +28,10 @@
 package org.medici.docsources.dao.document;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -195,6 +198,55 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Map<Integer, Long> findNumbersOfDocumentsRelatedPlace(List<Integer> placeAllIds) throws PersistenceException {
+		StringBuffer stringBufferSender = new StringBuffer("SELECT senderPlace.placeAllId, COUNT(entryId) FROM Document WHERE");
+		StringBuffer stringBufferRecipient = new StringBuffer("SELECT recipientPlace.placeAllId, COUNT(entryId) FROM Document WHERE");
+		for(int i = 0; i < placeAllIds.size(); i++){
+			if(stringBufferSender.indexOf("=") != -1){
+				stringBufferSender.append(" or ");
+			}
+			if(stringBufferRecipient.indexOf("=") != -1){
+				stringBufferRecipient.append(" or ");
+			}
+			stringBufferSender.append("(senderPlace.placeAllId=");
+			stringBufferSender.append(placeAllIds.get(i) + ")");
+			stringBufferRecipient.append("(recipientPlace.placeAllId=");
+			stringBufferRecipient.append(placeAllIds.get(i) + " AND senderPlace.placeAllId!=" + placeAllIds.get(i) + ")");
+		}
+		stringBufferSender.append(" group by senderPlace.placeAllId");
+		stringBufferRecipient.append(" group by recipientPlace.placeAllId");
+		
+		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
+		List tempValuesSender;
+		if(stringBufferSender.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBufferSender.toString());
+			tempValuesSender = query.getResultList();
+			for(Iterator i = tempValuesSender.iterator(); i.hasNext();){
+				Object [] data = (Object []) i.next();
+				returnValues.put((Integer)data[0], (Long)data[1]);
+			}
+		}
+		List tempValuesRecipient;
+		if(stringBufferRecipient.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBufferRecipient.toString());
+			tempValuesRecipient = query.getResultList();
+			for(Iterator i = tempValuesRecipient.iterator(); i.hasNext();){
+				Object [] data = (Object []) i.next();
+				if(returnValues.containsKey((Integer) data[0])){
+					data[1] = (Long) returnValues.remove((Integer) data[0]) + (Long) data[1];
+				}
+				returnValues.put((Integer) data[0], (Long) data[1]);
+			}
+		}
+		
+		return returnValues;
 	}
 
 	/**

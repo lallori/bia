@@ -149,8 +149,8 @@ public class SimpleSearchController {
 			outputFields = new ArrayList<String>(4);
 			outputFields.add("Place Name");
 			outputFields.add("Place Type");
-			outputFields.add("Parent Name");
-			outputFields.add("Type");
+			outputFields.add("People Related");
+			outputFields.add("Documents Related");
 		} else {
 			outputFields = new ArrayList<String>(4);
 			outputFields.add("Carteggio");

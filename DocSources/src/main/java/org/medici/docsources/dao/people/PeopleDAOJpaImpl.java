@@ -171,10 +171,10 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			stringBufferBorn.append("(bornPlace.placeAllId=");
         	stringBufferBorn.append(placeAllIds.get(i) + ")");
         	stringBufferDeath.append("(deathPlace.placeAllId=");
-        	stringBufferDeath.append(placeAllIds.get(i) + ")");
+        	stringBufferDeath.append(placeAllIds.get(i) + " AND bornPlace.placeAllId!=" + placeAllIds.get(i) + ")");
 		}
 		stringBufferBorn.append(" group by bornPlace.placeAllId");
-		stringBufferDeath.append("group by deathPlace.placeAllId");
+		stringBufferDeath.append(" group by deathPlace.placeAllId");
 		
 		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
 		List tempValuesBorn;

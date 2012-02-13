@@ -28,6 +28,8 @@
 package org.medici.docsources.dao.document;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -114,6 +116,14 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Integer findNumberOfSenderDocumentsPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllIds
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Map<Integer, Long> findNumbersOfDocumentsRelatedPlace(List<Integer> placeAllIds) throws PersistenceException;
 	
 	/**
 	 * This method searches documents which contains the parameters set in {@link org.medici.docsources.common.search}

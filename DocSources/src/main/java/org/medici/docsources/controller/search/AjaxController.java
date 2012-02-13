@@ -277,6 +277,7 @@ public class AjaxController {
 		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 		Map<Integer, Long> peopleRelated = new HashMap<Integer, Long>();
+		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		List<Integer> placeAllIds = new ArrayList<Integer>();
 
 		try {
@@ -287,6 +288,7 @@ public class AjaxController {
 			}
 			
 			peopleRelated = getGeoBaseService().findNumbersOfPeopleRelated(placeAllIds);
+			documentsRelated = getGeoBaseService().findNumbersOfDocumentsRelated(placeAllIds);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -300,7 +302,10 @@ public class AjaxController {
 				singleRow.add(peopleRelated.get(currentPlace.getPlaceAllId()).toString());
 			else
 				singleRow.add("0");
-			singleRow.add(currentPlace.getParentType());
+			if(documentsRelated.containsKey(currentPlace.getPlaceAllId()))
+				singleRow.add(documentsRelated.get(currentPlace.getPlaceAllId()).toString());
+			else
+				singleRow.add("0");
 
 			resultList.add(HtmlUtils.showPlace(singleRow, currentPlace.getPlaceAllId()));
 		}
@@ -767,6 +772,7 @@ public class AjaxController {
 		Page page = null;
 		
 		Map<Integer, Long> peopleRelated = new HashMap<Integer, Long>();
+		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		List<Integer> placeAllIds = new ArrayList<Integer>();
 
 		try {
@@ -777,6 +783,7 @@ public class AjaxController {
 			}
 			
 			peopleRelated = getGeoBaseService().findNumbersOfPeopleRelated(placeAllIds);
+			documentsRelated = getGeoBaseService().findNumbersOfDocumentsRelated(placeAllIds);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -790,7 +797,10 @@ public class AjaxController {
 				singleRow.add(peopleRelated.get(currentPlace.getPlaceAllId()).toString());
 			else
 				singleRow.add("0");
-			singleRow.add(currentPlace.getParentType());
+			if(documentsRelated.containsKey(currentPlace.getPlaceAllId()))
+				singleRow.add(documentsRelated.get(currentPlace.getPlaceAllId()).toString());
+			else
+				singleRow.add("0");
 
 			resultList.add(HtmlUtils.showPlace(singleRow, currentPlace.getPlaceAllId()));
 		}

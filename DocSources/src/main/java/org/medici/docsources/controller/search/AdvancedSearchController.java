@@ -263,7 +263,7 @@ public class AdvancedSearchController {
 			outputFields.add("Place Name");
 			outputFields.add("Place Type");
 			outputFields.add("People Related");
-			outputFields.add("Type");
+			outputFields.add("Documents Related");
 		} else {
 			outputFields = new ArrayList<String>(5);
 			outputFields.add("Carteggio");
