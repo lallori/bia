@@ -387,7 +387,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getPeopleDAO().searchPeople(searchContainer, paginationFilter);
+			return getPeopleDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -411,7 +411,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getPlaceDAO().searchPlaces(searchContainer, paginationFilter);
+			return getPlaceDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
