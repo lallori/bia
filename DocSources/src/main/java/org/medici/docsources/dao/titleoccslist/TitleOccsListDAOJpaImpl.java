@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.titleoccslist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -156,13 +157,27 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(queryTitleOcc, TitleOccsList.class);
 			final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery( booleanQuery, TitleOccsList.class );
 			
-			//fullTextQuery.setSort(new Sort(new SortField("titleOcc", SortField.STRING)));
+			// Pasquinelli 13/02/2012 Does we need sorting??
+			//fullTextQuery.setSort(new Sort(new SortField("titleOcc", SortField.STRING, true)));
+			//fullTextQueryWithWildCard.setSort(new Sort(new SortField("titleOcc", SortField.STRING, true)));
+			
+			
 			// Projection permits to extract only a subset of domain class, tuning application.
 			//fullTextQuery.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			//fullTextQuery.setResultTransformer(Transformers.aliasToBean(TitleOccsList.class));
-			List<TitleOccsList> result = fullTextQuery.list();
-			result.addAll(fullTextQueryWithWildCard.list());
+			
+			//Matteo it's better to control size before adding to result
+			List<TitleOccsList> result = new ArrayList<TitleOccsList>(0);
+			List<TitleOccsList> result1 = fullTextQuery.list();
+			List<TitleOccsList> result2 = fullTextQueryWithWildCard.list();
+			if (result1.size()>0) {
+				result.addAll(result1);
+			}
+			if (result2.size()>0) {
+				result.addAll(result2);
+			}
+
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
