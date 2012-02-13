@@ -96,8 +96,26 @@ public class SimpleSearchPlace extends SimpleSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer jpaQuery = new StringBuffer("FROM Place ");
+		
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		
+		if(words.length > 0){
+			jpaQuery.append(" WHERE ");
+		}
+		
+		for(int i = 0; i < words.length; i++){
+			jpaQuery.append("((placeNameFull like '%");
+			jpaQuery.append(words[i]);
+			jpaQuery.append("%') OR termAccent like '%");
+			jpaQuery.append(words[i]);
+			jpaQuery.append("%'))");
+			if(i < words.length-1){
+				jpaQuery.append(" AND ");
+			}
+		}
+		
+		return jpaQuery.toString();
 	}
 
 	/**

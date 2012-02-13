@@ -134,7 +134,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 
-		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.MUST);
+		Query stringQuery = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.SHOULD);
 		//Query stringQuery2 = SimpleSearchUtils.constructBooleanQueryOnStringFields(stringFields, words, Occur.MUST, Occur.SHOULD);
 
 		booleanQuery.add(stringQuery,Occur.SHOULD);
