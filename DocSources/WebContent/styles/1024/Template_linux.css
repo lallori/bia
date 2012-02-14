@@ -155,9 +155,9 @@ a {
 /* ---------------------------------------- SEARCH FORM (#top_top) --------------------------------------- */
 
 #searchForm { /* Search Form Container */
-	width:200px;
+	width:250px;
 	height:80px;
-	margin: 10px 0 0 17px;
+	margin: 17px 0 0 17px;
 	position:absolute;
 	font-size:12px;
 }
@@ -172,23 +172,43 @@ a {
 	margin-top:0px;
 }
 
+#simpleSearchPerimeter {
+	width:145px;
+	font-size:12px;
+}
+
 .select option{
 	background-color: transparent;
 }
 
 #search { /* Search button */
-	margin-left:110px;
 	border:none;
 	background-color:transparent;
 	margin-top:-1px;
-	background-image:url(/DocSources/images/1024/button_search.png);
-	width:50px;
-	height:13px;
+	background-image:url(/DocSources/images/1024/button_mini.png);
+	width:22px;
+	height:22px;
 	cursor:pointer;
+	margin: 5px 0 0 0;
+}
+
+a.helpIcon  {
+    -moz-border-radius: 10px 10px 10px 10px;
+    background-color: #DCC0BA;
+    border: 1px solid #6D5C4D;
+    color: #6D5C4D;
+    cursor: default;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 6px;
+    padding-right: 6px;
+    text-decoration: none;
 }
 
 #text {
-	width:127px;
+	width:167px;
+	margin: 5px 4px 0 5px;
+	font-size:12px;
 }
 
 #searchType {
@@ -201,24 +221,10 @@ a {
 /* --------------------------------------- DIGITIZATION MODULE (#top_top) --------------------------------------- */
 
 #digitizationModule {
-	background-image:url(/DocSources/images/1024/button_digitizationModule.png);
-	background-repeat:no-repeat;
 	text-decoration:none;
-	width:100px;
-	top:10px;
-	height:85px;
-	padding-left:10px;
+	font-size:10px;
 	position: absolute;
-	margin: 0 0 0 190px;
-}
-
-#digitizationModule:hover {
-	ms-transform:translate(0,-5px);
-	-moz-transform:translate(0,-5px);
-	-webkit-transform:translate(0,-5px);
-	-o-transform:translate(0,-5px);
-	transform:translate(0,-5px);
-	cursor:pointer;
+	margin: 6px 0 0 156px;
 }
 
 
@@ -330,7 +336,7 @@ a {
 /* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
 
 #administrationModule { /* Administration Module */
-	margin: 5px 0 0 289px;
+	margin: 6px 0 0 16px;
 	position: absolute;
 	font-size: 10px;
 }

@@ -9,13 +9,13 @@
  */
 
 
-#MyHistoryDiv { /* Chronology Content Div */
+#myHistoryDiv { /* Chronology Content Div */
 	width:720px;
 	height:400px;
 	margin:10px auto 0 auto;
 }
 
-#MyHistoryDiv #DocsHistory { /* Documents Chronology Div */
+#myHistoryDiv #docsHistory { /* Documents Chronology Div */
 	width:330px;
 	height:150px;
 	float:left;
@@ -24,7 +24,7 @@
 	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
 }
 
-#MyHistoryDiv #PeopleHistory { /* People Chronology Div */
+#myHistoryDiv #peopleHistory { /* People Chronology Div */
 	width:330px;
 	height:150px;
 	float:right;
@@ -35,7 +35,7 @@
 	margin-bottom: 20px;
 }
 
-#MyHistoryDiv #VolumesHistory { /* Volumes Chronology Div */
+#myHistoryDiv #volumesHistory { /* Volumes Chronology Div */
 	width:330px;
 	height:150px;
 	float:right;
@@ -44,7 +44,7 @@
 	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
 }
 
-#MyHistoryDiv #PlaceHistory { /* Place Chronology Div */
+#myHistoryDiv #placeHistory { /* Place Chronology Div */
 	width:330px;
 	height:150px;
 	float:left;
@@ -60,85 +60,28 @@
 	height:50px;
 }
 
-#MyDocumentsHistoryTable {
+#myDocumentsHistoryTable {
 	width:740px;
 }
 
 /* --------------- DIV STRUCTURE ----------------------- */ 
 
 
-#MyHistoryDiv .title {
+#myHistoryDiv .title {
 	width:220px;
 	height:20px;
 	padding-top:8px;
 }
 
-#MyHistoryDiv h5 {
+#myHistoryDiv h5 {
 	margin:0 37px 5px 5px;
 	position:relative;
 	text-decoration:none;
 }
 
-.historyList {
-	display: table;
-	margin:5px 0 10px 0;
-	width:100%;
-	font-size:11px;
-}
-
-.historyRow {
-	display: table-row;
-}
-
-.historyRowColor {
-	background-color:#EFE0DE;
-	display: table-row;
-}
-
-.historyDate {
-	display: table-cell;
-	width:30%;
-	text-align:left;
-	padding:3px 0 3px 5px;
-	font-weight:normal;
-}
-
-.historyDate a {
-	color:#666;
-}
-
-.historyAction {
-	display: table-cell;
-	width:30%;
-	text-align:center;
-	padding:3px 5px 3px 5px;
-	cursor: default;
-	
-}
-
-.historyItem {
-	display: table-cell;
-	width:40%;
-	font-size:12px;
-	text-align:right;
-	color:#6d5c4d;
-	padding:3px 5px 3px 5px;
-	max-width:50%;
-}
-
-.historyPersonValue a {
-	display: table-cell;
-	width:60%;
-	text-align:right;
-	color:#6d5c4d;
-	padding:3px 5px 3px 5px;
-	font-size:11px;
-}
-
-
 /* ------------------------------------------------------- */ 
 
-#MyHistoryDiv a {
+#myHistoryDiv a {
 	text-decoration:none;
 	font-size:11px;
 }
@@ -167,11 +110,11 @@
 	float:right;
 }
 
-#MyHistoryDiv a:hover {
+#myHistoryDiv a:hover {
 	text-decoration:underline;
 }
 
-#MyHistoryDiv #close {
+#myHistoryDiv #close {
 	margin:0;
 }
 
@@ -185,16 +128,17 @@
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:11px;
-	padding:4px 0 0 12px;
+	padding:4px 0 0 0;
 	width:52px;
 	height:22px;
-	margin-left: 200px;
+	margin-left: 214px;
+	text-align:center;
 }
 
 #generalHistory {
     background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
-    float: right;
+    float: left;
     font-size: 11px;
     height: 22px;
 	padding: 4px 0 0;
@@ -246,7 +190,12 @@ a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#cat
 
 /* ------------------- Data Table ----------------- */ 
 
-#researchHistoryTableDiv {
+table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, table.display#AllVolumesHistoryTable, table.display#AllPlacesHistoryTable, table.display#researchHistoryTable{
+	margin: 0 0 10px 10px;
+	width:710px;
+}
+
+#researchHistoryTableDiv, #myDocumentsHistoryTableDiv, #myVolumeHistoryTableDiv, #myPlaceHistoryTableDiv, #myPeopleHistoryTableDiv {
 	height:390px !important;
 	height /**/: 400px;
 	overflow:auto !important;
@@ -254,12 +203,24 @@ a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#cat
 	margin-bottom:40px;
 }
 
-#researchHistoryTableDiv .dataTables_info {
+#researchHistoryTableDiv .dataTables_info, #myDocumentsHistoryTableDiv .dataTables_info, #myVolumeHistoryTableDiv .dataTables_info, #myPlaceHistoryTableDiv .dataTables_info, #myPeopleHistoryTableDiv .dataTables_info {
     color: #666666;
     float: left;
     font-size: 10px;
     margin-left: 10px;
     width: 60%;
+}
+
+table#myDocumentsHistoryTable, table#myVolumeHistoryTable, table#myPlaceHistoryTable, #myPeopleHistoryTable {
+	width: 725px;
+}
+
+/* ------------------- Data Table in Category View ----------------- */
+
+table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHistoryTable, table.display#myCategoryVolumesHistoryTable, table.display#myCategoryPlacesHistoryTable{
+	margin: 0;
+	width:330px;
+	min-width:330px;
 }
 
 

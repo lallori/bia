@@ -67,7 +67,8 @@
 .dataTables_info {
     width: 60%;
     float: left;
-	font-size:90%;
+    font-size: 10px;
+    margin-left: 6px;
 }
 
 .dataTables_paginate {
@@ -123,17 +124,6 @@ table.display {
      * If you want that effect I'd suggest setting a border-top/left on th/td's and 
      * then filling in the gaps with other borders.
      */
-}
-
-table.display#MyDocumentsHistoryTable, table.display#MyPeopleHistoryTable, table.display#MyVolumesHistoryTable, table.display#MyPlacesHistoryTable{
-	margin: 0;
-	width:330px;
-	min-width:330px;
-}
-
-table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, table.display#AllVolumesHistoryTable, table.display#AllPlacesHistoryTable, table.display#researchHistoryTable{
-	margin: 0 0 10px 10px;
-	width:710px;
 }
 
 .searchResult {

@@ -96,6 +96,11 @@ input {
 	float:left;
 }
 
+input.submit {
+	margin: 35px 0 0 170px;
+}
+
+
 .loginInput, .registerInput { /* INPUT text */
 	font-size:12px;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -156,7 +161,7 @@ input {
 }
 
 #registrationForm h1 {
-	padding:7px 0 5px 340px;
+	padding: 7px 0 6px 340px;
 	margin:0;
 }
 
@@ -165,6 +170,7 @@ input {
 	border-bottom:1px solid #AEAEAE;
 	margin:0;
 	font-size:10px;
+	width: 502px;
 }
 
 .registrationForm { /*  Form class */
@@ -261,9 +267,9 @@ input {
 
 .recovery { /*  Form class */
 	margin-left:20px;
-	height:100px;
-	width:250px;
-	position:absolute;
+	height: 198px;
+	width: 460px;
+	margin-top: 20px;
 }
 
 .recoveryKO { /*  Form KO class */
@@ -291,17 +297,15 @@ input {
 	background-color: #fbf7f4;
 	color: #6d5c4d;
 	padding:3px;
-	margin: 5px 7px 5px 5px;
+	margin: 5px 7px 30px 5px;
 	width:250px;
 	margin-left:90px;
 }
 
 #captcha_recovery{
-	width:250px;
-	height:130px;
+	width: 450px;
+	height: 155px;
 	margin-left: 10px;
-	margin-top:50px;
-	z-index:2;
 }
 
 #captcha_recoveryKO{
