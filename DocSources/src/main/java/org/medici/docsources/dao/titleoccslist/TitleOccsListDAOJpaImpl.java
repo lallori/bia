@@ -175,7 +175,11 @@ public class TitleOccsListDAOJpaImpl extends JpaDao<Integer, TitleOccsList> impl
 				result.addAll(result1);
 			}
 			if (result2.size()>0) {
-				result.addAll(result2);
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0)
+					result.addAll(result2);
 			}
 
 			return result;
