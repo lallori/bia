@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.place;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -170,8 +171,21 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
 
-			List<Place> result = fullTextQuery.list();
-			result.addAll(fullTextQueryWithWildCard.list());
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
+			
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
@@ -205,8 +219,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
-			List<Place> result = fullTextQuery.list();
-			result.addAll(fullTextQueryWithWildCard.list());
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
@@ -241,8 +267,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
-			List<Place> result = fullTextQuery.list();
-			result.addAll(fullTextQueryWithWildCard.list());
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
@@ -277,8 +315,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
 
-			List<Place> result = fullTextQuery.list();
-			result.addAll(fullTextQueryWithWildCard.list());
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
@@ -356,8 +406,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
 
-			List<Place> result = fullTextQuery.list();
-			result.addAll(fullTextQueryWithWildCard.list());
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
@@ -392,8 +454,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
 
-			List<Place> result = fullTextQuery.list();
-			result.addAll(fullTextQueryWithWildCard.list());
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
@@ -428,8 +502,20 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
 
-			List<Place> result = fullTextQuery.list();
-			result.addAll(fullTextQueryWithWildCard.list());
+			List<Place> result = new ArrayList<Place>(0);
+			List<Place> result1 = fullTextQuery.list();
+			List<Place> result2 = fullTextQueryWithWildCard.list();
+			if(result1.size() > 0){
+				result.addAll(result1);
+			}
+			if(result2.size() > 0){
+				if(result.size() > 0){
+					result2.removeAll(result);
+				}
+				if(result2.size() > 0){
+					result.addAll(result2);
+				}
+			}
 			return result;
         } catch (ParseException parseException) {
 			// TODO: handle exception
