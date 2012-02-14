@@ -31,29 +31,41 @@
 		</security:authorize>
 		</div>
 
-		<c:if test="${not empty image}">
-		<div id="SpineVolumeDigitDiv">
-			<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
-			<b>Volume Spine</b>
-			<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
-		</div>
-		</c:if>
-		<c:if test="${empty image && volume.digitized == false}">
-			<div id="SpineVolumeNotDigitDiv">
-				<img src="<c:url value="/images/1024/img_volumespinedefault.png"/>">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<c:if test="${not empty image}">
+			<div id="SpineVolumeDigitDiv">
+				<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 				<b>Volume Spine</b>
+				<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
 			</div>
-		</c:if>
-		<c:if test="${empty image && volume.digitized == true}">
-			<div id="SpineVolumeNotDigitDiv">
-				<img src="<c:url value="/images/1024/img_volumespinenotavailable.png"/>">
-				<b>Volume Spine</b>
-			</div>
-		</c:if>
-		<!-- <div id="SpineVolumeDiv">
+			</c:if>
+			<c:if test="${empty image && volume.digitized == false}">
+				<div id="SpineVolumeNotDigitDiv">
+					<span>To be digitized</span>
+					<img src="<c:url value="/images/1024/img_volume.png"/>" alt="Volume" width="120px" height="160px">
+					<p>Volume Spine</p>
+				</div>
+			</c:if>
+			<c:if test="${empty image && volume.digitized == true}">
+				<div id="SpineVolumeNotDigitDiv">
+					<span>Spine not available</span>
+					<img src="<c:url value="/images/1024/img_volume.png"/>" alt="Volume" width="120px" height="160px">
+					<p>Volume Spine</p>
+				</div>
+			</c:if>
+		</security:authorize>
+			<!-- <div id="SpineVolumeDiv">
 			<img src="<c:url value="/images/image_volume.png"/>" alt="default image" />
 			<p><b>Costola</b> <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS"><a id="EditPortraitPerson" href="/DocSources/de/peoplebase/EditPortraitPerson.html">edit</a></security:authorize></p>
-		</div> -->
+			</div> -->
+		
+		<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<div id="SpineVolumeNotDigitDiv">
+				<span class="register">To see this Volume you must register</span>
+				<img alt="Volume" src="<c:url value="/images/1024/img_volume.png"/>" width="120px" height="160px">
+				<p>Volume Spine</p>
+			</div>
+		</security:authorize>
 		
 		<h3>${volume.serieList}</h3>
 		<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
