@@ -16,6 +16,26 @@
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
+<c:url var="ShowTopicsPlaceURL" value="/de/geobase/ShowTopicsPlace.do">
+	<c:param name="placeAllId" value="${place.placeAllId}" />
+</c:url>
+
+<c:url var="ShowBirthPeoplePlaceURL" value="/de/geobase/ShowBirthPeoplePlace.do">
+	<c:param name="placeAllId" value="${place.placeAllId}" />
+</c:url>
+
+<c:url var="ShowDeathPeoplePlaceURL" value="/de/geobase/ShowDeathPeoplePlace.do">
+	<c:param name="placeAllId" value="${place.placeAllId}" />
+</c:url>
+
+<c:url var="ShowActiveStartPeoplePlaceURL" value="/de/geobase/ShowActiveStartPeoplePlace.do">
+	<c:param name="placeAllId" value="${place.placeAllId}" />
+</c:url>
+
+<c:url var="ShowActiveEndPeoplePlaceURL" value="/de/geobase/ShowActiveEndPeoplePlace.do">
+	<c:param name="placeAllId" value="${place.placeAllId}" />
+</c:url>
+
 <div>
 	<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}" class="buttonMedium">Edit this Place</a>
 </div>
@@ -102,7 +122,7 @@
 		<div class="row">
 			<c:if test="${senderPlace != null && senderPlace != 0}">
 				<%-- <div class="value">${senderPlace} Senders</div> --%>
-				<div class="value"><a id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a></div>
+				<div class="value"><a id="linkSearch" class="senderCompare" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a></div>
 			</c:if>
 			<c:if test="${senderPlace == 0 || senderPlace == null}">
 				<div class="value">0 Sender</div>
@@ -110,7 +130,7 @@
 		</div>
 		<div class="row">
 			<c:if test="${recipientPlace != null && recipientPlace != 0}">
-				<div class="value">${recipientPlace} Recipients</div>
+				<div class="value"><a id="linkSearch" class="recipientCompare" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a></div>
 			</c:if>
 			<c:if test="${recipientPlace == 0 || recipientPlace == null}">
 				<div class="value">0 Recipient</div>
@@ -129,7 +149,7 @@
 	<div class="list">	
 		<div class="row">
 			<c:if test="${topicsPlace != null && topicsPlace != 0}">
-				<div class="value">${docInTopics} Documents on ${topicsPlace} Topics</div>
+				<div class="value"><a id="linkSearch" class="topicsCompare" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a></div>
 			</c:if>
 			<c:if test="${topicsPlace == 0 || topicsPlace == null}">
 				<div class="value">0 Document on 0 Topic</div>
@@ -148,10 +168,10 @@
 	
 	<div class="list">	
 		<div class="row">
-			<div class="value">${birthPlace} Birth      ${activeStartPlace} Active Start</div>
+			<div class="value"><c:if test="${birthPlace != 0}"><a id="linkSearch" class="birthCompare" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Birth</a></c:if><c:if test="${birthPlace == 0}">0 Birth</c:if>      <c:if test="${activeStartPlace != 0}"><a id="linkSearch" class="activeStartCompare" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Start</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Start</c:if></div>
 		</div>
 		<div class="row">
-			<div class="value">${deathPlace} Death      ${activeEndPlace} Active End</div>
+			<div class="value"><c:if test="${deathPlace != 0}"><a id="linkSearch" class="deathCompare" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Death</a></c:if><c:if test="${deathPlace == 0}">0 Death</c:if>      <c:if test="${activeEndPlace != 0}"><a id="linkSearch" class="activeEndCompare" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active End</a></c:if><c:if test="${activeEndPlace == 0}">0 Active End</c:if></div>
 		</div>
 	</div>
 </div>
@@ -235,7 +255,7 @@
 				return false;
 			});
 			
-			$j(".sender").click(function(){
+			$j(".senderCompare").click(function(){
 				var tabName = "Senders ${place.placeName}";
 				var numTab = 0;
 				
@@ -259,8 +279,128 @@
 				}
 			});
 			
-			$j(".recipient").click(function(){
+			$j(".recipientCompare").click(function(){
 				var tabName = "Recipients ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".topicsCompare").click(function(){
+				var tabName = "Topics ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".birthCompare").click(function(){
+				var tabName = "Birth ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".deathCompare").click(function(){
+				var tabName = "Death ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".activeStartCompare").click(function(){
+				var tabName = "Active Start ${place.placeName}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".activeEndCompare").click(function(){
+				var tabName = "Active End ${place.placeName}";
 				var numTab = 0;
 				
 				//Check if already exist a tab with this person
