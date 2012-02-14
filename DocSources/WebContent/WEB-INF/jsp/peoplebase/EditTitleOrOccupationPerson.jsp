@@ -26,7 +26,7 @@
 			</c:if>
 			</legend>
 			<div>
-				<form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">New Title &amp; Occ:</form:label>
+				<form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">Add Title &amp; Occ:</form:label>
 				<form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_34c"/>
 			</div>
 			<div>
