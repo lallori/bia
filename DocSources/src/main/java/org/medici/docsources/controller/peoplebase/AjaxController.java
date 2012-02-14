@@ -27,12 +27,18 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
+import java.io.UnsupportedEncodingException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.converters.StringConverter;
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -485,7 +491,14 @@ public class AjaxController {
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Page page = null;
-
+		
+		//To convert family name with accents
+		try {
+			alias = new String(alias.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+		
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
 		try {
 			page = getPeopleBaseService().searchFamilyPerson(alias, paginationFilter);
