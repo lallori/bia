@@ -135,6 +135,10 @@
 	<bean id="editNamePersonValidator" class="org.medici.docsources.validator.peoplebase.EditNamePersonValidator">
         <description>Edit Name Person Validator.</description>
 	</bean>
+	
+	<bean id="editParentsPersonValidator" class="org.medici.docsources.validator.peoplebase.EditParentsPersonValidator">
+		<description>Edit Parents Person Validator</description>
+	</bean>
 
 	<bean id="editResearchNotesPersonValidator" class="org.medici.docsources.validator.peoplebase.EditResearchNotesPersonValidator">
         <description>Edit ResearchNotes Person Validator.</description>

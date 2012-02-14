@@ -28,8 +28,14 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.validation.Valid;
+
 import org.medici.docsources.command.peoplebase.EditParentsPersonCommand;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
@@ -38,6 +44,7 @@ import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +62,7 @@ public class EditParentsPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
 	@Autowired(required = false)
-	@Qualifier("modifyPersonValidator")
+	@Qualifier("editParentsPersonValidator")
 	private Validator validator;
 
 	/**
@@ -74,6 +81,63 @@ public class EditParentsPersonController {
 	public Validator getValidator() {
 		return validator;
 	}
+	
+	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditParentsPersonCommand command, BindingResult result){
+		getValidator().validate(command, result);
+		
+		if(result.hasErrors()){
+			return setupForm(command);
+		}else{
+			Map<String, Object> model = new HashMap<String, Object>();
+			
+			Parent parentFather = new Parent(command.getFatherRecordId());
+			parentFather.setParent(new People(command.getFatherPersonId()));
+			parentFather.setChild(new People(command.getPersonId()));
+			
+			Parent parentMother = new Parent(command.getMotherRecordId());
+			parentMother.setParent(new People(command.getMotherPersonId()));
+			parentMother.setChild(new People(command.getPersonId()));
+			
+			try{
+				if(command.getFatherRecordId().equals(0)){
+					if(command.getFatherPersonId() != null){
+						parentFather = getPeopleBaseService().addNewFatherPerson(parentFather);
+					}
+				}else{
+					if(command.getFatherPersonId() == null){
+						getPeopleBaseService().deleteFatherFromPerson(parentFather);
+					}else{
+						parentFather = getPeopleBaseService().editFatherPerson(parentFather);
+					}
+				}
+				
+				if(command.getMotherRecordId().equals(0)){
+					if(command.getMotherPersonId() != null){
+						parentMother = getPeopleBaseService().addNewMotherPerson(parentMother);
+					}
+				}else{
+					if(command.getMotherPersonId() == null){
+						getPeopleBaseService().deleteMotherFromPerson(parentMother);
+					}else{
+						parentMother = getPeopleBaseService().editMotherPerson(parentMother);
+					}
+				}
+				
+				model.put("person", parentFather.getChild());
+			}catch(ApplicationThrowable th){
+				return new ModelAndView("error/EditParentsPerson", model);
+			}
+			
+			return new ModelAndView("peoplebase/ShowPerson", model);
+		}
+	}
 
 	/**
 	 * @param peopleBaseService
@@ -91,17 +155,70 @@ public class EditParentsPersonController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditParentsPersonCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		List<Month> months = null;
+		try {
+			months = getPeopleBaseService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/EditParentsPerson", model);
+		}
+		
 		if ((command != null) && (command.getPersonId() > 0)) {
 			try {
 				People person = getPeopleBaseService().findPerson(command.getPersonId());
 				model.put("person", person);
 				
-				for (Parent parent: person.getParents()) {
-					if (parent.getParent().getGender().equals(Gender.M)) {
-						model.put("father", parent);
-					} if (parent.getParent().getGender().equals(Gender.F)) {
-						model.put("mother", parent);
+				Set<Parent> parents = person.getParents();
+				if(parents.size() > 0){
+					for (Parent parent: parents) {
+						if (parent.getParent().getGender().equals(Gender.M)) {
+							model.put("father", parent);
+							command.setFatherPersonId(parent.getParent().getPersonId());
+							command.setFatherRecordId(parent.getId());
+							command.setFatherDescription(parent.getParent().toString());
+							command.setBioNotesFather(parent.getParent().getBioNotes());
+							command.setBornYearFather(parent.getParent().getBornYear());
+							if (parent.getParent().getBornMonth()!= null){
+								command.setBornMonthNumFather(parent.getParent().getBornMonth().getMonthNum());
+								command.setBornMonthFather(parent.getParent().getBornMonth().getMonthName());
+							}
+							command.setBornDayFather(parent.getParent().getBornDay());
+							command.setDeathYearFather(parent.getParent().getDeathYear());
+							if (parent.getParent().getDeathMonth() != null) {
+								command.setDeathMonthNumFather(parent.getParent().getDeathMonth().getMonthNum());
+								command.setDeathMonthFather(parent.getParent().getDeathMonth().getMonthName());
+							}
+							command.setDeathDayFather(parent.getParent().getDeathDay());
+						}else if (parent.getParent().getGender().equals(Gender.F)) {
+							model.put("mother", parent);
+							command.setMotherPersonId(parent.getParent().getPersonId());
+							command.setMotherRecordId(parent.getId());
+							command.setMotherDescription(parent.getParent().toString());
+							command.setBioNotesMother(parent.getParent().getBioNotes());
+							command.setBornYearMother(parent.getParent().getBornYear());
+							if (parent.getParent().getBornMonth()!= null){
+								command.setBornMonthNumMother(parent.getParent().getBornMonth().getMonthNum());
+								command.setBornMonthMother(parent.getParent().getBornMonth().getMonthName());
+							}
+							command.setBornDayMother(parent.getParent().getBornDay());
+							command.setDeathYearMother(parent.getParent().getDeathYear());
+							if (parent.getParent().getDeathMonth() != null) {
+								command.setDeathMonthNumMother(parent.getParent().getDeathMonth().getMonthNum());
+								command.setDeathMonthMother(parent.getParent().getDeathMonth().getMonthName());
+							}
+							command.setDeathDayMother(parent.getParent().getDeathDay());
+						}
+						if(command.getFatherPersonId() == null){
+							command.setFatherRecordId(0);
+						}
+						if(command.getMotherPersonId() == null){
+							command.setMotherRecordId(0);
+						}
 					}
+				}else{
+					command.setFatherRecordId(0);
+					command.setMotherRecordId(0);
 				}
 
 			} catch (ApplicationThrowable ath) {

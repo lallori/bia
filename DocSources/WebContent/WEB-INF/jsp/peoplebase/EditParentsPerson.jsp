@@ -6,82 +6,117 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<c:url var="EditParentsPersonURL" value="/de/peoplebase/EditParentsPerson.do">
-			<c:param name="personId"   value="${person.personId}" />
-		</c:url>
+		<c:url var="EditParentsPersonURL" value="/de/peoplebase/EditParentsPerson.do" />
+			
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
+		
 	</security:authorize>
 
-	<form:form id="EditParentsPersonForm" method="post" cssClass="edit">
+	<div id="EditParentPersonDiv">
+		<form:form id="EditParentsPersonForm" action="${editParentsPersonURL}" method="post" cssClass="edit">
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
 		<fieldset>
-		<legend><b>PARENTS</b></legend>
-			<c:url var="EditFatherPersonURL" value="/de/peoplebase/EditFatherPerson.do">
-				<c:param name="id" value="${father.id}" />
-				<c:param name="parentId" value="${father.parent.personId}" />
-				<c:param name="childId" value="${person.personId}" />
-			</c:url>
-			<c:url var="DeleteFatherPersonURL" value="/de/peoplebase/DeleteFatherPerson.do" >
-				<c:param name="id" value="${father.id}" />
-				<c:param name="parentId" value="${father.parent.personId}" />
-				<c:param name="childId" value="${person.personId}" />
-			</c:url>
-			<div>
-				Father
-			<c:if test="${not empty father}">
-      			<input id="father" name="father" class="input_30c_disabled" type="text" value="${father.parent}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteFatherPersonURL}"></a>
-      		</c:if>
-			<c:if test="${empty father}">
-      			<input id="father" name="father" class="input_30c_disabled" type="text" value="" disabled="disabled" />
-      		</c:if>
-				<a class="editValue" class="editValue" href="${EditFatherPersonURL}" title="Edit this entry"></a>
-				<c:if test="${not empty father}">
-					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-						<c:param name="personId"   value="${father.parent.personId}" />
-					</c:url>
-					<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"></a>
-				</c:if>
-			</div>
-
-			<c:url var="EditMotherPersonURL" value="/de/peoplebase/EditMotherPerson.do">
-				<c:param name="id" value="${mother.id}" />
-				<c:param name="parentId" value="${mother.parent.personId}" />
-				<c:param name="childId" value="${person.personId}" />
-			</c:url>
-			<c:url var="DeleteMotherPersonURL" value="/de/peoplebase/DeleteMotherPerson.do" >
-				<c:param name="id" value="${mother.id}" />
-				<c:param name="parentId" value="${mother.parent.personId}" />
-				<c:param name="childId" value="${person.personId}" />
-			</c:url>
-
-			<div>
-				Mother 
-			<c:if test="${not empty mother}">
-      			<input id="mother" name="mother" class="input_30c_disabled" type="text" value="${mother.parent}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteMotherPersonURL}"></a>
-      		</c:if>
-			<c:if test="${empty mother}">
-      			<input id="mother" name="mother" class="input_30c_disabled" type="text" value="" disabled="disabled" />
-      		</c:if>
-				<a class="editValue" class="editValue" href="${EditMotherPersonURL}" title="Edit this entry"></a>
-				<c:if test="${not empty mother}">
-				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-					<c:param name="personId"   value="${mother.parent.personId}" />
-				</c:url>
-					<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"></a>
-				</c:if>
-			</div>
-			
-			<div>
-				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-			</div>
-			
-		</fieldset>	
+			<legend>
+				<b>PARENTS</b>
+			</legend>
+			<p><b>Father:</b></p>
+				<div>
+					<form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error">Name:</form:label>
+					<form:input id="fatherAutocompleter" path="fatherDescription" cssClass="input_25c" />
+				</div>
+				
+				<div> 
+					<b>Birth:</b>
+					<form:label id="bornYearLabelFather" for="bornYearFather" path="bornYearFather">Year</form:label>
+					<form:input path="bornYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
+					<form:label id="bornMonthLabelFather" for="bornMonthNumFather" path="bornMonthNumFather">Month</form:label>
+					<form:select id="bornMonthFather" disabled="disabled" path="bornMonthFather" cssClass="selectform_disabled" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+					<form:label id="bornDayLabelFather" for="bornDayFather" path="bornDayFather">Day</form:label>
+					<form:input path="bornDayFather" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
+				</div>
+				
+				<div>
+					<b>Death:</b>
+					<form:label id="deathYearLabelFather" for="deathYearFather" path="bornYearFather">Year</form:label>
+					<form:input path="deathYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
+					<form:label id="deathMonthLabelFather" for="deathMonthNumFather" path="deathMonthNumFather">Month</form:label>
+					<form:select id="deathMonthFather" disabled="disabled" path="deathMonthFather" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+					<form:label id="deathDayLabelFather" for="deathDayFather" path="deathDayFather">Day</form:label>
+					<form:input path="deathDayFather" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
+				</div>
+				
+				<div>
+					<form:label id="bioNotesLabelFather" for="bioNotesFather" path="bioNotesFather">Bio notes:</form:label>
+				</div>
+				<div>
+					<form:textarea path="bioNotesFather" readonly="true" cssClass="txtarea_disabled" />
+				</div>
+				
+								
+			<p><b>Mother:</b></p>
+				<div>
+					<form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error">Name:</form:label>
+					<form:input id="motherAutocompleter" path="motherDescription" cssClass="input_25c" />
+				</div>
+				
+				<div> 
+					<b>Birth:</b>
+					<form:label id="bornYearLabelMother" for="bornYearMother" path="bornYearMother">Year</form:label>
+					<form:input path="bornYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
+					<form:label id="bornMonthLabelMother" for="bornMonthNumMother" path="bornMonthNumMother">Month</form:label>
+					<form:select id="bornMonthMother" disabled="disabled" path="bornMonthMother" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+					<form:label id="bornDayLabelMother" for="bornDayMother" path="bornDayMother">Day</form:label>
+					<form:input path="bornDayMother" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
+				</div>
+				
+				<div>
+					<b>Death:</b>
+					<form:label id="deathYearLabelMother" for="deathYearMother" path="deathYearMother">Year</form:label>
+					<form:input path="deathYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
+					<form:label id="deathMonthLabelMother" for="deathMonthNumMother" path="deathMonthNumMother">Month</form:label>
+					<form:select id="deathMonthMother" disabled="disabled" path="deathMonthMother" cssClass="selectform_disabled" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+					<form:label id="deathDayLabelMother" for="deathDayMother" path="deathDayMother">Day</form:label>
+					<form:input path="deathDayMother" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
+				</div>
+				
+				<div>
+					<form:label id="bioNotesLabelMother" for="bioNotesMother" path="bioNotesMother">Bio notes:</form:label>
+				</div>
+				<div>
+					<form:textarea path="bioNotesMother" readonly="true" cssClass="txtarea_disabled" />
+				</div>
+				
+				<div>
+					<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
+					<input id="save" type="submit" value="Save" class="button"/>
+				</div>
+				
+				<form:hidden path="fatherRecordId"/>
+				<form:hidden path="fatherPersonId"/>
+				<form:hidden path="motherRecordId"/>
+				<form:hidden path="motherPersonId"/>
+				<form:hidden path="personId"/>
+				<form:hidden path="genderFather"/>
+				<form:hidden path="genderMother"/>
+			</fieldset>
 	</form:form>
 	
-	<div id="EditParentPersonDiv"></div>
+	</div>
+	
+	<c:url var="SearchFatherLinkableToPersonURL" value="/de/peoplebase/SearchFatherLinkableToPerson.json">
+		<c:param name="personId" value="${command.personId}" />
+	</c:url>
+
+	<c:url var="ShowFatherDetailsURL" value="/de/peoplebase/ShowFatherDetails.json" />
+	
+	<c:url var="SearchMotherLinkableToPersonURL" value="/de/peoplebase/SearchMotherLinkableToPerson.json">
+		<c:param name="personId" value="${command.personId}" />
+	</c:url>
+
+	<c:url var="ShowMotherDetailsURL" value="/de/peoplebase/ShowMotherDetails.json" />
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -95,10 +130,103 @@
 	        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
 	        
 	        $j('#close').click(function() {
-				$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
-					$j("#body_left").html(html);
-				}});
-				return false;
+	        	$j(".autocomplete").remove();
+	        	$j("#EditParentsPersonDiv").block({ message: $j("#question") });
+	        	return false;
+			});
+	        
+	        $j("#bornMonthFather, #bornYearFather, #bornDayFather, #bornMonthMother, #bornYearMother, #bornDayMother").attr("disabled", "disabled");
+			$j("#deathMonthFather, #deathYearFather, #deathDayFather, #deathMonthMother, #deathYearMother, #deathDayMother").attr("disabled", "disabled");
+			
+			var fatherDescription = $j('#fatherAutocompleter').autocompletePerson({ 
+			    serviceUrl:'${SearchFatherLinkableToPersonURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ 
+			    	$j('#fatherPersonId').val(data); 
+					$j.get("${ShowFatherDetailsURL}", { personId: "" + data }, function(data) {
+						$j("#bornYearFather").val(data.bornYear);
+						$j("#bornMonthFather").append('<option value="' + data.bornMonth + '" selected="selected">' + data.bornMonth + '</option>');
+						$j("#bornDayFather").val(data.bornDay);
+						$j("#deathYearFather").val(data.deathYear);
+						$j("#deathMonthFather").append('<option value="' + data.deathMonth + '" selected="selected">' + data.deathMonth + '</option>');
+						$j("#deathDayFather").val(data.deathDay);
+						$j("#bioNotesFather").val(data.bioNotes);
+						$j("#genderFather").val(data.gender);
+					})
+			    }
+			  });
+			
+			var motherDescription = $j('#motherAutocompleter').autocompletePerson({ 
+			    serviceUrl:'${SearchMotherLinkableToPersonURL}',
+			    minChars:3, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){ 
+			    	$j('#motherPersonId').val(data); 
+					$j.get("${ShowMotherDetailsURL}", { personId: "" + data }, function(data) {
+						$j("#bornYearMother").val(data.bornYear);
+						$j("#bornMonthMother").append('<option value="' + data.bornMonth + '" selected="selected">' + data.bornMonth + '</option>');
+						$j("#bornDayMother").val(data.bornDay);
+						$j("#deathYearMother").val(data.deathYear);
+						$j("#deathMonthMother").append('<option value="' + data.deathMonth + '" selected="selected">' + data.deathMonth + '</option>');
+						$j("#deathDayMother").val(data.deathDay);
+						$j("#bioNotesMother").val(data.bioNotes);
+						$j("#genderMother").val(data.gender);
+					})
+			    }
+			  });
+			
+			$j("#fatherAutocompleter").change(function(){
+				if($j("#fatherAutocompleter").val() == ''){
+					$j("#bornYearFather").val('');
+					$j("#bornMonthFather").val('');
+					$j("#bornDayFather").val('');
+					$j("#deathYearFather").val('');
+					$j("#deathMonthFather").val('');
+					$j("#deathDayFather").val('');
+					$j("#bioNotesFather").val('');
+					$j("#genderFather").val('');
+					$j("#fatherPersonId").val('');
+				}
+			});
+			
+			$j("#motherAutocompleter").change(function(){
+				if($j("#motherAutocompleter").val() == ''){
+					$j("#bornYearMother").val('');
+					$j("#bornMonthMother").val('');
+					$j("#bornDayMother").val('');
+					$j("#deathYearMother").val('');
+					$j("#deathMonthMother").val('');
+					$j("#deathDayMother").val('');
+					$j("#bioNotesMother").val('');
+					$j("#genderMother").val('');
+					$j("#motherPersonId").val('');
+				}
+			});
+			
+			$j("#EditParentsPersonForm").submit(function (){
+				if($j("#genderFather").val() == 'F' || $j("#genderFather").val() == 'X'){
+					$j('#EditParentsPersonDiv').block({ message: $j('#questionGenderFather') });
+					return false;
+				}else if($j("#genderMother").val() == 'M' || $j("#genderMother").val() == 'X'){
+					$j('#EditParentsPersonDiv').block({ message: $j('#questionGenderMother') });
+					return false;
+				}else{
+					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+						$j("#body_left").load('${ShowPersonURL}');
+					}})
+					return false;
+				}
 			});
 
 	        /*$j(".deleteIcon").click(function() {
@@ -110,78 +238,61 @@
 					}
 		        });
 				return false;
-			});*/
-
-			$j(".editValue").click(function() {
-				$j(".deleteIcon").css('visibility', 'hidden');
-				$j("#EditParentPersonDiv").load($j(this).attr("href"));
-				return false;
-			});
-
-			$j(".deleteIcon").click(function(){
-				var temp = $j(this);
-				$j('#EditParentsPersonDiv').block({ message: $j('.question') });
-
-				$j('.no').click(function() {
-					$j.unblockUI();
-					$j(".blockUI").fadeOut("slow");
-					$j(".question").hide();
-					$j("#EditParentsPersonDiv").append($j(".question"));
-					$j(".blockUI").remove();
-					$j("#EditParentsPersonDiv").load('${EditParentsPersonURL}');
-					return false; 
-				}); 
-		        
-				$j('.yes').click(function() { 
-					$j.get(temp.attr("href"), function(data) {
-						if(data.match(/KO/g)){
-				            var resp = $j('<div></div>').append(data); // wrap response
-						} else {
-							$j("#EditParentsPersonDiv").load('${EditParentsPersonURL}');
-						}
-						
-						return false; 
-					}); 	     
-				}); 
-				return false;
-			});
-
-			$j(".personIcon").click(function(){
-				var tabName = $j(this).parent();
-				tabName = $j(tabName).find('.input_30c_disabled');
-				tabName = $j(tabName).val();
-				
-				var numTab = 0;
-				
-				if(tabName.length > 20){
-					tabName = tabName.substring(0,17) + "...";
-				}
-				
-				//Check if already exist a tab with this person
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName){
-						tabExist = true;
-					}
-				});
-				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					return false;
-				}
-			});
-				
+			});*/				
 		});
 	</script>
 	
-	<div class="question" style="display:none; cursor: default"> 
-		<h1>Delete this Parent entry?</h1> 
-		<input type="button" class="yes" value="Yes" /> 
-		<input type="button" class="no" value="No" /> 
+	<div id="question" style="display:none; cursor: default"> 
+		<h1>discard changes?</h1> 
+		<input type="button" id="yes" value="Yes" /> 
+		<input type="button" id="no" value="No" /> 
 	</div>
+	
+	<div id="questionGenderFather" class="differentGender" style="display:none; cursor: default">
+		<h1>A father can't be a female or a corporate identity</h1>
+		<input type="button" id="okFather" class="ok" value="Ok" />
+	</div>
+	
+	<div id="questionGenderMother" class="differentGender" style="display:none; cursor: default">
+		<h1>A mother can't be a male or a corporate identity</h1>
+		<input type="button" id="okMother" class="ok" value="Ok" />
+	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j('#no').click(function() { 
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#question").hide();
+				$j("#EditParentsPersonDiv").append($j("#question"));
+				$j(".blockUI").remove();
+				return false; 
+			}); 
+	        
+			$j('#yes').click(function() { 
+				$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
+				}});					
+				return false; 
+			}); 
+			
+			$j("#okFather").click(function(){
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#questionGenderFather").hide();
+				$j("#EditParentPersonDiv").append($j("#questionGenderFather"));
+				$j(".blockUI").remove();
+				return false;
+			});
+			
+			$j("#okMother").click(function(){
+				$j.unblockUI();
+				$j(".blockUI").fadeOut("slow");
+				$j("#questionGenderMother").hide();
+				$j("#EditParentPersonDiv").append($j("#questionGenderMother"));
+				$j(".blockUI").remove();
+				return false;
+			});
+			
+		});
+	</script>
