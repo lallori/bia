@@ -72,6 +72,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<String> roleCategories;
 	private List<String> titlesOcc;
 	private List<Integer> titlesOccId;
+	private List<String> titleOccWord;
 	private List<String> words;
 	private List<WordType> wordsTypes;
 	private List<String> researchNotes;
@@ -99,6 +100,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		roleCategories = new ArrayList<String>(0);
 		titlesOcc = new ArrayList<String>(0);
 		titlesOccId = new ArrayList<Integer>(0);
+		titleOccWord = new ArrayList<String>(0);
 		logicalDelete = Boolean.FALSE;
 		researchNotes = new ArrayList<String>(0);
 	}
@@ -206,6 +208,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getTitlesOccId() {
 		return titlesOccId;
+	}
+
+	/**
+	 * @return the titleOccWord
+	 */
+	public List<String> getTitleOccWord() {
+		return titleOccWord;
 	}
 
 	/**
@@ -320,6 +329,20 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			}
 		}else{
 			roleCategories = new ArrayList<String>(0);
+		}
+		
+		//OccupationsWords
+		if((command.getOccupationWord() != null) && (command.getOccupationWord().size() > 0)){
+			titleOccWord = new ArrayList<String>(command.getOccupationWord().size());
+			for(String singleWord : command.getOccupationWord()){
+				try{
+					titleOccWord.add(URIUtil.decode(singleWord, "UTF-8"));
+				}catch(URIException e){
+					
+				}
+			}
+		}else{
+			titleOccWord = new ArrayList<String>(0);
 		}
 		
 		//Occupations
@@ -523,6 +546,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @param titleOccWord the titleOccWord to set
+	 */
+	public void setTitleOccWord(List<String> titleOccWord) {
+		this.titleOccWord = titleOccWord;
+	}
+
+	/**
 	 * @param words the words to set
 	 */
 	public void setWords(List<String> words) {
@@ -689,6 +719,26 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				}
 				jpaQuery.append(roleCatQuery);
 			}	
+		}
+		
+		//OccupationsWord
+		if(titleOccWord.size() > 0){
+			StringBuffer titleOccWordQuery = new StringBuffer("(");
+			for(int i = 0; i < titleOccWord.size(); i++){
+				if(titleOccWordQuery.length() > 1){
+					titleOccWordQuery.append(" AND ");
+				}
+				titleOccWordQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOcc like '%");
+				titleOccWordQuery.append(titleOccWord.get(i));
+				titleOccWordQuery.append("%'))");
+			}
+			titleOccWordQuery.append(")");
+			if(!titleOccWordQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(titleOccWordQuery);
+			}
 		}
 		
 		//Occupations

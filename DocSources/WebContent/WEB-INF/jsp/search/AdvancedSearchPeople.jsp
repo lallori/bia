@@ -155,6 +155,16 @@
 		</form>
 		
 		<br />
+		<span style="margin:0 0 0 26px;">Word search in Title/Occupation</span>
+		
+		<form id="occupationWordSearchForm" method="post" class="edit">
+			<a class="helpIcon" title="...">?</a>
+			<input id="occupationWord" name="occupationWord" class="input_20c" type="text" value=""/>
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+			<input type="hidden" id="category" value="OccupationWord">
+		</form>
+		<br />
+		
 		<span style="margin:0 0 0 26px;">Match the exact Title/Occupation</span>
 		
 		<form id="occupationSearchForm" method="post" class="edit">
@@ -203,6 +213,7 @@
 		$j('#wordSearchForm').advancedSearchForm();
 		$j('#dateSearchForm').advancedSearchForm();
 		$j('#roleCategorySearchForm').advancedSearchForm();
+		$j('#occupationWordSearchForm').advancedSearchForm();
 		$j('#occupationSearchForm').advancedSearchForm();
 		$j('#placeSearchForm').advancedSearchForm();	
 		$j('#researchNotesSearchForm').advancedSearchForm();

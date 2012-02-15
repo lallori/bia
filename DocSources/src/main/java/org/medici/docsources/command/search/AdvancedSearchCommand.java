@@ -76,6 +76,7 @@ public class AdvancedSearchCommand {
 	
 	private List<String> nameParts;
 	private List<String> roleCategory;
+	private List<String> occupationWord;
 	private List<String> occupation;
 	private List<String> researchNotes;
 
@@ -575,10 +576,24 @@ public class AdvancedSearchCommand {
 	}
 
 	/**
+	 * @param occupationWord the occupationWord to set
+	 */
+	public void setOccupationWord(List<String> occupationWord) {
+		this.occupationWord = occupationWord;
+	}
+
+	/**
 	 * @return the occupation
 	 */
 	public List<String> getOccupation() {
 		return occupation;
+	}
+
+	/**
+	 * @return the occupationWord
+	 */
+	public List<String> getOccupationWord() {
+		return occupationWord;
 	}
 
 	/**

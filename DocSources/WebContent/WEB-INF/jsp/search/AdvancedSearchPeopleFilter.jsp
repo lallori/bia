@@ -58,7 +58,17 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.titlesOcc) && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.titleOccWord) && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<div id="occupationWordSearchDiv">
+			<c:forEach items="${searchFilter.filterData.titleOccWord}" varStatus="iterator">
+				<div class="searchFilterDiv">
+					<span class="categorySearch">Occupation Word: </span><span class="wordSearch">${searchFilter.filterData.titleOccWord[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${fn2:encode(searchFilter.filterData.titleOccWord[iterator.index])}" name="occupationWord"/>
+				</div>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			</c:forEach>
+			</div>
+			<c:if test="${(not empty searchFilter.filterData.titlesOcc) && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titleOccWord)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="occupationSearchDiv">
 			<c:forEach items="${searchFilter.filterData.titlesOcc}" varStatus="iterator">	
 				<div class="searchFilterDiv">
@@ -68,7 +78,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.place) && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titlesOcc)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.place) && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titlesOcc) || (not empty searchFilter.filterData.titleOccWord)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="placeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.place}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -78,7 +88,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.researchNotes) && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titlesOcc) || (not empty searchFilter.filterData.place)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.researchNotes) && ((not empty searchFilter.filterData.names) || (not empty searchFilter.filterData.words) || (not empty searchFilter.filterData.datesTypes) || (not empty searchFilter.filterData.roleCategories) || (not empty searchFilter.filterData.titlesOcc) || (not empty searchFilter.filterData.place) || (not empty searchFilter.filterData.titleOccWord)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="researchNotesSearchDiv">
 			<c:forEach items="${searchFilter.filterData.researchNotes}" varStatus="iterator">
 				<div class="searchFilterDiv">
