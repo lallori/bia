@@ -151,7 +151,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchBornPlace(String query) throws PersistenceException {
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -165,8 +165,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
+			//fullTextQuery.setProjection(outputFields);
+			//fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
@@ -200,7 +200,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchDeathPlace(String query) throws PersistenceException {
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -214,8 +214,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
+			//fullTextQuery.setProjection(outputFields);
+			//fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
@@ -247,7 +247,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchPlaceLinkableToTopicDocument(String searchText) throws PersistenceException {
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -261,8 +261,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
+			//fullTextQuery.setProjection(outputFields);
+			//fullTextQueryWithWildCard.setProjection(outputFields);
 			
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
@@ -295,7 +295,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchPlaceParent(String query) throws PersistenceException{
 		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -309,8 +309,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
+			//fullTextQuery.setProjection(outputFields);
+			//fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
@@ -386,7 +386,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchPlaces(String searchText) throws PersistenceException {
 		String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -400,8 +400,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
+			//fullTextQuery.setProjection(outputFields);
+			//fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
@@ -434,7 +434,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchRecipientsPlace(String searchText) throws PersistenceException {
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -448,8 +448,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
+			//fullTextQuery.setProjection(outputFields);
+			//fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
@@ -482,7 +482,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	@Override
 	public List<Place> searchSendersPlace(String searchText) throws PersistenceException {
         String[] searchFields = new String[]{"placeName", "placeNameFull", "termAccent"};
-		String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
+		//String[] outputFields = new String[]{"placeAllId", "placeNameFull", "prefFlag", "plType"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
 
@@ -496,8 +496,8 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	        final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( queryPlace, Place.class );
 	        final FullTextQuery fullTextQueryWithWildCard = fullTextSession.createFullTextQuery(queryPlaceWithWildCard, Place.class);
 			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			fullTextQueryWithWildCard.setProjection(outputFields);
+			//fullTextQuery.setProjection(outputFields);
+			//fullTextQueryWithWildCard.setProjection(outputFields);
 			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
 			fullTextQuery.setResultTransformer(Transformers.aliasToBean(Place.class));
 			fullTextQueryWithWildCard.setResultTransformer(Transformers.aliasToBean(Place.class));
