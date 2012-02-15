@@ -385,7 +385,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				poLinkToCreate.setStartMonthNum(null);
 				poLinkToCreate.setStartMonth(null);
 			}
-			poLinkToCreate.setStartMonth(poLink.getStartMonth());
 			poLinkToCreate.setStartDay(poLink.getStartDay());
 			if (poLink.getStartApprox() == null) {
 				poLinkToCreate.setStartApprox(Boolean.FALSE);
