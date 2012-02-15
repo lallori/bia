@@ -1318,7 +1318,7 @@ input.file {
     text-align:center;
 }
 
-#DocumentImageDigitDiv span {
+#DocumentImageDigitDiv span, #DocumentImageNotDigitDiv span {
     color: #C0272D;
     height: 60px;
     position: absolute;
