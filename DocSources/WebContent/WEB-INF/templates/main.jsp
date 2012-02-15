@@ -6,7 +6,7 @@
 		<base href="${pageContext.request.contextPath}"></base>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>the MEDICI ARCHIVE PROJECT</title>
-		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
+		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
 
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
