@@ -32,7 +32,6 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.PoLink;
 import org.springframework.stereotype.Repository;
