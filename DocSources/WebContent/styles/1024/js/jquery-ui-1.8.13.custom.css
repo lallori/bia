@@ -949,10 +949,8 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  }
  
  .yourSearchDiv { /* Your Search: [...] Div containing the reserched words on the Result Tab */
-	font-size: 11px;
 	margin: 15px 0 10px 0px;
 	font-size: 12px;    
-	color: #666EA4;
 	text-align: center;
 }
 
