@@ -360,7 +360,6 @@ form div {
     z-index:999;
     opacity:0.4;
     width:485px;
-    height:100%;
     position:absolute;
 }
 
@@ -1831,9 +1830,19 @@ a#editValue, .editValue { /* "Edit Value" Button */
 
 /* -------------------------------------- */
 /*
-/* ------------ Relationships ----------- */
-/*
-/* Parents */
+/* ------------ Parents ----------- */
+
+#bornYearLabelFather, #bornYearLabelMother {
+	margin-left: 40px;
+}
+
+#deathYearLabelFather, #deathYearLabelMother {
+	margin-left: 36px;
+}
+
+#bornMonthLabelFather, #bornMonthLabelMother, #bornDayLabelFather, #bornDayLabelMother, #deathMonthLabelFather, #deathMonthLabelMother, #deathDayLabelFather, #deathDayLabelMother {
+	margin-left: 30px;
+}
 
 a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a {
 	font-size:11px;
