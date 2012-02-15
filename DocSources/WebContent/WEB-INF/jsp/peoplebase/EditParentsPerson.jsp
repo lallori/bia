@@ -24,12 +24,12 @@
 			</legend>
 			<p><b>Father:</b></p>
 				<div>
-					<form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error">Name:</form:label>
-					<form:input id="fatherAutocompleter" path="fatherDescription" cssClass="input_25c" />
+					<form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error">Name</form:label>
+					<form:input id="fatherAutocompleter" path="fatherDescription" cssClass="input_30c" />
 				</div>
 				
 				<div> 
-					<b>Birth:</b>
+					<u>Birth:</u>
 					<form:label id="bornYearLabelFather" for="bornYearFather" path="bornYearFather">Year</form:label>
 					<form:input path="bornYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
 					<form:label id="bornMonthLabelFather" for="bornMonthNumFather" path="bornMonthNumFather">Month</form:label>
@@ -39,7 +39,7 @@
 				</div>
 				
 				<div>
-					<b>Death:</b>
+					<u>Death:</u>
 					<form:label id="deathYearLabelFather" for="deathYearFather" path="bornYearFather">Year</form:label>
 					<form:input path="deathYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
 					<form:label id="deathMonthLabelFather" for="deathMonthNumFather" path="deathMonthNumFather">Month</form:label>
@@ -58,12 +58,12 @@
 								
 			<p><b>Mother:</b></p>
 				<div>
-					<form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error">Name:</form:label>
-					<form:input id="motherAutocompleter" path="motherDescription" cssClass="input_25c" />
+					<form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error">Name</form:label>
+					<form:input id="motherAutocompleter" path="motherDescription" cssClass="input_30c" />
 				</div>
 				
 				<div> 
-					<b>Birth:</b>
+					<u>Birth:</u>
 					<form:label id="bornYearLabelMother" for="bornYearMother" path="bornYearMother">Year</form:label>
 					<form:input path="bornYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
 					<form:label id="bornMonthLabelMother" for="bornMonthNumMother" path="bornMonthNumMother">Month</form:label>
@@ -73,7 +73,7 @@
 				</div>
 				
 				<div>
-					<b>Death:</b>
+					<u>Death:</u>
 					<form:label id="deathYearLabelMother" for="deathYearMother" path="deathYearMother">Year</form:label>
 					<form:input path="deathYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
 					<form:label id="deathMonthLabelMother" for="deathMonthNumMother" path="deathMonthNumMother">Month</form:label>
