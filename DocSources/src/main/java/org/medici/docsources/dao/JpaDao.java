@@ -435,13 +435,13 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 					case 2:
 						paginationFilter.addSortingCriteria("bornYear", paginationFilter.getSortingDirection());
 						//Month is an entity, so we don't have field with suffix 
-						paginationFilter.addSortingCriteria("bornMonthNum.monthNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("bornMonth.monthNum", paginationFilter.getSortingDirection());
 						paginationFilter.addSortingCriteria("bornDay", paginationFilter.getSortingDirection());
 						break;
 					case 3:
 						paginationFilter.addSortingCriteria("deathYear", paginationFilter.getSortingDirection());
 						//Month is an entity, so we don't have field with suffix 
-						paginationFilter.addSortingCriteria("deathMonthNum.monthNum", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("deathMonth.monthNum", paginationFilter.getSortingDirection());
 						paginationFilter.addSortingCriteria("deathDay", paginationFilter.getSortingDirection());
 						break;
 					case 4:
@@ -653,12 +653,11 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				} else {
-					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				}
+				} 
 			}
 		}
 		
