@@ -43,7 +43,12 @@
 			<c:if test="${(searchFilter.filterData.digitized != null)}">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">Digitized: </span><span class="wordSearch"><c:if test="${searchFilter.filterData.digitized == true}">Yes</c:if><c:if test="${searchFilter.filterData.digitized == false}">No</c:if></span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.digitized.toString()) }" name="digitized">
+					<c:if test="${searchFilter.filterData.digitized.toString() ==  'true'}">
+						<input type="hidden" value="Yes" name="digitized">
+					</c:if>
+					<c:if test="${searchFilter.filterData.digitized.toString() == 'false' }">
+						<input type="hidden" value="No" name="digitized">
+					</c:if>
 				</div>
 			</c:if>
 			</div>
