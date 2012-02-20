@@ -35,7 +35,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.hibernate.id.IdentityGenerator.GetGeneratedKeysDelegate;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
@@ -342,7 +341,11 @@ public class AjaxController {
 		List resultList = new ArrayList();
 		for (Volume currentVolume : (List<Volume>)page.getList()) {
 			List singleRow = new ArrayList();
-			singleRow.add(currentVolume.getSerieList().toString());
+			if(currentVolume.getSerieList() != null){
+				singleRow.add(currentVolume.getSerieList().toString());
+			}else{
+				singleRow.add("");
+			}
 			singleRow.add(currentVolume.getMDP());
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
