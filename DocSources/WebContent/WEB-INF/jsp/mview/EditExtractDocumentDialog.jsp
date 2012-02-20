@@ -21,6 +21,7 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#EditExtractDocumentDiv").dialog("option" , "position" , ['left', 'middle']);
 			$j("#saveExtract").click(function (){
 				if (extractChanged) {
 					$j.ajax({ type:"POST", url:$j("#EditExtractDocumentForm").attr("action"), data:$j("#EditExtractDocumentForm").serialize(), async:false, success:function(html) { 
@@ -42,6 +43,7 @@
 							} 
 						});
 				}
+				//$j("#EditExtractDocumentDiv").dialog("option" , "position" , ['left', 'middle']);
 				$j("#EditSynopsisDocumentDiv").dialog( "open" );
 
 				return false;

@@ -86,6 +86,14 @@
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
+		
+	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" >
+		<c:param name="entryId" value="${command.entryId}" />
+	</c:url>
+	
+	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" >
+		<c:param name="entryId" value="${command.entryId}" />
+	</c:url>
 
 <div id="EditPersonalNotesDiv">
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -93,6 +101,8 @@
 		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
 		<span id="transcribeMode" class="transcribeMessage" style="visibility: hidden;">You are in transcribing a folio</span>
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</a>
+		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green">This document has been entred but not transcribed</font>
+		<a id="extractTranscribe" href="#" style="visibility: hidden;" title="Transcribe extract" class="transcribe">Transcribe this document</a>
 		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden;" class="transcribe">Show this document record</a>
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Transcribe this document</a>
 		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Choose this as "Start folio"</a>
@@ -281,9 +291,58 @@
 				}
 			});
 			
+			var $dialogExtract = $j('<div id="EditExtractDocumentDiv"></div>')
+			.dialog({                                                                                                                                                                   
+				autoOpen: false,
+				width: 352,
+				minWidth: 350,
+				minHeight: 200,                                                                                                                                                         
+				title: 'EDIT EXTRACT',
+				position: ['left','middle'],                                                                                                                                                       
+				closeOnEscape: false,
+				maximized:false,
+				
+				open: function(event, ui) { 
+					$j(".ui-dialog-titlebar-close").hide(); 
+					$(this).load('${EditExtractDialogUrl}');
+				},
+				//drag: function(event, ui) {$j(this).append(ui.position.left);},
+				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);}, 
+				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+			}).dialogExtend({"minimize" : true});
+			
+			var $dialogSynopsis = $j('<div id="EditSynopsisDocumentDiv"></div>')
+			.dialog({                                                                                                                                                                   
+				autoOpen: false,
+				width: 352,
+				minWidth: 350,
+				minHeight: 200,                                                                                                                                                         
+				title: 'EDIT SYNOPSIS',
+				position: [$j("#EditExtractDocumentDiv").dialog("option" , "width") + 8 , "middle"],                                                                                                                                       
+				closeOnEscape: false,
+				maximized:false,
+				
+				open: function(event, ui) { 
+					$j(".ui-dialog-titlebar-close").hide(); 
+					$(this).load('${EditSynopsisDialogUrl}');
+				},
+				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+			}).dialogExtend({"minimize" : true});;
+			
 			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open');
 				return false;
+			});
+			
+			$j('#extractTranscribe').click(function() {
+				if ($dialogExtract.dialog("isOpen")) {
+					$dialogExtract.dialog("close");;
+					return false;
+				} else {
+					$dialogExtract.dialog("open");
+					return false;
+				}
 			});
 			
 			$j('#volumeSummary').click(function(){
@@ -314,26 +373,44 @@
 					$j("#unvailableTranscribe").css('visibility', 'visible');
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+					$j("#notExtract").css('visibility', 'hidden');
+					$j("#extractTranscribe").css('visibility', 'hidden');
 					$j("#readyToTranscribe").css('visibility', 'hidden');
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 				} else if (data.linkedDocument == 'true') {
-					$j("#alreadyTranscribe").css('visibility', 'visible');
-					$j("#showAlreadyTranscribed").css('visibility', 'visible');
-					$j("#unvailableTranscribe").css('visibility', 'hidden');
-					$j("#readyToTranscribe").css('visibility', 'hidden');
-					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+					if(data.isExtract == 'false'){
+						$j("#notExtract").css('visibility', 'visible');
+						$j("#extractTranscribe").css('visibility', 'visible');
+						$j("#alreadyTranscribe").css('visibility', 'hidden');
+						$j("#showAlreadyTranscribe").css('visibility', 'hidden');
+						$j("#unvailableTranscribe").css('visibility', 'hidden');
+						$j("#readyToTranscribe").css('visibility', 'hidden');
+						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+					}else{
+						$j("#alreadyTranscribe").css('visibility', 'visible');
+						$j("#showAlreadyTranscribed").css('visibility', 'visible');
+						$j("#notExtract").css('visibility', 'hidden');
+						$j("#extractTranscribe").css('visibility', 'hidden');
+						$j("#unvailableTranscribe").css('visibility', 'hidden');
+						$j("#readyToTranscribe").css('visibility', 'hidden');
+						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+					}
 				} else if (data.linkedDocument == 'false') {
 					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 					$j("#readyToTranscribe").css('visibility', 'visible');
 					</security:authorize>
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+					$j("#notExtract").css('visibility', 'hidden');
+					$j("#extractTranscribe").css('visibility', 'hidden');
 					$j("#unvailableTranscribe").css('visibility', 'hidden');
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 				} else {
 					$j("#unvailableTranscribe").css('visibility', 'hidden');
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+					$j("#notExtract").css('visibility', 'hidden');
+					$j("#extractTranscribe").css('visibility', 'hidden');
 					$j("#readyToTranscribe").css('visibility', 'hidden');
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 				}

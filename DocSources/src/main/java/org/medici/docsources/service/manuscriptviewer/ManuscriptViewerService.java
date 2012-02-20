@@ -221,4 +221,12 @@ public interface ManuscriptViewerService {
 	 * @throws ApplicationThrowable
 	 */
 	public ImageType getImageType(Integer volNum, String volLetExt, Integer imageOrder) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Boolean isDocumentExtract(Integer entryId) throws ApplicationThrowable;
 }

@@ -109,6 +109,7 @@ public class AjaxController {
 
 		try {
 			Integer documentId = null;
+			Boolean isExtract = false;
 			Image image = new Image();
 			if (entryId != null) {
 				documentId = entryId;
@@ -132,16 +133,21 @@ public class AjaxController {
 					}
 				}
 			}			
-
+			if(documentId != null){
+				isExtract = getManuscriptViewerService().isDocumentExtract(documentId);
+			}
+			
 			model.put("linkedDocument", (documentId != null) ? "true" : "false");
 			model.put("entryId", documentId );
 			model.put("showLinkedDocument", HtmlUtils.showDocument(documentId));
+			model.put("isExtract", (isExtract == true) ? "true" : "false");
 		}catch (ApplicationThrowable applicationThrowable) {
 			model.put("entryId", null);
 			model.put("linkedDocument", "false");
 			model.put("showLinkedDocument", "");
 			model.put("imageName", "");
 			model.put("imageId", "");
+			model.put("isExtract", "false");
 		}
 		
 		return new ModelAndView("responseOK", model);

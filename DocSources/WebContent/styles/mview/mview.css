@@ -100,7 +100,7 @@ a.transcribe {
 
 /* ---- Show Allready Transcribed Document ----- */
 
-#showAlreadyTranscribed.transcribe { /* Volume Summary button on Page Turner Panel */
+#showAlreadyTranscribed.transcribe, #extractTranscribe.transcribe { /* Volume Summary button on Page Turner Panel */
 	margin: 53px 0 0 0px;
 }
 

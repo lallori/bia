@@ -20,6 +20,8 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#EditSynopsisDocumentDiv").dialog("option" , "position" , [$j("#EditExtractDocumentDiv").dialog("option" , "width") + 8 , "middle"]);
+			
 			$j("#saveSynopsis").click(function (){
 				if (synopsisChanged) {
 					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 

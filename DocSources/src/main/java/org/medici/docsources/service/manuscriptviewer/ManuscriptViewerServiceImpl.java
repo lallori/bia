@@ -391,6 +391,23 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isDocumentExtract(Integer entryId) throws ApplicationThrowable {
+		try{
+			Document document = getDocumentDAO().find(entryId);
+			if(!document.getSynExtract().getDocExtract().isEmpty()){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @return the peopleDAO
@@ -454,4 +471,5 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
+
 }

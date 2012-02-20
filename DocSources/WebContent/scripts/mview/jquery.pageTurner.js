@@ -153,15 +153,28 @@
 							$j("#unvailableTranscribe").css('visibility', 'visible');
 	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
 	    					$j("#showAlreadyTranscribed").removeAttr('href');
+	    					$j("#notExtract").css('visibility', 'hidden');
+    						$j("#extractTranscribe").css('visibility', 'hidden');
 	    					$j("#readyToTranscribe").css('visibility', 'hidden');
 	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 	    				} else if (data.linkedDocument == 'true') {
-	    					$j("#alreadyTranscribe").css('visibility', 'visible');
-	    					$j("#showAlreadyTranscribed").css('visibility', 'visible');
-	    					$j("#showAlreadyTranscribed").attr('href', data.showLinkedDocument);
-	    					$j("#unvailableTranscribe").css('visibility', 'hidden');
-	    					$j("#readyToTranscribe").css('visibility', 'hidden');
-	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+	    					if(data.isExtract == 'false'){
+	    						$j("#notExtract").css('visibility', 'visible');
+	    						$j("#extractTranscribe").css('visibility', 'visible');
+	    						$j("#alreadyTranscribe").css('visibility', 'hidden');
+	    						$j("#showAlreadyTranscribe").css('visibility', 'hidden');
+	    						$j("#unvailableTranscribe").css('visibility', 'hidden');
+	    						$j("#readyToTranscribe").css('visibility', 'hidden');
+	    						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+	    					}else{
+	    						$j("#alreadyTranscribe").css('visibility', 'visible');
+	    						$j("#showAlreadyTranscribed").css('visibility', 'visible');
+	    						$j("#notExtract").css('visibility', 'hidden');
+	    						$j("#extractTranscribe").css('visibility', 'hidden');
+	    						$j("#unvailableTranscribe").css('visibility', 'hidden');
+	    						$j("#readyToTranscribe").css('visibility', 'hidden');
+	    						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+	    					}
 	    				} else if (data.linkedDocument == 'false') {
 	    					// Only users with special role can transcribe new document. 
 	    					if (functionParams["canTranscribe"] =='true' && data.imageType != "R") {
@@ -170,6 +183,8 @@
 	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
 	    					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 	    					$j("#showAlreadyTranscribed").removeAttr('href');
+	    					$j("#notExtract").css('visibility', 'hidden');
+    						$j("#extractTranscribe").css('visibility', 'hidden');
 	    					$j("#unvailableTranscribe").css('visibility', 'hidden');
 	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 	    				} else {
@@ -177,6 +192,8 @@
 	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
 	    					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 	    					$j("#showAlreadyTranscribed").removeAttr('href');
+	    					$j("#notExtract").css('visibility', 'hidden');
+    						$j("#extractTranscribe").css('visibility', 'hidden');
 	    					$j("#readyToTranscribe").css('visibility', 'hidden');
 	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 	    				}
@@ -304,15 +321,28 @@
 		    					$j("#unvailableTranscribe").css('visibility', 'visible');
 		    					$j("#alreadyTranscribe").css('visibility', 'hidden');
 		    					$j("#showAlreadyTranscribed").removeAttr('href');
+		    					$j("#notExtract").css('visibility', 'hidden');
+	    						$j("#extractTranscribe").css('visibility', 'hidden');
 		    					$j("#readyToTranscribe").css('visibility', 'hidden');
 		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 		    				} else if (data.linkedDocument == 'true') {
-		    					$j("#alreadyTranscribe").css('visibility', 'visible');
-		    					$j("#showAlreadyTranscribed").css('visibility', 'visible');
-		    					$j("#showAlreadyTranscribed").attr('href', data.showLinkedDocument);
-		    					$j("#unvailableTranscribe").css('visibility', 'hidden');
-		    					$j("#readyToTranscribe").css('visibility', 'hidden');
-		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
+		    					if(data.isExtract == 'false'){
+		    						$j("#notExtract").css('visibility', 'visible');
+		    						$j("#extractTranscribe").css('visibility', 'visible');
+		    						$j("#alreadyTranscribe").css('visibility', 'hidden');
+		    						$j("#showAlreadyTranscribe").css('visibility', 'hidden');
+		    						$j("#unvailableTranscribe").css('visibility', 'hidden');
+		    						$j("#readyToTranscribe").css('visibility', 'hidden');
+		    						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+		    					}else{
+		    						$j("#alreadyTranscribe").css('visibility', 'visible');
+		    						$j("#showAlreadyTranscribed").css('visibility', 'visible');
+		    						$j("#notExtract").css('visibility', 'hidden');
+		    						$j("#extractTranscribe").css('visibility', 'hidden');
+		    						$j("#unvailableTranscribe").css('visibility', 'hidden');
+		    						$j("#readyToTranscribe").css('visibility', 'hidden');
+		    						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+		    					}
 		    				} else if (data.linkedDocument == 'false') {
 		    					// Only users with special role can transcribe new document. 
 		    					if (functionParams["canTranscribe"] =='true') {
@@ -321,6 +351,8 @@
 		    					$j("#alreadyTranscribe").css('visibility', 'hidden');
 		    					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 		    					$j("#showAlreadyTranscribed").removeAttr('href');
+		    					$j("#notExtract").css('visibility', 'hidden');
+	    						$j("#extractTranscribe").css('visibility', 'hidden');
 		    					$j("#unvailableTranscribe").css('visibility', 'hidden');
 		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 		    				} else {
@@ -328,6 +360,8 @@
 		    					$j("#alreadyTranscribe").css('visibility', 'hidden');
 		    					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 		    					$j("#showAlreadyTranscribed").removeAttr('href');
+		    					$j("#notExtract").css('visibility', 'hidden');
+	    						$j("#extractTranscribe").css('visibility', 'hidden');
 		    					$j("#readyToTranscribe").css('visibility', 'hidden');
 		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 		    				}
