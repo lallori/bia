@@ -79,7 +79,8 @@ public class MarriageDAOJpaImpl extends JpaDao<Integer, Marriage> implements Mar
         } else if (gender.equals(Gender.F)) {
         	queryJPQL += "wife.personId = :wifeId";
         }
-    	
+        queryJPQL += " ORDER BY startYear asc, startMonthNum asc, startDay asc";
+        
         Query query = getEntityManager().createQuery(queryJPQL);
 
         if ((gender == null) || (gender.equals(Gender.X))) {
