@@ -137,7 +137,7 @@ public class AjaxController {
 			model.put("volNum", volNum.toString());
 			model.put("volLetExt", volLetExt.toString());
 			model.put("summaryId", (volume == null) ? "" : volume.getSummaryId().toString());
-			model.put("volumeDigitized", volume.getDigitized());
+			model.put("volumeDigitized", (volume != null) ? volume.getDigitized() : "false");
 		} catch (ApplicationThrowable aex) {
 			model.put("volNum", (volNum != null) ? volNum.toString() : "");
 			model.put("volLetExt", (volLetExt != null) ? volLetExt.toString() : "");

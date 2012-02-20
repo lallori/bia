@@ -123,7 +123,7 @@
 							);
 						} else {
 							if ($j("#volExist").length == 0) {
-								$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\">Volume is already present, you cannot add again this volume. Save is disabled.<br></span>");
+								$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\"><font color='red'>Volume is already present, you cannot add again this volume. Save is disabled.</font><br></span>");
 							}
 							$j("#save").attr("disabled","true");
 						}
