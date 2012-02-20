@@ -228,5 +228,36 @@ public class DateUtils {
 		
 		return returnValue.toString();
 	}
+	
+	/**
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static String getStringDateHTMLForTable(Integer year, Month month, Integer day) {
+		StringBuffer returnValue = new StringBuffer("");
+		
+		if (year != null) {
+			returnValue.append(year);
+		}
+
+		if (!ObjectUtils.toString(month).equals("")) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append("<br />");
+			}
+			returnValue.append(month);
+		}
+
+		if (day != null) {
+			if (returnValue.length() > 0 ) {
+				returnValue.append("<br />");
+			}
+			returnValue.append(day);
+		}
+		
+		return returnValue.toString();
+	}
 
 }

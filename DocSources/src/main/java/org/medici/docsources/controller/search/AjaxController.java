@@ -141,7 +141,7 @@ public class AjaxController {
 			else
 				singleRow.add("");
 
-			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			
 			if (currentDocument.getSenderPlace() != null){
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
@@ -248,8 +248,8 @@ public class AjaxController {
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			//Dates column must be filled with a string concatenation
-			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
-			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
 			if(documentsRelated.containsKey(currentPerson.getPersonId()))
 				singleRow.add(documentsRelated.get(currentPerson.getPersonId()).toString());
 			else
@@ -348,8 +348,8 @@ public class AjaxController {
 			}
 			singleRow.add(currentVolume.getMDP());
 			//Dates column must be filled with a string concatenation
-			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
-			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
 			if(stateVolumesDigitized.get(currentVolume.getMDP()))
 				singleRow.add("YES");
 			else
@@ -641,7 +641,7 @@ public class AjaxController {
 			else
 				singleRow.add("");
 
-			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			
 			if (currentDocument.getSenderPlace() != null){
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
@@ -747,8 +747,8 @@ public class AjaxController {
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			//Dates column must be filled with a string concatenation
-			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
-			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
 			if(documentsRelated.containsKey(currentPerson.getPersonId()))
 				singleRow.add(documentsRelated.get(currentPerson.getPersonId()).toString());
 			else
@@ -843,8 +843,8 @@ public class AjaxController {
 			singleRow.add((currentVolume.getSerieList() == null) ? "" : currentVolume.getSerieList().toString());
 			singleRow.add(currentVolume.getMDP());
 			//Dates column must be filled with a string concatenation
-			singleRow.add(DateUtils.getStringDate(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
-			singleRow.add(DateUtils.getStringDate(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentVolume.getStartYear(), currentVolume.getStartMonthNum(), currentVolume.getStartDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentVolume.getEndYear(), currentVolume.getEndMonthNum(), currentVolume.getEndDay()));
 			if(currentVolume.getDigitized().equals(Boolean.TRUE)) {
 				singleRow.add("YES");
 			 }else {
