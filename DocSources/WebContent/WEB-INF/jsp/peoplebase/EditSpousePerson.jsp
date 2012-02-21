@@ -84,7 +84,15 @@
 			    	$j.get("${ShowSpouseDetailsURL}", { personId: "" + data }, function(data) {
 			    		if(data.gender == 'F'){
 			    			if($j("#gender").val() == 'F'){
-			    				$j('#EditSpousesPersonDiv').block({ message: $j('.differentGender') });
+			    				$j('#EditSpousesPersonDiv').block({ message: $j('.differentGender'),
+			    					css: { 
+										border: 'none', 
+										padding: '5px',
+										boxShadow: '1px 1px 10px #666',
+										'-webkit-box-shadow': '1px 1px 10px #666'
+										} ,
+										overlayCSS: { backgroundColor: '#999' }	
+			    				});
 			    				$j('#spouseDescriptionAutoCompleter').val('');
 								return false;
 			    			}
@@ -92,7 +100,15 @@
 				    	}
 						if(data.gender == 'M'){
 							if($j("#gender").val() == 'M'){
-								$j('#EditSpousesPersonDiv').block({ message: $j('.differentGender') });
+								$j('#EditSpousesPersonDiv').block({ message: $j('.differentGender'),
+									css: { 
+										border: 'none', 
+										padding: '5px',
+										boxShadow: '1px 1px 10px #666',
+										'-webkit-box-shadow': '1px 1px 10px #666'
+										} ,
+										overlayCSS: { backgroundColor: '#999' }	
+								});
 								$j('#spouseDescriptionAutoCompleter').val('');
 								return false;
 							}
@@ -105,7 +121,15 @@
 
 			$j('#closeSpouse').click(function() {
 				$j('.autocomplete').remove();
-				$j('#EditSpousePersonDiv').block({ message: $j('#question') }); 
+				$j('#EditSpousePersonDiv').block({ message: $j('#question'),
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				}); 
 				return false;
 			});
 			
@@ -125,7 +149,7 @@
 	</div>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
+	<h1>Discard changes?</h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

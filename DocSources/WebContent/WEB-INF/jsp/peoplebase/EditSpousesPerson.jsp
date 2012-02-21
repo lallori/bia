@@ -105,7 +105,15 @@
 
 				$j(".deleteIcon").click(function() {
 					var temp = $j(this);
-					$j("#EditSpousesPersonDiv").block({ message: $j(".question") });
+					$j("#EditSpousesPersonDiv").block({ message: $j(".question"),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					});
 
 					$j('.no').click(function() {
 						$j.unblockUI();

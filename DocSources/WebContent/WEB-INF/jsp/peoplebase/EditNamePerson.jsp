@@ -63,7 +63,15 @@
 // FAR FUNZIONARE ANCHE QUI				
 				if($j("#modify").val() == 1){
 	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-					$j('#EditNamePersonDiv').block({ message: $j('#question') }); 
+					$j('#EditNamePersonDiv').block({ message: $j('#question'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
 				return false;
 		       	}else{
 		       		$j.ajax({ url: '${EditNamesPersonURL}', cache: false, success:function(html) { 
@@ -88,7 +96,7 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
+	<h1>Discard changes?</h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

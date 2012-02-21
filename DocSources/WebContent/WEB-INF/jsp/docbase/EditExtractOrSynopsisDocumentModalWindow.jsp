@@ -39,7 +39,15 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 	        $j('#close').click(function() {
-				$j('#MB_frame').block({ message: $j('#question') }); 
+				$j('#MB_frame').block({ message: $j('#question'),
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				}); 
 				return false;
 			});
 
@@ -60,7 +68,7 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
+	<h1>Discard changes?</h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>

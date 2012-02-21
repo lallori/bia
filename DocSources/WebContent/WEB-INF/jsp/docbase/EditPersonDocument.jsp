@@ -71,7 +71,15 @@
 
 			$j('#closePerson').click(function(e) {
 				$j('.autocomplete').remove();
-				$j('#EditPersonDocumentDiv').block({ message: $j('#questionPerson') }); 
+				$j('#EditPersonDocumentDiv').block({ message: $j('#questionPerson'),
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				}); 
 	            return false;
 			});
 
@@ -85,7 +93,7 @@
 	</script>
 
 <div id="questionPerson" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
+	<h1>Discard changes?</h1> 
 	<input type="button" id="yesPerson" value="Yes" /> 
 	<input type="button" id="noPerson" value="No" /> 
 </div>

@@ -347,13 +347,6 @@ item a{
 /* -------------------------------------------------- EDIT ------------------------------------------------- */
 /* Common elements in Edit Forms */
 
-/*
-form div {
-	margin-top:5px;
-	margin-bottom:0;
-}
-*/
-
 #loadingDiv { /* Animated Gif that shows up when saving each edit section */
     background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
     visibility: hidden;
@@ -388,7 +381,6 @@ fieldset {  /* FORM BACKGROUND */
 }
 
 legend { /* FORM TITLE */
-	font-size:11px;
 	color:#6d5c4d;
 	background-color:#DCC0BA;
 	border: 1px solid #DCC0BA;
@@ -838,13 +830,18 @@ img.transparent {
 /*
 /* ----------------- DROPDOWN MENU -------------------- */
 
+select {
+        font-size:11px;
+        color: #6d5c4d;
+	background-color: #fbf7f4;
+}
+
 .selectform{ /* dropdown menu class */
 	width:80px;
 	border: 1px solid #DCC0BA;
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -854,7 +851,6 @@ img.transparent {
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -864,7 +860,6 @@ img.transparent {
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -874,7 +869,6 @@ img.transparent {
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -884,7 +878,6 @@ img.transparent {
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -898,7 +891,6 @@ img.transparent {
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -908,7 +900,6 @@ img.transparent {
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -918,7 +909,6 @@ img.transparent {
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -1073,7 +1063,7 @@ img.transparent {
     background-color: #FBF7F4;
     border: 1px solid #DCC0BA;
     border-radius: 4px 4px 4px 4px;
-	-moz-border-radius: 4px;
+    -moz-border-radius: 4px;
     color: #000000;
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 11px;
@@ -1265,10 +1255,6 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /*
 /* ------------------- TEXTAREAS ---------------------- */
 
-select {
-	color: #6d5c4d;
-	background-color: #fbf7f4;
-}
 
 div.fileinputs {
 	position: relative;
@@ -1310,7 +1296,7 @@ input.file {
 
 #DocumentImageNotDigitDiv, #DocumentImageDigitDiv { /* Document image digitized or to be digitized */
     float:right; 
-	margin-right:20px;
+    margin-right:20px;
     z-index:1;
     height:160px;
     width:120px;
@@ -1784,7 +1770,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 }
 
 #wifeDescriptionLabel {
-	margin-left:32px;
+	margin-left:27px;
 }
 
 #EditSpousePersonForm #endYearLabel {
@@ -1796,7 +1782,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 }
 
 #childDescriptionLabel {
-	margin-left:27px;
+	margin-left:20px;
 }
 
 #bornYearLabel {
@@ -2183,7 +2169,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 #folioCountForm { /* "Folio Count" FORM */
 	color:#6d5c4d;
 	float: left;
-	font-size:10px;
 }
 
 #folioModalCountForm { /* "Folio Count" FORM in Fullscreen Mode */
@@ -2192,14 +2177,12 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	margin-top:10px;
 	margin-left:50px;
 	position:relative;
-	font-size:11px;
 }
 
 #moveToFolioForm { /* Move to folio FORM */
 	width: 110px;
 	color:#6d5c4d;
 	float:right;
-	font-size:10px;
 }
 
 #moveToFolioModalForm { /* Move to folio FORM in Fullscreen Mode */
@@ -2211,14 +2194,12 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 .folioLabel { /* "Move to folio" <label> ID  */
-	font-size: 11px;
 	margin: 0;
 	position:absolute;
 	color:#6d5c4d;
 }
 
 .folioLabelModal { /* "Move to folio" <label> ID in Fullscreen Mode  */
-	font-size:11px;
 	margin:0 0 0 59px;
 	position:relative;
 	color:#6d5c4d;
@@ -2228,7 +2209,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	margin: -3px 0 0 35px;
 	position:absolute;
 	width: 30px;
-	font-size: 11px;
 }
 
 .input_4cFolioModal { /* "Move to folio" <input> ID  */
@@ -2275,8 +2255,9 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	background-image:url(/DocSources/images/1024/button_large.png);
 	background-repeat:no-repeat;
 	font-size:11px;
-	padding:4px 0 0 15px;
+	padding:4px 0 0 0;
 	float: left;
+	text-align:center;
 }
 
 .pirobox_gall1 {
@@ -2708,12 +2689,13 @@ a.refreshVolumeExplorer {
 #createPlace #tgnPlace #AddNewTgnPlace {
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	font-size:11px;
-	padding:4px 0 0 11px;
-    top: 0; left: 0; /* top-left corner of logo */
+	padding:4px 0 0 0;
+        top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
 	width:122px;
 	height:22px;
+        text-align:center;
 }
 
 #createPlace #tgnPlace #AddNewTgnPlace:hover, #createPlace #mapPlace #AddNewMapPlace:hover, #createPlace #mapSite #AddNewMapSitePlace:hover {
@@ -2733,23 +2715,25 @@ a.refreshVolumeExplorer {
 #createPlace #mapPlace #AddNewMapPlace {
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	font-size:11px;
-	padding:4px 0 0 10px;
-    top: 0; left: 0; /* top-left corner of logo */
+	padding:4px 0 0 0;
+        top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
 	width:122px;
 	height:22px;
+        text-align:center;
 }
 
 #createPlace #mapSite #AddNewMapSitePlace {
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	font-size:11px;
-	padding:4px 0 0 5px;
-    top: 0; left: 0; /* top-left corner of logo */
+	padding:4px 0 0 0;
+        top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
 	width:122px;
 	height:22px;
+        text-align:center;
 }
 
 
@@ -3412,8 +3396,9 @@ form#EditUserProfileForm span{
 	float:none;
 	margin-left:29px;
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
-	padding:3px 0 0 2px;
+	padding:3px 0 0 0;
 	font-size:11px;
+        text-align:center;
 }
 
 #dateYearBetween {
@@ -3426,11 +3411,13 @@ form#EditUserProfileForm span{
 	margin:0 0 0 260px;
 }
 
-#volumeSearchForm p {
+#volumeSearchForm p, #folioSearchForm p {
 	visibility:hidden; 
 	margin:0;
 	display:inline;
 }
+
+
 
 #dateMonthBetween, #dateDayBetween, .invisible {
 	visibility:hidden;
@@ -3559,6 +3546,14 @@ form#EditUserProfileForm span{
 	font-size:11px;
 	color:#645350;
 	margin:0 0 10px 0;
+}
+
+#advancedSearch h3{
+	font-size:11px;
+	color:#645350;
+	margin: 15px 0 5px 0;
+	font-style: normal;
+	padding: 0;
 }
 
 #advancedSearch #body_right p{
@@ -4066,6 +4061,29 @@ table#savedSearchFiltersForm.display {
 /*
 /* -------------------------- COMUNITY COMMENTS ----------------------------- */
 
+#commentButtons {
+	position: relative;
+	width: 490px;
+	height: 20px;
+}
+
+.addComment {
+	height:22px;
+	width:122px;
+	background-image:url(/DocSources/images/1024/button_medium.png);
+	background-repeat:no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	float: right;
+}
+
+.addComment:hover {
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
 .commentDiv { 
 	padding:0 0 5px 0;
 	width:455px;
@@ -4140,7 +4158,7 @@ a.showDigitizedDocument{
 	background:url(/DocSources/images/1024/button_bodyleftmenu_xlarge.png) no-repeat;
 	font-size:10px;
 	padding: 2px 0 0 0;
-	width:150px;
+	width:140px;
 	height:17px;
 	float:right;
 	text-decoration:none;

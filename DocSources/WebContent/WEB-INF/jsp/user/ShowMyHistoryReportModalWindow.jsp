@@ -22,7 +22,7 @@
 	</c:url>
 
 <div id="MyHistoryDiv">
-	<div id="DocsHistory">
+	<div id="docsHistory">
 		<div class="title">
         	<h5>DOCUMENTS</h5>
         </div>
@@ -38,10 +38,10 @@
         	</c:forEach>
 		</div>
         
-        <a href="${MoreDocumentsURL}" id="moreDocs">More<span class="arrow"></span></a>
+        <a href="${MoreDocumentsURL}" id="moreDocs">More &rarr;</span></a>
     </div>
 
-    <div id="VolumesHistory">
+    <div id="volumesHistory">
 		<div class="title">
         	<h5>VOLUME</h5>
         </div>
@@ -57,10 +57,10 @@
         	</c:forEach>
 		</div>
         
-        <a href="${MoreVolumesURL}" id="moreVolumes">More<span class="arrow"></span></a>
+        <a href="${MoreVolumesURL}" id="moreVolumes">More &rarr;</span></a>
     </div>
     
-    <div id="PlaceHistory">
+    <div id="placeHistory">
 		<div class="title">
         	<h5>PLACE</h5>
         </div>
@@ -76,10 +76,10 @@
         	</c:forEach>
 		</div>
         
-        <a href="${MorePlacesURL}" id="morePlaces">More<span class="arrow"></span></a>
+        <a href="${MorePlacesURL}" id="morePlaces">More &rarr;</span></a>
     </div>
     
-    <div id="PeopleHistory">
+    <div id="peopleHistory">
 		<div class="title">
         	<h5>PEOPLE</h5>
         </div>
@@ -100,7 +100,7 @@
         	</c:forEach>
 		</div>
         
-        <a href="${MorePeopleURL}" id="morePeople">More<span class="arrow"></span></a>
+        <a href="${MorePeopleURL}" id="morePeople">More &rarr;</span></a>
     </div>
 
     <div id="MyHistoryButtons">

@@ -131,7 +131,15 @@
 	        
 	        $j('#close').click(function() {
 	        	$j(".autocomplete").remove();
-	        	$j("#EditParentsPersonDiv").block({ message: $j("#question") });
+	        	$j("#EditParentsPersonDiv").block({ message: $j("#question"),
+	        		css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+	        	});
 	        	return false;
 			});
 	        
@@ -216,10 +224,26 @@
 			
 			$j("#EditParentsPersonForm").submit(function (){
 				if($j("#genderFather").val() == 'F' || $j("#genderFather").val() == 'X'){
-					$j('#EditParentsPersonDiv').block({ message: $j('#questionGenderFather') });
+					$j('#EditParentsPersonDiv').block({ message: $j('#questionGenderFather'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					});
 					return false;
 				}else if($j("#genderMother").val() == 'M' || $j("#genderMother").val() == 'X'){
-					$j('#EditParentsPersonDiv').block({ message: $j('#questionGenderMother') });
+					$j('#EditParentsPersonDiv').block({ message: $j('#questionGenderMother'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					});
 					return false;
 				}else{
 					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
@@ -243,7 +267,7 @@
 	</script>
 	
 	<div id="question" style="display:none; cursor: default"> 
-		<h1>discard changes?</h1> 
+		<h1>Discard changes?</h1> 
 		<input type="button" id="yes" value="Yes" /> 
 		<input type="button" id="no" value="No" /> 
 	</div>

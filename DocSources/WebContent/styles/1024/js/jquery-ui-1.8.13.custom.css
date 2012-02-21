@@ -53,7 +53,7 @@
 }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { 
 	font-family: Georgia, "Times New Roman", Times, serif; 
-	font-size: 11px; 
+	/*font-size: 11px;*/ 
 }
 
 .ui-widget-content { 
@@ -963,4 +963,76 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  .recordsNum { /* The number of records on the research */
 	 color:#009;
 	 margin-left:8px;
+}
+
+/* Discard Changes? message */
+
+.blockOverlay {
+	z-index: 1000;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-width: initial;
+	border-color: initial;
+	border-image: initial;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	background-color: #999;
+	cursor: wait;
+	position: absolute;
+	opacity: 0.6;
+	border-radius: 5px;
+}
+
+.blockElement {
+	z-index: 1001;
+	position: absolute;
+	padding-top: 4px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	width: 30%;
+	text-align: center;
+	color: black;
+	background-color: #F6EDEC;
+	cursor: wait;
+	left: 167px;
+	top: 213px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 1px 1px 10px #666;
+	-webkit-box-shadow: 1px 1px 10px #666;
+	border: none;
+}
+
+#question h1 {
+	margin-bottom:5px;
+}
+
+#yes, #no {
+	margin: 0;
+	width: 52px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_small.png);
+	font-size: 11px;
+	padding: 0 0 0 2px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
 }

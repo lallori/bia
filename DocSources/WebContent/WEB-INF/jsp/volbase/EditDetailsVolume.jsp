@@ -147,7 +147,15 @@
 
 			$j('#close').click(function() {
 	        	if($j("#modify").val() == 1){
-					$j('#EditDetailsVolumeForm').block({ message: $j('#question') }); 
+					$j('#EditDetailsVolumeForm').block({ message: $j('#question'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
 					return false;
 	        	}else{
 	        		$j.ajax({ url: '${ShowVolume}', cache: false, success:function(html) { 
@@ -180,29 +188,69 @@
 			$j("#EditDetailsVolumeForm").submit(function (){
 				if($j("#endYear").val() != '' && $j("#startYear").val() !=''){
 					if($j("#endYear").val() < $j("#startYear").val()){
-						$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate') });
+						$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate'),
+							css: { 
+								border: 'none', 
+								padding: '5px',
+								boxShadow: '1px 1px 10px #666',
+								'-webkit-box-shadow': '1px 1px 10px #666'
+								} ,
+								overlayCSS: { backgroundColor: '#999' }	
+						});
 						return false;
 					}
 					if($j("#endMonthNum").val() > 0 && $j("#startMonthNum").val() > 0){
 						if(($j("#endYear").val() == $j("#startYear").val()) && ($j("#endMonthNum").val() < $j("#startMonthNum").val())){
-							$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate') });
+							$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate'),
+								css: { 
+									border: 'none', 
+									padding: '5px',
+									boxShadow: '1px 1px 10px #666',
+									'-webkit-box-shadow': '1px 1px 10px #666'
+									} ,
+									overlayCSS: { backgroundColor: '#999' }	
+							});
 							return false;
 						}
 						if($j("#endDay").val() != '' && $j("#startDay").val() != ''){
 							if(($j("#endYear").val() == $j("#startYear").val()) && ($j("#endMonthNum").val() == $j("#startMonthNum").val()) && ($j("#endDay").val() < $j("#startDay").val())){
-								$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate') });
+								$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate'),
+									css: { 
+										border: 'none', 
+										padding: '5px',
+										boxShadow: '1px 1px 10px #666',
+										'-webkit-box-shadow': '1px 1px 10px #666'
+										} ,
+										overlayCSS: { backgroundColor: '#999' }	
+								});
 								return false;
 							}							
 						}
 					}
 				}
 				if($j("#startDay").val() != '' && ($j("#startDay").val() < 1 || $j("#startDay").val() > 31)){
-					$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongFormatDate')});
+					$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongFormatDate'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					});
 					return false;
 				}
 				
 				if($j("#endDay").val() != '' && ($j("#endDay").val() < 1 || $j("#endDay").val() > 31)){
-					$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongFormatDate')});
+					$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongFormatDate'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					});
 					return false;
 				}
 								
@@ -231,7 +279,7 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
+	<h1>Discard changes?</h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>
