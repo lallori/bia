@@ -23,23 +23,28 @@
 			//dynamic field management
 			$j("#${command.searchUUID} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 			var test;
+			var colsort;
 			<c:choose>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'PEOPLE'}">
 					test = [[0, "desc"]];
+					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }, { "bSortable": false, "aTargets": [4]}];
 				</c:when>			
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
 					test = [[2, "asc"]];
+					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
 				</c:when>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'VOLUME'}">
 					test = [[1, "desc"]];
+					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
 				</c:when>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'PLACE'}">
 					test = [[0, "desc"]];
+					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [2,3] }];
 				</c:when>
 			</c:choose>
 						
 			$j('#${command.searchUUID}').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }],
+				"aoColumnDefs": colsort,
 				"aaSorting": test,
 				"bDestroy" : true,
 				"bProcessing": true,
