@@ -95,6 +95,7 @@
 			<input type="hidden" value="" id="modify" />
 		</fieldset>	
 		<input type="hidden" name="summaryId" value="${document.volume.summaryId}">
+		<form:hidden id="folioNumStored" path="folioNum" />
 
 	</form:form>
 
@@ -118,11 +119,6 @@
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
-	        
-	        $j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
-	        	$j("#loadingDiv").css('visibility', 'visible');
-	        });
 	        
 	        
 	        $j("#EditDetailsDocumentForm :input").change(function(){
@@ -171,6 +167,13 @@
 			$j("#volume").change(showVolumeExplorer);
 			
 			var alreadyDigitized = function(){
+				if($j("#folioNum").val() == $j("#folioNumStored").val()){
+					if ($j("#alreadyDigitized").length > 0) {
+						$j("#alreadyDigitized").remove();
+					}
+					$j("#save").removeAttr("disabled");
+					return "";
+				}
 				$j.get('<c:url value="/src/docbase/FindDocument.json" />', { volNum: $j("#volume").val(), folioNum: $j("#folioNum").val(), folioMod: $j("#folioMod").val() },
 						function(data){
 							if (data.entryId != "") {
@@ -281,6 +284,12 @@
 			}
 
 			$j("#EditDetailsDocumentForm").submit(function (){
+				var error = alreadyDigitized();
+				if(error != ""){
+					return false;
+				}
+				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					if ($j(html).find(".inputerrors").length > 0){
 						$j("#EditDetailsDocumentDiv").html(html);
@@ -303,7 +312,15 @@
 	        $j('#close').click(function() {
 	        	if($j("#modify").val() == 1){
 	        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-					$j('#EditDetailsDocumentForm').block({ message: $j('#question') }); 
+					$j('#EditDetailsDocumentForm').block({ message: $j('#question'), 
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
 					return false;
 	        	}else{
 	        		$j.ajax({ url: '${ShowDocumentURL}', cache: false, success:function(html) { 
@@ -347,7 +364,7 @@
 	</script>
 
 <div id="question" style="display:none; cursor: default"> 
-	<h1>discard changes?</h1> 
+	<h1>Discard changes?</h1> 
 	<input type="button" id="yes" value="Yes" /> 
 	<input type="button" id="no" value="No" /> 
 </div>
