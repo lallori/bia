@@ -247,6 +247,14 @@ public interface PeopleBaseService {
 	public AltName findAltNamePerson(Integer personId, Integer nameId) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable;
+	
+	/**
 	 * This method last entry {@link org.medici.docsources.domain.People}.
 	 * 
 	 * @return Last entry {@link org.medici.docsources.domain.People}

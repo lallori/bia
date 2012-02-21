@@ -20,7 +20,7 @@
 		</security:authorize>
 		</div>
 		<div class="list">
-			<c:forEach items="${person.children}" var="currentChild">
+			<c:forEach items="${children}" var="currentChild">
 				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 					<c:param name="personId"   value="${currentChild.child.personId}" />
 				</c:url>

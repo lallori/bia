@@ -93,7 +93,7 @@ public class ParentDAOJpaImpl extends JpaDao<Integer, Parent> implements ParentD
 	@Override
 	public List<People> findChildren(Integer parentId) throws PersistenceException {
 		String queryJPQL = "FROM Parent WHERE ";
-		queryJPQL += " parent.personId = :parentId";
+		queryJPQL += " parent.personId = :parentId ORDER BY child.bornYear ASC, child.bornMonth.monthNum ASC, child.bornDay ASC";
 		
 		Query query = getEntityManager().createQuery(queryJPQL);
 		query.setParameter("parentId", parentId);

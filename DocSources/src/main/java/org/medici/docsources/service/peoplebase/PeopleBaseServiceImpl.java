@@ -968,6 +968,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<People> findChildrenPerson(Integer personId) throws ApplicationThrowable {
+		try{
+			return getParentDAO().findChildren(personId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public People findLastEntryPerson() throws ApplicationThrowable {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().findLastEntry(Category.PEOPLE);

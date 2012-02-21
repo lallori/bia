@@ -27,8 +27,6 @@
  */
 package org.medici.docsources.controller.peoplebase;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -93,6 +91,8 @@ public class ShowPersonController {
 				model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 				model.put("marriages", marriages);
+				List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
+				model.put("children", children);
 				
 				
 			} catch (ApplicationThrowable ath) {

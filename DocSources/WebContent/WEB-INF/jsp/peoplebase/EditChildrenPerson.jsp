@@ -21,7 +21,7 @@
 	<form:form id="EditChildrenPersonForm" method="post" cssClass="edit">
 		<fieldset>
 		<legend><b>CHILDREN</b></legend>
-		<c:forEach items="${person.children}" var="currentChild">
+		<c:forEach items="${children}" var="currentChild">
 			<c:url var="EditChildPersonURL" value="/de/peoplebase/EditChildPerson.do">
 				<c:param name="id" value="${currentChild.id}" />
 				<c:param name="parentId" value="${command.personId}" />
@@ -89,7 +89,15 @@
 
 			$j(".deleteIcon").click(function() {
 				var temp = $j(this);
-				$j("#EditChildrenPersonDiv").block({ message: $j(".question")});
+				$j("#EditChildrenPersonDiv").block({ message: $j(".question"),
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				});
 
 				$j('.no').click(function() {
 					$j.unblockUI();

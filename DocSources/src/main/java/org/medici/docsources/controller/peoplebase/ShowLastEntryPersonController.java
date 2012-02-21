@@ -68,6 +68,8 @@ public class ShowLastEntryPersonController {
 			model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 			List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 			model.put("marriages", marriages);
+			List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
+			model.put("children", children);
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowPerson", model);
 		}
