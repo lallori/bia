@@ -425,7 +425,7 @@ public class AjaxController {
 			else
 				singleRow.add("");
 
-			singleRow.add(DateUtils.getStringDate(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
 			
 			if (currentDocument.getSenderPlace() != null){
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
@@ -507,8 +507,8 @@ public class AjaxController {
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			//Dates column must be filled with a string concatenation
-			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
-			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
 			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
 		}
 		
@@ -551,8 +551,8 @@ public class AjaxController {
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			//Dates column must be filled with a string concatenation
-			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
-			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
 			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
 		}
 		
@@ -603,12 +603,12 @@ public class AjaxController {
 			singleRow.add(currentPerson.getMapNameLf());
 			singleRow.add((currentPerson.getGender() != null) ? currentPerson.getGender().toString() : "");
 			//Dates column must be filled with a string concatenation
-			singleRow.add(DateUtils.getStringDate(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
-			singleRow.add(DateUtils.getStringDate(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
 			PoLink currentOccupation = occupations.get(currentPerson.getPersonId());
 			if(currentOccupation != null){
-				singleRow.add(DateUtils.getStringDate(currentOccupation.getStartYear(), currentOccupation.getStartMonthNum(), currentOccupation.getStartDay()));
-				singleRow.add(DateUtils.getStringDate(currentOccupation.getEndYear(), currentOccupation.getEndMonthNum(), currentOccupation.getEndDay()));
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentOccupation.getStartYear(), currentOccupation.getStartMonthNum(), currentOccupation.getStartDay()));
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentOccupation.getEndYear(), currentOccupation.getEndMonthNum(), currentOccupation.getEndDay()));
 			}else{
 				singleRow.add("");
 				singleRow.add("");

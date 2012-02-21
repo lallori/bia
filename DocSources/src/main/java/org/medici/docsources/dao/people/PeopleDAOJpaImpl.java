@@ -232,11 +232,11 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+				} 
 			}
 		}
 		
@@ -273,11 +273,11 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+				} 
 			}
 		}
 		
@@ -314,11 +314,11 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+				} 
 			}
 		}
 		
@@ -390,11 +390,11 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+				} 
 			}
 		}
 		
@@ -466,11 +466,11 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
+				} 
 			}
 		}
 		
@@ -695,12 +695,11 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}else{
-					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
-				}
+				} 
 			}
 		}
 		
@@ -836,12 +835,11 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}else{
-					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
-				}
+				} 
 			}
 		}
 		

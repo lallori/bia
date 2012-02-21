@@ -393,12 +393,11 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}else{
-					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
-				}
+				} 
 			}
 		}
 		
@@ -421,7 +420,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Document WHERE summaryId=" + volumeToSearch);
+		String toSearch = new String("FROM Document WHERE volume.summaryId=" + volumeToSearch);
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -434,12 +433,11 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}else{
-					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
-				}
+				} 
 			}
 		}
 		
@@ -476,12 +474,11 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}else{
-					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
-				}
+				} 
 			}
 		}
 		
@@ -518,12 +515,11 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		if(sortingCriterias.size() > 0){
 			orderBySQL.append(" ORDER BY ");
 			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn());
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
 				if (i<(sortingCriterias.size()-1)) {
 					orderBySQL.append(", ");
-				}else{
-					orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC" : " DESC" ));
-				}
+				} 
 			}
 		}
 		
