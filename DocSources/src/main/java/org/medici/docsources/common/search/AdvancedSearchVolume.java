@@ -1253,7 +1253,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				toString += (volumes.get(i) + " ");
 			}
 		}
-		if(!volumesBetween.isEmpty()){
+		if(!volumesBetween.isEmpty() && !(volumesBetween.size() == 1 && volumesBetween.get(0) == "0")){
 			if(!toString.isEmpty()){
 				toString += "AND ";
 			}
