@@ -240,7 +240,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -281,7 +281,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -322,7 +322,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -398,7 +398,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
@@ -474,7 +474,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());

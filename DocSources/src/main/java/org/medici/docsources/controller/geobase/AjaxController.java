@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
@@ -738,28 +737,22 @@ public class AjaxController {
 		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 			switch (sortingColumnNumber) {
 				case 0:
-					paginationFilter.addSortingCriteria("mapNameLf_Sort", sortingDirection);
+					paginationFilter.addSortingCriteria("document.volume.volNum", sortingDirection);
+					paginationFilter.addSortingCriteria("document.volume.volLetExt", sortingDirection);
+					paginationFilter.addSortingCriteria("document.folioNum", sortingDirection);
+					paginationFilter.addSortingCriteria("document.folioMod", sortingDirection);
 					break;
 				case 1:
-					paginationFilter.addSortingCriteria("gender", sortingDirection);
+					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
 					break;
 				case 2:
-					paginationFilter.addSortingCriteria("bornYear_Sort", sortingDirection, SortField.INT);
-					//Month is an entity, so we don't have field with suffix _Sort
-					paginationFilter.addSortingCriteria("bornMonthNum.monthNum", sortingDirection, SortField.INT);
-					paginationFilter.addSortingCriteria("bornDay_Sort", sortingDirection, SortField.INT);
-					break;
-				case 3:
-					paginationFilter.addSortingCriteria("deathYear_Sort", sortingDirection, SortField.INT);
-					//Month is an entity, so we don't have field with suffix _Sort
-					paginationFilter.addSortingCriteria("deathMonthNum.monthNum", sortingDirection, SortField.INT);
-					paginationFilter.addSortingCriteria("deathDay_Sort", sortingDirection, SortField.INT);
-					break;
-				case 4:
-					paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection);
+					paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
+					//Month is an entity, so we don't have field with suffix 
+					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", sortingDirection);
+					paginationFilter.addSortingCriteria("document.docDay", sortingDirection);
 					break;
 				default:
-					paginationFilter.addSortingCriteria("senderPeople.mapNameLf", sortingDirection);
+					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
 					break;
 			}		
 		}

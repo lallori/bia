@@ -150,7 +150,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch);
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
