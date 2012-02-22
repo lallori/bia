@@ -101,7 +101,7 @@
 		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
 		<span id="transcribeMode" class="transcribeMessage" style="visibility: hidden;">You are in transcribing a folio</span>
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</a>
-		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green">This document has been entred but not transcribed</font>
+		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green">This document has been entered but not transcribed</font>
 		<a id="extractTranscribe" href="#" style="visibility: hidden;" title="Transcribe extract" class="transcribe">Transcribe this document</a>
 		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden;" class="transcribe">Show this document record</a>
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Transcribe this document</a>
