@@ -215,7 +215,7 @@
 								}
 								$j("#save").removeAttr("disabled");
 								
-								return data.entryId
+								return data.entryId;
 								
 // 								var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
 // 		            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
@@ -231,9 +231,15 @@
 							}
 						}
 					);
-			}
-			$j("#folioNum").change(alreadyDigitized);
-			$j("#folioMod").change(alreadyDigitized);
+			};
+			$j("#folioNum").keyup(alreadyDigitized);
+			$j("#folioMod").keyup(alreadyDigitized);
+			$j("#folioNum").focus(function(){
+				if ($j("#alreadyDigitized").length > 0) {
+					$j("#alreadyDigitized").remove();
+				}
+				$j("#save").removeAttr("disabled");
+			});
 			
 			var folioNotExist = function (){
 				if($j("#volume").val() != ""){
@@ -284,10 +290,11 @@
 			}
 
 			$j("#EditDetailsDocumentForm").submit(function (){
-				var error = alreadyDigitized();
-				if(error != ""){
-					return false;
-				}
+//  				var error = alreadyDigitized();
+//  				alert(error);
+//  				if(error != ""){
+//  					return false;
+//  				}
 				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
