@@ -44,8 +44,10 @@ import org.medici.docsources.domain.SearchFilter.SearchType;
 public class AdvancedSearchCommand {
 	private Integer idSearchFilter;
 	private SearchType searchType;
+	private List<String> docId;
 	private List<String> word;
 	private List<String> volume;
+	private List<String> folio;
 	private List<String> date;
 	private List<String> extract;
 	private List<String> synopsis;
@@ -163,6 +165,20 @@ public class AdvancedSearchCommand {
 	}
 
 	/**
+	 * @param docId the entryId to set
+	 */
+	public void setDocId(List<String> docId) {
+		this.docId = docId;
+	}
+
+	/**
+	 * @return the docId
+	 */
+	public List<String> getDocId() {
+		return docId;
+	}
+
+	/**
 	 * @return the word
 	 */
 	public List<String> getWord() {
@@ -190,6 +206,20 @@ public class AdvancedSearchCommand {
 		this.volume = volume;
 	}
 	
+	/**
+	 * @return the folio
+	 */
+	public List<String> getFolio() {
+		return folio;
+	}
+
+	/**
+	 * @param folio the folio to set
+	 */
+	public void setFolio(List<String> folio) {
+		this.folio = folio;
+	}
+
 	/**
 	 * @return the date
 	 */

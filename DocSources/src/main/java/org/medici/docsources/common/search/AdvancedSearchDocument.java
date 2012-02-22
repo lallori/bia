@@ -67,7 +67,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<DateType> datesTypes;
 	private List<Integer> datesYear;
 	private List<Integer> datesYearBetween;
+	private List<String> docIds;
 	private List<String> extract;
+	private List<String> folios;
+	private List<String> foliosBetween;
+	private List<FolioType> foliosTypes;
 	private List<String> from;
 	private List<Integer> fromId;
 	private List<String> person;
@@ -128,6 +132,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		volumesTypes = new ArrayList<AdvancedSearchDocument.VolumeType>(0);
 		volumes = new ArrayList<String>(0);
 		volumesBetween = new ArrayList<String>(0);
+		folios = new ArrayList<String>(0);
+		foliosBetween = new ArrayList<String>(0);
+		foliosTypes = new ArrayList<AdvancedSearchAbstract.FolioType>(0);
+		docIds = new ArrayList<String>(0);
 		logicalDelete = Boolean.FALSE;
 	}
 
@@ -181,10 +189,38 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @return the docIds
+	 */
+	public List<String> getDocIds() {
+		return docIds;
+	}
+
+	/**
 	 * @return the extract
 	 */
 	public List<String> getExtract() {
 		return extract;
+	}
+
+	/**
+	 * @return the folios
+	 */
+	public List<String> getFolios() {
+		return folios;
+	}
+
+	/**
+	 * @return the foliosBetween
+	 */
+	public List<String> getFoliosBetween() {
+		return foliosBetween;
+	}
+
+	/**
+	 * @return the foliosTypes
+	 */
+	public List<FolioType> getFoliosTypes() {
+		return foliosTypes;
 	}
 
 	/**
@@ -778,6 +814,47 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			volumes = new ArrayList<String>(0);
 			volumesBetween = new ArrayList<String>(0);
 		}
+		
+		//Folio
+		if((command.getFolio() != null) && (command.getFolio().size() > 0)){
+			foliosTypes = new ArrayList<AdvancedSearchAbstract.FolioType>(command.getFolio().size());
+			folios = new ArrayList<String>(command.getFolio().size());
+			foliosBetween = new ArrayList<String>(command.getFolio().size());
+			
+			for(String singleWord : command.getFolio()){
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				if((stringTokenizer.countTokens() == 0) || (stringTokenizer.countTokens() == 1)){
+					continue;
+				}else if(stringTokenizer.countTokens() == 2){
+					foliosTypes.add(FolioType.valueOf(stringTokenizer.nextToken()));
+					folios.add(stringTokenizer.nextToken());
+					foliosBetween.add("0");
+				}else if(stringTokenizer.countTokens() == 3){
+					foliosTypes.add(FolioType.valueOf(stringTokenizer.nextToken()));
+					folios.add(stringTokenizer.nextToken());
+					foliosBetween.add(stringTokenizer.nextToken());
+				}
+			}
+		}else{
+			foliosTypes = new ArrayList<AdvancedSearchAbstract.FolioType>(0);
+			folios = new ArrayList<String>(0);
+			foliosBetween = new ArrayList<String>(0);
+		}
+		
+		//EntryId
+		if((command.getDocId() != null) && (command.getDocId().size() > 0)){
+			docIds = new ArrayList<String>(command.getDocId().size());
+			
+			for(String singleWord : command.getDocId()){
+				try{
+					docIds.add(URIUtil.decode(singleWord, "UTF-8"));
+				}catch(NumberFormatException nex){					
+				}catch(URIException e){
+				}
+			}
+		}else{
+			docIds = new ArrayList<String>(0);
+		}
 	}
 
 	/**
@@ -844,10 +921,38 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	}
 
 	/**
+	 * @param docIds the docIds to set
+	 */
+	public void setDocIds(List<String> docIds) {
+		this.docIds = docIds;
+	}
+
+	/**
 	 * @param extract the extract to set
 	 */
 	public void setExtract(List<String> extract) {
 		this.extract = extract;
+	}
+
+	/**
+	 * @param folios the folios to set
+	 */
+	public void setFolios(List<String> folios) {
+		this.folios = folios;
+	}
+
+	/**
+	 * @param foliosBetween the foliosBetween to set
+	 */
+	public void setFoliosBetween(List<String> foliosBetween) {
+		this.foliosBetween = foliosBetween;
+	}
+
+	/**
+	 * @param foliosTypes the foliosTypes to set
+	 */
+	public void setFoliosTypes(List<FolioType> foliosTypes) {
+		this.foliosTypes = foliosTypes;
 	}
 
 	/**
@@ -1508,6 +1613,63 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				jpaQuery.append(volumesQuery);
 			}
 		}
+		
+		//Folio
+		if(folios.size() > 0){
+			StringBuffer foliosQuery = new StringBuffer("(");
+			for(int i = 0; i < folios.size(); i++){
+				if(StringUtils.isNumeric(folios.get(i))){
+					if(foliosQuery.length() > 1){
+						foliosQuery.append(" AND ");
+					}
+					
+					if(foliosTypes.get(i).equals(FolioType.Exactly)){
+						foliosQuery.append("(folioNum=");
+						foliosQuery.append(folios.get(i));
+						foliosQuery.append(")");
+					}else if(foliosTypes.get(i).equals(FolioType.Between)){
+						foliosQuery.append("(folioNum>=");
+						foliosQuery.append(folios.get(i));
+						foliosQuery.append(" AND folioNum<=");
+						foliosQuery.append(foliosBetween.get(i));
+						foliosQuery.append(")");
+					}
+				}else{
+					continue;
+				}
+			}
+			foliosQuery.append(")");
+			if(!foliosQuery.toString().equals("")){
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(foliosQuery);
+			}
+		}
+		
+		//EntryId
+		if(docIds.size() > 0){
+			StringBuffer docIdQuery = new StringBuffer("(");
+			for(int i = 0; i < docIds.size(); i++){
+				if(StringUtils.isNumeric(docIds.get(i))){
+					if(docIdQuery.length() > 1){
+						docIdQuery.append(" AND ");
+					}
+					docIdQuery.append("(entryId=");
+					docIdQuery.append(docIds.get(i));
+					docIdQuery.append(")");
+				}else{
+					continue;
+				}
+			}
+			docIdQuery.append(")");
+			if(!docIdQuery.toString().equals("")){
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(docIdQuery);
+			}
+		}
 
 		return jpaQuery.toString();
 	}
@@ -2133,6 +2295,44 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				toString += (volumesBetween.get(i) + " ");
 			}
 		}
+		
+		if(!folios.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Folios: ");
+			for(int i = 0; i < folios.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (folios.get(i) + " ");
+			}
+		}
+		if(!foliosBetween.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += ("Between Folios: ");
+			for(int i = 0; i < foliosBetween.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (foliosBetween.get(i) + " ");
+			}
+		}
+		if(!docIds.isEmpty()){
+			if(!toString.isEmpty()){
+				toString += "AND ";
+			}
+			toString += "Doc ID: ";
+			for(int i = 0; i < docIds.size(); i++){
+				if(i > 0){
+					toString += "AND ";
+				}
+				toString += (docIds.get(i) + " ");
+			}
+		}
+		
 		return toString;
 	}
 }

@@ -150,8 +150,9 @@
 				</form>
 			</div>
 			
-			<h1 id="volumeSearch"><a><i>in</i> Volume</a></h1>
+			<h1 id="volumeSearch"><a><i>in</i> Volume and/or Folio</a></h1>
 			<div>
+				<h3>Volume</h3>
 				<form id="volumeSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
 					<select id="volumeType" name="volumeType" class="selectform_long">
@@ -164,6 +165,30 @@
 					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
 					<input type="hidden" id="category" value="Volume">
 				</form>
+				
+				<h3>Folio</h3>
+				<form id="folioSearchForm" method="post" class="edit">
+					<a class="helpIcon" title="Text will go here">?</a>
+					<select id="folioType" name="folioType" class="selectform_long">
+						<option value="Exactly" selected="selected">Exactly</option>
+						<option value="Between">Between</option>
+					</select>
+					<input type="text" id="folio" name="folio" class="input_5c" maxlength="5" />
+					<p class="invisibleFol">and</p>
+					<input id="folioBetween" name="folioBetween" class="input_5c" type="text" style="visibility:hidden"/>
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="hidden" id="category" value="Folio">
+				</form>
+			</div>
+			
+			<h1 id="docIdSearch"><a>Doc ID</a></h1>
+			<div>
+				<form id="docIdSearchForm" method="post" class="edit">
+					<a class="helpIcon" title="Text will go here">?</a>
+					<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+					<input type="hidden" id="category" value="Doc Id">
+				</form>			
 			</div>
 		</div>
 	</div>
@@ -189,6 +214,17 @@
 					$j(".invisibleVol").css('visibility','hidden');
 				}
 			});	
+			
+			$j("#folioType").change(function(){
+                if(this.options[1].selected) {
+                    $j('#folioBetween').css('visibility','visible'); 
+                    $j('.invisibleFol').css('visibility','visible'); 
+                } else { 
+                    $j('#folioBetween').css('visibility','hidden');
+                    $j('.invisibleFol').css('visibility','hidden');
+                }
+            });
+
 
 			$j("#dateType").change(function(){
 				if(this.options[2].selected) { 
@@ -242,6 +278,8 @@
 			$j("#topicSearchForm").advancedSearchForm();
 			$j("#dateSearchForm").advancedSearchForm();
 			$j("#volumeSearchForm").advancedSearchForm();
+			$j("#folioSearchForm").advancedSearchForm();
+			$j("#docIdSearchForm").advancedSearchForm();
 
 			$j('#accordion').accordion({
 				active: false, 
@@ -474,6 +512,12 @@
 					$j.scrollTo({top:'222px',left:'0px'}, 800 );
 					$j("#yourSearchFilterDiv").animate({"top": "180px"}, "slow");
 					return false;
+			});
+			
+			$j('#docIdSearch').click(function(){
+				$j.scrollTo({top:'245px',left:'0px'}, 800 );
+				$j("#yourSearchFilterDiv").animate({"top": "200px"}, "slow");
+				return false;
 			});
 			
 		});

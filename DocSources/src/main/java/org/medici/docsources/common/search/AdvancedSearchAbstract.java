@@ -118,4 +118,24 @@ public abstract class AdvancedSearchAbstract implements AdvancedSearch {
 	        return volumeType;
 	    }
 	}
+	
+	/**
+	 * 
+	 * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+	 *
+	 */
+	public static enum FolioType {
+		Exactly("Exactly"), Between("Between");
+		
+		private final String folioType;
+
+	    private FolioType(String value) {
+	    	folioType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return folioType;
+	    }
+	}
 }
