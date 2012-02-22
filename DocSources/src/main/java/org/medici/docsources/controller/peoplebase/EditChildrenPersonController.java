@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.peoplebase.EditChildrenPersonCommand;
@@ -94,6 +95,8 @@ public class EditChildrenPersonController {
 			try {
 				People person = getPeopleBaseService().findPerson(command.getPersonId());
 				model.put("person", person);
+				List<People> children = getPeopleBaseService().findChildrenPerson(command.getPersonId());
+				model.put("children", children);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditChildrenPerson", model);
 			}
