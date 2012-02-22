@@ -399,7 +399,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public Boolean isDocumentExtract(Integer entryId) throws ApplicationThrowable {
 		try{
 			Document document = getDocumentDAO().find(entryId);
-			if(!document.getSynExtract().getDocExtract().isEmpty()){
+			if(document.getSynExtract() != null && !document.getSynExtract().getDocExtract().isEmpty()){
 				return true;
 			}else{
 				return false;
