@@ -79,7 +79,7 @@
 					}
 
 					resetDateFields(formName, fieldName);
-				} else if (isVolumeForm(formName)) {
+				} else if (isVolumeForm(formName) || isFolioForm(formName)) {
 					if ($(this).find("option:selected").val() == 'Between') {
 						searchWord = getSearchWordForBetweenField(formName, fieldName);
 						hiddenValue = $(this).find("option:selected").val() + "|" + $('#' + formName).find('#' + fieldName).val() + '|' + $('#' + formName).find('#' + fieldName + 'Between').val();
@@ -481,6 +481,16 @@
 	 */
 	function isDateForm(formName) {
 		if (formName.indexOf("date") >= 0)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * This method check if form manage folio.
+	 */
+	function isFolioForm(formName) {
+		if (formName.indexOf("folio") >= 0)
 			return true;
 		else
 			return false;
