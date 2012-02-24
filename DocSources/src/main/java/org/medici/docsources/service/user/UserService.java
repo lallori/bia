@@ -335,6 +335,15 @@ public interface UserService {
 
 	/**
 	 * 
+	 * @param category
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchUserHistory(Category category, PaginationFilter paginationFilter, Integer resultSize) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable

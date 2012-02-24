@@ -214,6 +214,35 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Page findHistory(Category category, PaginationFilter paginationFilter, Integer resultSize) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+
+		if (paginationFilter.getTotal() == null) {
+	        String queryString = "SELECT count(username) FROM UserHistory WHERE username=:username and category=:category and logicalDelete=false ";
+
+	        Query query = getEntityManager().createQuery(queryString);
+	        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+	        query.setParameter("category", category); 
+			page.setTotal(new Long((Long)query.getSingleResult()));
+		}
+
+        String queryString = "FROM UserHistory WHERE username=:username and category=:category and logicalDelete=false ORDER BY dateAndTime DESC";
+
+        Query query = getEntityManager().createQuery(queryString);
+
+        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("category", category); 
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		page.setList(query.getResultList());
+        
+		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserHistory> findHistory(Integer resultSize) {

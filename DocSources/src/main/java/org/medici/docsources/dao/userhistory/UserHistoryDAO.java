@@ -89,6 +89,16 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	public Page findHistory(Category category, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
+	 * 
+	 * @param category
+	 * @param paginationFilter
+	 * @param resultSize
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findHistory(Category category, PaginationFilter paginationFilter, Integer resultSize) throws PersistenceException;
+	
+	/**
 	 * This method will return a list with size "resultSize", of user history on document base. 
 	 * 
 	 * @param resultSize
@@ -96,7 +106,8 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @throws PersistenceException
 	 */
 	public List<UserHistory> findHistory(Integer resultSize) throws PersistenceException;
-	
+
+
 	/**
 	 * 
 	 * @param paginationFilter
@@ -104,7 +115,6 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @throws PersistenceException
 	 */
 	public Page findHistory(PaginationFilter paginationFilter) throws PersistenceException;
-
 
 	/**
 	 * 

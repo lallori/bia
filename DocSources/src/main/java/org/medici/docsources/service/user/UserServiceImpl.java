@@ -682,6 +682,18 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchUserHistory(Category category, PaginationFilter paginationFilter, Integer resultSize) throws ApplicationThrowable {
+		try {
+			return getUserHistoryDAO().findHistory(category, paginationFilter, resultSize);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page searchUserHistory(PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getUserHistoryDAO().findHistory(paginationFilter);
