@@ -235,6 +235,73 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
+	/** This method returns 5 elements for History Category View Preview.
+	 * 
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/user/MyHistoryFirstFiveElementsByCategoryPagination.json", method = RequestMethod.GET)
+	public ModelAndView myHistoryFirstFiveElementsByCategoryPagination(@RequestParam(value="category") Category category,
+	   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+	   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+	   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+		     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		Page page = null;
+
+		try {
+			page = getUserService().searchUserHistory(category, paginationFilter, 5);
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		
+		 List<Object> resultList = new ArrayList<Object>();
+		  for (UserHistory currentUserHistory : (List<UserHistory>)page.getList()) {
+		   List<String> singleRow = new ArrayList<String>();
+		   if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
+				singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			    singleRow.add(currentUserHistory.getAction().toString());
+			    singleRow.add(currentUserHistory.getDocument().getVolume().getMDP());
+			    resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getDocument().getEntryId()));
+		   } else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
+			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			   	singleRow.add(currentUserHistory.getAction().toString());
+			   	singleRow.add(currentUserHistory.getPerson().getMapNameLf());
+			    resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getPerson().getPersonId()));
+		   } else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
+			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			   singleRow.add(currentUserHistory.getAction().toString());
+			   singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
+			   resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
+		   } else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
+			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
+			   singleRow.add(currentUserHistory.getAction().toString());
+			   singleRow.add(currentUserHistory.getVolume().getMDP());
+			   resultList.add(HtmlUtils.showVolume(singleRow, currentUserHistory.getVolume().getSummaryId()));
+		   }
+		  }
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		return new ModelAndView("responseOK", model);
+	}
+	
+	
+	
+	
+	
 	/**
 	 * This method calculate password rating. 
 	 *  
