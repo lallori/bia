@@ -5,6 +5,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="ShowMyHistoryURL" value="/user/ShowMyHistory.do" />
+
+<c:url var="ShowMyHistoryURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json" />
+
+
+
 	<c:url var="MoreDocumentsURL" value="/user/ShowMyHistoryReportByCategory.do">
 		<c:param name="category" value="DOCUMENT"/>
 	</c:url>
@@ -21,94 +27,261 @@
 		<c:param name="category" value="VOLUME"/>
 	</c:url>
 
-<div id="MyHistoryDiv">
+<div id="myHistoryDiv">
 	<div id="docsHistory">
 		<div class="title">
         	<h5>DOCUMENTS</h5>
         </div>
         
-        <div class="historyList">
-        	<c:forEach items="${historyReport['Document']}" var="currentHistory" varStatus="status">
-        	<c:url var="showURL" value="/src/docbase/ShowDocument.do?entryId=${currentHistory.document.entryId}"/>
-            <div class="historyRow">
-                <div class="historyDate"><a href="${showURL}" class="showHistory"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
-                <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="${showURL}" class="showHistory">${currentHistory.document.MDPAndFolio}</a></div>
-			</div>
-        	</c:forEach>
-		</div>
+       <table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryDocumentsHistoryTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Action</th>
+                    <th>Volume/Folio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>                                                                                              
+                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+                </tr> 
+            </tbody>
+        </table>
         
-        <a href="${MoreDocumentsURL}" id="moreDocs">More &rarr;</span></a>
+        <a href="/DocSources/cm/HistoryDocs.html" id="moreDocs">More &rarr;</a>
     </div>
 
-    <div id="volumesHistory">
-		<div class="title">
-        	<h5>VOLUME</h5>
-        </div>
-        
-        <div class="historyList">
-        	<c:forEach items="${historyReport['Volume']}" var="currentHistory" varStatus="status">
-        	<c:url var="showURL" value="/src/volbase/ShowVolume.do?summaryId=${currentHistory.volume.summaryId}"/>
-            <div class="historyRow">
-                <div class="historyDate"><a href="${showURL}" class="showHistory"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
-                <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="${showURL}" class="showHistory">${currentHistory.volume}</a></div>
-			</div>
-        	</c:forEach>
-		</div>
-        
-        <a href="${MoreVolumesURL}" id="moreVolumes">More &rarr;</span></a>
-    </div>
+	 <div id="volumesHistory">
+			<div class="title">
+	        	<h5>VOLUME</h5>
+	        </div>
+	        
+	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryVolumesHistoryTable">
+	            <thead>
+	                <tr>
+	                    <th>Date</th>
+	                    <th>Action</th>
+	                    <th>Volume Number</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>                                                                                              
+	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                </tr> 
+	            </tbody>
+	        </table>
+	        
+	        <a href="/DocSources/cm/HistoryVol.html" id="moreVolumes">More &rarr;</a>
+	    </div>
+	    
+	    <div id="placeHistory">
+			<div class="title">
+	        	<h5>PLACE</h5>
+	        </div>
+	        
+	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryPlacesHistoryTable">
+	            <thead>
+	                <tr>
+	                    <th>Date</th>
+	                    <th>Action</th>
+	                    <th>Place Name</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>                                                                                              
+	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                </tr> 
+	            </tbody>
+	        </table>
+	        
+	        <a href="/DocSources/cm/HistoryPla.html" id="morePlaces">More &rarr;</a>
+	    </div>
+	    
+	    <div id="peopleHistory">
+			<div class="title">
+	        	<h5>PERSON</h5>
+	        </div>
+	        
+	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryPeopleHistoryTable">
+	            <thead>
+	                <tr>
+	                    <th>Date</th>
+	                    <th>Action</th>
+	                    <th>Name</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>                                                                                              
+	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                </tr> 
+	            </tbody>
+	        </table>
+	        
+	        <a href="/DocSources/cm/HistoryPeop.html" id="morePeople">More &rarr;</a>
+	    </div>
+	    
+	    <div id="MyHistoryButtons">
+	        <a href="${ShowMyHistoryURL}" id="generalHistory">Research History</a>
+	        <a id="closeMyHistory" href="#" title="Close History window">Close</a>
+	    </div>
+	</div>
+
     
-    <div id="placeHistory">
-		<div class="title">
-        	<h5>PLACE</h5>
-        </div>
-        
-        <div class="historyList">
-        	<c:forEach items="${historyReport['Place']}" var="currentHistory" varStatus="status">
-        		<c:url var="showURL" value="/src/geobase/ShowPlace.do?placeAllId=${currentHistory.place.placeAllId}"/>
-            <div class="historyRow">
-                <div class="historyDate"><a href="${showURL}" class="showHistory"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
-                <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <div class="historyItem"><a href="${showURL}" class="showHistory">${currentHistory.place.placeName}</a></div>
-			</div>
-        	</c:forEach>
-		</div>
-        
-        <a href="${MorePlacesURL}" id="morePlaces">More &rarr;</span></a>
-    </div>
-    
-    <div id="peopleHistory">
-		<div class="title">
-        	<h5>PEOPLE</h5>
-        </div>
-        
-        <div class="historyList">
-        	<c:forEach items="${historyReport['People']}" var="currentHistory" varStatus="status">
-        	<c:url var="showURL" value="/src/peoplebase/ShowPerson.do?personId=${currentHistory.person.personId}"/>
-            <div class="historyRow">
-                <div class="historyDate"><a href="${showURL}" class="showHistory"><fmt:formatDate pattern="MM/dd/yyyy" value="${currentHistory.dateAndTime}" /></a></div> 
-                <div class="historyAction" title="Deleted">${currentHistory.action}</div>
-                <c:if test="${currentHistory.person.mapNameLf.length() <= 20}">
-                	<div class="historyItem"><a href="${showURL}" class="showHistory">${currentHistory.person}</a></div>
-                </c:if>
-                <c:if test="${currentHistory.person.mapNameLf.length() > 20}">
-                	<div class="historyItem"><a href="${showURL}" class="showHistory">${fn:substring(currentHistory.person.mapNameLf,0,16)}...</a></div>
-                </c:if>
-			</div>
-        	</c:forEach>
-		</div>
-        
-        <a href="${MorePeopleURL}" id="morePeople">More &rarr;</span></a>
-    </div>
-
-    <div id="MyHistoryButtons">
-        <a href="<c:url value="/user/ShowMyHistory.do"/>" id="generalHistory">Research History</a>
-        <input id="close" type="submit" title="Close Chronology window" value="Close"/>
-    </div>
-</div>
-
+<script type="text/javascript" charset="utf-8">                                                           
+		$j(document).ready(function() {                                                                       
+			$j('#myCategoryDocumentsHistoryTable').dataTable( {                                                             
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],    
+				"bAutoWidth" : false,
+					"aoColumns" : [
+					{ sWidth : "70px" },
+					{ sWidth : "70px" },
+					{ sWidth : "200px" },
+					],                           
+				"bDestroy" : true,  
+				"bFilter" : false,
+				"bLengthChange": false,                                                                          
+				"bProcessing": true,                                                                          
+				"bServerSide": true,                                                                          
+				"iDisplayLength": 10,                                                                         
+				"iDisplayStart": 0,                                                                           
+				"oSearch": {"sSearch": ""},                                                                   
+				"sAjaxSource": "/user/MyHistoryFirstFiveElementsByCategoryPagination.json",                                           
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,             
+				"bFilter":false,                                                      
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+					/* Add some extra data to the sender */                                                   
+					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+					$j.getJSON( sSource, aoData, function (json) {                                            
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)                                                                      
+					} );                                                                                      
+				}                                                                                             
+			} );                                                                                              
+																											  
+			// We need to remove any previous live function                                                   
+			$j('.searchResult').die();                                                                        
+			// Result links have a specific class style on which we attach click live.                        
+			$j('.searchResult').live('click', function() {                                                    
+				return false;                                                                                 
+			});
+			
+			$j('#myCategoryVolumesHistoryTable').dataTable( {                                                             
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],    
+				"bAutoWidth" : false,
+					"aoColumns" : [
+					{ sWidth : "70px" },
+					{ sWidth : "70px" },
+					{ sWidth : "200px" },
+					],                           
+				"bDestroy" : true,  
+				"bFilter" : false,
+				"bLengthChange": false,                                                                          
+				"bProcessing": true,                                                                          
+				"bServerSide": true,                                                                          
+				"iDisplayLength": 10,                                                                         
+				"iDisplayStart": 0,                                                                           
+				"oSearch": {"sSearch": ""},                                                                   
+				"sAjaxSource": "/user/MyHistoryFirstFiveElementsByCategoryPagination.json",                                           
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,             
+				"bFilter":false,                                                      
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+					/* Add some extra data to the sender */                                                   
+					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+					$j.getJSON( sSource, aoData, function (json) {                                            
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)                                                                      
+					} );                                                                                      
+				}                                                                                             
+			} );                                                                                              
+																											  
+			// We need to remove any previous live function                                                   
+			$j('.searchResult').die();                                                                        
+			// Result links have a specific class style on which we attach click live.                        
+			$j('.searchResult').live('click', function() {                                                    
+				return false;                                                                                 
+			});
+			
+			$j('#myCategoryPlacesHistoryTable').dataTable( {                                                             
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],    
+				"bAutoWidth" : false,
+					"aoColumns" : [
+					{ sWidth : "70px" },
+					{ sWidth : "70px" },
+					{ sWidth : "200px" },
+					],                           
+				"bDestroy" : true,  
+				"bFilter" : false,
+				"bLengthChange": false,                                                                          
+				"bProcessing": true,                                                                          
+				"bServerSide": true,                                                                          
+				"iDisplayLength": 10,                                                                         
+				"iDisplayStart": 0,                                                                           
+				"oSearch": {"sSearch": ""},                                                                   
+				"sAjaxSource": "/user/MyHistoryFirstFiveElementsByCategoryPagination.json",                                           
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,             
+				"bFilter":false,                                                      
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+					/* Add some extra data to the sender */                                                   
+					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+					$j.getJSON( sSource, aoData, function (json) {                                            
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)                                                                      
+					} );                                                                                      
+				}                                                                                             
+			} );                                                                                              
+																											  
+			// We need to remove any previous live function                                                   
+			$j('.searchResult').die();                                                                        
+			// Result links have a specific class style on which we attach click live.                        
+			$j('.searchResult').live('click', function() {                                                    
+				return false;                                                                                 
+			});  
+			
+			$j('#myCategoryPeopleHistoryTable').dataTable( {                                                             
+				"aoColumnDefs": [ { "sWidth": "100%", "aTargets": [ "_all" ] }],    
+				"bAutoWidth" : false,
+					"aoColumns" : [
+					{ sWidth : "70px" },
+					{ sWidth : "70px" },
+					{ sWidth : "200px" },
+					],                           
+				"bDestroy" : true,  
+				"bFilter" : false,
+				"bLengthChange": false,                                                                          
+				"bProcessing": true,                                                                          
+				"bServerSide": true,                                                                          
+				"iDisplayLength": 10,                                                                         
+				"iDisplayStart": 0,                                                                           
+				"oSearch": {"sSearch": ""},                                                                   
+				"sAjaxSource": "/user/MyHistoryFirstFiveElementsByCategoryPagination.json",                                           
+				"sDom": 'T<"clear">lfrtip',
+				"bInfo":false,             
+				"bFilter":false,                                                      
+				"sPaginationType": "two_button", 
+				"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+					/* Add some extra data to the sender */                                                   
+					aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+					$j.getJSON( sSource, aoData, function (json) {                                            
+						/* Do whatever additional processing you want on the callback, then tell DataTables */
+						fnCallback(json)                                                                      
+					} );                                                                                      
+				}                                                                                             
+			} );                                                                                              
+																											  
+			// We need to remove any previous live function                                                   
+			$j('.searchResult').die();                                                                        
+			// Result links have a specific class style on which we attach click live.                        
+			$j('.searchResult').live('click', function() {                                                    
+				return false;                                                                                 
+			});                                                                                               
+		} );                                                                                                  
+</script>
 
 <script type="text/javascript">
 	$j(document).ready(function() {
