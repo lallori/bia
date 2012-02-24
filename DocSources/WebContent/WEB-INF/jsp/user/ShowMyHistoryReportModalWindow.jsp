@@ -7,9 +7,21 @@
 
 	<c:url var="ShowMyHistoryURL" value="/user/ShowMyHistory.do" />
 
-<c:url var="ShowMyHistoryURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json" />
-
-
+	<c:url var="FiveElementsDocumentURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json">
+		<c:param name="category" value="DOCUMENT"/>
+	</c:url>
+	
+	<c:url var="FiveElementsPeopleURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json">
+		<c:param name="category" value="PEOPLE"/>
+	</c:url>
+	
+	<c:url var="FiveElementsPlaceURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json">
+		<c:param name="category" value="PLACE"/>
+	</c:url>
+	
+	<c:url var="FiveElementsVolumeURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json">
+		<c:param name="category" value="VOLUME"/>
+	</c:url>
 
 	<c:url var="MoreDocumentsURL" value="/user/ShowMyHistoryReportByCategory.do">
 		<c:param name="category" value="DOCUMENT"/>
@@ -145,7 +157,7 @@
 				"iDisplayLength": 10,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "/user/MyHistoryFirstFiveElementsByCategoryPagination.json",                                           
+				"sAjaxSource": "${FiveElementsDocumentURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"bInfo":false,             
 				"bFilter":false,                                                      
@@ -183,7 +195,7 @@
 				"iDisplayLength": 10,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "/user/MyHistoryFirstFiveElementsByCategoryPagination.json",                                           
+				"sAjaxSource": "${FiveElementsVolumeURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"bInfo":false,             
 				"bFilter":false,                                                      
@@ -221,7 +233,7 @@
 				"iDisplayLength": 10,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "/user/MyHistoryFirstFiveElementsByCategoryPagination.json",                                           
+				"sAjaxSource": "${FiveElementsPlaceURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"bInfo":false,             
 				"bFilter":false,                                                      
@@ -259,7 +271,7 @@
 				"iDisplayLength": 10,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "/user/MyHistoryFirstFiveElementsByCategoryPagination.json",                                           
+				"sAjaxSource": "${FiveElementsPeopleURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"bInfo":false,             
 				"bFilter":false,                                                      
