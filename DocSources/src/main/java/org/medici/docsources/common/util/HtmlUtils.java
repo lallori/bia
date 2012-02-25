@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.domain.Schedone;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -122,6 +123,23 @@ public class HtmlUtils {
 	 * @param entryId
 	 * @return
 	 */
+	public static String showDocument(Integer entryId) {
+		if (entryId == null)
+			return "";
+
+		String url = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		url += "/src/docbase/ShowDocument.do?entryId=";
+		url += entryId;
+
+		return url;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
 	public static List<String> showDocument(List<String> inputList, Integer entryId) {
 		if (inputList == null)
 			return null;
@@ -141,50 +159,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
-	/**
-	 * 
-	 * @param inputList
-	 * @param entryId
-	 * @return
-	 */
-	public static String showDocument(Integer entryId) {
-		if (entryId == null)
-			return "";
 
-		String url = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
-		url += "/src/docbase/ShowDocument.do?entryId=";
-		url += entryId;
-
-		return url;
-	}
-
-	/**
-	 * 
-	 * @param inputList
-	 * @param idFilter
-	 * @return
-	 */
-	public static List<String> showUserSearchFilter(List<Object> inputList, Integer idSearchFilter) {
-		if (inputList == null)
-			return null;
-
-		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
-		
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
-		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		anchorBegin.append("/src/AdvancedSearch.do?idSearchFilter=");
-		anchorBegin.append(idSearchFilter);
-		anchorBegin.append("\">");
-		String hrefEnd = "</a>";
-		
-		for (int i=0; i<inputList.size(); i++) {
-			retValue.add(anchorBegin + inputList.get(i).toString() + hrefEnd);
-		}
-		
-		return retValue;
-	}
-	
 	/**
 	 * 
 	 * @param inputList
@@ -212,6 +187,20 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+	
+	/**
+	 * 
+	 * @param senderUser
+	 * @return
+	 */
+	public static String showMessage(Integer messageId, String text) {
+		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/community/ShowMessage.do?messageId=");
+		anchor.append(messageId);
+		anchor.append("\">text</a>");
+
+		return anchor.toString();	}
 
 	/**
 	 * 
@@ -298,6 +287,81 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param currentSchedone
+	 * @return
+	 */
+	public static String showSchedoneActive(Schedone currentSchedone) {
+		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/digitization/ActivateSchedone.json?schedoneId=");
+		anchor.append(currentSchedone.getSchedoneId());
+		anchor.append("\">Active It</a>");
+
+		return anchor.toString();
+	}
+	
+	/**
+	 * 
+	 * @param currentSchedone
+	 * @return
+	 */
+	public static String showSchedoneDeactivateIt(Schedone currentSchedone) {
+		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/digitization/DeactivateSchedone.json?schedoneId=");
+		anchor.append(currentSchedone.getSchedoneId());
+		anchor.append("\">Deactivate It</a>");
+
+		return anchor.toString();
+	}
+
+	/**
+	 * 
+	 * @param currentSchedone
+	 * @return
+	 */
+	public static String showSchedoneDescription(Schedone currentSchedone) {
+		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
+		anchor.append(currentSchedone.getSchedoneId());
+		anchor.append("\">DESCRIPTION SCHEDONE</a>");
+
+		return anchor.toString();
+	}
+
+	/**
+	 * 
+	 * @param currentSchedone
+	 * @return
+	 */
+	public static String showSchedoneEditIt(Schedone currentSchedone) {
+		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
+		anchor.append(currentSchedone.getSchedoneId());
+		anchor.append("\">Edit It</a>");
+
+		return anchor.toString();
+	}
+
+	/**
+	 * 
+	 * @param currentSchedone
+	 * @return
+	 */
+	public static String showSchedoneMDP(Schedone currentSchedone) {
+		StringBuffer anchor = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
+		anchor.append(currentSchedone.getSchedoneId());
+		anchor.append("\">SCHEDONE MDP</a>");
+
+		return anchor.toString();
+	}
+
+	/**
+	 * 
 	 * @param inputList
 	 * @param entryId
 	 * @return
@@ -323,7 +387,33 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
+	/**
+	 * 
+	 * @param inputList
+	 * @param idFilter
+	 * @return
+	 */
+	public static List<String> showUserSearchFilter(List<Object> inputList, Integer idSearchFilter) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/src/AdvancedSearch.do?idSearchFilter=");
+		anchorBegin.append(idSearchFilter);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i).toString() + hrefEnd);
+		}
+		
+		return retValue;
+	}
+
 	/**
 	 * 
 	 * @param inputList

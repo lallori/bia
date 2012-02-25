@@ -29,6 +29,8 @@ package org.medici.docsources.common.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -69,9 +71,11 @@ public class RegExUtils {
 	 * @return The input string without punctuation.
 	 */
 	public static String[] splitPunctuationAndSpaceChars(String inputString) {
-		//return inputString.split("[\\p{P},\\s]");
+		if (StringUtils.isEmpty(inputString)) {
+			return new String[0];
+		}
+
 		String[] retValue = inputString.split("([.,!?:;'\"-]|\\s)+");
-		
 		return retValue;
 	}
 	
