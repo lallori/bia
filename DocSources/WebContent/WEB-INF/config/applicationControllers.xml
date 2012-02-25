@@ -39,7 +39,7 @@
 		</mvc:interceptor>
 			
 		<mvc:interceptor>
-			<mvc:mapping path="/catalog/**"/>
+			<mvc:mapping path="/digitization/**"/>
 	       	<bean class="org.medici.docsources.audit.AccessLogAction">
 				<description>Access Log Module.</description>
 				<property name="logService" ref="logService" />
@@ -47,21 +47,21 @@
 		</mvc:interceptor>
 
 		<mvc:interceptor>
+			<mvc:mapping path="/community/**"/>
+	       	<bean class="org.medici.docsources.audit.AccessLogAction">
+				<description>Access Log Module.</description>
+				<property name="logService" ref="logService" />
+	       	</bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
 			<mvc:mapping path="/de/**"/>
 	       	<bean class="org.medici.docsources.audit.AccessLogAction">
 				<description>Access Log Module.</description>
 				<property name="logService" ref="logService" />
 	       	</bean>
 		</mvc:interceptor>
-			
-		<mvc:interceptor>
-			<mvc:mapping path="/de/**"/>
-	       	<bean class="org.medici.docsources.audit.HistoryLogAction">
-				<description>History Log Module.</description>
-				<property name="logService" ref="logService" />
-	       	</bean>
-		</mvc:interceptor>
-		
+					
 		<mvc:interceptor>
 			<mvc:mapping path="/src/**"/>
 	       	<bean class="org.medici.docsources.audit.AccessLogAction">

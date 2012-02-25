@@ -4,6 +4,23 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
+	<!-- Digitization base Validator -->
+	<bean id="editDetailsSchedoneValitor" class="org.medici.docsources.validator.digitization.EditDetailsSchedoneValidator">
+        <description>Edit Details Schedone Validator.</description>
+	</bean>
+	
+	<bean id="editJpegImagesSchedoneValidator" class="org.medici.docsources.validator.digitization.EditJpegImagesSchedoneValidator">
+        <description>Edit Jpeg Images Schedone Validator.</description>
+	</bean>
+
+	<bean id="editPdfImagesSchedoneValidator" class="org.medici.docsources.validator.digitization.EditPdfImagesSchedoneValidator">
+        <description>Edit Pdf Images Schedone Validator.</description>
+	</bean>
+
+	<bean id="editTiffImagesSchedoneValidator" class="org.medici.docsources.validator.digitization.EditTiffImagesSchedoneValidator">
+        <description>Edit Tiff Images Schedone Validator.</description>
+	</bean>
+
 	<!-- Document base Validator -->
 	<bean id="deleteDocumentValidator" class="org.medici.docsources.validator.docbase.DeleteDocumentValidator">
         <description>Delete a Document Validator.</description>
