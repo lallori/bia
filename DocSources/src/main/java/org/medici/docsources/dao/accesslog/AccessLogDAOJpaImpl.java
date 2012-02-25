@@ -37,8 +37,7 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.medici.docsources.domain.HistoryLog
- * @see org.medici.docsources.audit.HistoryLogAction
+ * @see org.medici.docsources.domain.AccessLog
  */
 @Repository
 public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements
