@@ -34,7 +34,7 @@ import org.medici.docsources.domain.Document;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
- * @see org.EditDetailsDocumentController.docsources.controller.docbase.ModifyDocumentController
+ * @see org.medici.docsources.controller.docbase.EditCorrespondentsOrPeopleDocumentController
  */
 public class EditCorrespondentsOrPeopleDocumentCommand {
 	private Integer entryId;
