@@ -36,13 +36,13 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.ImageUtils;
 import org.medici.docsources.common.volume.FoliosInformations;
 import org.medici.docsources.common.volume.VolumeSummary;
-import org.medici.docsources.dao.catalog.CatalogDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
+import org.medici.docsources.dao.schedone.SchedoneDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
-import org.medici.docsources.domain.Catalog;
+import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
@@ -62,7 +62,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	@Autowired
-	private CatalogDAO catalogDAO;
+	private SchedoneDAO catalogDAO;
 	@Autowired
 	private DocumentDAO documentDAO;
 	@Autowired
@@ -313,7 +313,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 					volumeSummary.setMisnumberedFolios(foliosInformations.getMisnumberedFolios());
 				}
 				
-				Catalog catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
+				Schedone catalog = getCatalogDAO().findBySummaryId(volume.getSummaryId());
 				if (catalog != null) {
 					volumeSummary.setCartulazione(catalog.getCartulazione());
 					volumeSummary.setNoteCartulazione(catalog.getNoteCartulazione());
@@ -331,7 +331,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	/**
 	 * @return the catalogDAO
 	 */
-	public CatalogDAO getCatalogDAO() {
+	public SchedoneDAO getCatalogDAO() {
 		return catalogDAO;
 	}
 
@@ -399,7 +399,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	public Boolean isDocumentExtract(Integer entryId) throws ApplicationThrowable {
 		try{
 			Document document = getDocumentDAO().find(entryId);
-			if(document.getSynExtract() != null && !document.getSynExtract().getDocExtract().isEmpty()){
+			if(document.getSynExtract() != null && (!document.getSynExtract().getDocExtract().isEmpty())){
 				return true;
 			}else{
 				return false;
@@ -433,7 +433,7 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 	/**
 	 * @param catalogDAO the catalogDAO to set
 	 */
-	public void setCatalogDAO(CatalogDAO catalogDAO) {
+	public void setCatalogDAO(SchedoneDAO catalogDAO) {
 		this.catalogDAO = catalogDAO;
 	}
 

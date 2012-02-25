@@ -27,8 +27,15 @@
  */
 package org.medici.docsources.service.digitization;
 
-import org.medici.docsources.dao.catalog.CatalogDAO;
-import org.medici.docsources.domain.Catalog;
+import java.util.List;
+
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.Search;
+import org.medici.docsources.dao.month.MonthDAO;
+import org.medici.docsources.dao.schedone.SchedoneDAO;
+import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,21 +50,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class DigitizationServiceImpl implements DigitizationService {
 	@Autowired
-	private CatalogDAO catalogDAO;
+	private MonthDAO monthDAO;
+	@Autowired
+	private SchedoneDAO schedoneDAO;
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
-	public Catalog findCatalog(Integer catalogId) {
-		// TODO Auto-generated method stub
-		return new Catalog();
-	}
-
-	/**
-	 * @return the catalogDAO
-	 */
-	public CatalogDAO getCatalogDAO() {
-		return catalogDAO;
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Schedone addNewSchedone(Schedone schedone) throws ApplicationThrowable {
+		try {
+			getSchedoneDAO().persist(schedone);
+			
+			return schedone;
+		}catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -65,24 +74,140 @@ public class DigitizationServiceImpl implements DigitizationService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void save(Catalog catalog) throws ApplicationThrowable {
+	public Schedone editDetailsSchedone(Schedone schedone) throws ApplicationThrowable {
 		try {
-			if ((catalog.getId() != null) && (catalog.getId() > 0)) {
-				getCatalogDAO().persist(catalog);
-			} else {
-				getCatalogDAO().merge(catalog);
-			}
-				
+			Schedone schedoneToUpdate = getSchedoneDAO().find(schedone.getSchedoneId());
+			// we update only schedone fields
+			
+			getSchedoneDAO().merge(schedoneToUpdate);
+			
+			return schedoneToUpdate;
 		}catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}
 
 	/**
-	 * @param catalogDAO the catalogDAO to set
+	 * {@inheritDoc}
 	 */
-	public void setCatalogDAO(CatalogDAO catalogDAO) {
-		this.catalogDAO = catalogDAO;
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Schedone editJpegImagesSchedone(Schedone schedone) throws ApplicationThrowable {
+		try {
+			Schedone schedoneToUpdate = getSchedoneDAO().find(schedone.getSchedoneId());
+			// we update only jpeg images fields
+			
+			getSchedoneDAO().merge(schedoneToUpdate);
+			
+			return schedoneToUpdate;
+		}catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Schedone editPdfImagesSchedone(Schedone schedone) throws ApplicationThrowable {
+		try {
+			Schedone schedoneToUpdate = getSchedoneDAO().find(schedone.getSchedoneId());
+			// we update only pdf images fields
+			
+			getSchedoneDAO().merge(schedoneToUpdate);
+			
+			return schedoneToUpdate;
+		}catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Schedone editTiffImagesSchedone(Schedone schedone) throws ApplicationThrowable {
+		try {
+			Schedone schedoneToUpdate = getSchedoneDAO().find(schedone.getSchedoneId());
+			// we update only jpeg images fields
+			
+			getSchedoneDAO().merge(schedoneToUpdate);
+			
+			return schedoneToUpdate;
+		}catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Schedone findSchedone(Integer schedoneId) throws ApplicationThrowable {
+		try {
+			Schedone schedone = getSchedoneDAO().find(schedoneId);
+			
+			return schedone;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @return the monthDAO
+	 */
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
+	}
+
+	/**
+	 * 
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable {
+		try {
+			List<Month> months = getMonthDAO().getAllMonths();
+			
+			months.add(0, new Month(null, ""));
+			
+			return months;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @return the schedoneDAO
+	 */
+	public SchedoneDAO getSchedoneDAO() {
+		return schedoneDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchSchedones(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getSchedoneDAO().searchMYSQL(searchContainer, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @param monthDAO the monthDAO to set
+	 */
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * @param schedoneDAO the schedoneDAO to set
+	 */
+	public void setSchedoneDAO(SchedoneDAO schedoneDAO) {
+		this.schedoneDAO = schedoneDAO;
 	}
 
 }

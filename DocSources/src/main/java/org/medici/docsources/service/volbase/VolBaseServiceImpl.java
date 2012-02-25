@@ -39,10 +39,10 @@ import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.VolumeUtils;
-import org.medici.docsources.dao.catalog.CatalogDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
+import org.medici.docsources.dao.schedone.SchedoneDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
@@ -76,7 +76,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
-	private CatalogDAO catalogDAO;
+	private SchedoneDAO catalogDAO;
 	@Autowired
 	private DocumentDAO documetDAO;
 	@Autowired
@@ -529,7 +529,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * @return the catalogDAO
 	 */
-	public CatalogDAO getCatalogDAO() {
+	public SchedoneDAO getCatalogDAO() {
 		return catalogDAO;
 	}
 	
@@ -600,7 +600,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 	
 	/**
-	 * @return the UserHistoryDAO
+	 * @return the UserMessageDAO
 	 */
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
@@ -720,7 +720,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	/**
 	 * @param catalogDAO the catalogDAO to set
 	 */
-	public void setCatalogDAO(CatalogDAO catalogDAO) {
+	public void setCatalogDAO(SchedoneDAO catalogDAO) {
 		this.catalogDAO = catalogDAO;
 	}
 

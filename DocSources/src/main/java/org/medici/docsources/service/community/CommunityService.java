@@ -25,76 +25,75 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.service.digitization;
-
-import java.util.List;
+package org.medici.docsources.service.community;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
-import org.medici.docsources.domain.Schedone;
-import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.UserComment;
+import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public interface DigitizationService {
-
-	/**
-	 * 
-	 * @param schedone
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Schedone addNewSchedone(Schedone schedone) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param schedone
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Schedone editDetailsSchedone(Schedone schedone) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param schedone
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Schedone editJpegImagesSchedone(Schedone schedone) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param schedone
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Schedone editPdfImagesSchedone(Schedone schedone) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param schedone
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public Schedone editTiffImagesSchedone(Schedone schedone) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param schedoneId
-	 * @return
-	 */
-	public Schedone findSchedone(Integer schedoneId) throws ApplicationThrowable;
+public interface CommunityService {
 
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Month> getMonths() throws ApplicationThrowable;
+	public Integer checkNewMessages() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param userComment
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserComment createNewComment(UserComment userComment) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param userComment
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserComment createNewMessage(UserMessage userMessage) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param userComment
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserComment deleteComment(Integer commentId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param userComment
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public void deleteMessage(Integer userMessageId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param userComment
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserComment replyComment(UserComment userComment, Integer parentUserCommentId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param userComment
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserComment replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -103,5 +102,5 @@ public interface DigitizationService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Page searchSchedones(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchMessages(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

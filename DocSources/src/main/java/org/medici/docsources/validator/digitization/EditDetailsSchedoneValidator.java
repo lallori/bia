@@ -1,5 +1,5 @@
 /*
- * EditCatalogRequestValidator.java
+ * EditDetailsSchedoneValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,34 +27,34 @@
  */
 package org.medici.docsources.validator.digitization;
 
-import org.medici.docsources.command.digitization.EditCatalogCommand;
+import org.medici.docsources.command.digitization.EditDetailsSchedoneCommand;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * Validator bean for action "Edit Catalog".
+ * Validator bean for action "Edit Details Schedone".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class EditCatalogRequestValidator implements Validator {
+public class EditDetailsSchedoneValidator implements Validator {
 	@Autowired
-	private DigitizationService catalogService;
+	private DigitizationService digitizationService;
 
 	/**
-	 * @return the catalogService
+	 * @param digitizationService the digitizationService to set
 	 */
-	public DigitizationService getCatalogService() {
-		return catalogService;
+	public void setDigitizationService(DigitizationService digitizationService) {
+		this.digitizationService = digitizationService;
 	}
 
 	/**
-	 * @param catalogService the catalogService to set
+	 * @return the digitizationService
 	 */
-	public void setCatalogService(DigitizationService catalogService) {
-		this.catalogService = catalogService;
+	public DigitizationService getDigitizationService() {
+		return digitizationService;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class EditCatalogRequestValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(EditCatalogCommand.class);
+		return givenClass.equals(EditDetailsSchedoneCommand.class);
 	}
 
 	/**
@@ -79,29 +79,9 @@ public class EditCatalogRequestValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditCatalogCommand editCatalogCommand = (EditCatalogCommand) object;
-		editCatalogCommand.getId();
+		EditDetailsSchedoneCommand editDetailsSchedoneCommand = (EditDetailsSchedoneCommand) object;
+		editDetailsSchedoneCommand.getSchedoneId();
 		// TODO : implement validation logic
 		
-	}
-
-
-	/**
-	 * 
-	 * @param catalogId
-	 * @param errors
-	 */
-	public void validateCatalogId(Integer catalogId, Errors errors) {
-		if (errors.hasErrors()) {
-			return;
-		}
-		
-		if (catalogId != null) {
-			if (catalogId > 0) {
-				if (getCatalogService().findCatalog(catalogId) == null) {
-					errors.reject("catalogId", "error.catalogId.notfound");
-				}
-			}
-		}
 	}
 }
