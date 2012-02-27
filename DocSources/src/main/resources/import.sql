@@ -162,6 +162,34 @@ update docsources.tblPOLink set prtag = 1 where prtag =-1;
 -- MonthNum in linked TitleOrOccupation must be null if not present
 update docsources.tblPOLink set startMonthNum = null where startMonthNum = 0;
 update docsources.tblPOLink set endMonthNum = null where endMonthNum = 0;
+-- Set startMonthNum from the startMonth field
+update docsources.tblPOLink set startMonthNum = null where startMonth is null;
+update docsources.tblPOLink set startMonthNum = 1 where startMonth like 'January';
+update docsources.tblPOLink set startMonthNum = 2 where startMonth like 'February';
+update docsources.tblPOLink set startMonthNum = 3 where startMonth like 'March';
+update docsources.tblPOLink set startMonthNum = 4 where startMonth like 'April';
+update docsources.tblPOLink set startMonthNum = 5 where startMonth like 'May';
+update docsources.tblPOLink set startMonthNum = 6 where startMonth like 'June';
+update docsources.tblPOLink set startMonthNum = 7 where startMonth like 'July';
+update docsources.tblPOLink set startMonthNum = 8 where startMonth like 'August';
+update docsources.tblPOLink set startMonthNum = 9 where startMonth like 'September';
+update docsources.tblPOLink set startMonthNum = 10 where startMonth like 'October';
+update docsources.tblPOLink set startMonthNum = 11 where startMonth like 'November';
+update docsources.tblPOLink set startMonthNum = 12 where startMonth like 'December';
+-- Set endMonthNum from the endMonth field
+update docsources.tblPOLink set endMonthNum = null where endMonth is null;
+update docsources.tblPOLink set endMonthNum = 1 where endMonth like 'January';
+update docsources.tblPOLink set endMonthNum = 2 where endMonth like 'February';
+update docsources.tblPOLink set endMonthNum = 3 where endMonth like 'March';
+update docsources.tblPOLink set endMonthNum = 4 where endMonth like 'April';
+update docsources.tblPOLink set endMonthNum = 5 where endMonth like 'May';
+update docsources.tblPOLink set endMonthNum = 6 where endMonth like 'June';
+update docsources.tblPOLink set endMonthNum = 7 where endMonth like 'July';
+update docsources.tblPOLink set endMonthNum = 8 where endMonth like 'August';
+update docsources.tblPOLink set endMonthNum = 9 where endMonth like 'September';
+update docsources.tblPOLink set endMonthNum = 10 where endMonth like 'October';
+update docsources.tblPOLink set endMonthNum = 11 where endMonth like 'November';
+update docsources.tblPOLink set endMonthNum = 12 where endMonth like 'December';
 
 -- VOLUMES 
 
