@@ -40,8 +40,7 @@ import org.springframework.stereotype.Repository;
  * @see org.medici.docsources.domain.AccessLog
  */
 @Repository
-public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements
-AccessLogDAO {
+public class AccessLogDAOJpaImpl extends JpaDao<Integer, AccessLog> implements AccessLogDAO {
 
 	/**
 	 * 
