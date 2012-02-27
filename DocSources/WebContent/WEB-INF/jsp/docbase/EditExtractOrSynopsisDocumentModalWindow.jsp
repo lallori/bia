@@ -30,6 +30,7 @@
 		
 		<form:hidden path="entryId"/>
 		<form:hidden path="synExtrId"/>
+		<input type="hidden" value="" id="modify" />
 	</form:form>
 
 	<c:url var="ShowDocument" value="/src/docbase/ShowDocument.do">
@@ -38,17 +39,27 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-	        $j('#close').click(function() {
-				$j('#MB_frame').block({ message: $j('#question'),
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				}); 
+			$j("#EditExtractOrSynopsisDocumentFullscreenForm :input").change(function(){
+				$j("#modify").val(1); //set the hidden field if an element is modified
 				return false;
+			});
+			
+	        $j('#close').click(function() {
+	        	if($j("#modify").val() == 1){
+					$j('#MB_frame').block({ message: $j('#question'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
+					return false;
+	        	}else{
+	        		Modalbox.hide();
+	        		return false;
+	        	}
 			});
 
 			$j("#EditExtractOrSynopsisDocumentFullscreenForm").submit(function (){
