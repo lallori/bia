@@ -51,77 +51,18 @@
 	</div>
 </div>
 
-<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditContextVolume").css('visibility', 'visible');
-	        $j("#EditCorrespondentsVolume").css('visibility', 'visible'); 
-	        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
-			$j("#EditDetailsVolume").css('visibility', 'visible'); 
+			$j("#EditDetailsSchedone").css('visibility', 'visible');
+	        $j("#EditTiffImagesSchedone").css('visibility', 'visible'); 
+	        $j("#EditJpegImagesSchedone").css('visibility', 'visible'); 
+	        $j("#EditPdfImagesSchedone").css('visibility', 'visible'); 
 
-			$j("#EditDetailsVolume").volumeExplorer( {
-				summaryId				: "${volume.summaryId}",
-				volNum					: "${volume.volNum}",
-				volLetExt				: "${volume.volLetExt}",
-				checkVolumeDigitizedURL	: "${checkVolumeDigitizedURL}",
-				showExplorerVolumeURL	: "${ShowExplorerVolumeURL}",
-				target 					: $j("#body_right") 
-			});  
-
-			$j("#EditDetailsVolume").click(function(){
+			$j("#EditDetailsSchedone").click(function(){
 				$j(this).next().css('visibility', 'visible');
-				$j("#EditDetailsVolumeDiv").load($j(this).attr("href"));
+				$j("#EditDetailsSchedoneDiv").load($j(this).attr("href"));
 				return false;
-			});
-			
-			//For check if already exsist a tab with volume explorer
-			$j("#ShowVolumeInVolumeExplorer").click(function(){
-				var tabName = "Explore Volume ${volume.volNum}${volume.volLetExt}";
-				var numTab = 0;
-				
-				//Check if already exist a tab with this person
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName){
-						tabExist = true;
-					}
-				});
-				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					return false;
-				}
-			});
-			
-			$j(".num_docs").click(function(){
-				//var tabName = "Docs Volume ${volume.summaryId}";
-				var tabName = "Docs Volume ${volume.volNum}${volume.volLetExt}";
-				var numTab = 0;
-				
-				//Check if already exist a tab with this person
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName){
-						tabExist = true;
-					}
-				});
-				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					return false;
-				}
 			});
 		});
 	</script>

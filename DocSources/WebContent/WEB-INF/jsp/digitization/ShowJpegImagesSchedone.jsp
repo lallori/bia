@@ -8,11 +8,13 @@
 		<c:param name="schedoneId"   value="${schedone.schedoneId}" />
 	</c:url>
 
-<div id="EditJpegImagesDiv" class="background">
+<div id="EditJpegImagesSchedoneDiv" class="background">
 	<div class="title">
 		<h5>JPEG IMAGES</h5>
 		<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+			<c:if test="${schedone.schedoneId > 0}">
 			<a id="EditJpegImagesSchedone" href="${EditJpegImagesSchedoneURL}" class="editButton" title="Edit Jpeg Images"></a><span id="loading"/>
+			</c:if>
 		</security:authorize>
 	</div>
 	<div class="list">
@@ -38,3 +40,20 @@
 		</div>
 	</div>
 </div>
+
+<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#EditDetailsSchedone").css('visibility', 'visible');
+	        $j("#EditTiffImagesSchedone").css('visibility', 'visible'); 
+	        $j("#EditJpegImagesSchedone").css('visibility', 'visible'); 
+	        $j("#EditPdfImagesSchedone").css('visibility', 'visible'); 
+
+			$j("#EditJpegImagesSchedone").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditJpegImagesSchedoneDiv").load($j(this).attr("href"));
+				return false;
+			});
+		});
+	</script>
+</security:authorize>

@@ -4,10 +4,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<div id="EditTiffImagesDiv" class="background">
+	<c:url var="EditTiffImagesSchedoneURL" value="/digitization/EditTiffImagesSchedone.do">
+		<c:param name="schedoneId"   value="${schedone.schedoneId}" />
+	</c:url>
+
+<div id="EditTiffImagesSchedoneDiv" class="background">
 	<div class="title">
 		<h5>TIFF IMAGES</h5>
-		<a id="EditTiffImagesSchedone" class="editButton" href="/DocSources/dm/EditTiffImages.html" title="Edit Tiff Images"></a>
+		<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+			<c:if test="${schedone.schedoneId > 0}">
+			<a id="EditTiffImagesSchedone" href="${EditTiffImagesSchedoneURL}" class="editButton" title="Edit Tiff Images"></a><span id="loading"/>
+			</c:if>
+		</security:authorize>
 	</div>
 	<div class="list">
 		<div class="row">
@@ -33,3 +41,19 @@
 	</div>
 </div>
 
+<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#EditDetailsSchedone").css('visibility', 'visible');
+	        $j("#EditTiffImagesSchedone").css('visibility', 'visible'); 
+	        $j("#EditJpegImagesSchedone").css('visibility', 'visible'); 
+	        $j("#EditPdfImagesSchedone").css('visibility', 'visible'); 
+
+			$j("#EditTiffImagesSchedone").click(function(){
+				$j(this).next().css('visibility', 'visible');
+				$j("#EditTiffImagesSchedoneDiv").load($j(this).attr("href"));
+				return false;
+			});
+		});
+	</script>
+</security:authorize>

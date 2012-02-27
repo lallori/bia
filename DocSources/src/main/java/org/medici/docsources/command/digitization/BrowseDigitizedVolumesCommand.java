@@ -1,5 +1,5 @@
 /*
- * SchedoneSearch.java
+ * BrowseDigitizedVolumesCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,41 +25,22 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.common.search;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.search.Query;
-import org.medici.docsources.common.util.RegExUtils;
+package org.medici.docsources.command.digitization;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class SchedoneSearch implements GenericSearch {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5135090884608784944L;
+public class BrowseDigitizedVolumesCommand {
+	private String alias;
+	private String searchUUID;
 	
-	private String alias; 
-
 	/**
-	 * 
+	 * @param alias the alias to set
 	 */
-	public SchedoneSearch() {
-		super();
-	}
-
-	/**
-	 * 
-	 * @param text
-	 */
-	public SchedoneSearch(String text) {
-		super();
-		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
-		}
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	/**
@@ -70,56 +51,17 @@ public class SchedoneSearch implements GenericSearch {
 	}
 
 	/**
-	 * 
-	 * @param command
+	 * @param searchUUID the searchUUID to set
 	 */
-	public void initFromText(String text) {
-		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
-		}
+	public void setSearchUUID(String searchUUID) {
+		this.searchUUID = searchUUID;
 	}
 
 	/**
-	 * @param alias the alias to set
+	 * @return the searchUUID
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public String getSearchUUID() {
+		return searchUUID;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM Schedone ");
-		
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(getAlias());
-		
-		if (words.length >0) {
-			jpaQuery.append(" WHERE ");
-			// TODO : ...
-		}
-		
-		return jpaQuery.toString();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Query toLuceneQuery() {
-		// NOT IMPLEMENTED
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		if (getAlias() != null)
-			return getAlias();
-		else
-			return "";
-	}
 }

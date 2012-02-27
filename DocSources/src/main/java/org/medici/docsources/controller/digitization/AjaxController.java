@@ -107,8 +107,8 @@ public class AjaxController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/digitization/SchedoneSearchPagination.json", method = RequestMethod.GET)
-	public ModelAndView schedoneSearchPagination(HttpSession httpSession,
+	@RequestMapping(value = "/digitization/BrowseDigitizedVolumes.json", method = RequestMethod.GET)
+	public ModelAndView browseDigitizedVolumes(HttpSession httpSession,
 											@RequestParam(value="alias", required=false) String alias,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
