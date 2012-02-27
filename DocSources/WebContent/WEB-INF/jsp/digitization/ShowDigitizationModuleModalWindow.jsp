@@ -7,17 +7,17 @@
 <div id="digitizationModalDiv">
 	<div id="CreateCatalogDiv">
         <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="CreateCatalog" href="<c:url value="digitization/CreateSchedone.do"/>"><p>Create new Catalog Description (Schedone)</p></a>
+        <a id="CreateCatalog" href="<c:url value="/digitization/CreateSchedone.do"/>"><p>Create new Catalog Description (Schedone)</p></a>
 	</div>
     
     <div id="AddNewFilzaDiv">
         <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="AddNewFilza" href="<c:url value="digitization/AddDigitizedVolume.do"/>"><p>Add new Digitized Volume (Filza)</p></a>
+        <a id="AddNewFilza" href="<c:url value="/digitization/AddDigitizedVolume.do"/>"><p>Add new Digitized Volume (Filza)</p></a>
     </div>
     
     <div id="BrowseFilzeDiv">
         <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="BrowseFilze" href="<c:url value="digitization/BrowseDigitizedVolumes.do"/>"><p>Browse Digitized Volumes (Filze)</p></a>
+        <a id="BrowseFilze" href="<c:url value="/digitization/BrowseDigitizedVolumes.do"/>"><p>Browse Digitized Volumes (Filze)</p></a>
 	</div>
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close" style="margin:22px 0 0 145px"/>
 </div>
