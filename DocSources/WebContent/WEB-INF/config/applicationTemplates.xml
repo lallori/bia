@@ -182,7 +182,23 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
 	</definition>
 
+	<definition name="community/ShowCommentsOnDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnDocument.jsp"/>
+	</definition>
+
+	<definition name="community/ShowCommentsOnPeople" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnPeople.jsp"/>
+	</definition>
+
+	<definition name="community/ShowCommentsOnPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnPlace.jsp"/>
+	</definition>
+
+	<definition name="community/ShowCommentsOnVolume" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnVolume.jsp"/>
+	</definition>
 	<!-- Community Module END -->
+
     <!-- Digitization Module BEGIN -->
 	<definition name="digitization/BrowseDigitizedVolumes" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/digitization/BrowseDigitizedVolumes.jsp"/>

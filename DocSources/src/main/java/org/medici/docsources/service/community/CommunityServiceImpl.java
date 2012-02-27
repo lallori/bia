@@ -27,9 +27,10 @@
  */
 package org.medici.docsources.service.community;
 
+import java.util.ArrayList;
+
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.dao.forumcategory.ForumCategoryDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
@@ -110,6 +111,42 @@ public class CommunityServiceImpl implements CommunityService {
 	public void deleteMessage(Integer userMessageId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public ArrayList<UserComment> getCommentsOnDocument(Integer entryId) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public ArrayList<UserComment> getCommentsOnPerson(Integer personId) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public ArrayList<UserComment> getCommentsOnPlace(Integer placeAllId) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public ArrayList<UserComment> getCommentsOnVolume(Integer summaryId) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

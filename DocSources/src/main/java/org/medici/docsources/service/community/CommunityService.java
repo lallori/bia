@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.service.community;
 
+import java.util.ArrayList;
+
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
@@ -78,6 +80,38 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public void deleteMessage(Integer userMessageId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ArrayList<UserComment> getCommentsOnDocument(Integer entryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ArrayList<UserComment> getCommentsOnPerson(Integer personId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ArrayList<UserComment> getCommentsOnPlace(Integer placeAllId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ArrayList<UserComment> getCommentsOnVolume(Integer summaryId) throws ApplicationThrowable;
 
 	/**
 	 * 
