@@ -44,9 +44,17 @@
 		<c:param name="placeAllId" value="${document.recipientPlace.placeAllId}" />
 	</c:url>
 
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
 		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="buttonMedium">Edit this Document</a>
 	</div>
+	</security:authorize>
+	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<div>
+		<a href="${ShowDocumentURL}" id="editLink${document.entryId}" class="buttonMedium">Show this Document</a>
+	</div>
+	</security:authorize>
+	
 	
 	<div id="EditDetailsDocumentDiv" class="background">
 	<div class="title">

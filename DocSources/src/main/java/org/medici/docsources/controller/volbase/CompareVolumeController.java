@@ -72,7 +72,7 @@ public class CompareVolumeController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") CompareVolumeRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Volume volume = new Volume();

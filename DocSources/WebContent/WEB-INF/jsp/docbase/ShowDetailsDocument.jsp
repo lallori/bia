@@ -37,6 +37,10 @@
 		<c:param name="imageProgTypeNum"   value="${document.folioNum}" />
 		<c:param name="flashVersion"   value="false" />
 	</c:url>
+	
+	<c:url var="CompareVolumeURL" value="/src/volbase/CompareVolume.do">
+		<c:param name="summaryId"   value="${document.volume.summaryId}" />
+	</c:url>
 
 	<div id="EditDetailsDocumentDiv" class="background">
 		<div class="title">
@@ -77,7 +81,7 @@
 				<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Volume (MDP)</div> <div class="value">${document.volume.volNum}${document.volume.volLetExt}</div>
+				<div class="item60">Volume (MDP)</div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="Click here to view this volume">${document.volume.volNum}${document.volume.volLetExt}</a></div>
 			</div>
 			<div class="row">
 				<div class="item60">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
@@ -165,6 +169,33 @@
 				
 				//Check if already exist a tab with this document in volume explorer
 				var numTab = 0;
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			$j(".linkVolume").click(function() {
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
+				//Check if already exist a tab with this Volume
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
 					if(!tabExist)
