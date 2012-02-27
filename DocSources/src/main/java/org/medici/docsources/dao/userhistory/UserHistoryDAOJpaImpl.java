@@ -224,7 +224,12 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	        Query query = getEntityManager().createQuery(queryString);
 	        query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 	        query.setParameter("category", category); 
-			page.setTotal(new Long((Long)query.getSingleResult()));
+	        // we need to force to resultSize total if result is bigger
+	        Long total = new Long((Long)query.getSingleResult());
+	        if (total > resultSize)
+	        	total=new Long(resultSize);
+
+	        page.setTotal(total);
 		}
 
         String queryString = "FROM UserHistory WHERE username=:username and category=:category and logicalDelete=false ORDER BY dateAndTime DESC";
@@ -234,7 +239,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
         query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         query.setParameter("category", category); 
 		query.setFirstResult(paginationFilter.getFirstRecord());
-		query.setMaxResults(paginationFilter.getLength());
+		query.setMaxResults(page.getTotal().intValue());
 		page.setList(query.getResultList());
         
 		return page;
