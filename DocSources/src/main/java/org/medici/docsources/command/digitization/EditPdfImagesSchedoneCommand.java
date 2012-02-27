@@ -34,63 +34,56 @@ package org.medici.docsources.command.digitization;
  */
 public class EditPdfImagesSchedoneCommand {
 	private Integer schedoneId;
-	private Integer numeroTotaleImmagini;
-	private Long dimMediaImmagini;
-	private Long dimTotaleImmagini;
-	
+	private Integer numeroTotaleImmaginiPdf;
+	private Long dimMediaImmaginiPdf;
+	private Long dimTotaleImmaginiPdf;
 	/**
 	 * @return the schedoneId
 	 */
 	public Integer getSchedoneId() {
 		return schedoneId;
 	}
-	
 	/**
 	 * @param schedoneId the schedoneId to set
 	 */
 	public void setSchedoneId(Integer schedoneId) {
 		this.schedoneId = schedoneId;
 	}
-	
 	/**
-	 * @return the numeroTotaleImmagini
+	 * @return the numeroTotaleImmaginiPdf
 	 */
-	public Integer getNumeroTotaleImmagini() {
-		return numeroTotaleImmagini;
+	public Integer getNumeroTotaleImmaginiPdf() {
+		return numeroTotaleImmaginiPdf;
 	}
-	
 	/**
-	 * @param numeroTotaleImmagini the numeroTotaleImmagini to set
+	 * @param numeroTotaleImmaginiPdf the numeroTotaleImmaginiPdf to set
 	 */
-	public void setNumeroTotaleImmagini(Integer numeroTotaleImmagini) {
-		this.numeroTotaleImmagini = numeroTotaleImmagini;
+	public void setNumeroTotaleImmaginiPdf(Integer numeroTotaleImmaginiPdf) {
+		this.numeroTotaleImmaginiPdf = numeroTotaleImmaginiPdf;
 	}
-	
 	/**
-	 * @return the dimMediaImmagini
+	 * @return the dimMediaImmaginiPdf
 	 */
-	public Long getDimMediaImmagini() {
-		return dimMediaImmagini;
+	public Long getDimMediaImmaginiPdf() {
+		return dimMediaImmaginiPdf;
 	}
-	
 	/**
-	 * @param dimMediaImmagini the dimMediaImmagini to set
+	 * @param dimMediaImmaginiPdf the dimMediaImmaginiPdf to set
 	 */
-	public void setDimMediaImmagini(Long dimMediaImmagini) {
-		this.dimMediaImmagini = dimMediaImmagini;
+	public void setDimMediaImmaginiPdf(Long dimMediaImmaginiPdf) {
+		this.dimMediaImmaginiPdf = dimMediaImmaginiPdf;
 	}
-	
 	/**
-	 * @return the dimTotaleImmagini
+	 * @return the dimTotaleImmaginiPdf
 	 */
-	public Long getDimTotaleImmagini() {
-		return dimTotaleImmagini;
+	public Long getDimTotaleImmaginiPdf() {
+		return dimTotaleImmaginiPdf;
 	}
-	
 	/**
-	 * @param dimTotaleImmagini the dimTotaleImmagini to set
+	 * @param dimTotaleImmaginiPdf the dimTotaleImmaginiPdf to set
 	 */
-	public void setDimTotaleImmagini(Long dimTotaleImmagini) {
-		this.dimTotaleImmagini = dimTotaleImmagini;
+	public void setDimTotaleImmaginiPdf(Long dimTotaleImmaginiPdf) {
+		this.dimTotaleImmaginiPdf = dimTotaleImmaginiPdf;
 	}
+
 }

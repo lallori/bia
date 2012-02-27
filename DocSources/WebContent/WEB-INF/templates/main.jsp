@@ -144,7 +144,7 @@
 			</div>
 			<div id="top_bottom" class="docs">
 <tiles:insertAttribute name="administratorMenu"/>
-<%--<tiles:insertAttribute name="digitizationMenu"/> --%>
+<tiles:insertAttribute name="digitizationMenu"/>
 <tiles:insertAttribute name="whoAmIMenu"/>
 			</div>
 <tiles:insertAttribute name="main"/>

@@ -34,63 +34,56 @@ package org.medici.docsources.command.digitization;
  */
 public class EditTiffImagesSchedoneCommand {
 	private Integer schedoneId;
-	private Integer numeroTotaleImmagini;
-	private Long dimMediaImmagini;
-	private Long dimTotaleImmagini;
-	
+	private Integer numeroTotaleImmaginiTiff;
+	private Long dimMediaImmaginiTiff;
+	private Long dimTotaleImmaginiTiff;
 	/**
 	 * @return the schedoneId
 	 */
 	public Integer getSchedoneId() {
 		return schedoneId;
 	}
-	
 	/**
 	 * @param schedoneId the schedoneId to set
 	 */
 	public void setSchedoneId(Integer schedoneId) {
 		this.schedoneId = schedoneId;
 	}
-	
 	/**
-	 * @return the numeroTotaleImmagini
+	 * @return the numeroTotaleImmaginiTiff
 	 */
-	public Integer getNumeroTotaleImmagini() {
-		return numeroTotaleImmagini;
+	public Integer getNumeroTotaleImmaginiTiff() {
+		return numeroTotaleImmaginiTiff;
+	}
+	/**
+	 * @param numeroTotaleImmaginiTiff the numeroTotaleImmaginiTiff to set
+	 */
+	public void setNumeroTotaleImmaginiTiff(Integer numeroTotaleImmaginiTiff) {
+		this.numeroTotaleImmaginiTiff = numeroTotaleImmaginiTiff;
+	}
+	/**
+	 * @return the dimMediaImmaginiTiff
+	 */
+	public Long getDimMediaImmaginiTiff() {
+		return dimMediaImmaginiTiff;
+	}
+	/**
+	 * @param dimMediaImmaginiTiff the dimMediaImmaginiTiff to set
+	 */
+	public void setDimMediaImmaginiTiff(Long dimMediaImmaginiTiff) {
+		this.dimMediaImmaginiTiff = dimMediaImmaginiTiff;
+	}
+	/**
+	 * @return the dimTotaleImmaginiTiff
+	 */
+	public Long getDimTotaleImmaginiTiff() {
+		return dimTotaleImmaginiTiff;
+	}
+	/**
+	 * @param dimTotaleImmaginiTiff the dimTotaleImmaginiTiff to set
+	 */
+	public void setDimTotaleImmaginiTiff(Long dimTotaleImmaginiTiff) {
+		this.dimTotaleImmaginiTiff = dimTotaleImmaginiTiff;
 	}
 	
-	/**
-	 * @param numeroTotaleImmagini the numeroTotaleImmagini to set
-	 */
-	public void setNumeroTotaleImmagini(Integer numeroTotaleImmagini) {
-		this.numeroTotaleImmagini = numeroTotaleImmagini;
-	}
-	
-	/**
-	 * @return the dimMediaImmagini
-	 */
-	public Long getDimMediaImmagini() {
-		return dimMediaImmagini;
-	}
-	
-	/**
-	 * @param dimMediaImmagini the dimMediaImmagini to set
-	 */
-	public void setDimMediaImmagini(Long dimMediaImmagini) {
-		this.dimMediaImmagini = dimMediaImmagini;
-	}
-	
-	/**
-	 * @return the dimTotaleImmagini
-	 */
-	public Long getDimTotaleImmagini() {
-		return dimTotaleImmagini;
-	}
-	
-	/**
-	 * @param dimTotaleImmagini the dimTotaleImmagini to set
-	 */
-	public void setDimTotaleImmagini(Long dimTotaleImmagini) {
-		this.dimTotaleImmagini = dimTotaleImmagini;
-	}
 }

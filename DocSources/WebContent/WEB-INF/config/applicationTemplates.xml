@@ -30,6 +30,7 @@
 		<put-attribute name="dataEntryMenu" value="/WEB-INF/jsp/menu/DataEntry.jsp" />
 		<put-attribute name="profileMenu" value="/WEB-INF/jsp/menu/Profile.jsp" />
 		<put-attribute name="administratorMenu" value="/WEB-INF/jsp/menu/Administrator.jsp" />
+		<put-attribute name="digitizationMenu" value="/WEB-INF/jsp/menu/Digitization.jsp" />
 		<put-attribute name="whoAmIMenu" value="/WEB-INF/jsp/menu/WhoAmI.jsp" />
 	</definition>
     
@@ -48,6 +49,8 @@
     <definition name="template.printDOM" template="/WEB-INF/templates/printDOM.jsp">
     	<put-attribute name="footer" value="/WEB-INF/jsp/fragments/printFooter.jsp" />
     </definition>
+
+	<definition name="template.schedone" template="/WEB-INF/templates/schedone.jsp" />
 
     <definition name="template.shareDOM" template="/WEB-INF/templates/shareDOM.jsp"/>
 
@@ -125,14 +128,26 @@
     <!-- Authentication Module END -->
     
     <!-- Digitization Module BEGIN -->
-    <definition name="catalog/EditCatalog" extends="template.completeDOM">
+    <definition name="digitization/ShowDigitizationModuleModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowDigitizationModuleModalWindow.jsp"/>
+	</definition>
+	
+	<definition name="digitization/EditCatalog" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/EditCatalog.jsp"/>
     </definition>
 
-    <definition name="catalog/EditCatalogResult" extends="template.partialDOM">
+    <definition name="digitization/EditCatalogResult" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/catalog/EditCatalog.jsp"/>
     </definition>
-    <!-- Digitization Module END -->
+	
+	<definition name="digitization/ShowSchedone" extends="template.volume">
+		<put-attribute name="menu" value="/WEB-INF/jsp/digitization/ShowMenuSchedone.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/digitization/ShowDetailsSchedone.jsp"/>
+		<put-attribute name="tiffImages" value="/WEB-INF/jsp/digitization/ShowTiffImagesSchedone.jsp"/>
+		<put-attribute name="jpegImages" value="/WEB-INF/jsp/digitization/ShowJpegImagesSchedone.jsp"/>
+		<put-attribute name="pdfImages" value="/WEB-INF/jsp/digitization/ShowPdfImagesSchedone.jsp"/>
+	</definition>
+	<!-- Digitization Module END -->
 
 	<!-- Administrator Module BEGIN -->
     <definition name="user/DeleteUser" extends="template.completeDOM">

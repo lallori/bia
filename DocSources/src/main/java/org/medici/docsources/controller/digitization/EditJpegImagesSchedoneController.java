@@ -88,9 +88,9 @@ public class EditJpegImagesSchedoneController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			Schedone schedone = new Schedone(command.getSchedoneId());
-			schedone.setDimMediaImmagini(command.getDimMediaImmagini());
-			schedone.setDimTotaleImmagini(command.getDimTotaleImmagini());
-			schedone.setNumeroTotaleImmagini(command.getNumeroTotaleImmagini());
+			schedone.setDimMediaImmaginiJpeg(command.getDimMediaImmaginiJpeg());
+			schedone.setDimTotaleImmaginiJpeg(command.getDimTotaleImmaginiJpeg());
+			schedone.setNumeroTotaleImmaginiJpeg(command.getNumeroTotaleImmaginiJpeg());
 
 			try {
 				schedone = getDigitizationService().editJpegImagesSchedone(schedone);
@@ -124,14 +124,14 @@ public class EditJpegImagesSchedoneController {
 			}
 
 			command.setSchedoneId(schedone.getSchedoneId());
-			command.setNumeroTotaleImmagini(schedone.getNumeroTotaleImmagini());
-			command.setDimMediaImmagini(schedone.getDimMediaImmagini());
-			command.setDimTotaleImmagini(schedone.getDimTotaleImmagini());
+			command.setNumeroTotaleImmaginiJpeg(schedone.getNumeroTotaleImmaginiJpeg());
+			command.setDimMediaImmaginiJpeg(schedone.getDimMediaImmaginiJpeg());
+			command.setDimTotaleImmaginiJpeg(schedone.getDimTotaleImmaginiJpeg());
 		} else {
 			command.setSchedoneId(0);
-			command.setNumeroTotaleImmagini(null);
-			command.setDimMediaImmagini(null);
-			command.setDimTotaleImmagini(null);
+			command.setNumeroTotaleImmaginiJpeg(null);
+			command.setDimMediaImmaginiJpeg(null);
+			command.setDimTotaleImmaginiJpeg(null);
 		}
 
 		return new ModelAndView("digitization/EditJpegImagesSchedone", model);

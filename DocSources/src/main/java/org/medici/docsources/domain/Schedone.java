@@ -38,6 +38,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
+
 /**
  * This class represents entity Schedone. This is the unique entity in domain 
  * which has fields defined in italian language. 
@@ -96,12 +100,24 @@ public class Schedone {
 	private String compressione;
 	@Column (name="\"NOME_FILES\"", length=50)
 	private String nomeFiles;
-	@Column (name="\"NUMERO_TOTALE_IMMAGINI\"")
-	private Integer numeroTotaleImmagini;
-	@Column (name="\"DIM_MEDIA_IMMAGINI\"")
-	private Long dimMediaImmagini;
-	@Column (name="\"DIM_TOTALE_IMMAGINI\"")
-	private Long dimTotaleImmagini;
+	@Column (name="\"NUMERO_TOTALE_IMMAGINI_TIFF\"")
+	private Integer numeroTotaleImmaginiTiff;
+	@Column (name="\"DIM_MEDIA_IMMAGINI_TIFF\"")
+	private Long dimMediaImmaginiTiff;
+	@Column (name="\"DIM_TOTALE_IMMAGINI_TIFF\"")
+	private Long dimTotaleImmaginiTiff;
+	@Column (name="\"NUMERO_TOTALE_IMMAGINI_JPEG\"")
+	private Integer numeroTotaleImmaginiJpeg;
+	@Column (name="\"DIM_MEDIA_IMMAGINI_JPEG\"")
+	private Long dimMediaImmaginiJpeg;
+	@Column (name="\"DIM_TOTALE_IMMAGINI_JPEG\"")
+	private Long dimTotaleImmaginiJpeg;
+	@Column (name="\"NUMERO_TOTALE_IMMAGINI_PDF\"")
+	private Integer numeroTotaleImmaginiPdf;
+	@Column (name="\"DIM_MEDIA_IMMAGINI_PDF\"")
+	private Long dimMediaImmaginiPdf;
+	@Column (name="\"DIM_TOTALE_IMMAGINI_PDF\"")
+	private Long dimTotaleImmaginiPdf;
 	@Column (name="\"RESPONSABILE_FOTORIPRODUZIONE\"", length=50)
 	private String responsabileFotoRiproduzione;
 	@Column (name="\"TIPO_RIPRESA\"", length=50)
@@ -111,6 +127,8 @@ public class Schedone {
 	private Date dataRipresa;
 	@Column (name="\"OPERATORE\"", length=50)
 	private String operatore;
+	@Column (name="\"RESID\"")
+	private String researcher;
 	@Column (name="\"DATA_CREAZIONE\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCreazione;
@@ -456,49 +474,133 @@ public class Schedone {
 	public void setNomeFiles(String nomeFiles) {
 		this.nomeFiles = nomeFiles;
 	}
-	
+
 	/**
-	 * @return the numeroTotaleImmagini
+	 * @return the numeroTotaleImmaginiTiff
 	 */
-	public Integer getNumeroTotaleImmagini() {
-		return numeroTotaleImmagini;
+	public Integer getNumeroTotaleImmaginiTiff() {
+		return numeroTotaleImmaginiTiff;
 	}
-	
+
 	/**
-	 * @param numeroTotaleImmagini the numeroTotaleImmagini to set
+	 * @param numeroTotaleImmaginiTiff the numeroTotaleImmaginiTiff to set
 	 */
-	public void setNumeroTotaleImmagini(Integer numeroTotaleImmagini) {
-		this.numeroTotaleImmagini = numeroTotaleImmagini;
+	public void setNumeroTotaleImmaginiTiff(Integer numeroTotaleImmaginiTiff) {
+		this.numeroTotaleImmaginiTiff = numeroTotaleImmaginiTiff;
 	}
-	
+
 	/**
-	 * @return the dimMediaImmagini
+	 * @return the dimMediaImmaginiTiff
 	 */
-	public Long getDimMediaImmagini() {
-		return dimMediaImmagini;
+	public Long getDimMediaImmaginiTiff() {
+		return dimMediaImmaginiTiff;
 	}
-	
+
 	/**
-	 * @param dimMediaImmagini the dimMediaImmagini to set
+	 * @param dimMediaImmaginiTiff the dimMediaImmaginiTiff to set
 	 */
-	public void setDimMediaImmagini(Long dimMediaImmagini) {
-		this.dimMediaImmagini = dimMediaImmagini;
+	public void setDimMediaImmaginiTiff(Long dimMediaImmaginiTiff) {
+		this.dimMediaImmaginiTiff = dimMediaImmaginiTiff;
 	}
-	
+
 	/**
-	 * @return the dimTotaleImmagini
+	 * @return the dimTotaleImmaginiTiff
 	 */
-	public Long getDimTotaleImmagini() {
-		return dimTotaleImmagini;
+	public Long getDimTotaleImmaginiTiff() {
+		return dimTotaleImmaginiTiff;
 	}
-	
+
 	/**
-	 * @param dimTotaleImmagini the dimTotaleImmagini to set
+	 * @param dimTotaleImmaginiTiff the dimTotaleImmaginiTiff to set
 	 */
-	public void setDimTotaleImmagini(Long dimTotaleImmagini) {
-		this.dimTotaleImmagini = dimTotaleImmagini;
+	public void setDimTotaleImmaginiTiff(Long dimTotaleImmaginiTiff) {
+		this.dimTotaleImmaginiTiff = dimTotaleImmaginiTiff;
 	}
-	
+
+	/**
+	 * @return the numeroTotaleImmaginiJpeg
+	 */
+	public Integer getNumeroTotaleImmaginiJpeg() {
+		return numeroTotaleImmaginiJpeg;
+	}
+
+	/**
+	 * @param numeroTotaleImmaginiJpeg the numeroTotaleImmaginiJpeg to set
+	 */
+	public void setNumeroTotaleImmaginiJpeg(Integer numeroTotaleImmaginiJpeg) {
+		this.numeroTotaleImmaginiJpeg = numeroTotaleImmaginiJpeg;
+	}
+
+	/**
+	 * @return the dimMediaImmaginiJpeg
+	 */
+	public Long getDimMediaImmaginiJpeg() {
+		return dimMediaImmaginiJpeg;
+	}
+
+	/**
+	 * @param dimMediaImmaginiJpeg the dimMediaImmaginiJpeg to set
+	 */
+	public void setDimMediaImmaginiJpeg(Long dimMediaImmaginiJpeg) {
+		this.dimMediaImmaginiJpeg = dimMediaImmaginiJpeg;
+	}
+
+	/**
+	 * @return the dimTotaleImmaginiJpeg
+	 */
+	public Long getDimTotaleImmaginiJpeg() {
+		return dimTotaleImmaginiJpeg;
+	}
+
+	/**
+	 * @param dimTotaleImmaginiJpeg the dimTotaleImmaginiJpeg to set
+	 */
+	public void setDimTotaleImmaginiJpeg(Long dimTotaleImmaginiJpeg) {
+		this.dimTotaleImmaginiJpeg = dimTotaleImmaginiJpeg;
+	}
+
+	/**
+	 * @return the numeroTotaleImmaginiPdf
+	 */
+	public Integer getNumeroTotaleImmaginiPdf() {
+		return numeroTotaleImmaginiPdf;
+	}
+
+	/**
+	 * @param numeroTotaleImmaginiPdf the numeroTotaleImmaginiPdf to set
+	 */
+	public void setNumeroTotaleImmaginiPdf(Integer numeroTotaleImmaginiPdf) {
+		this.numeroTotaleImmaginiPdf = numeroTotaleImmaginiPdf;
+	}
+
+	/**
+	 * @return the dimMediaImmaginiPdf
+	 */
+	public Long getDimMediaImmaginiPdf() {
+		return dimMediaImmaginiPdf;
+	}
+
+	/**
+	 * @param dimMediaImmaginiPdf the dimMediaImmaginiPdf to set
+	 */
+	public void setDimMediaImmaginiPdf(Long dimMediaImmaginiPdf) {
+		this.dimMediaImmaginiPdf = dimMediaImmaginiPdf;
+	}
+
+	/**
+	 * @return the dimTotaleImmaginiPdf
+	 */
+	public Long getDimTotaleImmaginiPdf() {
+		return dimTotaleImmaginiPdf;
+	}
+
+	/**
+	 * @param dimTotaleImmaginiPdf the dimTotaleImmaginiPdf to set
+	 */
+	public void setDimTotaleImmaginiPdf(Long dimTotaleImmaginiPdf) {
+		this.dimTotaleImmaginiPdf = dimTotaleImmaginiPdf;
+	}
+
 	/**
 	 * @return the responsabileFotoRiproduzione
 	 */
@@ -553,6 +655,20 @@ public class Schedone {
 	 */
 	public void setOperatore(String operatore) {
 		this.operatore = operatore;
+	}
+
+	/**
+	 * @param researcher the researcher to set
+	 */
+	public void setResearcher(String researcher) {
+		this.researcher = researcher;
+	}
+
+	/**
+	 * @return the researcher
+	 */
+	public String getResearcher() {
+		return researcher;
 	}
 
 	/**
