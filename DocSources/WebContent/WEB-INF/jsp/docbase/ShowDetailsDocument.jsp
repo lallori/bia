@@ -188,7 +188,9 @@
 				}
 			});
 			$j(".linkVolume").click(function() {
-				var tabName = $j(this).text();
+				var tabN = $j(this).text();
+				tabName = 'Volume  ' 
+				tabName += tabN;
 				var numTab = 0;
 				
 				if(tabName.length > 20){
