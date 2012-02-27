@@ -103,7 +103,8 @@
 			
 
 			$j('#closeTopic').click(function() { 
-				$j('.autocomplete').attr('visibility', 'hidden');
+				topicDescription.killSuggestions();
+				placeDescription.killSuggestions();
 	            $j('#EditTopicDocumentDiv').block({ message: $j('#question'),
 	            	css: { 
 						border: 'none', 
