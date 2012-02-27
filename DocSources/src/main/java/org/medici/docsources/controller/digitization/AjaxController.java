@@ -32,8 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SchedoneSearch;
@@ -108,8 +106,7 @@ public class AjaxController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/digitization/BrowseDigitizedVolumes.json", method = RequestMethod.GET)
-	public ModelAndView browseDigitizedVolumes(HttpSession httpSession,
-											@RequestParam(value="alias", required=false) String alias,
+	public ModelAndView browseDigitizedVolumes(@RequestParam(value="alias", required=false) String alias,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,

@@ -29,7 +29,7 @@ package org.medici.docsources.service.community;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.Search;
+import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.domain.UserComment;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -102,5 +102,5 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Page searchMessages(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchMessages(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

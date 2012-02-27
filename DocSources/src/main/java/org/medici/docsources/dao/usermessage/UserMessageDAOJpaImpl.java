@@ -27,13 +27,22 @@
  */
 package org.medici.docsources.dao.usermessage;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Logger;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
+import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.domain.UserMessage.RecipientStatus;
+import org.medici.docsources.domain.UserMessage.UserMessageCategory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
@@ -72,6 +81,107 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	/**
+	 * 
+	 */
+	public Page searchMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + userMessageSearch.toJPAQuery();
+	        
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+
+		String objectsQuery = userMessageSearch.toJPAQuery();
+		paginationFilter = generatePaginationFilterMYSQL(userMessageSearch, paginationFilter);
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		String jpql = objectsQuery + orderBySQL.toString();
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql );
+		// We set pagination  
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+
+		// We set search result on return method
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+	
+	private PaginationFilter generatePaginationFilterMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) {
+		if (userMessageSearch.getUserMessageCategory().equals(UserMessageCategory.INBOX)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("sender", paginationFilter.getSortingDirection());
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("subject", paginationFilter.getSortingDirection());
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("messageSendedDate", paginationFilter.getSortingDirection());
+						break;
+					default:
+						break;
+				}
+			}
+		} else if (userMessageSearch.getUserMessageCategory().equals(UserMessageCategory.OUTBOX)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("recipient", paginationFilter.getSortingDirection());
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("subject", paginationFilter.getSortingDirection());
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("messageSendedDate", paginationFilter.getSortingDirection());
+						break;
+					default:
+						break;
+				}
+			}
+		} else if (userMessageSearch.getUserMessageCategory().equals(UserMessageCategory.DRAFT)) {
+			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+				switch (paginationFilter.getSortingColumn()) {
+					case 0:
+						paginationFilter.addSortingCriteria("recipient", paginationFilter.getSortingDirection());
+						break;
+					case 1:
+						paginationFilter.addSortingCriteria("subject", paginationFilter.getSortingDirection());
+						break;
+					case 2:
+						paginationFilter.addSortingCriteria("messageSendedDate", paginationFilter.getSortingDirection());
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		return paginationFilter;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -88,4 +198,11 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfUnreadedMessages() throws PersistenceException {
+		return this.findNumberOfNewMessages();
+	}
 }

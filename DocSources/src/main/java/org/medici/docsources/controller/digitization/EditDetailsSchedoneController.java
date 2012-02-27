@@ -94,7 +94,7 @@ public class EditDetailsSchedoneController {
 			schedone.setFondo(command.getFondo());
 			schedone.setSerie(command.getSerie());
 			schedone.setNumeroUnita(command.getNumeroUnita());
-			schedone.getDateEstreme(); //TODO
+			//schedone.getDateEstreme(); //TODO
 			schedone.setDescrizioneContenuto(command.getDescrizioneContenuto());
 			schedone.setLegatura(command.getLegatura());
 			schedone.setSupporto(command.getSupporto());

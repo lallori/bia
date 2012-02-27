@@ -30,6 +30,7 @@ package org.medici.docsources.service.community;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
+import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.dao.forumcategory.ForumCategoryDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
 import org.medici.docsources.dao.forumsubcategory.ForumSubCategoryDAO;
@@ -163,9 +164,9 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public Page searchMessages(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
+	public Page searchMessages(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getUserMessageDAO().searchMYSQL(searchContainer, paginationFilter);
+			return getUserMessageDAO().searchMYSQL(userMessageSearch, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

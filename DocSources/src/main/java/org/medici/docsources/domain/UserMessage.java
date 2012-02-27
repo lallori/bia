@@ -241,4 +241,24 @@ public class UserMessage implements Serializable{
 	        return status;
 	    }
 	}
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum UserMessageCategory {
+		INBOX("INBOX"), OUTBOX("OUTBOX"), DRAFT("DRAFT");
+		
+		private final String category;
+
+	    private UserMessageCategory(String value) {
+	    	category = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return category;
+	    }
+	}
 }

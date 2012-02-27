@@ -14,92 +14,11 @@ import org.medici.docsources.domain.SearchFilter.SearchType;
   *
   */
 public class PaginationFilter {
-	/**
- 	 * 
- 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- 	 *
- 	 */
- 	public static enum Order {
- 		ASC("ascending"), DESC("descending");
-         
- 		private final String order;
-
- 	    private Order(String value) {
- 	    	if (!ObjectUtils.toString(value).equals("")) {
- 	    		order = value.toUpperCase();
- 	    	} else {
- 	    		order = "ASC";
- 	    	}
- 	    }
-
- 	    @Override
- 	    public String toString(){
- 	        return order;
- 	    }
- 	    
- 	    public String toStringJPQL(){
- 	    	if (!ObjectUtils.toString(order).equals("")) {
- 	    		if (order.equalsIgnoreCase("ascending")) {
- 	    			return "ASC";
- 	    		} else {
- 	    			return "DESC";
- 	    		}
- 	    	}
- 	        return "";
- 	    }
- 	}
-	/**
- 	 * 
- 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- 	 *
- 	 */
-     public class SortingCriteria {
-         private String column;
-         private Integer columnType;
-         private Order order;
-
-         public SortingCriteria(String column, Order order) {
-             this.column = column;
-             this.order = order;
-             this.columnType = SortField.STRING;
-         }
-
-         public SortingCriteria(String column, Order order, Integer columnType) {
-             this.column = column;
-             this.order = order;
-             this.columnType = columnType;
-         }
-
- 		/**
- 		 * @return the column
- 		 */
-         public String getColumn() {
-             return column;
-         }
-
- 		/**
- 		 * @return the columnType
- 		 */
- 		public Integer getColumnType() {
- 			return columnType;
- 		}
-
- 		/**
- 		 * @return the order
- 		 */
-         public Order getOrder() {
-             return order;
-         }
-     }
 	private Integer firstRecord;
 	private Integer length;
-	
 	private SearchType searchType;
-	
 	private Integer sortingColumn;
-	
 	private List<SortingCriteria> sortingCriterias;
-
  	private String sortingDirection;
  	private Long total;
 
@@ -277,4 +196,82 @@ public class PaginationFilter {
  	public void setTotal(Long total) {
  		this.total = total;
  	}
- }
+
+	/**
+ 	 * 
+ 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ 	 *
+ 	 */
+ 	public static enum Order {
+ 		ASC("ascending"), DESC("descending");
+         
+ 		private final String order;
+
+ 	    private Order(String value) {
+ 	    	if (!ObjectUtils.toString(value).equals("")) {
+ 	    		order = value.toUpperCase();
+ 	    	} else {
+ 	    		order = "ASC";
+ 	    	}
+ 	    }
+
+ 	    @Override
+ 	    public String toString(){
+ 	        return order;
+ 	    }
+ 	    
+ 	    public String toStringJPQL(){
+ 	    	if (!ObjectUtils.toString(order).equals("")) {
+ 	    		if (order.equalsIgnoreCase("ascending")) {
+ 	    			return "ASC";
+ 	    		} else {
+ 	    			return "DESC";
+ 	    		}
+ 	    	}
+ 	        return "";
+ 	    }
+ 	}
+	/**
+ 	 * 
+ 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ 	 *
+ 	 */
+     public class SortingCriteria {
+         private String column;
+         private Integer columnType;
+         private Order order;
+
+         public SortingCriteria(String column, Order order) {
+             this.column = column;
+             this.order = order;
+             this.columnType = SortField.STRING;
+         }
+
+         public SortingCriteria(String column, Order order, Integer columnType) {
+             this.column = column;
+             this.order = order;
+             this.columnType = columnType;
+         }
+
+ 		/**
+ 		 * @return the column
+ 		 */
+         public String getColumn() {
+             return column;
+         }
+
+ 		/**
+ 		 * @return the columnType
+ 		 */
+ 		public Integer getColumnType() {
+ 			return columnType;
+ 		}
+
+ 		/**
+ 		 * @return the order
+ 		 */
+         public Order getOrder() {
+             return order;
+         }
+     }
+}

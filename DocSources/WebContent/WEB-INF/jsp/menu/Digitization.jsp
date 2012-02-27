@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 		<a href="<c:url value="/digitization/ShowDigitizationModule.do"/>" id="digitizationModule">Digitization Module</a>
 	</security:authorize>
 	

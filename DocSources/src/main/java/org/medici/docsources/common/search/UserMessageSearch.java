@@ -1,5 +1,5 @@
 /*
- * SchedoneSearch.java
+ * UserMessageSearch.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -29,7 +29,9 @@ package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.Query;
-import org.medici.docsources.common.util.RegExUtils;
+import org.medici.docsources.domain.UserMessage.UserMessageCategory;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * 
@@ -37,12 +39,13 @@ import org.medici.docsources.common.util.RegExUtils;
  *
  */
 public class UserMessageSearch implements GenericSearch {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5135090884608784944L;
+	private static final long serialVersionUID = 1526279104072787935L;
 	
-	private String alias; 
+	private UserMessageCategory userMessageCategory; 
 
 	/**
 	 * 
@@ -55,18 +58,18 @@ public class UserMessageSearch implements GenericSearch {
 	 * 
 	 * @param text
 	 */
-	public UserMessageSearch(String text) {
+	public UserMessageSearch(UserMessageCategory userMessageCategory) {
 		super();
-		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+		if (userMessageCategory != null) {
+			setUserMessageCategory(userMessageCategory);
 		}
 	}
 
 	/**
-	 * @return the alias
+	 * @return the userMessageCategory
 	 */
-	public String getAlias() {
-		return alias;
+	public UserMessageCategory getUserMessageCategory() {
+		return userMessageCategory;
 	}
 
 	/**
@@ -75,15 +78,20 @@ public class UserMessageSearch implements GenericSearch {
 	 */
 	public void initFromText(String text) {
 		if (!StringUtils.isEmpty(text)) {
-			setAlias(text.toLowerCase());
+			try {
+				setUserMessageCategory(UserMessageCategory.valueOf(text)); 
+			} catch (Exception exception) {
+				setUserMessageCategory(null);
+			}
 		}
 	}
 
+
 	/**
-	 * @param alias the alias to set
+	 * @param userMessageCategory the userMessageCategory to set
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public void setUserMessageCategory(UserMessageCategory userMessageCategory) {
+		this.userMessageCategory = userMessageCategory;
 	}
 
 	/**
@@ -91,22 +99,38 @@ public class UserMessageSearch implements GenericSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		StringBuffer jpaQuery = new StringBuffer("FROM Schedone ");
+		String account = ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+		StringBuffer jpaQuery = new StringBuffer("FROM UserMessage ");
 		
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(getAlias());
-		
-		if (words.length >0) {
+		if (getUserMessageCategory() != null) {
 			jpaQuery.append(" WHERE ");
-		
-			for(int i = 0; i < words.length; i++){
-				jpaQuery.append("(synExtract.synopsis like '%");
-				jpaQuery.append(words[i]);
-				jpaQuery.append("%')");
-				if(i < words.length-1){
-					jpaQuery.append(" AND ");
-				}
+
+			switch (getUserMessageCategory()) {
+				case DRAFT:
+					jpaQuery.append(" sender = '");
+					jpaQuery.append(account);
+					jpaQuery.append("' and recipientStatus ='");
+					jpaQuery.append(getUserMessageCategory());
+					jpaQuery.append("'");
+				break;
+				
+			case INBOX:
+				jpaQuery.append("recipient = '");
+				jpaQuery.append(account);
+				jpaQuery.append("'");
+				break;
+			
+			case OUTBOX:
+				jpaQuery.append("sender = '");
+				jpaQuery.append(account);
+				jpaQuery.append("'");
+				break;
+
+			default:
+				break;
 			}
 		}
+		
 		
 		return jpaQuery.toString();
 	}
@@ -125,8 +149,8 @@ public class UserMessageSearch implements GenericSearch {
 	 */
 	@Override
 	public String toString() {
-		if (getAlias() != null)
-			return getAlias();
+		if (getUserMessageCategory() != null)
+			return getUserMessageCategory().toString();
 		else
 			return "";
 	}

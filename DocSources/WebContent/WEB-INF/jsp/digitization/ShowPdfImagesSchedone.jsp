@@ -11,7 +11,7 @@
 <div id="EditPdfImagesSchedoneDiv" class="background">
 	<div class="title">
 		<h5>PDF IMAGES</h5>
-		<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 			<c:if test="${schedone.schedoneId > 0}">
 			<a id="EditPdfImagesSchedone" href="${EditPdfImagesSchedoneURL}" class="editButton" title="Edit Pdf Images"></a><span id="loading"/>
 			</c:if>
@@ -41,7 +41,7 @@
 	</div>
 </div>
 
-<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsSchedone").css('visibility', 'visible');

@@ -31,16 +31,17 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * This class represents entity Schedone. This is the unique entity in domain 
@@ -58,14 +59,33 @@ public class Schedone {
 	private Integer schedoneId;
 	@Column (name="\"ISTITUTO\"", length=50)
 	private String istituto;
+	// We can't attach entity beacause a schedone can be attached to a non existing volume
+	@Column (name="\"VOLNUM\"", length=10)
+	private Integer volNum;
+	@Column (name="\"VOLLETEXT\"", length=1)
+	private String volLetExt;
 	@Column (name="\"FONDO\"", length=50)
 	private String fondo;
 	@Column (name="\"SERIE\"", length=50)
 	private String serie;
 	@Column (name="\"N_UNITA\"")
 	private Integer numeroUnita;
-	@Column (name="\"DATE_ESTREME\"", length=50)
-	private String dateEstreme;
+	@Column (name="\"DATA_INIZIO_ANNO\"", length=50)
+	private Integer dataInizioAnno;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"DATA_INIZIO_MESE\"", nullable=true)
+	@IndexedEmbedded
+	private Month dataInizioMese;
+	@Column (name="\"DATA_INIZIO_GIORNO\"", length=50)
+	private Integer dataInizioGiorno;
+	@Column (name="\"DATA_FINE_ANNO\"", length=50)
+	private Integer dataFineAnno;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"DATA_FINE_MESE\"", nullable=true)
+	@IndexedEmbedded
+	private Month dataFineMese;
+	@Column (name="\"DATA_FINE_GIORNO\"", length=50)
+	private Integer dataFineGiorno;
 	@Column (name="\"TITOLO\"", length=50)
 	private String titolo;
 	@Column (name="\"DESCRIZIONE_CONTENUTO\"", length=50)
@@ -129,6 +149,8 @@ public class Schedone {
 	private String operatore;
 	@Column (name="\"RESID\"")
 	private String researcher;
+	@Column (name="\"ATTIVO\"")
+	private Boolean attivo;
 	@Column (name="\"DATA_CREAZIONE\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCreazione;
@@ -181,6 +203,34 @@ public class Schedone {
 	}
 	
 	/**
+	 * @param volNum the volNum to set
+	 */
+	public void setVolNum(Integer volNum) {
+		this.volNum = volNum;
+	}
+
+	/**
+	 * @return the volNum
+	 */
+	public Integer getVolNum() {
+		return volNum;
+	}
+
+	/**
+	 * @param volLetExt the volLetExt to set
+	 */
+	public void setVolLetExt(String volLetExt) {
+		this.volLetExt = volLetExt;
+	}
+
+	/**
+	 * @return the volLetExt
+	 */
+	public String getVolLetExt() {
+		return volLetExt;
+	}
+
+	/**
 	 * @return the fondo
 	 */
 	public String getFondo() {
@@ -223,20 +273,6 @@ public class Schedone {
 		return numeroUnita;
 	}
 
-	/**
-	 * @return the dateEstreme
-	 */
-	public String getDateEstreme() {
-		return dateEstreme;
-	}
-	
-	/**
-	 * @param dateEstreme the dateEstreme to set
-	 */
-	public void setDateEstreme(String dateEstreme) {
-		this.dateEstreme = dateEstreme;
-	}
-	
 	/**
 	 * @return the titolo
 	 */
@@ -669,6 +705,20 @@ public class Schedone {
 	 */
 	public String getResearcher() {
 		return researcher;
+	}
+
+	/**
+	 * @param attivo the attivo to set
+	 */
+	public void setAttivo(Boolean attivo) {
+		this.attivo = attivo;
+	}
+
+	/**
+	 * @return the attivo
+	 */
+	public Boolean getAttivo() {
+		return attivo;
 	}
 
 	/**

@@ -5,16 +5,14 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_COORDINATORS, DIGITIZATION_TECHNICIANS">
-		<c:url var="ShowSchedoneDetailsURL" value="/src/docbase/ShowSchedoneDetails.do">
-			<c:param name="entryId"   value="${command.entryId}" />
+		<c:url var="ShowSchedoneURL" value="/src/docbase/ShowSchedone.do">
+			<c:param name="schedoneId"   value="${command.schedoneId}" />
 		</c:url>
 	</security:authorize>
 
-<script type="text/javascript" src="/DocSources/scripts/jquery.tooltip.js"></script>
-
-<%-- Loading div when saving the form --%>
-<div id="loadingDiv"></div>
-	<form id="EditSchedoneDetailsForm" action="/DocSources/dm/EditSchedoneDetails.do" method="post" class="edit">
+	<%-- Loading div when saving the form --%>
+	<div id="loadingDiv"></div>
+	<form:form id="EditDetailsSchedoneForm" method="post" cssClass="edit">
 	    <fieldset>
 	    <legend><b>SCHEDONE DETAILS</b></legend>
 	        <div style="margin-top:5px">
@@ -132,14 +130,14 @@
 	        </div>
 	        <input type="hidden" value="" id="modify" />
 	    </fieldset>
-	</form>
+	</form:form>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#EditSchedoneDetails").css('visibility', 'hidden');
-			$j("#EditTiffImages").css('visibility', 'hidden'); 
-	        $j("#EditJpegImages").css('visibility', 'hidden'); 
-	        $j("#EditPDFImages").css('visibility', 'hidden'); 
+			$j("#EditDetailsSchedone").css('visibility', 'hidden');
+			$j("#EditTiffImagesSchedone").css('visibility', 'hidden'); 
+	        $j("#EditJpegImagesSchedone").css('visibility', 'hidden'); 
+	        $j("#EditPDFImagesSchedone").css('visibility', 'hidden'); 
 			
 			 $j("#save").click(function(){
 		        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
@@ -149,7 +147,7 @@
 			 $j('#close').click(function() {
 		        	if($j("#modify").val() == 1){
 		        		// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
-						$j('#EditSchedoneDetailsForm').block({ message: $j('#question') }); 
+						$j('#EditDetailsSchedoneForm').block({ message: $j('#question') }); 
 						return false;
 		        	}else{
 		        		$j.ajax({ url: '${ShowCatalogURL}', cache: false, success:function(html) { 
@@ -160,9 +158,9 @@
 		        	}	        		
 			});
 	        
-			$j("#EditSchedoneDetailsForm").submit(function (){
+			$j("#EditDetailsSchedoneForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#EditSchedoneDetailsDiv").html(html);
+					$j("#EditDetailsSchedoneDiv").html(html);
 				}});
 				return false;
 			});
@@ -190,7 +188,7 @@
 				$j.unblockUI();
 				$j(".blockUI").fadeOut("slow");
 				$j("#question").hide();
-				$j("#EditSchedoneDetailsDiv").append($j("#question"));
+				$j("#EditDetailsSchedoneDiv").append($j("#question"));
 				$j(".blockUI").remove();
 				return false; 
 			}); 

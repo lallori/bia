@@ -29,6 +29,8 @@ package org.medici.docsources.dao.schedone;
 
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Schedone;
 import org.springframework.stereotype.Repository;
@@ -67,5 +69,43 @@ public class SchedoneDAOJpaImpl extends JpaDao<Integer, Schedone> implements Sch
 	public Schedone findBySummaryId(Integer summaryId) throws PersistenceException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * 
+	 */
+	protected PaginationFilter generatePaginationFilterMYSQL(PaginationFilter paginationFilter) {
+		if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
+			switch (paginationFilter.getSortingColumn()) {
+				//Filza N.
+				case 0:
+					paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection());
+					paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection());
+					break;
+				//Catalog Description
+				case 1:
+					paginationFilter.addSortingCriteria("titolo", paginationFilter.getSortingDirection());
+					break;
+				//Active
+				case 2:
+					paginationFilter.addSortingCriteria("attivo", paginationFilter.getSortingDirection());
+					break;
+				//Edit Catalog Description
+				case 3:
+					paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection());
+					paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection());
+					break;
+				// Deactivate It
+				case 4:  
+					paginationFilter.addSortingCriteria("attivo", paginationFilter.getSortingDirection());
+					break;
+				default:
+					paginationFilter.addSortingCriteria("volNum", paginationFilter.getSortingDirection());
+					paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection());
+					break;
+			}
+		}
+
+		return paginationFilter;
 	}
 }

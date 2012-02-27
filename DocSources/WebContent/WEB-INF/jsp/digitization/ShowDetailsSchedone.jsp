@@ -8,10 +8,10 @@
 		<c:param name="schedoneId"   value="${schedone.schedoneId}" />
 	</c:url>
 
-<div id="EditSchedoneDetailsDiv" class="background">
+<div id="EditDetailsSchedoneDiv" class="background">
 	<div class="title">
 		<h5>SCHEDONE DETAILS</h5>
-		<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 			<a id="EditDetailsSchedone" href="${EditDetailsSchedoneURL}" class="editButton" title="Edit Schedone details"></a><span id="loading"/>
 		</security:authorize>
 	</div>
@@ -51,7 +51,7 @@
 	</div>
 </div>
 
-<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsSchedone").css('visibility', 'visible');

@@ -39,6 +39,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.UserMessage;
+import org.medici.docsources.domain.UserMessage.UserMessageCategory;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.medici.docsources.service.user.UserService;
@@ -97,9 +98,9 @@ public class AjaxController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/community/UserMessageSearchPagination.json", method = RequestMethod.GET)
-	public ModelAndView schedoneSearchPagination(HttpSession httpSession,
-											@RequestParam(value="alias", required=false) String alias,
+	@RequestMapping(value = "/community/ShowMessagesByCategoryPagination.json", method = RequestMethod.GET)
+	public ModelAndView showMessagesByCategoryPagination(HttpSession httpSession,
+											@RequestParam(value="category", required=false) UserMessageCategory category,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -110,7 +111,7 @@ public class AjaxController {
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection);
 
 		try {
-			page = getCommunityService().searchMessages(new UserMessageSearch(alias), paginationFilter);
+			page = getCommunityService().searchMessages(new UserMessageSearch(category), paginationFilter);
 			
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);

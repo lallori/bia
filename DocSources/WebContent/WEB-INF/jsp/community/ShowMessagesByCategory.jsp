@@ -4,7 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="BrowseDigitizedVolumesURL" value="/digitization/BrowseDigitizedVolumes.json">
+	<c:url var="ShowMessagesByCategoryPaginationURL" value="/community/ShowMessagesByCategoryPagination.json">
+		<c:param name="category" value="INBOX"/>
 	</c:url>
 
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
@@ -33,7 +34,7 @@
 				"iDisplayLength": 10,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "${BrowseDigitizedVolumesURL}",                                           
+				"sAjaxSource": "${ShowMessagesByCategoryPaginationURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {

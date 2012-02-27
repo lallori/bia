@@ -41,7 +41,7 @@
 	</div>
 </div>
 
-<security:authorize ifAnyGranted="ROLE_DIGITIZATION_USERS">
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j("#EditDetailsSchedone").css('visibility', 'visible');

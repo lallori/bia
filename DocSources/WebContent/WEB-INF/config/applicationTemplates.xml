@@ -127,28 +127,6 @@
 	</definition>
     <!-- Authentication Module END -->
     
-    <!-- Digitization Module BEGIN -->
-    <definition name="digitization/ShowDigitizationModuleModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowDigitizationModuleModalWindow.jsp"/>
-	</definition>
-	
-	<definition name="digitization/EditCatalog" extends="template.completeDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/user/EditCatalog.jsp"/>
-    </definition>
-
-    <definition name="digitization/EditCatalogResult" extends="template.partialDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/catalog/EditCatalog.jsp"/>
-    </definition>
-	
-	<definition name="digitization/ShowSchedone" extends="template.volume">
-		<put-attribute name="menu" value="/WEB-INF/jsp/digitization/ShowMenuSchedone.jsp"/>
-		<put-attribute name="details" value="/WEB-INF/jsp/digitization/ShowDetailsSchedone.jsp"/>
-		<put-attribute name="tiffImages" value="/WEB-INF/jsp/digitization/ShowTiffImagesSchedone.jsp"/>
-		<put-attribute name="jpegImages" value="/WEB-INF/jsp/digitization/ShowJpegImagesSchedone.jsp"/>
-		<put-attribute name="pdfImages" value="/WEB-INF/jsp/digitization/ShowPdfImagesSchedone.jsp"/>
-	</definition>
-	<!-- Digitization Module END -->
-
 	<!-- Administrator Module BEGIN -->
     <definition name="user/DeleteUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/delete.jsp"/>
@@ -198,6 +176,46 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/user/UploadUserPhoto.jsp"/>
 	</definition>
 	<!-- Administration Module END -->
+
+	<!-- Community Module BEGIN -->
+	<definition name="community/ShowMessagesByCategory" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
+	</definition>
+
+	<!-- Community Module END -->
+    <!-- Digitization Module BEGIN -->
+	<definition name="digitization/BrowseDigitizedVolumes" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/BrowseDigitizedVolumes.jsp"/>
+    </definition>
+
+	<definition name="digitization/EditDetailsSchedone" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditDetailsSchedone.jsp"/>
+	</definition>
+
+	<definition name="digitization/EditJpegImagesSchedone" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditJpegImagesSchedone.jsp"/>
+	</definition>
+
+	<definition name="digitization/EditPdfImagesSchedone" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditPdfImagesSchedone.jsp"/>
+	</definition>
+
+	<definition name="digitization/EditTiffImagesSchedone" extends="template.partialDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditTiffImagesSchedone.jsp"/>
+	</definition>
+
+    <definition name="digitization/ShowDigitizationModuleModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowDigitizationModuleModalWindow.jsp"/>
+	</definition>
+
+	<definition name="digitization/ShowSchedone" extends="template.schedone">
+		<put-attribute name="menu" value="/WEB-INF/jsp/digitization/ShowMenuSchedone.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/digitization/ShowDetailsSchedone.jsp"/>
+		<put-attribute name="tiffImages" value="/WEB-INF/jsp/digitization/ShowTiffImagesSchedone.jsp"/>
+		<put-attribute name="jpegImages" value="/WEB-INF/jsp/digitization/ShowJpegImagesSchedone.jsp"/>
+		<put-attribute name="pdfImages" value="/WEB-INF/jsp/digitization/ShowPdfImagesSchedone.jsp"/>
+	</definition>
+	<!-- Digitization Module END -->
 
 	<!-- DocBase Module START -->
 	<definition name="docbase/ChoiceStartFolioModalWindow" extends="template.partialDOM">
@@ -608,7 +626,7 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
 	</definition>
 	
-		<!-- PeopleBase Module END -->
+	<!-- PeopleBase Module END -->
 
 	<!-- Search Module START -->
 	<definition name="search/ChoiceAdvancedSearch" extends="template.partialDOM">
