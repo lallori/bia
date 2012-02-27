@@ -96,6 +96,11 @@
 	        $j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
 			
+			$j("#EditDetailsTgnPlaceForm :input").change(function(){
+				$j("#modify").val(1);
+				return false;
+			})
+			
 			$j("#save").click(function(){
 	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	        	$j("#loadingDiv").css('visibility', 'visible');
@@ -103,7 +108,7 @@
 			
 			$j('#close').click(function() {
 	        	if($j("#modify").val() == 1){
-					$j('#EditDetailsPlaceForm').block({ message: $j('#question'),
+					$j('#EditDetailsTgnPlaceForm').block({ message: $j('#question'),
 						css: { 
 							border: 'none', 
 							padding: '5px',
@@ -157,19 +162,19 @@
 			});
 			 
 	        
-			$j('#close').click(function(e) {
-				$j('.autocomplete').remove();
-				$j('#EditDetailsTgnPlaceForm').block({ message: $j('#question'),
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				}); 
-	            return false;
-			});			
+// 			$j('#close').click(function(e) {
+// 				$j('.autocomplete').remove();
+// 				$j('#EditDetailsTgnPlaceForm').block({ message: $j('#question'),
+// 					css: { 
+// 						border: 'none', 
+// 						padding: '5px',
+// 						boxShadow: '1px 1px 10px #666',
+// 						'-webkit-box-shadow': '1px 1px 10px #666'
+// 						} ,
+// 						overlayCSS: { backgroundColor: '#999' }	
+// 				}); 
+// 	            return false;
+// 			});			
 		});
 	</script>
 
