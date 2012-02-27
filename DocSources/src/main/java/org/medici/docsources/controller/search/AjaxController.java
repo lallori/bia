@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.controller.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -730,6 +731,11 @@ public class AjaxController {
 		Page page = null;
 		List<Integer> personIds = new ArrayList<Integer>();
 		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
+		try {
+			searchText = new String(searchText.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+		}
+		
 		try {
 			page = getSearchService().searchPeople(new SimpleSearchPeople(searchText), paginationFilter);
 			for(People currentPerson : (List<People>)page.getList()){

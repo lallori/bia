@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.controller.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -103,6 +104,10 @@ public class SimpleSearchController {
 	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		// This number is used to generate an unique id for new search 
+		try {
+			command.setText(new String(command.getText().getBytes(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+		}
 		UUID uuid = UUID.randomUUID();
 		command.setSearchUUID(uuid.toString());
 		model.put("searchUUID", uuid.toString());
