@@ -60,7 +60,7 @@
             </tbody>
         </table>
         
-        <a href="/DocSources/cm/HistoryDocs.html" id="moreDocs">More &rarr;</a>
+        <a href="${MoreDocumentsURL}" id="moreDocs">More &rarr;</a>
     </div>
 
 	 <div id="volumesHistory">
@@ -83,7 +83,7 @@
 	            </tbody>
 	        </table>
 	        
-	        <a href="/DocSources/cm/HistoryVol.html" id="moreVolumes">More &rarr;</a>
+	        <a href="${MoreVolumesURL}" id="moreVolumes">More &rarr;</a>
 	    </div>
 	    
 	    <div id="placeHistory">
@@ -106,7 +106,7 @@
 	            </tbody>
 	        </table>
 	        
-	        <a href="/DocSources/cm/HistoryPla.html" id="morePlaces">More &rarr;</a>
+	        <a href="${MorePlacesURL}" id="morePlaces">More &rarr;</a>
 	    </div>
 	    
 	    <div id="peopleHistory">
@@ -129,7 +129,7 @@
 	            </tbody>
 	        </table>
 	        
-	        <a href="/DocSources/cm/HistoryPeop.html" id="morePeople">More &rarr;</a>
+	        <a href="${MorePeopleURL}" id="morePeople">More &rarr;</a>
 	    </div>
 	    
 	    <div id="MyHistoryButtons">
@@ -154,7 +154,7 @@
 				"bLengthChange": false,                                                                          
 				"bProcessing": true,                                                                          
 				"bServerSide": true,                                                                          
-				"iDisplayLength": 10,                                                                         
+				"iDisplayLength": 4,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
 				"sAjaxSource": "${FiveElementsDocumentURL}",                                           
@@ -192,7 +192,7 @@
 				"bLengthChange": false,                                                                          
 				"bProcessing": true,                                                                          
 				"bServerSide": true,                                                                          
-				"iDisplayLength": 10,                                                                         
+				"iDisplayLength": 4,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
 				"sAjaxSource": "${FiveElementsVolumeURL}",                                           
@@ -230,7 +230,7 @@
 				"bLengthChange": false,                                                                          
 				"bProcessing": true,                                                                          
 				"bServerSide": true,                                                                          
-				"iDisplayLength": 10,                                                                         
+				"iDisplayLength": 4,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
 				"sAjaxSource": "${FiveElementsPlaceURL}",                                           
@@ -268,7 +268,7 @@
 				"bLengthChange": false,                                                                          
 				"bProcessing": true,                                                                          
 				"bServerSide": true,                                                                          
-				"iDisplayLength": 10,                                                                         
+				"iDisplayLength": 4,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
 				"sAjaxSource": "${FiveElementsPeopleURL}",                                           
@@ -317,7 +317,7 @@
 		$j("#generalHistory").click(function() {															
 			Modalbox.show($j(this).attr("href"), {title: "RESEARCH HISTORY", width: 750});return false;}
 		);	
-		$j("#close").click(function(){
+		$j("#closeMyHistory").click(function(){
 			Modalbox.hide(); return false;}
 		);
 	});
