@@ -45,20 +45,22 @@
         	<h5>DOCUMENTS</h5>
         </div>
         
-       <table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryDocumentsHistoryTable">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Action</th>
-                    <th>Volume/Folio</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>                                                                                              
-                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
-                </tr> 
-            </tbody>
-        </table>
+        <div id="myCategoryDocumentsHistoryTableDiv">
+        	<table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryDocumentsHistoryTable">
+            	<thead>
+                	<tr>
+                    	<th>Date</th>
+                    	<th>Action</th>
+                    	<th>Volume/Folio</th>
+                	</tr>
+            	</thead>
+            	<tbody>
+                	<tr>                                                                                              
+                    	<td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+                	</tr> 
+            	</tbody>
+        	</table>
+        </div>
         
         <a href="${MoreDocumentsURL}" id="moreDocs">More &rarr;</a>
     </div>
@@ -68,20 +70,22 @@
 	        	<h5>VOLUME</h5>
 	        </div>
 	        
-	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryVolumesHistoryTable">
-	            <thead>
-	                <tr>
-	                    <th>Date</th>
-	                    <th>Action</th>
-	                    <th>Volume Number</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>                                                                                              
-	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
-	                </tr> 
-	            </tbody>
-	        </table>
+	        <div id="myCategoryVolumesHistoryTableDiv">
+	        	<table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryVolumesHistoryTable">
+	            	<thead>
+	                	<tr>
+	                    	<th>Date</th>
+	                    	<th>Action</th>
+	                    	<th>Volume Number</th>
+	                	</tr>
+	            	</thead>
+	            	<tbody>
+	                	<tr>                                                                                              
+	                    	<td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                	</tr> 
+	            	</tbody>
+	        	</table>
+	        </div>
 	        
 	        <a href="${MoreVolumesURL}" id="moreVolumes">More &rarr;</a>
 	    </div>
@@ -91,20 +95,22 @@
 	        	<h5>PLACE</h5>
 	        </div>
 	        
-	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryPlacesHistoryTable">
-	            <thead>
-	                <tr>
-	                    <th>Date</th>
-	                    <th>Action</th>
-	                    <th>Place Name</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>                                                                                              
-	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
-	                </tr> 
-	            </tbody>
-	        </table>
+	        <div id="myCategoryPlacesHistoryTableDiv">
+	        	<table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryPlacesHistoryTable">
+	            	<thead>
+	                	<tr>
+	                    	<th>Date</th>
+	                    	<th>Action</th>
+	                    	<th>Place Name</th>
+	                	</tr>
+	            	</thead>
+	            	<tbody>
+	            	    <tr>                                                                                              
+	                	    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                	</tr> 
+	            	</tbody>
+	        	</table>
+	        </div>
 	        
 	        <a href="${MorePlacesURL}" id="morePlaces">More &rarr;</a>
 	    </div>
@@ -114,20 +120,22 @@
 	        	<h5>PERSON</h5>
 	        </div>
 	        
-	        <table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryPeopleHistoryTable">
-	            <thead>
-	                <tr>
-	                    <th>Date</th>
-	                    <th>Action</th>
-	                    <th>Name</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>                                                                                              
-	                    <td colspan="3" class="dataTables_empty">Loading data from server</td>                        
-	                </tr> 
-	            </tbody>
-	        </table>
+	        <div id="myCategoryPeopleHistoryTableDiv">
+	        	<table cellpadding="0" cellspacing="0" border="0" class="display" id="myCategoryPeopleHistoryTable">
+	            	<thead>
+	                	<tr>
+	                    	<th>Date</th>
+	                    	<th>Action</th>
+	                    	<th>Name</th>
+	                	</tr>
+	            	</thead>
+	            	<tbody>
+	                	<tr>                                                                                              
+	                    	<td colspan="3" class="dataTables_empty">Loading data from server</td>                        
+	                	</tr> 
+	            	</tbody>
+	        	</table>
+	        </div>
 	        
 	        <a href="${MorePeopleURL}" id="morePeople">More &rarr;</a>
 	    </div>
