@@ -114,6 +114,7 @@
 				resetCheckboxField(formName, fieldName);
 			}
 			
+			hiddenValue = unescape(hiddenValue);
 			console.log("Searching : " + searchWord);
 			console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
 
