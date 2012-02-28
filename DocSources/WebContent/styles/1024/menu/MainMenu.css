@@ -189,7 +189,6 @@
 
 #EntryMenuDiv #AddNewDocument{
 	background:url(/DocSources/images/1024/button_addnewdocument.png) no-repeat;
-	font-size:11px;
 	position:absolute;
 	margin: 20px 0 5px 35px;
 	width:122px;
@@ -204,7 +203,6 @@
 
 #EntryMenuDiv #AddNewPerson{
 	background:url(/DocSources/images/1024/button_addnewperson.png) no-repeat;
-	font-size:11px;
 	margin: 20px 0 5px 300px;
 	position:absolute;
 	width:120px;
@@ -219,7 +217,6 @@
 
 #EntryMenuDiv #AddNewVolume{
 	background:url(/DocSources/images/1024/button_addnewvolume.png) no-repeat;
-	font-size:11px;
 	position:absolute;
 	margin: 20px 0 5px 175px;
 	position:absolute;
@@ -235,7 +232,6 @@
 
 #EntryMenuDiv #AddNewPlace{
 	background:url(/DocSources/images/1024/button_addnewplace.png) no-repeat;
-	font-size:11px;
 	position:absolute;
 	margin: 20px 0 5px 425px;
 	position:absolute;
@@ -250,7 +246,6 @@
 }
 
 #EntryMenuDiv #DeleteThisItem{
-	font-size:11px;
 	padding:5px 0 0 14px;
 	position:absolute;
 	margin: 20px 0 5px 560px;

@@ -223,6 +223,7 @@ h6 { /* Titles */
 	margin:5px 0 0 30px;
 	width:90%; 
 	font-size:11px;
+	line-height: 18px;
 }
 
 .listDetails { /* Display list in Details section (the first one) */
@@ -230,6 +231,7 @@ h6 { /* Titles */
 	margin:5px 0 0 30px;
 	width:63%; 
 	font-size:11px;
+	line-height: 18px;
 }
 
 .row { /* Single row */
@@ -354,6 +356,7 @@ item a{
     opacity:0.4;
     width:485px;
     position:absolute;
+	border-radius:4px;
 }
 
 #loadingDiv2 { /* Animated Gif that shows up when saving each edit section when two sections are open simultanously */
@@ -364,11 +367,6 @@ item a{
     width:485px;
     height:100%;
     position:absolute;
-}
-
-.edit { /* Edit FORM class */
-	font-size:11px;
-	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
 fieldset {  /* FORM BACKGROUND */
@@ -831,8 +829,7 @@ img.transparent {
 /* ----------------- DROPDOWN MENU -------------------- */
 
 select {
-        font-size:11px;
-        color: #6d5c4d;
+    color: #6d5c4d;
 	background-color: #fbf7f4;
 }
 
@@ -1197,7 +1194,6 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #SpineVolumeDiv, #SpineVolumeNotDigitDiv, #SpineVolumeDigitDiv  {
     float:right;
-	margin-right:23px;
     z-index:1;
     height:160px;
     width: 120px;
@@ -1387,7 +1383,7 @@ input.file {
 }
 
 #recipientPlaceDescriptionLabel  {
-	margin-left:40px;
+	margin-left: 23px;
 }
 
 #senderPeopleDescriptionLabel {
@@ -1585,7 +1581,6 @@ input.file {
 .num_docs {
 	margin-left:30px;
 	color:#900;
-	font-size:11px;
 }
 
 a.num_docs {
@@ -1831,7 +1826,6 @@ a#editValue, .editValue { /* "Edit Value" Button */
 }
 
 a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a {
-	font-size:11px;
 	text-decoration: underline;
 	color: #B7958F;
 	display:inline;
@@ -1850,7 +1844,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	margin:-5px 0 0 364px;
 	background-image:url(/DocSources/images/1024/button_medium.png);
 	background-repeat:no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0;
 	text-align:center;
 }
@@ -2222,7 +2215,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	width:22px;
 	height:22px;
 	background-image:url(/DocSources/images/1024/button_mini.png);
-	font-size:11px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
@@ -2254,7 +2246,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	display:inline;
 	background-image:url(/DocSources/images/1024/button_large.png);
 	background-repeat:no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0;
 	float: left;
 	text-align:center;
@@ -2292,7 +2283,6 @@ a#volumeSummary {
 	display:inline;
 	background-image:url(/DocSources/images/1024/button_medium.png);
 	background-repeat:no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0;
 	cursor:pointer;
 	text-align:center;
@@ -2374,7 +2364,6 @@ a.refreshVolumeExplorer {
 	display:inline;
 	background-image:url(/DocSources/images/1024/button_small.png);
 	background-repeat:no-repeat;
-	font-size:11px;
 	padding-top:4px;
 	text-align:center;
 	cursor:pointer;
@@ -2688,14 +2677,13 @@ a.refreshVolumeExplorer {
 
 #createPlace #tgnPlace #AddNewTgnPlace {
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0;
-        top: 0; left: 0; /* top-left corner of logo */
+    top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
 	width:122px;
 	height:22px;
-        text-align:center;
+    text-align:center;
 }
 
 #createPlace #tgnPlace #AddNewTgnPlace:hover, #createPlace #mapPlace #AddNewMapPlace:hover, #createPlace #mapSite #AddNewMapSitePlace:hover {
@@ -2714,26 +2702,24 @@ a.refreshVolumeExplorer {
 
 #createPlace #mapPlace #AddNewMapPlace {
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0;
-        top: 0; left: 0; /* top-left corner of logo */
+    top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
 	width:122px;
 	height:22px;
-        text-align:center;
+    text-align:center;
 }
 
 #createPlace #mapSite #AddNewMapSitePlace {
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0;
-        top: 0; left: 0; /* top-left corner of logo */
+    top: 0; left: 0; /* top-left corner of logo */
 	margin: 20px 0 5px 50px;
 	position:absolute;
 	width:122px;
 	height:22px;
-        text-align:center;
+    text-align:center;
 }
 
 
@@ -2744,12 +2730,40 @@ a.refreshVolumeExplorer {
 	text-decoration:none;
 }
 
+/* Create Place */
+
 #geoDiv {
 	margin-top:30px;
 }
 
 #geoDiv h4{
 	padding-top: 5px;
+}
+
+#PlaceMapDiv { /* Place map */
+    float:right; 
+    margin-right:20px;
+    z-index:1;
+    height:160px;
+    width:120px;
+    text-align:center;
+}
+
+#PlaceMapDiv span {
+    color: #C0272D;
+    height: 60px;
+    position: absolute;
+    margin-top: 70px;
+    width: 70px;
+	text-shadow:1px 1px 1px #999;
+	font-size:11px;
+	text-align:center;
+	moz-margin-left: 25px;
+	margin-left: 25px;
+}
+
+#PlaceMapDiv a.PlaceMap {
+	color: #666EA4;
 }
 
 #createPlace #goBack {
@@ -2864,14 +2878,12 @@ a.refreshVolumeExplorer {
 }
 
 #userProfile { /* My Profile Div Container */
-	font-size:11px;	
 	float:left;
 	margin:5px 0 0 10px;
 }
 
 #userProfile a{
 	text-decoration:underline;
-	font-size:11px;
 	color:#b99c84;
 }
 
@@ -2943,7 +2955,6 @@ form#EditUserProfileForm span{
 }
 
 #helpProfile a, #aboutmapProfile a{	/* Help ancors (User Manual, Download Manual, Help Videos) */
-	font-size:11px;
 	line-height:18px;
 	text-decoration:none;
 	color:#900;
@@ -3346,7 +3357,6 @@ form#EditUserProfileForm span{
 	margin-left:10px;
 	border:none;
 	position:absolute;
-	font-size:11px;
 }
 
 #advancedSearch #body_right { /* RIGHT-hand side of the SCREEN */
@@ -3355,7 +3365,6 @@ form#EditUserProfileForm span{
 	border:none;
 	margin: 0 0 0 489px;
 	position:absolute;
-	font-size:11px;
 	z-index:2;
 }
 
@@ -3383,13 +3392,19 @@ form#EditUserProfileForm span{
 
 #accordion #addSearchFilter { /* Add button */
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
 	width:52px;
 	height:22px;
-	float:right;
 	border:none;
 	cursor:pointer;
-	margin:5px 0 0 0;
+	margin: 5px 0 0 29px;
+}
+
+#occupation {
+	width:241px;
+}
+
+#dateSearchForm #addSearchFilter { 
+	margin: 5px 0 0 19px;
 }
 
 #personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
@@ -3453,7 +3468,7 @@ form#EditUserProfileForm span{
 	font-weight:normal;
 }
 
-#advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #vettingHisttoryDiv a.helpIcon,  #EditTopicsDocumentForm a.helpIcon, #body_left a.helpIcon{ /* Help symbol "?" */
+a.helpIcon{ /* Help symbol "?" */
 	border: 1px solid #6D5C4D;
 	color:  #6D5C4D; 
 	font-size: 12px; 
@@ -3580,7 +3595,6 @@ span.wordSearch {
 }
 
 span.categorySearch {
-	font-size:11px;
 	font-style:italic;
 	margin-right:5px;
 }
@@ -4380,7 +4394,11 @@ ul#network a {
 }
 
 #unitaLabel {
-	margin-right: 57px;
+	margin-right: 3px;
+}
+
+#unita {
+	margin-right: 69px;
 }
 
 #serieLabel {
@@ -4435,6 +4453,10 @@ ul#network a {
 
 #dimensioneMediaImmaginiLabel {
 	margin-right: 42px;
+}
+
+#dimensioneMediaImmagini, #dimensioneTotaleImmagini {
+	margin: 5px 3px 5px 5px;
 }
 
 #dimensioneTotaleImmaginiLabel {

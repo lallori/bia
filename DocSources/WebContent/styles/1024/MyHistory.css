@@ -10,47 +10,52 @@
 
 
 #myHistoryDiv { /* Chronology Content Div */
-	width:720px;
+	width: 730px;
 	height:400px;
 	margin:10px auto 0 auto;
 }
 
 #myHistoryDiv #docsHistory { /* Documents Chronology Div */
-	width:330px;
-	height:150px;
+	width: 346px;
+	height: 217px;
 	float:left;
 	color:#6F6B69;
-	padding:0 10px 40px 10px;
+	padding: 0 10px 0 9px;
 	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
 }
 
+#myHistoryDiv #myCategoryDocumentsHistoryTableDiv, #myHistoryDiv #myCategoryPeopleHistoryTableDiv, #myHistoryDiv #myCategoryPlacesHistoryTableDiv, #myHistoryDiv #myCategoryVolumesHistoryTableDiv {
+	height: 168px;
+	height /**/: 158px;
+	overflow: auto !important;
+}
+
 #myHistoryDiv #peopleHistory { /* People Chronology Div */
-	width:330px;
-	height:150px;
+	width: 346px;
+	height: 217px;
 	float:right;
 	color:#6F6B69;
-	padding:0 10px 40px 10px;
+	padding: 0 10px 20px 9px;
 	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
-	margin-top: 20px;
 	margin-bottom: 20px;
 }
 
 #myHistoryDiv #volumesHistory { /* Volumes Chronology Div */
-	width:330px;
-	height:150px;
+	width: 346px;
+	height: 217px;
 	float:right;
 	color:#6F6B69;
-	padding:0 10px 40px 10px;
+	padding: 0 10px 10px 9px;
 	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
 }
 
 #myHistoryDiv #placeHistory { /* Place Chronology Div */
-	width:330px;
-	height:150px;
+	width: 346px;
+	height: 217px;
 	float:left;
 	color:#6F6B69;
-	padding:0 10px 40px 10px;
-	margin:20px 0 20px 0;
+	padding: 0 10px 20px 9px;
+	margin: 10px 0 20px 0;
 	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
 }
 
@@ -83,17 +88,16 @@
 
 #myHistoryDiv a {
 	text-decoration:none;
-	font-size:11px;
 }
 
 #moreDocs, #morePeople, #moreVolumes, #morePlaces {
-	margin: 10px 0 0 280px;
-	width:42px;
+	margin: 2px 28px 0 0;
+	float:right;
+	width:43px;
 	color:#900;
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */
-	position: absolute;
 }
 
 #moreDocs:hover, #morePeople:hover, #moreVolumes:hover, #morePlaces:hover {
@@ -127,7 +131,6 @@
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0;
 	width:52px;
 	height:22px;
@@ -139,7 +142,6 @@
     background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     float: left;
-    font-size: 11px;
     height: 22px;
 	padding: 4px 0 0;
 	text-align: center;
@@ -150,7 +152,6 @@
     background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
 	float:right;
-    font-size: 11px;
     height: 22px;
     margin: 0;
     padding: 4px 0 0;
@@ -162,7 +163,6 @@
     background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
 	float:left;
-    font-size: 11px;
     height: 22px;
     margin-left: 12px;
     padding: 4px 0 0;
@@ -174,7 +174,6 @@
 	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     float: left;
-    font-size: 11px;
     height: 22px;
 	padding: 4px 0 0;
 	text-align: center;
@@ -196,11 +195,11 @@ table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, tab
 }
 
 #researchHistoryTableDiv, #myDocumentsHistoryTableDiv, #myVolumeHistoryTableDiv, #myPlaceHistoryTableDiv, #myPeopleHistoryTableDiv {
-	height:390px !important;
-	height /**/: 400px;
+	height:320px !important;
+	height /**/: 330px;
 	overflow:auto !important;
 	width: 740px;
-	margin-bottom:40px;
+	margin-bottom:25px;
 }
 
 #researchHistoryTableDiv .dataTables_info, #myDocumentsHistoryTableDiv .dataTables_info, #myVolumeHistoryTableDiv .dataTables_info, #myPlaceHistoryTableDiv .dataTables_info, #myPeopleHistoryTableDiv .dataTables_info {
@@ -232,9 +231,10 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
     float: left;
     font-size: 11px;
     height: 22px;
-	padding: 4px 0 0;
+	padding: 3px 0 0;
 	text-align: center;
     width: 52px;
+	border: none;
 }
 
 .no, .goBack {
@@ -243,9 +243,10 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
     float: right;
     font-size: 11px;
     height: 22px;
-	padding: 4px 0 0;
+	padding: 3px 0 0;
 	text-align: center;
     width: 52px;
+	border: none;
 }
 
 .yesNoButtons {

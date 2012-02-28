@@ -137,7 +137,6 @@ table.display thead th {
     * cursor: hand;
 	text-align: center;
 	color: #8F726B;
-	font-size: 11px;
 	font-weight:normal;
 }
 
@@ -596,6 +595,9 @@ div.box {
 	color:#888888; /* Grey */
 }
 
+
+/* Added by Joana Amill Luzondo */
+
 #savedSearchFiltersForm_paginate  {
 	margin:0 15px 10px 0;
 }
@@ -612,4 +614,8 @@ div.box {
 
 a:hover {
 	text-decoration:underline;
+}
+
+#myCategoryDocumentsHistoryTable_paginate, #myCategoryPlacesHistoryTable_paginate, #myCategoryPeopleHistoryTable_paginate, #myCategoryVolumesHistoryTable_paginate {
+	display:none;
 }

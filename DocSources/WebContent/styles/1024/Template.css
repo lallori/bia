@@ -129,7 +129,6 @@ a {
 	padding:0 5px 0 5px;
 	float:left;
 	position:absolute;
-	font-size:11px;
 	z-index:1;
 	margin-bottom:100px;
 	border-right:1px solid #DCC0BA;
@@ -143,7 +142,6 @@ a {
 	float:right;
 	position:absolute;
 	margin-left:500px;
-	font-size:11px;
 	border-left:1px solid #DCC0BA;
 	min-height: 520px;
 
@@ -159,7 +157,6 @@ a {
 	height:80px;
 	margin: 17px 0 0 17px;
 	position:absolute;
-	font-size:11px;
 }
 
 .input_search { /* Input Text class */
@@ -180,7 +177,6 @@ a {
 	width:22px;
 	height:22px;
 	background-image:url(/DocSources/images/1024/button_mini.png);
-	font-size:11px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
@@ -192,7 +188,6 @@ a {
 a.helpIcon { /* Help symbol "?" */
 	border: 1px solid #6D5C4D;
 	color:  #6D5C4D; 
-	font-size: 12px; 
 	background-color: #DCC0BA; 
 	padding-left: 5px; 
 	padding-right: 4px; 
@@ -361,11 +356,14 @@ a:hover.helpIcon { /* Help symbol "?" */
 }
 
 #top_bottom p{ /* top_bottom (Who am I?) */
-	color:#FFF;
 	margin-top:5px;
 	float:right;
 	padding-right:30px;
 	font-size:10px;
+}
+
+#top_bottom p:hover{ 
+	cursor:default;
 }
 
 /* ------------- */

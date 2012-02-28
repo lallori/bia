@@ -5,7 +5,7 @@ body {
 	background-color:#f6edec;
 	margin:0;
 	padding:0;
-	font-size:small;
+	font-size:11px;
 	color:#6F6B69;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
@@ -61,9 +61,10 @@ body {
 /*  Log in - Form */
 
 #login h1 {
-	padding:15px 0 15px 90px;
+	padding:15px 0 15px 0;
 	border-bottom:1px solid #AEAEAE;
 	margin:0;
+	text-align:center;
 }
 
 .loginform{ /*  Form class */
@@ -80,7 +81,7 @@ body {
 }
 
 .fyp { /* Forgot your password class */
-	font-size: 80%;
+	font-size: 10px;
 	line-height:17px;
 }
 
@@ -115,7 +116,7 @@ input.submit {
 }
 
 .remember { /* Remember me class */
-	font-size: 80%;
+	font-size: 10px;
 	margin-left: 70px;
 }
 
@@ -161,16 +162,17 @@ input.submit {
 }
 
 #registrationForm h1 {
-	padding: 7px 0 6px 340px;
-	margin:0;
+        text-align:center;
+	margin: 5px 0 5px 0;
 }
 
 #registrationForm .title{
-	padding:0 0 8px 347px;
 	border-bottom:1px solid #AEAEAE;
-	margin:0;
+	margin:0 0 5px 0;
 	font-size:10px;
-	width: 502px;
+	width: 850px;
+	text-align: center;
+        padding-bottom:5px;
 }
 
 .registrationForm { /*  Form class */
@@ -180,7 +182,6 @@ input.submit {
 	margin-left:20px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:90%;
 }
 
 .registrationFormKO { /*  Form class */
@@ -190,7 +191,6 @@ input.submit {
 	margin-left:20px;
 	position:absolute;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:90%;
 }
 
 
@@ -204,10 +204,6 @@ input.submit {
 	font-family:Georgia, "Times New Roman", Times, serif;
 	font-size: 10px;
 	margin:10px 0px 0px 240px;
-}
-
-.readThis a {
-	font-size:95%;
 }
 
 #submitbutton { /* submit button class */
@@ -323,9 +319,9 @@ input.submit {
 }
 
 .inputerrors_recovery { /* Error Span messages */
-	color:#900;
-	font-size:85%;
-	margin-left:60px;
+	color: #900;
+	font-size: 10px;
+	margin-left: 77px;
 }
 
 /*  SendUserActivationCode */
@@ -341,7 +337,8 @@ input.submit {
 }
 
 #activationcode h1 {
-	padding:15px 0 15px 150px;
+	padding:15px 0 15px 0;
+        text-align:center;
 	border-bottom:1px solid #AEAEAE;
 	margin:0;
 }
@@ -473,7 +470,6 @@ a {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	text-decoration:none;
 	color:#6F6B69;
-	font-size:small;
 }
 
 /* ReCaptcha */
