@@ -8,36 +8,33 @@
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
 	
-	<c:url var="ShowDocumentsVolumeURL" value="/de/peoplebase/ShowDocumentsVolume.do">
-		<c:param name="summaryId" value="${volume.summaryId}" />
-	</c:url>
+	
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<div>
+			<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="buttonMedium">Edit this Volume</a>
+		</div>
+	</security:authorize>
+	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+		<div>
+			<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="buttonMedium">Show this Volume</a>
+		</div>
+	</security:authorize>
 	
 	
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
 			<h5>VOLUME DETAILS </h5>
 		</div>
-
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<div>
-			<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="buttonMedium">Edit this Volume</a>
-		</div>
-		</security:authorize>
-		<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<div>
-			<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="buttonMedium">Show this Volume</a>
-		</div>
-		</security:authorize>
-		
 		<h3>${volume.serieList}</h3>
+		
 		<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Documents related</a>
+			<span class="num_docs">${volDocsRelated} Documents related</span>
 		</c:if>
 		<c:if test="${volDocsRelated == 0}">
 			<a class="num_docs">0 Documents related</a>
 		</c:if>
 		<c:if test="${volDocsRelated == 1}">
-			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Document related</a>
+			<span class="num_docs" >${volDocsRelated} Document related</a>
 		</c:if>
 		<div class="listDetails">
 			<div class="row">

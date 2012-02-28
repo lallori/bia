@@ -80,6 +80,7 @@ public class CompareVolumeController {
 		if (command.getSummaryId() > 0) {
 			try {
 				volume = getVolBaseService().compareVolume(command.getSummaryId());
+				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/CompareVolume", model);
 			}
