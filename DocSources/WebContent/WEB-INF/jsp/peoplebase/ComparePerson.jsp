@@ -109,8 +109,8 @@
 					<c:if test="${!currentPoLink.preferredRole}">
 						<div class="value5"></div>
 					</c:if>
-					<div class="value60"><a class="linkSearch" href="${ShowTitlesOrOccupationsPeoplePersonURL}"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
-					<a class="linkSearch" href="${ShowRoleCatPeoplePersonURL}">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
+					<div class="value60"><a class="linkOccupationCompare" href="${ShowTitlesOrOccupationsPeoplePersonURL}"><b>${currentPoLink.titleOccList.titleOcc}</b></a><br>
+					<a class="linkOccupationCompare" href="${ShowRoleCatPeoplePersonURL}">${currentPoLink.titleOccList.roleCat.roleCatMinor}</a></div> 
 					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
 				</div>
 		</c:forEach>
@@ -130,7 +130,7 @@
 				<c:param name="personId"   value="${currentParent.parent.personId}" />
 			</c:url>
 			<c:if test="${currentParent.parent.gender == 'M'}">
-				<div class="value"><a class="linkParent" href="${ComparePersonURL}">${currentParent.parent}</a></div> 
+				<div class="value"><a class="linkParentCompare" href="${ComparePersonURL}">${currentParent.parent}</a></div> 
 				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
 			</c:if>				
 		</c:forEach>
@@ -142,7 +142,7 @@
 				<c:param name="personId"   value="${currentParent.parent.personId}" />
 			</c:url>
 			<c:if test="${currentParent.parent.gender == 'F'}">
-				<div class="value"><a class="linkParent" href="${ComparePersonURL}">${currentParent.parent}</a></div> 
+				<div class="value"><a class="linkParentCompare" href="${ComparePersonURL}">${currentParent.parent}</a></div> 
 				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
 			</c:if>				
 		</c:forEach>
@@ -243,7 +243,34 @@
 				}
 			});
 			
-			$j(".linkParent").click(function() {
+			$j(".linkOccupationCompare").click(function() {
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".linkParentCompare").click(function() {
 				var tabName = $j(this).text();
 				var numTab = 0;
 				
