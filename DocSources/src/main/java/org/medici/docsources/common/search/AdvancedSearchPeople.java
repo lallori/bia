@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.common.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -246,11 +247,11 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				try{
 					if(stringTokenizer.countTokens() == 2){
 						namesTypes.add(NameType.valueOf(stringTokenizer.nextToken().replace(" ", "")));
-						names.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						names.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
 					}else{
 						continue;
 					}
-				}catch(URIException e){
+				}catch(UnsupportedEncodingException e){
 					namesTypes.remove(namesTypes.size()-1);
 				}
 			}
@@ -336,8 +337,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			titleOccWord = new ArrayList<String>(command.getOccupationWord().size());
 			for(String singleWord : command.getOccupationWord()){
 				try{
-					titleOccWord.add(URIUtil.decode(singleWord, "UTF-8"));
-				}catch(URIException e){
+					titleOccWord.add(new String(singleWord.getBytes(), "UTF-8"));
+				}catch(UnsupportedEncodingException e){
 					
 				}
 			}
@@ -391,7 +392,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 						continue;
 					}else if(stringTokenizer.countTokens() == 1){
 						placeId.add(new Integer(0));
-						place.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						place.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
 					}else if(stringTokenizer.countTokens() == 2){
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
@@ -400,11 +401,11 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 						}else{
 							placeId.add(new Integer(0));
 						}
-						place.add(URIUtil.decode(singleText, "UTF-8"));
+						place.add(new String(singleText.getBytes(), "UTF-8"));
 					}
 				}catch(NumberFormatException nex){
 					
-				}catch(URIException e){
+				}catch(UnsupportedEncodingException e){
 					placeId.remove(placeId.size() - 1);
 				}
 			}
@@ -419,8 +420,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			
 			for (String singleWord : command.getResearchNotes()) {
 				try {
-					researchNotes.add(URIUtil.decode(singleWord, "UTF-8"));
-				} catch (URIException e) {
+					researchNotes.add(new String(singleWord.getBytes(), "UTF-8"));
+				} catch (UnsupportedEncodingException e) {
 					researchNotes.remove(researchNotes.size()-1);
 				}
 			}

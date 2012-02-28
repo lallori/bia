@@ -614,6 +614,12 @@ public class AjaxController {
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	private void simpleSearchDocuments(Map<String, Object> model, SimpleSearchPerimeter simpleSearchPerimeter, String searchText, PaginationFilter paginationFilter) {
 		Page page = null;
+		
+		try {
+			searchText = new String(searchText.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			page = getSearchService().searchDocuments(new SimpleSearchDocument(simpleSearchPerimeter, searchText), paginationFilter);
@@ -783,6 +789,12 @@ public class AjaxController {
 		Map<Integer, Long> peopleRelated = new HashMap<Integer, Long>();
 		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		List<Integer> placeAllIds = new ArrayList<Integer>();
+		
+		try {
+			searchText = new String(searchText.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			page = getSearchService().searchPlaces(new SimpleSearchPlace(searchText), paginationFilter);
@@ -833,6 +845,12 @@ public class AjaxController {
 		Page page = null;
 		// Lorenzo Pasquinelli : Now digitized information on volume is a property of volume entity ... We can comment next code
 		//Map<String, Boolean> stateVolumesDigitized = new HashMap<String, Boolean>();
+		
+		try {
+			searchText = new String(searchText.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			page = getSearchService().searchVolumes(new SimpleSearchVolume(searchText), paginationFilter);

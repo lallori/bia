@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.common.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -253,11 +254,11 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				try {
 					if (stringTokenizer.countTokens() == 2) {
 						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
-						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						words.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
 					} else {
 						continue;
 					}
-				} catch (URIException e) {
+				} catch (UnsupportedEncodingException e) {
 					wordsTypes.remove(wordsTypes.size()-1);
 				}
 			}
@@ -361,9 +362,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			fromVolume = new ArrayList<String>(command.getFromVolume().size());
 			for(String singleWord : command.getFromVolume()){
 				try{
-					fromVolume.add(URIUtil.decode(singleWord, "UTF-8"));
+					fromVolume.add(new String(singleWord.getBytes(), "UTF-8"));
 				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				}catch(UnsupportedEncodingException e){
 				}
 			}
 		}else{
@@ -375,9 +376,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			toVolume = new ArrayList<String>(command.getToVolume().size());
 			for(String singleWord : command.getToVolume()){
 				try{
-					toVolume.add(URIUtil.decode(singleWord, "UTF-8"));
+					toVolume.add(new String(singleWord.getBytes(), "UTF-8"));
 				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				}catch(UnsupportedEncodingException e){
 				}
 			}
 		}else{
@@ -389,9 +390,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			context = new ArrayList<String>(command.getContext().size());
 			for(String singleWord : command.getContext()){
 				try{
-					context.add(URIUtil.decode(singleWord, "UTF-8"));
+					context.add(new String(singleWord.getBytes(), "UTF-8"));
 				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				}catch(UnsupportedEncodingException e){
 				}
 			}
 		}else{
@@ -403,9 +404,9 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			inventario = new ArrayList<String>(command.getInventario().size());
 			for(String singleWord : command.getInventario()){
 				try{
-					inventario.add(URIUtil.decode(singleWord, "UTF-8"));
+					inventario.add(new String(singleWord.getBytes(), "UTF-8"));
 				}catch(NumberFormatException nex){
-				}catch(URIException e){
+				}catch(UnsupportedEncodingException e){
 				}
 			}
 		}else{

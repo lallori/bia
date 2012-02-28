@@ -18,7 +18,7 @@
 		<c:forEach items="${searchFilter.filterData.placesName}" varStatus="iterator">
 			<div class="searchFilterDiv">
 				<span class="categorySearch">Place Name: </span><span class="wordSearch">${searchFilter.filterData.placesName[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-				<input type="hidden" value="${fn2:encode(searchFilter.filterData.placesName[iterator.index])}" name="placeName" />
+				<input type="hidden" value="${searchFilter.filterData.placesName[iterator.index]}" name="placeName" />
 			</div>
 			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 		</c:forEach>

@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.common.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -392,11 +393,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				try {
 					if (stringTokenizer.countTokens() == 2) {
 						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
-						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						words.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
 					} else {
 						continue;
 					}
-				} catch (URIException e) {
+				} catch (UnsupportedEncodingException e) {
 					wordsTypes.remove(wordsTypes.size()-1);
 				}
 			}
@@ -421,7 +422,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					} else if (stringTokenizer.countTokens() == 1) {
 						// string format is |text
 						personId.add(new Integer(0));
-						person.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						person.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
 					} else if (stringTokenizer.countTokens() == 2) {
 						// string format is number|text
 	
@@ -434,12 +435,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							//Empty personId is equal to 0
 							personId.add(new Integer(0));
 						}
-						person.add(URIUtil.decode(singleText, "UTF-8"));
+						person.add(new String(singleText.getBytes(), "UTF-8"));
 					} else {
 						// we skip field
 					}
 				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (UnsupportedEncodingException e) {
 					personId.remove(personId.size()-1);
 				}
 			}
@@ -464,7 +465,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					} else if (stringTokenizer.countTokens() == 1) {
 						// string format is |text
 						placeId.add(new Integer(0));
-						place.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						place.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
 					} else if (stringTokenizer.countTokens() == 2) {
 						// string format is number|text
 						String singleId = stringTokenizer.nextToken();
@@ -476,12 +477,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							//Empty placeId is equal to 0
 							placeId.add(new Integer(0));
 						}
-						place.add(URIUtil.decode(singleText, "UTF-8"));
+						place.add(new String(singleText.getBytes(), "UTF-8"));
 					} else {
 						// we skip field
 					}
 				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (UnsupportedEncodingException e) {
 					placeId.remove(placeId.size()-1);
 				}
 			}
@@ -691,9 +692,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			
 			for (String singleWord : command.getExtract()) {
 				try {
-					extract.add(URIUtil.decode(singleWord, "UTF-8"));
+					extract.add(new String(singleWord.getBytes(), "UTF-8"));
 				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (UnsupportedEncodingException e) {
 				}
 			}
 		} else {
@@ -706,9 +707,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			
 			for (String singleWord : command.getSynopsis()) {
 				try {
-					synopsis.add(URIUtil.decode(singleWord, "UTF-8"));
+					synopsis.add(new String(singleWord.getBytes(), "UTF-8"));
 				} catch (NumberFormatException nex) {
-				} catch (URIException e) {
+				} catch (UnsupportedEncodingException e) {
 				}
 			}
 		} else {

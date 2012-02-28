@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.common.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -93,9 +94,9 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			
 			for(String singleWord : command.getPlaceName()){
 				try{
-					placesName.add(URIUtil.decode(singleWord, "UTF-8"));
+					placesName.add(new String(singleWord.getBytes(), "UTF-8"));
 				}catch(NumberFormatException nex){					
-				}catch(URIException e){
+				}catch(UnsupportedEncodingException e){
 				}
 			}
 		}else{

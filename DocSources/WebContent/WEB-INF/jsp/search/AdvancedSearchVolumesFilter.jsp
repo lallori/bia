@@ -85,7 +85,7 @@
 			<c:forEach items="${searchFilter.filterData.fromVolume}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">From: </span><span class="wordSearch">${searchFilter.filterData.fromVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.fromVolume[iterator.index])}" name="fromVolume">
+					<input type="hidden" value="${searchFilter.filterData.fromVolume[iterator.index]}" name="fromVolume">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
@@ -95,7 +95,7 @@
 			<c:forEach items="${searchFilter.filterData.toVolume}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">To: </span><span class="wordSearch">${searchFilter.filterData.toVolume[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.toVolume[iterator.index])}" name="toVolume">
+					<input type="hidden" value="${searchFilter.filterData.toVolume[iterator.index]}" name="toVolume">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
@@ -105,7 +105,7 @@
 			<c:forEach items="${searchFilter.filterData.context}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">Context: </span><span class="wordSearch">${searchFilter.filterData.context[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.context[iterator.index])}" name="context">
+					<input type="hidden" value="${searchFilter.filterData.context[iterator.index]}" name="context">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
@@ -115,7 +115,7 @@
 			<c:forEach items="${searchFilter.filterData.inventario}" varStatus="iterator">
 				<div class="searchFilterDiv">
 					<span class="categorySearch">Inventario: </span><span class="wordSearch">${searchFilter.filterData.inventario[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-					<input type="hidden" value="${fn2:encode(searchFilter.filterData.inventario[iterator.index])}" name="inventario">
+					<input type="hidden" value="${searchFilter.filterData.inventario[iterator.index]}" name="inventario">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
