@@ -253,6 +253,11 @@ public class AjaxController {
 	@RequestMapping(value = "/de/peoplebase/SearchTitleOrOccupation", method = RequestMethod.GET)
 	public ModelAndView searchTitleOrOccupation(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			List<TitleOccsList> titlesOrOccupations = getPeopleBaseService().searchTitleOrOccupation(query);
@@ -486,6 +491,8 @@ public class AjaxController {
 			 								  @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Page page = null;
+		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
+		List<Integer> personIds = new ArrayList<Integer>();
 		
 		//To convert family name with accents
 		try {
@@ -497,6 +504,12 @@ public class AjaxController {
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
 		try {
 			page = getPeopleBaseService().searchFamilyPerson(alias, paginationFilter);
+			
+			for(People currentPerson : (List<People>) page.getList()){
+				personIds.add(currentPerson.getPersonId());
+			}
+			documentsRelated = getPeopleBaseService().findNumbersOfDocumentsRelated(personIds);
+			
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -509,6 +522,10 @@ public class AjaxController {
 			//Dates column must be filled with a string concatenation
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
+			if(documentsRelated.containsKey(currentPerson.getPersonId()))
+				singleRow.add(documentsRelated.get(currentPerson.getPersonId().toString()));
+			else
+				singleRow.add("0");
 			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));
 		}
 		

@@ -90,6 +90,7 @@ public class ShowFamilyPersonController {
 			outputFields.add("Gender");
 			outputFields.add("Born Date");
 			outputFields.add("Death Date");
+			outputFields.add("Documents related");
 								
 			model.put("outputFields", outputFields);
 				
