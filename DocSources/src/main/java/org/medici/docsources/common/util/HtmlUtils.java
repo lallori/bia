@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.Schedone;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -43,6 +44,28 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public class HtmlUtils {
 
+	public static String generateLinkGoogleMaps(PlaceGeographicCoordinates placeGeographicCoordinates){
+		String link = "http://maps.google.com/maps?q=";
+		Double latitude = placeGeographicCoordinates.getMinuteLatitude().doubleValue() * 60 + placeGeographicCoordinates.getSecondLatitude().doubleValue();
+		latitude = latitude / 3600;
+		latitude = placeGeographicCoordinates.getDegreeLatitude().doubleValue() + latitude;
+		if(placeGeographicCoordinates.getDirectionLatitude().equals("N")){
+			link += "+" + latitude.toString();
+		}else if(placeGeographicCoordinates.getDirectionLatitude().equals("S")){
+			link += "-" + latitude.toString();
+		}
+		link += ",";
+		Double longitude = placeGeographicCoordinates.getMinuteLongitude().doubleValue() * 60 + placeGeographicCoordinates.getSecondLongitude().doubleValue();
+		longitude = longitude / 3600;
+		longitude = placeGeographicCoordinates.getDegreeLongitude().doubleValue() + longitude;
+		if(placeGeographicCoordinates.getDirectionLongitude().equals("E")){
+			link += "+" + longitude.toString();
+		}else if(placeGeographicCoordinates.getDirectionLongitude().equals("W")){
+			link += "-" + longitude.toString();
+		}
+		return link;
+	}
+	
 	/**
 	 * 
 	 * @param documentExplorer

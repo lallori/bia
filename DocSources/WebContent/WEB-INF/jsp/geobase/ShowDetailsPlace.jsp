@@ -57,8 +57,15 @@
 			<a id="EditDetailsPlace" href="${EditDetailsPlaceURL}" class="editButton"></a><span id="loading" />
 			</security:authorize>
 		</div>
+		
+		<div id="PlaceMapDiv">
+			<img src="<c:url value="/images/1024/img_place.png"/>" alt="Place" width="120px" height="160px">
+			<c:if test="${linkGoogleMaps != null}">
+				<a class="placeMap" href="${linkGoogleMaps}" target="_blank">Click here to view the Google Map</a>
+			</c:if>
+		</div>
 	
-		<div class="list">
+		<div class="listDetails">
 			<div class="row">
 				<div class="item">Place ID</div> 
 				<div class="value">${place.placeAllId}</div> 

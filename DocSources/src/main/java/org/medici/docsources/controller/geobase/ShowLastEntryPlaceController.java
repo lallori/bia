@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -74,6 +75,11 @@ public class ShowLastEntryPlaceController {
 			List<Place> placeNames;
 			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 			model.put("placeNames", placeNames);
+			
+			if(place.getPlaceGeographicCoordinates() != null)
+				model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
+			else
+				model.put("linkGoogleMaps", null);
 
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowLastEntryPlace", model);
