@@ -331,6 +331,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
 	</definition>
 	
+	<definition name="docbase/ShowTopicsRelatedDocument" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsRelatedDocument.jsp"/>
+	</definition>
+	
 	<definition name="docbase/ShowTopicDescriptionModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicDescriptionModalWindow.jsp"/>
 	</definition>

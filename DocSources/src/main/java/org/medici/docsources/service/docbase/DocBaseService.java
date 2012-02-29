@@ -31,6 +31,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
@@ -458,6 +460,15 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param topic
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchTopicsRelatedDocument(String topic, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * This method mark a {@link org.medici.docsources.domain.Document} as available.

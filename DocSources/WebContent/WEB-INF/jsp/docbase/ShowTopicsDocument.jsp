@@ -21,13 +21,25 @@
 		</div>
 		<div class="list">
 		<c:forEach items="${document.eplToLink}" var="currentTopicAndPlace">
+			<c:url var="ShowTopicsRelatedDocumentURL" value="/de/docbase/ShowTopicsRelatedDocument.do">
+				<c:param name="topicId" value="${currentTopicAndPlace.topic.topicId}" />
+				<c:param name="topicTitle" value="${currentTopicAndPlace.topic.topicTitle}" />
+			</c:url>
+			<c:url var="ComparePlaceURL" value="/src/geobase/ComparePlace.do">
+				<c:param name="placeAllId" value="${currentTopicAndPlace.place.placeAllId}"/>
+			</c:url>
 			<div class="row">
 				<div class="item">Topic:</div>
-				<div class="value80"> ${currentTopicAndPlace.topic.topicTitle}</div>
+				<div class="value80"><a href="${ShowTopicsRelatedDocumentURL}" class="linkTopic">${currentTopicAndPlace.topic.topicTitle}</a></div>
 			</div>
 			<div class="row">
 				<div class="item">Topic Place:</div>
-				<div class="value80"> ${currentTopicAndPlace.place.placeNameFull}</div>
+				<c:if test="${currentTopicAndPlace.place.placeAllId != 53384 && currentTopicAndPlace.place.placeAllId != 55627 && currentTopicAndPlace.place.placeAllId != 54332}">
+					<div class="value80"><a href="${ComparePlaceURL}" class="linkTopic">${currentTopicAndPlace.place.placeNameFull}</a></div>
+				</c:if>
+				<c:if test="${currentTopicAndPlace.place.placeAllId == 53384 || currentTopicAndPlace.place.placeAllId == 55627 || currentTopicAndPlace.place.placeAllId == 54332 }">
+					<div class="value80">${currentTopicAndPlace.place.placeNameFull}</div>
+				</c:if>
 			</div>
 			<br/>
 		</c:forEach>
@@ -49,6 +61,34 @@
 				$j(this).next().css('visibility', 'visible');
 				$j("#EditTopicsDocumentDiv").load($j(this).attr("href"));
 				return false;
+			});
+	        
+	        $j(".linkTopic").click(function() {
+				var tabName = $j(this).text();
+				var numTab = 0;
+				
+				if(tabName.length > 20){
+					tabName = tabName.substring(0,17) + "...";
+				}
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
 			});
 		});
 	</script>

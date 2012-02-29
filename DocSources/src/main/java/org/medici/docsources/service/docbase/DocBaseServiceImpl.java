@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.EpLinkUtils;
@@ -1142,6 +1144,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 			
 			return getTopicsListDAO().searchTopicLinkableToDocument(EplToLinkUtils.getTopicIdList(eplToLinkList), query);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchTopicsRelatedDocument(String topic, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return eplToLinkDAO.searchTopics(topic, paginationFilter);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

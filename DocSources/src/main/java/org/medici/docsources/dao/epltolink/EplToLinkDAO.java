@@ -84,6 +84,15 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	
 	/**
 	 * 
+	 * @param topic
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchTopics(String topic, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param placeToSearch
 	 * @param paginationFilter
 	 * @return

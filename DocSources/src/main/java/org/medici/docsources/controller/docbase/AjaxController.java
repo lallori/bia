@@ -27,12 +27,19 @@
  */
 package org.medici.docsources.controller.docbase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.TopicList;
@@ -238,6 +245,115 @@ public class AjaxController {
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/docbase/ShowTopicsRelatedDocument.json", method = RequestMethod.GET)
+	public ModelAndView ShowTopicsRelatedDocument(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		
+		try{
+			page = getDocBaseService().searchTopicsRelatedDocument(alias, paginationFilter);
+		}catch(ApplicationThrowable aex){
+			page = new Page(paginationFilter);
+		}
+		
+		List resultList = new ArrayList();
+		for (EplToLink currentEplToLink : (List<EplToLink>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentEplToLink.getPlace().getPlaceName());
+			if (currentEplToLink.getDocument().getSenderPeople() != null){
+				if(!currentEplToLink.getDocument().getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentEplToLink.getDocument().getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentEplToLink.getDocument().getRecipientPeople() != null){
+				if(!currentEplToLink.getDocument().getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentEplToLink.getDocument().getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+			
+			if (currentEplToLink.getDocument().getMDPAndFolio() != null){
+				singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>");				
+			}
+			else
+				singleRow.add("");
+			
+			
+			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * 
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	private PaginationFilter generatePaginationFilter(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+			case 0:
+				paginationFilter.addSortingCriteria("place.placeName", sortingDirection);
+				break;
+			case 1:
+				paginationFilter.addSortingCriteria("document.senderPeople.mapNameLf", sortingDirection);
+				break;
+			case 2:
+				paginationFilter.addSortingCriteria("document.recipientPeople.mapNameLf", sortingDirection);
+				break;
+			case 3:
+				paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
+				//Month is an entity, so we don't have field with suffix 
+				paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", sortingDirection);
+				paginationFilter.addSortingCriteria("document.docDay", sortingDirection);
+				break;
+			case 4:
+				paginationFilter.addSortingCriteria("document.volume.volNum", sortingDirection);
+				paginationFilter.addSortingCriteria("document.volume.volLetExt", sortingDirection);
+				paginationFilter.addSortingCriteria("document.folioNum", sortingDirection);
+				paginationFilter.addSortingCriteria("document.folioMod", sortingDirection);
+				break;
+			default:
+				paginationFilter.addSortingCriteria("docYear", sortingDirection);
+				paginationFilter.addSortingCriteria("docMonthNum.monthNum", sortingDirection);
+				paginationFilter.addSortingCriteria("docDay", sortingDirection);
+				break;
+			}		
+		}
+		
+		return paginationFilter;
 	}
 
 }
