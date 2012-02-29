@@ -447,11 +447,23 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page searchFamilyPerson(String familyName, String familyNamePrefix, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE personId IN (SELECT person.personId FROM org.medici.docsources.domain.AltName WHERE altName.altName like '" + familyToSearch + "' AND altName.nameType like 'Family')");
+		//MD: If the name of the family contains apostrophe, I replace it with two apostrophes for the SQL query
+		if(familyName.contains("'"))
+			familyName = familyName.replace("'", "\'\'");
+		
+		String toSearch = new String("FROM People WHERE personId IN (SELECT person.personId FROM org.medici.docsources.domain.AltName WHERE altName.altName like '" + familyName + "' AND altName.nameType like 'Family'");
+		
+		if(familyNamePrefix != null){
+			if(familyNamePrefix.contains("'"))
+				familyNamePrefix = familyNamePrefix.replace("'", "\'\'");
+			toSearch += " AND altName.namePrefix like '" + familyNamePrefix + "')";
+		}else{
+			toSearch += ")";
+		}
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;

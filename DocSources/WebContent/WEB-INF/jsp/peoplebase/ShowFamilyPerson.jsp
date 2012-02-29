@@ -11,7 +11,7 @@
 		Family "${family}"
 	</div>
 	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showFamilyPerson${family}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showFamilyPerson${nameId}">
 		<thead>
 			<tr></tr>
 		</thead>
@@ -27,9 +27,9 @@
 			
 			
 			//dynamic field management
-			$j("#showFamilyPerson${family} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#showFamilyPerson${nameId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#showFamilyPerson${family}').dataTable( {
+			$j('#showFamilyPerson${nameId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"aaSorting": [[0, "desc"]],
 				"bDestroy" : true,
@@ -37,7 +37,7 @@
 				"bServerSide": true,
 				"iDisplayLength": 10,
 				"iDisplayStart": 0,
-				"oSearch": {"sSearch": "${family}"},
+				"oSearch": {"sSearch": "${nameId}"},
 				"sAjaxSource": "${ShowFamilyPersonURL}",
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
@@ -79,8 +79,8 @@
 				}
 			});
 			
-			$j("#showFamilyPerson${family}_length").css('margin', '0 0 0 0');
-			$j("#showFamilyPerson${family}_filter").remove();
+			$j("#showFamilyPerson${nameId}_length").css('margin', '0 0 0 0');
+			$j("#showFamilyPerson${nameId}_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.showResult').die();

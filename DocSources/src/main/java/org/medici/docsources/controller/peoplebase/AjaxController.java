@@ -494,13 +494,6 @@ public class AjaxController {
 		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		List<Integer> personIds = new ArrayList<Integer>();
 		
-		//To convert family name with accents
-		try {
-			alias = new String(alias.getBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			
-		}
-		
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
 		try {
 			page = getPeopleBaseService().searchFamilyPerson(alias, paginationFilter);
@@ -523,7 +516,7 @@ public class AjaxController {
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getBornYear(), currentPerson.getBornMonth(), currentPerson.getBornDay()));
 			singleRow.add(DateUtils.getStringDateHTMLForTable(currentPerson.getDeathYear(), currentPerson.getDeathMonth(), currentPerson.getDeathDay()));
 			if(documentsRelated.containsKey(currentPerson.getPersonId()))
-				singleRow.add(documentsRelated.get(currentPerson.getPersonId().toString()));
+				singleRow.add(documentsRelated.get(currentPerson.getPersonId()).toString());
 			else
 				singleRow.add("0");
 			resultList.add(HtmlUtils.showPeopleRelated(singleRow, currentPerson.getPersonId()));

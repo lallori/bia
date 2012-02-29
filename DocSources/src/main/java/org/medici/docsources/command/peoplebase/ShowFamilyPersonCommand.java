@@ -39,6 +39,8 @@ import javax.validation.constraints.NotNull;
 public class ShowFamilyPersonCommand {
 	@NotNull
 	private String altName;
+	@NotNull
+	private Integer nameId;
 	
 	/**
 	 * @param altName the altName to set
@@ -52,6 +54,20 @@ public class ShowFamilyPersonCommand {
 	 */
 	public String getAltName() {
 		return altName;
+	}
+
+	/**
+	 * @param nameId the nameId to set
+	 */
+	public void setNameId(Integer nameId) {
+		this.nameId = nameId;
+	}
+
+	/**
+	 * @return the nameId
+	 */
+	public Integer getNameId() {
+		return nameId;
 	}
 
 		

@@ -162,11 +162,12 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	/**
 	 * 
 	 * @param familyToSearch
+	 * @param familyNamePrefix
 	 * @param paginationFilter
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	public Page searchFamilyPerson(String familyName, String familyNamePrefix, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * This method searches for mothers which could be related to a person which contains 

@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
@@ -1420,7 +1421,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public Page searchFamilyPerson(String familyToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{
-			return getPeopleDAO().searchFamilyPerson(familyToSearch, paginationFilter);
+			AltName family = getAltNameDAO().find(NumberUtils.createInteger(familyToSearch));
+			return getPeopleDAO().searchFamilyPerson(family.getAltName(), family.getNamePrefix(), paginationFilter);
 			}catch(Throwable th){
 				throw new ApplicationThrowable(th);
 			}
