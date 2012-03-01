@@ -228,7 +228,7 @@ h6 { /* Titles */
 
 .listDetails { /* Display list in Details section (the first one) */
 	display: table;
-	margin:5px 0 0 30px;
+	margin:0 0 0 30px;
 	width:63%; 
 	font-size:11px;
 	line-height: 18px;
@@ -1290,9 +1290,22 @@ input.file {
 /*
 /* ------------ EditDetailsDocument ------------ */
 
+#EditDetailsDocumentDiv h3 {
+	padding: 0 0 0 30px;
+}
+
+#EditDetailsDocumentDiv h4 {
+	padding: 0 0 0 30px;
+}
+
+#EditDetailsDocumentDiv .listDetails {
+	margin: 13px 0 0 30px;
+}
+
+
 #DocumentImageNotDigitDiv, #DocumentImageDigitDiv { /* Document image digitized or to be digitized */
     float:right; 
-    margin-right:20px;
+    margin: 10px 20px 0 0;
     z-index:1;
     height:160px;
     width:120px;
@@ -1383,7 +1396,7 @@ input.file {
 }
 
 #recipientPlaceDescriptionLabel  {
-	margin-left: 23px;
+	margin-left: 40px;
 }
 
 #senderPeopleDescriptionLabel {
@@ -1860,6 +1873,14 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /* -------------------------- ADD NEW VOLUME -------------------------------- */
 /*
 /* --------------- EditDetailsVolume --------------- */
+
+#EditDetailsVolumeDiv h4 {
+	padding: 0 0 13px 30px;
+}
+
+#EditDetailsVolumeDiv h3 {
+	padding: 0 0 0 30px;
+}
 
 #startYearLabel {
 	margin-left: 3px;
@@ -2736,8 +2757,25 @@ a.refreshVolumeExplorer {
 	margin-top:30px;
 }
 
-#geoDiv h4{
-	padding-top: 5px;
+#EditDetailsPlaceDiv h4 {
+	padding: 0 0 7px 30px;
+}
+
+#EditDetailsPlaceDiv h3 {
+	padding: 0 0 0 30px;
+}
+
+#EditDetailsPlaceDiv h7 {
+	color: #088A08;
+	padding: 0 0 21px 29px;
+}
+
+#geoDiv h2 {
+	margin: 35px 0 5px 15px;
+}
+
+#EditDetailsPlaceDiv .listDetails {
+	margin: 10px 0 0 30px;
 }
 
 #PlaceMapDiv { /* Place map */
@@ -2747,6 +2785,7 @@ a.refreshVolumeExplorer {
     height:160px;
     width:120px;
     text-align:center;
+	margin-top: 20px;
 }
 
 #PlaceMapDiv span {
