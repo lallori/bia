@@ -31,6 +31,11 @@
 		</security:authorize>
 		</div>
 
+		<c:if test="${volume.volNum != 0}">
+			<h3>MDP ${volume.volNum}</h3>
+			<h4>${volume.serieList}</h4>
+		</c:if>
+		
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${not empty image}">
 			<div id="SpineVolumeDigitDiv">
@@ -67,7 +72,6 @@
 			</div>
 		</security:authorize>
 		
-		<h3>${volume.serieList}</h3>
 		<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
 			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Documents related</a>
 		</c:if>
@@ -79,7 +83,7 @@
 		</c:if>
 		<div class="listDetails">
 			<div class="row">
-				<div class="item">Volume/Filza (MDP)</div>
+				<div class="item">Volume/Filza</div>
 				<div class="value">${volume.volNum}${volume.volLetExt}</div>
 			</div>
 			<div class="row">
@@ -106,6 +110,10 @@
 	        $j("#EditDescriptionVolume").css('visibility', 'visible'); 
 			$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
+			if($j("#ShowVolumeInVolumeExplorer").length != 0){
+				$j("#EditDetailsVolumeDiv").css('min-height', '300px');
+			}
+			
 			$j("#EditDetailsVolume").volumeExplorer( {
 				summaryId				: "${volume.summaryId}",
 				volNum					: "${volume.volNum}",

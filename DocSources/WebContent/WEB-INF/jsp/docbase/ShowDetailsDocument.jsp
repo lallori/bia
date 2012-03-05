@@ -49,7 +49,11 @@
 			<a id="EditDetailsDocument" href="${EditDetailsDocumentURL}" class="editButton"></a><span id="loading"/>
 		</security:authorize>
 		</div>
-
+		
+		<c:if test="${document.volume != null}">
+			<h3>MDP ${document.volume.volNum} ${document.volume.volLetExt}</h3><h4>Folio ${document.folioNum} ${document.folioMod}</h4>
+		</c:if>
+		
 		<c:if test="${not empty image}">
 			<div id="DocumentImageDigitDiv">
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -81,7 +85,7 @@
 				<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 			</div>
 			<div class="row">
-				<div class="item60">Volume (MDP)</div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="Click here to view this volume">${document.volume.volNum}${document.volume.volLetExt}</a></div>
+				<div class="item60">Volume</div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="Click here to view this volume">${document.volume.volNum}${document.volume.volLetExt}</a></div>
 			</div>
 			<div class="row">
 				<div class="item60">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
