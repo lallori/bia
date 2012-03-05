@@ -45,9 +45,83 @@ create table docsources_audit.tblTitleOccsList_AUD (TITLEOCCID integer not null,
 create table docsources_audit.tblTopicsList_AUD (TOPICID integer not null, REV integer not null, REVTYPE tinyint, DESCRIPTION LONGTEXT, TOPICTITLE varchar(50), primary key (TOPICID, REV));
 create table docsources_audit.tblVolumes_AUD (SUMMARYID integer not null, REV integer not null, REVTYPE tinyint, BOUND TINYINT default '-1', CCONDITION LONGTEXT, CCONTEXT LONGTEXT, CIPHER TINYINT default '-1', CIPHERNOTES varchar(255), DATECREATED datetime, DATENOTES LONGTEXT, ENDDAY TINYINT, ENDMONTH varchar(50), ENDMONTHNUM integer, ENDYEAR integer, ENGLISH TINYINT default '-1', FOLIOCOUNT varchar(50), FOLSNUMBRD TINYINT default '-1', FRENCH TINYINT default '-1', GERMAN TINYINT default '-1', ITALIAN TINYINT default '-1', LATIN TINYINT default '-1', OLDALPHAINDEX TINYINT default '-1', ORGNOTES LONGTEXT, OTHERLANG varchar(50), PRINTEDDRAWINGS TINYINT default '-1', PRINTEDMATERIAL TINYINT default '-1', RECIPS LONGTEXT, RESID varchar(255), SENDERS LONGTEXT, SPANISH TINYINT default '-1', STAFFMEMO LONGTEXT, STARTDAY TINYINT, STARTMONTH varchar(50), STARTMONTHNUM integer, STARTYEAR integer, STATBOX varchar(50), VOLLETEXT varchar(1), VOLNUM integer, VOLTOBEVETTED TINYINT default '-1', VOLTOBEVETTEDDATE datetime, VOLVETBEGINS datetime, VOLVETID varchar(50), VOLVETTED TINYINT default '-1', VOLVETTEDDATE datetime, SERIESREFNUM integer, primary key (SUMMARYID, REV));
 
+CREATE TABLE docsources.persistent_logins (
+	`series` VARCHAR(255) NOT NULL,
+	`last_used` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`token` VARCHAR(255) NOT NULL,
+	`username` VARCHAR(255) NULL DEFAULT NULL,
+	PRIMARY KEY (`series`)
+) ENGINE=InnoDB;
+
+CREATE TABLE docsources.tblAccessLog (
+	`idAccessLog` INT(11) NOT NULL AUTO_INCREMENT,
+	`action` VARCHAR(1000) NOT NULL,
+	`username` VARCHAR(50) NOT NULL,
+	`authorities` VARCHAR(50) NULL DEFAULT NULL,
+	`dateAndTime` DATETIME NOT NULL,
+	`executionTime` BIGINT(20) NOT NULL,
+	`httpMethod` VARCHAR(8) NOT NULL,
+	`informations` VARCHAR(3000) NULL DEFAULT NULL,
+	`ipAddress` VARCHAR(50) NOT NULL,
+	`errors` VARCHAR(3000) NULL DEFAULT NULL,
+	PRIMARY KEY (`idAccessLog`)
+) ENGINE=InnoDB AUTO_INCREMENT=59052;
+
+CREATE TABLE docsources.tblActivationUser (
+	`Uuid` VARCHAR(50) NOT NULL,
+	`account` VARCHAR(30) NOT NULL,
+	`activationDate` DATETIME NULL DEFAULT NULL,
+	`activationIPAddress` VARCHAR(50) NULL DEFAULT NULL,
+	`active` BIT(1) NOT NULL,
+	`mailSended` BIT(1) NOT NULL,
+	`mailSendedDate` DATETIME NULL DEFAULT NULL,
+	`requestDate` DATETIME NOT NULL,
+	`requestIPAddress` VARCHAR(50) NOT NULL,
+	`ACTIOVATIONIPADDRESS` VARCHAR(50) NULL DEFAULT NULL,
+	PRIMARY KEY (`Uuid`)
+) ENGINE=InnoDB;
+
+CREATE TABLE docsources.tblCountries (
+	`CODE` VARCHAR(2) NOT NULL,
+	`NAME` VARCHAR(50) NOT NULL,
+	PRIMARY KEY (`CODE`)
+) ENGINE=InnoDB;
+
+CREATE TABLE docsources.tblImages (
+	`imageId` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`volNum` INT(10) UNSIGNED NOT NULL,
+	`volLetExt` VARCHAR(1) NULL DEFAULT NULL,
+	`imageName` VARCHAR(45) NOT NULL,
+	`imageType` VARCHAR(1) NOT NULL,
+	`imageRectoVerso` VARCHAR(1) NOT NULL,
+	`missedNumbering` VARCHAR(3) NULL DEFAULT NULL,
+	`imageOrder` INT(5) NULL DEFAULT NULL,
+	`imageProgTypeNum` INT(5) NOT NULL,
+	`storagePath` INT(11) NOT NULL,
+	`dateCreated` DATETIME NOT NULL,
+	PRIMARY KEY (`imageId`)
+) ENGINE=InnoDB AUTO_INCREMENT=58033;
+
+CREATE TABLE `tblParents` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`parentId` INT(10) NOT NULL,
+	`childId` INT(10) NOT NULL,
+	`dateCreated` DATETIME NULL DEFAULT NULL,
+	`lastUpdate` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `FK7A67536B501303B1` (`parentId`),
+	INDEX `FK7A67536B36829BA3` (`childId`)
+) ENGINE=InnoDB AUTO_INCREMENT=26022;
+
+CREATE TABLE docsources.tblPlaceType (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(255) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=437;
+
 ALTER TABLE `docsources`.`persistent_logins` ENGINE = InnoDB ;
 ALTER TABLE `docsources`.`tblAccessLog` ENGINE = InnoDB ;
-ALTER TABLE `docsources`.`tblAdvancedSearchFilter` ENGINE = InnoDB ;
+ALTER TABLE `docsources`.`tblPRCLink`RENAME TO `docsources`.`tblPrcLink`;
 
 -- MYSQL DATABASE STRUCTURE NORMALIZATION PATCH
 
@@ -66,14 +140,8 @@ ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `DOCDATE` INT(11) AFTER `DOCD
 ALTER TABLE `docsources`.`tblDocuments` CHANGE COLUMN `YEARMODERN` `YEARMODERN` INT(4) NULL DEFAULT NULL  ;
 -- Sortable date : type size decreased from 50 to 10
 ALTER TABLE `docsources`.`tblDocuments` CHANGE COLUMN `SORTABLEDATE` `SORTABLEDATE` VARCHAR(10) NULL DEFAULT NULL  ;
-
--- IMAGES
--- ImageType
-ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageType` VARCHAR(1) NOT NULL  AFTER `imageName` ;
--- ImageOrder
-ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageOrder` INT(5) NOT NULL  AFTER `imageType` ;
--- ImageProgTypeNum
-ALTER TABLE `docsources`.`tblImages` ADD COLUMN `imageProgTypeNum` INT(5) NOT NULL  AFTER `imageOrder` ;
+-- Logical delete
+ALTER TABLE `docsources`.`tblDocuments` ADD COLUMN `LOGICALDELETE` TINYINT(4) NOT NULL DEFAULT '0' AFTER `DOCTYPOLOGY`;
 
 -- PEOPLE
 -- Change born date fields and death date fields order
@@ -82,25 +150,37 @@ ALTER TABLE `docsources`.`tblPeople` CHANGE COLUMN `BYEAR` `BYEAR` DOUBLE NULL D
 ALTER TABLE `docsources`.`tblPeople` ADD COLUMN `BORNDATE` INT(11) AFTER `BDAY`;
 -- Death Date for Lucene indexing 
 ALTER TABLE `docsources`.`tblPeople` ADD COLUMN `DEATHDATE` INT(11) AFTER `DDAY`;
+-- Logical delete
+ALTER TABLE `docsources`.`tblPeople` ADD COLUMN `LOGICALDELETE` TINYINT(4) NOT NULL DEFAULT '0' AFTER `LastUpdate`;
 
+-- PLACES
+-- GEOGKEY_CHILDREN
+ALTER TABLE `docsources`.`tblPlaces` ADD COLUMN `GEOGKEY_CHILDREN` LONGTEXT NULL  AFTER `OTHER_FLAGS`;
+-- GEO_ID_ENCODING
+ALTER TABLE `docsources`.`tblPlaces` ADD COLUMN `GEO_ID_ENCODING` VARCHAR(10) NULL DEFAULT NULL AFTER `GEOGKEY_CHILDREN`;
+-- Logical delete
+ALTER TABLE `docsources`.`tblPlaces` ADD COLUMN `LOGICALDELETE` TINYINT(4) NOT NULL DEFAULT '0' AFTER `GEO_ID_ENCODING`;
 
 -- VOLUMES
+-- Start Date for Lucene indexing 
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `STARTDATE` INT(11) AFTER `STARTDAY`;
+-- End Date for Lucene indexing 
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `ENDDATE` INT(11) AFTER `ENDDAY`;
 -- Context to CContext (context is a reserved key on Mysql)
 ALTER TABLE `docsources`.`tblVolumes` CHANGE COLUMN `CONTEXT` `CCONTEXT` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL, CHANGE COLUMN `CONDITION` `CCONDITION` LONGTEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;
 -- Printed Drawings
 ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `PRINTEDDRAWINGS` TINYINT(1) AFTER `STAFFMEMO`;
 -- Printed Material
 ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `PRINTEDMATERIAL` TINYINT(1) AFTER `PRINTEDDRAWINGS`;
--- Start Date for Lucene indexing 
-ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `STARTDATE` INT(11) AFTER `STARTDAY`;
--- End Date for Lucene indexing 
-ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `ENDDATE` INT(11) AFTER `ENDDAY`;
+-- Digitized column.
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `DIGITIZED` TINYINT(4) NOT NULL DEFAULT '0' AFTER `PRINTEDMATERIAL`;
+-- Logical delete.
+ALTER TABLE `docsources`.`tblVolumes` ADD COLUMN `LOGICALDELETE` TINYINT(4) NOT NULL DEFAULT '0' AFTER `DIGITIZED`;
 
 
 -- MYSQL DATABASE DATA NORMALIZATION PATCH
 
 -- DOCUMENTS :
-
 -- docMonthNum 0 or 13 must be setted to null  (Foreign Keys Checks)
 update docsources.tblDocuments set docMonthNum = null where docMonthNum = 0;
 update docsources.tblDocuments set docMonthNum = null where docMonthNum = 13;
@@ -113,7 +193,7 @@ update docsources.tblDocuments set sendLocplall = null where sendLocplall not in
 -- Recipient place linked to invalid place (Foreign Keys Checks)
 update docsources.tblDocuments set recipLocplall = null where recipLocplall not in (select placeAllId from tblPlaces);
 -- FolioMod must be setted to null instead of empty string
-update tblDocuments set folioMod=null where folioMod='';
+update docsources.tblDocuments set folioMod=null where folioMod='';
 
 -- IMAGES
 -- Folio type : this update sets the correct type by imageName field (example from filza n.7 : '0536_C_333_R.tif')
@@ -123,9 +203,9 @@ update docsources.tblImages set imageRectoVerso = substring(SUBSTRING_INDEX(imag
 
 -- PARENTS
 -- Creating father records
-insert into tblParents select null, fatherId, personId, dateCreated, now() from tblPeople where fatherId is not null;
+insert into docsources.tblParents select null, fatherId, personId, dateCreated, now() from tblPeople where fatherId is not null;
 -- Creating mother records
-insert into tblParents select null, motherId, personId, now(), now() from tblPeople where motherId is not null;
+insert into docsources.tblParents select null, motherId, personId, now(), now() from tblPeople where motherId is not null;
 
 -- PEOPLE
 -- Gender types patch to allow correct use of numeration type Gender
@@ -137,6 +217,7 @@ update docsources.tblPeople set gender = null where gender = '';
 update docsources.tblPeople set bPlaceId = null where (bPlaceId not in (select placeAllId from tblPlaces));
 -- Death place linked to invalid place
 update docsources.tblPeople set dPlaceId = null where (dPlaceId not in (select placeAllId from tblPlaces));
+
 -- Marriages linked to invalid people
 delete from docsources.tblMarriages where (husbandId not in (select personId from tblPeople) ) or ( wifeId not in (select personId from tblPeople));
 -- PrcLink linked to invalid RoleCat
@@ -149,6 +230,7 @@ update docsources.tblPeople set dMonthNum = null where dMonthNum = 0;
 update docsources.tblPeople set dMonthNum = null where dMonthNum = 13;
 -- lastUpdate cannot be null, we update this to dateCreated
 update docsources.tblPeople set lastUpdate = dateCreated where lastUpdate is null;
+
 -- linked alternative names is an enumeration with first letter in upper case
 update docsources.tblAltNames set nameType = 'Appellative' where lower(nameType) = 'appellative';
 update docsources.tblAltNames set nameType = 'Family' where lower(nameType) = 'family';
@@ -157,6 +239,7 @@ update docsources.tblAltNames set nameType = 'Maiden' where lower(nameType) = 'm
 update docsources.tblAltNames set nameType = 'Married' where lower(nameType) = 'married';
 update docsources.tblAltNames set nameType = 'Patronymic' where lower(nameType) = 'patronymic';
 update docsources.tblAltNames set nameType = 'SearchName' where lower(nameType) = 'searchname';
+
 -- Preferred Role must be a boolean column (tinyint)
 update docsources.tblPOLink set prtag = 1 where prtag =-1;
 -- MonthNum in linked TitleOrOccupation must be null if not present
@@ -192,7 +275,6 @@ update docsources.tblPOLink set endMonthNum = 11 where endMonth like 'November';
 update docsources.tblPOLink set endMonthNum = 12 where endMonth like 'December';
 
 -- VOLUMES 
-
 -- start Document Month num 0 or 13 must be setted to null
 update docsources.tblVolumes set startMonthNum = null where startMonthNum = 0;
 update docsources.tblVolumes set startMonthNum = null where startMonthNum = 13;
@@ -276,249 +358,256 @@ update docsources.tblPeople set activeStart = null where activeStart = '';
 update docsources.tblPeople set activeEnd = null where activeEnd = '';
 
 -- COUNTRY DATA ENTRY (Table schema is based on ISO standard 3166 code lists http://www.iso.org/iso/list-en1-semic-3.txt)
-INSERT INTO tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('�LAND ISLANDS', 'AX');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ALBANIA', 'AL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ALGERIA', 'DZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('AMERICAN SAMOA', 'AS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ANDORRA', 'AD');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ANGOLA', 'AO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ANGUILLA', 'AI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ANTARCTICA', 'AQ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ANTIGUA AND BARBUDA', 'AG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ARGENTINA', 'AR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ARMENIA', 'AM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ARUBA', 'AW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('AUSTRALIA', 'AU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('AUSTRIA', 'AT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('AZERBAIJAN', 'AZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BAHAMAS', 'BS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BAHRAIN', 'BH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BANGLADESH', 'BD');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BARBADOS', 'BB');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BELARUS', 'BY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BELGIUM', 'BE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BELIZE', 'BZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BENIN', 'BJ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BERMUDA', 'BM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BHUTAN', 'BT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BOLIVIA, PLURINATIONAL STATE OF', 'BO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BOSNIA AND HERZEGOVINA', 'BA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BOTSWANA', 'BW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BOUVET ISLAND', 'BV');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BRAZIL', 'BR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BRITISH INDIAN OCEAN TERRITORY', 'IO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BRUNEI DARUSSALAM', 'BN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BULGARIA', 'BG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BURKINA FASO', 'BF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('BURUNDI', 'BI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CAMBODIA', 'KH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CAMEROON', 'CM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CANADA', 'CA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CAPE VERDE', 'CV');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CAYMAN ISLANDS', 'KY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CENTRAL AFRICAN REPUBLIC', 'CF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CHAD', 'TD');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CHILE', 'CL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CHINA', 'CN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CHRISTMAS ISLAND', 'CX');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('COCOS (KEELING) ISLANDS', 'CC');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('COLOMBIA', 'CO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('COMOROS', 'KM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CONGO', 'CG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CONGO, THE DEMOCRATIC REPUBLIC OF THE', 'CD');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('COOK ISLANDS', 'CK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('COSTA RICA', 'CR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('C�TE D''IVOIRE', 'CI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CROATIA', 'HR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CUBA', 'CU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CYPRUS', 'CY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('CZECH REPUBLIC', 'CZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('DENMARK', 'DK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('DJIBOUTI', 'DJ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('DOMINICA', 'DM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('DOMINICAN REPUBLIC', 'DO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ECUADOR', 'EC');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('EGYPT', 'EG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('EL SALVADOR', 'SV');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('EQUATORIAL GUINEA', 'GQ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ERITREA', 'ER');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ESTONIA', 'EE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ETHIOPIA', 'ET');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('FALKLAND ISLANDS (MALVINAS)', 'FK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('FAROE ISLANDS', 'FO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('FIJI', 'FJ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('FINLAND', 'FI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('FRANCE', 'FR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('FRENCH GUIANA', 'GF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('FRENCH POLYNESIA', 'PF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('FRENCH SOUTHERN TERRITORIES', 'TF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GABON', 'GA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GAMBIA', 'GM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GEORGIA', 'GE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GERMANY', 'DE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GHANA', 'GH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GIBRALTAR', 'GI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GREECE', 'GR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GREENLAND', 'GL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GRENADA', 'GD');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GUADELOUPE', 'GP');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GUAM', 'GU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GUATEMALA', 'GT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GUERNSEY', 'GG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GUINEA', 'GN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GUINEA-BISSAU', 'GW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('GUYANA', 'GY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('HAITI', 'HT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('HEARD ISLAND AND MCDONALD ISLANDS', 'HM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('HOLY SEE (VATICAN CITY STATE)', 'VA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('HONDURAS', 'HN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('HONG KONG', 'HK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('HUNGARY', 'HU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ICELAND', 'IS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('INDIA', 'IN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('INDONESIA', 'ID');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('IRAN, ISLAMIC REPUBLIC OF', 'IR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('IRAQ', 'IQ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('IRELAND', 'IE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ISLE OF MAN', 'IM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ISRAEL', 'IL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ITALY', 'IT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('JAMAICA', 'JM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('JAPAN', 'JP');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('JERSEY', 'JE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('JORDAN', 'JO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('KAZAKHSTAN', 'KZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('KENYA', 'KE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('KIRIBATI', 'KI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('KOREA, DEMOCRATIC PEOPLE''S REPUBLIC OF', 'KP');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('KOREA, REPUBLIC OF', 'KR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('KUWAIT', 'KW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('KYRGYZSTAN', 'KG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LAO PEOPLE''S DEMOCRATIC REPUBLIC', 'LA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LATVIA', 'LV');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LEBANON', 'LB');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LESOTHO', 'LS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LIBERIA', 'LR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LIBYAN ARAB JAMAHIRIYA', 'LY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LIECHTENSTEIN', 'LI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LITHUANIA', 'LT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('LUXEMBOURG', 'LU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MACAO', 'MO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF', 'MK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MADAGASCAR', 'MG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MALAWI', 'MW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MALAYSIA', 'MY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MALDIVES', 'MV');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MALI', 'ML');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MALTA', 'MT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MARSHALL ISLANDS', 'MH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MARTINIQUE', 'MQ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MAURITANIA', 'MR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MAURITIUS', 'MU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MAYOTTE', 'YT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MEXICO', 'MX');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MICRONESIA, FEDERATED STATES OF', 'FM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MOLDOVA, REPUBLIC OF', 'MD');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MONACO', 'MC');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MONGOLIA', 'MN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MONTENEGRO', 'ME');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MONTSERRAT', 'MS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MOROCCO', 'MA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MOZAMBIQUE', 'MZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('MYANMAR', 'MM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NAMIBIA', 'NA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NAURU', 'NR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NEPAL', 'NP');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NETHERLANDS', 'NL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NETHERLANDS ANTILLES', 'AN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NEW CALEDONIA', 'NC');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NEW ZEALAND', 'NZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NICARAGUA', 'NI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NIGER', 'NE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NIGERIA', 'NG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NIUE', 'NU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NORFOLK ISLAND', 'NF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NORTHERN MARIANA ISLANDS', 'MP');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('NORWAY', 'NO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('OMAN', 'OM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PAKISTAN', 'PK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PALAU', 'PW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PALESTINIAN TERRITORY, OCCUPIED', 'PS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PANAMA', 'PA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PAPUA NEW GUINEA', 'PG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PARAGUAY', 'PY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PERU', 'PE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PHILIPPINES', 'PH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PITCAIRN', 'PN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('POLAND', 'PL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PORTUGAL', 'PT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('PUERTO RICO', 'PR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('QATAR', 'QA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('R�UNION', 'RE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ROMANIA', 'RO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('RUSSIAN FEDERATION', 'RU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('RWANDA', 'RW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT BARTH�LEMY', 'BL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA', 'SH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT KITTS AND NEVIS', 'KN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT LUCIA', 'LC');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT MARTIN', 'MF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT PIERRE AND MIQUELON', 'PM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAINT VINCENT AND THE GRENADINES', 'VC');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAMOA', 'WS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAN MARINO', 'SM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAO TOME AND PRINCIPE', 'ST');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SAUDI ARABIA', 'SA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SENEGAL', 'SN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SERBIA', 'RS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SEYCHELLES', 'SC');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SIERRA LEONE', 'SL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SINGAPORE', 'SG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SLOVAKIA', 'SK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SLOVENIA', 'SI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SOLOMON ISLANDS', 'SB');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SOMALIA', 'SO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SOUTH AFRICA', 'ZA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS', 'GS');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SPAIN', 'ES');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SRI LANKA', 'LK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SUDAN', 'SD');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SURINAME', 'SR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SVALBARD AND JAN MAYEN', 'SJ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SWAZILAND', 'SZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SWEDEN', 'SE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SWITZERLAND', 'CH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('SYRIAN ARAB REPUBLIC', 'SY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TAIWAN, PROVINCE OF CHINA', 'TW');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TAJIKISTAN', 'TJ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TANZANIA, UNITED REPUBLIC OF', 'TZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('THAILAND', 'TH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TIMOR-LESTE', 'TL');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TOGO', 'TG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TOKELAU', 'TK');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TONGA', 'TO');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TRINIDAD AND TOBAGO', 'TT');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TUNISIA', 'TN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TURKEY', 'TR');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TURKMENISTAN', 'TM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TURKS AND CAICOS ISLANDS', 'TC');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('TUVALU', 'TV');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('UGANDA', 'UG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('UKRAINE', 'UA');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('UNITED ARAB EMIRATES', 'AE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('UNITED KINGDOM', 'GB');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('UNITED STATES', 'US');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('UNITED STATES MINOR OUTLYING ISLANDS', 'UM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('URUGUAY', 'UY');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('UZBEKISTAN', 'UZ');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('VANUATU', 'VU');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('VENEZUELA, BOLIVARIAN REPUBLIC OF', 'VE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('VIET NAM', 'VN');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('VIRGIN ISLANDS, BRITISH', 'VG');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('VIRGIN ISLANDS, U.S.', 'VI');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('WALLIS AND FUTUNA', 'WF');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('WESTERN SAHARA', 'EH');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('YEMEN', 'YE');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ZAMBIA', 'ZM');
-INSERT INTO tblCountries (NAME, CODE) VALUES ('ZIMBABWE', 'ZW');
+delete from docsources.tblCountries;
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('AFGHANISTAN', 'AF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ALAND ISLANDS', 'AX');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ALBANIA', 'AL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ALGERIA', 'DZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('AMERICAN SAMOA', 'AS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ANDORRA', 'AD');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ANGOLA', 'AO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ANGUILLA', 'AI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ANTARCTICA', 'AQ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ANTIGUA AND BARBUDA', 'AG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ARGENTINA', 'AR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ARMENIA', 'AM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ARUBA', 'AW');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('AUSTRALIA', 'AU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('AUSTRIA', 'AT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('AZERBAIJAN', 'AZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BAHAMAS', 'BS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BAHRAIN', 'BH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BANGLADESH', 'BD');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BARBADOS', 'BB');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BELARUS', 'BY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BELGIUM', 'BE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BELIZE', 'BZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BENIN', 'BJ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BERMUDA', 'BM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BHUTAN', 'BT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BOLIVIA, PLURINATIONAL STATE OF', 'BO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BOSNIA AND HERZEGOVINA', 'BA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BOTSWANA', 'BW');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BOUVET ISLAND', 'BV');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BRAZIL', 'BR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BRITISH INDIAN OCEAN TERRITORY', 'IO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BRUNEI DARUSSALAM', 'BN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BULGARIA', 'BG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BURKINA FASO', 'BF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('BURUNDI', 'BI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CAMBODIA', 'KH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CAMEROON', 'CM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CANADA', 'CA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CAPE VERDE', 'CV');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CAYMAN ISLANDS', 'KY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CENTRAL AFRICAN REPUBLIC', 'CF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CHAD', 'TD');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CHILE', 'CL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CHINA', 'CN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CHRISTMAS ISLAND', 'CX');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('COCOS (KEELING) ISLANDS', 'CC');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('COLOMBIA', 'CO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('COMOROS', 'KM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CONGO', 'CG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CONGO, THE DEMOCRATIC REPUBLIC OF THE', 'CD');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('COOK ISLANDS', 'CK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('COSTA RICA', 'CR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('C�TE D''IVOIRE', 'CI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CROATIA', 'HR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CUBA', 'CU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CYPRUS', 'CY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('CZECH REPUBLIC', 'CZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('DENMARK', 'DK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('DJIBOUTI', 'DJ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('DOMINICA', 'DM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('DOMINICAN REPUBLIC', 'DO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ECUADOR', 'EC');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('EGYPT', 'EG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('EL SALVADOR', 'SV');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('EQUATORIAL GUINEA', 'GQ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ERITREA', 'ER');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ESTONIA', 'EE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ETHIOPIA', 'ET');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('FALKLAND ISLANDS (MALVINAS)', 'FK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('FAROE ISLANDS', 'FO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('FIJI', 'FJ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('FINLAND', 'FI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('FRANCE', 'FR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('FRENCH GUIANA', 'GF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('FRENCH POLYNESIA', 'PF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('FRENCH SOUTHERN TERRITORIES', 'TF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GABON', 'GA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GAMBIA', 'GM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GEORGIA', 'GE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GERMANY', 'DE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GHANA', 'GH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GIBRALTAR', 'GI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GREECE', 'GR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GREENLAND', 'GL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GRENADA', 'GD');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GUADELOUPE', 'GP');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GUAM', 'GU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GUATEMALA', 'GT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GUERNSEY', 'GG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GUINEA', 'GN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GUINEA-BISSAU', 'GW');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('GUYANA', 'GY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('HAITI', 'HT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('HEARD ISLAND AND MCDONALD ISLANDS', 'HM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('HOLY SEE (VATICAN CITY STATE)', 'VA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('HONDURAS', 'HN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('HONG KONG', 'HK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('HUNGARY', 'HU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ICELAND', 'IS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('INDIA', 'IN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('INDONESIA', 'ID');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('IRAN, ISLAMIC REPUBLIC OF', 'IR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('IRAQ', 'IQ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('IRELAND', 'IE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ISLE OF MAN', 'IM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ISRAEL', 'IL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ITALY', 'IT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('JAMAICA', 'JM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('JAPAN', 'JP');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('JERSEY', 'JE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('JORDAN', 'JO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('KAZAKHSTAN', 'KZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('KENYA', 'KE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('KIRIBATI', 'KI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('KOREA, DEMOCRATIC PEOPLE''S REPUBLIC OF', 'KP');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('KOREA, REPUBLIC OF', 'KR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('KUWAIT', 'KW');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('KYRGYZSTAN', 'KG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LAO PEOPLE''S DEMOCRATIC REPUBLIC', 'LA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LATVIA', 'LV');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LEBANON', 'LB');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LESOTHO', 'LS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LIBERIA', 'LR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LIBYAN ARAB JAMAHIRIYA', 'LY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LIECHTENSTEIN', 'LI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LITHUANIA', 'LT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('LUXEMBOURG', 'LU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MACAO', 'MO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF', 'MK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MADAGASCAR', 'MG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MALAWI', 'MW');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MALAYSIA', 'MY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MALDIVES', 'MV');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MALI', 'ML');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MALTA', 'MT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MARSHALL ISLANDS', 'MH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MARTINIQUE', 'MQ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MAURITANIA', 'MR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MAURITIUS', 'MU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MAYOTTE', 'YT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MEXICO', 'MX');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MICRONESIA, FEDERATED STATES OF', 'FM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MOLDOVA, REPUBLIC OF', 'MD');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MONACO', 'MC');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MONGOLIA', 'MN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MONTENEGRO', 'ME');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MONTSERRAT', 'MS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MOROCCO', 'MA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MOZAMBIQUE', 'MZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MYANMAR', 'MM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NAMIBIA', 'NA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NAURU', 'NR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NEPAL', 'NP');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NETHERLANDS', 'NL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NETHERLANDS ANTILLES', 'AN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NEW CALEDONIA', 'NC');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NEW ZEALAND', 'NZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NICARAGUA', 'NI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NIGER', 'NE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NIGERIA', 'NG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NIUE', 'NU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NORFOLK ISLAND', 'NF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NORTHERN MARIANA ISLANDS', 'MP');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('NORWAY', 'NO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('OMAN', 'OM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PAKISTAN', 'PK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PALAU', 'PW');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PALESTINIAN TERRITORY, OCCUPIED', 'PS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PANAMA', 'PA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PAPUA NEW GUINEA', 'PG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PARAGUAY', 'PY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PERU', 'PE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PHILIPPINES', 'PH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PITCAIRN', 'PN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('POLAND', 'PL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PORTUGAL', 'PT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('PUERTO RICO', 'PR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('QATAR', 'QA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('R�UNION', 'RE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ROMANIA', 'RO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('RUSSIAN FEDERATION', 'RU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('RWANDA', 'RW');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAINT BARTH�LEMY', 'BL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA', 'SH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAINT KITTS AND NEVIS', 'KN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAINT LUCIA', 'LC');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAINT MARTIN', 'MF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAINT PIERRE AND MIQUELON', 'PM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAINT VINCENT AND THE GRENADINES', 'VC');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAMOA', 'WS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAN MARINO', 'SM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAO TOME AND PRINCIPE', 'ST');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SAUDI ARABIA', 'SA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SENEGAL', 'SN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SERBIA', 'RS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SEYCHELLES', 'SC');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SIERRA LEONE', 'SL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SINGAPORE', 'SG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SLOVAKIA', 'SK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SLOVENIA', 'SI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SOLOMON ISLANDS', 'SB');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SOMALIA', 'SO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SOUTH AFRICA', 'ZA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS', 'GS');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SPAIN', 'ES');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SRI LANKA', 'LK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SUDAN', 'SD');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SURINAME', 'SR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SVALBARD AND JAN MAYEN', 'SJ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SWAZILAND', 'SZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SWEDEN', 'SE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SWITZERLAND', 'CH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('SYRIAN ARAB REPUBLIC', 'SY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TAIWAN, PROVINCE OF CHINA', 'TW');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TAJIKISTAN', 'TJ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TANZANIA, UNITED REPUBLIC OF', 'TZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('THAILAND', 'TH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TIMOR-LESTE', 'TL');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TOGO', 'TG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TOKELAU', 'TK');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TONGA', 'TO');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TRINIDAD AND TOBAGO', 'TT');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TUNISIA', 'TN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TURKEY', 'TR');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TURKMENISTAN', 'TM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TURKS AND CAICOS ISLANDS', 'TC');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('TUVALU', 'TV');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('UGANDA', 'UG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('UKRAINE', 'UA');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('UNITED ARAB EMIRATES', 'AE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('UNITED KINGDOM', 'GB');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('UNITED STATES', 'US');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('UNITED STATES MINOR OUTLYING ISLANDS', 'UM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('URUGUAY', 'UY');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('UZBEKISTAN', 'UZ');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('VANUATU', 'VU');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('VENEZUELA, BOLIVARIAN REPUBLIC OF', 'VE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('VIET NAM', 'VN');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('VIRGIN ISLANDS, BRITISH', 'VG');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('VIRGIN ISLANDS, U.S.', 'VI');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('WALLIS AND FUTUNA', 'WF');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('WESTERN SAHARA', 'EH');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('YEMEN', 'YE');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ZAMBIA', 'ZM');
+INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('ZIMBABWE', 'ZW');
+
+
+insert into docsources.tblAccessLog select * from docsources_2011.tblAccessLog;
+insert into docsources.tblUserComment select * from docsources_2011.tblUserComment;
+insert into docsources.tblUserHistory select * from docsources_2011.tblUserHistory;
+insert into docsources.tblUserMessage select * from docsources_2011.tblUserMessage;
