@@ -56,6 +56,9 @@
 				</c:if>
 			</div>	
 			<div class="row">
+				<div class="item">Sender Notes</div> <div class="value80">${document.sendNotes}</div>
+			</div>
+			<div class="row">
 				<c:if test="${document.recipientPeople.personId != 9285 && document.recipientPeople.personId != 3905 && document.recipientPeople.personId != 198}">
 					<div class="item">Recipient</div> <div class="value80"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
 				</c:if>
@@ -70,6 +73,9 @@
 				<c:if test="${document.recipientPlace.placeAllId == 53384 || document.recipientPlace.placeAllId == 55627 || document.recipientPlace.placeAllId == 54332}">
 					<div class="item">To</div> <div class="value80">${document.recipientPlace.placeNameFull}</div>
 				</c:if>
+			</div>
+			<div class="row">
+				<div class="item">Recipient Notes</div> <div class="value80">${document.recipNotes}</div>
 			</div>	
 			<br>
 			<div class="row">

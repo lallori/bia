@@ -45,6 +45,7 @@ public class EditCorrespondentsOrPeopleDocumentCommand {
 	private String senderPlaceDescription;
 	private Boolean senderPlaceUnsure;
 	private String senderPlacePrefered;
+	private String sendNotes;
 	private Integer recipientPeopleId;
 	private String recipientPeopleDescription;
 	private Boolean recipientPeopleUnsure;
@@ -52,6 +53,7 @@ public class EditCorrespondentsOrPeopleDocumentCommand {
 	private String recipientPlaceDescription;
 	private Boolean recipientPlaceUnsure;
 	private String recipientPlacePrefered;
+	private String recipNotes;
 	private Document document;
 	
 	/**
@@ -152,6 +154,20 @@ public class EditCorrespondentsOrPeopleDocumentCommand {
 		this.senderPlaceUnsure = senderPlaceUnsure;
 	}
 	
+	/**
+	 * @param sendNotes the sendNotes to set
+	 */
+	public void setSendNotes(String sendNotes) {
+		this.sendNotes = sendNotes;
+	}
+
+	/**
+	 * @return the sendNotes
+	 */
+	public String getSendNotes() {
+		return sendNotes;
+	}
+
 	/**
 	 * @return the recipientPeopleId
 	 */
@@ -276,5 +292,19 @@ public class EditCorrespondentsOrPeopleDocumentCommand {
 	 */
 	public String getRecipientPlacePrefered() {
 		return recipientPlacePrefered;
+	}
+
+	/**
+	 * @param recipNotes the recipNotes to set
+	 */
+	public void setRecipNotes(String recipNotes) {
+		this.recipNotes = recipNotes;
+	}
+
+	/**
+	 * @return the recipNotes
+	 */
+	public String getRecipNotes() {
+		return recipNotes;
 	}
 }

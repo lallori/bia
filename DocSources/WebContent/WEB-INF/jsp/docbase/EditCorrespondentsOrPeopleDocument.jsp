@@ -62,6 +62,11 @@
 					<a title="Show this place record" id="placeIcon" class="senderLinkPlace"></a>
 				</c:if>
 			</div>
+			<br />
+			<div>
+				<form:label id="senderNotesLabel" for="sendNotes" path="sendNotes">Sender notes</form:label>
+				<form:textarea path="sendNotes" id="senderNotes" class="txtarea" name="senderNotes"/>
+			</div>
 
 			<hr />
 			
@@ -88,6 +93,11 @@
 				<c:if test="${command.document.recipientPlace.placeAllId == 53384 || command.document.recipientPlace.placeAllId == 55627 || command.document.recipientPlace.placeAllId == 54332 || command.document.recipientPlace.placeAllId == 0}">
 					<a title="Show this place record" id="placeIcon" class="recipientLinkPlace"></a>
 				</c:if>
+			</div>
+			<br />
+			<div>
+				<form:label for="recipNotes" id="recipientNotesLabel" path="recipNotes">Recipient notes</form:label>
+				<form:textarea path="recipNotes" id="recipientNotes" name="recipientNotes" class="txtarea"/>
 			</div>
 			
 			<form:hidden path="senderPeopleId"/>

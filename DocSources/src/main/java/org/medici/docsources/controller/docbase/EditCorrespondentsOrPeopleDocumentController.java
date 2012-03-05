@@ -118,6 +118,10 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				document.setSenderPlace(new Place(command.getSenderPlaceId()));
 				document.setSenderPlaceUnsure(command.getSenderPlaceUnsure());
 			}
+			
+			if(command.getSendNotes() != ""){
+				document.setSendNotes(command.getSendNotes());
+			}
 
 			if (!ObjectUtils.toString(command.getRecipientPeopleId()).equals("") || !ObjectUtils.toString(command.getRecipientPeopleDescription()).equals("")) {
 				document.setRecipientPeople(new People(command.getRecipientPeopleId()));
@@ -137,6 +141,10 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			} else {
 				document.setRecipientPlace(new Place(command.getRecipientPlaceId()));
 				document.setRecipientPlaceUnsure(command.getRecipientPlaceUnsure());
+			}
+			
+			if(command.getRecipNotes() != ""){
+				document.setRecipNotes(command.getRecipNotes());
 			}
 
 			try {
@@ -188,6 +196,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 					
 				}
 				command.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
+				command.setSendNotes(document.getSendNotes());
 
 				// We set recipient people in command object
 				if (document.getRecipientPeople() != null) {
@@ -202,6 +211,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 					command.setRecipientPlaceDescription(document.getRecipientPlace().getPlaceNameFull());
 				}
 				command.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
+				command.setRecipNotes(document.getRecipNotes());
 
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);

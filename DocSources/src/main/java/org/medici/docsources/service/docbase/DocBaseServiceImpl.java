@@ -466,6 +466,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 			else
 				documentToUpdate.setSenderPlace(null);
 			documentToUpdate.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
+			if(!document.getSendNotes().equals("")){
+				documentToUpdate.setSendNotes(document.getSendNotes());
+			}
 			
 			if ((!document.getRecipientPeople().getMapNameLf().equals(""))  && (document.getRecipientPeople().getPersonId() >0)) { 
 				People recipient = getPeopleDAO().find(document.getRecipientPeople().getPersonId());
@@ -517,6 +520,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 				documentToUpdate.setRecipientPlace(null);
 			}
 			documentToUpdate.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
+			if(!document.getRecipNotes().equals("")){
+				documentToUpdate.setRecipNotes(document.getRecipNotes());
+			}
 		
 			getUserHistoryDAO().persist(new UserHistory("Edit Correspondents", Action.MODIFY, Category.DOCUMENT, documentToUpdate));
 
