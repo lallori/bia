@@ -22,7 +22,7 @@
 			var colsort;
 			<c:choose>
 				<c:when test="${command.searchType.toString() == 'PEOPLE'}">
-					test = [[0, "desc"]];
+					test = [[0, "asc"]];
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }, { "bSortable": false, "aTargets": [4]}];
 				</c:when>			
 				<c:when test="${command.searchType.toString() == 'DOCUMENT'}">
@@ -30,7 +30,7 @@
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
 				</c:when>
 				<c:when test="${command.searchType.toString() == 'VOLUME'}">
-					test = [[1, "desc"]];
+					test = [[1, "asc"]];
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
 				</c:when>
 				<c:when test="${command.searchType.toString() == 'PLACE'}">

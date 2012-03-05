@@ -109,7 +109,7 @@ public class SimpleSearchPlace extends SimpleSearch {
 			jpaQuery.append(words[i]);
 			jpaQuery.append("%') OR termAccent like '%");
 			jpaQuery.append(words[i]);
-			jpaQuery.append("%'))");
+			jpaQuery.append("%')");
 			if(i < words.length-1){
 				jpaQuery.append(" AND ");
 			}

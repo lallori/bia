@@ -26,7 +26,7 @@
 			var colsort;
 			<c:choose>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'PEOPLE'}">
-					test = [[0, "desc"]];
+					test = [[0, "asc"]];
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }, { "bSortable": false, "aTargets": [4]}];
 				</c:when>			
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'EXTRACT' || command.simpleSearchPerimeter.toString() == 'SYNOPSIS'}">
@@ -38,7 +38,7 @@
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
 				</c:when>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'PLACE'}">
-					test = [[0, "desc"]];
+					test = [[0, "asc"]];
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [2,3] }];
 				</c:when>
 			</c:choose>
