@@ -744,6 +744,10 @@ public class AjaxController {
 					break;
 				case 1:
 					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
+					paginationFilter.addSortingCriteria("document.docYear", "asc");
+					//Month is an entity, so we don't have field with suffix 
+					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", "asc");
+					paginationFilter.addSortingCriteria("document.docDay", "asc");
 					break;
 				case 2:
 					paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
