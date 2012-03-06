@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.rolecat;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.RoleCat;
 
@@ -37,5 +41,12 @@ import org.medici.docsources.domain.RoleCat;
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface RoleCatDAO extends Dao<Integer, RoleCat> {
+	
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<RoleCat> getAllRoleCat() throws PersistenceException;
 
 }

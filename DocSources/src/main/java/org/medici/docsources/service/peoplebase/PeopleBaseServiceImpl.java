@@ -65,6 +65,7 @@ import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.domain.PoLink;
+import org.medici.docsources.domain.RoleCat;
 import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Action;
@@ -362,6 +363,23 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 
 			return person;
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public TitleOccsList addNewTitleOccupation(TitleOccsList titleOcc) throws ApplicationThrowable {
+		try{
+			TitleOccsList titleOccToPersist = new TitleOccsList(null);
+			titleOccToPersist.setTitleOcc(titleOcc.getTitleOcc());
+			titleOccToPersist.setRoleCat(getRoleCatDAO().find(titleOcc.getRoleCat().getRoleCatId()));
+			getTitleOccsListDAO().persist(titleOccToPersist);
+			return titleOccToPersist;
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1360,6 +1378,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public PoLinkDAO getPoLinkDAO() {
 		return poLinkDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<RoleCat> getRoleCat() throws ApplicationThrowable {
+		try{
+			return getRoleCatDAO().getAllRoleCat();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @return the roleCatsDAO
@@ -1456,10 +1486,34 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page searchRecipientDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().searchRecipientDocumentsPerson(personToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable {
 		try {
 			return getPeopleDAO().searchRecipientsPeople(query);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchReferringToDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().searchReferringToDocumentsPerson(personToSearch, paginationFilter);
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}
@@ -1471,6 +1525,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public Page searchRoleCatPeoplePerson(String roleCatToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{
 			return getPeopleDAO().searchRoleCatPeople(roleCatToSearch, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchSenderDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().searchSenderDocumentsPerson(personToSearch, paginationFilter);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
@@ -1488,6 +1554,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<People> searchSpouseLinkableToPerson(Integer personId, String query) throws ApplicationThrowable {
 		try{
@@ -1496,7 +1565,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */

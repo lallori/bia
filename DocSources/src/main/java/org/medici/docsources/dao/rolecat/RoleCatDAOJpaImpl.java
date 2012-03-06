@@ -27,6 +27,11 @@
  */
 package org.medici.docsources.dao.rolecat;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.RoleCat;
 import org.springframework.stereotype.Repository;
@@ -60,4 +65,15 @@ public class RoleCatDAOJpaImpl extends JpaDao<Integer, RoleCat> implements RoleC
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = -9002790272415154253L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RoleCat> getAllRoleCat() throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM RoleCat ORDER BY RoleCatMajor");
+		
+		return query.getResultList();
+	}
 }

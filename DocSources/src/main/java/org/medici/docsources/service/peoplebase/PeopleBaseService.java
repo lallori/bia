@@ -40,6 +40,7 @@ import org.medici.docsources.domain.Parent;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.People.Gender;
 import org.medici.docsources.domain.PoLink;
+import org.medici.docsources.domain.RoleCat;
 import org.medici.docsources.domain.TitleOccsList;
 import org.medici.docsources.exception.ApplicationThrowable;
 
@@ -105,6 +106,14 @@ public interface PeopleBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public People addNewPerson(People person) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param titleOcc
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public TitleOccsList addNewTitleOccupation(TitleOccsList titleOcc) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -427,6 +436,13 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<RoleCat> getRoleCat() throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void optimizeIndexPeople() throws ApplicationThrowable;
@@ -478,11 +494,29 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param personToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchRecipientDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param query
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchRecipientsPeople(String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchReferringToDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -493,6 +527,15 @@ public interface PeopleBaseService {
 	 */
 	public Page searchRoleCatPeoplePerson(String roleCatToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param personToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchSenderDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param query

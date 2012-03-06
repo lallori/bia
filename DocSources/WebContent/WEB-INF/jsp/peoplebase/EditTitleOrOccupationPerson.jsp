@@ -11,6 +11,7 @@
 		<c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 			<c:param name="personId"   value="${command.personId}" />
 		</c:url>
+		<c:url var="CreateNewTitleOrOccupationPersonURL" value="/de/peoplebase/CreateNewTitleOrOccupationPerson.do" />
 	</security:authorize>
 	<br>
 	<form:form id="EditTitleOrOccupationPersonForm" method="post" cssClass="edit">
@@ -120,6 +121,48 @@
 				}})
 				return false;
 			});
+			
+			var delay = (function(){
+				  var timer = 0;
+				  return function(callback, ms){
+				    clearTimeout (timer);
+				    timer = setTimeout(callback, ms);
+				  };
+				})();
+
+			var $dialogNewTitleOccupation = $j('<div id="DialogNewTitleOccupation"></div>').dialog({
+				resizable: false,
+				width: 550,
+				height: 200, 
+				modal: true,
+				autoOpen : false,
+				zIndex: 3999,
+				open: function(event, ui) { 
+            		$j(this).load('${CreateNewTitleOrOccupationPersonURL}');
+           		},
+				overlay: {
+					backgroundColor: '#000',
+					opacity: 0.5
+				},
+				title: 'CREATE NEW TITLE / OCCUPATION'
+			});
+			
+			$j('#titleAutocomplete').keyup(function(){
+				delay(function(){
+					$j(".autocomplete").each(function(){
+					if($j(this).text() == "No Title found."){
+						$j(this).append(" - <a id='createNew' href='#'>Create new Title / Occupation</a>");
+						$j("#createNew").click(function(){
+							titleOrOccupationDescription.killSuggestions();
+							$j("#titleAutocomplete").val("");
+							$dialogNewTitleOccupation.dialog("open");
+							return false;
+						});
+					}
+				});}, 1000 );				
+			});
+			
+			
 		});
 	</script>
 	

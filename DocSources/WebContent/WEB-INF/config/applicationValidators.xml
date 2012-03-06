@@ -105,6 +105,10 @@
 	</bean>
 
 	<!-- People base validator -->
+	<bean id="createNewTitleOrOccupationPersonValidator" class="org.medici.docsources.validator.peoplebase.CreateNewTitleOrOccupationPersonValidator">
+		<description>Create New Title Or Occupation Person Validator</description>
+	</bean>
+	
 	<bean id="deleteChildPersonValidator" class="org.medici.docsources.validator.peoplebase.DeleteChildPersonValidator">
         <description>Delete Child Person Validator.</description>
 	</bean>

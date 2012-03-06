@@ -511,6 +511,10 @@
 	<!--  Manuscript Viewer END -->
 
 	<!-- PeopleBase Module START -->
+	<definition name="peoplebase/CreateNewTitleOrOccupationPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreateNewTitleOrOccupationPerson.jsp" />
+	</definition>
+	
 	<definition name="peoplebase/ComparePerson" extends="template.compare">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ComparePerson.jsp"/>
 	</definition>
