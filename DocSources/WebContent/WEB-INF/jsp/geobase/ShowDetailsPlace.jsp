@@ -14,45 +14,45 @@
 	
 	<div id="geoDiv">
 		<div id="geoTitle">
-		
-		<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
-			<c:if test="${place.placeAllId == 0}">
-				<h2>Adding TGN Place Record</h2>
-				<p style="margin:0 0 5px 15px">To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
+			<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
+				<c:if test="${place.placeAllId == 0}">
+					<h2>Adding TGN Place Record</h2>
+					<p style="margin:0 0 5px 15px">To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
+				</c:if>
+				<%---<c:if test="${place.placeAllId != 0}">
+					<h4>Editing TGN Place Record</h4>
+					<div style="margin-left:8px">
+						<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
+					</div>
+				</c:if> --%>
 			</c:if>
-			<%---<c:if test="${place.placeAllId != 0}">
-				<h4>Editing TGN Place Record</h4>
+		
+			<c:if test="${place.plSource == 'MAPPLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">
+				<h2>MAP Place Record</h2>
+			</c:if>
+		
+			<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
+				<h2>MAP Site or Subsite</h2>
+			</c:if>
+		
+			<c:if test="${place.prefFlag == 'V'}">
+				<br />
 				<div style="margin-left:8px">
-					<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
+						<c:forEach items="${placeNames}" var="currentName">
+							<c:if test="${currentName.prefFlag == 'P'}">
+								<p><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
+							</c:if>
+						</c:forEach>
 				</div>
-			</c:if> --%>
-		</c:if>
-		
-		<c:if test="${place.plSource == 'MAPPLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">
-			<h2>MAP Place Record</h2>
-		</c:if>
-		
-		<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
-			<h2>MAP Site or Subsite</h2>
-		</c:if>
-		
-		<c:if test="${place.prefFlag == 'V'}">
-			<br />
-			<div style="margin-left:8px">
-					<c:forEach items="${placeNames}" var="currentName">
-						<c:if test="${currentName.prefFlag == 'P'}">
-							<p><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
-						</c:if>
-					</c:forEach>
-			</div>
-		</c:if>
-		</div>
-		
-		<c:if test="${place.placeName != null}">
-				<h3>${place.placeName}</h3>
-				<h4>${place.placeNameFull}</h4>
-				<h7>${place.plType}</h7>
 			</c:if>
+		
+			<c:if test="${place.placeName != null}">
+					<h3>${place.placeName}</h3>
+					<h4>${place.placeNameFull}</h4>
+					<h7>${place.plType}</h7>
+			</c:if>
+		
+		</div>
 		
 		<div class="background" id="EditDetailsPlaceDiv">
 			<div class="title">
@@ -94,7 +94,7 @@
 	
 		
 		</div>
-		</div>
+	</div>
 		
 		<br />
 
