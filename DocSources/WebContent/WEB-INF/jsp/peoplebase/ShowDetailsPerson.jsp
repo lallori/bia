@@ -24,7 +24,32 @@
 	<c:url var="ShowDocumentsPersonURL" value="/de/peoplebase/ShowDocumentsPerson.do">
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
+	
+	<h3>${person.mapNameLf}</h3>
+	<c:forEach items="${person.poLink}" var="currentPoLink">
+		<c:if test="${currentPoLink.preferredRole}">
+			<h4>${currentPoLink.titleOccList.titleOcc}</h4>
+		</c:if>
+	</c:forEach>
+	
+	<c:if test="${person.activeStart != null}">
+		<h7>Active Start: ${person.activeStart}</h7>
+	</c:if>
+	<c:if test="${person.activeStart == null}">
+		<h7>Birth: ${person.bornYear} ${person.bornMonth} ${person.bornDay}</h7>
+	</c:if>
+		
+	<c:if test="${person.activeEnd != null}">
+		<h7>Active End: ${person.activeEnd}</h7>
+	</c:if>
+	<c:if test="${person.activeEnd == null}">
+		<h7>Death: ${person.deathYear} ${person.deathMonth} ${person.deathDay}</h7>
+	</c:if>
+	
+	
+		
 
+	
 	<div id="EditDetailsPersonDiv" class="background">
 		<div class="title">
 			<h5>PERSON DETAILS</h5>
@@ -32,7 +57,7 @@
 				<a id="EditDetailsPerson" href="${EditDetailsPersonURL}" class="editButton"></a><span id="loading"/>
 			</security:authorize>
 		</div>
-		<h3>${person.mapNameLf}</h3>
+		
 		
 		<c:if test="${docsRelated != 0 && docsRelated != 1}">
 			<a href="${ShowDocumentsPersonURL}" class="num_docs" title="Click here to view all documents related">${docsRelated} Documents related</a>

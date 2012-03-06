@@ -20,12 +20,12 @@
 			<h2>Adding TGN Place Record</h2>
 			<p style="margin:0 0 5px 15px">To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
 		</c:if>
-		<c:if test="${place.placeAllId != 0}">
+		<%---<c:if test="${place.placeAllId != 0}">
 			<h4>Editing TGN Place Record</h4>
 			<div style="margin-left:8px">
 				<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
 			</div>
-		</c:if>
+		</c:if> --%>
 	</c:if>
 	
 	<c:if test="${place.plSource == 'MAPPLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">
@@ -48,6 +48,12 @@
 	</c:if>
 	</div>
 	
+	<c:if test="${place.placeName != null}">
+			<h3>${place.placeName}</h3>
+			<h4>${place.placeNameFull}</h4>
+			<h7>${place.plType}</h7>
+		</c:if>
+	
 	<div class="background" id="EditDetailsPlaceDiv">
 		<div class="title">
 			<h5>PLACE DETAILS</h5>
@@ -55,12 +61,6 @@
 			<a id="EditDetailsPlace" href="${EditDetailsPlaceURL}" class="editButton"></a><span id="loading" />
 			</security:authorize>
 		</div>
-		
-		<c:if test="${place.placeName != null}">
-			<h3>${place.placeName}</h3>
-			<h4>${place.placeNameFull}</h4>
-			<h7>${place.plType}</h7>
-		</c:if>
 		
 		<div id="PlaceMapDiv">
 			<img src="<c:url value="/images/1024/img_place.png"/>" alt="Place" width="120px" height="160px">

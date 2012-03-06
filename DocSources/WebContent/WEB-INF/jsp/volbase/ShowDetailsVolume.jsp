@@ -22,6 +22,21 @@
 		<c:param name="summaryId" value="${volume.summaryId}" />
 	</c:url>
 		
+	<c:if test="${volume.volNum != 0}">
+		<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
+		<h4>${volume.serieList}</h4>
+		<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
+	</c:if>
+	
+	<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
+			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Documents related</a>
+		</c:if>
+		<c:if test="${volDocsRelated == 0}">
+			<a class="num_docs">0 Documents related</a>
+		</c:if>
+		<c:if test="${volDocsRelated == 1}">
+			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Document related</a>
+	</c:if>
 	
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
@@ -30,11 +45,6 @@
 			<a id="EditDetailsVolume" href="${EditDetailsVolumeURL}" class="editButton"></a><span id="loading"/>
 		</security:authorize>
 		</div>
-
-		<c:if test="${volume.volNum != 0}">
-			<h3>MDP ${volume.volNum}</h3>
-			<h4>${volume.serieList}</h4>
-		</c:if>
 		
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 			<c:if test="${not empty image}">
@@ -72,15 +82,6 @@
 			</div>
 		</security:authorize>
 		
-		<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Documents related</a>
-		</c:if>
-		<c:if test="${volDocsRelated == 0}">
-			<a class="num_docs">0 Documents related</a>
-		</c:if>
-		<c:if test="${volDocsRelated == 1}">
-			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Document related</a>
-		</c:if>
 		<div class="listDetails">
 			<div class="row">
 				<div class="item">Volume/Filza</div>

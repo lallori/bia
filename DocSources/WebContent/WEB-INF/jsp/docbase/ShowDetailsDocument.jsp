@@ -41,7 +41,14 @@
 	<c:url var="CompareVolumeURL" value="/src/volbase/CompareVolume.do">
 		<c:param name="summaryId"   value="${document.volume.summaryId}" />
 	</c:url>
-
+	
+	<c:if test="${document.volume != null}">
+		<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt} - Folio: ${document.folioNum}${document.folioMod}</h3>
+		<h4>(${document.senderPeople.mapNameLf}) TO &rArr; (${document.recipientPeople.mapNameLf})</h4>
+		<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+	</c:if>
+	
+	
 	<div id="EditDetailsDocumentDiv" class="background">
 		<div class="title">
 			<h5>DOCUMENT DETAILS </h5>
@@ -50,9 +57,6 @@
 		</security:authorize>
 		</div>
 		
-		<c:if test="${document.volume != null}">
-			<h3>MDP ${document.volume.volNum} ${document.volume.volLetExt}</h3><h4>Folio ${document.folioNum} ${document.folioMod}</h4>
-		</c:if>
 		
 		<c:if test="${not empty image}">
 			<div id="DocumentImageDigitDiv">

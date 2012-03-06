@@ -13,10 +13,11 @@
 /* ----------------- TITLES ------------------------------- */ 
 
 h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLACE NAME (in PLACE DETAILS) */
-	padding:0 0 15px 30px;
-	font-size:14px;
-	font-style:italic;
-	color:#666EA4;
+	padding: 0 0 8px 12px;
+	font-size: 16px;
+	font-style: italic;
+	color: #666EA4;
+	margin-top: 47px;
 }
 
 h3.place { /* PLACE NAME */
@@ -37,8 +38,7 @@ h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	text-align:left;
 	font-size: 11px;
 	font-style:italic;
-	padding:0 0 2px 10px;
-	margin:5px 0 0 0;
+	padding: 0 0 8px 12px;
 	color: #666EA4;
 }
 
@@ -75,6 +75,12 @@ h6 { /* Titles */
 	text-align:center;
 }
 
+h7 {
+	font-size:11px;
+	display:block;
+	margin:0 0 8px 12px;
+	color:#088A08;
+}
 
 /* --------------------------------------------------------- */ 
 /*
@@ -684,6 +690,11 @@ img.transparent {
 	margin: 5px 6px 5px 5px; 
 }
 
+.input_43c { /* input for 40 characters approx. */ 
+	width: 365px;
+	margin: 5px 6px 5px 5px; 
+}
+
 .input_45c { /* input for 45 characters approx. */ 
 	width: 410px;
 	margin: 5px 6px 5px 0px; 
@@ -1103,7 +1114,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditUserControlForm, #EditEmailControlDiv {
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditUserControlForm, #EditEmailControlDiv, #EditDetailsVolumeDiv {
 	width:485px;
 	margin:10px 0 0 0;
 	min-height:100px;!important
@@ -1115,15 +1126,6 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 
 /* Body left Details Divs */
-#body_left #EditDetailsDocumentDiv, #body_left #EditDetailsPersonDiv  {
-	margin-top:45px;
-	min-height:100px;!important
-}
-
-#body_left #EditDetailsVolumeDiv {
-	margin-top: 45px;
-	min-height:240px;!important
-}
 
 #body_left #EditDetailsPlaceDiv  {
 	width:485px;
@@ -1592,8 +1594,8 @@ input.file {
 /* --------- EditDetailsPerson ---------- */
 
 .num_docs {
-	margin-left:30px;
-	color:#900;
+	margin-left: 14px;
+	color: #900;
 }
 
 a.num_docs {
@@ -1605,6 +1607,27 @@ a.num_docs {
 	width:111px;
 	height:145px;
 	background:url(/DocSources/images/1024/img_user.jpg) no-repeat;
+}
+
+#uploadPortrait {
+	width: 122px;
+	height: 22px;
+	display: inline;
+	background-image: url(/DocSources/images/1024/button_medium.png);
+	background-repeat: no-repeat;
+	padding: 4px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+	float: left;
+	margin: 10px 0 20px 4px;
+}
+
+#uploadPortrait:hover {
+	text-decoration:none;
+}
+
+#EditPortraitPersonForm #save {
+	margin: 5px auto auto 170px;
 }
 
 #sucNumLabel {
@@ -1673,12 +1696,9 @@ margin-left: 56px;
 }
 
 #linkLabel  {
-	margin-left: 8px;
+	margin-left: 14px;
 }
 
-#browseLabel {
-	margin-left: 55px;
-}
 
 /* -------------------------------------- */
 /*
@@ -2752,10 +2772,6 @@ a.refreshVolumeExplorer {
 }
 
 /* Create Place */
-
-#geoDiv {
-	margin-top:30px;
-}
 
 #EditDetailsPlaceDiv h4 {
 	padding: 0 0 7px 30px;
