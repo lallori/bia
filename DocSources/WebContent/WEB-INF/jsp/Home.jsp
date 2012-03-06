@@ -19,6 +19,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<c:url var="LastEntryUserURL" value="/user/LastEntryUser.json" />
 
 <script>
 	$j(function() {
@@ -36,6 +38,25 @@
 		$j("#tabs span.ui-icon-close" ).live("click", function() {
 			var index = $j("li", $j("#tabs")).index($j(this).parent());
 			$j("#tabs").tabs("remove", index);
+		});
+		
+		$j.get('${LastEntryUserURL}', function(data){
+			if(data.category == 'Document'){
+				$j("#body_left").load('<c:url value="/src/docbase/ShowLastEntryDocument.do"/>');
+				return false;
+			}
+			if(data.category == 'Volume'){
+				$j("#body_left").load('<c:url value="/src/volbase/ShowLastEntryVolume.do"/>');
+				return false;
+			}
+			if(data.category == 'Person'){
+				$j("#body_left").load('<c:url value="/src/peoplebase/ShowLastEntryPerson.do"/>');
+				return false;
+			}
+			if(data.category == 'Place'){
+				$j("#body_left").load('<c:url value="/src/geobase/ShowLastEntryPlace.do"/>');
+				return false;
+			}
 		});
 	});
 </script>

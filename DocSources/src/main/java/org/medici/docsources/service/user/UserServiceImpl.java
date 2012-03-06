@@ -53,6 +53,7 @@ import org.medici.docsources.domain.PasswordChangeRequest;
 import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
+import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -662,6 +663,18 @@ public class UserServiceImpl implements UserService {
 		try {
 			getUserHistoryDAO().restoreUserHistory(username, category);
 		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserHistory searchLastUserHistoryEntry() throws ApplicationThrowable {
+		try{
+			return getUserHistoryDAO().findLastEntry();
+		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
 	}

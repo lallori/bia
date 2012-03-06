@@ -66,7 +66,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AjaxController {
 	@Autowired
 	private UserService userService;
-
+	
 	/**
 	 * This method will make a check if account passed as parameter is not 
 	 * already present in LDAP Tree.
@@ -88,6 +88,21 @@ public class AjaxController {
 	 */
 	public UserService getUserService() {
 		return userService;
+	}
+	
+	@RequestMapping(value = "/user/LastEntryUser.json", method = RequestMethod.GET)
+	public ModelAndView lastEntryUser(){
+		Map<String, Object> model = new HashMap<String, Object>();
+		UserHistory lastEntry = null;
+		try{
+			lastEntry = getUserService().searchLastUserHistoryEntry();
+			model.put("category", lastEntry.getCategory().toString());
+			
+			return new ModelAndView("responseOK", model);
+		}catch(ApplicationThrowable aex){
+			return new ModelAndView("responseKO", model);
+		}
+		
 	}
 
 	/**
