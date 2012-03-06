@@ -530,6 +530,196 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/peoplebase/ShowRecipientDocumentsRelatedPerson.json", method = RequestMethod.GET)
+	public ModelAndView ShowRecipientDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
+		
+		try{
+			page = getPeopleBaseService().searchRecipientDocumentsRelated(alias, paginationFilter);
+			
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			
+			stateDocumentsDigitized = getPeopleBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
+		}catch(ApplicationThrowable aex){
+			page = new Page(paginationFilter);
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+				}else{
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+				}				
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/peoplebase/ShowReferringToDocumentsRelatedPerson.json", method = RequestMethod.GET)
+	public ModelAndView ShowReferringToDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
+		
+		try{
+			page = getPeopleBaseService().searchReferringToDocumentsRelated(alias, paginationFilter);
+			
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			
+			stateDocumentsDigitized = getPeopleBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
+		}catch(ApplicationThrowable aex){
+			page = new Page(paginationFilter);
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+				}else{
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+				}				
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
+	}
+	
 	/**
 	 * This method performs a simple search on people dictionary.
 	 * 
@@ -571,6 +761,101 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 		
+		return new ModelAndView("responseOK", model);
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/peoplebase/ShowSenderDocumentsRelatedPerson.json", method = RequestMethod.GET)
+	public ModelAndView ShowSenderDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
+		
+		try{
+			page = getPeopleBaseService().searchSenderDocumentsRelated(alias, paginationFilter);
+			
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			
+			stateDocumentsDigitized = getPeopleBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
+		}catch(ApplicationThrowable aex){
+			page = new Page(paginationFilter);
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+				}else{
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+				}				
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
 		return new ModelAndView("responseOK", model);
 	}
 	

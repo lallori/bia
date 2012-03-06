@@ -156,6 +156,15 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 
 	/**
 	 * 
+	 * @param personToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchRecipientDocumentsPerson(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param placeToSearch
 	 * @param paginationFilter
 	 * @return
@@ -163,6 +172,24 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 */
 	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param personToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchReferringToDocumentsPerson(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param personToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchSenderDocumentsPerson(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param placeToSearch
