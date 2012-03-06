@@ -21,7 +21,8 @@
 	<c:url var="ShowDocumentsVolumeURL" value="/de/peoplebase/ShowDocumentsVolume.do">
 		<c:param name="summaryId" value="${volume.summaryId}" />
 	</c:url>
-		
+	<div id="personDiv">
+		<div id="personTitle">	
 	<c:if test="${volume.volNum != 0}">
 		<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
 		<h4>${volume.serieList}</h4>
@@ -37,6 +38,7 @@
 		<c:if test="${volDocsRelated == 1}">
 			<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Document related</a>
 	</c:if>
+	
 	
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
