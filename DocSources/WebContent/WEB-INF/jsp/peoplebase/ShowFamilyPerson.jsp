@@ -8,7 +8,7 @@
 	<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Family "${family}"
+		Family "${family}" <span id="recordsNum${nameId}" class="recordsNum"></span>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showFamilyPerson${nameId}">
@@ -50,6 +50,7 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
+					$j("#recordsNum${nameId}").text(this.fnSettings()._iRecordsTotal + ' Records');
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');
