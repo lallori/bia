@@ -148,7 +148,7 @@ public class EditDetailsDocumentController {
 					Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 					model.put("image", image);
 					
-					return new ModelAndView("docbase/ShowDetailsDocument", model);
+					return new ModelAndView("docbase/ShowDocument", model);
 				}
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);

@@ -306,7 +306,7 @@
 					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 		        	$j("#loadingDiv").css('visibility', 'visible');
 	 				$j.ajax({ type:"POST", url:$j(this).closest('form').attr("action"), data:$j(this).closest('form').serialize(), async:false, success:function(html) { 
-						$j("#EditCorrespondentsDocumentDiv").html(html);
+						$j("#body_left").html(html);
 					}});
 	 				return false;
 				}

@@ -336,7 +336,7 @@
 						$j("#body_left").html(html);
 					</c:when> 
 					<c:otherwise> 
-						$j("#EditDetailsPersonDiv").html(html);
+						$j("#body_left").html(html);
 						$j("#EditNamesPersonDiv").load("${ShowNamesPersonURL}");
 					</c:otherwise> 
 				</c:choose> 

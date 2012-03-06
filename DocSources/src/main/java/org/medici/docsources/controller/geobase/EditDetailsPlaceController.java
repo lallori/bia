@@ -38,6 +38,7 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -131,6 +132,19 @@ public class EditDetailsPlaceController {
 					List<Place> placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 					model.put("placeNames", placeNames);
 					model.put("place", place);
+					model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(place.getPlaceAllId()));
+					model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(place.getPlaceAllId()));
+					model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(place.getPlaceAllId()));
+					model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(place.getPlaceAllId()));
+					model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(place.getPlaceAllId()));
+					model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
+					model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
+					model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
+					
+					if(place.getPlaceGeographicCoordinates() != null)
+						model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
+					else
+						model.put("linkGoogleMaps", null);
 					return new ModelAndView("geobase/ShowPlace", model);
 				}
 			}catch(ApplicationThrowable th){

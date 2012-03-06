@@ -155,7 +155,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);
 			}
 			
-			return new ModelAndView("docbase/ShowCorrespondentsOrPeopleDocument", model);
+			return new ModelAndView("docbase/ShowDocument", model);
 		}
 	}
 

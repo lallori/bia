@@ -272,7 +272,7 @@
 							$j("#body_left").html(html);
 						</c:when> 
 						<c:otherwise> 
-							$j("#EditDetailsVolumeDiv").html(html);
+							$j("#body_left").html(html);
 						</c:otherwise> 
 					</c:choose> 
 					}

@@ -125,8 +125,9 @@ public class EditDetailsVolumeController {
 				} else {
 					volume = getVolBaseService().editDetailsVolume(volume);
 					model.put("volume", volume);
+					model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
 
-					return new ModelAndView("volbase/ShowDetailsVolume", model);
+					return new ModelAndView("volbase/ShowVolume", model);
 				}
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsVolume", model);

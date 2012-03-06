@@ -38,6 +38,7 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
+import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
@@ -163,8 +164,12 @@ public class EditDetailsPersonController {
 					person = getPeopleBaseService().editDetailsPerson(person);
 					model.put("person", person);
 					model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
+					List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
+					model.put("marriages", marriages);
+					List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
+					model.put("children", children);
 
-					return new ModelAndView("peoplebase/ShowDetailsPerson", model);
+					return new ModelAndView("peoplebase/ShowPerson", model);
 				}
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsPerson", model);
