@@ -42,86 +42,90 @@
 		<c:param name="summaryId"   value="${document.volume.summaryId}" />
 	</c:url>
 	
-	<c:if test="${document.volume != null}">
-		<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt} - Folio: ${document.folioNum}${document.folioMod}</h3>
-		<h4>(${document.senderPeople.mapNameLf}) TO &rArr; (${document.recipientPeople.mapNameLf})</h4>
-		<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
-	</c:if>
 	
+	<div id="documentDiv">
+		<div id="documentTitle">
+			<c:if test="${document.volume != null}">
+				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt} - Folio: ${document.folioNum}${document.folioMod}</h3>
+				<h4>(${document.senderPeople.mapNameLf}) TO &rArr; (${document.recipientPeople.mapNameLf})</h4>
+				<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+			</c:if>
+		</div>
 	
-	<div id="EditDetailsDocumentDiv" class="background">
-		<div class="title">
-			<h5>DOCUMENT DETAILS </h5>
-		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-			<a id="EditDetailsDocument" href="${EditDetailsDocumentURL}" class="editButton"></a><span id="loading"/>
-		</security:authorize>
-		</div>
-		
-		
-		<c:if test="${not empty image}">
-			<div id="DocumentImageDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
-					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a><br>
-					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
-				</security:authorize>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-					<span class="register">To see this Document you must register</span>
-					<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
-				</security:authorize>
+		<div id="EditDetailsDocumentDiv" class="background">
+			<div class="title">
+				<h5>DOCUMENT DETAILS </h5>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<a id="EditDetailsDocument" href="${EditDetailsDocumentURL}" class="editButton"></a><span id="loading"/>
+			</security:authorize>
 			</div>
-		</c:if>
-		<c:if test="${empty image}">
-			<div id="DocumentImageNotDigitDiv">
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-					<span>To be digitized</span>
-					<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
-				</security:authorize>
-				<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-					<span class="register">To see this Document you must register</span>
-					<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
-				</security:authorize>
+			
+			
+			<c:if test="${not empty image}">
+				<div id="DocumentImageDigitDiv">
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+						<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
+						<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a><br>
+						<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
+					</security:authorize>
+					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+						<span class="register">To see this Document you must register</span>
+						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+					</security:authorize>
+				</div>
+			</c:if>
+			<c:if test="${empty image}">
+				<div id="DocumentImageNotDigitDiv">
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+						<span>To be digitized</span>
+						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+					</security:authorize>
+					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+						<span class="register">To see this Document you must register</span>
+						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+					</security:authorize>
+				</div>
+			</c:if>
+			
+			<div class="listDetails">
+				<div class="row">
+					<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Volume</div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="Click here to view this volume">${document.volume.volNum}${document.volume.volLetExt}</a></div>
+				</div>
+				<div class="row">
+					<div class="item60">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Paginated</div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Nonconsecutive</div> <div class="value">${document.contDisc ? 'Yes' : 'NO'}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Modern Date</div> <div class="valueHilight">${document.yearModern}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
+				</div>
+				<div class="row">
+					<div class="item60">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
+				</div>
 			</div>
-		</c:if>
-		
-		<div class="listDetails">
-			<div class="row">
-				<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Volume</div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="Click here to view this volume">${document.volume.volNum}${document.volume.volLetExt}</a></div>
-			</div>
-			<div class="row">
-				<div class="item60">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Document starts at folio </div> <div class="value">${document.folioNum} / ${document.folioMod}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Paginated</div> <div class="value">${document.unpaged ? 'Yes' : 'NO'}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Nonconsecutive</div> <div class="value">${document.contDisc ? 'Yes' : 'NO'}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Modern Date</div> <div class="valueHilight">${document.yearModern}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
-			</div>
-			<div class="row">
-				<div class="item60">Undated</div> <div class="value">${document.undated ? 'Yes' : 'NO'}</div>
-			</div>
-		</div>
-		<div class="list">
-			<div class="row">
-				<div class="item37">Date Notes</div> <div class="value50">${document.dateNotes}</div>
+			<div class="list">
+				<div class="row">
+					<div class="item37">Date Notes</div> <div class="value50">${document.dateNotes}</div>
+				</div>
 			</div>
 		</div>
 	</div>
