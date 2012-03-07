@@ -466,7 +466,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			else
 				documentToUpdate.setSenderPlace(null);
 			documentToUpdate.setSenderPlaceUnsure(document.getSenderPlaceUnsure());
-			if(!document.getSendNotes().equals("")){
+			if(document.getSendNotes() != null && !document.getSendNotes().equals("")){
 				documentToUpdate.setSendNotes(document.getSendNotes());
 			}
 			
@@ -520,7 +520,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 				documentToUpdate.setRecipientPlace(null);
 			}
 			documentToUpdate.setRecipientPlaceUnsure(document.getRecipientPlaceUnsure());
-			if(!document.getRecipNotes().equals("")){
+			if(document.getRecipNotes() != null && !document.getRecipNotes().equals("")){
 				documentToUpdate.setRecipNotes(document.getRecipNotes());
 			}
 		

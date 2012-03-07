@@ -509,7 +509,7 @@
 			$j("#EditCorrespondentsDocumentDiv").append($j(".notPrincipal"));
 			$j(".blockUI").remove();
 			$j.ajax({ type:"POST", url:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').attr("action"), data:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').serialize(), async:false, success:function(html) { 
-				$j("#EditCorrespondentsDocumentDiv").html(html);
+				$j("#body_left").html(html);
 			}});
 			return false;
 		});
@@ -535,7 +535,7 @@
 				return false;
 			}else{
 				$j.ajax({ type:"POST", url:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').attr("action"), data:$j("#EditCorrespondentsOrPeopleDocumentForm").closest('form').serialize(), async:false, success:function(html) { 
-					$j("#EditCorrespondentsDocumentDiv").html(html);
+					$j("#body_left").html(html);
 				}});
 				return false;
 			}
