@@ -83,6 +83,12 @@ public class AjaxController {
 	@RequestMapping(value = "/de/peoplebase/SearchChildLinkableToPerson", method = RequestMethod.GET)
 	public ModelAndView searchChildLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			List<People> people = getPeopleBaseService().searchChildLinkableToPerson(personId, query);
@@ -111,6 +117,12 @@ public class AjaxController {
 	@RequestMapping(value = "/de/peoplebase/SearchFatherLinkableToPerson", method = RequestMethod.GET)
 	public ModelAndView searchFatherLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			List<People> people = getPeopleBaseService().searchFatherLinkableToPerson(personId, query);
@@ -139,6 +151,12 @@ public class AjaxController {
 	@RequestMapping(value = "/de/peoplebase/SearchMotherLinkableToPerson", method = RequestMethod.GET)
 	public ModelAndView searchMotherLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			List<People> people = getPeopleBaseService().searchMotherLinkableToPerson(personId, query);
@@ -166,6 +184,12 @@ public class AjaxController {
 	@RequestMapping(value = "/de/peoplebase/SearchRecipientPeople", method = RequestMethod.GET)
 	public ModelAndView searchRecipients(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			List<People> people = getPeopleBaseService().searchRecipientsPeople(query);
@@ -194,6 +218,12 @@ public class AjaxController {
 	@RequestMapping(value = "/de/peoplebase/SearchSenderPeople", method = RequestMethod.GET)
 	public ModelAndView searchSenders(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
@@ -225,6 +255,12 @@ public class AjaxController {
 	@RequestMapping(value = "/de/peoplebase/SearchSpouseLinkableToPerson", method = RequestMethod.GET)
 	public ModelAndView searchSpouseLinkableToPerson(@RequestParam("personId") Integer personId, @RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 
 		try {
 			List<People> people = getPeopleBaseService().searchChildLinkableToPerson(personId, query);

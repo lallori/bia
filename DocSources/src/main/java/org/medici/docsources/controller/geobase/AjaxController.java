@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.controller.geobase;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,12 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+		
+		try {
 			List<Place> places = getGeoBaseService().searchBornPlace(query);
 			model.put("query", query);
 			model.put("count", places.size());
@@ -97,6 +104,12 @@ public class AjaxController {
 	public ModelAndView searchDeathPlace(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+		
 		try {
 			List<Place> places = getGeoBaseService().searchDeathPlace(query);
 			model.put("query", query);
@@ -125,6 +138,12 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+		
+		try {
 			List<Place> places = getGeoBaseService().searchPlaceParent(query);
 			model.put("query", query);
 			model.put("count", places.size());
@@ -150,6 +169,12 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+		
+		try {
 			List<Place> places = getGeoBaseService().searchSendersPlace(query);
 			model.put("query", query);
 			model.put("count", places.size());
@@ -174,6 +199,12 @@ public class AjaxController {
 	public ModelAndView searchRecipients(@RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+		
 		try {
 			List<Place> places = getGeoBaseService().searchRecipientsPlace(query);
 			model.put("query", query);

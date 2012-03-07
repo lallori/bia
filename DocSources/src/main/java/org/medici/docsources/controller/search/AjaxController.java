@@ -441,6 +441,12 @@ public class AjaxController {
 		try {
 //			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
 //			paginationFilter.addSortingCriteria("mapNameLf_Sort", "DESC");
+			
+			try {
+				query = new String(query.getBytes(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				
+			}
 
 			List<People> people = getSearchService().searchPeople(query);
 			model.put("query", query);
@@ -473,6 +479,12 @@ public class AjaxController {
 //			PaginationFilter paginationFilter = new PaginationFilter(0, Integer.MAX_VALUE);
 //			paginationFilter.addSortingCriteria("placeNameFull_Sort", "DESC");
 
+			try {
+				query = new String(query.getBytes(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				
+			}
+			
 			List<Place> places = getSearchService().searchPlaces(query);
 			model.put("query", query);
 			model.put("count", places.size());
