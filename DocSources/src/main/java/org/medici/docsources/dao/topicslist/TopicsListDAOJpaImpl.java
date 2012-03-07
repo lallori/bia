@@ -92,7 +92,7 @@ public class TopicsListDAOJpaImpl extends JpaDao<Integer, TopicList> implements 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TopicList> findTopicsList() throws PersistenceException {
-		Query query = getEntityManager().createQuery("from TopicList");
+		Query query = getEntityManager().createQuery("from TopicList ORDER BY topicTitle");
 		
 		return query.getResultList();
 	}
