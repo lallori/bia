@@ -11,7 +11,7 @@
 	<h1 id="placeNameH1"><a>Place Name</a></h1>
 	<div>
 		<form id="placeNameSearchForm" method="post" class="edit">
-			<a class="helpIcon" title="You can search here for place names in many languages (without accents).">?</a>
+			<a class="helpIcon" title="You can search here for place names using either whole or partial words (without accents).">?</a>
 			<input id="placeName" name="placeName" class="input_20c" type="text" value=""/>
 <!-- 			<label for="stressSense" id="placeNameType">Stress sense</label> -->
 <!-- 			<input type="checkbox" name="stressSense" class="checkbox4"/> -->
