@@ -177,7 +177,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			getPlaceGeographicCoordinatesDAO().persist(placeGeographicCoordinatesToPersist);
 			
 			
-			//getPlaceDAO().refresh(placeGeographicCoordinates.getPlace());
+			getPlaceDAO().refresh(getPlaceDAO().find(placeGeographicCoordinatesToPersist.getPlace().getPlaceAllId()));
 			
 			getUserHistoryDAO().persist(new UserHistory("Add geographic coordinates", Action.MODIFY, Category.PLACE, placeGeographicCoordinatesToPersist.getPlace()));
 

@@ -97,14 +97,38 @@ public class EditGeographicCoordinatesPlaceController {
 			if(placeGeographicCoordinates.getPlace() == null){
 				placeGeographicCoordinates.setPlace(new Place(command.getPlaceAllId()));
 			}
-			placeGeographicCoordinates.setDegreeLatitude(command.getDegreeLatitude());
-			placeGeographicCoordinates.setMinuteLatitude(command.getMinuteLatitude());
-			placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
-			placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude());
-			placeGeographicCoordinates.setDegreeLongitude(command.getDegreeLongitude());
-			placeGeographicCoordinates.setMinuteLongitude(command.getMinuteLongitude());
-			placeGeographicCoordinates.setSecondLongitude(command.getSecondLongitude());
-			placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude());
+			if(command.getDegreeLatitude() != null)
+				placeGeographicCoordinates.setDegreeLatitude(command.getDegreeLatitude());
+			else
+				placeGeographicCoordinates.setDegreeLatitude(0);
+			if(command.getMinuteLatitude() != null)
+				placeGeographicCoordinates.setMinuteLatitude(command.getMinuteLatitude());
+			else
+				placeGeographicCoordinates.setMinuteLatitude(0);
+			if(command.getSecondLatitude() != null)
+				placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
+			else
+				placeGeographicCoordinates.setSecondLatitude(0);
+			if(command.getDirectionLatitude() != null)
+				placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude());
+			else
+				placeGeographicCoordinates.setDirectionLatitude("N");
+			if(command.getDegreeLongitude() != null)
+				placeGeographicCoordinates.setDegreeLongitude(command.getDegreeLongitude());
+			else
+				placeGeographicCoordinates.setDegreeLongitude(0);
+			if(command.getMinuteLongitude() != null)
+				placeGeographicCoordinates.setMinuteLongitude(command.getMinuteLongitude());
+			else
+				placeGeographicCoordinates.setMinuteLongitude(0);
+			if(command.getSecondLongitude() != null)
+				placeGeographicCoordinates.setSecondLongitude(command.getSecondLongitude());
+			else
+				placeGeographicCoordinates.setSecondLongitude(0);
+			if(command.getDirectionLongitude() != null)
+				placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude());
+			else
+				placeGeographicCoordinates.setDirectionLongitude("E");
 			
 			try{
 				Place place = null;
