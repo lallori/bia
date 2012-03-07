@@ -625,9 +625,21 @@
 		<put-attribute name="spouses" value="/WEB-INF/jsp/peoplebase/ShowSpousesPerson.jsp"/>
 		<put-attribute name="researchNotes" value="/WEB-INF/jsp/peoplebase/ShowResearchNotesPerson.jsp"/>
 	</definition>
+	
+	<definition name="peoplebase/ShowRecipientDocumentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowRecipientDocumentsPerson.jsp" />
+	</definition>
+	
+	<definition name="peoplebase/ShowReferringToDocumentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowReferringToDocumentsPerson.jsp" />
+	</definition>
 
 	<definition name="peoplebase/ShowRoleCatPeoplePerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowRoleCatPeoplePerson.jsp"/>
+	</definition>
+	
+	<definition name="peoplebase/ShowSenderDocumentsPerson" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowSenderDocumentsPerson.jsp" />
 	</definition>
 	
 	<definition name="peoplebase/ShowResearchNotesPerson" extends="template.partialDOM">

@@ -4,13 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowDocumentsRelatedPersonURL" value="/de/peoplebase/ShowDocumentsRelatedPerson.json"></c:url>
+	<c:url var="ShowSenderDocumentsRelatedPersonURL" value="/de/peoplebase/ShowSenderDocumentsRelatedPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Documents indexed to "${mapNameLf}" <span id="allDocRecordsNum${personId}" class="recordsNum"></span>
+		Sender Documents indexed to "${mapNameLf}" <span id="senderRecordsNum${personId}" class="recordsNum"></span>
 	</div>
 	
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDocumentsPersonId${personId}">
+	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showSenderDocumentsPersonId${personId}">
 		<thead>
 			<tr></tr>
 		</thead>
@@ -26,9 +26,9 @@
 			
 			
 			//dynamic field management
-			$j("#showDocumentsPersonId${personId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+			$j("#showSenderDocumentsPersonId${personId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
-			$j('#showDocumentsPersonId${personId}').dataTable( {
+			$j('#showSenderDocumentsPersonId${personId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"aaSorting": [[2, "asc"]],
 				"bDestroy" : true,
@@ -37,7 +37,7 @@
 				"iDisplayLength": 10,
 				"iDisplayStart": 0,
 				"oSearch": {"sSearch": "${personId}"},
-				"sAjaxSource": "${ShowDocumentsRelatedPersonURL}",
+				"sAjaxSource": "${ShowSenderDocumentsRelatedPersonURL}",
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
@@ -49,7 +49,7 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
-					$j("#allDocRecordsNum${personId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					$j("#senderRecordsNum${personId}").text(this.fnSettings()._iRecordsTotal + ' Records');
 					
 					$j("tr.odd").mouseover(
 							function(){
@@ -80,8 +80,8 @@
 				}
 			});
 			
-			$j("#showDocumentsPersonId${personId}_length").css('margin', '0 0 0 0');
-			$j("#showDocumentsPersonId${personId}_filter").remove();
+			$j("#showSenderDocumentsPersonId${personId}_length").css('margin', '0 0 0 0');
+			$j("#showSenderDocumentsPersonId${personId}_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.showResult').die();
