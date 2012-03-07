@@ -13,7 +13,7 @@
 	<div class="background" id="EditExtLinkPlaceDiv">
 		<div class="title">
 			<h5>EXTERNAL LINKS</h5>
-			<c:if test="${place.placeAllId > 0}">
+			<c:if test="${place.placeAllId > 0 && place.prefFlag == 'P'}">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				<a title="Edit External Links" href="${EditExternalLinksPlaceURL}" class="editButton" id="EditExtLinkPlace"></a>
 			</security:authorize>

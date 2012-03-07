@@ -25,6 +25,9 @@
 						<p>To get this data through the TGN <a href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>
 					</div>
 				</c:if> --%>
+				<c:if test="${place.placeAllId != 0}">
+					<h2>TGN Place Record</h2>
+				</c:if>
 			</c:if>
 		
 			<c:if test="${place.plSource == 'MAPPLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">

@@ -25,6 +25,18 @@
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
 	
+	<c:url var="ShowSenderDocumentsPersonURL" value="/de/peoplebase/ShowSenderDocumentsPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+	
+	<c:url var="ShowRecipientDocumentsPersonURL" value="/de/peoplebase/ShowRecipientDocumentsPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+	
+	<c:url var="ShowReferringToDocumentsPersonURL" value="/de/peoplebase/ShowReferringToDocumentsPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+	
 	<div id="personDiv">
 		<div id="personTitle">
 			<h3>${person.mapNameLf}</h3>
@@ -49,13 +61,13 @@
 			</c:if>
 			
 			<c:if test="${docsRelated != 0 && docsRelated != 1}">
-				<p style="margin-left:12px">Documents related to this person entry: <a href="${ShowDocumentsPersonURL}" class="num_docs" title="Click here to view all documents related">${docsRelated}</a></p>
+				<p style="margin-left:12px">Documents related to this person entry: <span class="num_docs">${docsRelated}</span> <br />(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related"><u>View All</u></a>, <a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the senders documents related" style="margin-left:8px"><u>Sender</u></a>,<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the recipients documents related" style="margin-left:8px"><u>Recipient</u></a>,<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the Referred To documents related" style="margin-left:8px"><u>Referring To</u></a>)</p>
 			</c:if>
 			<c:if test="${docsRelated == 0}">
 				<p style="margin-left:12px">Documents related to this person entry: <a class="num_docs" title="No documents indexed to this person entry">0</a></p>
 			</c:if>
 			<c:if test="${docsRelated == 1}">
-				<p style="margin-left:12px">Documents related to this person entry:<a href="${ShowDocumentsPersonURL}" class="num_docs" title="Click here to view all documents related">${docsRelated}</a></p>
+				<p style="margin-left:12px">Document related to this person entry: <span class="num_docs">${docsRelated}</span> <br />(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related"><u>View All</u></a>, <a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the senders documents related" style="margin-left:8px"><u>Sender</u></a>,<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the recipients documents related" style="margin-left:8px"><u>Recipient</u></a>,<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the Referred To documents related" style="margin-left:8px"><u>Referring To</u></a>)</p>
 			</c:if>
 		</div>
 		
@@ -156,8 +168,80 @@
 				}
 			});
 			
-			$j(".num_docs").click(function(){
-				var tabName = "Docs ${person.mapNameLf}";
+			$j(".all_docs").click(function(){
+				var tabName = "All Docs ${person.mapNameLf}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".sender_docs").click(function(){
+				var tabName = "Sender Docs ${person.mapNameLf}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".recipient_docs").click(function(){
+				var tabName = "Recipient Docs ${person.mapNameLf}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".referred_docs").click(function(){
+				var tabName = "Docs Referring To ${person.mapNameLf}";
 				var numTab = 0;
 				
 				//Check if already exist a tab with this person
