@@ -333,16 +333,16 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 					linkedToPeopleQuery.append(" AND ");
 				}
 				if(linkedToPeople.get(i).equals("Sender Location")){
-					linkedToPeopleQuery.append("(placeAllId IN (SELECT senderPlace.placeAllId FROM Document WHERE senderPlace is not null))");
+					linkedToPeopleQuery.append("(geogKey IN (SELECT senderPlace.geogKey FROM Document WHERE senderPlace is not null))");
 				}
 				if(linkedToPeople.get(i).equals("Recipient Location")){
-					linkedToPeopleQuery.append("(placeAllId IN (SELECT recipientPlace.placeAllId FROM Document WHERE recipientPlace is not null))");
+					linkedToPeopleQuery.append("(geogKey IN (SELECT recipientPlace.geogKey FROM Document WHERE recipientPlace is not null))");
 				}
 				if(linkedToPeople.get(i).equals("Birth Place")){
-					linkedToPeopleQuery.append("(placeAllId IN (SELECT bornPlace.placeAllId FROM People WHERE bornPlace is not null))");
+					linkedToPeopleQuery.append("(geogKey IN (SELECT bornPlace.geogKey FROM People WHERE bornPlace is not null))");
 				}
 				if(linkedToPeople.get(i).equals("Death Place")){
-					linkedToPeopleQuery.append("(placeAllId IN (SELECT deathPlace.placeAllId FROM People WHERE deathPlace is not null))");
+					linkedToPeopleQuery.append("(geogKey IN (SELECT deathPlace.geogKey FROM People WHERE deathPlace is not null))");
 				}
 			}
 			linkedToPeopleQuery.append(")");
