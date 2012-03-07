@@ -155,9 +155,9 @@
 			});
 			*/  
 
-			$j("#buttonShareLink").click(function() {
+			/*$j("#buttonShareLink").click(function() {
 				window.open('${ShareDocumentURL}','ADD NEW PERSON','width=490,height=700,screenX=0,screenY=0,scrollbars=yes');return false;
-			});
+			});*/
 
 			$j("#buttonShareLink").hover(function(){
 				var iconName = $j(this).find("img").attr("src");
@@ -177,7 +177,7 @@
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
-				var tabName = "Volume Explorer ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}";
+				var tabName = "Explore Volume ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}";
 				
 				//Check if already exist a tab with this document in volume explorer
 				var numTab = 0;
