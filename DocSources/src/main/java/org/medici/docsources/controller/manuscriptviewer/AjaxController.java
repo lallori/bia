@@ -111,9 +111,9 @@ public class AjaxController {
 			Integer documentId = null;
 			Boolean isExtract = false;
 			Image image = new Image();
-			if (entryId != null) {
-				documentId = entryId;
-			} else {
+//			if (entryId != null) {
+//				documentId = entryId;
+//			} else {
 				if ((!ObjectUtils.toString(imageType).equals(""))  && (!imageType.equals("C"))){
 					model.put("error", "wrongType");
 				} else {
@@ -132,7 +132,7 @@ public class AjaxController {
 						model.put("imageType", image.getImageType());
 					}
 				}
-			}			
+//			}			
 			if(documentId != null){
 				isExtract = getManuscriptViewerService().isDocumentExtract(documentId);
 			}

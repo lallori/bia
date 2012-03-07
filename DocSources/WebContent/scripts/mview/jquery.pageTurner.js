@@ -148,6 +148,16 @@
 					// We set currentImage
 					currentImage = data.imageId;
 
+					if($dialogExtract.dialog("isOpen")){
+						$j("#unvailableTranscribe").css('visibility', 'hidden');
+						$j("#alreadyTranscribe").css('visibility', 'hidden');
+						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+						$j("#notExtract").css('visibility', 'hidden');
+						$j("#extractTranscribe").css('visibility', 'hidden');
+						$j("#readyToTranscribe").css('visibility', 'hidden');
+						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						$j("#transcribeMode").css('visibility','visible');
+					}else{
 					if (transcribing == false) {
 						if (data.error == 'wrongType' || data.imageType == 'R') {
 							$j("#unvailableTranscribe").css('visibility', 'visible');
@@ -197,6 +207,7 @@
 	    					$j("#readyToTranscribe").css('visibility', 'hidden');
 	    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 	    				}
+					}
 					}
     			});
             });
@@ -316,6 +327,16 @@
 						// We set currentImage
 						currentImage = data.imageId;
 
+						if($dialogExtract.dialog("isOpen")){
+							$j("#unvailableTranscribe").css('visibility', 'hidden');
+							$j("#alreadyTranscribe").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+							$j("#notExtract").css('visibility', 'hidden');
+							$j("#extractTranscribe").css('visibility', 'hidden');
+							$j("#readyToTranscribe").css('visibility', 'hidden');
+							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+							$j("#transcribeMode").css('visibility','visible');
+						}else{						
 						if (transcribing == false) {
 							if (data.error == 'wrongType') {
 		    					$j("#unvailableTranscribe").css('visibility', 'visible');
@@ -365,6 +386,7 @@
 		    					$j("#readyToTranscribe").css('visibility', 'hidden');
 		    					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 		    				}
+						}
 						}
 	    			});
 

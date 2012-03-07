@@ -369,50 +369,61 @@
 			$j.ajax({ type:"GET", url:"${GetLinkedDocumentURL}", async:false, success:function(data) {
 				// We set currentImage
 				currentImage = data.imageId;
-				if (data.error == 'wrongType' || data.imageType == 'R') {
-					$j("#unvailableTranscribe").css('visibility', 'visible');
+				if($dialogExtract.dialog("isOpen") || $j("#EditExtractDocumentForm").length != 0){
+					$j("#unvailableTranscribe").css('visibility', 'hidden');
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
 					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 					$j("#notExtract").css('visibility', 'hidden');
 					$j("#extractTranscribe").css('visibility', 'hidden');
 					$j("#readyToTranscribe").css('visibility', 'hidden');
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
-				} else if (data.linkedDocument == 'true') {
-					if(data.isExtract == 'false'){
-						$j("#notExtract").css('visibility', 'visible');
-						$j("#extractTranscribe").css('visibility', 'visible');
+					$j("#transcribeMode").css('visibility','visible');
+				}else{
+					if (data.error == 'wrongType' || data.imageType == 'R') {
+						$j("#unvailableTranscribe").css('visibility', 'visible');
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
-						$j("#showAlreadyTranscribe").css('visibility', 'hidden');
-						$j("#unvailableTranscribe").css('visibility', 'hidden');
+						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+						$j("#notExtract").css('visibility', 'hidden');
+						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#readyToTranscribe").css('visibility', 'hidden');
 						$j("#choiceThisFolioStart").css('visibility', 'hidden');
-					}else{
-						$j("#alreadyTranscribe").css('visibility', 'visible');
-						$j("#showAlreadyTranscribed").css('visibility', 'visible');
+					} else if (data.linkedDocument == 'true') {
+						if(data.isExtract == 'false'){
+							$j("#notExtract").css('visibility', 'visible');
+							$j("#extractTranscribe").css('visibility', 'visible');
+							$j("#alreadyTranscribe").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribe").css('visibility', 'hidden');
+							$j("#unvailableTranscribe").css('visibility', 'hidden');
+							$j("#readyToTranscribe").css('visibility', 'hidden');
+							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						}else{
+							$j("#alreadyTranscribe").css('visibility', 'visible');
+							$j("#showAlreadyTranscribed").css('visibility', 'visible');
+							$j("#notExtract").css('visibility', 'hidden');
+							$j("#extractTranscribe").css('visibility', 'hidden');
+							$j("#unvailableTranscribe").css('visibility', 'hidden');
+							$j("#readyToTranscribe").css('visibility', 'hidden');
+							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						}
+					} else if (data.linkedDocument == 'false') {
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+						$j("#readyToTranscribe").css('visibility', 'visible');
+						</security:authorize>
+						$j("#alreadyTranscribe").css('visibility', 'hidden');
+						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 						$j("#notExtract").css('visibility', 'hidden');
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#unvailableTranscribe").css('visibility', 'hidden');
+						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+					} else {
+						$j("#unvailableTranscribe").css('visibility', 'hidden');
+						$j("#alreadyTranscribe").css('visibility', 'hidden');
+						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
+						$j("#notExtract").css('visibility', 'hidden');
+						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#readyToTranscribe").css('visibility', 'hidden');
 						$j("#choiceThisFolioStart").css('visibility', 'hidden');
 					}
-				} else if (data.linkedDocument == 'false') {
-					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-					$j("#readyToTranscribe").css('visibility', 'visible');
-					</security:authorize>
-					$j("#alreadyTranscribe").css('visibility', 'hidden');
-					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-					$j("#notExtract").css('visibility', 'hidden');
-					$j("#extractTranscribe").css('visibility', 'hidden');
-					$j("#unvailableTranscribe").css('visibility', 'hidden');
-					$j("#choiceThisFolioStart").css('visibility', 'hidden');
-				} else {
-					$j("#unvailableTranscribe").css('visibility', 'hidden');
-					$j("#alreadyTranscribe").css('visibility', 'hidden');
-					$j("#showAlreadyTranscribed").css('visibility', 'hidden');
-					$j("#notExtract").css('visibility', 'hidden');
-					$j("#extractTranscribe").css('visibility', 'hidden');
-					$j("#readyToTranscribe").css('visibility', 'hidden');
-					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 				}
 			}});
 
