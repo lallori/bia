@@ -442,8 +442,8 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 
         List<Integer> result = (List<Integer>) query.getResultList();
 
-		// second query is for volLetExt equal to null
-        hql = "SELECT DISTINCT(b.summaryId) FROM Image a, Volume b WHERE a.volNum=b.volNum and a.volLetExt is null and b.digitized=false";
+		// second query is for volLetExt equal to null (08/03/2012 added "and b.volLetExt is null" )
+        hql = "SELECT DISTINCT(b.summaryId) FROM Image a, Volume b WHERE a.volNum=b.volNum and a.volLetExt is null and b.volLetExt is null and b.digitized=false";
 
         query = getEntityManager().createQuery(hql);
         
