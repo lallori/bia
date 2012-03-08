@@ -61,13 +61,18 @@
 			</c:if>
 			
 			<c:if test="${docsRelated != 0 && docsRelated != 1}">
-				<p style="margin-left:12px">Documents related to this person entry: <span class="num_docs">${docsRelated}</span> <br />(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related"><u>View All</u></a>, <a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the senders documents related" style="margin-left:8px"><u>Sender</u></a>,<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the recipients documents related" style="margin-left:8px"><u>Recipient</u></a>,<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the Referred To documents related" style="margin-left:8px"><u>Referring To</u></a>)</p>
+				<p style="margin-left:12px">Documents related to this person entry: <span class="num_docs">${docsRelated}</span> <br />
+				(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related to this person "><u>View All</u></a>,
+				<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the letters SENT BY this person" style="margin-left:8px"><u>Sender</u></a>,
+				<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the letters RECEIVED BY this person" style="margin-left:8px"><u>Recipient</u></a>,
+				<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the documents in which this person is mentioned" style="margin-left:8px"><u>Referring To</u></a>)</p>
 			</c:if>
 			<c:if test="${docsRelated == 0}">
 				<p style="margin-left:12px">Documents related to this person entry: <a class="num_docs" title="No documents indexed to this person entry">0</a></p>
 			</c:if>
 			<c:if test="${docsRelated == 1}">
-				<p style="margin-left:12px">Document related to this person entry: <span class="num_docs">${docsRelated}</span> <br />(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related"><u>View All</u></a>, <a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the senders documents related" style="margin-left:8px"><u>Sender</u></a>,<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the recipients documents related" style="margin-left:8px"><u>Recipient</u></a>,<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the Referred To documents related" style="margin-left:8px"><u>Referring To</u></a>)</p>
+				<p style="margin-left:12px">Document related to this person entry: <span class="num_docs">${docsRelated}</span> <br />
+				(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to see this documentview all documents related"><u>View it</u></a></p>
 			</c:if>
 		</div>
 		

@@ -47,8 +47,26 @@
 		<div id="documentTitle">
 			<c:if test="${document.volume != null}">
 				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt} - Folio: ${document.folioNum}${document.folioMod}</h3>
-				<h4>(${document.senderPeople.mapNameLf}) TO &rArr; (${document.recipientPeople.mapNameLf})</h4>
+			
+				<c:choose>
+					<%-- Recipient Empty --%>
+					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+				 		<h4>FROM: ${document.senderPeople.mapNameLf}</h4>
+				 		<h4>TO: (Not Entered)</h4>
+					</c:when>
+					<%-- Sender Empty --%>
+					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+				 		<h4>FROM:(Not Entered)</h4>
+				 		<h4>TO: ${document.recipientPeople.mapNameLf}</h4>
+					</c:when>
+					<c:otherwise>
+				  		<h4>FROM: ${document.senderPeople.mapNameLf}</h4>
+				  		<h4>TO: ${document.recipientPeople.mapNameLf}</h4>
+					</c:otherwise>
+				</c:choose>
+
 				<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+				
 			</c:if>
 		</div>
 	
