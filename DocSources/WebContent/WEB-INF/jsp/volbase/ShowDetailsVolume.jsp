@@ -23,25 +23,32 @@
 	</c:url>
 	
 	<div id="volumeDiv">
-		<div id="volumeTitle" class="background">	
-			<c:if test="${volume.summaryId != 0}">
-				<div class="title">
-   				 	<h5>VOLUME</h5>
-  				</div>
-				<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
-				<h4>${volume.serieList}</h4>
-				<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
-				<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-					<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Documents related</a>
-				</c:if>
-				<c:if test="${volDocsRelated == 0}">
-					<a class="num_docs">0 Documents related</a>
-				</c:if>
-				<c:if test="${volDocsRelated == 1}">
-					<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Document related</a>
-				</c:if>
+		<%-- Create new Volume Record --%>
+		<c:if test="${volume.summaryId == 0}">
+		<div id="volumeTitle">
+			<h2>ADD New - Volume Record</h2>
+		</div>
+		</c:if>	
+		<%-- Editing Volume Record --%>	
+		<c:if test="${volume.summaryId != 0}">
+		<div id="volumeTitle" class="background">
+			<div class="title">
+  				 <h5>VOLUME</h5>
+ 			</div>
+			<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
+			<h4>${volume.serieList}</h4>
+			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
+			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
+				<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Documents related</a>
+			</c:if>
+			<c:if test="${volDocsRelated == 0}">
+				<a class="num_docs">0 Documents related</a>
+			</c:if>
+			<c:if test="${volDocsRelated == 1}">
+				<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Document related</a>
 			</c:if>
 		</div>
+		</c:if>
 			
 		<div id="EditDetailsVolumeDiv" class="background">
 			<div class="title">

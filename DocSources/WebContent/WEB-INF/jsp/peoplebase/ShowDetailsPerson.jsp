@@ -38,57 +38,55 @@
 	</c:url>
 	
 	<div id="personDiv">
+		<c:if test="${person.personId == 0}">
+		<div id="personTitle">
+			<h2>ADD New - Person Record</h2>
+		</c:if>
 		<c:if test="${person.personId != 0}">
 		<div id="personTitle" class="background">
 			<div class="title">
 		    	<h5>PERSON</h5>
-			</div>
-			
+			</div>			
 			<h3>${person.mapNameLf}</h3>
 			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<c:if test="${currentPoLink.preferredRole}">
 					<h4>${currentPoLink.titleOccList.titleOcc}</h4>
 				</c:if>
-			</c:forEach>
-			
+			</c:forEach>			
 			<c:if test="${person.activeStart != null}">
 				<h7>ACTIVE START: <span class="h7"> ${person.activeStart}</span></h7>
 			</c:if>
 			<c:if test="${person.activeStart == null}">
 				<h7>BIRTH: <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
-			</c:if> 
-				
+			</c:if> 		
 			<c:if test="${person.activeEnd != null}">
 				<h7>ACTIVE END:<span class="h7"> ${person.activeEnd}</span></h7>
 			</c:if>
 			<c:if test="${person.activeEnd == null}">
 				<h7>DEATH: <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
 			</c:if>
-			
-			
-				<c:if test="${docsRelated != 0 && docsRelated != 1}">
-					<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
-					<div style="margin-left:28px">
-						(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related to this person ">View All</a> | 
-						<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the letters SENT BY this person">Sender</a> | 
-						<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the letters RECEIVED BY this person">Recipient</a> | 
-						<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the documents in which this person is mentioned">Referring To</a>)
-					</div>
-				</c:if>
-				<c:if test="${docsRelated == 0}">	
-					<p>Documents related to this person entry: <span class="num_docs" title="No documents indexed to this person entry">${docsRelated}</span>
-				</c:if>
-				<c:if test="${docsRelated == 1}">
-					<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
-					<div style="margin-left:28px">
-						(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to see this documentview all documents related">View it</a>)
-					</div>	
-				</c:if>
-				
-			
-		</div>
+	        <%-- Documents Related Section--%>		
+			<c:if test="${docsRelated != 0 && docsRelated != 1}">
+				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
+				<div style="margin-left:28px">
+					(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related to this person ">View All</a> | 
+					<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the letters SENT BY this person">Sender</a> | 
+					<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the letters RECEIVED BY this person">Recipient</a> | 
+					<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the documents in which this person is mentioned">Referring To</a>)
+				</div>
+			</c:if>
+			<c:if test="${docsRelated == 0}">	
+				<p>Documents related to this person entry: <span class="num_docs" title="No documents indexed to this person entry">${docsRelated}</span>
+			</c:if>
+			<c:if test="${docsRelated == 1}">
+				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
+				<div style="margin-left:28px">
+					(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to see this documentview all documents related">View it</a>)
+				</div>	
+			</c:if>				
 		</c:if>
-		
+		</div>
+	
 		<div id="EditDetailsPersonDiv" class="background">
 			<div class="title">
 				<h5>PERSON DETAILS</h5>

@@ -43,36 +43,41 @@
 	</c:url>
 	
 	<div id="documentDiv">
-		<div id="documentTitle" class="background">
+		<%-- Create new Document Record --%>
+		<c:if test="${document.volume == null}">
+		<div id="documentTitle">
+			<h2>ADD New - Document Record</h2>
+		</div>
+		</c:if>
+		<%-- Editing Document Record --%>
 		<c:if test="${document.volume != null}">
+		<div id="documentTitle" class="background">
 			<div class="title">
 			    <h5>DOCUMENT</h5>
 			</div>
-			
-				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
-				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
-			
-				<c:choose>
-					<%-- Recipient Empty --%>
-					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-				 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
-				 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
-					</c:when>
-					<%-- Sender Empty --%>
-					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-				 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
-				 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
-					</c:when>
-					<c:otherwise>
-				  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
-				  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
-					</c:otherwise>
-				</c:choose>
-
-				<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
-				
-			</c:if>
+			<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
+			<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+			<c:choose>
+				<%-- Recipient empty --%>
+				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+			 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+			 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
+				</c:when>
+				<%-- Sender empty --%>
+				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+			 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
+			 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+				</c:when>
+				<%-- Sender and Recipient filled in --%>
+				<c:otherwise>
+			  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+			  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+				</c:otherwise>
+			</c:choose>
+			<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
 		</div>
+		</c:if>
+		
 	
 		<div id="EditDetailsDocumentDiv" class="background">
 			<div class="title">
