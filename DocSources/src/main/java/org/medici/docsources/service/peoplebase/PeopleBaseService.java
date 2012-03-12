@@ -316,6 +316,30 @@ public interface PeopleBaseService {
 	
 	/**
 	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfRecipientDocumentsRelated(Integer personId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfReferringDocumentsRelated(Integer personId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Integer findNumberOfSenderDocumentsRelated(Integer personId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param personIds
 	 * @return
 	 * @throws ApplicationThrowable

@@ -103,11 +103,27 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	
 	/**
 	 * 
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfRecipientDocumentsPerson(Integer personId) throws PersistenceException;
+	
+	/**
+	 * 
 	 * @param placeAllId
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfSenderDocumentsPerson(Integer personId) throws PersistenceException;
 	
 	/**
 	 * 

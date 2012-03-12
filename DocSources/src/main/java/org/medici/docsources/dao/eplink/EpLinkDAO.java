@@ -89,6 +89,14 @@ public interface EpLinkDAO extends Dao<Integer, EpLink> {
 	 * @throws PersistenceException
 	 */
 	public Integer findNumberOfDocumentsRelated(Integer personId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfReferringDocumentsRelated(Integer personId) throws PersistenceException;
 
 	/**
 	 * 

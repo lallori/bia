@@ -147,6 +147,18 @@ public class EpLinkDAOJpaImpl extends JpaDao<Integer, EpLink> implements EpLinkD
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfReferringDocumentsRelated(Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT entryId) FROM EpLink WHERE person.personId =:personId AND docRole is null");
+		query.setParameter("personId", personId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
 
 	/**
 	 * {@inheritDoc}

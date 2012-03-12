@@ -1077,6 +1077,42 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfRecipientDocumentsRelated(Integer personId) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().findNumberOfRecipientDocumentsPerson(personId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfReferringDocumentsRelated(Integer personId) throws ApplicationThrowable {
+		try{
+			return getEpLinkDAO().findNumberOfReferringDocumentsRelated(personId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfSenderDocumentsRelated(Integer personId) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().findNumberOfSenderDocumentsPerson(personId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

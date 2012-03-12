@@ -180,6 +180,18 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer findNumberOfRecipientDocumentsPerson(Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPeople.personId =:personId");
+		query.setParameter("personId", personId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer findNumberOfRecipientDocumentsPlace(Integer placeAllId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE recipientPlace.placeAllId =:placeAllId");
 		query.setParameter("placeAllId", placeAllId);
@@ -188,6 +200,18 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		return new Integer(result.intValue());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer findNumberOfSenderDocumentsPerson(Integer personId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE senderPeople.personId =:personId");
+		query.setParameter("personId", personId);
+		
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
