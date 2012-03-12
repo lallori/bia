@@ -21,15 +21,17 @@
 	<c:url var="ShowDocumentsVolumeURL" value="/de/peoplebase/ShowDocumentsVolume.do">
 		<c:param name="summaryId" value="${volume.summaryId}" />
 	</c:url>
+	
 	<div id="volumeDiv">
-		<div id="volumeTitle">	
-			<c:if test="${volume.volNum != 0}">
+		<div id="volumeTitle" class="background">	
+			<c:if test="${volume.summaryId != 0}">
+				<div class="title">
+   				 	<h5>VOLUME</h5>
+  				</div>
 				<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
 				<h4>${volume.serieList}</h4>
 				<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
-			</c:if>
-			
-			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
+				<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
 					<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Documents related</a>
 				</c:if>
 				<c:if test="${volDocsRelated == 0}">
@@ -37,6 +39,7 @@
 				</c:if>
 				<c:if test="${volDocsRelated == 1}">
 					<a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all documents related">${volDocsRelated} Document related</a>
+				</c:if>
 			</c:if>
 		</div>
 			

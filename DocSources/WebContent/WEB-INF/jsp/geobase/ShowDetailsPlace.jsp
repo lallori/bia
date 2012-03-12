@@ -20,14 +20,14 @@
 			<c:if test="${place.placeAllId == 0}">
 				<div id="geoTitle">
 					<c:if test="${place.plSource == 'TGN'}">
-	            		<h2>CREATING NEW TGN Place Record</h2>
-	            		<p style="margin:0 0 5px 15px">Get this place data through the Getty TGN source <a class="link" href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>		
+	            		<h2>ADD New - TGN Place Record</h2>
+	            		<p style="margin:0 0 5px 15px">Get this place data through the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
 					</c:if>
 					<c:if test="${place.plSource == 'MAPPLACE'}">
-						<h2>CREATING NEW MAP Place Record</h2>
+						<h2>ADD New -  MAP Place Record</h2>
 					</c:if>
 					<c:if test="${place.plSource == 'MAPSITE'}">
-						<h2>CREATING NEW MAP SITE or SUBSITE Place Record</h2>
+						<h2>ADD New -  MAP SITE or SUBSITE Place Record</h2>
 					</c:if>
 				</div>
 			</c:if>
@@ -56,7 +56,7 @@
 					<h7>${place.plType}</h7>
 					
 					<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
-						<p style="margin:20px 0 5px 28px">Compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/conducting_research/vocabularies/tgn/" target="_blank">click here</a></p>		
+						<p style="margin:20px 0 5px 28px">Compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
 					</c:if>
 					
 					<c:if test="${place.prefFlag == 'V'}">

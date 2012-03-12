@@ -355,7 +355,7 @@ item a{
 
 /* Title Divs */
 
-#documentTitle, #volumeTitle, #personTitle, #placeTitle{
+#documentTitle, #volumeTitle, #personTitle, #geoTitle{
 	margin-top: 30px;
 	margin-bottom: 25px;
 }
@@ -1655,7 +1655,6 @@ input.file {
 .num_docs {
 	margin-left: 28px;
 	color: #900;
-	cursor:pointer;
 }
 
 #imgPortraitPerson { /* User image profile */
