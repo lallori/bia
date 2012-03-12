@@ -39,21 +39,6 @@
 	
 	<div id="personTitle" class="background">
 	<div class="title">
-	    <h5>PERSON</h5>
-	</div>
-	    <h3>Tudor, Henry VIII Tudor</h3>
-	    <h7>BIRTH: <span class="h7">1491</span></h7>
-	    <h7>DARTH: <span class="h7">1547 January 1</span></h7>
-	    <p>Documents related to this person entry: <span class="num_docs">34</span></p>
-	    <div style="margin-left:28px">
-	        <a href="#" class="all_docs" title="Click here to view all documents related to this person ">View All</a> |
-	        <a href="#" class="sender_docs" title="Click here to view the letters SENT BY this person">Sender</a> |
-	        <a href="#" class="recipient_docs" title="Click here to view the letters RECEIVED BY this person">Recipient</a> |
-	        <a href="#" class="referred_docs" title="Click here to view the documents in which this person is mentioned">Referring To</a>
-	    </div>
-	</div>
-	
-	
 	<div id="personDiv">
 		<div id="personTitle" class="background">
 			<div class="title">
