@@ -107,7 +107,7 @@
 			<div id="synopsisSearchDiv">
 			<c:forEach items="${searchFilter.filterData.synopsis}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Synopsis: </span><span class="wordSearch">${searchFilter.filterData.extract[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch">Synopsis: </span><span class="wordSearch">${searchFilter.filterData.synopsis[iterator.index]}</span><a class="remove" href="#">(remove)</a>
 					<input type="hidden" value="${searchFilter.filterData.synopsis[iterator.index]}" name="synopsis">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
