@@ -396,6 +396,16 @@ item a{
 	text-align: center;
 }
 
+.button_large {
+	width: 182px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_large.png);
+	background-repeat: no-repeat;
+	padding: 2px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+}
+
 #loadingDiv { /* Animated Gif that shows up when saving each edit section */
     background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
     visibility: hidden;
