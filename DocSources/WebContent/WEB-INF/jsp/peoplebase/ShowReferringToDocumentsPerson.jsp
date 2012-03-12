@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowReferringToDocumentsRelatedPersonURL" value="/de/peoplebase/ShowReferringToDocumentsRelatedPerson.json"></c:url>
+	<c:url var="ShowReferringToDocumentsRelatedPersonURL" value="/src/peoplebase/ShowReferringToDocumentsRelatedPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		Documents referred to "${mapNameLf}" <span id="referringToRecordsNum${personId}" class="recordsNum"></span>

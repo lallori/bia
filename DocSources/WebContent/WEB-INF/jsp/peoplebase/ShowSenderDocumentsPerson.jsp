@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowSenderDocumentsRelatedPersonURL" value="/de/peoplebase/ShowSenderDocumentsRelatedPerson.json"></c:url>
+	<c:url var="ShowSenderDocumentsRelatedPersonURL" value="/src/peoplebase/ShowSenderDocumentsRelatedPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
 		Sender Documents indexed to "${mapNameLf}" <span id="senderRecordsNum${personId}" class="recordsNum"></span>

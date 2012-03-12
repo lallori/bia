@@ -416,7 +416,7 @@ public class AjaxController {
 	}
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/peoplebase/ShowDocumentsRelatedPerson.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/peoplebase/ShowDocumentsRelatedPerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -567,7 +567,7 @@ public class AjaxController {
 	}
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/peoplebase/ShowRecipientDocumentsRelatedPerson.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/peoplebase/ShowRecipientDocumentsRelatedPerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowRecipientDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -662,7 +662,7 @@ public class AjaxController {
 	}
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/peoplebase/ShowReferringToDocumentsRelatedPerson.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/peoplebase/ShowReferringToDocumentsRelatedPerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowReferringToDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
@@ -801,7 +801,7 @@ public class AjaxController {
 	}
 	
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/peoplebase/ShowSenderDocumentsRelatedPerson.json", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/peoplebase/ShowSenderDocumentsRelatedPerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowSenderDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
 										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,

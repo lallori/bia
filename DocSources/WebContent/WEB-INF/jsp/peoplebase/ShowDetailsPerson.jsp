@@ -58,21 +58,21 @@
 			</c:if>
 			<c:if test="${person.activeStart == null}">
 				<h7>BIRTH: <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
-			</c:if> 		
+			</c:if>		
 			<c:if test="${person.activeEnd != null}">
 				<h7>ACTIVE END:<span class="h7"> ${person.activeEnd}</span></h7>
 			</c:if>
 			<c:if test="${person.activeEnd == null}">
 				<h7>DEATH: <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
 			</c:if>
-	        <%-- Documents Related Section--%>		
+			<%-- Documents Related Section --%>
 			<c:if test="${docsRelated != 0 && docsRelated != 1}">
 				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
 				<div style="margin-left:28px">
 					(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related to this person ">View All</a> | 
-					<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the letters SENT BY this person">Sender</a> | 
-					<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the letters RECEIVED BY this person">Recipient</a> | 
-					<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the documents in which this person is mentioned">Referring To</a>)
+					<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the letters SENT BY this person">Sender</a> <span class="num_docs">${senderDocsRelated}</span> | 
+					<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the letters RECEIVED BY this person">Recipient</a> <span class="num_docs">${recipientDocsRelated}</span> | 
+					<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the documents in which this person is mentioned">Referring To</a> <span class="num_docs">${referringDocsRelated}</span>)
 				</div>
 			</c:if>
 			<c:if test="${docsRelated == 0}">	
@@ -83,10 +83,10 @@
 				<div style="margin-left:28px">
 					(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to see this documentview all documents related">View it</a>)
 				</div>	
-			</c:if>				
+			</c:if>
 		</c:if>
-		</div>
-	
+		</div>		
+		
 		<div id="EditDetailsPersonDiv" class="background">
 			<div class="title">
 				<h5>PERSON DETAILS</h5>
