@@ -177,13 +177,43 @@
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)                                                                      
 					} );                                                                                      
-				}                                                                                             
+				},
+				"fnDrawCallback" : function(){
+					$j("tr.odd").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.odd").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+								return false;
+							}
+					);
+					$j("tr.even").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.even").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+								return false;
+							}
+					);
+				}
 			} );                                                                                              
 																											  
 			// We need to remove any previous live function                                                   
 			$j('.searchResult').die();                                                                        
 			// Result links have a specific class style on which we attach click live.                        
-			$j('.searchResult').live('click', function() {                                                    
+			$j('.searchResult').live('click', function() { 
+				$j("#body_left").load($j(this).attr("href"));
+				Modalbox.hide();
 				return false;                                                                                 
 			});
 			
@@ -215,13 +245,43 @@
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)                                                                      
 					} );                                                                                      
-				}                                                                                             
+				},
+				"fnDrawCallback" : function(){
+					$j("tr.odd").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.odd").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+								return false;
+							}
+					);
+					$j("tr.even").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.even").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+								return false;
+							}
+					);
+				}
 			} );                                                                                              
 																											  
 			// We need to remove any previous live function                                                   
 			$j('.searchResult').die();                                                                        
 			// Result links have a specific class style on which we attach click live.                        
-			$j('.searchResult').live('click', function() {                                                    
+			$j('.searchResult').live('click', function() {  
+				$j("#body_left").load($j(this).attr("href"));
+				Modalbox.hide();
 				return false;                                                                                 
 			});
 			
@@ -253,13 +313,43 @@
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)                                                                      
 					} );                                                                                      
+				},
+				"fnDrawCallback" : function(){
+					$j("tr.odd").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.odd").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+								return false;
+							}
+					);
+					$j("tr.even").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.even").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+								return false;
+							}
+					);
 				}                                                                                             
 			} );                                                                                              
 																											  
 			// We need to remove any previous live function                                                   
 			$j('.searchResult').die();                                                                        
 			// Result links have a specific class style on which we attach click live.                        
-			$j('.searchResult').live('click', function() {                                                    
+			$j('.searchResult').live('click', function() { 
+				$j("#body_left").load($j(this).attr("href"));
+				Modalbox.hide();
 				return false;                                                                                 
 			});  
 			
@@ -291,13 +381,43 @@
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)                                                                      
 					} );                                                                                      
+				},
+				"fnDrawCallback" : function(){
+					$j("tr.odd").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.odd").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+								return false;
+							}
+					);
+					$j("tr.even").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.even").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+								return false;
+							}
+					);
 				}                                                                                             
 			} );                                                                                              
 																											  
 			// We need to remove any previous live function                                                   
 			$j('.searchResult').die();                                                                        
 			// Result links have a specific class style on which we attach click live.                        
-			$j('.searchResult').live('click', function() {                                                    
+			$j('.searchResult').live('click', function() { 
+				$j("#body_left").load($j(this).attr("href"));
+				Modalbox.hide();
 				return false;                                                                                 
 			});                                                                                               
 		} );                                                                                                  

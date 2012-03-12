@@ -292,12 +292,12 @@ public class AjaxController {
 			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   	singleRow.add(currentUserHistory.getAction().toString());
 			   	singleRow.add(currentUserHistory.getPerson().getMapNameLf());
-			    resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getPerson().getPersonId()));
+			    resultList.add(HtmlUtils.showPeople(singleRow, currentUserHistory.getPerson().getPersonId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   singleRow.add(currentUserHistory.getAction().toString());
 			   singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
-			   resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
+			   resultList.add(HtmlUtils.showPlace(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   singleRow.add(currentUserHistory.getAction().toString());
