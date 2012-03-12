@@ -37,8 +37,6 @@
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
 	
-	<div id="personTitle" class="background">
-	<div class="title">
 	<div id="personDiv">
 		<div id="personTitle" class="background">
 			<div class="title">
