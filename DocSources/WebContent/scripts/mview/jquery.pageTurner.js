@@ -147,8 +147,8 @@
                 $.get(functionParams["getLinkedDocumentUrl"], parameters, function(data){
 					// We set currentImage
 					currentImage = data.imageId;
-
-					if($dialogExtract.dialog("isOpen")){
+					
+					if($j('#EditExtractDocumentDiv').dialog("isOpen")){
 						$j("#unvailableTranscribe").css('visibility', 'hidden');
 						$j("#alreadyTranscribe").css('visibility', 'hidden');
 						$j("#showAlreadyTranscribed").css('visibility', 'hidden');
@@ -326,8 +326,8 @@
 					$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data){
 						// We set currentImage
 						currentImage = data.imageId;
-
-						if($dialogExtract.dialog("isOpen")){
+						
+						if($j('#EditExtractDocumentDiv').dialog("isOpen")){
 							$j("#unvailableTranscribe").css('visibility', 'hidden');
 							$j("#alreadyTranscribe").css('visibility', 'hidden');
 							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
