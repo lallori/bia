@@ -36,9 +36,18 @@
 	<c:param name="placeAllId" value="${place.placeAllId}" />
 </c:url>
 
-<div>
-	<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}" class="buttonMedium">Edit this Place</a>
-</div>
+
+<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+	<div>
+		<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}" class="button_large">Show or Edit this Place</a>
+	</div>
+</security:authorize>
+<security:authorize ifAnyGranted="ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS">
+	<div>
+		<a href="${ShowPlaceURL}" id="editLink${place.placeAllId}" class="buttonMedium">Show this Place</a>
+	</div>
+</security:authorize>
+
 <div id="geoCompareDiv">
 	<div id="geoTitle">
 	

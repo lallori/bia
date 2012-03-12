@@ -8,18 +8,17 @@
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
 	
-	
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<div>
-			<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="buttonMedium">Edit this Volume</a>
-		</div>
+	<div>
+		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="button_large">Show or Edit this Volume</a>
+	</div>
 	</security:authorize>
-	<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<div>
-			<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="buttonMedium">Show this Volume</a>
-		</div>
+	<security:authorize ifAnyGranted="ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS">
+	<div>
+		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="buttonMedium">Show this Volume</a>
+	</div>
 	</security:authorize>
-	
+		
 	
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
