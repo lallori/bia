@@ -13,33 +13,39 @@
 /* ----------------- TITLES ------------------------------- */ 
 
 h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLACE NAME (in PLACE DETAILS) */
-	padding: 0 0 8px 12px;
+	padding: 0 45px 24px 28px;
 	font-size: 16px;
 	font-style: italic;
 	color: #666EA4;
-	margin-top: 47px;
+	display: inline;
+	margin-bottom: 10px;
 }
 
-h3.place { /* PLACE NAME */
+h3.place { /* AlreadyPresent....html */
 	padding:0 0 5px 30px;
 	font-size:14px;
 	font-style:italic;
 	color:#009;
 }
 
-h3.details { /* PLACE NAME */
+h3.details { /* AlreadyPresent....html */
 	padding:0 0 15px 30px;
 	font-size:11px;
 	font-weight:normal;
 	color:#006;
 }
 
-h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
-	text-align:left;
+h4, span.h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
+	text-align: left;
 	font-size: 11px;
-	font-style:italic;
-	padding: 0 0 8px 12px;
+	font-style: italic;
+	padding: 10px 0 0 28px;
 	color: #666EA4;
+	width: 430px;
+}
+
+span.h4 {
+	padding:10px 0 0 10px;
 }
 
 #body_right h4 {
@@ -62,25 +68,34 @@ h2 { /* Error Text 403, 404, 500, 503*/
 	margin-left:15px;
 }
 
-h1 { /* Titles or explaining text */
+h1 { /* Help Title/About Map Title in My Profile */
 	font-size:11px;
 	color:#A13125;
 	font-weight:normal;
 }
 
-h6 { /* Titles */
+h6 { /* Titles in Modal Windows */
 	font-size:11px;
 	color:#6d5c4d;
 	font-weight:bold;
 	text-align:center;
 }
 
-h7 {
-	font-size:11px;
-	display:block;
-	margin:0 0 8px 12px;
-	color:#088A08;
+h7 { /* Modern Date in Document - Start Date/End Date in Volume - Birth/Death in People - Place Typle in Place   */
+	font-size: 11px;
+	display: block;
+	margin: 10px 0 8px 28px;
+	color: #088A08;
 }
+
+span.h7 {
+	font-size: 11px;
+	margin: 10px 0 8px 10px;
+	color: #088A08;
+
+}
+
+
 
 /* --------------------------------------------------------- */ 
 /*
@@ -338,6 +353,13 @@ item a{
 }
 
 
+/* Title Divs */
+
+#documentTitle, #volumeTitle, #personTitle, #placeTitle{
+	margin-top: 30px;
+	margin-bottom: 25px;
+}
+
 /* ----------------------------------------------------- */ 
 /*
 /* ------------------- ADJUST PLACE ---------------------------- */ 
@@ -354,6 +376,25 @@ item a{
 /*
 /* -------------------------------------------------- EDIT ------------------------------------------------- */
 /* Common elements in Edit Forms */
+
+.button_small {
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	width:52px;
+	height:22px;
+	border:none;
+}
+
+.button_medium {
+	width: 122px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_medium.png);
+	background-repeat: no-repeat;
+	padding: 2px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+}
 
 #loadingDiv { /* Animated Gif that shows up when saving each edit section */
     background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
@@ -698,6 +739,11 @@ img.transparent {
 .input_45c { /* input for 45 characters approx. */ 
 	width: 410px;
 	margin: 5px 6px 5px 0px; 
+}
+
+.input_50c { /* input for 45 characters approx. */ 
+	width: 510px;
+	margin: 5px 6px 5px 5px; 
 }
 
 /* ---------------------------------------------------- */ 
@@ -1114,10 +1160,14 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditUserControlForm, #EditEmailControlDiv, #EditDetailsVolumeDiv {
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditUserControlForm, #EditEmailControlDiv {
 	width:485px;
 	margin:10px 0 0 0;
 	min-height:100px;!important
+}
+
+#EditDetailsVolumeDiv {
+	min-height: 190px;!important
 }
 
 #CreateNewPersonRecordForm, #CreateNewTitlesOccupationsForm  {
@@ -1593,12 +1643,18 @@ input.file {
 /*
 /* --------- EditDetailsPerson ---------- */
 
-.num_docs {
-	margin-left: 14px;
-	color: #900;
+#personTitle p {
+	margin-left:28px;
+	display: inline;
 }
 
-a.num_docs {
+#personTitle div {
+	margin-top: 10px;
+}
+
+.num_docs {
+	margin-left: 28px;
+	color: #900;
 	cursor:pointer;
 }
 
@@ -1858,7 +1914,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin-left: 30px;
 }
 
-a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a {
+a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a, .all_docs, .sender_docs, .recipient_docs, .referred_docs {
 	text-decoration: underline;
 	color: #B7958F;
 	display:inline;
@@ -2011,7 +2067,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /*
 /* ------------- Context ------------- */
 
-#contextLabel {
+#EditContextVolumeForm #contextLabel {
 	margin-top:5px;
 	float:left;
 }
@@ -2592,7 +2648,7 @@ a.refreshVolumeExplorer {
 #VolumeExplorerModalLeft iframe.iframeFlipVolumeFullCom {
 	width: 455px;
 	height: 450px;
-	margin: 10px auto 0 20px;
+	margin: 10px 10px 0 20px;
 	border: 1px solid #e6d0c6;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -2909,8 +2965,37 @@ a.refreshVolumeExplorer {
 
 /* -------------------------------------- */
 /*
-/* ---- EdtitExternalLinkTgn, Map and MapSite --- */
+/* ---- EdtitCoordinatesTgn, Map and MapSite --- */
 
+#EditGeoCoorTgnPlaceForm a {
+	color: #B7958F;
+    display: inline;
+    margin: 15px 0 0;
+    text-decoration: underline;
+}
+
+#EditGeoCoorTgnPlaceForm p {
+	display:inline;
+}
+
+#EditGeoCoorTgnPlaceForm #gettyTgn, #EditGeoCoorTgnPlaceForm #googleMaps{
+	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
+	width:122px;
+	height:23px;
+	position:absolute;
+	text-decoration:none;
+	color:#6D5C4D;
+	padding:4px 0 0 0;
+	text-align:center;
+}
+
+#EditGeoCoorTgnPlaceForm #gettyTgn {
+	margin:-5px 0 0 19px;
+}
+
+#EditGeoCoorTgnPlaceForm #googleMaps {
+	margin:-5px 0 0 157px;
+}
 
 
 /*
@@ -3064,7 +3149,7 @@ form#EditUserProfileForm span{
 	margin-left:49px;
 }
 
-#address{
+#EditUserProfileForm #address{
 	margin-left:40px;
 }
 
@@ -3451,24 +3536,20 @@ form#EditUserProfileForm span{
 	height:22px;
 	border:none;
 	cursor:pointer;
-	margin: 5px 0 0 29px;
+	margin: 5px 0 0 49px;
 }
 
 #occupation {
 	width:241px;
 }
 
-#dateSearchForm #addSearchFilter { 
-	margin: 5px 0 0 19px;
-}
-
 #personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
 	float:none;
-	margin-left:29px;
+	margin-left: 49px;
+    padding: 0;
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
-	padding:3px 0 0 0;
 	font-size:11px;
-        text-align:center;
+    text-align:center;
 }
 
 #dateYearBetween {
@@ -3486,8 +3567,6 @@ form#EditUserProfileForm span{
 	margin:0;
 	display:inline;
 }
-
-
 
 #dateMonthBetween, #dateDayBetween, .invisible {
 	visibility:hidden;
@@ -3958,6 +4037,14 @@ table#savedSearchFiltersForm.display {
 /* ------------- DOCUMENT SEARCH ------------------ */
 /* Input Label positions */
 
+#topicsSearchForm #addSearchFilter {
+	margin:0 0 0 107px;
+}
+
+#wordSearchForm #addSearchFilter {
+	margin: 0 0 0 29px;
+}
+
 #volumeSearchLabel {
 	margin-left:23px;
 }
@@ -3982,14 +4069,24 @@ table#savedSearchFiltersForm.display {
 	margin:5px 0px 0 25px;
 	width: 320px;
 	height:150px;
+	resize: none;
 }
 
-#extractSearchForm #addSearchFilter{
+#extractSearchForm #addSearchFilter, #synopsisSearchForm #addSearchFilter{
 	margin:70px 0 0 0;
+	float: right;
 }
 
-#synopsisSearchForm #addSearchFilter{
-	margin:70px 0 0 0;
+.documents #dateSearchForm #addSearchFilter {
+	margin:0 0 0 10px;
+}
+
+.documents #volumeSearchForm #addSearchFilter, .documents #folioSearchForm #addSearchFilter {
+	margin: 0 0 0 90px;
+}
+
+#docIdSearchForm #addSearchFilter {
+	 margin: 0 0 0 275px;
 }
 
 .txtadvsearch {
@@ -4036,13 +4133,39 @@ table#savedSearchFiltersForm.display {
 /* ------------- VOLUME SEARCH ------------------ */
 /* Input Label positions */
 
-#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel, #fromVolumeSearchForm #fromLabel, #toVolumeSearchForm #toLabel, #digitizedSearchForm #digitizedLabel, #cipherSearchForm #cipherLabel, #indexSearchForm #indexLabel, #inventarioSearchForm #inventarioLabel, #extractLabel, #synopsisLabel {
+#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel, #fromVolumeSearchForm #fromLabel, #toVolumeSearchForm #toLabel, #digitizedSearchForm #digitizedLabel, #cipherSearchForm #cipherLabel, #indexSearchForm #indexLabel, #inventarioSearchForm #inventarioLabel, #extractLabel, #synopsisLabel,  #contextSearchForm #contextLabel{
 	margin-left:7px;
 }
 
-#languagesSearchForm #languagesLabel, #contextSearchForm #contextLabel {
+#languagesSearchForm #languagesLabel {
 	margin:0 0 0 7px;
 	float:none;
+}
+
+.volumes #volumeSearchForm #addSearchFilter { /* Add button */
+	margin: 5px 0 0 115px;
+}
+
+.volumes #dateSearchForm #addSearchFilter { 
+	margin: 5px 0 0 50px;
+}
+
+#fromVolumeSearchForm #addSearchFilter, #toVolumeSearchForm #addSearchFilter, #toVolumeSearchForm #addSearchFilter, #contextSearchForm #addSearchFilter, #inventarioSearchForm #addSearchFilter { 
+	float:right;
+	margin: 23px 0 0;
+}
+
+#digitizedSearchForm #addSearchFilter, #cipherSearchForm #addSearchFilter, #indexSearchForm #addSearchFilter { 
+	margin: 5px 0 0 195px;
+} 
+
+#customSearchFilterDiv hr {
+	width: 440px;
+}
+
+
+#contextSearchForm #contextLabel {
+	margin-right: 30px;
 }
 
 #languagesSearchForm #frenchLabel, #languagesSearchForm #germanLabel {
@@ -4090,6 +4213,22 @@ table#savedSearchFiltersForm.display {
 /* ------------- PEOPLE SEARCH ------------------ */
 /* Input Label positions */
 
+#namePartsSearchForm #addSearchFilter {
+	margin: 5px 0 0 20px;
+}
+
+.people #dateSearchForm #addSearchFilter {
+	margin: 5px 0 0 20px;
+}
+
+#genderSearchForm #addSearchFilter, #occupationSearchForm #addSearchFilter, .people #placeSearchForm #addSearchFilter {
+	margin: 5px 0 0 100px;
+}
+
+#researchNotesForm #addSearchFilter{
+	margin: 5px 0 0 175px;
+}
+
 #namePartsSearchLabel {
 	margin-left:3px;
 }
@@ -4112,6 +4251,14 @@ table#savedSearchFiltersForm.display {
 /*
 /* ------------- PLACE SEARCH ------------------ */
 /* Input Label positions */
+
+#placeNameSearchForm #addSearchFilter {
+	margin:5px 0 0 40px;
+}
+
+#placeTypeSearchForm #addSearchFilter, #linkedToTopicsSearchForm #addSearchFilter, #linkedToPeopleSearchForm #addSearchFilter {
+	margin: 5px 0 0 200px;
+}
 
 #placeNameSearchLabel {
 	margin-left:21px;
@@ -4721,4 +4868,61 @@ h3.systemManagement {
 #emailDisplayLabel {
 	margin-left: ;
 }
+
+/* ---------------- googleMapsCoordinates ------------- */
+
+#adressDiv {
+	margin-left: 20px;
+}
+
+#adressDiv #adress{
+	margin-left: 5px;
+}
+
+#map_canvas {
+	margin:10px 0 0 20px;
+	width: 580px;
+	height: 330px;
+	float:left;
+	border: 1px solid #DCC0BA;
+    border-radius: 4px 4px 4px 4px;
+}
+
+#coordinatesDiv {
+	position: absolute;
+	margin: 10px 0 20px 635px;
+	background-color: #F2E6E5;
+	border: 1px solid #DCC0BA;
+    border-radius: 4px 4px 4px 4px;
+	padding: 5px 5px 5px 11px;
+}
+
+#latitudeForm {
+	margin-bottom: 45px;
+}
+
+#lngLabel {
+	margin-left: 1px;
+}
+
+#latLabel {
+	margin-left: 10px;
+}
+
+#description {
+	padding: 10px 20px 0 20px;
+}
+
+#description ul{
+	list-style:decimal;
+	margin-bottom:20px;
+}
+
+#description h1{
+	font-weight:bold;
+	font-size:11px;
+}
+
+
+
 
