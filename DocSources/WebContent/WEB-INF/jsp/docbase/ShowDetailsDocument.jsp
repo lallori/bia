@@ -42,26 +42,29 @@
 		<c:param name="summaryId"   value="${document.volume.summaryId}" />
 	</c:url>
 	
-	
 	<div id="documentDiv">
-		<div id="documentTitle">
+		<div id="documentTitle" class="background">
+			<div class="title">
+			    <h5>DOCUMENT</h5>
+			</div>
 			<c:if test="${document.volume != null}">
-				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt} - Folio: ${document.folioNum}${document.folioMod}</h3>
+				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
+				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
 			
 				<c:choose>
 					<%-- Recipient Empty --%>
 					<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-				 		<h4>FROM: ${document.senderPeople.mapNameLf}</h4>
-				 		<h4>TO: (Not Entered)</h4>
+				 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+				 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
 					</c:when>
 					<%-- Sender Empty --%>
 					<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-				 		<h4>FROM:(Not Entered)</h4>
-				 		<h4>TO: ${document.recipientPeople.mapNameLf}</h4>
+				 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
+				 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
 					</c:when>
 					<c:otherwise>
-				  		<h4>FROM: ${document.senderPeople.mapNameLf}</h4>
-				  		<h4>TO: ${document.recipientPeople.mapNameLf}</h4>
+				  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+				  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
 					</c:otherwise>
 				</c:choose>
 
