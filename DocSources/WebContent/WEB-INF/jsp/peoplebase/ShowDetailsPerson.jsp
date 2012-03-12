@@ -38,11 +38,12 @@
 	</c:url>
 	
 	<div id="personDiv">
+		<c:if test="${person.personId != 0}">
 		<div id="personTitle" class="background">
 			<div class="title">
 		    	<h5>PERSON</h5>
 			</div>
-			<c:if test="${person.personId != 0}">
+			
 			<h3>${person.mapNameLf}</h3>
 			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<c:if test="${currentPoLink.preferredRole}">
@@ -83,9 +84,10 @@
 						(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to see this documentview all documents related">View it</a>)
 					</div>	
 				</c:if>
-				</c:if>
+				
 			
 		</div>
+		</c:if>
 		
 		<div id="EditDetailsPersonDiv" class="background">
 			<div class="title">
