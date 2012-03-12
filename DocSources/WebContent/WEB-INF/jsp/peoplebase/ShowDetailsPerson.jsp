@@ -21,19 +21,19 @@
 		<c:param name="placeAllId" value="${person.deathPlace.placeAllId}" />
 	</c:url>
 	
-	<c:url var="ShowDocumentsPersonURL" value="/de/peoplebase/ShowDocumentsPerson.do">
+	<c:url var="ShowDocumentsPersonURL" value="/src/peoplebase/ShowDocumentsPerson.do">
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
 	
-	<c:url var="ShowSenderDocumentsPersonURL" value="/de/peoplebase/ShowSenderDocumentsPerson.do">
+	<c:url var="ShowSenderDocumentsPersonURL" value="/src/peoplebase/ShowSenderDocumentsPerson.do">
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
 	
-	<c:url var="ShowRecipientDocumentsPersonURL" value="/de/peoplebase/ShowRecipientDocumentsPerson.do">
+	<c:url var="ShowRecipientDocumentsPersonURL" value="/src/peoplebase/ShowRecipientDocumentsPerson.do">
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
 	
-	<c:url var="ShowReferringToDocumentsPersonURL" value="/de/peoplebase/ShowReferringToDocumentsPerson.do">
+	<c:url var="ShowReferringToDocumentsPersonURL" value="/src/peoplebase/ShowReferringToDocumentsPerson.do">
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
 	
@@ -42,6 +42,7 @@
 			<div class="title">
 		    	<h5>PERSON</h5>
 			</div>
+			<c:if test="${person.personId != 0}">
 			<h3>${person.mapNameLf}</h3>
 			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<c:if test="${currentPoLink.preferredRole}">
@@ -81,6 +82,7 @@
 					<div style="margin-left:28px">
 						(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to see this documentview all documents related">View it</a>)
 					</div>	
+				</c:if>
 				</c:if>
 			
 		</div>
@@ -279,4 +281,107 @@
 			});
 		});
 	</script>
+</security:authorize>
+<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+<script type="text/javascript">
+		$j(document).ready(function() {
+			
+			$j(".all_docs").click(function(){
+				var tabName = "All Docs ${person.mapNameLf}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".sender_docs").click(function(){
+				var tabName = "Sender Docs ${person.mapNameLf}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".recipient_docs").click(function(){
+				var tabName = "Recipient Docs ${person.mapNameLf}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
+			$j(".referred_docs").click(function(){
+				var tabName = "Docs Referring To ${person.mapNameLf}";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+		
+		});
+</script>
 </security:authorize>
