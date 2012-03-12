@@ -44,10 +44,11 @@
 	
 	<div id="documentDiv">
 		<div id="documentTitle" class="background">
+		<c:if test="${document.volume != null}">
 			<div class="title">
 			    <h5>DOCUMENT</h5>
 			</div>
-			<c:if test="${document.volume != null}">
+			
 				<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
 				<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
 			
