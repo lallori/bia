@@ -14,8 +14,14 @@
 	</div>
 	<div class="list">	
 		<div class="row">
-			<c:if test="${topicsPlace != null && topicsPlace != 0}">
+			<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
 				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a></div>
+			</c:if>
+			<c:if test="${topicsPlace == 1}">
+				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topic</a></div>
+			</c:if>
+			<c:if test="${docInTopics == 1 && topicsPlace != 1}">
+				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topics</a></div>
 			</c:if>
 			<c:if test="${topicsPlace == 0 || topicsPlace == null}">
 				<div class="value">0 Document on 0 Topic</div>

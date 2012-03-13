@@ -19,16 +19,22 @@
 	
 	<div class="list">	
 		<div class="row">
-			<c:if test="${senderPlace != null && senderPlace != 0}">
+			<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1}">
 				<div class="value"><a id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a></div>
+			</c:if>
+			<c:if test="${senderPlace == 1 }">
+				<div class="value"><a id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a></div>
 			</c:if>
 			<c:if test="${senderPlace == 0 || senderPlace == null}">
 				<div class="value">0 Sender</div>
 			</c:if>
 		</div>
 		<div class="row">
-			<c:if test="${recipientPlace != null && recipientPlace != 0}">
+			<c:if test="${recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
 				<div class="value"><a id="linkSearch" class="recipient" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a></div>
+			</c:if>
+			<c:if test="${recipientPlace == 1}">
+				<div class="value"><a id="linkSearch" class="recipient" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a></div>
 			</c:if>
 			<c:if test="${recipientPlace == 0 || recipientPlace == null}">
 				<div class="value">0 Recipient</div>

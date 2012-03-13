@@ -7,7 +7,7 @@
 	<c:url var="ShowRecipientDocumentsRelatedPersonURL" value="/src/peoplebase/ShowRecipientDocumentsRelatedPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Recipient Documents indexed to "${mapNameLf}" <span id="RecipientRecordsNum${personId}" class="recordsNum"></span>
+		Recipient Documents indexed to "${mapNameLf}" <span id="recipientRecordsNum${personId}" class="recordsNum"></span>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showRecipientDocumentsPersonId${personId}">
