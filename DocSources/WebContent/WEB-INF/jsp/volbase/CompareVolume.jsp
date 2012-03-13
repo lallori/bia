@@ -10,12 +10,12 @@
 	
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div>
-		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="button_large">Show or Edit this Volume</a>
+		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showOrEditCompare">Show or Edit this Volume</a>
 	</div>
 	</security:authorize>
 	<security:authorize ifAnyGranted="ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS, ROLE_GUESTS">
 	<div>
-		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="buttonMedium">Show this Volume</a>
+		<a href="${ShowVolumeURL}" id="editLink${volume.summaryId}" class="showCompare">Show this Volume</a>
 	</div>
 	</security:authorize>
 		

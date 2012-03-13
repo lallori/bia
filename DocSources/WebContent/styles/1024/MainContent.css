@@ -406,6 +406,30 @@ item a{
 	text-align: center;
 }
 
+.showCompare {
+	width: 122px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_medium.png);
+	background-repeat: no-repeat;
+	padding: 2px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+	position:absolute;
+	margin:-5px 0 0 364px;
+}
+
+.showOrEditCompare {
+	width: 182px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_large.png);
+	background-repeat: no-repeat;
+	padding: 2px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+	position: absolute;
+	margin: 0 0 0 304px;
+}
+
 #loadingDiv { /* Animated Gif that shows up when saving each edit section */
     background-image:url(/DocSources/images/1024/img_loadingDiv.gif);
     visibility: hidden;
@@ -1662,8 +1686,12 @@ input.file {
 	margin-top: 10px;
 }
 
-.num_docs {
+#personTitle .num_docs {
 	margin-left: 28px;
+	color: #900;
+}
+
+#volumeTitle .num_docs {
 	color: #900;
 }
 
@@ -2651,13 +2679,13 @@ a.refreshVolumeExplorer {
 /*  Modal Box with Comunity Comments */
 
 #VolumeExplorerModalLeft {
-	border-right: 1px solid #BEA08B;
+	border-right: 1px solid #DCC0BA;
 }
 
 #VolumeExplorerModalLeft iframe.iframeFlipVolumeFullCom {
-	width: 455px;
+	width: 440px;
 	height: 450px;
-	margin: 10px 10px 0 20px;
+	margin: 47px 8px 0 20px;
 	border: 1px solid #e6d0c6;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
