@@ -81,6 +81,11 @@ public class ShowDocumentInManuscriptViewerController {
 
 		try {
 			documentExplorer = getManuscriptViewerService().getDocumentExplorer(documentExplorer);
+			if(documentExplorer.getEntryId() == null){
+				Integer entryId = getManuscriptViewerService().findLinkedDocument(command.getVolNum(), command.getVolLetExt(), documentExplorer.getImage());
+				if(entryId != null)
+					documentExplorer.setEntryId(entryId);
+			}
 
 			model.put("documentExplorer", documentExplorer);
 		} catch (ApplicationThrowable ath) {
