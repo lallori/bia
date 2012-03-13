@@ -114,7 +114,9 @@
 				resetCheckboxField(formName, fieldName);
 			}
 			
-			hiddenValue = unescape(hiddenValue);
+			//hiddenValue = unescape(hiddenValue);
+			//MD: This is for ignore the apostrophe because the link generated is wrong if it's present.
+			//hiddenValue = hiddenValue.replace("'", "")
 			console.log("Searching : " + searchWord);
 			console.log("Final hidden parameter (" + formName + ") value: " + hiddenValue);
 

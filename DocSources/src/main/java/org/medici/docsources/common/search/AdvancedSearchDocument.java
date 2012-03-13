@@ -393,13 +393,14 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				try {
 					if (stringTokenizer.countTokens() == 2) {
 						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
-						words.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
+						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						
 					} else {
 						continue;
 					}
-				} catch (UnsupportedEncodingException e) {
+				}catch (URIException e) {
 					wordsTypes.remove(wordsTypes.size()-1);
-				}
+				} 
 			}
 		} else {
 			wordsTypes = new ArrayList<WordType>(0);
@@ -435,7 +436,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							//Empty personId is equal to 0
 							personId.add(new Integer(0));
 						}
-						person.add(new String(singleText.getBytes(), "UTF-8"));
+						try {
+							person.add(URIUtil.decode(singleText, "UTF-8"));
+						} catch (URIException e) {
+							
+						}
 					} else {
 						// we skip field
 					}
@@ -477,7 +482,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							//Empty placeId is equal to 0
 							placeId.add(new Integer(0));
 						}
-						place.add(new String(singleText.getBytes(), "UTF-8"));
+						try {
+							place.add(URIUtil.decode(singleText, "UTF-8"));
+						} catch (URIException e) {
+							
+						}
 					} else {
 						// we skip field
 					}
