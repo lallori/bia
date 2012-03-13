@@ -136,6 +136,7 @@ public class EditExtractDocumentDialogController {
 
 			try {
 				synExtract = getDocBaseService().findSynExtractDocument(command.getEntryId());
+				Document document = getDocBaseService().findDocument(command.getEntryId());
 				
 				if (synExtract != null) {
 					command.setSynExtrId(synExtract.getSynExtrId());
@@ -144,6 +145,9 @@ public class EditExtractDocumentDialogController {
 					command.setSynExtrId(0);
 					command.setDocExtract(null);
 				}
+				
+				model.put("folioNum", document.getFolioNum());
+				model.put("volNum", document.getVolume().getVolNum());
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditExtractDocumentDialog", model);
 			}

@@ -99,7 +99,6 @@
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div id="transcribeDiv">
 		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
-		<span id="transcribeMode" class="transcribeMessage" style="visibility: hidden;">You are in transcribing a folio</span>
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</a>
 		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green">This document has been entered but not transcribed</font>
 		<a id="extractTranscribe" href="#" style="visibility: hidden;" title="Transcribe extract" class="transcribe">Transcribe this document</a>
@@ -337,7 +336,7 @@
 			
 			$j('#extractTranscribe').click(function() {
 				if ($dialogExtract.dialog("isOpen")) {
-					$dialogExtract.dialog("close");;
+					$dialogExtract.dialog("close");
 					return false;
 				} else {
 					$dialogExtract.dialog("open");
@@ -365,7 +364,7 @@
 				}
 			});
 			
-
+			
 			$j.ajax({ type:"GET", url:"${GetLinkedDocumentURL}", async:false, success:function(data) {
 				// We set currentImage
 				currentImage = data.imageId;
@@ -377,7 +376,8 @@
 					$j("#extractTranscribe").css('visibility', 'hidden');
 					$j("#readyToTranscribe").css('visibility', 'hidden');
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
-					$j("#transcribeMode").css('visibility','visible');
+					$j("#transcribeDiv").append($j("#transcribeMode"));
+					$j("#transcribeMode").css('visibility', 'visible');
 				}else{
 					if (data.error == 'wrongType' || data.imageType == 'R') {
 						$j("#unvailableTranscribe").css('visibility', 'visible');

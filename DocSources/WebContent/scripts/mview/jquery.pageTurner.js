@@ -156,6 +156,7 @@
 						$j("#extractTranscribe").css('visibility', 'hidden');
 						$j("#readyToTranscribe").css('visibility', 'hidden');
 						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+						$j("#transcribeDiv").append($j("#transcribeMode"));
 						$j("#transcribeMode").css('visibility','visible');
 					}else{
 					if (transcribing == false) {
@@ -335,6 +336,7 @@
 							$j("#extractTranscribe").css('visibility', 'hidden');
 							$j("#readyToTranscribe").css('visibility', 'hidden');
 							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+							$j("#transcribeDiv").append($j("#transcribeMode"));
 							$j("#transcribeMode").css('visibility','visible');
 						}else{						
 						if (transcribing == false) {

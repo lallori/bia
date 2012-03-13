@@ -52,6 +52,9 @@
 			$j("#extract").change(function(){
 				extractChanged=true;
 			});
+			
+						
 		});
 	</script>
 
+<span id="transcribeMode" class="transcribeMessage" style="visibility: hidden;">You are transcribing from<br />Folio: ${folioNum} MDP: ${volNum}</span>
