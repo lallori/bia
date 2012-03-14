@@ -119,10 +119,8 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				document.setSenderPlaceUnsure(command.getSenderPlaceUnsure());
 			}
 			
-			if(command.getSendNotes() != ""){
-				document.setSendNotes(command.getSendNotes());
-			}
-
+			document.setSendNotes(command.getSendNotes());
+			
 			if (!ObjectUtils.toString(command.getRecipientPeopleId()).equals("") || !ObjectUtils.toString(command.getRecipientPeopleDescription()).equals("")) {
 				document.setRecipientPeople(new People(command.getRecipientPeopleId()));
 			} else {
@@ -143,10 +141,8 @@ public class EditCorrespondentsOrPeopleDocumentController {
 				document.setRecipientPlaceUnsure(command.getRecipientPlaceUnsure());
 			}
 			
-			if(command.getRecipNotes() != ""){
-				document.setRecipNotes(command.getRecipNotes());
-			}
-
+			document.setRecipNotes(command.getRecipNotes());
+			
 			try {
 				document = getDocBaseService().editCorrespondentsDocument(document);
 
