@@ -197,6 +197,7 @@ span.h7 {
 	position: absolute;
 	margin-left: 5px;
 	background:url(/DocSources/images/1024/button_lastRecord.png) no-repeat;
+	margin-top: 1px;
 }
 
 #nextRecord {

@@ -55,30 +55,46 @@
 	</div>
 	</security:authorize>
 	
+	<div id="documentDiv">
+		<%-- Create new Document Record --%>
+		<c:if test="${document.volume == null}">
+		<div id="documentTitle">
+			<h2>ADD New - Document Record</h2>
+		</div>
+		</c:if>
+		<%-- Editing Document Record --%>
+		<c:if test="${document.volume != null}">
+		<div id="documentTitle" class="background">
+			<div class="title">
+			    <h5>DOCUMENT</h5>
+			</div>
+			<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
+			<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+			<c:choose>
+				<%-- Recipient empty --%>
+				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+			 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+			 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
+				</c:when>
+				<%-- Sender empty --%>
+				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+			 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
+			 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+				</c:when>
+				<%-- Sender and Recipient filled in --%>
+				<c:otherwise>
+			  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+			  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+				</c:otherwise>
+			</c:choose>
+			<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+		</div>
+		</c:if>
 	
 	<div id="EditDetailsDocumentDiv" class="background">
-	<div class="title">
-		<h5>DOCUMENT DETAILS </h5>
+		<div class="title">
+			<h5>DOCUMENT DETAILS </h5>
 		</div>
-<!-- 		<div id="CreatedSharePrintDiv"> -->
-<%-- 			<div id="createdby">CREATED BY ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div> --%>
-<!-- 			<a title="Print this record" href="#" id="buttonPrint"></a> -->
-<!-- 			<div id="buttonShareLink"> -->
-<!-- 				<a href="#"><img src="/DocSources/images/1024/img_transparent.png"></a> -->
-<!-- 				<span>Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.</span> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-		
-<!-- 		<div id="DocumentImageDiv"> -->
-<%-- 			<c:if test="${not empty image}"> --%>
-<%-- 			<img src="<c:url value="/mview/ReverseProxyIIPImageThumbnail.do?imageName=${image}"/>"> --%>
-<%-- 			<p><a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}">Show in manuscript viewer</a></p> --%>
-<%-- 			</c:if> --%>
-<%-- 			<c:if test="${empty image}"> --%>
-<%-- 			<img src="<c:url value="/images/1024/img_document.png"/>" alt="document image" /> --%>
-<%-- 			</c:if> --%>
-<!-- 		</div> -->
-		
 		<div class="listDetails">
 			<div class="row">
 				<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
