@@ -34,6 +34,11 @@
 	        $j("#EditDescriptionVolume").css('visibility', 'hidden'); 
 			$j("#EditDetailsVolume").css('visibility', 'hidden'); 
 			
+			$j("#EditContextVolumeForm :input").change(function(){
+				$j("#modify").val(1); //set the hidden field if an element is modified
+				return false;
+			});
+			
 			 $j("#save").click(function(){
 		        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 		        	$j("#loadingDiv").css('visibility', 'visible');
@@ -41,7 +46,7 @@
 
 			 $j('#close').click(function() {
 		        	if($j("#modify").val() == 1){
-						$j('#EditContextVolumeForm').block({ message: $j('#question'),
+						$j('#EditContextVolumeDiv').block({ message: $j('#question'),
 							css: { 
 								border: 'none', 
 								padding: '5px',
