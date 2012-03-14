@@ -19,22 +19,38 @@
 	</div>
 	</security:authorize>
 		
-	
+	<div id="volumeDiv">
+		<%-- Create new Volume Record --%>
+		<c:if test="${volume.summaryId == 0}">
+		<div id="volumeTitle">
+			<h2>ADD New - Volume Record</h2>
+		</div>
+		</c:if>	
+		<%-- Editing Volume Record --%>	
+		<c:if test="${volume.summaryId != 0}">
+		<div id="volumeTitle" class="background">
+			<div class="title">
+  				 <h5>VOLUME</h5>
+ 			</div>
+			<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
+			<h4>${volume.serieList}</h4>
+			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
+			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
+				<p style="margin-left:28px;">Documents related to this Volume record: <a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all the documents related to this Volume record">${volDocsRelated}</a></p>
+			</c:if>
+			<c:if test="${volDocsRelated == 0}">
+				<p style="margin-left:28px;">Documents related to this Volume record: <span class="num_docs" title="No documents related to this Volume record">0</span></p>
+			</c:if>
+			<c:if test="${volDocsRelated == 1}">
+				<p style="margin-left:28px;">Documents related to this Volume record: <a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to document related to this Volume record">${volDocsRelated}</a></p>
+			</c:if>
+		</div>
+		</c:if>
+
 	<div id="EditDetailsVolumeDiv" class="background">
 		<div class="title">
 			<h5>VOLUME DETAILS </h5>
 		</div>
-		<h3>${volume.serieList}</h3>
-		
-		<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-			<span class="num_docs">${volDocsRelated} Documents related</span>
-		</c:if>
-		<c:if test="${volDocsRelated == 0}">
-			<a class="num_docs">0 Documents related</a>
-		</c:if>
-		<c:if test="${volDocsRelated == 1}">
-			<span class="num_docs" >${volDocsRelated} Document related</a>
-		</c:if>
 		<div class="listDetails">
 			<div class="row">
 				<div class="item">Volume/Filza (MDP)</div>
