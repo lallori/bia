@@ -13,11 +13,10 @@
 /* ----------------- TITLES ------------------------------- */ 
 
 h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLACE NAME (in PLACE DETAILS) */
-	padding: 0 45px 24px 28px;
+	padding: 0 45px 0 28px;
 	font-size: 16px;
 	font-style: italic;
 	color: #666EA4;
-	margin-bottom: 10px;
 }
 
 #documentTitle h3 {
@@ -49,11 +48,6 @@ h4, span.h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 
 span.h4 {
 	padding:10px 0 0 10px;
-}
-
-#body_right h4 {
-	position: absolute;
-	margin: -11px 0 0 2px;
 }
 
 h5{ /* Data Entry main fields Title */
@@ -360,6 +354,11 @@ item a{
 
 #documentTitle, #volumeTitle, #personTitle, #geoTitle{
 	margin-top: 30px;
+	margin-bottom: 25px;
+}
+
+#body_right #documentTitle, #body_right #volumeTitle, #body_right #personTitle, #body_right #geoTitle{
+	margin-top: 0px;
 	margin-bottom: 25px;
 }
 
