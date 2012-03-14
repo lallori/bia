@@ -22,7 +22,7 @@
 		<div class="list">
 			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson.do">
-					<c:param name="titleOccId" value="${currentPoLink.titleOccList.titleOcc}" />
+					<c:param name="titleOccId" value="${currentPoLink.titleOccList.titleOccId}" />
 				</c:url>
 				<c:url var="ShowRoleCatPeoplePersonURL" value="/src/peoplebase/ShowRoleCatPeoplePerson.do">
 					<c:param name="roleCatId" value="${currentPoLink.titleOccList.roleCat.roleCatId}" />
