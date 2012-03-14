@@ -61,16 +61,18 @@
 					$j("#body_left").load($j(this).attr("href"));
 					Modalbox.hide();
 					return false;                                                                                 
-				});                                                                                               
+				});  
+				$j("#categoryHistory").click(function() {															
+					Modalbox.show($j(this).attr("href"), {title: "CATEGORY VIEW", width: 760});
+					return false;
+				});
+				
 			} );                                                                                                  
 	</script>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j("#categoryHistory").click(function() {															
-				Modalbox.show($j(this).attr("href"), {title: "CATEGORY VIEW", width: 760});
-				return false;
-			});	
+				
 			$j("#closeMyHistory").click(function(){
 				Modalbox.hide(); 
 				return false;

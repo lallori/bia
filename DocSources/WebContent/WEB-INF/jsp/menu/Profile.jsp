@@ -27,7 +27,7 @@
 							Modalbox.show($j(this).attr("href"), {title: "ADVANCED SEARCH", width: 750, height: 325});return false;
 						});							   	
 						$j("#myHistoryMenu").click(function() {															
-							Modalbox.show($j(this).attr("href"), {title: "MY HISTORY", width: 760, height: 415});return false;
+							Modalbox.show($j(this).attr("href"), {title: "MY HISTORY", width: 750, height: 415});return false;
 						});	
 						$j("#myprofileMenu").click(function() {
 							Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 760, height: 440});return false;}																	

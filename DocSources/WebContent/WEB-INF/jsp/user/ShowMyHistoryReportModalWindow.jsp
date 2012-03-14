@@ -7,19 +7,19 @@
 
 	<c:url var="ShowMyHistoryURL" value="/user/ShowMyHistory.do" />
 
-	<c:url var="FiveElementsDocumentURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json">
+	<c:url var="FourElementsDocumentURL" value="/user/MyHistoryFirstFourElementsByCategoryPagination.json">
 		<c:param name="category" value="DOCUMENT"/>
 	</c:url>
 	
-	<c:url var="FiveElementsPeopleURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json">
+	<c:url var="FourElementsPeopleURL" value="/user/MyHistoryFirstFourElementsByCategoryPagination.json">
 		<c:param name="category" value="PEOPLE"/>
 	</c:url>
 	
-	<c:url var="FiveElementsPlaceURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json">
+	<c:url var="FourElementsPlaceURL" value="/user/MyHistoryFirstFourElementsByCategoryPagination.json">
 		<c:param name="category" value="PLACE"/>
 	</c:url>
 	
-	<c:url var="FiveElementsVolumeURL" value="/user/MyHistoryFirstFiveElementsByCategoryPagination.json">
+	<c:url var="FourElementsVolumeURL" value="/user/MyHistoryFirstFourElementsByCategoryPagination.json">
 		<c:param name="category" value="VOLUME"/>
 	</c:url>
 
@@ -162,10 +162,10 @@
 				"bLengthChange": false,                                                                          
 				"bProcessing": true,                                                                          
 				"bServerSide": true,                                                                          
-				"iDisplayLength": 4,                                                                         
+				"iDisplayLength": 3,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "${FiveElementsDocumentURL}",                                           
+				"sAjaxSource": "${FourElementsDocumentURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"bInfo":false,             
 				"bFilter":false,                                                      
@@ -230,10 +230,10 @@
 				"bLengthChange": false,                                                                          
 				"bProcessing": true,                                                                          
 				"bServerSide": true,                                                                          
-				"iDisplayLength": 4,                                                                         
+				"iDisplayLength": 3,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "${FiveElementsVolumeURL}",                                           
+				"sAjaxSource": "${FourElementsVolumeURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"bInfo":false,             
 				"bFilter":false,                                                      
@@ -298,10 +298,10 @@
 				"bLengthChange": false,                                                                          
 				"bProcessing": true,                                                                          
 				"bServerSide": true,                                                                          
-				"iDisplayLength": 4,                                                                         
+				"iDisplayLength": 3,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "${FiveElementsPlaceURL}",                                           
+				"sAjaxSource": "${FourElementsPlaceURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"bInfo":false,             
 				"bFilter":false,                                                      
@@ -366,10 +366,10 @@
 				"bLengthChange": false,                                                                          
 				"bProcessing": true,                                                                          
 				"bServerSide": true,                                                                          
-				"iDisplayLength": 4,                                                                         
+				"iDisplayLength": 3,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "${FiveElementsPeopleURL}",                                           
+				"sAjaxSource": "${FourElementsPeopleURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"bInfo":false,             
 				"bFilter":false,                                                      
@@ -425,6 +425,8 @@
 
 <script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#MB_window").css("width", "760px");
+		
 		$j("#moreDocs").click(function() {															
 			Modalbox.show($j(this).attr("href"), {title: "MY DOCUMENTS HISTORY ", width: 750});return false;
 		});	

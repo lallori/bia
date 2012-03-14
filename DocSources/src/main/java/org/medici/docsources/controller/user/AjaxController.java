@@ -260,8 +260,8 @@ public class AjaxController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/user/MyHistoryFirstFiveElementsByCategoryPagination.json", method = RequestMethod.GET)
-	public ModelAndView myHistoryFirstFiveElementsByCategoryPagination(@RequestParam(value="category") Category category,
+	@RequestMapping(value = "/user/MyHistoryFirstFourElementsByCategoryPagination.json", method = RequestMethod.GET)
+	public ModelAndView myHistoryFirstFourElementsByCategoryPagination(@RequestParam(value="category") Category category,
 	   		 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 	   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 	   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -274,7 +274,7 @@ public class AjaxController {
 		Page page = null;
 
 		try {
-			page = getUserService().searchUserHistory(category, paginationFilter, 5);
+			page = getUserService().searchUserHistory(category, paginationFilter, 4);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -296,7 +296,7 @@ public class AjaxController {
 		   } else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   singleRow.add(currentUserHistory.getAction().toString());
-			   singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
+			   singleRow.add(currentUserHistory.getPlace().getPlaceName() + " / " + currentUserHistory.getPlace().getPlParent());
 			   resultList.add(HtmlUtils.showPlace(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
