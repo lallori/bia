@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.common.search;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -93,10 +92,13 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			placesName = new ArrayList<String>(command.getPlaceName().size());
 			
 			for(String singleWord : command.getPlaceName()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try{
-					placesName.add(new String(singleWord.getBytes(), "UTF-8"));
+					placesName.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){					
-				}catch(UnsupportedEncodingException e){
+				}catch(URIException e){
 				}
 			}
 		}else{
@@ -270,10 +272,10 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 					placesNameQuery.append(" AND ");
 				}
 				placesNameQuery.append("((placeNameFull like '%");
-				placesNameQuery.append(placesName.get(i).toLowerCase());
+				placesNameQuery.append(placesName.get(i).toLowerCase().replace("'", "''"));
 				placesNameQuery.append("%') or ");
 				placesNameQuery.append("(termAccent like '%");
-				placesNameQuery.append(placesName.get(i).toLowerCase());
+				placesNameQuery.append(placesName.get(i).toLowerCase().replace("'", "''"));
 				placesNameQuery.append("%'))");
 			}
 			placesNameQuery.append(")");

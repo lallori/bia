@@ -229,7 +229,7 @@
 	 * This method return hidden parameter for normal field  
 	 */
 	function getHiddenParameterForNormalField(formName, fieldName) {
-		return $('#' + formName).find('#' + fieldName).val();
+		return escape($('#' + formName).find('#' + fieldName).val());
 	}
 
 	/**

@@ -307,6 +307,11 @@
 				$j(".personAdd").attr("disabled","disabled");
 			});
 			
+			/*$j("#personSearchForm").submit(function(){
+				$j("#personId").val("");
+				$j(".personAdd").attr("disabled","disabled");
+			});*/
+			
 			
 			$j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',

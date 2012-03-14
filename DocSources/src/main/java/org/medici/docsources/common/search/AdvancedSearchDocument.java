@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.common.search;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -389,6 +388,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			words = new ArrayList<String>(command.getWord().size());
 			
 			for (String singleWord : command.getWord()) {
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if (stringTokenizer.countTokens() == 2) {
@@ -413,8 +415,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			person = new ArrayList<String>(command.getPerson().size());
 			
 			for (String singleWord : command.getPerson()) {
-				//This is for refine search when the URLencoder change the space in "+"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -423,7 +426,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					} else if (stringTokenizer.countTokens() == 1) {
 						// string format is |text
 						personId.add(new Integer(0));
-						person.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
+						try {
+							person.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+						} catch (URIException e) {
+						}
 					} else if (stringTokenizer.countTokens() == 2) {
 						// string format is number|text
 	
@@ -439,14 +445,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						try {
 							person.add(URIUtil.decode(singleText, "UTF-8"));
 						} catch (URIException e) {
-							
+							personId.remove(personId.size()-1);
 						}
 					} else {
 						// we skip field
 					}
 				} catch (NumberFormatException nex) {
-				} catch (UnsupportedEncodingException e) {
-					personId.remove(personId.size()-1);
 				}
 			}
 		} else {
@@ -460,8 +464,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			place = new ArrayList<String>(command.getPlace().size());
 			
 			for (String singleWord : command.getPlace()) {
-				//This is for refine search when the URLencoder change the space in "+"
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
 				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
@@ -470,7 +475,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					} else if (stringTokenizer.countTokens() == 1) {
 						// string format is |text
 						placeId.add(new Integer(0));
-						place.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
+						place.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
 					} else if (stringTokenizer.countTokens() == 2) {
 						// string format is number|text
 						String singleId = stringTokenizer.nextToken();
@@ -482,16 +487,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 							//Empty placeId is equal to 0
 							placeId.add(new Integer(0));
 						}
-						try {
-							place.add(URIUtil.decode(singleText, "UTF-8"));
-						} catch (URIException e) {
-							
-						}
+						place.add(URIUtil.decode(singleText, "UTF-8"));
 					} else {
 						// we skip field
 					}
 				} catch (NumberFormatException nex) {
-				} catch (UnsupportedEncodingException e) {
+				} catch (URIException e) {
 					placeId.remove(placeId.size()-1);
 				}
 			}
@@ -700,10 +701,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			extract = new ArrayList<String>(command.getExtract().size());
 			
 			for (String singleWord : command.getExtract()) {
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try {
-					extract.add(new String(singleWord.getBytes(), "UTF-8"));
+					extract.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch (NumberFormatException nex) {
-				} catch (UnsupportedEncodingException e) {
+				} catch (URIException e) {
 				}
 			}
 		} else {
@@ -715,10 +719,12 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			synopsis = new ArrayList<String>(command.getSynopsis().size());
 			
 			for (String singleWord : command.getSynopsis()) {
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try {
-					synopsis.add(new String(singleWord.getBytes(), "UTF-8"));
+					synopsis.add(URIUtil.decode(singleWord, "UTF-8"));
 				} catch (NumberFormatException nex) {
-				} catch (UnsupportedEncodingException e) {
+				} catch (URIException e) {
 				}
 			}
 		} else {
@@ -1148,18 +1154,18 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 				if (wordsTypes.get(i).equals(WordType.Extract)) {
 					wordsQuery.append("(synExtract.docExtract like '%");
-					wordsQuery.append(words.get(i).toLowerCase());
+					wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
 					wordsQuery.append("%')");
 				} else if (wordsTypes.get(i).equals(WordType.Synopsis)) {
 					wordsQuery.append("(synExtract.synopsis like '%");
-					wordsQuery.append(words.get(i).toLowerCase());
+					wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
 					wordsQuery.append("%')");
 				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
 					wordsQuery.append("((synExtract.docExtract like '%");
-					wordsQuery.append(words.get(i).toLowerCase());
+					wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
 					wordsQuery.append("%') or ");
 					wordsQuery.append("(synExtract.synopsis like '%");
-					wordsQuery.append(words.get(i).toLowerCase());
+					wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
 					wordsQuery.append("%'))");
 				}
 			}
@@ -1195,7 +1201,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					personQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.mapNameLf like '%");
-					personQuery.append(person.get(i).toLowerCase());
+					personQuery.append(person.get(i).toLowerCase().replace("'", "''"));
 					personQuery.append("%')"); 
 					/*personQuery.append("%') or altName.altName like '%'");
 					personQuery.append(person.get(i).toLowerCase());
@@ -1241,11 +1247,11 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					placeQuery.append("(senderPlace.placeName like '%");
-					placeQuery.append(place.get(i).toLowerCase());
+					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
 					placeQuery.append("%' or recipientPlace.placeName like '%'");
-					placeQuery.append(place.get(i).toLowerCase());
+					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
 					placeQuery.append("%' or entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeName like '%'");
-					placeQuery.append(place.get(i).toLowerCase());
+					placeQuery.append(place.get(i).toLowerCase().replace("'", "''"));
 					placeQuery.append("%'))");
 				}
 			}
@@ -1284,7 +1290,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					senderQuery.append("(senderPeople.mapNameLf like '%");
-					senderQuery.append(sender.get(i).toLowerCase());
+					senderQuery.append(sender.get(i).toLowerCase().replace("'", "''"));
 					senderQuery.append("%')");
 				}
 			}
@@ -1323,7 +1329,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					fromQuery.append("(senderPlace.placeNameFull like '%");
-					fromQuery.append(from.get(i).toLowerCase());
+					fromQuery.append(from.get(i).toLowerCase().replace("'", "''"));
 					fromQuery.append("%')");
 				}
 			}
@@ -1362,7 +1368,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					recipientQuery.append("(recipientPeople.mapNameLf like '%");
-					recipientQuery.append(recipient.get(i).toLowerCase());
+					recipientQuery.append(recipient.get(i).toLowerCase().replace("'", "''"));
 					recipientQuery.append("%')");
 				}
 			}
@@ -1401,7 +1407,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					toQuery.append("(recipientPlace.placeNameFull like '%");
-					toQuery.append(from.get(i).toLowerCase());
+					toQuery.append(from.get(i).toLowerCase().replace("'", "''"));
 					toQuery.append("%')");
 				}
 			}
@@ -1440,7 +1446,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					refersToQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.mapNameLf like '%");
-					refersToQuery.append(refersTo.get(i).toLowerCase());
+					refersToQuery.append(refersTo.get(i).toLowerCase().replace("'", "''"));
 					refersToQuery.append("%'))");
 				}
 			}
@@ -1467,7 +1473,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				String[] wordsSingleExtract = StringUtils.split(extract.get(i), " ");
 				for (int j=0; j<wordsSingleExtract.length; j++) {
 					extractQuery.append("(synExtract.docExtract like '%");
-					extractQuery.append(wordsSingleExtract[j]);
+					extractQuery.append(wordsSingleExtract[j].replace("'", "''"));
 					extractQuery.append("%')");
 					if (j< (wordsSingleExtract.length-1)) {
 						extractQuery.append(" AND ");
@@ -1490,7 +1496,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				String[] wordsSingleSynopsis = StringUtils.split(synopsis.get(i), " ");
 				for (int j=0; j<wordsSingleSynopsis.length; j++) {
 					synopsisQuery.append("(synExtract.synopsis like '%");
-					synopsisQuery.append(wordsSingleSynopsis[j]);
+					synopsisQuery.append(wordsSingleSynopsis[j].replace("'", "''"));
 					synopsisQuery.append("%')");
 					if (j< (wordsSingleSynopsis.length-1)) {
 						synopsisQuery.append(" AND ");
@@ -1525,7 +1531,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					}
 					
 					topicsQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicTitle like '%");
-					topicsQuery.append(topics.get(i).toLowerCase());
+					topicsQuery.append(topics.get(i).toLowerCase().replace("'", "''"));
 					topicsQuery.append("%'))");
 				}
 			}

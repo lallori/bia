@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.common.search;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -254,11 +253,11 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 				try {
 					if (stringTokenizer.countTokens() == 2) {
 						wordsTypes.add(WordType.valueOf(stringTokenizer.nextToken()));
-						words.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
+						words.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
 					} else {
 						continue;
 					}
-				} catch (UnsupportedEncodingException e) {
+				} catch (URIException e) {
 					wordsTypes.remove(wordsTypes.size()-1);
 				}
 			}
@@ -361,10 +360,13 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(command.getFromVolume() != null && command.getFromVolume().size() > 0){
 			fromVolume = new ArrayList<String>(command.getFromVolume().size());
 			for(String singleWord : command.getFromVolume()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try{
-					fromVolume.add(new String(singleWord.getBytes(), "UTF-8"));
+					fromVolume.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
-				}catch(UnsupportedEncodingException e){
+				}catch(URIException e){
 				}
 			}
 		}else{
@@ -375,10 +377,13 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(command.getToVolume() != null && command.getToVolume().size() > 0){
 			toVolume = new ArrayList<String>(command.getToVolume().size());
 			for(String singleWord : command.getToVolume()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try{
-					toVolume.add(new String(singleWord.getBytes(), "UTF-8"));
+					toVolume.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
-				}catch(UnsupportedEncodingException e){
+				}catch(URIException e){
 				}
 			}
 		}else{
@@ -389,10 +394,13 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(command.getContext() != null && command.getContext().size() > 0){
 			context = new ArrayList<String>(command.getContext().size());
 			for(String singleWord : command.getContext()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try{
-					context.add(new String(singleWord.getBytes(), "UTF-8"));
+					context.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
-				}catch(UnsupportedEncodingException e){
+				}catch(URIException e){
 				}
 			}
 		}else{
@@ -403,10 +411,13 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(command.getInventario() != null && command.getInventario().size() > 0){
 			inventario = new ArrayList<String>(command.getInventario().size());
 			for(String singleWord : command.getInventario()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try{
-					inventario.add(new String(singleWord.getBytes(), "UTF-8"));
+					inventario.add(URIUtil.decode(singleWord, "UTF-8"));
 				}catch(NumberFormatException nex){
-				}catch(UnsupportedEncodingException e){
+				}catch(URIException e){
 				}
 			}
 		}else{
@@ -782,7 +793,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 						fromVolumeQuery.append(" AND ");
 					}
 					fromVolumeQuery.append("(senders like '%");
-					fromVolumeQuery.append(wordsSingleFromVolume[j]);
+					fromVolumeQuery.append(wordsSingleFromVolume[j].replace("'", "''"));
 					fromVolumeQuery.append("%')");
 				}
 			}
@@ -808,7 +819,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 						toVolumeQuery.append(" AND ");
 					}
 					toVolumeQuery.append("(recips like '%");
-					toVolumeQuery.append(wordsSingleToVolume[j]);
+					toVolumeQuery.append(wordsSingleToVolume[j].replace("'", "''"));
 					toVolumeQuery.append("%')");
 				}
 			}
@@ -834,7 +845,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 						contextQuery.append(" AND ");
 					}
 					contextQuery.append("(ccontext like '%");
-					contextQuery.append(wordsSingleContext[j]);
+					contextQuery.append(wordsSingleContext[j].replace("'", "''"));
 					contextQuery.append("%')");
 				}
 			}
@@ -860,7 +871,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 						inventarioQuery.append(" AND ");
 					}
 					inventarioQuery.append("(inventarioSommarioDescription like '%");
-					inventarioQuery.append(wordsSingleInventario[j]);
+					inventarioQuery.append(wordsSingleInventario[j].replace("'", "''"));
 					inventarioQuery.append("%')");
 				}
 			}

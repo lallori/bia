@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.common.search;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -243,15 +242,18 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			names = new ArrayList<String>(command.getNameParts().size());
 			
 			for(String singleWord: command.getNameParts()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try{
 					if(stringTokenizer.countTokens() == 2){
 						namesTypes.add(NameType.valueOf(stringTokenizer.nextToken().replace(" ", "")));
-						names.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
+						names.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
 					}else{
 						continue;
 					}
-				}catch(UnsupportedEncodingException e){
+				}catch(URIException e){
 					namesTypes.remove(namesTypes.size()-1);
 				}
 			}
@@ -336,9 +338,12 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		if((command.getOccupationWord() != null) && (command.getOccupationWord().size() > 0)){
 			titleOccWord = new ArrayList<String>(command.getOccupationWord().size());
 			for(String singleWord : command.getOccupationWord()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try{
-					titleOccWord.add(new String(singleWord.getBytes(), "UTF-8"));
-				}catch(UnsupportedEncodingException e){
+					titleOccWord.add(URIUtil.decode(singleWord, "UTF-8"));
+				}catch(URIException e){
 					
 				}
 			}
@@ -352,6 +357,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			titlesOcc = new ArrayList<String>(command.getOccupation().size());
 			
 			for(String singleWord : command.getOccupation()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try{
 					if(stringTokenizer.countTokens() == 0){
@@ -386,13 +394,16 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			place = new ArrayList<String>(command.getPlace().size());
 			
 			for(String singleWord : command.getPlace()){
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try{
 					if(stringTokenizer.countTokens() == 0){
 						continue;
 					}else if(stringTokenizer.countTokens() == 1){
 						placeId.add(new Integer(0));
-						place.add(new String(stringTokenizer.nextToken().getBytes(), "UTF-8"));
+						place.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
 					}else if(stringTokenizer.countTokens() == 2){
 						String singleId = stringTokenizer.nextToken();
 						String singleText = stringTokenizer.nextToken();
@@ -401,11 +412,11 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 						}else{
 							placeId.add(new Integer(0));
 						}
-						place.add(new String(singleText.getBytes(), "UTF-8"));
+						place.add(URIUtil.decode(singleText, "UTF-8"));
 					}
 				}catch(NumberFormatException nex){
 					
-				}catch(UnsupportedEncodingException e){
+				}catch(URIException e){
 					placeId.remove(placeId.size() - 1);
 				}
 			}
@@ -419,9 +430,12 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			researchNotes = new ArrayList<String>(command.getResearchNotes().size());
 			
 			for (String singleWord : command.getResearchNotes()) {
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
 				try {
-					researchNotes.add(new String(singleWord.getBytes(), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
+					researchNotes.add(URIUtil.decode(singleWord, "UTF-8"));
+				} catch (URIException e) {
 					researchNotes.remove(researchNotes.size()-1);
 				}
 			}
@@ -598,14 +612,14 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				}
 				if(namesTypes.get(i).equals(NameType.AllNameTypes)){
 					namesQuery.append("(mapNameLf like '%");
-					namesQuery.append(names.get(i).toLowerCase());
+					namesQuery.append(names.get(i).toLowerCase().replace("'", "''"));
 					namesQuery.append("%' OR ");
 					namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
-					namesQuery.append(names.get(i).toLowerCase());
+					namesQuery.append(names.get(i).toLowerCase().replace("'", "''"));
 					namesQuery.append("%')))");
 				}else{
 					namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
-					namesQuery.append(names.get(i).toLowerCase());
+					namesQuery.append(names.get(i).toLowerCase().replace("'", "''"));
 					namesQuery.append("%' AND nameType like '");
 					namesQuery.append(namesTypes.get(i).toString().toLowerCase());
 					namesQuery.append("'))");
@@ -629,19 +643,19 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					wordsQuery.append(" AND ");
 				}
 				wordsQuery.append("((mapNameLf like '%");
-				wordsQuery.append(words.get(i).toLowerCase());
+				wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
 				wordsQuery.append("%') OR ");
 				wordsQuery.append("((bioNotes like '%");
-				wordsQuery.append(words.get(i).toLowerCase());
+				wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
 				wordsQuery.append("%') OR ");
 				wordsQuery.append("(staffNotes like '%");
-				wordsQuery.append(words.get(i).toLowerCase());
+				wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
 				wordsQuery.append("%') OR ");
 				wordsQuery.append("((mapNameLf like '%");
-				wordsQuery.append(words.get(i).toLowerCase());
+				wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
 				wordsQuery.append("%') OR ");
 				wordsQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
-				wordsQuery.append(names.get(i).toLowerCase());
+				wordsQuery.append(names.get(i).toLowerCase().replace("'", "''"));
 				wordsQuery.append("%'))");
 			}
 			wordsQuery.append(")");
@@ -730,7 +744,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					titleOccWordQuery.append(" AND ");
 				}
 				titleOccWordQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOcc like '%");
-				titleOccWordQuery.append(titleOccWord.get(i));
+				titleOccWordQuery.append(titleOccWord.get(i).replace("'", "''"));
 				titleOccWordQuery.append("%'))");
 			}
 			titleOccWordQuery.append(")");
@@ -755,7 +769,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					titleOccIdQuery.append("))");
 				}else{
 					titleOccIdQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOcc like '%");
-					titleOccIdQuery.append(titlesOcc.get(i));
+					titleOccIdQuery.append(titlesOcc.get(i).replace("'", "''"));
 					titleOccIdQuery.append("%'))");
 				}
 			}
@@ -783,9 +797,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					placeIdQuery.append(")");
 				}else{
 					placeIdQuery.append("(bornPlace.placeName like '%");
-					placeIdQuery.append(place.get(i));
+					placeIdQuery.append(place.get(i).replace("'", "''"));
 					placeIdQuery.append("%' OR deathPlace.placeName like '%");
-					placeIdQuery.append(place.get(i));
+					placeIdQuery.append(place.get(i).replace("'", "''"));
 					placeIdQuery.append("%' )");
 				}
 			}
@@ -806,7 +820,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					researchNotesQuery.append(" AND ");
 				}
 				researchNotesQuery.append("(bioNotes like '%");
-				researchNotesQuery.append(researchNotes.get(i).toLowerCase());
+				researchNotesQuery.append(researchNotes.get(i).toLowerCase().replace("'", "''"));
 				researchNotesQuery.append("%')");
 			}
 			researchNotesQuery.append(")");
