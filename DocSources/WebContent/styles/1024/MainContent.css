@@ -17,8 +17,11 @@ h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLAC
 	font-size: 16px;
 	font-style: italic;
 	color: #666EA4;
-	display: inline;
 	margin-bottom: 10px;
+}
+
+#documentTitle h3 {
+	display: inline;
 }
 
 h3.place { /* AlreadyPresent....html */
@@ -360,6 +363,8 @@ item a{
 	margin-bottom: 25px;
 }
 
+
+
 /* ----------------------------------------------------- */ 
 /*
 /* ------------------- ADJUST PLACE ---------------------------- */ 
@@ -423,11 +428,18 @@ item a{
 	height: 22px;
 	background-image: url(/DocSources/images/1024/button_large.png);
 	background-repeat: no-repeat;
-	padding: 2px 0 0 0;
+	padding: 4px 0 0 0;
 	cursor: pointer;
 	text-align: center;
 	position: absolute;
 	margin: 0 0 0 304px;
+}
+
+.showOrEditCompare:hover {
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
 }
 
 #loadingDiv { /* Animated Gif that shows up when saving each edit section */
@@ -1686,12 +1698,7 @@ input.file {
 	margin-top: 10px;
 }
 
-#personTitle .num_docs {
-	margin-left: 28px;
-	color: #900;
-}
-
-#volumeTitle .num_docs {
+.num_docs {
 	color: #900;
 }
 
