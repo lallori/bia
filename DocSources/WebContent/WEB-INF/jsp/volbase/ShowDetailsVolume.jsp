@@ -39,13 +39,13 @@
 			<h4>${volume.serieList}</h4>
 			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-				<p>Documents related to this Volume record: <a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all the documents related to this Volume record">${volDocsRelated}</a></p>
+				<p style="margin-left:28px;">Documents related to this Volume record: <a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all the documents related to this Volume record">${volDocsRelated}</a></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 0}">
-				<p>Documents related to this Volume record: <span class="num_docs" title="No documents related to this Volume record">0</span></p>
+				<p style="margin-left:28px;">Documents related to this Volume record: <span class="num_docs" title="No documents related to this Volume record">0</span></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 1}">
-				<p>Documents related to this Volume record: <a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to document related to this Volume record">${volDocsRelated}</a></p>
+				<p style="margin-left:28px;">Documents related to this Volume record: <a href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to document related to this Volume record">${volDocsRelated}</a></p>
 			</c:if>
 		</div>
 		</c:if>
