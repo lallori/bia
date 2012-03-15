@@ -30,8 +30,8 @@
 			$j("#showFamilyPerson${nameId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
 			$j('#showFamilyPerson${nameId}').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
-				"aaSorting": [[0, "desc"]],
+				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }, { "bSortable": false, "aTargets": [4]}], 
+				"aaSorting": [[0, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,

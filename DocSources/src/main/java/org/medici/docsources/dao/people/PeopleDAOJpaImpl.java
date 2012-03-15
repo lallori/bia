@@ -455,7 +455,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		if(familyName.contains("'"))
 			familyName = familyName.replace("'", "\'\'");
 		
-		String toSearch = new String("FROM People WHERE personId IN (SELECT person.personId FROM org.medici.docsources.domain.AltName WHERE altName.altName like '%" + familyName + "%' AND altName.nameType like 'Family')");
+		String toSearch = new String("FROM People WHERE personId IN (SELECT person.personId FROM org.medici.docsources.domain.AltName WHERE (altName.altName like '" + familyName + "%' OR altName.altName like '% " + familyName + "%' OR altName.altName like '%-" + familyName + "%') AND altName.nameType like 'Family')");
 		
 		//MD: We ignore the familyNamePrefix, because e.g. the family "Medici" is the same of "de' Medici"
 		/*if(familyNamePrefix != null){
