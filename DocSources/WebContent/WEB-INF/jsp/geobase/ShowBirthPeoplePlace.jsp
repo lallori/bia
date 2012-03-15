@@ -31,7 +31,7 @@
 
 			$j('#showBirthPeoplePlaceAllId${placeAllId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
-				"aaSorting": [[0, "desc"]],
+				"aaSorting": [[0, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
