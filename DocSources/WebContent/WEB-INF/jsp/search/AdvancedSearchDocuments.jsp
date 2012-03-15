@@ -162,7 +162,7 @@
 					<input type="text" id="volume"  name="volume" class="input_5c"/><!-- AUTOCOMPLETE -->
 					<p class="invisibleVol">and</p>
 					<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" style="visibility:hidden"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="volumeAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Volume">
 				</form>
 				
@@ -303,14 +303,15 @@
 				}
 			});
 			
-			$j("#person").change(function(){
-				$j(".personAdd").attr("disabled","disabled");
+			$j("#person").keyup(function(){
+				if($j("#personId").val() != '')
+					$j(".personAdd").attr("disabled","disabled");
 			});
 			
-			/*$j("#personSearchForm").submit(function(){
+			$j("#personSearchForm").submit(function(){
 				$j("#personId").val("");
 				$j(".personAdd").attr("disabled","disabled");
-			});*/
+			});
 			
 			
 			$j("#place").autocompletePlace({
@@ -330,10 +331,15 @@
 				}
 			});	
 			
-			$j("#place").change(function(){
-				$j(".placeAdd").attr("disabled","disabled");
+			$j("#place").keyup(function(){
+				if($j("#placeId").val() != '')
+					$j(".placeAdd").attr("disabled","disabled");
 			});
 			
+			$j("#placeSearchForm").submit(function(){
+				$j("#placeId").val("");
+				$j(".placeAdd").attr("disabled","disabled");
+			});
 			
 			$j("#sender").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
@@ -352,10 +358,15 @@
 				}
 			});
 			
-			$j("#sender").change(function(){
-				$j(".senderAdd").attr("disabled","disabled");
+			$j("#sender").keyup(function(){
+				if($j("#senderId").val() != '')
+					$j(".senderAdd").attr("disabled","disabled");
 			});
 			
+			$j("#senderSearchForm").submit(function(){
+				$j("#senderId").val("");
+				$j(".senderAdd").attr("disabled","disabled");
+			});		
 			
 			$j("#from").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
@@ -374,7 +385,13 @@
 				}
 			});
 			
-			$j("#from").change(function(){
+			$j("#from").keyup(function(){
+				if($j("#fromId").val() != '')
+					$j(".fromAdd").attr("disabled","disabled");
+			});
+			
+			$j("#fromSearchForm").submit(function(){
+				$j("#fromId").val("");
 				$j(".fromAdd").attr("disabled","disabled");
 			});
 			
@@ -395,7 +412,13 @@
 				}
 			});	
 			
-			$j("#recipient").change(function(){
+			$j("#recipient").keyup(function(){
+				if($j("#recipientId").val() != '')
+					$j(".recipientAdd").attr("disabled","disabled");
+			});
+			
+			$j("#recipientSearchForm").submit(function(){
+				$j("#recipientId").val("");
 				$j(".recipientAdd").attr("disabled","disabled");
 			});
 			
@@ -416,7 +439,13 @@
 				}
 			});	
 			
-			$j("#to").change(function(){
+			$j("#to").keyup(function(){
+				if($j("#toId").val() != '')
+					$j(".toAdd").attr("disabled","disabled");
+			});
+			
+			$j("#toSearchForm").submit(function(){
+				$j("#toId").val("");
 				$j(".toAdd").attr("disabled","disabled");
 			});
 			
@@ -437,7 +466,13 @@
 				}
 			});
 			
-			$j("#refersTo").change(function(){
+			$j("#refersTo").keyup(function(){
+				if($j("#refersToId").val() != '')
+					$j(".refersToAdd").attr("disabled","disabled");
+			});
+			
+			$j("#refersToSearchForm").submit(function(){
+				$j("#refersToId").val("");
 				$j(".refersToAdd").attr("disabled","disabled");
 			});
 			
@@ -458,6 +493,11 @@
 				}
 			});	
 			
+			$j("#topicSearchForm").submit(function(){
+				$j("#topicId").val("");
+				$j(".topicAdd").attr("disabled","disabled");
+			});
+			
 			$j("#volume").autocompleteGeneral({
 				serviceUrl: '${searchVolumeURL}',
 				minChars: 1,
@@ -470,6 +510,21 @@
 				onSelect: function(value, data){
 				}
 			});
+			
+			$j("#volume").change(function(){
+				if($j(this).val() != ''){
+					$j(".volumeAdd").removeAttr("disabled");
+					$j(".volumeAdd").attr("disabled");
+					$j(".volumeAdd").prop("disabled", false);
+				}					
+			});
+			
+			$j(".volumeAdd").click(function(){
+				if($j("#volume").val() == '')
+					return false;
+			})
+			
+			
 			
 			$j("#volumeBetween").autocompleteGeneral({
 				serviceUrl: '${searchVolumeURL}',
@@ -484,8 +539,9 @@
 				}
 			});
 			
-			$j("#topic").change(function(){
-				$j(".topicAdd").attr("disabled","disabled");
+			$j("#topic").keyup(function(){
+				if($j("#topicId").val() != '')
+					$j(".topicAdd").attr("disabled","disabled");
 			});
 			
 			$j('#wordSearch').click(function(){

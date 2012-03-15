@@ -170,7 +170,7 @@
 		<form id="occupationSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Use this autocomplater textfield to find a particular title or occupation name. Plase note that a most of titles or occupations  are written in their own language, so try using the  appropriate language rather than English or Italian.">?</a>
 			<input id="occupation" name="occupation" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="occupationAdd" disabled="disabled">
 			<input type="hidden" id="category" value="Occupation">
 			<input type="hidden" id="occupationId" value="">
 		</form>
@@ -290,11 +290,17 @@
 				}
 			});	
 		 
-		 $j("#place").change(function(){
+		$j("#place").keyup(function(){
+			if($j("#placeId").val() != '')
 				$j(".placeAdd").attr("disabled","disabled");
-			});
+		});
+			
+		$j("#placeSearchForm").submit(function(){
+			$j("#placeId").val("");
+			$j(".placeAdd").attr("disabled","disabled");
+		});
 		 
-		 $j("#occupation").AutocompleteTitle({
+		$j("#occupation").AutocompleteTitle({
 			 	serviceUrl:'${searchTitleOrOccupationURL}',
 			    minChars:3, 
 			    delimiter: null, // /(,|;)\s*/, // regex or character
@@ -303,8 +309,24 @@
 			    zIndex: 9999,
 			    deferRequestBy: 0, //miliseconds
 			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ $j('#occupationId').val(data); }
-		 })
+			    onSelect: function(value, data){ 
+			    	$j(".occupationAdd").removeAttr("disabled");
+			    	$j('#occupationId').val(data);
+			    	$j(".occupationAdd").attr("disabled");
+			    	$j(".occupationAdd").prop("disabled", false);
+			    }
+		});
+		
+		$j("#occupation").keyup(function(){
+			if($j("#occupationId").val() != '')
+				$j(".occupationAdd").attr("disabled","disabled");
+		});
+		
+		$j("#occupationSearchForm").submit(function(){
+			$j("#occupationId").val("");
+			$j(".occupationAdd").attr("disabled","disabled");
+		});
+		 
 		$j('#nameParts').click(function(){
 			 $j.scrollTo({top:'0px',left:'0px'}, 800 );
 			 $j("#yourSearchFilterDiv").animate({"top": "0px"}, "high");

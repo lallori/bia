@@ -17,7 +17,7 @@
 					</select>
 					<input type="text" id="volume"  value="" class="input_5c" maxlength="5"/><!-- AUTOCOMPLETE -->
 					<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" value="" maxlength="5" style="visibility:hidden"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+					<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="volumeAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Volume">
 				</form>
 				<hr />
@@ -239,6 +239,19 @@
 				
 			}
 		});
+		
+		$j("#volume").change(function(){
+			if($j(this).val() != ''){
+				$j(".volumeAdd").removeAttr("disabled");
+				$j(".volumeAdd").attr("disabled");
+				$j(".volumeAdd").prop("disabled", false);
+			}					
+		});
+		
+		$j(".volumeAdd").click(function(){
+			if($j("#volume").val() == '')
+				return false;
+		})
 		
 		$j("#volumeBetween").autocompleteGeneral({
 			serviceUrl: '${searchVolumeURL}',
