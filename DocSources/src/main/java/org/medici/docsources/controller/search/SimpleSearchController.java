@@ -27,13 +27,14 @@
  */
 package org.medici.docsources.controller.search;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.medici.docsources.command.search.SimpleSearchCommand;
 import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
 import org.medici.docsources.service.docbase.DocBaseService;
@@ -105,8 +106,8 @@ public class SimpleSearchController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		// This number is used to generate an unique id for new search 
 		try {
-			command.setText(new String(command.getText().getBytes(), "UTF-8"));
-		} catch (UnsupportedEncodingException e) {
+			command.setText(URIUtil.decode(command.getText(), "UTF-8"));
+		} catch (URIException e) {
 		}
 		UUID uuid = UUID.randomUUID();
 		command.setSearchUUID(uuid.toString());
