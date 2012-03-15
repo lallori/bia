@@ -39,6 +39,7 @@ import javax.validation.constraints.NotNull;
 public class ShowRoleCatPeoplePersonCommand {
 	@NotNull
 	private Integer roleCatId;
+	private String roleCat;
 
 	/**
 	 * @param roleCatId the roleCatId to set
@@ -52,6 +53,20 @@ public class ShowRoleCatPeoplePersonCommand {
 	 */
 	public Integer getRoleCatId() {
 		return roleCatId;
+	}
+
+	/**
+	 * @param roleCat the roleCat to set
+	 */
+	public void setRoleCat(String roleCat) {
+		this.roleCat = roleCat;
+	}
+
+	/**
+	 * @return the roleCat
+	 */
+	public String getRoleCat() {
+		return roleCat;
 	}
 	
 }

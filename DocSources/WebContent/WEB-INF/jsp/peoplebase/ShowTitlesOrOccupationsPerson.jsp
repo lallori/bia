@@ -23,9 +23,11 @@
 			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/src/peoplebase/ShowTitlesOrOccupationsPeoplePerson.do">
 					<c:param name="titleOccId" value="${currentPoLink.titleOccList.titleOccId}" />
+					<c:param name="titleOcc" value="${currentPoLink.titleOccList.titleOcc}" />
 				</c:url>
 				<c:url var="ShowRoleCatPeoplePersonURL" value="/src/peoplebase/ShowRoleCatPeoplePerson.do">
 					<c:param name="roleCatId" value="${currentPoLink.titleOccList.roleCat.roleCatId}" />
+					<c:param name="roleCat" value="${currentPoLink.titleOccList.roleCat.roleCatMinor}" />
 				</c:url>
 				<div class="row">
 					<c:if test="${currentPoLink.preferredRole}">

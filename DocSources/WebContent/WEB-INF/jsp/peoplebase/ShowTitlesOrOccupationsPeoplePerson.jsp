@@ -8,7 +8,7 @@
 	<c:url var="ShowTitlesOrOccupationsPeoplePersonURL" value="/de/peoplebase/ShowTitlesOrOccupationsPeoplePerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		
+		Title / Occupation : "${titleOcc}" <span id="recordsNum${titleOccId}" class="recordsNum"></span>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showTitlesOrOccupationsPeopleTitleOccId${titleOccId}">
@@ -31,7 +31,7 @@
 
 			$j('#showTitlesOrOccupationsPeopleTitleOccId${titleOccId}').dataTable( {
 				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
-				"aaSorting": [[0, "desc"]],
+				"aaSorting": [[0, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
@@ -48,6 +48,35 @@
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)
 					}); 					
+				},
+				"fnDrawCallback": function(){
+					$j("#recordsNum${titleOccId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					$j("tr.odd").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.odd").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+								return false;
+							}
+					);
+					$j("tr.even").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.even").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+								return false;
+							}
+					);
 				}
 			});
 			

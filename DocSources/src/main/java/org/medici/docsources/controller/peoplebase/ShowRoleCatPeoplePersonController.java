@@ -95,7 +95,7 @@ public class ShowRoleCatPeoplePersonController {
 
 				
 				model.put("roleCatId", command.getRoleCatId());
-				
+				model.put("roleCat", command.getRoleCat());
 			
 		}
 

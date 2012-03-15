@@ -39,6 +39,7 @@ import javax.validation.constraints.NotNull;
 public class ShowTitlesOrOccupationsPeoplePersonCommand {
 	@NotNull
 	private Integer titleOccId;
+	private String titleOcc;
 
 	/**
 	 * @param titleOccId the titleOccId to set
@@ -52,6 +53,20 @@ public class ShowTitlesOrOccupationsPeoplePersonCommand {
 	 */
 	public Integer getTitleOccId() {
 		return titleOccId;
+	}
+
+	/**
+	 * @param titleOcc the titleOcc to set
+	 */
+	public void setTitleOcc(String titleOcc) {
+		this.titleOcc = titleOcc;
+	}
+
+	/**
+	 * @return the titleOcc
+	 */
+	public String getTitleOcc() {
+		return titleOcc;
 	}
 	
 }

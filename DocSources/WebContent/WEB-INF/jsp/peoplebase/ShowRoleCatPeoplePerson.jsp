@@ -8,7 +8,7 @@
 	<c:url var="ShowRoleCatPeoplePersonURL" value="/de/peoplebase/ShowRoleCatPeoplePerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		
+		Role Category: "${roleCat}" <span id="recordsNum${roleCatId}" class="recordsNum"></span>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showRoleCatPeopleId${roleCatId}">
@@ -50,6 +50,8 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
+					$j("#recordsNum${roleCatId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');

@@ -97,7 +97,7 @@ public class ShowTitlesOrOccupationsPeoplePersonController {
 
 				
 				model.put("titleOccId", command.getTitleOccId());
-				
+				model.put("titleOcc", command.getTitleOcc());
 			
 		}
 
