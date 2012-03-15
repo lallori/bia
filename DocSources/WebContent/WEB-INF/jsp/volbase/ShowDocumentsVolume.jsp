@@ -7,7 +7,7 @@
 	<c:url var="ShowDocumentsRelatedVolumeURL" value="/de/volbase/ShowDocumentsRelatedVolume.json"></c:url>
 	
 	<div class="yourSearchDiv">
-	<div class="num_docs">Documents indexed to Volume ${volNum}</div>
+	<div class="num_docs">Documents indexed to Volume ${volNum} <span id="docIndexedTo${volNum}" class="recordsNum"></span></div>
 	<br>	
 	</div>
 	
@@ -50,6 +50,8 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
+					$j("#docIndexedTo${volNum}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');
