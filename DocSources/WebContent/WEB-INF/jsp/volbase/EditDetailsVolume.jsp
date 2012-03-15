@@ -93,11 +93,6 @@
 					$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 					return false;
 			});
-			
-			$j("#save").click(function(){
-		       	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
-		       	$j("#loadingDiv").css('visibility', 'visible');
-		    });
 	        
 			<%-- We disable editing an already entered volume number if not Administrator  --%>
 	        <security:authorize ifNotGranted="ROLE_ADMINISTRATORS">
@@ -262,6 +257,9 @@
 				
 				$j("#volNum").removeAttr("disabled");
 				$j("#volLetExt").removeAttr("disabled");
+				
+				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+		       	$j("#loadingDiv").css('visibility', 'visible');
 
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
 					if ($j(html).find(".inputerrors").length > 0){

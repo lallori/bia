@@ -51,13 +51,7 @@
 	    $j(document).ready(function() { 
 	    	//$j.scrollTo("#EditPersonDocumentForm");
 	    	
-	    	$j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j(this).parent().height());
-	        	$j("#loadingDiv").css('visibility', 'visible');
-	        	alert("a");
-	     	});
-	    	
-			var peopleDescription = $j('#personDescriptionAutoCompleter').autocompletePerson({ 
+	    	var peopleDescription = $j('#personDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchPersonLinkableToDocumentURL}',
 			    minChars:3, 
 			    delimiter: /(,|;)\s*/, // regex or character
@@ -84,6 +78,8 @@
 			});
 
 			$j("#EditPersonDocumentForm").submit(function (){
+				$j("#loadingDiv2").css('height', $j("#loadingDiv2").parent().height());
+	        	$j("#loadingDiv2").css('visibility', 'visible');
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 					$j("#EditCorrespondentsDocumentDiv").load('${EditCorrespondentsOrPeopleDocumentURL}');
 				}})

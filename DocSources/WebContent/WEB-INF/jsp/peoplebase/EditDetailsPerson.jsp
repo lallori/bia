@@ -160,12 +160,7 @@
 			$j("#EditSpousesPerson").css('visibility', 'hidden');
 	        $j("#EditResearchNotesPerson").css('visibility', 'hidden');
 	        
-	        $j("#save").click(function(){
-	        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
-	        	$j("#loadingDiv").css('visibility', 'visible');
-	        });
-	        
-	        $j("#EditDetailsPersonForm :input").change(function(){
+	       	$j("#EditDetailsPersonForm :input").change(function(){
 				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
 				return false;
 			});
@@ -327,22 +322,24 @@
 					});
 					return false;
 				}else{
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					if ($j(html).find(".inputerrors").length > 0){
-						$j("#EditDetailsPersonDiv").html(html);
-					} else {
-				<c:choose> 
-					<c:when test="${command.personId == 0}"> 
-						$j("#body_left").html(html);
-					</c:when> 
-					<c:otherwise> 
-						$j("#body_left").html(html);
-						$j("#EditNamesPersonDiv").load("${ShowNamesPersonURL}");
-					</c:otherwise> 
-				</c:choose> 
-					}
-				}});
-				return false;
+					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+		        	$j("#loadingDiv").css('visibility', 'visible');
+					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+						if ($j(html).find(".inputerrors").length > 0){
+							$j("#EditDetailsPersonDiv").html(html);
+						} else {
+					<c:choose> 
+						<c:when test="${command.personId == 0}"> 
+							$j("#body_left").html(html);
+						</c:when> 
+						<c:otherwise> 
+							$j("#body_left").html(html);
+							$j("#EditNamesPersonDiv").load("${ShowNamesPersonURL}");
+						</c:otherwise> 
+					</c:choose> 
+						}
+					}});
+					return false;
 				}
 			});
 

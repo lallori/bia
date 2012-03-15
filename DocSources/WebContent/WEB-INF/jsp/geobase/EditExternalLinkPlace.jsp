@@ -14,6 +14,7 @@
 		</c:url>
 	</security:authorize>
 	
+	<div id="loadingDiv"></div>
 	<form:form id="EditExternalLinkForm" method="post" cssClass="edit">
 		<fieldset>
 		<c:if test="${command.placeExternalLinksId == 0}">
@@ -67,6 +68,8 @@
 			});
 
 			$j("#EditExternalLinkForm").submit(function (){
+				$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	        	$j("#loadingDiv").css('visibility', 'visible');
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 					$j("#EditExtLinkPlaceDiv").load('${EditExternalLinksPlaceURL}');
 				}})

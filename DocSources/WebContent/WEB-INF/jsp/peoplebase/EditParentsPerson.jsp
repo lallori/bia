@@ -246,6 +246,8 @@
 					});
 					return false;
 				}else{
+					$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+		        	$j("#loadingDiv").css('visibility', 'visible');
 					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
 						$j("#body_left").load('${ShowPersonURL}');
 					}})
