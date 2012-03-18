@@ -41,8 +41,18 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.scrollTo.js"/>"></script>		
 		
 		<script type="text/javascript">
+			if (navigator.appVersion.indexOf("Mac")!=-1)
+				document.write('<link href="/DocSources/styles/1024/MainContent_mac.css" rel="stylesheet" type="text/css">');
+			
+			if (navigator.appVersion.indexOf("Linux")!=-1)
+				document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">','<link href="/DocSources/styles/1024/Template_linux.css" rel="stylesheet" type="text/css">');
+			 
+			 if (navigator.appVersion.indexOf("X11")!=-1)
+				 document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">','<link href="/DocSources/styles/1024/Template_linux.css" rel="stylesheet" type="text/css">');
+
 			var $j = jQuery.noConflict();
-			$j(document).ready(function() {
+
+			 $j(document).ready(function() {
 				$j.ajaxSetup ({
 					// Disable caching of AJAX responses
 					cache: false,
@@ -57,17 +67,6 @@
 						console.log(err);
 				    }
 				});
-				
-				if (navigator.appVersion.indexOf("Mac")!=-1)
-					document.write('<link href="/DocSources/styles/1024/MainContent_mac.css" rel="stylesheet" type="text/css">');
-				
-				if (navigator.appVersion.indexOf("Linux")!=-1)
-					document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">','<link href="/DocSources/styles/1024/Template_linux.css" rel="stylesheet" type="text/css">');
-				 
-				 if (navigator.appVersion.indexOf("X11")!=-1)
-					 document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">','<link href="/DocSources/styles/1024/Template_linux.css" rel="stylesheet" type="text/css">');
-				
-
 			});
 		</script>
 		<script type="text/javascript">
