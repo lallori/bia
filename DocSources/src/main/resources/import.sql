@@ -123,6 +123,9 @@ ALTER TABLE `docsources`.`persistent_logins` ENGINE = InnoDB ;
 ALTER TABLE `docsources`.`tblAccessLog` ENGINE = InnoDB ;
 ALTER TABLE `docsources`.`tblPRCLink`RENAME TO `docsources`.`tblPrcLink`;
 
+ALTER TABLE `tblEPLTOLink` CHANGE COLUMN `EPLTOID#` `EPLTOID` INT(10) NOT NULL AUTO_INCREMENT FIRST;
+-- ALTER TABLE `docsources`.`tblEPLTOLink` DROP COLUMN `EPLTOID`;
+
 -- MYSQL DATABASE STRUCTURE NORMALIZATION PATCH
 
 -- DOCUMENTS
@@ -497,6 +500,7 @@ INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MALI', 'ML');
 INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MALTA', 'MT');
 INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MARSHALL ISLANDS', 'MH');
 INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MARTINIQUE', 'MQ');
+
 INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MAURITANIA', 'MR');
 INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MAURITIUS', 'MU');
 INSERT INTO docsources.tblCountries (NAME, CODE) VALUES ('MAYOTTE', 'YT');
@@ -611,3 +615,4 @@ insert into docsources.tblAccessLog select * from docsources_2011.tblAccessLog;
 insert into docsources.tblUserComment select * from docsources_2011.tblUserComment;
 insert into docsources.tblUserHistory select * from docsources_2011.tblUserHistory;
 insert into docsources.tblUserMessage select * from docsources_2011.tblUserMessage;
+
