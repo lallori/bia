@@ -147,8 +147,7 @@
                 $.get(functionParams["getLinkedDocumentUrl"], parameters, function(data){
 					// We set currentImage
 					currentImage = data.imageId;
-					
-					if (functionParams["canTranscribe"] =='false' ) {
+					if (transcribing == false) {
 						if (data.error == 'wrongType' || data.imageType == 'R') {
 							$j("#unvailableTranscribe").css('visibility', 'visible');
 	    					$j("#alreadyTranscribe").css('visibility', 'hidden');
@@ -325,8 +324,7 @@
 					$.get(functionParams["getLinkedDocumentUrl"], parameters, function(data){
 						// We set currentImage
 						currentImage = data.imageId;
-						
-						if (functionParams["canTranscribe"] =='false' ) {
+						if (transcribing == false) {
 							if (data.error == 'wrongType') {
 		    					$j("#unvailableTranscribe").css('visibility', 'visible');
 		    					$j("#alreadyTranscribe").css('visibility', 'hidden');
