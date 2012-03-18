@@ -94,7 +94,12 @@ public class EditDetailsSchedoneController {
 			schedone.setFondo(command.getFondo());
 			schedone.setSerie(command.getSerie());
 			schedone.setNumeroUnita(command.getNumeroUnita());
-			//schedone.getDateEstreme(); //TODO
+			schedone.setDataInizioAnno(command.getDataInizioAnno());
+			schedone.setDataInizioMese((command.getDataInizioMese() != null) ? new Month(command.getDataInizioMese()) : null);
+			schedone.setDataInizioGiorno(command.getDataInizioGiorno());
+			schedone.setDataFineAnno(command.getDataFineAnno());
+			schedone.setDataFineMese((command.getDataFineMese() != null) ? new Month(command.getDataFineMese()) : null);
+			schedone.setDataFineGiorno(command.getDataFineGiorno());
 			schedone.setDescrizioneContenuto(command.getDescrizioneContenuto());
 			schedone.setLegatura(command.getLegatura());
 			schedone.setSupporto(command.getSupporto());
@@ -109,7 +114,9 @@ public class EditDetailsSchedoneController {
 			schedone.setRisoluzione(command.getRisoluzione());
 			schedone.setNomeFiles(command.getNomeFiles());
 			schedone.setResponsabileFotoRiproduzione(command.getResponsabileFotoRiproduzione());
-			schedone.setDataRipresa(command.getDataRipresa());
+			schedone.setDataRipresaAnno(command.getDataRipresaAnno());
+			schedone.setDataRipresaMese((command.getDataRipresaMese() != null) ? new Month(command.getDataRipresaMese()) : null);
+			schedone.setDataRipresaGiorno(command.getDataRipresaGiorno());
 			schedone.setOperatore(command.getOperatore());
 
 			try {
@@ -162,7 +169,12 @@ public class EditDetailsSchedoneController {
 			command.setFondo(schedone.getFondo());
 			command.setSerie(schedone.getSerie());
 			command.setNumeroUnita(schedone.getNumeroUnita());
-			command.getDateEstreme(); //TODO
+			command.setDataInizioAnno(schedone.getDataInizioAnno());
+			command.setDataInizioMese((schedone.getDataInizioMese() != null) ? schedone.getDataInizioMese().getMonthNum() : null);
+			command.setDataInizioGiorno(schedone.getDataInizioGiorno());
+			command.setDataFineAnno(schedone.getDataFineAnno());
+			command.setDataFineMese((schedone.getDataFineMese() != null) ? schedone.getDataFineMese().getMonthNum() : null);
+			command.setDataFineGiorno(schedone.getDataFineGiorno());
 			command.setDescrizioneContenuto(schedone.getDescrizioneContenuto());
 			command.setLegatura(schedone.getLegatura());
 			command.setSupporto(schedone.getSupporto());
@@ -177,14 +189,21 @@ public class EditDetailsSchedoneController {
 			command.setRisoluzione(schedone.getRisoluzione());
 			command.setNomeFiles(schedone.getNomeFiles());
 			command.setResponsabileFotoRiproduzione(schedone.getResponsabileFotoRiproduzione());
-			command.setDataRipresa(schedone.getDataRipresa());
+			command.setDataRipresaAnno(schedone.getDataRipresaAnno());
+			command.setDataRipresaMese((schedone.getDataRipresaMese() != null) ? schedone.getDataRipresaMese().getMonthNum() : null);
+			command.setDataRipresaGiorno(schedone.getDataRipresaGiorno());
 			command.setOperatore(schedone.getOperatore());
 		} else {
 			command.setIstituto(null);
 			command.setFondo(null);
 			command.setSerie(null);
 			command.setNumeroUnita(null);
-			command.setDateEstreme(null); //TODO
+			command.setDataInizioAnno(null);
+			command.setDataInizioMese(null);
+			command.setDataInizioGiorno(null);
+			command.setDataFineAnno(null);
+			command.setDataFineMese(null);
+			command.setDataFineGiorno(null);
 			command.setDescrizioneContenuto(null);
 			command.setLegatura(null);
 			command.setSupporto(null);
@@ -199,7 +218,9 @@ public class EditDetailsSchedoneController {
 			command.setRisoluzione(null);
 			command.setNomeFiles(null);
 			command.setResponsabileFotoRiproduzione(null);
-			command.setDataRipresa(null);
+			command.setDataRipresaAnno(null);
+			command.setDataRipresaMese(null);
+			command.setDataRipresaGiorno(null);
 			command.setOperatore(null);
 		}
 

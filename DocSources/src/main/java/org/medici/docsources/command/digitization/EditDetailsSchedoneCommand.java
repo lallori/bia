@@ -27,8 +27,6 @@
  */
 package org.medici.docsources.command.digitization;
 
-import java.util.Date;
-
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -40,7 +38,12 @@ public class EditDetailsSchedoneCommand {
 	private String fondo;
 	private String serie;
 	private Integer numeroUnita;
-	private String dateEstreme;
+	private Integer dataInizioAnno;
+	private Integer dataInizioMese;
+	private Integer dataInizioGiorno;
+	private Integer dataFineAnno;
+	private Integer dataFineMese;
+	private Integer dataFineGiorno;
 	private String titolo;
 	private String descrizioneContenuto;
 	private String legatura;
@@ -63,7 +66,9 @@ public class EditDetailsSchedoneCommand {
 	private Long dimTotaleImmagini;
 	private String responsabileFotoRiproduzione;
 	private String tipoRipresa;
-	private Date dataRipresa;
+	private Integer dataRipresaAnno;
+	private Integer dataRipresaMese;
+	private Integer dataRipresaGiorno;
 	private String operatore;
 	
 	/**
@@ -135,19 +140,89 @@ public class EditDetailsSchedoneCommand {
 	public void setNumeroUnita(Integer numeroUnita) {
 		this.numeroUnita = numeroUnita;
 	}
-	
+
 	/**
-	 * @return the dateEstreme
+	 * @return the dataInizioAnno
 	 */
-	public String getDateEstreme() {
-		return dateEstreme;
+	public Integer getDataInizioAnno() {
+		return dataInizioAnno;
 	}
-	
+
 	/**
-	 * @param dateEstreme the dateEstreme to set
+	 * @param dataInizioAnno the dataInizioAnno to set
 	 */
-	public void setDateEstreme(String dateEstreme) {
-		this.dateEstreme = dateEstreme;
+	public void setDataInizioAnno(Integer dataInizioAnno) {
+		this.dataInizioAnno = dataInizioAnno;
+	}
+
+	/**
+	 * @return the dataInizioMese
+	 */
+	public Integer getDataInizioMese() {
+		return dataInizioMese;
+	}
+
+	/**
+	 * @param dataInizioMese the dataInizioMese to set
+	 */
+	public void setDataInizioMese(Integer dataInizioMese) {
+		this.dataInizioMese = dataInizioMese;
+	}
+
+	/**
+	 * @return the dataInizioGiorno
+	 */
+	public Integer getDataInizioGiorno() {
+		return dataInizioGiorno;
+	}
+
+	/**
+	 * @param dataInizioGiorno the dataInizioGiorno to set
+	 */
+	public void setDataInizioGiorno(Integer dataInizioGiorno) {
+		this.dataInizioGiorno = dataInizioGiorno;
+	}
+
+	/**
+	 * @return the dataFineAnno
+	 */
+	public Integer getDataFineAnno() {
+		return dataFineAnno;
+	}
+
+	/**
+	 * @param dataFineAnno the dataFineAnno to set
+	 */
+	public void setDataFineAnno(Integer dataFineAnno) {
+		this.dataFineAnno = dataFineAnno;
+	}
+
+	/**
+	 * @return the dataFineMese
+	 */
+	public Integer getDataFineMese() {
+		return dataFineMese;
+	}
+
+	/**
+	 * @param dataFineMese the dataFineMese to set
+	 */
+	public void setDataFineMese(Integer dataFineMese) {
+		this.dataFineMese = dataFineMese;
+	}
+
+	/**
+	 * @return the dataFineGiorno
+	 */
+	public Integer getDataFineGiorno() {
+		return dataFineGiorno;
+	}
+
+	/**
+	 * @param dataFineGiorno the dataFineGiorno to set
+	 */
+	public void setDataFineGiorno(Integer dataFineGiorno) {
+		this.dataFineGiorno = dataFineGiorno;
 	}
 
 	/**
@@ -445,6 +520,48 @@ public class EditDetailsSchedoneCommand {
 	}
 	
 	/**
+	 * @return the dataRipresaAnno
+	 */
+	public Integer getDataRipresaAnno() {
+		return dataRipresaAnno;
+	}
+
+	/**
+	 * @param dataRipresaAnno the dataRipresaAnno to set
+	 */
+	public void setDataRipresaAnno(Integer dataRipresaAnno) {
+		this.dataRipresaAnno = dataRipresaAnno;
+	}
+
+	/**
+	 * @return the dataRipresaMese
+	 */
+	public Integer getDataRipresaMese() {
+		return dataRipresaMese;
+	}
+
+	/**
+	 * @param dataRipresaMese the dataRipresaMese to set
+	 */
+	public void setDataRipresaMese(Integer dataRipresaMese) {
+		this.dataRipresaMese = dataRipresaMese;
+	}
+
+	/**
+	 * @return the dataRipresaGiorno
+	 */
+	public Integer getDataRipresaGiorno() {
+		return dataRipresaGiorno;
+	}
+
+	/**
+	 * @param dataRipresaGiorno the dataRipresaGiorno to set
+	 */
+	public void setDataRipresaGiorno(Integer dataRipresaGiorno) {
+		this.dataRipresaGiorno = dataRipresaGiorno;
+	}
+
+	/**
 	 * @param tipoRipresa the tipoRipresa to set
 	 */
 	public void setTipoRipresa(String tipoRipresa) {
@@ -456,20 +573,6 @@ public class EditDetailsSchedoneCommand {
 	 */
 	public String getTipoRipresa() {
 		return tipoRipresa;
-	}
-
-	/**
-	 * @param dataRipresa the dataRipresa to set
-	 */
-	public void setDataRipresa(Date dataRipresa) {
-		this.dataRipresa = dataRipresa;
-	}
-
-	/**
-	 * @return the dataRipresa
-	 */
-	public Date getDataRipresa() {
-		return dataRipresa;
 	}
 
 	/**
