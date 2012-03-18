@@ -88,16 +88,20 @@ public class Schedone {
 	private Integer dataFineGiorno;
 	@Column (name="\"TITOLO\"", length=50)
 	private String titolo;
-	@Column (name="\"DESCRIZIONE_CONTENUTO\"", length=50)
+	@Column (name="\"DESCRIZIONE_CONTENUTO\"", length=1000)
 	private String descrizioneContenuto;
+	@Column (name="\"DESCRIZIONE_CONTENUTO_ENG\"", length=1000)
+	private String descrizioneContenutoEng;
 	@Column (name="\"LEGATURA\"", length=50)
 	private String legatura;
 	@Column (name="\"SUPPORTO\"", length=50)
 	private String supporto;
 	@Column (name="\"CARTULAZIONE\"", length=50)
 	private String cartulazione;
-	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", length=50)
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE\"", length=1000)
 	private String noteCartulazione;
+	@Column (name="\"NOTE_ALLA_CARTULAZIONE_ENG\"", length=1000)
+	private String noteCartulazioneEng;
 	@Column (name="\"CARTE_BIANCHE\"", length=50)
 	private String carteBianche;
 	@Column (name="\"CARTE_MANCANTI\"", length=50)
@@ -142,9 +146,14 @@ public class Schedone {
 	private String responsabileFotoRiproduzione;
 	@Column (name="\"TIPO_RIPRESA\"", length=50)
 	private String tipoRipresa;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column (name="\"DATA_RIPRESA\"", length=50)
-	private Date dataRipresa;
+	@Column (name="\"DATA_RIPRESA_ANNO\"", length=50)
+	private Integer dataRipresaAnno;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"DATA_RIPRESA_MESE\"", nullable=true)
+	@IndexedEmbedded
+	private Month dataRipresaMese;
+	@Column (name="\"DATA_RIPRESA_GIORNO\"", length=50)
+	private Integer dataRipresaGiorno;
 	@Column (name="\"OPERATORE\"", length=50)
 	private String operatore;
 	@Column (name="\"RESID\"")
@@ -274,6 +283,90 @@ public class Schedone {
 	}
 
 	/**
+	 * @param dataInizioAnno the dataInizioAnno to set
+	 */
+	public void setDataInizioAnno(Integer dataInizioAnno) {
+		this.dataInizioAnno = dataInizioAnno;
+	}
+
+	/**
+	 * @return the dataInizioAnno
+	 */
+	public Integer getDataInizioAnno() {
+		return dataInizioAnno;
+	}
+
+	/**
+	 * @param dataInizioMese the dataInizioMese to set
+	 */
+	public void setDataInizioMese(Month dataInizioMese) {
+		this.dataInizioMese = dataInizioMese;
+	}
+
+	/**
+	 * @return the dataInizioMese
+	 */
+	public Month getDataInizioMese() {
+		return dataInizioMese;
+	}
+
+	/**
+	 * @param dataInizioGiorno the dataInizioGiorno to set
+	 */
+	public void setDataInizioGiorno(Integer dataInizioGiorno) {
+		this.dataInizioGiorno = dataInizioGiorno;
+	}
+
+	/**
+	 * @return the dataInizioGiorno
+	 */
+	public Integer getDataInizioGiorno() {
+		return dataInizioGiorno;
+	}
+
+	/**
+	 * @param dataFineAnno the dataFineAnno to set
+	 */
+	public void setDataFineAnno(Integer dataFineAnno) {
+		this.dataFineAnno = dataFineAnno;
+	}
+
+	/**
+	 * @return the dataFineAnno
+	 */
+	public Integer getDataFineAnno() {
+		return dataFineAnno;
+	}
+
+	/**
+	 * @param dataFineMese the dataFineMese to set
+	 */
+	public void setDataFineMese(Month dataFineMese) {
+		this.dataFineMese = dataFineMese;
+	}
+
+	/**
+	 * @return the dataFineMese
+	 */
+	public Month getDataFineMese() {
+		return dataFineMese;
+	}
+
+	/**
+	 * @param dataFineGiorno the dataFineGiorno to set
+	 */
+	public void setDataFineGiorno(Integer dataFineGiorno) {
+		this.dataFineGiorno = dataFineGiorno;
+	}
+
+	/**
+	 * @return the dataFineGiorno
+	 */
+	public Integer getDataFineGiorno() {
+		return dataFineGiorno;
+	}
+
+	/**
 	 * @return the titolo
 	 */
 	public String getTitolo() {
@@ -301,6 +394,20 @@ public class Schedone {
 		this.descrizioneContenuto = descrizioneContenuto;
 	}
 	
+	/**
+	 * @param descrizioneContenutoEng the descrizioneContenutoEng to set
+	 */
+	public void setDescrizioneContenutoEng(String descrizioneContenutoEng) {
+		this.descrizioneContenutoEng = descrizioneContenutoEng;
+	}
+
+	/**
+	 * @return the descrizioneContenutoEng
+	 */
+	public String getDescrizioneContenutoEng() {
+		return descrizioneContenutoEng;
+	}
+
 	/**
 	 * @return the legatura
 	 */
@@ -357,6 +464,20 @@ public class Schedone {
 		this.noteCartulazione = noteCartulazione;
 	}
 	
+	/**
+	 * @param noteCartulazioneEng the noteCartulazioneEng to set
+	 */
+	public void setNoteCartulazioneEng(String noteCartulazioneEng) {
+		this.noteCartulazioneEng = noteCartulazioneEng;
+	}
+
+	/**
+	 * @return the noteCartulazioneEng
+	 */
+	public String getNoteCartulazioneEng() {
+		return noteCartulazioneEng;
+	}
+
 	/**
 	 * @return the carteBianche
 	 */
@@ -666,19 +787,47 @@ public class Schedone {
 	}
 
 	/**
-	 * @return the dataRipresa
+	 * @param dataRipresaAnno the dataRipresaAnno to set
 	 */
-	public Date getDataRipresa() {
-		return dataRipresa;
+	public void setDataRipresaAnno(Integer dataRipresaAnno) {
+		this.dataRipresaAnno = dataRipresaAnno;
 	}
-	
+
 	/**
-	 * @param dataRipresa the dataRipresa to set
+	 * @return the dataRipresaAnno
 	 */
-	public void setDataRipresa(Date dataRipresa) {
-		this.dataRipresa = dataRipresa;
+	public Integer getDataRipresaAnno() {
+		return dataRipresaAnno;
 	}
-	
+
+	/**
+	 * @param dataRipresaMese the dataRipresaMese to set
+	 */
+	public void setDataRipresaMese(Month dataRipresaMese) {
+		this.dataRipresaMese = dataRipresaMese;
+	}
+
+	/**
+	 * @return the dataRipresaMese
+	 */
+	public Month getDataRipresaMese() {
+		return dataRipresaMese;
+	}
+
+	/**
+	 * @param dataRipresaGiorno the dataRipresaGiorno to set
+	 */
+	public void setDataRipresaGiorno(Integer dataRipresaGiorno) {
+		this.dataRipresaGiorno = dataRipresaGiorno;
+	}
+
+	/**
+	 * @return the dataRipresaGiorno
+	 */
+	public Integer getDataRipresaGiorno() {
+		return dataRipresaGiorno;
+	}
+
 	/**
 	 * @return the operatore
 	 */
