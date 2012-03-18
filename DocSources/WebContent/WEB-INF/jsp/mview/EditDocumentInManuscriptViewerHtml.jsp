@@ -29,6 +29,8 @@
 	</c:url>
 	
 		<script type="text/javascript">
+			transcribing=true;
+
 			var credit = '';	
 			if ("${documentExplorer.image.imageType}" == 'R') {
 				credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
