@@ -83,9 +83,9 @@ public class EditDetailsPersonValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditDetailsPersonCommand modifyPersonCommand = (EditDetailsPersonCommand) object;
-		validatePersonId(modifyPersonCommand.getPersonId(), errors);
-		validateDates(modifyPersonCommand.getBornYear(), modifyPersonCommand.getBornMonth(), modifyPersonCommand.getBornDay(), modifyPersonCommand.getDeathYear(), modifyPersonCommand.getDeathMonth(), modifyPersonCommand.getDeathDay(), errors);
+		EditDetailsPersonCommand editDetailsPersonCommand = (EditDetailsPersonCommand) object;
+		validatePersonId(editDetailsPersonCommand.getPersonId(), errors);
+		validateDates(editDetailsPersonCommand.getBornYear(), editDetailsPersonCommand.getBornMonth(), editDetailsPersonCommand.getBornDay(), editDetailsPersonCommand.getDeathYear(), editDetailsPersonCommand.getDeathMonth(), editDetailsPersonCommand.getDeathDay(), errors);
 	}
 
 	/**
