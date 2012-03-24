@@ -46,10 +46,12 @@ public class EditDetailsSchedoneCommand {
 	private Integer dataFineGiorno;
 	private String titolo;
 	private String descrizioneContenuto;
+	private String descrizioneContenutoEng;
 	private String legatura;
 	private String supporto;
 	private String cartulazione;
 	private String noteCartulazione;
+	private String noteCartulazioneEng;
 	private String carteBianche;
 	private String carteMancanti;
 	private String dimensioniBase;
@@ -254,6 +256,20 @@ public class EditDetailsSchedoneCommand {
 	}
 	
 	/**
+	 * @param descrizioneContenutoEng the descrizioneContenutoEng to set
+	 */
+	public void setDescrizioneContenutoEng(String descrizioneContenutoEng) {
+		this.descrizioneContenutoEng = descrizioneContenutoEng;
+	}
+
+	/**
+	 * @return the descrizioneContenutoEng
+	 */
+	public String getDescrizioneContenutoEng() {
+		return descrizioneContenutoEng;
+	}
+
+	/**
 	 * @return the legatura
 	 */
 	public String getLegatura() {
@@ -309,6 +325,20 @@ public class EditDetailsSchedoneCommand {
 		this.noteCartulazione = noteCartulazione;
 	}
 	
+	/**
+	 * @param noteCartulazioneEng the noteCartulazioneEng to set
+	 */
+	public void setNoteCartulazioneEng(String noteCartulazioneEng) {
+		this.noteCartulazioneEng = noteCartulazioneEng;
+	}
+
+	/**
+	 * @return the noteCartulazioneEng
+	 */
+	public String getNoteCartulazioneEng() {
+		return noteCartulazioneEng;
+	}
+
 	/**
 	 * @return the carteBianche
 	 */

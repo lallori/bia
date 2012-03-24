@@ -79,6 +79,37 @@ public class DigitizationServiceImpl implements DigitizationService {
 			Schedone schedoneToUpdate = getSchedoneDAO().find(schedone.getSchedoneId());
 			// we update only schedone fields
 			
+			schedoneToUpdate.setIstituto(schedone.getIstituto());
+			schedoneToUpdate.setFondo(schedone.getFondo());
+			schedoneToUpdate.setSerie(schedone.getSerie());
+			schedoneToUpdate.setNumeroUnita(schedone.getNumeroUnita());
+			schedoneToUpdate.setDataInizioAnno(schedone.getDataInizioAnno());
+			schedoneToUpdate.setDataInizioMese((schedone.getDataInizioMese() != null) ? schedone.getDataInizioMese() : null);
+			schedoneToUpdate.setDataInizioGiorno(schedone.getDataInizioGiorno());
+			schedoneToUpdate.setDataFineAnno(schedone.getDataFineAnno());
+			schedoneToUpdate.setDataFineMese((schedone.getDataFineMese() != null) ? schedone.getDataFineMese() : null);
+			schedoneToUpdate.setDataFineGiorno(schedone.getDataFineGiorno());
+			schedoneToUpdate.setDescrizioneContenuto(schedone.getDescrizioneContenuto());
+			schedoneToUpdate.setDescrizioneContenutoEng(schedone.getDescrizioneContenutoEng());
+			schedoneToUpdate.setLegatura(schedone.getLegatura());
+			schedoneToUpdate.setSupporto(schedone.getSupporto());
+			schedoneToUpdate.setCartulazione(schedone.getCartulazione());
+			schedoneToUpdate.setNoteCartulazione(schedone.getNoteCartulazione());
+			schedoneToUpdate.setNoteCartulazioneEng(schedone.getNoteCartulazioneEng());
+			schedoneToUpdate.setCarteBianche(schedone.getCarteBianche());
+			schedoneToUpdate.setCarteMancanti(schedone.getCarteMancanti());
+			schedoneToUpdate.setDimensioniBase(schedone.getDimensioniBase());
+			schedoneToUpdate.setDimensioniAltezza(schedone.getDimensioniAltezza());
+			schedoneToUpdate.setTipoRipresa(schedone.getTipoRipresa());
+			schedoneToUpdate.setColoreImmagine(schedone.getColoreImmagine());
+			schedoneToUpdate.setRisoluzione(schedone.getRisoluzione());
+			schedoneToUpdate.setNomeFiles(schedone.getNomeFiles());
+			schedoneToUpdate.setResponsabileFotoRiproduzione(schedone.getResponsabileFotoRiproduzione());
+			schedoneToUpdate.setDataRipresaAnno(schedone.getDataRipresaAnno());
+			schedoneToUpdate.setDataRipresaMese((schedone.getDataRipresaMese() != null) ? schedone.getDataRipresaMese() : null);
+			schedoneToUpdate.setDataRipresaGiorno(schedone.getDataRipresaGiorno());
+			schedoneToUpdate.setOperatore(schedone.getOperatore());
+			
 			getSchedoneDAO().merge(schedoneToUpdate);
 			
 			return schedoneToUpdate;

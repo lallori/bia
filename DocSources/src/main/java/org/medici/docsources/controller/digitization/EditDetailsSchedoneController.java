@@ -101,10 +101,12 @@ public class EditDetailsSchedoneController {
 			schedone.setDataFineMese((command.getDataFineMese() != null) ? new Month(command.getDataFineMese()) : null);
 			schedone.setDataFineGiorno(command.getDataFineGiorno());
 			schedone.setDescrizioneContenuto(command.getDescrizioneContenuto());
+			schedone.setDescrizioneContenutoEng(command.getDescrizioneContenutoEng());
 			schedone.setLegatura(command.getLegatura());
 			schedone.setSupporto(command.getSupporto());
 			schedone.setCartulazione(command.getCartulazione());
 			schedone.setNoteCartulazione(command.getNoteCartulazione());
+			schedone.setNoteCartulazioneEng(command.getNoteCartulazioneEng());
 			schedone.setCarteBianche(command.getCarteBianche());
 			schedone.setCarteMancanti(command.getCarteMancanti());
 			schedone.setDimensioniBase(command.getDimensioniBase());
@@ -176,10 +178,12 @@ public class EditDetailsSchedoneController {
 			command.setDataFineMese((schedone.getDataFineMese() != null) ? schedone.getDataFineMese().getMonthNum() : null);
 			command.setDataFineGiorno(schedone.getDataFineGiorno());
 			command.setDescrizioneContenuto(schedone.getDescrizioneContenuto());
+			command.setDescrizioneContenutoEng(schedone.getDescrizioneContenutoEng());
 			command.setLegatura(schedone.getLegatura());
 			command.setSupporto(schedone.getSupporto());
 			command.setCartulazione(schedone.getCartulazione());
 			command.setNoteCartulazione(schedone.getNoteCartulazione());
+			command.setNoteCartulazioneEng(schedone.getNoteCartulazioneEng());
 			command.setCarteBianche(schedone.getCarteBianche());
 			command.setCarteMancanti(schedone.getCarteMancanti());
 			command.setDimensioniBase(schedone.getDimensioniBase());
@@ -205,10 +209,12 @@ public class EditDetailsSchedoneController {
 			command.setDataFineMese(null);
 			command.setDataFineGiorno(null);
 			command.setDescrizioneContenuto(null);
+			command.setDescrizioneContenutoEng(null);
 			command.setLegatura(null);
 			command.setSupporto(null);
 			command.setCartulazione(null);
 			command.setNoteCartulazione(null);
+			command.setNoteCartulazioneEng(null);
 			command.setCarteBianche(null);
 			command.setCarteMancanti(null);
 			command.setDimensioniBase(null);

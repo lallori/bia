@@ -5,6 +5,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_COORDINATORS, DIGITIZATION_TECHNICIANS">
+		<c:url var="EditDetailsSchedoneURL" value="/digitization/EditDetailsSchedone.do">
+			<c:param name="schedoneId"   value="${command.schedoneId}" />
+		</c:url>
 		<c:url var="ShowSchedoneURL" value="/src/docbase/ShowSchedone.do">
 			<c:param name="schedoneId"   value="${command.schedoneId}" />
 		</c:url>
@@ -12,118 +15,147 @@
 
 	<%-- Loading div when saving the form --%>
 	<div id="loadingDiv"></div>
-	<form:form id="EditDetailsSchedoneForm" method="post" cssClass="edit">
+	<form:form id="EditDetailsSchedoneForm" action="${editDetailsSchedoneURL}" method="post" cssClass="edit">
 	    <fieldset>
 	    <legend><b>SCHEDONE DETAILS</b></legend>
 	        <div style="margin-top:5px">
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="istituto" id="istitutoLabel">Istituto</label>
-	            <input id="istituto" name="istituto" class="input_29c" type="text" value="Archivio di Stato di Firenze"/>
+	            <a class="helpIcon" title="The instutition this digital collection belongs to">?</a>
+	            <form:label for="istituto" path="istituto" id ="istitutoLabel" cssErrorClass="error" title="Istituto">Istituto</form:label>
+				<form:input path="istituto" id="istituto" cssClass="input_29c" />
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="fondo" id="fondoLabel">Fondo</label>
-	            <input id="fondo" name="fondo" class="input_29c" type="text" value="Mediceo del Principato"/>
+	            <a class="helpIcon" title="Archival corpus that this Schedone belongs to">?</a>
+	            <form:label for="fondo" path="fondo" id ="fondoLabel" cssErrorClass="error" title="Fondo">Fondo</form:label>
+				<form:input path="fondo" id="fondo" cssClass="input_29c" />
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="serie" id="serieLabel">Serie</label>
-	            <input id="serie" name="serie" class="input_29c" type="text" value="Minute di Lettere"/>
+	            <a class="helpIcon" title="Serie, Carteggio for this digitized volume">?</a>
+	            <form:label for="serie" path="serie" id ="serieLabel" cssErrorClass="error" title="Serie">Serie</form:label>
+				<form:input path="serie" id="serie" cssClass="input_29c" />
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="unita" id="unitaLabel">N. Unità</label>
-	            <input id="unita" name="unita" class="input_5c" type="text" value=""/>
+	            <a class="helpIcon" title="Volume number">?</a>
+	            <form:label for="numeroUnita" path="numeroUnita" id ="numeroUnitaLabel" cssErrorClass="error" title="Unit&agrave;">N. Unit&agrave;</form:label>
+				<form:input path="numeroUnita" id="numeroUnita" cssClass="input_4c" />
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="dateEstreme" id="dateEstremeLabel">Date estreme</label>
-	            <input id="fondo" name="fondo" class="input_5c" type="text" value="yyyy"/>
-	            <input id="fondo" name="fondo" class="input_5c" type="text" value="mm"/>
-	            <input id="fondo" name="fondo" class="input_5c" type="text" value="dd"/>
+	            <a class="helpIcon" title="Help to be created">?</a>
+				<label for="dateEstreme" id="dateEstremeLabel">Date estreme</label>
+				<br>
+	            <form:input id="dataInizioAnno" path="dataInizioAnno" class="input_4c" value="" maxlength="4"/>
+				<form:select id="dataInizioMese" path="dataInizioMese" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+				<form:input id="dataInizioGiorno" path="dataInizioGiorno" class="input_2c" maxlength="2"/>
+	            <br>
+	            <form:input id="dataFineAnno" path="dataFineAnno" class="input_4c" value="" maxlength="4"/>
+				<form:select id="dataFineMese" path="dataFineMese" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+				<form:input id="dataFineGiorno" path="dataFineGiorno" class="input_2c" maxlength="2"/>
 	        </div>
 	        <div style="margin-top:5px">
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="dateNotes" id="dateNotesLabel">Descrizione contenuto</label>
+	        	 <a class="helpIcon" title="Description of this volume content in Italian">?</a>
+	        	 <form:label for="descrizioneContenuto" path="descrizioneContenuto" id ="descrizioneContenutoLabel" cssErrorClass="error" title="Descrizione contenuto">Descrizione contenuto</form:label>
 	        </div>
-	        <div><textarea id="dateNotes" name="dateNotes" class="txtarea"></textarea></div>
+	        <div>
+				<form:textarea path="descrizioneContenuto" id="descrizioneContenuto" cssClass="txtarea"></form:textarea>  
+	       </div>
+	       <div style="margin-top:5px">
+	        	 <a class="helpIcon" title="English translation for Descrizione Contenuto of this volume">?</a>
+	        	 <form:label for="descrizioneContenutoEng" path="descrizioneContenutoEng" id ="descrizioneContenutoEngLabel" cssErrorClass="error" title="Content description">Content Description</form:label>
+	        </div>
+	        <div>
+				<form:textarea path="descrizioneContenutoEng" id="descrizioneContenutoEng" cssClass="txtarea"></form:textarea>  
+	       </div>
 	        
 	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="legatura" id="legaturaLabel">Legatura</label>
-	            <input id="legatura" name="legatura" class="input_29c" type="text" value=""/>
+	            <a class="helpIcon" title="What kind of legatura does this volume have?">?</a>
+	            <form:label for="legatura" path="legatura" id ="legaturaLabel" cssErrorClass="error" title="Legatura">Legatura</form:label>
+				<form:input path="legatura" id="legatura" cssClass="input_29c" />
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="supporto" id="supportoLabel">Supporto</label>
-	            <input id="supporto" name="supporto" class="input_29c" type="text" value=""/>
+	            <a class="helpIcon" title="This help has to be created">?</a>
+	            <form:label for="supporto" path="supporto" id ="supportoLabel" cssErrorClass="error" title="supporto">Supporto</form:label>
+				<form:input path="supporto" id="supporto" cssClass="input_29c" />
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="cartulazione" id="cartulazioneLabel">Cartulazione</label>
-	            <input id="cartulazione" name="cartulazione" class="input_29c" type="text" value=""/>
+	            <a class="helpIcon" title="This help has to be created">?</a>
+	            <form:label for="cartulazione" path="cartulazione" id ="cartulazioneLabel" cssErrorClass="error" title="cartulazione">Cartulazione</form:label>
+				<form:input path="cartulazione" id="cartulazione" cssClass="input_29c" />
 	        </div>
 	        <div style="margin-top:5px">
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="noteCartulazione" id="noteCartulazioneLabel">Note alla cartulazione</label>
-	        </div>
-	        <div><textarea id="noteCartulazione" name="noteCartulazione" class="txtarea"></textarea></div>
-	        <div style="margin-top:5px">
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="carteBianche" id="carteBiancheLabel">Carte bianche</label>
-	        </div>
-	        <div><textarea id="carteBianche" name="carteBianche" class="txtarea"></textarea></div>
-	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="carteMancanti" id="carteMancantiLabel">Carte mancanti</label>
-	            <input id="carteMancanti" name="carteMancanti" class="input_29c" type="text" value=""/>
+	            <a class="helpIcon" title="Notes to the Cartulazione in Italian">?</a>
+	            <form:label for="noteCartulazione" path="noteCartulazione" id ="noteCartulazioneLabel" cssErrorClass="error" title="cartulazione">Note alla Cartulazione</form:label>
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="dimensioniBase" id="dimensioniBaseLabel">Dimensioni base</label>
-	            <input id="dimensioniBase" name="dimensioniBase" class="input_5c" type="text" value=""/>mm
-	        </div>
-	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="dimensioniAltezza" id="dimensioniAltezzaLabel">Dimensioni altezza</label>
-	            <input id="dimensioniAltezza" name="dimensioniAltezza" class="input_5c" type="text" value=""/>mm
-	        </div>
-	        <div>
-	            <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-	            <label for="tipoRipresa" id="tipoRipresaLabel">Tipo di ripresa</label>
-	            <input id="tipoRipresa" name="tipoRipresa" class="input_29c" type="text" value="Da originale"/>
-	        </div>
-	        <div>
-	            <a class="helpIcon" title="B/N, toni di griggio, colori">?</a>
-	            <label for="coloreImmagine" id="coloreImmagineLabel">Colore immagine</label>
-	            <input id="coloreImmagine" name="coloreImmagine" class="input_29c" type="text" value="RGB"/>
-	        </div>
-	        <div>
-	            <a class="helpIcon" title="B/N, toni di griggio, colori">?</a>
-	            <label for="risoluzione" id="risoluzioneLabel">Risoluzione</label>
-	            <input id="risoluzione" name="risoluzione" class="input_29c" type="text" value="300 ppi"/>
+	        	<form:textarea id="noteCartulazione" path="noteCartulazione" cssClass="txtarea"></form:textarea>
 	        </div>
 	        <div style="margin-top:5px">
-	            <a class="helpIcon" title="<b>Quattro cifre</b> (numero progressivo immagine) <b>_coperta/C</b> (carta) <b>/G</b> (guardia) <b>/A</b>  (allegato) <b>/R</b> (repertorio) <b>_tre cifre</b> (numero della carta) <b>_tre lettere</b> (bis ter qua) <b>_R/V</b>">?</a>
-	            <label for="carteBianche" id="carteBiancheLabel">Nome files</label>
-	        </div>
-	        <div><textarea id="carteBianche" name="carteBianche" class="txtarea"></textarea></div>
-	        <div style="margin-top:5px">
-	            <a class="helpIcon" title="B/N, toni di griggio, colori">?</a>
-	            <label for="responsabileFotoriproduzione" id="responsabileFotoriproduzioneLabel">Responsabile fotoriproduzione</label>
-	            <input id="responsabileFotoriproduzione" name="responsabileFotoriproduzione" class="input_23c" type="text" value="dr. Francesca Klein"/>
+	            <a class="helpIcon" title="English translation for Note alla Cartulazione">?</a>
+	            <form:label for="noteCartulazioneEng" path="noteCartulazioneEng" id ="noteCartulazioneEngLabel" cssErrorClass="error" title="Notes for Cartulation">Notes for the Cartulazione</form:label>
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="B/N, toni di griggio, colori">?</a>
+	        	<form:textarea id="noteCartulazioneEng" path="noteCartulazioneEng" cssClass="txtarea"></form:textarea>
+	        </div>
+	        <div style="margin-top:5px">
+	            <a class="helpIcon" title="Blank Pages">?</a>
+	           	<form:label for="carteBianche" path="carteBianche" id ="carteBiancheLabel" cssErrorClass="error" title="carte bianche">Carte bianche</form:label> 
+	        </div>
+	        <div>
+	        	<form:textarea id="carteBianche" path="carteBianche" cssClass="txtarea"></form:textarea>
+	        </div>
+	        <div>
+	            <a class="helpIcon" title="Missing folios">?</a>
+	            <form:label for="carteMancanti" path="carteMancanti" id ="carteMancantiLabel" cssErrorClass="error" title="Carte mancanti">Carte Mancanti</form:label>
+				<form:input path="carteMancanti" id="carteMancanti" cssClass="input_29c" />
+	        </div>
+	        <div>
+	            <a class="helpIcon" title="use millimeters not inches">?</a>
+	            <form:label for="dimensioniBase" path="dimensioniBase" id ="dimensioniBaseLabel" cssErrorClass="error" title="Dimensioni Base">Dimensioni Base</form:label>
+				<form:input path="dimensioniBase" id="dimensioniBase" cssClass="input_5c" />	      
+	        </div>
+	        <div>
+	            <a class="helpIcon" title="use millimeters not inches">?</a>
+	            <form:label for="dimensioniAltezza" path="dimensioniAltezza" id ="dimensioniAltezzaLabel" cssErrorClass="error" title="Dimensioni Altezza">Dimensioni Altezza</form:label>
+				<form:input path="dimensioniAltezza" id="dimensioniAltezza" cssClass="input_5c" />
+	        </div>
+	        <div>
+	            <a class="helpIcon" title="What kind of digitization equipment are you using? A digital camera? A scanner? etc.">?</a>
+	            <form:label for="tipoRipresa" path="tipoRipresa" id ="tipoRipresaLabel" cssErrorClass="error" title="Tipo di ripresa">Digitization Type</form:label>
+				<form:input path="tipoRipresa" id="tipoRipresa" cssClass="input_29c" />
+	        </div>
+	        <div>
+	            <a class="helpIcon" title="B&W, grayscale, RGB?">?</a>
+	            <form:label for="coloreImmagine" path="coloreImmagine" id ="coloreImmagineLabel" cssErrorClass="error" title="Schema colore immagini">Schema colore immagini</form:label>
+				<form:input path="coloreImmagine" id="coloreImmagine" cssClass="input_29c" />
+	        </div>
+	        <div>
+	            <a class="helpIcon" title="At what resolution? (must use PPI, pixels per inch)">?</a>
+	            <form:label for="risoluzione" path="risoluzione" id ="risoluzioneLabel" cssErrorClass="error" title="Colore immagine">Image Resolution</form:label>
+				<form:input path="risoluzione" id="risoluzione" cssClass="input_29c" />
+	        </div>
+	        <div style="margin-top:5px">
+	            <a class="helpIcon" title="Default filename: <b>Quattro cifre</b> (numero progressivo immagine) <b>_coperta/C</b> (carta) <b>/G</b> (guardia) <b>/A</b>  (allegato) <b>/R</b> (repertorio) <b>_tre cifre</b> (numero della carta) <b>_tre lettere</b> (bis ter qua) <b>_R/V</b>">?</a>
+	            <form:label for="nomeFiles" path="nomeFiles" id ="nomeFilesLabel" cssErrorClass="error" title="Nome files">Nome Files</form:label>
+	        </div>
+	        <div>
+	        	<form:textarea id="nomeFiles" path="nomeFiles" cssClass="txtarea"></form:textarea>
+	        	
+	        </div>
+	        <div style="margin-top:5px">
+	            <a class="helpIcon" title="Il responsabile del progetto di digitalizzazione">?</a>
+	            <form:label for="responsabileFotoRiproduzione" path="responsabileFotoRiproduzione" id ="responsabileFotoRiproduzioneLabel" cssErrorClass="error" title="Responsabile Fotoriproduzione">Responsabile Fotoriproduzione</form:label>
+				<form:input path="responsabileFotoRiproduzione" id="responsabileFotoRiproduzione" cssClass="input_23c" />
+	        </div>
+	        <div>
+	            <a class="helpIcon" title="Data della Ripresa">?</a>
 	            <label for="daRipresa" id="daRipresaLabel">Da ripresa</label>
-	            <input id="daRipresa" name="daRipresa" class="input_29c" type="text" value=""/>
+	            <form:input id="dataRipresaAnno" path="dataRipresaAnno" class="input_4c" value="" maxlength="4"/>
+				<form:select id="dataRipresaMese" path="dataRipresaMese" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
+				<form:input id="dataRipresaGiorno" path="dataRipresaGiorno" class="input_2c" maxlength="2"/>
 	        </div>
 	        <div>
-	            <a class="helpIcon" title="B/N, toni di griggio, colori">?</a>
-	            <label for="operatore" id="operatoreLabel">Operatore</label>
-	            <input id="operatore" name="operatore" class="input_29c" type="text" value=""/>
+	            <a class="helpIcon" title="Name and Lastname of the Digitization Tecnicians">?</a>
+	             <form:label for="operatore" path="operatore" id ="operatoreLabel" cssErrorClass="error" title="Operatore/1">Operatore</form:label>
+				<form:input path="operatore" id="operatore" cssClass="input_29c" />
 	        </div>
-	        
 	        <div>
 	            <input id="close" type="submit" value="Close" title="Do not save changes" />
 	            <input id="save" class="save" type="submit" value="Save" />
@@ -134,6 +166,10 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			<%-- Initialize input type dates default values --%>
+			<%-- TO BE DONE--%>
+			
+			
 			$j("#EditDetailsSchedone").css('visibility', 'hidden');
 			$j("#EditTiffImagesSchedone").css('visibility', 'hidden'); 
 	        $j("#EditJpegImagesSchedone").css('visibility', 'hidden'); 
