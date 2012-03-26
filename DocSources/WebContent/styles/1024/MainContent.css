@@ -3580,7 +3580,11 @@ form#EditUserProfileForm span{
 	height:22px;
 	border:none;
 	cursor:pointer;
-	margin: 5px 0 0 49px;
+	margin: 5px 0 0 29px;
+}
+
+#placeNameSearchForm #addSearchFilter {
+	margin: 5px 0 0 77px;
 }
 
 #occupation {
@@ -4301,6 +4305,10 @@ table#savedSearchFiltersForm.display {
 }
 
 #placeTypeSearchForm #addSearchFilter, #linkedToTopicsSearchForm #addSearchFilter, #linkedToPeopleSearchForm #addSearchFilter {
+	margin: 5px 0 0 150px;
+}
+
+#linkedToPeopleSearchForm #addSearchFilter {
 	margin: 5px 0 0 200px;
 }
 
@@ -4600,6 +4608,10 @@ ul#network a {
 
 /*------------------------------- Edit/Display Divs -------------------------------------*/
 
+#EditDetailsSchedoneDiv {
+	margin-top: 30px;
+}
+
 #EditSchedoneDetailsDiv .helpIcon, #EditEditTiffImagesForm .helpIcon, #EditEditJpegImagesForm .helpIcon, #EditEditPdfImagesForm .helpIcon{
 	margin-right: 5px;
 }
@@ -4735,9 +4747,8 @@ ul#network a {
     display: inline;
     font-size: 11px;
     height: 17px;
-    padding-top: 2px;
     position: absolute;
-	margin: -13px;
+	margin: 8px;
     text-align: center;
     width: 65px;
 	text-decoration:none;
