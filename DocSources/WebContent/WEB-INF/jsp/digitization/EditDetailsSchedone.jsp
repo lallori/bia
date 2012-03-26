@@ -15,7 +15,7 @@
 
 	<%-- Loading div when saving the form --%>
 	<div id="loadingDiv"></div>
-	<form:form id="EditDetailsSchedoneForm" action="${editDetailsSchedoneURL}" method="post" cssClass="edit">
+	<form:form id="EditDetailsSchedoneForm" action="" method="post" cssClass="edit">
 	    <fieldset>
 	    <legend><b>SCHEDONE DETAILS</b></legend>
 	        <div style="margin-top:5px">
