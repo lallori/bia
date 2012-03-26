@@ -25,26 +25,23 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.altname;
-
-import java.util.List;
+package org.medici.docsources.dao.applicationproperty;
 
 import javax.persistence.PersistenceException;
-import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.AltName;
+import org.medici.docsources.domain.ApplicationProperty;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>ApplicationPropertyDAOJpaImpl</b> is a default implementation of <b>AltNameDAO</b>.
+ * <b>ApplicationPropertyDAOJpaImpl</b> is a default implementation of <b>ApplicationPropertyDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.AltName
  */
 @Repository
-public class AltNameDAOJpaImpl extends JpaDao<Integer, AltName> implements AltNameDAO {
-
+public class ApplicationPropertyDAOJpaImpl extends JpaDao<Integer, ApplicationProperty> implements ApplicationPropertyDAO {
 	/**
 	 * 
 	 *  If a serializable class does not explicitly declare a serialVersionUID, 
@@ -63,22 +60,14 @@ public class AltNameDAOJpaImpl extends JpaDao<Integer, AltName> implements AltNa
 	 *  since such declarations apply only to the immediately declaring 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
-	private static final long serialVersionUID = 617902723399766439L;
+	private static final long serialVersionUID = 2108912098591204306L;
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public AltName findAltNamePerson(Integer personId, Integer nameId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("from AltName where person.personId=:personId and nameId=:nameId");
-		query.setParameter("personId", personId);
-		query.setParameter("nameId", nameId);
-		
-		List<AltName> result = query.getResultList();
-		
-		if (result.size() == 0) {
-			return null;
-		} else {
-			return result.get(0);
-		}
+	public String getPortraitTempPath() throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 }

@@ -30,6 +30,7 @@ package org.medici.docsources.controller.docbase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -66,6 +67,9 @@ public class ShowLastEntryDocumentController {
 		try {
 			Document document = getDocBaseService().findLastEntryDocument();
 			model.put("document", document);
+
+			HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
+			model.put("historyNavigator", historyNavigator);
 
 			Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 			model.put("image", image);

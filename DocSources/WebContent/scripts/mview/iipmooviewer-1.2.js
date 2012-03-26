@@ -858,7 +858,7 @@ var IIP = new Class({
       // Take a note of the starting coords of our drag zone
       onStart: function() {
 	  this.navpos = [$('zone').offsetLeft, $('zone').offsetTop-10];
-      }.bind(this),
+      }.bind(this)
       //onComplete: this.scrollNavigation.bindWithEvent(this)
     });
 

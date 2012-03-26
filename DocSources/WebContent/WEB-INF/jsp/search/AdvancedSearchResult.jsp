@@ -62,34 +62,24 @@
 				},
 				"fnDrawCallback" : function(){
 					$j("#recordsNum${command.searchUUID}").text(this.fnSettings()._iRecordsTotal + ' Records');
-					$j("tr.odd").mouseover(
-							function(){
-								$j(this).find("td.sorting_1").css('background-color','#b0addd');
-								return false;
-							}
-					);
-					
-					$j("tr.odd").mouseout(
-							function(){
-								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
-								return false;
-							}
-					);
-					$j("tr.even").mouseover(
-							function(){
-								$j(this).find("td.sorting_1").css('background-color','#b0addd');
-								return false;
-							}
-					);
-					
-					$j("tr.even").mouseout(
-							function(){
-								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
-								return false;
-							}
-					);
+					$j("tr.odd").mouseover(function(){
+						$j(this).find("td.sorting_1").css('background-color','#b0addd');
+						return false;
+					});
+					$j("tr.odd").mouseout(function(){
+						$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+						return false;
+					});
+					$j("tr.even").mouseover(function(){
+						$j(this).find("td.sorting_1").css('background-color','#b0addd');
+						return false;
+					});
+					$j("tr.even").mouseout(function(){
+						$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+						return false;
+					});
 				}
-			} );
+			});
 
 			// We need to remove any previous live function
 			$j('.searchResult').die();
@@ -101,17 +91,14 @@
 			
 			$j("#refine${command.searchUUID}").open({width: 960, height: 350, scrollbars: "yes"});
 			
-			$j("#tabLink").click(function(){
-				//Modalbox.show('<h1>This Search:</h1><br /><br /><p>${yourSearch}</p><br /><input type=\'submit\' id=\"closeModal\" title=\"Close This Search window\" value=\"Close\"\ onclick=\'Modalbox.hide()\' style=\"margin: 55px 0 0 335px; position: absolute;\" />', {title: "THIS SEARCH", width: 750, height: 190});return false;
-			});
-			
-		} );
+			$j("#tabLink").open({width: 960, height: 350, scrollbars: "yes"});			
+		});
 	</script>
 	
 	<div class="yourSearchDiv">
 		Your search:
 		<c:if test="${yourSearch.length() > 45}">
-			<a class="tabLink" id="tabLink" href="#">${yourSearch.substring(0,41)}...</a>
+			<a class="tabLink" id="tabLink" href="${AdvancedSearchRefineURL}">${yourSearch.substring(0,41)}...</a>
 		</c:if>
 		<c:if test="${yourSearch.length() <= 45}">
 			<font color="red">${yourSearch}</font>

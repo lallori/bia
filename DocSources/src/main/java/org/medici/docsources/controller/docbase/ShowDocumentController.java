@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.command.docbase.ShowDocumentRequestCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -79,13 +80,13 @@ public class ShowDocumentController {
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowDocumentRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Document document = new Document();
+		HistoryNavigator historyNavigator = new HistoryNavigator();
 		
 		if(command.getEntryId() > 0){
 			try {
-				// Details
 				document = getDocBaseService().findDocument(command.getEntryId());
-				
-	
+				historyNavigator = getDocBaseService().getHistoryNavigator(document);
+
 				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 				model.put("image", image);
 			} catch (ApplicationThrowable ath) {
@@ -98,7 +99,8 @@ public class ShowDocumentController {
 			document.setDateCreated(new Date());
 		}
 		
-		model.put("document", document);		
+		model.put("document", document);
+		model.put("historyNavigator", historyNavigator);
 
 		return new ModelAndView("docbase/ShowDocument", model);
 	}

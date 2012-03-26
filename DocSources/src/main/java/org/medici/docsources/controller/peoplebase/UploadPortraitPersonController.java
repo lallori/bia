@@ -1,5 +1,5 @@
 /*
- * ShowLastEntryPersonController.java
+ * UploadPortraitPersonController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -28,76 +28,94 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.domain.Marriage;
-import org.medici.docsources.domain.People;
+import javax.validation.Valid;
+
+import org.medici.docsources.command.peoplebase.UploadPortraitPersonCommand;
+import org.medici.docsources.common.image.PersonPortrait;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show last entry person".
+ * Controller for action "Show Upload Portrait Person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/peoplebase/ShowLastEntryPerson")
-public class ShowLastEntryPersonController {
+@RequestMapping("/de/peoplebase/UploadPortraitPerson")
+public class UploadPortraitPersonController {
 	@Autowired
 	private PeopleBaseService peopleBaseService;
+	@Autowired(required = false)
+	@Qualifier("uploadPortraitPersonValidator")
+	private Validator validator;
 
 	/**
 	 * 
-	 * @param volumeId
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(){
-		Map<String, Object> model = new HashMap<String, Object>();
-	
-		try {
-			People person = getPeopleBaseService().findLastEntryPerson();
-			model.put("person", person);
-			
-			List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
-			model.put("marriages", marriages);
-			List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
-			model.put("children", children);
-			Integer senderDocsRelated = getPeopleBaseService().findNumberOfSenderDocumentsRelated(person.getPersonId());
-			model.put("senderDocsRelated", senderDocsRelated);
-			Integer recipientDocsRelated = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(person.getPersonId());
-			model.put("recipientDocsRelated", recipientDocsRelated);
-			Integer referringDocsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(person.getPersonId());
-			model.put("referringDocsRelated", referringDocsRelated);
-			Integer docsRelated = senderDocsRelated + recipientDocsRelated + referringDocsRelated;
-			model.put("docsRelated", docsRelated);
-			
-			model.put("historyNavigator", getPeopleBaseService().getHistoryNavigator(person));
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowPerson", model);
-		}
-
-		return new ModelAndView("peoplebase/ShowPerson", model);
+	public PeopleBaseService getPeopleBaseService() {
+		return peopleBaseService;
 	}
 
 	/**
-	 * @param peopleBaseService the peopleBaseService to set
+	 * 
+	 * @param peopleBaseService
 	 */
 	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
 		this.peopleBaseService = peopleBaseService;
 	}
 
 	/**
-	 * @return the peopleBaseService
+	 * 
+	 * @param peopleId
+	 * @param result
+	 * @return
 	 */
-	public PeopleBaseService getPeopleBaseService() {
-		return peopleBaseService;
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processRequest(@Valid @ModelAttribute("requestCommand") UploadPortraitPersonCommand command, BindingResult result){
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		getValidator().validate(command, result);
+
+		if (result.hasErrors()) {
+			//return setupForm(command);
+		} else {
+			PersonPortrait personPortrait = new PersonPortrait(command.getPersonId(), command.getBrowse(), command.getLink());
+
+			try {
+				String fileName = getPeopleBaseService().saveTemporaryImage(personPortrait);
+				
+				model.put("tempFileName", fileName);
+			} catch (ApplicationThrowable ath) {
+				new ModelAndView("error/ShowUploadPortraitPersonModalWindow", model);
+			}
+		}
+		
+		return new ModelAndView("peoplebase/UploadPortraitPersonModalWindow", model);
 	}
 
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
 }

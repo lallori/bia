@@ -1,5 +1,5 @@
 /*
- * ShowLastEntryVolumeController.java
+ * ShowDocumentFromHistoryController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,32 +25,40 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.volbase;
+package org.medici.docsources.controller.docbase;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.command.docbase.ShowDocumentFromHistoryRequestCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
-import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show last entry volume".
+ * Controller for action "Show Document from History Record".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/volbase/ShowLastEntryVolume")
-public class ShowLastEntryVolumeController {
+@RequestMapping("/src/docbase/ShowDocumentFromHistory")
+public class ShowDocumentFromHistoryController {
 	@Autowired
-	private VolBaseService volBaseService;
+	private DocBaseService docBaseService;
 	@Autowired
 	private ManuscriptViewerService manuscriptViewerService;
 
@@ -58,41 +66,53 @@ public class ShowLastEntryVolumeController {
 	 * 
 	 * @return
 	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
 	}
 
 	/**
 	 * 
-	 * @param volumeId
+	 * @param documentId
+	 * @param result
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(){
+	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowDocumentFromHistoryRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
-	
-		try {
-			Volume volume = getVolBaseService().findLastEntryVolume();
-			model.put("volume", volume);
+		Document document = new Document();
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		
+		if(command.getIdUserHistory() > 0){
+			try {
+				// Details
+				document = getDocBaseService().findDocumentFromHistory(command.getIdUserHistory());
 
-			model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
-			Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
-			model.put("image", image);
-
-			model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowVolume", model);
+				historyNavigator = getDocBaseService().getHistoryNavigator(command.getIdUserHistory());
+				
+				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
+				model.put("image", image);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowDocument", model);
+			}
+		} else {
+			//EntryId equals to zero is 'New Document'
+			document.setEntryId(0);
+			document.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			document.setDateCreated(new Date());
 		}
+		
+		model.put("document", document);
+		model.put("historyNavigator", historyNavigator);
 
-		return new ModelAndView("volbase/ShowVolume", model);
+		return new ModelAndView("docbase/ShowDocument", model);
 	}
 
 	/**
 	 * 
-	 * @param volBaseService
+	 * @param docBaseService
 	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * ShowLastEntryVolumeController.java
+ * ShowVolumeController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,28 +27,34 @@
  */
 package org.medici.docsources.controller.volbase;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.medici.docsources.command.volbase.ShowVolumeFromHistoryRequestCommand;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show last entry volume".
+ * Controller for action "Show volume from history".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/volbase/ShowLastEntryVolume")
-public class ShowLastEntryVolumeController {
+@RequestMapping("/src/volbase/ShowVolumeFromHistory")
+public class ShowVolumeFromHistoryController {
 	@Autowired
 	private VolBaseService volBaseService;
 	@Autowired
@@ -63,26 +69,38 @@ public class ShowLastEntryVolumeController {
 	}
 
 	/**
-	 * 
-	 * @param volumeId
+ 	 * This method extracts volume identified by param command.summaryId,
+ 	 * and invoke view ShowVolume to render Volume information on client.
+ 	 * 
+	 * @param command Object containing input parameters
+	 * @param result
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(){
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowVolumeFromHistoryRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
-	
-		try {
-			Volume volume = getVolBaseService().findLastEntryVolume();
-			model.put("volume", volume);
+		Volume volume = new Volume();
 
-			model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
-			Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
-			model.put("image", image);
+		if (command.getIdUserHistory() > 0) {
+			try {
+				volume = getVolBaseService().findVolumeFromHistory(command.getIdUserHistory());
 
-			model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
-		} catch (ApplicationThrowable ath) {
-			return new ModelAndView("error/ShowVolume", model);
+				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
+				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+				model.put("image", image);
+				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(command.getIdUserHistory()));
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowVolume", model);
+			}
+		} else {
+			//SummaryId equals to zero is 'New Volume'
+			volume.setSummaryId(0);
+			volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+			volume.setDateCreated(new Date());
+			model.put("volDocsRelated", 0);
 		}
+
+		model.put("volume", volume);
 
 		return new ModelAndView("volbase/ShowVolume", model);
 	}

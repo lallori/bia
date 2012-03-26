@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Place;
@@ -243,6 +244,15 @@ public interface GeoBaseService {
 
 	/**
 	 * 
+	 * @param idUserHistory
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Place findPlaceFromHistory(Integer idUserHistory) throws ApplicationThrowable;
+	
+	
+	/**
+	 * 
 	 * @param placeAllId
 	 * @return {@link org.medici.docsources.domain.PlaceGeographicCoordinates}
 	 * @throws ApplicationThrowable
@@ -258,7 +268,6 @@ public interface GeoBaseService {
 	 */
 	public List<Place> findPlaceNames(Integer geogKey) throws ApplicationThrowable;
 	
-	
 	/**
 	 * 
 	 * @return
@@ -266,13 +275,13 @@ public interface GeoBaseService {
 	 */
 	public List<PlaceType> findPlaceTypes() throws ApplicationThrowable;
 	
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexPlace() throws ApplicationThrowable;
-	
-	
+
 	/**
 	 * 
 	 * @throws ApplicationThrowable
@@ -290,7 +299,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexPlaceType() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param volNums
@@ -301,13 +310,29 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param idUserHistory
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Object getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param place
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getHistoryNavigator(Place place) throws ApplicationThrowable;
 	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void optimizeIndexPlace() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param placeToSearch
@@ -325,7 +350,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param placeToSearch
@@ -359,7 +384,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchDeathPlace(String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param query
@@ -375,7 +400,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchPlaces(String text) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param placeToSearch
@@ -384,7 +409,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param query
@@ -392,7 +417,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchRecipientsPlace(String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param placeToSearch
@@ -401,7 +426,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchSenderDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param query
@@ -409,7 +434,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchSendersPlace(String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param placeToSearch

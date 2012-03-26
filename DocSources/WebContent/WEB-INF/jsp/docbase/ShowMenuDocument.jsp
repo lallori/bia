@@ -19,6 +19,14 @@
 		
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
+		<security:authorize ifNotGranted="ROLE_GUESTS">
+			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
+				<a id="lastRecord" title="Go back to your last Record" href="${historyNavigator.previousHistoryUrl}"></a>
+			</c:if>
+			<c:if test="${(not empty historyNavigator.nextHistoryUrl)}"> 
+				<a id="nextRecord" title="Go back to the next Record" href="${historyNavigator.nextHistoryUrl}"></a>
+			</c:if>
+		</security:authorize>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="vettingHistory" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
 		</security:authorize>
@@ -44,5 +52,14 @@
 		$j("#menuActions").click( function() {															
 			Modalbox.show($j(this).attr("href"), {title: "DOCUMENT ACTIONS MENU", width: 750, height: 190});return false;
 		});	
+
+		$j('#lastRecord').click(function() {
+			$j("#body_left").load($j(this).attr("href"));
+			return false;
+		});
+		$j('#nextRecord').click(function() {
+			$j("#body_left").load($j(this).attr("href"));
+			return false;
+		});
 	});
 	</script>

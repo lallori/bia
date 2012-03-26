@@ -87,7 +87,7 @@ public class ShowPersonController {
 		if(command.getPersonId() > 0){
 			try {
 				person = getPeopleBaseService().findPerson(command.getPersonId());
-								
+
 				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 				model.put("marriages", marriages);
 				List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
@@ -101,7 +101,7 @@ public class ShowPersonController {
 				Integer docsRelated = senderDocsRelated + recipientDocsRelated + referringDocsRelated;
 				model.put("docsRelated", docsRelated);
 				
-				
+				model.put("historyNavigator", getPeopleBaseService().getHistoryNavigator(person));
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowPerson", model);
 			}

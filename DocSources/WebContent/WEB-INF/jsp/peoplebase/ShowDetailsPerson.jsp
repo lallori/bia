@@ -8,8 +8,8 @@
 		<c:url var="EditDetailsPersonURL" value="/de/peoplebase/EditDetailsPerson.do">
 			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
-		<c:url var="ShowNamesPersonURL" value="/src/peoplebase/ShowNamesPerson.do">
-			<c:param name="personId" value="${person.personId}" />
+		<c:url var="UploadPortraitWindowURL" value="/de/peoplebase/ShowUploadPortraitPerson.do">
+			<c:param name="personId"   value="${person.personId}" />
 		</c:url>
 	</security:authorize>
 	
@@ -25,6 +25,10 @@
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
 	
+	<c:url var="ShowNamesPersonURL" value="/src/peoplebase/ShowNamesPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+
 	<c:url var="ShowSenderDocumentsPersonURL" value="/src/peoplebase/ShowSenderDocumentsPerson.do">
 		<c:param name="personId" value="${person.personId}" />
 	</c:url>
@@ -98,6 +102,11 @@
 			<div id="EditPortraitPersonDiv">
 				<div id="imgPortraitPerson"></div>
 				<p style="text-align:center"><b>Portrait</b></p>
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<c:if test="${person.personId != 0}">
+					<a id="uploadPortrait" href="#">Upload Portrait</a>
+				</c:if>
+				</security:authorize>
 			</div>
 			
 			<div class="listDetails">
@@ -147,6 +156,24 @@
 			$j("#EditChildrenPerson").css('visibility', 'visible');
 			$j("#EditSpousesPerson").css('visibility', 'visible');
 	        $j("#EditResearchNotesPerson").css('visibility', 'visible'); 
+
+	        var $uploadPortraitWindow = $j('<div id="uploadPortraitWindow" title="UPLOAD PORTRAIT" style="display:none"></div>')
+			.dialog({                                                                                                                                                                   
+				resizable: false,
+				width: 450,
+				height: 135, 
+				modal: true,
+				autoOpen : false,
+				zIndex: 3999,
+				open: function(event, ui) { 
+					$j(this).load('${UploadPortraitWindowURL}');
+				}
+			});                 
+	        
+	        $j('#uploadPortrait').click(function(){
+				$j('#uploadPortraitWindow').dialog('open');
+				return false;
+			});
 	        
 	        <c:choose> 
 				<c:when test="${person.personId != 0}"> 

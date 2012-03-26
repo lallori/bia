@@ -466,7 +466,7 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowTopicsPlace.jsp" />
 	</definition>
 
-	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
+	<definition name="geobase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
 	</definition>
 	
@@ -575,6 +575,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/PrintPerson.jsp"/>	
 	</definition>
 
+	<definition name="peoplebase/SharePerson" extends="template.shareDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/SharePerson.jsp"/>	
+	</definition>
+
 	<definition name="peoplebase/ShowChildrenPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
 	</definition>
@@ -597,10 +601,6 @@
 	
 	<definition name="peoplebase/ShowFamilyPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowFamilyPerson.jsp" />
-	</definition>
-
-	<definition name="peoplebase/SharePerson" extends="template.shareDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/SharePerson.jsp"/>	
 	</definition>
 
 	<definition name="peoplebase/ShowMenuActionsPerson" extends="template.partialDOM">
@@ -658,10 +658,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowTitlesOrOccupationsPeoplePerson.jsp"/>
 	</definition>
 
-	<definition name="docbase/ShowVettingChronologyPlaceModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowVettingChronologyPlaceModalWindow.jsp"/>
+	<definition name="peoplebase/ShowVettingChronologyPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowVettingChronologyPersonModalWindow.jsp"/>
 	</definition>
 	
+	<definition name="peoplebase/ShowUploadPortraitPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowUploadPortraitPersonModalWindow.jsp"/>
+	</definition>
+
 	<!-- PeopleBase Module END -->
 
 	<!-- Search Module START -->

@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.peoplebase;
 
+import java.io.File;
 import java.text.Normalizer;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,14 +36,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
+import org.medici.docsources.common.image.PersonPortrait;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.PersonUtils;
 import org.medici.docsources.dao.altname.AltNameDAO;
+import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
@@ -89,7 +96,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Autowired
 	private AltNameDAO altNameDAO;
-	
+	@Autowired
+	private ApplicationPropertyDAO applicationPropertyDAO;
+
 	@Autowired
 	private BiblioTDAO biblioTDAO;
 	
@@ -104,6 +113,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	
 	@Autowired
 	private ImageDAO imageDAO;
+	
+	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	@Autowired
 	private MarriageDAO marriageDAO;
@@ -1171,6 +1182,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public People findPersonFromHistory(Integer idUserHistory) throws ApplicationThrowable {
+		try{
+			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
+			
+			return userHistory.getPerson();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public PoLink findTitleOrOccupationPerson(Integer personId, Integer prfLinkId) throws ApplicationThrowable {
 		try {
 			return getPoLinkDAO().find(personId, prfLinkId);
@@ -1304,6 +1329,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @param applicationPropertyDAO the applicationPropertyDAO to set
+	 */
+	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
+		this.applicationPropertyDAO = applicationPropertyDAO;
+	}
+
+	/**
+	 * @return the applicationPropertyDAO
+	 */
+	public ApplicationPropertyDAO getApplicationPropertyDAO() {
+		return applicationPropertyDAO;
+	}
+
+	/**
 	 * @return the biblioTDAO
 	 */
 	public BiblioTDAO getBiblioTDAO() {
@@ -1351,6 +1390,52 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	public Object getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getHistoryNavigator(People person) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PEOPLE, person.getPersonId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+
+	/**
 	 * @return the imageDAO
 	 */
 	public ImageDAO getImageDAO() {
@@ -1388,6 +1473,23 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable {
+		try{
+			Map<Integer, PoLink> result = new HashMap<Integer, PoLink>();
+			List<PoLink> occupations = getPoLinkDAO().getOccupationsDetails(alias, peopleIds);
+			for(PoLink currentOccupation : occupations){
+				result.put(currentOccupation.getPerson().getPersonId(), currentOccupation);
+			}
+			return result;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
 	 * @return the parentDAO
 	 */
 	public ParentDAO getParentDAO() {
@@ -1400,7 +1502,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
 	}
-
+	
 	/**
 	 * @return the placeDAO
 	 */
@@ -1414,7 +1516,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public PoLinkDAO getPoLinkDAO() {
 		return poLinkDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1433,7 +1535,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public RoleCatDAO getRoleCatDAO() {
 		return roleCatDAO;
 	}
-
+	
 	/**
 	 * @return the titleOccsListDAO
 	 */
@@ -1447,7 +1549,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1455,6 +1557,23 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public void optimizeIndexPeople() throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String saveTemporaryImage(PersonPortrait personPortrait) throws ApplicationThrowable {
+		try {
+			String tempPath = applicationPropertyDAO.getPortraitTempPath();
+			
+			String fileName = ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + personPortrait.getPersonId(); 
+			File tempFile = new File(fileName);
+			FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile());
+			return fileName;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -1480,7 +1599,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1505,7 +1624,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1529,7 +1648,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1541,7 +1660,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1601,7 +1720,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1768,22 +1887,5 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}		
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Map<Integer, PoLink> getOccupationsDetails(String alias, List<Integer> peopleIds) throws ApplicationThrowable {
-		try{
-			Map<Integer, PoLink> result = new HashMap<Integer, PoLink>();
-			List<PoLink> occupations = getPoLinkDAO().getOccupationsDetails(alias, peopleIds);
-			for(PoLink currentOccupation : occupations){
-				result.put(currentOccupation.getPerson().getPersonId(), currentOccupation);
-			}
-			return result;
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
 	}
 }

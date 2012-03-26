@@ -8,7 +8,7 @@
        http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="jdbcUrl" value="jdbc:mysql://mysql.medici.org:3306/docsources?autoReconnect=true" />
         <property name="user" value="docsources" />
@@ -16,7 +16,6 @@
         <property name="initialPoolSize" value="15" />
         <property name="minPoolSize" value="10" />
         <property name="maxPoolSize" value="30" />
-		<property name="idleConnectionTestPeriod" value="200" />		
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

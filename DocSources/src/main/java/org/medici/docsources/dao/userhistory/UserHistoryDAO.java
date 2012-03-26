@@ -118,6 +118,15 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 
 	/**
 	 * 
+	 * @param document
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserHistory findHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param category
 	 * @return
 	 * @throws PersistenceException
@@ -131,6 +140,24 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @throws PersistenceException
 	 */
 	public UserHistory findLastEntry(Category category) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param category
+	 * @param idUserHistory
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserHistory findNextHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param category
+	 * @param idUserHistory
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserHistory findPreviousHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException;
 
 	/**
 	 * 

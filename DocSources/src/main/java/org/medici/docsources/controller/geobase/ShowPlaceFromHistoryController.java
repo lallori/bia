@@ -1,5 +1,5 @@
 /*
- * ShowPlaceController.java
+ * ShowPlaceFromHistoryController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,8 +30,8 @@ package org.medici.docsources.controller.geobase;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.medici.docsources.command.geobase.ShowPlaceRequestCommand;
-import org.medici.docsources.common.util.HtmlUtils;
+
+import org.medici.docsources.command.geobase.ShowPlaceFromHistoryRequestCommand;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -46,13 +46,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show place".
+ * Controller for action "ShowPlaceFrom History".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/geobase/ShowPlace")
-public class ShowPlaceController {
+@RequestMapping("/src/geobase/ShowPlaceFromHistory")
+public class ShowPlaceFromHistoryController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 
@@ -79,37 +79,31 @@ public class ShowPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowPlaceRequestCommand command, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowPlaceFromHistoryRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Place place = new Place();
 		List<Place> placeNames;
 		
-		if(command.getPlaceAllId() > 0){
+		if(command.getIdUserHistory() > 0){
 			try {
-				place = getGeoBaseService().findPlace(command.getPlaceAllId());
+				place = getGeoBaseService().findPlaceFromHistory(command.getIdUserHistory());
 				
-				model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(command.getPlaceAllId()));
-				model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(command.getPlaceAllId()));
-				model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(command.getPlaceAllId()));
-				model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(command.getPlaceAllId()));
-				model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(command.getPlaceAllId()));
-				model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(command.getPlaceAllId()));
-				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
-				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
-				
-				if(place.getPlaceGeographicCoordinates() != null)
-					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
-				else
-					model.put("linkGoogleMaps", null);
-
-				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(place));
+				model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(place.getPlaceAllId()));
+				model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(place.getPlaceAllId()));
+				model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(place.getPlaceAllId()));
+				model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(place.getPlaceAllId()));
+				model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(place.getPlaceAllId()));
+				model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
+				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
+				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
+				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(command.getIdUserHistory()));
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowPlace", model);
 			}
 		}else{
 			place.setPlaceAllId(0);
-			place.setPlSource(command.getPlSource());
+			place.setPlSource("");
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 		}
 		

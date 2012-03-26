@@ -117,7 +117,7 @@
 					//drag: function(event, ui) {$j(this).append(ui.position.left);},
 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);}, 
 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-				}).dialogExtend({"minimize" : true});                                                                                                                                                                         
+				}).dialogExtend({"minimize" : true});
 
 				var $dialogSynopsis = $j('<div id="EditSynopsisDocumentDiv"></div>')
 				.dialog({                                                                                                                                                                   

@@ -49,10 +49,10 @@
 		</style>
 		<![endif]-->
 		
-		<!--  <script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.3-full-compat-compressed.js"/>"></script>-->
-		<!-- <script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.3-full-compat-compressed.js"/>"></script>-->
+<!-- 
 		<script src="/DocSources/scripts/mview/mootools-core-1.3.2-full-nocompat-yc.js" type="text/javascript"></script>
 		<script src="/DocSources/scripts/mview/mootools-more-1.3.2.1.js" type="text/javascript"></script>
+-->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
 <!-- <script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-1.2.js"/>"></script> -->
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.advancedSearch.js"/>"></script>

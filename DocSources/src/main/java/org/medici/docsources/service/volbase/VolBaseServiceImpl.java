@@ -33,11 +33,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.image.ImageDAO;
@@ -76,13 +79,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
-	private SchedoneDAO catalogDAO;
-	@Autowired
 	private DocumentDAO documetDAO;
 	@Autowired
 	private ImageDAO imageDAO;
+	private final Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
 	private MonthDAO monthDAO;
+	@Autowired
+	private SchedoneDAO schedoneDAO;
 	@Autowired
 	private SeriesListDAO seriesListDAO;
 	@Autowired
@@ -486,7 +490,20 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Volume findVolumeFromHistory(Integer idUserHistory) throws ApplicationThrowable {
+		try{
+			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
+			
+			return userHistory.getVolume();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -527,20 +544,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 	
 	/**
-	 * @return the catalogDAO
-	 */
-	public SchedoneDAO getCatalogDAO() {
-		return catalogDAO;
-	}
-	
-	/**
-	 * @return the documetDAO
-	 */
-	public DocumentDAO getDocumetDAO() {
-		return documetDAO;
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -561,6 +564,59 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * @return the documetDAO
+	 */
+	public DocumentDAO getDocumetDAO() {
+		return documetDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getHistoryNavigator(Integer historyId) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().find(historyId);
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getHistoryNavigator(Volume volume) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.VOLUME, volume.getSummaryId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
 
 	/**
 	 * @return the imageDAO
@@ -575,7 +631,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -593,18 +649,28 @@ public class VolBaseServiceImpl implements VolBaseService {
 	}
 
 	/**
+	 * @return the catalogDAO
+	 */
+	public SchedoneDAO getSchedoneDAO() {
+		return schedoneDAO;
+	}
+
+
+	/**
 	 * @return the seriesListDAO
 	 */
 	public SeriesListDAO getSeriesListDAO() {
 		return seriesListDAO;
 	}
-	
+
+
 	/**
 	 * @return the UserMessageDAO
 	 */
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
+
 
 	/**
 	 * @return the volumeDAO
@@ -637,8 +703,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -690,7 +755,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -716,22 +782,12 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
-
-	/**
-	 * @param catalogDAO the catalogDAO to set
-	 */
-	public void setCatalogDAO(SchedoneDAO catalogDAO) {
-		this.catalogDAO = catalogDAO;
-	}
-
-
 	/**
 	 * @param documetDAO the documetDAO to set
 	 */
 	public void setDocumetDAO(DocumentDAO documetDAO) {
 		this.documetDAO = documetDAO;
 	}
-
 
 	/**
 	 * @param imageDAO the imageDAO to set
@@ -740,12 +796,22 @@ public class VolBaseServiceImpl implements VolBaseService {
 		this.imageDAO = imageDAO;
 	}
 
+
 	/**
 	 * @param monthDAO the monthDAO to set
 	 */
 	public void setMonthDAO(MonthDAO monthDAO) {
 		this.monthDAO = monthDAO;
 	}
+
+
+	/**
+	 * @param schedoneDAO the schedoneDAO to set
+	 */
+	public void setSchedoneDAO(SchedoneDAO schedoneDAO) {
+		this.schedoneDAO = schedoneDAO;
+	}
+
 
 	/**
 	 * @param seriesListDAO the seriesListDAO to set

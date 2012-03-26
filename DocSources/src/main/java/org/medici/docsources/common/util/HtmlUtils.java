@@ -33,6 +33,8 @@ import java.util.List;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.domain.UserHistory;
+import org.medici.docsources.domain.UserHistory.Category;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -101,6 +103,67 @@ public class HtmlUtils {
 		stringBuffer.append(documentExplorer.getTotalGuardia());
 		
 		return stringBuffer.toString();
+	}
+
+	/**
+	 * 
+	 * @param inputList
+	 * @param summaryId
+	 * @return
+	 */
+	public static String getHistoryNavigatorNextPageUrl(UserHistory userHistory) {
+		if (userHistory == null)
+			return null;
+
+		return getHistoryNavigatorUrl(userHistory.getCategory(), userHistory.getIdUserHistory());
+	}
+
+	/**
+	 * 
+	 * @param inputList
+	 * @param summaryId
+	 * @return
+	 */
+	public static String getHistoryNavigatorPreviousPageUrl(UserHistory userHistory) {
+		if (userHistory == null)
+			return null;
+
+		return getHistoryNavigatorUrl(userHistory.getCategory(), userHistory.getIdUserHistory());
+	}
+
+	/**
+	 * 
+	 * @param category
+	 * @param idUserHistory
+	 * @return
+	 */
+	private static String getHistoryNavigatorUrl(Category category, Integer idUserHistory) {
+		if ((category == null) || (idUserHistory ==null))
+			return null;
+
+		String url = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		switch (category) {
+			case DOCUMENT :
+				url += "/src/docbase/ShowDocumentFromHistory.do?idUserHistory=";
+				url += idUserHistory;
+				break;
+			case PEOPLE :
+				url += "/src/peoplebase/ShowPersonFromHistory.do?idUserHistory=";
+				url += idUserHistory;
+				break;
+			case PLACE :
+				url += "/src/geobase/ShowPlaceFromHistory.do?idUserHistory=";
+				url += idUserHistory;
+				break;
+			case VOLUME :
+				url += "/src/volbase/ShowVolumeFromHistory.do?idUserHistory=";
+				url += idUserHistory;
+				break;
+			default :
+				break;
+		}
+
+		return url;
 	}
 
 	/**

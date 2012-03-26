@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.Document;
@@ -43,6 +44,7 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SynExtract;
 import org.medici.docsources.domain.TopicList;
+import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -291,6 +293,14 @@ public interface DocBaseService {
 
 	/**
 	 * 
+	 * @param idUserHistory
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Document findDocumentFromHistory(Integer idUserHistory) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param entryId
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
@@ -415,6 +425,30 @@ public interface DocBaseService {
 	 */
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getHistoryNavigator(Document document) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param idUserHistory
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param historyLog
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getHistoryNavigator(UserHistory historyLog) throws ApplicationThrowable;
+	
 	/**
 	 * Extracts all months available.
 	 *  

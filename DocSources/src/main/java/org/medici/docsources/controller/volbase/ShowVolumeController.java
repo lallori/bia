@@ -80,26 +80,28 @@ public class ShowVolumeController {
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowVolumeRequestCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Volume volume = new Volume();
-		
+
 		if (command.getSummaryId() > 0) {
 			try {
 				volume = getVolBaseService().findVolume(command.getSummaryId());
+
 				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
 				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
 				model.put("image", image);
+
+				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/ShowVolume", model);
 			}
 		} else {
 			//SummaryId equals to zero is 'New Volume'
-			volume.setSummaryId(command.getSummaryId());
+			volume.setSummaryId(0);
 			volume.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			volume.setDateCreated(new Date());
 			model.put("volDocsRelated", 0);
 		}
 
 		model.put("volume", volume);
-
 		return new ModelAndView("volbase/ShowVolume", model);
 	}
 

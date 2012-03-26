@@ -28,9 +28,7 @@
 package org.medici.docsources.controller.geobase;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -72,10 +70,9 @@ public class ShowLastEntryPlaceController {
 			model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
 			model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
 			model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
-			List<Place> placeNames;
-			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
-			model.put("placeNames", placeNames);
-			
+			model.put("placeNames", getGeoBaseService().findPlaceNames(place.getGeogKey()));
+			model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(place));
+
 			if(place.getPlaceGeographicCoordinates() != null)
 				model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
 			else

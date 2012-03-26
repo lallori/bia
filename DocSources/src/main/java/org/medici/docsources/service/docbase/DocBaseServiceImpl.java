@@ -34,12 +34,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.EpLinkUtils;
 import org.medici.docsources.common.util.EplToLinkUtils;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ImageUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
@@ -83,6 +86,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly=true)
 public class DocBaseServiceImpl implements DocBaseService {
+	private final Logger logger = Logger.getLogger(this.getClass());
+
 	@Autowired
 	private DocumentDAO documentDAO;
 	@Autowired
@@ -801,6 +806,20 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Document findDocumentFromHistory(Integer idUserHistory) throws ApplicationThrowable {
+		try{
+			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
+			
+			return userHistory.getDocument();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public FactChecks findFactChecksDocument(Integer entryId) throws ApplicationThrowable {
 		try {
 			return getFactChecksDAO().findByEntryId(entryId);
@@ -1027,6 +1046,71 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public FactChecksDAO getFactChecksDAO() {
 		return factChecksDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getHistoryNavigator(Document document) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.DOCUMENT, document.getEntryId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getHistoryNavigator(UserHistory historyLog) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().find(historyLog.getIdUserHistory());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+		}catch(Throwable th){
+			logger.error(th);
+		}
+		
+		return historyNavigator;
 	}
 
 	/**

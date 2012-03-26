@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
@@ -205,6 +206,14 @@ public interface VolBaseService {
 	public Integer findVolumeDocumentsRelated(Integer summaryId) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param idUserHistory
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Volume findVolumeFromHistory(Integer idUserHistory) throws ApplicationThrowable;
+
+	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Month}.
 	 * 
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
@@ -227,7 +236,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public void generateIndexVolume() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param volNums
@@ -238,6 +247,22 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param historyId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getHistoryNavigator(Integer historyId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param volume
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getHistoryNavigator(Volume volume) throws ApplicationThrowable;
 	
 	/**
 	 * This method extracts all months available.
@@ -249,6 +274,7 @@ public interface VolBaseService {
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
 
+	
 	/**
 	 * 
 	 * @param volumeExplorer
@@ -257,7 +283,8 @@ public interface VolBaseService {
 	 * 
 	 */
 	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable;
-
+	
+	
 	/**
 	 * This method searches if the volumes are digitized
 	 * 
@@ -266,14 +293,13 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Map<String, Boolean> getVolumesDigitizedState(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void optimizeIndexVolume() throws ApplicationThrowable;
 
-	
 	/**
 	 * 
 	 * @param volumeToSearch
@@ -282,8 +308,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchDocumentsRelated(String volumeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
-	
+
 	/**
 	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
 	 * 
