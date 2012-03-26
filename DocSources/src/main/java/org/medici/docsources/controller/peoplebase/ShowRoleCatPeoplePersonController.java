@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.peoplebase.ShowRoleCatPeoplePersonCommand;
+import org.medici.docsources.domain.RoleCat;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,8 +85,8 @@ public class ShowRoleCatPeoplePersonController {
 		
 		
 		if(command.getRoleCatId() > 0){
-			
-				
+			try{
+				RoleCat roleCat = getPeopleBaseService().findRoleCat(command.getRoleCatId());
 				List<String> outputFields = new ArrayList<String>(5);
 				outputFields.add("Name");
 				outputFields.add("Gender");
@@ -94,9 +96,11 @@ public class ShowRoleCatPeoplePersonController {
 				model.put("outputFields", outputFields);
 
 				
-				model.put("roleCatId", command.getRoleCatId());
-				model.put("roleCat", command.getRoleCat());
-			
+				model.put("roleCatId", roleCat.getRoleCatId());
+				model.put("roleCat", roleCat.getRoleCatMinor());
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("error/ShowRoleCatPeoplePerson", model);
+			}
 		}
 
 		return new ModelAndView("peoplebase/ShowRoleCatPeoplePerson", model);

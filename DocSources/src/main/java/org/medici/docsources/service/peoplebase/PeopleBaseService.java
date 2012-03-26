@@ -381,6 +381,22 @@ public interface PeopleBaseService {
 
 	/**
 	 * 
+	 * @param roleCatId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public RoleCat findRoleCat(Integer roleCatId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param titleOccId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public TitleOccsList findTitleOccList(Integer titleOccId) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param personId
 	 * @param prfLinkId
 	 * @return

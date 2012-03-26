@@ -1191,7 +1191,31 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public RoleCat findRoleCat(Integer roleCatId) throws ApplicationThrowable {
+		try{
+			return getRoleCatDAO().find(roleCatId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TitleOccsList findTitleOccList(Integer titleOccId) throws ApplicationThrowable {
+		try{
+			return getTitleOccsListDAO().find(titleOccId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

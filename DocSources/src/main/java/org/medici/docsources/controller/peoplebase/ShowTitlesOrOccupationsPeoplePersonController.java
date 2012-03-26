@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.peoplebase.ShowTitlesOrOccupationsPeoplePersonCommand;
+import org.medici.docsources.domain.TitleOccsList;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,8 +85,8 @@ public class ShowTitlesOrOccupationsPeoplePersonController {
 		
 		
 		if(command.getTitleOccId() > 0){
-			
-				
+			try{
+				TitleOccsList titleOcc = getPeopleBaseService().findTitleOccList(command.getTitleOccId());
 				List<String> outputFields = new ArrayList<String>(5);
 				outputFields.add("Name");
 				outputFields.add("Gender");
@@ -96,8 +98,11 @@ public class ShowTitlesOrOccupationsPeoplePersonController {
 				model.put("outputFields", outputFields);
 
 				
-				model.put("titleOccId", command.getTitleOccId());
-				model.put("titleOcc", command.getTitleOcc());
+				model.put("titleOccId", titleOcc.getTitleOccId());
+				model.put("titleOcc", titleOcc.getTitleOcc());
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("error/ShowTitleOrOccupationsPeoplePerson", model);
+			}
 			
 		}
 

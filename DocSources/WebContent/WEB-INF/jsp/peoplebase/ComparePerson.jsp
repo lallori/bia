@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn2" uri="http://docsources.medici.org/jsp:jstl" %>
 
 <c:url var="ShowPersonURL" value="/src/peoplebase/ShowPerson.do">
 	<c:param name="personId" value="${person.personId}" />
