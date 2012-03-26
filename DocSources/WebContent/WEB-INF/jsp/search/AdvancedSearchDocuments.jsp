@@ -137,8 +137,6 @@
 						</c:forEach>
 					</select>
 					<input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="addDateRange">
-					<input type="hidden" id="category" value="Date">
 					<p class="invisible">and</p>
 	                <input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
 	                <select id="dateMonthBetween" name="dateMonthBetween" class="selectform" style="visibility:hidden">
@@ -147,6 +145,8 @@
 						</c:forEach>
 	                </select>
 	                <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
+	                <input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="addDateRange">
+					<input type="hidden" id="category" value="Date">
 				</form>
 			</div>
 			

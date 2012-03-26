@@ -24,7 +24,7 @@
 	<div>
 		<form id="placeTypeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="These Place Types are assigned to geographical place names in the Getty Thesaurus of Geographic Names. Most places in the Documentary Sources database are of the type 'Inhabited Place' (that is to say, cities, towns and villages.)">?</a>
-			<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_XXXlong">
+			<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_Xlong">
 				<option value="Select a Place Type" selected="selected">Select a Place Type</option>
 				<c:forEach items="${placeTypes}" var="placeType">
 					<option value="${placeType}">${placeType}</option>
@@ -40,7 +40,7 @@
 	<div>
 		<form id="linkedToTopicsSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Most documents are indexed to one or more Topic Categories, and each Topic is indexed to the related Places. By selecting a Topic, you will create a list here of the places that are associated with that topic in the indexed documents. For example, selecting the Topic 'Music and Musical Instruments' will produce a list of places that are linked to documents mentioning Music and Musical Instruments. This allows you to select those relevant to your research.">?</a>
-			<select id="linkedToTopicsSelect" name="linkedToTopicsSelect" class="selectform_XXlong">
+			<select id="linkedToTopicsSelect" name="linkedToTopicsSelect" class="selectform_Xlong">
 				<option value="Select a Topic" selected="selected">Select a Topic</option>
 				<c:forEach items="${topicsList}" var="topicList">
 					<option value="${topicList.topicId}">${topicList}</option>
