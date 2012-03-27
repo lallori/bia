@@ -87,7 +87,7 @@ public class ShowNamesPersonController {
 
 		if(command != null && command.getPersonId() > 0){
 			try {
-				person = getPeopleBaseService().findPerson(command.getPersonId());
+				person = getPeopleBaseService().findPersonForNames(command.getPersonId());
 								
 				model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
