@@ -89,11 +89,18 @@ public class ShowPersonFromHistoryController {
 			try {
 				person = getPeopleBaseService().findPersonFromHistory(command.getIdUserHistory());
 
-				model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
 				List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 				model.put("marriages", marriages);
 				List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
 				model.put("children", children);
+				Integer senderDocsRelated = getPeopleBaseService().findNumberOfSenderDocumentsRelated(person.getPersonId());
+				model.put("senderDocsRelated", senderDocsRelated);
+				Integer recipientDocsRelated = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(person.getPersonId());
+				model.put("recipientDocsRelated", recipientDocsRelated);
+				Integer referringDocsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(person.getPersonId());
+				model.put("referringDocsRelated", referringDocsRelated);
+				Integer docsRelated = senderDocsRelated + recipientDocsRelated + referringDocsRelated;
+				model.put("docsRelated", docsRelated);
 				
 				model.put("historyNavigator", getPeopleBaseService().getHistoryNavigator(command.getIdUserHistory()));
 			} catch (ApplicationThrowable ath) {
