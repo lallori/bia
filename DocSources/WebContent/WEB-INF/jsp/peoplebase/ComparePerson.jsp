@@ -140,6 +140,7 @@
 				<div class="item">${currentName.nameType}</div> 
 				<c:if test="${currentName.nameType == 'Family' }">
 					<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.do">
+						<c:param name="nameId" value="${currentName.nameId}" />
 						<c:param name="altName" value="${currentName.altName}" />
 					</c:url>
 						<div class="value"><a class="linkFamilyCompare" href="${ShowFamilyPersonURL}">${currentName.namePrefix} ${currentName.altName}</a></div>
