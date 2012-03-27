@@ -47,7 +47,7 @@
 			<h2>ADD New - Person Record</h2>
 		</c:if>
 		<c:if test="${person.personId != 0}">
-		<div id="personTitle" class="background">
+		<div id="personTitle">
 			<div class="title">
 		    	<h5>PERSON</h5>
 			</div>			

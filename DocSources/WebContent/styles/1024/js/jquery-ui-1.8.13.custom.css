@@ -650,6 +650,7 @@
 	margin: 0;
 	display:block;
 	float: left;
+	box-shadow: 1px 1px 10px #666;   -webkit-box-shadow: 1px 1px 10px #666;
 }
 .ui-menu .ui-menu {
 	margin-top: -3px;
@@ -930,37 +931,50 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  */
  
 .refine { /* Refine this search button on Search Results Tab */
- 	float:right;
-	margin:5px 6px 0 0;
-	width:122px;
-	height:22px;
-	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
-	text-align:center;
-	padding-top:4px;
- }
+ 	float: right;
+	margin: 20px 0 0 10px;
+	width: 122px;
+	height: 22px;
+	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align: center;
+}
+
+.print {
+	float: left;
+	margin: 15px 0 0 25px;
+	width: 122px;
+	height: 22px;
+	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align: center;
+}
  
- .refine:hover {
+.refine:hover, .print:hover {
 	text-decoration:none;
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */ !important
- }
+}
  
- .yourSearchDiv { /* Your Search: [...] Div containing the reserched words on the Result Tab */
-	margin: 15px 0 10px 0px;
-	font-size: 12px;    
-	text-align: center;
+.yourSearchDiv { /* Your Search: [...] Div containing the reserched words on the Result Tab */
+	margin: 20px 0 10px 10px;
+	font-size: 11px;
+	text-align: left;
+	line-height: 22px;
+}
+
+.yourSearchDiv p {
+	margin-left: 25px;
 }
 
  .tabLink { /* The word used on the research */
 	 margin-left:8px;
 	 color:#B7958F;
 	 text-decoration:underline;
- }
+}
  
  .recordsNum { /* The number of records on the research */
 	 color:#009;
-	 margin-left:8px;
+	 margin: 5px 0 0 5px;
 }
 
 /* Discard Changes? message */

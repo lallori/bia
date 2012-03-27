@@ -111,9 +111,10 @@
 	</script>
 	
 	<div class="yourSearchDiv">
-		Your search:
-		<font color="red">${command.text}</font>
-		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span>
+		<p>Your search:
+		<font color="red" style="margin-left:5px">${command.text}</font></p>
+		<p>Total record found:
+		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
 	</div>
 
 	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>

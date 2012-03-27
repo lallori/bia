@@ -13,7 +13,7 @@
 /* ----------------- TITLES ------------------------------- */ 
 
 h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLACE NAME (in PLACE DETAILS) */
-	padding: 0 45px 0 28px;
+	padding: 0 5px 0 27px;
 	font-size: 16px;
 	font-style: italic;
 	color: #666EA4;
@@ -37,17 +37,18 @@ h3.details { /* AlreadyPresent....html */
 	color:#006;
 }
 
-h4, span.h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
+h4 { /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	text-align: left;
 	font-size: 11px;
 	font-style: italic;
 	padding: 10px 0 0 28px;
-	color: #666EA4;
+	color: #6F6B69;
 	width: 430px;
 }
 
 span.h4 {
 	padding:10px 0 0 10px;
+	color: #666EA4;
 }
 
 h5{ /* Data Entry main fields Title */
@@ -353,7 +354,7 @@ item a{
 
 /* Title Divs */
 
-#documentTitle, #volumeTitle, #personTitle, #geoTitle{
+#documentTitle, #volumeTitle, #geoTitle{
 	margin-top: 30px;
 	margin-bottom: 25px;
 }
@@ -363,6 +364,19 @@ item a{
 	margin-bottom: 25px;
 }
 
+#body_right #volumeTitle {
+	margin-top: 10px;
+}
+
+#personTitle {
+	border: 1px solid #DCC0BA;
+	border-radius: 4px;
+	margin-top: 57px;
+	padding: 5px 0 8px 0;
+	width: 479px;
+	background-color: #FAF4F4;
+	box-shadow: 1px 1px 10px #C8C8C8;
+}
 
 
 /* ----------------------------------------------------- */ 
@@ -2956,6 +2970,9 @@ a.refreshVolumeExplorer {
 	color: #6d5c4d;
 }
 
+#geoCompareDiv {
+	margin-top: 10px;
+}
 
 
 /* ------------------ */

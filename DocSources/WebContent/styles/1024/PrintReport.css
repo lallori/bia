@@ -7,7 +7,7 @@ body {
 }
 
 #layout {
-	width:670px;
+	width: 584px;
 	margin:0;
 	padding-top:20px;
 }
@@ -15,7 +15,7 @@ body {
 .print {
 	background-image:url(/DocSources/images/1024/img_print.png);
 	position:absolute;
-	margin:-10px 0 0 540px;
+	margin: -10px 0 0 532px;
 	height:40px;
 	width:40px;
 }
@@ -95,11 +95,23 @@ h5.first, h3.first {
 	margin-top:40px;
 }
 
+table#catalog {
+	margin: 40px 0 0 0;
+	width: 584px;
+	font-size: 11px;
+	text-align: left;
+}
+
 table {
 	margin-left:80px;
 	text-align:justify;
 	width:550px;
 	font-size:10px;
+}
+
+table#catalog tr td {
+	vertical-align:top;
+	padding: 3px 5px 3px 5px;
 }
 
 table tr td {
@@ -136,5 +148,9 @@ hr {
 	color:#999;
 	font-size:9px;
 	display: none;
+}
+
+#yourSearchDiv p {
+	margin-left: 25px;
 }
 
