@@ -44,38 +44,38 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-@Controller
-@RequestMapping("/de/peoplebase/ShowUploadPortraitPerson")
-public class CropPortraitPersonController {
-	@Autowired
-	private PeopleBaseService peopleBaseService;
-
-	/**
-	 * 
-	 * @return
-	 */
-	public PeopleBaseService getPeopleBaseService() {
-		return peopleBaseService;
-	}
-
-	/**
-	 * 
-	 * @param peopleBaseService
-	 */
-	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
-		this.peopleBaseService = peopleBaseService;
-	}
-
-	/**
-	 * 
-	 * @param peopleId
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowUploadPortraitPersonCommand command, BindingResult result){
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
-	}
-}
+//@Controller
+//@RequestMapping("/de/peoplebase/ShowUploadPortraitPerson")
+//public class CropPortraitPersonController {
+//	@Autowired
+//	private PeopleBaseService peopleBaseService;
+//
+//	/**
+//	 * 
+//	 * @return
+//	 */
+//	public PeopleBaseService getPeopleBaseService() {
+//		return peopleBaseService;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param peopleBaseService
+//	 */
+//	public void setPeopleBaseService(PeopleBaseService peopleBaseService) {
+//		this.peopleBaseService = peopleBaseService;
+//	}
+//
+//	/**
+//	 * 
+//	 * @param peopleId
+//	 * @param result
+//	 * @return
+//	 */
+//	@RequestMapping(method = RequestMethod.GET)
+//	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowUploadPortraitPersonCommand command, BindingResult result){
+//		Map<String, Object> model = new HashMap<String, Object>();
+//
+//		return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
+//	}
+//}
