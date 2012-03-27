@@ -49,7 +49,7 @@
 				$j("#body_left").load('<c:url value="/src/volbase/ShowLastEntryVolume.do"/>');
 				return false;
 			}
-			if(data.category == 'Person'){
+			if(data.category == 'People'){
 				$j("#body_left").load('<c:url value="/src/peoplebase/ShowLastEntryPerson.do"/>');
 				return false;
 			}
