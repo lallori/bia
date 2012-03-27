@@ -262,6 +262,14 @@ public interface VolBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public HistoryNavigator getCategoryHistoryNavigator(Volume volume) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param volume
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public HistoryNavigator getHistoryNavigator(Volume volume) throws ApplicationThrowable;
 	
 	/**

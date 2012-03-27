@@ -431,6 +431,14 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public HistoryNavigator getHistoryNavigator(Document document) throws ApplicationThrowable;
 
 	/**

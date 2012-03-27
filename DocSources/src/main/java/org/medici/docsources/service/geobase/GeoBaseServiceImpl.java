@@ -675,8 +675,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -693,13 +693,36 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public HistoryNavigator getCategoryHistoryNavigator(Place place) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PLACE, place.getPlaceAllId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public HistoryNavigator getHistoryNavigator(Place place) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
 			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PLACE, place.getPlaceAllId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));

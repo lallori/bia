@@ -581,8 +581,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(historyId);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -599,13 +599,36 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public HistoryNavigator getCategoryHistoryNavigator(Volume volume) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.VOLUME, volume.getSummaryId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public HistoryNavigator getHistoryNavigator(Volume volume) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
 			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.VOLUME, volume.getSummaryId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));

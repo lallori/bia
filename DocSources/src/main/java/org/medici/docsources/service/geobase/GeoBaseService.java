@@ -325,6 +325,14 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public HistoryNavigator getCategoryHistoryNavigator(Place place) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param place
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public HistoryNavigator getHistoryNavigator(Place place) throws ApplicationThrowable;
 	
 	/**

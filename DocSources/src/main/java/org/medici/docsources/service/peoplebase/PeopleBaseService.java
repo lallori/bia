@@ -370,6 +370,13 @@ public interface PeopleBaseService {
 	 * @return
 	 */
 	public People findPerson(Integer personId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	public People findPersonForNames(Integer personId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -477,6 +484,14 @@ public interface PeopleBaseService {
 	 */
 	public Object getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param person
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getCategoryHistoryNavigator(People person) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param person

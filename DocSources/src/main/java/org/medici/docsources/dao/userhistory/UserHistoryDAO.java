@@ -123,6 +123,15 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
+	public UserHistory findCategoryHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param category
+	 * @param primaryKeyId
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public UserHistory findHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException;
 
 	/**
@@ -148,7 +157,15 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findNextHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException;
+	public UserHistory findNextCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param idUserHisotry
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserHistory findNextHistoryCursor(Integer idUserHisotry) throws PersistenceException;
 
 	/**
 	 * 
@@ -157,7 +174,15 @@ public interface UserHistoryDAO extends Dao<Integer, UserHistory> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public UserHistory findPreviousHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException;
+	public UserHistory findPreviousCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param idUserHistory
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserHistory findPreviousHistoryCursor(Integer idUserHistory) throws PersistenceException;
 
 	/**
 	 * 

@@ -1052,13 +1052,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HistoryNavigator getHistoryNavigator(Document document) throws ApplicationThrowable {
+	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.DOCUMENT, document.getEntryId());
+			UserHistory userHistory = getUserHistoryDAO().findCategoryHistoryFromEntity(Category.DOCUMENT, document.getEntryId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1066,6 +1066,27 @@ public class DocBaseServiceImpl implements DocBaseService {
 			logger.error(th);
 		}
 
+		return historyNavigator;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getHistoryNavigator(Document document) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try{
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.DOCUMENT, document.getEntryId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+		}catch(Throwable th){
+			logger.error(th);
+		}
+		
 		return historyNavigator;
 	}
 
@@ -1078,8 +1099,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1101,8 +1122,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(historyLog.getIdUserHistory());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));

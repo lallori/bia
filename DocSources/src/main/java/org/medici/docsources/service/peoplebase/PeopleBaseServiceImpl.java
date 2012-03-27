@@ -1177,6 +1177,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public People findPersonForNames(Integer personId)  throws ApplicationThrowable {
+		try {
+			People people = getPeopleDAO().find(personId);
+
+			return people;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1422,8 +1436,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			UserHistory userHistory = getUserHistoryDAO().find(idUserHistory);
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
@@ -1440,13 +1454,36 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public HistoryNavigator getCategoryHistoryNavigator(People person) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PEOPLE, person.getPersonId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public HistoryNavigator getHistoryNavigator(People person) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
 			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PEOPLE, person.getPersonId());
 			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousHistoryCursor(userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextHistoryCursor(userHistory.getIdUserHistory());
 			
 			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
 			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));

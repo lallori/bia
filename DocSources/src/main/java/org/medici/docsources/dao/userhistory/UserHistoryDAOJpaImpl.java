@@ -310,7 +310,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public UserHistory findHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException {
+	public UserHistory findCategoryHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException {
 		StringBuffer stringBuffer = new StringBuffer("FROM UserHistory WHERE username=:username AND category=:category ");
         
         switch (category) {
@@ -345,6 +345,45 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 			return result.get(0);
 		} 
 
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findHistoryFromEntity(Category category, Integer primaryKeyId) throws PersistenceException{
+		StringBuffer stringBuffer = new StringBuffer("FROM UserHistory WHERE username=:username ");
+		
+		switch(category){
+			case DOCUMENT:
+				stringBuffer.append(" AND document.entryId=:primaryKeyId");
+				break;
+			case PEOPLE:
+				stringBuffer.append(" AND person.personId=:primaryKeyId");
+				break;
+			case PLACE:
+				stringBuffer.append(" AND place.placeAllId=:primaryKeyId");
+				break;
+			case VOLUME:
+				stringBuffer.append(" AND volume.summaryId=:primaryKeyId");
+				break;
+			default:
+				break;
+		}
+		stringBuffer.append(" ORDER BY idUserHistory DESC");
+		
+		Query query = getEntityManager().createQuery(stringBuffer.toString());
+		query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		query.setParameter("primaryKeyId", primaryKeyId);
+		
+		List<UserHistory> result = query.getResultList();
+		
+		if(result.size() > 0){
+			return result.get(0);
+		}
+		
 		return null;
 	}
 
@@ -398,7 +437,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public UserHistory findNextHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException {
+	public UserHistory findNextCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException {
 		// -- Next
 		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory > 15 and entryId is not null ORDER BY idUserHistory ASC LIMIT 1
 		StringBuffer queryString = new StringBuffer("FROM UserHistory WHERE username='");
@@ -438,13 +477,41 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	
 		return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findNextHistoryCursor(Integer idUserHistory) throws PersistenceException {
+		// -- Next
+		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory > 15 and entryId is not null ORDER BY idUserHistory ASC LIMIT 1
+		StringBuffer queryString = new StringBuffer("FROM UserHistory WHERE username='");
+		queryString.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		queryString.append("'");
+		queryString.append(" AND idUserHistory > ");
+		queryString.append(idUserHistory);        
+
+        queryString.append(" ORDER BY idUserHistory ASC LIMIT 1");
+	
+	    Query query = getEntityManager().createQuery(queryString.toString());	
+        query.setMaxResults(1);
+
+        List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+	
+		return null;
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public UserHistory findPreviousHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException {
+	public UserHistory findPreviousCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException {
 		// -- Previous
 		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory < 15 and entryId is not null ORDER BY idUserHistory DESC LIMIT 1
 		StringBuffer queryString = new StringBuffer("FROM UserHistory WHERE username='");
@@ -471,6 +538,36 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 				break;
 		}
 
+        queryString.append(" ORDER BY idUserHistory DESC LIMIT 1");
+
+        Query query = getEntityManager().createQuery(queryString.toString());
+        query.setMaxResults(1);
+        //query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        //query.setParameter("idUserHistory", idUserHistory);
+
+		List<UserHistory> result = query.getResultList();
+		
+		if (result.size()>0) {
+			return result.get(0);
+		} 
+
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserHistory findPreviousHistoryCursor(Integer idUserHistory) throws PersistenceException {
+		// -- Previous
+		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory < 15 and entryId is not null ORDER BY idUserHistory DESC LIMIT 1
+		StringBuffer queryString = new StringBuffer("FROM UserHistory WHERE username='");
+		queryString.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		queryString.append("'");
+		queryString.append(" AND idUserHistory < ");
+		queryString.append(idUserHistory);
+        
         queryString.append(" ORDER BY idUserHistory DESC LIMIT 1");
 
         Query query = getEntityManager().createQuery(queryString.toString());
