@@ -115,9 +115,9 @@
 		<font color="red" style="margin-left:5px">${command.text}</font></p>
 		<p>Total record found:
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
+		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
+		<a id="print${command.searchUUID}" class="print" href="${AdvancedSearchRefineURL}">Print Records</a>
 	</div>
-
-	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
 
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="${command.searchUUID}">
 		<thead>
