@@ -28,6 +28,7 @@
 package org.medici.docsources.dao.epltolink;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -81,6 +82,14 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @throws PersistenceException
 	 */
 	public Integer findNumberOfDocumentInTopicsByPlace(Integer placeAllId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeAllIds
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Map<Integer, Long> findNumbersOfDocumentsInTopicsByPlace(List<Integer> placeAllIds) throws PersistenceException;
 	
 	/**
 	 * 

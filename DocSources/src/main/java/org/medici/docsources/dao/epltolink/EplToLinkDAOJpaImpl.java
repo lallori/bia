@@ -27,7 +27,10 @@
  */
 package org.medici.docsources.dao.epltolink;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -112,6 +115,37 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Map<Integer, Long> findNumbersOfDocumentsInTopicsByPlace(List<Integer> placeAllIds) throws PersistenceException {
+		StringBuffer stringBuffer = new StringBuffer("SELECT place.placeAllId, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE");
+		for(int i = 0; i < placeAllIds.size(); i++){
+			if(stringBuffer.indexOf("=") != -1){
+				stringBuffer.append(" or ");
+			}
+			stringBuffer.append("(place.placeAllId=");
+			stringBuffer.append(placeAllIds.get(i) + ")");
+		}
+		stringBuffer.append(" GROUP BY place.placeAllId");
+		
+		Map<Integer, Long> returnValues = new HashMap<Integer, Long>();
+		List tempValues;
+		if(stringBuffer.indexOf("=") != -1){
+			Query query = getEntityManager().createQuery(stringBuffer.toString());
+			tempValues = query.getResultList();
+			for(Iterator i = tempValues.iterator(); i.hasNext();){
+				Object[] data = (Object []) i.next();
+				returnValues.put((Integer) data[0] , (Long) data[1]); 
+			}
+			
+		}
+		
+		return returnValues;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -171,7 +205,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM EplToLink WHERE (place.placeAllId=" + placeToSearch + ")");
+		String toSearch = new String("FROM EplToLink WHERE place.placeAllId=" + placeToSearch);
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;

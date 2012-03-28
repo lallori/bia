@@ -259,11 +259,12 @@ public class AdvancedSearchController {
 			outputFields.add("Death Date");
 			outputFields.add("Documents Related");
 		} else if (searchType.equals(SearchType.PLACE)) {
-			outputFields = new ArrayList<String>(4);
+			outputFields = new ArrayList<String>(5);
 			outputFields.add("Place Name");
 			outputFields.add("Place Type");
 			outputFields.add("People Related");
-			outputFields.add("Documents Related");
+			outputFields.add("From/To Documents Related");
+			outputFields.add("Documents Related (Topics)");
 		} else {
 			outputFields = new ArrayList<String>(5);
 			outputFields.add("Carteggio");

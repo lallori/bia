@@ -225,6 +225,14 @@ public interface GeoBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public Map<Integer, Long> findNumbersOfFromToDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllIds
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public Map<Integer, Long> findNumbersOfPeopleRelated(List<Integer> placeAllIds) throws ApplicationThrowable;
 		
 	/**

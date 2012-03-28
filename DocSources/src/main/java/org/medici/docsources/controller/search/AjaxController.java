@@ -277,6 +277,7 @@ public class AjaxController {
 		HashMap<String, SearchFilter> searchFilterMap = (HashMap<String, SearchFilter>) httpSession.getAttribute("searchFilterMap");
 		SearchFilter searchFilter = searchFilterMap.get(searchUUID);
 		Map<Integer, Long> peopleRelated = new HashMap<Integer, Long>();
+		Map<Integer, Long> fromToRelated = new HashMap<Integer, Long>();
 		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		List<Integer> placeAllIds = new ArrayList<Integer>();
 
@@ -288,6 +289,7 @@ public class AjaxController {
 			}
 			
 			peopleRelated = getGeoBaseService().findNumbersOfPeopleRelated(placeAllIds);
+			fromToRelated = getGeoBaseService().findNumbersOfFromToDocumentsRelated(placeAllIds);
 			documentsRelated = getGeoBaseService().findNumbersOfDocumentsRelated(placeAllIds);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
@@ -300,6 +302,10 @@ public class AjaxController {
 			singleRow.add(currentPlace.getPlType());
 			if(peopleRelated.containsKey(currentPlace.getPlaceAllId()))
 				singleRow.add(peopleRelated.get(currentPlace.getPlaceAllId()).toString());
+			else
+				singleRow.add("0");
+			if(fromToRelated.containsKey(currentPlace.getPlaceAllId()))
+				singleRow.add(fromToRelated.get(currentPlace.getPlaceAllId()).toString());
 			else
 				singleRow.add("0");
 			if(documentsRelated.containsKey(currentPlace.getPlaceAllId()))
@@ -799,6 +805,7 @@ public class AjaxController {
 		Page page = null;
 		
 		Map<Integer, Long> peopleRelated = new HashMap<Integer, Long>();
+		Map<Integer, Long> fromToRelated = new HashMap<Integer, Long>();
 		Map<Integer, Long> documentsRelated = new HashMap<Integer, Long>();
 		List<Integer> placeAllIds = new ArrayList<Integer>();
 		
@@ -816,6 +823,7 @@ public class AjaxController {
 			}
 			
 			peopleRelated = getGeoBaseService().findNumbersOfPeopleRelated(placeAllIds);
+			fromToRelated = getGeoBaseService().findNumbersOfFromToDocumentsRelated(placeAllIds);
 			documentsRelated = getGeoBaseService().findNumbersOfDocumentsRelated(placeAllIds);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
@@ -828,6 +836,10 @@ public class AjaxController {
 			singleRow.add(currentPlace.getPlType());
 			if(peopleRelated.containsKey(currentPlace.getPlaceAllId()))
 				singleRow.add(peopleRelated.get(currentPlace.getPlaceAllId()).toString());
+			else
+				singleRow.add("0");
+			if(fromToRelated.containsKey(currentPlace.getPlaceAllId()))
+				singleRow.add(fromToRelated.get(currentPlace.getPlaceAllId()).toString());
 			else
 				singleRow.add("0");
 			if(documentsRelated.containsKey(currentPlace.getPlaceAllId()))

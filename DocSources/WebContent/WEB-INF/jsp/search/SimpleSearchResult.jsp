@@ -39,7 +39,7 @@
 				</c:when>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'PLACE'}">
 					test = [[0, "asc"]];
-					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [2,3] }];
+					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [2,3,4] }];
 				</c:when>
 			</c:choose>
 						

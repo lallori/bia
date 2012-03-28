@@ -481,9 +481,22 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
+	public Map<Integer, Long> findNumbersOfFromToDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
 		try{
 			Map<Integer, Long> docsRel = getDocumentDAO().findNumbersOfDocumentsRelatedPlace(placeAllIds);
+			return docsRel;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
+		try{
+			Map<Integer, Long> docsRel = getEplToLinkDAO().findNumbersOfDocumentsInTopicsByPlace(placeAllIds);
 			return docsRel;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -1051,5 +1064,4 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 }
