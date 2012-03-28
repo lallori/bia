@@ -647,20 +647,62 @@ public class AjaxController {
 		}
 		
 		List resultList = new ArrayList();
-		for (EplToLink currentEplToLink : (List<EplToLink>)page.getList()) {
+		for (EplToLink currentEplToLink : (List<EplToLink>) page.getList()) {
 			List singleRow = new ArrayList();
-			if (currentEplToLink.getDocument() != null)
-				singleRow.add(currentEplToLink.getDocument().getMDPAndFolio());
-			else
-				singleRow.add("");
-			
-			if (currentEplToLink.getTopic() != null)
-				singleRow.add(currentEplToLink.getTopic().getTopicTitle());
-			else
-				singleRow.add("");
-
-			singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
-			
+			if (currentEplToLink.getDocument() != null){
+				if(currentEplToLink.getDocument().getSenderPeople() != null){
+					if(!currentEplToLink.getDocument().getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+						singleRow.add(currentEplToLink.getDocument().getSenderPeople().getMapNameLf());
+					else
+						singleRow.add("Person Name Lost");
+				}else
+					singleRow.add("");
+				if (currentEplToLink.getDocument().getRecipientPeople() != null){
+					if(!currentEplToLink.getDocument().getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+						singleRow.add(currentEplToLink.getDocument().getRecipientPeople().getMapNameLf());
+					else
+						singleRow.add("Person Name Lost");
+				}
+				else
+					singleRow.add("");
+				
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+				
+				String senderPlace, recipientPlace;
+				if (currentEplToLink.getDocument().getSenderPlace() != null){
+					if(!currentEplToLink.getDocument().getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+						senderPlace = currentEplToLink.getDocument().getSenderPlace().getPlaceName();
+					else
+						senderPlace = "Place Name Lost";
+				}
+				else
+					senderPlace = "-";
+				if (currentEplToLink.getDocument().getRecipientPlace() != null){
+					if(!currentEplToLink.getDocument().getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+						recipientPlace = currentEplToLink.getDocument().getRecipientPlace().getPlaceName();
+					else
+						recipientPlace = "Place Name Lost";
+				}
+				else
+					recipientPlace = "-";
+				singleRow.add(senderPlace + " / " + recipientPlace);
+				
+				if (currentEplToLink.getTopic() != null)
+					singleRow.add(currentEplToLink.getTopic().getTopicTitle());
+				else
+					singleRow.add("");
+				
+				if (currentEplToLink.getDocument().getMDPAndFolio() != null){
+					if(currentEplToLink.getDocument().getVolume().getDigitized()){
+						singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+					}else{
+						singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>");
+					}
+					
+				}
+				else
+					singleRow.add("");
+			}			
 			
 			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
 		}
@@ -768,23 +810,33 @@ public class AjaxController {
 		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 			switch (sortingColumnNumber) {
 				case 0:
-					paginationFilter.addSortingCriteria("document.volume.volNum", sortingDirection);
-					paginationFilter.addSortingCriteria("document.volume.volLetExt", sortingDirection);
-					paginationFilter.addSortingCriteria("document.folioNum", sortingDirection);
-					paginationFilter.addSortingCriteria("document.folioMod", sortingDirection);
+					paginationFilter.addSortingCriteria("document.senderPeople.mapNameLf", sortingDirection);
 					break;
 				case 1:
-					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
-					paginationFilter.addSortingCriteria("document.docYear", "asc");
-					//Month is an entity, so we don't have field with suffix 
-					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", "asc");
-					paginationFilter.addSortingCriteria("document.docDay", "asc");
+					paginationFilter.addSortingCriteria("document.recipientPeople.mapNameLf", sortingDirection);
 					break;
 				case 2:
 					paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
 					//Month is an entity, so we don't have field with suffix 
 					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", sortingDirection);
 					paginationFilter.addSortingCriteria("document.docDay", sortingDirection);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
+					paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
+					break;
+				case 4:
+					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
+					paginationFilter.addSortingCriteria("document.docYear", "asc");
+					//Month is an entity, so we don't have field with suffix 
+					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", "asc");
+					paginationFilter.addSortingCriteria("document.docDay", "asc");
+					break;
+				case 5:
+					paginationFilter.addSortingCriteria("document.volume.volNum", sortingDirection);
+					paginationFilter.addSortingCriteria("document.volume.volLetExt", sortingDirection);
+					paginationFilter.addSortingCriteria("document.folioNum", sortingDirection);
+					paginationFilter.addSortingCriteria("document.folioMod", sortingDirection);
 					break;
 				default:
 					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);

@@ -29,11 +29,7 @@
 			$j("#showTopicsPlaceAllId${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
 			$j('#showTopicsPlaceAllId${placeAllId}').dataTable( {
-				"aoColumnDefs": [
-					              { "sWidth": "20%" , "aTargets": [ "_all" ]},
-					              { "sWidth": "80%" , "aTargets": [ "_all" ]},
-					              { "sWidth": "80%" , "aTargets": [ "_all" ]}
-					              ], 
+				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,

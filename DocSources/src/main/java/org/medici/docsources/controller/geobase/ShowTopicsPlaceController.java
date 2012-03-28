@@ -88,9 +88,13 @@ public class ShowTopicsPlaceController {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
 								
 				List<String> outputFields = new ArrayList<String>(3);
-				outputFields.add("Doc Volume / Folio");
-				outputFields.add("Topic");
+				outputFields.add("Sender");
+				outputFields.add("Recipient");
 				outputFields.add("Date");
+				outputFields.add("From/To Location");
+				outputFields.add("Topic");
+				outputFields.add("Volume / Folio");
+				
 								
 				model.put("outputFields", outputFields);
 				
