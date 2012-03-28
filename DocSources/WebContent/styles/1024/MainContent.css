@@ -13,7 +13,7 @@
 /* ----------------- TITLES ------------------------------- */ 
 
 h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLACE NAME (in PLACE DETAILS) */
-	padding: 0 5px 0 27px;
+	padding: 0 5px 0 10px;
 	font-size: 16px;
 	font-style: italic;
 	color: #666EA4;
@@ -41,7 +41,7 @@ h4 { /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	text-align: left;
 	font-size: 11px;
 	font-style: italic;
-	padding: 10px 0 0 28px;
+	padding: 10px 0 0 10px;
 	color: #6F6B69;
 	width: 430px;
 }
@@ -82,7 +82,7 @@ h6 { /* Titles in Modal Windows */
 h7 { /* Modern Date in Document - Start Date/End Date in Volume - Birth/Death in People - Place Typle in Place   */
 	font-size: 11px;
 	display: block;
-	margin: 10px 0 8px 28px;
+	margin: 10px 0 8px 10px;
 	color: #088A08;
 }
 
@@ -354,28 +354,18 @@ item a{
 
 /* Title Divs */
 
-#documentTitle, #volumeTitle, #geoTitle{
+#body_right #documentTitle, #body_right #volumeTitle, #body_right #personTitle, #body_right #geoTitle{
 	margin-top: 30px;
 	margin-bottom: 25px;
 }
 
-#body_right #documentTitle, #body_right #volumeTitle, #body_right #personTitle, #body_right #geoTitle{
-	margin-top: 0px;
-	margin-bottom: 25px;
-}
-
-#body_right #volumeTitle {
-	margin-top: 10px;
-}
-
-#personTitle {
+#personTitle, #documentTitle, #volumeTitle, #geoTitle {
 	border: 1px solid #DCC0BA;
 	border-radius: 4px;
-	margin-top: 57px;
-	padding: 5px 0 8px 0;
-	width: 479px;
+	margin: 57px 0 20px 5px;
+	padding: 5px 0 0 0;
+	width: 475px;
 	background-color: #FAF4F4;
-	box-shadow: 1px 1px 10px #C8C8C8;
 }
 
 
@@ -446,7 +436,7 @@ item a{
 	cursor: pointer;
 	text-align: center;
 	position: absolute;
-	margin: 0 0 0 304px;
+	margin: -27px 0 0 301px;
 }
 
 .showOrEditCompare:hover {
@@ -1704,7 +1694,7 @@ input.file {
 /* --------- EditDetailsPerson ---------- */
 
 #personTitle p {
-	margin-left:28px;
+	margin-left:10px;
 	display: inline;
 }
 
@@ -1978,25 +1968,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	display:inline;
 	text-align: left;
 	cursor: pointer;
-}
-
-/* -------------------------------------- */
-/*
-/* ------------ Compare Person Record ----------- */
-
-.buttonMedium { /* Clik here to edit this person */
-	width:122px;
-	height:22px;
-	position:absolute;
-	margin:-5px 0 0 364px;
-	background-image:url(/DocSources/images/1024/button_medium.png);
-	background-repeat:no-repeat;
-	padding:4px 0 0 0;
-	text-align:center;
-}
-
-.buttonMedium:hover {
-	text-decoration:none;
 }
 
 /* -------------------------------------- */

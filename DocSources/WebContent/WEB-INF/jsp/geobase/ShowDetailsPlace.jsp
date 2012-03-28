@@ -30,21 +30,15 @@
 			</c:if>
 			<%-- Editing Place Records --%>
 			<c:if test="${place.placeAllId != 0}">
-				<div id="geoTitle" class="background">
+				<div id="geoTitle">
 					<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
-						<div class="title">
-            				<h5>PLACE - TGN Place record</h5>
-        				</div>
+            			<h5>PLACE - TGN Place record</h5>
         			</c:if>
         			<c:if test="${place.plSource == 'MAPPLACE' || (place.geogKey >= 100000 && place.geogKey < 400000) }">
-        				<div class="title">
-							<h5>PLACE - MAP Place record</h5>
-						</div>
+						<h5>PLACE - MAP Place record</h5>
 					</c:if>
         			<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
-        				<div class="title">
-							<h5>PLACE - MAP Site or Subsite record</h5>
-						</div>
+						<h5>PLACE - MAP Site or Subsite record</h5>
 					</c:if>
         			
         			<h3>${place.placeName}</h3>
@@ -52,7 +46,7 @@
 					<h7>${place.plType}</h7>
 					
 					<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
-						<p style="margin:20px 0 5px 28px">Compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
+						<p style="margin:20px 0 5px 10px">Compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
 					</c:if>
 					
 					<c:if test="${place.prefFlag == 'V'}">
@@ -60,7 +54,7 @@
 						<div style="margin-left:8px">
 								<c:forEach items="${placeNames}" var="currentName">
 									<c:if test="${currentName.prefFlag == 'P'}">
-										<p style="margin:0 0 5px 20px"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
+										<p style="margin:0 0 5px 10px"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
 									</c:if>
 								</c:forEach>
 						</div>
