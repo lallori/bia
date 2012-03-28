@@ -60,6 +60,15 @@ h5{ /* Data Entry main fields Title */
 	text-decoration:underline;
 }
 
+#geoTitle h5 {
+	display: block;
+	position: relative;
+	margin: 10px 7px 0 10px;
+	color: red;
+	text-decoration: none;
+	font-weight: normal;
+}
+
 h2 { /* Error Text 403, 404, 500, 503*/
 	font-size:11px;
 	color:#6d5c4d;
