@@ -68,7 +68,7 @@
 			<%-- Documents Related Section --%>
 			<c:if test="${docsRelated != 0 && docsRelated != 1}">
 				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
-				<div style="margin:10px 0 10px 10px">
+				<div style="margin:10px 0 0 10px">
 					(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to view all documents related to this person ">View All</a> | 
 					<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the letters SENT BY this person">Sender</a> <span class="num_docs">${senderDocsRelated}</span> | 
 					<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the letters RECEIVED BY this person">Recipient</a> <span class="num_docs">${recipientDocsRelated}</span> | 

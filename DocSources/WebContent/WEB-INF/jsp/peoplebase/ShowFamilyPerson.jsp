@@ -8,7 +8,7 @@
 	<c:url var="ShowFamilyPersonURL" value="/src/peoplebase/ShowFamilyPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Family "${family}" <span id="recordsNum${nameId}" class="recordsNum"></span>
+		Family: "${family}" <span id="recordsNum${nameId}" class="recordsNum"></span>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showFamilyPerson${nameId}">
