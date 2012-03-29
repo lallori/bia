@@ -90,7 +90,14 @@
 						hiddenValue = $(this).find("option:selected").text() + "|" + searchWord;
 						$('#' + formName).find('#' + fieldName).val("");
 					} 
-				} else {
+				}else if(isAutocompleterForm(formName, fieldName)){
+					//MD: In this case we have a select with an autocompleter field. For example the section "Birth/Death Place" in Person search.
+					//MD: Changed the searchType to have the correct category Search.
+					searchType = $(this).find("option:selected").val();
+					searchWord = getSearchWordForAutocompleterField(formName, fieldName);
+					hiddenValue = $(this).find("option:selected").val() + "|";
+					hiddenValue += getHiddenParameterForAutocompleterField(formName, fieldName);
+				}else {
 					searchWord = $('#' + formName).find('#' + fieldName).val();
 					hiddenValue = $(this).find("option:selected").val() + "|" + escape($('#' + formName).find('#' + fieldName).val());
 					$('#' + formName).find('#' + fieldName).val("");
@@ -468,6 +475,13 @@
 		}
 		return false;
 	}
+	
+	/*function isAutocompleterAndSelectForm(formName, fieldName) {
+		if($('#' + formName).find('#' + fieldName + 'Id').size() > 0 && $('#' + formName).find('#' + fieldName + 'Type').size > 0){
+			return true;
+		}else
+			return false;
+	}*/
 	
 	/**
 	 * This method check if form is composed of checkbox

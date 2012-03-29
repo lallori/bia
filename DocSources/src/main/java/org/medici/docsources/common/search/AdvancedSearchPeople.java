@@ -68,6 +68,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<String> names;
 	private List<NameType> namesTypes;
 	private List<String> place;
+	private List<String> placeType;
 	private List<Integer> placeId;
 	private List<String> roleCategories;
 	private List<String> titlesOcc;
@@ -97,6 +98,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		datesDayBetween = new ArrayList<Integer>(0);
 		placeId = new ArrayList<Integer>(0);
 		place = new ArrayList<String>(0);
+		placeType = new ArrayList<String>(0);
 		roleCategories = new ArrayList<String>(0);
 		titlesOcc = new ArrayList<String>(0);
 		titlesOccId = new ArrayList<Integer>(0);
@@ -180,6 +182,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getPlaceId() {
 		return placeId;
+	}
+
+	/**
+	 * @return the placeType
+	 */
+	public List<String> getPlaceType() {
+		return placeType;
 	}
 
 	/**
@@ -392,6 +401,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		if((command.getPlace() != null) && (command.getPlace().size() > 0)){
 			placeId = new ArrayList<Integer>(command.getPlace().size());
 			place = new ArrayList<String>(command.getPlace().size());
+			placeType = new ArrayList<String>(command.getPlace().size());
 			
 			for(String singleWord : command.getPlace()){
 				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
@@ -413,6 +423,16 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 							placeId.add(new Integer(0));
 						}
 						place.add(URIUtil.decode(singleText, "UTF-8"));
+					}else if(stringTokenizer.countTokens() == 3){
+						placeType.add(stringTokenizer.nextToken());
+						String singleId = stringTokenizer.nextToken();
+						String singleText = stringTokenizer.nextToken();
+						if(NumberUtils.isNumber(singleId)){
+							placeId.add(NumberUtils.createInteger(singleId));
+						}else{
+							placeId.add(new Integer(0));
+						}
+						place.add(URIUtil.decode(singleText, "UTF-8"));
 					}
 				}catch(NumberFormatException nex){
 					
@@ -423,6 +443,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		}else{
 			placeId = new ArrayList<Integer>(0);
 			place = new ArrayList<String>(0);
+			placeType = new ArrayList<String>(0);
 		}
 		
 		//Research Notes
@@ -530,6 +551,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public void setPlaceId(List<Integer> placeId) {
 		this.placeId = placeId;
+	}
+
+	/**
+	 * @param placeType the placeType to set
+	 */
+	public void setPlaceType(List<String> placeType) {
+		this.placeType = placeType;
 	}
 
 	/**
@@ -789,18 +817,40 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				if(placeIdQuery.length() > 1){
 					placeIdQuery.append(" AND ");
 				}
-				if(placeId.get(i) > 0){
-					placeIdQuery.append("(bornPlace.placeAllId=");
-					placeIdQuery.append(placeId.get(i));
-					placeIdQuery.append(" OR deathPlace.placeAllId=");
-					placeIdQuery.append(placeId.get(i));
-					placeIdQuery.append(")");
-				}else{
-					placeIdQuery.append("(bornPlace.placeName like '%");
-					placeIdQuery.append(place.get(i).replace("'", "''"));
-					placeIdQuery.append("%' OR deathPlace.placeName like '%");
-					placeIdQuery.append(place.get(i).replace("'", "''"));
-					placeIdQuery.append("%' )");
+				if(placeType.get(i).equals("Birth/Death Place")){
+					if(placeId.get(i) > 0){
+						placeIdQuery.append("(bornPlace.placeAllId=");
+						placeIdQuery.append(placeId.get(i));
+						placeIdQuery.append(" OR deathPlace.placeAllId=");
+						placeIdQuery.append(placeId.get(i));
+						placeIdQuery.append(")");
+					}else{
+						placeIdQuery.append("(bornPlace.placeName like '%");
+						placeIdQuery.append(place.get(i).replace("'", "''"));
+						placeIdQuery.append("%' OR deathPlace.placeName like '%");
+						placeIdQuery.append(place.get(i).replace("'", "''"));
+						placeIdQuery.append("%' )");
+					}
+				}else if(placeType.get(i).equals("Birth Place")){
+					if(placeId.get(i) > 0){
+						placeIdQuery.append("(bornPlace.placeAllId=");
+						placeIdQuery.append(placeId.get(i));
+						placeIdQuery.append(")");
+					}else{
+						placeIdQuery.append("(bornPlace.placeName like '%");
+						placeIdQuery.append(place.get(i).replace("'", "''"));
+						placeIdQuery.append("%' )");
+					}
+				}else if(placeType.get(i).equals("Death Place")){
+					if(placeId.get(i) > 0){
+						placeIdQuery.append("(deathPlace.placeAllId=");
+						placeIdQuery.append(placeId.get(i));
+						placeIdQuery.append(")");
+					}else{
+						placeIdQuery.append("(deathPlace.placeName like '%");
+						placeIdQuery.append(place.get(i).replace("'", "''"));
+						placeIdQuery.append("%' )");
+					}
 				}
 			}
 			placeIdQuery.append(")");

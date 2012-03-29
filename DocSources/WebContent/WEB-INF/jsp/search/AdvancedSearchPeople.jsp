@@ -176,10 +176,15 @@
 		</form>
 	</div>
 	
-	<h1 id="placeSearch"><a>Place</a></h1>
+	<h1 id="placeSearch"><a>Birth and Death Place</a></h1>
 	<div>
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>
+			<select id="placeType" name="placeType" class="selectform_MXlong">
+				<option value="Birth/Death Place" selected="selected">Birth/Death Place</option>
+				<option value="Birth Place">Birth Place</option>
+				<option value="Death Place">Death Place</option>
+			</select>
 			<input id="place" name="place" class="input_20c" type="text" value=""/><!-- AUTOCOMPLETE -->
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd" disabled="disabled">
 			<input type="hidden" id="category" value="Place">
