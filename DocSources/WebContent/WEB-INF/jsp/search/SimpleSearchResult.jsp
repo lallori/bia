@@ -49,7 +49,7 @@
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
-				"iDisplayLength": 10,
+				"iDisplayLength": 20,
 				"iDisplayStart": 0,
 				"oSearch": {"sSearch": "${command.text}"},
 				"sAjaxSource": "${SimpleSearchPaginationURL}",
