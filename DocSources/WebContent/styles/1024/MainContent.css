@@ -91,7 +91,7 @@ h6 { /* Titles in Modal Windows */
 h7 { /* Modern Date in Document - Start Date/End Date in Volume - Birth/Death in People - Place Typle in Place   */
 	font-size: 11px;
 	display: block;
-	margin: 10px 0 8px 10px;
+	margin: 10px 0 0 10px;
 	color: #088A08;
 }
 
@@ -372,7 +372,7 @@ item a{
 	border: 1px solid #DCC0BA;
 	border-radius: 4px;
 	margin: 57px 0 20px 5px;
-	padding: 5px 0 0 0;
+	padding: 5px 0 8px 0;
 	width: 475px;
 	background-color: #FAF4F4;
 }
@@ -1703,8 +1703,7 @@ input.file {
 /* --------- EditDetailsPerson ---------- */
 
 #personTitle p {
-	margin-left:10px;
-	display: inline;
+	margin: 10px 0 0 10px;
 }
 
 #personTitle div {

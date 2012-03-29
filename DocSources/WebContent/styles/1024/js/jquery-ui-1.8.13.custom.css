@@ -941,7 +941,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 .print {
 	float: left;
-	margin: 15px 0 0 25px;
+	margin: 15px 0 0 0;
 	width: 122px;
 	height: 22px;
 	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
@@ -956,23 +956,26 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 }
  
 .yourSearchDiv { /* Your Search: [...] Div containing the reserched words on the Result Tab */
-	margin: 20px 0 10px 10px;
+	margin: 15px 0 10px 7px;
 	font-size: 11px;
 	text-align: left;
 	line-height: 22px;
+	border: 1px solid #DCC0BA;
+	border-radius: 4px;
+	background-color: #EFE0DE;
 }
 
 .yourSearchDiv p {
-	margin-left: 25px;
+	margin-left: 10px;
 }
 
- .tabLink { /* The word used on the research */
+.tabLink { /* The word used on the research */
 	 margin-left:8px;
 	 color:#B7958F;
 	 text-decoration:underline;
 }
  
- .recordsNum { /* The number of records on the research */
+.recordsNum { /* The number of records on the research */
 	 color:#009;
 	 margin: 5px 0 0 5px;
 }
