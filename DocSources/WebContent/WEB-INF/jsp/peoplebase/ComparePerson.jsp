@@ -50,10 +50,7 @@
 			<h2>ADD New - Person Record</h2>
 		</c:if>
 		<c:if test="${person.personId != 0}">
-		<div id="personTitle" class="background">
-			<div class="title">
-		    	<h5>PERSON</h5>
-			</div>			
+		<div id="personTitle">
 			<h3>${person.mapNameLf}</h3>
 			<c:forEach items="${person.poLink}" var="currentPoLink">
 				<c:if test="${currentPoLink.preferredRole}">
@@ -75,7 +72,7 @@
 			<%-- Documents Related Section --%>
 			<c:if test="${docsRelated != 0 && docsRelated != 1}">
 				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
-				<div style="margin-left:28px">
+				<div style="margin:10px 0 10px 10px">
 					(<a href="${ShowDocumentsPersonURL}" class="all_docsCompare" title="Click here to view all documents related to this person ">View All</a> | 
 					<a href="${ShowSenderDocumentsPersonURL}" class="sender_docsCompare" title="Click here to view the letters SENT BY this person">Sender</a> <span class="num_docs">${senderDocsRelated}</span> | 
 					<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docsCompare" title="Click here to view the letters RECEIVED BY this person">Recipient</a> <span class="num_docs">${recipientDocsRelated}</span> | 
