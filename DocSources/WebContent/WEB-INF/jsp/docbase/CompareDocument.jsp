@@ -56,18 +56,9 @@
 	</security:authorize>
 	
 	<div id="documentDiv">
-		<%-- Create new Document Record --%>
-		<c:if test="${document.volume == null}">
-		<div id="documentTitle">
-			<h2>ADD New - Document Record</h2>
-		</div>
-		</c:if>
-		<%-- Editing Document Record --%>
+		<%-- Comparing Document Record --%>
 		<c:if test="${document.volume != null}">
-		<div id="documentTitle" class="background">
-			<div class="title">
-			    <h5>DOCUMENT</h5>
-			</div>
+		<div id="documentTitle">
 			<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
 			<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
 			<c:choose>
