@@ -43,11 +43,9 @@
 					<h5>MAP Site or Subsite record</h5>
 					</c:if>
 					<h7>${place.plType}</h7>
-					
 					<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
-						<p style="margin:20px 0 5px 10px">Compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
+						<p style="margin:20px 0 5px 10px">To compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
 					</c:if>
-					
 					<c:if test="${place.prefFlag == 'V'}">
 						<br />
 						<div style="margin-left:8px">
