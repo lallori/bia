@@ -24,29 +24,20 @@
 	</security:authorize>
 		
 	<div id="volumeDiv">
-		<%-- Create new Volume Record --%>
-		<c:if test="${volume.summaryId == 0}">
-		<div id="volumeTitle">
-			<h2>ADD New - Volume Record</h2>
-		</div>
-		</c:if>	
 		<%-- Editing Volume Record --%>	
 		<c:if test="${volume.summaryId != 0}">
-		<div id="volumeTitle" class="background">
-			<div class="title">
-  				 <h5>VOLUME</h5>
- 			</div>
+		<div id="volumeTitle">
 			<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
 			<h4>${volume.serieList}</h4>
 			<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
 			<c:if test="${volDocsRelated != 0 && volDocsRelated != 1}">
-				<p style="margin-left:28px;">Documents related to this Volume record: <a id="num_docsCompare" href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all the documents related to this Volume record">${volDocsRelated}</a></p>
+				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <a id="num_docsCompare" href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to view all the documents related to this Volume record">${volDocsRelated}</a></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 0}">
-				<p style="margin-left:28px;">Documents related to this Volume record: <span class="num_docs" title="No documents related to this Volume record">0</span></p>
+				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <span class="num_docs" title="No documents related to this Volume record">0</span></p>
 			</c:if>
 			<c:if test="${volDocsRelated == 1}">
-				<p style="margin-left:28px;">Documents related to this Volume record: <a id="num_docsCompare" href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to document related to this Volume record">${volDocsRelated}</a></p>
+				<p style="margin:10px 0 0 10px;">Documents related to this Volume record: <a id="num_docsCompare" href="${ShowDocumentsVolumeURL}" class="num_docs" title="Click here to document related to this Volume record">${volDocsRelated}</a></p>
 			</c:if>
 		</div>
 		</c:if>
