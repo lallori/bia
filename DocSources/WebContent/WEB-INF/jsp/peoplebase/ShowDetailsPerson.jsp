@@ -43,7 +43,7 @@
 	
 	<div id="personDiv">
 		<c:if test="${person.personId == 0}">
-			<h2>ADD New - Person Record</h2>
+			<h2 class="addNew">ADD New - Person Record</h2>
 		</c:if>
 		<c:if test="${person.personId != 0}">
 		<div id="personTitle">		

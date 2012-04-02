@@ -25,7 +25,7 @@
 	<div id="volumeDiv">
 		<%-- Create new Volume Record --%>
 		<c:if test="${volume.summaryId == 0}">
-		<h2>ADD New - Volume Record</h2>
+		<h2 class="addNew">ADD New - Volume Record</h2>
 		</c:if>	
 		<%-- Editing Volume Record --%>	
 		<c:if test="${volume.summaryId != 0}">

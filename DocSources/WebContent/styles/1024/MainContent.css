@@ -75,6 +75,10 @@ h2 { /* Error Text 403, 404, 500, 503*/
 	margin-left:15px;
 }
 
+h2.addNew {
+	margin-top: 31px;
+}
+
 h1 { /* Help Title/About Map Title in My Profile */
 	font-size:11px;
 	color:#A13125;
@@ -2485,7 +2489,7 @@ a#volumeSummary {
 }
 
 #volumeSummaryWindow h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
-	margin:25px 0 5px -30px;
+	margin: 25px 0 5px -10px;
 	text-align:left;
 }
 
