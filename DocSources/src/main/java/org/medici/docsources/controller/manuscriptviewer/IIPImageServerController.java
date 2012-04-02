@@ -257,20 +257,20 @@ public class IIPImageServerController {
 					tileWidth = reader.getTileWidth(0);
 					tileHeight = reader.getTileHeight(0);
 					imageWidth = reader.getWidth(0);
-			        imageHeight = reader.getHeight(0);
-			        //Last level is not readable, I don't know why but i remove this
-			        resolutionNumber = reader.getNumImages(true)-1;
-			        // Calculate of image position, final -1 is beacause index start from 0 and not from 1
-			        convertedPageImage = resolutionNumber - pageImage;
-			        // We read our specific tile 
+	        imageHeight = reader.getHeight(0);
+	        //Last level is not readable, I don't know why but i remove this
+	        resolutionNumber = reader.getNumImages(true)-1;
+	        // Calculate of image position, final -1 is beacause index start from 0 and not from 1
+	        convertedPageImage = resolutionNumber - pageImage;
+	        // We read our specific tile 
 					ImageReadParam param = reader.getDefaultReadParam(); 
 					param.setSourceRegion(new Rectangle(new Point(xCoordinate*tileWidth, yCoordinate * tileHeight), new Dimension(tileWidth, tileHeight))); 
 					BufferedImage subImage = reader.read(convertedPageImage,param);
 					//preparing image for output
-				    ImageIO.write(subImage, "jpeg", byteArrayOutputStream);
-				    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-				    //writing image to output
-				    httpServletResponse.setContentType("image/jpeg");
+			    ImageIO.write(subImage, "jpeg", byteArrayOutputStream);
+			    inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+			    //writing image to output
+			    httpServletResponse.setContentType("image/jpeg");
 					IOUtils.copy(inputStream,httpServletResponse.getOutputStream());  
 					
 					// Flushing request
@@ -327,12 +327,12 @@ public class IIPImageServerController {
 			generateFullImage(httpServletRequest, response);
 		} else if (httpServletRequest.getParameter("JTL") != null) {
 			String imageName = httpServletRequest.getParameter("FIF");
-	        Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
-	        Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
-	        StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"),",");
-	        //pageImage is inverted as stored in tiff file : first image is last image
-	        Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
-	        Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
+			Integer x = NumberUtils.createInteger(httpServletRequest.getParameter("x"));
+	    Integer y = NumberUtils.createInteger(httpServletRequest.getParameter("y"));
+	    StringTokenizer stringTokenizer = new StringTokenizer(httpServletRequest.getParameter("JTL"),",");
+	    //pageImage is inverted as stored in tiff file : first image is last image
+	    Integer pageImage = NumberUtils.createInteger(stringTokenizer.nextToken());
+	    Integer tileNumber = NumberUtils.createInteger(stringTokenizer.nextToken());
 			generateTiledImage(imageName, pageImage, tileNumber, x, y, response);
 		} else if (httpServletRequest.getParameter("WID") != null) {
 			Double thumbnailWidth = NumberUtils.createDouble(httpServletRequest.getParameter("WID"));
