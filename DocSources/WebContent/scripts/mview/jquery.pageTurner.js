@@ -173,6 +173,7 @@
 	    						$j("#unvailableTranscribe").css('visibility', 'hidden');
 	    						$j("#readyToTranscribe").css('visibility', 'hidden');
 	    						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+	    						$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
 	    					}
 	    				} else if (data.linkedDocument == 'false') {
 	    					// Only users with special role can transcribe new document. 
@@ -350,6 +351,7 @@
 		    						$j("#unvailableTranscribe").css('visibility', 'hidden');
 		    						$j("#readyToTranscribe").css('visibility', 'hidden');
 		    						$j("#choiceThisFolioStart").css('visibility', 'hidden');
+		    						$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
 		    					}
 		    				} else if (data.linkedDocument == 'false') {
 		    					// Only users with special role can transcribe new document. 

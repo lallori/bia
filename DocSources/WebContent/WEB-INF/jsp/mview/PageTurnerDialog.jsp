@@ -404,6 +404,7 @@
 							$j("#unvailableTranscribe").css('visibility', 'hidden');
 							$j("#readyToTranscribe").css('visibility', 'hidden');
 							$j("#choiceThisFolioStart").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribed").attr("href", data.showLinkedDocument);
 						}
 					} else if (data.linkedDocument == 'false') {
 						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
