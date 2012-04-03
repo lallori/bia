@@ -3591,7 +3591,7 @@ form#EditUserProfileForm span{
 	width:241px;
 }
 
-#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
+#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #refersToSearchForm #addSearchFilter, #placeSearchForm #addSearchFilter{
 	float:none;
 	margin-left: 49px;
     padding: 0;

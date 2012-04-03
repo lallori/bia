@@ -73,7 +73,11 @@
 					<td width="235" class="value">${currentParent.parent}</td>
 					<td width="120" class="valueRight">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</td>
 				</c:if>
-							
+			</tr>
+		</c:forEach>
+		
+		<c:forEach items="${person.parents}" var="currentParent">
+			<tr>				
 				<c:if test="${currentParent.parent.gender == 'F'}">
 					<td width="60">Mother</td>
 					<td width="235" class="value">${currentParent.parent}</td>
@@ -87,7 +91,7 @@
 	
 	<h5>Children</h5>
 	<table>
-		<c:forEach items="${person.children}" var="currentChild">
+		<c:forEach items="${children}" var="currentChild">
 			<tr>
 				<td width="290">${currentChild.child}</td>
 				<td width="120" class="valueRight">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</td>

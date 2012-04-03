@@ -122,7 +122,7 @@
 			</div>
 
 			<h1 id="dateRange"><a>Date Range</a></h1>
-			<div>
+			<div class="documents">
 				<form id="dateSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
 					<select id="dateType" name="dateType" class="selectform_Llong">
