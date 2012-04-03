@@ -87,13 +87,17 @@
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
 		
-	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" >
-		<c:param name="entryId" value="${command.entryId}" />
-	</c:url>
+<%-- 	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" > --%>
+<%-- 		<c:param name="entryId" value="${command.entryId}" /> --%>
+<%-- 	</c:url> --%>
+
+	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" />
 	
-	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" >
-		<c:param name="entryId" value="${command.entryId}" />
-	</c:url>
+<%-- 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" > --%>
+<%-- 		<c:param name="entryId" value="${command.entryId}" /> --%>
+<%-- 	</c:url> --%>
+
+	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" />
 
 <div id="EditPersonalNotesDiv">
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
@@ -105,6 +109,7 @@
 		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden;" class="transcribe">Show this document record</a>
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Transcribe this document</a>
 		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Choose this as "Start folio"</a>
+		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
 	</div>
 	</security:authorize>	  
 	<div id="line3"></div>
@@ -303,7 +308,7 @@
 				
 				open: function(event, ui) { 
 					$j(".ui-dialog-titlebar-close").hide(); 
-					$(this).load('${EditExtractDialogUrl}');
+					$(this).load('${EditExtractDialogUrl}' + '?entryId=' + $j('#currentEntryId').val());
 				},
 				//drag: function(event, ui) {$j(this).append(ui.position.left);},
 				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);}, 
@@ -323,7 +328,7 @@
 				
 				open: function(event, ui) { 
 					$j(".ui-dialog-titlebar-close").hide(); 
-					$(this).load('${EditSynopsisDialogUrl}');
+					$(this).load('${EditSynopsisDialogUrl}' + '?entryId=' + $j('#currentEntryId').val());
 				},
 				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
@@ -391,8 +396,9 @@
 						if(data.isExtract == 'false'){
 							$j("#notExtract").css('visibility', 'visible');
 							$j("#extractTranscribe").css('visibility', 'visible');
+							$j("#currentEntryId").val(data.entryId);
 							$j("#alreadyTranscribe").css('visibility', 'hidden');
-							$j("#showAlreadyTranscribe").css('visibility', 'hidden');
+							$j("#showAlreadyTranscribed").css('visibility', 'hidden');
 							$j("#unvailableTranscribe").css('visibility', 'hidden');
 							$j("#readyToTranscribe").css('visibility', 'hidden');
 							$j("#choiceThisFolioStart").css('visibility', 'hidden');
