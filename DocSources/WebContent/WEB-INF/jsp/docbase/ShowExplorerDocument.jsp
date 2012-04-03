@@ -70,6 +70,20 @@
 		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
 		<c:param name="flashVersion" value="false" />
 	</c:url>
+	
+	<c:url var="searchCarta" value="/src/mview/SearchCarta.json">
+		<c:param name="entryId" value="${documentExplorer.entryId}" />
+		<c:param name="volNum" value="${documentExplorer.volNum}" />
+		<c:param name="volLetExt" value="${documentExplorer.volLetExt}" />
+		<c:param name="imageOrder" value="${documentExplorer.image.imageOrder}" />
+		<c:param name="total" value="${documentExplorer.total}" />
+		<c:param name="totalRubricario" value="${documentExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${documentExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${documentExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${documentExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${documentExplorer.totalGuardia}" />
+		<c:param name="nextPage" value="true" />
+	</c:url>
 
 	<c:url var="previousPageURL" value="/src/docbase/ShowExplorerDocument.do">
 		<c:param name="entryId" value="${documentExplorer.entryId}" />
@@ -203,7 +217,11 @@
 					bg_alpha : 0.5,
 					piro_scroll : true
 				});
-
+				
+				$j.ajax({ type:"GET", url:"${searchCarta}", async:false, success:function(data) {
+					$j("#titleTab${documentExplorer.entryId}").html('Explore Volume ${documentExplorer.volNum}/' + data.imageProgTypeNum);
+				}});
+								
 				$j(".previousPage").click(function(){
 					// we change selected tab url, 
 					$j("#tabs").tabs("url", $j("#tabs").tabs("option", "selected"), $j(this).attr("href"));
