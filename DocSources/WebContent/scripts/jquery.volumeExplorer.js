@@ -50,11 +50,14 @@
         	if ((options["summaryId"] >0) || (options["volNum"] >0)) {
             	$.ajax({ type:"GET", url:options["checkVolumeDigitizedURL"], async:false, success:function(data) {
             		if (data.digitized == "true") {
-            			var tabName = "Explore Volume " + data.volNum + data.volLetExt;
+            			var tabName = "<span id='titleTab" + data.volNum + data.volLetExt + "'>Explore Volume " + data.volNum + data.volLetExt + "</span>";
             			var tabExist = false;
+            			var numTab = 0;
             			//Verify if a tab with same title already exist
         				$j("#tabs ul li a").each(function(){
-        					if(this.text == tabName){
+        					if(!tabExist)
+        						numTab++;
+        					if(this.text == tabName || this.text.indexOf("Explore Volume " + data.volNum + data.volLetExt) != -1){
         						tabExist = true;
         					}
         				});
@@ -63,6 +66,10 @@
         					tabName += "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab";
         					$("#tabs").tabs("add", options["showExplorerVolumeURL"], tabName);
                         	$("#tabs").tabs("select", $("#tabs").tabs("length")-1);
+        				}else{
+        					$j("#tabs").tabs("select", numTab-1);
+        					$j("#tabs").tabs("url", numTab-1, options["showExplorerVolumeURL"]);
+        					$j("#tabs").tabs("load", numTab-1);
         				}
                     	return false;
                     	

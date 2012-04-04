@@ -218,9 +218,23 @@
 					piro_scroll : true
 				});
 				
-				$j.ajax({ type:"GET", url:"${searchCarta}", async:false, success:function(data) {
-					$j("#titleTab${documentExplorer.entryId}").html('Explore Volume ${documentExplorer.volNum}/' + data.imageProgTypeNum);
-				}});
+				var delay = (function(){
+					  var timer = 0;
+					  return function(callback, ms){
+					    clearTimeout (timer);
+					    timer = setTimeout(callback, ms);
+					  };
+				})();
+				
+				delay(function(){
+					$j.ajax({ type:"GET", url:"${searchCarta}", async:false, success:function(data) {
+						if(data.imageType == 'C'){
+							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('Explore Volume ${documentExplorer.volNum}/' + data.imageProgTypeNum);
+						}else{
+							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('Explore Volume ${documentExplorer.volNum}');
+						}
+				}});},250);
+				
 								
 				$j(".previousPage").click(function(){
 					// we change selected tab url, 

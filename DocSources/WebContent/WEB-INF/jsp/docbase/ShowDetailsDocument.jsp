@@ -199,7 +199,7 @@
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
-				var tabName = "<span id='titleTab${document.entryId}'>Explore Volume ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}</span>";
+				var tabName = "<span id='titleTab${document.volume.volNum}${document.volume.volLetExt}'>Explore Volume ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}</span>";
 				
 				//Check if already exist a tab with this document in volume explorer
 				var numTab = 0;
@@ -207,10 +207,14 @@
 				$j("#tabs ul li a").each(function(){
 					if(!tabExist)
 						numTab++;
-					if(this.text == tabName){
+					if(this.text == tabName || this.text.indexOf("Explore Volume ${document.volume.volNum}${document.volume.volLetExt}") != -1){
 						tabExist = true;
 					}
 				});
+				
+				/*if($j('#titleTab${document.volume.volNum}${document.volume.volLetExt}').length != 0){
+					tabExist = true;
+				}*/
 				
 				if(!tabExist){
 					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
@@ -218,6 +222,8 @@
 					return false;
 				}else{
 					$j("#tabs").tabs("select", numTab-1);
+					$j("#tabs").tabs("url", numTab-1, $j(this).attr("href"));
+					$j("#tabs").tabs("load", numTab-1);
 					return false;
 				}
 			});

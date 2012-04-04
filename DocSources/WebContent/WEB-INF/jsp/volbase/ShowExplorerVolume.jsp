@@ -45,6 +45,19 @@
 
 	<c:url var="ShowExplorerVolumeURL" value="/src/volbase/ShowExplorerVolume.do" />
 	
+	<c:url var="searchCarta" value="/src/mview/SearchCarta.json">
+		<c:param name="volNum" value="${volumeExplorer.volNum}" />
+		<c:param name="volLetExt" value="${volumeExplorer.volLetExt}" />
+		<c:param name="imageOrder" value="${volumeExplorer.image.imageOrder}" />
+		<c:param name="total" value="${volumeExplorer.total}" />
+		<c:param name="totalRubricario" value="${volumeExplorer.totalRubricario}" />
+		<c:param name="totalCarta" value="${volumeExplorer.totalCarta}" />
+		<c:param name="totalAppendix" value="${volumeExplorer.totalAppendix}" />
+		<c:param name="totalOther" value="${volumeExplorer.totalOther}" />
+		<c:param name="totalGuardia" value="${volumeExplorer.totalGuardia}" />
+		<c:param name="nextPage" value="true" />
+	</c:url>
+	
 	<c:url var="currentPage" value="/src/volbase/ShowExplorerVolume.do">
 		<c:param name="summaryId" value="${command.summaryId}"/>
 		<c:param name="volNum" value="${volumeExplorer.volNum}" />
@@ -210,6 +223,23 @@
 					bg_alpha : 0.5,
 					piro_scroll : true
 				});
+				
+				var delay = (function(){
+					  var timer = 0;
+					  return function(callback, ms){
+					    clearTimeout (timer);
+					    timer = setTimeout(callback, ms);
+					  };
+				})();
+				
+				delay(function(){
+					$j.ajax({ type:"GET", url:"${searchCarta}", async:false, success:function(data) {
+						if(data.imageType == 'C'){
+							$j("#titleTab${volumeExplorer.volNum}${volumeExplorer.volLetExt}").html('Explore Volume ${volumeExplorer.volNum}/' + data.imageProgTypeNum);
+						}else{
+							$j("#titleTab${volumeExplorer.volNum}${volumeExplorer.volLetExt}").html('Explore Volume ${volumeExplorer.volNum}');
+						}
+				}});},250);
 
 				$j(".previousPage").click(function(){
 					// we change selected tab url, 
