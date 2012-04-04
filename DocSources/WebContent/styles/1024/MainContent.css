@@ -3584,7 +3584,7 @@ form#EditUserProfileForm span{
 }
 
 #placeNameSearchForm #addSearchFilter {
-	margin: 5px 0 0 77px;
+	margin: 5px 0 0 175px;
 }
 
 #occupation {
@@ -4085,7 +4085,7 @@ table#savedSearchFiltersForm.display {
 /* ------------- DOCUMENT SEARCH ------------------ */
 /* Input Label positions */
 
-#topicsSearchForm #addSearchFilter {
+#topicSearchForm #addSearchFilter {
 	margin:0 0 0 107px;
 }
 
@@ -4107,6 +4107,10 @@ table#savedSearchFiltersForm.display {
 
 #fromDateDaySearch, #toDateDaySearch {
 	margin-left:2px;
+}
+
+#dateSearchForm #addSearchFilter {
+	margin: 5px 0 0 20px;
 }
 
 #extractSearchForm #extractSearchLabel, #synopsisSearchForm #synopsisSearchLabel {
@@ -4269,9 +4273,17 @@ table#savedSearchFiltersForm.display {
 	margin: 5px 0 0 20px;
 }
 
-#genderSearchForm #addSearchFilter, #occupationSearchForm #addSearchFilter, .people #placeSearchForm #addSearchFilter {
+#roleCategorySearchForm #addSearchFilter, #occupationSearchForm #addSearchFilter {
 	margin: 5px 0 0 100px;
 }
+
+.people #placeSearchForm #addSearchFilter {
+	margin: 5px 0 0 18px;
+}
+
+#occupationWordSearchForm #addSearchFilter {
+	margin: 5px 0 0 177px;
+} 
 
 #researchNotesForm #addSearchFilter{
 	margin: 5px 0 0 175px;

@@ -8,7 +8,7 @@
 		<h1 class="advSearchTitle">Create your custom search filter</h1>
 		<div id="accordion">
 			<h1 id="wordSearch"><a>Word search</a></h1>
-			<div>
+			<div class="documents">
 				<form id="wordSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
 					<input type="text" id="word" name="word" class="input_15c" value="" />
@@ -24,7 +24,7 @@
 			</div>
 			
 			<h1 id="peoplePlaces"><a><i>search on</i> People &amp; Places</a></h1>
-		    <div>
+		    <div class="documents">
 		    	<form id="personSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="General Person Search: search here for documents related to person name either if it is a sender, a recipient and/or referenced in a document.">?</a>
 					<label for="person" id="personLabel">Person</label> 
@@ -92,7 +92,7 @@
 		    </div>
 		
 			<h1 id="extractSynopsis"><a><i>in</i> Extract and/or Synopsis</a></h1>
-			<div>
+			<div class="documents">
 				<form id="extractSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="That text will explain...">?</a>
 					<label for="extract" id="extractLabel">Extract</label><br />
@@ -111,7 +111,7 @@
 			</div>
 			
 			<h1 id="topicsSearch"><a><i>with</i> Topics</a></h1>
-			<div>
+			<div class="documents">
 				<form id="topicSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
 					<input type="text" id="topic" name="topic" class="input_25c"/><!-- AUTOCOMPLETE -->
@@ -151,7 +151,7 @@
 			</div>
 			
 			<h1 id="volumeSearch"><a><i>in</i> Volume and/or Folio</a></h1>
-			<div>
+			<div class="documents">
 				<h3>Volume</h3>
 				<form id="volumeSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
@@ -182,7 +182,7 @@
 			</div>
 			
 			<h1 id="docIdSearch"><a>Doc ID</a></h1>
-			<div>
+			<div class="documents">
 				<form id="docIdSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="Text will go here">?</a>
 					<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
@@ -233,14 +233,12 @@
 					$j("#dateDayBetween").css('visibility','visible');
 					$j('.invisible').css('visibility','visible');
 					$j('.visible').css('visibility','hidden');
-					$j('.addDateRange').css('margin-top','53px');
 			   } else { 
 					$j('#dateYearBetween').css('visibility','hidden');
 					$j('#dateMonthBetween').css('visibility','hidden');
 					$j('#dateDayBetween').css('visibility','hidden');
 					$j('.invisible').css('visibility','hidden');
 					$j('.visible').css('visibility','visible');
-					$j('.addDateRange').css('margin-top','5px');
 				}
 			});
 			

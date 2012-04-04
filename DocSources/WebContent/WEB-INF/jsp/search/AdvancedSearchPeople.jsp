@@ -8,12 +8,12 @@
 	<h1 class="advSearchTitle">Create your custom search filter</h1>
 <div id="accordion">
 	<h1 id="nameParts"><a>Name Parts</a></h1>
-	<div>
+	<div class="people">
 		<form id="namePartsSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Names are broken down into their component parts in order to help identify individuals who may have been referred to by a variety of names. Each person therefore has various distinct name records in order to track 'Given Names', 'Appellatives', 'Family Names', 'Married Names' and 'Patronymics'. You should enter name parts without modifiers (e.g. Agnolo instead of d'Agnolo or di Agnolo). You can select a specific name type to further limit the name search. Women's 'maiden' names are categorized as 'Family' names.">?</a>
 			<input id="nameParts" name="nameParts" class="input_20c" type="text" value=""/>
 			in
-			<select id="namePartsType" name="namePartsType" class="selectform_Mlong">
+			<select id="namePartsType" name="namePartsType" class="selectform_SXlong">
 				<option value="All Name Types" selected="selected">All Name Types</option>
 				<option value="Appellative">Appellative</option>
 				<option value="Family">Family</option>
@@ -28,7 +28,7 @@
 	</div>
 	
 	<h1 id="dateRange"><a>Date Range</a></h1>
-	<div>
+	<div class="people">
 		<form id="dateSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
 			<select id="dateType" name="dateType" class="selectform_Llong">
@@ -59,7 +59,7 @@
 	</div>
 
 	<h1 id="titleOccupation"><a>Title/Occupation</a></h1>
-	<div>
+	<div class="people">
 		<form id="roleCategorySearchForm" method="post" class="edit">
 			<a class="helpIcon" title="The subjects of some biographical entries are categorized as 'Groups', with the 'Gender' specified as 'X'. This includes entities such as academies and confraternities (even if their membership was made up of a single gender), and families when they are mentioned collectively in a document.">?</a>
 		
@@ -177,7 +177,7 @@
 	</div>
 	
 	<h1 id="placeSearch"><a>Birth and Death Place</a></h1>
-	<div>
+	<div class="people">
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>
 			<select id="placeType" name="placeType" class="selectform_MXlong">
@@ -193,7 +193,7 @@
 	</div>
 	
 	<h1 id="researchNotes"><a><i>in </i>Research Notes</a></h1>
-	<div>
+	<div class="people">
 		<form id="researchNotesSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="Search here for words (in English) that appear in the Research Notes field.">?</a>
 			<input id="researchNotes" name="researchNotes" class="input_20c" type="text" value=""/>
@@ -235,14 +235,12 @@
 				$j('#dateDayBetween').css('visibility','visible');
 				$j('.invisible').css('visibility','visible');
 				$j('.visible').css('visibility','hidden');
-				$j('.addDateRange').css('margin-top','53px');
 		   } else { 
 				$j('#dateYearBetween').css('visibility','hidden');
 				$j('#dateMonthBetween').css('visibility','hidden');
 				$j('#dateDayBetween').css('visibility','hidden');
 				$j('.invisible').css('visibility','hidden');
 				$j('.visible').css('visibility','visible');
-				$j('.addDateRange').css('margin-top','5px');
 			}
 		});
 		 $j('#dateYear').focus(function(){

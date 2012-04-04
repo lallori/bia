@@ -8,7 +8,7 @@
 		<h1 class="advSearchTitle">Create your custom search filter</h1>
 			<div id="accordion">
 			<h1 id="volumeSearch"><a>Volume</a></h1>
-			<div>
+			<div class="volumes">
 				<form id="volumeSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
 					<select id="volumeType" name="volumeType" class="selectform_long">
@@ -49,7 +49,7 @@
 			</div>
 			
 			<h1 id="volumeDesc"><a>Volume Description</a></h1>
-			<div>
+			<div class="volumes">
 				<form id="digitizedSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
 					<label for="digitized" id="digitizedLabel">Digitized</label> 
@@ -104,7 +104,7 @@
 			</div>
 			
 			<h1 id="coorCont"><a>Correspondents and Context</a></h1>
-			<div>
+			<div class="volumes">
 				<form id="fromVolumeSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
 	                <label for="fromVolume" id="fromLabel">From</label> 
@@ -163,14 +163,12 @@
 				$j("#dateDayBetween").css('visibility','visible');
 				$j('.invisible').css('visibility','visible');
 				$j('.visible').css('visibility','hidden');
-				$j('.addDateRange').css('margin-top','53px');
 		   } else { 
 				$j('#dateYearBetween').css('visibility','hidden');
 				$j('#dateMonthBetween').css('visibility','hidden');
 				$j('#dateDayBetween').css('visibility','hidden');
 				$j('.invisible').css('visibility','hidden');
 				$j('.visible').css('visibility','visible');
-				$j('.addDateRange').css('margin-top','5px');
 			}
 		});
 		
