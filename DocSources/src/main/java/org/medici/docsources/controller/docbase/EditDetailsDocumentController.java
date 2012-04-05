@@ -35,6 +35,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
@@ -139,6 +140,9 @@ public class EditDetailsDocumentController {
 
 					Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 					model.put("image", image);
+					
+					HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
+					model.put("historyNavigator", historyNavigator);
 
 					return new ModelAndView("docbase/ShowDocument", model);
 				} else {
@@ -147,6 +151,9 @@ public class EditDetailsDocumentController {
 
 					Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 					model.put("image", image);
+					
+					HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
+					model.put("historyNavigator", historyNavigator);
 					
 					return new ModelAndView("docbase/ShowDocument", model);
 				}

@@ -34,12 +34,15 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.docbase.EditCorrespondentsOrPeopleDocumentCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -60,6 +63,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class EditCorrespondentsOrPeopleDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
 	@Autowired(required = false)
 	@Qualifier("editCorrespondentsOrPeopleDocumentValidator")
 	private Validator validator;
@@ -69,6 +74,13 @@ public class EditCorrespondentsOrPeopleDocumentController {
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
+	}
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
 	}
 
 	/**
@@ -145,8 +157,13 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			
 			try {
 				document = getDocBaseService().editCorrespondentsDocument(document);
+				
+				HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
+				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
 
 				model.put("document", document);
+				model.put("image", image);
+				model.put("historyNavigator", historyNavigator);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditCorrespondentsOrPeopleDocument", model);
 			}
@@ -160,6 +177,14 @@ public class EditCorrespondentsOrPeopleDocumentController {
 	 */
 	public void setDocBaseService(DocBaseService docBaseService) {
 		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(
+			ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
 	}
 
 	/**

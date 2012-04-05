@@ -38,6 +38,7 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.geobase.EditDetailsPlaceCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceType;
@@ -125,6 +126,9 @@ public class EditDetailsPlaceController {
 					placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
 					model.put("placeNames", placeNames);
 					model.put("place", place);
+					
+					HistoryNavigator historyNavigator = getGeoBaseService().getHistoryNavigator(place);
+					model.put("historyNavigator", historyNavigator);
 					return new ModelAndView("geobase/ShowPlace", model);
 				}
 				else{
@@ -145,6 +149,10 @@ public class EditDetailsPlaceController {
 						model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
 					else
 						model.put("linkGoogleMaps", null);
+					
+					HistoryNavigator historyNavigator = getGeoBaseService().getHistoryNavigator(place);
+					model.put("historyNavigator", historyNavigator);
+					
 					return new ModelAndView("geobase/ShowPlace", model);
 				}
 			}catch(ApplicationThrowable th){

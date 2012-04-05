@@ -38,6 +38,7 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
@@ -157,17 +158,32 @@ public class EditDetailsPersonController {
 					person = getPeopleBaseService().addNewPerson(person);
 					
 					model.put("person", person);
-					model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
+					//MD: I set to 0 the docsRelated because in this case we have a new Person entry
+					model.put("docsRelated", 0);
+					
+					HistoryNavigator historyNavigator = getPeopleBaseService().getHistoryNavigator(person);
+					model.put("historyNavigator", historyNavigator);
 
 					return new ModelAndView("peoplebase/ShowPerson", model);
 				} else {
 					person = getPeopleBaseService().editDetailsPerson(person);
 					model.put("person", person);
-					model.put("docsRelated", getPeopleBaseService().findNumberOfDocumentsRelated(person.getPersonId()));
+					
 					List<Marriage> marriages = getPeopleBaseService().findMarriagesPerson(person.getPersonId(), person.getGender());
 					model.put("marriages", marriages);
 					List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
 					model.put("children", children);
+					Integer senderDocsRelated = getPeopleBaseService().findNumberOfSenderDocumentsRelated(person.getPersonId());
+					model.put("senderDocsRelated", senderDocsRelated);
+					Integer recipientDocsRelated = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(person.getPersonId());
+					model.put("recipientDocsRelated", recipientDocsRelated);
+					Integer referringDocsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(person.getPersonId());
+					model.put("referringDocsRelated", referringDocsRelated);
+					Integer docsRelated = senderDocsRelated + recipientDocsRelated + referringDocsRelated;
+					model.put("docsRelated", docsRelated);
+					
+					HistoryNavigator historyNavigator = getPeopleBaseService().getHistoryNavigator(person);
+					model.put("historyNavigator", historyNavigator);
 
 					return new ModelAndView("peoplebase/ShowPerson", model);
 				}

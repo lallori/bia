@@ -36,11 +36,14 @@ import javax.validation.Valid;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.volbase.EditDetailsVolumeCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
+import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
+import org.medici.docsources.service.manuscriptviewer.ManuscriptViewerService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -66,6 +69,15 @@ public class EditDetailsVolumeController {
 	private Validator validator;
 	@Autowired
 	private VolBaseService volBaseService;
+	@Autowired
+	private ManuscriptViewerService manuscriptViewerService;
+
+	/**
+	 * @return the manuscriptViewerService
+	 */
+	public ManuscriptViewerService getManuscriptViewerService() {
+		return manuscriptViewerService;
+	}
 
 	/**
 	 * This method returns the Validator class used by Controller to make
@@ -121,11 +133,24 @@ public class EditDetailsVolumeController {
 				if (command.getSummaryId().equals(0)) {
 					volume = getVolBaseService().addNewVolume(volume);
 					model.put("volume", volume);
+					
+					Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+					model.put("image", image);
+					
+					HistoryNavigator historyNavigator = getVolBaseService().getHistoryNavigator(volume);
+					model.put("historyNavigator", historyNavigator);
+					
 					return new ModelAndView("volbase/ShowVolume", model);
 				} else {
 					volume = getVolBaseService().editDetailsVolume(volume);
 					model.put("volume", volume);
 					model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
+					
+					Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+					model.put("image", image);
+					
+					HistoryNavigator historyNavigator = getVolBaseService().getHistoryNavigator(volume);
+					model.put("historyNavigator", historyNavigator);
 
 					return new ModelAndView("volbase/ShowVolume", model);
 				}
@@ -210,6 +235,14 @@ public class EditDetailsVolumeController {
 		}
 
 		return new ModelAndView("volbase/EditDetailsVolume", model);
+	}
+
+	/**
+	 * @param manuscriptViewerService the manuscriptViewerService to set
+	 */
+	public void setManuscriptViewerService(
+			ManuscriptViewerService manuscriptViewerService) {
+		this.manuscriptViewerService = manuscriptViewerService;
 	}
 
 	/**

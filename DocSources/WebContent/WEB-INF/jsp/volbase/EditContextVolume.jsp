@@ -5,8 +5,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<form:form id="EditContextVolumeForm" method="post" cssClass="edit">
+		<div id="loadingDiv"></div>
 		<fieldset>
-			<div id="loadingDiv"></div>
 			<legend><b>CONTEXT</b></legend>
 			<div><form:label for="ccontext" id="ccontextLabel" path="ccontext">Context</form:label></div>
 			<div><form:textarea path="ccontext" cssClass="txtarea_medium"/><form:errors path="ccontext" cssClass="inputerrors"/></div>

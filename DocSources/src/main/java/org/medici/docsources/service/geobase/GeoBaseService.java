@@ -237,8 +237,9 @@ public interface GeoBaseService {
 		
 	/**
 	 * 
-	 * @param peopleId
+	 * @param placeId
 	 * @return
+	 * @throws ApplicationThrowable
 	 */
 	public Place findPlace(Integer placeId) throws ApplicationThrowable;
 
@@ -250,6 +251,14 @@ public interface GeoBaseService {
 	 */
 	public PlaceExternalLinks findPlaceExternalLinks(Integer placeAllId, Integer placeExternalLinksId) throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param placeId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Place findPlaceForHierarchy(Integer placeId) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param idUserHistory

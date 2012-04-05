@@ -85,7 +85,7 @@ public class ShowHierarchyPlaceController {
 		
 		if(command.getPlaceAllId() > 0){
 			try {
-				place = getGeoBaseService().findPlace(command.getPlaceAllId());
+				place = getGeoBaseService().findPlaceForHierarchy(command.getPlaceAllId());
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowPlace", model);
 			}

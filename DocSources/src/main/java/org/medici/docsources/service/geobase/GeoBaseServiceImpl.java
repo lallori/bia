@@ -543,6 +543,20 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Place findPlaceForHierarchy(Integer placeId) throws ApplicationThrowable {
+		try{
+			Place place = getPlaceDAO().find(placeId);
+			
+			return place;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
