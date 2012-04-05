@@ -4199,7 +4199,7 @@ table#savedSearchFiltersForm.display {
 }
 
 .volumes #dateSearchForm #addSearchFilter { 
-	margin: 5px 0 0 50px;
+	margin: 5px 0 0 15px;
 }
 
 #fromVolumeSearchForm #addSearchFilter, #toVolumeSearchForm #addSearchFilter, #toVolumeSearchForm #addSearchFilter, #contextSearchForm #addSearchFilter, #inventarioSearchForm #addSearchFilter { 
@@ -4285,7 +4285,7 @@ table#savedSearchFiltersForm.display {
 	margin: 5px 0 0 177px;
 } 
 
-#researchNotesForm #addSearchFilter{
+#researchNotesSearchForm #addSearchFilter{
 	margin: 5px 0 0 175px;
 }
 
