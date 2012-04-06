@@ -27,7 +27,7 @@ Joana Amill <joana.amill@gmail.com>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 		<meta name="description" content="IIPImage: High Resolution Remote Image Streaming Viewing"/>
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip-2.1.css"/>" />
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip.compressed.css"/>" />
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip.css"/>" />
 		<!--[if lt IE 10]> 
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/ie.compressed.css"/>" /> 
 		<![endif]-->
