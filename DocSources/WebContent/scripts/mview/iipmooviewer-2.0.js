@@ -905,6 +905,12 @@ var IIPMooViewer = new Class({
 
     // For panoramic images, use a large navigation window
     if( tx > 2*ty ) thumb_width = this.view.w / 2;
+    
+    // MEDICI ARCHIVE PROJECT START
+		// Navigation window in Manuscript Transcriber
+		if (this.view.w > 1000)
+			thumb_width = this.view.w / 8;
+	// MEDICI ARCHIVE PROJECT END
 
     //if( (ty/tx)*thumb_width > this.view.h*0.5 ) thumb_width = Math.round( this.view.h * 0.5 * tx/ty );
 
@@ -927,7 +933,12 @@ var IIPMooViewer = new Class({
       this.resolutions.push({w:tx,h:ty});
       if( tx < this.view.w && ty < this.view.h ) this.view.res++;
     }
-    this.view.res -= 1;
+    //this.view.res -= 1;
+    
+    // MEDICI ARCHIVE PROJECT START
+		this.view.res -= 1;
+		//this.view.res = this.initialZoom;
+		// MEDICI ARCHIVE PROJECT END
 
     // Sanity check and watch our for small screen displays causing the res to be negative
     if( this.view.res < 0 ) this.view.res = 0;
@@ -1081,7 +1092,9 @@ var IIPMooViewer = new Class({
     // We want to add our keyboard events, but only when we are over the viewer div
     // In order to add keyboard events to a div, we need to give it a tabindex and focus it
     this.container.set( 'tabindex', 0 );
-    this.container.focus();
+    // MEDICI ARCHIVE PROJECT START
+		//container.focus();
+	// MEDICI ARCHIVE PROJECT END
 
     // Focus and defocus when we move into and out of the div,
     // get key presses and prevent default scrolling via mousewheel
@@ -1326,7 +1339,7 @@ var IIPMooViewer = new Class({
     // For standalone iphone/ipad the logo gets covered by the status bar 
     if( Browser.Platform.ios && window.navigator.standalone ) navcontainer.setStyle( 'top', 20 );
 
-    var toolbar = new Element( 'div', {
+   /* var toolbar = new Element( 'div', {
       'class': 'toolbar',
       'events': {
 	 dblclick: function(source){
@@ -1334,14 +1347,29 @@ var IIPMooViewer = new Class({
          }.pass(this.container)
       }
     });
-    toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
-    toolbar.inject(navcontainer);
+		toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
+    	toolbar.inject(navcontainer);*/
+    
+    // MEDICI ARCHIVE PROJECT START
+	var toolbar = new Element('div', {
+			'class' : 'toolbar',
+			//'html' : '<span>NAVIGATION TOOLBAR</span>',
+			'events' : {
+				dblclick :  function(source){
+	   				source.getElement('div.navbuttons').get('slide').toggle();
+         			}.pass(this.container)
+			}
+		});
+		
+		toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
+    	toolbar.inject(navcontainer);
+	// MEDICI ARCHIVE PROJECT END
 
 
     // Create our navigation div and inject it inside our frame if requested
     if( this.showNavWindow ){
 
-      var navwin = new Element( 'div', {
+     /* var navwin = new Element( 'div', {
 	'class': 'navwin',
         'styles': {
 	  height: this.navWin.h
@@ -1362,7 +1390,34 @@ var IIPMooViewer = new Class({
           'mousedown': function(e){ var event = new DOMEvent(e); event.stop(); }
         }
       });
-      navimage.inject(navwin);
+      navimage.inject(navwin);*/
+      
+      // MEDICI ARCHIVE PROJECT START
+			//if (this.showNavImage) {
+				var navwin = new Element( 'div', {
+					'class': 'navwin',
+					'styles': {
+						height: this.navWin.h
+					}
+				});
+				navwin.inject( navcontainer );
+				//navcontainer.setAttribute("height", navwin.getAttribute("height") + 20);
+				
+				
+				// Create our navigation image and inject inside the div we just created
+				var navimage = new Element( 'img', {
+					'class': 'navimage',
+					'src': this.server + '?FIF=' + this.images[0].src + '&SDS=' + this.images[0].sds + '&WID=' + this.navWin.w + '&QLT=99&CVT=jpeg',
+					'events': {
+						click: this.scrollNavigation.bind(this),
+						mousewheel: this.zoom.bind(this),
+						// Prevent user from dragging navigation image
+						mousedown: function(e){ var event = new DOMEvent(e); event.stop(); }
+					 }
+				});
+				navimage.inject(navwin);
+			//}
+			// MEDICI ARCHIVE PROJECT END
 
 
       // Create our navigation zone and inject inside the navigation div
@@ -1377,7 +1432,14 @@ var IIPMooViewer = new Class({
  	  'dblclick': this.zoom.bind(this)
 	}
       });
-      this.zone.inject(navwin);
+     // MEDICI ARCHIVE PROJECT START
+		// this.zone.inject(navwin);
+		//if (this.showNavImage) {
+			this.zone.inject(navwin);
+		//} else {
+			//this.zone.inject(navcontainer);
+		//}
+	// MEDICI ARCHIVE PROJECT END
 
     }
 
