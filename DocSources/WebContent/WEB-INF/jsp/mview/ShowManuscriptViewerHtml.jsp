@@ -61,7 +61,7 @@
             		var credit = ' ';
             	}
 			
-			iip = new IIP( "targetframe", {
+			iip = new IIPMooViewer( "targetframe", {
 				server: '${IIPImageServerURL}',
 				prefix: '${ImagePrefixURL}',
 				image: '${image}',

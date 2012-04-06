@@ -85,7 +85,7 @@
 	    	}
 		
 		
-			iip = new IIP( "targetframe", {
+			iip = new IIPMooViewer( "targetframe", {
 				server: '${IIPImageServer}',
 				prefix: '${ImagePrefixURL}',
 				image: '${documentExplorer.image}',

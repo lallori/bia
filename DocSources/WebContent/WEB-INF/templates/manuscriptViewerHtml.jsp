@@ -19,7 +19,7 @@ Lorenzo Allori <lorenzo.allori@gmail.com>
 Lorenzo Pasquinelli <lorenzo.pasquinelli@gmail.com>
 Joana Amill <joana.amill@gmail.com>
 --> 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta name="author" content="Ruven Pillay &lt;ruven@users.sourceforge.netm&gt;"/>
 		<meta name="author" content="Lorenzo Allori &lt;lorenzo.allori@gmail.com&gt;"/>
@@ -27,13 +27,19 @@ Joana Amill <joana.amill@gmail.com>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 		<meta name="description" content="IIPImage: High Resolution Remote Image Streaming Viewing"/>
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip-2.1.css"/>" />
-		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/mview.css"/>" />                                                                                
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/iip.compressed.css"/>" />
+		<!--[if lt IE 10]> 
+		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/ie.compressed.css"/>" /> 
+		<![endif]-->
+ 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/mview/mview.css"/>" />                                                                               
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css"/>" /> 
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
 		<title>DocSourcesV5 Manuscript Viewer</title>
-		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.3.2-full-nocompat-yc.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.3.2.1.js"/>"></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.1.js"/>"/></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.4.5-full-nocompat.js"/>"></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.4.0.1.js"/>"></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/protocols/iip.js"/>"/></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.0.js"/>"/></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/lang/help.en.js"/>"/></script>
 		
 		<!-- jquery dialog -->
 		<script type="text/javascript" src="<c:url value="/scripts/mview/jquery.min.js"/>"/></script>                                                                                                
@@ -65,6 +71,6 @@ Joana Amill <joana.amill@gmail.com>
 	</head>
 
 	<body>
-		<div style="width:99%;height:99%;margin-left:auto;margin-right:auto" id="targetframe"></div>
+		<div style="width:100%;height:100%;position:absolute" id="targetframe"></div>
 	</body>
 </html>

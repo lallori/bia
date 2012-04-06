@@ -117,18 +117,18 @@
 	                	} 
 						
 
-						iip = new IIP( "targetframe", {
+						iipMooViewer = new IIPMooViewer( "targetframe", {
 							server: functionParams["IIPImageServer"],
 							image: data.imageCompleteName,
 							prefix: functionParams["imagePrefix"],
 							credit: credit, 
-							scale: 0,
 							navigation: true,
 							showNavWindow: true,
 							showNavImage: true, // this property hide navigation image
 							showNavButtons: true,
 							winResize: true,
-							zoom: 3
+							zoom: 3,
+							scale: 0
 						});
 
 						if (data.previousPage == '') {
@@ -300,18 +300,18 @@
                 	}
 					
 					
-					iip = new IIP( "targetframe", {
+					iipMooViewer = new IIPMooViewer( "targetframe", {
 						server: functionParams["IIPImageServer"],
 						image: data.imageCompleteName,
 						prefix: functionParams["imagePrefix"],
 						credit: credit, 
-						scale: 0,
 						navigation: true,
 						showNavWindow: true,
 						showNavImage: true, // this property hide navigation image
 						showNavButtons: true,
 						winResize: true,
-						zoom: 3
+						zoom: 3,
+						scale: 0
 					});
 					if (data.previousPage == '') {
 						$("#previous").removeAttr('href');
