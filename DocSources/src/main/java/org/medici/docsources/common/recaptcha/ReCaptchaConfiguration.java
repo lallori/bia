@@ -25,7 +25,10 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.support.recaptcha;
+package org.medici.docsources.common.recaptcha;
+
+import org.apache.commons.lang.math.NumberUtils;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 
 /**
  * This class contains Recaptcha configuration.
@@ -40,10 +43,20 @@ package org.medici.docsources.support.recaptcha;
  * 
  */
 public class ReCaptchaConfiguration {
+	private String domainName;
 	private String privateKey;
 	private String publicKey;
 	private Integer siteId;
 
+	/**
+	 * 
+	 */
+	public ReCaptchaConfiguration() {
+		setDomainName(ApplicationPropertyManager.getApplicationProperty("recaptcha.domainName"));
+		setSiteId(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("recaptcha.siteId")));
+		setPublicKey(ApplicationPropertyManager.getApplicationProperty("recaptcha.publicKey"));
+		setPrivateKey(ApplicationPropertyManager.getApplicationProperty("recaptcha.privateKey"));
+	}
 	/**
 	 * 
 	 * @return
@@ -82,6 +95,18 @@ public class ReCaptchaConfiguration {
 
 	public void setSiteId(Integer siteId) {
 		this.siteId = siteId;
+	}
+	/**
+	 * @param domainName the domainName to set
+	 */
+	public void setDomainName(String domainName) {
+		this.domainName = domainName;
+	}
+	/**
+	 * @return the domainName
+	 */
+	public String getDomainName() {
+		return domainName;
 	}
 
 }

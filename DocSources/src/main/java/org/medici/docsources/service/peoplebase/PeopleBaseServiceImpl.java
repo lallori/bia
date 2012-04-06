@@ -44,6 +44,7 @@ import org.medici.docsources.common.image.PersonPortrait;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.HtmlUtils;
@@ -1626,9 +1627,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public String saveTemporaryImage(PersonPortrait personPortrait) throws ApplicationThrowable {
 		try {
-			String tempPath = applicationPropertyDAO.getPortraitTempPath();
+			String tempPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person.temp");
 			
-			String fileName = ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + personPortrait.getPersonId(); 
+			String fileName = tempPath + "/" + ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + personPortrait.getPersonId(); 
 			File tempFile = new File(fileName);
 			FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile());
 			return fileName;

@@ -29,8 +29,6 @@ package org.medici.docsources.controller.manuscriptviewer;
 
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Properties;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.httpclient.HttpClient;
@@ -38,8 +36,7 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,9 +52,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/mview/ReverseProxyIIPImage")
 public class ReverseProxyIIPImageController {
 	private Logger logger = Logger.getLogger(this.getClass());
-	@Autowired(required = false)
-	@Qualifier("iipImageConfiguration")
-	private Properties properties;
 
 	/**
 	 * 
@@ -69,7 +63,7 @@ public class ReverseProxyIIPImageController {
 	public void proxyIIPImage(HttpServletRequest httpServletRequest, HttpServletResponse response) {
 		// Create an instance of HttpClient.
 		HttpClient client = new HttpClient(); 	
-		String versionServer = properties.getProperty("iipimage.version");
+		String versionServer = ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.version");
 		String connectUrl = null;
 		
 		if (versionServer.equals("0.9.8")) {
@@ -116,15 +110,15 @@ public class ReverseProxyIIPImageController {
 		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
 		
 		StringBuffer stringBuffer = new StringBuffer("");
-		stringBuffer.append(properties.getProperty("iipimage.protocol"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
 		stringBuffer.append("://");
-		stringBuffer.append(properties.getProperty("iipimage.host"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
 		stringBuffer.append(":");
-		stringBuffer.append(properties.getProperty("iipimage.port"));
-		stringBuffer.append(properties.getProperty("iipimage.fcgi.path"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
 		stringBuffer.append("?");
 		stringBuffer.append("FIF=");
-		stringBuffer.append(properties.getProperty("iipimage.image.path"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
 		stringBuffer.append(httpServletRequest.getParameter("FIF"));
 		stringBuffer.append("&");
 
@@ -160,18 +154,18 @@ public class ReverseProxyIIPImageController {
 		// "GET /fcgi-bin/iipsrv.fcgi?FIF=/data/tiled_mdp/1/MDP1702/0003_C_000_RV.tif&jtl=1,1& HTTP/1.1" 200 2445
 		
 		StringBuffer stringBuffer = new StringBuffer("");
-		stringBuffer.append(properties.getProperty("iipimage.protocol"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
 		stringBuffer.append("://");
-		stringBuffer.append(properties.getProperty("iipimage.host"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
 		stringBuffer.append(":");
-		stringBuffer.append(properties.getProperty("iipimage.port"));
-		stringBuffer.append(properties.getProperty("iipimage.fcgi.path"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
+		stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
 		stringBuffer.append("?");
 
 		if (httpServletRequest.getParameter("obj") != null) {
 			// This get image tile informations
 			stringBuffer.append("FIF=");
-			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
 			stringBuffer.append(httpServletRequest.getParameter("FIF"));
 			stringBuffer.append("&");
 			String[] values = httpServletRequest.getParameterValues("obj");
@@ -186,7 +180,7 @@ public class ReverseProxyIIPImageController {
 			stringBuffer.append("WID=");
 			stringBuffer.append(httpServletRequest.getParameter("WID"));
 			stringBuffer.append("&FIF=");
-			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
 			stringBuffer.append(httpServletRequest.getParameter("FIF"));
 			stringBuffer.append("&CVT=");
 			stringBuffer.append(httpServletRequest.getParameter("CVT"));
@@ -194,7 +188,7 @@ public class ReverseProxyIIPImageController {
 		} else if (httpServletRequest.getParameter("jtl") != null) {
 			// This get tiff section image.
 			stringBuffer.append("&FIF=");
-			stringBuffer.append(properties.getProperty("iipimage.image.path"));
+			stringBuffer.append(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
 			stringBuffer.append(httpServletRequest.getParameter("FIF"));
 			stringBuffer.append("&jtl=");
 			stringBuffer.append(httpServletRequest.getParameter("jtl"));
@@ -203,19 +197,4 @@ public class ReverseProxyIIPImageController {
 		
 		return stringBuffer.toString();
 	}
-
-	/**
-	 * @param properties the properties to set
-	 */
-	public void setProperties(Properties properties) {
-		this.properties = properties;
-	}
-
-	/**
-	 * @return the properties
-	 */
-	public Properties getProperties() {
-		return properties;
-	}
-
 }

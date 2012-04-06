@@ -27,7 +27,7 @@
  */
 package org.medici.docsources.dao.applicationproperty;
 
-import javax.persistence.PersistenceException;
+import java.util.List;
 
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.ApplicationProperty;
@@ -37,7 +37,18 @@ import org.medici.docsources.domain.ApplicationProperty;
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public interface ApplicationPropertyDAO extends Dao<Integer, ApplicationProperty> {
+public interface ApplicationPropertyDAO extends Dao<String, ApplicationProperty> {
 
-	public String getPortraitTempPath() throws PersistenceException;
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public String getApplicationProperty(String key);
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<String> getApplicationPropertiesNames();
 }

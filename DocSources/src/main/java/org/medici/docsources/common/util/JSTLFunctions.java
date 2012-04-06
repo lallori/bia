@@ -31,6 +31,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.medici.docsources.common.property.ApplicationPropertyManager;
+
 /**
   * Utility class to provides custom jstl functions.
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -76,4 +78,14 @@ public final class JSTLFunctions {
     	
     	return stringBuffer.toString();
      }
+    
+    /**
+     * This method return application property.
+     * 
+     * @param propertyName
+     * @return
+     */
+    public static String getApplicationProperty(String propertyName) {
+    	return ApplicationPropertyManager.getApplicationProperty(propertyName);
+    }
 }

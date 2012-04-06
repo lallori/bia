@@ -1,5 +1,5 @@
 /*
- * ReverseProxyIIPImageController.java
+ * IIPImageServerController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -42,7 +42,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.StringTokenizer;
 
 import javax.imageio.IIOException;
@@ -72,8 +71,7 @@ import org.apache.sanselan.formats.tiff.TiffImageData;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata;
 import org.apache.sanselan.formats.tiff.constants.TiffDirectoryConstants;
 import org.apache.sanselan.formats.tiff.constants.TiffTagConstants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -83,8 +81,7 @@ import com.sun.media.jai.codec.ImageEncoder;
 import com.sun.media.jai.codec.JPEGEncodeParam;
 
 /**
- * This controller is a proxy to IIPImage Server. It's used to not expose 
- * IIPImage server.
+ * This controller is IIPImage Server.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
@@ -93,9 +90,6 @@ import com.sun.media.jai.codec.JPEGEncodeParam;
 @RequestMapping("/mview/IIPImageServer")
 public class IIPImageServerController {
 	private Logger logger = Logger.getLogger(this.getClass());
-	@Autowired(required = false)
-	@Qualifier("iipImageConfiguration")
-	private Properties properties;
 
 	/**
 	 * This method retun a specific tiled image.
@@ -103,7 +97,7 @@ public class IIPImageServerController {
 	 * @param httpServletResponse
 	 */
 	private void generateFullImage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-		File imageFile = new File(getProperties().getProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
+		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
 		
 		ImageInputStream imageInputStream = null; 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -172,7 +166,7 @@ public class IIPImageServerController {
 	 * 
 	 */
 	private void generateInformationsTiledImage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-		File imageFile = new File(getProperties().getProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
+		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
 		ImageInputStream imageInputStream = null; 
         Integer imageWidth = new Integer(0);
         Integer imageHeight = new Integer(0);
@@ -234,7 +228,7 @@ public class IIPImageServerController {
 	 */
 	@SuppressWarnings("unused")
 	private void generateTiledImage(String fileName, Integer pageImage, Integer tileNumber, Integer xCoordinate, Integer yCoordinate, HttpServletResponse httpServletResponse) {
-		File imageFile = new File(getProperties().getProperty("iipimage.image.path") + fileName);
+		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + fileName);
         Integer imageWidth = new Integer(0);
         Integer imageHeight = new Integer(0);
         Integer tileWidth = new Integer(0);
@@ -304,13 +298,6 @@ public class IIPImageServerController {
 	}
 
 	/**
-	 * @return the properties
-	 */
-	public Properties getProperties() {
-		return properties;
-	}
-
-	/**
 	 * 
 	 * 
 	 * @param volumeId
@@ -357,7 +344,7 @@ public class IIPImageServerController {
 	 * @param response
 	 */
 	private void generateThumbnailImage(String imageName, Double thumbnailWidth, Integer imageQuality, String thumbnailFormat, HttpServletResponse httpServletResponse) {
-		File imageFile = new File(getProperties().getProperty("iipimage.image.path") + imageName);
+		File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + imageName);
 
 		ImageInputStream imageInputStream = null; 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -535,7 +522,7 @@ public class IIPImageServerController {
         String imageWidth = "";
         String imageHeight = "";
 
-        File imageFile = new File(getProperties().getProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
+        File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
 
 		try {
 			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
@@ -615,7 +602,7 @@ public class IIPImageServerController {
         String tileWidth = "";
         String tileLength = "";
 
-        File imageFile = new File(getProperties().getProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
+        File imageFile = new File(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path") + httpServletRequest.getParameter("FIF"));
 
 		try {
 			IImageMetadata metadata = Sanselan.getMetadata(imageFile);
@@ -652,12 +639,4 @@ public class IIPImageServerController {
 		    }
 	    }
 	}
-
-	/**
-	 * @param properties the properties to set
-	 */
-	public void setProperties(Properties properties) {
-		this.properties = properties;
-	}
-
 }

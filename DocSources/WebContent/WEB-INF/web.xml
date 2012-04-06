@@ -8,7 +8,7 @@
             /WEB-INF/config/applicationCaptcha.xml,
             /WEB-INF/config/applicationDS.xml,
             /WEB-INF/config/applicationI18n.xml,
-            /WEB-INF/config/applicationIIPImage.xml,
+            /WEB-INF/config/applicationProvider.xml,
             /WEB-INF/config/applicationSchedulers.xml,
             /WEB-INF/config/applicationSecurity.xml,
             /WEB-INF/config/applicationServices.xml,

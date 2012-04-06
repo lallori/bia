@@ -31,7 +31,7 @@ import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
-import org.medici.docsources.support.recaptcha.ReCaptchaConfiguration;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,8 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReCaptchaServiceImpl implements ReCaptchaService {
 	@Autowired
 	private ReCaptcha reCaptcha;
-	@Autowired
-	private ReCaptchaConfiguration reCaptchaConfiguration;
+
 
 	/**
 	 * {@inheritDoc}
@@ -64,25 +63,21 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
 	}
 
 	/**
-	 * 
-	 * @return
-	 */
-	private ReCaptchaConfiguration getReCaptchaConfiguration() {
-		return reCaptchaConfiguration;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public ReCaptcha getReCaptchaObjectNoSSL() {
-		return ReCaptchaFactory.newReCaptcha(getReCaptchaConfiguration().getPublicKey(), getReCaptchaConfiguration().getPrivateKey(), false);
+		return ReCaptchaFactory.newReCaptcha(ApplicationPropertyManager.getApplicationProperty("recaptcha.publicKey"),
+											 ApplicationPropertyManager.getApplicationProperty("recaptcha.privateKey"),
+											 false);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public ReCaptcha getReCaptchaObjectSSL() {
-		return ReCaptchaFactory.newSecureReCaptcha(getReCaptchaConfiguration().getPublicKey(), getReCaptchaConfiguration().getPrivateKey(), false);
+		return ReCaptchaFactory.newSecureReCaptcha(ApplicationPropertyManager.getApplicationProperty("recaptcha.publicKey"),
+				 								   ApplicationPropertyManager.getApplicationProperty("recaptcha.privateKey"),
+												   false);
 	}
 
 	/**
@@ -91,14 +86,4 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
 	public void setReCaptcha(ReCaptcha reCaptcha) {
 		this.reCaptcha = reCaptcha;
 	}
-
-	/**
-	 * 
-	 * @param reCaptchaConfiguration
-	 */
-	@SuppressWarnings("unused")
-	private void setReCaptchaConfiguration(ReCaptchaConfiguration reCaptchaConfiguration) {
-		this.reCaptchaConfiguration = reCaptchaConfiguration;
-	}
-
 }

@@ -616,3 +616,13 @@ insert into docsources.tblUserComment select * from docsources_2011.tblUserComme
 insert into docsources.tblUserHistory select * from docsources_2011.tblUserHistory;
 insert into docsources.tblUserMessage select * from docsources_2011.tblUserMessage;
 
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('recaptcha.domainName', 'reCAPTCHA will only work on this domain and subdomains. If you have more than one domain (or a staging server), you can create a new set of keys.', 'localhost');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('recaptcha.privateKey', 'Use this when communicating between your server and our server. Be sure to keep it a secret.', '6LcA-LsSAAAAAInVIlSHKjxqKKre-40BOpb3Abcs ');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('recaptcha.publicKey', 'Use this in the JavaScript code that is served to your users', '	6LcA-LsSAAAAAKYVTuOi0KQWArgUQwPtMQFqwe_6 ');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('recaptcha.siteId', 'Site identifier', '314849700');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.protocol', 'IIPImage supported protocl', 'http');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.version', 'Property must be filled with 0.9.8 or 0.9.9', '0.9.9');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.host', 'IIPImage host name', 'iipimage.medici.org');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.port', 'IIPImage listening port', '80');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.fcgi.path', 'IIPImage fcgi-bin path', '/fcgi-bin/iipsrv.fcgi');
+INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.image.path', 'Remote server image path', '/data/tiled_mdp/');

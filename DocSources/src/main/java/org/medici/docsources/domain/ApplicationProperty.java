@@ -48,22 +48,24 @@ public class ApplicationProperty implements Serializable {
 	 */
 	private static final long serialVersionUID = 1135080755062759384L;
 	@Id
-	@Column (name="\"key\"", length=100, nullable=false)
-	private String key;
-	@Column (name="\"value\"", nullable=false)
+	@Column (name="\"id\"", length=100, nullable=false)
+	private String id;
+	@Column (name="\"help\"", length=1000, nullable=false)
+	private String help;
+	@Column (name="\"value\"", length=1000, nullable=false)
 	private String value;
 
 	/**
-	 * @param key the key to set
+	 * @param id the id to set
 	 */
-	public void setKey(String key) {
-		this.key = key;
+	public void setId(String id) {
+		this.id = id;
 	}
 	/**
-	 * @return the key
+	 * @return the id
 	 */
-	public String getKey() {
-		return key;
+	public String getId() {
+		return id;
 	}
 	/**
 	 * @param value the value to set
@@ -76,6 +78,18 @@ public class ApplicationProperty implements Serializable {
 	 */
 	public String getValue() {
 		return value;
+	}
+	/**
+	 * @param help the help to set
+	 */
+	public void setHelp(String help) {
+		this.help = help;
+	}
+	/**
+	 * @return the help
+	 */
+	public String getHelp() {
+		return help;
 	}
 }
 

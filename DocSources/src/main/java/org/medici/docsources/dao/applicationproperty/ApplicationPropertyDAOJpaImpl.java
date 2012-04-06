@@ -27,8 +27,12 @@
  */
 package org.medici.docsources.dao.applicationproperty;
 
-import javax.persistence.PersistenceException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Query;
+
+import org.apache.log4j.Logger;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.ApplicationProperty;
 import org.springframework.stereotype.Repository;
@@ -41,7 +45,7 @@ import org.springframework.stereotype.Repository;
  * @see org.medici.docsources.domain.AltName
  */
 @Repository
-public class ApplicationPropertyDAOJpaImpl extends JpaDao<Integer, ApplicationProperty> implements ApplicationPropertyDAO {
+public class ApplicationPropertyDAOJpaImpl extends JpaDao<String, ApplicationProperty> implements ApplicationPropertyDAO {
 	/**
 	 * 
 	 *  If a serializable class does not explicitly declare a serialVersionUID, 
@@ -62,12 +66,45 @@ public class ApplicationPropertyDAOJpaImpl extends JpaDao<Integer, ApplicationPr
 	 */
 	private static final long serialVersionUID = 2108912098591204306L;
 
+	private final Logger logger = Logger.getLogger(this.getClass());
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getPortraitTempPath() throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
+	public String getApplicationProperty(String id) {
+		try {
+	        Query query = getEntityManager().createQuery("FROM ApplicationProperty where id=:id");
+	        query.setParameter("id", id);
+	
+	        List<ApplicationProperty> list = query.getResultList();
+	        
+	        if (list.size() ==1) {
+	        	return ((ApplicationProperty)list.get(0)).getValue();
+	        } else if (list.size() ==0) {
+				logger.fatal("Property " + id + " not found. Check database table.");
+				return "";
+	        } else {
+	        	return "";
+	        }
+		} catch(Throwable th) {
+			logger.error("Exception during reading application property " + id, th);
+			return "";
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<String> getApplicationPropertiesNames() {
+		try {
+	        Query query = getEntityManager().createQuery("SELECT id FROM ApplicationProperty ORDER by id ASC ");
+
+	         return query.getResultList();
+		} catch(Throwable th) {
+			logger.error("Exception during reading application properties names ", th);
+			return new ArrayList<String>(0);
+		}
 	}
 }
