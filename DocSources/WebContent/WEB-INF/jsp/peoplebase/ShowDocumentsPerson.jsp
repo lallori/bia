@@ -7,7 +7,8 @@
 	<c:url var="ShowDocumentsRelatedPersonURL" value="/src/peoplebase/ShowDocumentsRelatedPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Documents indexed to "${mapNameLf}" <span id="allDocRecordsNum${personId}" class="recordsNum"></span>
+		<p>Documents indexed to <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
+		<p>Total record found: <span id="allDocRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDocumentsPersonId${personId}">

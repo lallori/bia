@@ -7,8 +7,8 @@
 	<c:url var="ShowDocumentsRelatedVolumeURL" value="/de/volbase/ShowDocumentsRelatedVolume.json"></c:url>
 	
 	<div class="yourSearchDiv">
-	<div class="num_docs">Documents indexed to Volume ${volNum} <span id="docIndexedTo${volNum}" class="recordsNum"></span></div>
-	<br>	
+	<p>Documents indexed to <font color="red" style="margin-left:5px">Volume ${volNum}</font></p>
+	<p>Total record found: <span id="docIndexedTo${volNum}" class="recordsNum"></span></p>	
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDocumentsSummaryId${summaryId}">

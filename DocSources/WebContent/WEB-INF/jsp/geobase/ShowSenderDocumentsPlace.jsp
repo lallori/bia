@@ -7,7 +7,7 @@
 	<c:url var="ShowSenderDocumentsPlaceURL" value="/de/geobase/ShowSenderDocumentsPlace.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Senders From "${placeNameFull}"
+		<p>Senders From <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showSenderDocumentsPlaceAllId${placeAllId}">

@@ -7,7 +7,8 @@
 	<c:url var="ShowReferringToDocumentsRelatedPersonURL" value="/src/peoplebase/ShowReferringToDocumentsRelatedPerson.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Documents referred to "${mapNameLf}" <span id="referringToRecordsNum${personId}" class="recordsNum"></span>
+		<p>Documents referred to <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
+		<p>Total record found: <span id="referringToRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showReferringToDocumentsPersonId${personId}">
