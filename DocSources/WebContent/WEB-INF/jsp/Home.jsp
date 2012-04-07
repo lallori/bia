@@ -12,7 +12,7 @@
 		<div id="body_right">
 			<div id="tabs">
 				<ul>
-					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_FORMER_FELLOWS, ROLE_DISTANT_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_TECHNICIANS">
 					<li><a href="<c:url value="/Welcome.do"/>">Welcome</a><span class="ui-icon ui-icon-close" title="Close Tab">Remove Tab</span></li>
 					</security:authorize>
 				</ul>
