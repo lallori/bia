@@ -119,22 +119,5 @@
 
 			});
 		</script> 
-		
-		<%--
-		<script type="text/javascript">
-			    var iip = new IIP( "targetframe", {
-			     server: '/DocSources/mview/IIPImageServer.do',
-			     prefix: '/DocSources/images/mview/',
-			     image: '1/MDP2/0259_C_125_R.tif',
-			     credit: 'asd',     
-			     navigation: true,
-			     showNavWindow: true,
-			     showNavImage: true, // this property hide navigation image
-			     showNavButtons: true,
-			     winResize: true,
-			     zoom: 3,
-			     scale: 0
-			    });
- 		 </script>--%>
 
 		  
