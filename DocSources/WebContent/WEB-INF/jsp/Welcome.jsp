@@ -8,12 +8,12 @@
 	<div class="welcome_list">
 		<h2>Welcome back <security:authentication property="principal.firstName"/>. <br />From your last log on:</h2>
 			<ul>
-				<li>you have <b>23</b> new messages</li>
+				<li>you have <b><li><b>${archiveStatistics['Message']}</b> new messages</li>
 	
-				<li><b>1</b> new volumes have been entered</li>
-				<li><b>12</b> new documents have been entered</li>
-				<li><b>1</b> new people have been entered</li>
-				<li><b>1</b>  new places and/or locations have been entered</li>
+				<li><b>${archiveStatistics['Volume']}</b> new volumes have been entered</li>
+				<li><b>${archiveStatistics['Document']}</b> new documents have been entered</li>
+				<li><b>${archiveStatistics['People']}</b> new people have been entered</li>
+				<li><b>${archiveStatistics['Place']}</b>  new places and/or locations have been entered</li>
 	
 			</ul>				
 	</div>

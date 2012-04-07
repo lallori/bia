@@ -27,6 +27,13 @@
  */
 package org.medici.docsources.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.medici.docsources.service.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,15 +48,31 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/Welcome")
 public class WelcomeController {
-	
+	@Autowired
+	private UserService userService;
+
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
 	/**
 	 * 
 	 * @return
 	 */
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView setupForm() {
-		//TODO : implement business invocation to retrieve statistics
-		
-		return new ModelAndView("Welcome");
+	public ModelAndView setupForm(HttpSession httpSession) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		return new ModelAndView("Welcome", model);
 	}
 }

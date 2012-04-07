@@ -27,11 +27,7 @@
  */
 package org.medici.docsources.security;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.medici.docsources.common.util.LdapUtils;
@@ -39,7 +35,6 @@ import org.medici.docsources.common.util.UserRoleUtils;
 import org.medici.docsources.domain.User.UserRole;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
-import org.springframework.util.Assert;
 
 /**
  * This class extends LdapUserDetailsImpl to permit storage in UserDetails
@@ -72,41 +67,24 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	 *
 	 */
 	public static class Essence extends LdapUserDetailsImpl.Essence {
-		// 20101030214433+0100
-		private DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
-
 		public Essence() {
 		}
 
 		public Essence(DirContextOperations ctx) {
 			super(ctx);
 
-			setExpirationDate(ctx.getStringAttribute("krb5AccountExpirationTime"));
-			setExpirationPasswordDate(ctx.getStringAttribute("krb5PasswordEnd"));
 			setFirstName(ctx.getStringAttribute("givenName"));
 			setInitials(ctx.getStringAttribute("initials"));
-			setInvalidAccess(ctx.getStringAttribute("krb5MaxLife"));
-			setInvalidAccessMax(ctx.getStringAttribute("krb5MaxRenew"));
 			setLastName(ctx.getStringAttribute("surname"));
 			setMail(ctx.getStringAttribute("mail"));
-			setActive(ctx.getStringAttribute("krb5AccountDisabled"));
-			setAccountNonLocked(ctx.getStringAttribute("krb5AccountLockedOut"));
 			setSignificantRoleDescritpion(ctx.getStringAttributes("member"));
-			setAccountNonExpired();
 		}
 
 		public Essence(DocSourcesLdapUserDetailsImpl copyMe) {
 			super(copyMe);
-			setExpirationDate(copyMe.getExpirationDate());
-			setExpirationPasswordDate(copyMe.getExpirationPasswordDate());
 			setFirstName(copyMe.getFirstName());
-			setInvalidAccess(copyMe.getInvalidAccess().toString());
-			setInvalidAccessMax(copyMe.getInvalidAccessMax().toString());
 			setLastName(copyMe.getLastName());
 			setMail(copyMe.getMail());
-			setActive(copyMe.getActive().toString());
-			setAccountNonLocked(((LdapUserDetailsImpl)copyMe).isAccountNonLocked());
-			setAccountNonExpired();
 			setSignificantRoleDescritpion(copyMe.getSignificantRoleDescription());
 		}
 
@@ -119,74 +97,8 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 		 */
 		public DocSourcesLdapUserDetailsImpl createUserDetails() {
 			DocSourcesLdapUserDetailsImpl p = (DocSourcesLdapUserDetailsImpl) super.createUserDetails();
-			Assert.notNull(p.getActive());
-			Assert.notNull(p.getActive());
 
 			return p;
-		}
-
-		/**
-		 * 
-		 */
-		public void setAccountNonExpired() {
-			//The user is not expired if expiration date is after or equals today
-			super.setAccountNonExpired((!((DocSourcesLdapUserDetailsImpl) instance).expirationDate.before(new Date())));        	
-		}
-
-		/**
-		 * 
-		 * @param accountNonLocked
-		 */
-		public void setAccountNonLocked(String accountNonLocked) {
-			super.setAccountNonLocked(!Boolean.valueOf(accountNonLocked));        	
-		}
-
-		/**
-		 * 
-		 * @param disabled
-		 */
-		public void setActive(String disabled) {
-			((DocSourcesLdapUserDetailsImpl) instance).active = !Boolean.valueOf(disabled);
-		}
-
-		/**
-		 * 
-		 * @param expirationDate
-		 */
-		public void setExpirationDate(Date expirationDate) {
-			((DocSourcesLdapUserDetailsImpl) instance).expirationDate = expirationDate;
-		}
-
-		/**
-		 * 
-		 * @param expirationDate
-		 */
-		public void setExpirationDate(String expirationDate) {
-			try {
-				((DocSourcesLdapUserDetailsImpl) instance).expirationDate = dateFormat.parse(expirationDate);
-			} catch (ParseException pex) {
-				pex.printStackTrace();
-			}
-		}
-
-		/**
-		 * 
-		 * @param expirationPasswordDate
-		 */
-		public void setExpirationPasswordDate(Date expirationPasswordDate) {
-			((DocSourcesLdapUserDetailsImpl) instance).expirationPasswordDate = expirationPasswordDate;
-		}
-
-		/**
-		 * 
-		 * @param expirationPasswordDate
-		 */
-		public void setExpirationPasswordDate(String expirationPasswordDate) {
-			try {
-				((DocSourcesLdapUserDetailsImpl) instance).expirationPasswordDate = dateFormat.parse(expirationPasswordDate);
-			} catch (ParseException pex) {
-				pex.printStackTrace();
-			}
 		}
 
 		/**
@@ -205,28 +117,6 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 			((DocSourcesLdapUserDetailsImpl) instance).initials = initials;
 		}
 		
-		/**
-		 * 
-		 * @param invalidAccess
-		 */
-		public void setInvalidAccess(String invalidAccess) {
-			try {
-				((DocSourcesLdapUserDetailsImpl) instance).invalidAccess = Integer.valueOf(invalidAccess);
-			} catch(NumberFormatException nfex) {
-			}
-		}
-
-		/**
-		 * 
-		 * @param invalidAccessMax
-		 */
-		public void setInvalidAccessMax(String invalidAccessMax) {
-			try {
-				((DocSourcesLdapUserDetailsImpl) instance).invalidAccessMax = Integer.valueOf(invalidAccessMax);
-			} catch(NumberFormatException nfex) {
-			}
-		}
-
 		/**
 		 * 
 		 * @param lastName
@@ -277,13 +167,8 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	 * 
 	 */
 	private static final long serialVersionUID = 2764404863477028517L;
-	private Boolean active;
-	private Date expirationDate;
-	private Date expirationPasswordDate;
 	private String firstName;
 	private String initials;
-	private Integer invalidAccess;
-	private Integer invalidAccessMax;
 	private String lastName;
 	private String mail;
 	// This field rapresents the most significant roleDescription
@@ -301,27 +186,6 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	}
 
 	/**
-	 * @return the active
-	 */
-	public Boolean getActive() {
-		return active;
-	}
-
-	/**
-	 * @return the expirationDate
-	 */
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	/**
-	 * @return the expirationPasswordDate
-	 */
-	public Date getExpirationPasswordDate() {
-		return expirationPasswordDate;
-	}
-
-	/**
 	 * @return the firstName
 	 */
 	public String getFirstName() {
@@ -333,20 +197,6 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	 */
 	public String getInitials() {
 		return initials;
-	}
-
-	/**
-	 * @return the invalidAccess
-	 */
-	public Integer getInvalidAccess() {
-		return invalidAccess;
-	}
-
-	/**
-	 * @return the invalidAccessMax
-	 */
-	public Integer getInvalidAccessMax() {
-		return invalidAccessMax;
 	}
 
 	/**
@@ -371,27 +221,6 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	}
 
 	/**
-	 * @param active the active to set
-	 */
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
-	/**
-	 * @param expirationDate the expirationDate to set
-	 */
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-	/**
-	 * @param expirationPasswordDate the expirationPasswordDate to set
-	 */
-	public void setExpirationPasswordDate(Date expirationPasswordDate) {
-		this.expirationPasswordDate = expirationPasswordDate;
-	}
-
-	/**
 	 * @param firstName the firstName to set
 	 */
 	public void setFirstName(String firstName) {
@@ -403,20 +232,6 @@ public class DocSourcesLdapUserDetailsImpl extends LdapUserDetailsImpl {
 	 */
 	public void setInitials(String initials) {
 		this.initials = initials;
-	}
-
-	/**
-	 * @param invalidAccess the invalidAccess to set
-	 */
-	public void setInvalidAccess(Integer invalidAccess) {
-		this.invalidAccess = invalidAccess;
-	}
-
-	/**
-	 * @param invalidAccessMax the invalidAccessMax to set
-	 */
-	public void setInvalidAccessMax(Integer invalidAccessMax) {
-		this.invalidAccessMax = invalidAccessMax;
 	}
 
 	/**

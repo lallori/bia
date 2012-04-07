@@ -29,8 +29,8 @@ package org.medici.docsources.service.mail;
 
 import java.net.URLEncoder;
 import java.util.Date;
-import java.util.Locale;
 
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.dao.activationuser.ActivationUserDAO;
 import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
 import org.medici.docsources.domain.ActivationUser;
@@ -114,8 +114,13 @@ public class MailServiceImpl implements MailService {
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setFrom(getMailFrom());
 			message.setTo(user.getMail());
-			message.setSubject(getMessageSource().getMessage("mail.activationUser.subject", null, Locale.ENGLISH));
-			message.setText(getMessageSource().getMessage("mail.activationUser.text", new String[]{user.getFirstName(), user.getAccount(), URLEncoder.encode(activationUser.getUuid().toString(),"UTF-8") }, Locale.ENGLISH));
+			message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.subject"));
+			message.setText(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.text", 
+							new String[]{user.getFirstName(), 
+										 user.getAccount(), 
+										 URLEncoder.encode(activationUser.getUuid().toString(),"UTF-8"), 
+										 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+										 ApplicationPropertyManager.getApplicationProperty("website.domain")}, "{", "}"));
 			getJavaMailSender().send(message);
 			
 			activationUser.setMailSended(Boolean.TRUE);
@@ -138,8 +143,13 @@ public class MailServiceImpl implements MailService {
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setFrom(getMailFrom());
 			message.setTo(user.getMail());
-			message.setSubject(getMessageSource().getMessage("mail.resetUserPassword.subject", null, Locale.ENGLISH));
-			message.setText(getMessageSource().getMessage("mail.resetUserPassword.text", new String[]{user.getFirstName(), user.getAccount(), URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8") }, Locale.ENGLISH));
+			message.setSubject(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.subject"));
+			message.setText(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.text", 
+							new String[]{user.getFirstName(), 
+										 user.getAccount(), 
+										 URLEncoder.encode(passwordChangeRequest.getUuid().toString(),"UTF-8"), 
+										 ApplicationPropertyManager.getApplicationProperty("website.protocol"),
+										 ApplicationPropertyManager.getApplicationProperty("website.domain")}, "{", "}"));
 			getJavaMailSender().send(message);
 
 			passwordChangeRequest.setMailSended(Boolean.TRUE);

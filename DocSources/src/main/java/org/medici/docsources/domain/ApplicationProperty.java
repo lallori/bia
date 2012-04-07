@@ -52,7 +52,7 @@ public class ApplicationProperty implements Serializable {
 	private String id;
 	@Column (name="\"help\"", length=1000, nullable=false)
 	private String help;
-	@Column (name="\"value\"", length=1000, nullable=false)
+	@Column (name="\"value\"", length=3000, nullable=false)
 	private String value;
 
 	/**

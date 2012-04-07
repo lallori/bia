@@ -106,6 +106,17 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Long countDocumentCreatedAfterDate(Date inputDate) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE dateCreated>=:inputDate");
+		query.setParameter("inputDate", inputDate);
+
+		return (Long) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Long countDocumentsLinkedToAVolume(Integer summaryId) throws PersistenceException {
 		Query query = getEntityManager().createQuery("SELECT COUNT(entryId) FROM Document WHERE volume.summaryId =:summaryId");
 		query.setParameter("summaryId", summaryId);
@@ -144,7 +155,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 			return (Document) query.getResultList().get(0);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -152,7 +163,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException {
 		return this.findDocument(volNum, volLetExt, folioNum, folioMod);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -163,7 +174,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 
         return (Document) query.getSingleResult();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -187,7 +198,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -199,7 +210,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -223,7 +234,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -393,7 +404,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		return page;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -435,7 +446,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		return page;
 		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -515,7 +526,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		return page;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -597,7 +608,7 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		
 		return page;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

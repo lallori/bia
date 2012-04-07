@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.volume;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -43,6 +44,14 @@ import org.medici.docsources.domain.Volume;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface VolumeDAO extends Dao<Integer, Volume> {
+
+	/**
+	 * 
+	 * @param inputDate
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Long countVolumeCreatedAfterDate(Date inputDate) throws PersistenceException;
 
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Volume}created on database.
@@ -72,6 +81,15 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @throws PersistenceException
 	 */
 	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Volume> searchVolumes(String query) throws PersistenceException;
 
 	/**
 	 * This method searches volumes which contains text input parameter in one of his fields
@@ -83,15 +101,6 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @throws PersistenceException
 	 */
 	public Page searchVolumes(String text, PaginationFilter paginationFilter) throws PersistenceException;
-	
-	/**
-	 * 
-	 * 
-	 * @param query
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public List<Volume> searchVolumes(String query) throws PersistenceException;
 
 	/**
 	 * This method set digitized information to true to a list of input volumes.

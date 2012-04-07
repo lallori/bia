@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.common.context.ApplicationContextProvider;
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,28 +49,79 @@ import org.springframework.test.context.ContextConfiguration;
 public class ApplicationPropertyManager {
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
-
-	protected final static ApplicationPropertyManager instance;
 	private final Map<String, String> simpleProperties = new HashMap<String, String>();
+	protected final static ApplicationPropertyManager instance;
 
 	static {
 		instance = new ApplicationPropertyManager();
 		instance.init(true);
 	}
-
 	/**
-	 * @param applicationPropertyDAO
-	 *            the applicationPropertyDAO to set
+	 * 
+	 * @return
 	 */
-	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
-		this.applicationPropertyDAO = applicationPropertyDAO;
+	public static List<String> getApplicationPropertiesNames() {
+		List<String> list = new ArrayList<String>();
+		list.addAll(instance.simpleProperties.keySet());
+		Collections.sort(list);
+
+		return list;
 	}
 
 	/**
-	 * @return the applicationPropertyDAO
+	 * This method return an application property.
+	 * 
+	 * @param propertyName
+	 * @return
 	 */
-	public ApplicationPropertyDAO getApplicationPropertyDAO() {
-		return applicationPropertyDAO;
+	public static String getApplicationProperty(String propertyName) {
+		if (!instance.simpleProperties.containsKey(propertyName)) {
+			String property = instance.getApplicationPropertyDAO().getApplicationProperty(propertyName);
+			instance.simpleProperties.put(propertyName, property);
+		}
+
+		return instance.simpleProperties.get(propertyName);
+	}
+
+	/**
+	 * 
+	 * @param string
+	 * @param strings
+	 * @return
+	 */
+	public static String getApplicationProperty(String propertyName, String[] stringsToBeReplaced, String prefixPlaceHolder, String suffixPlaceHolder) {
+		if (!instance.simpleProperties.containsKey(propertyName)) {
+			String property = instance.getApplicationPropertyDAO().getApplicationProperty(propertyName);
+			instance.simpleProperties.put(propertyName, property);
+		}
+
+		String property = instance.simpleProperties.get(propertyName);
+		
+		for (int i=0; i<stringsToBeReplaced.length; i++) {
+			property = StringUtils.replace(property, prefixPlaceHolder + i + suffixPlaceHolder, stringsToBeReplaced[i]);
+		}
+		
+		return property;
+	}
+
+	/**
+     * 
+     */
+	public final static void init() {
+		instance.init(false);
+	}
+
+	/**
+     * 
+     */
+	public static void refreshProperties() {
+		List<String> list = new ArrayList<String>();
+		list.addAll(instance.simpleProperties.keySet());
+
+		for (int i = 0; i < list.size(); i++) {
+			instance.simpleProperties.remove(list.get(i));
+			getApplicationProperty(list.get(i));
+		}
 	}
 
 	/**
@@ -80,10 +132,10 @@ public class ApplicationPropertyManager {
 	}
 
 	/**
-     * 
-     */
-	public final static void init() {
-		instance.init(false);
+	 * @return the applicationPropertyDAO
+	 */
+	public ApplicationPropertyDAO getApplicationPropertyDAO() {
+		return applicationPropertyDAO;
 	}
 
 	/**
@@ -110,41 +162,10 @@ public class ApplicationPropertyManager {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * @param applicationPropertyDAO
+	 *            the applicationPropertyDAO to set
 	 */
-	public static List<String> getApplicationPropertiesNames() {
-		List<String> list = new ArrayList<String>();
-		list.addAll(instance.simpleProperties.keySet());
-		Collections.sort(list);
-
-		return list;
-	}
-
-	/**
-     * 
-     */
-	public static void refreshProperties() {
-		List<String> list = new ArrayList<String>();
-		list.addAll(instance.simpleProperties.keySet());
-
-		for (int i = 0; i < list.size(); i++) {
-			instance.simpleProperties.remove(list.get(i));
-			getApplicationProperty(list.get(i));
-		}
-	}
-
-	/**
-	 * 
-	 * @param propertyName
-	 * @return
-	 */
-	public static String getApplicationProperty(String propertyName) {
-		if (!instance.simpleProperties.containsKey(propertyName)) {
-			String property = instance.getApplicationPropertyDAO().getApplicationProperty(propertyName);
-			instance.simpleProperties.put(propertyName, property);
-		}
-
-		return instance.simpleProperties.get(propertyName);
+	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
+		this.applicationPropertyDAO = applicationPropertyDAO;
 	}
 }

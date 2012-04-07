@@ -68,7 +68,7 @@ public class ActivationUserEmailJob {
 	 * 
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Scheduled(fixedRate=600000)
+	@Scheduled(fixedRate=300000)
 	public void execute() {
 		MDC.put("username", "threademail");
 		try {

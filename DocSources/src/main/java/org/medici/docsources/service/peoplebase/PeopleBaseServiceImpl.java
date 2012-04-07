@@ -1019,8 +1019,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				return userHistory.getPerson();
 			}
 			
-			// in case of no user History we extract last person created on database.
-			return getPeopleDAO().findLastEntryPerson();
+			// in case of no user History we return .
+			return null;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

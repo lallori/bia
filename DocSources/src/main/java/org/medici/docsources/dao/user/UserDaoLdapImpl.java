@@ -32,9 +32,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,23 +96,6 @@ public class UserDaoLdapImpl implements UserDAO {
 			user.setMail(context.getStringAttribute("mail"));
 			user.setTitle(context.getStringAttribute("personalTitle"));
 			user.setInterests(context.getStringAttribute("info"));
-			user.setActive(!Boolean.valueOf(context.getStringAttribute("krb5AccountDisabled")));
-			user.setLocked(Boolean.valueOf(context.getStringAttribute("krb5AccountLockedOut")));
-			try {
-				// 20101030214433+0100
-				DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
-				user.setExpirationDate(dateFormat.parse(context.getStringAttribute("krb5AccountExpirationTime")));
-				user.setExpirationPasswordDate(dateFormat.parse(context.getStringAttribute("krb5PasswordEnd")));
-				user.setRegistrationDate(dateFormat.parse(context.getStringAttribute("krb5ValidStart")));
-			} catch (ParseException pex) {
-				pex.printStackTrace();
-			}
-			try {
-				user.setInvalidAccess(Integer.valueOf(context.getStringAttribute("krb5MaxLife")));
-				user.setInvalidAccessMax(Integer.valueOf(context.getStringAttribute("krb5MaxRenew")));
-			} catch (NumberFormatException nfex) {
-				nfex.printStackTrace();
-			}
 			
 			try {
 				if (context.getObjectAttribute("photo") != null) {
@@ -405,22 +385,6 @@ public class UserDaoLdapImpl implements UserDAO {
 		if (user.getInterests() != null)
 			if (!user.getInterests().equals(""))
 				context.setAttributeValue("info", user.getInterests());
-
-		if (user.getActive() != null) 
-			context.setAttributeValue("krb5AccountDisabled", (user.getActive()) ? Boolean.FALSE.toString() : Boolean.TRUE.toString());
-		if (user.getLocked() != null) 
-			context.setAttributeValue("krb5AccountLockedOut", user.getLocked().toString());
-		if (user.getInvalidAccess() != null)
-			context.setAttributeValue("krb5MaxLife", user.getInvalidAccess().toString());
-		if (user.getInvalidAccessMax() != null)
-			context.setAttributeValue("krb5MaxRenew", user.getInvalidAccessMax().toString());
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssZZZZ");
-		if (user.getExpirationDate() != null)
-			context.setAttributeValue("krb5AccountExpirationTime", dateFormat.format(user.getExpirationDate()));
-		if (user.getExpirationPasswordDate() != null)
-			context.setAttributeValue("krb5PasswordEnd", dateFormat.format(user.getExpirationPasswordDate()));
-		if (user.getRegistrationDate() != null)
-			context.setAttributeValue("krb5ValidStart", dateFormat.format(user.getRegistrationDate()));
 
 		if (context.getObjectAttribute("photo") != null)  {
 			context.removeAttributeValue("photo;binary", context.getObjectAttribute("photo"));

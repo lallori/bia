@@ -65,7 +65,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public Integer checkNewMessages() throws ApplicationThrowable {
+	public Long checkNewMessages() throws ApplicationThrowable {
 		try {
 			return getUserMessageDAO().findNumberOfNewMessages();
 		} catch (Throwable th) {

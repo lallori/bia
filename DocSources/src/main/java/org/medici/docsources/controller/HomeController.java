@@ -28,8 +28,16 @@
 package org.medici.docsources.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.medici.docsources.domain.SearchFilter.SearchType;
+import org.medici.docsources.domain.UserInformation;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,15 +53,46 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/Home")
 public class HomeController {
+	@Autowired
+	private UserService userService;
+	
 	/**
 	 * 
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm() {
+	public ModelAndView setupForm(HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		// We need genders enumeration to populate relative combo-box
 		model.put("searchTypes", SearchType.values());		
+
+		try {			
+			UserInformation userInformation = getUserService().findUserInformation();
+			httpSession.setAttribute("userInformation", userInformation);
+
+			HashMap<String, List<?>> userStatistics = getUserService().getMyHistoryReport(1);
+			httpSession.setAttribute("userStatistics", userStatistics);
+
+			HashMap<String, Long> archiveStatistics = getUserService().getArchiveStatisticsFromLastLogin(userInformation);
+			httpSession.setAttribute("archiveStatistics", archiveStatistics);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/Welcome", model);
+		}
+
 		return new ModelAndView("Home", model);
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
 	}
 }

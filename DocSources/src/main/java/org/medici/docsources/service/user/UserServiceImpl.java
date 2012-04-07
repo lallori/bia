@@ -37,16 +37,24 @@ import java.util.UUID;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.common.util.ApplicationError;
 import org.medici.docsources.common.util.RegExUtils;
 import org.medici.docsources.dao.activationuser.ActivationUserDAO;
 import org.medici.docsources.dao.country.CountryDAO;
+import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.passwordchangerequest.PasswordChangeRequestDAO;
+import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.personalnotes.PersonalNotesDAO;
+import org.medici.docsources.dao.place.PlaceDAO;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.dao.userinformation.UserInformationDAO;
+import org.medici.docsources.dao.usermessage.UserMessageDAO;
+import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.ActivationUser;
 import org.medici.docsources.domain.Country;
 import org.medici.docsources.domain.PasswordChangeRequest;
@@ -55,9 +63,12 @@ import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Category;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,18 +95,36 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private CountryDAO countryDAO;
 	@Autowired
+	private DocumentDAO documentDAO;
+	@Autowired
 	private PasswordChangeRequestDAO passwordChangeRequestDAO;
 	@Autowired
+	private PeopleDAO peopleDAO;
+	@Autowired
 	private PersonalNotesDAO personalNotesDAO;
+	@Autowired
+	private PlaceDAO placeDAO;
+
 	@Autowired(required = false)
 	@Qualifier("userDaoLdapImpl")
-	private UserDAO userDAO; 
+	private UserDAO userDAO;
+
 	@Autowired
 	private UserHistoryDAO userHistoryDAO;
+
+	@Autowired
+	private UserInformationDAO userInformationDAO;
+
+	@Autowired
+	private UserMessageDAO userMessageDAO;
+
+	@Autowired
+	private VolumeDAO volumeDAO;
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void activateUser(UUID uuid) throws ApplicationThrowable {
 		try {
@@ -103,9 +132,9 @@ public class UserServiceImpl implements UserService {
 			ActivationUser activationUser = getActivationUserDAO().find(uuid.toString());
 			
 			//Search user by account and update active flag
-			User user = getUserDAO().findUser(activationUser.getAccount());
+			UserInformation user = getUserInformationDAO().find(activationUser.getAccount());
 			user.setActive(Boolean.TRUE);
-			getUserDAO().merge(user);
+			getUserInformationDAO().merge(user);
 			
 			//Complete the activation by updating the activation request.
 			activationUser.setActive(Boolean.TRUE);
@@ -120,6 +149,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void addActivationUserRequest(User user, String remoteAddress) throws ApplicationThrowable {
 		try {
@@ -139,6 +169,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void addPasswordChangeRequest(User user, String remoteAddress) throws ApplicationThrowable {
 		try {
@@ -158,6 +189,7 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteMyHistory() throws ApplicationThrowable {
 		try {
@@ -166,10 +198,11 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteMyHistory(Category category) throws ApplicationThrowable {
 		try {
@@ -178,10 +211,11 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteUser(User user) throws ApplicationThrowable {
 		try {
@@ -190,10 +224,10 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteUserHistory(String username) throws ApplicationThrowable {
 		try {
@@ -202,10 +236,10 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void deleteUserHistory(String username, Category category) throws ApplicationThrowable {
 		try {
@@ -213,8 +247,7 @@ public class UserServiceImpl implements UserService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
-	}
-
+	} 
 	/**
 	 * {@inheritDoc}
 	 */
@@ -242,7 +275,6 @@ public class UserServiceImpl implements UserService {
 
 		return personalNotesToUpdate;
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -305,7 +337,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -320,7 +352,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	@Override
 	public PersonalNotes findPersonalNotes(String account) throws ApplicationThrowable {
 		try {
@@ -364,6 +396,30 @@ public class UserServiceImpl implements UserService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public UserInformation findUserInformation() throws ApplicationThrowable {
+		try {
+			return getUserInformationDAO().find(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UserInformation findUserInformation(String account) throws ApplicationThrowable {
+		try {
+			return getUserInformationDAO().find(account);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<User> findUsers(User user) throws ApplicationThrowable {
 		try {
 			return getUserDAO().findUsers(user);
@@ -371,7 +427,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -472,10 +528,40 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HashMap<String, Long> getArchiveStatisticsFromLastLogin(UserInformation userInformation) throws ApplicationThrowable {
+		HashMap<String, Long> archiveStatistics = new HashMap<String, Long>(4);
+		try {
+			archiveStatistics.put("Document", getDocumentDAO().countDocumentCreatedAfterDate(userInformation.getLastLoginDate()));
+			archiveStatistics.put("People", getPeopleDAO().countPeopleCreatedAfterDate(userInformation.getLastLoginDate()));
+			archiveStatistics.put("Place", getPlaceDAO().countPlaceCreatedAfterDate(userInformation.getLastLoginDate()));
+			archiveStatistics.put("Volume", getVolumeDAO().countVolumeCreatedAfterDate(userInformation.getLastLoginDate()));
+			archiveStatistics.put("Message", getUserMessageDAO().countMessageReceivedAfterDate(userInformation.getLastLoginDate()));
+		} catch (Throwable th) {
+			archiveStatistics.put("Document", new Long(0));
+			archiveStatistics.put("People", new Long(0));
+			archiveStatistics.put("Place", new Long(0));
+			archiveStatistics.put("Volume", new Long(0));
+			archiveStatistics.put("Message", new Long(0));
+		}
+
+		return archiveStatistics;
+	}
+
+	/**
 	 * @return the countryDAO
 	 */
 	public CountryDAO getCountryDAO() {
 		return countryDAO;
+	}
+
+	/**
+	 * @return the documentDAO
+	 */
+	public DocumentDAO getDocumentDAO() {
+		return documentDAO;
 	}
 
 	/**
@@ -496,11 +582,19 @@ public class UserServiceImpl implements UserService {
 		return historyReport;
 	}
 
+
 	/**
 	 * @return the passwordChangeRequestDAO
 	 */
 	public PasswordChangeRequestDAO getPasswordChangeRequestDAO() {
 		return passwordChangeRequestDAO;
+	}
+	
+	/**
+	 * @return the peopleDAO
+	 */
+	public PeopleDAO getPeopleDAO() {
+		return peopleDAO;
 	}
 
 	/**
@@ -508,6 +602,13 @@ public class UserServiceImpl implements UserService {
 	 */
 	public PersonalNotesDAO getPersonalNotesDAO() {
 		return personalNotesDAO;
+	}
+
+	/**
+	 * @return the placeDAO
+	 */
+	public PlaceDAO getPlaceDAO() {
+		return placeDAO;
 	}
 
 	/**
@@ -522,6 +623,27 @@ public class UserServiceImpl implements UserService {
 	 */
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
+	}
+
+	/**
+	 * @return the userInformationDAO
+	 */
+	public UserInformationDAO getUserInformationDAO() {
+		return userInformationDAO;
+	}
+
+	/**
+	 * @return the userMessageDAO
+	 */
+	public UserMessageDAO getUserMessageDAO() {
+		return userMessageDAO;
+	}
+
+	/**
+	 * @return the volumeDAO
+	 */
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
 	}
 
 	/**
@@ -579,25 +701,14 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
 	public void registerUser(User user) throws ApplicationThrowable {
 		try {
 			// User account is generated by application
 			user.setAccount(generateAccount(user));
-			user.setActive(false);
-			user.setLocked(false);
-			user.setRegistrationDate(new Date());
-			Calendar expirationDate = Calendar.getInstance();
-			expirationDate.add(Calendar.YEAR, 1);
-			user.setExpirationDate(expirationDate.getTime());
-			Calendar expirationPasswordDate = Calendar.getInstance();
-			expirationPasswordDate.add(Calendar.YEAR, 2);
-			user.setExpirationPasswordDate(expirationPasswordDate.getTime());
 			//User initial is generated by application
 			user.setInitials(generateInitials(user));
-			user.setInvalidAccess(0);
-			user.setInvalidAccessMax(5);
-			
 			// Every user is always register as COMMUNITY_USER
 			List<UserRole> userRoles = new ArrayList<UserRole>();
 			userRoles.add(UserRole.COMMUNITY_USERS);
@@ -605,6 +716,19 @@ public class UserServiceImpl implements UserService {
 
 			getUserDAO().persist(user);
 
+			UserInformation userInformation = new UserInformation(user.getAccount());
+			userInformation.setRegistrationDate(new Date());
+			Calendar expirationDate = Calendar.getInstance();
+			expirationDate.add(Calendar.MONTH, NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.expiration.user.months")));
+			userInformation.setExpirationDate(expirationDate.getTime());
+			Calendar expirationPasswordDate = Calendar.getInstance();
+			expirationPasswordDate.add(Calendar.MONTH, NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("user.expiration.password.months")));
+			userInformation.setExpirationPasswordDate(expirationPasswordDate.getTime());
+			userInformation.setBadLogin(0);
+			userInformation.setActive(false);
+			userInformation.setLocked(false);
+			getUserInformationDAO().persist(userInformation);
+			
 			// We generate the request for sending activation mail 
 			ActivationUser activationUser = new ActivationUser();
 			activationUser.setUuid(UUID.randomUUID().toString());
@@ -666,7 +790,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -678,7 +802,7 @@ public class UserServiceImpl implements UserService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -731,6 +855,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * @param documentDAO the documentDAO to set
+	 */
+	public void setDocumentDAO(DocumentDAO documentDAO) {
+		this.documentDAO = documentDAO;
+	}
+
+	/**
 	 * 
 	 * @param passwordChangeRequestDAO the passwordChangeRequestDAO to set
 	 */
@@ -739,10 +870,24 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * @param peopleDAO the peopleDAO to set
+	 */
+	public void setPeopleDAO(PeopleDAO peopleDAO) {
+		this.peopleDAO = peopleDAO;
+	}
+
+	/**
 	 * @param personalNotesDAO the personalNotesDAO to set
 	 */
 	public void setPersonalNotesDAO(PersonalNotesDAO personalNotesDAO) {
 		this.personalNotesDAO = personalNotesDAO;
+	}
+
+	/**
+	 * @param placeDAO the placeDAO to set
+	 */
+	public void setPlaceDAO(PlaceDAO placeDAO) {
+		this.placeDAO = placeDAO;
 	}
 
 	/**
@@ -757,6 +902,27 @@ public class UserServiceImpl implements UserService {
 	 */
 	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
 		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @param userInformationDAO the userInformationDAO to set
+	 */
+	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
+		this.userInformationDAO = userInformationDAO;
+	}
+
+	/**
+	 * @param userMessageDAO the userMessageDAO to set
+	 */
+	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
+		this.userMessageDAO = userMessageDAO;
+	}
+
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
 	}
 
 	/**

@@ -96,7 +96,13 @@ public class AjaxController {
 		UserHistory lastEntry = null;
 		try{
 			lastEntry = getUserService().searchLastUserHistoryEntry();
-			model.put("category", lastEntry.getCategory().toString());
+			
+			// Check is necessary for new user which has not history... 
+			if (lastEntry != null) {
+				model.put("category", lastEntry.getCategory().toString());
+			} else {
+				model.put("category", "");
+			}
 			
 			return new ModelAndView("responseOK", model);
 		}catch(ApplicationThrowable aex){

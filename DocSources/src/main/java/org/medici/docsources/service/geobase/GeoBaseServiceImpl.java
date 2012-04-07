@@ -103,6 +103,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			place.setPlaceAllId(null);
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			place.setDateEntered(new Date());
+			place.setDateCreated(new Date());
+			place.setLastUpdate(new Date());
 			place.setAddlRes(false);
 			place.setLogicalDelete(Boolean.FALSE);
 			if(place.getParentPlace() != null){
@@ -294,6 +296,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			placeToUpdate.setPlaceNameFull(placeToUpdate.getPlaceName() + " / " + placeToUpdate.getPlParent() + " / " + placeToUpdate.getgParent() + " / " + placeToUpdate.getGgp());
 			placeToUpdate.setPlNameFullPlType(placeToUpdate.getPlaceName() + " (" + placeToUpdate.getPlType() + ") / " + placeToUpdate.getPlParent() + " (" + placeToUpdate.getParentType() + ") / " + placeToUpdate.getgParent() + " (" + placeToUpdate.getGpType() + ") / " + placeToUpdate.getGgp() + " (" + placeToUpdate.getGgpType() + ") /" + placeToUpdate.getGp2() + " (" + placeToUpdate.getGp2Ttype() + ")");
 			
+			placeToUpdate.setLastUpdate(new Date());
 			getPlaceDAO().merge(placeToUpdate);
 
 			getUserHistoryDAO().persist(new UserHistory("Edit details ", Action.MODIFY, Category.PLACE, placeToUpdate));
@@ -362,8 +365,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 				return userHistory.getPlace();
 			}
 			
-			// in case of no user History we extract last place created on database.
-			return getPlaceDAO().findLastEntryPlace();
+			return null;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

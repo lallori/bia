@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.place;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -45,21 +46,20 @@ import org.medici.docsources.domain.Place;
 public interface PlaceDAO extends Dao<Integer, Place> {
 
 	/**
+	 * 
+	 * @param inputDate
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Long countPlaceCreatedAfterDate(Date inputDate) throws PersistenceException;
+	
+	/**
 	 * This method returns a list of places with the same geogKey
 	 * 
 	 * @return List of {@link org.medici.docsources.domain.Place}
 	 * @throws PersistenceException
 	 */
 	public List<Place> findByGeogKey(Integer geogKey) throws PersistenceException;
-	
-	/**
-	 * This method find a new geogKey for a new Place.
-	 * 
-	 * @param plSource
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Place findNewGeogKey(String plSource) throws PersistenceException;
 	
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Place}created on database.
@@ -69,6 +69,15 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 */
 	public Place findLastEntryPlace() throws PersistenceException;
 	
+	/**
+	 * This method find a new geogKey for a new Place.
+	 * 
+	 * @param plSource
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Place findNewGeogKey(String plSource) throws PersistenceException;
+
 	/**
 	 * This method returns the principal Place
 	 * 
@@ -97,7 +106,7 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchDeathPlace(String query) throws PersistenceException;
-
+	
 	/**
 	 * This method searches for places which could be related to a document which contains 
 	 * a text parameter (String searchText). 
@@ -117,7 +126,7 @@ public interface PlaceDAO extends Dao<Integer, Place> {
 	 * @throws PersistenceException
 	 */
 	public List<Place> searchPlaceParent(String query) throws PersistenceException;
-	
+
 	/**
 	 * This method searches places which contains the parameters set in {@link org.medici.docsources.common.search}
 	 * object and return a result page. 

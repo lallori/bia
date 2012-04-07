@@ -1,5 +1,5 @@
 /*
- * UserMessageDAO.java
+ * UserInformationDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,53 +25,16 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.usermessage;
+package org.medici.docsources.dao.userinformation;
 
-import java.util.Date;
-
-import javax.persistence.PersistenceException;
-
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.dao.Dao;
-import org.medici.docsources.domain.UserMessage;
+import org.medici.docsources.domain.UserInformation;
 
 /**
- * UserMessages Dao.
+ * UserInformation Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
-public interface UserMessageDAO extends Dao<Integer, UserMessage> {
+public interface UserInformationDAO extends Dao<String, UserInformation> {
 
-	/**
-	 * 
-	 * @param inputDate
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Long countMessageReceivedAfterDate(Date inputDate) throws PersistenceException;
-
-	/**
-	 * 
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Long findNumberOfNewMessages() throws PersistenceException;
-
-	/**
-	 * 
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Long findNumberOfUnreadedMessages() throws PersistenceException;
-
-	/**
-	 * 
-	 * @param userMessageSearch
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page searchMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws PersistenceException;
 }

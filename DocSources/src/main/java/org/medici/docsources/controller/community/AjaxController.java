@@ -75,7 +75,7 @@ public class AjaxController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		try{
-			Integer numberOfNewMessages = getCommunityService().checkNewMessages();
+			Long numberOfNewMessages = getCommunityService().checkNewMessages();
 			model.put("numberOfNewMessages", numberOfNewMessages.toString());
 			model.put("numberOfNewMessages", "0");
 			model.put("newMessages", (numberOfNewMessages>0) ? "true" : "false");

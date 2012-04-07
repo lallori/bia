@@ -47,7 +47,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Integer checkNewMessages() throws ApplicationThrowable;
+	public Long checkNewMessages() throws ApplicationThrowable;
 
 	/**
 	 * 

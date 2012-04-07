@@ -47,7 +47,6 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
 	@Autowired
 	private ReCaptcha reCaptcha;
 
-
 	/**
 	 * {@inheritDoc}
 	 */

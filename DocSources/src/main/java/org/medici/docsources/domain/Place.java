@@ -250,6 +250,16 @@ public class Place implements Serializable {
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean logicalDelete;
 
+	@Column (name="\"DATECREATED\"")
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
+	private Date dateCreated;
+	
+	@Column (name="\"LASTUPDATE\"")
+	@Field(index=Index.UN_TOKENIZED, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	@DateBridge(resolution=Resolution.DAY) 
+	private Date lastUpdate;
+	
 	@OneToMany(mappedBy="senderPlace", fetch=FetchType.LAZY)
 	//@ContainedIn
     private Set<Document> senderDocuments;
@@ -803,6 +813,34 @@ public class Place implements Serializable {
 	 */
 	public Boolean getLogicalDelete() {
 		return logicalDelete;
+	}
+
+	/**
+	 * @return the dateCreated
+	 */
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	/**
+	 * @param dateCreated the dateCreated to set
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	/**
+	 * @return the lastUpdate
+	 */
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	/**
+	 * @param lastUpdate the lastUpdate to set
+	 */
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
 }

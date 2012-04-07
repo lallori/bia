@@ -41,6 +41,7 @@ import org.medici.docsources.domain.PersonalNotes;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Category;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -221,6 +222,21 @@ public interface UserService {
 	public User findUser(User user) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserInformation findUserInformation() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param account
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public UserInformation findUserInformation(String account) throws ApplicationThrowable;
+
+	/**
 	 * Given in input an user containing search fields conditions, this method
 	 * will returns {@link java.util.List} of User object that match with the search
 	 *   
@@ -242,6 +258,15 @@ public interface UserService {
 	 */
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize) throws ApplicationThrowable;
 
+
+	/**
+	 * 
+	 * @param userInformation
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HashMap<String, Long> getArchiveStatisticsFromLastLogin(UserInformation userInformation)throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param numberOfHistory
@@ -249,8 +274,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public HashMap<String, List<?>> getMyHistoryReport(Integer numberOfHistory) throws ApplicationThrowable;
-
-
+	
 	/**
 	 * 
 	 * @param account
@@ -277,7 +301,7 @@ public interface UserService {
 	 *          - 3, password contains alphabetic chars and letters;
 	 */
 	public Integer ratePassword(String password);
-	
+
 	/**
 	 * This method implements business logic for register a new user.<br>
 	 * The input user must be completed, with following informations :<br>
@@ -309,7 +333,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public void restoreMyHistory(Category category) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param username
@@ -331,7 +355,7 @@ public interface UserService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserHistory searchLastUserHistoryEntry() throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param category

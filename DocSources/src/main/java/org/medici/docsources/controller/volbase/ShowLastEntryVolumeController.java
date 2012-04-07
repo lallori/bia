@@ -73,18 +73,21 @@ public class ShowLastEntryVolumeController {
 	
 		try {
 			Volume volume = getVolBaseService().findLastEntryVolume();
-			model.put("volume", volume);
+			
+			if (volume != null) {
+				model.put("volume", volume);
+				model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
+				Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
+				model.put("image", image);
+				model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
 
-			model.put("volDocsRelated", getVolBaseService().findVolumeDocumentsRelated(volume.getSummaryId()));
-			Image image = getManuscriptViewerService().findVolumeImageSpine(volume.getVolNum(), volume.getVolLetExt());
-			model.put("image", image);
-
-			model.put("historyNavigator", getVolBaseService().getHistoryNavigator(volume));
+				return new ModelAndView("volbase/ShowVolume", model);
+			} else {
+				return new ModelAndView("empty", model);
+			}
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowVolume", model);
 		}
-
-		return new ModelAndView("volbase/ShowVolume", model);
 	}
 
 	/**

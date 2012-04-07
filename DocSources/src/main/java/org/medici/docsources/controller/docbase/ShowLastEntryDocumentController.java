@@ -66,18 +66,22 @@ public class ShowLastEntryDocumentController {
 
 		try {
 			Document document = getDocBaseService().findLastEntryDocument();
-			model.put("document", document);
-
-			HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
-			model.put("historyNavigator", historyNavigator);
-
-			Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
-			model.put("image", image);
+			if (document != null) {
+				model.put("document", document);
+	
+				HistoryNavigator historyNavigator = getDocBaseService().getHistoryNavigator(document);
+				model.put("historyNavigator", historyNavigator);
+	
+				Image image = getManuscriptViewerService().findDocumentImageThumbnail(document);
+				model.put("image", image);
+				return new ModelAndView("docbase/ShowDocument", model);
+			} else {
+				return new ModelAndView("empty", model);
+			}
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowLastEntryDocument", model);
 		}
 
-		return new ModelAndView("docbase/ShowDocument", model);
 	}
 
 	/**

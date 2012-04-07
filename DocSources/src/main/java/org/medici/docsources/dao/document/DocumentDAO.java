@@ -56,6 +56,14 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	public Document checkVolumeFolio(Integer summaryId) throws PersistenceException;
 	
 	/**
+	 * 
+	 * @param inputDate
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Long countDocumentCreatedAfterDate(Date inputDate) throws PersistenceException;
+	
+	/**
 	 * This method is used to count how many documents are linked to a volume.
 	 * 
 	 * @param summaryId
@@ -63,7 +71,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Long countDocumentsLinkedToAVolume(Integer summaryId) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param volNum
@@ -74,7 +82,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param folioNum
@@ -83,7 +91,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Document findDocumentByFolioStart(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws PersistenceException;
-	
+
 	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.Document} 
 	 * created on database.
@@ -92,7 +100,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Document findLastEntryDocument() throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param summaryId
@@ -160,7 +168,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Page searchDocumentsRelated(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param volumeToSearch
@@ -169,7 +177,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Page searchDocumentsRelatedVolume(String volumeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param personToSearch
@@ -178,7 +186,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Page searchRecipientDocumentsPerson(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param placeToSearch
@@ -187,7 +195,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param personToSearch
@@ -205,7 +213,7 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Page searchSenderDocumentsPerson(String personToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param placeToSearch

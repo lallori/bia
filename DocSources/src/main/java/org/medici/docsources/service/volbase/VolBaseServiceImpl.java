@@ -424,9 +424,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 			if (userHistory != null) {
 				return userHistory.getVolume();
 			}
-			
-			// in case of no user History we extract last volume created on database.
-			return getVolumeDAO().findLastEntryVolume();
+
+			return null;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

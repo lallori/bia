@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.people;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,14 @@ import org.medici.docsources.domain.People;
 public interface PeopleDAO extends Dao<Integer, People> {
 	
 	/**
+	 * 
+	 * @param inputDate
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Long countPeopleCreatedAfterDate(Date inputDate) throws PersistenceException;
+	
+	/**
 	 * This method returns last entry {@link org.medici.docsources.domain.People} 
 	 * created on database.
 	 * 
@@ -61,14 +70,6 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws PersistenceException;
-	
-	/**
-	 * 
-	 * @param placeAllId
-	 * @return
-	 * @throws PersistenceException
-	 */
 	public Integer findNumberOfActiveEndInPlace(Integer placeAllId) throws PersistenceException;
 	
 	/**
@@ -77,7 +78,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfBirthInPlace(Integer placeAllId) throws PersistenceException;
+	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws PersistenceException;
 	
 	/**
 	 * 
@@ -85,8 +86,16 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Integer findNumberOfDeathInPlace(Integer placeAllId) throws PersistenceException;
+	public Integer findNumberOfBirthInPlace(Integer placeAllId) throws PersistenceException;
 
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Integer findNumberOfDeathInPlace(Integer placeAllId) throws PersistenceException;
+	
 	/**
 	 * 
 	 * @param placeAllIds
@@ -109,7 +118,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 
@@ -118,8 +127,8 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-	
+	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+
 	/**
 	 * 
 	 * @param placeToSearch
@@ -139,7 +148,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public List<People> searchChildLinkableToPerson(Integer personId, String query) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param placeToSearch
@@ -148,16 +157,6 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public Page searchDeathPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
-	
-	/**
-	 * This method searches for fathers which could be related to a person which contains 
-	 * a text parameter (String query).
-	 * 
-	 * @param query Text to be searched
-	 * @return A List<People> of fathers that could be related to a person.
-	 * @throws PersistenceException
-	 */
-	public List<People> searchFatherLinkableToPerson(String query) throws PersistenceException;
 
 	/**
 	 * 
@@ -168,6 +167,16 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public Page searchFamilyPerson(String familyName, String familyNamePrefix, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * This method searches for fathers which could be related to a person which contains 
+	 * a text parameter (String query).
+	 * 
+	 * @param query Text to be searched
+	 * @return A List<People> of fathers that could be related to a person.
+	 * @throws PersistenceException
+	 */
+	public List<People> searchFatherLinkableToPerson(String query) throws PersistenceException;
 	
 	/**
 	 * This method searches for mothers which could be related to a person which contains 
@@ -189,7 +198,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws PersistenceException;
-	
+
 	/**
 	 * This method searches for person entities which contains the parameters set in query
 	 * 
@@ -219,7 +228,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public List<People> searchRecipientsPeople(String searchText) throws PersistenceException;
-
+	
 	/**
 	 * 
 	 * @param roleCatToSearch
@@ -248,7 +257,7 @@ public interface PeopleDAO extends Dao<Integer, People> {
 	 * @throws PersistenceException
 	 */
 	public List<People> searchSpouseLinkableToPerson(String query) throws PersistenceException;
-	
+
 	/**
 	 * 
 	 * @param titleOccToSearch

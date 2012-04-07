@@ -853,7 +853,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			}
 			
 			// in case of no user History we extract last document created on database.
-			return getDocumentDAO().findLastEntryDocument();
+			return null;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

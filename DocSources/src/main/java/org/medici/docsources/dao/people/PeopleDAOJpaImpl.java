@@ -28,6 +28,7 @@
 package org.medici.docsources.dao.people;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -102,22 +103,22 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public People findLastEntryPerson() throws PersistenceException {
-        Query query = getEntityManager().createQuery("FROM People where logicalDelete = false ORDER BY dateCreated DESC");
-        query.setMaxResults(1);
+	public Long countPeopleCreatedAfterDate(Date inputDate) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE dateCreated>=:inputDate");
+		query.setParameter("inputDate", inputDate);
 
-        return (People) query.getSingleResult();
+		return (Long) query.getSingleResult();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart!=NULL");
-		query.setParameter("placeAllId", placeAllId);
-		Long result = (Long) query.getSingleResult();
-		return new Integer(result.intValue());
+	public People findLastEntryPerson() throws PersistenceException {
+        Query query = getEntityManager().createQuery("FROM People where logicalDelete = false ORDER BY dateCreated DESC");
+        query.setMaxResults(1);
+
+        return (People) query.getSingleResult();
 	}
 
 	/**
@@ -135,13 +136,24 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Integer findNumberOfActiveStartInPlace(Integer placeAllId) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart!=NULL");
+		query.setParameter("placeAllId", placeAllId);
+		Long result = (Long) query.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Integer findNumberOfBirthInPlace(Integer placeAllId)	throws PersistenceException {
 		Query query = getEntityManager().createQuery("SELECT COUNT(personId) FROM People WHERE bornPlace.placeAllId =:placeAllId AND activeStart=NULL");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -152,7 +164,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -201,23 +213,23 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		return returnValues;
 	}
-
+	
 	/**
 	 * @return the logger
 	 */
 	public Logger getLogger() {
 		return logger;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ") AND activeStart!=NULL");
+		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ") AND activeEnd!=NULL");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -254,11 +266,11 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE (deathPlace.placeAllId=" + placeToSearch + ") AND activeEnd!=NULL");
+		String toSearch = new String("FROM People WHERE (bornPlace.placeAllId=" + placeToSearch + ") AND activeStart!=NULL");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -331,7 +343,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		return page;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -366,7 +378,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
         	return new ArrayList<People>(0);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -406,41 +418,6 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		page.setList(query.getResultList());
 		
 		return page;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<People> searchFatherLinkableToPerson(String searchText) throws PersistenceException {
-		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
-
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-
-        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
-
-        try  {
-	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
-
-			BooleanQuery booleanQuery = new BooleanQuery();
-			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
-	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
-	        for (String singleWord:words) {
-	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
-	        }
-	
-			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
-			// Projection permits to extract only a subset of domain class, tuning application.
-			fullTextQuery.setProjection(outputFields);
-			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
-			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
-
-			return fullTextQuery.list();
-        } catch (ParseException parseException) {
-        	logger.error("Unable to parse query with text " + searchText, parseException);
-        	return new ArrayList<People>(0);
-		}
 	}
 
 	/**
@@ -502,7 +479,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<People> searchMotherLinkableToPerson(String searchText) throws PersistenceException {
+	public List<People> searchFatherLinkableToPerson(String searchText) throws PersistenceException {
 		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
 
 		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
@@ -532,6 +509,41 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<People> searchMotherLinkableToPerson(String searchText) throws PersistenceException {
+		String[] outputFields = new String[]{"personId", "mapNameLf", "activeStart", "activeEnd", "bornYear", "deathYear"};
+
+		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+
+        QueryParser parserMapNameLf = new QueryParser(Version.LUCENE_30, "mapNameLf", fullTextSession.getSearchFactory().getAnalyzer("peopleAnalyzer"));
+
+        try  {
+	        org.apache.lucene.search.Query queryMapNameLf = parserMapNameLf.parse(searchText.toLowerCase() + "*");
+
+			BooleanQuery booleanQuery = new BooleanQuery();
+			booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+	        String[] words = RegExUtils.splitPunctuationAndSpaceChars(searchText);
+	        for (String singleWord:words) {
+	        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("altName.altName", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+	        }
+	
+			final FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery( booleanQuery, People.class );
+			// Projection permits to extract only a subset of domain class, tuning application.
+			fullTextQuery.setProjection(outputFields);
+			// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+			fullTextQuery.setResultTransformer(Transformers.aliasToBean(People.class));
+
+			return fullTextQuery.list();
+        } catch (ParseException parseException) {
+        	logger.error("Unable to parse query with text " + searchText, parseException);
+        	return new ArrayList<People>(0);
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -575,7 +587,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		return page;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -684,7 +696,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
         	return new ArrayList<People>(0);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -725,7 +737,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		return page;
 	}
-	
+
 	/**
 	 * This method search senders using jpa implementation.
 	 * 

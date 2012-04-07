@@ -61,28 +61,33 @@ public class ShowLastEntryPlaceController {
 
 		try {
 			Place place = getGeoBaseService().findLastEntryPlace();
-			model.put("place", place);
-			model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(place.getPlaceAllId()));
-			model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(place.getPlaceAllId()));
-			model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(place.getPlaceAllId()));
-			model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(place.getPlaceAllId()));
-			model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(place.getPlaceAllId()));
-			model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
-			model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
-			model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
-			model.put("placeNames", getGeoBaseService().findPlaceNames(place.getGeogKey()));
-			model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(place));
+			
+			if (place != null) {
+				model.put("place", place);
+				model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(place.getPlaceAllId()));
+				model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(place.getPlaceAllId()));
+				model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(place.getPlaceAllId()));
+				model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(place.getPlaceAllId()));
+				model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(place.getPlaceAllId()));
+				model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
+				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
+				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
+				model.put("placeNames", getGeoBaseService().findPlaceNames(place.getGeogKey()));
+				model.put("historyNavigator", getGeoBaseService().getHistoryNavigator(place));
+	
+				if(place.getPlaceGeographicCoordinates() != null)
+					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
+				else
+					model.put("linkGoogleMaps", null);
 
-			if(place.getPlaceGeographicCoordinates() != null)
-				model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
-			else
-				model.put("linkGoogleMaps", null);
-
+				return new ModelAndView("geobase/ShowPlace", model);
+			} else {
+				return new ModelAndView("empty", model);
+			}
 		} catch (ApplicationThrowable ath) {
 			return new ModelAndView("error/ShowLastEntryPlace", model);
 		}
 		
-		return new ModelAndView("geobase/ShowPlace", model);
 	}
 
 	/**

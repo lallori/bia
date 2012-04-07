@@ -28,6 +28,7 @@
 package org.medici.docsources.dao.place;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -86,6 +87,17 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Long countPlaceCreatedAfterDate(Date inputDate) throws PersistenceException {
+		Query query = getEntityManager().createQuery("SELECT COUNT(placeAllId) FROM Place WHERE dateCreated>=:inputDate");
+		query.setParameter("inputDate", inputDate);
+
+		return (Long) query.getSingleResult();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Place> findByGeogKey(Integer geogKey) throws PersistenceException {
@@ -128,7 +140,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
 		
 		return (Place) query.getSingleResult();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -239,7 +251,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         	return null;
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -287,7 +299,7 @@ public class PlaceDAOJpaImpl extends JpaDao<Integer, Place> implements PlaceDAO 
         	return null;
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

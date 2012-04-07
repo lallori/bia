@@ -57,7 +57,11 @@
     <definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
     
 	<!-- Various definitions -->
-	<definition name="error/ActivateUser" extends="template.registerDOM">
+	<definition name="empty" extends="template.emptyDOM">
+        <put-attribute name="main" value="/WEB-INF/jsp/fragments/Empty.jsp"/>
+    </definition>
+
+   	<definition name="error/ActivateUser" extends="template.registerDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
     </definition>
 

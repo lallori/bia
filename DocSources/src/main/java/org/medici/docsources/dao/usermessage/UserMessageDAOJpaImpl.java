@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.usermessage;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -81,52 +82,44 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	/**
-	 * 
+	 * {@inheritDoc}
 	 */
-	public Page searchMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws PersistenceException {
-		// We prepare object of return method.
-		Page page = new Page(paginationFilter);
-		
-		Query query = null;
-		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
-			String countQuery = "SELECT COUNT(*) " + userMessageSearch.toJPAQuery();
-	        
-			query = getEntityManager().createQuery(countQuery);
-			page.setTotal(new Long((Long) query.getSingleResult()));
-		}
+	@Override
+	public Long countMessageReceivedAfterDate(Date inputDate) throws PersistenceException {
+        String queryString = "SELECT COUNT(messageId) FROM UserMessage WHERE recipient=:recipient and recipientStatus=:recipientStatus and messageSendedDate>=:inputDate ORDER BY messageSendedDate DESC";
 
-		String objectsQuery = userMessageSearch.toJPAQuery();
-		paginationFilter = generatePaginationFilterMYSQL(userMessageSearch, paginationFilter);
-		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
-		if (sortingCriterias.size() > 0) {
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
-		
-		String jpql = objectsQuery + orderBySQL.toString();
-		logger.info("JPQL Query : " + jpql);
-		query = getEntityManager().createQuery(jpql );
-		// We set pagination  
-		query.setFirstResult(paginationFilter.getFirstRecord());
-		query.setMaxResults(paginationFilter.getLength());
+        Query query = getEntityManager().createQuery(queryString);
 
-		// We manage sorting (this manages sorting on multiple fields)
+        query.setParameter("recipient", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("recipientStatus", RecipientStatus.NOT_READ); 
+        query.setParameter("inputDate", inputDate);
 
-		// We set search result on return method
-		page.setList(query.getResultList());
-		
-		return page;
+        return (Long) query.getSingleResult();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long findNumberOfNewMessages() throws PersistenceException {
+        String queryString = "SELECT COUNT(messageId) FROM UserMessage WHERE recipient=:recipient and recipientStatus=:recipientStatus ORDER BY messageSendedDate DESC";
+
+        Query query = getEntityManager().createQuery(queryString);
+
+        query.setParameter("recipient", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        query.setParameter("recipientStatus", RecipientStatus.NOT_READ); 
+
+		return (Long) query.getSingleResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long findNumberOfUnreadedMessages() throws PersistenceException {
+		return this.findNumberOfNewMessages();
+	}
+
 	private PaginationFilter generatePaginationFilterMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) {
 		if (userMessageSearch.getUserMessageCategory().equals(UserMessageCategory.INBOX)) {
 			if (!ObjectUtils.toString(paginationFilter.getSortingColumn()).equals("")) {
@@ -182,27 +175,49 @@ public class UserMessageDAOJpaImpl extends JpaDao<Integer, UserMessage> implemen
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * 
 	 */
-	@Override
-	public Integer findNumberOfNewMessages() throws PersistenceException {
-        String queryString = "SELECT COUNT(messageId) FROM UserMessages WHERE recipient=:recipient and recipientStatus=:recipientStatus ORDER BY messageSendedDate DESC";
-
-        Query query = getEntityManager().createQuery(queryString);
-
-        query.setParameter("recipient", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-        query.setParameter("recipientStatus", RecipientStatus.NOT_READ); 
-
-		Integer result = (Integer) query.getSingleResult();
+	public Page searchMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
 		
-		return result;
-	}
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + userMessageSearch.toJPAQuery();
+	        
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Integer findNumberOfUnreadedMessages() throws PersistenceException {
-		return this.findNumberOfNewMessages();
+		String objectsQuery = userMessageSearch.toJPAQuery();
+		paginationFilter = generatePaginationFilterMYSQL(userMessageSearch, paginationFilter);
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		String jpql = objectsQuery + orderBySQL.toString();
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql );
+		// We set pagination  
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+
+		// We set search result on return method
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * UserMessageDAO.java
+ * UserInformationDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,53 +25,29 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.usermessage;
+package org.medici.docsources.dao.userinformation;
 
-import java.util.Date;
-
-import javax.persistence.PersistenceException;
-
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.search.UserMessageSearch;
-import org.medici.docsources.dao.Dao;
-import org.medici.docsources.domain.UserMessage;
+import org.apache.log4j.Logger;
+import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.UserInformation;
+import org.springframework.stereotype.Repository;
 
 /**
- * UserMessages Dao.
+ * <b>UserInformationDAOJpaImpl</b> is a default implementation of
+ * <b>UserInformationDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * 
+ * @see org.medici.docsources.domain.UserInformation
  */
-public interface UserMessageDAO extends Dao<Integer, UserMessage> {
+@Repository
+public class UserInformationDAOJpaImpl extends JpaDao<String, UserInformation> implements UserInformationDAO {
 
 	/**
 	 * 
-	 * @param inputDate
-	 * @return
-	 * @throws PersistenceException
 	 */
-	public Long countMessageReceivedAfterDate(Date inputDate) throws PersistenceException;
+	private static final long serialVersionUID = 1193605850422464008L;
 
-	/**
-	 * 
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Long findNumberOfNewMessages() throws PersistenceException;
+	private final Logger logger = Logger.getLogger(this.getClass());
 
-	/**
-	 * 
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Long findNumberOfUnreadedMessages() throws PersistenceException;
-
-	/**
-	 * 
-	 * @param userMessageSearch
-	 * @param paginationFilter
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Page searchMYSQL(UserMessageSearch userMessageSearch, PaginationFilter paginationFilter) throws PersistenceException;
 }

@@ -277,6 +277,12 @@ update docsources.tblPOLink set endMonthNum = 10 where endMonth like 'October';
 update docsources.tblPOLink set endMonthNum = 11 where endMonth like 'November';
 update docsources.tblPOLink set endMonthNum = 12 where endMonth like 'December';
 
+-- PLACES
+-- added new field to manage creation date
+update docsources.tblPlaces set dateCreated = dateEntered where dateCreated is null;
+-- added new field to manage last update
+update docsources.tblPlaces set lastUpdate = dateEntered where lastUpdate is null;
+
 -- VOLUMES 
 -- start Document Month num 0 or 13 must be setted to null
 update docsources.tblVolumes set startMonthNum = null where startMonthNum = 0;
@@ -616,13 +622,24 @@ insert into docsources.tblUserComment select * from docsources_2011.tblUserComme
 insert into docsources.tblUserHistory select * from docsources_2011.tblUserHistory;
 insert into docsources.tblUserMessage select * from docsources_2011.tblUserMessage;
 
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('recaptcha.domainName', 'reCAPTCHA will only work on this domain and subdomains. If you have more than one domain (or a staging server), you can create a new set of keys.', 'localhost');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('recaptcha.privateKey', 'Use this when communicating between your server and our server. Be sure to keep it a secret.', '6LcA-LsSAAAAAInVIlSHKjxqKKre-40BOpb3Abcs ');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('recaptcha.publicKey', 'Use this in the JavaScript code that is served to your users', '	6LcA-LsSAAAAAKYVTuOi0KQWArgUQwPtMQFqwe_6 ');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('recaptcha.siteId', 'Site identifier', '314849700');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.protocol', 'IIPImage supported protocl', 'http');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.version', 'Property must be filled with 0.9.8 or 0.9.9', '0.9.9');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.host', 'IIPImage host name', 'iipimage.medici.org');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.port', 'IIPImage listening port', '80');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.fcgi.path', 'IIPImage fcgi-bin path', '/fcgi-bin/iipsrv.fcgi');
-INSERT INTO docsources.tblApplicationProperty (id, help, value) VALUES ('iipimage.image.path', 'Remote server image path', '/data/tiled_mdp/');
+truncate table docsources.tblApplicationProperty 
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('iipimage.image.path', 'Remote server image path', '/data/tiled_mdp/');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.fcgi.path', 'IIPImage fcgi-bin path', '/fcgi-bin/iipsrv.fcgi');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.host', 'IIPImage host name', 'iipimage.medici.org');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.port', 'IIPImage listening port', '80');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.protocol', 'IIPImage supported protocl', 'http');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('iipimage.reverseproxy.version', 'Property must be filled with 0.9.8 or 0.9.9', '0.9.9');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('mail.activationUser.subject', '', 'Action Required to Activate Membership for DocSources');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('mail.activationUser.text', '', 'Dear {0},\r\n\r\nThank you for registering at the DocSources. Before we can activate your account one last step must be taken to complete your registration.\r\nPlease note - you must complete this last step to become a registered member. You will only need to visit this url once to activate your account.\r\nTo complete your registration, please visit this url:\r\n\r\n{3}://{4}/DocSources/user/ActivateUser.do?uuid={2}\r\n\r\nPlease be sure not to add extra spaces.\r\nIf you are still having problems signing up please contact a member of our support staff.\r\nYour Account is: {1}\r\nYour Activation uuid is:{2}\r\n\r\nAll the best,\r\nDocSources Support Service');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('mail.resetUserPassword.subject', '', 'Your login details for DocSources');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('mail.resetUserPassword.text', '', 'Dear {0},\r\n\r\nYou have requested to reset your password on DocSources because you have forgotten your password.\r\nTo reset your password, go to this page:\r\n\r\n{3}://{4}/DocSources/user/ResetUserPassword.do?uuid={2}\r\n\r\nPlease be sure not to add extra spaces.\r\n\r\nIf you are still having problems signing up please contact a member of our support staff.\r\nYour Username is: {1}\r\nYour Reset Password uuid is:{2}\r\n\r\nAll the best,\r\nDocSources Support Service\r\n');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('recaptcha.domainName', 'reCAPTCHA will only work on this domain and subdomains. If you have more than one domain (or a staging server), you can create a new set of keys.', 'localhost');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('recaptcha.privateKey', 'Use this when communicating between your server and our server. Be sure to keep it a secret.', '6LcA-LsSAAAAAInVIlSHKjxqKKre-40BOpb3Abcs ');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('recaptcha.publicKey', 'Use this in the JavaScript code that is served to your users', '	6LcA-LsSAAAAAKYVTuOi0KQWArgUQwPtMQFqwe_6 ');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('recaptcha.server', 'Google recaptcha remote server. http://api.recaptcha.net or https://api-secure.recaptcha.net', 'https://api-secure.recaptcha.net');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('recaptcha.siteId', 'Site identifier', '314849700');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('user.expiration.password.months', 'Number of months to calculate user password from last change password', '6');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('user.expiration.user.months', 'Number of months to calculate user expiration date from registration date', '6');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('user.maxBadLogin', 'How many bad login user can have before user lock', '5');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('website.domain', '', 'bia.medici.org');
+INSERT INTO tblApplicationProperty (id, help, value) VALUES ('website.protocol', '', 'http');
