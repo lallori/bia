@@ -56,6 +56,8 @@ public class UserInformation implements Serializable {
 	private Date activationDate;
 	@Column (name="\"active\"")
 	private Boolean active;
+	@Column (name="\"approved\"")
+	private Boolean approved;
 	@Column (name="\"badLogin\"")
 	private Integer badLogin;
 	@Column (name="\"currentLoginDate\"")
@@ -123,6 +125,20 @@ public class UserInformation implements Serializable {
 	 */
 	public Boolean getActive() {
 		return active;
+	}
+
+	/**
+	 * @param approved the approved to set
+	 */
+	public void setApproved(Boolean approved) {
+		this.approved = approved;
+	}
+
+	/**
+	 * @return the approved
+	 */
+	public Boolean getApproved() {
+		return approved;
 	}
 
 	/**
