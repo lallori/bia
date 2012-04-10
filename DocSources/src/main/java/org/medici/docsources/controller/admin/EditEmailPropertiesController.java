@@ -96,7 +96,7 @@ public class EditEmailPropertiesController {
 				hashMap.put("mail.resetUserPassword.subject", command.getResetUserPasswordSubject());
 				hashMap.put("mail.resetUserPassword.text", command.getResetUserPasswordText());
 
-				getAdminService().updateApplicationProperty(hashMap);
+				getAdminService().updateApplicationProperties(hashMap);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}

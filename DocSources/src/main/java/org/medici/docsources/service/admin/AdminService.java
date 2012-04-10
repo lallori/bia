@@ -42,5 +42,5 @@ public interface AdminService {
 	 * @param hashMap
 	 * @throws ApplicationThrowable
 	 */
-	public void updateApplicationProperty(HashMap<String, String> hashMap) throws ApplicationThrowable;
+	public void updateApplicationProperties(HashMap<String, String> hashMap) throws ApplicationThrowable;
 }

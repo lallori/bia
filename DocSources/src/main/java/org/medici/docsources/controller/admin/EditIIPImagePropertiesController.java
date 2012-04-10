@@ -97,7 +97,7 @@ public class EditIIPImagePropertiesController {
 				hashMap.put("iipimage.reverseproxy.protocol", command.getServerProtocol());
 				hashMap.put("iipimage.reverseproxy.version", command.getServerVersion());
 				
-				getAdminService().updateApplicationProperty(hashMap);
+				getAdminService().updateApplicationProperties(hashMap);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}

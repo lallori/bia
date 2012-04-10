@@ -14,23 +14,23 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Domain name</div> 
-			<div class="value60"></div> 
+			<div class="value60">${fn2:getApplicationProperty('recaptcha.domainName')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Private key</div> 
-			<div class="value60">6LcA-LsSAAAAAInVIlSHKjxqKKre-40BOpb3Abcs</div> 
+			<div class="value60">${fn2:getApplicationProperty('recaptcha.privateKey')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Public key</div> 
-			<div class="value60">6LcA-LsSAAAAAKYVTuOi0KQWArgUQwPtMQFqwe_6</div> 
+			<div class="value60">${fn2:getApplicationProperty('recaptcha.publicKey')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Server url</div> 
-			<div class="value60">https://api-secure.recaptcha.net</div> 
+			<div class="value60">${fn2:getApplicationProperty('recaptcha.server')}</div> 
 		</div>
         <div class="row">
 			<div class="item">Site identifier</div> 
-			<div class="value60">314849700</div> 
+			<div class="value60">${fn2:getApplicationProperty('recaptcha.siteId')}</div> 
 		</div>
 	</div>
 </div>

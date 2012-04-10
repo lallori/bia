@@ -94,7 +94,7 @@ public class EditGeneralPropertiesController {
 				hashMap.put("iipimage.image.path", command.getImagesPath());
 				hashMap.put("websiste.domain", command.getWebsiteDomain());
 				
-				getAdminService().updateApplicationProperty(hashMap);
+				getAdminService().updateApplicationProperties(hashMap);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}

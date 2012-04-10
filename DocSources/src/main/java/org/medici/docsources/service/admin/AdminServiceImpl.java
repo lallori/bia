@@ -28,19 +28,25 @@
 package org.medici.docsources.service.admin;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
+import org.medici.docsources.domain.ApplicationProperty;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
- * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a
+ *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional(readOnly = true)
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
@@ -53,7 +59,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 * @param applicationPropertyDAO the applicationPropertyDAO to set
+	 * @param applicationPropertyDAO
+	 *            the applicationPropertyDAO to set
 	 */
 	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
 		this.applicationPropertyDAO = applicationPropertyDAO;
@@ -62,14 +69,21 @@ public class AdminServiceImpl implements AdminService {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public void updateApplicationProperty(HashMap<String, String> hashMap) throws ApplicationThrowable {
+	public void updateApplicationProperties(HashMap<String, String> hashMap) throws ApplicationThrowable {
 		try {
-			
+			Iterator<Entry<String,String>> iterator = hashMap.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, String> pairs = (Map.Entry<String, String>) iterator.next();
+				ApplicationProperty applicationProperty = getApplicationPropertyDAO().find(pairs.getKey());
+				applicationProperty.setValue(pairs.getValue());
+				getApplicationPropertyDAO().merge(applicationProperty);
+			}
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 		// TODO Auto-generated method stub
-		
+
 	}
 }
