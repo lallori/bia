@@ -98,6 +98,9 @@ public class EditRecaptchaPropertiesController {
 				hashMap.put("recaptcha.siteId", command.getSiteIdentifier());
 						
 				getAdminService().updateApplicationProperties(hashMap);
+
+				// We need to refresh ApplicationPropertyManager...
+				ApplicationPropertyManager.refreshProperties();
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditRecaptchaProperties", model);
 			}

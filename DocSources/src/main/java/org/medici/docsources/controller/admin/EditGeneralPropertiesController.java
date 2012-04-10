@@ -95,6 +95,9 @@ public class EditGeneralPropertiesController {
 				hashMap.put("websiste.domain", command.getWebsiteDomain());
 				
 				getAdminService().updateApplicationProperties(hashMap);
+
+				// We need to refresh ApplicationPropertyManager...
+				ApplicationPropertyManager.refreshProperties();
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}

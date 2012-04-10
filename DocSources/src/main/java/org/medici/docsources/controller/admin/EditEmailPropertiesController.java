@@ -97,6 +97,9 @@ public class EditEmailPropertiesController {
 				hashMap.put("mail.resetUserPassword.text", command.getResetUserPasswordText());
 
 				getAdminService().updateApplicationProperties(hashMap);
+
+				// We need to refresh ApplicationPropertyManager...
+				ApplicationPropertyManager.refreshProperties();
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditDetailsDocument", model);
 			}
