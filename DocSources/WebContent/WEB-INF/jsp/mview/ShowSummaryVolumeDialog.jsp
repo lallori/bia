@@ -68,3 +68,11 @@
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		$j(document).ready(function() {
+			var close = $j("#ui-dialog-title-DialogVolumeSummaryDiv").parent();
+			$j(close).find(".ui-dialog-titlebar-close").css("display", "inline");
+			//$j(".ui-dialog-titlebar-close").css("display", "inline");
+		});
+	</script>

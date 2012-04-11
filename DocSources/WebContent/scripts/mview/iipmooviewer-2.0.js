@@ -615,7 +615,10 @@ var IIPMooViewer = new Class({
     else{
       // From a drag
       xmove = e.offsetLeft;
-      ymove = e.offsetTop-10;
+      //ymove = e.offsetTop-10;
+      //MEDICI ARCHIVE PROJECT START
+      ymove = e.offsetTop-18;
+      //MEDICI ARCHIVE PROJECT END
       if( (Math.abs(xmove-this.navpos.x) < 3) && (Math.abs(ymove-this.navpos.y) < 3) ) return;
     }
 
@@ -908,8 +911,8 @@ var IIPMooViewer = new Class({
     
     // MEDICI ARCHIVE PROJECT START
 		// Navigation window in Manuscript Transcriber
-		if (this.view.w > 1000)
-			thumb_width = this.view.w / 8;
+    	if (this.view.w > 1000)
+    		thumb_width = this.view.w / 8;
 	// MEDICI ARCHIVE PROJECT END
 
     //if( (ty/tx)*thumb_width > this.view.h*0.5 ) thumb_width = Math.round( this.view.h * 0.5 * tx/ty );
@@ -926,7 +929,11 @@ var IIPMooViewer = new Class({
     // for our window size
     this.resolutions = new Array(this.num_resolutions);
     this.resolutions.push({w:tx,h:ty});
-    this.view.res = 0;
+    //this.view.res = 0;
+    //MEDICI ARCHIVE PROJECT START
+    //MD: This is for the initial Zoom
+    this.view.res = 2;
+    //MEDICI ARCHIVE PROJECT END
     for( var i=1; i<this.num_resolutions; i++ ){
       tx = Math.floor(tx/2);
       ty = Math.floor(ty/2);
@@ -1098,6 +1105,10 @@ var IIPMooViewer = new Class({
 
     // Focus and defocus when we move into and out of the div,
     // get key presses and prevent default scrolling via mousewheel
+    
+    //MEDICI ARCHIVE PROJECT START
+    this.container.removeEvents();
+    //MEDICI ARCHIVE PROJECT END
     this.container.addEvents({
       'keydown': this.key.bind(this),
       'mouseover': function(){ _this.container.focus(); },
@@ -1358,7 +1369,13 @@ var IIPMooViewer = new Class({
 				dblclick :  function(source){
 	   				source.getElement('div.navbuttons').get('slide').toggle();
          			}.pass(this.container)
+			//}
+			//MEDICI ARCHIVE PROJECT START
+			},
+			'styles': {
+				height: '18px'
 			}
+			//MEDICI ARCHIVE PROJECT END
 		});
 		
 		toolbar.store( 'tip:text', IIPMooViewer.lang.drag );
@@ -1401,7 +1418,8 @@ var IIPMooViewer = new Class({
 					}
 				});
 				navwin.inject( navcontainer );
-				//navcontainer.setAttribute("height", navwin.getAttribute("height") + 20);
+				//To increase the height of navigation toolbar
+				navcontainer.setAttribute("height", navwin.getAttribute("height") + 10);
 				
 				
 				// Create our navigation image and inject inside the div we just created
@@ -1453,7 +1471,10 @@ var IIPMooViewer = new Class({
 
       // Create our buttons as SVG with fallback to PNG
       var prefix = this.prefix;
-      ['reset','zoomIn','zoomOut'].each( function(k){
+      //MEDICI ARCHIVE PROJECT START
+      //['reset','zoomIn','zoomOut'].each( function(k){
+      ['zoomIn','zoomOut','rotateLeft','rotateRight','reset'].each( function(k){
+      //MEDICI ARCHIVE PROJECT END
 	new Element('img',{
 	  'src': prefix + k + '.svg',
 	  'class': k,
@@ -1486,6 +1507,22 @@ var IIPMooViewer = new Class({
 	IIPMooViewer.windows(this).each( function(el){ el.reload(); });
 	this.reload();
       }.bind(this) );
+      
+     //MEDICI ARCHIVE PROJECT START
+      navbuttons.getElement('img.rotateRight').addEvent( 'click', function(){
+    var r = this.view.rotation;
+    r += 45 % 360;
+   	IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
+    this.rotate(r);
+      }.bind(this) );
+      
+      navbuttons.getElement('img.rotateLeft').addEvent( 'click', function(){
+    var r = this.view.rotation;
+    r -= 45 % 360;
+    IIPMooViewer.windows(this).each( function(el){ el.rotate(r); });
+    this.rotate(r);
+      }.bind(this) );
+     //MEDICI ARCHIVE PROJECT END
 
     }
 
@@ -1740,6 +1777,12 @@ var IIPMooViewer = new Class({
 
     // For panoramic images, use a large navigation window
     if( this.max_size.w > 2*this.max_size.h ) thumb_width = this.view.w / 2;
+    
+    // MEDICI ARCHIVE PROJECT START
+	// Navigation window in Manuscript Transcriber
+	if (this.view.w > 1000)
+		thumb_width = this.view.w / 8;
+	// MEDICI ARCHIVE PROJECT END
 
     // Make sure the height of our nav window also fits
     if( thumb_width*this.max_size.w/this.max_size.h > this.view.h-50 ){
@@ -1762,7 +1805,7 @@ var IIPMooViewer = new Class({
       });
 
       // Resize our navigation window div
-      if(this.zone) this.zone.getParent().setStyle('height', this.navWin.h );
+      if(this.zone) this.zone.getParent().setStyle('height', this.navWin.h);
     }
 
     // Reset and reposition our scale
@@ -1867,21 +1910,24 @@ var IIPMooViewer = new Class({
     if( pleft < 0 ) pleft = 0;
 
     var ptop = (this.view.y/this.hei) * (this.navWin.h);
-    if( ptop > this.navWin.h ) ptop = this.navWin.h;
+    if( ptop > this.navWin.h) ptop = this.navWin.h;
     if( ptop < 0 ) ptop = 0;
 
     var width = (this.view.w/this.wid) * (this.navWin.w);
     if( pleft+width > this.navWin.w ) width = this.navWin.w - pleft;
 
     var height = (this.view.h/this.hei) * (this.navWin.h);
-    if( height+ptop > this.navWin.h ) height = this.navWin.h - ptop;
+    if( height+ptop > this.navWin.h) height = this.navWin.h - ptop;
 
     var border = this.zone.offsetHeight - this.zone.clientHeight;
 
     // Move the zone to the new size and position
     this.zone.morph({
       left: pleft,
-      top: ptop + 8, // 8 is the height of toolbar
+      //top: ptop + 8, // 8 is the height of toolbar
+      //MEDICI ARCHIVE PROJECT START
+      top: ptop + 18, //18 is the height of toolbar
+      //MEDICI ARCHOVE PROJECT END
       width: (width-border>0)? width - border : 1, // Watch out for zero sizes!
       height: (height-border>0)? height - border : 1
     });

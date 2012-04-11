@@ -57,4 +57,4 @@
 		});
 	</script>
 
-<span id="transcribeMode" class="transcribeMessage" style="visibility: hidden;">You are transcribing from<br />Folio: ${folioNum} MDP: ${volNum}</span>
+<span id="transcribeMode" class="transcribeMessage" style="display: none;">You are transcribing from<br />Folio: ${folioNum} MDP: ${volNum}</span>

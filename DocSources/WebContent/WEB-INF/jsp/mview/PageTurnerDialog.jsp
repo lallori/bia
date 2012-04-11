@@ -251,6 +251,7 @@
 				resizable: false,
 				width: 550,
 				height: 600, 
+				title: 'VOLUME SUMMARY',
 				modal: true,
 				autoOpen : false,
 				zIndex: 3999,
@@ -265,7 +266,7 @@
 			
 			$j("#exit").dialog({
 				resizable: false,
-				height:140,
+				height:150,
 				modal: true,
 				autoOpen : false,
 				overlay: {
@@ -332,7 +333,7 @@
 				},
 				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
 				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-			}).dialogExtend({"minimize" : true});;
+			}).dialogExtend({"minimize" : true});
 			
 			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open');
@@ -361,10 +362,10 @@
 
 			$j('#personalNotesButton').click(function() {
 				if ($dialogPersonalNotes.dialog("isOpen")) {
-					$dialogPersonalNotes.dialog("close");
+					$dialogPersonalNotes.dialog("option", "zindex", 1014).dialogExtend("restore");
 					return false;
 				} else {
-					$dialogPersonalNotes.dialog("open")
+					$dialogPersonalNotes.dialog("open");
 					return false;
 				}
 			});
@@ -382,7 +383,7 @@
 					$j("#readyToTranscribe").css('visibility', 'hidden');
 					$j("#choiceThisFolioStart").css('visibility', 'hidden');
 					$j("#transcribeDiv").append($j("#transcribeMode"));
-					$j("#transcribeMode").css('visibility', 'visible');
+					$j("#transcribeMode").css('display', 'inline');
 				}else{
 					if (data.error == 'wrongType' || data.imageType == 'R') {
 						$j("#unvailableTranscribe").css('visibility', 'visible');

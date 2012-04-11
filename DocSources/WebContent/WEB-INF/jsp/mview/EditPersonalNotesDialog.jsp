@@ -18,6 +18,9 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			var close = $j("#ui-dialog-title-DialogPersonalNotesDiv").parent();
+			$j(close).find(".ui-dialog-titlebar-close").css("display", "inline");
+			
 			$j("#saveNotes").click(function (){
 				$j.ajax({ type:"POST", url:$j("#EditPersonalNotesForm").attr("action"), data:$j("#EditPersonalNotesForm").serialize(), async:false, success:function(html) { 
 						$j("#DialogPersonalNotes").html(html);
