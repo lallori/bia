@@ -182,7 +182,7 @@
 			</security:authorize> 
 			--%>
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
-				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="VOLUME EXPLORER" class="showFullscreenMode">Show in Fullscreen mode</a>
+				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode">Show in Fullscreen mode</a>
 			</security:authorize>
 			<a id="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
@@ -193,7 +193,7 @@
 		
 		<div id="folioMoveTo">
 			<div id="folioCountForm"> 
-				<b>Folio Count:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
+				<b>Total Folios in this Volume:</b> <label for="folioCount" id="folioCount">${volumeExplorer.totalCarta}</label>
 			</div>
 		
 		<form:form id="moveToFolioForm" action="${ShowExplorerVolumeURL}" cssClass="editMoveToFolioForm">
