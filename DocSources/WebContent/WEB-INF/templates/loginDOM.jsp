@@ -9,7 +9,7 @@
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
 
 		<title>the MEDICI ARCHIVE PROJECT</title>
-		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.jpg"/>" />
+		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
 		<link rel="stylesheet" media="screen" href="<c:url value="/styles/1024/LoginUser.css"/>" />
 		<!-- <link rel="stylesheet" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/LoginUser.css"/>" />
 		<link rel="stylesheet" media="screen and (min-width: 1025px)" href="<c:url value="/styles/1280/LoginUser.css"/>" /> -->
