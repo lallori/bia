@@ -3,13 +3,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+			
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				<a href="/DocSources/adm/administrationModuleModal.html" id="administrationModule">Administration Module</a>
+				<a href="<c:url value="/adm/ShowAdministrationModule.do" />" id="administrationModule">Administration Module</a>
 			</security:authorize>
 			
-			<script>
-			$j("#digitizationModule").click(
-					function() {
-					Modalbox.show($j(this).attr("href"), {title: "DIGITIZATION MODULE", width: 350, height: 190});return false;}
-			);
+			<script type="text/javascript">
+			$j(document).ready(function(){
+				$j("#administrationModule").click(function(){
+					Modalbox.show($j(this).attr("href"), {title: "ADMINISTRATION MODULE", width: 270, height: 190});
+					return false;
+				}						
+				);
+			});
 			</script>

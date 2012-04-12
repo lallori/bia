@@ -9,7 +9,7 @@
 
 <div id="administrationModalDiv">
 	<div id="SystemManagementDiv">
-        <a id="SystemManagement" href="/DocSources/adm/SystemManagement.html"><p>System Management</p></a>
+        <a id="SystemManagement" href="<c:url value="/admin/ShowApplicationProperties.do" />"><p>System Management</p></a>
 	</div>
     
 	<div id="UserManagementDiv">
