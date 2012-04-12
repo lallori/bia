@@ -8,15 +8,15 @@
 		<c:param name="entryId" value="${command.entryId}"></c:param>
 	</c:url>
 
-	<form:form id="EditSynopsisDocumentForm" method="post" cssClass="edit">
-		<form:textarea id="synopsis" path="synopsis" rows="22"/>
-		<div>
+	<div id="EditSynopsisDocumentDiv">
+		<form:form id="EditSynopsisDocumentForm" method="post" cssClass="edit">
+			<form:textarea id="synopsis" path="synopsis" rows="22"/>
 			<input id="saveSynopsis" type="submit" value="Save Synopsis"/>
 			<input id="saveSynopsisExit" type="submit" value="Save Synopsis and Exit"/>
-		</div>
-		<form:hidden path="entryId"/>
-		<form:hidden path="synExtrId" />
-	</form:form>
+			<form:hidden path="entryId"/>
+			<form:hidden path="synExtrId" />
+		</form:form>
+	</div>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
