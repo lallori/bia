@@ -161,9 +161,10 @@ public class DocSourcesLdapUserDetailsMapper extends LdapUserDetailsMapper {
 		
 		if (!userInformation.getActive()) 
 			throw new DisabledException("User is not activated");
-
-		if (!userInformation.getApproved()) 
-			throw new AccountNotApprovedException("User is not approved");
+		
+		//MD: This code isn't implemented
+		/*if (!userInformation.getApproved()) 
+			throw new AccountNotApprovedException("User is not approved");*/
 
 		if (!userInformation.getExpirationDate().after(new Date())) 
 			throw new AccountExpiredException("User is expired");
