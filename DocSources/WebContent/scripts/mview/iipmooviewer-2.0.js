@@ -1496,13 +1496,12 @@ var IIPMooViewer = new Class({
       navbuttons.set('slide', {duration: 300, transition: Fx.Transitions.Quad.easeInOut, mode:'vertical'});
 
       // MEDICI ARCHIVE PROJECT
-      // Set title to buttons
+      // Set titles (explanations) to buttons
       navbuttons.getElement('img.zoomIn').set('title', 'Zoom In');
       navbuttons.getElement('img.zoomOut').set('title', 'Zoom Out');
       navbuttons.getElement('img.rotateLeft').set('title', 'Rotate Anti-clockwise');
       navbuttons.getElement('img.rotateRight').set('title', 'Rotate Clockwise');
       navbuttons.getElement('img.reset').set('title', 'Refresh Image');
-      
       
       // MEDICI ARCHIVE PROJECT
       
