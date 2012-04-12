@@ -1364,7 +1364,7 @@ var IIPMooViewer = new Class({
     // MEDICI ARCHIVE PROJECT START
 	var toolbar = new Element('div', {
 			'class' : 'toolbar',
-			//'html' : '<span>NAVIGATION TOOLBAR</span>',
+			'html' : '<span>DRAG ME</span>',
 			'events' : {
 				dblclick :  function(source){
 	   				source.getElement('div.navbuttons').get('slide').toggle();
@@ -1483,15 +1483,29 @@ var IIPMooViewer = new Class({
 	      this.removeEvents('error'); // Prevent infinite reloading
 	      this.src = this.src.replace('.svg','.png'); // PNG fallback
 	    }
-	  }
+	  }	
 	}).inject(navbuttons);
       });
+      
+      
+      //navbuttons.getElement('img.zoomIn').set('title': 'zoom in');
 
       navbuttons.inject(navcontainer);
 
       // Need to set this after injection
       navbuttons.set('slide', {duration: 300, transition: Fx.Transitions.Quad.easeInOut, mode:'vertical'});
 
+      // MEDICI ARCHIVE PROJECT
+      // Set title to buttons
+      navbuttons.getElement('img.zoomIn').set('title', 'Zoom In');
+      navbuttons.getElement('img.zoomOut').set('title', 'Zoom Out');
+      navbuttons.getElement('img.rotateLeft').set('title', 'Rotate Anti-clockwise');
+      navbuttons.getElement('img.rotateRight').set('title', 'Rotate Clockwise');
+      navbuttons.getElement('img.reset').set('title', 'Refresh Image');
+      
+      
+      // MEDICI ARCHIVE PROJECT
+      
       // Add events to our buttons
       navbuttons.getElement('img.zoomIn').addEvent( 'click', function(){
 	IIPMooViewer.windows(this).each( function(el){ el.zoomIn(); });
@@ -1934,7 +1948,6 @@ var IIPMooViewer = new Class({
 
   }
 });
-
 
 /* Static function for synchronizing iipmooviewer instances
  */
