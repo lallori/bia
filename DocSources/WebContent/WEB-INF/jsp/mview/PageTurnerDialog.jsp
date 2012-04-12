@@ -136,9 +136,11 @@
 		</div>
 	</div>
 	
-	<div>
-    	<a id="indexNames" href="${indexOfNamesURL}" class="transcribe" title="Index of Names"></a>
-    </div>
+	<c:if test="${command.totalRubricario > 0}">
+		<div>
+    		<a id="indexNames" href="${indexOfNamesURL}" class="transcribe" title="Index of Names"></a>
+    	</div>
+    </c:if>
 
 	<div>
 		<a id="volumeSummary" href="${VolumeSummaryDialogURL}" class="transcribe" title="Volume Summary"></a>
