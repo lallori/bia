@@ -25,7 +25,7 @@ body {
 	margin:0 !important; 
 	padding:0 !important; 
 	height: 100%;
-	font-size:11px;
+	font-size: 12px;
 	color:#6F6B69;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
@@ -48,7 +48,7 @@ a {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	text-decoration:none;
 	color:#6F6B69;
-	font-size:11px;
+	font-size: 12px;
 }
 
 
@@ -328,7 +328,7 @@ a:hover.helpIcon { /* Help symbol "?" */
 #administrationModule { /* Administration Module */
 	margin: 6px 0 0 16px;
 	position: absolute;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 #administrationModule:hover { /* Administration Module */
@@ -344,8 +344,8 @@ a:hover.helpIcon { /* Help symbol "?" */
 	background-repeat:no-repeat;
 	text-decoration:none;
 	position: absolute;
-	margin: 6px 0 0 156px;
-	font-size: 10px;
+	margin: 6px 0 0 188px;
+	font-size: 11px;
 }
 
 #digitizationModule:hover { /* Administration Module */
@@ -359,7 +359,7 @@ a:hover.helpIcon { /* Help symbol "?" */
 	margin-top:5px;
 	float:right;
 	padding-right:30px;
-	font-size:10px;
+	font-size: 11px;
 }
 
 #top_bottom p:hover{ 

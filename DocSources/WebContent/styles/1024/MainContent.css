@@ -39,7 +39,7 @@ h3.details { /* AlreadyPresent....html */
 
 h4 { /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	text-align: left;
-	font-size: 11px;
+	font-size: 12px;
 	font-style: italic;
 	padding: 10px 0 0 10px;
 	color: #6F6B69;
@@ -52,7 +52,7 @@ span.h4 {
 }
 
 h5{ /* Data Entry main fields Title */
-	font-size:11px;
+	font-size: 12px;
 	display:inline;
 	margin:0 7px 10px 15px;
 	position:absolute;
@@ -93,14 +93,14 @@ h6 { /* Titles in Modal Windows */
 }
 
 h7 { /* Modern Date in Document - Start Date/End Date in Volume - Birth/Death in People - Place Typle in Place   */
-	font-size: 11px;
+	font-size: 12px;
 	display: block;
 	margin: 10px 0 0 10px;
 	color: #088A08;
 }
 
 span.h7 {
-	font-size: 11px;
+	font-size: 12px;
 	margin: 10px 0 8px 10px;
 	color: #088A08;
 
@@ -124,7 +124,7 @@ span.h7 {
 }
 
 #topBodyLeftMenuDiv { /* Div containig "Crated By..." "Vetting Chronology" "Actions" "Print this record" "Share/Link" */
-	width:485px;
+	width: 466px;
 	height:20px;
 	margin:5px 0 0 5px;
 	position:absolute;
@@ -133,7 +133,7 @@ span.h7 {
 #createdby { /* "Created by ..." Title in ADD NEW DOCUMENT, ADD NEW PERSON, ADD NEW VOLUME */
 	position:absolute;
 	width:190px;
-	font-size:10px;
+	font-size: 11px;
 	top: 27px;
 	right:10px;
 	text-align:right;
@@ -141,12 +141,12 @@ span.h7 {
 }
 
 #buttonShareLink { /* Share/Link Button */
-	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
-	font-size:10px;
+	background: url(/DocSources/images/1024/button_bodyleftmenu_xmedium.png) no-repeat;
+	font-size: 11px;
 	padding:2px 0 0 0;
-	width:65px;
+	width: 86px;
 	height:17px;
-	right: 57px;
+	right: 42px;
 	position:absolute;
 	cursor:pointer;
 	text-align:center;
@@ -155,53 +155,53 @@ span.h7 {
 #buttonPrint {  /* Print this Document Button */
 	background-image:url(/DocSources/images/1024/button_print.png);
 	background-repeat:no-repeat;
-	width:18px;
-	height:18px;
+	width: 20px;
+	height: 20px;
 	position:absolute;
-	right:28px;
+	right: 17px;
 }
 
 #buttonPDF {  /* Print this Document Button */
 	background-image:url(/DocSources/images/1024/button_pdf.png);
 	background-repeat:no-repeat;
-	width:18px;
-	height:18px;
+	width: 20px;
+	height: 20px;
 	position:absolute;
-	right:7px;
+	right: -9px;
 }
 
 #menuActions { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_medium.png) no-repeat;
-	font-size:10px;
+	font-size: 11px;
 	padding: 2px 0 0;
 	width:65px;
 	height:17px;
 	position:absolute;
-	right: 132px;
+	right: 133px;
 	text-align: center;
 }
 
 #vettingHistory { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
-	font-size:10px;
+	font-size: 11px;
 	padding:2px 0 0 0;
 	width:102px;
 	height:17px;
 	position:absolute;
 	text-decoration:none;
-	right: 206px;
+	right: 202px;
 	text-align:center;
 }
 
 #showComments { /* Actions Menu Button */
-	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
-	font-size:10px;
+	background: url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
+	font-size: 11px;
 	padding:2px 0 0 0;
 	width:102px;
 	height:17px;
 	position:absolute;
 	text-decoration:none;
-	right: 317px;
+	right: 308px;
 	text-align:center;
 }
 
@@ -209,7 +209,6 @@ span.h7 {
 	width: 35px;
 	height: 25px;
 	position: absolute;
-	margin-left: 5px;
 	background:url(/DocSources/images/1024/button_lastRecord.png) no-repeat;
 	margin-top: 1px;
 }
@@ -218,8 +217,9 @@ span.h7 {
 	width: 35px;
 	height: 25px;
 	position: absolute;
-	margin-left: 35px;
+	margin-left: 28px;
 	background:url(/DocSources/images/1024/button_nextRecord.png) no-repeat;
+	margin-top: 1px;
 }
 
 #buttonShareLink:hover, #menuActions:hover, #vettingHistory:hover, #showComments:hover {
@@ -255,7 +255,9 @@ span.h7 {
 	display: table;
 	margin:5px 0 0 30px;
 	width:90%; 
-	font-size:11px;
+	
+ 	
+ 	 	font-size: 12px;
 	line-height: 18px;
 }
 
@@ -263,7 +265,9 @@ span.h7 {
 	display: table;
 	margin:0 0 0 30px;
 	width:63%; 
-	font-size:11px;
+	
+ 	
+ 	 	font-size: 12px;
 	line-height: 18px;
 }
 
@@ -498,7 +502,7 @@ legend { /* FORM TITLE */
 }
 
 input, select { /* INPUT text */
-	font-size:11px;
+	font-size: 12px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 	border: 1px solid #DCC0BA;
 	-moz-border-radius: 4px;
@@ -642,7 +646,7 @@ img.transparent {
 
 .inputerrors { /* Error Span messages */
 	color:#900;
-	font-size:10px;
+	font-size: 11px;
 	text-align:right;
 	padding:1px 4px 1px 4px;
 	margin: -21px 9px 0 0;
@@ -1779,7 +1783,7 @@ input.file {
 }
 
 #bornDateBcLabel, #deathDateBcLabel {
-	margin-left: 18px;
+	margin-left: 23px;
 }
 
 #bornYearLabel {
@@ -1812,7 +1816,7 @@ margin-left: 56px;
 }
 
 #linkLabel  {
-	margin-left: 14px;
+	margin-left: 9px;
 }
 
 
@@ -1898,11 +1902,11 @@ a#editValue, .editValue { /* "Edit Value" Button */
 /* ----- EditTitleOccupationsPerson ----- */
 
 #father {
-	margin-left:8px;
+	margin-left: 21px;
 }
 
 #mother {
-	margin-left:7px;
+	margin-left: 18px;
 }
 
 #fatherLabel {
@@ -2058,7 +2062,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #folsNumbrdLabel {
-	margin-left: 82px;
+	margin-left: 79px;
 }
 
 #folioCountLabel {
@@ -2829,7 +2833,7 @@ a.refreshVolumeExplorer {
 }
 
 #createPlace #tgnPlace p, #createPlace #mapSite p, #createPlace #mapPlace p {
-	font-size:11px;
+	font-size: 12px;
 	color: #6d5c4d;
 	width: 170px;
 	text-align:justify;
@@ -2925,7 +2929,7 @@ a.refreshVolumeExplorer {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
+	font-size: 12px;
 	padding:4px 0 0 4px;
 	width:52px;
 	height:22px;
@@ -2942,14 +2946,14 @@ a.refreshVolumeExplorer {
 }
 
 #notes p{
-	font-size:11px;
+	font-size: 12px;
 	color: #6d5c4d;
 	text-align:center;
 	line-height: 18px;
 }
 
 #notes a{
-	font-size:11px;
+	font-size: 12px;
 	color: #6d5c4d;
 }
 
@@ -2968,19 +2972,19 @@ a.refreshVolumeExplorer {
 }
 
 #tgnTermIDLabel {
-	margin-left:19px;
+	margin-left: 11px;
 }
 
 #nameNoAccentsLabel {
-	margin-left:97px;
+	margin-left: 93px;
 }
 
 #nameWithAccentsLabel {
-	margin-left:30px;
+	margin-left: 26px;
 }
 
 #placeParentLabel {
-	margin-left:20px;
+	margin-left: 18px;
 }
 
 /* -------------------------------------- */
@@ -3206,7 +3210,7 @@ form#EditUserProfileForm span{
 }
 
 #EditUserProfileForm #newPasswordLabel {
-	margin-left:28px;
+	margin-left: 51px;
 }
 
 #EditUserProfileForm #linkLabel,  #EditUserProfileForm #browseLabel{
@@ -3286,7 +3290,7 @@ form#EditUserProfileForm span{
 #modalBox P{
 	line-height:20px;
 	text-align:justify;
-	font-size:11px;
+	font-size: 12px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 	padding:15px;
 }
@@ -3303,7 +3307,7 @@ form#EditUserProfileForm span{
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	padding:4px 0 0 0;
-	font-size:11px;
+	font-size: 12px;
 	width:52px;
 	height:22px;
 	border:none;
@@ -3318,7 +3322,7 @@ form#EditUserProfileForm span{
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	padding:4px 0 0 0;
-	font-size:11px;
+	font-size: 12px;
 	width:52px;
 	height:22px;
 	border:none;
@@ -3333,7 +3337,7 @@ form#EditUserProfileForm span{
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	padding:4px 0 0 0;
-	font-size:11px;
+	font-size: 12px;
 	width:52px;
 	height:22px;
 	border:none;
@@ -3348,7 +3352,7 @@ form#EditUserProfileForm span{
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	padding:4px 0 0 0;
-	font-size:11px;
+	font-size: 12px;
 	width:52px;
 	height:22px;
 	border:none;
@@ -3372,7 +3376,7 @@ form#EditUserProfileForm span{
 	resize: none;
 	color: #000000;
 	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:11px;
+	font-size: 12px;
 	padding:5px 10px 5px 10px;
 	margin: 5px 7px 5px 40px; /* top right bottom left */
 }
@@ -3388,7 +3392,7 @@ form#EditUserProfileForm span{
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	float:right;
 	padding:4px 0 0 0;
-	font-size:11px;
+	font-size: 12px;
 	width:52px;
 	height:22px;
 	text-align:center;
@@ -3401,7 +3405,7 @@ form#EditUserProfileForm span{
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	padding:4px 0 0 0;
 	float:left;
-	font-size:11px;
+	font-size: 12px;
 	width:52px;
 	height:22px;
 	border:none;
@@ -3412,7 +3416,7 @@ form#EditUserProfileForm span{
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
 	background-color:transparent;
 	padding:0 0 0 3px;
-	font-size:11px;
+	font-size: 12px;
 	width:52px;
 	height:22px;
 	margin: 5px 0 0 15px;
@@ -3645,9 +3649,10 @@ form#EditUserProfileForm span{
 #tooltip h1, #tooltip div { margin: 0; }
 
 #tooltip h1	{
-	font-size:11px;
+	font-size:12px;
 	color:#363636;
 	font-weight:normal;
+	line-height:18px;
 }
 
 a.helpIcon{ /* Help symbol "?" */
@@ -4597,8 +4602,8 @@ ul#network a {
 
 #printTiff, #printJpeg, #printPdf { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_xlarge.png) no-repeat;
-	font-size:10px;
-	padding:2px 0 0 0;
+	font-size: 11px;
+	padding: 1px 0 0 0;
 	width:140px;
 	height:17px;
 	position:absolute;
@@ -4607,15 +4612,15 @@ ul#network a {
 }
 
 #printTiff {
-	right:295px;
+	right: 326px;
 }
 
 #printJpeg {
-	right: 150px;
+	right: 157px;
 }
 
 #printPdf {
-	right: 5px;
+	right: -11px;
 }
 
 /*------------------------------- Edit/Display Divs -------------------------------------*/
@@ -4624,7 +4629,7 @@ ul#network a {
 	margin-top: 30px;
 }
 
-#EditSchedoneDetailsDiv .helpIcon, #EditEditTiffImagesForm .helpIcon, #EditEditJpegImagesForm .helpIcon, #EditEditPdfImagesForm .helpIcon{
+#EditSchedoneDetailsDiv .helpIcon, #EditEditTiffImagesForm .helpIcon, #EditEditJpegImagesForm .helpIcon, #EditEditPdfImagesForm .helpIcon, #EditDetailsSchedoneDiv .helpIcon{
 	margin-right: 5px;
 }
 
@@ -4644,19 +4649,19 @@ ul#network a {
 }
 
 #carteMancantiLabel {
-	margin-right: 14px;
+	margin-right: 20px;
 }
 
 #cartulazioneLabel {
-	margin-right: 34px;
+	margin-right: 38px;
 }
 
 #supportoLabel {
-	margin-right: 56px;
+	margin-right: 60px;
 }
 
 #legaturaLabel {
-	margin-right: 55px;
+	margin-right: 59px;
 }
 
 #dateEstremeLabel {
@@ -4684,15 +4689,15 @@ ul#network a {
 }
 
 #tipoRipresaLabel {
-	margin-right: 25px;
+	margin-right: 28px;
 }
 
 #coloreImmagineLabel {
-	margin-right: 8px;
+	margin-right: 13px;
 }
 
 #risoluzioneLabel {
-	margin-right: 44px;
+	margin-right: 48px;
 }
 
 #daRipresaLabel {
@@ -4704,7 +4709,7 @@ ul#network a {
 }
 
 #responsabileFotoRiproduzioneLabel {
-	 margin-right: 21px;
+	 margin-right: 25px;
 }
 
 /* TIFF images */
@@ -4753,18 +4758,23 @@ ul#network a {
 }
 
 #AddNewDigitizedVolumeDiv .activate {
-	background-image: url("/DocSources/images/1024/button_bodyleftmenu_medium.png");
+	background-image: url("/DocSources/images/1024/button_medium.png");
     background-repeat: no-repeat;
     cursor: pointer;
     display: inline;
-    font-size: 11px;
-    height: 17px;
+    
+	font-size: 12px;
+    
+	height: 22px;
     position: absolute;
-	margin: 8px;
+	margin: 5px;
     text-align: center;
-    width: 65px;
+    
+	width: 65px;
 	text-decoration:none;
 	color: #6D5C4D;
+	width: 122px;
+	padding: 3px 0 0 0;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -4780,7 +4790,7 @@ ul#network a {
 	margin-left: 98px;
 }
 
-#administrationModalDiv #UserManagement, #administrationModalDiv #ReportsRevisions, #administrationModalDiv #SystemManagement{
+#administrationModalDiv #userManagement, #administrationModalDiv #reportsRevisions, #administrationModalDiv #systemWide{
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4790,33 +4800,101 @@ ul#network a {
 	margin:-5px 0 0 10px;
 }
 
-#administrationModalDiv #UserManagement:hover, #administrationModalDiv #ReportsRevisions:hover, #administrationModalDiv #SystemManagement:hover {
+#administrationModalDiv #userManagement:hover, #administrationModalDiv #reportsRevisions:hover, #administrationModalDiv #systemWide:hover {
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	text-decoration:none;
 	filter:alpha(opacity=50); /* IE */ !important
 }
 
-#administrationModalDiv #SystemManagementDiv {
+#administrationModalDiv #systemWideDiv {
 	width:200px;
 	margin:15px 0 0 25px;
 	position:absolute;
 }
 
-#administrationModalDiv #UserManagementDiv {
+#administrationModalDiv #userManagementDiv {
 	width:200px;
 	margin:50px 0 0 25px;
 	position:absolute;
 }
 
-#administrationModalDiv #ReportsRevisionsDiv {
+#administrationModalDiv #reportsRevisionsDiv {
 	width:200px;
 	margin:85px 0 0 25px;
 	position:absolute;
 }
 
 
-/* ---------------- User Search Form (body_left) ------------- */
+
+/* ---------------- User Management ------------- */
+
+/* Modal */
+#userManagementDiv #close {
+	position:absolute;
+	margin-top: 120px;
+	margin-left: 98px;
+}
+
+#userManagementDiv #addNew, #userManagementDiv #editOrShow, #userManagementDiv #globalProperties{
+	background:url(/DocSources/images/1024/button_large.png) no-repeat;
+	text-align:center;
+	padding-top:4px;
+	position:absolute;
+	width:182px;
+	height:22px;
+	margin:-5px 0 0 10px;
+}
+
+#userManagementDiv #addNew:hover, #userManagementDiv #editOrShow:hover, #userManagementDiv #globalProperties:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	text-decoration:none;
+	filter:alpha(opacity=50); /* IE */ !important
+}
+
+#userManagementDiv #addNewDiv {
+	width:200px;
+	margin:15px 0 0 25px;
+	position:absolute;
+}
+
+#userManagementDiv #editOrShowDiv {
+	width:200px;
+	margin:50px 0 0 25px;
+	position:absolute;
+}
+
+#userManagementDiv #globalPropertiesDiv {
+	width:200px;
+	margin:85px 0 0 25px;
+	position:absolute;
+}
+
+
+/* Add New User */
+/* Display */
+
+#EditUserControlDiv {
+	margin-top:20px;
+}
+
+/* Edit */
+
+#emailAdressLabel {
+	margin-left: 85px;
+}
+
+#emailDisplayLabel {
+	margin-left: 86px;
+}
+
+#reciveNotifEmailLabel {
+	margin-left: 3px;
+}
+
+/* Edit or Show Existing User */
+/* User Search  */
 
 #SystemManagementForm {
 	width: 485px;
@@ -4835,15 +4913,21 @@ ul#network a {
 	height:22px;
 	border:none;
 	text-align:center;
-	margin: 20px 0 7px 310px;
+	margin: 0 0 7px 10px;
+}
+
+h3.userSearch {
+	padding: 10px 5px 10px 10px;
+	font-style: normal;
+	font-size: 14px;
 }
 
 #fullNameLabel {
-	margin-left: 19px;
+	margin-left: 30px;
 }
 
 #userNameLabel {
-	margin-left: 16px;
+	margin-left: 27px;
 }
 
 h3.systemManagement {
@@ -4852,7 +4936,15 @@ h3.systemManagement {
 	text-align: center;
 }
 
-/* ---------------- User Search Table (body_right) ------------- */
+#userAccountExpirationLabel {
+	margin-left: 6px;
+}
+
+#userMaxBadLoginCountLabel {
+	margin-left: 55px;
+}
+
+/* User Search Table (body_right) */
 
 .SystemManagement{
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
@@ -4878,9 +4970,6 @@ h3.systemManagement {
 	margin: 60px 0 10px 72px;
 }
 
-
-
-
 /* Edit Details Document Gif animata loading  */
 #prova {
 	z-index:999;
@@ -4891,7 +4980,8 @@ h3.systemManagement {
 	opacity:0.4;
 }
 
-/* ---------------- User Control Form ------------- */
+/* User */
+/* Edit */
 
 #EditUserControlForm #userNameLabel {
 	margin-left: 10px;
@@ -4918,7 +5008,7 @@ h3.systemManagement {
 }
 
 #lockAccountLabel {
-	margin-left: 72px;
+	margin-left: 61px;
 }
 
 #passwordExpiresLabel {
@@ -4988,6 +5078,64 @@ h3.systemManagement {
 #description h1{
 	font-weight:bold;
 	font-size:11px;
+}
+
+
+/* ---------------- System-Wide Properties ------------- */
+
+
+/* Display Elements  */
+
+#EditGeneralPropertiesDiv {
+	margin-top: 20px;
+}
+
+#IipImagePropertiesDiv p {
+	margin-left: 28px;
+	color: #666EA4;
+	margin-bottom: 10px;
+}
+
+/* Edit Elements  */
+
+#imagePathLabel {
+	margin-left: 21px;
+}
+
+#privateKeyLabel {
+	margin-left: 25px;
+}
+
+#serverUrlLabel {
+	margin-left: 32px;
+}
+
+#siteIdentifierLabel {
+	margin-left: 14px;
+}
+
+#domainNameLabel {
+	margin-left: 11px;
+}
+
+#serverPathLabel {
+	margin-left: 17px;
+}
+
+#serverHostNameLabel {
+	margin-left: 30px;
+}
+
+#serverPortLabel {
+	margin-left: 68px;
+}
+
+#serverProtocolLabel {
+	margin-left: 46px;
+}
+
+#serverVersionLabel {
+	margin-left: 50px;
 }
 
 

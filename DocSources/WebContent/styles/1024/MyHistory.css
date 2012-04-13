@@ -91,9 +91,9 @@
 }
 
 #moreDocs, #morePeople, #moreVolumes, #morePlaces {
-	margin: 2px 28px 0 0;
-	float:right;
-	width:43px;
+	margin: 0 28px 0 0;
+	float: right;
+	width: 45px;
 	color:#900;
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
