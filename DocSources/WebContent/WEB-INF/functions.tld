@@ -18,7 +18,7 @@
     <function>
         <name>getApplicationProperty</name>
         <function-class>org.medici.docsources.common.util.JSTLFunctions</function-class>
-        <function-signature>java.lang.String toString(java.lang.String)</function-signature>
+        <function-signature>java.lang.String getApplicationProperty(java.lang.String)</function-signature>
     </function>
 
     <function>
