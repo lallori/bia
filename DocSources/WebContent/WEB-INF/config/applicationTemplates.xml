@@ -135,7 +135,7 @@
     
 	<!-- Administrator Module BEGIN -->
 	<definition name="admin/EditGeneralProperties" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/admin/EditGeneralProperties.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditGeneralProperties.jsp"/>
 	</definition>
 	
 	<definition name="admin/EditEmailProperties" extends="template.partialDOM">

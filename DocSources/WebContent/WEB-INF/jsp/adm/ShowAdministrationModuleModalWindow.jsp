@@ -8,16 +8,16 @@
 <script type="text/javascript" src="/DocSources/scripts/jquery.tooltip.js"></script>
 
 <div id="administrationModalDiv">
-	<div id="SystemManagementDiv">
-        <a id="SystemManagement" href="<c:url value="/admin/ShowApplicationProperties.do" />"><p>System Management</p></a>
+	<div id="systemWideDiv">
+        <a id="systemWide" href="<c:url value="/admin/ShowApplicationProperties.do" />"><p>System-Wide Properties</p></a>
 	</div>
     
-	<div id="UserManagementDiv">
-        <a id="UserManagement" href="/DocSources/adm/UserManagement.html"><p>User Management</p></a>
+	<div id="userManagementDiv">
+        <a id="userManagement" href="/DocSources/adm/UserManagement.html"><p>User Management</p></a>
 	</div>
     
-    <div id="ReportsRevisionsDiv">
-        <a id="ReportsRevisions" href="/DocSources/adm/ReportsRevisions.html"><p>Reports and Revisions</p></a>
+    <div id="reportsRevisionsDiv">
+        <a id="reportsRevisions" href="/DocSources/adm/ReportsRevisions.html"><p>Reports and Revisions</p></a>
     </div>
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
@@ -28,7 +28,7 @@
 
 <script>
 	$j(document).ready(function() {
-		$j("#SystemManagement").click(
+		$j("#systemWide").click(
 			function(){
 				$j("#body_left").load($j(this).attr("href"));
 				Modalbox.hide(); return false;}

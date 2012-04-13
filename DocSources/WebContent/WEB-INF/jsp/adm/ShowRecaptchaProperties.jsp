@@ -34,4 +34,5 @@
 		</div>
 	</div>
 </div>
+<br />
 </security:authorize>

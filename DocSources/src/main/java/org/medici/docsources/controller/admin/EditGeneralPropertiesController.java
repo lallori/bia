@@ -52,7 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/adm/EditGeneralProperties")
+@RequestMapping("/admin/EditGeneralProperties")
 public class EditGeneralPropertiesController {
 	@Autowired
 	private AdminService adminService;
@@ -92,7 +92,7 @@ public class EditGeneralPropertiesController {
 			try {
 				HashMap<String, String> hashMap = new HashMap<String, String>();
 				hashMap.put("iipimage.image.path", command.getImagesPath());
-				hashMap.put("websiste.domain", command.getWebsiteDomain());
+				hashMap.put("website.domain", command.getWebsiteDomain());
 				
 				getAdminService().updateApplicationProperties(hashMap);
 
@@ -123,7 +123,7 @@ public class EditGeneralPropertiesController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		command.setImagesPath(ApplicationPropertyManager.getApplicationProperty("iipimage.image.path"));
-		command.setWebsiteDomain(ApplicationPropertyManager.getApplicationProperty("websiste.domain"));
+		command.setWebsiteDomain(ApplicationPropertyManager.getApplicationProperty("website.domain"));
 
 		return new ModelAndView("admin/EditGeneralProperties", model);
 	}

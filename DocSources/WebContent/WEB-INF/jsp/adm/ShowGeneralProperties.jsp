@@ -6,10 +6,12 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+<c:url var="EditGeneralPropertiesURL" value="/admin/EditGeneralProperties.do" />
+
 <div id="EditGeneralPropertiesDiv" class="background">
 	<div class="title">
 		<h5>GENERAL PROPERTIES</h5>
-		<a id="EditGeneralProperties" class="editButton" href="/DocSources/adm/EditGeneralProperties.html" title="Edit General Properties"></a>
+		<a id="EditGeneralProperties" class="editButton" href="${EditGeneralPropertiesURL}" title="Edit General Properties"></a><span id="loading"/>
 	</div>
 	<div class="list">
 		<div class="row">
@@ -22,4 +24,16 @@
 		</div>
 	</div>
 </div>
+<br />
+
+<script type="text/javascript">
+	$j(document).ready(function(){
+		$j("#EditGeneralProperties").click(function(){
+			$j(this).next().css('visibility', 'visible');
+			$j("#EditGeneralPropertiesDiv").load($j(this).attr("href"));
+			return false;
+		});
+	});
+</script>
+
 </security:authorize>
