@@ -11,7 +11,7 @@ html version
 	border: 1px solid #DCC0BA;
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
-	font-size:11px;
+	font-size: 12px;
 	color: #000000;
 	width: 98%;
 	height:90%;
@@ -21,7 +21,7 @@ html version
 	position:relative;
 	margin:0 auto 0 auto;
 	height:97%;
-	font-size:11px;
+	font-size: 12px;
 }
 
 /* ---------- Buttons --------- */
@@ -183,7 +183,7 @@ h3{ /* PERSON NAME (in PERSON DETAILS) and VOLUME NAME (in VOLUME DETAILS) */
 }
 
 h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
-	font-size:11px;
+	font-size: 12px;
 	color:#6d5c4d;
 	margin:3px 0 3px 0;
 }
@@ -292,7 +292,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #EditPersonalNotesDiv #folioMoveTo .folioLabel { /* "Move to folio" <label> ID  */
-	font-size:11px;
+	font-size: 12px;
 	margin:0 0 0 33px;
 	position:absolute;
 	color:#6d5c4d;
@@ -318,7 +318,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	width:22px;
 	height:22px;
 	background-image:url(/DocSources/images/mview/button_mini.png);
-	font-size:11px;
+	font-size: 12px;
 	padding:0 0 0 2px;
 	background-repeat:no-repeat;
 	background-color:transparent;
@@ -364,7 +364,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	color:#6F6B69;
 	width:52px;
 	height:22px;
-	font-size:11px;
+	font-size: 12px;
 	text-transform:capitalize;
 }
 
@@ -413,7 +413,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	color:#6F6B69;
 	width:122px;
 	height:22px;
-	font-size:11px;
+	font-size: 12px;
 	border:none;
 }
 
@@ -426,7 +426,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	color:#6F6B69;
 	width:182px;
 	height:22px;
-	font-size:11px;
+	font-size: 12px;
 	border:none;
 }
 
@@ -443,7 +443,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	color:#6F6B69;
 	width:122px;
 	height:22px;
-	font-size:11px;
+	font-size: 12px;
 	border:none;
 }
 
@@ -456,7 +456,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	color:#6F6B69;
 	width:182px;
 	height:22px;
-	font-size:11px;
+	font-size: 12px;
 	border:none;
 }
 
@@ -474,7 +474,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	color:#6F6B69;
 	width:122px;
 	height:22px;
-	font-size:11px;
+	font-size: 12px;
 	border:none;
 	cursor:pointer;
 }
@@ -489,7 +489,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	color:#6F6B69;
 	width:122px;
 	height:22px;
-	font-size:11px;
+	font-size: 12px;
 	border:none;
 	cursor:pointer;
 }
@@ -504,7 +504,8 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 
 .ui-widget { 
 	font-family:Georgia, "Times New Roman", Times, serif; 
-	font-size:11px;
+	
+ 	font-size: 12px;
 	-moz-box-shadow: 1px 1px 10px #666;
 	-webkit-box-shadow: 1px 1px 10px #666;
 	box-shadow: 1px 1px 10px #666; 
