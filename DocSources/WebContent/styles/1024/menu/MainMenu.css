@@ -47,7 +47,7 @@
 	background-image:url(/DocSources/images/1024/button_advsearch.png);
 	background-repeat:no-repeat;
 	display:block;
-	width:110px;
+	width: 115px;
 	height:64px;
 }
 
@@ -105,6 +105,15 @@
 
 #messagesMenu:hover{
 	background-image:url(/DocSources/images/1024/button_messagesRollover.png);
+}
+
+.messagesMenu span {
+	position: absolute;
+	margin: -24px 0 0 18px;
+	color: #C0272D;
+	font-weight: bold;
+	width: 64px;
+	text-align: right;
 }
 
 #logoutMenu{

@@ -1448,8 +1448,6 @@ input.file {
     margin-top: 55px;
 }
 
-
-
 #DocumentImageDigitDiv span:hover {
 	cursor:default;
 }
@@ -1468,6 +1466,11 @@ input.file {
 	background:url(/DocSources/images/1024/button_showManuscViewer.png) bottom no-repeat;
 	cursor:pointer;
 	float:right;
+}
+
+.list span.unsure {
+	margin-left: 10px;
+	color: #C0272D;
 }
 
 /* Input positions }*/

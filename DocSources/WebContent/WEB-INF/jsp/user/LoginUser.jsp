@@ -19,22 +19,22 @@
 							<td>Username: </td>
 						</tr>
 						<tr>
-							<td><input type="text" name="j_username" class="loginInput" style="margin-left:15px"/></td>
+							<td><input type="text" name="j_username" class="loginInput" style="margin-left:30px"/></td>
 						</tr>
 						<tr>
 							<td>Password:</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="password" name="j_password" class="loginInput" style="margin-left:15px"/><br/><br/>
+								<input type="password" name="j_password" class="loginInput" style="margin-left:30px"/><br/><br/>
 							</td>
 						</tr>
 						<tr>
-							<td align="right"><input name="Login" type="image" src="<c:url value="/images/1024/img_transparentLogin.png"/>" alt="Log_in" title="send the module" style="margin-left:35px" class="button_login"/>
+							<td align="right"><input name="Login" type="image" src="<c:url value="/images/1024/img_transparentLogin.png"/>" alt="Log_in" title="send the module" style="margin-left:48px" class="button_login"/>
 							</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" name="_spring_security_remember_me" value="yes" style="margin:11px 0px 0px 50px"/><p class="remember">Remember me</p>
+							<td><input type="checkbox" name="_spring_security_remember_me" value="yes" style="margin:11px 0px 0px 60px"/><p class="remember">Remember me</p>
 							</td>
 						</tr>
 						<tr>

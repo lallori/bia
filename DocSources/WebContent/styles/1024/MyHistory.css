@@ -17,7 +17,7 @@
 
 #myHistoryDiv #docsHistory { /* Documents Chronology Div */
 	width: 346px;
-	height: 217px;
+	height: 225px;
 	float:left;
 	color:#6F6B69;
 	padding: 0 10px 0 9px;
@@ -25,14 +25,14 @@
 }
 
 #myHistoryDiv #myCategoryDocumentsHistoryTableDiv, #myHistoryDiv #myCategoryPeopleHistoryTableDiv, #myHistoryDiv #myCategoryPlacesHistoryTableDiv, #myHistoryDiv #myCategoryVolumesHistoryTableDiv {
-	height: 168px;
-	height /**/: 158px;
+	height: 178px;
+	height /**/: 168px;
 	overflow: auto !important;
 }
 
 #myHistoryDiv #peopleHistory { /* People Chronology Div */
 	width: 346px;
-	height: 217px;
+	height: 225px;
 	float:right;
 	color:#6F6B69;
 	padding: 0 10px 20px 9px;
@@ -42,7 +42,7 @@
 
 #myHistoryDiv #volumesHistory { /* Volumes Chronology Div */
 	width: 346px;
-	height: 217px;
+	height: 225px;
 	float:right;
 	color:#6F6B69;
 	padding: 0 10px 10px 9px;
@@ -51,7 +51,7 @@
 
 #myHistoryDiv #placeHistory { /* Place Chronology Div */
 	width: 346px;
-	height: 217px;
+	height: 225px;
 	float:left;
 	color:#6F6B69;
 	padding: 0 10px 20px 9px;
