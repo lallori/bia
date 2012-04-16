@@ -52,7 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/adm/EditRecaptchaProperties")
+@RequestMapping("/admin/EditRecaptchaProperties")
 public class EditRecaptchaPropertiesController {
 	@Autowired
 	private AdminService adminService;
@@ -105,7 +105,7 @@ public class EditRecaptchaPropertiesController {
 				return new ModelAndView("error/EditRecaptchaProperties", model);
 			}
 
-			return new ModelAndView("admin/ShowRecaptchaProperties", model);
+			return new ModelAndView("admin/ShowApplicationProperties", model);
 		}
 	}
 

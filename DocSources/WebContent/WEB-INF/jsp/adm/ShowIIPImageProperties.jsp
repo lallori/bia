@@ -6,10 +6,12 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+<c:url var="EditIipImagePropertiesURL" value="/admin/EditIIPImageProperties.do" />
+
 <div id="IipImagePropertiesDiv" class="background">
 	<div class="title">
 		<h5>IIP IMAGE</h5>
-		<a id="IipImageProperties" class="editButton" href="/DocSources/adm/IipImageProperties.html" title="IipImage Properties"></a>
+		<a id="EditIipImageProperties" class="editButton" href="${EditIipImagePropertiesURL}" title="IipImage Properties"></a><span id="loading" />
 	</div>
     <p>IIpImage server reverse proxy properties</p>
 	<div class="list">
@@ -35,4 +37,19 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$j(document).ready(function(){
+		$j("#EditGeneralProperties").css('visibility', 'visible');
+		$j("#EditEmailSystemProperties").css('visibility', 'visible');
+		$j("#EditRecaptchaProperties").css('visibility', 'visible');
+		$j("#EditIipImageProperties").css('visibility', 'visible');
+		
+		$j("#EditIipImageProperties").click(function(){
+			$j(this).next().css('visibility', 'visible');
+			$j("#IipImagePropertiesDiv").load($j(this).attr("href"));
+			return false;
+		});
+	})
+</script>
 </security:authorize>

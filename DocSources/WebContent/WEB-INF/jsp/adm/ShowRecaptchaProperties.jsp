@@ -6,10 +6,11 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+<c:url var="EditRecaptchaPropertiesURL" value="/admin/EditRecaptchaProperties.do" />
 <div id="RecaptchaPropertiesDiv" class="background">
 	<div class="title">
 		<h5>RECAPTCHA PROPERTIES</h5>
-		<a id="RecaptchaProperties" class="editButton" href="/DocSources/adm/RecaptchaProperties.html" title="Recaptcha Properties"></a>
+		<a id="EditRecaptchaProperties" class="editButton" href="${EditRecaptchaPropertiesURL}" title="Recaptcha Properties"></a><span id="loading" />
 	</div>
 	<div class="list">
 		<div class="row">
@@ -35,4 +36,19 @@
 	</div>
 </div>
 <br />
+
+<script type="text/javascript">
+	$j(document).ready(function(){
+		$j("#EditGeneralProperties").css('visibility', 'visible');
+		$j("#EditEmailSystemProperties").css('visibility', 'visible');
+		$j("#EditRecaptchaProperties").css('visibility', 'visible');
+		$j("#EditIipImageProperties").css('visibility', 'visible');
+		
+		$j("#EditRecaptchaProperties").click(function(){
+			$j(this).next().css('visibility', 'visible');
+			$j("#RecaptchaPropertiesDiv").load($j(this).attr("href"));
+			return false;
+		});
+	})
+</script>
 </security:authorize>

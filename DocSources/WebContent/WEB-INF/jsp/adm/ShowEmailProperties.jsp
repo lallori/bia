@@ -6,10 +6,12 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+<c:url var="EditEmailPropertiesURL" value="/admin/EditEmailProperties.do" />
+
 <div id="EditEmailSystemPropertiesDiv" class="background">
 	<div class="title">
 		<h5>EMAIL SYSTEM PROPERTIES</h5>
-		<a id="EditEmailSystemProperties" class="editButton" href="/DocSources/adm/EditEmailSystemProperties.html" title="Edit Email System Properties"></a>
+		<a id="EditEmailSystemProperties" class="editButton" href="${EditEmailPropertiesURL}"></a><span id="loading"/>
 	</div>
 	<div class="list">
 		<div class="row">
@@ -31,4 +33,20 @@
 	</div>
 </div>
 <br />
+
+<script type="text/javascript">
+	$j(document).ready(function(){
+		$j("#EditGeneralProperties").css('visibility', 'visible');
+		$j("#EditEmailSystemProperties").css('visibility', 'visible');
+		$j("#EditRecaptchaProperties").css('visibility', 'visible');
+		$j("#EditIipImageProperties").css('visibility', 'visible');
+		
+		$j("#EditEmailSystemProperties").click(function(){
+			$j(this).next().css('visibility', 'visible');
+			$j("#EditEmailSystemPropertiesDiv").load($j(this).attr("href"));
+			return false;
+		})
+	})
+</script>
 </security:authorize>
+

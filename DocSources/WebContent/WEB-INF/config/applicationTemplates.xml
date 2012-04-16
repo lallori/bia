@@ -139,15 +139,15 @@
 	</definition>
 	
 	<definition name="admin/EditEmailProperties" extends="template.partialDOM">
- 		<put-attribute name="email" value="/WEB-INF/jsp/admin/EditEmailProperties.jsp"/>
+ 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditEmailProperties.jsp"/>
 	</definition>
 
 	<definition name="admin/EditRecaptchaProperties" extends="template.partialDOM">
-		<put-attribute name="recaptcha" value="/WEB-INF/jsp/admin/EditRecaptchaProperties.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditRecaptchaProperties.jsp"/>
 	</definition>
 
 	<definition name="admin/EditIIPImageProperties" extends="template.partialDOM">
- 		<put-attribute name="iip" value="/WEB-INF/jsp/admin/EditIIPImageProperties.jsp"/>
+ 		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditIIPImageProperties.jsp"/>
 	</definition>
 	
 	<definition name="admin/ShowAdministrationModuleModalWindow" extends="template.partialDOM">
@@ -162,7 +162,7 @@
 	</definition>
 
 	<definition name="admin/ShowGeneralProperties" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/admin/ShowGeneralProperties.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowGeneralProperties.jsp"/>
 	</definition>
 	
 	<definition name="admin/ShowEmailProperties" extends="template.partialDOM">

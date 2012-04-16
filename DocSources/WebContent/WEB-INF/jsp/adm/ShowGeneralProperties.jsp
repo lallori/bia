@@ -28,6 +28,11 @@
 
 <script type="text/javascript">
 	$j(document).ready(function(){
+		$j("#EditGeneralProperties").css('visibility', 'visible');
+		$j("#EditEmailSystemProperties").css('visibility', 'visible');
+		$j("#EditRecaptchaProperties").css('visibility', 'visible');
+		$j("#EditIipImageProperties").css('visibility', 'visible');
+		
 		$j("#EditGeneralProperties").click(function(){
 			$j(this).next().css('visibility', 'visible');
 			$j("#EditGeneralPropertiesDiv").load($j(this).attr("href"));

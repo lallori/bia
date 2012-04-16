@@ -31,8 +31,23 @@
 
 <script type="text/javascript">
 	$j(document).ready(function(){
+		$j("#EditEmailSystemProperties").css('visibility', 'hidden');
+		$j("#EditRecaptchaProperties").css('visibility', 'hidden');
+		
+		$j("#save").click(function(){
+	       	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
+	       	$j("#loadingDiv").css('visibility', 'visible');
+	    });
+		
 		$j("#generalPropertiesForm").submit(function (){
 			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+				$j("#EditGeneralPropertiesDiv").html(html);
+			}});
+			return false;
+		});
+		
+		$j("#close").click(function(){
+			$j.ajax({ url: '${ShowApplicationProperties}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
 			return false;

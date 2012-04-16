@@ -52,7 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/adm/EditEmailProperties")
+@RequestMapping("/admin/EditEmailProperties")
 public class EditEmailPropertiesController {
 	@Autowired
 	private AdminService adminService;
@@ -101,10 +101,10 @@ public class EditEmailPropertiesController {
 				// We need to refresh ApplicationPropertyManager...
 				ApplicationPropertyManager.refreshProperties();
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/EditDetailsDocument", model);
+				return new ModelAndView("error/EditEmailProperties", model);
 			}
 
-			return new ModelAndView("admin/ShowEmailProperties", model);
+			return new ModelAndView("admin/ShowApplicationProperties", model);
 		}
 	}
 
