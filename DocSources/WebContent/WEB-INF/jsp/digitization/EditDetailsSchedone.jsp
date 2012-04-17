@@ -8,7 +8,7 @@
 		<c:url var="EditDetailsSchedoneURL" value="/digitization/EditDetailsSchedone.do">
 			<c:param name="schedoneId"   value="${command.schedoneId}" />
 		</c:url>
-		<c:url var="ShowSchedoneURL" value="/src/docbase/ShowSchedone.do">
+		<c:url var="ShowSchedoneURL" value="/digitization/ShowSchedone.do">
 			<c:param name="schedoneId"   value="${command.schedoneId}" />
 		</c:url>
 	</security:authorize>
@@ -186,7 +186,7 @@
 						$j('#EditDetailsSchedoneForm').block({ message: $j('#question') }); 
 						return false;
 		        	}else{
-		        		$j.ajax({ url: '${ShowCatalogURL}', cache: false, success:function(html) { 
+		        		$j.ajax({ url: '${ShowSchedoneURL}', cache: false, success:function(html) { 
 		    				$j("#body_left").html(html);
 		    			}});
 		    				
@@ -230,7 +230,7 @@
 			}); 
 	        
 			$j('#yes').click(function() { 
-				$j.ajax({ url: '${ShowCatalog}', cache: false, success:function(html) { 
+				$j.ajax({ url: '${ShowSchedoneURL}', cache: false, success:function(html) { 
 					$j("#body_left").html(html);
 				}});
 					

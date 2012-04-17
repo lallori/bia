@@ -18,35 +18,35 @@
 	<div class="list">
 		<div class="row">
 			<div class="item">Istituto</div> 
-			<div class="value60">Archivio di Stato di Firenze</div> 
+			<div class="value60">${schedone.istituto}</div> 
 		</div>
         <div class="row">
 			<div class="item">Fondo</div> 
-			<div class="value60">Mediceo del Principato</div> 
+			<div class="value60">${schedone.fondo}</div> 
 		</div>
         <div class="row">
 			<div class="item">Serie</div> 
-			<div class="value60">Minute di Lettere</div> 
+			<div class="value60">${schedone.serie}</div> 
 		</div>
         <div class="row">
 			<div class="item">Date estreme</div> 
-			<div class="value60"></div> 
+			<div class="value60">${schedone.dataInizioAnno} ${schedone.dataInizioMese} ${schedone.dataInizioGiorno} - ${schedone.dataFineAnno} ${schedone.dataFineMese} ${schedone.dataFineGiorno}</div> 
 		</div>
         <div class="row">
 			<div class="item">Descrizione contenuto</div> 
-			<div class="value60"></div> 
+			<div class="value60">${schedone.descrizioneContenuto}</div> 
 		</div>
         <div class="row">
 			<div class="item">Legatura</div> 
-			<div class="value60"></div> 
+			<div class="value60">${schedone.legatura}</div> 
 		</div>
         <div class="row">
 			<div class="item">Supporto</div> 
-			<div class="value60"></div> 
+			<div class="value60">${schedone.supporto}</div> 
 		</div>
         <div class="row">
 			<div class="item">Cartulazione</div> 
-			<div class="value60"></div> 
+			<div class="value60">${schedone.cartulazione}</div> 
 		</div>
 	</div>
 </div>
