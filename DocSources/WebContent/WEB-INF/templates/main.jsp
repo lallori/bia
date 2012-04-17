@@ -9,13 +9,9 @@
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
 
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
-		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
-		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/menu/ActionsMenu.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/MainContent.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/Template.css" />" />
-		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/MyHistory.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/modalbox.css" />" />
-		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/pirobox.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery.autocomplete2.css" />"/>
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
 <!-- 	<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/TableTools.css"/>" />  -->

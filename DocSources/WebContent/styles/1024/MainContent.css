@@ -17,6 +17,7 @@ h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLAC
 	font-size: 16px;
 	font-style: italic;
 	color: #666EA4;
+	margin: 5px 0 0 0;
 }
 
 #documentTitle h3 {
@@ -44,6 +45,7 @@ h4 { /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	padding: 10px 0 0 10px;
 	color: #6F6B69;
 	width: 430px;
+	margin: 0;
 }
 
 span.h4 {
@@ -135,7 +137,7 @@ span.h7 {
 	width:190px;
 	font-size: 11px;
 	top: 27px;
-	right:10px;
+	right: -10px;
 	text-align:right;
 	font-style:italic;
 }
@@ -227,6 +229,126 @@ span.h7 {
 	cursor:pointer;
 }
 
+/* -------------------------- */
+/*
+/*
+/* --------------------- ACTIONS MENU ----------------------------------- */
+
+
+.actionsmenu {
+	padding-left: 15px; /*offset of tabs relative to browser left edge*/
+}
+
+.actionsmenu ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+/*Top level list items*/
+.actionsmenu ul li{
+	position: relative;
+	display: inline;
+	float: left;
+	z-index:3;
+}
+
+/*Top level menu link items style*/
+.actionsmenu ul li a{
+	display: block;
+	padding: 3px 7px 0px 7px;
+	color: #FFFDF5;
+	text-decoration: none;
+	font-size:95%;
+}
+	
+/*1st sub level menu*/
+.actionsmenu ul li ul{
+	position: absolute;
+	left: 0;
+	display: block;
+	visibility: hidden;
+	margin-top:-3px;
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.actionsmenu ul li ul li{
+	display: list-item;
+	float: none;
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.actionsmenu ul li ul li ul{
+	top: 0;
+}
+
+/* Sub level menu links style */
+.actionsmenu ul li ul li a{
+	width: 100px; /*width of sub menus*/
+	background-color: #BEA088;
+	color: white;
+	padding: 0px 5px;
+}
+
+.actionsmenu ul li ul li a:hover{ /*sub menus hover style*/
+	background: #85705E;
+	color: white;
+}
+
+/* CSS classes applied to down and right arrow images */
+
+.downarrowclass{ /* NOT USED */
+	position: absolute;
+	top: 7px;
+	right: 5px;
+}
+
+.rightarrowclass{ /* NOT USED */
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+/*Are you sure you want to delete this record? */
+
+#DeleteThisRecordDiv #yes {
+	margin: 15px auto 7px 150px;
+	text-align: center;
+	padding-top: 4px;
+	position: absolute;
+	cursor: pointer;
+	background-color: transparent;
+	background-image: url(/DocSources/images/1024/button_small.png);
+	width: 52px;
+	height: 22px;
+	border: none;
+	background-repeat: no-repeat;
+}
+
+#DeleteThisRecordDiv #no {
+	margin: 15px auto 7px 220px;
+	position: absolute;
+	text-align: center;
+	padding-top: 4px;
+	cursor: pointer;
+	background-color: transparent;
+	background-image: url(/DocSources/images/1024/button_small.png);
+	width: 52px;
+	height: 22px;
+	border: none;
+	background-repeat: no-repeat;
+}
+
+#DeleteThisRecordDiv #close{
+	margin:60px 0 0 185px;
+	position:absolute;
+}
+
+#YesDeleteThisRecordDiv #close{
+	margin:20px 0 0 185px;
+	position:absolute;
+}
+
 
 /* ----------------------------------------------------- */ 
 /*
@@ -244,10 +366,10 @@ span.h7 {
 
 .editButton { /* Edit button on top right */
 	background-image:url(/DocSources/images/1024/button_edit_pencilicon.png);
-	width:40px;
-	height:20px;
+	width:45px;
+	height:23px;
 	position:absolute;
-	margin:-18px 0 0 200px;
+	margin: -20px 0 0 204px;
 	display:inline;
 }
 
@@ -1604,20 +1726,20 @@ input.file {
 
 .editSplitScreen { /* Edit in Split Screen icon */
 	background:url(/DocSources/images/1024/button_edit_splitscreen.png) no-repeat;
-	width:77px;
-	height:20px;
+	width:85px;
+	height:22px;
 	position:absolute;
-	margin:-8px 0 0 270px;
+	margin: -8px 0 0 255px;
 	display:inline;
 }
 
 .EditDocumentInManuscriptTranscriber { /* Edit with Manuscript Transcriber icon */
 	background:url(/DocSources/images/1024/button_edit_mantranscriber.png) no-repeat;
-	width:105px;
-	height:20px;
-	position:absolute;
-	margin:-8px 0 0 375px;
-	display:inline;
+	width: 115px;
+	height: 22px;
+	position: absolute;
+	margin: -8px 0 0 365px;
+	display: inline;
 }
 
 .EditDocumentInManuscriptTranscriberOff { /* Edit with Manuscript Transcriber icon */
@@ -2432,7 +2554,7 @@ a#volumeSummary {
 	cursor:pointer;
 	text-align:center;
 	float: left;
-	margin: 10px 0 20px 13px;
+	margin: 10px 0 20px 30px;
 }
 
 #volumeSummaryWindow {
@@ -3807,23 +3929,6 @@ span.categorySearch {
 	color:#063;
 }
 
-/* Save As Button 
-.saveAsButton { 
-	margin: 65px 0 0 30px;
-	position:absolute;
-	cursor:pointer;
-	background-color:transparent;
-	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
-	padding:4px 0 0 5px; 
-	background-repeat:no-repeat;
-	width:59px;
-	height:23px;
-	border:none;
-	outline:none;
-}
-*/
-
 .saveButton { /* Save Button */
 	margin: 25px 0 0 0px;
 	position:absolute;
@@ -5140,6 +5245,398 @@ h3.systemManagement {
 #serverVersionLabel {
 	margin-left: 50px;
 }
+
+
+
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* -------------------------------------------------------------- YOUR SEARCH (body_right data table) ------------------------------------------------------------- */
+
+
+.refine { /* Refine this search button on Search Results Tab */
+ 	float: right;
+	margin: 20px 0 0 10px;
+	width: 122px;
+	height: 22px;
+	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align: center;
+}
+
+.print {
+	float: left;
+	margin: 15px 0 0 0;
+	width: 122px;
+	height: 22px;
+	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
+	text-align: center;
+}
+ 
+.refine:hover, .print:hover {
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
+}
+ 
+.yourSearchDiv { /* Your Search: [...] Div containing the reserched words on the Result Tab */
+	margin: 15px 0 10px 7px;
+	font-size: 12px;
+	text-align: left;
+	line-height: 22px;
+	border: 1px solid #DCC0BA;
+	border-radius: 4px;
+	background-color: #EFE0DE;
+	padding-left: 10px;
+}
+
+.yourSearchDiv p {
+	margin-left: 10px;
+}
+
+.tabLink { /* The word used on the research */
+	 margin-left:8px;
+	 color:#B7958F;
+	 text-decoration:underline;
+}
+ 
+.recordsNum { /* The number of records on the research */
+	 color:#009;
+	 margin: 5px 0 0 5px;
+}
+
+
+/* Discard Changes? message */
+
+.blockOverlay {
+	z-index: 1000;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-width: initial;
+	border-color: initial;
+	border-image: initial;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	background-color: #999;
+	cursor: wait;
+	position: absolute;
+	opacity: 0.6;
+	border-radius: 5px;
+}
+
+.blockElement {
+	z-index: 1001;
+	position: absolute;
+	padding-top: 4px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	width: 30%;
+	text-align: center;
+	color: black;
+	background-color: #F6EDEC;
+	cursor: wait;
+	left: 167px;
+	top: 213px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 1px 1px 10px #666;
+	-webkit-box-shadow: 1px 1px 10px #666;
+	border: none;
+}
+
+#question h1 {
+	margin-bottom:5px;
+}
+
+#yes, #no {
+	margin: 0;
+	width: 52px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_small.png);
+	font-size: 11px;
+	padding: 0 0 0 2px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+
+
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
+/* -------------------------------------------------------------- MY HISTORY ------------------------------------------------------------- */
+
+#myHistoryDiv { /* Chronology Content Div */
+	width: 730px;
+	height:400px;
+	margin:10px auto 0 auto;
+}
+
+#myHistoryDiv #docsHistory { /* Documents Chronology Div */
+	width: 346px;
+	height: 225px;
+	float:left;
+	color:#6F6B69;
+	padding: 0 10px 0 9px;
+	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
+}
+
+#myHistoryDiv #myCategoryDocumentsHistoryTableDiv, #myHistoryDiv #myCategoryPeopleHistoryTableDiv, #myHistoryDiv #myCategoryPlacesHistoryTableDiv, #myHistoryDiv #myCategoryVolumesHistoryTableDiv {
+	height: 178px;
+	height /**/: 168px;
+	overflow: auto !important;
+}
+
+#myHistoryDiv #peopleHistory { /* People Chronology Div */
+	width: 346px;
+	height: 225px;
+	float:right;
+	color:#6F6B69;
+	padding: 0 10px 20px 9px;
+	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
+	margin-bottom: 20px;
+}
+
+#myHistoryDiv #volumesHistory { /* Volumes Chronology Div */
+	width: 346px;
+	height: 225px;
+	float:right;
+	color:#6F6B69;
+	padding: 0 10px 10px 9px;
+	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
+}
+
+#myHistoryDiv #placeHistory { /* Place Chronology Div */
+	width: 346px;
+	height: 225px;
+	float:left;
+	color:#6F6B69;
+	padding: 0 10px 20px 9px;
+	margin: 10px 0 20px 0;
+	background:url(/DocSources/images/1024/bg_myHistory.png) no-repeat; 
+}
+
+#DocsImg, #PeopleImg, #VolumesImg, #PlaceImg {
+	background-image:url(/DocSources/images/1024/img_chronology.jpg);
+	width:280px;
+	height:50px;
+}
+
+#myDocumentsHistoryTable {
+	width:740px;
+}
+
+/* --------------- DIV STRUCTURE ----------------------- */ 
+
+
+#myHistoryDiv .title {
+	width:220px;
+	height:20px;
+	padding-top:8px;
+}
+
+#myHistoryDiv h5 {
+	margin:0 37px 5px 5px;
+	position:relative;
+	text-decoration:none;
+}
+
+/* ------------------------------------------------------- */ 
+
+#myHistoryDiv a {
+	text-decoration:none;
+}
+
+#moreDocs, #morePeople, #moreVolumes, #morePlaces {
+	margin: 0 28px 0 0;
+	float: right;
+	width: 45px;
+	color:#900;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
+#moreDocs:hover, #morePeople:hover, #moreVolumes:hover, #morePlaces:hover {
+	text-decoration:none;
+	opacity:1; /* FireFox, Chrome, Safari */
+	-moz-opacity: 1;
+	filter:alpha(opacity=100); /* IE */
+}
+
+#myHistoryDiv a:hover {
+	text-decoration:underline;
+}
+
+#myHistoryDiv #close {
+	margin:0;
+}
+
+#MyHistoryButtons {
+    width: 723px;
+}
+
+#closeMyHistory {
+	float:left;
+	cursor:pointer;
+	background-color:transparent;
+	background:url(/DocSources/images/1024/button_small.png) no-repeat;
+	padding:4px 0 0 0;
+	width:52px;
+	height:22px;
+	margin-left: 214px;
+	text-align:center;
+}
+
+#generalHistory {
+    background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: left;
+    height: 22px;
+	padding: 4px 0 0;
+	text-align: center;
+    width: 122px;
+}
+
+#categoryHistory {
+    background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+	float:right;
+    height: 22px;
+    margin: 0;
+    padding: 4px 0 0;
+    text-align: center;
+    width: 122px;
+}
+
+#eraseHistory {
+    background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+	float:left;
+    height: 22px;
+    margin-left: 12px;
+    padding: 4px 0 0;
+    text-align: center;
+    width: 122px;
+}
+
+#goBackToMyHistory {
+	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: left;
+    height: 22px;
+	padding: 4px 0 0;
+	text-align: center;
+    width: 52px;
+}
+
+a#goBackToMyHistory:hover, a#closeMyHistory:hover, a#generalHistory:hover, a#categoryHistory:hover, #eraseHistory:hover {
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
+/* ------------------- Data Table ----------------- */ 
+
+table.display#AllDocumentsHistoryTable, table.display#AllPeopleHistoryTable, table.display#AllVolumesHistoryTable, table.display#AllPlacesHistoryTable, table.display#researchHistoryTable{
+	margin: 0 0 10px 10px;
+	width:710px;
+}
+
+#researchHistoryTableDiv, #myDocumentsHistoryTableDiv, #myVolumeHistoryTableDiv, #myPlaceHistoryTableDiv, #myPeopleHistoryTableDiv {
+	height:320px !important;
+	height /**/: 330px;
+	overflow:auto !important;
+	width: 740px;
+	margin-bottom:25px;
+}
+
+#researchHistoryTableDiv .dataTables_info, #myDocumentsHistoryTableDiv .dataTables_info, #myVolumeHistoryTableDiv .dataTables_info, #myPlaceHistoryTableDiv .dataTables_info, #myPeopleHistoryTableDiv .dataTables_info {
+    color: #666666;
+    float: left;
+    font-size: 10px;
+    margin-left: 10px;
+    width: 60%;
+}
+
+table#myDocumentsHistoryTable, table#myVolumeHistoryTable, table#myPlaceHistoryTable, #myPeopleHistoryTable {
+	width: 725px;
+}
+
+/* ------------------- Data Table in Category View ----------------- */
+
+table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHistoryTable, table.display#myCategoryVolumesHistoryTable, table.display#myCategoryPlacesHistoryTable{
+	margin: 0;
+	width:330px;
+	min-width:330px;
+}
+
+
+/* ------------------- Erase History ----------------- */
+
+.yes, .close {
+	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: left;
+    font-size: 11px;
+    height: 22px;
+	padding: 3px 0 0;
+	text-align: center;
+    width: 52px;
+	border: none;
+}
+
+.no, .goBack {
+	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: right;
+    font-size: 11px;
+    height: 22px;
+	padding: 3px 0 0;
+	text-align: center;
+    width: 52px;
+	border: none;
+}
+
+.yesNoButtons {
+	width:150px; 
+	margin-left: 68px;
+	margin-top:15px
+}
+
+.yes:hover, .no:hover, .close:hover, .goBack:hover {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+	text-decoration:none;
+}
+
+
+
+
+	
 
 
 
