@@ -46,6 +46,11 @@
 		$j("#EditEmailSystemProperties").css('visibility', 'hidden');
 		$j("#EditRecaptchaProperties").css('visibility', 'hidden');
 		
+		$j("#EditIipImagePropertiesForm :input").change(function(){
+			$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+			return false;
+		});
+		
 		$j("#save").click(function(){
 	       	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 	       	$j("#loadingDiv").css('visibility', 'visible');
@@ -59,11 +64,53 @@
 		});
 		
 		$j("#close").click(function(){
+			if($j("#modify").val() == 1){
+				$j("#EditIipImagePropertiesForm").block({ message: $j("#question"),
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				});
+				return false;
+			}else{
+				$j.ajax({ url: '${ShowApplicationProperties}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
+				}});
+				return false;
+			}
+		});
+	})
+</script>
+
+<div id="question" style="display:none; cursor: default"> 
+	<h1>Discard changes?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
+</div>
+
+<script type="text/javascript">
+	$j(document).ready(function() {
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j("#question").hide();
+			// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+			$j("#EditIipImagePropertiesForm").append($j("#question"));
+			$j(".blockUI").remove();
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
 			$j.ajax({ url: '${ShowApplicationProperties}', cache: false, success:function(html) { 
 				$j("#body_left").html(html);
 			}});
-			return false;
-		});
-	})
+				
+			return false; 
+		}); 
+     	
+	});
 </script>
 </security:authorize>
