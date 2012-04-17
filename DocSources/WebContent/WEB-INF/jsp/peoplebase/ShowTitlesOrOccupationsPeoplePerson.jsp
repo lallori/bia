@@ -31,7 +31,7 @@
 			$j("#showTitlesOrOccupationsPeopleTitleOccId${titleOccId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
 			$j('#showTitlesOrOccupationsPeopleTitleOccId${titleOccId}').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
+				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [4, 5] }], 
 				"aaSorting": [[0, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
