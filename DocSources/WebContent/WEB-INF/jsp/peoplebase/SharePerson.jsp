@@ -4,125 +4,183 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<a href="javascript:window.print()" class="print" title="Print"></a>
-	<a href="#" class="pdf" title="Save as PDF"></a>
-
-	<h4>Documentary Sources for the Arts and Humanities 1537 - 1743<br />Person Report</h4>
+	<a href="#" class="moreInfo" title="Browse The Medici Archive Project Database"></a><!-- Questo pulsante chiude la finestra "pop up" e a lo stesso tempo riporta questa persona nell body_left del main  -->
+	<ul id="network">
+		<li><a href="#"></a></li>
+		<li><a href="#"></a></li>
+		<li><a href="#"></a></li>
+	</ul>
 	
+	<div id="EditDetailsPersonDiv" class="background">
+		<div class="title">
+			<h5>PERSON DETAILS</h5>
+		</div>
+		
+		<div id="EditPortraitPersonDiv">
+			<div id="imgPortraitPerson"></div>
+			<p style="text-align:center"><b>Portrait</b></p>
+			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+			<c:if test="${person.personId != 0}">
+				<a id="uploadPortrait" href="#">Upload Portrait</a>
+			</c:if>
+			</security:authorize>
+		</div>
+		<h3>${person.mapNameLf}</h3>
+		<div class="listDetails">
+			<div class="row">
+					<div class="item">Gender</div> <div class="value">${person.gender}</div>
+				</div>
+				<div class="row">
+					<div class="item">Date of Birth</div> <div class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</div>
+				</div>
+				<div class="row">
+					<div class="item">Birth Place</div>
+					<div class="value">${person.bornPlace.placeNameFull}</div>
+				</div>
+				<div class="row">
+					<div class="item">Active Start</div> <div class="value">${person.activeStart}</div>
+				</div>
+				<div class="row">
+					<div class="item">Date of Death</div> <div class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</div>
+				</div>
+				<div class="row">
+					<div class="item">Death Place</div>
+					<div class="value">${person.deathPlace.placeNameFull}</div>
+				</div>
+				<div class="row">
+					<div class="item">Active End</div> <div class="value">${person.activeEnd}</div>
+				</div>
+		</div>
+		
+	</div>
 	
-	<h3>${person.mapNameLf}</h3>
-	<table>
-		<tr>
-			<td width="70">Birth</td>
-			<td width="300" class="value">${person.bornYear} ${person.bornMonth} ${person.bornDay}</td>
-		</tr>
-		<tr>
-			<td width="70">Death</td>
+	<br />
+	<br />
 	
-			<td width="300" class="value">${person.deathYear} ${person.deathMonth} ${person.deathDay}</td>
-		</tr>
-		<tr>
-			<td width="70">Birth Place</td>
-			<td width="300" class="value">${person.bornPlace.placeNameFull}</td>
-		</tr>
-		<tr>
+	<div id="EditNamesPersonDiv" class="background">
+		<div class="title">
+			<h5>NAMES</h5>
+		</div>
+		
+		<div class="list">
+			<c:forEach items="${person.altName}" var="currentName">
+				<div class="row">
+					<div class="item">${currentName.nameType}</div>
+					<div class="value">${currentName.namePrefix} ${currentName.altName}</div> 
+				</div>
+			</c:forEach>
+		</div>
+	</div>
 	
-			<td width="70">Death Place</td>
-			<td width="300" class="value">${person.deathPlace.placeNameFull}</td>
-		</tr>
-	</table>
+	<br />
+	<br />
 	
-	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
+	<div id="EditTitlesOccupationsPersonDiv" class="background">
+		<div class="title">
+			<h5>TITLES / OCCUPATIONS</h5>
+		</div>
+		
+		<div class="list">
+			<c:forEach items="${person.poLink}" var="currentPoLink">
+				<div class="row">
+					<c:if test="${currentPoLink.preferredRole}">
+						<div class="value5" title="Preferred Role" id="preferredRoleIcon"></div>
+					</c:if>
+					<c:if test="${!currentPoLink.preferredRole}">
+						<div class="value5"></div>
+					</c:if>
+					<div class="value60"><b>${currentPoLink.titleOccList.titleOcc}</b><br>
+					${currentPoLink.titleOccList.roleCat.roleCatMinor}</div> 
+					<div class="info">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</div>
+				</div>
+			</c:forEach>
+		</div>	
+	</div>
 	
-	<h5>Names</h5>
-	<table>
-		<c:forEach items="${person.altName}" var="currentName">
-			<tr>
-				<td width="70">${currentName.nameType}</td>
-				<td width="300" class="value">${currentName.namePrefix} ${currentName.altName}</td>
-			</tr>
-		</c:forEach>	
-	</table>
+	<br />
+	<br />
 	
-	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
-	
-	<h5>Titles/Occupations</h5>
-	<table>
-		<c:forEach items="${person.poLink}" var="currentPoLink">
-			<tr>
-				<c:if test="${currentPoLink.preferredRole}">
-					<td width="10"><img src="<c:url value="/images/1024/img_preferred.png"/>" alt="Preferred Role" /></td>
-				</c:if>
-				<c:if test="${!currentPoLink.preferredRole}">
-					<td width="10"></td>
-				</c:if>
-				<td width="190">${currentPoLink.titleOccList.titleOcc}<br />${currentPoLink.titleOccList.roleCat.roleCatMinor}</td>
-				<td width="200" class="valueRight">Start ${currentPoLink.startDate} | End ${currentPoLink.endDate}</td>
-			</tr>
-		</c:forEach>
-	</table>
-	
-	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
-	
-	<h5>Parents</h5>
-	<table>
+	<div id="EditParentsPersonDiv" class="background">
+		<div class="title">
+			<h5>PARENTS</h5>
+			<br />
+		</div>
+		
+		<div class="list">
+			<div class="row">
+				<div class="item">Father</div> 
 		<c:forEach items="${person.parents}" var="currentParent">
-			<tr>
-				<c:if test="${currentParent.parent.gender == 'M'}">
-					<td width="60">Father</td>
-					<td width="235" class="value">${currentParent.parent}</td>
-					<td width="120" class="valueRight">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</td>
-				</c:if>
-							
-				<c:if test="${currentParent.parent.gender == 'F'}">
-					<td width="60">Mother</td>
-					<td width="235" class="value">${currentParent.parent}</td>
-					<td width="120" class="valueRight">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</td>
-				</c:if>
-			</tr>
+			<c:if test="${currentParent.parent.gender == 'M'}">
+				<div class="value">${currentParent.parent}</div> 
+				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+			</c:if>				
 		</c:forEach>
-	</table>
-	
-	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
-	
-	<h5>Children</h5>
-	<table>
-		<c:forEach items="${person.children}" var="currentChild">
-			<tr>
-				<td width="290">${currentChild.child}</td>
-				<td width="120" class="valueRight">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</td>
-			</tr>
+			</div>
+			<div class="row">
+				<div class="item">Mother</div> 
+		<c:forEach items="${person.parents}" var="currentParent">
+			<c:if test="${currentParent.parent.gender == 'F'}">
+				<div class="value">${currentParent.parent}</div> 
+				<div class="info">Born ${currentParent.parent.bornYear} | Death ${currentParent.parent.deathYear}</div>
+			</c:if>				
 		</c:forEach>
-	</table>	
+			</div>
+		</div>
+	</div>
 	
-	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
+	<br />
 	
-	<h5>Spouses</h5>
-	<table>
-		<c:forEach items="${marriages}" var="currentMarriage">
-			<tr>
-			<c:if test="${person.personId == currentMarriage.husband.personId}">
-				<td width="200">${currentMarriage.wife}</td>
-				<td width="200" class="valueRight">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</td>
-			</c:if>
-			
-			<c:if test="${person.personId == currentMarriage.wife.personId}">
-				<td width="200">${currentMarriage.husband}</td>
-				<td width="200" class="valueRight">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.husband.deathYear}</td>
-			</c:if>
-			</tr>
-		</c:forEach>
-	</table>
+	<div id="EditChildrenPersonDiv" class="background">
+		<div class="title">
+			<h5>CHILDREN</h5>
+		</div>
+		
+		<div class="list">
+			<c:forEach items="${children}" var="currentChild">
+				<div class="row">
+					<div class="value">${currentChild.child}</div> 
+					<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
 	
-	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
+	<br />
 	
+	<div id="EditSpousesPersonDiv"class="background">
+		<div class="title">
+			<h5>SPOUSES</h5>
+		</div>
+		
+		<div class="list">
+			<c:forEach items="${marriages}" var="currentMarriage">
+				<div class="row">
+					<c:if test="${person.personId == currentMarriage.husband.personId}">
+						<div class="value">${currentMarriage.wife}</div> 
+						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.wife.deathYear}</div>
+					</c:if>
+					<c:if test="${person.personId == currentMarriage.wife.personId}">
+						<div class="value">${currentMarriage.husband}</div> 
+						<div class="info">Marriage ${currentMarriage.startYear} - ${currentMarriage.endYear} | Death ${currentMarriage.husband.deathYear}</div>
+					</c:if>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
 	
-	<h5>Research Notes</h5>
-	<table>
-		<tr>
-			<td width="400" class="value">${person.bioNotes}</td>
-		</tr>
-	</table>
+	<br />
+	<br />
 	
-	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin: 10px 0 10px 85px" />
-	
+	<div id="EditResearchNotesPersonDiv" class="background">
+		<div class="title">
+			<h5>RESEARCH NOTES</h5>
+		</div>
+		
+		<div class="list">
+			<div class="row">
+				<div class="value">
+					${person.bioNotes}
+				</div>
+			</div>		
+		</div>		
+	</div>
