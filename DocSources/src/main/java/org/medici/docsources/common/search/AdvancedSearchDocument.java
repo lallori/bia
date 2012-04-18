@@ -1234,13 +1234,13 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						placeIdQuery.append(" AND ");
 					}
 					
-					placeIdQuery.append("(senderPlace.placeAllId=");
+					placeIdQuery.append("(senderPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append(" or recipientPlace.placeAllId=");
+					placeIdQuery.append(") or recipientPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append(" or entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeAllId=");
+					placeIdQuery.append(") or entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 					placeIdQuery.append(placeId.get(i).toString());
-					placeIdQuery.append("))");
+					placeIdQuery.append(")))");
 				} else {
 					if (placeQuery.length()>1) {
 						placeQuery.append(" AND ");
@@ -1320,9 +1320,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						fromIdQuery.append(" AND ");
 					}
 					
-					fromIdQuery.append("(senderPlace.placeAllId=");
+					fromIdQuery.append("(senderPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 					fromIdQuery.append(fromId.get(i).toString());
-					fromIdQuery.append(")");
+					fromIdQuery.append("))");
 				} else {
 					if (fromQuery.length()>1) {
 						fromQuery.append(" AND ");
@@ -1398,9 +1398,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						toIdQuery.append(" AND ");
 					}
 					
-					toIdQuery.append("(recipientPlace.placeAllId=");
+					toIdQuery.append("(recipientPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 					toIdQuery.append(toId.get(i).toString());
-					toIdQuery.append(")");
+					toIdQuery.append("))");
 				} else {
 					if (toQuery.length()>0) {
 						toQuery.append(" AND ");
