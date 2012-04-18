@@ -1429,6 +1429,10 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	color:#6F6B69;
 }
 
+#EditPortraitPersonDiv p {
+	margin: 2px;
+}
+
 #EditDetailsVolumeDiv h3 {
 	max-width: 290px;
 }
@@ -1816,7 +1820,7 @@ input.file {
 }
 
 #TopicsDescriptionWindow p{ /* Text */
-	font-size:11px;
+	font-size:12px;
 	text-align:justify;
 	line-height:18px;
 }
@@ -2103,7 +2107,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin-left: 30px;
 }
 
-a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a, .all_docs, .sender_docs, .recipient_docs, .referred_docs {
+a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a, .all_docs, .sender_docs, .recipient_docs, .referred_docs, .all_docsCompare, .sender_docsCompare, .recipient_docsCompare, .referred_docsCompare {
 	text-decoration: underline;
 	color: #B7958F;
 	display:inline;
@@ -3013,7 +3017,7 @@ a.refreshVolumeExplorer {
 }
 
 #geoDiv h2 {
-	margin: 35px 0 5px 15px;
+	margin: 5px 0 5px 15px;
 }
 
 #EditDetailsPlaceDiv .listDetails {
@@ -3110,6 +3114,10 @@ a.refreshVolumeExplorer {
 
 #placeParentLabel {
 	margin-left: 18px;
+}
+
+#placeIDLabel {
+	margin-right: 10px;
 }
 
 /* -------------------------------------- */
@@ -3620,7 +3628,7 @@ form#EditUserProfileForm span{
 }
 
 #advancedSearchModal #CloseButton{ /* Close Advanced Search Button */
-	margin: 220px 0 0 340px;
+	margin: 210px 0 0 340px;
 	position:absolute;
 }
 
@@ -4016,7 +4024,7 @@ h1.advancesSearchTitle {
 
 #savedSearchFiltersDiv{
 	width:650px;
-	margin:5px 0 0 40px;
+	margin:5px 0 0 10px;
 }
 
 #savedSearchFiltersDiv #documentSearchFilters {
@@ -4052,8 +4060,8 @@ h1.advancesSearchTitle {
 }
 
 table#savedSearchFiltersForm.display {
-	width:700px;
-	margin-left:15px;
+	width:715px;
+	margin-left:0;
 }
 
 #savedSearchFiltersDiv #close { /* Close Button */
@@ -4613,13 +4621,14 @@ ul#network {
 }
 
 ul#network a {
-	width:25px;
-	height:25px;
-	background:url(/DocSources/images/1024/img_network.png) no-repeat;
+	width: 22px;
+	height: 22px;
 	display: block;
 	float:right;
 	margin-right: 10px;
 	margin-left: 10px;
+	background-color: #B7958F;
+	border-radius: 4px;
 }
 
 .moreInfo {
@@ -4680,6 +4689,10 @@ ul#network a {
 	width:255px;
 	height:22px;
 	margin:-5px 0 0 10px;
+}
+
+#CreateCatalog p, #AddNewFilza p, #BrowseFilze p {
+	margin: 0;
 }
 
 #digitizationModalDiv #CreateCatalog:hover, #digitizationModalDiv #AddNewFilza:hover, #digitizationModalDiv #BrowseFilze:hover {
@@ -4753,27 +4766,35 @@ ul#network a {
 
 /* Schedone details */
 #dimensioniBaseLabel {
-	margin-right: 13px;
+	margin-right: 69px;
 }
 
 #carteMancantiLabel {
-	margin-right: 20px;
+	margin-right: 16px;
 }
 
 #cartulazioneLabel {
-	margin-right: 38px;
+	margin-right: 33px;
 }
 
 #supportoLabel {
-	margin-right: 60px;
+	margin-right: 55px;
 }
 
 #legaturaLabel {
-	margin-right: 59px;
+	margin-right: 54px;
 }
 
 #dateEstremeLabel {
 	margin-right: 31px;
+}
+
+#dataFineAnno {
+	margin-left: 141px;
+}
+
+#numeroUnitaLabel {
+	margin-right: 56px;
 }
 
 #unitaLabel {
@@ -4796,28 +4817,32 @@ ul#network a {
 	margin-right: 63px;
 }
 
+#dimensioniAltezzaLabel {
+	margin-right: 53px;
+}
+
 #tipoRipresaLabel {
-	margin-right: 28px;
+	margin-right: 65px;
 }
 
 #coloreImmagineLabel {
-	margin-right: 13px;
+	margin-right: 21px;
 }
 
 #risoluzioneLabel {
-	margin-right: 48px;
+	margin-right: 66px;
 }
 
 #daRipresaLabel {
-	margin-right: 124px;
+	margin-right: 117px;
 }
 
 #operatoreLabel {
-	margin-right: 55px;
+	margin-right: 49px;
 }
 
 #responsabileFotoRiproduzioneLabel {
-	 margin-right: 25px;
+	 margin-right: 17px;
 }
 
 /* TIFF images */
@@ -4906,6 +4931,10 @@ ul#network a {
 	width:182px;
 	height:22px;
 	margin:-5px 0 0 10px;
+}
+
+#systemWide p, #userManagement p, #reportsRevisions p {
+	margin: 0px;
 }
 
 #administrationModalDiv #userManagement:hover, #administrationModalDiv #reportsRevisions:hover, #administrationModalDiv #systemWide:hover {
@@ -5214,6 +5243,10 @@ h3.systemManagement {
 	margin-left: 25px;
 }
 
+#publicKeyLabel {
+	margin-left: 32px;
+}
+
 #serverUrlLabel {
 	margin-left: 32px;
 }
@@ -5262,6 +5295,7 @@ h3.systemManagement {
 	height: 22px;
 	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
 	text-align: center;
+	padding-top: 3px;
 }
 
 .print {
@@ -5271,6 +5305,8 @@ h3.systemManagement {
 	height: 22px;
 	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
 	text-align: center;
+	padding-top: 3px;
+	
 }
  
 .refine:hover, .print:hover {
@@ -5284,7 +5320,7 @@ h3.systemManagement {
 	margin: 15px 0 10px 7px;
 	font-size: 12px;
 	text-align: left;
-	line-height: 22px;
+	line-height: 18px;
 	border: 1px solid #DCC0BA;
 	border-radius: 4px;
 	background-color: #EFE0DE;

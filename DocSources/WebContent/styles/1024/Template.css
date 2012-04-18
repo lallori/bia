@@ -136,9 +136,9 @@ a {
 }
 	
 #body_right{ /* RIGHT-hand side of the SCREEN */
-	width:490px;
+	width:489px;
 	height:auto;
-	padding:0 5px 0 5px;
+	padding: 0 5px 0 7px;
 	float:right;
 	position:absolute;
 	margin-left:500px;
@@ -680,7 +680,7 @@ $('.searchResult').live('click', function() {
 #EntryMenuDiv #AddNewDocument{
 	background:url(/DocSources/images/1024/button_addnewdocument.png) no-repeat;
 	position:absolute;
-	margin: 20px 0 5px 35px;
+	margin: 20px 0 5px 101px;
 	width:122px;
 	height:75px;
 	background-position:top;
@@ -693,7 +693,7 @@ $('.searchResult').live('click', function() {
 
 #EntryMenuDiv #AddNewPerson{
 	background:url(/DocSources/images/1024/button_addnewperson.png) no-repeat;
-	margin: 20px 0 5px 300px;
+	margin: 20px 0 5px 374px;
 	position:absolute;
 	width:120px;
 	height:75px;
@@ -708,7 +708,7 @@ $('.searchResult').live('click', function() {
 #EntryMenuDiv #AddNewVolume{
 	background:url(/DocSources/images/1024/button_addnewvolume.png) no-repeat;
 	position:absolute;
-	margin: 20px 0 5px 175px;
+	margin: 20px 0 5px 240px;
 	position:absolute;
 	width:120px;
 	height:75px;
@@ -723,7 +723,7 @@ $('.searchResult').live('click', function() {
 #EntryMenuDiv #AddNewPlace{
 	background:url(/DocSources/images/1024/button_addnewplace.png) no-repeat;
 	position:absolute;
-	margin: 20px 0 5px 425px;
+	margin: 20px 0 5px 503px;
 	position:absolute;
 	width:120px;
 	height:75px;

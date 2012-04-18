@@ -15,7 +15,7 @@
 			<div><form:textarea path="recips" cssClass="txtarea_medium"/><form:errors path="recips" cssClass="inputerrors"/></div>
 			<div style="margin-top:5px">
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
-				<input id="save" type="submit" value="Save" style="margin-left:300px" class="button"/>
+				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
 			<form:hidden path="summaryId"/>
 			<input type="hidden" value="" id="modify" />
