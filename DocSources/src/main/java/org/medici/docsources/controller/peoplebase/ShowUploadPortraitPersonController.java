@@ -30,6 +30,8 @@ package org.medici.docsources.controller.peoplebase;
 import java.util.HashMap;
 import java.util.Map;
 import org.medici.docsources.command.peoplebase.ShowUploadPortraitPersonCommand;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,7 +77,16 @@ public class ShowUploadPortraitPersonController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowUploadPortraitPersonCommand command, BindingResult result){
 		Map<String, Object> model = new HashMap<String, Object>();
-
-		return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
+		if(command.getPersonId() > 0){
+			try{
+				People person = getPeopleBaseService().findPerson(command.getPersonId());
+				model.put("person", person);
+			
+				return new ModelAndView("peoplebase/ShowUploadPortraitPersonModalWindow", model);
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("error/ShowUploadPortraitPersonModalWindow", model);
+			}
+		}
+		return new ModelAndView("error/ShowUploadPortraitPersonModalWindow", model);		
 	}
 }

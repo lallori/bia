@@ -3,8 +3,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-
-	<form id="EditPortraitPersonForm" action="/DocSources/de/peoplebase/EditDetailsPerson.do?summaryId=0&amp;volNum=0&amp;volLeText=" method="post" class="edit">
+	
+	<c:url var="UploadPortraitPersonURL" value="/de/peoplebase/UploadPortraitPerson.do" >
+		<c:param name="personId" value="${person.personId }" />
+	</c:url>
+	
+	<form id="EditPortraitPersonForm" action="${UploadPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
 	       <div>
 	       	<label for="browseLabel" id="browseLabel">Browse</label>	
 	           <input id="browse" name="browse" type="file" value="Browse"/>
