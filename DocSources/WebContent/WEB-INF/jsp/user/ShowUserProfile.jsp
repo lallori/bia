@@ -62,9 +62,9 @@
 			
 		<div id="helpProfile">
 			<h1>HELP SYSTEM</h1>
-			<a href="#">User Manual (HTML version)</a><br />
-			<a href="#">Download Manual (PDF version)</a><br />
-			<a href="#">Help Videos</a>
+			<a href="/manual/DataEntryManual.html">User Manual (HTML version)</a><br />
+			<a href="">Download Manual (PDF version)</a><br />
+			<a href="">Help Videos</a>
 		</div>
 	
 		<div id="aboutmapProfile">
