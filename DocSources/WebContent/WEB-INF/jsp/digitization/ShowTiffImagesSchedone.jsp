@@ -28,15 +28,15 @@
 		</div>
         <div class="row">
 			<div class="item">Numero totale immagini</div> 
-			<div class="value60"></div> 
+			<div class="value60">${schedone.numeroTotaleImmaginiTiff}</div> 
 		</div>
         <div class="row">
 			<div class="item">Dimensione media immagini</div> 
-			<div class="value60"></div> 
+			<div class="value60">${schedone.dimMediaImmaginiTiff}</div> 
 		</div>
         <div class="row">
 			<div class="item">Dimensione totale immagini</div> 
-			<div class="value60"></div> 
+			<div class="value60">${schedone.dimTotaleImmaginiTiff}</div> 
 		</div>
 	</div>
 </div>

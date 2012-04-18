@@ -9,6 +9,3 @@
 	<a id="printJpeg" href="#">Print schedone JPEG</a>
 	<a id="printPdf" href="#">Print schedone PDF</a>
 </div>
-
-<BR>
-<BR>

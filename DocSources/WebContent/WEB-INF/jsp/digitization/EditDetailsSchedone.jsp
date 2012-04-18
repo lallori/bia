@@ -41,7 +41,6 @@
 	        <div>
 	            <a class="helpIcon" title="Help to be created">?</a>
 				<label for="dateEstreme" id="dateEstremeLabel">Date estreme</label>
-				<br>
 	            <form:input id="dataInizioAnno" path="dataInizioAnno" class="input_4c" value="" maxlength="4"/>
 				<form:select id="dataInizioMese" path="dataInizioMese" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
 				<form:input id="dataInizioGiorno" path="dataInizioGiorno" class="input_2c" maxlength="2"/>
@@ -119,17 +118,17 @@
 	        <div>
 	            <a class="helpIcon" title="What kind of digitization equipment are you using? A digital camera? A scanner? etc.">?</a>
 	            <form:label for="tipoRipresa" path="tipoRipresa" id ="tipoRipresaLabel" cssErrorClass="error" title="Tipo di ripresa">Digitization Type</form:label>
-				<form:input path="tipoRipresa" id="tipoRipresa" cssClass="input_29c" />
+				<form:input path="tipoRipresa" id="tipoRipresa" cssClass="input_24c" />
 	        </div>
 	        <div>
 	            <a class="helpIcon" title="B&W, grayscale, RGB?">?</a>
 	            <form:label for="coloreImmagine" path="coloreImmagine" id ="coloreImmagineLabel" cssErrorClass="error" title="Schema colore immagini">Schema colore immagini</form:label>
-				<form:input path="coloreImmagine" id="coloreImmagine" cssClass="input_29c" />
+				<form:input path="coloreImmagine" id="coloreImmagine" cssClass="input_24c" />
 	        </div>
 	        <div>
 	            <a class="helpIcon" title="At what resolution? (must use PPI, pixels per inch)">?</a>
 	            <form:label for="risoluzione" path="risoluzione" id ="risoluzioneLabel" cssErrorClass="error" title="Colore immagine">Image Resolution</form:label>
-				<form:input path="risoluzione" id="risoluzione" cssClass="input_29c" />
+				<form:input path="risoluzione" id="risoluzione" cssClass="input_24c" />
 	        </div>
 	        <div style="margin-top:5px">
 	            <a class="helpIcon" title="Default filename: <b>Quattro cifre</b> (numero progressivo immagine) <b>_coperta/C</b> (carta) <b>/G</b> (guardia) <b>/A</b>  (allegato) <b>/R</b> (repertorio) <b>_tre cifre</b> (numero della carta) <b>_tre lettere</b> (bis ter qua) <b>_R/V</b>">?</a>
