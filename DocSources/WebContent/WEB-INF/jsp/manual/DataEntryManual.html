@@ -1,0 +1,1220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<!--<base href="/DocSources"></base>-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>the MEDICI ARCHIVE PROJECT</title>
+        <link rel="shortcut icon" type="image/x-icon" href="images/favicon_medici.png" />
+        <link rel="stylesheet" type="text/css" href="/DocSources/styles/1024/MainContent.css" />
+        <link rel="stylesheet" type="text/css" href="/DocSources/styles/1024/Template.css" />
+        <link rel="stylesheet" type="text/css" href="/DocSources/styles/1024/DataEntryManual.css"/>
+		<link rel="stylesheet" type="text/css" href="/DocSources/styles/1024/js/jquery-ui-1.8.13.custom.css" />
+
+        <!--[if lte IE 7]>
+        <style type="text/css">
+        html .jquerycssmenu{height: 1%;} /*Holly Hack for IE7 and below*/
+        </style>
+        <![endif]-->
+
+		<script type="text/javascript" src="/DocSources/scripts/jquery.min.js"></script>
+        <script type="text/javascript" src="/DocSources/scripts/jquery.form-2.47.js"></script>
+		<script type="text/javascript" src="/DocSources/scripts/jquery.open.js"></script>
+		<script type='text/javascript' src='/DocSources/scripts/jquery.blockUI.js'></script>
+		<script type="text/javascript" src="/DocSources/scripts/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/DocSources/scripts/jquery.multi-open-accordion-1.0.1.js"></script>
+        <script type="text/javascript" src="/DocSources/scripts/jquery.scrollTo-min.js"></script>	
+
+
+		<script type="text/javascript">
+            var $j = jQuery.noConflict();
+            $j(document).ready(function() {
+                $j.ajaxSetup ({
+                    // Disable caching of AJAX responses */
+                    cache: false
+                });
+            });
+        </script>	
+        
+        <script type="text/javascript">
+			$j(document).ready(function() {
+					$j('#accordion').accordion({
+							active: 0, 
+							autoHeight: false,
+							collapsible: true
+							});
+					$j('.goToIndex').click(function(){
+							$j.scrollTo({top:'1000px',left:'0px'}, 800 );
+							return false;
+			  });
+			});		
+		</script>
+	</head>
+	
+	<body>
+        <div id="cover">
+            <div id="map"></div>
+            <h1>Documentary Sources for the <br />Arts and Humanities: 1537 - 1743</h1>
+            <h2>Data Entry Manual</h2>
+            <a href="#index" class="goToIndex">go to the Index</a>
+        </div>
+        <div id="index">
+        	<h3>INDEX</h3>
+        	<div id="accordion">
+<!-- CHAPTER 1 -->
+				<h1><a style="font-size:12px; font-weight:bold; color:#6F6B69;">I. GENERAL CONSIDERATIONS</a></h1>	
+            		<div>
+                        <ul>
+                            <li><a href="#chapter1"><b>THE ARCHIVE</b></a></li>
+                            <li><a href="#ourDatabase"><b>OUR DATABASE AND ITS USERS</b></a></li>
+                            <li><a href="#inputOutput"><b>"INPUT" VS. "OUTPUT"</b></a></li>
+                            <li><a href="#fourLinkedModules"><b>FOUR LINKED MODULES</b></a>
+                                <ul>
+                                    <li><a href="#volbaseModule">VolBase Module</a></li>
+                                    <li><a href="#docbaseModule">DocBase Module</a></li>
+                                    <li><a href="#peoplebaseModule">PeopleBase Module</a></li>
+                                    <li><a href="#geobaseModule">GeoBase Module</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#interface"><b>MODULES' COMMON INTERFACE</b></a>
+                                <ul>
+                                    <li><a href="#basicSearch">Basic Search</a></li>
+                                    <li><a href="#lastEntryMenu">Last entry menu</a></li>
+                                    <li><a href="#mainMenu">Main Menu</a></li>
+                                    <li><a href="#splitScreen">Split screen</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#example"><b>EXAMPLE OF CONNECTIONS AMONG MODULES</b></a></li>
+                            <li><a href="#notesDataEntry"><b>SOME NOTES ON DATA ENTRY</b></a>
+                                <ul>
+                                    <li><a href="#"><font color="#FF0000">Saving records</font></a></li>
+                                    <li><a href="#"><font color="#FF0000">The esc key</font></a></li>
+                                    <li><a href="#systemMessages"><font color="#FF0000">System messages</font></a></li>
+                                    <li><a href="#error"><font color="#FF0000">#Error</font></a></li>
+                                    <li><a href="#exiting">Exiting the database</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                	</div>
+                 
+<!-- CHAPTER 2 -->
+				<h1><a style="font-size:12px; font-weight:bold; color:#6F6B69;">II. DESCRIBING A VOLUME (VOLBASE)</a></h1>
+                	<div>
+                        <ul>
+                            <li><a href="#chapter2"><b>GENERAL CONSIDERATIONS</b></a></li>    
+                            <li><a href="#selfNumbers"><b>SHELF NUMBERS VS VOLUME ID NUMBERS</b></a></li>
+                            <li><a href="#volSummary"><b>VOLUME SUMMARY DATA ENTRY</b></a></li>
+                            <li><a href="#"><font color="#FF0000"><b>THE ID SECTION</b></font></a></li>                
+                            <li><a href="#volbaseSections"><b>VOLBASE SECTIONS</b></a>
+                                <ul>
+                                    <li><a href="#volbaseSections">Volume details</a></li>       	
+                                    <li><a href="#volDescription">Description</a></li>
+                                    <li><a href="#volCorrespondents">Correspondents</a></li>
+                                    <li><a href="#volContext">Context</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#ongoingVolume"><b>ONGOING ENTRY INTO THE VOLUME SUMMARY</b></a></li>
+                        </ul>
+                	</div>
+                
+<!-- CHAPTER 3 -->
+                <h1><a style="font-size:12px; font-weight:bold; color:#6F6B69;">III. DESCRIBING A DOCUMENT (DOCBASE)</a></h1>
+                	<div>
+                        <ul>
+                            <li><a href="#chapter3"><b>KINDS OF DOCUMENTS</b></a></li>    
+                            <li><a href="#extractSinopsis"><b>DOCBASE EXTRACTS AND SYNOPSIS SECTION</b></a>
+                                <ul>
+                                    <li><a href="#extractSinopsis">General considerations</a></li>
+                                    <li><a href="#spelling">Spelling conventions in "Document Extracts"</a></li>
+                                    <li><a href="#squareBrackets">Square Brackets</a></li>
+                                    <li><a href="#capitalization">Capitalization</a></li>
+                                    <li><a href="#diacriticalMarks">Diacritical Marks</a></li>
+                                    <li><a href="#"><font color="#FF0000">Abreviations and Symbols</font></a></li>
+                                    <li><a href="#punctuation">Punctuation</a></li>
+                                </ul>
+                            </li>        
+                            <li><a href="#correspondentsPeople"><b>DOCBASE CORRESPONDENTS/PEOPLE SECTION</b></a></li>
+                            <li><a href="#topics"><b>DOCBASE TOPICS SECTION</b></a>
+                                <ul>
+                                    <li><a href="#">General considerations</a></li>
+                                    <li><a href="#topicsCategories">39 Topic categories</a></li>
+                                    <li><a href="#indexingTopics">Indexing topics</a></li>
+                                    <li><a href="#topicplaces">Topic places</a></li>
+                                    <li><a href="#"><font color="#FF0000">"Place index" as topic</font></a></li>
+                                    <li><a href="#"><font color="#FF0000">Deleting topic assignments</font></a></li>
+                                    <li><a href="#"><font color="#FF0000">No topic assignment for some documents</font></a></li>
+                                    <li><a href="#"><font color="#FF0000">"Do I include this document or not?"</font></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><b>DOCBASE VOLUME INFO SECTION</b></a></li>                                                
+                            <li><a href="#"><b>DOCBASE FACT CHECK SECTION</b></a></li>                                                
+                            <li><a href="#"><b><font color="#FF0000">DOCBASE GRIDS</font></b></a></li>                                                
+                        </ul>
+                	</div>
+                
+<!-- CHAPTER 4 -->
+                <h1><a style="font-size:12px; font-weight:bold; color:#6F6B69;">IV. MANAGING BIOGRAPHICAL INFORMATION (PEOPLEBASE)</a></h1>
+                	<div>
+                        <ul>
+                            <li><a href="#chapter4"><b>GENERAL CONSIDERATIONS: NAMES AND PEOPLE</b></a></li>    
+                            <li><a href="#"><b>DEVELOPMENT OF THE "PEOPLEBASE" SUBSYSTEM</b></a>
+                            <li><a href="#"><b>"ADDING" PEOPLE VS. "ASSIGNING" PEOPLE</b></a>
+                            <li><a href="#"><b>THE BIOGRAPHICAL DATA ENTRY FORM (PEOPLEBASE MODULE)</b></a>
+                            <li><a href="#"><b>ID SECTION: DISPLAY NAMES</b></a>
+                                <ul>
+                                    <li><a href="#">Adding a new person to peoplebase</a></li>
+                                    <li><a href="#">Display name notes</a></li>
+                                </ul>
+                            </li>        
+                            <li><a href="#peoplebaseSection"><b>PEOPLEBASE SECTION</b></a></li>
+                                <ul>
+                                    <li><a href="#peoplebaseSection">Person Details</a></li>
+                                    <li><a href="#peopleNames">Names</a></li>
+                                    <li><a href="#peopleTitles">Titles and Occupations</a></li>
+                                    <li><a href="#peopleParents">Parents</a></li>
+                                    <li><a href="#peopleChildren">Children</a></li>
+                                    <li><a href="#peopleSpouses">Spouses</a></li>
+                                    <li><a href="#peopleResearch">Research Notes</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><b>PUBLIC AND STAFF NOTES</b></a></li>                                                
+                            <li><a href="#"><b>PEOPLEBASE UTILITIES</b></a>                                                
+                            	<ul>
+                                    <li><a href="#">Vital statistics section</a></li>
+                                    <li><a href="#">Names section</a></li>
+                                    <li><a href="#">Titles and Occupations section</a></li>
+                                    <li><a href="#">Adding new Titles and Occupations</a></li>
+                                    <li><a href="#">Parents section</a></li>
+                                    <li><a href="#">Children section</a></li>
+                                    <li><a href="#">Spouses section</a></li>
+                                </ul>
+							</li>                                            
+                        </ul>
+                	</div>
+                    
+<!-- CHAPTER 5 -->
+                <h1><a style="font-size:12px; font-weight:bold; color:#6F6B69;">V.  MANAGING GEOGRAPHICAL DATA (GEOBASE)</a></h1>
+                	<div>
+                        <ul>
+                            <li><a href="#chapter5"><b>GENERAL CONSIDERATIONS</b></a></li>    
+                            <li><a href="#"><b>"PREFERRED" LOCATION NAMES ("P" TAG)</b></a>
+                            <li><a href="#addingPlace"><b>ADDING NEW PLACE OR SITE</b></a>
+                                <ul>
+                                    <li><a href="#tgnPlace">TGN Place Record</a></li>
+                                    <li><a href="#mapPlace">MAP Place Record</a></li>
+                                    <li><a href="#mapSitePlace">MAP Sites and Subsites</a></li>
+                                </ul>
+                            </li>        
+                            <li><a href="#duplicatePlace"><b>MANAGING DUPLICATE PLACE RECORDS</b></a></li>
+                            <li><a href="#"><b>ADDING VARIANT NAMES FOR A GEOBASE RECORD</b></a></li>
+                        </ul>
+                	</div>
+                    
+<!-- CHAPTER 6 -->
+                <h1><a style="font-size:12px; font-weight:bold; color:#6F6B69;">VI.  APPENDICES</a></h1>
+                	<div>
+                        <ul>
+                            <li><a href="#"><b>MENUBAR OPTIONS</b></a></li>    
+                            <li><a href="#"><b>RIGHT MOUSE BUTTON MENUS</b></a>
+                            <li><a href="#"><b>CRITERIA THAT CAN BE TYPED IN THE "FILTER FOR" BOX</b></a>
+                            <li><a href="#"><b>THE USE OF THE "LIKE" OPERATOR IN FILTERING</b></a>
+                            <li><a href="#"><b>TYPING ACCENTED CHARACTERS</b></a>
+                        </ul>
+                	</div>
+                
+            </ul>
+            </div>
+        </div>
+        <a href="#index" class="backToIndex">Back to Index</a>
+        
+<!-- CHAPTER 1 -->
+        <div id="chapter1">
+            <h3>I. GENERAL CONSIDERATIONS</h3>
+            
+<!-- The Archive -->            
+            <h1>The Archive</h1>
+            <p>The Archivio Mediceo del Principato is the most complete record of any princely regime in early modern Europe.</p>
+            <p>An estimated 90% of the Archivio Mediceo del Principato consists of letters to and from the Medici Court between the years 1537 and 1743. Most of the other items found in this archive (including avvisi, maps, drawings, lists, inventories, legal and financial documents) were sent as enclosures in these letters and ultimately filed with them by the Medici administration.</p>
+            <p>There are two essential considerations in assessing the Archivio Mediceo del Principato:</p>
+            <p>(1) We are dealing with epistolary correspondence, which has a distinct identity of its own when compared with other kinds of documentation. Letters are characteristically sent by one person to another and they usually feature narrative discussions of topical matters. Indeed, much of the Archivio Mediceo del Principato is made up of ongoing streams of correspondence extending over many years. As a result, this archive has an internal logic quite different from one made up of other kinds of documention (for example, financial accounts, literary manuscripts or legal records.)</p>
+            <p>(2) We are dealing with the archive of a ruling family, a fact which defines both its organization and its content. The letters in the Archivio Mediceo del Principato were either received by the Medici, their representatives and functionaries or were sent by them (and are preserved in the form of file copies, rough drafts or saved originals.) The Medici Court is thus the common denominator which links all of these letters and defines the range of information they communicate.</p>
+            
+<!-- Our Database and its Users -->
+            <h1 id="ourDatabase">Our Database and its Users</h1>
+            <p>Since the Archivio Mediceo del Principato is largely uncatalogued and unindexed, "Documentary Sources for the Arts and Humanities in the Medici Granducal Archive, 1537-1743" will figure as the point of entry for most scholars seeking access to this material.  The Project's task is thus one of mediation between the Archive itself (which has its own inherent logic based on early modern assumptions of princely administration) and the users of the database, who typically approach it with a different set of standards and criteria (those of present-day academic research.)</p>
+            <p>The Project's primary constituency consists of advanced researchers in the "Arts and Humanities." However, the Project seeks to be inclusive and serve as broad a public as possible. For this reason, we have constructed multiple points of entry to the database, including names of people, names of places and date ranges, as well as topic categories. Also, we have developed a system that allows users to access a wealth of information from each document in the English <b>Summary</b>, with the language of the original restricted to the <b>Extract</b>.</p>
+			<p>All 6,429 volumes of documents in the Archivio Mediceo del Principato are being described at the volume level, and the material relevant to the "Arts and Humanities" is further described at the document level. Since the Archivio Mediceo del Principato includes several million letters (they have never been counted), it is not possible at this time to create a record for every one of them or to index all possible topic categories. The Project has therefore created a configuration of topics that responds to a wide range of present-day research interests while relating in a meaningful way to the documentary reality of the Medici Granducal Archive. This configuration of topics also serves as the key to a broader understanding of the pattern of individual and collective relationships that defined the Medici sphere of influence.</p>
+            <p><font color="#FF0000">The defined user groups are: Administrators, On-Site Fellows, Senior Distance Fellows, Distance Fellows, Digitization Technicians, Community users and Guests. Some special role users are also present: Distance Fellow Coordinator, Community Coordinator and Digitization Coordinator.</font></p>
+             
+<!-- "Input" vs. "Output" -->            
+			<h1 id="inputOutput">"Input" vs. "Output"</h1>
+			<p>Document description by us (Project Researchers) and data retrieval by outside users are two distinct processes in the context of the "Documentary Sources" database; both processes, however, are directly related to the same system of stored data. Though the Project staff is now entering data, the public will not be able to access the full database live and on-line for several years. Users will then be able to make queries and generate reports by combining fixed criteria (including "People", "Places", "Topics" and "Date Ranges") and free text searches.</p>
+			<p>For Project Researchers, the most valuable source of information regarding the Archivio Mediceo del Principato is the Archivio Mediceo del Principato itself. For this reason, we often need to access previously entered data in the course of our work. This can be achieved at every stage of research, as explained in the relevant sections of this manual. However, it is important to remember that this system of access does not represent a fully-evolved "user interface".</p>
+        
+<!-- Four linked modules -->
+			<h1 id="fourLinkedModules">Four linked modules</h1>
+            <p>"Documentary Sources" consists of four linked <b><i>modules</i></b>:  VolBase, DocBase, PeopleBase and GeoBase.</p>
+            <p id="volbaseModule"><b>VolBase Module</b></br> stores information about the 6,429 volumes in the archive.</p>
+            <p id="docbaseModule"><b>DocBase Module</b></br> stores identifying and indexing information regarding the documents themselves.</p>
+            <p id="peoplebaseModule"><b>PeopleBase Module</b></br> stores biographical information regarding the individuals and corporate bodies whose names appear in the Document Database.</p>
+            <p id="geobaseModule"><b>GeoBase Module</b></br> contains the hierarchy of place names used in the database, from continents and nations down to individual buildings, institutions and sites.</p>
+            
+            <h1 id="interface">Modules' Common Interface</h1>
+            <p>This is the common Interface:</p>
+            <img src="/DocSources/images/dataEntryManual/interface.png" alt="MAP Database interface" width="750" height="550" style="margin-left:115px"/>
+            <p>It is composed by:</p> 
+            <img src="/DocSources/images/dataEntryManual/interfaceParts.png" alt="MAP Database interface parts" width="857" height="550" style="margin-left:60px"/>
+            <ul class="numbers">
+            	<li id="basicSearch"><u>Basic Search</u>: is placed at the top left of the <i>Main Menu</i> and permits a "word search" on documents, volumes, people, places, and Community comments. The results are displayed in a list on the Right slipt screen. It's also possible to search through the results obtained from a basic search, but only using the Advanced Search format. </li>
+                <li id="lastEntryMenu"><u>Last entry menu</u>: is placed at the top right of the <i>Main Menu</i> and it consists in four buttons that if clicked take you to the last document, person, volume or place that you most recently edited.</li>
+                <li id="mainMenu"><u>Main menu</u>: is used to navigate through the interface. <font color="#FF0000">Each user group has his own menu.</font> 
+                	<ul>
+                    	<li style="list-style:square"><u>Entry Menu</u>: is visible to Administrators, On-Site Fellows, Senior Distance Fellows and Distance Fellows. It is used to perform the "Add" operations and to delete item the user is currently viewing. <br />Menu items:
+                        	<ul>
+                            	<li style="list-style:none"><i>Add new document</i></li>
+                                <li style="list-style:none; margin-top:0"><i>Add new volume</i></li>
+                                <li style="list-style:none; margin-top:0"><i>Add new person</i></li>
+                                <li style="list-style:none; margin-top:0"><i>Add new place</i></li>
+                                <li style="list-style:none; margin-top:0"><i>Delete this item</i> (visible to Administrators and On-Site Fellows)</li>
+                            </ul>
+                        </li>
+                        <li style="list-style:square"><u>Advanced Search</u>: this menu is used to do a search over documents, volumes, people, places, and community comments applying several filters. <br />Menu items:
+                        	<ul>
+                            	<li style="list-style:none"><i>Search on documents</i></li>
+                                <li style="list-style:none; margin-top:0"><i>Search on volumes</i></li>
+                                <li style="list-style:none; margin-top:0"><i>Search on people</i></li>
+                                <li style="list-style:none; margin-top:0"><i>Search on places</i></li>
+                                <li style="list-style:none; margin-top:0"><i>Search on community comments</i></li>
+                            </ul>
+                        </li>
+                        <li style="list-style:square"><u>My History</u>: will show a list of the <font color="#FF0000">twenty</font> most recent database items viewed or edited.</li>
+                        <li style="list-style:square"><u>My profile</u>: this link takes the user to his profile.</li>
+                        <li style="list-style:square"><u>Messages</u>: this link takes the user to his inbox.</li>
+                        <li style="list-style:square"><u>Log out</u>: this link logs out the user from the system.</li>
+                    </ul>
+                </li>
+                <li id="splitScreen"><u>Split screen</u>: This feature is one of the most important innovations of the whole system. Allows the Fellows to compare one document to another entry in the same screen. <br />This screen is divided into two parts: 
+					<ul>
+                    	<li style="list-style:square"><u>Left split screen (edit)</u>: where the Fellow modifies the document.</li>
+                        <li style="list-style:square"><u>Right split screen (compare)</u>: here the Fellow can perform a related search, and is also abailable to open up a "read-only" version of the document, people, volume or place entry for comparison, while editing on the left-hand side of the screen.</li>
+                        <li style="list-style:square"><u><font color="#FF0000">Actions menu</font></u></li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h1 id="example">Example of Connections Among Modules</h1>
+            <p>Let's take a concrete example of the way the modules are interconnected: a letter from Cosimo I de' Medici to Luca Martini, as it appears in "DocBase."  The document below is indexed to the Sender, the Recipient, and also to the town of Firenze where the Sender wrote it, and to Pisa, where the Recipient received it.</p>
+            <img src="/DocSources/images/dataEntryManual/connectionEx1.jpg" alt="Example of Connections Among Modules" width="359" height="900" style="margin-left:270px"/>
+            <p>Note that in Correspondents/People section are wrotten the names of the Sender, Recipient and  a complete list of all the people and documents indexed in the database. If you click, for example, on Martini Luca, the PeopleBase will appear on the right split screen, showing his full biographical record <font color="#FF0000">in display mode</font>:</p>
+            <img src="/DocSources/images/dataEntryManual/connectionEx2.jpg" alt="Example of Connections Among Modules" width="900" height="656" style="margin-left:30px"/>
+            <p>If you click on the Sender Place (Firenze / Firenze / Toscana / Italia) the GeoBase record of Firenze will be opened in a new tab on the right split screen.</p>
+            <p><font color="#FF0000">Manca l'immagine perché su javatuning dice "could not load this tab. We'll try to fix this as soon as possible." PAG. 11</font></p>
+        
+
+
+
+<!-- VII. Some Notes on Data Entry -->       
+		<h1 id="notesDataEntry">Some Notes on Data Entry</h1>
+        <p>The above examples demonstrate various ways of navigating the data already entered in the "Documentary Sources" database by means of the main module screens. Every addition to the "Documentary Sources" database creates new interconnections, elaborating an increasingly complex web of information. Most of these interconnections are effected automatically by our software.  While it is important that you understand how and why these assignments take place, this is more easily demonstrated than explained. Therefore, after a few general comments regarding data entry, we will do a step-by-step illustration of our research procedure.</p>
+        <p>Since you will be working in a network, with one master database shared by all of the Project Researchers, every piece of data that you enter quickly becomes an integral part of its web of interconnected relationships. However daunting this prospect may seem, there are  always ways to correct or refine your entries. <font color="#FF0000">If the record is "open" (see below), you can cancel the data you are entering on the screen by pressing the "Esc" (escape) key.  Furthermore, duplicate records can be merged, mistaken assignments can be deleted, and extraneous records can be deleted, through the procedures described below.</font></p>
+        <p>Each researcher's entries are quickly made available to all researchers since the data is "Refreshed" automatically (that is to say, made current for the entire network.  However, if a record is in an "open" state <font color="#FF0000">(i.e. with pencil icon showing on the left side of the module screen)</font> then new information on that screen will not be visible to other researchers until the record is saved.  <font color="#FF0000">You can ascertain that your screen has the most up-to-date information at any moment by hitting the "Refresh" button at the top of your screen under "Records".</font> It is often important to have the latest information when carrying out a search or some other operation.</p>
+
+
+<!-- System messages -->
+        <h4 id="systemMessages">System messages</h4>
+        <font color="#FF0000">Correggere questa sezione con Lo</font>
+        <p>At times messages will pop on the screen indicating that there is an issue or problem with data entry.  Generally the message is self-explanatory and the required response obvious.</p>
+        <p>Sometimes you will see a warning that you cannot edit the record you are currently working on.  This suggests that the record is open on another user's computer, or perhaps in another window on your own computer.  While it is possible to open many windows at a time in the system, too many windows simultaneously open can cause problems.  If you see unexpected error messages, you should close windows that are not currently in use and ensure that there are no "pencil icons" showing. After waiting a couple of minutes, you should be able to edit your record.</p>        
+
+<!-- #Error -->        
+        <h4 id="error">#Error</h4>
+        <font color="#FF0000">Correggere questa sezione con Lo</font>
+        <p>If you see "#ERROR" appear in a field, it is possible that data has become corrupted, usually due to a network glitch of some sort.  In this case, you should inform your colleagues of this development and the database should then be shut down, "Jetcomped" (compact/repair function) and restarted.  Instructions for this process are available in the Project's workroom in the Archivio di Stato.</p>
+        
+<!-- Exitng the Database -->        
+        <h4 id="exiting">Exitng the Database</h4>
+        <p>It is important that researchers exit the database properly, so that all connections are closed and data corruption avoided.  The proper way to close the database on your individual computer is to click the "LOG OUT" button at the bottom of the <a href="#mainMenu" class="link">Main Menu</a>.  You should then wait patiently for the system to remove any filters and close down all of the open database windows before shutting off your computer.  If you are seeing unexpected error messages, you should close down your copy of the database and re-enter, which can take care of some problems. <font color="#FF0000">If there are serious error messages, such as the "#ERROR" message above, or screen freeze or system crash or lockup, everyone in the workroom must exit the system, and the database then "Jetcomped" and restarted</font>.</p>
+        </div>
+        
+      
+<!-- CHAPTER 2 -->
+<!-- II.  DESCRIBING A VOLUME (VOLBASE) -->
+		<div id="chapter2">
+            <h3>II.  DESCRIBING A VOLUME (VOLBASE)</h3>
+            
+<!-- I. General Considerations -->            
+            <h1>General Considerations</h1>
+            <p>As you have already heard (and will hear frequently), there are 6,429 volumes of documents in the Archivio Mediceo del Principato. We will be describing all 6,429 of them in our "Documentary Sources" database.</p>
+            <p>These volumes (or "filze," as they are called in the context of the Archivio di Stato) are of several types. Most are indeed volumes (consisting of bound sheets of paper, only rarely parchment) while a small but significant number are collections of loose sheets (usually divided into "inserti" or fascicles.) These volumes or "filze" come in all sizes, ranging from a hundred or so sheets to well over a thousand (especially in the later years of the Medici Grand Dukedom.)</p>
+            
+<!-- II. Shelf Numbers vs Volume ID numbers -->
+            <h1 id="selfNumbers">Shelf Numbers vs Volume ID numbers</h1>
+            <p>In the context of our database system, volumes have two essential numbers:</p>
+            <p><b>Shelf Numbers</b> are the numbers set out in the printed catalogue (Archivio Mediceo del Principato: Inventario Sommario, Rome, 1951).  These are the numbers that we use to request these volumes for consultation in the Archivio, and they sometimes include an "extension" letter. (For example: 176a).</p>
+            <p><b>ID Numbers</b> are the numbers automatically assigned to volumes by our database.  Each volume has a unique ID Number.  For example, Volume Shelf Number 11 has been auto-assigned the ID#433.  Because this number is assigned at the moment a record is created, you can use this field to sort all of the records in order of data entry, for example to identify the most recently added volumes.</p>
+
+<!-- III. Volume Summary Data Entry -->            
+            <h1 id="volSummary">Volume Summary Data Entry</h1>
+            <p>Information describing individual volumes of documents is compiled in the "Volume Summary Form", aka VolBase. Because the volume is the basic element of the system's structure, A VOLUME SUMMARY MUST BE CREATED BEFORE YOU BEGIN COMPILING RECORDS FOR SINGLE DOCUMENTS IN THAT VOLUME.   This does not mean that the entire form must be filled out in one pass; you can (and probably will) return to the "Volume Summary Form" to effect additions and amendments as work progresses on that volume.</p>
+            
+            <h1>The ID section</h1>
+            <p>To create a "Volume Summary" for a new volume you must first fill in required information in the "ID" section at the top of the VolBase screen.</p>
+            <ul class="numbers">
+                <li>Click on <font color="#FF0000">the "Entry Menu" button at the begining of the Main Menu.</font></li>
+                <li>Click on the "Add New Volume" button.</li>
+                <li><font color="#FF0000">In the VOLUME SHELF NUMBER field at the top of the VolBase screen</font>, enter the relevant shelf number. Sometimes a <font color="#FF0000">"Volume Shelf Number"</font> will include a letter extension  (for example, 1170a.) The letter extension is entered separately in the EXTENSION field.</li>
+                <li>In the RESEARCHER ID field, enter your initials from the pull-down list. (NOTE: Though the authorship of database records is of great importance for administration and quality control within the Project, it will not be made public in the on-line version of the database.)</li>
+            </ul>
+            <p><font color="#FF0000">You will notice that the VOLUME SHELF NUMBER and RESEARCHER ID fields are outlined in red on the screen because they are the required fields for starting a new VolBase record.  Once you have entered them, you schould move on to the VolBase Tabs.  The other fields in the "ID" portion at the top of the VolBase screen are related to the vetting process and will become relevant at a later stage of  data entry.</font></p>
+
+<!-- IV. Volbase Sections -->             
+            <h1 id="volbaseSections">Volbase Sections</h1>
+            <h4>Volume Details</h4>
+            <img src="/DocSources/images/dataEntryManual/volumeDetails.png" alt="Volume details" width="520" height="325" align="left"/>
+            <!-- Foto -->
+            <ul class="numbers" >
+            	<li><u>Series list, Volume/Filza MDP, Volume extension</u></li>
+            	<li><u>START YEAR, MONTH, DAY and END YEAR, MONTH, DAY fields</u>: Enter the dates of the earliest and latest documents in the volume, ACCORDING TO THE MODERN CALENDAR (that is to say, Roman rather than Florentine reckoning.) For the MONTH fields, select from the pull-down list.</li>
+                <li><u>DATE NOTES field</u>: This is a free-text field where you can enter information regarding the dating conventions in the volume.</li>
+                <p>According to FLORENTINE STYLE DATING, the new year begins on 25 March (that is to say, 24 March 1600 Roman Style is 24 March 1599 Florentine Style.) Florentine Style Dating applies almost invariably to documents sent from Tuscany and the Granducal Court.  Correspondence arriving from locations outside Tuscany is often dated in Florentine style by Florentine writers, but this is not always the case.</p>
+                <p>When included as a Date Note, the indication "Florentine style dating applies" refers to the scheme of dating expressed in the documents in the volume, not the start year and end year on the "Volume Summary Form," which is always expressed in Modern or Roman style.</p>
+            </ul>
+            <p>Another example of a Date Note would be, "Letters are generally dated in Roman style but mistakenly filed according to Florentine style." This explanation could save a great deal of time and confusion for a scholar consulting the volume for the first time.</p>
+            
+            <h4 id="volDescription">Description</h4>
+            <img src="/DocSources/images/dataEntryManual/volumeDescription.png" alt="Volume description" width="520" height="652" align="left"/>
+            <ul class="numbers">
+            	<li>In the <u>ORGANIZATIONAL CRITERIA field</u>, enter essential information regarding the arrangement of documents within the volume. For example, <i>"A reconstituted filza, combining material formerly in MP 65 and MP 67.  Two separate schemes of pagination and no index."</i> Or (as above), <i>"A very loose series (including material relocated from the Miscellanea Medicea) divided into 5 inserts of varying sizes."</i> Though this is a free-text field, clarity and conciseness is encouraged. The goal is not to offer a definitive description, but rather to help scholars by giving them advance notice of what they will find in the volume.</li>
+                <li><u>CONDITION field</u>: Enter information describing the condition of volume and documents.  For example: "Documents heavily treated and sometimes faint." Here as well, the goal is to help scholars make efficient use of this material, not to offer a full curatorial description.</li>
+                <li><u>BOUND, FOLIOS NUMBERED and ALPHABETICAL INDEX fields</u> are set to default to "No."  Check the box when "Yes" is appropriate. <i>(Note: Old alphabetical indices are often found in the volumes of Cosimo I's Carteggio Universale and in the registri of outgoing letters.)</i></li>
+                <li>In the <u>FOLIO COUNT field</u>, enter the total number of sheets contained in the volume. If the count is estimated, preface the total with "c." for "circa" (for example, "c.400".)</li>
+                <li><u>PRINTED MATERIAL, PRINTED DRAWINGS</u></li>
+                <li>Check the <u>Language boxes</u> that are relevant to the documents in the volume. Specify OTHER LANGUAGES when they occur.</li>
+                <li>Check <u>SOME DOCUMENTS IN CIPHER</u> if the volume contains documents in diplomatic code.</li>
+                <li>In <u>CIPHER NOTES</u>, add information related to coded documents. For example: "Most letters deciphered" or "Deciphered versions of many of these letters are found in MP 4071."</li>
+            </ul>
+            <br /><br /><br /><br />
+            
+            <h4 id="volCorrespondents">Correspondents</h4>
+            <img src="/DocSources/images/dataEntryManual/volumeCorrespondents.png" alt="Volume Correspondents" width="520" height="320" align="left"/>
+            <ul class="numbers">
+            	<li>In the <u>FROM and TO fields</u> type general descriptions of the correspondents who wrote and received the letters in this volume. For example, <i>"From: Tuscan Court (Andrea Cioli; Ferdinando I; Cristina di Lorena)"</i> and <i>"To: Italy and Abroad (Princes; Nobles; Gentlemen.)" Or (as in the example above), "From: Italy (Nobles; Gentlemen; Agents; Administrators)"</i> and <i>"To: Tuscan Court (Cosimo I; Secretary: Cristiano Pagni)"</i>.</li>
+                <p><i>Note: In <b>VolBase</b>, FROM and TO are free text fields. The goal is to give a general impression of the nature or internal logic of the volume, not to compose a complete description of every variable. This differs markedly from our practice in tracking the "Senders" and "Recipients" of individual documents in <b>DocBase</b>, where the names of "People" and "Places" are linked to unique records in "PeopleBase" and "GeoBase".</i></p>
+            </ul>
+            <br /><br /><br /><br /><br />
+            
+            <h4 id="volContext">Context</h4>
+            <img src="/DocSources/images/dataEntryManual/volumeContext.png" alt="Volume Correspondents" width="520" height="319" align="left"/>
+            <ul class="numbers">
+            	<li><u>CONTEXT field</u></li>
+                <li><u>INVENTARIO SOMMARIO DESCRIPTION field</u></li>
+            </ul>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <h1 id="ongoingVolume">ONGOING ENTRY INTO THE VOLUME SUMMARY</h1>
+            <p>After the"Volume Summary" has been created, click the "DB" button on the upper right side of the screen to open the DocBase screen; this is where you will begin describing specific documents in that volume. It is likely that you will wish to return to the "Volume Summary Form" in the course of this work, in order to correct or expand your Volume Summary. In order to return to the "Volume Summary Form", click on the MAIN MENU button and then select VOLUME SUMMARIES; or else click the Volume Tab within the DocBase module and press the ID button indicating the volume number.</p>
+            
+            
+        </div>
+        
+        <!-- CHAPTER 3 -->
+        <div id="chapter3">
+        	<h3>III. DESCRIBING A DOCUMENT (DOCBASE)</h3>
+            <h1>Kinds of documents</h1>
+            <p>Though the Archivio Mediceo del Principato contains a variety of document types, it consists overwhelmingly of letters. Not only do the conventions of writing, receiving and storing letters dictate the structure of the archive itself, but most of the other documents there were sent as enclosures and thus have an auxiliary character.</p>
+            <p>The "Documentary Sources" database was designed specifically to describe epistolary correspondence and to track the kinds of information that occur within it. On occasion, when other documentation needs to be accommodated, the data entry system has proven sufficiently elastic. It is usually enough to enter "Not Relevant" in the "Sender" and "Recipient" spaces and then follow the established protocol, offering a "Synopsis" of the document (with or without a transcribed "Extract") and then applying the standard criteria for indexing "Names", "Places" and "Topics".</p>
+            <p>To take a few cases in point: The Archivio Mediceo del Principato contains a considerable number of "registri" or "copialettere", in which outgoing letters were copied, usually several to a page. We treat each of these entries as a letter in its own right (since they do in fact represent individual letters that were written and sent.) There are also a few gatherings of "mandati di pagamento", ordering the disbursement of money for goods or services. These can be treated as letters as well, since each was normally sent by one person to another on a particular date, for a clearly expressed purpose.</p>
+            <p>The Archivio Mediceo del Principato includes a significant number of anonymous "avvisi" or newsletters. A separate record is created for each of these, as described in Section V, Topics.  In this case, the name of the Sender is usually "Not Relevant", while the Place of the Sender is usually the place where the avviso originated.  The Recipient may or may not be "Relevant" depending on the context; and the recipient place is most often "Firenze".</p>
+           
+            <h1>Document Details</h1>
+            <img src="/DocSources/images/dataEntryManual/documentDetails.png" alt="Document details" width="520" height="485" align="left"/>
+            <ul class="numbers">
+            	<li><u>VOLUME (MDP) field</u></i></li>
+                <li><u>INSERT/PART:</u> Some volumes are subdivided into distinct parts. (This scheme of division should be clearly explained in the <b>"Volume Summary"</b>, in the "VOLUME ORGANIZATIONAL CRITERIA" field.) For example, if a volume is broken down into 5 folders marked with Roman numerals, insert the Roman numeral of the folder containing the particular document.</li>
+                <li>Check the <u>UNPAGINATED box</u> if the document does not bear a page or folio number. At FOLIO START NUMBER, enter the number of the folio on which the document begins.</li>
+                <li>Enter the <u>DATE</u>, recording the DAY, MONTH and YEAR as found on the document. 
+                	<ul class="letters">
+                    	<li style="margin-left: 480px;">If the DAY and/or MONTH are missing, leave those fields blank.</li>
+                        <p style="margin-left: 480px;"><i>As we noted before, the Florentine new year fell on 25 March (nearly three months after the Roman or Modern new year, which began on 1 January.) FLORENTINE STYLE DATING applies almost invariably to documents sent from Tuscany and the Granducal Court. Correspondence arriving from locations outside Tuscany is often dated in Florentine style by Florentine writers, but this is not always the case. In instances of FLORENTINE STYLE DATING, insert the FLORENTINE YEAR (e.g. the year written on the document) in the Year field, and the Modern Year in the <u>MODERN DATING field</u>.</i></p><br />
+                        <li>If the date can be reasonably estimated by reference to the content of the document or its sequence in the volume, then enter this estimated date in the DATE fields (YEAR, MONTH, and DAY if warranted) and check the <u>DATE UNCERTAIN OR APPROXIMATE box</u>.</li>
+                        <li>If the document is not dated, check the <u>UNDATED box</u>.</li>
+                        <li>If a date cannot be approximated, enter the inclusive dates of the Volume as stated in the "Volume Summary" in the <u>DATE NOTE box</u>.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>You have now completed data entry in the DOCUMENT DETAILS portion of the DocBase screen, and can move on to entering information on the DocBase sections.</p>
+           
+            <h1>Fact Check</h1>
+            <img src="/DocSources/images/dataEntryManual/documentFactCheck.png" alt="Document Fact Check" width="520" height="128" align="left"/>
+            <p><font color="#FF0000">This section in the DocBase module is intended to store information about pending research questions related to this document. The Fact Check Grid (see below) can be filtered to show all questions entered by a given researcher, and then printed out for handy reference for offsite research at other libraries and archives.</font></p>
+            <br />
+          
+            <h1>Correspondents/People</h1>
+            <h4>Correspondents</h4>
+            <img src="/DocSources/images/dataEntryManual/documentCorrespondents.png" alt="Document Correspondents" width="520" height="228" align="left"/>
+            <ul class="numbers">
+                <li><u>SENDER and RECIPIENT NAME</u>. To insert a name into the "Sender" and "Recipient" fields:
+                      <ul>
+                          <li>Click on the field.</li>
+                          <li>Begin typing the name or last name of the "Sender" or "Recipient". You will be brought automatically to the indicated ranges of names. Scroll through the pull-down list to find the correct name. <font color="#FF0000">Names are normally arranged in alphabetical order by last name.</font></li>
+                          <li>Highlight the name, then click the mouse button. The name will then be inserted in the field.</li>
+                      </ul>
+                </li>
+                <br />
+                <p><i>Note: If the required name does not appear on the pull-down list, it means either that this person has not yet been entered in the database or that he/she has been entered with a different form of their name. MAKE A THOROUGH SEARCH IN ORDER TO ASCERTAIN THAT THIS PERSON IS NOT ALREADY IN PEOPLEBASE!<font color="#FF0000"> If necessary, leave the DocBase screen at the point of entering sender or recipient, and use the PeopleBase module button (PB), or People Grid button to explore whether the person is entered under another name or designation.  If indeed the person does not yet exist in PeopleBase, then follow these instructions for <u>creating a new "quick" record for this person:</font></u></i></p>
+                      <ul style="color:#F00">
+                          <li>When asked whether you wish to CREATE A NEW MASTER PERSON RECORD, answer YES.</li>
+                          <li>Enter the relevant data on the "CREATE NEW PERSON" Form.  Be sure that first name and family name, gender and RESID are filled in correctly.</li>
+                          <li>Save and Exit. You will be returned to the Document Entry form, and should now be able to select the new person from the pull-down list.  If the new name does not appear, close the box to refresh its contents, and select again. <i>(Tip: If the name still does not appear, it is possible that you made an error in the name forms boxes, resulting in a Display Name that is not alphabetizing as you would expect. Go to PeopleBase, search for your newly added record, and be sure the Display Name is as you intended.)</i></li>
+                      </ul>
+                  </li>
+                  <li><font color="#FF0000">If the name of the "Sender" or "Recipient" is uncertain, check the "?" box located at the right of the field.</font></li>
+                  <li><u>SENDER and RECIPIENT LOCATION</u>. These locations are selected from pull-down lists that draw from GeoBase, our system of geographical place names, which is based on the Getty Thesaurus of Geographic Names. You assign a sender or recipient location by typing te first letters and then select the appropriate name from the pull-down list.
+                  <p>You may use any language variant of the place name, as long as it is in the correct hierarchy. For instance, you may select "Florence / Firenze / Toscana / Europe" and the system will automatically make the assignment to the "Preferred" place name in the local language, in this case "Firenze / Firenze / Toscana / Europe". <font color="#FF0000">If you are <u>sure</u> that the location you are looking for is not already in GeoBase, then continue on with the process of adding a new place record:</font></p>
+                      <ul class="letters" style="color:#F00">
+                          <li>You will be informed that the AddPlace Menu is being opened. Answer "OK".</li>
+                          <li>Select whether the new place name is a M.A.P. Place Record, a M.A.P. Site or Subsite, or a TGN Place Record. <b>(See the GeoBase Module section of this manual for Project protocols regarding adding new place records.)</b></li>
+                          <li>Fill in the "Add M.A.P. Place" form, and close.</li>                    
+                          <li>A "Select Location" dialogue box will appear. Find the newly entered place name in the pull-down list. Click "OK".</li>
+                          <li>The "Document Entry Form" will then reappear, with the newly added place name appropriately entered.</li>
+                      </ul>
+                  </li>
+                  <li><font color="#FF0000">If the location of the "Sender" or "Recipient" is uncertain, check the "?" box located to the right of the field. Remember, however, that with the GeoBase system we can define these locations within a range of relative specificity, choosing (for example) Firenze (city), Firenze (province), Toscana (region), Italia (country) and Europe (continent).</font></li>
+            </ul>
+            
+            <h4>People</h4>
+            <img src="/DocSources/images/dataEntryManual/documentPeople.png" alt="Document People" width="520" height="187" align="left"/>
+            <ul class="numbers">
+            	<li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <br /><br /><br /><br /><br /><br />
+            <h1>Extract/Synopsis</h1>
+            
+            <h4>General considerations</h4>
+            <p>There are three ways of editing the Extract and Synopsis section:</p>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynButtons.png" alt="Document Extract Synopsis buttons" width="520" height="58" align="left"/>
+            <ul class="numbers">
+            	<li>Edit</li>
+                <li>Edit with Split screen</li>
+                <li>Edit with Manuscript Transcriber</li>
+            </ul>
+            
+            <h4>Edit</h4>
+            <img src="/DocSources/images/dataEntryManual/documentEditExtSyn.png" alt="Edit Extract/Synopsis" width="520" height="394" align="left"/>
+            <p style="margin-bottom:300px;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            
+            <h4>Edit with Split screen</h4>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynSplitScreen.png" alt="Edit Extract/Synopsis with Split screen" width="520" height="329" align="left"/>
+            <p style="margin-bottom:220px;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            
+            <h4>Edit with Manuscript Transcriber</h4>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynManTrans.png" alt="Edit Extract/Synopsis with Split screen" width="520" height="329" align="left"/>
+            <p style="margin-bottom:220px;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            
+            
+            <p>We are working with a database that allows us an extraordinary degree of flexibility in describing the content of documents. In each case, we can be as specific or as general as we consider appropriate—remembering that our goal is not to offer the last word on any particular subject but to do as much as we reasonably can to make a body of archival material accessible through electronic means.</p>
+            <p>There is no single "Right Way" or "Wrong Way" for a scholar to carry out research and there is no single "Right Way" or "Wrong Way" for us to construct a document entry. Our database offers several different places to store and organize content information, most significantly, (1) the "English Synopsis," (2) the "Document Extract," and (3) the indexes of "Names," "Places" and "Topics." In the "Synopses" and "Extracts," we should always make it clear why we have indexed a particular set of terms. Beyond that, we have considerable leeway in how we use these structures.</p>
+            <p>Ideally, the "English Synopsis" will offer a concise summary of the relevant portion of the document while the "Document Extract" will include crucial terminology in the original language. Though the "Synopsis" and the "Extract" should be mutually supporting, they needn't be mirror images of each other.</p>
+            <p>Also, the "English Synopses" should be clear and self-contained. An important consideration in structuring the database is that it be fully navigable in English, until the user reaches the advanced scholarly level of the "Extracts" in the original languages.</p>
+            <p>Consider this example, in which the "English Synopsis" is practically a translation.</p>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynEx1.jpg" alt="Edit Extract/Synopsis with Split screen" width="842" height="98" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <br /><br />
+            <p>In the following case, however, there are some differences.  Here the "Synopsis" is really a summary.</p>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynEx2.jpg" alt="Edit Extract/Synopsis with Split screen" width="842" height="143" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <br /><br />
+            <p>In the following example, the "Synopsis" is part translation and part summary.  The researcher has omitted the colorful (and perhaps untranslatable) language of the original, and added a conjecture concerning the identity of one of the persons mentioned there.</p>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynEx3.jpg" alt="Edit Extract/Synopsis with Split screen" width="842" height="98" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <br /><br />
+            <p>In the following example, the researcher is certain about the identity of "Benvenuto," so the name appears in brackets in the "Extract" as well.  Note that the expression "various items" stands in for many details in the original.</p>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynEx4.jpg" alt="Edit Extract/Synopsis with Split screen" width="842" height="145" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <br /><br />
+            <p>The same conciseness is evident in the following example.  The expressive human details in the "Extract" are summed up in a few words in this "Synopsis".  This example also shows how the mention of a particularly important object, in this case a "predella" or birthing chair, can tilt the balance in favor of including a document that at first glance might seem marginally relevant to our criteria for inclusion.  The birthing chair clearly links the document to the TOPIC of "Furniture" and it also renders the reference to childbirth practice so concrete as to support an attribution to "Medicine."</p>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynEx5.jpg" alt="Edit Extract/Synopsis with Split screen" width="842" height="171" style="box-shadow: 0 0 10px #ccc; margin-left:50px"/>
+            <br /><br />
+            <p>Here the "English Synopsis" introduces information that the researcher has deduced from elsewhere in the document or from elsewhere in the correspondence (concerning a book that is being prepared for publication.) In addition to the reference to "Books and Printing", the document is also relevant to the topics "Academies" and "Antiquities and Antiquarianism." </p>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynEx6.jpg" alt="Edit Extract/Synopsis with Split screen" width="842" height="102" style="box-shadow: 0 0 10px #ccc; margin-left:50px" />
+            <br /><br />
+            <p>Sometimes the "Synopsis" will suffice and there will be no need for an "Extract." This is especially the case when a document is so diffuse that the extract cannot give a characteristic impression without running longer than the content warrants. If the original document is too illegible for us to transcribe as fully as we would like, we can also throw the weight of description onto the "English Synopsis."  Consider the following example:</p>
+            <img src="/DocSources/images/dataEntryManual/documentExtSynEx7.jpg" alt="Edit Extract/Synopsis with Split screen" width="842" height="84" style="box-shadow: 0 0 10px #ccc; margin-left:50px" />
+            <p>Since there is no single "Right Way" or "Wrong Way" to construct a document entry, w should avoid being over-ingenious in making problems for ourselves. If we can't find an appropriate formula for including a particular bit of information, we should allude to it more generally or leave it out.</p>
+            <h1 id="spelling">Spelling conventions in "Document Extracts"</h1>
+            <p>Our goal is to keep the criteria for transcription as simple and intuitive as possible, in order to facilitate work on the data entry side. We also need to maximize word-search capability on the data-retrieval side. In dealing with the characteristically irregular spelling in old documents, these two requirements are at seeming odds with each other. Fortunately, we found a compromise solution that comes near to letting us have our cake and eat it too.</p>
+            <p>Words are to be transcribed as accurately as possible, reproducing the spelling in the original document. In cases where the spelling is irregular enough to render significant words irretrievable through "Word search" (including eventual "Fuzzy search"), we insert the regularized form in square brackets immediately after the transcribed version.</p>
+            <p>For example: Hoggi ò ricevuto la chopa [coppa] d'ariento [argento] che mi à mandato.</p>
+            <p>We need to decide on a case-by-case basis which words are the most likely targets for word search (as demonstrated by the selective regularization in the above example.) If we find ourselves spending too much time deciding a particular case, the default is "Yes!" Just insert the regularized form in square brackets and keep going!</p>
+            <h1 id="squareBrackets">Square brackets</h1>
+            <p>In the "Document Extracts," we are using square brackets to indicate all interventions and interpolations (see below), including regularized spelling.</p>
+            <!-- FOTO -->
+            <p>If there are lacunae in the original document due to damage, fading or cancellation, this should be indicated in square brackets with an explanation in English. Other examples:</p>
+            <p>Mandammi tutte le notizie <b>[illegible]</b> dell'imperatore<br /> Anche se fosse vero <b>[loss]</b> venuto lo stesso<br /> Aspettiamo l'arrivo del Cardinal <b>[blank]</b> mandato qui dal Papa</p>
+            <p>If a passage is cancelled but legible, it is inserted in square brackets. For example:<br /> Ho lasciato a Pisa <b>[cancelled: due]</b> tre libri francesi</p>
+            <p>Non so che cosa <b>[proposed reading: dire]</b> in risposta</p>
+            <p>Secure clarifications of known fact are placed in square brackets. For example:<br /> La Granduchessa [Giovanna d'Austria] è tornata in villa.</p>
+            <p>Less secure clarifications of fact are best restricted to the "English Synopsis." For example:<br /> "Grand Duchess Giovanna d'Austria returns to the villa, presumably Poggio a Caiano."</p>
+            <p><b>Ellipsis</b> is always placed within square brackets. "Document Extracts" always begin and end with ellipsis, in order to emphasize that they are extracts. For example:</p>
+            <p>[…] Non so esprimere il mio piacere nel ricevere […] il vostro bel regalo di vino […]</p>
+            <p><b>Parentheses (round brackets)</b> are used only when they appear in the original document.</p>
+            <p>Carets are placed before and after words added by the author of the document in the margin or between lines. For example:<br /> Il nuovo vestito cremisino ^verde invece^ non mi piace.</p>
+            <h4 id="capitalization">Capitalization</h4>
+            <p>Capital letters are inserted after all full stops.</p>
+            <p>The following rules should be observed in deference to modern Italian grammatical practice (and by extension in Latin):</p>
+            <p><b>Proper names</b> (e.g. Giorgio Vasari) and geographical names (i.e. Ferrara) are capitalized, as are adjectives that have substantive force. For example: il <i>Romano</i>, but <i>il ragazzo romano</i>.</p>
+            <p>References to sacred personages are capitalized when they have the force of proper names but not when they merely express attributes or qualifications. For example: <br /> <i>Dominus</i>, but <i>dominus Deus</i>; <i>Signore</i> but <i>signor Dio</i>.</p>
+            <p>The substantive adjectives <i>santo</i> and <i>beato</i>, <i>sanctus</i> and <i>beatus</i>, and the relevant female and plural forms, are capitalized when they denote places and institutions, not the attributes of persons. For example: <i>monastero di Sant'Agostino; monasterium Sancti Agustini,</i> but <i>ordine di sant'Agostino; ordo sancti Augustini.</i></p>
+            <p>In practice, the names of religious holidays are capitalized but this capitalization only applies to the one chief word. For example: <i>dopo la Nascita; post Nativitatem, </i>but <i>dopo la nascita del Signore, post nativitatem Domini</i>.</p>
+            <p>The substantives <i>ecclesia</i> and <i>imperium</i> are capitalized only when they refer to universal institutions. For example: <i>Sacro Romano Impero; Sancta Ecclesia, </i>but <i>ecclesia di San Pietro, ecclesia Sancti Petri.</i></p>
+            
+            <h4 id="diacriticalMarks">Diacritical marks</h4>
+            <p>Apostrophes and accents in Italian are used according to modern Italian practice. Only grave accents <b>(à)</b> are used in Document Extracts in Italian.  Extracts in Spanish and French and People Names in those languages utilize the acute accent according to standard modern usage in those languages.</p>
+            <p>A grave accent must be placed over the a and o when the initial <i>h</i> is missing in forms of the verb <i>avere</i>. For example: <i>ànno</i> for <i>hanno</i>; <i>ò</i> for <i>ho</i>.</p>
+            <p>When the apostrophe is missing from elided or contracted words or the apostrophe is used in an irregular manner, we render this as written in the original document. For example: <i>lomperatore</i> or <i>lo 'mperatore</i>. The regularized forms of these constructions can be offered afterwards in square brackets. For example: <i>lomperatore</i> [imperatore]; <i>linfermo</i> [infermo]</p>
+            <p>See Appendix for instructions on inserting diacritical marks from the English language keyboard.</p>
+            
+            <h4>Abbreviations and symbols</h4>
+            <p>Abbreviations (including honorifics) can be written out directly in the text without recourse to square brackets. This will be especially helpful to database users in the case of unusual or irregular abbreviations. There is no need to write out very common abbreviations like V.A. or S.E. (though it is not an error to do so.) In the context of long "Document Extracts," it is permissible to write out the abbreviation only the first time that it appears.</p>
+            <p>When you are unsure of the reading, put the proposed reading in square brackets with an explanation in English; also, when persons are indicated by, for instance, a single letter, write out the rest of the name in square brackets, if the indicated name is certain, for example: "mio fratello B[ernardo]"</p>
+            <p>Abbreviations of sacred names are written out without square brackets. For example: IHS=Iesus.</p>
+            <p><b>Abbreviations of measures</b>, monetary units or units of the calendar can be expressed by placing a period after the letters of the abbreviations. For example: l., lb., lbr., li., lib., libr.=<i>libbre</i> or <i>lire</i>; k., ka., kal., kl., cha.=<i>calendi</i> or <i>calende</i>. There is also the option of writing out the abbreviated word in full without recourse to square brackets.</p>
+            <p><b>Numbers</b> should be rendered in Roman or Arabic form, as expressed in the document. Roman numerals are always expressed as capital letters. For example: <i>anno MCCCC79; MCCLXIIII°; MCCC quadragesimo quinto</i></p>
+            <p><i>Symbols representing words</i> should be written out whenever possible, to avoid confusion and computer mishaps. For example: the small triangle representing <i>scudi</i> should be expressed as the word <i>scudi</i>;  & should be expressed as <i>et</i>.</p>
+            <p><b>Obscure symbols</b> with unclear or special meanings can be described in English within square brackets: For example: "Troverete un balascio orientale nella busta indicata [seven-pointed star] che Giovanni Bianchi mi ha mandato."</p>
+            
+            <h4 id="punctuation">Punctuation</h4>
+            <p>The conventions of modern punctuation will be used (but sparingly and without forcing interpretations of the text. When in doubt, don't punctuate.)</p>
+            
+            <h1 id="topics">DocBase Topics</h1>
+            <img src="/DocSources/images/dataEntryManual/documentTopics.png" alt="Edit Extract/Synopsis with Split screen" width="520" height="130" align="left" />
+            <ul class="numbers" style="margin-bottom:50px">
+				<li><u>Delete this entry</u>: You can delete a topic assignment by clicking on the red "X" button to the right of the assignment row.  This will not delete the topic itself or the place record; it will only delete the assignment of this topic/place combination to this particular document.</li>
+                <li><u>Edit value</u>:</li>
+                <li><u>Show Topic description</u>:</li>
+                <li><u>Close</u>:</li>
+                <li><u>Add</u>:</li>                              
+            </ul>
+            <h4 id="topics">General considerations</h4>
+            <p>The Medici Archive Project is unique in attempting content-oriented archival description at the document level and realizing it by means of a fully-searchable database. Usually, when cataloguers seek to describe the content of archival material, they do so in generalized terms at the volume or series level, not at the level of individual documents. This allows them to rely on broad bibliographical categories that are more-or-less applicable to all times, places and cultures. In managing letter collections, the usual response is merely to calendar the letters, recording who sent and received them, where and when. It is thus relatively simple and unproblematic to limit indexing to proper nouns (usually people and places) without seeking to delimit subject areas.</p>
+            <p>The scope of the "Documentary Sources" database is defined by content ("Arts and Humanities") and our method for realizing it is a calculated response to the essential characteristics of the Archivio Mediceo del Principato. This is a working archive in the most immediate sense, produced largely by people carrying out concrete tasks, whether relevant to the day-to-day running of the Granducal household or affairs of state. For this reason, letters are far more likely to talk about construction activity rather than "Architecture", writers or books rather than  "Literature" and current events at foreign courts rather than "Diplomacy".</p>
+            <p>Our task was to devise a series of TOPICS that reflect the historical and cultural assumptions inherent in the archive itself. As a result, our TOPIC CATEGORIES tend toward concreteness, usually indicating kinds of objects or kinds of activities. It is worth noting that various other topics were tested and discarded in the course of developing the database, because they melted down at the point of data entry.  There are 39 Topic Categories available in the "Documentary Sources" database system:</p>
+            <h4 id="topicsCategories">39 TOPIC CATGORIES:</h4>
+            <ul class="topicsList">
+            	<li>ACADEMIES</li>
+                <li>ANTIQUITIES AND ANTIQUARIANISM</li>
+                <li>ARCHIVES</li>
+                <li>ARMS AND ARMOR</li>
+                <li>ART COLLECTING</li>
+                <li>ART LEGISLATION</li>
+                <li>AVVISI</li>
+                <li>BOOKS AND PRINTING</li>
+                <li>CARRIAGES</li>
+                <li>CERAMICS</li>
+                <li>COINS AND MEDALS</li>
+                <li>COSTUME AND DRESS</li>
+                <li>DRAWINGS</li>
+                <li>EXOTIC ANIMALS</li>
+                <li>FOOD AND WINE</li>
+                <li>FORTIFICATIONS</li>
+                <li>FOUNTAINS AND HYDRAULICS</li>
+                <li>FRAMES</li>
+                <li>FURNITURE</li>
+                <li>GAMES TOYS AND SPORTS</li>
+                <li>GARDENS</li>
+                <li>GLASSWARE</li>
+                <li>GOLD AND SILVERWORK</li>
+                <li>JEWELS AND JEWELRY</li>
+                <li>LUXURY TEXTILES</li>
+                <li>MAPS AND MAPMAKING</li>
+                <li>MEDICINE</li>
+                <li>MIRACULOUS IMAGES</li>
+                <li>MUSIC AND MUSICAL INSTRUMENTS</li>
+                <li>NATURAL SCIENCES</li>
+                <li>PAINTING</li>
+                <li>PIETRE DURE</li>
+                <li>RELICS</li>
+                <li>SCULPTURE</li>
+                <li>STATE GIFTS</li>
+                <li>TAPESTRIES AND HANGINGS</li>
+                <li>THEATER AND FESTIVAL</li>
+                <li>TIMEPIECES</li>
+            </ul>
+            <p>In fact, this list of  TOPICS <font color="#FF0000">(which is discussed more fully under <b>Topic Criteria</b>, below)</font> has a double significance for the Project. Most immediately, it represents a concrete set of indexing terms built into the system. More generally, it serves to define the concept of "Arts and Humanities" as expressed in the "Documentary Sources" database. A useful exercise is to imagine these topics as pins stuck in a map. For our purposes, "Arts and Humanities" is the territory that falls within this perimeter.</p>
+            
+            <img src="/DocSources/images/dataEntryManual/documentTopicsList.png" alt="Edit Extract/Synopsis with Split screen" width="520" height="397" align="left" />
+            <ul class="numbers" style="margin-top:130px; margin-bottom:75px">
+            	<li id="indexingTopics"><u>Indexing Topics</u>: The procedure for assigning topics to a document entry is a simple matter of selecting the topic from the pull-down list in the DocBase TOPICS SECTION.</li>
+                <li><u>"?" icon</u>:</li>
+                <li id="topicPlaces"><u>Topic Places</u>: <font color="#FF0000">Each document entry is linked to its relevant geographical location, which you enter to the right of the topic by the same procedure you used in selecting "Sender Place" and "Recipient Place" above.  In the screenshot above, you will note that there are two topic assignments for "Music and Musical Instruments." This is because the topic assignment in this document entry is relevant to two geographic locations (Lucca and Firenze.)</font></li>
+            </ul>
+            <h4><font color="#FF0000">"Place Index" as Topic</font></h4>
+            <p><font color="#FF0000">In the earlier screen-shot, you may have noticed "Place Index" among the Topics in the pull-down list. This is used when the place itself is an interesting or significant element in the document.<br />
+            Note: If a Place has already been entered as the modifier of another Topic in the document, do not double-enter it as "Place Index".<br />
+            Since built structures, piazze and gardens (for example) are included in our GeoBase, there are many kinds of places to choose from. The following example represents a document that includes important information concerning three monasteries.</font></p>
+            <p>"ACADEMIES" indexes every occurrence of the term "Accademia" (in its various language forms).  The term "Accademia" was used to designate a wide variety of formal and informal organizations, ranging from official bodies (like the Florentine "Accademia del Disegno" and "Accademia della Crusca") to simple gatherings of people with shared interests ("Stasera si fa l'accademia dei poeti in palazzo").  "Accademie" were frequently meetings of artists and\or amateurs to draw from the nude.  Therefore, the term "Fare l'accademia" often meant "To draw from the nude" and the noun "Un'accademia" could indicate "A drawing from the nude." Duly constituted Academies with formal corporate identities are also indexed under "PEOPLE" as "Corporate Bodies."</p>
+            <p>"ANTIQUITIES AND ANTIQUARIANISM" subsumes the wide range of activities inherent in the period concept of  "Antiquarianism," including: the excavation, sale and collecting of (usually classical) artifacts; the study of classical art, literature, history and philology; antiquarian publications and the correspondence of "Antiquari" throughout Europe.  In contemporary parlance, the term "Antiquario" could be used to indicate both a humble antique dealer and a grand scholar with high patronage (for example, Gian Pietro Bellori.)  A less frequent designation was "Antiquario moderno," indicating a scholar of post-classical (i.e. Christian) antiquity, especially of the high Middle Ages.</p>
+            <p>"ARCHIVES": The best source of information regarding the history and development of the Medici Granducal Archive is the Medici Granducal Archive itself. Therefore, this topic category focuses on the production, organization, conservation and use of documentary material, especially but not exclusively in the context of the Medici court and the Medici administration. Areas of interest include: the development and management of the Segreteria Vecchia and other archives in Florence and elsewhere; secretarial and administrative practices that shaped the structure and content of these archives; contemporary attitudes regarding the function and importance of archival materials. In the Medici Granducal Archive, there are many specific references to secretarial tasks, document coding and mail delivery; these are indexed under ARCHIVES when they shed light on the structure and content of a particular archive or the related cultural values of a particular place and time.</p>
+            <p>"ARMS AND ARMOR" focuses chiefly (but not exclusively) on luxury or parade armor, including body armor, edged weapons, firearms (military and hunting) and related regalia (standards, insignia, horse trappings, etc.)  References to ordinary or munitions armor are indexed less exhaustively, when there is significant information regarding design, production, acquisition or use. Armorers, gunsmiths, sword makers, etc., who are identifiable by name are indexed under "PEOPLE."</p>
+            <p>"ART COLLECTING" has two chief focuses: (1) the practice of art collecting as a considered activity, whether by individuals, families or corporate institutions; (2) the formation and dispersal of specific collections. Particular attention is paid to: the art market at all levels; attitudes toward collecting in various localities; the activity and inclinations of specific patrons and collectors; the copying of celebrated works of art.  Every reference to the commission or acquisition of a work of art is not indexed under "ART COLLECTING," since much of this information can be accessed through the names of "PEOPLE" or through "PLACES" (for single collections by location.)   Many references are cross-indexed under "STATE GIFTS."</p>
+            <p>"ART LEGISLATION" encompasses the regulation of artistic production and consumption of all kinds, by both civil and ecclesiastical authorities. Relevant subjects include: import and export restrictions; monopolies, taxes and price regulation; guild ordinances; the regulation of political and religious iconography and moral content; the open and implied censorship of the visual arts; the regulation of theaters and public festivities. The full range of SUMPTUARY LAWS is also indexed under "ART LEGISLATION."</p>
+            <p>"ART LITERATURE" includes all references to printed and manuscript writings on the VISUAL ARTS and architecture including: theoretical and technical treatises; "How to" books; artists' biographies and other forms of art historical writing; guide books with descriptions of monuments or collections; travelers' journals; local or national histories with an emphasis on the arts; "Relazioni" and "Lezioni" delivered in academies; discussions of the religious or moral implications of the arts.  References to the literature of ancient art are cross-indexed under "ANTIQUITIES AND ANTIQUARIANISM."  The literature of MUSIC is indexed exclusively under "MUSIC AND MUSICAL INSTRUMENTS."</p>
+            <p>"AVVISI" were newsletters (usually manuscript) composed by professional correspondents or "Intelligencers" (usually anonymous) and circulated in multiple copies to the ruling elite as well as other subscribers. Characteristically they filled four to eight sides of a single or double bifolio, with the place and date of issue recorded on the top of the first page followed by political and cultural news arranged in paragraphs. In the Medici Granducal Archive, "AVVISI" often occur as enclosures in letters, thus offering valuable evidence regarding their point of origin and intended recipient. In the database, "AVVISI" are tracked as objects in their own right; references are also tracked to their production, sale, circulation, collection and use. A distinct document record is thus created for each "AVVISO" (separate from the letter in which the "AVVISO" is enclosed, when this is the case), citing the place of origin (e.g., "Venezia") if known, as well as the sender and recipient, if known. The "Synopsis" in English always begins with the word "AVVISO" in capital letters, clearly signaling the nature of the document, followed by a brief characterization of its contents.  Political pamphlets, "Relazioni," "Conclavi" and other topical compositions are indexed as "AVVISI" (indeed, they were often produced and distributed by the same correspondents.) Printed items of this description are indexed both as "AVVISI" and "BOOKS AND PRINTING."  The collection and preservation of "AVVISI" is also indexed as "ARCHIVES."</p>
+            <p>"BOOKS AND PRINTING" includes: all categories of printing and printmaking; calligraphy and illumination; bookbinding; distribution and copyright privileges for books and prints; the censorship of printed works; the book trade; libraries. References to printed maps are cross-indexed under "MAPS AND MAPMAKING." Information on many specific BOOK COLLECTIONS can be accessed under "PLACES" (For example: Firenze--San Lorenzo--Biblioteca Laurenziana.)</p>
+            <p>"CARRIAGES, etc." includes: fine or state carriages; litters and other forms of land transport (usually luxurious); aspects of etiquette and ceremony regarding carriages; the impact of carriages on urban planning.</p>
+            <p>"CERAMICS" focuses on fine, imported or otherwise noteworthy majolica and porcelain rather than ordinary ware in daily use. Particular attention is given to technical innovations and the history of production.  Ceramic items that figured as "STATE GIFTS" are cross-indexed under that topic category.</p>
+            <p>"COINS AND MEDALS" encompasses all aspects of the creation and use of modern coins and medals as well as the collection and use of ancient coins and medals.  This includes: discussions of medal-making techniques (casting, striking, etc.); the acquisition of material and personnel for the Florentine mint and other mints; the design (including inscriptions) and distribution of coins and medals for ideological or propagandistic purposes.  Discussions of larger items such as "Medaglioni" and "Plaquettes" are cited when they inform our understanding of numismatic or medal-making practice.  All references to the discovery, collecting and study of ancient coins and medals are cross-indexed under "ANTIQUITIES AND ANTIQUARIANISM."  Discussions of advanced technology relevant to medal making are cross-indexed under "NATURAL SCIENCES."  All references to identifiable portraits on coins or medals are cited as "PORTRAITS" in the "PEOPLE" index.</p>
+            <p>"COSTUME AND DRESS" in the Medici Granducal Archive focuses primarily on the courtly environment. This includes: social and ceremonial usage in dress; the clothing of the entire granducal household, including servants; the development of styles or modes of dress and their diffusion nationally and internationally; liturgical vestments.  Detailed descriptions of costumes or articles of dress (excluding JEWELRY) are given particular attention, especially if they document period terminology.  Vague or passing references (for example, "Mandatemi due camice, per favore") are entered selectively, when the context renders them potentially informative.  Many references are cross-indexed under "COSTUME AND DRESS," "ART LEGISLATION (for sumptuary laws), "LUXURY TEXTILES," "THEATER AND FESTIVAL" or "STATE GIFTS."  See also "JEWELS AND JEWELRY."</p>
+            <p>"DRAWINGS" encompasses all references to the production, use and collection of drawings in all techniques, including: pen and ink, wash, metal point, charcoal, etc. (whether working drawings, academic studies, presentation drawings, architectural drawings or drawings intended as independent works of art.) The Project's goal is to be as inclusive as possible in order to support narrowed searches by "PEOPLE," "PLACE," "DATE RANGE" and "WORD SEARCH."  Unspecific references are indexed when they seem to imply a work of drawing (for example, "Il progetto," "Lo schema," "La pianta.") References to portraits in unspecified media are generally indexed as both "PAINTING" and DRAWINGS (unless another media seems to be implied.) Painted works on paper or parchment (especially miniatures) are cross-indexed as "PAINTING." Maps and topographical drawings are cross-indexed as "MAPS AND MAPMAKING." Tapestry cartoons are cross-indexed as "TAPESTRIES AND HANGINGS." Fresco cartoons are cross-indexed as "PAINTING."</p>
+            <p>"EXOTIC ANIMALS" includes: menageries and "Serragli" of live animals; specimens preserved as natural curiosities; descriptions and depictions of animals in foreign lands; rare animals imported for staged hunts.  Staged hunts are also indexed under "THEATER AND FESTIVAL." Many references to "EXOTIC ANIMALS" are cross-indexed under "NATURAL SCIENCES."</p>
+            <p>"FOOD AND WINE" focuses on social and cultural behavior as well as the specifics of food acquisition and preparation. This includes: descriptions of meals (including table decoration and service); specific dishes and notable ingredients; personal preferences in food and drink; local specialties; the importation, cultivation and processing of new or exotic foodstuffs.  Also: Restricted or ritualized food consumption, including fasting for religious or health reasons; popular beliefs regarding the special properties of foodstuffs. Routine references to day-to-day provisioning of the Medici Court, ships and military installations (including the prices of foodstuffs) are indexed very selectively. Gifts of food or wine to and from the Medici Court are cross-indexed under "STATE GIFTS." Feasts and banquets are often cross-indexed under "THEATER AND FESTIVAL."  References to the importation and cultivation of new species are often cross-indexed under "NATURAL SCIENCES" and "GARDENS." When cooks, pastry-makers, confectioners, etc. are identifiable by name, they are indexed as "PEOPLE."</p>
+            <p>"FORTIFICATIONS" focuses on: advanced military engineering in practice and theory; ballistics (including FIREWORKS); considerations of defense in urban planning.  Less emphasis is given to the routine maintenance of fortresses, munitions and provisions, garrisoning, etc.  Specific fortresses are also indexed under "PLACES" (for example: Firenze--Fortezza di San Giorgio.)  References to FIREWORKS are cross-indexed under "THEATER AND FESTIVAL."</p>
+            <p>"FOUNTAINS AND HYDRAULICS" includes public fountains in urban settings and water features of all kinds in gardens.  Also, schemes of hydraulic engineering to bring water to gardens and promote urban development. References to flood control and swamp reclamation are usually cited only when they relate to building projects or urban development.  Many citations are cross-referenced under "GARDENS."</p>
+            <p>"FRAMES" encompasses all references to the framing, setting and mounting of pictures and other primarily two-dimensional works (including bas reliefs, votive panels, mirrors, etc.) in both secular and sacred contexts (including altarpieces containing paintings.) Also, the mounting and presentation of prints and drawings in albums and other formats. The Project's goal is to be as inclusive as possible in order to support narrowed searches by "PEOPLE," "PLACE," "DATE RANGE" and "WORD SEARCH."</p>
+            <p>"FURNITURE" encompasses all references to sacred and domestic furniture, whether movable or fixed, usually in wood but also in marble, bronze and other materials. The Project's goal is to be as inclusive as possible in order to support narrowed searches by "PEOPLE," "PLACE," "DATE RANGE" and "WORD SEARCH." However, the emphasis is on substantial items of functional or parade furniture rather than small ornamental pieces (e.g. "Studioli" and "Stipi" rather than little inlaid boxes) unless there is technical or contextual information relevant to furniture making or furniture use. Particular attention is given to technical and descriptive terminology (especially furniture types: "Sgabello," "Lettuccio," "Cassone," etc.) Textile furnishings and leather wall-coverings are generally indexed only under "TAPESTRIES AND HANGINGS." Picture frames and framing devices are indexed primarily under "FRAMES" though sometimes cross-indexed as FURNITURE. Furniture-makers of all kinds who are identifiable by name are indexed as "PEOPLE."</p>
+            <p>"GAMES, TOYS AND SPORTS" includes both organized and spontaneous amusements: gambling; hunting, fishing and falconry; football, handball and racquet sports (e.g. "Calcio," "Pallone," "Pallamano," "Pallacorda," etc); wrestling; fencing; jousts and organized combats; horse and foot racing; recreational sailing and boating (including "Regatte"); children's games and amusements; all of the material culture associated with the above pursuits (including: dice and playing cards; children's toys; guns and other hunting requisites such as boar spears, bird nets, dogs and falcons.) Advanced horsemanship is included in this category (but not the acquisition and normal maintenance of horses.) Elaborate staged hunts, "Giostre" and "Caroselli" are double-indexed under "THEATER AND FESTIVAL," as are many references to carnival and popular entertainments. Treatises on hunting, fencing and ball games are double-indexed under "BOOKS AND PRINTING." Musical pursuits and dance are usually indexed only under "MUSIC AND MUSICAL INSTRUMENTS," unless they take place in a context relevant to GAMES, TOYS AND SPORTS.</p>
+            <p>"GARDENS" features all aspects of garden design, construction and use, including the acquisition and culture of rare or specimen plants.  Also, antique and modern sculpture in gardens and "Vigne."  References to fountains are cross-indexed under "FOUNTAINS AND HYDRAULICS."  Many references to botanical matters are cross-indexed under "NATURAL SCIENCES."  References to specific gardens are also indexed under "PLACES" (for example:  Firenze--Giardino di Boboli).</p>
+            <p>"GLASSWARE" includes all references to the production, import, export, display and use of glassware of every description.  Many citations also fall under the category of "STATE GIFTS."</p>
+            <p>"GOLD AND SILVERWORK" focuses on the production, acquisition and use of objects in worked gold and silver, with particular attention to gold and silver working techniques. References are not usually indexed to gold and silver in the abstract as money of exchange ("Abbiamo venduto il frumento per cinque ducati di oro"). References to "JEWELS AND JEWELRY," "COINS AND MEDALS," "ARMS AND ARMOR," "ANTIQUITIES AND ANTIQUARIANISM," "STATE GIFTS" and "RELICS (sacred, including reliquaries)" are cross-indexed when they include significant technical or contextual information regarding gold and silverwork. All gold and silver workers who are known by name are indexed as "PEOPLE." References to anonymous or unidentifiable gold and silver worker as ("Giovanni l'orefice")  are indexed under "GOLD AND SILVERWORK," even when they appear in contexts not directly relevant to this activity ("Abbiamo comprato una casa per l'orafo tedesco"), since these references would otherwise not be retrievable.</p>
+            <p>"JEWELS AND JEWELRY" encompasses the creation, acquisition, use and collecting of jewelry of all kinds.  Passing references to jewels and jewelry without descriptions or informative comments are indexed only selectively.  Jewels and jewelry were frequently used as collateral to secure loans and many unspecific references occur in the context of such financial transactions.  The mining or importation of uncut or unset stones is frequently indexed, especially when their place of origin is known (for example, emeralds from the New World, rubies from India, etc.).  Though most references to jewelry regard pieces intended for personal adornment, other items are indexed when they involve related materials and techniques. References to "JEWELS AND JEWELRY" are often cross-indexed as "PIETRE DURE," "RELICS (Sacred--including reliquaries), "GOLD AND SILVERWORK" and "STATE GIFTS."</p>
+            <p>"LUXURY TEXTILES" for furnishing and dress constituted one of the principal expenditures of any court or noble house and are among the items most frequently cited in the Medici Granducal Archive. Descriptions of luxury fabrics and trimmings are always indexed, while less circumstantial references are entered only selectively, when the context renders them potentially informative.  It is often difficult to determine whether a particular textile was intended for furnishing or dress, since the same products were often used for both purposes. References to "LUXURY TEXTILES" are often cross-indexed under "COSTUME AND DRESS," "TAPESTRIES AND HANGINGS" and "STATE GIFTS." References to SUMPTUARY LAWS involving textiles are cross-indexed under "ART LEGISLATION."</p>
+            <p>"MAPS AND MAPMAKING" includes: all aspects of cartography; the production, import and export of maps and topographical views; terrestrial and celestial maps and globes; the commissioning, collecting and use of telescopes and navigational instruments; geographical exploration and the exchange of such information. Some references to "MAPS AND MAPMAKING" are cross-indexed under "NATURAL SCIENCES."</p>
+            <p>"MEDICINE" encompasses all references to medical theory and practice in the period context including: anatomy (human and veterinary); pharmacology; popular and scholarly beliefs regarding health; surgical instruments; plague prevention and treatment. Botanical information relevant to pharmacology is often cross-indexed as "GARDENS." General or theoretical considerations are sometimes cross-referenced as "NATURAL SCIENCES."</p>
+            <p>"MIRACULOUS IMAGES" includes: cult practices related to miraculous images in any media; the reproduction and diffusion of such images; the influence of miraculous or cult images on contemporary artistic production.  Many miraculous images and the sites associated with them are also indexed under "PLACES" (for example: Firenze--Santissima Annunziata.)  Celebrations involving miraculous images are cross-indexed under "THEATER AND FESTIVAL."</p>
+            <p>"MUSIC AND MUSICAL INSTRUMENTS" includes: all aspects of written and performed vocal and choral music; the production, import and export of musical instruments.  Many references to "MUSIC AND MUSICAL INSTRUMENTS" are cross-indexed under "THEATER AND FESTIVAL."  References to printed music are cross-indexed under "BOOKS AND PRINTING." Musicians identifiable by name are indexed as "PEOPLE."</p>
+            <p>'NATURAL SCIENCES" is a broad category that reflects the period concept of "Natural Philosophy."  In addition to modern or proto-modern empirical science, it includes: alchemy and advanced technology; astrology and astronomy; the collecting of natural curiosities (often cross-indexed with "EXOTIC ANIMALS"); practical and theoretical medicine, anatomy and pharmacology.  Many scientists or natural philosophers are indexed by name under "PEOPLE" (for example: Galileo Galilei; Andreas Vesalius; Leonardo da Vinci.)   Formally constituted scientific organizations are indexed as "Corporate Bodies" in the "PEOPLE" index. Many references to botanical matters are cross-indexed under "GARDENS" and geological matters under "PIETRE DURE."</p>
+            <p>"PAINTING" encompasses all references to painting in general (techniques, history, theory, collecting) and to particular works in: oil (on canvas, panel, copper, slate, etc.); tempera; fresco; miniature; historiated majolica and other related media. The Project's goal is to be as inclusive as possible (citing even vague or uncircumstantial references, e.g. "Pagate quelle due pitture.") in order to support narrowed searches by "PEOPLE," "PLACE," "DATE RANGE" and "WORD SEARCH."  Unspecific references to "Quadretti," "Istorie," "Tavoline," etc., are indexed as PAINTING when there is a reasonable chance that painting is implied. References to miniatures in manuscripts are cross-indexed under "BOOKS AND PRINTING." Painters of all kinds who are identifiable by name are indexed as "PEOPLE."</p>
+            <p>"PIETRE DURE" creations--rich objects in semi-precious "Hard" stone--were among the most prized specialties of the Medici Granducal Workshops. All aspects of "Pietre dure" production are indexed, including: the gathering of rare stones from around the world; the development of "Pietre dure" techniques (including rock crystal, lapis lazuli, coral and porphyry); notable "Pietre dure" projects for the Cappella dei Principi at San Lorenzo, the Tribuna of the Uffizi, the Granducal Chapel in Palazzo Pitti and elsewhere (see also "PLACES"); the distribution of "Pietre dure" objects as state gifts. Though most "Pietre dure" objects were in mosaic, three-dimensional pieces were also realized in such materials.  Objects in mixed media that include hard-stone elements are indexed as "PIETRE DURE."  Unclear references that might refer either to "Hard" or "Soft" stone ("Pietre tenere") are indexed as "PIETRE DURE."   Many references to "PIETRE DURE" are cross-indexed as "JEWELS AND JEWELRY," "RELICS (Sacred--including reliquaries)" and "STATE GIFTS." Geological information is cross-indexed under "NATURAL SCIENCES."</p>
+            <p>"RELICS (Sacred)" includes: the discussion, acquisition and exchange of relics; cult practices related to relics; the commissioning and acquisition of reliquaries; state gifts of relics and reliquaries (see also "STATE GIFTS").  Many major relics and their cults are accessible by place (for example: Prato--Cattedrale).</p>
+            <p>SCULPTURE encompasses all general references to ancient and modern sculpture (techniques, history, theory, collecting) and all references to particular works in stone, bronze, ivory, wood, clay and other related media (including architectural or ornamental carving, ship's carving and temporary sculpture for festive structures.) The Project's goal is to be as inclusive as possible (citing even vague or uncircumstantial references where sculpture seems to be implied, ie. "Sono arrivate le due figure.") in order to support narrowed searches by "PEOPLE," "PLACE," "DATE RANGE" and "WORD SEARCH." The acquisition of marble and other materials is indexed as SCULPTURE when they seem to be associated with sculptural projects. Sculpture for fountains is cross-indexed under "FOUNTAINS AND HYDRAULICS." Classical or ancient sculpture is cross-indexed under "ANTIQUITIES AND ANTIQUARIANISM." Small-scale work in gold and silver is generally indexed only under "GOLD AND SILVER WORK" and small-scale work in hard-stone only under "PIETRE DURE." Sculptors of all kinds who are identifiable by name are indexed as "PEOPLE." References to unnamed or otherwise obscure sculptors ("Ceccarello scultore di legno")  are generally indexed under "SCULPTURE," even when they appear in contexts not directly relevant to this activity ("Quello scultore è partito per Roma per diventare prete.")</p>
+            <p>"STATE GIFTS" are divided into two subcategories: (1) STATE GIFTS FROM THE MEDICI (narrowed by the country/region of the recepient and a range of years) and  (2) STATE GIFTS TO THE MEDICI (narrowed by the counytry/region of the donor and a range of years).   Other STATE GIFTS, neither to nor from the Medici, can be broadly accessed though the "PATRONS INDEX" under the names of the sender and recipient, or in some cases, under the name of the "ARTIST" who created the gift. The Medici Archive Project seeks to define the political and historical context of state gifts as well as track specific objects.  It is sometimes unclear whether objects acquired by princes and officials were in fact gifts or purchases; when in doubt, they are treated as "STATE GIFTS."  References to "STATE GIFTS" are frequently cross-indexed with such topics as "ART COLLECTING," "GOLD AND SILVERWORK,"  "LUXURY TEXTILES"; "PIETRE DURE" and "RELICS (sacred)"). For the exchange of state portraits, see also "PORTRAITS" in the "PEOPLE" index.</p>
+            <p>"TAPESTRIES AND HANGINGS" encompasses suites of textile furnishings in all media (including plain silk, brocade, velvet and embroidery) but emphasizes historiated tapestries or "Arazzi" (including "Grottesche").  In practice, the terminology in the documents is often unclear and it is sometimes difficult to differentiate the various references to "Parati," "Arazzi," "Panni di arazzo," "Parati di arazzo," "Parati di sala," etc. [Note: "Parato di chiesa" tends to indicate vestments, or a suite of vestments and matching altar furnishings.]  Many references to "TAPESTRIES AND HANGINGS" are cross-indexed under "LUXURY TEXTILES" and "STATE GIFTS."</p>
+            <p>"THEATER AND FESTIVAL" includes: all sacred and secular public ceremonies; "Entrate" and the reception of state visitors; permanent and temporary festive structures; state banquets (see also "FOOD AND WINE"); public and private theatrical entertainments; dances, masques and opera; tournaments and staged hunts; carnival and popular entertainments; funerals and mourning; public executions.  References to MUSIC that imply a public or theatrical component are indexed both here and under "MUSIC AND MUSICAL INSTRUMENTS."  References to FIREWORKS (a branch of ballistic science) are cross-indexed under "FORTIFICATIONS." References to printed plays and "Festival books" are cross-indexed under "BOOKS AND PRINTING."</p>
+            <p>"TIMEPIECES" encompasses all references to clocks, watches, sundials, hour-glasses and other devices for measuring time, including the creation, acquisition, use, collection and maintenance of such objects.</p>
+        </div>
+        
+        <!-- CHAPTER 4 -->
+        <div id="chapter4">
+        	<h3>IV. MANAGING BIOGRAPHICAL INFORMATION (PEOPLEBASE)</h3>
+            <h1>General Considerations: Names and People</h1>
+            <p>In the archival context in which we work, names have an elusive reality of their own. Identifying people and tracking their names is thus the most complex challenge that we face in the "Documentary Sources" initiative, as demonstrated by the length and complexity of this particular section of the manual.</p>
+            <p>Since we are dealing with ongoing streams of correspondence, we often find letter writers referring to individuals in a loose or instinctive manner (for example, "Oggi ho parlato con Lorenzo", "L'ambasciatore di Sua Maestà mi ha mandato un biglietto", "Pippo legnaiuolo non ha finito la tavola".) Since the context of a letter was usually self-evident at the time it was written, such shorthand references were generally comprehensible to both the sender and the recipient, though not necessarily to a M.A.P. Project Researcher beginning work on a particular run of documentation!</p>
+            <p>Names appear in a shifting array of irregularized forms, particularly in the earlier material in the Archivio Mediceo del Principato. In the text of a single letter, it is common to find the same name spelled several different ways, or indeed, for a writer to sign his or her own name differently in several successive letters (for example, Margarita, Margherita, Marguerita, Margerita.)</p>
+            <p>There is also the question of language variants. Letter writers often transcribed or transferred foreign names as they heard them, without knowing what they might have been in the original language. We have (for example) Italians communicating French or German names in Italian, but also Flemings (for example) communicating French or German names in letters written in a hybrid of Italian and Spanish. "Duca di Ghisa", "Duc de Ghiz", "Duca di Guisa", "Duque de Quiz" and perhaps even "Duc de Guise" are all available archival forms. In processing such linguistic transferrals, it is often unclear (to us and perhaps also to the letter writers), whether we are dealing with a  first name, a family name, a title or a geographical identifier. It is thus difficult to second-guess the name or even the nationality of (for example) "il Signore di Venz" or "la marescialla consorte di Galla", unless we can do so by analyzing the context.x</p>
+            <p>Names often changed during the course of a person's life, through marriage, succession to titles, the development of a career or simply getting older. "Maso Ragazzino" in 1610 might well be "Signorino Tommaso" in 1620 and "Barone Tommaso Bianchi de' Rossi" in 1630.</p>
+            <p>Names also evolved during the life of a family. In 1550, "Jacopo da Pisa mercante" might well have been only a convenient way to indicate a particular merchant who came to Florence from Pisa and was named Jacopo. In 1600, however, his grandchildren might well have been calling themselves Giacomo, Maria and Filippo Pisani, with the geographical identifier having taken on the force of a family name. (Indeed, the institution of family names often occurred in the course of the sixteenth century.) Alternately, they might have become Giacomo, Maria and Filippo Mercatelli, with the occupational identifier dominating. They might even have emerged as Giacomo, Maria and Filippo Jacopini (or Giacomini, Jacobelli or Jacopucci), by identification with their grandfather's given name.</p>
+            <p>These few examples only hint at the complex social, cultural and historical reality inherent in names as expressed in the archival context. However, the immediate question for us is how to deal with this reality in a concrete way at the point of data entry. In the course of document description, the Project Researcher encounters names, parts of names or references to unnamed but ultimately identifiable people. How do we track these names and references? How do we gather, organize and store this data so that it can be retrieved in a coherent and useful form?</p>
+            
+            <h4>PeopleBase sections</h4>
+              <p>The PeopleBase sections provide detailed information about the person who is the subject of the record. These sections are: <b>Person Details</b>, <b>Names</b>, <b>Titles/Occupations</b>, <b>Parents</b>, <b>Children</b>, <b>Spouses</b>, and <b>Research notes</b>.</p>
+
+<!-- Person Details -->            
+            <h4 id="peoplebaseSection">Person Details</h4>
+            <img src="/DocSources/images/dataEntryManual/personDetails.png" alt="Perosn Details" width="520" height="608" align="left" />
+            <ul class="numbers">
+            	<p>We are tracking, organizing and storing biographical information relevant to every person added to PeopleBase. These "Person Details" are intended to serve two functions: (1) to assist Project Researchers in identifying references in documents, and (2) to enhance the usefulness of PeopleBase as a biographical research tool.</p>
+            	<li><u>FIRST NAME</u>  If there is more than one given name (e.g. Giovanni Battista) put both names in the "First Name" field.  Prefer the modern version of a given name.  For example prefer Bartolomeo to Bartolommeo, Roberto to Ruberto, Leonardo to Lionardo.  Prefer Iacopo to Jacopo.</li>
+                <li><font color="#FF0000"><u>PREFIX</u> The small boxes that preced the Pre-ID, ID and Post ID name fields are for Prefixes.  Enter only the prefix intended to precede the entire last name, including compound names. For example: Gaspar de Borja y Velasco, where "de" is entered as the prefix and "Borja y Velasco" is entered as "ID Name" (pag.53).</font></li>
+                <li><u>PRE-ID FIELD</u> Put Patronymics here. Patronymics are a valuable addition since they are often the best way to distinguish different members of a particular family. Avoid adding the patronymic for rulers (since they can be easily identifed by the Succession Number) and for married women.  The latter is a practical consideration; if we add the Patronymic to the Given, Maiden and Married names, it often results in a Display Name that is too long for the field.</li>
+                <li><u>PREFIX LASTNAME</u></li>
+                <li><u>LASTNAME</u></li>
+                <li><u>PREFIX POST-ID</u></li>
+                <li><u>POST-ID</u> This is the place for important nicknames, papal names (in Latin) and the professed names of nuns. In the Display Name, elements in the "Post ID" field will appear in parentheses. Thus the Display form for Domenico del Ghirlandaio would be Bigordi, Domenico (del Ghirlandaio).   Note that the Post ID is broken into prefix and name.</li>
+                <li><u>BIRTH and DEATH DATES</u> are entered if known. If not, we deduce the individual's dates of activity (by year), either from standard secondary sources (encyclopedias, etc.) or from the documents themselves. In many cases, the relevant ACTIVE FROM  and ACTIVE TO dates ("ActStart" and "ActEnd" on the "Vital Statistics" form) will correspond to the year of the first and last documents in which the person is cited (if there is more than one documentary citing.) These activity dates should be expanded whenever possible, as new documentation emerges.</li>
+                <li><u>PORTRAIT</u></li>
+            </ul>
+
+<!-- Names -->              
+            <h4 id="peopleNames">Names</h4>
+            <img src="/DocSources/images/dataEntryManual/personNames.png" alt="Perosn Names" width="520" height="351" align="left" />
+            <p>Clicking the edit button on the NAMES section in PeopleBase allows us to record and classify the wide range of names that often occur for a single individual. All significant components of a person's names (including variants) can thus be entered by the Project Researcher and retrieved by the database user. <font color="#FF0000">As you see in the column to the far right of the "Names" Tab page, every name component is directly linked to that person's unique "ID Number" (pag.56).</font></p>
+            <p>Each name part is entered separately under the NAME section and categorized by one of six available NAME TYPES selected from a pull-down list. Note that prepositions are not used as name parts. The "Name Types" are:</p>
+            <ul style="list-style:none;">
+            	<li style="margin-top:0px;">Appellative</li>
+                <li style="margin-top:0px;">Family</li>
+                <li style="margin-top:0px;">Given</li>
+                <li style="margin-top:0px;">Maiden</li>
+                <li style="margin-top:0px;">Married</li>
+                <li style="margin-top:0px;">Patronymic</li>
+                <li style="margin-top:0px;">SearchName</li>
+            </ul>
+            <p><font color="#FF0000">When you add a new PeopleBase record, the database program makes a first pass at automatically creating rows of name parts in the Names Tab. These automatic assignments are based on the following assumptions:<br /><br />
+            TABELLA pag. 57<br /><br />
+            <i>IMPORTANT NOTE: this initial assignment is intended merely as a convenience for the Project Researcher.  Due to the great variety in name forms, it is essential that you check the Names Tab after creating a PeopleBase record, adjusting the Names and Name Types as appropriate.  It is also important to note the automatic stripping of accents and other diacriticals from the "Display Name" in order to convert it into a "Search Name". This takes place automatically only at the initial creation of the "ID Name" so that you will need to edit the SEARCHNAME manually after any subsequent changes to the name parts.</i><br /><br />
+            Since the components that we enter constitute the basis for name searching, the general rule is to break names down into their logical parts.  It is well, for example, to avoid complex strings unless they constitute single characteristic units (like"Michele di Ridolfo", which is the most frequently-encountered contemporary name for this painter.)</font></p>
+            <ul  style="padding-left:15px;">
+                <li>
+                    <p>You should include any <b>Appellatives</b> that occur in the documents or are widely acknowledged in secondary sources (for example "Pater Patriae" for Cosimo il Vecchio de' Medici.)</p>
+                    <img src="/DocSources/images/dataEntryManual/personNamesEx1.png" alt="Maria Magdalena Names" width="520" height="161" align="left" />
+                    <p style="margin-top:40px">Peculiar or specialized forms can be explained in the note field (like Madama Serenissima for Cristina di Lorena and Serenissima Arciduchessa for Maria Maddalena d'Austria, which were the principal names by they were known in the context of their public careers.)</p>
+                </li>
+                <li>
+                    <p style="margin-top:80px;">When the <b>Appellative</b> is part of the person's commonly used name (for example "di Castellina" in "Medici di Castellina"), it is included in the ID name, but it also appears as an Appellative in the context of "Name Forms":</p>
+                    <img src="/DocSources/images/dataEntryManual/personNamesEx2.png" alt="Lorenzo di Raffaello Names" width="520" height="200" align="left" />
+                    <p style="margin-top:45px;">Be sure that <b>prefixes</b> are placed at the end of a name form, e.g. "Raffaelo, di" as opposed to "di Raffaelo".  This is important for alphabetizing and to ensure successful searching.</p>
+                    <p>An Appellative that is merely a standard polite form of the person's name ("Signor Lorenzo"), does not need to be included.</p>
+                </li>
+                <li>
+                    <p style="margin-top:70px;">When there are several known and used versions of a name, include all of them:</p>
+                    <img src="/DocSources/images/dataEntryManual/personNamesEx3.png" alt="Lorraine de' Medici Names" width="520" height="212" align="left" />
+                </li>
+                <li>
+                	<p style="margin-top:240px;">Papal names are considered Appellatives:</p>
+                    <img src="/DocSources/images/dataEntryManual/personNamesEx4.png" alt="Giovanni di Lorenzo Names" width="520" height="179" align="left" />
+                </li>
+            </ul>
+            
+<!-- Titles and Occupations -->            
+            <h4 style="margin-top:200px;" id="peopleTitles">Titles and Occupations</h4>
+            <p>This is a searchable, non-hierarchical, free-hand system that allows Project Researchers to record titles, occupations and other relevant descriptive formulas. It is expected that this system will eventually come to include many tens of thousands of terms, including now obscure historical usages that occur in the original documents.</p>
+            <img src="/DocSources/images/dataEntryManual/personTitles.png" alt="Titles and Occupations" width="520" height="148"/>
+            <p>The table below presents the full system of Major and Minor Role Categories, demonstrating their hierarchical relationship.</p>
+            <table width="600" style="margin-left:200px" cellspacing="0">
+            	<tr>
+                	<th width="50%">Major Sort</th>
+                    <th width="50%">Minor Sort</th>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Painters</td>
+                </tr>
+                <tr>
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Sculptors</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Architects/Engineers</td>
+                </tr>
+                <tr>
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Musicians/Singers/Instrument Makers</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Armorers/Weapon Makers</td>
+                </tr>
+                <tr>
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Jewelers/Hard Stone Workers</td>
+                </tr>
+                <tr  bgcolor="#EAD9D6">
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Gold/Silver Workers</td>
+                </tr>
+                <tr>
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Tapestry Weavers</td>
+                </tr>
+                <tr  bgcolor="#EAD9D6">
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Clothing Makers</td>
+                </tr>
+                <tr>
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Actors/Dancers</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Cloth Weavers/Embroiderers</td>
+                </tr>
+                <tr>
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Artists and Artisans OTHER</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Corporate Bodies</td>
+                    <td width="50%">Corporate Bodies Secular</td>
+                </tr>
+                <tr>
+                	<td width="50%">Corporate Bodies</td>
+                    <td width="50%">Corporate Bodies Religious</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Ecclesiastics</td>
+                    <td width="50%">Popes</td>
+                </tr>
+                <tr>
+                	<td width="50%">Ecclesiastics</td>
+                    <td width="50%">Cardinals</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Ecclesiastics</td>
+                    <td width="50%">Bishops</td>
+                </tr>
+                <tr>
+                	<td width="50%">Ecclesiastics</td>
+                    <td width="50%">Archbishops</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Ecclesiastics</td>
+                    <td width="50%">Ecclesiastics OTHER</td>
+                </tr>
+                <tr>
+                	<td width="50%">Ecclesiastics</td>
+                    <td width="50%">Saints/Beatified</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Ecclesiastics</td>
+                    <td width="50%">Ecclesiastics OTHER</td>
+                </tr>
+                <tr>
+                	<td width="50%">Ecclesiastics</td>
+                    <td width="50%">Saints/Beatified</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Heads of State</td>
+                    <td width="50%">Emperors-Empresses/Kings-Queens</td>
+                </tr>
+                <tr>
+                	<td width="50%">Heads of State</td>
+                    <td width="50%">Sovereign Dukes-Duchesses/Grand Dukes-Duchesses</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Heads of State</td>
+                    <td width="50%">Doges</td>
+                </tr>
+                <tr>
+                	<td width="50%">Heads of State</td>
+                    <td width="50%">Viceroys-Vicereines/Governors</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Heads of State</td>
+                    <td width="50%">Heads of State OTHER</td>
+                </tr>
+                <tr>
+                	<td width="50%">Nobles</td>
+                    <td width="50%">Princes-Princesses</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Nobles</td>
+                    <td width="50%">Dukes-Duchesses/Archdukes-Archduchesses</td>
+                </tr>
+                <tr>
+                	<td width="50%">Nobles</td>
+                    <td width="50%">Counts-Countesses</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Nobles</td>
+                    <td width="50%">Marquises-Marchionesses</td>
+                </tr>
+                <tr>
+                	<td width="50%">Nobles</td>
+                    <td width="50%">Barons-Baronesses</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Nobles</td>
+                    <td width="50%">Nobles OTHER</td>
+                </tr>
+                <tr>
+                	<td width="50%">Nobles</td>
+                    <td width="50%">Chivalric Orders</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Professions</td>
+                    <td width="50%">Medical Practitioners</td>
+                </tr>
+                <tr>
+                	<td width="50%">Professions</td>
+                    <td width="50%">Bankers/Merchants</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Professions</td>
+                    <td width="50%">Lawyers/Notaries</td>
+                </tr>
+                <tr>
+                	<td width="50%">Professions</td>
+                    <td width="50%">Military</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Scholarly and Literary</td>
+                    <td width="50%">Scholars/Writers</td>
+                </tr>
+                <tr>
+                	<td width="50%">Scholarly and Literary</td>
+                    <td width="50%">Printers/Booksellers</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">State and Court Personnel</td>
+                    <td width="50%">Secretaries/Ministers</td>
+                </tr>
+                <tr>
+                	<td width="50%">State and Court Personnel</td>
+                    <td width="50%">Diplomats</td>
+                </tr>
+            </table>
+            
+            <p>Here is the same table in reverse, showing the full range of Minor Role Categories in alphabetical order, with their governing Major Role Categories:</p>
+			
+            <table width="600" style="margin-left:200px" cellspacing="0">
+            	<tr>
+                	<th width="50%">RoleCatMinor</th>
+                    <th width="50%">RoleCatMajor</th>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Actors/Dancers</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr>
+                	<td width="50%">Archbishops</td>
+                    <td width="50%">Ecclesiastics</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Archbishops</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr>
+                	<td width="50%">Armorers/Weapon Makers</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Artists and Artisans</td>
+                    <td width="50%">Armorers/Weapon Makers</td>
+                </tr>
+                <tr>
+                	<td width="50%">Artists and Artisans OTHER</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr  bgcolor="#EAD9D6">
+                	<td width="50%">Bankers/Merchants</td>
+                    <td width="50%">Professions</td>
+                </tr>
+                <tr>
+                	<td width="50%">Barons-Baronesses</td>
+                    <td width="50%">Nobles</td>
+                </tr>
+                <tr  bgcolor="#EAD9D6">
+                	<td width="50%">Bishops</td>
+                    <td width="50%">Ecclesiastics</td>
+                </tr>
+                <tr>
+                	<td width="50%">Cardinals</td>
+                    <td width="50%">Ecclesiastics</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Chivalric Orders</td>
+                    <td width="50%">Nobles</td>
+                </tr>
+                <tr>
+                	<td width="50%">Civic/Local Administrators</td>
+                    <td width="50%">State and Court Personnel</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Cloth Weavers/Embroiderers</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr>
+                	<td width="50%">Clothing Makers</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Corporate Bodies Religious</td>
+                    <td width="50%">Corporate Bodies</td>
+                </tr>
+                <tr>
+                	<td width="50%">Corporate Bodies Secular</td>
+                    <td width="50%">Corporate Bodies</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Counts-Countesses</td>
+                    <td width="50%">Nobles</td>
+                </tr>
+                <tr>
+                	<td width="50%">Courtiers</td>
+                    <td width="50%">State and Court Personnel</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Diplomats</td>
+                    <td width="50%">State and Court Personnel</td>
+                </tr>
+                <tr>
+                	<td width="50%">Doges</td>
+                    <td width="50%">Heads of State</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Dukes-Duchesses/Archdukes-Archduchesses</td>
+                    <td width="50%">Nobles</td>
+                </tr>
+                <tr>
+                	<td width="50%">Ecclesiastics OTHER</td>
+                    <td width="50%">Ecclesiastics</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Emperors-Empresses/Kings-Queens</td>
+                    <td width="50%">Heads of State</td>
+                </tr>
+                <tr>
+                	<td width="50%">Gold/Silver Workers</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Heads of State OTHER</td>
+                    <td width="50%">Heads of State</td>
+                </tr>
+                <tr>
+                	<td width="50%">Jewelers/Hard Stone Workers</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Lawyers/Notaries</td>
+                    <td width="50%">Professions</td>
+                </tr>
+                <tr>
+                	<td width="50%">Marquises-Marchionesses</td>
+                    <td width="50%">Nobles</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Medical Practitioners</td>
+                    <td width="50%">Professions</td>
+                </tr>
+                <tr>
+                	<td width="50%">Military</td>
+                    <td width="50%">Professions</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Musicians/Singers/Instrument Makers</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr>
+                	<td width="50%">Nobles OTHER</td>
+                    <td width="50%">Nobles</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Popes</td>
+                    <td width="50%">Ecclesiastics</td>
+                </tr>
+                <tr>
+                	<td width="50%">Princes-Princesses</td>
+                    <td width="50%">Nobles</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Printers/Booksellers</td>
+                    <td width="50%">Scholarly and Literary</td>
+                </tr>
+                <tr>
+                	<td width="50%">Saints/Beatified</td>
+                    <td width="50%">Ecclesiastics</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Scholars/Writers</td>
+                    <td width="50%">Scholarly and Literary</td>
+                </tr>
+                <tr>
+                	<td width="50%">Sculptors</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Secretaries/Ministers</td>
+                    <td width="50%">State and Court Personnel</td>
+                </tr>
+                <tr>
+                	<td width="50%">Sovereign Dukes-Duchesses/Grand Dukes-Duchesses</td>
+                    <td width="50%">Heads of State</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">State and Court Personnel OTHER</td>
+                    <td width="50%">State and Court Personnel</td>
+                </tr>
+                <tr>
+                	<td width="50%">Tapestry Weavers</td>
+                    <td width="50%">Artists and Artisans</td>
+                </tr>
+                <tr bgcolor="#EAD9D6">
+                	<td width="50%">Unassigned</td>
+                    <td width="50%">Unassigned</td>
+                </tr>
+                <tr>
+                	<td width="50%">Viceroys-Vicereines/Governors</td>
+                    <td width="50%">Heads of State</td>
+                </tr>
+            </table>
+
+            <p>This is a free-hand list of the numerous descriptive terms that were applied to the individuals in PeopleBase with particular regard to their social status and occupational activity. "Titles" and "Occupations" are treated as a single category because they frequently overlapped. (For example, "Abbate", "Segretario" and "Castellano" can be considered as both.) Titles and Occupations are listed in the language in which they occur in the documents, at any level of specificity. ("Colonello" and "Colonello della Fanteria in Pisa" are both valid title/occupations.) Previously entered terms can be taken from the pull-down list and new terms can be added when necessary. Though we wish to compile an extensive compendium of such descriptive terms, it is not necessary to insist on differences without distinctions. For example, "Vicerè di Sicilia" and "Vicerè della Sicilia" do not require separate entries.</p>
+            <img src="/DocSources/images/dataEntryManual/personTitlesEx1.png" alt="Titles and Occupations" width="753" height="306" />
+            <img src="/DocSources/images/dataEntryManual/personTitlesEx2.png" alt="Titles and Occupations" width="520" height="275" align="left" />
+            <p>For each person in PeopleBase, one Title/Occupation should be checked as "Preferred role", meaning that it could serve as the identifying title for that person on a printed report.</p>
+            <p>For instance, Lucrezia di Cosimo I de'Medici-d'Este's preferred Title/Occupation would be "Duchessa di Ferrara" showed has an star icon on the left of the Title/Occupation.</p>
+            <h4>Adding a new Title/Occupation</h4>
+            <p>To add a new title or occupation, simply edit the Title/Occupation form and click the "Add" button on the bottom right. Begin typing the new title or occupation in the blank space.  <i>(Tip: if you make a mistake in creating a new Title/Occupation, you can correct it by clicking the "edit value" button on the right of the Title/Occupation.)</i></p>
+            
+<!-- Parents -->            
+            <h4 id="peopleParents" style="margin-top:30px">Parents</h4>
+            <p>If a person's Parents are already present on the pull-down list of "People" (i.e. if they already have their own PeopleBase record), then the relationship can be assigned directly from the Parents Tab of the child's PeopleBase record. If not, they must first be added to PeopleBase (if this is considered worthwhile.)</p>
+            <p>To assign parents to a person, edit the PARENTS section and press "edit value" in either the Father or the Mother row as appropriate. A new form will appear under the Parents one, enter the fullname or select it from the autocomplete list:</p>
+            <img src="/DocSources/images/dataEntryManual/personFather.png" alt="Giovanni di Lorenzo Names" width="692" height="255" align="left" />
+            <p style="margin-top:60px;">Select the name of the person's father and click Save.  You can remove the assignment from the Parents section by clicking the icon with the red "X" on the right.</p>
+            <p><i>Note: fathers and mothers must be added separately even for children they share.</i></p>
+
+<!-- Children -->            
+            <h4 id="peopleChildren" style="margin-top:100px;">Children</h4>
+            <p>Children are assigned in the same way as Parents.  You can create the relationship from either direction, i.e. either choosing a person's parents from the Parent Tab of the child's PeopleBase record, or by choosing the children from the Children Tab of the parent's record.</p>
+
+<!-- Spouses -->            
+            <h4 id="peopleSpouses">Spouses</h4>
+            <p>Spouses are assigned in the same way as Parents. For each spouse, press the "Add" button and then enter her name or select it from the autocomplete list.</p>
+            <p><font color="#FF0000">Manca un'immagine e del testo, pag.62</font></p>
+            
+<!-- Research Notes -->     
+			<h4 id="peopleResearch">Research Notes</h4>
+            <p><font color="#FF0000">Public and Staff Notes? pag. 68</font></p>
+        </div>
+        
+<!-- CHAPTER 5 -->
+        <div id="chapter5">
+        	<h3>V.  MANAGING GEOGRAPHICAL DATA (GEOBASE)</h3>
+            <h1>General Considerations</h1>
+            <p><b>GeoBase</b> is the system that stores geographical data in the "Documentary Sources" database. Its core is a block of some fifty thousand records relating to places in Europe that we extracted with permission from the <b>Getty Thesaurus of Geographical Names (TGN)</b>. The TGN is a worldwide vocabulary based on present-day geographical and political configurations. To the TGN, we have already added hundreds of geographical terms, largely drawn from documentary references in the Archivio Mediceo del Principato. In addition to these relatively obscure or "historic" cities, towns and villages (that sometimes no longer exist or have been absorbed into larger municipalities), we have added a further layer of specific "sites", including churches, monasteries, abbeys, castles, palaces, public squares, major roads, even fountains.</p>
+            <p>Place records that were imported from the Getty TGN carried with them their 7-digit GEOGKEY numbers beginning with 1,000,000; new cities, towns and villages that M.A.P. researchers add to the system are assigned six-digit numbers beginning with 100,000; new sites (buildings, piazze and the like) added by M.A.P. researchers are assigned six-digit numbers beginning with 400,000.   Because the pull-down lists in GeoBase include more than 54,000 place names imported from the TGN, you should usually be able to find the place mentioned in a document for indexing purposes.</p>
+            <h1><font color="#FF0000">"Preferred" Location Names ("P" tag) pag. 72</font></h1>
+            <h1>Adding New Place or Site</h1>
+            <p>In the relatively rare instances when you need to enter a new Place or Site, here is how to proceed:</p>
+            <p>In the Main Menu press the "Entry Menu" button. The following screen will appear:</p>
+            <img src="/DocSources/images/dataEntryManual/geoMenu.png" alt="Geo Menu" width="793" height="219" style="margin-left:100px"/>
+            <p>Once you have pressed the <b>"Add New Place"</b> button this other screen will appear:</p>
+            <img src="/DocSources/images/dataEntryManual/addNewPlace.png" alt="Add New Place Menu" width="793" height="477" style="margin-left:100px"/>
+            <p>As you see, there are three options for adding data to GeoBase; these will be explained in detail in the following section.</p>
+
+<!-- TGN Place Record -->            
+            <h4>TGN Place Record</h4>
+            <p>You may sometimes need to add sites that are already part of the TGN vocabulary but have not yet been transferred to our GeoBase. (This can be the case with places outside of Europe.)  If the place you are looking for exists in the modern world then it will definitely be in the online Getty TGN.  To incorporate the missing information into our GeoBase system, do the following:</p>
+            <ul class="numbers">
+            	<li>Log onto the Internet and go to the Getty TGN search screen at <u><a href="http://www.getty.edu/research/tools/vocabulary/tgn/" target="_blank" style="color:#B7958F">http://www.getty.edu/research/tools/vocabulary/tgn/</a></u><br />
+                Search for the place name within the TGN.  When you find the record on the website, take note of the Placename, the Geogkey number (7 digits) and the name of the Parent place entity for entry into the GeoBase system.</li>
+                <li>Then return to the Add New Place menu, and choose TGN Place Record.</li>
+                <li>Carefully enter the GEOG KEY from the online TGN and then double-check the number which you have entered.  Type the "Place Name", select the Place Type from the pull-down list, and link the place to its "Parent" <font color="#FF0000">by writing it in the text-box.</font></li>
+            </ul>
+
+<!-- MAP Place Record -->            
+            <h4>MAP Place Record</h4>
+            <p>More typically, you will be adding an historic village or hamlet that does not yet exist in the TGN.  In that case, click "MAP Place Records".</p>
+            <ul class="numbers">
+            	<li>Enter the "Place Name" that you wish to add to the system.  For some entries, there may be a principal name and several variants. You can only add the principal, or "Preferred" name to the system on this screen. All variant place names are added by way of the "Name or Name Variants" behind "Place Details".  As we noted, each record is  automatically assigned a unique "GEOGKEY" number; the preferred name version and all variants share the same "Geogkey Number".</li>
+                <li>Enter "Place Type." Most are "Inhabited places"; other possibilities are "abbey", "brook", "canal", "canton", "cape", "castle", "cathedral", "cave", "cemetery", "channel", etc.</li>
+                <li>Write the "Parent Name" in the text box. Begin by typing the first three letters of the "Parent Name" in order to scroll down to the relevant section of the list. The blanks from "Parent" through "GP4 type", representing the more general levels of the TGN hierarchy, will be filled in automatically.  Be sure you are selecting the correct parent, being careful of similar names at different levels of hierarchy, e.g. Firenze the inhabited place vs Firenze the province.</li>
+                <li>Indicate whether there are unresolved issues relevant to this entry that require additional research.</li>
+                <li>Add further notes as necessary.</li>
+            </ul>
+            
+<!-- MAP Sites and Subsites -->            
+            <h4>MAP Sites and Subsites</h4>
+            <p>Sometimes you will be adding "Sites", churches, piazze, fountains and such. In this case, begin by clicking the "MAP Sites and Subsites" button on the Add New Place popup dialogue box. The Sites and Subsites entry form will appear.  Be certain to select the proper "Place Parent". In the case of "Cappella Principi", this is the "Convento San Lorenzo"in "Firenze".</p>
+            <p><i>Note: in order to simplify searches and retrieval, chapels are listed without accompanying prepositions, for example: "Cappella Sacro Cingolo" rather than "Cappella del Sacro Cingolo".</i></p>                        
+                        
+<!-- Place Details -->
+			<p>All geoBase, TGN Place Record, MAP Place Record and MAP Site or Subsite, are composed by the same sections:</p>            
+            <h4>Place Details</h4>
+            <img src="/DocSources/images/dataEntryManual/placeDetails.png" alt="Place details" width="520" height="369" align="left"/>
+            <ul class="numbers">
+            	<li><u>Geog Key:</u> unique 7 digits number</li>
+                <li><u>TGN_TermID:</u></li>
+                <li><u>Place name with no accents:</u></li>
+                <li><u>With accents if required:</u></li>
+                <li><u>Place Type:</u> Most are "Inhabited places"; other possibilities are "abbey", "brook", "canal", "canton", "cape", "castle", "cathedral", "cave", "cemetery", "channel", etc.</li>
+                <li><u>Place Parent:</u> Begin by typing the first letters of the "Parent Name" in order to scroll down to the relevant section of the list. Be sure you are selecting the correct parent, being careful of similar names at different levels of hierarchy, e.g. Firenze the inhabited place vs Firenze the province.</li>
+                <li><u>Place notes:</u></li>
+            </ul>
+            
+<!-- Name or Names variants -->            
+            <h4 style="margin-top:100px">Name or Names variants</h4>
+            <p>While the Preferred Name record for a location is added to GeoBase by way of the "Place Details" section, all Variant Names are added by way of the "Names" section in  GeoBase, which is shown below:</p>
+            <img src="/DocSources/images/dataEntryManual/placeName.png" alt="Place Names" width="520" height="266"/>
+            <p>To add another Variant Name, simply click in the "Add" button and type the new name.</p>            
+        </div>
+	</body>
+</html>
