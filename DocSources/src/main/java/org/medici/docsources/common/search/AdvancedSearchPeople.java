@@ -819,11 +819,11 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 				}
 				if(placeType.get(i).equals("Birth/Death Place")){
 					if(placeId.get(i) > 0){
-						placeIdQuery.append("(bornPlace.placeAllId=");
+						placeIdQuery.append("(bornPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 						placeIdQuery.append(placeId.get(i));
-						placeIdQuery.append(" OR deathPlace.placeAllId=");
+						placeIdQuery.append(") OR deathPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 						placeIdQuery.append(placeId.get(i));
-						placeIdQuery.append(")");
+						placeIdQuery.append("))");
 					}else{
 						placeIdQuery.append("(bornPlace.placeName like '%");
 						placeIdQuery.append(place.get(i).replace("'", "''"));
@@ -833,9 +833,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					}
 				}else if(placeType.get(i).equals("Birth Place")){
 					if(placeId.get(i) > 0){
-						placeIdQuery.append("(bornPlace.placeAllId=");
+						placeIdQuery.append("(bornPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 						placeIdQuery.append(placeId.get(i));
-						placeIdQuery.append(")");
+						placeIdQuery.append("))");
 					}else{
 						placeIdQuery.append("(bornPlace.placeName like '%");
 						placeIdQuery.append(place.get(i).replace("'", "''"));
@@ -843,9 +843,9 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					}
 				}else if(placeType.get(i).equals("Death Place")){
 					if(placeId.get(i) > 0){
-						placeIdQuery.append("(deathPlace.placeAllId=");
+						placeIdQuery.append("(deathPlace.geogKey IN (SELECT geogKey FROM Place WHERE placeAllId=");
 						placeIdQuery.append(placeId.get(i));
-						placeIdQuery.append(")");
+						placeIdQuery.append("))");
 					}else{
 						placeIdQuery.append("(deathPlace.placeName like '%");
 						placeIdQuery.append(place.get(i).replace("'", "''"));
