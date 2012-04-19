@@ -25,8 +25,8 @@
 	        </div>
 	        <div>
 	            <a class="helpIcon" title="Che compressione hanno queste immagini (dafault is 1:1)">?</a>
-	            <form:label for="compressione" path="compressione" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
-				<form:input path="compressione" id="compressione" cssClass="input_4c_disabled" />
+	            <form:label for="compressioneTiff" path="compressioneTiff" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
+				<form:input path="compressioneTiff" id="compressione" cssClass="input_4c_disabled" />
 	        </div>
 	        
 	        <hr />

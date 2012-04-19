@@ -24,7 +24,7 @@
 		</div>
         <div class="row">
 			<div class="item">Compressione</div> 
-			<div class="value60">1:1</div> 
+			<div class="value60">${schedone.compressioneTiff}</div> 
 		</div>
         <div class="row">
 			<div class="item">Numero totale immagini</div> 

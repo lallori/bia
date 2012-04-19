@@ -15,7 +15,7 @@
 	
 	<%-- Loading div when saving the form --%>
 	<div id="loadingDiv"></div>
-	<form:form id="EditEditJpegImagesForm" action="${editJpegImagesSchedoneURL}" method="post" cssClass="edit">
+	<form:form id="EditJpegImagesForm" action="${editJpegImagesSchedoneURL}" method="post" cssClass="edit">
 	    <fieldset>
 	    <legend><b>COMPRESSED IMAGES (JPEGS)</b></legend>
 	        <div style="margin-top:5px">
@@ -25,8 +25,8 @@
 	        </div>
 	        <div>
 	            <a class="helpIcon" title="Che compressione hanno queste immagini (dafault is 1:60)">?</a>
-	            <form:label for="compressione" path="compressione" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
-				<form:input path="compressione" id="compressione" cssClass="input_4c_disabled" />
+	            <form:label for="compressioneJpeg" path="compressioneJpeg" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
+				<form:input path="compressioneJpeg" id="compressione" cssClass="input_4c_disabled" />
 	        </div>
 	        
 	        <hr />
