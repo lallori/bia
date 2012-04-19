@@ -86,6 +86,12 @@
 					<div class="item">Place name</div>
 					<div class="value">${place.placeName}</div>
 				</div>
+				<c:if test="${place.termAccent != place.placeName}">
+					<div class="row">
+						<div style="color: #6D5C4D;display: table-cell;padding: 3px 0;text-align: left;width: 20%;">(with accents)</div>
+						<div class="value">${place.termAccent}</div>
+					</div>
+				</c:if>
 				<div class="row">
 					<div class="item">Place type</div>
 					<div class="value">${place.plType}</div>
