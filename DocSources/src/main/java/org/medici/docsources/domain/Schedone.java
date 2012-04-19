@@ -120,8 +120,6 @@ public class Schedone {
 	private String risoluzione;
 	@Column (name="\"FORMATO\"", length=50)
 	private String formato;
-	@Column (name="\"COMPRESSIONE\"", length=50)
-	private String compressione;
 	@Column (name="\"NOME_FILES\"", length=50)
 	private String nomeFiles;
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_TIFF\"")
@@ -130,18 +128,24 @@ public class Schedone {
 	private Long dimMediaImmaginiTiff;
 	@Column (name="\"DIM_TOTALE_IMMAGINI_TIFF\"")
 	private Long dimTotaleImmaginiTiff;
+	@Column (name="\"COMPRESSIONE_TIFF\"", length=50)
+	private String compressioneTiff;
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_JPEG\"")
 	private Integer numeroTotaleImmaginiJpeg;
 	@Column (name="\"DIM_MEDIA_IMMAGINI_JPEG\"")
 	private Long dimMediaImmaginiJpeg;
 	@Column (name="\"DIM_TOTALE_IMMAGINI_JPEG\"")
 	private Long dimTotaleImmaginiJpeg;
+	@Column (name="\"COMPRESSIONE_JPEG\"", length=50)
+	private String compressioneJpeg;
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_PDF\"")
 	private Integer numeroTotaleImmaginiPdf;
 	@Column (name="\"DIM_MEDIA_IMMAGINI_PDF\"")
 	private Long dimMediaImmaginiPdf;
 	@Column (name="\"DIM_TOTALE_IMMAGINI_PDF\"")
 	private Long dimTotaleImmaginiPdf;
+	@Column (name="\"COMPRESSIONE_PDF\"", length=50)
+	private String compressionePdf;
 	@Column (name="\"RESPONSABILE_FOTORIPRODUZIONE\"", length=50)
 	private String responsabileFotoRiproduzione;
 	@Column (name="\"TIPO_RIPRESA\"", length=50)
@@ -591,6 +595,48 @@ public class Schedone {
 	}
 
 	/**
+	 * @param compressioneJpeg the compressioneJpeg to set
+	 */
+	public void setCompressioneJpeg(String compressioneJpeg) {
+		this.compressioneJpeg = compressioneJpeg;
+	}
+
+	/**
+	 * @return the compressioneJpeg
+	 */
+	public String getCompressioneJpeg() {
+		return compressioneJpeg;
+	}
+
+	/**
+	 * @param compressionePdf the compressionePdf to set
+	 */
+	public void setCompressionePdf(String compressionePdf) {
+		this.compressionePdf = compressionePdf;
+	}
+
+	/**
+	 * @return the compressionePdf
+	 */
+	public String getCompressionePdf() {
+		return compressionePdf;
+	}
+
+	/**
+	 * @param compressioneTiff the compressioneTiff to set
+	 */
+	public void setCompressioneTiff(String compressioneTiff) {
+		this.compressioneTiff = compressioneTiff;
+	}
+
+	/**
+	 * @return the compressioneTiff
+	 */
+	public String getCompressioneTiff() {
+		return compressioneTiff;
+	}
+
+	/**
 	 * @return the formato
 	 */
 	public String getFormato() {
@@ -602,20 +648,6 @@ public class Schedone {
 	 */
 	public void setFormato(String formato) {
 		this.formato = formato;
-	}
-	
-	/**
-	 * @return the compressione
-	 */
-	public String getCompressione() {
-		return compressione;
-	}
-	
-	/**
-	 * @param compressione the compressione to set
-	 */
-	public void setCompressione(String compressione) {
-		this.compressione = compressione;
 	}
 	
 	/**
