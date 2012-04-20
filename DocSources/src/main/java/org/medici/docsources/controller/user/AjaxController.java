@@ -232,7 +232,7 @@ public class AjaxController {
 				resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getDocument().getEntryId()));
 			}  else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
 				singleRow.add(currentUserHistory.getVolume().getMDP());
-				singleRow.add(currentUserHistory.getVolume().getSerieList().toString());
+				singleRow.add((currentUserHistory.getVolume().getSerieList() == null) ? "" : currentUserHistory.getVolume().getSerieList().toString());
 				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getStartYear(), currentUserHistory.getVolume().getStartMonthNum(), currentUserHistory.getVolume().getStartDay()));
 				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getEndYear(), currentUserHistory.getVolume().getEndMonthNum(), currentUserHistory.getVolume().getEndDay()));
 				singleRow.add(currentUserHistory.getVolume().getDigitized().toString());

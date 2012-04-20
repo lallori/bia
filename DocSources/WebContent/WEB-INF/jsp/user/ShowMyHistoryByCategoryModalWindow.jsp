@@ -10,7 +10,24 @@
 		<c:param name="category" value="${command.category}" />
 	</c:url>
 
-	<table cellpadding="0" cellspacing="0" border="0" class="display" id="MyDocumentsHistoryTable">
+	
+	<c:if test="${command.category == 'PEOPLE'}">
+		<div id="myPeopleHistoryTableDiv">
+		<table cellpadding="0" cellspacing="0" border="0" class="display" id="myPeopleHistoryTable" style="width:725px">
+	</c:if>
+	<c:if test="${command.category == 'DOCUMENT'}">
+		<div id="myDocumentsHistoryTableDiv">
+		<table cellpadding="0" cellspacing="0" border="0" class="display" id="myDocumentsHistoryTable" style="width:725px">
+	</c:if>
+	<c:if test="${command.category == 'VOLUME'}">
+		<div id="myVolumeHistoryTableDiv">
+		<table cellpadding="0" cellspacing="0" border="0" class="display" id="myVolumeHistoryTable" style="width:725px">
+	</c:if>
+	<c:if test="${command.category == 'PLACE'}">
+		<div id="myPlaceHistoryTableDiv">
+		<table cellpadding="0" cellspacing="0" border="0" class="display" id="myPlaceHistoryTable" style="width:725px">
+	</c:if>
+<!-- 	<table cellpadding="0" cellspacing="0" border="0" class="display" id="MyDocumentsHistoryTable"> -->
 		<thead>
 			<tr></tr>
 		</thead>
@@ -20,6 +37,7 @@
 			</tr>
 		</tbody>
 	</table>
+	</div>
 	
 	<div id="MyHistoryButtons">
 	    <a id="closeMyHistory" href="#" title="Close My History window">Close</a>
@@ -29,10 +47,116 @@
 	<script type="text/javascript" charset="utf-8">                                                           
 			$j(document).ready(function() {                                                                       
 				//dynamic field management
-				$j("#MyDocumentsHistoryTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
-
-				$j('#MyDocumentsHistoryTable').dataTable( {                                                             
-					"aoColumnDefs": [ { "sWidth": "90%", "aTargets": [ "_all" ] }],    
+				//$j("#MyDocumentsHistoryTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+				
+				<c:choose>
+					<c:when test="${command.category == 'PEOPLE'}">
+						$j("#myPeopleHistoryTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+						$j('#myPeopleHistoryTable').dataTable( {                                                             
+							"bAutoWidth" : false,
+							"aoColumns" : [
+											{ sWidth : "40px" },
+											{ sWidth : "40px" },
+											{ sWidth : "170px" },
+											{ sWidth : "80px" },
+											{ sWidth : "80px" },
+											],
+							"bDestroy" : true,  
+							"bFilter" : false,
+							"bLengthChange": false,                                                                          
+							"bProcessing": true,                                                                          
+							"bServerSide": true,                                                                          
+							"iDisplayLength": 10,                                                                         
+							"iDisplayStart": 0,                                                                           
+							"oSearch": {"sSearch": ""},                                                                   
+							"sAjaxSource": "${MyHistoryPaginationURL}",                                           
+							"sDom": 'T<"clear">lfrtip',                                                                   
+							"sPaginationType": "full_numbers", 
+							"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+								/* Add some extra data to the sender */                                                   
+								aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+								$j.getJSON( sSource, aoData, function (json) {                                            
+									/* Do whatever additional processing you want on the callback, then tell DataTables */
+									fnCallback(json)                                                                      
+								} );                                                                                      
+							}                                                                                             
+						} );
+					</c:when>
+					<c:when test="${command.category == 'DOCUMENT'}">
+						$j("#myDocumentsHistoryTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+						$j('#myDocumentsHistoryTable').dataTable( {                                                             
+							"bAutoWidth" : false,
+							"aoColumns" : [
+										{ sWidth : "40px" },
+										{ sWidth : "40px" },
+										{ sWidth : "50px" },
+										{ sWidth : "150px" },
+										{ sWidth : "150px" },
+										],
+							"bDestroy" : true,  
+							"bFilter" : false,
+							"bLengthChange": false,                                                                          
+							"bProcessing": true,                                                                          
+							"bServerSide": true,                                                                          
+							"iDisplayLength": 10,                                                                         
+							"iDisplayStart": 0,                                                                           
+							"oSearch": {"sSearch": ""},                                                                   
+							"sAjaxSource": "${MyHistoryPaginationURL}",                                           
+							"sDom": 'T<"clear">lfrtip',                                                                   
+							"sPaginationType": "full_numbers", 
+							"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+								/* Add some extra data to the sender */                                                   
+								aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+								$j.getJSON( sSource, aoData, function (json) {                                            
+									/* Do whatever additional processing you want on the callback, then tell DataTables */
+									fnCallback(json)                                                                      
+								} );                                                                                      
+							}                                                                                             
+						} );	
+					</c:when>
+					<c:when test="${command.category == 'VOLUME'}">
+					$j("#myVolumeHistoryTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+					$j('#myVolumeHistoryTable').dataTable( {                                                             
+						"bAutoWidth" : false,
+						"aoColumns" : [
+									{ sWidth : "40px" },
+									{ sWidth : "40px" },
+									{ sWidth : "60px" },
+									{ sWidth : "170px" },
+									{ sWidth : "80px" },
+									{ sWidth : "80px" }
+									],
+						"bDestroy" : true,  
+						"bFilter" : false,
+						"bLengthChange": false,                                                                          
+						"bProcessing": true,                                                                          
+						"bServerSide": true,                                                                          
+						"iDisplayLength": 10,                                                                         
+						"iDisplayStart": 0,                                                                           
+						"oSearch": {"sSearch": ""},                                                                   
+						"sAjaxSource": "${MyHistoryPaginationURL}",                                           
+						"sDom": 'T<"clear">lfrtip',                                                                   
+						"sPaginationType": "full_numbers", 
+						"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+							/* Add some extra data to the sender */                                                   
+							aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+							$j.getJSON( sSource, aoData, function (json) {                                            
+								/* Do whatever additional processing you want on the callback, then tell DataTables */
+								fnCallback(json)                                                                      
+							} );                                                                                      
+						}                                                                                             
+					} );	
+				</c:when>
+				<c:when test="${command.category == 'PLACE'}">
+				$j("#myPlaceHistoryTable > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
+				$j('#myPlaceHistoryTable').dataTable( {                                                             
+					"bAutoWidth" : false,
+					"aoColumns" : [
+									{ sWidth : "40px" },
+									{ sWidth : "40px" },
+									{ sWidth : "330px" },
+									{ sWidth : "120px" },
+									],
 					"bDestroy" : true,  
 					"bFilter" : false,
 					"bLengthChange": false,                                                                          
@@ -52,7 +176,34 @@
 							fnCallback(json)                                                                      
 						} );                                                                                      
 					}                                                                                             
-				} );                                                                                              
+				} );
+			</c:when>
+			</c:choose>
+
+// 				$j('#MyDocumentsHistoryTable').dataTable( {                                                             
+// 					"aoColumnDefs": colDef,
+// 					"bAutoWidth" : false,
+// 					"aoColumns" : col,
+// 					"bDestroy" : true,  
+// 					"bFilter" : false,
+// 					"bLengthChange": false,                                                                          
+// 					"bProcessing": true,                                                                          
+// 					"bServerSide": true,                                                                          
+// 					"iDisplayLength": 10,                                                                         
+// 					"iDisplayStart": 0,                                                                           
+// 					"oSearch": {"sSearch": ""},                                                                   
+// 					"sAjaxSource": "${MyHistoryPaginationURL}",                                           
+// 					"sDom": 'T<"clear">lfrtip',                                                                   
+// 					"sPaginationType": "full_numbers", 
+// 					"fnServerData": function ( sSource, aoData, fnCallback ) {                                    
+// 						/* Add some extra data to the sender */                                                   
+// 						aoData.push( { "name": "more_data", "value": "xxx" } );                                   
+// 						$j.getJSON( sSource, aoData, function (json) {                                            
+// 							/* Do whatever additional processing you want on the callback, then tell DataTables */
+// 							fnCallback(json)                                                                      
+// 						} );                                                                                      
+// 					}                                                                                             
+// 				} );                                                                                              
 																												  
 				// We need to remove any previous live function                                                   
 				$j('.searchResult').die();                                                                        

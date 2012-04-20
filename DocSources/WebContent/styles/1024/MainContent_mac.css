@@ -33,11 +33,6 @@ input, select { /* INPUT text */
 	font-size:12px;
 }
 
-#digitizationModule, #administrationModule {
-	margin-top: 7px;
-	font-size: 11px;
-}
-
 #top_bottom p{ /* top_bottom (Who am I?) */
 	margin-top:6px;
 	font-size:11px;
@@ -77,12 +72,6 @@ a {
 /* ----------------- TITLES ------------------------------- */ 
 
 
-h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
-	font-size:12px;
-	padding:0 0 5px 10px;
-	color:#6F6B69;
-}
-
 h5 {
 	font-size:12px;
 }
@@ -100,29 +89,20 @@ h5 {
 	margin-left:14px;
 }
 
-
 #buttonShareLink { /* Share/Link Button */
 	padding:3px 0 0 0;
-	right:52px;
-	font-size:11px;
 }
 
 #menuActions { /* Actions Menu Button */
 	padding: 3px 0 0;
-	right:126px;
-	font-size:11px;
 }
 
 #vettingHistory { /* Actions Menu Button */
 	padding:3px 0 0 0;
-	right:200px;
-	font-size:11px;
 }
 
 #showComments { /* Actions Menu Button */
 	padding:3px 0 0 0;
-	right:312px;
-	font-size:11px;
 }
 
 
@@ -697,23 +677,23 @@ a.showDigitizedDocument{
 
 /* Schedone details */
 #dimensioniBaseLabel {
-	margin-right: 27px;
+	margin-right: 21px;
 }
 
 #dimensioniAltezzaLabel {
-	margin-right:16px;
+	margin-right:9px;
 }
 
 #carteMancantiLabel {
-	margin-right: 31px;
+	margin-right: 28px;
 }
 
 #cartulazioneLabel {
-	margin-right: 45px;
+	margin-right: 43px;
 }
 
 #supportoLabel {
-	margin-right: 62px;
+	margin-right: 60px;
 }
 
 #legaturaLabel {
@@ -721,7 +701,7 @@ a.showDigitizedDocument{
 }
 
 #dateEstremeLabel {
-	margin-right: 43px;
+	margin-right: 41px;
 }
 
 #unitaLabel {
@@ -729,27 +709,35 @@ a.showDigitizedDocument{
 }
 
 #serieLabel {
-	margin-right: 84px;
+	margin-right: 82px;
+}
+
+#numeroUnitaLabel {
+	margin-right:63px;
 }
 
 #fondoLabel {
-	margin-right: 77px;
+	margin-right: 75px;
 }
 
 #istitutoLabel {
-	margin-right: 72px;
+	margin-right: 70px;
 }
 
 #tipoRipresaLabel {
-	margin-right: 36px;
+	margin-right: 33px;
 }
 
 #coloreImmagineLabel {
-	margin-right: 24px;
+	margin-right: 20px;
 }
 
 #risoluzioneLabel {
-	margin-right: 52px;
+	margin-right: 49px;
+}
+
+#responsabileFotoRiproduzioneLabel {
+	margin-right:30px;
 }
 
 #daRipresaLabel {
@@ -768,15 +756,15 @@ a.showDigitizedDocument{
 
 
 #numeroImmaginiLabel {
-	margin-right: 88px;
+	margin-right: 80px;
 }
 
 #dimensioneMediaImmaginiLabel {
-	margin-right: 69px;
+	margin-right: 58px;
 }
 
 #dimensioneTotaleImmaginiLabel {
-	margin-right: 70px;
+	margin-right: 60px;
 }
 
 /* ------------------------------------ ADD NEW DIGITIZED VOLUME ------------------------------------ */

@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.controller.docbase;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,6 +166,12 @@ public class AjaxController {
 	@RequestMapping(value = "/de/docbase/SearchPersonLinkableToDocument", method = RequestMethod.GET)
 	public ModelAndView searchPersonLinkableToDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try{
+			query = new String(query.getBytes(), "UTF-8");
+		}catch(UnsupportedEncodingException e){
+			
+		}
 
 		try {
 			//<!-- Autocomplete (SELECT [tblPeople].[MAPnameLF], [tblPeople].[ACTIVESTART], [tblPeople].[BYEAR], [tblPeople].[DYEAR] FROM tblPeople ORDER BY [MAPnameLF];) -->
@@ -197,6 +204,12 @@ public class AjaxController {
 	@RequestMapping(value = "/de/docbase/SearchPlaceLinkableToTopicDocument", method = RequestMethod.GET)
 	public ModelAndView searchPlaceLinkableToTopicDocument(@RequestParam("entryId") Integer entryId, @RequestParam("query") String query) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try{
+			query = new String(query.getBytes(), "UTF-8");
+		}catch(UnsupportedEncodingException e){
+			
+		}
 
 		try {
 			List<Place> places = getDocBaseService().searchPlaceLinkableToTopicDocument(entryId, query);
