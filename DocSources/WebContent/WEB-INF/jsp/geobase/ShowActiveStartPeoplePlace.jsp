@@ -8,7 +8,8 @@
 	<c:url var="ShowActiveStartPeoplePlaceURL" value="/de/geobase/ShowActiveStartPeoplePlace.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Active Start in "${placeNameFull}"
+		<p>Active Start in <font color="red" style="margin-left: 5px">"${placeNameFull}"</font></p>
+		<p>Total record found: <span id="activeStartIn${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showActiveStartPeoplePlaceAllId${placeAllId}">
@@ -50,6 +51,8 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
+					$j("#activeStartIn${placeAllId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');

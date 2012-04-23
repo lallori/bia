@@ -8,6 +8,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Senders From <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
+		<p>Total record found: <span id="senderFrom${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showSenderDocumentsPlaceAllId${placeAllId}">
@@ -49,6 +50,8 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
+					$j("#senderFrom${placeAllId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');

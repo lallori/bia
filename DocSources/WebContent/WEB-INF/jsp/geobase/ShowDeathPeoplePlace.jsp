@@ -8,7 +8,8 @@
 	<c:url var="ShowDeathPeoplePlaceURL" value="/de/geobase/ShowDeathPeoplePlace.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Death in "${placeNameFull}"
+		<p>Death in <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
+		<p>Total record found: <span id="deathIn${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showDeathPeoplePlaceAllId${placeAllId}">
@@ -50,6 +51,8 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
+					$j("#deathIn${placeAllId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');

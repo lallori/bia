@@ -7,7 +7,8 @@
 	<c:url var="ShowTopicsRelatedDocumentURL" value="/de/docbase/ShowTopicsRelatedDocument.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Documents indexed with topic: <font color="red">"${topicTitle}"</font>
+		<p>Documents indexed with topic: <font color="red" style="margin-left:5px">"${topicTitle}"</font></p>
+		<p>Total record found: <span id="docIndexedWith${topicId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showTopicsId${topicId}">
@@ -49,6 +50,8 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
+					$j("#docIndexedWith${topicId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');

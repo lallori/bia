@@ -8,7 +8,8 @@
 	<c:url var="ShowBirthPeoplePlaceURL" value="/de/geobase/ShowBirthPeoplePlace.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		Birth in "${placeNameFull}"
+		<p>Birth in <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
+		<p>Total record found: <span id="birthIn${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showBirthPeoplePlaceAllId${placeAllId}">
@@ -50,6 +51,8 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
+					$j("#birthIn${placeAllId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					
 					$j("tr.odd").mouseover(
 							function(){
 								$j(this).find("td.sorting_1").css('background-color','#b0addd');
