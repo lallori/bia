@@ -21,7 +21,7 @@
 	        <div style="margin-top:5px">
 	            <a class="helpIcon" title="The instutition this digital collection belongs to">?</a>
 	            <form:label for="istituto" path="istituto" id ="istitutoLabel" cssErrorClass="error" title="Istituto">Istituto</form:label>
-				<form:input path="istituto" id="istituto" cssClass="input_29c" />
+				<form:input path="istituto" id="istituto" cssClass="input_29c" value="Archivio di Stato di Firenze" />
 	        </div>
 	        <div>
 	            <a class="helpIcon" title="Archival corpus that this Schedone belongs to">?</a>
