@@ -33,6 +33,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.Term;
@@ -268,15 +269,21 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		if(placesName.size() > 0){
 			StringBuffer placesNameQuery = new StringBuffer("(");
 			for(int i = 0; i < placesName.size(); i++){
+				String wordsSinglePlaceNames[] = StringUtils.split(placesName.get(i), " ");
 				if(placesNameQuery.length() > 1){
 					placesNameQuery.append(" AND ");
 				}
-				placesNameQuery.append("((placeNameFull like '%");
-				placesNameQuery.append(placesName.get(i).toLowerCase().replace("'", "''"));
-				placesNameQuery.append("%') or ");
-				placesNameQuery.append("(termAccent like '%");
-				placesNameQuery.append(placesName.get(i).toLowerCase().replace("'", "''"));
-				placesNameQuery.append("%'))");
+				for(int j = 0; j < wordsSinglePlaceNames.length; j++){
+					placesNameQuery.append("((placeNameFull like '%");
+					placesNameQuery.append(wordsSinglePlaceNames[j].toLowerCase().replace("'", "''"));
+					placesNameQuery.append("%') or ");
+					placesNameQuery.append("(termAccent like '%");
+					placesNameQuery.append(wordsSinglePlaceNames[j].toLowerCase().replace("'", "''"));
+					placesNameQuery.append("%'))");
+					if(j < (wordsSinglePlaceNames.length - 1)){
+						placesNameQuery.append(" AND ");
+					}
+				}
 			}
 			placesNameQuery.append(")");
 			if(!placesNameQuery.toString().equals("")){

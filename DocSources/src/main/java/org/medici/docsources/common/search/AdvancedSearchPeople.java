@@ -635,22 +635,33 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		if(names.size() > 0){
 			StringBuffer namesQuery = new StringBuffer("(");
 			for(int i = 0; i < names.size(); i++){
+				String [] wordsSingleNames = StringUtils.split(names.get(i), " ");
 				if(namesQuery.length() > 1){
 					namesQuery.append(" AND ");
 				}
 				if(namesTypes.get(i).equals(NameType.AllNameTypes)){
-					namesQuery.append("(mapNameLf like '%");
-					namesQuery.append(names.get(i).toLowerCase().replace("'", "''"));
-					namesQuery.append("%' OR ");
-					namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
-					namesQuery.append(names.get(i).toLowerCase().replace("'", "''"));
-					namesQuery.append("%')))");
+					for(int j = 0; j < wordsSingleNames.length; j++){
+						namesQuery.append("(mapNameLf like '%");
+						namesQuery.append(wordsSingleNames[j].toLowerCase().replace("'", "''"));
+						namesQuery.append("%' OR ");
+						namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
+						namesQuery.append(wordsSingleNames[j].toLowerCase().replace("'", "''"));
+						namesQuery.append("%')))");
+						if( j < (wordsSingleNames.length - 1)){
+							namesQuery.append(" AND ");
+						}
+					}
 				}else{
-					namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
-					namesQuery.append(names.get(i).toLowerCase().replace("'", "''"));
-					namesQuery.append("%' AND nameType like '");
-					namesQuery.append(namesTypes.get(i).toString().toLowerCase());
-					namesQuery.append("'))");
+					for(int j = 0; j < wordsSingleNames.length; j++){
+						namesQuery.append("(personId IN (SELECT person.personId FROM AltName WHERE altName like '%");
+						namesQuery.append(wordsSingleNames[j].toLowerCase().replace("'", "''"));
+						namesQuery.append("%' AND nameType like '");
+						namesQuery.append(namesTypes.get(i).toString().toLowerCase());
+						namesQuery.append("'))");
+						if(j < (wordsSingleNames.length - 1)){
+							namesQuery.append(" AND ");
+						}
+					}
 				}
 			}
 			namesQuery.append(")");
