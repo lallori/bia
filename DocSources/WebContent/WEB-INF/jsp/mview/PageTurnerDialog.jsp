@@ -105,10 +105,10 @@
 		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">This document has already been transcribed</a>
 		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green">This document has been entered but not transcribed</font>
-		<a id="extractTranscribe" href="#" style="visibility: hidden;" title="Transcribe extract" class="transcribe">Transcribe this document</a>
-		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden;" class="transcribe">Show this document record</a>
-		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Transcribe this document</a>
-		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden;">Choose this as "Start folio"</a>
+		<a id="extractTranscribe" href="#" style="visibility: hidden; cursor: pointer;" title="Transcribe extract" class="transcribe">Transcribe this document</a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden; cursor: pointer" class="transcribe">Show this document record</a>
+		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Transcribe this document</a>
+		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Choose this as "Start folio"</a>
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
 	</div>
 	</security:authorize>	  
@@ -138,12 +138,12 @@
 	
 	<c:if test="${command.totalRubricario > 0}">
 		<div>
-    		<a id="indexNames" href="${indexOfNamesURL}" class="transcribe" title="Index of Names"></a>
+    		<a id="indexNames" href="${indexOfNamesURL}" class="transcribe" title="Index of Names" style="cursor: pointer;"></a>
     	</div>
     </c:if>
 
 	<div>
-		<a id="volumeSummary" href="${VolumeSummaryDialogURL}" class="transcribe" title="Volume Summary"></a>
+		<a id="volumeSummary" href="${VolumeSummaryDialogURL}" class="transcribe" title="Volume Summary" style="cursor: pointer;"></a>
 	</div>
 
 	<div id="line" class="transcribe"></div>
@@ -171,11 +171,11 @@
 	<div id="line2" class="transcribe"></div>
 	
 	<div id="personalNotesDiv">
-		<a id="personalNotesButton" href="#" class="transcribe" title="Personal Notes"></a>
+		<a id="personalNotesButton" href="#" class="transcribe" title="Personal Notes" style="cursor: pointer;"></a>
 	</div>
 	
 	<div id="exitDiv">
-		<a id="exitButton" href="#" class="transcribe" onClick="$j('#exit').dialog('open');">Exit</a>
+		<a id="exitButton" href="#" class="transcribe" onClick="$j('#exit').dialog('open');" style="cursor: pointer;">Exit</a>
 	</div>
 </div>
 

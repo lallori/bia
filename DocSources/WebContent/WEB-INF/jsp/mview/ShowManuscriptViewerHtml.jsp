@@ -6,6 +6,8 @@
 
 	<c:url var="IIPImageServerURL" value="/mview/IIPImageServer.do"/>
 	<c:url var="ImagePrefixURL" value="/images/mview/"/>
+	<!-- If the image is not present -->
+	<c:url var="TestImageURL" value="/images/" />
 	
 		<script type="text/javascript">
 				var credit = '';	
@@ -60,7 +62,7 @@
             	else {
             		var credit = ' ';
             	}
-			
+			if("${image}" != 'null/MDP/notPresent'){
 			iip = new IIPMooViewer( "targetframe", {
 				server: '${IIPImageServerURL}',
 				prefix: '${ImagePrefixURL}',
@@ -74,5 +76,20 @@
 				zoom: 2,
 				scale: 0
 			});				
+			}else{
+				iip = new IIPMooViewer( "targetframe", {
+					server: '${IIPImageServerURL}',
+					prefix: "${TestImageURL}",
+					image: '1/0005_SPI.tif',
+					credit: credit,
+					navigation: true,
+					showNavWindow: true,
+					showNavImage: true, // this property hide navigation image
+					showNavButtons: true,
+					winResize: true,
+					zoom: 2,
+					scale: 0
+			});
+			}
 
 		</script>
