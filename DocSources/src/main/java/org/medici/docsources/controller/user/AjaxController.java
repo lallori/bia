@@ -235,7 +235,10 @@ public class AjaxController {
 				singleRow.add((currentUserHistory.getVolume().getSerieList() == null) ? "" : currentUserHistory.getVolume().getSerieList().toString());
 				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getStartYear(), currentUserHistory.getVolume().getStartMonthNum(), currentUserHistory.getVolume().getStartDay()));
 				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getEndYear(), currentUserHistory.getVolume().getEndMonthNum(), currentUserHistory.getVolume().getEndDay()));
-				singleRow.add(currentUserHistory.getVolume().getDigitized().toString());
+				if(currentUserHistory.getVolume().getDigitized().equals(Boolean.TRUE))
+					singleRow.add("YES");
+				else
+					singleRow.add("NO");
 				resultList.add(HtmlUtils.showVolume(singleRow, currentUserHistory.getVolume().getSummaryId()));
 			} else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 				singleRow.add(currentUserHistory.getPlace().getPlaceNameFull());
@@ -297,7 +300,11 @@ public class AjaxController {
 		   } else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
 			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   	singleRow.add(currentUserHistory.getAction().toString());
-			   	singleRow.add(currentUserHistory.getPerson().getMapNameLf());
+			   	//MD:This code is for prevent a string too long.
+			   	if(currentUserHistory.getPerson().getMapNameLf().length() < 40)
+			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf());
+			   	else
+			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf().substring(0, 37) + "...");
 			    resultList.add(HtmlUtils.showPeople(singleRow, currentUserHistory.getPerson().getPersonId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
