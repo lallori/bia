@@ -225,6 +225,9 @@ public class DocBaseServiceImpl implements DocBaseService {
 		try {
 			epLink.setEpLinkId(null);
 			epLink.setDateCreated(new Date());
+			
+			epLink.setDocument(getDocumentDAO().find(epLink.getDocument().getEntryId()));
+			epLink.setPerson(getPeopleDAO().find(epLink.getPerson().getPersonId()));
 
 			getEpLinkDAO().persist(epLink);
 
@@ -430,8 +433,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 						epLinkSender = new EpLink(null);
 						epLinkSender.setDateCreated(new Date());
 						epLinkSender.setDocRole("S");
-						epLinkSender.setDocument(new Document(documentToUpdate.getEntryId()));
-						epLinkSender.setPerson(new People(sender.getPersonId()));
+						epLinkSender.setDocument(documentToUpdate);
+						epLinkSender.setPerson(getPeopleDAO().find(sender.getPersonId()));
 						epLinkSender.setAssignUnsure(false);
 						epLinkSender.setPortrait(false);
 						getEpLinkDAO().persist(epLinkSender);
@@ -485,7 +488,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 						epLinkSender.setDateCreated(new Date());
 						epLinkSender.setDocRole("R");
 						epLinkSender.setDocument(documentToUpdate);
-						epLinkSender.setPerson(recipient);
+						epLinkSender.setPerson(getPeopleDAO().find(recipient.getPersonId()));
 						epLinkSender.setAssignUnsure(false);
 						epLinkSender.setPortrait(false);
 						getEpLinkDAO().persist(epLinkSender);
