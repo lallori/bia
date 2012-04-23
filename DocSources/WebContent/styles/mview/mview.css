@@ -52,6 +52,7 @@ html version
 	width:35px;
 	height:22px;
 	font-size:11px;
+	cursor: pointer;
 }
 
 #EditPersonalNotesDiv #nextButton a {
@@ -204,7 +205,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #indexNames.transcribe { /* Index of Names button on Page Turner Pannel */
-	margin: 43px 0 0 328px;
+	margin: 42px 0 0 328px;
 }
 
 #indexNames:hover { /* Index of Names button on Rollover */

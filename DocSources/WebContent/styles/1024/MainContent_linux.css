@@ -90,17 +90,21 @@ a {
 /* ---------------------------------------- SEARCH FORM (#top_top) --------------------------------------- */
 
 #search { /* Search button */
-	margin-top:-1px;
+	padding:0;
+}
+
+#simpleSearchPerimeter {
+	width:152px;
 }
 
 a.helpIcon  {
-    -moz-border-radius: 10px 10px 10px 10px;
-    padding-left: 6px;
-    padding-right: 6px;
+    -moz-border-radius: 13px 13px 13px 13px;
+	padding:2px 5px 0 5px;
+	border-radius:13px;
 }
 
 #text {
-	width:167px;
+	width:186px;
 	font-size:12px;
 }
 
@@ -121,7 +125,7 @@ a.helpIcon  {
 }
 
 #top_bottom p{ /* top_bottom (Who am I?) */
-	margin-top:4px;
+	margin-top:5px;
 	font-size:11px;
 }
 
@@ -147,18 +151,6 @@ table, table.display thead th {
 /* -------------------------------------------------------------------- MainContent.css ------------------------------------------------------------------------------- 
  *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-/* ----------------- TITLES ------------------------------- */ 
-
-h4{ /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
-	font-size:12px;
-	padding:0 0 5px 10px;
-}
-
-h5{ /* Data Entry main fields Title */
-	font-size:12px;
-}
-
 /* -------------- TOP RECORD MENU -------------------------- */ 
 
 #createdby { /* "Created by ..." Title in ADD NEW DOCUMENT, ADD NEW PERSON, ADD NEW VOLUME */
@@ -166,28 +158,24 @@ h5{ /* Data Entry main fields Title */
 }
 
 #buttonShareLink { /* Share/Link Button */
-	right:49px;
     font-size:11px;
-	padding:1px 0 0 0;
+	padding:2px 0 0 0;
 }
 
 #menuActions { /* Actions Menu Button */
 	font-size:11px;
-	padding: 1px 0 0;
-	right:119px;
+	padding: 2px 0 0;
 }
 
 #vettingHistory { /* Actions Menu Button */
 	font-size:11px;
-	padding:1px 0 0 0;
-	right:188px;
+	padding:2px 0 0 0;
 }
 
 #showComments { /* Actions Menu Button */
 	background:url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
 	font-size:11px;
-	padding:1px 0 0 0;
-	right:295px;
+	padding:2px 0 0 0;
 }
 
 
@@ -273,8 +261,16 @@ input, select, textarea {
 /*
 /* ----- EditCorrespondentsDocument ----- */
 
-#senderPlaceDescriptionLabel, #recipientPlaceDescriptionLabel  {
-	margin-left:18px;
+#EditCorrespondentsOrPeopleDocumentForm .personIcon, #EditCorrespondentsOrPeopleDocumentForm .placeIcon, #EditCorrespondentsOrPeopleDocumentForm #personIcon {
+	margin:5px 0 0 5px;
+}
+
+#senderPlaceDescriptionLabel {
+	margin-left:24px;
+}
+
+#recipientPlaceDescriptionLabel  {
+	margin-left:44px;
 }
 
 #senderPeopleDescriptionLabel {
@@ -286,7 +282,7 @@ input, select, textarea {
 /* ------------------------- TOPICS ------------------------- */
 
 #topicLabel {
-	margin-right:27px;
+	margin-right:37px;
 }
 
 /* -------------------------------------- */
@@ -300,7 +296,7 @@ input, select, textarea {
 
 
 #sucNumLabel {
-	margin-left:39px;
+	margin-left:0;
 }
 
 #midPrefixLabel {
@@ -308,7 +304,7 @@ input, select, textarea {
 }
 
 #middleLabel {
-	margin-left:63px;
+	margin-left:28px;
 }
 
 #lastPrefixLabel {
@@ -316,7 +312,7 @@ input, select, textarea {
 }
 
 #lastLabel {
-	margin-left:52px;
+	margin-left:18px;
 }
 
 #postLastPrefixLabel {
@@ -328,11 +324,11 @@ input, select, textarea {
 }
 
 #postLastLabel {
-	margin-left:62px;
+	margin-left:29px;
 }
 
 #genderLabel {
-	margin-left:19px;
+	margin-left:15px;
 }
 
 #bornYearLabel {
@@ -340,27 +336,27 @@ input, select, textarea {
 }
 
 #bornPlaceDescriptionLabel, #deathPlaceDescriptionLabel {
-	margin-left:68px;
+	margin-left:66px;
 }
 
 #midPrefixLabel {
-	margin-left:24px;
+	margin-left:26px;
 }
 
 #activeStartLabel{
-	margin-left:38px;
+	margin-left:25px;
 }
 
 #activeEndLabel {
-	margin-left:41px;
+	margin-left:31px;
 }
 
 #linkLabel  {
-	margin-left: 26px;
+	margin-left: 5px;
 }
 
 #browseLabel {
-	margin-left: 60px;
+	margin-left: 50px;
 }
 
 /* -------------------------------------- */
@@ -368,7 +364,6 @@ input, select, textarea {
 /* ---------- EditNamesPerson ----------- */
 
 a#editValue, .editValue { /* "Edit Value" Button */
-	font-size:12px;
 	margin-left:42px;
 }
 
@@ -377,7 +372,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 /* ----- EditTitleOccupationsPerson ----- */
 
 #father {
-	margin-left:12px;
+	margin-left:22px;
 }
 
 #wifeDescriptionLabel {
@@ -385,19 +380,15 @@ a#editValue, .editValue { /* "Edit Value" Button */
 }
 
 #bornYearLabel {
-	margin-left:36px;
+	margin-left:25px;
 }
 
 #deathYearLabel {
-	margin-left:33px;
+	margin-left:20px;
 }
 
 #deathMonthLabel, #deathDayLabel, #bornMonthLabel, #bornDayLabel {
-	margin-left:28px;
-}
-
-a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a {
-	font-size:12px;
+	margin-left:15px;
 }
 
 /* -------------------------------------- */
@@ -406,7 +397,6 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 
 .buttonMedium { /* Clik here to edit this person */
 	margin: 2px 0 0 364px;
-	font-size:12px;
 }
 
 /* -------------------------------------- */
@@ -423,7 +413,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #volNumLabel {
-	margin-left:115px;
+	margin-left:75px;
 }
 
 #EditDetailsVolumeForm #volLeTextLabel {
@@ -431,11 +421,11 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #EditDetailsVolumeForm #startMonthNumLabel {
-	margin-left:24px;
+	margin-left:0;
 }
 
 #startDayLabel {
-	margin-left:31px;
+	margin-left:0;
 }
 
 #EditDetailsVolumeForm #endYearLabel {
@@ -443,46 +433,46 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #EditDetailsVolumeForm #endMonthNumLabel {
-    margin-left: 27px;
+    margin-left: 9px;
 }
 
 #EditDetailsVolumeForm #endDayLabel {
-    margin-left: 33px;
+    margin-left: 6px;
 }
 
 
 /* ------------- EditDescriptionVolume ------------- */
 
 #conditionLabel {
-	margin-left: 47px;
+	margin-left: 33px;
 }
 
 #boundLabel {
-	margin-left: 62px;
+	margin-left: 54px;
 }
 
 #folsNumbrdLabel {
-	margin-left: 95px;
+	margin-left: 69px;
 }
 
 #folioCountLabel {
-	margin-left: 38px;
+	margin-left: 23px;
 }
 
 #oldAlphaIndexLabel {
-	margin-left: 61px;
+	margin-left: 39px;
 }
 
 #printedMaterialLabel {
-	margin-left: 22px;
+	margin-left: 0;
 }
 
 #printedDrawingsLabel {
-	margin-left:101px;
+	margin-left:66px;
 }
 
 #italianLabel, #spanishLabel {
-	margin-left:82px;
+	margin-left:73px;
 }
 
 #latinLabel {
@@ -499,33 +489,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	margin:5px 5px 0 0;
 }
 
-#folioCountForm { /* "Folio Count" FORM */
-	font-size:12px;
-}
-
-.folioLabel { /* "Move to folio" <label> ID  */
-	font-size: 12px;
-}
-
 
 /* ------------- ShowVolumeExplorer ------------- */
-
-
-#go { /* "Move to rubricario" <input> GO button ID  */
-	font-size:12px;
-}
-
-.showFullscreenMode { 
-	font-size:12px;
-}
-
-a#volumeSummary {
-	font-size:12px;
-}
-
-a.refreshVolumeExplorer {
-	font-size:12px;
-}
 
 /*  Modal Box with Comunity Comments */
 
@@ -538,40 +503,43 @@ a.refreshVolumeExplorer {
 /*
 /* -- modal Window -- */
 
-#createPlace h1, #createPlace p, #createPlace #tgnPlace #AddNewTgnPlace, #createPlace #tgnPlace p, #createPlace #mapPlace #AddNewMapPlace, #createPlace #mapPlace p, #createPlace #mapSite #AddNewMapSitePlace, #createPlace #mapSite p{
-	font-size:12px;
-}
-
 #notes {
-        margin:270px 0 0 185px;
-}
-
-#notes a, #notes p {
-        font-size:12px;
-}
-
-#createPlace #goBack {
-         font-size:12px;
+        margin:270px 0 0 140px;
 }
 
 #geoDiv h4{
 	padding-top: 7px;
 }
 
+/* Input positions */
+
 #nameWithAccentsLabel {
-	margin-left:53px;
+	margin-left:6px;
 }
 
 #nameNoAccentsLabel {
-	margin-left:103px;
+	margin-left:86px;
+}
+
+#placeParentLabel {
+	margin-left:5px;
 }
 
 #tgnTermIDLabel {
-	margin-left:25px;
+	margin-left:0;
 }
 
+#latitudeGeoLabel {
+	margin-left:10px;
+}
 
-/* Input positions */
+#EditGeoCoorTgnPlaceForm #gettyTgn  {
+	margin: -5px 0 0 10px;
+}
+
+#EditGeoCoorTgnPlaceForm #googleMaps {
+	margin: -5px 0 0 142px;
+}
 
 #countryLabel {
 	margin-left:57px;
@@ -613,67 +581,33 @@ a.refreshVolumeExplorer {
 	margin-left:35px;
 }
 
-#advancedSearch #body_right { /* RIGHT-hand side of the SCREEN */
-	font-size:12px;
-}
-
-#advancedSearch #body_left a{
-	font-size:12px;
-}
-
-.ui wirdget input {
-        font-size:12px;
-}
-
 
 /* -------- Custom Search Filter (body_left) --------- */
 
-#accordion #addSearchFilter { /* Add button */
-	font-size:12px;
-}
 
 #personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #referstoSearchForm #addSearchFilter {
 	padding:2px 0 0 ;
     margin-left:32px;
 }
 
-#tooltip h1	{
-	font-size:12px;
-}
-
-#customSearchFilterDiv span {
-    font-size:12px;
-}
-
 #advancedSearch #body_left a.helpIcon, #advancedSearch #body_right a.helpIcon, #vettingHisttoryDiv a.helpIcon,  #EditTopicsDocumentForm a.helpIcon, #body_left a.helpIcon{ /* Help symbol "?" */	
-	font-size: 12px; 
-	padding-left: 6px; 
-	padding-right: 6px; 
-	-moz-border-radius: 10px;
-	border-radius: 10px;
+	padding-left: 5px; 
+	padding-right: 5px; 
+	-moz-border-radius: 13px;
+	border-radius: 13px;
 }
 
 #yourEasySearchFilterForm, #yourExpertSearchFilterForm {
 	padding:20px 0 0 60px;
 }
 
-#wordSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #topicsSearchDiv .searchFilterDiv a, #wordSearchDiv .searchFilterDiv a, #extractSearchDiv .searchFilterDiv a, #synopsisSearchDiv .searchFilterDiv a, #personSearchDiv .searchFilterDiv a, #placeSearchDiv .searchFilterDiv a, #senderSearchDiv .searchFilterDiv a, #fromSearchDiv .searchFilterDiv a, #recipientSearchDiv .searchFilterDiv a, #toSearchDiv .searchFilterDiv a, #refersToSearchDiv .searchFilterDiv a, dateSearchDiv, #topicSearchDiv .searchFilterDiv a, #dateSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a{
-	font-size:12px;
-}
-
-span.categorySearch {
-	font-size:12px;
-}
-
 .saveButton { /* Save Button */
 	margin: 35px 0 0 112px;	
     background-color:transparent;
-	font-size:12px;
 }
 
 #advsearch { /* Search Button */
 	margin: 35px auto auto 190px;
-	font-size:12px;
 	width:52px;
 }
 
@@ -710,25 +644,27 @@ span.categorySearch {
 	margin: 60px 0 10px 371px;
 }
 
+/* ------------- DIGITIZATION MODULE ------------------ */
+/* ----- CREATE NEW CATALOG DESCRIPTION (SCHEDONE) ---------- */
 
-/* -------------------------------------------------------------------- jquery-ui-1.8.13.custom.css ------------------------------------------------------------------------------- 
- *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
- */
-
-.ui-accordion .ui-accordion-header a {
-        font-size:12px;
+#numeroUnitaLabel {
+	margin-right:54px;
 }
+
+
+#responsabileFotoRiproduzioneLabel {
+	margin-right:0;
+}
+
+/* Input Label positions */
 
 /* --------------------------------------------------------------------------- MyHistory.css -------------------------------------------------------------------------------------- 
  *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
- */
-
-
-#myHistoryDiv a {
-	font-size:12px;	
-}
+*/
 
 #moreDocs, #morePeople, #moreVolumes, #morePlaces {
 	margin:3px 0 0 0;
 }
+
+
 

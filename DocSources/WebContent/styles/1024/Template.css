@@ -681,7 +681,7 @@ $('.searchResult').live('click', function() {
 	background:url(/DocSources/images/1024/button_addnewdocument.png) no-repeat;
 	position:absolute;
 	margin: 20px 0 5px 101px;
-	width:122px;
+	width:124px;
 	height:75px;
 	background-position:top;
 	text-align:center;
