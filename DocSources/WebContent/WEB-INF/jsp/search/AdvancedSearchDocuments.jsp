@@ -283,7 +283,25 @@
 				active: false, 
 				autoHeight: false,
 				collapsible:true
-				});
+			});
+			
+			$j("#dateSearchForm :input").keyup(function(){
+				if($j("#dateType option:selected").val() == 'Between'){
+					if($j("#dateYear").val() == 'yyyy' || $j("#dateYear").val() == '' || $j("#dateYearBetween").val() == 'yyyy' || $j("#dateYearBetween").val() == '')
+						$j(".addDateRange").attr("disabled", "disabled");
+					else{
+						$j(".addDateRange").attr("disabled");
+						$j(".addDateRange").removeAttr("disabled");
+						$j(".addDateRange").prop("disabled", false);
+					}
+						
+				}else{
+					$j(".addDateRange").attr("disabled");
+					$j(".addDateRange").removeAttr("disabled");
+					$j(".addDateRange").prop("disabled", false);
+				}
+			});
+			
 			$j("#person").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
