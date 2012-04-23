@@ -5,6 +5,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="ShowMyHistoryReportURL" value="/user/ShowMyHistoryReport.do"/>
+	
+	<c:url var="ShowMyHistoryURL" value="/user/ShowMyHistory.do" />
 
 	<c:url var="MyHistoryPaginationURL" value="/user/MyHistoryByCategoryPagination.json">
 		<c:param name="category" value="${command.category}" />
@@ -40,6 +42,7 @@
 	</div>
 	
 	<div id="MyHistoryButtons">
+		<a id="generalHistory" href="${ShowMyHistoryURL}" title="Research History">Research History</a>
 	    <a id="closeMyHistory" href="#" title="Close My History window">Close</a>
 	    <a id="categoryHistory" href="${ShowMyHistoryReportURL}">Category View</a>
 	</div>
@@ -124,7 +127,8 @@
 									{ sWidth : "60px" },
 									{ sWidth : "170px" },
 									{ sWidth : "80px" },
-									{ sWidth : "80px" }
+									{ sWidth : "80px" },
+									{ sWidth : "40px" }
 									],
 						"bDestroy" : true,  
 						"bFilter" : false,
@@ -215,6 +219,11 @@
 				});  
 				$j("#categoryHistory").click(function() {															
 					Modalbox.show($j(this).attr("href"), {title: "CATEGORY VIEW", width: 760});
+					return false;
+				});
+				
+				$j("#generalHistory").click(function(){
+					Modalbox.show($j(this).attr("href"), {title: "RESEARCH HISTORY", width: 750});
 					return false;
 				});
 				
