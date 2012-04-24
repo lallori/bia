@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.command.digitization.ShowSchedoneCommand;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -102,6 +103,15 @@ public class ShowSchedoneController {
 			}
 		}else{
 			schedone.setSchedoneId(0);
+			schedone.setIstituto(ApplicationPropertyManager.getApplicationProperty("schedone.istituto"));
+			schedone.setFondo(ApplicationPropertyManager.getApplicationProperty("schedonefondo"));
+			schedone.setLegatura(ApplicationPropertyManager.getApplicationProperty("schedone.legatura"));
+			schedone.setSupporto(ApplicationPropertyManager.getApplicationProperty("schedone.supporto"));
+			schedone.setTipoRipresa(ApplicationPropertyManager.getApplicationProperty("schedone.tipoRipresa"));
+			schedone.setColoreImmagine(ApplicationPropertyManager.getApplicationProperty("schedone.coloreImmagine"));
+			schedone.setNomeFiles(ApplicationPropertyManager.getApplicationProperty("schedone.nomeFiles"));
+			schedone.setResponsabileFotoRiproduzione(ApplicationPropertyManager.getApplicationProperty("schedone.responsabileFotoRiproduzione"));
+			schedone.setOperatore(ApplicationPropertyManager.getApplicationProperty("schedone.operatore"));
 			schedone.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
 			schedone.setDataCreazione(new Date());
 		}

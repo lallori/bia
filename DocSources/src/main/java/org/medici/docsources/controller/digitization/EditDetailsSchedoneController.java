@@ -34,6 +34,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.digitization.EditDetailsSchedoneCommand;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -198,8 +199,15 @@ public class EditDetailsSchedoneController {
 			command.setDataRipresaGiorno(schedone.getDataRipresaGiorno());
 			command.setOperatore(schedone.getOperatore());
 		} else {
-			command.setIstituto(null);
-			command.setFondo(null);
+			command.setIstituto(ApplicationPropertyManager.getApplicationProperty("schedone.istituto"));
+			command.setFondo(ApplicationPropertyManager.getApplicationProperty("schedonefondo"));
+			command.setLegatura(ApplicationPropertyManager.getApplicationProperty("schedone.legatura"));
+			command.setSupporto(ApplicationPropertyManager.getApplicationProperty("schedone.supporto"));
+			command.setTipoRipresa(ApplicationPropertyManager.getApplicationProperty("schedone.tipoRipresa"));
+			command.setColoreImmagine(ApplicationPropertyManager.getApplicationProperty("schedone.coloreImmagine"));
+			command.setNomeFiles(ApplicationPropertyManager.getApplicationProperty("schedone.nomeFiles"));
+			command.setResponsabileFotoRiproduzione(ApplicationPropertyManager.getApplicationProperty("schedone.responsabileFotoRiproduzione"));
+			command.setOperatore(ApplicationPropertyManager.getApplicationProperty("schedone.operatore"));
 			command.setSerie(null);
 			command.setNumeroUnita(null);
 			command.setDataInizioAnno(null);
@@ -210,8 +218,6 @@ public class EditDetailsSchedoneController {
 			command.setDataFineGiorno(null);
 			command.setDescrizioneContenuto(null);
 			command.setDescrizioneContenutoEng(null);
-			command.setLegatura(null);
-			command.setSupporto(null);
 			command.setCartulazione(null);
 			command.setNoteCartulazione(null);
 			command.setNoteCartulazioneEng(null);
@@ -219,15 +225,10 @@ public class EditDetailsSchedoneController {
 			command.setCarteMancanti(null);
 			command.setDimensioniBase(null);
 			command.setDimensioniAltezza(null);
-			command.setTipoRipresa(null);
-			command.setColoreImmagine(null);
 			command.setRisoluzione(null);
-			command.setNomeFiles(null);
-			command.setResponsabileFotoRiproduzione(null);
 			command.setDataRipresaAnno(null);
 			command.setDataRipresaMese(null);
 			command.setDataRipresaGiorno(null);
-			command.setOperatore(null);
 		}
 
 		return new ModelAndView("digitization/EditDetailsSchedone", model);

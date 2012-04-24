@@ -150,6 +150,10 @@
  		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditIIPImageProperties.jsp"/>
 	</definition>
 	
+	<definition name="admin/EditSchedoneProperties" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/EditSchedoneProperties.jsp"/>
+	</definition>
+	
 	<definition name="admin/ShowAdministrationModuleModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowAdministrationModuleModalWindow.jsp" />
 	</definition>	
@@ -159,6 +163,7 @@
  		<put-attribute name="email" value="/WEB-INF/jsp/adm/ShowEmailProperties.jsp"/>
 		<put-attribute name="recaptcha" value="/WEB-INF/jsp/adm/ShowRecaptchaProperties.jsp"/>
  		<put-attribute name="iip" value="/WEB-INF/jsp/adm/ShowIIPImageProperties.jsp"/>
+ 		<put-attribute name="schedone" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
 	</definition>
 
 	<definition name="admin/ShowGeneralProperties" extends="template.partialDOM">
@@ -173,6 +178,10 @@
 	</definition>
 	<definition name="admin/ShowIIPImageProperties" extends="template.partialDOM">
  		<put-attribute name="iip" value="/WEB-INF/jsp/admin/ShowIIPImageProperties.jsp"/>
+	</definition>
+	
+	<definition name="admin/ShowSchedoneProperties" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
 	</definition>
 
 	<definition name="user/DeleteUser" extends="template.completeDOM">
