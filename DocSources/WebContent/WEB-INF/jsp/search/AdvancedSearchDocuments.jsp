@@ -285,6 +285,7 @@
 				collapsible:true
 			});
 			
+			//These 3 function are dedicated for the date script
 			$j("#dateSearchForm :input").keyup(function(){
 				if($j("#dateType option:selected").val() == 'Between'){
 					if($j("#dateYear").val() == 'yyyy' || $j("#dateYear").val() == '' || $j("#dateYearBetween").val() == 'yyyy' || $j("#dateYearBetween").val() == '')
@@ -300,6 +301,32 @@
 					$j(".addDateRange").removeAttr("disabled");
 					$j(".addDateRange").prop("disabled", false);
 				}
+			});
+			
+			$j("#dateType").change(function(){
+				if($j("#dateType option:selected").val() == 'Between'){
+					if($j("#dateYear").val() == 'yyyy' || $j("#dateYear").val() == '' || $j("#dateYearBetween").val() == 'yyyy' || $j("#dateYearBetween").val() == '')
+						$j(".addDateRange").attr("disabled", "disabled");
+					else{
+						$j(".addDateRange").attr("disabled");
+						$j(".addDateRange").removeAttr("disabled");
+						$j(".addDateRange").prop("disabled", false);
+					}
+						
+				}else{
+					$j(".addDateRange").attr("disabled");
+					$j(".addDateRange").removeAttr("disabled");
+					$j(".addDateRange").prop("disabled", false);
+				}
+			});
+			
+			$j(".addDateRange").click(function(){
+				$j('#dateType option[value="After"]').attr('selected', 'selected');
+				$j('#dateYearBetween').css('visibility','hidden');
+				$j('#dateMonthBetween').css('visibility','hidden');
+				$j('#dateDayBetween').css('visibility','hidden');
+				$j('.invisible').css('visibility','hidden');
+				$j('.visible').css('visibility','visible');
 			});
 			
 			$j("#person").autocompletePerson({
