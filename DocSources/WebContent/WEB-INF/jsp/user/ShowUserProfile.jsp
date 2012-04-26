@@ -5,6 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="EditUserProfileURL" value="/user/EditUserProfile.do" />
+<c:url var="UserManualURL" value="/manual/DataEntryManual.html" />
 
 <div id="myProfile">
 	<div id="userProfile">
@@ -62,7 +63,7 @@
 			
 		<div id="helpProfile">
 			<h1>HELP SYSTEM</h1>
-			<a href="/DocSources/manual/DataEntryManual.html" target="_blank">User Manual (HTML version)</a><br />
+			<a href="${UserManualURL}" target="_blank">User Manual (HTML version)</a><br />
 			<a href="">Download Manual (PDF version)</a><br />
 			<a href="">Help Videos</a>
 		</div>
