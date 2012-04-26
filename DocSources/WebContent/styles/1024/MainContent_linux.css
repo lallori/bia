@@ -352,7 +352,7 @@ input, select, textarea {
 }
 
 #linkLabel  {
-	margin-left: 5px;
+	margin-left: 9px;
 }
 
 #browseLabel {
@@ -529,6 +529,14 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin-left:0;
 }
 
+#namePlaceLabel {
+	margin-left:36px;
+}
+
+#longitudeNameLabel {
+	margin-left:48px;
+}
+
 #latitudeGeoLabel {
 	margin-left:10px;
 }
@@ -656,14 +664,120 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin-right:0;
 }
 
-/* Input Label positions */
+/* ------------- ADMINISTRATION MODULE ------------------ */
+/* ----- CREATE NEW CATALOG DESCRIPTION (SCHEDONE) ---------- */
+
+#siteIdentifierLabel {
+	margin-left:7px;
+}
+
+#serverUrlLabel {
+	margin-left:28px;
+}
+
+#privateKeyLabel {
+	margin-left:22px;
+}
+
+#domainNameLabel{
+	margin-left:6px;
+}
+
+#serverPathLabel {
+	margin-left:9px;
+}
+
+#serverPortLabel {
+	margin-left:63px;
+}
+
+#serverProtocolLabel {
+	margin-left:38px;
+}
+
+#serverVersionLabel {
+	margin-left:44px;
+}
+
+#EditSchedoneForm #istitutoLabel {
+	margin-right: 86px;
+}
+
+#EditSchedoneForm #fondoLabel {
+	margin-right: 93px;
+}
+
+#EditSchedoneForm #legaturaLabel {
+	margin-right: 75px;
+}
+
+#EditSchedoneForm #supportoLabel {
+	margin-right: 74px;
+}
+
+#EditSchedoneForm #tipoRipresaLabel {
+	margin-right: 40px;
+}
+
+#EditSchedoneForm #coloreImmagineLabel {
+	margin-right: 27px;
+}
+
+#EditSchedoneForm #responsabileFotoRiproduzioneLabel {
+	margin-right: 28px;
+}
+
+#EditSchedoneForm #operatoreLabel {
+	margin-right: 69px;
+}
+
+/* ----- USER MANAGEMENT ---------- */
+/* Add New User */
+
+#passwordExpiresLabel {
+	margin-left: 41px;
+}
+
+#unmaskLabel {
+	margin-left: 22px;
+}
+
+#emailDisplayLabel {
+	margin-left: 91px;
+}
+
+#emailAdressLabel {
+	margin-left: 87px;
+}
+
+/* Edit or Show Existing User */
+
+#userNameLabel {
+	margin-left: 21px;
+}
+
+#fullNameLabel {
+	margin-left: 26px;
+}
+
+
+
+/* ------------- GOOGLE MAPS COORDINATES ------------------ */
+
+#latLabel {
+	margin-left:13px;
+}
+
+#lngLabel {
+	margin-left:3px;
+}
 
 /* --------------------------------------------------------------------------- MyHistory.css -------------------------------------------------------------------------------------- 
  *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
 #moreDocs, #morePeople, #moreVolumes, #morePlaces {
-	margin:3px 0 0 0;
+	margin:3px 25px 0 0;
 }
 
 

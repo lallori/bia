@@ -72,7 +72,7 @@ h5{ /* Data Entry main fields Title */
 }
 
 h2 { /* Error Text 403, 404, 500, 503*/
-	font-size:11px;
+	font-size:12px;
 	color:#6d5c4d;
 	margin-left:15px;
 }
@@ -369,7 +369,7 @@ span.h7 {
 	width:45px;
 	height:23px;
 	position:absolute;
-	margin: -20px 0 0 204px;
+	margin: -25px 0 0 204px;
 	display:inline;
 }
 
@@ -1161,7 +1161,6 @@ select {
 	background-color: #fbf7f4;
 	padding-left:3px;
 	margin: 5px 7px 5px 5px; 
-	font-size:11px;
 	font-family:Georgia, "Times New Roman", Times, serif;
 }
 
@@ -3026,12 +3025,12 @@ a.refreshVolumeExplorer {
 
 #PlaceMapDiv { /* Place map */
     float:right; 
-    margin-right:20px;
+    margin-right:15px;
     z-index:1;
     height:160px;
     width:120px;
     text-align:center;
-	margin-top: 20px;
+	margin-top: 0;
 }
 
 #PlaceMapDiv span {
@@ -3125,7 +3124,7 @@ a.refreshVolumeExplorer {
 /* ---- EdtitNameTgn, Map and MapSite --- */
 
 #namePlaceLabel {
-	margin-left:30px;
+	margin-left:33px;
 }
 
 #nameTypeLabel {
@@ -3733,7 +3732,7 @@ form#EditUserProfileForm span{
 	margin-left: 49px;
     padding: 0;
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
+	font-size:12px;
     text-align:center;
 }
 
@@ -3920,7 +3919,6 @@ span.categorySearch {
 }
 
 #wordSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #fromDateSearchDiv .searchFilterDiv a, #topicsSearchDiv .searchFilterDiv a, #wordSearchDiv .searchFilterDiv a, #extractSearchDiv .searchFilterDiv a, #synopsisSearchDiv .searchFilterDiv a, #personSearchDiv .searchFilterDiv a, #placeSearchDiv .searchFilterDiv a, #senderSearchDiv .searchFilterDiv a, #fromSearchDiv .searchFilterDiv a, #recipientSearchDiv .searchFilterDiv a, #toSearchDiv .searchFilterDiv a, #refersToSearchDiv .searchFilterDiv a, dateSearchDiv, #topicSearchDiv .searchFilterDiv a, #dateSearchDiv .searchFilterDiv a, #volumeSearchDiv .searchFilterDiv a, #digitizedSearchDiv .searchFilterDiv a, #languagesSearchDiv .searchFilterDiv a, #cipherSearchDiv .searchFilterDiv a, #indexSearchDiv .searchFilterDiv a, #fromVolumeSearchDiv .searchFilterDiv a, #toVolumeSearchDiv .searchFilterDiv a, #contextSearchDiv .searchFilterDiv a, #inventarioSearchDiv .searchFilterDiv a, #namePartsSearchDiv .searchFilterDiv a, #roleCategorySearchDiv .searchFilterDiv a, #occupationSearchDiv .searchFilterDiv a{
-	font-size:11px;
 	color:#900;
 }
 
@@ -3943,7 +3941,6 @@ span.categorySearch {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0; 
 	background-repeat:no-repeat;
 	width:52px;
@@ -3959,7 +3956,6 @@ span.categorySearch {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
 	padding:0 0 0 0; 
 	width:53px;
 	height:22px;
@@ -4328,14 +4324,17 @@ table#savedSearchFiltersForm.display {
 	margin: 23px 0 0;
 }
 
-#digitizedSearchForm #addSearchFilter, #cipherSearchForm #addSearchFilter, #indexSearchForm #addSearchFilter { 
+#digitizedSearchForm #addSearchFilter { 
 	margin: 5px 0 0 195px;
+} 
+
+#cipherSearchForm #addSearchFilter, #indexSearchForm #addSearchFilter { 
+	margin: 5px 0 0 197px;
 } 
 
 #customSearchFilterDiv hr {
 	width: 440px;
 }
-
 
 #contextSearchForm #contextLabel {
 	margin-right: 30px;
@@ -4398,8 +4397,12 @@ table#savedSearchFiltersForm.display {
 	margin: 5px 0 0 100px;
 }
 
+#genderSearchForm #addSearchFilter {
+	margin-left: 244px;
+}
+
 .people #placeSearchForm #addSearchFilter {
-	margin: 5px 0 0 18px;
+	margin: 5px 0 0 28px;
 }
 
 #occupationWordSearchForm #addSearchFilter {
@@ -4418,8 +4421,8 @@ table#savedSearchFiltersForm.display {
 	margin-left:6px;
 }
 
-#genderSearchLabel {
-	margin-left:27px;
+#genderSearchForm #genderLabel {
+	margin-left:6px;
 }
 
 #placeSearchLabel {
@@ -4970,6 +4973,10 @@ ul#network a {
 	margin-left: 98px;
 }
 
+#userManagementDiv p {
+	margin: 0;
+}
+
 #userManagementDiv #addNew, #userManagementDiv #editOrShow, #userManagementDiv #globalProperties{
 	background:url(/DocSources/images/1024/button_large.png) no-repeat;
 	text-align:center;
@@ -5133,32 +5140,18 @@ h3.systemManagement {
 	margin-left: 63px;
 }
 
-#newPasswordLabel {
-	margin-left: 60px;
-}
-
-#forcePswdChangeLabel {
-	margin-left: 9px;
-}
-
 #lockAccountLabel {
-	margin-left: 61px;
+	margin-left: 32px;
 }
 
 #passwordExpiresLabel {
-	margin-left: 58px;
+	margin-left: 69px;
 }
 
 #unmaskLabel {
 	margin-left: 33px;
 }
 
-
-/* ---------------- Email Control ------------- */
-
-#emailDisplayLabel {
-	margin-left: ;
-}
 
 /* ---------------- googleMapsCoordinates ------------- */
 
@@ -5211,7 +5204,7 @@ h3.systemManagement {
 
 #description h1{
 	font-weight:bold;
-	font-size:11px;
+	font-size:12px;
 }
 
 

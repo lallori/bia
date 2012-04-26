@@ -205,7 +205,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #indexNames.transcribe { /* Index of Names button on Page Turner Pannel */
-	margin: 42px 0 0 328px;
+	margin: 40px 0 0 328px;
 }
 
 #indexNames:hover { /* Index of Names button on Rollover */
