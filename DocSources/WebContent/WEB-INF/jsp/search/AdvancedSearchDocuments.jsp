@@ -320,7 +320,7 @@
 				}
 			});
 			
-			$j(".addDateRange").click(function(){
+			$j("#dateSearchForm").submit(function(){
 				$j('#dateType option[value="After"]').attr('selected', 'selected');
 				$j('#dateYearBetween').css('visibility','hidden');
 				$j('#dateMonthBetween').css('visibility','hidden');
