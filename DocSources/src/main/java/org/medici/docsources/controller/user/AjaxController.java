@@ -259,7 +259,7 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
-	/** This method returns 5 elements for History Category View Preview.
+	/** This method returns 4 elements for History Category View Preview.
 	 * 
 	 * @param searchType
 	 * @param sortingColumnNumber
@@ -300,7 +300,7 @@ public class AjaxController {
 		   } else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
 			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   	singleRow.add(currentUserHistory.getAction().toString());
-			   	//MD:This code is for prevent a string too long.
+			   	//MD: This code is for prevent a string too long.
 			   	if(currentUserHistory.getPerson().getMapNameLf().length() < 40)
 			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf());
 			   	else
@@ -309,7 +309,12 @@ public class AjaxController {
 		   } else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   singleRow.add(currentUserHistory.getAction().toString());
-			   singleRow.add(currentUserHistory.getPlace().getPlaceName() + " / " + currentUserHistory.getPlace().getPlParent());
+			   //MD: This code is for prevent a string too long
+			   String placeNameAndParent = currentUserHistory.getPlace().getPlaceName() + " / " + currentUserHistory.getPlace().getPlParent();
+			   if(placeNameAndParent.length() < 40)
+				   singleRow.add(placeNameAndParent);
+			   else
+				   singleRow.add(placeNameAndParent.substring(0, 37) + "...");
 			   resultList.add(HtmlUtils.showPlace(singleRow, currentUserHistory.getPlace().getPlaceAllId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
