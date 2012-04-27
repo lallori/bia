@@ -77,6 +77,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	private List<String> words;
 	private List<WordType> wordsTypes;
 	private List<String> researchNotes;
+	private List<Gender> gender;
 	private Boolean logicalDelete;
 
 	/**
@@ -105,6 +106,7 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		titleOccWord = new ArrayList<String>(0);
 		logicalDelete = Boolean.FALSE;
 		researchNotes = new ArrayList<String>(0);
+		gender = new ArrayList<AdvancedSearchAbstract.Gender>(0);
 	}
 
 	/**
@@ -154,6 +156,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public List<Integer> getDatesYearBetween() {
 		return datesYearBetween;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public List<Gender> getGender() {
+		return gender;
 	}
 
 	/**
@@ -397,6 +406,21 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 			titlesOccId = new ArrayList<Integer>(0);
 		}
 		
+		//Gender
+		if((command.getGender() != null) && (command.getGender().size() > 0)){
+			gender = new ArrayList<AdvancedSearchAbstract.Gender>(command.getGender().size());
+			
+			for(String singleWord : command.getGender()){
+				try{
+					gender.add(Gender.valueOf(URIUtil.decode(singleWord, "UTF-8")));
+				}catch(URIException e){
+					
+				}
+			}
+		}else{
+			gender = new ArrayList<AdvancedSearchAbstract.Gender>(0);
+		}
+		
 		//Places
 		if((command.getPlace() != null) && (command.getPlace().size() > 0)){
 			placeId = new ArrayList<Integer>(command.getPlace().size());
@@ -523,6 +547,13 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 	 */
 	public void setDatesYearBetween(List<Integer> datesYearBetween) {
 		this.datesYearBetween = datesYearBetween;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(List<Gender> gender) {
+		this.gender = gender;
 	}
 
 	/**
@@ -733,11 +764,40 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
 					datesQuery.append("))");
 				}else if(datesTypes.get(i).equals("Born/Died on")){
-					datesQuery.append("((STR_TO_DATE(CONCAT(bornYear, ',' , bornMonth, ',', bornDay),'%Y, %m ,%d')=");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(") OR (STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')=");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append("))");
+					StringBuffer bornQuery = new StringBuffer();
+					StringBuffer deathQuery = new StringBuffer();
+					if(datesYear.get(i) != null){
+						bornQuery.append("(bornYear =");
+						bornQuery.append(datesYear.get(i) + ")");
+						deathQuery.append("(deathYear =");
+						deathQuery.append(datesYear.get(i) + ")");
+						if(datesMonth.get(i) != null || datesDay.get(i) != null){
+							bornQuery.append(" AND ");
+							deathQuery.append(" AND ");
+						}
+					}
+					if(datesMonth.get(i) != null){
+						bornQuery.append("(bornMonth =");
+						bornQuery.append(datesMonth.get(i) + ")");
+						deathQuery.append("(deathMonth =");
+						deathQuery.append(datesMonth.get(i) + ")");
+						if(datesDay.get(i) != null){
+							bornQuery.append(" AND ");
+							deathQuery.append(" AND ");
+						}
+					}
+					if(datesDay.get(i) != null){
+						bornQuery.append("(bornDay =");
+						bornQuery.append(datesDay.get(i) + ")");
+						deathQuery.append("(deathDay =");
+						deathQuery.append(datesDay.get(i) + ")");
+					}
+					datesQuery.append(bornQuery + " OR " + deathQuery);
+//					datesQuery.append("((STR_TO_DATE(CONCAT(bornYear, ',' , bornMonth, ',', bornDay),'%Y, %m ,%d')=");
+//					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+//					datesQuery.append(") OR (STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')=");
+//					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+//					datesQuery.append("))");
 				}
 			}
 			datesQuery.append(")");
@@ -779,12 +839,18 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 		if(titleOccWord.size() > 0){
 			StringBuffer titleOccWordQuery = new StringBuffer("(");
 			for(int i = 0; i < titleOccWord.size(); i++){
+				String[] wordsOccupation = StringUtils.split(titleOccWord.get(i), " ");
 				if(titleOccWordQuery.length() > 1){
 					titleOccWordQuery.append(" AND ");
 				}
-				titleOccWordQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOcc like '%");
-				titleOccWordQuery.append(titleOccWord.get(i).replace("'", "''"));
-				titleOccWordQuery.append("%'))");
+				for(int j = 0; j < wordsOccupation.length; j++){
+					titleOccWordQuery.append("(personId IN (SELECT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOcc like '%");
+					titleOccWordQuery.append(wordsOccupation[j].replace("'", "''"));
+					titleOccWordQuery.append("%'))");
+					if(j < (wordsOccupation.length - 1)){
+						titleOccWordQuery.append(" AND ");
+					}
+				}
 			}
 			titleOccWordQuery.append(")");
 			if(!titleOccWordQuery.toString().equals("")){
@@ -818,6 +884,26 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(titleOccIdQuery);
+			}
+		}
+		
+		//Gender
+		if(gender.size() > 0){
+			StringBuffer genderQuery = new StringBuffer("(");
+			for(int i = 0; i < gender.size(); i++){
+				if(genderQuery.length() > 1){
+					genderQuery.append(" AND ");
+				}
+				genderQuery.append("(gender like '");
+				genderQuery.append(gender.get(i));
+				genderQuery.append("' )");
+			}
+			genderQuery.append(")");
+			if(!genderQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(genderQuery);
 			}
 		}
 		

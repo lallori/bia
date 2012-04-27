@@ -129,6 +129,7 @@
 						<option value="After">Written after</option>
 						<option value="Before">Written before</option>
 						<option value="Between">Written between</option>
+						<option value="InOn">Written in/on</option>
 					</select>
 					<input type="text" id="dateYear" class="input_4c" maxlength="4" value="yyyy"/>
 					<select id="dateMonth" name="dateMonth" class="selectform">

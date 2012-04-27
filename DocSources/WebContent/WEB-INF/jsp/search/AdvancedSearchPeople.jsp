@@ -27,37 +27,6 @@
 		</form>	
 	</div>
 	
-	<h1 id="dateRange"><a>Date Range</a></h1>
-	<div class="people">
-		<form id="dateSearchForm" method="post" class="edit">
-			<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
-			<select id="dateType" name="dateType" class="selectform_Llong">
-				<option value="Any" selected="selected">Any</option>
-				<option value="Born after">Born after</option>
-				<option value="Dead by">Dead by</option>
-				<option value="Lived between">Lived between</option>
-				<option value="Born/Died on">Born/Died on</option>
-			</select>
-			<input id="dateYear" name="dateYear" class="input_4c" type="text" value="yyyy" maxlength="4"/>
-			<select id="dateMonth" name="dateMonth" class="selectform">
-			<c:forEach items="${months}" var="month">
-				<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
-			</c:forEach>
-			</select>
-			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2"/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="addDateRange">
-			<input type="hidden" id="category" value="Date">
-			<p class="invisible">and</p>
-			<input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" />
-            <select id="dateMonthBetween" name="dateMonthBetween" class="selectform">
-            <c:forEach items="${months}" var="month">
-				<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
-			</c:forEach>
-            </select>
-            <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2"/>
-		</form>
-	</div>
-
 	<h1 id="titleOccupation"><a>Title/Occupation</a></h1>
 	<div class="people">
 		<form id="roleCategorySearchForm" method="post" class="edit">
@@ -176,8 +145,21 @@
 		</form>
 	</div>
 	
-	<h1 id="placeSearch"><a>Birth and Death Place</a></h1>
+	<h1 id="placeSearch"><a>Person Details and Vital Statistics</a></h1>
 	<div class="people">
+		<form id="genderSearchForm" method="post" class="edit">
+			<a class="helpIcon" title="...">?</a>
+			<label for="gender" id="genderLabel">Gender</label>
+			<select id="genderSelect" name="genderSelect" class="selectform_short">
+				<option value="M">M</option>
+                <option value="F">F</option>
+                <option value="X">X</option>
+			</select>
+			<input type="hidden" id="gender" name="gender" type="text" value=""/>
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+			<input type="hidden" id="category" value="Gender">
+		</form>
+		
 		<form id="placeSearchForm" method="post" class="edit">
 			<a class="helpIcon" title="That text will explain...">?</a>
 			<select id="placeType" name="placeType" class="selectform_MXlong">
@@ -189,6 +171,34 @@
 			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="placeAdd" disabled="disabled">
 			<input type="hidden" id="category" value="Place">
 			<input type="hidden" id="placeId" value="">
+		</form>
+		
+		<form id="dateSearchForm" method="post" class="edit">
+			<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
+			<select id="dateType" name="dateType" class="selectform_Llong">
+				<option value="Any" selected="selected">Any</option>
+				<option value="Born after">Born after</option>
+				<option value="Dead by">Dead by</option>
+				<option value="Lived between">Lived between</option>
+				<option value="Born/Died on">Born/Died on</option>
+			</select>
+			<input id="dateYear" name="dateYear" class="input_4c" type="text" value="yyyy" maxlength="4"/>
+			<select id="dateMonth" name="dateMonth" class="selectform">
+			<c:forEach items="${months}" var="month">
+				<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
+			</c:forEach>
+			</select>
+			<input id="dateDay" name="dateDay" class="input_2c" type="text" value="dd" maxlength="2"/>
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="addDateRange">
+			<input type="hidden" id="category" value="Date">
+			<p class="invisible">and</p>
+			<input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" />
+            <select id="dateMonthBetween" name="dateMonthBetween" class="selectform">
+            <c:forEach items="${months}" var="month">
+				<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
+			</c:forEach>
+            </select>
+            <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2"/>
 		</form>
 	</div>
 	
@@ -220,6 +230,7 @@
 		$j('#roleCategorySearchForm').advancedSearchForm();
 		$j('#occupationWordSearchForm').advancedSearchForm();
 		$j('#occupationSearchForm').advancedSearchForm();
+		$j('#genderSearchForm').advancedSearchForm();
 		$j('#placeSearchForm').advancedSearchForm();	
 		$j('#researchNotesSearchForm').advancedSearchForm();
 		
@@ -273,6 +284,11 @@
 			 	$j("#roleCategory").val($j(this).val());
 			 else
 				 $j("#roleCategory").val("");
+			 return false;
+		 });
+		 
+		 $j("#genderSelect").change(function(){
+			 $j("#gender").val($j(this).val());
 			 return false;
 		 });
 		 

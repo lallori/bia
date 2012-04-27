@@ -81,6 +81,7 @@ public class AdvancedSearchCommand {
 	private List<String> occupationWord;
 	private List<String> occupation;
 	private List<String> researchNotes;
+	private List<String> gender;
 
 	private Boolean logicalDelete;
 
@@ -666,5 +667,19 @@ public class AdvancedSearchCommand {
 	 */
 	public List<String> getResearchNotes() {
 		return researchNotes;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public List<String> getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(List<String> gender) {
+		this.gender = gender;
 	}
 }

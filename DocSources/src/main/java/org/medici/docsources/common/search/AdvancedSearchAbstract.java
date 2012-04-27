@@ -44,7 +44,7 @@ public abstract class AdvancedSearchAbstract implements AdvancedSearch {
 	 *
 	 */
 	public static enum DateType {
-		After("After"), Before("Before"), Between("Between");
+		After("After"), Before("Before"), Between("Between"), InOn("InOn");
 		
 		private final String dateType;
 
@@ -136,6 +136,26 @@ public abstract class AdvancedSearchAbstract implements AdvancedSearch {
 	    @Override
 	    public String toString(){
 	        return folioType;
+	    }
+	}
+	
+	/**
+	 * 
+	 * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
+	 *
+	 */
+	public static enum Gender {
+		M("M"), F("F"), X("X");
+		
+		private final String gender;
+
+	    private Gender(String value) {
+	        gender = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return gender;
 	    }
 	}
 }
