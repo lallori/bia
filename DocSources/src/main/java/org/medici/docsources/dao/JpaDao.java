@@ -431,6 +431,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						break;
 					case 1:
 						paginationFilter.addSortingCriteria("gender", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("mapNameLf", paginationFilter.getSortingDirection());
 						break;
 					case 2:
 						paginationFilter.addSortingCriteria("bornYear", paginationFilter.getSortingDirection());
