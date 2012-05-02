@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.command.geobase.SharePlaceRequestCommand;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -83,10 +84,24 @@ public class SharePlaceController {
 		try {
 			place = getGeoBaseService().findPlace(command.getPlaceAllId());
 			model.put("place", place);
+			
+			model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(command.getPlaceAllId()));
+			model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(command.getPlaceAllId()));
+			model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(command.getPlaceAllId()));
+			model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(command.getPlaceAllId()));
+			model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(command.getPlaceAllId()));
+			model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(command.getPlaceAllId()));
+			model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
+			model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
+			
+			if(place.getPlaceGeographicCoordinates() != null)
+				model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
+			else
+				model.put("linkGoogleMaps", null);
 		} catch (ApplicationThrowable ath) {
-			new ModelAndView("error/ComparePlace", model);
+			new ModelAndView("error/SharePlace", model);
 		}
 
-		return new ModelAndView("geobase/ComparePlace", model);
+		return new ModelAndView("geobase/SharePlace", model);
 	}
 }
