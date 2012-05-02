@@ -4,12 +4,39 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<style type="text/css">
+		#personTitle {
+			margin:10px 0 20px 5px;
+		}
+    </style>
+	
 	<a href="#" class="moreInfo" title="Browse The Medici Archive Project Database"></a><!-- Questo pulsante chiude la finestra "pop up" e a lo stesso tempo riporta questa persona nell body_left del main  -->
 	<ul id="network">
 		<li><a href="#"></a></li>
 		<li><a href="#"></a></li>
 		<li><a href="#"></a></li>
 	</ul>
+	
+	<div id="personTitle">
+		<h3>${person.mapNameLf}</h3>
+		<c:forEach items="${person.poLink}" var="currentPoLink">
+			<c:if test="${currentPoLink.preferredRole}">
+				<h4>${currentPoLink.titleOccList.titleOcc}</h4>
+			</c:if>
+		</c:forEach>			
+		<c:if test="${person.activeStart != null}">
+			<h7>ACTIVE START: <span class="h7"> ${person.activeStart}</span></h7>
+		</c:if>
+		<c:if test="${person.activeStart == null}">
+			<h7>BIRTH: <span class="h7">${person.bornYear} ${person.bornMonth} ${person.bornDay}</span></h7>
+		</c:if>		
+		<c:if test="${person.activeEnd != null}">
+			<h7>ACTIVE END:<span class="h7"> ${person.activeEnd}</span></h7>
+		</c:if>
+		<c:if test="${person.activeEnd == null}">
+			<h7>DEATH: <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
+		</c:if>
+	</div>
 	
 	<div id="EditDetailsPersonDiv" class="background">
 		<div class="title">

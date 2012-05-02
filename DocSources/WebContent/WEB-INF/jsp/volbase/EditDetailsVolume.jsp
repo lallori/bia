@@ -51,8 +51,8 @@
 			</div>
 
 			<form:errors path="seriesRefDescription" cssClass="inputerrors" htmlEscape="false"/>
-			<form:errors path="volNum" cssClass="inputerrors" htmlEscape="false"/>
-			<form:errors path="volLetExt" cssClass="inputerrors" htmlEscape="false"/>
+			<form:errors path="volNum" cssClass="inputerrorsForm" htmlEscape="false"/>
+			<form:errors path="volLetExt" cssClass="inputerrorsForm" htmlEscape="false"/>
 			<form:errors path="startYear" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="startMonthNum" cssClass="inputerrors" htmlEscape="false"/>
 			<form:errors path="startDay" cssClass="inputerrors" htmlEscape="false"/>
@@ -123,7 +123,7 @@
 							);
 						} else {
 							if ($j("#volExist").length == 0) {
-								$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\"><font color='red'>Volume is already present, you cannot add again this volume. Save is disabled.</font><br></span>");
+								$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\"><p>Volume is already present, you cannot add again this volume. Save is disabled.</p></span>");
 							}
 							$j("#save").attr("disabled","true");
 						}

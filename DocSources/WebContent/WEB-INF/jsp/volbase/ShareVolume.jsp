@@ -4,114 +4,162 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<a href="javascript:window.print()" class="print" title="Print"></a>
-	<a href="#" class="pdf" title="Save as PDF"></a>
-  
-     <h4>Documentary Sources for the Arts and Humanities 1537 - 1743<br />Volume Report</h4>
-
-     
-     <h3 class="first">Minute di Lettere e Registri / Minute: Cosimo I / Segretario: Concino</h3>
-     <table>
-         <tr> 
-             <td width="100">Volume/Filza (MDP)</td>
-             <td width="285" class="value">${volume.volNum}${volume.volLetExt}</td>
-         </tr>
-         <tr>
-             <td width="100">Start Date</td>
-
-             <td width="285" class="value">>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</td>
-         </tr>
-         <tr>
-             <td width="100">End Date</td>
-             <td width="285" class="value">${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay}</td>
-         </tr>
-         <tr>
-
-             <td width="100">Date Notes</td>
-             <td width="285" class="value">${volume.dateNotes}</td>
-         </tr>
-     </table> 
-     
-     <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
-     
-     <h5>Description</h5>
-     <table>
-         <tr> 
-             <td width="90">Organizational Criteria</td>
-             <td width="330" class="value" colspan="3">${volume.orgNotes}</td>
-         </tr>
-         <tr>
-             <td width="70">Condition</td>
-             <td width="330" class="value" colspan="3">${volume.ccondition}</td>
-         </tr>
-         <tr> 
-             <td width="70">Bound</td>
-             <td width="130" class="value">${volume.bound ? 'Yes' : 'No'}</td>
-             <td width="150">Folios Numbered</td>
-             <td width="30" class="valueRight">${volume.folsNumbrd ? 'Yes' : 'No'}</td>
-         </tr>
-         <tr> 
-             <td width="70">Folio Count</td>
-             <td width="150" class="value">${volume.folioCount}</td>
-
-             <td width="100">Index of Names</td>
-             <td width="50" class="valueRight">${volume.oldAlphaIndex ? 'Yes' : 'No'}</td>
-         </tr>
-         <tr> 
-             <td width="70">Printed material</td>
-             <td width="150" class="value">${volume.printedMaterial ? 'Yes' : 'No'}</td>
-             <td width="100">Printed drawings</td>
-             <td width="50" class="valueRight">${volume.printedDrawings ? 'Yes' : 'No'}</td>
-         </tr>
-         <tr> 
-             <td width="70">Languages</td>
-             <td width="150" class="valueLeft" colspan="3">${volume.italian ? 'Italian' : '' } 
+	<style type="text/css">
+		#volumeTitle {
+			margin:10px 0 20px 5px;
+		}
+    </style>
+        
+<!-- 	<a href="javascript:window.print()" class="print" title="Print"></a> -->
+<!-- 	<a href="#" class="pdf" title="Save as PDF"></a> -->
+	
+	<a href="#" class="moreInfo" title="Browse The Medici Archive Project Database"></a><!-- Questo pulsante chiude la finestra "pop up" e a lo stesso tempo riporta questo volume nell body_left del main  -->
+	<ul id="network">
+		<li><a href="#"></a></li>
+		<li><a href="#"></a></li>
+		<li><a href="#"></a></li>
+	</ul>
+	
+	<div id="volumeTitle">
+		<h3>Mediceo del Principato Volume ${volume.volNum}</h3>
+		<h4>${volume.serieList}</h4>
+		<h7>${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay} to ${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay} </h7>
+	</div>
+	
+	<div id="EditDetailsVolumeDiv" class="background">
+		<div class="title">
+			<h5>VOLUME DETAILS</h5>
+		</div>
+		
+		<c:if test="${not empty image}">
+			<div id="SpineVolumeDigitDiv">
+				<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
+				<b>Volume Spine</b>
+				<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="Show preview on the right screen"></a>
+			</div>
+		</c:if>
+		<c:if test="${empty image && volume.digitized == false}">
+			<div id="SpineVolumeNotDigitDiv">
+				<span>To be digitized</span>
+				<img src="<c:url value="/images/1024/img_volume.png"/>" alt="Volume" width="120px" height="160px">
+				<p>Volume Spine</p>
+			</div>
+		</c:if>
+		<c:if test="${empty image && volume.digitized == true}">
+			<div id="SpineVolumeNotDigitDiv">
+				<span>Spine not available</span>
+				<img src="<c:url value="/images/1024/img_volume.png"/>" alt="Volume" width="120px" height="160px">
+				<p>Volume Spine</p>
+			</div>
+		</c:if>
+		
+		<div class="listDetails">
+			<div class="row">
+				<div class="item">Volume/Filza</div>
+				<div class="value">${volume.volNum}${volume.volLetExt}</div>
+			</div>
+			<div class="row">
+				<div class="item">Start Date</div>
+				<div class="value">${volume.startYear} ${volume.startMonthNum.monthName} ${volume.startDay}</div>
+			</div>
+			<div class="row">
+				<div class="item">End Date</div>
+				<div class="value">${volume.endYear} ${volume.endMonthNum.monthName} ${volume.endDay}</div>
+			</div>
+			<div class="row">	
+				<div class="item">Date Notes</div>
+				<div class="value">${volume.dateNotes}</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="EditDescriptionVolumeDiv" class="background">
+		<div class="title">
+			<h5>DESCRIPTION</h5>
+		</div>
+		
+		<div class="list">
+			<div class="row">
+				<div class="item">Organizational Criteria</div>
+				<div class="value">${volume.orgNotes}</div>
+			</div>
+			<div class="row">
+				<div class="item">Condition</div>
+				<div class="value">${volume.ccondition}</div>
+			</div>
+			<div class="row">
+				<div class="item">Bound</div>
+				<div class="value">${volume.bound ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Folios Numbered</div>
+				<div class="value">${volume.folsNumbrd ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Folios Count</div>
+				<div class="value">${volume.folioCount}</div>
+			</div>
+			<div class="row">
+				<div class="item">Index of Names</div>
+				<div class="value">${volume.oldAlphaIndex ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Printed material</div>
+				<div class="value">${volume.printedMaterial ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Printed drawings</div>
+				<div class="value">${volume.printedDrawings ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Languages</div>
+				<div class="value"> ${volume.italian ? 'Italian' : '' } 
 									${volume.spanish ? 'Spanish' : ''}
 									${volume.english ? 'English' : ''}
 									${volume.latin ? 'Latin' : ''}
 									${volume.german ? 'German' : ''}
 									${volume.french ? 'French' : ''}
-									${volume.otherLang}</td>
-         </tr>
-         <tr>
-             <td width="130">Some Documents in Cipher</td>
-             <td width="50" class="value">${volume.cipher ? 'Yes' : 'No'}</td>
-         </tr>
-         <tr> 
-             <td width="70">Cipher Notes</td>
-             <td width="350" class="value" colspan="3">${volume.cipherNotes}</td>
-         </tr>
-     </table> 
+									${volume.otherLang}
+				</div>
+			</div>
+			<div class="row">
+				<div class="item">Some Documents in Cipher</div>
+				<div class="value">${volume.cipher ? 'Yes' : 'No'}</div>
+			</div>
+			<div class="row">
+				<div class="item">Cipher Notes</div>
+				<div class="value">${volume.cipherNotes}</div>
+			</div>
+		</div>
+	</div>
+  
+    <div id="EditCorrespondentsVolumeDiv" class="background">
+		<div class="title">
+			<h5>CORRESPONDENTS</h5>
+		</div>
+		
+		<div class="list">
+			<div class="row">
+				<div class="item">From </div><div class="value80"> ${volume.senders}</div>
+			</div>
+			<div class="row">
+				<div class="item">To </div><div class="value80">${volume.recips}</div>
+			</div>
+		</div>
+	</div>
      
-     <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
-
-     
-     <h5>Correspondents</h5>
-     <table>
-         <tr> 
-           <td width="70">From</td>
-           <td class="value">${volume.senders}</td>
-         </tr>
-         <tr> 
-           <td width="70">To</td>
-
-           <td class="value">${volume.recips}</td>
-         </tr>
-     </table>
-     
-     <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
-     
-     <h5>Context</h5>
-     <table>
-         <tr> 
-           <td width="70">Context</td>
-
-           <td class="value">${volume.ccontext}</td>
-         </tr>
-         <tr> 
-           <td width="70">Inventario Sommario Description</td>
-           <td class="value">${volume.inventarioSommarioDescription}</td>
-         </tr>
-     </table> 
-     
-     <img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
+    <div id="EditContextVolumeDiv" class="background">
+		<div class="title">
+			<h5>CONTEXT</h5>
+		</div>
+		
+		<div class="list">
+			<div class="row">
+				<div class="item">Context </div><div class="value80">${volume.ccontext}</div>
+			</div>
+			<div class="row">
+				<div class="item"> Inventario Sommario Description </div><div class="value80">${volume.inventarioSommarioDescription}</div>
+			</div>
+		</div>
+	</div>
+    

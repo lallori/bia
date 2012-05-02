@@ -3,7 +3,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-
+	
+	<style type="text/css">
+			#documentTitle {
+				margin:10px 0 20px 5px;
+			}
+     </style>
 	
 	<a href="#" class="moreInfo" title="Browse The Medici Archive Project Database"></a><!-- Questo pulsante chiude la finestra "pop up" e a lo stesso tempo riporta questo documento nell body_left del main  -->
 
@@ -12,6 +17,30 @@
 		<li><a href="#"></a></li>
            <li><a href="#"></a></li>
 	</ul>
+	
+	<div id="documentTitle">
+		<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
+		<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+		<c:choose>
+			<%-- Recipient empty --%>
+			<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+				<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+				<h4>TO: <span class="h4">(Not Entered)</span></h4>
+			</c:when>
+			<%-- Sender empty --%>
+			<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+				<h4>FROM:<span class="h4">(Not Entered)</span></h4>
+				<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+			</c:when>
+			<%-- Sender and Recipient filled in --%>
+			<c:otherwise>
+				<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+				<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+			</c:otherwise>
+		</c:choose>
+		<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+	</div>
+			
 
 	<div id="EditDetailsDocumentDiv" class="background">
 		<div class="title">

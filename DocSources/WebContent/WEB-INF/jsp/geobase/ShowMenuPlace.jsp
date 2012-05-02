@@ -43,7 +43,7 @@
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#buttonShareLink").click(function() {
-			window.open($j(this).attr("href"),'SHARE PERSON','width=510,height=550,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
+			window.open($j(this).attr("href"),'SHARE PLACE','width=510,height=550,screenX=0,screenY=0,scrollbars=yes,resizable=no');return false;
 		});
 	
 		$j("#buttonPrint").click(function() {	
