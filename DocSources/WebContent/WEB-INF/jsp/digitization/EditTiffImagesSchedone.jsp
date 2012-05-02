@@ -34,20 +34,20 @@
 	        
 	        <div>
 	        	<a class="helpIcon" title="Numero esatto di immagini in alta risoluzione prodotte per questa filza (compresi i test)">?</a>
-	        	<form:label for="numeroImmagini" path="numeroImmagini" id ="numeroImmaginiLabel" cssErrorClass="error" title="Numero totale Immagini">Numero totale immagini</form:label>
-				<form:input path="numeroImmagini" id="numeroImmagini" cssClass="input_4c_disabled" />
+	        	<form:label for="numeroTotaleImmaginiTiff" path="numeroTotaleImmaginiTiff" id ="numeroImmaginiLabel" cssErrorClass="error" title="Numero totale Immagini">Numero totale immagini</form:label>
+				<form:input path="numeroTotaleImmaginiTiff" id="numeroImmagini" cssClass="input_4c_disabled" />
 	        </div>
 	        <div>
 	            <a class="helpIcon" title="Dimensione Media delle immagini (usare script adeguato per calcolare)">?</a>
-	            <form:label for="dimensioneMediaImmagini" path="dimensioneMediaImmagini" id ="dimensioneMediaImmaginiLabel" cssErrorClass="error" title="Dimensione Media Immagini">Dimensione media immagini</form:label>
-				<form:input path="dimensioneMediaImmagini" id="dimensioneMediaImmagini" cssClass="input_10c" />
+	            <form:label for="dimMediaImmaginiTiff" path="dimMediaImmaginiTiff" id ="dimensioneMediaImmaginiLabel" cssErrorClass="error" title="Dimensione Media Immagini">Dimensione media immagini</form:label>
+				<form:input path="dimMediaImmaginiTiff" id="dimensioneMediaImmagini" cssClass="input_10c" />
 	            <form:select id="formatoMediaImmagini" path="formatoMediaImmagini" cssClass="selectform_short" items="${}" itemValue="" itemLabel=""/>
 	            <%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Mb--%>
 	        </div>
 	        <div>
 	            <a class="helpIcon" title="Dimensione Totale delle immagini (usare script adeguato per calcolare)">?</a>
-	            <form:label for="dimensioneTotaleImmagini" path="dimensioneTotaleImmagini" id ="dimensioneTotaleImmaginiLabel" cssErrorClass="error" title="Dimensione Totale Immagini">Dimensione totale immagini</form:label>
-				<form:input path="dimensioneMediaImmagini" id="dimensioneMediaImmagini" cssClass="input_10c" />
+	            <form:label for="dimTotaleImmaginiTiff" path="dimTotaleImmaginiTiff" id ="dimensioneTotaleImmaginiLabel" cssErrorClass="error" title="Dimensione Totale Immagini">Dimensione totale immagini</form:label>
+				<form:input path="dimTotaleImmaginiTiff" id="dimTotaleImmaginiTiff" cssClass="input_10c" />
 				<form:select id="formatoTotaleImmagini" path="formatoTotaleImmagini" cssClass="selectform_short" items="${}" itemValue="" itemLabel=""/>
 	        	<select id="formatoTotaleImmagini" name="formatoTotaleImmagini" class="selectform_short">
 	            <%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Gb--%>

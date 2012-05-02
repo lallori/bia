@@ -7,7 +7,7 @@
 <div id="digitizationModalDiv">
 	<div id="CreateCatalogDiv">
         <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="CreateCatalog" href="<c:url value="/digitization/CreateSchedone.do"/>"><p>Create new Catalog Description (Schedone)</p></a>
+        <a id="CreateCatalog" href="<c:url value="/digitization/CreateSchedone.do"/>"><p>Create new "Schedone"</p></a>
 	</div>
     
     <div id="AddNewFilzaDiv">
