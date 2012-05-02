@@ -1149,24 +1149,40 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		if (words.size()>0) {
 			StringBuffer wordsQuery = new StringBuffer("(");
 			for (int i=0; i<words.size(); i++) {
+				String[] wordsSingleWordSearch = StringUtils.split(words.get(i), " ");
 				if (wordsQuery.length()>1) {
 					wordsQuery.append(" AND ");
 				}
 				if (wordsTypes.get(i).equals(WordType.Extract)) {
-					wordsQuery.append("(synExtract.docExtract like '%");
-					wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
-					wordsQuery.append("%')");
+					for(int j = 0; j < wordsSingleWordSearch.length; j++){
+						wordsQuery.append("(synExtract.docExtract like '%");
+						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
+						wordsQuery.append("%')");
+						if(j < (wordsSingleWordSearch.length - 1)){
+							wordsQuery.append(" AND ");
+						}
+					}
 				} else if (wordsTypes.get(i).equals(WordType.Synopsis)) {
-					wordsQuery.append("(synExtract.synopsis like '%");
-					wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
-					wordsQuery.append("%')");
+					for(int j = 0; j < wordsSingleWordSearch.length; j++){
+						wordsQuery.append("(synExtract.synopsis like '%");
+						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
+						wordsQuery.append("%')");
+						if(j < (wordsSingleWordSearch.length - 1)){
+							wordsQuery.append(" AND ");
+						}
+					}
 				} else if (wordsTypes.get(i).equals(WordType.SynopsisAndExtract)) {
-					wordsQuery.append("((synExtract.docExtract like '%");
-					wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
-					wordsQuery.append("%') or ");
-					wordsQuery.append("(synExtract.synopsis like '%");
-					wordsQuery.append(words.get(i).toLowerCase().replace("'", "''"));
-					wordsQuery.append("%'))");
+					for(int j = 0; j < wordsSingleWordSearch.length; j++){
+						wordsQuery.append("((synExtract.docExtract like '%");
+						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
+						wordsQuery.append("%') or ");
+						wordsQuery.append("(synExtract.synopsis like '%");
+						wordsQuery.append(wordsSingleWordSearch[j].toLowerCase().replace("'", "''"));
+						wordsQuery.append("%'))");
+						if(j < (wordsSingleWordSearch.length - 1)){
+							wordsQuery.append(" AND ");
+						}
+					}
 				}
 			}
 			wordsQuery.append(")");
@@ -1577,6 +1593,25 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.append(") AND (STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')<");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
 					datesQuery.append("))");
+				}else if (datesTypes.get(i).equals(DateType.InOn)){
+					if(datesYear.get(i) != null){
+						datesQuery.append("(docYear =");
+						datesQuery.append(datesYear.get(i) + " )");
+						if(datesMonth.get(i) != null || datesDay.get(i) != null){
+							datesQuery.append(" AND ");
+						}
+					}
+					if(datesMonth.get(i) != null){
+						datesQuery.append("(docMonthNum =");
+						datesQuery.append(datesMonth.get(i) + " )");
+						if(datesDay.get(i) != null){
+							datesQuery.append(" AND ");
+						}
+					}
+					if(datesDay.get(i) != null){
+						datesQuery.append("(docDay =");
+						datesQuery.append(datesDay.get(i) + " )");
+					}
 				}
 			}
 			datesQuery.append(")");
