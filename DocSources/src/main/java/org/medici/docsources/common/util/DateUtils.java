@@ -112,6 +112,43 @@ public class DateUtils {
 		
 		return NumberUtils.createInteger(nextToken);
 	}
+	
+	/**
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static Integer getIntegerDate(Integer year, Month month, Integer day) {
+		StringBuffer stringBuffer = new StringBuffer("");
+		
+		if (year != null) {
+			stringBuffer.append(year);
+		} else {
+			stringBuffer.append("0000");
+		}
+
+		if (!ObjectUtils.toString(month).equals("")) {
+			if (month.getMonthNum()<10) {
+				stringBuffer.append("0");
+			}
+			stringBuffer.append(month.getMonthNum());
+		} else {
+			stringBuffer.append("00");
+		}
+		
+		if (day != null) {
+			if (day<10) {
+				stringBuffer.append("0");
+			}
+			stringBuffer.append(day);
+		} else {
+			stringBuffer.append("00");
+		}
+		
+		return NumberUtils.toInt(stringBuffer.toString());
+	}
 
 	/**
 	 * 
@@ -258,6 +295,45 @@ public class DateUtils {
 		}
 		
 		return returnValue.toString();
+	}
+	
+	/**
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static String getStringForSortableDate(Integer year, Month month, Integer day) {
+		StringBuffer stringBuffer = new StringBuffer("");
+		
+		if (year != null) {
+			stringBuffer.append(year);
+		} else {
+			stringBuffer.append("0000");
+		}
+
+		if (!ObjectUtils.toString(month).equals("")) {
+			if (month.getMonthNum()<10) {
+				stringBuffer.append(" 0");
+				stringBuffer.append(month.getMonthNum());
+			}else
+				stringBuffer.append(" " + month.getMonthNum());
+		} else {
+			stringBuffer.append(" 00");
+		}
+		
+		if (day != null) {
+			if (day<10) {
+				stringBuffer.append(" 0");
+				stringBuffer.append(day);
+			}else
+				stringBuffer.append(" " + day);
+		} else {
+			stringBuffer.append(" 00");
+		}
+		
+		return stringBuffer.toString();
 	}
 
 }

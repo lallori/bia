@@ -291,6 +291,14 @@ public class Document implements Serializable{
 	})
 	private Integer yearModern;
 	
+	@Column (name="\"SORTABLEDATE\"", length=10)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private String sortableDate;
+	
+	@Column (name="\"SORTABLEDATEINT\"", length=10)
+	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
+	private Integer sortableDateInt;
+	
 	@Column (name="\"RECKONING\"", length=1, columnDefinition="tinyint", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.NO, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
@@ -818,6 +826,34 @@ public class Document implements Serializable{
 		this.yearModern = yearModern;
 	}
 	
+	/**
+	 * @return the sortableDate
+	 */
+	public String getSortableDate() {
+		return sortableDate;
+	}
+
+	/**
+	 * @param sortableDate the sortableDate to set
+	 */
+	public void setSortableDate(String sortableDate) {
+		this.sortableDate = sortableDate;
+	}
+
+	/**
+	 * @return the sortableDateInt
+	 */
+	public Integer getSortableDateInt() {
+		return sortableDateInt;
+	}
+
+	/**
+	 * @param sortableDateInt the sortableDateInt to set
+	 */
+	public void setSortableDateInt(Integer sortableDateInt) {
+		this.sortableDateInt = sortableDateInt;
+	}
+
 	/**
 	 * @return the reckoning
 	 */

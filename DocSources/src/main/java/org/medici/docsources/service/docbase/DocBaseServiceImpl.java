@@ -147,6 +147,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 				document.setDocMonthNum(null);
 			}
 			document.setDocDate(DateUtils.getLuceneDate(document.getDocYear(), document.getDocMonthNum(), document.getDocDay()));
+			
+			//We set the sortableDateInt (and the sortableDate that it's used only in the old DB)
+			if(document.getYearModern() != null){
+				document.setSortableDateInt(DateUtils.getIntegerDate(document.getYearModern(), document.getDocMonthNum(), document.getDocDay()));
+				document.setSortableDate(DateUtils.getStringForSortableDate(document.getYearModern(), document.getDocMonthNum(), document.getDocDay()));
+			}else{
+				document.setSortableDateInt(DateUtils.getIntegerDate(document.getDocYear(), document.getDocMonthNum(), document.getDocDay()));
+				document.setSortableDate(DateUtils.getStringForSortableDate(document.getDocYear(), document.getDocMonthNum(), document.getDocDay()));
+			}
 
 			// We set InsertLet to null if it's an empty string. 
 			if (ObjectUtils.toString(document.getInsertLet()).equals("")){
@@ -586,10 +595,21 @@ public class DocBaseServiceImpl implements DocBaseService {
 			} else {
 				documentToUpdate.setDocMonthNum(null);
 			}
-			documentToUpdate.setDocDate(DateUtils.getLuceneDate(documentToUpdate.getDocYear(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
 			documentToUpdate.setDocDay(document.getDocDay());
+			documentToUpdate.setDocDate(DateUtils.getLuceneDate(documentToUpdate.getDocYear(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
+			
 			//Modern Dating
 			documentToUpdate.setYearModern(document.getYearModern());
+			
+			//Set SortableDateInt (and the sortableDate that it's used only in the old DB)
+			if(documentToUpdate.getYearModern() != null){
+				documentToUpdate.setSortableDateInt(DateUtils.getIntegerDate(documentToUpdate.getYearModern(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
+				documentToUpdate.setSortableDate(DateUtils.getStringForSortableDate(documentToUpdate.getYearModern(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
+			}else{
+				documentToUpdate.setSortableDateInt(DateUtils.getIntegerDate(documentToUpdate.getDocYear(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
+				documentToUpdate.setSortableDate(DateUtils.getStringForSortableDate(documentToUpdate.getDocYear(), documentToUpdate.getDocMonthNum(), documentToUpdate.getDocDay()));
+			}
+			
 			// Date Uncertain or Approximate
 			documentToUpdate.setDateUns(document.getDateUns());
 			// Undated
