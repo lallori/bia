@@ -1623,7 +1623,7 @@ input.file {
 }
 
 #contDiscLabel {
-	margin-left:115px;
+	margin-left:95px;
 }
 
 #insertNumLabel {
@@ -3433,8 +3433,7 @@ form#EditUserProfileForm span{
 }
 
 #modalBox #editCleanClose #edit {
-	margin:2px auto auto 0px;
-	position:absolute;
+	margin: 0px auto auto 0px;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
@@ -3444,11 +3443,11 @@ form#EditUserProfileForm span{
 	height:22px;
 	border:none;
 	text-align:center;
+	float: left;
 }
 
 #modalBox #editCleanClose #cleanAll {
-	margin:2px auto auto 60px;
-	position:absolute;
+	margin:0 0 0 20px;
 	padding:0;
 	cursor:pointer;
 	background-color:transparent;
@@ -3459,12 +3458,11 @@ form#EditUserProfileForm span{
 	height:22px;
 	border:none;
 	text-align:center;
+	float: left;
 }
 
 #modalBox #editCleanClose #close {
-	margin:1px auto auto 120px;
-	position:absolute;
-	padding:0;
+	margin:0 0 0 20px;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
@@ -3474,12 +3472,11 @@ form#EditUserProfileForm span{
 	height:22px;
 	border:none;
 	text-align:center;
+	float: left;
 }
 
 #modalBox #editCleanClose #goBack {
-	margin:1px auto auto 180px;
-	position:absolute;
-	padding:0;
+	margin:0 0 0 20px;
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
@@ -3489,14 +3486,15 @@ form#EditUserProfileForm span{
 	height:22px;
 	border:none;
 	text-align:center;
+	float: left;
 }
 
 
-#cleanAll:hover, #edit:hover, #closesavePersonalNotes #goBack:hover, #closesavePersonalNotes #close:hover {
+#modalBox #editCleanClose #cleanAll:hover, #modalBox #editCleanClose #edit:hover, #modalBox #editCleanClose #goBack:hover, #modalBox #editCleanClose #close:hover {
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */ !important
-	text-decoration:none;
+	text-decoration: none;
 }
 
 .txtarea_personalNotes {
@@ -4511,13 +4509,14 @@ table#savedSearchFiltersForm.display {
 	background-image:url(/DocSources/images/1024/bg_top_comment.png);
 	background-position:top;
 	background-repeat:repeat-x;
+	font-size:12px;
 }
 
 .commentDiv .commentText {
 	width:440px;
 	margin-left:7px;
 	margin-bottom:25px;
-	font-size:11px;
+	font-size:12px;
 }
 
 .replyCommentDiv {
@@ -4543,26 +4542,27 @@ table#savedSearchFiltersForm.display {
 	background-image:url(/DocSources/images/1024/bg_top_reply.png);
 	background-position:top;
 	background-repeat:repeat-x;
+	font-size:12px;
 }
 
 .replyCommentDiv .commentText {
 	width:410px;
 	margin-left:7px;
 	margin-bottom:25px;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .commentDiv a, .replyCommentDiv a {
 	text-decoration:underline;
-	font-size:10px;
-	color:#b99c84;
+	font-size:12px;
+	color: #87655E;
 }
 
 a.showDigitizedDocument{
 	background:url(/DocSources/images/1024/button_bodyleftmenu_xlarge.png) no-repeat;
-	font-size:10px;
-	padding: 2px 0 0 0;
-	width:140px;
+	font-size:11px;
+	padding: 1px 0 0 0;
+	width:152px;
 	height:17px;
 	float:right;
 	text-decoration:none;
@@ -5528,7 +5528,7 @@ h3.systemManagement {
 #moreDocs, #morePeople, #moreVolumes, #morePlaces {
 	margin: 0 28px 0 0;
 	float: right;
-	width: 45px;
+	width: 46px;
 	color:#900;
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
@@ -5657,7 +5657,6 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     float: left;
-    font-size: 11px;
     height: 22px;
 	padding: 3px 0 0;
 	text-align: center;
@@ -5669,7 +5668,6 @@ table.display#myCategoryDocumentsHistoryTable, table.display#myCategoryPeopleHis
 	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     float: right;
-    font-size: 11px;
     height: 22px;
 	padding: 3px 0 0;
 	text-align: center;

@@ -25,24 +25,6 @@
 	font-size:11px;
 }
 
-.recovery { /*  Form class */
-	height:100px;
-	width:250px;
-	position:absolute;
-}
-
-.recoveryInput { /* input text class */
-	margin: 5px 7px 5px 5px;
-}
-
-#captcha_recovery{
-	margin-top:50px;
-}
-
-.inputerrors_recovery { /* Error Span messages */
-	margin-left:85px;
-}
-
 .readThis {
 	font-size:11px;
 }
@@ -549,46 +531,6 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin: -5px 0 0 142px;
 }
 
-#countryLabel {
-	margin-left:57px;
-}
-
-#locationLabel {
-	margin-left: 54px;
-}
-
-#interests {
-	margin-left:32px;
-}
-
-#titleLabel {
-	margin-left: 74px;
-}
-
-#group {
-	margin-left:39px;
-}
-
-#address{
-	margin-left:32px;
-}
-
-#email{
-	margin-left:41px;
-}
-
-#EditUserProfileForm #password {
-	margin-left:25px;
-}
-
-#EditUserProfileForm #link {
-	margin-left:46px;
-}
-
-#EditUserProfileForm #browse {
-	margin-left:35px;
-}
-
 
 /* -------- Custom Search Filter (body_left) --------- */
 
@@ -621,35 +563,6 @@ a#editValue, .editValue { /* "Edit Value" Button */
 
 #senderLabel {
 	margin-right:15px;
-}
-
-#toSearchLabel {
-	margin-right:36px;
-}
-
-#refersToLabel {
-	margin-right:6px;
-}
-
-
-/* ------------- VOLUME SEARCH ------------------ */
-/* Input Label positions */
-
-
-#languagesSearchForm #frenchLabel, #languagesSearchForm #germanLabel {
-	margin-left:16px;
-}
-
-#languagesSearchForm #italianLabel {
-	margin-left: 33px;
-} 
-
-#indexLabel {
-	margin-right: 7px;
-}
-
-.userButton{
-	margin: 60px 0 10px 371px;
 }
 
 /* ------------- DIGITIZATION MODULE ------------------ */
@@ -781,4 +694,142 @@ a#editValue, .editValue { /* "Edit Value" Button */
 }
 
 
+/* -------------------------------------------------------------------------- ADVANCED SEARCH ------------------------------------------------------------------------------- 
+ *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+/* -------------- DOCUMENTS -------------------------- */ 
+
+#wordSearchForm #addSearchFilter {
+	margin: 0 0 0 20px;
+}
+
+#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #refersToSearchForm #addSearchFilter, #placeSearchForm #addSearchFilter{
+	margin-left: 34px;
+}
+
+#fromSearchForm #fromLabel {
+	margin-right:27px;
+}
+
+#toSearchLabel {
+	margin-right:44px;
+}
+
+#refersToLabel {
+	margin-right:4px;
+}
+
+.documents #volumeSearchForm #addSearchFilter, .documents #folioSearchForm #addSearchFilter {
+	margin: 0 0 0 85px;
+}
+
+/* -------------- VOLUME -------------------------- */ 
+
+.volumes #dateSearchForm #addSearchFilter { 
+	margin: 5px 0 0 10px;
+}
+
+.volumes #volumeSearchForm #addSearchFilter { /* Add button */
+	margin: 5px 0 0 110px;
+}
+
+#digitizedSearchForm #addSearchFilter, #cipherSearchForm #addSearchFilter, #indexSearchForm #addSearchFilter { 
+	margin: 5px 0 0 172px;
+} 
+
+#languagesSearchForm #frenchLabel{
+	margin-left:13px;
+}
+
+#languagesSearchForm #germanLabel {
+	margin-left:17px;
+}
+
+#languagesSearchForm #italianLabel {
+	margin-left: 18px;
+} 
+
+#cipherSearchForm #cipherLabel {
+	margin-right: 58px;
+}
+
+#indexLabel {
+	margin-right: 7px;
+}
+
+#digitizedSearchForm #digitizedLabel {
+	margin-right: 43px;
+}
+
+.userButton{
+	margin: 60px 0 10px 371px;
+}
+
+/* -------------- PEOPLE -------------------------- */
+
+#namePartsSearchForm #addSearchFilter {
+	margin: 5px 0 0 15px;
+}
+
+#genderSearchForm #addSearchFilter {
+	margin-left: 235px;
+}
+
+.people #placeSearchForm #addSearchFilter {
+	margin: 5px 0 0 22px;
+}
+
+.people #dateSearchForm #addSearchFilter {
+	margin: 5px 0 0 12px;
+}
+
+/* -------------------------------------------------------------------------- MY PROFILE ------------------------------------------------------------------------------- 
+ *  ----------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+#email{
+	margin-left:52px;
+}
+
+#EditUserProfileForm #link {
+	margin-left:61px;
+}
+
+#EditUserProfileForm #browse {
+	margin-left:43px;
+}
+
+#countryLabel {
+	margin-left:23px;
+}
+
+#locationLabel {
+	margin-left: 19px;
+}
+
+#interests {
+	margin-left:35px;
+}
+
+#resumeLabel {
+	margin-left:23px;
+}
+
+#titleLabel {
+	margin-left: 44px;
+}
+
+#group {
+	margin-left:50px;
+}
+
+#EditUserProfileForm #address{
+	margin-left:38px;
+}
+
+#EditUserProfileForm #password {
+	margin-left:25px;
+}
+
+#EditUserProfileForm #newPasswordLabel {
+	margin-left:25px;
+}
