@@ -399,10 +399,11 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("recipientPeople.mapNameLf", paginationFilter.getSortingDirection());
 						break;
 					case 2:
-						paginationFilter.addSortingCriteria("docYear", paginationFilter.getSortingDirection());
-						//Month is an entity, so we don't have field with suffix 
-						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection());
-						paginationFilter.addSortingCriteria("docDay", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("sortableDateInt", paginationFilter.getSortingDirection());
+//						paginationFilter.addSortingCriteria("docYear", paginationFilter.getSortingDirection());
+//						//Month is an entity, so we don't have field with suffix 
+//						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection());
+//						paginationFilter.addSortingCriteria("docDay", paginationFilter.getSortingDirection());
 						break;
 					case 3:
 						paginationFilter.addSortingCriteria("senderPlace.placeName", paginationFilter.getSortingDirection());

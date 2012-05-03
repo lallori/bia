@@ -488,8 +488,12 @@ public class AjaxController {
 			}
 			else
 				singleRow.add("");
-
-			singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			
+			if(currentDocument.getYearModern() != null){
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}else{
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}
 			
 			if (currentDocument.getSenderPlace() != null){
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
@@ -584,7 +588,11 @@ public class AjaxController {
 			else
 				singleRow.add("");
 
-			singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			if(currentDocument.getYearModern() != null){
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}else{
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}
 			
 			if (currentDocument.getSenderPlace() != null){
 				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
@@ -666,7 +674,11 @@ public class AjaxController {
 				else
 					singleRow.add("");
 				
-				singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+				if(currentEplToLink.getDocument().getYearModern() != null){
+					singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getYearModern(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+				}else{
+					singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+				}
 				
 				String senderPlace, recipientPlace;
 				if (currentEplToLink.getDocument().getSenderPlace() != null){
@@ -816,21 +828,23 @@ public class AjaxController {
 					paginationFilter.addSortingCriteria("document.recipientPeople.mapNameLf", sortingDirection);
 					break;
 				case 2:
-					paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
-					//Month is an entity, so we don't have field with suffix 
-					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", sortingDirection);
-					paginationFilter.addSortingCriteria("document.docDay", sortingDirection);
+					paginationFilter.addSortingCriteria("document.sortableDateInt", sortingDirection);
+//					paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
+//					//Month is an entity, so we don't have field with suffix 
+//					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", sortingDirection);
+//					paginationFilter.addSortingCriteria("document.docDay", sortingDirection);
 					break;
 				case 3:
-					paginationFilter.addSortingCriteria("senderPlace.placeName", sortingDirection);
-					paginationFilter.addSortingCriteria("recipientPlace.placeName", sortingDirection);
+					paginationFilter.addSortingCriteria("document.senderPlace.placeName", sortingDirection);
+					paginationFilter.addSortingCriteria("document.recipientPlace.placeName", sortingDirection);
 					break;
 				case 4:
 					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
-					paginationFilter.addSortingCriteria("document.docYear", "asc");
-					//Month is an entity, so we don't have field with suffix 
-					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", "asc");
-					paginationFilter.addSortingCriteria("document.docDay", "asc");
+					paginationFilter.addSortingCriteria("document.sortableDateInt", sortingDirection);
+//					paginationFilter.addSortingCriteria("document.docYear", "asc");
+//					//Month is an entity, so we don't have field with suffix 
+//					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", "asc");
+//					paginationFilter.addSortingCriteria("document.docDay", "asc");
 					break;
 				case 5:
 					paginationFilter.addSortingCriteria("document.volume.volNum", sortingDirection);

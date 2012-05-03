@@ -1580,23 +1580,25 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 				}
 
 				if (datesTypes.get(i).equals(DateType.After)) {
-					datesQuery.append("(STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')>");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					//datesQuery.append("(STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')>");
+					datesQuery.append("(sortableDateInt >");
+					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(")");
 				} else if (datesTypes.get(i).equals(DateType.Before)) {
-					datesQuery.append("(STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')<");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append("(sortableDateInt <");
+					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(")");
 				}else if (datesTypes.get(i).equals(DateType.Between)) {
-					datesQuery.append("((STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')>");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(") AND (STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')<");
-					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
-					datesQuery.append("))");
+					datesQuery.append("(sortableDateInt >");
+					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(") AND (sortableDateInt <");
+					datesQuery.append(DateUtils.getIntegerDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					datesQuery.append(")");
 				}else if (datesTypes.get(i).equals(DateType.InOn)){
 					if(datesYear.get(i) != null){
-						datesQuery.append("(docYear =");
-						datesQuery.append(datesYear.get(i) + " )");
+						datesQuery.append("(yearModern =");
+						datesQuery.append(datesYear.get(i) + " OR (docYear =");
+						datesQuery.append(datesYear.get(i) + " AND yearModern IS NULL))");
 						if(datesMonth.get(i) != null || datesDay.get(i) != null){
 							datesQuery.append(" AND ");
 						}
@@ -1612,6 +1614,27 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 						datesQuery.append("(docDay =");
 						datesQuery.append(datesDay.get(i) + " )");
 					}
+					
+					
+					//Old version without the sortableDate
+//					if(datesYear.get(i) != null){
+//						datesQuery.append("(docYear =");
+//						datesQuery.append(datesYear.get(i) + " )");
+//						if(datesMonth.get(i) != null || datesDay.get(i) != null){
+//							datesQuery.append(" AND ");
+//						}
+//					}
+//					if(datesMonth.get(i) != null){
+//						datesQuery.append("(docMonthNum =");
+//						datesQuery.append(datesMonth.get(i) + " )");
+//						if(datesDay.get(i) != null){
+//							datesQuery.append(" AND ");
+//						}
+//					}
+//					if(datesDay.get(i) != null){
+//						datesQuery.append("(docDay =");
+//						datesQuery.append(datesDay.get(i) + " )");
+//					}
 				}
 			}
 			datesQuery.append(")");

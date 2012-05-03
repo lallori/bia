@@ -149,6 +149,43 @@ public class DateUtils {
 		
 		return NumberUtils.toInt(stringBuffer.toString());
 	}
+	
+	/**
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static Integer getIntegerDate(Integer year, Integer month, Integer day) {
+		StringBuffer stringBuffer = new StringBuffer("");
+		
+		if (year != null) {
+			stringBuffer.append(year);
+		} else {
+			stringBuffer.append("0000");
+		}
+
+		if (!ObjectUtils.toString(month).equals("")) {
+			if (month<10) {
+				stringBuffer.append("0");
+			}
+			stringBuffer.append(month);
+		} else {
+			stringBuffer.append("00");
+		}
+		
+		if (day != null) {
+			if (day<10) {
+				stringBuffer.append("0");
+			}
+			stringBuffer.append(day);
+		} else {
+			stringBuffer.append("00");
+		}
+		
+		return NumberUtils.toInt(stringBuffer.toString());
+	}
 
 	/**
 	 * 
