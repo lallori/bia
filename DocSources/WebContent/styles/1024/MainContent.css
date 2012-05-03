@@ -501,6 +501,7 @@ item a{
 #personTitle, #documentTitle, #volumeTitle, #geoTitle {
 	border: 1px solid #DCC0BA;
 	border-radius: 4px;
+	-moz-border-radius: 4px;
 	margin: 57px 0 20px 5px;
 	padding: 5px 0 8px 0;
 	width: 475px;
@@ -775,6 +776,30 @@ img.transparent {
 	width:auto;
 	border:1px solid #900;
 	float: right;
+	border-radius:4px;
+	-moz-border-radius: 4px;
+}
+
+.inputerrorsForm { /* Error Span messages */
+	color:#900;
+	padding:1px 4px 1px 4px;
+	margin: 10px 0 0 0;
+	width:auto;
+	border:1px solid #900;
+	max-width: 407px;
+	border-radius:4px;
+	-moz-border-radius: 4px;
+}
+
+.inputerrorsVolumeExist p { /* Error Span messages */
+	color:#900;
+	padding:1px 4px 1px 4px;
+	width:auto;
+	border:1px solid #900;
+	max-width: 407px;
+	margin: 10px 0 0 0;
+	border-radius:4px;
+	-moz-border-radius: 4px;
 }
 
 -- margin da -65px a -64px
@@ -1448,6 +1473,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 
 #SpineVolumeDiv img, #SpineVolumeDigitDiv img {
 	border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 #SpineVolumeDiv p,  #SpineVolumeDigitDiv p, #SpineVolumeNotDigitDiv p{
@@ -1943,8 +1969,8 @@ margin-left: 56px;
 	margin-left:27px;
 }
 
-#linkLabel  {
-	margin-left: 9px;
+#EditPortraitPersonForm #linkLabel  {
+	margin-left: 15px;
 }
 
 
@@ -2136,7 +2162,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #volNumLabel {
-	margin-left:85px;
+	margin-left:82px;
 }
 
 #EditDetailsVolumeForm #volLetExtLabel {
@@ -2156,7 +2182,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #EditDetailsVolumeForm #endYearLabel {
-    margin-left: 8px;
+    margin-left: 10px;
 }
 
 #EditDetailsVolumeForm #endMonthNumLabel {
@@ -2164,7 +2190,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 }
 
 #EditDetailsVolumeForm #endDayLabel {
-    margin-left: 12px;
+    margin-left: 10px;
 }
 
 #EditDetailsVolumeForm input#startDay {
@@ -4267,6 +4293,7 @@ table#savedSearchFiltersForm.display {
 	padding:5px 10px 5px 10px;
 	margin: 5px 0px 5px 0px;
 	border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 #personLabel {
@@ -4727,7 +4754,7 @@ ul#network a {
 	background:url(/DocSources/images/1024/button_bodyleftmenu_xlarge.png) no-repeat;
 	font-size: 11px;
 	padding: 1px 0 0 0;
-	width:140px;
+	width:151px;
 	height:17px;
 	position:absolute;
 	text-decoration:none;
@@ -4735,15 +4762,15 @@ ul#network a {
 }
 
 #printTiff {
-	right: 326px;
+	right: 319px;
 }
 
 #printJpeg {
-	right: 157px;
+	right: 151px;
 }
 
 #printPdf {
-	right: -11px;
+	left: 332px;
 }
 
 /*------------------------------- Edit/Display Divs -------------------------------------*/
@@ -4768,7 +4795,7 @@ ul#network a {
 
 /* Schedone details */
 #dimensioniBaseLabel {
-	margin-right: 69px;
+	margin-right: 70px;
 }
 
 #carteMancantiLabel {
@@ -4820,7 +4847,7 @@ ul#network a {
 }
 
 #dimensioniAltezzaLabel {
-	margin-right: 53px;
+	margin-right: 56px;
 }
 
 #tipoRipresaLabel {
@@ -4844,7 +4871,7 @@ ul#network a {
 }
 
 #responsabileFotoRiproduzioneLabel {
-	 margin-right: 17px;
+	 margin-right: 20px;
 }
 
 /* TIFF images */
@@ -5023,11 +5050,11 @@ ul#network a {
 /* Edit */
 
 #emailAdressLabel {
-	margin-left: 85px;
+	margin-right: 85px;
 }
 
 #emailDisplayLabel {
-	margin-left: 86px;
+	margin-right: 86px;
 }
 
 #reciveNotifEmailLabel {
@@ -5078,11 +5105,11 @@ h3.systemManagement {
 }
 
 #userAccountExpirationLabel {
-	margin-left: 6px;
+	margin-right: 6px;
 }
 
 #userMaxBadLoginCountLabel {
-	margin-left: 55px;
+	margin-right: 55px;
 }
 
 /* User Search Table (body_right) */
@@ -5137,7 +5164,7 @@ h3.systemManagement {
 }
 
 #groupPoliciesLabel {
-	margin-left: 63px;
+	margin-right: 63px;
 }
 
 #lockAccountLabel {
@@ -5169,7 +5196,8 @@ h3.systemManagement {
 	height: 330px;
 	float:left;
 	border: 1px solid #DCC0BA;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 #coordinatesDiv {
@@ -5177,7 +5205,8 @@ h3.systemManagement {
 	margin: 10px 0 20px 635px;
 	background-color: #F2E6E5;
 	border: 1px solid #DCC0BA;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 4px;
+	-moz-border-radius: 4px;
 	padding: 5px 5px 5px 11px;
 }
 
@@ -5257,47 +5286,47 @@ h3.systemManagement {
 /* Edit Elements  */
 
 #imagePathLabel {
-	margin-left: 21px;
+	margin-right: 21px;
 }
 
 #privateKeyLabel {
-	margin-left: 25px;
+	margin-right: 25px;
 }
 
 #publicKeyLabel {
-	margin-left: 32px;
+	margin-right: 32px;
 }
 
 #serverUrlLabel {
-	margin-left: 32px;
+	margin-right: 32px;
 }
 
 #siteIdentifierLabel {
-	margin-left: 14px;
+	margin-right: 14px;
 }
 
 #domainNameLabel {
-	margin-left: 11px;
+	margin-right: 11px;
 }
 
 #serverPathLabel {
-	margin-left: 17px;
+	margin-right: 17px;
 }
 
 #serverHostNameLabel {
-	margin-left: 30px;
+	margin-right: 30px;
 }
 
 #serverPortLabel {
-	margin-left: 68px;
+	margin-right: 68px;
 }
 
 #serverProtocolLabel {
-	margin-left: 46px;
+	margin-right: 46px;
 }
 
 #serverVersionLabel {
-	margin-left: 50px;
+	margin-right: 50px;
 }
 
 
@@ -5344,6 +5373,7 @@ h3.systemManagement {
 	line-height: 18px;
 	border: 1px solid #DCC0BA;
 	border-radius: 4px;
+	-moz-border-radius: 4px;
 	background-color: #EFE0DE;
 	padding-left: 10px;
 }
@@ -5392,6 +5422,7 @@ h3.systemManagement {
 	position: absolute;
 	opacity: 0.6;
 	border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 
 .blockElement {

@@ -21,7 +21,7 @@ body {
 	margin-left: 80px;
 }
 
-/* -------------------------------------------------------------------- Template.css ------------------------------------------------------------------------------- 
+/* -------------------------------------------------------- Template.css ----------------------------------------------------------- 
 *  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
 
@@ -39,7 +39,8 @@ input, select { /* INPUT text */
 }
 
 a.helpIcon { /* Help symbol "?" */
-	padding:0 4px 0 4px; 
+	padding:0 5px 0 5px;
+	border-radius:10px 10px 10px 10px; 
 }
 
 #tooltip h1	{
@@ -177,7 +178,7 @@ form div {
 }
 
 #DocYearLabel, #dateUndatedLabel{
-	margin-left:49px;
+	margin-left:53px;
 }
 
 #dateUndatedLabel {
@@ -185,7 +186,7 @@ form div {
 }
 
 #contDiscLabel {
-	margin-left:125px;
+	margin-left:100px;
 }
 
 /* -------------------------------------- */
@@ -211,7 +212,7 @@ form div {
 
 
 #sucNumLabel {
-	margin-left: 30px;
+	margin-left: 20px;
 }
 
 #midPrefixLabel {
@@ -219,23 +220,23 @@ form div {
 }
 
 #middleLabel {
-	margin-left: 49px;
+	margin-left: 42px;
 }
 
 #lastPrefixLabel {
-	margin-left:3px;
+	margin-left:30px;
 }
 
 #lastLabel {
-	margin-left: 30px;
+	margin-left: 32px;
 }
 
 #postLastPrefixLabel, #bornDateBcLabel {
-	margin-left:17px;
+	margin-left:31px;
 }
 
 #bornDateBcLabel {
-	margin-left:28px;
+	margin-left:21px;
 }
 
 #postLastLabel {
@@ -243,36 +244,27 @@ form div {
 }
 
 #genderLabel {
-	margin-left:51px;
+	margin-left:22px;
 }
 
 #bornApproxLabel, #deathApproxLabel {
-	margin-left:52px;
+	margin-left:58px;
 }
 
 #bornPlaceDescriptionLabel, #deathPlaceDescriptionLabel {
-	margin-left:62px;
+	margin-left:70px;
 }
 
 #midPrefixLabel {
 	margin-left:20px;
 }
 
-#activeStartLabel, #midPrefixLabel{
+#midPrefixLabel{
 	margin-left:30px;
 }
 
-#activeEndLabel {
-	margin-left:37px;
-}
-
-
-#linkLabel  {
-	margin-left: 21px;
-}
-
-#browseLabel {
-	margin-left: 60px;
+#activeEndLabel, #activeStartLabel {
+	margin-left:40px;
 }
 
 /* -------------------------------------- */
@@ -306,7 +298,7 @@ form div {
 }
 
 #bornYearLabel {
-	margin-left:33px;
+	margin-left:30px;
 }
 
 #deathYearLabel {
@@ -314,7 +306,19 @@ form div {
 }
 
 #deathMonthLabel, #deathDayLabel, #bornMonthLabel, #bornDayLabel {
-	margin-left:28px;
+	margin-left:21px;
+}
+
+/* -------------------------------------- */
+/*
+/* ----- Parents ----- */
+
+#bornYearLabelFather, #bornYearLabelMother {
+	margin-left: 48px;
+}
+
+#deathYearLabelFather, #deathYearLabelMother {
+	margin-left: 43px;
 }
 
 /* -------------------------------------- */
@@ -465,9 +469,34 @@ form div {
 /*
 /* -- modal Window -- */
 
-
 #geoDiv h4{
 	padding-top: 7px;
+}
+
+/* -- Editing -- */
+
+#tgnTermIDLabel {
+	margin-left: 19px;
+}
+
+#nameNoAccentsLabel {
+	margin-left: 98px;
+}
+
+#nameWithAccentsLabel {
+	margin-left: 39px;
+}
+
+#placeParentLabel {
+	margin-left: 30px;
+}
+
+#namePlaceLabel {
+	margin-left:31px;
+}
+
+#EditGeoCoorTgnPlaceForm #googleMaps {
+	margin:-5px 0 0 161px;
 }
 
 /*
@@ -593,8 +622,12 @@ form div {
 	width:52px;
 }
 
-#accordion #addSearchFilter { /* Add button */
-	margin: 5px 0 0 17px;
+#cipherSearchForm #addSearchFilter, #indexSearchForm #addSearchFilter { 
+	margin: 5px 0 0 191px;
+}
+
+.volumes #dateSearchForm #addSearchFilter { 
+	margin: 5px 0 0 27px;
 }
 
 /* ------------- DOCUMENT SEARCH ------------------ */
@@ -641,6 +674,10 @@ form div {
 	margin-left: 171px;
 }
 
+#personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #refersToSearchForm #addSearchFilter, #placeSearchForm #addSearchFilter{
+	margin-left: 17px;
+}
+
 
 /* ------------- VOLUME SEARCH ------------------ */
 /* Input Label positions */
@@ -672,36 +709,36 @@ a.showDigitizedDocument{
 	width:150px;
 }
 
-/*------------------------------- Edit/Display Divs -------------------------------------*/
-
+/* ------------------------------------------------- DIGITIZATION MODULE ------------------------------------------------------ */
+/*---------------------- Create New Schedone --------------------------*/
 
 /* Schedone details */
 #dimensioniBaseLabel {
-	margin-right: 21px;
+	margin-right: 76px;
 }
 
 #dimensioniAltezzaLabel {
-	margin-right:9px;
+	margin-right:64px;
 }
 
 #carteMancantiLabel {
-	margin-right: 28px;
+	margin-right: 26px;
 }
 
 #cartulazioneLabel {
-	margin-right: 43px;
+	margin-right: 41px;
 }
 
 #supportoLabel {
-	margin-right: 60px;
+	margin-right: 59px;
 }
 
 #legaturaLabel {
-	margin-right: 62px;
+	margin-right: 61px;
 }
 
 #dateEstremeLabel {
-	margin-right: 41px;
+	margin-right: 38px;
 }
 
 #unitaLabel {
@@ -709,11 +746,11 @@ a.showDigitizedDocument{
 }
 
 #serieLabel {
-	margin-right: 82px;
+	margin-right: 81px;
 }
 
 #numeroUnitaLabel {
-	margin-right:63px;
+	margin-right:61px;
 }
 
 #fondoLabel {
@@ -725,31 +762,27 @@ a.showDigitizedDocument{
 }
 
 #tipoRipresaLabel {
-	margin-right: 33px;
+	margin-right: 74px;
 }
 
 #coloreImmagineLabel {
-	margin-right: 20px;
+	margin-right: 34px;
 }
 
 #risoluzioneLabel {
-	margin-right: 49px;
+	margin-right: 73px;
 }
 
 #responsabileFotoRiproduzioneLabel {
-	margin-right:30px;
+	margin-right:28px;
 }
 
 #daRipresaLabel {
-	margin-right: 55px;
+	margin-right: 124px;
 }
 
 #operatoreLabel {
-	margin-right: 57px;
-}
-
-#responsabileFotoriproduzioneLabel {
-	 margin-right: 41px;
+	margin-right: 55px;
 }
 
 /* TIFF images */
@@ -777,10 +810,122 @@ a.showDigitizedDocument{
 /* -------------------------------------------------------------------------- */
 /*
 /*
-/* -------------------------------------------------------------- ADMINISTRATION MODULE ------------------------------------------------------------- */
+/* ------------------------------------------------- ADMINISTRATION MODULE ------------------------------------------------------ */
 /* ---------------- User Search Table (body_right) ------------- */
 
 .userButton{
 	margin: 60px 0 10px 371px;
+}
+
+/* ---------------- System-Wide Properties ------------- */
+
+/* Recaptcha Properties */
+#siteIdentifierLabel {
+	margin-right:14px;
+}
+
+#serverUrlLabel {
+	margin-right: 38px;
+}
+
+#privateKeyLabel {
+	margin-right: 32px;
+}
+
+#domainNameLabel {
+	margin-right: 15px;
+}
+
+/* IIP Image */
+#serverPathLabel {
+	margin-right: 28px;
+}
+
+#serverHostNameLabel {
+	margin-right: 39px;
+}
+
+#serverPortLabel {
+	margin-right: 73px;
+}
+
+#serverProtocolLabel {
+	margin-right: 51px;
+}
+
+#serverVersionLabel {
+	margin-right: 57px;
+}
+
+/* Schedone */
+
+#EditSchedoneForm #istitutoLabel {
+	margin-right: 93px;
+}
+
+#EditSchedoneForm #legaturaLabel {
+	margin-right: 85px;
+}
+
+#EditSchedoneForm #supportoLabel {
+	margin-right: 83px;
+}
+
+#EditSchedoneForm #tipoRipresaLabel {
+	margin-right: 56px;
+}
+
+#EditSchedoneForm #coloreImmagineLabel {
+	margin-right: 43px;
+}
+
+#EditSchedoneForm #responsabileFotoRiproduzioneLabel {
+	margin-right: 54px;
+}
+
+#EditSchedoneForm #operatoreLabel {
+	margin-right: 80px;
+}
+
+/* ---------------- User Management ------------- */
+/* ----- Add New User ----- */
+
+/* User Control */
+#EditUserControlForm #unmaskLabel {
+	margin-left: 41px;
+}
+
+#EditUserControlForm #groupPoliciesLabel {
+	margin-right: 57px;
+}
+
+/* Email Control */
+#EditEmailControlForm #emailAdressLabel {
+	margin-right: 74px;
+}
+
+#EditEmailControlForm #emailDisplayLabel {
+	margin-right: 77px;
+}
+
+/* ----- Edit or Show Existing User ----- */
+
+#userSearchForm #fullNameLabel {
+	margin-left: 34px;
+}
+
+#userSearchForm #userNameLabel {
+	margin-left: 30px;
+}
+
+
+/* ----- Global User Properties ----- */
+
+#globalUserPropertiesForm #userAccountExpirationLabel {
+	margin-right: 8px;
+}
+
+#globalUserPropertiesForm #userMaxBadLoginCountLabel {
+	margin-right: 53px;
 }
 
