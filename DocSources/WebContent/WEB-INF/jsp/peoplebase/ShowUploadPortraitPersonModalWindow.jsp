@@ -11,7 +11,7 @@
 	<form id="EditPortraitPersonForm" action="${UploadPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
 	       <div>
 	       	<label for="browseLabel" id="browseLabel">Browse</label>	
-	           <input id="browse" name="browse" type="file" value="Browse"/>
+	           <input id="browse" name="browse" type="file"/>
 	       </div>
 	       <div>
 	           <label for="link" id="linkLabel">Link</label>
