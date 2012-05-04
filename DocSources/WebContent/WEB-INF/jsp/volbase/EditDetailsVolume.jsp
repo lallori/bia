@@ -103,7 +103,10 @@
 			</security:authorize>
 
 			var showVolumeExplorer = function (){
-				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val() },
+				if($j(".inputerrorsForm").length > 0){
+					$j(".inputerrorsForm").remove();
+				}
+				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val(), summaryId: '${command.summaryId}' },
 					function(data){
 						if (data.summaryId == "") {
 							if ($j("#volExist").length > 0) {
@@ -122,10 +125,17 @@
 								 
 							);
 						} else {
-							if ($j("#volExist").length == 0) {
-								$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\"><p>Volume is already present, you cannot add again this volume. Save is disabled.</p></span>");
+							if(data.summaryId != '${command.summaryId}'){
+								if ($j("#volExist").length == 0) {
+									$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\"><p>Volume is already present, you cannot add again this volume. Save is disabled.</p></span>");
+								}
+								$j("#save").attr("disabled","true");
+							}else{
+								if($j("#volExist").length > 0){
+									$j("#volExist").remove();
+								}
+								$j("#save").removeAttr("disabled");
 							}
-							$j("#save").attr("disabled","true");
 						}
 					}
 				);
