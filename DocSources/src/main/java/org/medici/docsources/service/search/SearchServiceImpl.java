@@ -457,7 +457,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
-			return getVolumeDAO().searchVolumes(searchContainer, paginationFilter);
+			return getVolumeDAO().searchMYSQL(searchContainer, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

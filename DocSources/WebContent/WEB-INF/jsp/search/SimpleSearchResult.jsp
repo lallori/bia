@@ -34,7 +34,7 @@
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
 				</c:when>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'VOLUME'}">
-					test = [[1, "desc"]];
+					test = [[1, "asc"]];
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ] }];
 				</c:when>
 				<c:when test="${command.simpleSearchPerimeter.toString() == 'PLACE'}">

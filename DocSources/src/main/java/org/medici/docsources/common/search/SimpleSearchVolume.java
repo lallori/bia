@@ -28,6 +28,7 @@
 package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -94,8 +95,44 @@ public class SimpleSearchVolume extends SimpleSearch {
 	 */
 	@Override
 	public String toJPAQuery() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer jpaQuery = new StringBuffer("FROM Volume ");
+		
+		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		
+		if(words.length > 0){
+			jpaQuery.append(" WHERE ");
+		}
+		
+		for(int i = 0; i < words.length; i++){
+			if(NumberUtils.isNumber(words[i])){
+				jpaQuery.append("(volNum = ");
+				jpaQuery.append(words[i]);
+				jpaQuery.append(") OR ");
+			}
+			jpaQuery.append("(ccondition like '%");
+			jpaQuery.append(words[i] + "%') OR ");
+			jpaQuery.append("(ccontext like '%");
+			jpaQuery.append(words[i] + "%') OR ");
+			jpaQuery.append("(orgNotes like '%");
+			jpaQuery.append(words[i] + "%') OR ");
+			jpaQuery.append("(recips like '%");
+			jpaQuery.append(words[i] + "%') OR ");
+			jpaQuery.append("(senders like '%");
+			jpaQuery.append(words[i] + "%') OR ");
+			jpaQuery.append("(serieList.title like '%");
+			jpaQuery.append(words[i] + "%') OR ");
+			jpaQuery.append("(serieList.subTitle1 like '%");
+			jpaQuery.append(words[i] + "%') OR ");
+			jpaQuery.append("(serieList.subTitle2 like '%");
+			jpaQuery.append(words[i] + "%')");
+			
+				
+			if(i < (words.length - 1)){
+				jpaQuery.append(" AND ");
+			}
+		}
+		
+		return jpaQuery.toString();
 	}
 
 	/**

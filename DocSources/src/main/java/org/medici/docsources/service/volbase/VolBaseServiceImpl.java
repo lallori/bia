@@ -367,6 +367,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+		
+		volumeToUpdate.setVolNum(volume.getVolNum());
+		volumeToUpdate.setVolLetExt(volume.getVolLetExt());
 
 		if (volume.getSerieList() != null) {
 			volumeToUpdate.setSerieList(getSeriesListDAO().find(volume.getSerieList().getSeriesRefNum()));
