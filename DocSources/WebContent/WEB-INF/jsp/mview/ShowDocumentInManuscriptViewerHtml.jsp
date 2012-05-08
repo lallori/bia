@@ -39,55 +39,27 @@
 				var credit = '';	
 				if ("${documentExplorer.image.imageType}" == 'R') {
 					credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
-					
-					credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
-					
-					if ("${documentExplorer.image.missedNumbering}") {
-						credit += ' ' + "${documentExplorer.image.missedNumbering}";
-					}
-		
-					if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
-						credit += '</span>' + ' recto' + '</span>';
-					} else {
-						credit += '</span>' + ' verso' + '</span>';
-					}
-				} 
-				
-				else if ("${documentExplorer.image.imageType}" == 'C') {
+				} else if ("${documentExplorer.image.imageType}" == 'C') {
 					credit += '<span style=\'font-size:16px\'>' + 'folio &nbsp; &nbsp;';
-					
-					credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
-					
-					if ("${documentExplorer.image.missedNumbering}") {
-						credit += ' ' + "${documentExplorer.image.missedNumbering}";
-					}
-		
-					if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
-						credit += '</span>' + ' recto' + '</span>';
-					} else {
-						credit += '</span>' + ' verso' + '</span>';
-					}
-				} 
-				
-				else if ("${documentExplorer.image.imageType}" == 'A') {
+				} else if ("${documentExplorer.image.imageType}" == 'A') {
 					credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
-					
-					credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
-					
-					if ("${documentExplorer.image.missedNumbering}") {
-						credit += ' ' + "${documentExplorer.image.missedNumbering}";
-					}
-		
-					if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
-						credit += '</span>' + ' recto' + '</span>';
-					} else {
-						credit += '</span>' + ' verso' + '</span>';
-					}
-				}
-		    
-		    	else {
+				} else if ("${documentExplorer.image.imageType}" == 'G') {
+					credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+				else {
 		    		var credit = ' ';
 		    	}
+				
+				credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
+				
+				if ("${documentExplorer.image.missedNumbering}") {
+					credit += ' ' + "${documentExplorer.image.missedNumbering}";
+				}
+	
+				if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
+					credit += '</span>' + ' recto' + '</span>';
+				} else {
+					credit += '</span>' + ' verso' + '</span>';
+				}
 				
 				iip = new IIPMooViewer( "targetframe", {
 					server: '${ReverseProxyIIPImage}',
