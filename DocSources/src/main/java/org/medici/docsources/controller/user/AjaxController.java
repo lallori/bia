@@ -301,10 +301,10 @@ public class AjaxController {
 			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			   	singleRow.add(currentUserHistory.getAction().toString());
 			   	//MD: This code is for prevent a string too long.
-			   	if(currentUserHistory.getPerson().getMapNameLf().length() < 40)
+			   	if(currentUserHistory.getPerson().getMapNameLf().length() < 38)
 			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf());
 			   	else
-			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf().substring(0, 37) + "...");
+			   		singleRow.add(currentUserHistory.getPerson().getMapNameLf().substring(0, 35) + "...");
 			    resultList.add(HtmlUtils.showPeople(singleRow, currentUserHistory.getPerson().getPersonId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.PLACE)) {
 			   singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
