@@ -1629,9 +1629,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			String tempPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person.temp");
 			
-			String fileName = tempPath + "/" + ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + personPortrait.getPersonId(); 
+			String fileName = tempPath + "/" + ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getFile().getOriginalFilename(); 
 			File tempFile = new File(fileName);
-			FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile());
+			FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile().getBytes());
 			return fileName;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

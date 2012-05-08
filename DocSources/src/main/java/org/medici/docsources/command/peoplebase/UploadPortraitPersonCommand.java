@@ -29,6 +29,8 @@ package org.medici.docsources.command.peoplebase;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -36,7 +38,8 @@ import javax.validation.constraints.NotNull;
  */
 public class UploadPortraitPersonCommand {
 	private Integer personId;
-	private byte[] browse;
+	//private byte[] browse;
+	private CommonsMultipartFile browse;
 	private String link;
 
 	/**
@@ -56,14 +59,14 @@ public class UploadPortraitPersonCommand {
 	/**
 	 * @param browse the browse to set
 	 */
-	public void setBrowse(byte[] browse) {
+	public void setBrowse(CommonsMultipartFile browse) {
 		this.browse = browse;
 	}
 
 	/**
 	 * @return the browse
 	 */
-	public byte[] getBrowse() {
+	public CommonsMultipartFile getBrowse() {
 		return browse;
 	}
 

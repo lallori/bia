@@ -10,14 +10,14 @@
 	
 	<form id="EditPortraitPersonForm" action="${UploadPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
 	       <div>
-	       	<label for="browseLabel" id="browseLabel">Browse</label>	
-	           <input id="browse" name="browse" type="file"/>
+	       		<label for="browseLabel" id="browseLabel">Browse</label>	
+	       	    <input id="browse" name="browse" type="file" class="input_28c"/>
 	       </div>
 	       <div>
-	           <label for="link" id="linkLabel">Link</label>
-	           <input id="link" name="link" class="input_43c" type="text" value="http://" />
+	       	    <label for="link" id="linkLabel">Link</label>
+	       	    <input id="link" name="link" class="input_40c" type="text" value="http://" />
 	       </div>
 	       <div>
-	           <input id="save" type="submit" value="Save" />
+	       	    <input id="save" type="submit" value="Save" />
 	       </div>
 	   </form>

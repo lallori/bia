@@ -28,7 +28,6 @@
 package org.medici.docsources.validator.peoplebase;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
 import org.medici.docsources.command.peoplebase.UploadPortraitPersonCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -36,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  * 
@@ -96,8 +96,17 @@ public class UploadPortraitPersonValidator implements Validator {
 	 * @param browse
 	 * @param errors
 	 */
-	private void validateImageToLoad(byte[] browse, Errors errors) {
-		// TODO Auto-generated method stub
+	private void validateImageToLoad(CommonsMultipartFile browse, Errors errors) {
+		if(browse != null){
+			String fileName = browse.getOriginalFilename().toLowerCase();
+			if(!fileName.endsWith(".jpg") || !fileName.endsWith(".png")){
+				errors.reject("browse", "error.browse.invalidImage");
+			}
+			//MD: Verify if the upload file is too big
+			if(browse.getSize() > 15000){
+				errors.reject("browse", "error.browse.fileDimension");
+			}
+		}
 		
 	}
 

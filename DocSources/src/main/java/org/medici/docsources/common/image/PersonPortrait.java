@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.common.image;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -34,7 +36,7 @@ package org.medici.docsources.common.image;
  */
 public class PersonPortrait {
 	private Integer personId;
-	private byte[] file;
+	private CommonsMultipartFile file;
 
 	/**
 	 * 
@@ -42,8 +44,10 @@ public class PersonPortrait {
 	 * @param browse
 	 * @param link
 	 */
-	public PersonPortrait(Integer personId, byte[] browse, String link) {
-		// TODO Auto-generated constructor stub
+	public PersonPortrait(Integer personId, CommonsMultipartFile browse, String link) {
+		this.personId = personId;
+		this.file = browse;
+		//TODO: link
 	}
 
 	/**
@@ -63,14 +67,14 @@ public class PersonPortrait {
 	/**
 	 * @param file the file to set
 	 */
-	public void setFile(byte[] file) {
+	public void setFile(CommonsMultipartFile file) {
 		this.file = file;
 	}
 
 	/**
 	 * @return the file
 	 */
-	public byte[] getFile() {
+	public CommonsMultipartFile getFile() {
 		return file;
 	}
 
