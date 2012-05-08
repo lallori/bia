@@ -75,7 +75,7 @@
 				</c:if>
 			</div>
 			<div class="row">
-				<div class="item">Recipient Notes</div> <div class="value80">${document.recipNotes}</div>
+				<div class="item">Recip. Notes</div> <div class="value80">${document.recipNotes}</div>
 			</div>	
 			<br>
 			<div class="row">
