@@ -129,6 +129,10 @@
 	</c:url>	
 	
 	<div id="ShowVolumeExplorer">
+		<div class="yourSearchDiv">
+			<p>Exploring Volume: <font color="red" style="margin-left:5px; font-size:15px">${volumeExplorer.volNum}${volumeExplorer.volLetExt}</font></p>
+		</div>
+	
 		<div id="prevNextButtons">
 			<div id="previousPage">
 			<c:if test="${volumeExplorer.image.imageOrder == 1}">

@@ -62,7 +62,7 @@
 		<form:label for="interests" id="interestsLabel" path="interests">Interests</form:label>
 		<form:input id="interests" path="interests" cssClass="input_20c" /><form:errors path="interests" />
 		<label for="resume" id="resumeLabel">Resume</label>
-		<input id="resume" name="resume" class="input_20c" type="file" value="" size="14"/>
+		<input id="resume" name="resume" class="input_20c" type="file" value="" size="11"/>
 	</div>
 	
 		<input id="close" type="submit" value="Close" title="Do not save changes" />

@@ -39,7 +39,7 @@ input, select { /* INPUT text */
 }
 
 a.helpIcon { /* Help symbol "?" */
-	padding:0 5px 0 5px;
+	padding:0 4px 0 4px;
 	border-radius:10px 10px 10px 10px; 
 }
 
@@ -174,11 +174,11 @@ form div {
 }
 
 #folioNumLabel {
-	margin-left:19px;
+	margin-left:17px;
 }
 
 #DocYearLabel, #dateUndatedLabel{
-	margin-left:53px;
+	margin-left:55px;
 }
 
 #dateUndatedLabel {
@@ -191,7 +191,15 @@ form div {
 
 /* -------------------------------------- */
 /*
-/* ------------------------- TOPICS ------------------------- */
+/* ------------------------- Correspondents / People ------------------------- */
+
+#recipientPlaceDescriptionLabel {
+	margin-left:38px;
+}
+
+/* -------------------------------------- */
+/*
+/* ------------------------- Topics ------------------------- */
 
 #topicLabel {
 	margin-right: 29px;
@@ -228,7 +236,7 @@ form div {
 }
 
 #lastLabel {
-	margin-left: 32px;
+	margin-left: 33px;
 }
 
 #postLastPrefixLabel, #bornDateBcLabel {
@@ -240,11 +248,11 @@ form div {
 }
 
 #postLastLabel {
-	margin-left: 42px;
+	margin-left: 43px;
 }
 
 #genderLabel {
-	margin-left:22px;
+	margin-left:23px;
 }
 
 #bornApproxLabel, #deathApproxLabel {
@@ -263,8 +271,12 @@ form div {
 	margin-left:30px;
 }
 
-#activeEndLabel, #activeStartLabel {
-	margin-left:40px;
+#activeEndLabel {
+	margin-left:41px;
+}
+
+#activeStartLabel {
+	margin-left:36px;
 }
 
 /* -------------------------------------- */
@@ -298,7 +310,7 @@ form div {
 }
 
 #bornYearLabel {
-	margin-left:30px;
+	margin-left:34px;
 }
 
 #deathYearLabel {
@@ -314,11 +326,11 @@ form div {
 /* ----- Parents ----- */
 
 #bornYearLabelFather, #bornYearLabelMother {
-	margin-left: 48px;
+	margin-left: 45px;
 }
 
 #deathYearLabelFather, #deathYearLabelMother {
-	margin-left: 43px;
+	margin-left: 41px;
 }
 
 /* -------------------------------------- */
@@ -363,7 +375,7 @@ form div {
 }
 
 #EditDetailsVolumeForm #startYearLabel {
-	margin-left:10px;
+	margin-left:13px;
 }
 
 #SpineVolumeDiv, #SpineVolumeNotDigitDiv, #SpineVolumeDigitDiv  {
@@ -393,7 +405,7 @@ form div {
 }
 
 #oldAlphaIndexLabel {
-	margin-left: 53px;
+	margin-left: 50px;
 }
 
 #printedMaterialLabel {
@@ -508,15 +520,23 @@ form div {
 /* Input positions */
 
 #countryLabel {
-	margin-left:44px;
+	margin-left:38px;
+}
+
+#interests {
+	margin-left:38px;
+}
+
+#group {
+	margin-left:51px;
 }
 
 #resumeLabel {
-	margin-left: 47px;
+	margin-left: 38px;
 }
 
 #locationLabel {
-	margin-left: 41px;
+	margin-left: 33px;
 }
 
 #organization {
@@ -524,7 +544,7 @@ form div {
 }
 
 #titleLabel {
-	margin-left: 62px;
+	margin-left: 55px;
 }
 
 
@@ -541,39 +561,39 @@ form div {
 /* Close & Save Buttons position */
 
 #userProfile #PersonalNotesButton {
-	padding:5px 0 0 0;
+	padding:3px 0 0 0;
 }
 
 #userProfile #EditUserProfile {
-	padding:5px 0 0 0;
+	padding:4px 0 0 0;
 }
 
 #userProfile #CloseUserProfile {
-	padding:5px 0 0 0;
+	padding:4px 0 0 0;
 }
 
 #modalBox #editCleanClose #edit {
-	padding:5px 0 0 0;
+	padding:4px 0 0 0;
 }
 
 #modalBox #editCleanClose #cleanAll {
-	padding:5px 0 0 0;
+	padding:4px 0 0 0;
 }
 
 #modalBox #editCleanClose #close {
-	padding:5px 0 0 0;
+	padding:4px 0 0 0;
 }
 
 #modalBox #editCleanClose #goBack {
-	padding:5px 0 0 0;
+	padding:4px 0 0 0;
 }
 
 #closesavePersonalNotes #close{
-	padding:5px 0 0 0;
+	padding:4px 0 0 0;
 }
 
 #closesavePersonalNotes #goBack{
-	padding:5px 0 0 0;
+	padding:4px 0 0 0;
 }
 
 /* -------------------------------------------------------------------------- */
