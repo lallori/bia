@@ -28,10 +28,13 @@
 package org.medici.docsources.service.community;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.UserComment;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -112,6 +115,22 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ArrayList<UserComment> getCommentsOnVolume(Integer summaryId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Forum> getForumCategories(Forum forum) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param categoriesIds
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HashMap<Integer, Forum> getForumsGroupByCategory(List<?> categoriesIds) throws ApplicationThrowable;
 
 	/**
 	 * 

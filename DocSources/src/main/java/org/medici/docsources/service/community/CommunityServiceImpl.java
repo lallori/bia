@@ -28,14 +28,16 @@
 package org.medici.docsources.service.community;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
-import org.medici.docsources.dao.forumcategory.ForumCategoryDAO;
+import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
-import org.medici.docsources.dao.forumsubcategory.ForumSubCategoryDAO;
 import org.medici.docsources.dao.usermessage.UserMessageDAO;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.UserComment;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -53,11 +55,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class CommunityServiceImpl implements CommunityService {
 	@Autowired
-	private ForumCategoryDAO forumCategoryDAO;   
+	private ForumDAO forumDAO;   
 	@Autowired
 	private ForumPostDAO forumPostDAO;   
-	@Autowired
-	private ForumSubCategoryDAO forumSubCategoryDAO;   
 	@Autowired
 	private UserMessageDAO userMessageDAO;   
 
@@ -150,10 +150,22 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @return the forumCategoryDAO
+	 * {@inheritDoc}
 	 */
-	public ForumCategoryDAO getForumCategoryDAO() {
-		return forumCategoryDAO;
+	@Override
+	public List<Forum> getForumCategories(Forum forum) throws ApplicationThrowable {
+		try {
+			return getForumDAO().findForumCategories(forum);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
 	}
 
 	/**
@@ -164,10 +176,12 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @return the forumSubCategoryDAO
+	 * {@inheritDoc}
 	 */
-	public ForumSubCategoryDAO getForumSubCategoryDAO() {
-		return forumSubCategoryDAO;
+	@Override
+	public HashMap<Integer, Forum> getForumsGroupByCategory(List<?> categoriesIds) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -210,10 +224,10 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * @param forumCategoryDAO the forumCategoryDAO to set
+	 * @param forumDAO the forumDAO to set
 	 */
-	public void setForumCategoryDAO(ForumCategoryDAO forumCategoryDAO) {
-		this.forumCategoryDAO = forumCategoryDAO;
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
 	}
 
 	/**
@@ -221,13 +235,6 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
 		this.forumPostDAO = forumPostDAO;
-	}
-
-	/**
-	 * @param forumSubCategoryDAO the forumSubCategoryDAO to set
-	 */
-	public void setForumSubCategoryDAO(ForumSubCategoryDAO forumSubCategoryDAO) {
-		this.forumSubCategoryDAO = forumSubCategoryDAO;
 	}
 
 	/**
