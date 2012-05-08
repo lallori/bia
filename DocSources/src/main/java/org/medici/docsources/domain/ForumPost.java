@@ -43,7 +43,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * This class represents entity ForumSubCategory.
+ * This class represents entity Forum.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
@@ -55,133 +55,133 @@ public class ForumPost {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"id\"", length=10, nullable=false)
 	private Integer id;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="\"forumSubCategory\"")
-	private ForumSubCategory forumSubCategory;
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn (name="\"parentPost\"", nullable=true)
 	private ForumPost parentPost;
 	@Column (name="\"username\"", length=64, nullable=false)
 	private String username;
-	@Column (name="\"title\"", length=64, nullable=false)
-	private String title;
-	@Column (name="\"content\"", length=2000)
-	private String content;
-	@Column (name="\"date\"")
+	@Column (name="\"dateCreated\"")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
+	private Date dateCreated;
+	@Column (name="\"lastUpdate\"")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastUpdate;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"forum\"")
+	private Forum forum;
 	@Column (name="\"ipAddress\"", length=50, nullable=false)
 	private String ipAddress;
-
+	@Column (name="\"subject\"", length=64, nullable=false)
+	private String subject;
+	@Column (name="\"text\"", length=75000)
+	private String text;
 	/**
 	 * @return the id
 	 */
 	public Integer getId() {
 		return id;
 	}
-	
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	/**
-	 * @return the forumSubCategory
-	 */
-	public ForumSubCategory getForumSubCategory() {
-		return forumSubCategory;
-	}
-	
-	/**
-	 * @param forumSubCategory the forumSubCategory to set
-	 */
-	public void setForumSubCategory(ForumSubCategory forumSubCategory) {
-		this.forumSubCategory = forumSubCategory;
-	}
-	
 	/**
 	 * @return the parentPost
 	 */
 	public ForumPost getParentPost() {
 		return parentPost;
 	}
-	
 	/**
 	 * @param parentPost the parentPost to set
 	 */
 	public void setParentPost(ForumPost parentPost) {
 		this.parentPost = parentPost;
 	}
-	
 	/**
 	 * @return the username
 	 */
 	public String getUsername() {
 		return username;
 	}
-	
 	/**
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
 	/**
-	 * @return the title
+	 * @return the dateCreated
 	 */
-	public String getTitle() {
-		return title;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
-	
 	/**
-	 * @param title the title to set
+	 * @param dateCreated the dateCreated to set
 	 */
-	public void setTitle(String title) {
-		this.title = title;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
-	
 	/**
-	 * @return the content
+	 * @return the lastUpdate
 	 */
-	public String getContent() {
-		return content;
+	public Date getLastUpdate() {
+		return lastUpdate;
 	}
-	
 	/**
-	 * @param content the content to set
+	 * @param lastUpdate the lastUpdate to set
 	 */
-	public void setContent(String content) {
-		this.content = content;
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
-	
 	/**
-	 * @return the date
+	 * @return the forum
 	 */
-	public Date getDate() {
-		return date;
+	public Forum getForum() {
+		return forum;
 	}
-	
 	/**
-	 * @param date the date to set
+	 * @param forum the forum to set
 	 */
-	public void setDate(Date date) {
-		this.date = date;
+	public void setForum(Forum forum) {
+		this.forum = forum;
 	}
-	
 	/**
 	 * @return the ipAddress
 	 */
 	public String getIpAddress() {
 		return ipAddress;
 	}
-	
 	/**
 	 * @param ipAddress the ipAddress to set
 	 */
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
+	/**
+	 * @return the subject
+	 */
+	public String getSubject() {
+		return subject;
+	}
+	/**
+	 * @param subject the subject to set
+	 */
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
+	}
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
+
 }
