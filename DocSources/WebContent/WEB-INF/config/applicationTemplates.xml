@@ -16,11 +16,15 @@
     
     <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp"/>
 
-    <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
-        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
-    </definition>
+	<definition name="template.forum" template="/WEB-INF/templates/forum.jsp">
+		<put-attribute name="search" value="/WEB-INF/jsp/community/fragments/searchForum.jsp"/>
+		<put-attribute name="chronology" value="/WEB-INF/jsp/community/fragments/chronologyUserForum.jsp"/>
+		<put-attribute name="user" value="/WEB-INF/jsp/community/fragments/userForum.jsp"/>
+		<put-attribute name="members" value="/WEB-INF/jsp/community/fragments/membersForum.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/jsp/community/fragments/footerForum.jsp"/>
+	</definition>
 
-    <definition name="template.registerDOM" template="/WEB-INF/templates/registerDOM.jsp">
+    <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
         <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
     </definition>
 
@@ -50,6 +54,10 @@
 
     <definition name="template.printDOM" template="/WEB-INF/templates/printDOM.jsp">
     	<put-attribute name="footer" value="/WEB-INF/jsp/fragments/printFooter.jsp" />
+    </definition>
+
+    <definition name="template.registerDOM" template="/WEB-INF/templates/registerDOM.jsp">
+        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
     </definition>
 
 	<definition name="template.schedone" template="/WEB-INF/templates/schedone.jsp" />
@@ -253,6 +261,19 @@
 	<definition name="community/ShowCommentsOnVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnVolume.jsp"/>
 	</definition>
+
+	<definition name="community/ShowIndexForum" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
+	</definition>
+
+	<definition name="community/ShowForum" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
+	</definition>
+
+	<definition name="community/ShowTopicForum" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowTopicForum.jsp"/>
+	</definition>
+
 	<!-- Community Module END -->
 
     <!-- Digitization Module BEGIN -->
