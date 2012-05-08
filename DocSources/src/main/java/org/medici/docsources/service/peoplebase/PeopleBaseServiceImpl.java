@@ -28,6 +28,7 @@
 package org.medici.docsources.service.peoplebase;
 
 import java.io.File;
+import java.net.URL;
 import java.text.Normalizer;
 import java.util.Date;
 import java.util.HashMap;
@@ -1629,9 +1630,18 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		try {
 			String tempPath = ApplicationPropertyManager.getApplicationProperty("path.portrait.person.temp");
 			
-			String fileName = tempPath + "/" + ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getFile().getOriginalFilename(); 
+			String fileName;
+			if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
+				fileName = tempPath + "/" + ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getFile().getOriginalFilename();
+			}else{
+				fileName = tempPath + "/" + ((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername() + "/" + personPortrait.getPersonId() + "/" + personPortrait.getPersonId() + personPortrait.getLink().substring(personPortrait.getLink().length() - 4, personPortrait.getLink().length());
+			}
 			File tempFile = new File(fileName);
-			FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile().getBytes());
+			if(personPortrait.getFile() != null && personPortrait.getFile().getSize() > 0){
+				FileUtils.writeByteArrayToFile(tempFile, personPortrait.getFile().getBytes());
+			}else{
+				FileUtils.copyURLToFile(new URL(personPortrait.getLink()), tempFile);
+			}
 			return fileName;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);

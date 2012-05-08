@@ -37,6 +37,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class PersonPortrait {
 	private Integer personId;
 	private CommonsMultipartFile file;
+	private String link;
 
 	/**
 	 * 
@@ -46,8 +47,8 @@ public class PersonPortrait {
 	 */
 	public PersonPortrait(Integer personId, CommonsMultipartFile browse, String link) {
 		this.personId = personId;
-		this.file = browse;
-		//TODO: link
+		this.file = browse;	
+		this.link = link;
 	}
 
 	/**
@@ -76,6 +77,20 @@ public class PersonPortrait {
 	 */
 	public CommonsMultipartFile getFile() {
 		return file;
+	}
+
+	/**
+	 * @param link the link to set
+	 */
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	/**
+	 * @return the link
+	 */
+	public String getLink() {
+		return link;
 	}
 
 }

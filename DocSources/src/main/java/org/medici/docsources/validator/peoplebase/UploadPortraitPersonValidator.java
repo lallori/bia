@@ -97,7 +97,7 @@ public class UploadPortraitPersonValidator implements Validator {
 	 * @param errors
 	 */
 	private void validateImageToLoad(CommonsMultipartFile browse, Errors errors) {
-		if(browse != null){
+		if(browse != null && browse.getSize() > 0){
 			String fileName = browse.getOriginalFilename().toLowerCase();
 			if(!fileName.endsWith(".jpg") || !fileName.endsWith(".png")){
 				errors.reject("browse", "error.browse.invalidImage");
