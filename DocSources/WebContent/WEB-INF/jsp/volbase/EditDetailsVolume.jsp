@@ -116,7 +116,7 @@
 
 							$j.get('${CheckVolumeDigitizedURL}', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val() }, function(data){
 									if (data.digitized == "true") {
-				            			var tabName = "Volume Explorer " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
+				            			var tabName = "Explore Volume " + data.volNum + data.volLetExt + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab"
 				            			var showVolumeExplorer = "${ShowExplorerVolumeURL}?volNum=" + data.volNum + "&volLetExt=" + data.volLetExt + "&flashVersion=false";
 				                    	$j("#tabs").tabs("add", "" + showVolumeExplorer, tabName);
 				                    	$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
@@ -141,7 +141,33 @@
 				);
 	 		}
 			$j("#volNum").change(showVolumeExplorer);
-			$j("#volLetExt").change(showVolumeExplorer);	        	
+			$j("#volLetExt").change(showVolumeExplorer);
+			
+			/*$j("#volNum").keyup(function(){
+				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val(), summaryId: '${command.summaryId}' },
+						function(data){
+							if (data.summaryId == "") {
+								if ($j("#volExist").length > 0) {
+									$j("#volExist").remove();
+								}
+								$j("#save").removeAttr("disabled");
+							}
+							else {
+								if(data.summaryId != '${command.summaryId}'){
+									if ($j("#volExist").length == 0) {
+										$j("#close").before("<span class=\"inputerrorsVolumeExist\" id=\"volExist\"><p>Volume is already present, you cannot add again this volume. Save is disabled.</p></span>");
+									}
+									$j("#save").attr("disabled","true");
+								}else{
+									if($j("#volExist").length > 0){
+										$j("#volExist").remove();
+									}
+									$j("#save").removeAttr("disabled");
+								}
+							}
+					});
+						
+			});*/
 
 			var a = $j('#seriesRefDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchSeriesListUrl}',
@@ -196,6 +222,23 @@
 			});
 
 			$j("#EditDetailsVolumeForm").submit(function (){
+				//Check if there is a tab opened that refers to the old number
+				if($j("#showDocumentsSummaryId${command.summaryId}").length > 0){
+					var tabName = "Docs Volume ${command.volNum}${command.volLetExt}";
+					var numTab = 0;
+					
+					//Check if already exist a tab with this person
+					var tabExist = false;
+					$j("#tabs ul li a").each(function(){
+						if(!tabExist)
+							numTab++;
+						if(this.text == tabName){
+							tabExist = true;
+						}
+					});
+					$j("#tabs").tabs("remove", numTab-1);
+				}
+				
 				if($j("#endYear").val() != '' && $j("#startYear").val() !=''){
 					if($j("#endYear").val() < $j("#startYear").val()){
 						$j('#EditDetailsVolumeDiv').block({ message: $j('.wrongEndDate'),

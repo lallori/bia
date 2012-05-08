@@ -114,7 +114,7 @@
 			<div class="row">
 <!-- 				Entries like "person name lost" or "to be entered" should be not clickable -->
 				<c:if test="${document.senderPeople.personId != 9285 && document.senderPeople.personId != 3905 && document.senderPeople.personId != 198}">
-					<div class="item">Sender</div> <div class="value80"><a class="linkPeople" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</a></div>
+					<div class="item">Sender</div> <div class="value80"><p class="linkSearch" href="${CompareSenderURL}">${document.senderPeople.mapNameLf}</p></div>
 				</c:if>
 				<c:if test="${document.senderPeople.personId == 9285 || document.senderPeople.personId == 3905 || document.senderPeople.personId == 198}">
 					<div class="item">Sender</div> <div class="value80">${document.senderPeople.mapNameLf}</div>
@@ -122,7 +122,7 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.senderPlace.placeAllId != 53384 && document.senderPlace.placeAllId != 55627 && document.senderPlace.placeAllId != 54332}">
-					<div class="item">From</div> <div class="value80"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a></div>
+					<div class="item">From</div> <div class="value80"><p class="linkSearch" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </p></div>
 				</c:if>
 				<c:if test="${document.senderPlace.placeAllId == 53384 || document.senderPlace.placeAllId == 55627 || document.senderPlace.placeAllId == 54332 }">
 					<div class="item">From</div> <div class="value80">${document.senderPlace.placeNameFull} </div>
@@ -130,7 +130,7 @@
 			</div>	
 			<div class="row">
 				<c:if test="${document.recipientPeople.personId != 9285 && document.recipientPeople.personId != 3905 && document.recipientPeople.personId != 198}">
-					<div class="item">Recipient</div> <div class="value80"><a class="linkPeople" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</a></div>
+					<div class="item">Recipient</div> <div class="value80"><p class="linkSearch" href="${CompareRecipientURL}">${document.recipientPeople.mapNameLf}</p></div>
 				</c:if>
 				<c:if test="${document.recipientPeople.personId == 9285 || document.recipientPeople.personId == 3905 || document.recipientPeople.personId == 198}">
 					<div class="item">Recipient</div> <div class="value80">${document.recipientPeople.mapNameLf}</div>
@@ -138,7 +138,7 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.recipientPlace.placeAllId != 53384 && document.recipientPlace.placeAllId != 55627 && document.recipientPlace.placeAllId != 54332}">
-					<div class="item">To</div> <div class="value80"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a></div>
+					<div class="item">To</div> <div class="value80"><p class="linkSearch" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</p></div>
 				</c:if>
 				<c:if test="${document.recipientPlace.placeAllId == 53384 || document.recipientPlace.placeAllId == 55627 || document.recipientPlace.placeAllId == 54332}">
 					<div class="item">To</div> <div class="value80">${document.recipientPlace.placeNameFull}</div>
@@ -155,7 +155,7 @@
 						<c:param name="personId"   value="${currentPeople.person.personId}" />
 					</c:url>
 					<c:if test="${currentPeople.person.personId != 9285 && currentPeople.person.personId != 3905 && currentPeople.person.personId != 198}">
-					<div class="value80"><a class="linkPeople" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</a></div>
+					<div class="value80"><p class="linkSearch" href="${ComparePersonURL}">${currentPeople.person.mapNameLf}</p></div>
 					</c:if>
 					<c:if test="${currentPeople.person.personId == 9285 || currentPeople.person.personId == 3905 || currentPeople.person.personId == 198}">
 					<div class="value80">${currentPeople.person.mapNameLf}</div>
