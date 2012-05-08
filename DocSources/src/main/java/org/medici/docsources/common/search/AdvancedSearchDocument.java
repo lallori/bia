@@ -1579,9 +1579,9 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.append(" AND ");
 				}
 
-				if (datesTypes.get(i).equals(DateType.After)) {
+				if (datesTypes.get(i).equals(DateType.From)) {
 					//datesQuery.append("(STR_TO_DATE(CONCAT(docYear, ',' , docMonthNum, ',', docDay),'%Y,%m,%d')>");
-					datesQuery.append("(sortableDateInt >");
+					datesQuery.append("(sortableDateInt >=");
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(")");
 				} else if (datesTypes.get(i).equals(DateType.Before)) {
@@ -1589,7 +1589,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(")");
 				}else if (datesTypes.get(i).equals(DateType.Between)) {
-					datesQuery.append("(sortableDateInt >");
+					datesQuery.append("(sortableDateInt >=");
 					datesQuery.append(DateUtils.getIntegerDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(") AND (sortableDateInt <");
 					datesQuery.append(DateUtils.getIntegerDate(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
@@ -2049,7 +2049,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			for (int i=0; i<datesTypes.size(); i++) {
 				if (datesTypes.get(i) == null) {
 					continue;
-				} else if (datesTypes.get(i).equals(DateType.After)) {
+				} else if (datesTypes.get(i).equals(DateType.From)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
 					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("docDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 

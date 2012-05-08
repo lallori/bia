@@ -44,7 +44,7 @@ public abstract class AdvancedSearchAbstract implements AdvancedSearch {
 	 *
 	 */
 	public static enum DateType {
-		After("After"), Before("Before"), Between("Between"), InOn("InOn");
+		From("From"), Before("Before"), Between("Between"), InOn("InOn");
 		
 		private final String dateType;
 
