@@ -222,7 +222,7 @@
 					<c:param name="personId"   value="${currentChild.child.personId}" />
 				</c:url>
 				<div class="row">
-					<div class="value"><a class="linkChild" href="${ComparePersonURL}">${currentChild.child}</a></div> 
+					<div class="value"><a class="linkChildCompare ${person.personId}" href="${ComparePersonURL}">${currentChild.child}</a></div> 
 					<div class="info">Birth ${currentChild.child.bornYear} | Death ${currentChild.child.deathYear}</div>
 				</div>
 	</c:forEach>
@@ -479,7 +479,7 @@
 				}
 			});
 			
-			$j(".linkChild").click(function() {
+			$j(".linkChildCompare.${person.personId}").click(function() {
 	        	var tabName = $j(this).text();
 				var numTab = 0;
 				
