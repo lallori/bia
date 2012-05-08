@@ -56,7 +56,7 @@ public class ListBeanUtils {
 	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<?> transformList(List inputList, String fieldName) {
-		if (inputList.size() == 0)
+		if (inputList == null)
 			return new ArrayList<Object>(0);
 
 		ArrayList retValue = new ArrayList(inputList.size());
@@ -77,39 +77,7 @@ public class ListBeanUtils {
 					retValue.set(i, null);
 				}
 			}
-		} /*else {
-			PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(inputList.get(0).getClass(), fieldName.substring(0, fieldName.indexOf(".")));
-			Method method = pd.getReadMethod();
-	
-			for (int i = 0; i < inputList.size(); i++) {
-				try {
-					Object beanProperty = method.invoke(inputList.get(i), (Object[]) null);
-					if (beanProperty != null) {
-						try {
-							Class clazz = Class.forName(beanProperty.getClass().getName());
-							Field field = clazz.getDeclaredField(fieldName.substring(fieldName.indexOf(".")+1));
-							PropertyDescriptor nestedProperty = BeanUtils.getPropertyDescriptor(field.getType(), fieldName.substring(fieldName.indexOf(".")+1));
-							method = nestedProperty.getReadMethod();
-							retValue.add(i, method.invoke(beanProperty, (Object[]) null));
-							if ((ObjectUtils.toString(retValue.get(i)).equals("0")) || ((ObjectUtils.toString(retValue.get(i)).equals("")))) {
-								retValue.set(i, "");
-							}
-						} catch (NoSuchFieldException noSuchFieldException) {
-							retValue.set(i, "");
-						} catch (ClassNotFoundException classNotFoundException) {
-							retValue.set(i, "");
-						}
-					} else {
-						retValue.add(i, "");
-					}
-
-				} catch (IllegalAccessException iaex) {
-					retValue.set(i, null);
-				} catch (InvocationTargetException itex) {
-					retValue.set(i, null);
-				}
-			}
-		}*/
+		}
 
 		return retValue;
 	}
@@ -141,6 +109,9 @@ public class ListBeanUtils {
 	 * @return
 	 */
 	public static ArrayList<String> toStringListWithConcatenationFields(List<?> beansList, String concatenatedFields, String fieldsSeparator, String outputFieldsSeparator, Boolean addBlankSpace, Boolean excludeZero) {
+		if (beansList == null)
+			return new ArrayList<String>(0);
+		
 		if ((beansList.size() == 0) || (StringUtils.isEmpty(fieldsSeparator)) || (StringUtils.isEmpty(outputFieldsSeparator)))
 			return new ArrayList<String>(0);
 
@@ -194,7 +165,7 @@ public class ListBeanUtils {
 	 * @return List<Object> Result list containing the specific input field of input list.
 	 **/
 	public static List<Object> transformToPlainList(List<Object> beansList) {
-		if (beansList.size() == 0)
+		if ((beansList == null) || (beansList.size() == 0))
 			return new ArrayList<Object>(0);
 
 		ArrayList<Object> arrayList = new ArrayList<Object>(beansList.size());
