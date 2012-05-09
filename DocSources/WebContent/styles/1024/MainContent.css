@@ -2139,7 +2139,7 @@ a#editValue, .editValue { /* "Edit Value" Button */
 	margin-left: 30px;
 }
 
-a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a, .all_docs, .sender_docs, .recipient_docs, .referred_docs, .all_docsCompare, .sender_docsCompare, .recipient_docsCompare, .referred_docsCompare {
+a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#linkSearch, .list a, .listDetails a, .all_docs, .sender_docs, .recipient_docs, .referred_docs, .all_docsCompare, .sender_docsCompare, .recipient_docsCompare, .referred_docsCompare, p.linkSearch {
 	text-decoration: underline;
 	color: #B7958F;
 	display:inline;

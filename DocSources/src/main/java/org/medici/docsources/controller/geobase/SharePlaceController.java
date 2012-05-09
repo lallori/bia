@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.geobase;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.geobase.SharePlaceRequestCommand;
@@ -47,6 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Share place".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/geobase/SharePlace")
@@ -81,6 +83,8 @@ public class SharePlaceController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Place place = new Place();
+		List<Place> placeNames;
+		
 		try {
 			place = getGeoBaseService().findPlace(command.getPlaceAllId());
 			model.put("place", place);
@@ -98,6 +102,9 @@ public class SharePlaceController {
 				model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
 			else
 				model.put("linkGoogleMaps", null);
+			
+			placeNames = getGeoBaseService().findPlaceNames(place.getGeogKey());
+			model.put("placeNames", placeNames);
 		} catch (ApplicationThrowable ath) {
 			new ModelAndView("error/SharePlace", model);
 		}

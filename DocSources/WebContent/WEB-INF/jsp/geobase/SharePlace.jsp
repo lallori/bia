@@ -96,7 +96,7 @@
 							<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 								<c:param name="placeAllId" value="${currentName.placeAllId}" />
 							</c:url>
-							<div class="value"><a class="linkPlace" href="${ShowPlaceURL}">${currentName.placeName}</a></div>
+							<div class="value"><p class="linkSearch" href="${ShowPlaceURL}">${currentName.placeName}</a></div>
 						</c:if>
 						<c:if test="${currentName.placeAllId == place.placeAllId}">
 							<div class="value">${currentName.placeName}</div>
@@ -121,10 +121,10 @@
         <div class="list">	
 			<div class="row">
 				<c:if test="${senderPlace != null && senderPlace != 0 && senderPlace != 1}">
-					<div class="value"><a id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a></div>
+					<div class="value"><p id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Senders</a></div>
 				</c:if>
 				<c:if test="${senderPlace == 1 }">
-					<div class="value"><a id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a></div>
+					<div class="value"><p id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a></div>
 				</c:if>
 				<c:if test="${senderPlace == 0 || senderPlace == null}">
 					<div class="value">0 Sender</div>
@@ -132,10 +132,10 @@
 			</div>
 			<div class="row">
 				<c:if test="${recipientPlace != null && recipientPlace != 0 && recipientPlace != 1}">
-					<div class="value"><a id="linkSearch" class="recipient" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a></div>
+					<div class="value"><p id="linkSearch" class="recipient" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipients</a></div>
 				</c:if>
 				<c:if test="${recipientPlace == 1}">
-					<div class="value"><a id="linkSearch" class="recipient" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a></div>
+					<div class="value"><p id="linkSearch" class="recipient" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a></div>
 				</c:if>
 				<c:if test="${recipientPlace == 0 || recipientPlace == null}">
 					<div class="value">0 Recipient</div>
@@ -154,13 +154,13 @@
         <div class="list">	
 			<div class="row">
 			<c:if test="${topicsPlace != null && topicsPlace != 0 && topicsPlace != 1 && docInTopics != 1}">
-				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a></div>
+				<div class="value"><p id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Documents on ${topicsPlace} Topics</a></div>
 			</c:if>
 			<c:if test="${topicsPlace == 1}">
-				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topic</a></div>
+				<div class="value"><p id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topic</a></div>
 			</c:if>
 			<c:if test="${docInTopics == 1 && topicsPlace != 1}">
-				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topics</a></div>
+				<div class="value"><p id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topics</a></div>
 			</c:if>
 			<c:if test="${topicsPlace == 0 || topicsPlace == null}">
 				<div class="value">0 Document on 0 Topic</div>
@@ -178,10 +178,10 @@
         
         <div class="list">	
 			<div class="row">
-				<div class="value"><c:if test="${birthPlace != 0}"><a id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Birth</a></c:if><c:if test="${birthPlace == 0}">0 Birth</c:if>      <c:if test="${activeStartPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Start</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Start</c:if></div>
+				<div class="value"><c:if test="${birthPlace != 0}"><p id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Birth</a></c:if><c:if test="${birthPlace == 0}">0 Birth</c:if>      <c:if test="${activeStartPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Start</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Start</c:if></div>
 			</div>
 			<div class="row">
-				<div class="value"><c:if test="${deathPlace != 0}"><a id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Death</a></c:if><c:if test="${deathPlace == 0}">0 Death</c:if>      <c:if test="${activeEndPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active End</a></c:if><c:if test="${activeEndPlace == 0}">0 Active End</c:if></div>
+				<div class="value"><c:if test="${deathPlace != 0}"><p id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Death</a></c:if><c:if test="${deathPlace == 0}">0 Death</c:if>      <c:if test="${activeEndPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active End</a></c:if><c:if test="${activeEndPlace == 0}">0 Active End</c:if></div>
 			</div>
 		</div>
 	</div>
@@ -215,7 +215,7 @@
         <div class="list">
 			<c:forEach items="${place.placeExternalLinks}" var="currentExternalLink">	
 				<div class="row">
-					<div class="value"><a id="linkSearch"  href="${currentExternalLink.externalLink}" target="_blank">${currentExternalLink.description}</a></div>
+					<div class="value"><p id="linkSearch"  href="${currentExternalLink.externalLink}" target="_blank">${currentExternalLink.description}</a></div>
 				</div>
 			</c:forEach>
 		</div>
