@@ -40,6 +40,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class UploadPortraitPersonValidator implements Validator {
@@ -98,12 +99,11 @@ public class UploadPortraitPersonValidator implements Validator {
 	 */
 	private void validateImageToLoad(CommonsMultipartFile browse, Errors errors) {
 		if(browse != null && browse.getSize() > 0){
-			String fileName = browse.getOriginalFilename().toLowerCase();
-			if(!fileName.endsWith(".jpg") || !fileName.endsWith(".png")){
+			if(!browse.getContentType().equals("image/jpeg") && !browse.getContentType().equals("image/png")){
 				errors.reject("browse", "error.browse.invalidImage");
 			}
 			//MD: Verify if the upload file is too big
-			if(browse.getSize() > 15000){
+			if(browse.getSize() > 15000000){
 				errors.reject("browse", "error.browse.fileDimension");
 			}
 		}

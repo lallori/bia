@@ -132,10 +132,10 @@
 					<div class="item60">Document Typology (other than letter)</div> <div class="value">${document.docTypology}</div>
 				</div>
 				<div class="row">
-					<div class="item60">Modern Date</div> <div class="valueHilight">${document.yearModern}</div>
+					<div class="item60">Modern Year</div> <div class="valueHilight">${document.yearModern}</div>
 				</div>
 				<div class="row">
-					<div class="item60">Recorded year</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
+					<div class="item60">Recorded Date</div> <div class="value">${document.docYear} ${document.docMonthNum} ${document.docDay}</div>
 				</div>
 				<div class="row">
 					<div class="item60">Date uncertain or approximate</div> <div class="value">${document.dateUns ? 'Yes' : 'NO'}</div>
