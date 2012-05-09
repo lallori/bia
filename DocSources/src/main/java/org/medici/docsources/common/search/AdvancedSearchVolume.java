@@ -663,8 +663,8 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					datesQuery.append(" AND ");
 				}
 				
-				if(datesTypes.get(i).equals(DateType.After)){
-					datesQuery.append("(STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')>");
+				if(datesTypes.get(i).equals(DateType.From)){
+					datesQuery.append("(STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')>=");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(")");
 				}else if(datesTypes.get(i).equals(DateType.Before)){
@@ -672,7 +672,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(")");
 				}else if(datesTypes.get(i).equals(DateType.Between)){
-					datesQuery.append("((STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')>");
+					datesQuery.append("((STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')>=");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 					datesQuery.append(") AND (STR_TO_DATE(CONCAT(startYear, ',' , startMonthNum, ',', startDay),'%Y,%m,%d')<");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
@@ -938,7 +938,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			for (int i=0; i<datesTypes.size(); i++) {
 				if (datesTypes.get(i) == null) {
 					continue;
-				} else if (datesTypes.get(i).equals(DateType.After)) {
+				} else if (datesTypes.get(i).equals(DateType.From)) {
 					// Range query can be executed only on UN_TOKENIZED lucene field, so we use sort field.
 					NumericRangeQuery<Integer> dateRangeQuery = NumericRangeQuery.newIntRange("startDate_Sort", 4, 
 							DateUtils.getLuceneDate(datesYear.get(i), datesMonth.get(i), datesDay.get(i)), 

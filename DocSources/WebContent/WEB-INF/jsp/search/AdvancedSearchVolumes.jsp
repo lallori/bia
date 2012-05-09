@@ -24,7 +24,7 @@
 				<form id="dateSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
 					<select id="dateType" name="dateType" class="selectform_Llong">
-						<option value="After">Written after</option>
+						<option value="From">Written from</option>
 						<option value="Before">Written before</option>
 						<option value="Between">Written between</option>
 					</select>
