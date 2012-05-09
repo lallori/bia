@@ -50,6 +50,7 @@ import org.medici.docsources.common.util.DateUtils;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class AdvancedSearchPeople extends AdvancedSearchAbstract {
@@ -748,21 +749,42 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 					datesQuery.append(" AND ");
 				}
 				if(datesTypes.get(i).equals("Born after")){
-					datesQuery.append("(STR_TO_DATE(CONCAT(bornYear, ',' , bornMonth, ',', bornDay),'%Y,%m,%d')>");
+					//For years that have two numbers
+					datesQuery.append("((bornYear < 100 AND STR_TO_DATE(CONCAT('00', bornYear, ',' , bornMonth, ',', bornDay),'%Y,%m,%d')>");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(")");
+					datesQuery.append(") OR (bornYear < 1000 AND bornYear >= 100 AND STR_TO_DATE(CONCAT('0', bornYear, ',' , bornMonth, ',', bornDay),'%Y,%m,%d')>");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(") OR (bornYear >= 1000 AND STR_TO_DATE(CONCAT(bornYear, ',' , bornMonth, ',', bornDay),'%Y,%m,%d')>");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")) AND bornDateBc = false");
 				}else if(datesTypes.get(i).equals("Dead by")){
-					datesQuery.append("(STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')<=");
+					datesQuery.append("((deathYear < 100 AND STR_TO_DATE(CONCAT('00', deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')<=");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(")");
+					datesQuery.append(") OR (deathYear < 1000 AND deathYear >= 100 AND STR_TO_DATE(CONCAT('0', deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')<=");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(") OR (deathYear >= 1000 AND STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')<=");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")) AND deathDateBc = false");
 				}else if(datesTypes.get(i).equals("Lived between")){
-					datesQuery.append("((STR_TO_DATE(CONCAT(bornYear, ',' , bornMonth, ',', bornDay),'%Y, %m ,%d')<");
+					datesQuery.append("(((bornYear < 100 AND STR_TO_DATE(CONCAT('00', bornYear, ',' , bornMonth, ',', bornDay),'%Y, %m ,%d')<");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
-					datesQuery.append(") AND (STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')>");
+					datesQuery.append(") OR (bornYear < 1000 AND bornYear >= 100 AND STR_TO_DATE(CONCAT('0', bornYear, ',' , bornMonth, ',', bornDay),'%Y, %m ,%d')<");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					datesQuery.append(") OR (bornYear >= 1000 AND STR_TO_DATE(CONCAT(bornYear, ',' , bornMonth, ',', bornDay),'%Y, %m ,%d')<");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					datesQuery.append(")) AND ((deathYear < 100 AND STR_TO_DATE(CONCAT('00', deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')>");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
-					datesQuery.append(") AND (STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')<");
+					datesQuery.append(") OR (deathYear < 1000 AND deathYear >=100 AND STR_TO_DATE(CONCAT('0', deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')>");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(") OR (deathYear >= 1000 AND STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')>");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
+					datesQuery.append(")) AND ((deathYear < 100 AND STR_TO_DATE(CONCAT('00', deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')<");
 					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
-					datesQuery.append("))");
+					datesQuery.append(") OR (deathYear < 1000 AND deathYear >= 100 AND STR_TO_DATE(CONCAT('0', deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')<");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					datesQuery.append(") OR (deathYear >= 1000 AND STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')<");
+					datesQuery.append(DateUtils.getDateForSQLQuery(datesYearBetween.get(i), datesMonthBetween.get(i), datesDayBetween.get(i)));
+					datesQuery.append("))) AND bornDateBc = false AND deathDateBc = false");
 				}else if(datesTypes.get(i).equals("Born/Died on")){
 					StringBuffer bornQuery = new StringBuffer();
 					StringBuffer deathQuery = new StringBuffer();
@@ -792,7 +814,8 @@ public class AdvancedSearchPeople extends AdvancedSearchAbstract {
 						deathQuery.append("(deathDay =");
 						deathQuery.append(datesDay.get(i) + ")");
 					}
-					datesQuery.append(bornQuery + " OR " + deathQuery);
+					datesQuery.append(bornQuery + " OR " + deathQuery + "AND bornDateBc = false AND deathDateBc = false");
+					//MD: Older version for "Born/Died on
 //					datesQuery.append("((STR_TO_DATE(CONCAT(bornYear, ',' , bornMonth, ',', bornDay),'%Y, %m ,%d')=");
 //					datesQuery.append(DateUtils.getDateForSQLQuery(datesYear.get(i), datesMonth.get(i), datesDay.get(i)));
 //					datesQuery.append(") OR (STR_TO_DATE(CONCAT(deathYear, ',' , deathMonth, ',', deathDay),'%Y, %m ,%d')=");

@@ -34,6 +34,7 @@ import org.medici.docsources.domain.Month;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class DateUtils {
@@ -59,8 +60,16 @@ public class DateUtils {
 		StringBuffer dateFormat = new StringBuffer("");
 		stringBuffer.append("STR_TO_DATE('");
 		if(year != null){
-			stringBuffer.append(year);
-			dateFormat.append("%Y");
+			if(year >= 1000){
+				stringBuffer.append(year);
+				dateFormat.append("%Y");
+			}else if(year >= 100){
+				stringBuffer.append("0" + year);
+				dateFormat.append("%Y");
+			}else if(year < 100){
+				stringBuffer.append("00" + year);
+				dateFormat.append("%Y");
+			}
 		}
 		if(month != null){
 			if(stringBuffer.length() > 13){
