@@ -217,7 +217,7 @@
 		<h5>CHILDREN</h5>
 	</div>
 	<div class="list">
-	<c:forEach items="${person.children}" var="currentChild">
+	<c:forEach items="${children}" var="currentChild">
 				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 					<c:param name="personId"   value="${currentChild.child.personId}" />
 				</c:url>
@@ -497,7 +497,7 @@
 				});
 				
 				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), $j(this).text() + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
 					return false;
 				}else{
