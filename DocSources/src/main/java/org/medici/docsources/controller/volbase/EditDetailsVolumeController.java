@@ -60,6 +60,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Edit Details Volume".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/volbase/EditDetailsVolume")
@@ -113,7 +114,11 @@ public class EditDetailsVolumeController {
 
 			Volume volume = new Volume(command.getSummaryId());
 			volume.setVolNum(command.getVolNum());
-			volume.setVolLetExt(command.getVolLetExt());
+			if(command.getVolLetExt().equals("")){
+				volume.setVolLetExt(null);
+			}else{
+				volume.setVolLetExt(command.getVolLetExt());
+			}
 			volume.setResearcher(command.getResearcher());
 
 			// We consider null series if the user clean description field

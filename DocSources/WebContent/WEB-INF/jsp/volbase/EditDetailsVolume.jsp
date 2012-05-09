@@ -143,7 +143,7 @@
 			$j("#volNum").change(showVolumeExplorer);
 			$j("#volLetExt").change(showVolumeExplorer);
 			
-			/*$j("#volNum").keyup(function(){
+			$j("#volNum").keyup(function(){
 				$j.get('<c:url value="/de/volbase/FindVolume.json" />', { volNum: $j("#volNum").val(), volLetExt: $j("#volLetExt").val(), summaryId: '${command.summaryId}' },
 						function(data){
 							if (data.summaryId == "") {
@@ -167,7 +167,7 @@
 							}
 					});
 						
-			});*/
+			});
 
 			var a = $j('#seriesRefDescriptionAutoCompleter').autocompleteGeneral({ 
 			    serviceUrl:'${searchSeriesListUrl}',
