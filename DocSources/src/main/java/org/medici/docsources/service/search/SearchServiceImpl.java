@@ -65,6 +65,7 @@ import org.springframework.transaction.annotation.Transactional;
  * action on document.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Service
 @Transactional(readOnly=true)
@@ -105,14 +106,20 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			// we need to perform an advanced search to obtain total number result
 			Page page = null;
+			PaginationFilter paginationFilter = new PaginationFilter(1, 1);
+			
 			if (searchFilter.getSearchType().equals(SearchType.DOCUMENT)) {
-				page = this.searchDocuments(searchFilter.getFilterData(), new PaginationFilter(1, 1));
+				paginationFilter.setSearchType(SearchType.DOCUMENT);
+				page = this.searchDocuments(searchFilter.getFilterData(), paginationFilter);
 			} else if (searchFilter.getSearchType().equals(SearchType.PEOPLE)) {
-				page = this.searchPeople(searchFilter.getFilterData(), new PaginationFilter(1, 1));
+				paginationFilter.setSearchType(SearchType.PEOPLE);
+				page = this.searchPeople(searchFilter.getFilterData(), paginationFilter);
 			} else if (searchFilter.getSearchType().equals(SearchType.PLACE)) {
-				page = this.searchPlaces(searchFilter.getFilterData(), new PaginationFilter(1, 1));
+				paginationFilter.setSearchType(SearchType.PLACE);
+				page = this.searchPlaces(searchFilter.getFilterData(), paginationFilter);
 			} else {
-				page = this.searchVolumes(searchFilter.getFilterData(), new PaginationFilter(1, 1));
+				paginationFilter.setSearchType(SearchType.VOLUME);
+				page = this.searchVolumes(searchFilter.getFilterData(), paginationFilter);
 			}
 			searchFilter.setId(null);
 			searchFilter.setDateCreated(new Date());
@@ -305,14 +312,19 @@ public class SearchServiceImpl implements SearchService {
 
 			// we need to perform an advanced search to obtain total number result
 			Page page = null;
+			PaginationFilter paginationFilter = new PaginationFilter(1, 1);
 			if (searchFilterToUpdate.getSearchType().equals(SearchType.DOCUMENT)) {
-				page = this.searchDocuments(searchFilterToUpdate.getFilterData(), new PaginationFilter(1, 1));
+				paginationFilter.setSearchType(SearchType.DOCUMENT);
+				page = this.searchDocuments(searchFilterToUpdate.getFilterData(), paginationFilter);
 			} else if (searchFilterToUpdate.getSearchType().equals(SearchType.PEOPLE)) {
-				page = this.searchPeople(searchFilterToUpdate.getFilterData(), new PaginationFilter(1, 1));
+				paginationFilter.setSearchType(SearchType.PEOPLE);
+				page = this.searchPeople(searchFilterToUpdate.getFilterData(), paginationFilter);
 			} else if (searchFilterToUpdate.getSearchType().equals(SearchType.PLACE)) {
-				page = this.searchPlaces(searchFilterToUpdate.getFilterData(), new PaginationFilter(1, 1));
+				paginationFilter.setSearchType(SearchType.PLACE);
+				page = this.searchPlaces(searchFilterToUpdate.getFilterData(), paginationFilter);
 			} else {
-				page = this.searchVolumes(searchFilterToUpdate.getFilterData(), new PaginationFilter(1, 1));
+				paginationFilter.setSearchType(SearchType.VOLUME);
+				page = this.searchVolumes(searchFilterToUpdate.getFilterData(), paginationFilter);
 			}
 			searchFilterToUpdate.setTotalResult(page.getTotal());
 			getSearchFilterDAO().merge(searchFilterToUpdate);

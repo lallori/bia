@@ -70,6 +70,7 @@ import org.springframework.stereotype.Repository;
  * @param <E>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 @Repository
@@ -418,9 +419,9 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("folioMod", paginationFilter.getSortingDirection());
 						break;
 					default:
-						paginationFilter.addSortingCriteria("docYear", paginationFilter.getSortingDirection());
-						paginationFilter.addSortingCriteria("docMonthNum.monthNum", paginationFilter.getSortingDirection());
-						paginationFilter.addSortingCriteria("docDay", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("docYear", "asc");
+						paginationFilter.addSortingCriteria("docMonthNum.monthNum", "asc");
+						paginationFilter.addSortingCriteria("docDay", "asc");
 						break;
 				}
 			}
@@ -450,7 +451,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("recipientPlace.placeName", paginationFilter.getSortingDirection());
 						break;
 					default:
-						paginationFilter.addSortingCriteria("senderPeople.mapNameLf", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("mapNameLf", "asc");
 						break;
 				}		
 			}
@@ -470,7 +471,7 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("parentType", paginationFilter.getSortingDirection());
 						break;
 					default:
-						paginationFilter.addSortingCriteria("placeNameFull", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("placeNameFull", "asc");
 						break;
 				}
 			}
@@ -504,9 +505,8 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 						paginationFilter.addSortingCriteria("volLetExt", paginationFilter.getSortingDirection());
 						break;
 					default:
-						paginationFilter.addSortingCriteria("serieList.title", paginationFilter.getSortingDirection());
-						paginationFilter.addSortingCriteria("serieList.subTitle1", paginationFilter.getSortingDirection());
-						paginationFilter.addSortingCriteria("serieList.subTitle2", paginationFilter.getSortingDirection());
+						paginationFilter.addSortingCriteria("volNum", "asc");
+						paginationFilter.addSortingCriteria("volLetExt", "asc");
 						break;
 				}
 			}

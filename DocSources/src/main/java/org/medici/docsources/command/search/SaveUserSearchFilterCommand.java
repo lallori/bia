@@ -36,6 +36,7 @@ import org.medici.docsources.domain.SearchFilter.SearchType;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class SaveUserSearchFilterCommand {
@@ -46,6 +47,7 @@ public class SaveUserSearchFilterCommand {
 	private Integer idSearchFilterToReplace;
 	private List<String> word;
 	private List<String> volume;
+	private List<String> folio;
 	private List<String> date;
 	private List<String> extract;
 	private List<String> synopsis;
@@ -57,6 +59,12 @@ public class SaveUserSearchFilterCommand {
 	private List<String> recipient;
 	private List<String> to;
 	private List<String> refersTo;
+	private List<String> name;
+	private List<String> role;
+	private List<String> placeName;
+	private List<String> placeType;
+	private List<String> linkedToTopics;
+	private List<String> linkedToPeople;
 	private List<Integer> datesDay;
 	private List<Integer> datesDayBetween;
 	private List<Integer> datesMonth;
@@ -67,7 +75,7 @@ public class SaveUserSearchFilterCommand {
 	private List<String> names;
 	private List<NameType> namesTypes;
 	private List<Integer> placeId;
-	private List<String> roleCategories;
+	private List<String> roleCategory;
 	private List<String> titlesOcc;
 	private List<Integer> titlesOccId;
 	private List<String> words;
@@ -80,6 +88,13 @@ public class SaveUserSearchFilterCommand {
 	private List<String> inventario;
 	private String cipher;
 	private String index;
+	private List<String> nameParts;
+	private List<String> occupationWord;
+	private List<String> occupation;
+	private List<String> researchNotes;
+	private List<String> gender;
+
+	private Boolean logicalDelete;
 
 	/**
 	 * @return the idSearchFilter
@@ -476,15 +491,15 @@ public class SaveUserSearchFilterCommand {
 	/**
 	 * @return the roleCategories
 	 */
-	public List<String> getRoleCategories() {
-		return roleCategories;
+	public List<String> getRoleCategory() {
+		return roleCategory;
 	}
 
 	/**
 	 * @param roleCategories the roleCategories to set
 	 */
-	public void setRoleCategories(List<String> roleCategories) {
-		this.roleCategories = roleCategories;
+	public void setRoleCategory(List<String> roleCategory) {
+		this.roleCategory = roleCategory;
 	}
 
 	/**
@@ -653,6 +668,188 @@ public class SaveUserSearchFilterCommand {
 	 */
 	public void setIndex(String index) {
 		this.index = index;
+	}
+
+	/**
+	 * @return the folio
+	 */
+	public List<String> getFolio() {
+		return folio;
+	}
+
+	/**
+	 * @param folio the folio to set
+	 */
+	public void setFolio(List<String> folio) {
+		this.folio = folio;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public List<String> getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(List<String> name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public List<String> getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(List<String> role) {
+		this.role = role;
+	}
+
+	/**
+	 * @return the placeName
+	 */
+	public List<String> getPlaceName() {
+		return placeName;
+	}
+
+	/**
+	 * @param placeName the placeName to set
+	 */
+	public void setPlaceName(List<String> placeName) {
+		this.placeName = placeName;
+	}
+
+	/**
+	 * @return the placeType
+	 */
+	public List<String> getPlaceType() {
+		return placeType;
+	}
+
+	/**
+	 * @param placeType the placeType to set
+	 */
+	public void setPlaceType(List<String> placeType) {
+		this.placeType = placeType;
+	}
+
+	/**
+	 * @return the linkedToTopics
+	 */
+	public List<String> getLinkedToTopics() {
+		return linkedToTopics;
+	}
+
+	/**
+	 * @param linkedToTopics the linkedToTopics to set
+	 */
+	public void setLinkedToTopics(List<String> linkedToTopics) {
+		this.linkedToTopics = linkedToTopics;
+	}
+
+	/**
+	 * @return the linkedToPeople
+	 */
+	public List<String> getLinkedToPeople() {
+		return linkedToPeople;
+	}
+
+	/**
+	 * @param linkedToPeople the linkedToPeople to set
+	 */
+	public void setLinkedToPeople(List<String> linkedToPeople) {
+		this.linkedToPeople = linkedToPeople;
+	}
+
+	/**
+	 * @return the nameParts
+	 */
+	public List<String> getNameParts() {
+		return nameParts;
+	}
+
+	/**
+	 * @param nameParts the nameParts to set
+	 */
+	public void setNameParts(List<String> nameParts) {
+		this.nameParts = nameParts;
+	}
+
+	/**
+	 * @return the occupationWord
+	 */
+	public List<String> getOccupationWord() {
+		return occupationWord;
+	}
+
+	/**
+	 * @param occupationWord the occupationWord to set
+	 */
+	public void setOccupationWord(List<String> occupationWord) {
+		this.occupationWord = occupationWord;
+	}
+
+	/**
+	 * @return the occupation
+	 */
+	public List<String> getOccupation() {
+		return occupation;
+	}
+
+	/**
+	 * @param occupation the occupation to set
+	 */
+	public void setOccupation(List<String> occupation) {
+		this.occupation = occupation;
+	}
+
+	/**
+	 * @return the researchNotes
+	 */
+	public List<String> getResearchNotes() {
+		return researchNotes;
+	}
+
+	/**
+	 * @param researchNotes the researchNotes to set
+	 */
+	public void setResearchNotes(List<String> researchNotes) {
+		this.researchNotes = researchNotes;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public List<String> getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(List<String> gender) {
+		this.gender = gender;
+	}
+
+	/**
+	 * @return the logicalDelete
+	 */
+	public Boolean getLogicalDelete() {
+		return logicalDelete;
+	}
+
+	/**
+	 * @param logicalDelete the logicalDelete to set
+	 */
+	public void setLogicalDelete(Boolean logicalDelete) {
+		this.logicalDelete = logicalDelete;
 	}
 
 	/**

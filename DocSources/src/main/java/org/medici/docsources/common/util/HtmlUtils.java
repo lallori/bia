@@ -33,6 +33,7 @@ import java.util.List;
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserHistory.Category;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -42,6 +43,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * This class is an utility to obtains specific application Url.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class HtmlUtils {
@@ -411,7 +413,7 @@ public class HtmlUtils {
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
 		anchor.append(currentSchedone.getSchedoneId());
-		anchor.append("\">DESCRIPTION SCHEDONE</a>");
+		anchor.append("\">" + currentSchedone.getDescrizioneContenuto() + "</a>");
 
 		return anchor.toString();
 	}
@@ -441,7 +443,7 @@ public class HtmlUtils {
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
 		anchor.append(currentSchedone.getSchedoneId());
-		anchor.append("\">SCHEDONE MDP</a>");
+		anchor.append("\">" + currentSchedone.getVolNum() + currentSchedone.getVolLetExt() + "</a>");
 
 		return anchor.toString();
 	}
@@ -480,7 +482,7 @@ public class HtmlUtils {
 	 * @param idFilter
 	 * @return
 	 */
-	public static List<String> showUserSearchFilter(List<Object> inputList, Integer idSearchFilter) {
+	public static List<String> showUserSearchFilter(List<Object> inputList, Integer idSearchFilter, SearchType searchType) {
 		if (inputList == null)
 			return null;
 
@@ -490,6 +492,8 @@ public class HtmlUtils {
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/AdvancedSearch.do?idSearchFilter=");
 		anchorBegin.append(idSearchFilter);
+		anchorBegin.append("&searchType=");
+		anchorBegin.append(searchType);
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
 		
