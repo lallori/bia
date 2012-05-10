@@ -36,6 +36,12 @@
             <form:input id="lonDirection" path="directionLongitude" class="input_1c" type="text" value="" maxlength="1"/>
 		</div>
 		
+		<div style="margin-top:15px;">
+			<p>Finds Geo Coordinates on:</p>
+			<a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank" id="gettyTgn">Getty TGN</a>
+			<a href="#" target="_blank" id="googleMaps">Google Maps</a>
+		</div>
+		
 		<div>
 			<input id="close" type="submit" value="Close" title="Do not save changes"/>
 			<input type="submit" value="Save" id="save">
@@ -116,6 +122,9 @@
 	            return false;
 			});
 		});
+		
+		$j("#gettyTgn").open({width: 960, height: 350, scrollbars: "yes"});
+		$j("#googleMaps").open({width: 960, height: 350, scrollbars: "yes"});
 	</script>
 	
 	<div id="question" style="display:none; cursor: default"> 
