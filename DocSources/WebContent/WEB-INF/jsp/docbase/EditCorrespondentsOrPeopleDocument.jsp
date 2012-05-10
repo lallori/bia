@@ -173,6 +173,7 @@
 	        $j("#EditDetailsDocument").css('visibility', 'hidden'); 
 	        $j("#EditExtractOrSynopsisDocument").css('visibility', 'hidden'); 
 	        $j("#EditDocumentInManuscriptTranscriber").css('visibility', 'hidden');
+	        $j(".EditDocumentInManuscriptTranscriberOff").css('visibility', 'hidden');
 	        $j("#EditDocumentInModal").css('visibility', 'hidden');
 	        $j("#EditFactCheckDocument").css('visibility', 'hidden');
 	        $j("#EditTopicsDocument").css('visibility', 'hidden');
@@ -430,7 +431,7 @@
 
 			$j('.linkPeople').click(function() {
 				var tabName = $j(this).parent();
-				tabName = $j(tabName).find('.input_35c_disabled');
+				tabName = $j(tabName).find('.input_35c_disabled').val();
 				
 				if(tabName.length > 20){
 					tabName = tabName.substring(0,17) + "...";
