@@ -151,12 +151,12 @@
 			<a class="helpIcon" title="...">?</a>
 			<label for="gender" id="genderLabel">Gender</label>
 			<select id="genderSelect" name="genderSelect" class="selectform_short">
-				<option value="M">M</option>
+				<option value="M" selected="selected">M</option>
                 <option value="F">F</option>
                 <option value="X">X</option>
 			</select>
 			<input type="hidden" id="gender" name="gender" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter" class="genderAdd">
 			<input type="hidden" id="category" value="Gender">
 		</form>
 		
@@ -239,7 +239,7 @@
 			collapsible:true
 			});
 		$j("#dateType").change(function(){
-			if(this.options[3].selected) { 
+			if(this.options[2].selected) { 
 				$j('#dateYearBetween').css('visibility','visible');
 				$j('#dateMonthBetween').css('visibility','visible');
 				$j('#dateDayBetween').css('visibility','visible');
@@ -312,7 +312,7 @@
 		 });
 		 
 		 $j("#dateSearchForm").submit(function(){
-				$j('#dateType option[value="Any"]').attr('selected', 'selected');
+				$j('#dateType option[value="Born after"]').attr('selected', 'selected');
 				$j('#dateYearBetween').css('visibility','hidden');
 				$j('#dateMonthBetween').css('visibility','hidden');
 				$j('#dateDayBetween').css('visibility','hidden');
@@ -328,6 +328,9 @@
 				 $j("#roleCategory").val("");
 			 return false;
 		 });
+		 
+		 //This is for set the field when the page is loaded
+		 $j("#gender").val($j("#genderSelect").find("option:selected").val());
 		 
 		 $j("#genderSelect").change(function(){
 			 $j("#gender").val($j(this).val());
