@@ -72,6 +72,7 @@ import org.springframework.web.servlet.ModelAndView;
  * AJAX Controller for search.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller("SearchAjaxController")
 public class AjaxController {
@@ -943,7 +944,7 @@ public class AjaxController {
 			singleRow.add(currentFilter.getSearchType());
 			singleRow.add(DateFormatUtils.format(currentFilter.getDateUpdated(), "MM/dd/yyyy"));
 
-			resultList.add(HtmlUtils.showUserSearchFilter(singleRow, currentFilter.getId()));
+			resultList.add(HtmlUtils.showUserSearchFilter(singleRow, currentFilter.getId(), currentFilter.getSearchType()));
 		}
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());
