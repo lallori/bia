@@ -45,8 +45,8 @@
 					credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
 				} else if ("${documentExplorer.image.imageType}" == 'G') {
 					credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
-				else {
-		    		var credit = ' ';
+				} else {
+		    		credit += ' ';
 		    	}
 				
 				credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
