@@ -335,6 +335,14 @@ form div {
 
 /* -------------------------------------- */
 /*
+/* ----- Child ----- */
+
+#childDescriptionLabel {
+	margin-left:27px;
+}
+
+/* -------------------------------------- */
+/*
 /* -------------------------------------------------------------------------- */
 /*
 /*
@@ -496,7 +504,7 @@ form div {
 }
 
 #nameWithAccentsLabel {
-	margin-left: 39px;
+	margin-left: 35px;
 }
 
 #placeParentLabel {
@@ -504,11 +512,15 @@ form div {
 }
 
 #namePlaceLabel {
-	margin-left:31px;
+	margin-left:26px;
 }
 
 #EditGeoCoorTgnPlaceForm #googleMaps {
 	margin:-5px 0 0 161px;
+}
+
+#EditExternalLinkForm #linkLabel {
+	margin-left:9px;
 }
 
 /*
@@ -719,6 +731,17 @@ form div {
 	margin-right: 32px;
 }
 
+/* ------------- PEOPLE SEARCH ------------------ */
+/* Input Label positions */
+
+.people #dateSearchForm #addSearchFilter {
+	margin: 5px 0 0 32px;
+}
+
+#genderSearchForm #addSearchFilter {
+	margin-left:246px;
+}
+
 /* -------------------------------------------------------------------------- */
 /*
 /*
@@ -839,9 +862,16 @@ a.showDigitizedDocument{
 
 /* ---------------- System-Wide Properties ------------- */
 
+/* General Properties */
+
+#imagePathLabel {
+	margin-right: 23px;
+}
+
+
 /* Recaptcha Properties */
 #siteIdentifierLabel {
-	margin-right:14px;
+	margin-right:17px;
 }
 
 #serverUrlLabel {
@@ -850,6 +880,10 @@ a.showDigitizedDocument{
 
 #privateKeyLabel {
 	margin-right: 32px;
+}
+
+#publicKeyLabel {
+	margin-right: 37px;
 }
 
 #domainNameLabel {
@@ -870,7 +904,7 @@ a.showDigitizedDocument{
 }
 
 #serverProtocolLabel {
-	margin-right: 51px;
+	margin-right: 53px;
 }
 
 #serverVersionLabel {
@@ -879,32 +913,32 @@ a.showDigitizedDocument{
 
 /* Schedone */
 
-#EditSchedoneForm #istitutoLabel {
-	margin-right: 93px;
+#EditSchedonePropertiesForm #istitutoLabel {
+	margin-right: 94px;
 }
 
-#EditSchedoneForm #legaturaLabel {
-	margin-right: 85px;
+#EditSchedonePropertiesForm #legaturaLabel {
+	margin-right: 86px;
 }
 
-#EditSchedoneForm #supportoLabel {
-	margin-right: 83px;
+#EditSchedonePropertiesForm #fondoLabel {
+	margin-right: 84px;
 }
 
-#EditSchedoneForm #tipoRipresaLabel {
-	margin-right: 56px;
+#EditSchedonePropertiesForm #tipoRipresaLabel {
+	margin-right: 113px;
 }
 
-#EditSchedoneForm #coloreImmagineLabel {
-	margin-right: 43px;
+#EditSchedonePropertiesForm #coloreImmagineLabel {
+	margin-right: 100px;
 }
 
-#EditSchedoneForm #responsabileFotoRiproduzioneLabel {
-	margin-right: 54px;
+#EditSchedonePropertiesForm #responsabileFotoRiproduzioneLabel {
+	margin-right: 28px;
 }
 
-#EditSchedoneForm #operatoreLabel {
-	margin-right: 80px;
+#EditSchedonePropertiesForm #operatoreLabel {
+	margin-right: 79px;
 }
 
 /* ---------------- User Management ------------- */

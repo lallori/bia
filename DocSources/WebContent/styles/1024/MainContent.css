@@ -17,7 +17,7 @@ h3{ /* PERSON NAME (in PERSON DETAILS), VOLUME NAME (in VOLUME DETAILS) and PLAC
 	font-size: 16px;
 	font-style: italic;
 	color: #666EA4;
-	margin: 5px 0 0 0;
+	margin: 0;
 }
 
 #documentTitle h3 {
@@ -485,10 +485,12 @@ item a{
 }
 
 /* Bottom Div Containers */
-#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv {
+#EditContextVolumeDiv, #EditTopicsDocumentDiv, #EditResearchNotesPersonDiv, #EditHierarchyPlaceDiv, #EditPdfImagesSchedoneDiv, #SchedoneDiv {
 	margin-bottom:30px;!important
 	min-height:100px;!important
 }
+
+
 
 
 /* Title Divs */
@@ -503,7 +505,7 @@ item a{
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	margin: 57px 0 20px 5px;
-	padding: 5px 0 8px 0;
+	padding: 8px 0 8px 0;
 	width: 475px;
 	background-color: #FAF4F4;
 }
@@ -646,7 +648,7 @@ input[type="submit"]:hover, input[type="image"]:hover{
 	filter:alpha(opacity=50); /* IE */
 }
 
-#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace { /* Close button on bottom left  */
+#close, #closeName, #closeTitleOrOccupation, #closeChild, #closeSpouse, #closeFather, #closeMother, #closeTitle, #closePerson, #closeTopic, #closePlace, #closeExternalLinkg4 { /* Close button on bottom left  */
 	margin:5px auto 7px 0px;
 	padding:0;
 	cursor:pointer;
@@ -1380,14 +1382,14 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 /* ---------------- EDIT FORMS POSITIONS ------------------ */
 
 /* Content Information Divs */
-#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditUserControlForm, #EditEmailControlDiv {
+#EditExtSynDocumentDiv, #EditFactCheckDocumentDiv, #EditCorrespondentsDocumentDiv, #EditExtractOrSynopsisDocumentDiv, #EditDescriptionVolumeDiv, #EditCorrespondentsVolumeDiv, #EditDetailsPersonDiv, #EditNamesPersonDiv, #EditCorrespondentsDocumentDiv, #EditExtSynDocumentDiv,  #EditNamesPersonDiv, #EditTitleOccupationsPersDiv, #EditRelationshipPersDiv,  #EditNamePlaceDiv, #EditExtLinkPlaceDiv, #EditGeoCoorPlaceDiv, #EditFactChecksDocumentDiv, #EditTitlesOrOccupationsPersonDiv, #EditParentsPersonDiv, #EditChildrenPersonDiv, #EditSpousesPersonDiv, #ShowVolumeExplorerDiv, #EditPersonCorrespondentsDocumentForm, #EditUserControlForm, #EditEmailControlDiv, #EditContextVolumeDiv, #EditResearchNotesPersonDiv {
 	width:485px;
-	margin:10px 0 0 0;
+	margin-top:10px;
 	min-height:100px;!important
 }
 
 #EditDetailsVolumeDiv {
-	min-height: 190px;!important
+	min-height: 220px;!important
 }
 
 #CreateNewPersonRecordForm, #CreateNewTitlesOccupationsForm  {
@@ -1432,7 +1434,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 /* Edit Forms */
-#EditCorrespondentsDocumentForm,  #EditNamesPersonForm, #AdddChildPersonForm, #EditChildPersonForm, #SpousesPersonForm, #EditRelationshipPersonForm, #EditTopicsDocumentForm, #TopicsDocumentForm,  #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm, #TitlesOccupationsPersonForm,   #EditFactChecksDocumentForm, #EditExtractOrSynopsisDocumentForm, #EditNameMapSitePlaceForm, #ParentsPersonForm, #ChildrenPersonForm, #EditResearchNotesPersonForm, #EditDescriptionVolumeForm, #EditCorrespondentsVolumeForm, #EditContextVolumeForm, #NameTgnPlaceForm, #NameMapSitePlaceForm, #NameMapPlaceForm, #EditGeoCoorTgnPlaceForm, #EditGeoCoorMapSitePlaceForm, #EditGeoCoorMapPlaceForm, #ExtLinkMapSitePlaceForm, #ExtLinkTgnPlaceForm, #ExtLinkMapPlaceForm, #EditSpousesPersonForm { 
+#EditCorrespondentsDocumentForm,  #EditNamesPersonForm, #AdddChildPersonForm, #EditChildPersonForm, #SpousesPersonForm, #EditRelationshipPersonForm, #EditTopicsDocumentForm, #TopicsDocumentForm,  #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm, #TitlesOccupationsPersonForm,   #EditFactChecksDocumentForm, #EditExtractOrSynopsisDocumentForm, #EditNameMapSitePlaceForm, #ParentsPersonForm, #ChildrenPersonForm, #EditResearchNotesPersonForm, #EditDescriptionVolumeForm, #EditCorrespondentsVolumeForm, #EditContextVolumeForm, #NameTgnPlaceForm, #NameMapSitePlaceForm, #NameMapPlaceForm, #EditGeoCoorTgnPlaceForm, #EditGeoCoorMapSitePlaceForm, #EditGeoCoorMapPlaceForm, #ExtLinkMapSitePlaceForm, #ExtLinkTgnPlaceForm, #ExtLinkMapPlaceForm, #EditSpousesPersonForm, #EditExternalLinkForm { 
 	width:485px;
 	margin:5px 0 0 0;
 }
@@ -1481,6 +1483,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 #SpineVolumeDiv img, #SpineVolumeDigitDiv img {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
+	margin-bottom:5px;
 }
 
 #SpineVolumeDiv p,  #SpineVolumeDigitDiv p, #SpineVolumeNotDigitDiv p{
@@ -1566,6 +1569,10 @@ input.file {
 /*
 /*
 /* ------------ EditDetailsDocument ------------ */
+
+#EditDetailsDocumentDiv {
+	max-width:485px;
+}
 
 #EditDetailsDocumentDiv h3 {
 	padding: 0 0 0 30px;
@@ -1780,10 +1787,10 @@ input.file {
 
 .EditDocumentInManuscriptTranscriberOff { /* Edit with Manuscript Transcriber icon */
 	background:url(/DocSources/images/1024/button_edit_mantranscriber.png) no-repeat;
-	width:105px;
+	width:115px;
 	height:20px;
 	position:absolute;
-	margin:-8px 0 0 375px;
+	margin:-8px 0 0 365px;
 	display:inline;
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
@@ -1873,6 +1880,12 @@ input.file {
 
 #personTitle p {
 	margin: 10px 0 0 10px;
+}
+
+#personTitle p.no_docs {
+	display:inline;
+	color:#B7958F;
+	margin:10px 0 0 0;
 }
 
 #personTitle div {
@@ -2147,6 +2160,8 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	cursor: pointer;
 }
 
+
+
 /* -------------------------------------- */
 /*
 /* -------------------------------------------------------------------------- */
@@ -2155,6 +2170,10 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /* -------------------------- ADD NEW VOLUME -------------------------------- */
 /*
 /* --------------- EditDetailsVolume --------------- */
+
+#EditDetailsVolumeDiv {
+	max-width:485px;
+}
 
 #EditDetailsVolumeDiv h4 {
 	padding: 0 0 13px 30px;
@@ -5247,35 +5266,35 @@ h3.systemManagement {
 
 /* ---------------- System-Wide Properties ------------- */
 
-#EditSchedoneForm #istitutoLabel {
-	margin-right: 91px;
+#EditSchedonePropertiesForm #istitutoLabel {
+	margin-right: 90px;
 }
 
-#EditSchedoneForm #fondoLabel {
-	margin-right: 99px;
-}
-
-#EditSchedoneForm #legaturaLabel {
-	margin-right: 80px;
-}
-
-#EditSchedoneForm #supportoLabel {
+#EditSchedonePropertiesForm #fondoLabel {
 	margin-right: 81px;
 }
 
-#EditSchedoneForm #tipoRipresaLabel {
-	margin-right: 50px;
+#EditSchedonePropertiesForm #legaturaLabel {
+	margin-right: 80px;
 }
 
-#EditSchedoneForm #coloreImmagineLabel {
-	margin-right: 33px;
+#EditSchedonePropertiesForm #supportoLabel {
+	margin-right: 81px;
 }
 
-#EditSchedoneForm #responsabileFotoRiproduzioneLabel {
+#EditSchedonePropertiesForm #tipoRipresaLabel {
+	margin-right: 108px;
+}
+
+#EditSchedonePropertiesForm #coloreImmagineLabel {
+	margin-right: 92px;
+}
+
+#EditSchedonePropertiesForm #responsabileFotoRiproduzioneLabel {
 	margin-right: 46px;
 }
 
-#EditSchedoneForm #operatoreLabel {
+#EditSchedonePropertiesForm #operatoreLabel {
 	margin-right: 75px;
 }
 
@@ -5462,7 +5481,7 @@ h3.systemManagement {
 	margin-bottom:5px;
 }
 
-#yes, #no {
+#yes, #no, #yesPerson, #noPerson {
 	margin: 0;
 	width: 52px;
 	height: 22px;
