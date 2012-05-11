@@ -109,8 +109,6 @@
 			</div>
 		</div>
 	</div>
-	<br />
-	<br />
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -120,7 +118,7 @@
 			$j("#EditDetailsVolume").css('visibility', 'visible'); 
 
 			if($j("#ShowVolumeInVolumeExplorer").length != 0){
-				$j("#EditDetailsVolumeDiv").css('min-height', '300px');
+				$j("#EditDetailsVolumeDiv").css('min-height', '260px');
 			}
 			
 			$j("#EditDetailsVolume").volumeExplorer( {

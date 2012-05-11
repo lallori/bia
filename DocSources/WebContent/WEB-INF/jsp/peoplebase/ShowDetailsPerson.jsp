@@ -74,19 +74,19 @@
 						<a href="${ShowSenderDocumentsPersonURL}" class="sender_docs" title="Click here to view the letters SENT BY this person">Sender</a> <span class="num_docs">${senderDocsRelated}</span> |
 					</c:if>
 					<c:if test="${senderDocsRelated == 0}">
-						<p  style="display: inline; color: #B7958F;">Sender</p> |
+						<p class="no_docs">Sender</p> |
 					</c:if>
 					<c:if test="${recipientDocsRelated != 0}">
 						<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docs" title="Click here to view the letters RECEIVED BY this person">Recipient</a> <span class="num_docs">${recipientDocsRelated}</span> |
 					</c:if>
 					<c:if test="${recipientDocsRelated == 0}">
-						<p style="display: inline; color: #B7958F;">Recipient</p> |
+						<p class="no_docs">Recipient</p> |
 					</c:if>
 					<c:if test="${referringDocsRelated != 0}">
 						<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docs" title="Click here to view the documents in which this person is mentioned">Referring To</a> <span class="num_docs">${referringDocsRelated}</span>)
 					</c:if>
 					<c:if test="${referringDocsRelated == 0}">
-						<p style="display: inline; color: #B7958F;">Referring To</p>)
+						<p class="no_docs">Referring To</p>)
 					</c:if>
 				</div>
 			</c:if>
@@ -95,7 +95,7 @@
 			</c:if>
 			<c:if test="${docsRelated == 1}">
 				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
-				<div style="margin-left:28px">
+				<div style="margin:10px 0 0 10px;">
 					(<a href="${ShowDocumentsPersonURL}" class="all_docs" title="Click here to see this documentview all documents related">View it</a>)
 				</div>	
 			</c:if>
@@ -172,7 +172,7 @@
 			.dialog({                                                                                                                                                                   
 				resizable: false,
 				width: 450,
-				height: 135, 
+				height: 150, 
 				modal: true,
 				autoOpen : false,
 				zIndex: 3999,

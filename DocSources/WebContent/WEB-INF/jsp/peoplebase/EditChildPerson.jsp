@@ -29,15 +29,15 @@
 			</c:if>
 			</legend>
 			<div>
-				<form:label id="childDescriptionLabel" for="childDescription" path="childDescription" cssErrorClass="error">Name:</form:label>
+				<form:label id="childDescriptionLabel" for="childDescription" path="childDescription" cssErrorClass="error">Name</form:label>
 				<form:input id="childDescriptionAutoCompleter" path="childDescription" class="input_25c" />
 			</div>
 			<div>
-				<form:label id="bornYearLabel" for="bornYear" path="bornYear" cssErrorClass="error">Born:</form:label>
+				<form:label id="bornYearLabel" for="bornYear" path="bornYear" cssErrorClass="error">Born</form:label>
 				<form:input path="bornYear" cssClass="input_4c_disabled" maxlength="4"/>
-				<form:label id="deathYearLabel" for="deathYear" path="deathYear" cssErrorClass="error">Died:</form:label>
+				<form:label id="deathYearLabel" for="deathYear" path="deathYear" cssErrorClass="error">Died</form:label>
 				<form:input path="deathYear" cssClass="input_4c_disabled" maxlength="4"/>
-				<form:label id="ageAtDeathLabel" for="ageAtDeath" path="ageAtDeath" cssErrorClass="error">Age at death:</form:label>
+				<form:label id="ageAtDeathLabel" for="ageAtDeath" path="ageAtDeath" cssErrorClass="error">Age at death</form:label>
 				<form:input path="ageAtDeath" cssClass="input_2c_disabled" maxlength="2"/>
 			</div>
 			<div>

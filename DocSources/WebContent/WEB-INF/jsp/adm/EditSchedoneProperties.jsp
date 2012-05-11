@@ -38,7 +38,7 @@
 		</div>
 		<div>
 			<form:label path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzioneLabel">Responsabile fotoriproduzione</form:label>
-			<form:input path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzione" cssClass="input_29c" type="text" value=""/>
+			<form:input path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzione" cssClass="input_24c" type="text" value=""/>
 		</div>
 		<div>
 			<form:label path="operatore" for="operatore" id="operatoreLabel">Operatore</form:label>

@@ -7,13 +7,13 @@
 	<div id="DeleteThisRecordDiv">
 		<h1>Filter has been saved.</h1>
 		
-		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+		<input id="close" type="submit" title="Close Actions Menu window" value="Close" style="margin:60px 0 0 90px;"/>
 	</div>
 
 	<script>
 		$j(document).ready(function() {
 			$j("#close").click(function(){
-				$dialogSaveAs.dialog("close");
+				$j("#DialogSaveAs").dialog("close");
 				return false;
 			});
 		});

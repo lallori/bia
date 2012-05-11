@@ -18,5 +18,3 @@
 
 <tiles:insertAttribute name="schedone"/>
 
-<br />
-

@@ -99,6 +99,7 @@
 			
 			// Result links have a specific class style on which we attach click live. 
 			$j('.searchResult').live('click', function() {
+				//$j(this).parent().parent().css('background-color','#b0addd');
 				$j("#body_left").load($j(this).attr("href"));
 				return false;
 			}); 

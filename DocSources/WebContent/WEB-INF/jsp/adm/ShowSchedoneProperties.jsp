@@ -52,7 +52,6 @@
 		</div>
 	</div>
 </div>
-<br />
 
 <script type="text/javascript">
 	$j(document).ready(function(){

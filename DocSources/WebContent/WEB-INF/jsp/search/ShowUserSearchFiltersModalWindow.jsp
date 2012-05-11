@@ -4,8 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<div id="savedSearchFiltersDiv">
-
 	<c:url var="UserSearchFiltersPaginationURL" value="/src/UserSearchFiltersPagination.json">
 		<c:param name="searchType" value="all"/>
 	</c:url>
@@ -39,6 +37,34 @@
 						/* Do whatever additional processing you want on the callback, then tell DataTables */
 						fnCallback(json)
 					} );
+				},
+				"fnDrawCallback" : function(){
+					$j("tr.odd").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.odd").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+								return false;
+							}
+					);
+					$j("tr.even").mouseover(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#b0addd');
+								return false;
+							}
+					);
+					
+					$j("tr.even").mouseout(
+							function(){
+								$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+								return false;
+							}
+					);
 				}
 			} );
 
@@ -46,12 +72,14 @@
 			$j('.searchResult').die();
 			// Result links have a specific class style on which we attach click live. 
 			$j('.searchResult').live('click', function() {
-				$j('.searchResult').open({width: 960, height: 350, scrollbars: "yes"});
+				window.open($j(".searchResult").attr("href"),"_blank",'width=960, height=350');
+				Modalbox.hide();
 				return false;
-			}); 
+			});
 		} );
 	</script>
 
+<div id="savedSearchFiltersDiv">
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="savedSearchFiltersForm">
 		<thead>
 			<tr>
