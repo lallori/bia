@@ -590,7 +590,8 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 					break;
 				} else if (foliosOnVolume.get(j) > i) {
 					foliosInformations.setTotalMissingFolios(foliosInformations.getTotalMissingFolios()+1);
-					foliosInformations.getMissingNumberingFolios().add(foliosOnVolume.get(j));
+					//LP : Missing numbering is first counter!!!!
+					foliosInformations.getMissingNumberingFolios().add(((Long)i).intValue());
 					break;
 				}
 			}
