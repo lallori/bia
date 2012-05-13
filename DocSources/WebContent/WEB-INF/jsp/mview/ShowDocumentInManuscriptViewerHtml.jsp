@@ -65,6 +65,7 @@
 					server: '${ReverseProxyIIPImage}',
 					prefix: '${ImagePrefixURL}',
 					image: '${documentExplorer.image}',
+					zoom: 3,
 					credit: credit
 				});
 
