@@ -929,10 +929,9 @@ var IIPMooViewer = new Class({
     // for our window size
     this.resolutions = new Array(this.num_resolutions);
     this.resolutions.push({w:tx,h:ty});
-    //this.view.res = 0;
     //MEDICI ARCHIVE PROJECT START
     //MD: This is for the initial Zoom
-    this.view.res = 1;
+    //this.view.res = 1;
     //MEDICI ARCHIVE PROJECT END
     for( var i=1; i<this.num_resolutions; i++ ){
       tx = Math.floor(tx/2);
@@ -940,12 +939,10 @@ var IIPMooViewer = new Class({
       this.resolutions.push({w:tx,h:ty});
       if( tx < this.view.w && ty < this.view.h ) this.view.res++;
     }
-    //this.view.res -= 1;
     
     // MEDICI ARCHIVE PROJECT START
-		this.view.res -= 1;
-		//this.view.res = this.initialZoom;
-		// MEDICI ARCHIVE PROJECT END
+	this.view.res = this.initialZoom;
+	// MEDICI ARCHIVE PROJECT END
 
     // Sanity check and watch our for small screen displays causing the res to be negative
     if( this.view.res < 0 ) this.view.res = 0;
