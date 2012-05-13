@@ -126,7 +126,9 @@ var IIPMooViewer = new Class({
     // Disable the right click context menu on image tiles?
     this.disableContextMenu = true;
 
+    //MEDICI ARCHIVE PROJECT START
 	this.initialZoom = options.zoom || 1;
+    //MEDICI ARCHIVE PROJECT END
 
     // Navigation window options
     this.showNavWindow = (options.showNavWindow == false) ? false : true;
