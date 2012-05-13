@@ -142,7 +142,7 @@ public class EditCorrespondentsOrPeopleDocumentController {
 			if (ObjectUtils.toString(command.getRecipientPeopleDescription()).equals("")) {
 				document.setRecipientPeopleUnsure(false);
 			} else {
-				document.setRecipientPeopleUnsure(command.getRecipientPlaceUnsure());
+				document.setRecipientPeopleUnsure(command.getRecipientPeopleUnsure());
 			}
 
 			if (ObjectUtils.toString(command.getRecipientPlaceDescription()).equals("")) {
