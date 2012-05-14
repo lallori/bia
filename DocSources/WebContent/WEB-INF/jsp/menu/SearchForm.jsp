@@ -70,7 +70,7 @@
 						
 						$j("#SearchForm").submit(function() {
 							var title = $j('#simpleSearchPerimeter').find('option:selected').text();
-							if(title == 'Document Synopses'){
+							if(title == 'Document Synopsis'){
 								title = "Document Synopsis"
 							}else{
 								title = title.replace('s','');
