@@ -207,9 +207,12 @@
 				var numTab = 0;
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
+					//MD: Declare variable toTest for fix problem with IE
+					var toTest = "";
+					toTest += this.text;
 					if(!tabExist)
 						numTab++;
-					if(this.text == tabName || this.text.indexOf("Explore Volume ${document.volume.volNum}${document.volume.volLetExt}") != -1){
+					if(toTest == tabName || toTest.indexOf("Explore Volume ${document.volume.volNum}${document.volume.volLetExt}") != -1){
 						tabExist = true;
 					}
 				});

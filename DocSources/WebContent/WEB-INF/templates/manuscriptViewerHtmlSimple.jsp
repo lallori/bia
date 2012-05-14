@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -5,8 +6,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <!--
 The original iipmooviewer script was written by Ruven Pillay <ruven@users.sourceforge.net>.
@@ -36,9 +37,10 @@ Joana Amill <joana.amill@gmail.com>
 		<title>DocSourcesV5 Manuscript Viewer</title>
 		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-core-1.4.5-full-nocompat.js"/>"></script>
   		<script type="text/javascript" src="<c:url value="/scripts/mview/mootools-more-1.4.0.1.js"/>"></script>
-  		<script type="text/javascript" src="<c:url value="/scripts/mview/protocols/iip.js"/>"/></script>
-  		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.0.js"/>"/></script>
-		<script type="text/javascript" src="<c:url value="/scripts/mview/lang/help.en.js"/>"/></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/protocols/iip.js"/>"></script>
+  		<script type="text/javascript" src="<c:url value="/scripts/mview/iipmooviewer-2.0.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/scripts/mview/lang/help.en.js"/>"></script>
+		
 		
 		<tiles:insertAttribute name="manuscriptviewer" />
 	</head>
