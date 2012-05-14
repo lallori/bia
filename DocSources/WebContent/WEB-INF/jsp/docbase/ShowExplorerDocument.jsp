@@ -181,7 +181,7 @@
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
 				<a id="ShowManuscriptViewer${documentExplorer.entryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode">Show in Fullscreen mode</a>
 			</security:authorize>
-			<a id="volumeSummary" href="#">Volume Summary</a>
+			<a id="volumeSummary${documentExplorer.entryId}" class="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPageURL}">Refresh</a>
 			<c:if test="${documentExplorer.totalRubricario > 0}">
 				<a id="indexNames${documentExplorer.entryId}" class="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
@@ -275,7 +275,7 @@
 
 		        var $dialogVolumeSummary = $j('<div id="DialogVolumeSummaryDiv"></div>').dialog({
 					resizable: false,
-					width: 520,
+					width: 550,
 					height: 600, 
 					modal: true,
 					autoOpen : false,
@@ -289,7 +289,7 @@
 					}
 				});
 				
-				$j("#volumeSummary").click(function(){
+				$j("#volumeSummary${documentExplorer.entryId}").click(function(){
 					$dialogVolumeSummary.dialog('open');
 					return false;
 				});

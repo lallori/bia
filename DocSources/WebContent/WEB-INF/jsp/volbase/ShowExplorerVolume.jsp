@@ -188,7 +188,7 @@
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS,ROLE_FORMER_FELLOWS, ROLE_COMMUNITY_USERS, ROLE_DIGITIZATION_USERS, ROLE_GUESTS">
 				<a id="ShowManuscriptViewer${volumeExplorer.summaryId}" href="${ShowDocumentInManuscriptViewerURL}" title="Manuscript Viewer" class="showFullscreenMode">Show in Fullscreen mode</a>
 			</security:authorize>
-			<a id="volumeSummary" href="#">Volume Summary</a>
+			<a id="volumeSummary${volumeExplorer.summaryId}" class="volumeSummary" href="#">Volume Summary</a>
 			<a class="refreshVolumeExplorer" href="${currentPage}">Refresh</a>
 			<c:if test="${volumeExplorer.totalRubricario > 0}">
 				<a id="indexNames${volumeExplorer.summaryId}" class="indexNames" title="Index of Names" class="transcribe" href="${indexOfNamesURL}" ></a>
@@ -300,7 +300,7 @@
 					}
 				});
 				
-				$j("#volumeSummary").click(function(){
+				$j("#volumeSummary${volumeExplorer.summaryId}").click(function(){
 					$dialogVolumeSummary.dialog('open');
 					return false;
 				});

@@ -2599,7 +2599,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 /*
 /* ---- Volume Summary --- */
 
-a#volumeSummary {
+a.volumeSummary {
 	width:122px;
 	height:22px;
 	display:inline;
