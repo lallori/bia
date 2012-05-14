@@ -36,7 +36,8 @@
 					cache: false
 				});
 
-				var credit = '';	
+				var credit = '';
+				var imageName = "${documentExplorer.image.imageName}";
 				if ("${documentExplorer.image.imageType}" == 'R') {
 					credit += '<span style=\'font-size:16px\'>' + 'index of names &nbsp;';
 				} else if ("${documentExplorer.image.imageType}" == 'C') {
@@ -45,6 +46,11 @@
 					credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
 				} else if ("${documentExplorer.image.imageType}" == 'G') {
 					credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+				}else if ("${documentExplorer.image.imageType}" == 'O') {
+					//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
+					if(imageName.indexOf("COPERTA") != -1){
+						credit += '<span style=\'font-size:16px\'>' + 'coperta &nbsp; &nbsp;';
+					}
 				} else {
 		    		credit += ' ';
 		    	}
@@ -57,8 +63,13 @@
 	
 				if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
 					credit += '</span>' + ' recto' + '</span>';
-				} else {
+				} else if("${documentExplorer.image.imageRectoVerso}" == 'V'){
 					credit += '</span>' + ' verso' + '</span>';
+				}
+				
+				//MD:The last control is to verify if the image is a spine
+				if(imageName.indexOf("SPI") != -1){
+					credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
 				}
 				
 				iip = new IIPMooViewer( "targetframe", {

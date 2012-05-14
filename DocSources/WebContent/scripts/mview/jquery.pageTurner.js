@@ -72,6 +72,11 @@
 							credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
 						} else if (data.imageType == 'G') {
 							credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+						}else if (data.imageType == 'O') {
+							//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
+							if(data.imageName.indexOf("COPERTA") != -1){
+								credit += '<span style=\'font-size:16px\'>' + 'coperta &nbsp; &nbsp;';
+							}
 						} else {
 	                		credit += ' ';
 	                	} 
@@ -84,10 +89,14 @@
 
 						if (data.imageRectoVerso == 'R') {
 							credit += '</span>' + ' recto' + '</span>';
-						} else {
+						} else if (data.imageRectoVerso == 'V'){
 							credit += '</span>' + ' verso' + '</span>';
 						}
 						
+						//MD:The last control is to verify if the image is a spine
+						if(data.imageName.indexOf("SPI") != -1){
+							credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
+						}
 
 						iipMooViewer = new IIPMooViewer( "targetframe", {
 							server: functionParams["IIPImageServer"],
@@ -227,6 +236,11 @@
 						credit += '<span style=\'font-size:16px\'>' + 'allegato &nbsp; &nbsp;';
 					} else if (data.imageType == 'G') {
 						credit += '<span style=\'font-size:16px\'>' + 'guardia &nbsp; &nbsp;';
+					}else if (data.imageType == 'O') {
+						//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
+						if(data.imageName.indexOf("COPERTA") != -1){
+							credit += '<span style=\'font-size:16px\'>' + 'coperta &nbsp; &nbsp;';
+						}
 					} else {
                 		credit += ' ';
                 	}
@@ -237,8 +251,13 @@
 					}
 					if (data.imageRectoVerso == 'R') {
 						credit += '</span>' + ' recto' + '</span>';
-					} else {
+					} else if(data.imageRectoVerso == 'V'){
 						credit += '</span>' + ' verso' + '</span>';
+					}
+					
+					//MD:The last control is to verify if the image is a spine
+					if(data.imageName.indexOf("SPI") != -1){
+						credit = '<span style=\'font-size:16px\'>' + 'SPINE' + '</span>';
 					}
 					
 					iipMooViewer = new IIPMooViewer( "targetframe", {
