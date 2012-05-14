@@ -64,18 +64,18 @@
             	<form id="languagesSearchForm" method="post" class="edit">
 	                <a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
 	                <label for="languages" id="languagesLabel">Languages</label> 
-	                <label for="italian" id="italianLabel"><i>Italian</i></label>
-	                <input type="checkbox" name="italian" value="italian"\/>
-	                <label for="french" id="frenchLabel"><i>French</i></label>
-	                <input type="checkbox" name="french" value="french"\/>
-	                <label for="german" id="germanLabel"><i>German</i></label>
-	                <input type="checkbox" name="german" value="german"\/>
-	                <label for="spanish" id="spanishLabel"><i>Spanish</i></label>
-	                <input type="checkbox" name="spanish" value="spanish"\/>
-	                <label for="latin" id="latinLabel"><i>Latin</i></label>
-	                <input type="checkbox" name="latin" value="latin"\/>
-	                <label for="english" id="englishLabel"><i>English</i></label>
-	                <input type="checkbox" name="english" value="english"\/>
+	                <label for="Italian" id="italianLabel"><i>Italian</i></label>
+	                <input type="checkbox" name="italian" value="Italian"\/>
+	                <label for="French" id="frenchLabel"><i>French</i></label>
+	                <input type="checkbox" name="french" value="French"\/>
+	                <label for="German" id="germanLabel"><i>German</i></label>
+	                <input type="checkbox" name="german" value="German"\/>
+	                <label for="Spanish" id="spanishLabel"><i>Spanish</i></label>
+	                <input type="checkbox" name="spanish" value="Spanish"\/>
+	                <label for="Latin" id="latinLabel"><i>Latin</i></label>
+	                <input type="checkbox" name="latin" value="Latin"\/>
+	                <label for="English" id="englishLabel"><i>English</i></label>
+	                <input type="checkbox" name="english" value="English"\/>
 	                <input type="submit" id="addSearchFilter" value="Add" title="Add this date to your search filter">
 	                <input type="hidden" id="category" value="Languages">
             	</form>

@@ -717,23 +717,23 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					if(j > 0){
 						languagesQuery.append(" AND ");
 					}
-					if(worldSingleLanguages[j].equals("italian")){
-						languagesQuery.append("(italian=true)");
+					if(worldSingleLanguages[j].equals("Italian")){
+						languagesQuery.append("(italian!=false)");
 					}
-					if(worldSingleLanguages[j].equals("french")){
-						languagesQuery.append("(french=true)");
+					if(worldSingleLanguages[j].equals("French")){
+						languagesQuery.append("(french!=false)");
 					}
-					if(worldSingleLanguages[j].equals("german")){
-						languagesQuery.append("(german=true)");
+					if(worldSingleLanguages[j].equals("German")){
+						languagesQuery.append("(german!=false)");
 					}
-					if(worldSingleLanguages[j].equals("spanish")){
-						languagesQuery.append("(spanish=true)");
+					if(worldSingleLanguages[j].equals("Spanish")){
+						languagesQuery.append("(spanish!=false)");
 					}
-					if(worldSingleLanguages[j].equals("latin")){
-						languagesQuery.append("(latin=true)");
+					if(worldSingleLanguages[j].equals("Latin")){
+						languagesQuery.append("(latin!=false)");
 					}
-					if(worldSingleLanguages[j].equals("english")){
-						languagesQuery.append("(english=true)");
+					if(worldSingleLanguages[j].equals("English")){
+						languagesQuery.append("(english!=false)");
 					}
 				}
 			}

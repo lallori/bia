@@ -345,7 +345,9 @@ public class AjaxController {
 		try {
 			page = getSearchService().searchAdvancedVolumes(searchFilter.getFilterData(), paginationFilter);
 			
-			stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
+			if(page.getTotal() > 0){
+				stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
+			}
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}

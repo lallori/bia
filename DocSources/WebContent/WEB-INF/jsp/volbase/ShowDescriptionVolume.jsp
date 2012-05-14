@@ -55,12 +55,12 @@
 			</div>
 			<div class="row">
 				<div class="item">Languages</div>
-				<div class="value"> ${volume.italian ? 'Italian' : '' } 
-									${volume.spanish ? 'Spanish' : ''}
-									${volume.english ? 'English' : ''}
-									${volume.latin ? 'Latin' : ''}
-									${volume.german ? 'German' : ''}
-									${volume.french ? 'French' : ''}
+				<div class="value"> ${volume.italian ? 'Italian;' : '' }
+									${volume.spanish ? 'Spanish;' : ''}
+									${volume.english ? 'English;' : ''}
+									${volume.latin ? 'Latin;' : ''} 
+									${volume.german ? 'German;' : ''}
+									${volume.french ? 'French;' : ''}
 									${volume.otherLang}
 				</div>
 			</div>
