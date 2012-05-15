@@ -16,6 +16,10 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/demo_table.css"/>" />
 <!-- 	<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/TableTools.css"/>" />  -->
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css"/>" />
+		
+		<!--[if IE]>
+            <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent_ie.css" />" />
+		<![endif]--> 
 <!-- 
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
@@ -77,7 +81,7 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.scrollTo.js"/>"></script>
 		<!-- <script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script> -->
-
+		
 		<script type="text/javascript">
 	           window.onbeforeunload = function() {
 	               return "If you leave this page you will exit the Software Platform";

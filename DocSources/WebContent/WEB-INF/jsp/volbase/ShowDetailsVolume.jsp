@@ -144,9 +144,11 @@
 				//Check if already exist a tab with this person
 				var tabExist = false;
 				$j("#tabs ul li a").each(function(){
+					var toTest = "";
+					toTest += this.text;
 					if(!tabExist)
 						numTab++;
-					if(this.text == tabName || this.text.indexOf("Explore Volume ${volume.volNum}${volume.volLetExt}") != -1){
+					if(this.text == tabName || toTest.indexOf("Explore Volume ${volume.volNum}${volume.volLetExt}") != -1){
 						tabExist = true;
 					}
 				});

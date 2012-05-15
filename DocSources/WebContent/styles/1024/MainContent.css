@@ -593,6 +593,8 @@ item a{
     visibility: hidden;
     z-index:999;
     opacity:0.4;
+	-moz-opacity: 0.4;
+	filter:alpha(opacity=40); /* IE */
     width:485px;
     position:absolute;
 	border-radius:4px;
@@ -612,6 +614,7 @@ fieldset {  /* FORM BACKGROUND */
 	border: 1px solid #DCC0BA;
 	-moz-border-radius: 4px;
 	border-radius: 4px;	
+	-webkit-border-radius: 4px;
 	background-color:#F2E6E5;
 	padding-left:30px;
 	min-height: 70px;	
@@ -2307,7 +2310,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	z-index:-1;
 	width:460px;
 	margin-left:15px;
-	height:335px;
+	height:300px;
 	margin-top:10px;
 	z-index:-1;
 	border: 1px solid;
@@ -3229,6 +3232,13 @@ a.refreshVolumeExplorer {
 	margin:-5px 0 0 157px;
 }
 
+/* -------------------------------------- */
+/*
+/* ---- EdtitExternalLinkTgn, Map and MapSite --- */
+
+#EditExtLinkTgnPlaceForm #linkLabel {
+	margin-left: 9px;
+}
 
 /*
 /* -------------------------------------------------------------------------- */
@@ -3685,7 +3695,7 @@ form#EditUserProfileForm span{
 #advancedSearchModal a:hover{ /* On Rollover transparency effect */
 	opacity:0.5; /* Chrome, Safari */
 	-moz-opacity: 0.5; /* Firefox */
-	filter:alpha(opacity=0); /* IE */
+	filter:alpha(opacity=50); /* IE */
 	text-decoration:none;
 }
 
@@ -5173,6 +5183,8 @@ h3.systemManagement {
 	position:absolute;
 	background:url(/DocSources/images/1024/loading_div.gif) no-repeat;
 	opacity:0.4;
+	-moz-opacity: 0.4;
+	filter:alpha(opacity=40); /* IE */
 }
 
 /* User */
@@ -5448,6 +5460,8 @@ h3.systemManagement {
 	cursor: wait;
 	position: absolute;
 	opacity: 0.6;
+	-moz-opacity: 0.6;
+	filter:alpha(opacity=60); /* IE */
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 }

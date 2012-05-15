@@ -55,9 +55,11 @@
             			var numTab = 0;
             			//Verify if a tab with same title already exist
         				$j("#tabs ul li a").each(function(){
+        					var toTest = "";
+        					toTest += this.text;
         					if(!tabExist)
         						numTab++;
-        					if(this.text == tabName || this.text.indexOf("Explore Volume " + data.volNum + data.volLetExt) != -1){
+        					if(this.text == tabName || toTest.indexOf("Explore Volume " + data.volNum + data.volLetExt) != -1){
         						tabExist = true;
         					}
         				});
