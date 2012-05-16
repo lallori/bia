@@ -482,6 +482,10 @@
 	<definition name="geobase/ShowConfirmUndeletePlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowConfirmUndeletePlace.jsp"/>
 	</definition>
+	
+	<definition name="geobase/ShowGoogleMapsGeoCoorPlace" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowGoogleMapsGeoCoorPlace.jsp"/>
+	</definition>
 
 	<definition name="geobase/ShowMenuActionsPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowMenuActionsPlace.jsp"/>
