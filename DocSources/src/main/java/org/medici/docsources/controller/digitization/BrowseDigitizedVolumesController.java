@@ -44,6 +44,7 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 @Controller
@@ -57,7 +58,7 @@ public class BrowseDigitizedVolumesController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = {RequestMethod.GET})
+	@RequestMapping(method = {RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("command") BrowseDigitizedVolumesCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		// This number is used to generate an unique id for new search 

@@ -36,9 +36,30 @@
 			return false;
 		});
 		$j("#BrowseFilze").click(function(){
-			$j("#body_right").load($j(this).attr("href"));
-			Modalbox.hide();
-			return false;
+			//$j("#body_right").load($j(this).attr("href"));
+			var tabTitle = "Browse Digitized Volumes";
+			var numTab = 0;
+			var tabExist = false;
+			$j("#tabs ul li a").each(function(){
+				var toTest = "";
+				toTest += this.text;
+				if(!tabExist)
+					numTab++;
+				if(toTest == tabTitle){
+					tabExist = true;
+				}
+			});
+			
+			if(!tabExist){
+				$j( "#tabs" ).tabs("add", $j(this).attr("href"), tabTitle + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				$j("#tabs").tabs("select", $j("#tabs").tabs("length") - 1);
+				Modalbox.hide();
+				return false;
+			}else{
+				$j("#tabs").tabs("select", numTab - 1);
+				Modalbox.hide();
+				return false;
+			}
 		});
 		$j("#close").click(function(){
 			Modalbox.hide();
