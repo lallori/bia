@@ -7,6 +7,8 @@
 	<c:url var="UserSearchFiltersPaginationURL" value="/src/UserSearchFiltersPagination.json">
 		<c:param name="searchType" value="all"/>
 	</c:url>
+	
+	<c:url var="ChoiceAdvancedSearchURL" value="/src/ChoiceAdvancedSearch.do"/>
 
 	<script type="text/javascript" charset="utf-8">
 		$j(document).ready(function() {
@@ -76,6 +78,14 @@
 				Modalbox.hide();
 				return false;
 			});
+			
+			$j("#closeSavedFilters").click(function(){
+				Modalbox.hide();return false;
+			});
+			
+			$j("#goBackToAdvancedSearch").click(function(){
+				Modalbox.show($j(this).attr("href"), {title: "ADVANCED SEARCH", width: 750, height: 325});return false;
+			});
 		} );
 	</script>
 
@@ -95,4 +105,10 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	<div id="savedFiltersButtons">
+		<a id="closeSavedFilters" type="submit" title="Close Saved Search Filters window" href="#">Close</a>
+		<a id="goBackToAdvancedSearch" title="Go Back to Advanced Search" href="${ChoiceAdvancedSearchURL}">Go back</a>
+	</div>
+	
 </div>
