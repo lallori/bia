@@ -327,32 +327,32 @@ public class Volume implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String ccondition;
 	
-	@Column (name="\"ITALIAN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"ITALIAN\"", length=1, columnDefinition="TINYINT default '0'", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean italian;
 	
-	@Column (name="\"SPANISH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"SPANISH\"", length=1, columnDefinition="TINYINT default '0'", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean spanish;
 	
-	@Column (name="\"ENGLISH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"ENGLISH\"", length=1, columnDefinition="TINYINT default '0'", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean english;
 	
-	@Column (name="\"LATIN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"LATIN\"", length=1, columnDefinition="TINYINT default '0'", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean latin;
 	
-	@Column (name="\"GERMAN\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"GERMAN\"", length=1, columnDefinition="TINYINT default '0'", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean german;
 	
-	@Column (name="\"FRENCH\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"FRENCH\"", length=1, columnDefinition="TINYINT default '0'", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean french;
@@ -361,7 +361,7 @@ public class Volume implements Serializable {
 	@Field(index=Index.TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	private String otherLang;
 	
-	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT default '-1'", nullable=false)
+	@Column (name="\"CIPHER\"", length=1, columnDefinition="TINYINT default '0'", nullable=false)
 	@Field(index=Index.UN_TOKENIZED, store=Store.YES, indexNullAs=Field.DEFAULT_NULL_TOKEN)
 	@FieldBridge(impl=BooleanBridge.class)
 	private Boolean cipher;
