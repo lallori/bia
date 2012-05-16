@@ -12,6 +12,10 @@
 		<c:url var="ShowPlaceURL" value="/src/geobase/ShowPlace.do">
 			<c:param name="placeAllId" value="${command.placeAllId}" />
 		</c:url>
+		
+		<c:url var="ShowGoogleMapsGeoCoorPlaceURL" value="/de/geobase/ShowGoogleMapsGeoCoorPlace.do">
+			<c:param name="placeAllId" value="${command.placeAllId}" />
+		</c:url>
 	</security:authorize>
 	
 <%-- Loading div when saving the form --%>
@@ -39,7 +43,7 @@
 		<div style="margin-top:15px;">
 			<p>Finds Geo Coordinates on:</p>
 			<a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank" id="gettyTgn">Getty TGN</a>
-			<a href="#" target="_blank" id="googleMaps">Google Maps</a>
+			<a href="${ShowGoogleMapsGeoCoorPlaceURL}" target="_blank" id="googleMaps">Google Maps</a>
 		</div>
 		
 		<div>
