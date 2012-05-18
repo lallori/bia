@@ -72,6 +72,7 @@ import org.springframework.stereotype.Repository;
  * <b>PeopleDAOJpaImpl</b> is a default implementation of <b>PeopleDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.People
  */
@@ -846,6 +847,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		
 		Query query = null;
 		String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOccId=" + titleOccToSearch + ")");
+		//MD: The next query is builded for test if is possible order result by date of Title Occupation
+		//String toSearch = new String("FROM People p, org.medici.docsources.domain.PoLink t WHERE p.personId = t.person.personId AND t.titleOccList.titleOccId=" + titleOccToSearch + " ORDER BY t.startYear");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
