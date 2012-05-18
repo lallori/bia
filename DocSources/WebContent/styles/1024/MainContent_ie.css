@@ -9,6 +9,14 @@
  */
 
 
+/* --------------------- SIMPLE SEARCH FORM ----------------------------------- */
+/* Edit */
+
+#simpleSearchPerimeter {
+	width: 151px;
+}
+
+
 /* --------------------- ADD NEW DOCUMENT ----------------------------------- */
 /* Edit */
 
@@ -262,3 +270,208 @@ form#EditUserProfileForm span {
 	margin-left: 38px;
 }
 
+
+/* --------------------- DIGITIZATION MODULE ----------------------------------- */
+/* CREATE NEW "SCHEDONE" */
+
+/* Schedone Details */
+/* Edit */
+
+#istitutoLabel {
+	margin-right: 71px;
+}
+
+#fondoLabel {
+	margin-right: 76px;
+}
+
+#serieLabel {
+	margin-right: 83px;
+}
+
+#numeroUnitaLabel {
+	margin-right: 63px;
+}
+
+#dateEstremeLabel {
+	margin-right: 40px;
+}
+
+#legaturaLabel {
+	margin-right: 62px;
+}
+
+#supportoLabel {
+	margin-right: 60px;
+}
+
+#cartulazioneLabel {
+	margin-right: 42px;
+}
+
+#carteMancantiLabel {
+	margin-right: 28px;
+}
+
+#dimensioniBaseLabel {
+	margin-right: 79px;
+}
+
+#dimensioniAltezzaLabel {
+	margin-right: 67px;
+}
+
+#tipoRipresaLabel {
+	margin-right: 77px;
+}
+
+#coloreImmagineLabel {
+	margin-right: 37px;
+}
+
+#risoluzioneLabel {
+	margin-right: 75px;
+}
+
+#responsabileFotoRiproduzioneLabel {
+	margin-right: 29px;
+}
+
+#daRipresaLabel {
+	margin-right: 124px;
+}
+
+#operatoreLabel {
+	margin-right: 55px;
+}
+
+
+/* Add Digitization Module */
+/* Edit */
+
+#AddNewDigitizedVolumeDiv .activate {
+	margin-top: -15px;
+}
+
+
+/* --------------------- ADMINISTRATION MODULE ----------------------------------- */
+/* SYSTEM-WIDE PROPERTIES */
+
+/* Recaptcha Properties */
+/* Edit */
+
+#domainNameLabel {
+	margin-right: 15px;
+}
+
+#privateKeyLabel {
+	margin-right: 32px;
+}
+
+#serverUrlLabel {
+	margin-right: 38px;
+}
+
+#siteIdentifierLabel {
+	margin-right: 19px;
+}
+
+
+/* Iip image */
+/* Edit */
+
+#serverPathLabel {
+	margin-right: 29px;
+}
+
+#serverHostNameLabel {
+	margin-right: 40px;
+}
+
+#serverPortLabel {
+	margin-right: 74px;
+}
+
+#serverProtocolLabel {
+	margin-right: 52px;
+}
+
+#serverVersionLabel {
+	margin-right: 58px;
+}
+
+
+/* Schedone */
+/* Edit */
+
+#EditSchedonePropertiesForm #istitutoLabel {
+	margin-right: 95px;
+}
+
+#EditSchedonePropertiesForm #fondoLabel {
+	margin-right: 85px;
+}
+
+#EditSchedonePropertiesForm #legaturaLabel {
+	margin-right: 87px;
+}
+
+#EditSchedonePropertiesForm #supportoLabel {
+	margin-right: 85px;
+}
+
+#EditSchedonePropertiesForm #tipoRipresaLabel {
+	margin-right: 115px;
+}
+
+#EditSchedonePropertiesForm #coloreImmagineLabel {
+	margin-right: 102px;
+}
+
+#EditSchedonePropertiesForm #responsabileFotoRiproduzioneLabel {
+	margin-right: 54px;
+}
+
+#EditSchedonePropertiesForm #operatoreLabel {
+	margin-right: 80px;
+}
+
+
+/* USER MANAGEMENT */
+/* Add New User */
+
+/* User Control */
+/* Edit */
+
+#groupPoliciesLabel {
+	margin-right: 57px;
+}
+
+
+/* Email Control */
+/* Edit */
+
+#emailAdressLabel {
+	margin-right: 83px;
+}
+
+#reciveNotifEmailLabel {
+	margin-right: 12px;
+}
+
+
+
+/* --------------------- ADVANCED SEARCH ----------------------------------- */
+/* VOLUME */
+
+#languagesSearchForm #spanishLabel {
+	margin-left: 105px;
+}
+
+#languagesSearchForm #latinLabel {
+	margin-left: 23px;
+}
+
+#languagesSearchForm #addSearchFilter {
+	margin-left:13px;
+}

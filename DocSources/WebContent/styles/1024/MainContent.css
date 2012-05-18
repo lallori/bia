@@ -377,9 +377,7 @@ span.h7 {
 	display: table;
 	margin:5px 0 0 30px;
 	width:90%; 
-	
- 	
- 	 	font-size: 12px;
+	font-size: 12px;
 	line-height: 18px;
 }
 
@@ -1437,7 +1435,7 @@ hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 }
 
 /* Edit Forms */
-#EditCorrespondentsDocumentForm,  #EditNamesPersonForm, #AdddChildPersonForm, #EditChildPersonForm, #SpousesPersonForm, #EditRelationshipPersonForm, #EditTopicsDocumentForm, #TopicsDocumentForm,  #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm, #TitlesOccupationsPersonForm,   #EditFactChecksDocumentForm, #EditExtractOrSynopsisDocumentForm, #EditNameMapSitePlaceForm, #ParentsPersonForm, #ChildrenPersonForm, #EditResearchNotesPersonForm, #EditDescriptionVolumeForm, #EditCorrespondentsVolumeForm, #EditContextVolumeForm, #NameTgnPlaceForm, #NameMapSitePlaceForm, #NameMapPlaceForm, #EditGeoCoorTgnPlaceForm, #EditGeoCoorMapSitePlaceForm, #EditGeoCoorMapPlaceForm, #ExtLinkMapSitePlaceForm, #ExtLinkTgnPlaceForm, #ExtLinkMapPlaceForm, #EditSpousesPersonForm, #EditExternalLinkForm { 
+#EditCorrespondentsDocumentForm,  #EditNamesPersonForm, #AdddChildPersonForm, #EditChildPersonForm, #SpousesPersonForm, #EditRelationshipPersonForm, #EditTopicsDocumentForm, #TopicsDocumentForm,  #AddSpousePersonForm, #AddNamesPersonForm, #AddTitlesOccupationsPersonForm, #AddPersonCorrespondentsDocumentForm, #AddTopicsDocumentForm, #AddExtLinkTgnPlaceForm, #AddExtLinkMapPlaceForm, #AddExtLinkMapSitePlaceForm, #AddNameTgnPlaceForm, #AddNameMapPlaceForm, #AddNameMapSitePlaceForm, #TitlesOccupationsPersonForm,   #EditFactChecksDocumentForm, #EditExtractOrSynopsisDocumentForm, #EditNameMapSitePlaceForm, #ParentsPersonForm, #ChildrenPersonForm, #EditResearchNotesPersonForm, #EditDescriptionVolumeForm, #EditCorrespondentsVolumeForm, #EditContextVolumeForm, #NameTgnPlaceForm, #NameMapSitePlaceForm, #NameMapPlaceForm, #EditGeoCoorPlaceForm, #ExtLinkMapSitePlaceForm, #ExtLinkTgnPlaceForm, #ExtLinkMapPlaceForm, #EditSpousesPersonForm, #EditExternalLinkForm { 
 	width:485px;
 	margin:5px 0 0 0;
 }
@@ -2580,7 +2578,7 @@ a.linkSearch, a.linkChild, a.linkParent, a.linkPeople, a.linkSpouse, a.link, a#l
 	height:22px;
 }
 
-#flipItInFullScreen:hover, #volumeSummary:hover, .refreshVolumeExplorer:hover, .showFullscreenMode:hover {
+#flipItInFullScreen:hover, .volumeSummary:hover, .refreshVolumeExplorer:hover, .showFullscreenMode:hover {
 	text-decoration:none;
 }
 
@@ -3202,18 +3200,18 @@ a.refreshVolumeExplorer {
 /*
 /* ---- EdtitCoordinatesTgn, Map and MapSite --- */
 
-#EditGeoCoorTgnPlaceForm a {
+#EditGeoCoorPlaceForm a {
 	color: #B7958F;
     display: inline;
     margin: 15px 0 0;
     text-decoration: underline;
 }
 
-#EditGeoCoorTgnPlaceForm p {
+#EditGeoCoorPlaceForm p {
 	display:inline;
 }
 
-#EditGeoCoorTgnPlaceForm #gettyTgn, #EditGeoCoorTgnPlaceForm #googleMaps{
+#EditGeoCoorPlaceForm #gettyTgn, #EditGeoCoorPlaceForm #googleMaps{
 	background:url(/DocSources/images/1024/button_medium.png) no-repeat;
 	width:122px;
 	height:23px;
@@ -3224,11 +3222,11 @@ a.refreshVolumeExplorer {
 	text-align:center;
 }
 
-#EditGeoCoorTgnPlaceForm #gettyTgn {
+#EditGeoCoorPlaceForm #gettyTgn {
 	margin:-5px 0 0 19px;
 }
 
-#EditGeoCoorTgnPlaceForm #googleMaps {
+#EditGeoCoorPlaceForm #googleMaps {
 	margin:-5px 0 0 157px;
 }
 
@@ -3699,6 +3697,14 @@ form#EditUserProfileForm span{
 	text-decoration:none;
 }
 
+#savedSearchFiltersTableDiv {
+	height:320px !important;
+	height /**/: 330px;
+	overflow:auto !important;
+	width: 740px;
+	margin-bottom:25px;
+}
+
 /*
 /* ------------------- pop up window ------------------------ */
 
@@ -4145,9 +4151,9 @@ table#savedSearchFiltersForm.display {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
-	padding:4px 0 0 5px;
-	width:50px;
+	padding:4px 0 0 0;
+	text-align:center;
+	width:52px;
 	height:22px;
 }
 
@@ -4156,8 +4162,8 @@ table#savedSearchFiltersForm.display {
 	cursor:pointer;
 	background-color:transparent;
 	background:url(/DocSources/images/1024/button_small.png) no-repeat;
-	font-size:11px;
-	padding:4px 0 0 12px;
+	padding:4px 0 0 0;
+	text-align:center;
 	width:52px;
 	height:22px;
 }
@@ -4411,7 +4417,7 @@ table#savedSearchFiltersForm.display {
 } 
 
 #languagesSearchForm #spanishLabel {
-	margin-left: 110px;
+	margin-left: 111px;
 }
 
 #languagesSearchForm #latinLabel {
@@ -5095,7 +5101,7 @@ ul#network a {
 }
 
 #reciveNotifEmailLabel {
-	margin-left: 3px;
+	margin-right: 3px;
 }
 
 /* Edit or Show Existing User */
@@ -5345,7 +5351,7 @@ h3.systemManagement {
 }
 
 #domainNameLabel {
-	margin-right: 11px;
+	margin-right: 9px;
 }
 
 #serverPathLabel {
