@@ -30,7 +30,7 @@
 		$j("#placeSearch").open({width: 980, height: 350, scrollbars: "yes"});		
 
 		$j("#savedFilters").click(function(){
-			Modalbox.show($j(this).attr("href"), {title: "SAVED SEARCH FILTERS", width: 750});
+			Modalbox.show($j(this).attr("href"), {title: "SAVED SEARCH FILTERS", width: 760, height: 415});
 			return false;
 		});
 	    

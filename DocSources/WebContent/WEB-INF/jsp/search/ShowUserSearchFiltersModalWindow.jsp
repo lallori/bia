@@ -90,21 +90,23 @@
 	</script>
 
 <div id="savedSearchFiltersDiv">
-	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="savedSearchFiltersForm">
-		<thead>
-			<tr>
-				<th>FILTER NAME</th>
-				<th>RESULTS</th>
-				<th>RECORD TYPES</th>
-				<th>DATE</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="4" class="dataTables_empty">Loading data from server</td>
-			</tr>
-		</tbody>
-	</table>
+	<div id="savedSearchFiltersTableDiv">
+		<table cellpadding="0" cellspacing="0" border="0" class="display"  id="savedSearchFiltersForm">
+			<thead>
+				<tr>
+					<th>FILTER NAME</th>
+					<th>RESULTS</th>
+					<th>RECORD TYPES</th>
+					<th>DATE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="4" class="dataTables_empty">Loading data from server</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	
 	<div id="savedFiltersButtons">
 		<a id="closeSavedFilters" type="submit" title="Close Saved Search Filters window" href="#">Close</a>
