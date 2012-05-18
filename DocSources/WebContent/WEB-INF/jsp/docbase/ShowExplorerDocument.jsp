@@ -233,9 +233,9 @@
 				delay(function(){
 					$j.ajax({ type:"GET", url:"${searchCarta}", async:false, success:function(data) {
 						if(data.imageType == 'C'){
-							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('Explore Volume ${documentExplorer.volNum}/' + data.imageProgTypeNum);
+							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('Volume ${documentExplorer.volNum} - Folio ' + data.imageProgTypeNum);
 						}else{
-							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('Explore Volume ${documentExplorer.volNum}');
+							$j("#titleTab${documentExplorer.volNum}${documentExplorer.volLetExt}").html('Volume ${documentExplorer.volNum}');
 						}
 				}});},250);
 				

@@ -201,7 +201,7 @@
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
 			
 			$j("#ShowDocumentInVolumeExplorer").click(function(){
-				var tabName = "<span id='titleTab${document.volume.volNum}${document.volume.volLetExt}'>Explore Volume ${document.volume.volNum}${document.volume.volLetExt}/${document.folioNum}</span>";
+				var tabName = "<span id='titleTab${document.volume.volNum}${document.volume.volLetExt}'>Volume ${document.volume.volNum}${document.volume.volLetExt} - Folio ${document.folioNum}</span>";
 				
 				//Check if already exist a tab with this document in volume explorer
 				var numTab = 0;
@@ -212,7 +212,7 @@
 					toTest += this.text;
 					if(!tabExist)
 						numTab++;
-					if(toTest == tabName || toTest.indexOf("Explore Volume ${document.volume.volNum}${document.volume.volLetExt}") != -1){
+					if(toTest == tabName || toTest.indexOf("Volume ${document.volume.volNum}${document.volume.volLetExt}") != -1){
 						tabExist = true;
 					}
 				});
