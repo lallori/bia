@@ -45,7 +45,7 @@
 			<div id="PlaceMapDiv">
 				<img src="<c:url value="/images/1024/img_place.png"/>" alt="Place" width="120px" height="160px">
 				<c:if test="${linkGoogleMaps != null}">
-					<a class="placeMap" href="${linkGoogleMaps}" target="_blank">Click here to view the Google Map</a>
+					<a class="placeMap" href="${linkGoogleMaps}" target="_blank">View this place on Google Maps</a>
 				</c:if>
 			</div>
 		

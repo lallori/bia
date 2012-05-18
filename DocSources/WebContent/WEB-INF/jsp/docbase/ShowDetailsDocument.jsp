@@ -116,7 +116,7 @@
 					<div class="item60">Doc ID</div> <div class="value">${document.entryId == 0 ? '' : document.entryId}</div>
 				</div>
 				<div class="row">
-					<div class="item60">Volume</div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="Click here to view this volume">${document.volume.volNum}${document.volume.volLetExt}</a></div>
+					<div class="item60">Volume</div> <div class="value"><a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></div>
 				</div>
 				<div class="row">
 					<div class="item60">Insert/Part</div> <div class="value">${document.insertNum} / ${document.insertLet}</div>

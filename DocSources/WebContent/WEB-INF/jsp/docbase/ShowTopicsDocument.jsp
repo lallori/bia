@@ -30,7 +30,7 @@
 			</c:url>
 			<div class="row">
 				<div class="item">Topic:</div>
-				<div class="value80"><a href="${ShowTopicsRelatedDocumentURL}" class="linkTopic">${currentTopicAndPlace.topic.topicTitle}</a></div>
+				<div class="value80"><a href="${ShowTopicsRelatedDocumentURL}" class="linkTopic" title="Show documents related to topic: ${currentTopicAndPlace.topic.topicTitle}">${currentTopicAndPlace.topic.topicTitle}</a></div>
 			</div>
 			<div class="row">
 				<div class="item">Topic Place:</div>

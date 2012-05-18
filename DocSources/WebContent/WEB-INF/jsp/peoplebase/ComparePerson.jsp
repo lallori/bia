@@ -73,10 +73,10 @@
 			<c:if test="${docsRelated != 0 && docsRelated != 1}">
 				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
 				<div style="margin:10px 0 0 10px">
-					(<a href="${ShowDocumentsPersonURL}" class="all_docsCompare ${person.personId}" title="Click here to view all documents related to this person">View All</a> | 
-					<a href="${ShowSenderDocumentsPersonURL}" class="sender_docsCompare ${person.personId}" title="Click here to view the letters SENT BY this person">Sender</a> <span class="num_docs">${senderDocsRelated}</span> | 
-					<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docsCompare ${person.personId}" title="Click here to view the letters RECEIVED BY this person">Recipient</a> <span class="num_docs">${recipientDocsRelated}</span> | 
-					<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docsCompare ${person.personId}" title="Click here to view the documents in which this person is mentioned">Referring To</a> <span class="num_docs">${referringDocsRelated}</span>)
+					(<a href="${ShowDocumentsPersonURL}" class="all_docsCompare ${person.personId}" title="View all documents related to this person">View All</a> | 
+					<a href="${ShowSenderDocumentsPersonURL}" class="sender_docsCompare ${person.personId}" title="View the letters SENT BY this person">Sender</a> <span class="num_docs">${senderDocsRelated}</span> | 
+					<a href="${ShowRecipientDocumentsPersonURL}" class="recipient_docsCompare ${person.personId}" title="View the letters RECEIVED BY this person">Recipient</a> <span class="num_docs">${recipientDocsRelated}</span> | 
+					<a href="${ShowReferringToDocumentsPersonURL}" class="referred_docsCompare ${person.personId}" title="View the documents in which this person is mentioned">Referring To</a> <span class="num_docs">${referringDocsRelated}</span>)
 				</div>
 			</c:if>
 			<c:if test="${docsRelated == 0}">	
@@ -85,7 +85,7 @@
 			<c:if test="${docsRelated == 1}">
 				<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span>
 				<div style="margin-left:28px">
-					(<a href="${ShowDocumentsPersonURL}" class="all_docs ${person.personId}" title="Click here to see this documentview all documents related">View it</a>)
+					(<a href="${ShowDocumentsPersonURL}" class="all_docs ${person.personId}" title="View all the documents related to this person">View it</a>)
 				</div>	
 			</c:if>
 		</c:if>
