@@ -1,5 +1,5 @@
 /*
- * SearchUserCommand.java
+ * ShowUserSearchValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,77 +25,41 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.user;
+package org.medici.docsources.validator.admin;
+
+import org.medici.docsources.command.admin.ShowUserSearchCommand;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 /**
- * Command bean for action "search user".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
- * @see org.medici.docsources.controller.user.SearchUserController
  */
-public class SearchUserCommand {
-	private String alias;
-	private Integer pageNumber;
-	private String sort;
-	private Boolean sortAscending;
+public class ShowUserSearchValidator implements Validator {
 
 	/**
-	 * This method returns alias property.
+	 * Indicates whether the given class is supported by this converter. This
+	 * validator supports only SearchUserCommand.
 	 * 
-	 * @return the alias
+	 * @param givenClass the class to test for support
+	 * @return true if supported; false otherwise
 	 */
-	public String getAlias() {
-		return alias;
+	@SuppressWarnings("rawtypes")
+	public boolean supports(Class givenClass) {
+		return givenClass.equals(ShowUserSearchCommand.class);
 	}
 
 	/**
-	 * @return the pageNumber
-	 */
-	public Integer getPageNumber() {
-		return pageNumber;
-	}
-	/**
-	 * @return the sort
-	 */
-	public String getSort() {
-		return sort;
-	}
-	/**
-	 * @return the sortAscending
-	 */
-	public Boolean getSortAscending() {
-		return sortAscending;
-	}
-	/**
-	 * This method sets alias property.
+	 * Validate the supplied target object, which must be of a Class for which
+	 * the supports(Class) method typically has (or would) return true. The
+	 * supplied errors instance can be used to report any resulting validation
+	 * errors.
 	 * 
-	 * @param alias
-	 *            the alias to set
+	 * @param object the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
-	/**
-	 * @param pageNumber the pageNumber to set
-	 */
-	public void setPageNumber(Integer pageNumber) {
-		this.pageNumber = pageNumber;
-	}
-
-	/**
-	 * @param sort the sort to set
-	 */
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
-
-	/**
-	 * @param sortAscending the sortAscending to set
-	 */
-	public void setSortAscending(Boolean sortAscending) {
-		this.sortAscending = sortAscending;
+	public void validate(Object object, Errors errors) {
 	}
 }

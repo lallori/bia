@@ -1,5 +1,5 @@
 /*
- * SearchUserCommand.java
+ * ShowUserManagementController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -24,78 +24,32 @@
  * resulting executable to be covered by the GNU General Public License.
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
+ * 
  */
-package org.medici.docsources.command.user;
+package org.medici.docsources.controller.admin;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Command bean for action "search user".
+ * Controller for action "Show Administration Module".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
- * 
- * @see org.medici.docsources.controller.user.SearchUserController
  */
-public class SearchUserCommand {
-	private String alias;
-	private Integer pageNumber;
-	private String sort;
-	private Boolean sortAscending;
-
+@Controller
+@RequestMapping("/admin/ShowUserManagement")
+public class ShowUserManagementController {
+	
 	/**
-	 * This method returns alias property.
 	 * 
-	 * @return the alias
+	 * @return
 	 */
-	public String getAlias() {
-		return alias;
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupPage(){
+		return new ModelAndView("admin/ShowUserManagementModalWindow");
 	}
 
-	/**
-	 * @return the pageNumber
-	 */
-	public Integer getPageNumber() {
-		return pageNumber;
-	}
-	/**
-	 * @return the sort
-	 */
-	public String getSort() {
-		return sort;
-	}
-	/**
-	 * @return the sortAscending
-	 */
-	public Boolean getSortAscending() {
-		return sortAscending;
-	}
-	/**
-	 * This method sets alias property.
-	 * 
-	 * @param alias
-	 *            the alias to set
-	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
-	/**
-	 * @param pageNumber the pageNumber to set
-	 */
-	public void setPageNumber(Integer pageNumber) {
-		this.pageNumber = pageNumber;
-	}
-
-	/**
-	 * @param sort the sort to set
-	 */
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
-
-	/**
-	 * @param sortAscending the sortAscending to set
-	 */
-	public void setSortAscending(Boolean sortAscending) {
-		this.sortAscending = sortAscending;
-	}
 }

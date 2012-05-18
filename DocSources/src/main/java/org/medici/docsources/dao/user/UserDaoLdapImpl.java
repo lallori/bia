@@ -63,6 +63,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 @Repository
@@ -303,19 +304,19 @@ public class UserDaoLdapImpl implements UserDAO {
 		AndFilter filter = new AndFilter();
 		filter.and(new EqualsFilter("objectclass", "person"));
 		OrFilter orFilter = new OrFilter();
-		if (!user.getAccount().equals("")) {
+		if (user.getAccount() != null && !user.getAccount().equals("")) {
 			orFilter.or(new WhitespaceWildcardsFilter("cn", user.getAccount()));
 		}
-		if (!user.getFirstName().equals("")) {
+		if (user.getFirstName() != null && !user.getFirstName().equals("")) {
 			orFilter.or(new WhitespaceWildcardsFilter("givenName", user.getFirstName()));
 		}
-		if (!user.getLastName().equals("")) {
+		if (user.getLastName() != null && !user.getLastName().equals("")) {
 			orFilter.or(new WhitespaceWildcardsFilter("surname", user.getLastName()));
 		}
-		if (!user.getOrganization().equals("")) {
+		if (user.getOrganization() != null && !user.getOrganization().equals("")) {
 			orFilter.or(new WhitespaceWildcardsFilter("ou", user.getOrganization()));
 		}
-		if (!user.getMail().equals("")) {
+		if (user.getMail() != null && !user.getMail().equals("")) {
 			orFilter.or(new WhitespaceWildcardsFilter("mail", user.getMail()));
 		}
 		filter.and(orFilter);

@@ -191,6 +191,18 @@
 	<definition name="admin/ShowSchedoneProperties" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
 	</definition>
+	
+	<definition name="admin/ShowUserManagementModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserManagementModalWindow.jsp" />
+	</definition>
+	
+	<definition name="admin/UserSearch" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/UserSearch.jsp"/>
+	</definition>
+	
+	<definition name="admin/UserSearchResult" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserSearchResult.jsp"/>	
+	</definition>
 
 	<definition name="user/DeleteUser" extends="template.completeDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/user/delete.jsp"/>

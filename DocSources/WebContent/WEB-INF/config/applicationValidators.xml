@@ -268,6 +268,10 @@
   	<bean id="showUserPhotoValidator" class="org.medici.docsources.validator.user.ShowUserPhotoValidator">
         <description>User registration validator.</description>
 	</bean>
+	
+	<bean id="showUserSearchValidator" class="org.medici.docsources.validator.admin.ShowUserSearchValidator">
+		<description>User Search Validator</description>
+	</bean>
     
     <bean id="searchUserValidator" class="org.medici.docsources.validator.user.SearchUserValidator">
         <description>User search validator.</description>

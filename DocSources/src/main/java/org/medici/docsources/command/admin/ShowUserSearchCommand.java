@@ -1,7 +1,7 @@
 /*
- * SearchUserCommand.java
- * 
- * Developed by Medici Archive Project (2010-2012).
+ * ShowSearchUserCommand.java
+ *
+ * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
  * This file is part of DocSources.
  * 
@@ -25,77 +25,40 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.user;
+package org.medici.docsources.command.admin;
 
 /**
- * Command bean for action "search user".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
- * 
- * @see org.medici.docsources.controller.user.SearchUserController
+ *
  */
-public class SearchUserCommand {
-	private String alias;
-	private Integer pageNumber;
-	private String sort;
-	private Boolean sortAscending;
-
+public class ShowUserSearchCommand {
+	
+	private String fullName;
+	private String userName;
 	/**
-	 * This method returns alias property.
-	 * 
-	 * @return the alias
+	 * @return the fullName
 	 */
-	public String getAlias() {
-		return alias;
-	}
-
-	/**
-	 * @return the pageNumber
-	 */
-	public Integer getPageNumber() {
-		return pageNumber;
+	public String getFullName() {
+		return fullName;
 	}
 	/**
-	 * @return the sort
+	 * @param fullName the fullName to set
 	 */
-	public String getSort() {
-		return sort;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	/**
-	 * @return the sortAscending
+	 * @return the userName
 	 */
-	public Boolean getSortAscending() {
-		return sortAscending;
+	public String getUserName() {
+		return userName;
 	}
 	/**
-	 * This method sets alias property.
-	 * 
-	 * @param alias
-	 *            the alias to set
+	 * @param userName the userName to set
 	 */
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
-	/**
-	 * @param pageNumber the pageNumber to set
-	 */
-	public void setPageNumber(Integer pageNumber) {
-		this.pageNumber = pageNumber;
-	}
-
-	/**
-	 * @param sort the sort to set
-	 */
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
-
-	/**
-	 * @param sortAscending the sortAscending to set
-	 */
-	public void setSortAscending(Boolean sortAscending) {
-		this.sortAscending = sortAscending;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

@@ -28,15 +28,26 @@
 package org.medici.docsources.service.admin;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface AdminService {
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
+	 */
+	public List<User> findUsers(User user) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param hashMap

@@ -29,27 +29,35 @@ package org.medici.docsources.service.admin;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
+import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.domain.ApplicationProperty;
+import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
- * @author Lorenzo Pasquinelli (<a
- *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Service
 @Transactional(readOnly = true)
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
+	
+	@Autowired(required = false)
+	@Qualifier("userDaoLdapImpl")
+	private UserDAO userDAO;
 
 	/**
 	 * @return the applicationPropertyDAO
@@ -59,11 +67,34 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @return the userDAO
+	 */
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+
+	/**
 	 * @param applicationPropertyDAO
 	 *            the applicationPropertyDAO to set
 	 */
 	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
 		this.applicationPropertyDAO = applicationPropertyDAO;
+	}
+	
+	/**
+	 * @param userDAO the userDAO to set
+	 */
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	@Override
+	public List<User> findUsers(User user) throws ApplicationThrowable {
+		try{
+			return getUserDAO().findUsers(user);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
