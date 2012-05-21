@@ -36,9 +36,13 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.search.SimpleSearch.SimpleSearchPerimeter;
+import org.medici.docsources.common.search.AdvancedSearch;
+import org.medici.docsources.common.search.AdvancedSearchFactory;
 import org.medici.docsources.common.search.SimpleSearchDocument;
 import org.medici.docsources.common.search.SimpleSearchPeople;
 import org.medici.docsources.common.search.SimpleSearchPlace;
@@ -90,6 +94,39 @@ public class AjaxController {
 	
 	@Autowired
 	private VolBaseService volBaseService;
+
+	/**
+	 * 
+	 * @param searchType
+	 * @param alias
+	 * @param sortingColumn
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@RequestMapping(value = "/src/AdvancedSearchCount.json", method = RequestMethod.POST)
+	public ModelAndView advancedSearchCount(HttpSession httpSession, AdvancedSearchCommand command) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Long totalResult = new Long(0);
+
+		AdvancedSearch advancedSearch = AdvancedSearchFactory.create(command);
+
+		try {
+			totalResult = getSearchService().searchCount((Search) advancedSearch);
+			
+			model.put("totalResult", totalResult);
+			model.put("response", "OK");
+			return new ModelAndView("responseOK", model);
+		} catch (ApplicationThrowable aex) {
+			model.put("error", totalResult);
+			model.put("response", "KO");
+			return new ModelAndView("responseOK", model);
+		}
+
+		
+	}
 
 	/**
 	 * 
@@ -185,7 +222,7 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 	}
-
+	
 	/**
 	 * 
 	 * @param searchType

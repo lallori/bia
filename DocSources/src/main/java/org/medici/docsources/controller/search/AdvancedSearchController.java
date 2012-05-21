@@ -148,7 +148,7 @@ public class AdvancedSearchController {
 			// if searchUUID is not presentt, it's a new search
 			command.setSearchUUID(UUID.randomUUID().toString());
 
-			// User request a new request. 
+			// User request a new search function. 
 			searchFilter = new SearchFilter(0, command.getSearchType());
 			searchFilter.setDateCreated(new Date());
 			searchFilter.setDateUpdated(new Date());

@@ -337,6 +337,18 @@ public class SearchServiceImpl implements SearchService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Long searchCount(Search searchContainer) throws ApplicationThrowable {
+		try {
+			return getDocumentDAO().countSearchMYSQL(searchContainer);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page searchAdvancedDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getDocumentDAO().searchMYSQL(searchContainer, paginationFilter);
@@ -368,7 +380,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -392,7 +404,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -404,7 +416,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -416,7 +428,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -440,7 +452,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	@Override
 	public Page searchTitleOrOccupation(Search searchContainer,	PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{
@@ -462,7 +474,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -474,7 +486,7 @@ public class SearchServiceImpl implements SearchService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -514,14 +526,14 @@ public class SearchServiceImpl implements SearchService {
 	public void setPlaceDAO(PlaceDAO placeDAO) {
 		this.placeDAO = placeDAO;
 	}
-
+	
 	/**
 	 * @param placeTypeDAO the placeTypeDAO to set
 	 */
 	public void setPlaceTypeDAO(PlaceTypeDAO placeTypeDAO) {
 		this.placeTypeDAO = placeTypeDAO;
 	}
-	
+
 	/**
 	 * @param searchFilterDAO the searchFilterDAO to set
 	 */

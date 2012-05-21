@@ -36,6 +36,8 @@
 	$.advancedSearchForm = {};
 
 	$.advancedSearchForm.defaults = {
+		"AdvancedSearchCountURL" : "/DocSources/src/AdvancedSearchCount.json",
+
 	};
 
 	$.fn.advancedSearchForm = function (options) {
@@ -162,6 +164,11 @@
 
 			console.log("AdvancedSearchForm " + formName + " completed.");
 			
+ 			$j.ajax({ type:"POST", url:options["AdvancedSearchCountURL"], data:$j("#yourEasySearchFilterForm").serialize(), async:false, success:function(json) {
+ 				// At this point we have count of total result. Review output page and put the total...
+ 				console.log("Advanced search result " + json.totalResult);
+			}});
+ 			
 			return false;
 		});
 

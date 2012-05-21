@@ -680,6 +680,16 @@ public abstract class JpaDao<K, E> implements Dao<K, E> {
 		
 	/**
 	 * 
+	 */
+	@Override
+	public Long countSearchMYSQL(org.medici.docsources.common.search.Search searchContainer) throws PersistenceException {
+		String countQuery = "SELECT COUNT(*) " + searchContainer.toJPAQuery();
+		Query query = getEntityManager().createQuery(countQuery);
+		return new Long((Long) query.getSingleResult());
+	}
+
+	/**
+	 * 
 	 * @param entityManager
 	 */
 	public void setEntityManager(EntityManager entityManager) {

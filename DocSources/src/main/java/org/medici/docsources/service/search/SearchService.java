@@ -169,6 +169,15 @@ public interface SearchService {
 	public Page searchAdvancedVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
+	 * This method is used to count a search.
+	 * 
+	 * @param searchContainer
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Long searchCount(Search searchContainer) throws ApplicationThrowable;
+	
+	/**
 	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
@@ -176,7 +185,7 @@ public interface SearchService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchDocuments(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param searchContainer
@@ -185,7 +194,7 @@ public interface SearchService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param query
@@ -193,7 +202,7 @@ public interface SearchService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<People> searchPeople(String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param searchContainer
@@ -202,7 +211,7 @@ public interface SearchService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchPlaces(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param query
@@ -219,15 +228,6 @@ public interface SearchService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchTitleOrOccupation(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param searchContainer
-	 * @param paginationFilter
-	 * @return
-	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
-	 */
-	public List<TopicList> searchTopics(String query, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -236,8 +236,17 @@ public interface SearchService {
 	 * @return
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
-	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public List<TopicList> searchTopics(String query, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Page searchVolumes(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param searchContainer

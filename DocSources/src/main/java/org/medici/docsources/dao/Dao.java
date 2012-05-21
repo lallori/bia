@@ -47,6 +47,15 @@ import org.medici.docsources.common.search.Search;
 public interface Dao<K, E> extends Serializable {
 	
 	/**
+	 * This method is used to count advanced search functions.
+	 * 
+	 * @param searchContainer
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Long countSearchMYSQL(org.medici.docsources.common.search.Search searchContainer) throws PersistenceException;
+	
+	/**
 	 * 
 	 * @param id
 	 * @return
