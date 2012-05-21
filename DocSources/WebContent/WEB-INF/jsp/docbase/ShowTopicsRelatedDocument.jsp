@@ -6,10 +6,17 @@
 
 	<c:url var="ShowTopicsRelatedDocumentURL" value="/de/docbase/ShowTopicsRelatedDocument.json"></c:url>
 	
+	<c:url var="AdvancedSearchRefineURL" value="/src/AdvancedSearch.do">
+		<c:param name="searchUUID" value="${UUID}" />
+		<c:param name="searchType" value="DOCUMENT" />
+	</c:url>
+	
 	<div class="yourSearchDiv">
 		<p>Documents indexed with topic: <font color="red" style="margin-left:5px">"${topicTitle}"</font></p>
 		<p>Total record found: <span id="docIndexedWith${topicId}" class="recordsNum"></span></p>
 	</div>
+	
+	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showTopicsId${topicId}">
 		<thead>
@@ -111,6 +118,8 @@
 					return false;
 				}
 			});
+			
+			$j("#refine${command.searchUUID}").open({width: 960, height: 350, scrollbars: "yes"});
 
 		} );
 	</script>
