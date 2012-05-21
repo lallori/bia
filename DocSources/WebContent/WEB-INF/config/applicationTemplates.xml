@@ -192,6 +192,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
 	</definition>
 	
+	<definition name="admin/ShowUser" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserControl.jsp"/>
+	</definition>
+	
 	<definition name="admin/ShowUserManagementModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/adm/ShowUserManagementModalWindow.jsp" />
 	</definition>
