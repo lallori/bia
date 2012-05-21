@@ -42,6 +42,7 @@ import org.springframework.beans.BeanUtils;
  * Utility class to work on list object containing java bean object.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public class ListBeanUtils {
 	/**
@@ -56,7 +57,7 @@ public class ListBeanUtils {
 	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<?> transformList(List inputList, String fieldName) {
-		if (inputList == null)
+		if (inputList == null || inputList.size() == 0)
 			return new ArrayList<Object>(0);
 
 		ArrayList retValue = new ArrayList(inputList.size());
