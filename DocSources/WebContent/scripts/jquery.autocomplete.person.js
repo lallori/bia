@@ -254,7 +254,8 @@
         me.options.params.query = q;
         // we attach loading image...
         //$(this.el).css('background-image', 'url(/DocSources/images/1024/img_waiting.gif)').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
-        $(this.el).addClass(".autoCompleterWaiting");
+        $(this.el).css('background-image', 'url(/DocSources/images/loading_autocomplete.gif)').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
+        //$(this.el).addClass(".autoCompleterWaiting");
         
         $.get(this.serviceUrl, me.options.params, function(txt) { me.processResponse(txt); }, 'text');
       }
@@ -314,8 +315,9 @@
       this.enabled = true;
       this.container.show();
       // we remove the loading image...
-      $(this.el).removeClass(".autoCompleterWaiting");
-      $(this.el).addClass(".autoCompleterNoWaiting");
+      $(this.el).css('background-image', '').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
+      //$(this.el).removeClass(".autoCompleterWaiting");
+      //$(this.el).addClass(".autoCompleterNoWaiting");
     },
 
     processResponse: function(text) {
