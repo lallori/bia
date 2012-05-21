@@ -846,9 +846,9 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOccId=" + titleOccToSearch + ")");
+		//String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOccId=" + titleOccToSearch + ")");
 		//MD: The next query is builded for test if is possible order result by date of Title Occupation
-		//String toSearch = new String("FROM People p, org.medici.docsources.domain.PoLink t WHERE p.personId = t.person.personId AND t.titleOccList.titleOccId=" + titleOccToSearch + " ORDER BY t.startYear");
+		String toSearch = new String("FROM People p, org.medici.docsources.domain.PoLink t WHERE p.personId = t.person.personId AND t.titleOccList.titleOccId=" + titleOccToSearch);
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;
@@ -856,7 +856,8 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 		
-		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		//MD: We have a pagination filter already parameterized
+		//paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
 		
 		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
@@ -871,7 +872,7 @@ public class PeopleDAOJpaImpl extends JpaDao<Integer, People> implements PeopleD
 			}
 		}
 		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		query = getEntityManager().createQuery("SELECT t.person " + toSearch + orderBySQL);
 		
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());

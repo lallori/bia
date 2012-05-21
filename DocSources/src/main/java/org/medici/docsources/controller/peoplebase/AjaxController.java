@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.lucene.search.SortField;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
@@ -59,6 +58,7 @@ import org.springframework.web.servlet.ModelAndView;
  * AJAX Controller for PeopleBase.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller("PeoleBaseAjaxController")
 public class AjaxController {
@@ -931,7 +931,7 @@ public class AjaxController {
 		List<Integer> peopleIds = new ArrayList<Integer>(); 
 		Map<Integer, PoLink> occupations = new HashMap<Integer, PoLink>();
 
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
+		PaginationFilter paginationFilter = generatePaginationFilterForTitleOcc(sortingColumnNumber, sortingDirection, firstRecord, length);
 		try {
 			page = getPeopleBaseService().searchTitlesOrOccupationsPeoplePerson(alias, paginationFilter);
 			
@@ -980,37 +980,37 @@ public class AjaxController {
 	 * @param length
 	 * @return
 	 */
-	private PaginationFilter generatePaginationFilter(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+	private PaginationFilter generatePaginationFilterForTitleOcc(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
 
 		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
 			switch (sortingColumnNumber) {
 			case 0:
-				paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection, SortField.STRING);
+				paginationFilter.addSortingCriteria("p.mapNameLf", sortingDirection);
 				break;
 			case 1:
-				paginationFilter.addSortingCriteria("recipientPeople.mapNameLf_Sort", sortingDirection, SortField.STRING);
+				paginationFilter.addSortingCriteria("p.gender", sortingDirection);
+				paginationFilter.addSortingCriteria("p.mapNameLf", sortingDirection);
 				break;
 			case 2:
-				paginationFilter.addSortingCriteria("docYear_Sort", sortingDirection, SortField.INT);
-				//Month is an entity, so we don't have field with suffix _Sort
-				paginationFilter.addSortingCriteria("docMonthNum.monthNum", sortingDirection, SortField.INT);
-				paginationFilter.addSortingCriteria("docDay_Sort", sortingDirection, SortField.INT);
+				paginationFilter.addSortingCriteria("p.bornYear", sortingDirection);
+				//Month is an entity, so we don't have field with suffix 
+				paginationFilter.addSortingCriteria("p.bornMonth.monthNum", sortingDirection);
+				paginationFilter.addSortingCriteria("p.bornDay", sortingDirection);
 				break;
 			case 3:
-				paginationFilter.addSortingCriteria("senderPlace.placeName_Sort", sortingDirection, SortField.STRING);
+				paginationFilter.addSortingCriteria("p.deathYear", sortingDirection);
+				//Month is an entity, so we don't have field with suffix 
+				paginationFilter.addSortingCriteria("p.deathMonth.monthNum", sortingDirection);
+				paginationFilter.addSortingCriteria("p.deathDay", sortingDirection);
 				break;
 			case 4:
-				paginationFilter.addSortingCriteria("recipientPlace.placeName_Sort", sortingDirection, SortField.STRING);
+				paginationFilter.addSortingCriteria("t.startYear", sortingDirection);
 				break;
 			case 5:
-				paginationFilter.addSortingCriteria("volume.volNum_Sort", sortingDirection, SortField.INT);
-				paginationFilter.addSortingCriteria("volume.volLetExt_Sort", sortingDirection, SortField.STRING);
-				paginationFilter.addSortingCriteria("folioNum_Sort", sortingDirection, SortField.INT);
-				paginationFilter.addSortingCriteria("folioMod_Sort", sortingDirection, SortField.STRING);
-				break;
+				paginationFilter.addSortingCriteria("t.endYear", sortingDirection);
 			default:
-				paginationFilter.addSortingCriteria("senderPeople.mapNameLf_Sort", sortingDirection);
+				paginationFilter.addSortingCriteria("p.mapNameLf", "asc");
 				break;
 			}		
 		}
