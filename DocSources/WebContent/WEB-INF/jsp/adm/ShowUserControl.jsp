@@ -4,11 +4,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-		<c:url var="" 	value="">
-			<c:param name=""   	value="" />
-		</c:url>
-	</security:authorize>
+<%-- 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS"> --%>
+<%-- 		<c:url var="" 	value=""> --%>
+<%-- 			<c:param name=""   	value="" /> --%>
+<%-- 		</c:url> --%>
+<%-- 	</security:authorize> --%>
 	
 	
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">

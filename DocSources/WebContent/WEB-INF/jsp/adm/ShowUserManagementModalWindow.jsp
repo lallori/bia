@@ -8,7 +8,7 @@
 
 <div id="userManagementDiv">
 	<div id="addNewDiv">
-        <a id="addNew" href="#"><p>Add New User</p></a>
+        <a id="addNew" href="<c:url value="/admin/ShowUser.do" />"><p>Add New User</p></a>
 	</div>
     
 	<div id="editOrShowDiv">
