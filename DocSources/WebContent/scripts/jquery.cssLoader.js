@@ -35,7 +35,7 @@
         "contextPath" :  "", /** This is contextPath should be setted to /DocSources/                                      **/
         "stylePath"   :  "", /** This is the position of style sheets home.                                                **/
         "styleSheets" :  {}, /** This is stylesheets array to load. Every record should consider his relative to stylePath **/
-        "forceResolution":  0, /** This parameter is used to force css loading to a specific resolution.                 **/ 
+        "forceResolution":  0 /** This parameter is used to force css loading to a specific resolution.                 **/ 
     };
 
     $.fn.cssLoader = function (params) {
