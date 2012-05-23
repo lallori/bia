@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css" />" />
         
         
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCY9kFTexYcSzbpOBI302lrZPhzGjboLtc&sensor=false"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAHbLtT8No8RIf-7pzQOcnfOeWP0TPYHG4&sensor=false"></script>
         <script type="text/javascript" src="<c:url value="/scripts/jquery.min.js" />"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/jquery-ui.min.js" />"></script>
         
