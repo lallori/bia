@@ -33,6 +33,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
@@ -232,12 +233,19 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 		return null;
 	}
 
+	@Override
+	public Page findUsers(User user, PaginationFilter paginationFilter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * @return the passwordEncoder
 	 */
 	public PasswordEncoder getPasswordEncoder() {
 		return passwordEncoder;
 	}
+
 
 	/**
 	 * 
@@ -246,14 +254,6 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 	 */
 	public void persistUserRoles(String account, List<User.UserRole> userRoles) {
 		return;
-	}
-
-
-	/**
-	 * @param passwordEncoder the passwordEncoder to set
-	 */
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -266,5 +266,12 @@ public class UserDaoJpaImpl extends JpaDao<String, User> implements UserDAO {
 	public void removeUserRoles(String account, List<UserRole> userRoles) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @param passwordEncoder the passwordEncoder to set
+	 */
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
 	}
 }

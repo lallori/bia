@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.dao.userinformation;
 
-import org.apache.log4j.Logger;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserInformation;
 import org.springframework.stereotype.Repository;
@@ -47,7 +46,5 @@ public class UserInformationDAOJpaImpl extends JpaDao<String, UserInformation> i
 	 * 
 	 */
 	private static final long serialVersionUID = 1193605850422464008L;
-
-	private final Logger logger = Logger.getLogger(this.getClass());
 
 }

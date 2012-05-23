@@ -27,10 +27,6 @@
  */
 package org.medici.docsources.command.admin;
 
-import java.util.List;
-
-import org.medici.docsources.domain.User.UserRole;
-
 /**
  * Command bean for action "show user".
  * 
@@ -42,16 +38,6 @@ import org.medici.docsources.domain.User.UserRole;
 public class ShowUserCommand {
 	/** User's Account **/
 	private String account;
-	/** User's Confirmation password **/
-	private String confirmPassword;
-	/** User's first name **/
-	private String firstName;
-	/** User's last name **/
-	private String lastName;
-	/** User's password **/
-	private String password;
-	/** User's security roles */
-	private List<UserRole> userRole;
 
 	/**
 	 * This method returns account property.
@@ -60,105 +46,5 @@ public class ShowUserCommand {
 	 */
 	public String getAccount() {
 		return account;
-	}
-
-	/**
-	 * This method returns confirmPassword property.
-	 * 
-	 * @return the confirmation password
-	 */
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	/**
-	 * This method returns firstName property.
-	 * 
-	 * @return the first name
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-
-	/**
-	 * This method returns password property.
-	 * 
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * This method returns list of user's roles.
-	 * 
-	 * @return list of user's roles
-	 */
-	public List<UserRole> getUserRole() {
-		return userRole;
-	}
-
-	/**
-	 * This method sets account property.
-	 * 
-	 * @param account
-	 *            the account to set
-	 */
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
-	/**
-	 * This method sets confirmPassword property.
-	 * 
-	 * @param confirmPassword
-	 *            the confirmation password
-	 */
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-
-	/**
-	 * This method sets first name.
-	 * 
-	 * @param firstName
-	 *            the first name to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
-	 * This method sets password property.
-	 * 
-	 * @param password
-	 *            the user password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * This method sets list of user's roles.
-	 * 
-	 * @param userRole
-	 *            the userRole to set
-	 */
-	public void setUserRole(List<UserRole> userRole) {
-		this.userRole = userRole;
-	}
-
-	/**
-	 * @param lastName the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	/**
-	 * @return the lastName
-	 */
-	public String getLastName() {
-		return lastName;
 	}
 }

@@ -27,19 +27,15 @@
  */
 package org.medici.docsources.controller.admin;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.validation.Valid;
-
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.admin.ShowUserCommand;
-import org.medici.docsources.command.user.CreateUserCommand;
 import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.admin.AdminService;
-import org.medici.docsources.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -70,34 +66,35 @@ public class ShowUserController {
 		return adminService;
 	}
 
-//	@RequestMapping(method = RequestMethod.POST)
-//	public ModelAndView processSubmit(@Valid @ModelAttribute("command") CreateUserCommand command, BindingResult result) {
-//
-//		if (result.hasErrors()) {
-//			return setupForm();
-//		} else {
-//			Map<String, Object> model = new HashMap<String, Object>();
-//
-//			User user = new User();
-//			try {
-//				BeanUtils.copyProperties(user, command);
-//			} catch (InvocationTargetException itex) {
-//			} catch (IllegalAccessException iaex) {
-//			}
-//
-//			try {
-//				getAdminService().registerUser(user);
-//				model.put("user", getAdminService().findUser(user.getAccount()));
-//			} catch (ApplicationThrowable aex) {
-//			}
-//
-//			return new ModelAndView("responseOK",model);
-//		}
-//	}
-
+	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowUserCommand command, BindingResult result) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		// This is user stored on LDAP
+		User user = new User();
+		// UserInformation contains additional user information as activation state, lock state 
+		UserInformation userInformation = new UserInformation();
 
+		if (StringUtils.isNotBlank(command.getAccount())) {
+			try {
+				user = getAdminService().findUser(command.getAccount());
+
+				userInformation = getAdminService().findUserInformation(command.getAccount());
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowVolume", model);
+			}
+		} else {
+			user.setAccount("");
+		}
+
+		model.put("user", user);
+		model.put("userInformation", userInformation);
+		
 		return new ModelAndView("admin/ShowUser");
 	}
 

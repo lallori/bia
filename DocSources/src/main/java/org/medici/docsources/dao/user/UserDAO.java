@@ -30,6 +30,7 @@ package org.medici.docsources.dao.user;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.exception.TooManyUsersException;
@@ -77,6 +78,14 @@ public interface UserDAO {
 	 * @return
 	 */
 	public Page findUsers(User user, Integer pageNumber, Integer pageSize);
+
+	/**
+	 * 
+	 * @param user
+	 * @param paginationFilter
+	 * @return
+	 */
+	public Page findUsers(User user,PaginationFilter paginationFilter);
 	
 	/**
 	 * This method updates the input {@link org.medici.docsources.domain.User} 

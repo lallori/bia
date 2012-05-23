@@ -37,8 +37,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.naming.Name;
+import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.LdapUtils;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
@@ -68,6 +71,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserDaoLdapImpl implements UserDAO {
+	private Logger logger = Logger.getLogger(this.getClass());
 	/**
 	 * This class is DocSource's implementation to map LDAP Attribute in User
 	 * Model Object.
@@ -271,6 +275,34 @@ public class UserDaoLdapImpl implements UserDAO {
 		AndFilter filter = getSearchFilter(user);
 		
 		return new Page(getLdapTemplate().search(DistinguishedName.EMPTY_PATH,  filter.encode(), getUserContextMapper()), pageNumber, pageSize);
+	}
+
+	@Override
+	public Page findUsers(User user, PaginationFilter paginationFilter) {
+		AndFilter filter = getSearchFilter(user);
+		List<User> users = null;
+		try {
+			users = getLdapTemplate().search(DistinguishedName.EMPTY_PATH, filter.encode(), getUserContextMapper());
+		} catch (Throwable th) {
+			logger.error(th);
+			users = new ArrayList<User>(0);
+		}
+
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			page.setTotal(new Long(Integer.valueOf(users.size())));
+		}
+
+		if (page.getTotal() >0) {
+			page.setList(users.subList(paginationFilter.getFirstRecord(), paginationFilter.getLength()));
+		} else{
+			page.setList(new ArrayList<User>(0));
+		}
+		
+		return page;
 	}
 
 	/**

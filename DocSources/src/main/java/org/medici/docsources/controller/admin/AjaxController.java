@@ -33,12 +33,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,10 +80,10 @@ public class AjaxController {
 					   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 					   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 					   		 	@RequestParam(value="iDisplayLength") Integer length) {
-		List<User> searchResults = null;
+		Page page = null;
 		Map<String, Object> model = new HashMap<String, Object>();
 		
-		//PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection);
 
 		User user = new User();
 		if(userName != null && userName.length() > 0)
@@ -92,51 +94,34 @@ public class AjaxController {
 			user.setFirstName(fullName);
 			user.setLastName(fullName);
 		}
-//		user.setOrganization(alias);
-//		user.setMail(alias);
 
 		try {
-			searchResults = getAdminService().findUsers(user);
+			// Paging results...
+			page = getAdminService().findUsers(user, paginationFilter);
 		} catch (ApplicationThrowable aex) {
 		}
-		
 
-		// Ordering results...
-		PropertyComparator.sort(searchResults, new MutableSortDefinition("firstName", true, true));
-		searchResults = Collections.unmodifiableList(searchResults);
-		// Paging results...
-		PagedListHolder<User> pagedListHolder = new PagedListHolder<User>(searchResults);
+		// Ordering results... 
+		// LP : la gestione dell'ordinamento va spostata nel blocco metodo del dao invocato nel service
+		PropertyComparator.sort(page.getList(), new MutableSortDefinition("firstName", true, true));
+		page.setList(Collections.unmodifiableList(page.getList()));
 
-		Integer page = Integer.valueOf(1);
-		pagedListHolder.setPage(page);
-		int pageSize = 10;
-		pagedListHolder.setPageSize(pageSize);
-		//SearchResult userSearchPagination = new SearchResult(searchResults, 1, 10);
-		//model.addAttribute(userSearchPagination);
-//		List test = new ArrayList();
-//		for (int i=0; i<10; i++) {
-//			List singleRow = new ArrayList();
-//			singleRow.add("Lorenzo");
-//			singleRow.add("Pasquinelli");
-//			singleRow.add("pasquinelli");
-//			singleRow.add("pasquinelli@gmail.com");
-//			test.add(singleRow);
-//		}
 		List resultList = new ArrayList();
-		for(User currentUser : searchResults){
+		for(User currentUser : (List<User>) page.getList()){
 			List singleRow = new ArrayList();
 			singleRow.add(currentUser.getFirstName() + " " + currentUser.getLastName());
 			singleRow.add(currentUser.getMail());
 			singleRow.add(currentUser.getCity());
 			singleRow.add(currentUser.getCountry());
 			singleRow.add("");
-			resultList.add(singleRow);
+			resultList.add(HtmlUtils.showUser(singleRow, currentUser.getAccount()));
 		}
 
 		model.put("iEcho", 1);
-		model.put("iTotalDisplayRecords", 10);
-		model.put("iTotalRecords", resultList.size());
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
+
 		return new ModelAndView("responseOK",model);
 	}
 

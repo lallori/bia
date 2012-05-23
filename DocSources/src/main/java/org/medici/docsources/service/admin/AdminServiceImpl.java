@@ -33,10 +33,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
 import org.medici.docsources.dao.user.UserDAO;
+import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.domain.ApplicationProperty;
 import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,6 +62,44 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired(required = false)
 	@Qualifier("userDaoLdapImpl")
 	private UserDAO userDAO;
+	
+	@Autowired(required = false)
+	private UserInformationDAO userInformationDAO;
+
+	@Override
+	public User findUser(String account) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserInformation findUserInformation(String account) throws ApplicationThrowable {
+		try{
+			return getUserInformationDAO().find(account);
+			
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	@Override
+	public List<User> findUsers(User user) throws ApplicationThrowable {
+		try{
+			return getUserDAO().findUsers(user);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	@Override
+	public Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getUserDAO().findUsers(user, paginationFilter);
+			
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}	
+	}
 
 	/**
 	 * @return the applicationPropertyDAO
@@ -74,13 +116,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
+	 * @return the userInformationDAO
+	 */
+	public UserInformationDAO getUserInformationDAO() {
+		return userInformationDAO;
+	}
+
+	/**
 	 * @param applicationPropertyDAO
 	 *            the applicationPropertyDAO to set
 	 */
 	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
 		this.applicationPropertyDAO = applicationPropertyDAO;
 	}
-	
+
 	/**
 	 * @param userDAO the userDAO to set
 	 */
@@ -88,13 +137,11 @@ public class AdminServiceImpl implements AdminService {
 		this.userDAO = userDAO;
 	}
 
-	@Override
-	public List<User> findUsers(User user) throws ApplicationThrowable {
-		try{
-			return getUserDAO().findUsers(user);
-		}catch(Throwable th){
-			throw new ApplicationThrowable(th);
-		}
+	/**
+	 * @param userInformationDAO the userInformationDAO to set
+	 */
+	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
+		this.userInformationDAO = userInformationDAO;
 	}
 
 	/**
