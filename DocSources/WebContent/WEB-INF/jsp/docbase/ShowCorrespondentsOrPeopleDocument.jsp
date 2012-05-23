@@ -49,10 +49,10 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.senderPlace.placeAllId != 53384 && document.senderPlace.placeAllId != 55627 && document.senderPlace.placeAllId != 54332}">
-					<div class="item">From</div> <div class="value80"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a> ${document.senderPlaceUnsure ? '(Unsure)':'' }</div>
+					<div class="item">Place From</div> <div class="value80"><a class="linkPeople" href="${CompareFromURL}">${document.senderPlace.placeNameFull} </a> ${document.senderPlaceUnsure ? '(Unsure)':'' }</div>
 				</c:if>
 				<c:if test="${document.senderPlace.placeAllId == 53384 || document.senderPlace.placeAllId == 55627 || document.senderPlace.placeAllId == 54332 }">
-					<div class="item">From</div> <div class="value80">${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</div>
+					<div class="item">Place From</div> <div class="value80">${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</div>
 				</c:if>
 			</div>	
 			<div class="row">
@@ -68,10 +68,10 @@
 			</div>
 			<div class="row">
 				<c:if test="${document.recipientPlace.placeAllId != 53384 && document.recipientPlace.placeAllId != 55627 && document.recipientPlace.placeAllId != 54332}">
-					<div class="item">To</div> <div class="value80"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a> ${document.recipientPlaceUnsure ? '(Unsure)':'' }</div>
+					<div class="item">Place To</div> <div class="value80"><a class="linkPeople" href="${CompareToURL}">${document.recipientPlace.placeNameFull}</a> ${document.recipientPlaceUnsure ? '(Unsure)':'' }</div>
 				</c:if>
 				<c:if test="${document.recipientPlace.placeAllId == 53384 || document.recipientPlace.placeAllId == 55627 || document.recipientPlace.placeAllId == 54332}">
-					<div class="item">To</div> <div class="value80">${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</div>
+					<div class="item">Place To</div> <div class="value80">${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</div>
 				</c:if>
 			</div>
 			<div class="row">
