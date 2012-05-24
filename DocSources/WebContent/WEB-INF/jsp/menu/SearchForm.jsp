@@ -13,7 +13,7 @@
 										<option value="PEOPLE">People</option>
 										<option value="PLACE">Places</option>
 								</select>
-						<a class="helpIcon" title="Documents">?</a>
+						<a class="helpIcon" title="Perform your search in Document Synopsis">?</a>
   						<br/>
 						for <input id="text" name="text" type="text" value=""/>
 						<input id="search" type="submit" title="submit form" value="Go"/>
@@ -37,7 +37,7 @@
 							}
 							
 							if($j(this).find('option:selected').val() == 'SYNOPSIS'){
-								$j(".helpIcon").attr('title', 'Perform your search in Document Synopses');
+								$j(".helpIcon").attr('title', 'Perform your search in Document Synopsis');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 

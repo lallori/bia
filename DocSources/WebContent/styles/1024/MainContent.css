@@ -3886,6 +3886,11 @@ a.helpIcon{ /* Help symbol "?" */
 	position:absolute;
 }
 
+#yourEasySearchFilterDiv .yourSearchFilterDiv {
+	width:337px;
+	margin:15px 0 10px 0;
+}
+
 #yourSearchFilterDiv .yourSearchFilterTitle { /* Search Form and Search Filter titles */
 	background:url(/DocSources/images/1024/bg_yourSearchFilterTitle.jpg) no-repeat center;
 	height:30px;
