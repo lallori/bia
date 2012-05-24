@@ -27,8 +27,12 @@
  */
 package org.medici.docsources.validator.search;
 
+import java.util.List;
+
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand;
 import org.medici.docsources.command.search.SaveUserSearchFilterCommand.SaveType;
+import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -38,6 +42,7 @@ import org.springframework.validation.Validator;
  * Validator bean for action "Save User Search Filter".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class SaveUserSearchFilterValidator implements Validator {
@@ -92,7 +97,18 @@ public class SaveUserSearchFilterValidator implements Validator {
 	 * @param errors
 	 */
 	private void validateSaveAction(SaveType saveType, String saveAs, Integer searchFilter, Errors errors) {
-		
+		if(saveAs != null && saveType.equals(SaveType.newSearch)){
+			try{
+				List<SearchFilter> userSearchFilters = getSearchService().getUserSearchFilters();
+				for(SearchFilter currentSearchFilter : userSearchFilters){
+					if(currentSearchFilter.getFilterName().toLowerCase().equals(saveAs.toLowerCase())){
+						errors.reject("saveAs", "error.saveAs.invalid");
+					}
+				}
+			}catch(ApplicationThrowable ath){
+				errors.reject("searchFilter", "error.searchFilter.notFound");
+			}
+		}
 	}
 
 

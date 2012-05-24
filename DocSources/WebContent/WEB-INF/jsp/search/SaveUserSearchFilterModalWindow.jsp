@@ -22,11 +22,25 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#saveAs").change(function(){
+				$j(".error").remove();
+				if($j('input:radio:checked').val() == "newSearch"){
+					$j("#idSearchFilterToReplace option").each(function(){
+						if($j(this).text() == $j("#saveAs").val()){
+							$j("#saveFilter").before("<span class=\"error\" style=\"color:red\">Name already in use<br /></span>");
+							return false;
+						}
+					});
+				}
+			});
+			
 			$j("#saveAsForm").submit(function() {
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#saveAsDiv").html(html);
-				}});
-				return false;
+				if($j("#saveAsForm").find(".error").length == 0){
+					$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+						$j("#saveAsDiv").html(html);
+					}});
+					return false;
+				}
 			});
 		});
 	</script>
