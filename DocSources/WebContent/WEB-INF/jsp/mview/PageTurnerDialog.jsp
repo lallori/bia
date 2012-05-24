@@ -83,6 +83,19 @@
 		<c:param name="modeEdit" value="${command.modeEdit}" />
 	</c:url>
 	
+	<c:url var="exploreDocumentURL" value="/src/volbase/ShowExplorerVolume.do">
+		<c:param name="volNum" value="${command.volNum}" />
+		<c:param name="volLetExt" value="${command.volLetExt}" />
+		<c:param name="imageOrder" value="${command.imageOrder + 1}" />
+		<c:param name="total" value="${command.total}" />
+		<c:param name="totalRubricario" value="${command.totalRubricario}" />
+		<c:param name="totalCarta" value="${command.totalCarta}" />
+		<c:param name="totalAppendix" value="${command.totalAppendix}" />
+		<c:param name="totalOther" value="${command.totalOther}" />
+		<c:param name="totalGuardia" value="${command.totalGuardia}" />
+		<c:param name="flashVersion" value="false" />
+	</c:url>
+	
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
@@ -110,6 +123,7 @@
 		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Transcribe this document</a>
 		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Choose this as "Start folio"</a>
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
+		<input type="hidden" id="currentImageOrder" value="${command.imageOrder}" />
 	</div>
 	</security:authorize>	  
 	<div id="line3"></div>
@@ -376,6 +390,7 @@
 			$j.ajax({ type:"GET", url:"${GetLinkedDocumentURL}", async:false, success:function(data) {
 				// We set currentImage
 				currentImage = data.imageId;
+				$j("#currentImageOrder").val(data.imageOrder);
 				if($dialogExtract.dialog("isOpen") || $j("#EditExtractDocumentForm").length != 0){
 					$j("#unvailableTranscribe").css('visibility', 'hidden');
 					$j("#alreadyTranscribe").css('visibility', 'hidden');
@@ -451,8 +466,41 @@
 				$j("#readyToTranscribe").css('visibility', 'hidden');
 				imageDocumentFolioStart=currentImage;
 				var urlToTranscribe = "/DocSources/de/docbase/TranscribeAndContextualizeDocument.do?imageDocumentToCreate=" + imageDocumentToCreate + "&imageDocumentFolioStart=" + imageDocumentFolioStart;
+				var urlToExplore;
+				var volLetExt;
+				if("${command.volLetExt}" == ""){
+					volLetExt = "";
+				}
+				else{
+					volLetExt = "${command.volLetExt}";
+				}
+				urlToExplore = "/DocSources/src/volbase/ShowExplorerVolume.do?volNum=" + ${command.volNum} + "&volLetExt=" + volLetExt + "&imageOrder=" + $j("#currentImageOrder").val() + "&total=" + ${command.total} + "&totalRubricario=" + ${command.totalRubricario} + "&totalCarta=" + ${command.totalCarta} + "&totalAppendix=" + ${command.totalAppendix} + "&totalOther=" + ${command.totalOther} + "&totalGuardia=" + ${command.totalGuardia} + "&flashVersion=false&showHelp=false&showThumbnail=false";
 				window.opener.$j("#body_left").load(urlToTranscribe);
 				$j("#choiceThisFolioStart").css('visibility', 'hidden');
+				//To open volume explorer in a tab
+				var tabName = "<span id='titleTab${command.volNum}" + volLetExt + "'>Explore Volume ${command.volNum}" + volLetExt + "</span>";
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				window.opener.$j("#tabs ul li a").each(function(){
+					var toTest = "";
+					toTest += this.text;
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName || toTest.indexOf("Volume ${command.volNum}" + volLetExt) != -1){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					window.opener.$j( "#tabs" ).tabs( "add" , urlToExplore, tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					window.opener.$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+				}else{
+					window.opener.$j("#tabs").tabs("select", numTab-1);
+					window.opener.$j("#tabs").tabs("url", numTab-1, urlToExplore);
+					window.opener.$j("#tabs").tabs("load", numTab-1);
+				}
 				window.blur();
 				window.opener.focus();
 				window.close();

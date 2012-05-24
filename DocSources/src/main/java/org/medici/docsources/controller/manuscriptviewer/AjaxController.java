@@ -51,6 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
  * AJAX Controller for ManuscriptViewer.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller("ManuscriptViewerAjaxController")
 public class AjaxController {
@@ -130,6 +131,7 @@ public class AjaxController {
 						model.put("imageName", image.getImageName());
 						model.put("imageId", image.getImageId());
 						model.put("imageType", image.getImageType());
+						model.put("imageOrder", image.getImageOrder());
 					}
 				}
 //			}			
@@ -147,6 +149,7 @@ public class AjaxController {
 			model.put("showLinkedDocument", "");
 			model.put("imageName", "");
 			model.put("imageId", "");
+			model.put("imageOrder", "");
 			model.put("isExtract", "false");
 		}
 		
