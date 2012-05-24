@@ -38,6 +38,7 @@ import org.medici.docsources.common.util.SimpleSearchUtils;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class SimpleSearchVolume extends SimpleSearch {
@@ -103,34 +104,36 @@ public class SimpleSearchVolume extends SimpleSearch {
 			jpaQuery.append(" WHERE ");
 		}
 		
-		for(int i = 0; i < words.length; i++){
-			if(NumberUtils.isNumber(words[i])){
-				jpaQuery.append("(volNum = ");
-				jpaQuery.append(words[i]);
-				jpaQuery.append(") OR ");
-			}
-			jpaQuery.append("(ccondition like '%");
-			jpaQuery.append(words[i] + "%') OR ");
-			jpaQuery.append("(ccontext like '%");
-			jpaQuery.append(words[i] + "%') OR ");
-			jpaQuery.append("(orgNotes like '%");
-			jpaQuery.append(words[i] + "%') OR ");
-			jpaQuery.append("(recips like '%");
-			jpaQuery.append(words[i] + "%') OR ");
-			jpaQuery.append("(senders like '%");
-			jpaQuery.append(words[i] + "%') OR ");
-			jpaQuery.append("(serieList.title like '%");
-			jpaQuery.append(words[i] + "%') OR ");
-			jpaQuery.append("(serieList.subTitle1 like '%");
-			jpaQuery.append(words[i] + "%') OR ");
-			jpaQuery.append("(serieList.subTitle2 like '%");
-			jpaQuery.append(words[i] + "%')");
+//		for(int i = 0; i < words.length; i++){
+		if(NumberUtils.isNumber(words[0])){
+			jpaQuery.append("(volNum = ");
+			jpaQuery.append(words[0]);
+			jpaQuery.append(")");
+		}else{
+			return null;
+		}
+//			jpaQuery.append("(ccondition like '%");
+//			jpaQuery.append(words[i] + "%') OR ");
+//			jpaQuery.append("(ccontext like '%");
+//			jpaQuery.append(words[i] + "%') OR ");
+//			jpaQuery.append("(orgNotes like '%");
+//			jpaQuery.append(words[i] + "%') OR ");
+//			jpaQuery.append("(recips like '%");
+//			jpaQuery.append(words[i] + "%') OR ");
+//			jpaQuery.append("(senders like '%");
+//			jpaQuery.append(words[i] + "%') OR ");
+//			jpaQuery.append("(serieList.title like '%");
+//			jpaQuery.append(words[i] + "%') OR ");
+//			jpaQuery.append("(serieList.subTitle1 like '%");
+//			jpaQuery.append(words[i] + "%') OR ");
+//			jpaQuery.append("(serieList.subTitle2 like '%");
+//			jpaQuery.append(words[i] + "%')");
 			
 				
-			if(i < (words.length - 1)){
-				jpaQuery.append(" AND ");
-			}
-		}
+//			if(i < (words.length - 1)){
+//				jpaQuery.append(" AND ");
+//			}
+//		}
 		
 		return jpaQuery.toString();
 	}

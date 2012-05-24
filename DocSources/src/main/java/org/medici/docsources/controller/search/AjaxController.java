@@ -35,6 +35,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.common.pagination.Page;
@@ -925,7 +926,11 @@ public class AjaxController {
 		}
 
 		try {
-			page = getSearchService().searchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
+			//MD: We search volumes only in volume number 
+			if(NumberUtils.isNumber(searchText))
+				page = getSearchService().searchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
+			else
+				page = new Page(paginationFilter);
 
 			// Lorenzo Pasquinelli : Now digitized information on volume is a property of volume entity ... We can comment next code
 			// stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
