@@ -58,6 +58,7 @@ import org.springframework.stereotype.Repository;
  * <b>ImageDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 @Repository
@@ -178,7 +179,10 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		
         	
         	for (int i=0; i<result.size(); i++) {
-        		returnValues.add(DocumentUtils.toMDPAndFolioFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt(), ImageUtils.extractFolioNumber(result.get(i).getImageName()), ImageUtils.extractFolioExtension(result.get(i).getImageName())));
+        		if(ImageUtils.extractFolioExtension(result.get(i).getImageName()) != null)
+        			returnValues.add(DocumentUtils.toMDPAndFolioFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt(), ImageUtils.extractFolioNumber(result.get(i).getImageName()), ImageUtils.extractFolioExtension(result.get(i).getImageName()).toLowerCase()));
+        		else
+        			returnValues.add(DocumentUtils.toMDPAndFolioFormat(result.get(i).getVolNum(), result.get(i).getVolLetExt(), ImageUtils.extractFolioNumber(result.get(i).getImageName()), null));
         	}
         }
 		return returnValues;
