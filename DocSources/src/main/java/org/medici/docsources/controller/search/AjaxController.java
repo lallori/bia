@@ -625,7 +625,15 @@ public class AjaxController {
 			model.put("query", query);
 			model.put("count", volumes.size());
 			model.put("data", ListBeanUtils.transformList(volumes, "volNum"));
-			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(volumes, "volNum", " ", " ", Boolean.TRUE));
+			List<String> suggestions = new ArrayList<String>();
+			for(Volume currentVolume : volumes){
+				if(currentVolume.getVolLetExt() != null){
+					suggestions.add(currentVolume.getVolNum().toString() + currentVolume.getVolLetExt());
+				}else{
+					suggestions.add(currentVolume.getVolNum().toString());
+				}
+			}
+			model.put("suggestions", suggestions);
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

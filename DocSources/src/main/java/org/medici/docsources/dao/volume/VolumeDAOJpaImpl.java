@@ -69,6 +69,7 @@ import org.springframework.stereotype.Repository;
  * <b>VolumeDAOJpaImpl</b> is a default implementation of <b>VolumeDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Repository
 public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeDAO {
@@ -198,55 +199,75 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 		return page;
 	}
 	
+	//MD: Version with Lucene query
+//	/**
+//	 * {@inheritDoc}
+//	 */
+//	@SuppressWarnings({"unchecked"})
+//	@Override
+//	public List<Volume> searchVolumes(String query) throws PersistenceException {
+//		String[] outputFields = new String[]{"volNum", "volLetExt"};
+//		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
+//		
+//		/*QueryParser parserTopicTitle = new QueryParser(Version.LUCENE_30, "topicTitle", fullTextSession.getSearchFactory().getAnalyzer("topicListAnalyzer"));
+//		try{
+//		org.apache.lucene.search.Query queryMapNameLf = parserTopicTitle.parse(alias.toLowerCase() + "*");
+//		BooleanQuery booleanQuery = new BooleanQuery();
+//		booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
+//		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+//		for (String singleWord:words) {
+//        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+//        }*/
+//		BooleanQuery booleanQuery = new BooleanQuery();
+//		//String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+//		//String singleWord;
+//		//for(int i = 0; i < words.length; i++){
+//		//	singleWord = words[i];
+//		//	if(i == 0){
+//		//		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.MUST));
+//		//	}
+//		//	else{
+//		//		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
+//		//	}
+//		//}
+//		if(StringUtils.isNumeric(query)){
+//			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volNum", query.toLowerCase() + "*")), BooleanClause.Occur.MUST));
+//		}else{
+//			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volNum", query.toLowerCase())), BooleanClause.Occur.SHOULD));
+//			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volLetExt", VolumeUtils.extractVolLetExt(query.toLowerCase()) + "*")), BooleanClause.Occur.SHOULD));
+//		}
+//
+//		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Volume.class);
+//		fullTextQuery.setProjection(outputFields);
+//		// Projection returns an array of Objects, using Transformer we can return a list of domain object  
+//		fullTextQuery.setResultTransformer(Transformers.aliasToBean(Volume.class));
+//
+//		List<Volume> listVolumes = fullTextQuery.list();
+//		
+//		
+//		Comparator fieldCompare = new BeanComparator( "volNum" );
+//		Collections.sort(listVolumes, fieldCompare );
+//
+//		return listVolumes;
+//	}
+	
+	//MD: Version with SQL query	
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings({"unchecked"})
 	@Override
 	public List<Volume> searchVolumes(String query) throws PersistenceException {
-		String[] outputFields = new String[]{"volNum", "volLetExt"};
-		FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(((HibernateEntityManager)getEntityManager()).getSession());
-		
-		/*QueryParser parserTopicTitle = new QueryParser(Version.LUCENE_30, "topicTitle", fullTextSession.getSearchFactory().getAnalyzer("topicListAnalyzer"));
-		try{
-		org.apache.lucene.search.Query queryMapNameLf = parserTopicTitle.parse(alias.toLowerCase() + "*");
-		BooleanQuery booleanQuery = new BooleanQuery();
-		booleanQuery.add(new BooleanClause(queryMapNameLf, BooleanClause.Occur.SHOULD));
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-		for (String singleWord:words) {
-        	booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
-        }*/
-		BooleanQuery booleanQuery = new BooleanQuery();
-		//String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
-		//String singleWord;
-		//for(int i = 0; i < words.length; i++){
-		//	singleWord = words[i];
-		//	if(i == 0){
-		//		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.MUST));
-		//	}
-		//	else{
-		//		booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("topicTitle", singleWord.toLowerCase() + "*")), BooleanClause.Occur.SHOULD));
-		//	}
-		//}
-		if(StringUtils.isNumeric(query)){
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volNum", query.toLowerCase() + "*")), BooleanClause.Occur.MUST));
+		StringBuffer stringBuffer = new StringBuffer("FROM Volume WHERE (CONVERT(volNum, CHAR)) LIKE '");
+		stringBuffer.append(query.toLowerCase());
+		stringBuffer.append("%' ORDER BY volNum");
+		Query result = getEntityManager().createQuery(stringBuffer.toString());
+		if(result.getResultList().size() == 0){
+			return null;
 		}else{
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volNum", query.toLowerCase())), BooleanClause.Occur.SHOULD));
-			booleanQuery.add(new BooleanClause(new WildcardQuery(new Term("volLetExt", VolumeUtils.extractVolLetExt(query.toLowerCase()) + "*")), BooleanClause.Occur.SHOULD));
+			List<Volume> listVolumes = result.getResultList();
+			return listVolumes;
 		}
-
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(booleanQuery, Volume.class);
-		fullTextQuery.setProjection(outputFields);
-		// Projection returns an array of Objects, using Transformer we can return a list of domain object  
-		fullTextQuery.setResultTransformer(Transformers.aliasToBean(Volume.class));
-
-		List<Volume> listVolumes = fullTextQuery.list();
-		
-		
-		Comparator fieldCompare = new BeanComparator( "volNum" );
-		Collections.sort(listVolumes, fieldCompare );
-
-		return listVolumes;
 	}
 
 	/**
