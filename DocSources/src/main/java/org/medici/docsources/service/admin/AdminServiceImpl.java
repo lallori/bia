@@ -68,8 +68,11 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public User findUser(String account) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			return getUserDAO().findUser(account);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	@Override

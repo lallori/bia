@@ -47,4 +47,11 @@ public class ShowUserCommand {
 	public String getAccount() {
 		return account;
 	}
+
+	/**
+	 * @param account the account to set
+	 */
+	public void setAccount(String account) {
+		this.account = account;
+	}
 }

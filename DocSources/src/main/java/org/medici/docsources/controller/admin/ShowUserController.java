@@ -95,7 +95,7 @@ public class ShowUserController {
 		model.put("user", user);
 		model.put("userInformation", userInformation);
 		
-		return new ModelAndView("admin/ShowUser");
+		return new ModelAndView("admin/ShowUser", model);
 	}
 
 	/**

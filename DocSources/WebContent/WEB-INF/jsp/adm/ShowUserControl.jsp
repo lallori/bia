@@ -21,15 +21,15 @@
 	<div class="list">
 		<div class="row">
 			<div class="item37">Username</div> 
-			<div class="value">AA</div> 
+			<div class="value">${user.account}</div> 
 		</div>
 		<div class="row">
 			<div class="item37">First Name</div>
-			<div class="value">Alessio</div>
+			<div class="value">${user.firstName}</div>
 		</div>
 		<div class="row">
 			<div class="item37">Last Name</div>
-            <div class="value">Assonitis</div>
+            <div class="value">${user.lastName}</div>
 		</div>
         <div class="row">
 			<div class="item37">New Password</div> 
@@ -41,7 +41,9 @@
 		</div>
 		<div class="row">
 			<div class="item37">Group policies</div> 
-			<div class="value">Onsite Fellow</div>
+			<c:forEach items="${user.userRoles}" var="currentRole">
+				<div class="value">${currentRole}</div>
+			</c:forEach>			
 		</div>
 		<div class="row">
 			<div class="item37">Account Expiration Time</div> 
@@ -51,12 +53,12 @@
 </div>
 
 <script type="text/javascript">
-	$j(document).ready(function() {
-		$j("#EditUserControl").click(
-				function(){
-					$j("#EditUserControlDiv").load($j(this).attr("href"));
-					return false;
-				});
-	});
+// 	$j(document).ready(function() {
+// 		$j("#EditUserControl").click(
+// 				function(){
+// 					$j("#EditUserControlDiv").load($j(this).attr("href"));
+// 					return false;
+// 				});
+// 	});
 </script>
 </security:authorize>

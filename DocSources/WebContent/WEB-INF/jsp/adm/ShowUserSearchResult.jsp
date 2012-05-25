@@ -89,31 +89,33 @@
 			$j("#userSearchTable_filter").remove();
 
 			// We need to remove any previous live function
-			$j('.showResult').die();
+			$j('.searchResult').die();
 			 
 			
-			$j(".showResult").live('click', function() {
-				var tabName = $j(this).attr("title");
-				var numTab = 0;
+			$j(".searchResult").live('click', function() {
+				$j("#body_left").load($j(this).attr("href"));
+				return false;
+// 				var tabName = $j(this).attr("title");
+// 				var numTab = 0;
 				
-				//Check if already exist a tab with this person
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName){
-						tabExist = true;
-					}
-				});
+//				Check if already exist a tab with this person
+// 				var tabExist = false;
+// 				$j("#tabs ul li a").each(function(){
+// 					if(!tabExist)
+// 						numTab++;
+// 					if(this.text == tabName){
+// 						tabExist = true;
+// 					}
+// 				});
 				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					return false;
-				}
+// 				if(!tabExist){
+// 					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+// 					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+// 					return false;
+// 				}else{
+// 					$j("#tabs").tabs("select", numTab-1);
+// 					return false;
+// 				}
 			});
 
 		} );

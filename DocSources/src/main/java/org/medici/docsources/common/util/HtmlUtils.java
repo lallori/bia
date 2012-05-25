@@ -518,7 +518,7 @@ public class HtmlUtils {
 		
 		String anchorBegin = "<a class=\"searchResult\" href=\"";
 		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
-		anchorBegin += "/src/admin/ShowUser.do?account=";
+		anchorBegin += "/admin/ShowUser.do?account=";
 		anchorBegin += account;
 		anchorBegin += "\">";
 		String hrefEnd = "</a>";

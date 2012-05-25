@@ -5,11 +5,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-		<c:url var="" 	value="">
-			<c:param name=""   	value="" />
-		</c:url>
-	</security:authorize>
+<%-- 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS"> --%>
+<%-- 		<c:url var="" 	value=""> --%>
+<%-- 			<c:param name=""   	value="" /> --%>
+<%-- 		</c:url> --%>
+<%-- 	</security:authorize> --%>
 	
 	
 
@@ -23,7 +23,7 @@
 	<div class="list">
 		<div class="row">
 			<div class="item37">Email adress</div> 
-			<div class="value">assonitis@yahoo.com</div>
+			<div class="value">${user.mail}</div>
 		</div>
 		<div class="row">
 			<div class="item37">Edit display</div> 
@@ -37,12 +37,12 @@
 </div>
 
 <script type="text/javascript">
-	$j(document).ready(function() {			
-		$j("#EditEmailControl").click(
-				function(){
-					$j("#EditEmailControlDiv").load($j(this).attr("href"));
-					return false;
-				});
-	});
+// 	$j(document).ready(function() {			
+// 		$j("#EditEmailControl").click(
+// 				function(){
+// 					$j("#EditEmailControlDiv").load($j(this).attr("href"));
+// 					return false;
+// 				});
+// 	});
 </script>
 </security:authorize>

@@ -297,7 +297,11 @@ public class UserDaoLdapImpl implements UserDAO {
 		}
 
 		if (page.getTotal() >0) {
-			page.setList(users.subList(paginationFilter.getFirstRecord(), paginationFilter.getLength()));
+			if(paginationFilter.getLength() < users.size()){
+				page.setList(users.subList(paginationFilter.getFirstRecord(), paginationFilter.getLength()));
+			}else{
+				page.setList(users.subList(paginationFilter.getFirstRecord(), users.size()));
+			}
 		} else{
 			page.setList(new ArrayList<User>(0));
 		}
