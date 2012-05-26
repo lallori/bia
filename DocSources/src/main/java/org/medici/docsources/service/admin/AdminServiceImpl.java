@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.service.admin;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -66,6 +67,53 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired(required = false)
 	private UserInformationDAO userInformationDAO;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public void editUser(User user, UserInformation userInformation) throws ApplicationThrowable {
+		try{
+			User userToUpdate = new User(user.getAccount()); 
+			userToUpdate.setAddress(user.getAddress());
+			userToUpdate.setCity(user.getCity());
+			userToUpdate.setCountry(user.getCountry());
+			userToUpdate.setFirstName(user.getFirstName());
+			userToUpdate.setInitials(user.getInitials());
+			userToUpdate.setInterests(user.getInterests());
+			userToUpdate.setLastName(user.getLastName());
+			userToUpdate.setMail(user.getMail());
+			userToUpdate.setOrganization(user.getOrganization());
+			userToUpdate.setPhoto(user.getPhoto());
+			userToUpdate.setTitle(user.getTitle());
+			
+			if (getUserDAO().findUser(user.getAccount()) == null) {
+				getUserDAO().persist(userToUpdate);
+			} else {
+				getUserDAO().merge(userToUpdate);
+			}
+			
+			UserInformation userInformationToUpdate = new UserInformation(user.getAccount()); 
+			userInformationToUpdate.setActivationDate(userInformation.getActivationDate());
+			userInformationToUpdate.setActive(userInformation.getActive());
+			userInformationToUpdate.setApproved(userInformation.getApproved());
+			userInformationToUpdate.setExpirationDate(userInformation.getExpirationDate());
+			userInformationToUpdate.setExpirationPasswordDate(userInformation.getExpirationDate());
+			userInformationToUpdate.setLastPasswordChangeDate(new Date());			
+						
+			if (getUserInformationDAO().find(userInformationToUpdate.getAccount()) == null) {
+				getUserInformationDAO().persist(userInformationToUpdate);
+			} else {
+				getUserInformationDAO().merge(userInformationToUpdate);
+			}
+		} catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User findUser(String account) throws ApplicationThrowable {
 		try{
@@ -75,6 +123,9 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public UserInformation findUserInformation(String account) throws ApplicationThrowable {
 		try{
@@ -84,7 +135,10 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<User> findUsers(User user) throws ApplicationThrowable {
 		try{
@@ -93,7 +147,10 @@ public class AdminServiceImpl implements AdminService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{

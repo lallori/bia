@@ -45,6 +45,14 @@ public interface AdminService {
 
 	/**
 	 * 
+	 * @param user
+	 * @param userInformation
+	 * @throws ApplicationThrowable
+	 */
+	public void editUser(User user, UserInformation userInformation) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param account
 	 * @return
 	 * @throws ApplicationThrowable
@@ -66,7 +74,7 @@ public interface AdminService {
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public List<User> findUsers(User user) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param user

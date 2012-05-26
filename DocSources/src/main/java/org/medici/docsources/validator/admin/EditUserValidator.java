@@ -1,5 +1,5 @@
 /*
- * ShowApplicationPropertiesController.java
+ * EditUserValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,48 +25,31 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.admin;
+package org.medici.docsources.validator.admin;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.medici.docsources.command.admin.ShowApplicationPropertiesCommand;
+import org.medici.docsources.command.admin.EditUserCommand;
 import org.medici.docsources.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 /**
- * Controller for action "Show Application Properties".
+ * Validator bean for action "Edit User Validator".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
-@Controller
-@RequestMapping("/admin/ShowApplicationProperties")
-public class ShowApplicationPropertiesController {
+public class EditUserValidator implements Validator {
 	@Autowired
 	private AdminService adminService;
 
-
 	/**
-	 * 
-	 * @param placeId
-	 * @param result
-	 * @return
+	 * @return the adminService
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowApplicationPropertiesCommand command, BindingResult result) {
-		Map<String, Object> model = new HashMap<String, Object>();
-		
-		return new ModelAndView("admin/ShowApplicationProperties", model);
+	public AdminService getAdminService() {
+		return adminService;
 	}
-
 
 	/**
 	 * @param adminService the adminService to set
@@ -75,11 +58,29 @@ public class ShowApplicationPropertiesController {
 		this.adminService = adminService;
 	}
 
+	/**
+	 * Indicates whether the given class is supported by this converter. This
+	 * validator supports only ModifyDocumentCommand.
+	 * 
+	 * @param givenClass the class to test for support
+	 * @return true if supported; false otherwise
+	 */
+	@SuppressWarnings("rawtypes")
+	public boolean supports(Class givenClass) {
+		return givenClass.equals(EditUserCommand.class);
+	}
 
 	/**
-	 * @return the adminService
+	 * Validate the supplied target object, which must be of a Class for which
+	 * the supports(Class) method typically has (or would) return true. The
+	 * supplied errors instance can be used to report any resulting validation
+	 * errors.
+	 * 
+	 * @param object the object that is to be validated (can be null)
+	 * @param errors contextual state about the validation process (never null)
 	 */
-	public AdminService getAdminService() {
-		return adminService;
+	public void validate(Object object, Errors errors) {
+		EditUserCommand editUserCommand = (EditUserCommand) object;
+		// TODO : implement validation logic
 	}
 }

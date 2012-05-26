@@ -21,6 +21,10 @@
         <description>Edit IIPImage Properties Validator.</description>
 	</bean>
 
+	<bean id="editUserValidator" class="org.medici.docsources.validator.admin.EditUserValidator">
+        <description>Edit User Validator.</description>
+	</bean>
+
 	<!-- Digitization base Validator -->
 	<bean id="editDetailsSchedoneValitor" class="org.medici.docsources.validator.digitization.EditDetailsSchedoneValidator">
         <description>Edit Details Schedone Validator.</description>

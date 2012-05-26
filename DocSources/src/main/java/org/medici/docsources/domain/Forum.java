@@ -43,6 +43,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.math.NumberUtils;
+
 /**
  * This class represents entity Forum.
  * 
@@ -56,13 +58,13 @@ public class Forum {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"id\"", length=10, nullable=false)
 	private Integer id;
-	@Column (name="\"type\"", length=10, nullable=true)
+	@Column (name="\"type\"", length=1, nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"forumParent\"", nullable=true)
 	private Forum forumParent;
-	@Column (name="\"title\"", length=64, nullable=false)
+	@Column (name="\"title\"", length=2000, nullable=false)
 	private String name;
 	@Column (name="\"description\"", length=2000)
 	private String description;
@@ -280,9 +282,9 @@ public class Forum {
 	 *
 	 */
 	public static enum Type {
-		FORUM("Forum"),
-		CATEGORY("Category"),
-		LINK("Link");
+		FORUM("F"),
+		CATEGORY("C"),
+		LINK("L");
 		
 		private final String type;
 
@@ -302,18 +304,20 @@ public class Forum {
 	 *
 	 */
 	public static enum Status {
-		ONLINE("Online"),
-		OFFLINE("Offline");
+		OFFLINE(0), ONLINE(1);
 		
-		private final String status;
+		private final Integer status;
 
-	    private Status(String value) {
+	    private Status(Integer value) {
 	    	status = value;
 	    }
 
 	    @Override
 	    public String toString(){
-	        return status;
+	    	if (status == null)
+	    		return null;
+
+	    	return status.toString();
 	    }
 	}
 }

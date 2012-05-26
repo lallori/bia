@@ -144,6 +144,22 @@ public class User implements Serializable {
 
 	private List<UserRole> userRoles;
 
+	/**
+	 * Default constructor.
+	 */
+	public User() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param newAccount
+	 */
+	public User(String newAccount) {
+		super();
+		setAccount(newAccount);
+	}
+
 	public String getAccount() {
 		return account;
 	}

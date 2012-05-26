@@ -1,5 +1,5 @@
 /*
- * ShowAdministrationModuleController.java
+ * ShowUserCommand.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -24,33 +24,34 @@
  * resulting executable to be covered by the GNU General Public License.
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
- * 
  */
-package org.medici.docsources.controller.admin;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+package org.medici.docsources.command.admin;
 
 /**
- * Controller for action "Show Administration Module".
+ * Command bean for action "show user".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
+ * @see org.ShowUserController.docsources.controller.user.CreateUserController
  */
-@Controller
-@RequestMapping("/admin/ShowAdministrationModule")
-public class ShowAdministrationModuleController {
-	
+public class EditUserCommand {
+	/** User's Account **/
+	private String account;
+
 	/**
+	 * This method returns account property.
 	 * 
-	 * @return
+	 * @return the account name
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupPage(){
-		return new ModelAndView("admin/ShowAdministrationModuleModalWindow");
+	public String getAccount() {
+		return account;
 	}
 
+	/**
+	 * @param account the account to set
+	 */
+	public void setAccount(String account) {
+		this.account = account;
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * EditEmailPropertiesController.java
+ * EditUserController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -32,8 +32,17 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.admin.EditEmailPropertiesCommand;
-import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.apache.commons.lang.StringUtils;
+import org.medici.docsources.command.admin.EditUserCommand;
+import org.medici.docsources.command.admin.ShowUserCommand;
+import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Image;
+import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.UserInformation;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,32 +56,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Email Properties".
+ * Controller to permit user creation action.
+ * It manages View and request's elaboration process.
+ * This is an administration function.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/admin/EditEmailProperties")
-public class EditEmailPropertiesController {
+@RequestMapping("/admin/EditUser")
+public class EditUserController {
 	@Autowired
 	private AdminService adminService;
 	@Autowired(required = false)
-	@Qualifier("editEmailPropertiesValidator")
+	@Qualifier("editUserValidator")
 	private Validator validator;
 
 	/**
-	 * @return the adminService
+	 * 
+	 * @return
 	 */
 	public AdminService getAdminService() {
 		return adminService;
-	}
-
-	/**
-	 * @return the validator
-	 */
-	public Validator getValidator() {
-		return validator;
 	}
 
 	/**
@@ -81,56 +86,63 @@ public class EditEmailPropertiesController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditEmailPropertiesCommand command, BindingResult result) {
-		getValidator().validate(command, result);
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") EditUserCommand command) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		// This is user stored on LDAP
+		User user = new User();
+		// UserInformation contains additional user information as activation state, lock state 
+		UserInformation userInformation = new UserInformation();
 
+		if (StringUtils.isNotBlank(command.getAccount())) {
+			try {
+				user = getAdminService().findUser(command.getAccount());
+
+				userInformation = getAdminService().findUserInformation(command.getAccount());
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("error/ShowVolume", model);
+			}
+		} else {
+			user.setAccount("");
+		}
+
+		model.put("user", user);
+		model.put("userInformation", userInformation);
+		
+		return new ModelAndView("admin/EditUser", model);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditUserCommand command, BindingResult result) {
+		getValidator().validate(command, result);
+	
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
+			User user = new User(command.getAccount());
+			UserInformation userInformation = new UserInformation(command.getAccount());
+
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
-				hashMap.put("mail.activationUser.subject", command.getActivationSubject());
-				hashMap.put("mail.activationUser.text", command.getActivationText());
-				hashMap.put("mail.resetUserPassword.subject", command.getResetUserPasswordSubject());
-				hashMap.put("mail.resetUserPassword.text", command.getResetUserPasswordText());
-
-				getAdminService().updateApplicationProperties(hashMap);
-
-				// We need to refresh ApplicationPropertyManager...
-				ApplicationPropertyManager.refreshProperties();
+				getAdminService().editUser(user, userInformation);
+				
+				model.put("user", user);
+				model.put("userInformation", userInformation);
+				
+				return new ModelAndView("admin/EditUser", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/EditEmailProperties", model);
+				return new ModelAndView("error/EditUser", model);
 			}
-
-			return new ModelAndView("admin/ShowApplicationProperties", model);
 		}
 	}
-
 	/**
-	 * @param adminService the adminService to set
+		}
+	 * 
+	 * @param adminService
 	 */
 	public void setAdminService(AdminService adminService) {
 		this.adminService = adminService;
-	}
-
-	/**
-	 * 
-	 * @param command
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditEmailPropertiesCommand command) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		command.setActivationSubject(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.subject"));
-		command.setActivationText(ApplicationPropertyManager.getApplicationProperty("mail.activationUser.text"));
-		command.setResetUserPasswordSubject(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.subject"));
-		command.setResetUserPasswordText(ApplicationPropertyManager.getApplicationProperty("mail.resetUserPassword.text"));
-
-		return new ModelAndView("admin/EditEmailProperties", model);
 	}
 
 	/**
@@ -138,5 +150,12 @@ public class EditEmailPropertiesController {
 	 */
 	public void setValidator(Validator validator) {
 		this.validator = validator;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
 	}
 }
