@@ -32,18 +32,23 @@
 				<c:param name="titleOccId" value="${currentTitleOrOccupation.titleOccList.titleOccId}" />
 				<c:param name="personId" value="${command.personId}" />
 			</c:url>
-
-			<div>
-			<c:if test="${currentTitleOrOccupation.preferredRole}">
-				<div title="Preferred Role" class="preferredIconEdit"></div>
-			</c:if>
-			<c:if test="${!currentTitleOrOccupation.preferredRole}">
-				<div title="Preferred Role" class="notPreferredIcon"></div>
-			</c:if>
-      			<input id="firstTitleOcc" name="name_${currentTitleOrOccupation.prfLinkId}" class="input_37c_disabled" type="text" value="${currentTitleOrOccupation.titleOccList.titleOcc}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteTitleOrOccupationPersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditTitleOrOccupationPersonURL}" title="Edit this entry"></a>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_r">
+						<c:if test="${currentTitleOrOccupation.preferredRole}">
+							<div title="Preferred Role" class="preferredIconEdit"></div>
+						</c:if>
+						<c:if test="${!currentTitleOrOccupation.preferredRole}">
+							<div title="Preferred Role" class="notPreferredIcon"></div>
+						</c:if>
+					</div>
+					<div class="col_l"><input id="firstTitleOcc" name="name_${currentTitleOrOccupation.prfLinkId}" class="input_37c_disabled" type="text" value="${currentTitleOrOccupation.titleOccList.titleOcc}" disabled="disabled" /></div>
+					<div class="col_r"><a class="deleteIcon" title="Delete this entry" href="${DeleteTitleOrOccupationPersonURL}"></a></div>
+					<div class="col_r"><a class="editValue" class="editValue" href="${EditTitleOrOccupationPersonURL}" title="Edit this entry"></a></div>
+				</div>
 			</div>
+
 		</c:forEach>
 			
 			<div>

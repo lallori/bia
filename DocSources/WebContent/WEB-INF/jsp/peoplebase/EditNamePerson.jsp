@@ -25,14 +25,20 @@
 				<b>Edit NAME</b>
 			</c:if> 
 			</legend>
-			<div>
-				<form:label id="altNameLabel" for="altName" path="altName" cssErrorClass="error">Name</form:label>
-				<form:input path="altName" class="input_30c" />
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l">
+						<a class="helpIcon" title="Text goes here">?</a>
+						<form:label id="altNameLabel" for="altName" path="altName" cssErrorClass="error">Name</form:label>
+					</div>
+					<div class="col_l"><form:input path="altName" class="input_30c" /></div>
+				</div>
+				<div class="row">
+					<div class="col_l"><form:label id="nameTypeLabel" for="nameType" path="nameType" cssErrorClass="error">NameType</form:label></div>
+					<div class="col_l"><form:select path="nameType" cssClass="selectform_Mlong" items="${nameTypes}"/></div>
+				</div>
 			</div>
-			<div>
-				<form:label id="nameTypeLabel" for="nameType" path="nameType" cssErrorClass="error">NameType</form:label>
-				<form:select path="nameType" cssClass="selectform_Mlong" items="${nameTypes}"/>
-			</div>
+			
 			<div>
 				<input id="closePerson" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>

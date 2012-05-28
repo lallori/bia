@@ -42,27 +42,33 @@
 					<c:param name="wifeId" value="${currentMarriage.wife.personId}" />
 				</c:if> 
 			</c:url>
-
-			<div>
-				<c:if test="${command.personId == currentMarriage.husband.personId}">
-      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_40c_disabled" type="text" value="${currentMarriage.wife} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.wife.deathYear}" disabled="disabled" />
-				</c:if> 
-				<c:if test="${command.personId == currentMarriage.wife.personId}">
-      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_40c_disabled" type="text" value="${currentMarriage.husband} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.husband.deathYear}" disabled="disabled" />
-				</c:if> 
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteSpousePersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditSpousePersonURL}" title="Edit this entry"></a>
-				<c:if test="${command.personId == currentMarriage.husband.personId}">
-					<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-						<c:param name="personId"   value="${currentMarriage.wife.personId}" />
-					</c:url>
-				</c:if> 
-				<c:if test="${command.personId == currentMarriage.wife.personId}">
-      				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-						<c:param name="personId"   value="${currentMarriage.husband.personId}" />
-					</c:url>
-				</c:if> 
-				<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"></a>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_r">
+						<c:if test="${command.personId == currentMarriage.husband.personId}">
+		      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_40c_disabled" type="text" value="${currentMarriage.wife} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.wife.deathYear}" disabled="disabled" />
+						</c:if> 
+						<c:if test="${command.personId == currentMarriage.wife.personId}">
+		      				<input id="marriage_${currentMarriage.marriageId}" name="name_${currentMarriage.marriageId}" class="input_40c_disabled" type="text" value="${currentMarriage.husband} - m.(${currentMarriage.startYear} - ${currentMarriage.endYear}) d.${currentMarriage.husband.deathYear}" disabled="disabled" />
+						</c:if>
+					</div>
+					<div class="col_r"><a class="deleteIcon" title="Delete this entry" href="${DeleteSpousePersonURL}"></a></div>
+					<div class="col_r"><a class="editValue" class="editValue" href="${EditSpousePersonURL}" title="Edit this entry"></a></div>
+					<div class="col_r">
+						<c:if test="${command.personId == currentMarriage.husband.personId}">
+							<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+								<c:param name="personId"   value="${currentMarriage.wife.personId}" />
+							</c:url>
+						</c:if> 
+						<c:if test="${command.personId == currentMarriage.wife.personId}">
+		      				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+								<c:param name="personId"   value="${currentMarriage.husband.personId}" />
+							</c:url>
+						</c:if> 
+						<a href="${ComparePersonURL}" class="personIcon" title="Show this person record"></a>
+					</div>
+				</div>
 			</div>
 		</c:forEach>
 			

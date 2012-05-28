@@ -22,73 +22,80 @@
 			<legend>
 				<b>PARENTS</b>
 			</legend>
-			<p><b>Father:</b></p>
-				<div>
-					<form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error">Name</form:label>
-					<form:input id="fatherAutocompleter" path="fatherDescription" cssClass="input_30c" />
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><b>Father:</b></div>
+					</div>
+					<div class="row">
+						<div class="col_l"><form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error">Name</form:label></div>
+						<div class="col_l"><form:input id="fatherAutocompleter" path="fatherDescription" cssClass="input_30c" /></div>
+					</div>
 				</div>
 				
-				<div> 
-					<u>Birth:</u>
-					<form:label id="bornYearLabelFather" for="bornYearFather" path="bornYearFather">Year</form:label>
-					<form:input path="bornYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
-					<form:label id="bornMonthLabelFather" for="bornMonthNumFather" path="bornMonthNumFather">Month</form:label>
-					<form:select id="bornMonthFather" disabled="disabled" path="bornMonthFather" cssClass="selectform_disabled" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-					<form:label id="bornDayLabelFather" for="bornDayFather" path="bornDayFather">Day</form:label>
-					<form:input path="bornDayFather" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><u>Birth:</u></div>
+						<div class="col_r"><form:label id="bornYearLabelFather" for="bornYearFather" path="bornYearFather">Year</form:label></div>
+						<div class="col_l"><form:input path="bornYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" /></div>
+						<div class="col_r"><form:label id="bornMonthLabelFather" for="bornMonthNumFather" path="bornMonthNumFather">Month</form:label></div>
+						<div class="col_l"><form:select id="bornMonthFather" disabled="disabled" path="bornMonthFather" cssClass="selectform_disabled" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+						<div class="col_r"><form:label id="bornDayLabelFather" for="bornDayFather" path="bornDayFather">Day</form:label></div>
+						<div class="col_l"><form:input path="bornDayFather" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" /></div>
+					</div>
+					<div class="row">
+						<div class="col_l"><u>Death:</u></div>
+						<div class="col_r"><form:label id="deathYearLabelFather" for="deathYearFather" path="bornYearFather">Year</form:label></div>
+						<div class="col_l"><form:input path="deathYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" /></div>
+						<div class="col_r"><form:label id="deathMonthLabelFather" for="deathMonthNumFather" path="deathMonthNumFather">Month</form:label></div>
+						<div class="col_l"><form:select id="deathMonthFather" disabled="disabled" path="deathMonthFather" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+						<div class="col_r"><form:label id="deathDayLabelFather" for="deathDayFather" path="deathDayFather">Day</form:label></div>
+						<div class="col_l"><form:input path="deathDayFather" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" /></div>
+					</div>
 				</div>
 				
-				<div>
-					<u>Death:</u>
-					<form:label id="deathYearLabelFather" for="deathYearFather" path="bornYearFather">Year</form:label>
-					<form:input path="deathYearFather" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
-					<form:label id="deathMonthLabelFather" for="deathMonthNumFather" path="deathMonthNumFather">Month</form:label>
-					<form:select id="deathMonthFather" disabled="disabled" path="deathMonthFather" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-					<form:label id="deathDayLabelFather" for="deathDayFather" path="deathDayFather">Day</form:label>
-					<form:input path="deathDayFather" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
+				<div class="listForm">
+					<div class="row"><form:label id="bioNotesLabelFather" for="bioNotesFather" path="bioNotesFather">Bio notes:</form:label></div>
+					<div class="row"><form:textarea path="bioNotesFather" readonly="true" cssClass="txtarea_disabled" /></div>
 				</div>
 				
-				<div>
-					<form:label id="bioNotesLabelFather" for="bioNotesFather" path="bioNotesFather">Bio notes:</form:label>
-				</div>
-				<div>
-					<form:textarea path="bioNotesFather" readonly="true" cssClass="txtarea_disabled" />
+				<hr />
+				
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><b>Mother:</b></div>
+					</div>
+					<div class="row">
+						<div class="col_l"><form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error">Name</form:label></div>
+						<div class="col_l"><form:input id="motherAutocompleter" path="motherDescription" cssClass="input_30c" /></div>
+					</div>
 				</div>
 				
-								
-			<p><b>Mother:</b></p>
-				<div>
-					<form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error">Name</form:label>
-					<form:input id="motherAutocompleter" path="motherDescription" cssClass="input_30c" />
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><u>Birth:</u></div>
+						<div class="col_r"><form:label id="bornYearLabelMother" for="bornYearMother" path="bornYearMother">Year</form:label></div>
+						<div class="col_l"><form:input path="bornYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" /></div>
+						<div class="col_r"><form:label id="bornMonthLabelMother" for="bornMonthNumMother" path="bornMonthNumMother">Month</form:label></div>
+						<div class="col_l"><form:select id="bornMonthMother" disabled="disabled" path="bornMonthMother" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+						<div class="col_r"><form:label id="bornDayLabelMother" for="bornDayMother" path="bornDayMother">Day</form:label></div>
+						<div class="col_l"><form:input path="bornDayMother" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" /></div>
+					</div>
+					<div class="row">
+						<div class="col_l"><u>Death:</u></div>
+						<div class="col_r"><form:label id="deathYearLabelMother" for="deathYearMother" path="deathYearMother">Year</form:label></div>
+						<div class="col_l"><form:input path="deathYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" /></div>
+						<div class="col_r"><form:label id="deathMonthLabelMother" for="deathMonthNumMother" path="deathMonthNumMother">Month</form:label></div>
+						<div class="col_l"><form:select id="deathMonthMother" disabled="disabled" path="deathMonthMother" cssClass="selectform_disabled" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+						<div class="col_r"><form:label id="deathDayLabelMother" for="deathDayMother" path="deathDayMother">Day</form:label></div>
+						<div class="col_l"><form:input path="deathDayMother" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" /></div>
+					</div>
 				</div>
 				
-				<div> 
-					<u>Birth:</u>
-					<form:label id="bornYearLabelMother" for="bornYearMother" path="bornYearMother">Year</form:label>
-					<form:input path="bornYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
-					<form:label id="bornMonthLabelMother" for="bornMonthNumMother" path="bornMonthNumMother">Month</form:label>
-					<form:select id="bornMonthMother" disabled="disabled" path="bornMonthMother" cssClass="selectform_disabled"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-					<form:label id="bornDayLabelMother" for="bornDayMother" path="bornDayMother">Day</form:label>
-					<form:input path="bornDayMother" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
-				</div>
-				
-				<div>
-					<u>Death:</u>
-					<form:label id="deathYearLabelMother" for="deathYearMother" path="deathYearMother">Year</form:label>
-					<form:input path="deathYearMother" disabled="disabled" maxlength="4" cssClass="input_4c_disabled" />
-					<form:label id="deathMonthLabelMother" for="deathMonthNumMother" path="deathMonthNumMother">Month</form:label>
-					<form:select id="deathMonthMother" disabled="disabled" path="deathMonthMother" cssClass="selectform_disabled" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-					<form:label id="deathDayLabelMother" for="deathDayMother" path="deathDayMother">Day</form:label>
-					<form:input path="deathDayMother" disabled="disabled" maxlength="2" cssClass="input_2c_disabled" />
-				</div>
-				
-				<div>
-					<form:label id="bioNotesLabelMother" for="bioNotesMother" path="bioNotesMother">Bio notes:</form:label>
-				</div>
-				<div>
-					<form:textarea path="bioNotesMother" readonly="true" cssClass="txtarea_disabled" />
-				</div>
-				
+				<div class="listForm">
+					<div class="row"><form:label id="bioNotesLabelMother" for="bioNotesMother" path="bioNotesMother">Bio notes:</form:label></div>
+					<div class="row"><form:textarea path="bioNotesMother" readonly="true" cssClass="txtarea_disabled" /></div>
+				</div>	
+
 				<div>
 					<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 					<input id="save" type="submit" value="Save" class="button"/>

@@ -18,9 +18,9 @@
 	<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>RESEARCH NOTES</b></legend>
-			
-			<div>
-				<form:textarea id="bioNotes" path="bioNotes" class="txtarea_big" />
+			<div class="listForm">
+				<div class="row"><a class="helpIcon" title="Text goes here">?</a></div>
+				<div class="row"><form:textarea id="bioNotes" path="bioNotes" class="txtarea_big" /></div>
 			</div>
 			
 			<form:hidden path="personId"/>

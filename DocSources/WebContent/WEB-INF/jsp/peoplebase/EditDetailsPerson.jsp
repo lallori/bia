@@ -21,106 +21,160 @@
 		<div id="loadingDiv"></div>
 			<fieldset>
 			<legend><b>PERSON DETAILS</b></legend>
-				<div>
-					<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error" title="First or Given Name"><u>First Name</u></form:label>
-					<form:input path="first" id="first" cssClass="input_20c" />
-					<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error" title="Succession Number. E.g., 'I' in Cosimo I de'Medici">Succes. Number</form:label>
-					<form:input path="sucNum" id="sucNum" cssClass="input_5c" maxlength="5"/>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error" title="First or Given Name"><u>First Name</u></form:label>
+						</div>
+						<div class="col_l"><form:input path="first" id="first" cssClass="input_18c" /></div>
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error" title="Succession Number. E.g., 'I' in Cosimo I de'Medici">Succes. Number</form:label>
+						</div>
+						<div class="col_r"><form:input path="sucNum" id="sucNum" cssClass="input_5c" maxlength="5"/></div>
+					</div>
 				</div>
 				
-				<div>
-					<form:label for="midPrefix" id="midPrefixLabel" path="midPrefix" cssErrorClass="error" title="Prefix for Middle Display Name">Prefix</form:label>
-					<form:input path="midPrefix" id="midPrefix" cssClass="input_5c" maxlength="5"/>
-		
-					<form:label for="middle" id="middleLabel" path="middle" cssErrorClass="error" title="Middle Display Name">Patronymic</form:label>
-					<form:input path="middle" id="middle" cssClass="input_20c" />
+				<div class="listForm">
+					<div class="row">
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="midPrefix" id="midPrefixLabel" path="midPrefix" cssErrorClass="error" title="Prefix for Middle Display Name">Prefix</form:label>
+						</div>
+						<div class="col_l"><form:input path="midPrefix" id="midPrefix" cssClass="input_4c" maxlength="5"/></div>
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="middle" id="middleLabel" path="middle" cssErrorClass="error" title="Middle Display Name">Patronymic</form:label>
+						</div>
+						<div class="col_r"><form:input path="middle" id="middle" cssClass="input_20c" /></div>
+					</div>
+					<div class="row">
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="lastPrefix" id="lastPrefixLabel" path="lastPrefix" cssErrorClass="error" title="Prefix for Family Name e.g. 'degli''">Prefix</form:label>
+						</div>
+						<div class="col_l"><form:input path="lastPrefix" id="lastPrefix" cssClass="input_4c" maxlength="5"/></div>
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="last" id="lastLabel" path="last" cssErrorClass="error" title="Last or Identification Display Name - Required Entry"><u>Family Name</u></form:label>
+						</div>
+						<div class="col_r"><form:input path="last" id="last" cssClass="input_20c" /></div>
+					</div>
+					<div class="row">
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="postLastPrefix" id="postLastPrefixLabel" path="postLastPrefix" cssErrorClass="error" title="Prefix for Appellative">Prefix</form:label>
+						</div>
+						<div class="col_l"><form:input path="postLastPrefix" id="postLastPrefix" cssClass="input_4c" maxlength="5"/></div>
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="postLast" id="postLastLabel" path="postLast" cssErrorClass="error" title="Post-ID Display Name">Appellative</form:label>
+						</div>
+						<div class="col_r"><form:input path="postLast" id="postLast" cssClass="input_20c"/></div>
+					</div>
 				</div>
 				
-				<div>
-					<form:label for="lastPrefix" id="lastPrefixLabel" path="lastPrefix" cssErrorClass="error" title="Prefix for Family Name e.g. 'degli''">Prefix</form:label>
-					<form:input path="lastPrefix" id="lastPrefix" cssClass="input_5c" maxlength="5"/>
-		
-					<form:label for="last" id="lastLabel" path="last" cssErrorClass="error" title="Last or Identification Display Name - Required Entry"><u>Family Name</u></form:label>
-					<form:input path="last" id="last" cssClass="input_20c" />
-				</div>
-				
-				<div>
-					<form:label for="postLastPrefix" id="postLastPrefixLabel" path="postLastPrefix" cssErrorClass="error" title="Prefix for Appellative">Prefix</form:label>
-					<form:input path="postLastPrefix" id="postLastPrefix" cssClass="input_5c" maxlength="5"/>
-					<form:label for="postLast" id="postLastLabel" path="postLast" cssErrorClass="error" title="Post-ID Display Name">Appellative</form:label>
-					<form:input path="postLast" id="postLast" cssClass="input_20c"/>
-				</div>
-				
-				<div>
-					<form:label for="gender" id="genderLabel" path="gender" cssErrorClass="error">Gender</form:label>
-					 <form:select path="gender" id="gender" cssClass="selectform_short" items="${genders}"/>
-				</div>
-				
-				<hr />
-				
-				<div>
-					<b>Birth:</b>
-					<form:label for="bornYear" id="bornYearLabel" path="bornYear" cssErrorClass="error"></form:label>
-					<form:input id="bornYear" path="bornYear" cssClass="input_4c" maxlength="4"/>
-					<form:label for="bornMonth" id="bornMonthLabel" path="bornMonth" cssErrorClass="error">Month</form:label>
-					<form:select id="bornMonth" path="bornMonth" cssClass="selectform_long"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-					<form:label for="bornDay" id="bornDayLabel" path="bornDay" cssErrorClass="error">Day</form:label>
-					<form:input id="bornDay" path="bornDay" cssClass="input_2c" maxlength="2"/>
-				</div>
-				
-				<div>
-					<form:label for="bornApprox" id="bornApproxLabel" path="bornApprox" cssErrorClass="error">Approx</form:label>
-					<form:checkbox path="bornApprox" id="bornApprox1" cssClass="checkboxPers1"/>
-					<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error">BC?</form:label>
-					<form:checkbox id="bornDateBc1" path="bornDateBc" cssClass="checkboxPers2"/>
-				</div>
-				
-				<div>
-					<form:label for="bornPlaceDescription" id="bornPlaceDescriptionLabel" path="bornPlaceDescription" cssErrorClass="error">Place</form:label>
-					<form:input id="bornPlaceAutoCompleter" path="bornPlaceDescription" cssClass="input_25c"/>
-				</div>
-				
-				<div>
-					<form:label for="activeStart" id="activeStartLabel" path="activeStart" cssErrorClass="error"></form:label>
-					<form:input id="activeStart" path="activeStart" cssClass="input_10c"/>
-		
-					<form:label for="bornPlaceUnsure" id="bornPlaceUnsureLabel" path="bornPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
-					<form:checkbox id="bornPlaceUnsure1" path="bornPlaceUnsure" cssClass="checkboxPers2"/>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="gender" id="genderLabel" path="gender" cssErrorClass="error">Gender</form:label>
+							<form:select path="gender" id="gender" cssClass="selectform_short" items="${genders}"/>
+						</div>
+					</div>
 				</div>
 				
 				<hr />
 				
-				<div>
-					<b>Death:</b>
-					<form:label for="deathYear" id="deathYearLabel" path="deathYear" cssErrorClass="error"></form:label>
-					<form:input id="deathYear" path="deathYear" cssClass="input_4c" maxlength="4"/>
-					<form:label id="deathMonthLabel" for="deathMonth" path="deathMonth" cssErrorClass="error">Month</form:label>
-					<form:select id="deathMonth" path="deathMonth" cssClass="selectform_long"  items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-					<form:label for="deathDay" id="deathDayLabel" path="deathDay" cssErrorClass="error">Day</form:label>
-					<form:input id="deathDay" path="deathDay" cssClass="input_2c" maxlength="2"/>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><b>Birth:</b></div>
+						<div class="col_r"><form:label for="bornYear" id="bornYearLabel" path="bornYear" cssErrorClass="error"></form:label></div>
+						<div class="col_l"><form:input id="bornYear" path="bornYear" cssClass="input_4c" maxlength="4"/></div>
+						<div class="col_r"><form:label for="bornMonth" id="bornMonthLabel" path="bornMonth" cssErrorClass="error">Month</form:label></div>
+						<div class="col_l"><form:select id="bornMonth" path="bornMonth" cssClass="selectform_long"  items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+						<div class="col_r"><form:label for="bornDay" id="bornDayLabel" path="bornDay" cssErrorClass="error">Day</form:label></div>
+						<div class="col_l"><form:input id="bornDay" path="bornDay" cssClass="input_2c" maxlength="2"/></div>
+					</div>
 				</div>
 				
-				<div>
-					<form:label for="deathApprox" id="deathApproxLabel" path="deathApprox" cssErrorClass="error">Approx</form:label>
-					<form:checkbox path="deathApprox" id="deathApprox" cssClass="checkboxPers1"/>
-					<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error">BC?</form:label>
-					<form:checkbox id="deathDateBc" path="deathDateBc" cssClass="checkboxPers2"/>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_r">
+							<form:label for="bornApprox" id="bornApproxLabel" path="bornApprox" cssErrorClass="error">Approx</form:label>
+							<form:checkbox path="bornApprox" id="bornApprox1"/>
+						</div>
+						<div class="col_r">
+							<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error">BC?</form:label>
+							<form:checkbox id="bornDateBc1" path="bornDateBc"/>
+						</div>
+					</div>
 				</div>
 				
-				<div>
-					<form:label for="deathPlaceDescription" id="deathPlaceDescriptionLabel" path="deathPlaceDescription" cssErrorClass="error">Place</form:label>
-					<form:input id="deathPlaceAutoCompleter" path="deathPlaceDescription" cssClass="input_25c"/>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_r"><form:label for="bornPlaceDescription" id="bornPlaceDescriptionLabel" path="bornPlaceDescription" cssErrorClass="error">Place</form:label></div>
+						<div class="col_r"><form:input id="bornPlaceAutoCompleter" path="bornPlaceDescription" cssClass="input_25c"/></div>
+					</div>
+					<div class="row">
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="activeStart" id="activeStartLabel" path="activeStart" cssErrorClass="error"></form:label>
+						</div>
+						<div class="col_l"><form:input id="activeStart" path="activeStart" cssClass="input_10c"/></div>
+						<div class="col_r">
+							<form:label for="bornPlaceUnsure" id="bornPlaceUnsureLabel" path="bornPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
+							<form:checkbox id="bornPlaceUnsure1" path="bornPlaceUnsure" />
+						</div>
+					</div>
 				</div>
 				
-				<div>
-					<form:label for="activeEnd" id="activeEndLabel" path="activeEnd" cssErrorClass="error"></form:label>
-					<form:input id="activeEnd" path="activeEnd" cssClass="input_10c"/>
-					
-					<form:label for="deathPlaceUnsure" id="deathPlaceUnsureLabel" path="deathPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
-					<form:checkbox id="deathPlaceUnsure" path="deathPlaceUnsure" cssClass="checkboxPers2"/>
+				<hr />
+				
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><b>Death:</b></div>
+						<div class="col_r"><form:label for="deathYear" id="deathYearLabel" path="deathYear" cssErrorClass="error"></form:label></div>
+						<div class="col_l"><form:input id="deathYear" path="deathYear" cssClass="input_4c" maxlength="4"/></div>
+						<div class="col_r"><form:label id="deathMonthLabel" for="deathMonth" path="deathMonth" cssErrorClass="error">Month</form:label></div>
+						<div class="col_l"><form:select id="deathMonth" path="deathMonth" cssClass="selectform_long"  items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+						<div class="col_r"><form:label for="deathDay" id="deathDayLabel" path="deathDay" cssErrorClass="error">Day</form:label></div>
+						<div class="col_l"><form:input id="deathDay" path="deathDay" cssClass="input_2c" maxlength="2"/></div>
+					</div>
 				</div>
 				
+				<div class="listForm">
+					<div class="row">
+						<div class="col_r">
+							<form:label for="deathApprox" id="deathApproxLabel" path="deathApprox" cssErrorClass="error">Approx</form:label>
+							<form:checkbox path="deathApprox" id="deathApprox" />
+						</div>
+						<div class="col_r">
+							<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error">BC?</form:label>
+							<form:checkbox id="deathDateBc" path="deathDateBc"/>
+						</div>
+					</div>
+				</div>
 				
+				<div class="listForm">
+					<div class="row">
+						<div class="col_r"><form:label for="deathPlaceDescription" id="deathPlaceDescriptionLabel" path="deathPlaceDescription" cssErrorClass="error">Place</form:label></div>
+						<div class="col_l"><form:input id="deathPlaceAutoCompleter" path="deathPlaceDescription" cssClass="input_25c"/></div>
+					</div>
+					<div class="row">
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="activeEnd" id="activeEndLabel" path="activeEnd" cssErrorClass="error"></form:label>
+						</div>
+						<div class="col_l"><form:input id="activeEnd" path="activeEnd" cssClass="input_10c"/></div>
+						<div class="col_r">
+							<form:label for="deathPlaceUnsure" id="deathPlaceUnsureLabel" path="deathPlaceUnsure" cssErrorClass="error">Unsure?</form:label>
+							<form:checkbox id="deathPlaceUnsure" path="deathPlaceUnsure" />
+						</div>
+					</div>
+				</div>
+		
 				<form:hidden path="personId"/>
 				<form:hidden path="bornPlaceId"/>
 				<form:hidden path="bornPlacePrefered"/>

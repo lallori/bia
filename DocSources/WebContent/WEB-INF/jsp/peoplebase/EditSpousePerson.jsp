@@ -26,30 +26,40 @@
 			</c:if>
 			<%-- We manage fields for husband --%>
 			<c:if test="${command.personId == command.wifeId}">
-				<div>
-					<form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error">Name</form:label>
-					<form:input id="spouseDescriptionAutoCompleter" path="husbandDescription" cssClass="input_25c" />
-					<form:hidden path="husbandId"/>
-					<form:hidden path="wifeId"/>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error">Name</form:label></div>
+						<div class="col_l">
+							<form:input id="spouseDescriptionAutoCompleter" path="husbandDescription" cssClass="input_25c" />
+							<form:hidden path="husbandId"/>
+							<form:hidden path="wifeId"/>
+						</div>
+					</div>
 				</div>
 			</c:if> 
 			<%-- We manage fields for wife --%>
 			<c:if test="${command.personId == command.husbandId}">
-				<div>
-					<form:label id="wifeDescriptionLabel" for="wifeDescription" path="wifeDescription" cssErrorClass="error">Name</form:label>
-					<form:input id="spouseDescriptionAutoCompleter" path="wifeDescription" cssClass="input_25c" />
-					<form:hidden path="wifeId"/>
-					<form:hidden path="husbandId"/>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><form:label id="wifeDescriptionLabel" for="wifeDescription" path="wifeDescription" cssErrorClass="error">Name</form:label></div>
+						<div class="col_l">
+							<form:input id="spouseDescriptionAutoCompleter" path="wifeDescription" cssClass="input_25c" />
+							<form:hidden path="wifeId"/>
+							<form:hidden path="husbandId"/>
+						</div>
+					</div>
 				</div>
 			</c:if> 
-
-			<div>
-				<form:label id="startYearLabel" for="startYear" path="startYear">Start Year</form:label>
-				<form:input path="startYear" cssClass="input_4c"/>
-				<form:label id="endYearLabel" for="endYear" path="endYear">End Year</form:label>
-				<form:input path="endYear" cssClass="input_4c"/>
-				<form:label id="marriageTermLabel" for="marriageTerm" path="marriageTerm">Reason</form:label>
-				<form:select cssClass="selectform_long" path="marriageTerm" items="${marriageTerms}"/>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l"><form:label id="startYearLabel" for="startYear" path="startYear">Start Year</form:label></div>
+					<div class="col_l"><form:input path="startYear" cssClass="input_4c"/></div>
+					<div class="col_r"><form:label id="endYearLabel" for="endYear" path="endYear">End Year</form:label></div>
+					<div class="col_l"><form:input path="endYear" cssClass="input_4c"/></div>
+					<div class="col_r"><form:label id="marriageTermLabel" for="marriageTerm" path="marriageTerm">Reason</form:label></div>
+					<div class="col_l"><form:select cssClass="selectform_long" path="marriageTerm" items="${marriageTerms}"/></div>
+				</div>
 			</div>
 			
 			<div>

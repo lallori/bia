@@ -28,18 +28,24 @@
 				<b>Edit CHILD</b>
 			</c:if>
 			</legend>
-			<div>
-				<form:label id="childDescriptionLabel" for="childDescription" path="childDescription" cssErrorClass="error">Name</form:label>
-				<form:input id="childDescriptionAutoCompleter" path="childDescription" class="input_25c" />
+			<div class="listForm">
+				<div class="row">
+					<div class="col_r"><form:label id="childDescriptionLabel" for="childDescription" path="childDescription" cssErrorClass="error">Name</form:label></div>
+					<div class="col_l"><form:input id="childDescriptionAutoCompleter" path="childDescription" class="input_30c" /></div>
+				</div>
 			</div>
-			<div>
-				<form:label id="bornYearLabel" for="bornYear" path="bornYear" cssErrorClass="error">Born</form:label>
-				<form:input path="bornYear" cssClass="input_4c_disabled" maxlength="4"/>
-				<form:label id="deathYearLabel" for="deathYear" path="deathYear" cssErrorClass="error">Died</form:label>
-				<form:input path="deathYear" cssClass="input_4c_disabled" maxlength="4"/>
-				<form:label id="ageAtDeathLabel" for="ageAtDeath" path="ageAtDeath" cssErrorClass="error">Age at death</form:label>
-				<form:input path="ageAtDeath" cssClass="input_2c_disabled" maxlength="2"/>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_r"><form:label id="bornYearLabel" for="bornYear" path="bornYear" cssErrorClass="error">Born</form:label></div>
+					<div class="col_l"><form:input path="bornYear" cssClass="input_4c_disabled" maxlength="4"/></div>
+					<div class="col_r"><form:label id="deathYearLabel" for="deathYear" path="deathYear" cssErrorClass="error">Died</form:label></div>
+					<div class="col_l"><form:input path="deathYear" cssClass="input_4c_disabled" maxlength="4"/></div>
+					<div class="col_r"><form:label id="ageAtDeathLabel" for="ageAtDeath" path="ageAtDeath" cssErrorClass="error">Age at death</form:label></div>
+					<div class="col_l"><form:input path="ageAtDeath" cssClass="input_2c_disabled" maxlength="2"/></div>
+				</div>
 			</div>
+			
 			<div>
 				<input id="closeChild" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>

@@ -37,13 +37,16 @@
 			<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
 					<c:param name="personId"   value="${currentChild.child.personId}" />
 				</c:url>
-
-			<div>
-      			<input id="child_${currentChild.id}" name="child_${currentChild.id}" class="input_40c_disabled" type="text" value="${currentChild.child.mapNameLf}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteChildPersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditChildPersonURL}" title="Edit this entry"></a>
-				<a href="${ComparePersonURL }" class="personIcon" title="Show this person record"></a>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l"><input id="child_${currentChild.id}" name="child_${currentChild.id}" class="input_40c_disabled" type="text" value="${currentChild.child.mapNameLf}" disabled="disabled" /></div>
+					<div class="col_r"><a class="deleteIcon" title="Delete this entry" href="${DeleteChildPersonURL}"></a></div>
+					<div class="col_r"><a class="editValue" class="editValue" href="${EditChildPersonURL}" title="Edit this entry"></a></div>
+					<div class="col_r"><a href="${ComparePersonURL }" class="personIcon" title="Show this person record"></a></div>
+				</div>
 			</div>
+
 		</c:forEach>
 			
 			<div>

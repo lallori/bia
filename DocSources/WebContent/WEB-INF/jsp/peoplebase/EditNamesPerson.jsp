@@ -30,14 +30,18 @@
 				<c:param name="personId" value="${command.personId}" />
 				<c:param name="nameId" value="${currentName.nameId}" />
 			</c:url>
-
-			<div>
-				<select disabled="disabled" class="selectform_long_disabled" name="nameType" id="nameType">
-					<option value="${currentName.nameType}" selected="selected">${currentName.nameType}</option>
-				</select>
-      			<input id="name_${currentName.nameId}" name="name_${currentName.nameId}" class="input_20c_disabled" type="text" value="${currentName.namePrefix} ${currentName.altName}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteNamePersonURL}"></a>
-				<a class="editValue" class="editValue" href="${EditNamePersonURL}" title="Edit this entry"></a>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l">
+						<select disabled="disabled" class="selectform_long_disabled" name="nameType" id="nameType">
+							<option value="${currentName.nameType}" selected="selected">${currentName.nameType}</option>
+						</select>
+					</div>
+					<div class="col_l"><input id="name_${currentName.nameId}" name="name_${currentName.nameId}" class="input_20c_disabled" type="text" value="${currentName.namePrefix} ${currentName.altName}" disabled="disabled" /></div>
+					<div class="col_r"><a class="deleteIcon" title="Delete this entry" href="${DeleteNamePersonURL}"></a></div>
+					<div class="col_r"><a class="editValue" class="editValue" href="${EditNamePersonURL}" title="Edit this entry"></a></div>
+				</div>
 			</div>
 		</c:forEach>
 			

@@ -26,43 +26,63 @@
 				<b>Edit TITLE</b>
 			</c:if>
 			</legend>
-			<div>
-				<form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">Add Title &amp; Occ:</form:label>
-				<form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_34c"/>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l"><form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">Add Title &amp; Occ:</form:label></div>
+					<div class="col_r"><form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_34c"/></div>
+				</div>
+				<div class="row">
+					<div class="col_l"></div>
+					<div class="col_r">
+						<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role</form:label>
+						<form:checkbox id="preferredRole1" path="preferredRole" />
+					</div>
+				</div>
 			</div>
-			<div>
-				<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role</form:label>
-				<form:checkbox id="preferredRole1" path="preferredRole" cssClass="checkboxPers2"/>
-			</div>
+			
 			<hr />
-			<div>
-				<b>Start:</b>
-				<br />
-				<form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Year</form:label>
-				<form:input path="startYear" cssClass="input_4c" maxlength="4" id="startYear"/>
-				<form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error">Month</form:label>
-				<form:select id="startMonthNum" path="startMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-				<form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Day</form:label>
-				<form:input path="startDay" cssClass="input_2c" maxlength="2"/>
-				<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error">Approx</form:label>
-				<form:checkbox path="startApprox" cssClass="checkboxPers3" id="startApprox1"/>
-				<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error">Uns</form:label>
-				<form:checkbox path="startUns" cssClass="checkboxPers3" id="startUns1"/>
+			
+			<div><b>Start:</b></div>
+			<div class="listForm">
+				<div class="row">
+					<div class="col_r"><form:label id="startYearLabel" for="startYear" path="startYear" cssErrorClass="error">Year</form:label></div>
+					<div class="col_l"><form:input path="startYear" cssClass="input_4c" maxlength="4" id="startYear"/></div>
+					<div class="col_r"><form:label id="startMonthNumLabel" for="startMonthNum" path="startMonthNum" cssErrorClass="error">Month</form:label></div>
+					<div class="col_l"><form:select id="startMonthNum" path="startMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+					<div class="col_r"><form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Day</form:label></div>
+					<div class="col_l"><form:input path="startDay" cssClass="input_2c" maxlength="2"/></div>
+					<div class="col_r">
+						<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error">Approx</form:label>
+						<form:checkbox path="startApprox" id="startApprox1"/>
+					</div>
+					<div class="col_r">
+						<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error">Uns</form:label>
+						<form:checkbox path="startUns" id="startUns1"/>
+					</div>
+				</div>
 			</div>
+				
 			<hr />
-			<div>
-				<b>End:</b>
-				<br />
-				<form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">Year</form:label>
-				<form:input path="endYear" cssClass="input_4c" maxlength="4" id="endYear"/>
-				<form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error">Month</form:label>
-				<form:select id="endMonthNum" path="endMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-				<form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">Day</form:label>
-				<form:input path="endDay" cssClass="input_2c" maxlength="2"/>
-				<form:label id="endApproxLabel" for="endApprox" path="endApprox" cssErrorClass="error">Approx</form:label>
-				<form:checkbox path="endApprox" cssClass="checkboxPers3" id="endApprox1"/>
-				<form:label id="endUnsLabel" for="endtUns" path="endUns" cssErrorClass="error">Uns</form:label>
-				<form:checkbox path="endUns" cssClass="checkboxPers3" id="endUns1"/>
+			
+			<div><b>End:</b></div>
+			<div class="listForm">
+				<div class="row">
+					<div class="col_r"><form:label id="endYearLabel" for="endYear" path="endYear" cssErrorClass="error">Year</form:label></div>
+					<div class="col_l"><form:input path="endYear" cssClass="input_4c" maxlength="4" id="endYear"/></div>
+					<div class="col_r"><form:label id="endMonthNumLabel" for="endMonthNum" path="endMonthNum" cssErrorClass="error">Month</form:label></div>
+					<div class="col_l"><form:select id="endMonthNum" path="endMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+					<div class="col_r"><form:label id="endDayLabel" for="endDay" path="endDay" cssErrorClass="error">Day</form:label></div>
+					<div class="col_l"><form:input path="endDay" cssClass="input_2c" maxlength="2"/></div>
+					<div class="col_r">
+						<form:label id="endApproxLabel" for="endApprox" path="endApprox" cssErrorClass="error">Approx</form:label>
+						<form:checkbox path="endApprox" id="endApprox1"/>
+					</div>
+					<div class="col_r">
+						<form:label id="endUnsLabel" for="endtUns" path="endUns" cssErrorClass="error">Uns</form:label>
+						<form:checkbox path="endUns" id="endUns1"/>
+					</div>
+				</div>
 			</div>
 			
 			<form:hidden path="titleOccIdNew" />
