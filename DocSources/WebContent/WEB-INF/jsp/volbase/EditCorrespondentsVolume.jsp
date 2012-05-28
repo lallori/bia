@@ -8,12 +8,24 @@
 		<div id="loadingDiv"></div>
 		<fieldset>
 			<legend><b>CORRESPONDENTS</b></legend>
-			<div style="margin-top:5px"><form:label id="sendersLabel" for="senders" path="senders" cssErrorClass="error">From</form:label></div>
-			<div style="margin:0"><form:textarea path="senders" cssClass="txtarea_medium"/><form:errors path="senders" cssClass="inputerrors"/></div>
-			<br />
-			<div><form:label id="recipsLabel" for="recips" path="recips" cssErrorClass="error">To</form:label></div>
-			<div><form:textarea path="recips" cssClass="txtarea_medium"/><form:errors path="recips" cssClass="inputerrors"/></div>
-			<div style="margin-top:5px">
+			<div class="listForm">
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label id="sendersLabel" for="senders" path="senders" cssErrorClass="error">From</form:label>
+				</div>
+				<div class="row"><form:textarea path="senders" cssClass="txtarea_medium"/><form:errors path="senders" cssClass="inputerrors"/></div>
+				
+				<br />
+				
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label id="recipsLabel" for="recips" path="recips" cssErrorClass="error">To</form:label>
+				</div>
+				<div class="row"><form:textarea path="recips" cssClass="txtarea_medium"/><form:errors path="recips" cssClass="inputerrors"/></div>
+			
+			</div>
+			
+			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
