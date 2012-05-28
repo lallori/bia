@@ -47,8 +47,8 @@
 				
 				<form id="senderSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="Search documents sent FROM Person/Organization.">?</a>
-					<label for="sender" id="senderLabel">Sender</label> 
-					<input type="text" id="sender" class="input_25c"/><!-- AUTOCOMPLETE -->
+					<label for="sender" id="senderLabel">Sender Name</label> 
+					<input type="text" id="sender" class="input_24c"/><!-- AUTOCOMPLETE -->
 					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="senderAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Sender">
 					<input type="hidden" id="senderId" value="">
@@ -56,8 +56,8 @@
 				
 				<form id="fromSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="Search documents sent FROM Place/Location.">?</a>
-					<label for="from" id="fromLabel">From</label> 
-					<input type="text" id="from" name="from" class="input_25c"/><!-- AUTOCOMPLETE -->
+					<label for="from" id="fromLabel">Place From</label> 
+					<input type="text" id="from" name="from" class="input_24c"/><!-- AUTOCOMPLETE -->
 					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="fromAdd" disabled="disabled">
 					<input type="hidden" id="category" value="From">
 					<input type="hidden" id="fromId" value="">
@@ -65,8 +65,8 @@
 				
 				<form id="recipientSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="Search documents sent TO Person/Organization.">?</a>
-					<label for="recipientSearch" id="recipientSearchLabel">Recipient</label> 
-					<input type="text" id="recipient" name="recipient" class="input_25c"/><!-- AUTOCOMPLETE -->
+					<label for="recipientSearch" id="recipientSearchLabel">Recipient Name</label> 
+					<input type="text" id="recipient" name="recipient" class="input_24c"/><!-- AUTOCOMPLETE -->
 					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="recipientAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Recipient">
 					<input type="hidden" id="recipientId" value="">
@@ -74,8 +74,8 @@
 				
 				<form id="toSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="Search documents sent Place/Location.">?</a>
-					<label for="to" id="toSearchLabel">To</label> 
-					<input type="text" id="to" name="to" class="input_25c"/><!-- AUTOCOMPLETE -->
+					<label for="to" id="toSearchLabel">Place To</label> 
+					<input type="text" id="to" name="to" class="input_24c"/><!-- AUTOCOMPLETE -->
 					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="toAdd" disabled="disabled">
 					<input type="hidden" id="category" value="To">
 					<input type="hidden" id="toId" value="">
@@ -84,7 +84,7 @@
 				<form id="refersToSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="Search documents in which this Person's name is mentioned.">?</a>
 					<label for="refersTo" id="refersToLabel">Refers to</label> 
-					<input type="text" id="refersTo" name="refersTo" class="input_25c"/><!-- AUTOCOMPLETE -->
+					<input type="text" id="refersTo" name="refersTo" class="input_24c"/><!-- AUTOCOMPLETE -->
 					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="refersToAdd" disabled="disabled">
 					<input type="hidden" id="category" value="Referers To">
 					<input type="hidden" id="refersToId" value="">
