@@ -24,54 +24,69 @@
 		<form:form id="EditDetailsTgnPlaceForm" cssClass="edit" method="post" action="${EditDetailsPlaceURL}">
 			<fieldset>
 				<legend><b>PLACE DETAILS</b></legend>
-				<div id="placeIdDiv">
-					<label id="placeIDLabel" for="placeAllId">Place ID: </label> <i>Fills in automatically</i>
-				</div>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><label id="placeIDLabel" for="placeAllId">Place ID: </label></div>
+						<div class="col_l"><i>Fills in automatically</i></div>
+					</div>
 				
-				<div>
-					<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
-					<c:if test="${command.plSource != 'TGN'}">
-						<form:input path="geogKey" cssClass="input_35c_disabled" disabled="disabled"/>
-					</c:if>
-					<c:if test="${command.plSource == 'TGN' || command.geogKey >= 1000000}">
-						<form:input path="geogKey" cssClass="input_14c" />
-						<form:label for="tgnTermIdLabel" path="placeNameId" cssErrorClass="error" id="tgnTermIDLabel">TGN_TermID</form:label>
-						<form:input path="placeNameId" cssClass="input_14c" />
-					</c:if>
-				</div>
-				
-				<hr />
-				
-				<div>
-					<b>Place name</b><br />
-					<form:label for="nameNoAccentsLabel" path="placeName" cssErrorClass="error" id="nameNoAccentsLabel">No accents</form:label>
-					<form:input path="placeName" cssClass="input_28c" id="nameNoAccents" />
-				</div>
-				
-				<div>
-					<form:label for="nameWithAccentsLabel" path="termAccent" cssErrorClass="error" id="nameWithAccentsLabel">With accents if required</form:label>
-					<form:input path="termAccent" cssClass="input_25c" id="nameWithAccents"/>
+					<div class="row">
+						<div class="col_l">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="geogKeyLabel" path="geogKey" cssErrorClass="error" id="geogKeyLabel">Geog Key</form:label>
+						</div>
+						<c:if test="${command.plSource != 'TGN'}">
+							<div class="col_l"><form:input path="geogKey" cssClass="input_35c_disabled" disabled="disabled"/></div>
+						</c:if>
+						
+						<c:if test="${command.plSource == 'TGN' || command.geogKey >= 1000000}">
+							<div class="col_l"><form:input path="geogKey" cssClass="input_10c" /></div>
+							<div class="col_r"><form:label for="tgnTermIdLabel" path="placeNameId" cssErrorClass="error" id="tgnTermIDLabel">TGN_TermID</form:label></div>
+							<div class="col_r"><form:input path="placeNameId" cssClass="input_10c" /></div>
+						</c:if>
+					</div>
 				</div>
 				
 				<hr />
 				
-				<div>
-					<form:label for="placeTypeLabel" path="plType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label>
-					<form:select path="plType" cssClass="selectform_Llong" items="${placeTypes}"/>
-				
-					<form:label for="placeParentLabel" path="plParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label>
-					<form:input id="placeParentAutoCompleter" path="plParent" cssClass="input_10c"/>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><b>Place name</b></div>
+					</div>
+					<div class="row">
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="nameNoAccentsLabel" path="placeName" cssErrorClass="error" id="nameNoAccentsLabel">No accents</form:label>
+						</div>
+						<div class="col_r"><form:input path="placeName" cssClass="input_25c" id="nameNoAccents" /></div>
+					</div>
+					<div class="row">
+						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
+							<form:label for="nameWithAccentsLabel" path="termAccent" cssErrorClass="error" id="nameWithAccentsLabel">With accents if required</form:label>
+						</div>
+						<div class="col_r"><form:input path="termAccent" cssClass="input_25c" id="nameWithAccents"/></div>
+					</div>
 				</div>
 				
-				<br />
+				<hr />
 				
-				<div>
-					<form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label>
+				<div class="listForm">
+					<div class="row">
+						<div class="col_l"><form:label for="placeTypeLabel" path="plType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label></div>
+						<div class="col_l"><form:select path="plType" cssClass="selectform_Llong" items="${placeTypes}"/></div>
+					</div>
+					<div class="row">
+						<div class="col_l"><form:label for="placeParentLabel" path="plParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label></div>
+						<div class="col_l"><form:input id="placeParentAutoCompleter" path="plParent" cssClass="input_35c"/></div>
+					</div>
 				</div>
-				<div>
-					<form:textarea path="placesMemo" cssClass="txtarea" id="placeNotes"/>
+				
+				<div class="listForm">
+					<div class="row"><form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label></div>
+					<div class="row"><form:textarea path="placesMemo" cssClass="txtarea" id="placeNotes"/></div>
 				</div>
-					
+
 				<div>
 					<input type="submit" title="Do not save changes" value="Close" id="close">
 					<input type="submit" value="Save" id="save">

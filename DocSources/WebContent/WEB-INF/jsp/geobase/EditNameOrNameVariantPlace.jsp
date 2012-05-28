@@ -23,14 +23,19 @@
 				<b>Edit NAME</b>
 			</c:if> 
 		</legend>
-		<div>
-			<form:label for="namePlace" id="namePlaceLabel" path="plName">Name</form:label>
-			<form:input id="namePlace" path="plName" cssClass="input_30c" type="text" />
-		</div>
 		
-		<div>
-			<form:label for="nameType" id="nameTypeLabel" path="plType">Place Type</form:label>
-			<form:input id="nameType" path="plType" cssClass="input_35c_disabled" type="text" disabled="disabled" />
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label for="namePlace" id="namePlaceLabel" path="plName">Name</form:label>
+				</div>
+				<div class="col_l"><form:input id="namePlace" path="plName" cssClass="input_30c" type="text" /></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label for="nameType" id="nameTypeLabel" path="plType">Place Type</form:label></div>
+				<div class="col_l"><form:input id="nameType" path="plType" cssClass="input_35c_disabled" type="text" disabled="disabled" /></div>
+			</div>
 		</div>
 		
 		<div>

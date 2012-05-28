@@ -35,12 +35,16 @@
 				<c:param name="placeAllId" value="${currentName.placeAllId}" />
 			</c:url>
 			
-			<div>
-				<input id="name_${currentName.placeAllId}" name="name_${currentName.placeAllId}" class="input_40c_disabled" type="text" value="${currentName.placeName}" disabled="disabled" />
-				<c:if test="${currentName.prefFlag != 'P' && currentName.placeAllId != command.placeAllId}">
-					<a class="deleteIcon" title="Delete this entry" href="${DeleteNameOrNameVariantsPlaceURL}"></a>
-				</c:if>
-				<a class="editValue" href="${EditNameOrNameVariantPlaceURL}" title="Edit this entry"></a>
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l"><input id="name_${currentName.placeAllId}" name="name_${currentName.placeAllId}" class="input_40c_disabled" type="text" value="${currentName.placeName}" disabled="disabled" /></div>
+					<div class="col_l">
+						<c:if test="${currentName.prefFlag != 'P' && currentName.placeAllId != command.placeAllId}">
+							<a class="deleteIcon" title="Delete this entry" href="${DeleteNameOrNameVariantsPlaceURL}"></a>
+						</c:if>
+					</div>
+					<div class="col_l"><a class="editValue" href="${EditNameOrNameVariantPlaceURL}" title="Edit this entry"></a></div>
+				</div>
 			</div>
 		</c:forEach>
 	

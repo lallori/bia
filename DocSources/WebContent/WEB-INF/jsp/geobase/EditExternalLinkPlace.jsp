@@ -23,16 +23,23 @@
 		<c:if test="${command.placeExternalLinksId > 0 }">
 			<legend><b>EXTERNAL LINKS</b></legend>
 		</c:if>
-				
-		<div>
-			<form:label for="name" id="nameLabel" path="description">Name</form:label>
-			<form:input id="name" path="description" cssClass="input_30c" type="text" />
-		</div>
 		
-		<div>
-			<form:label for="link" id="linkLabel" path="externalLink">Link</form:label>
-			<form:input id="link" path="externalLink" class="input_39c" type="text" />
-		</div>
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label for="name" id="nameLabel" path="description">Name</form:label>
+				</div>
+				<div class="col_l"><form:input id="name" path="description" cssClass="input_30c" type="text" /></div>
+			</div>
+			<div class="row">
+				<div class="col_l">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label for="link" id="linkLabel" path="externalLink">Link</form:label>
+				</div>
+				<div class="col_l"><form:input id="link" path="externalLink" class="input_39c" type="text" /></div>
+			</div>
+		</div>		
 		
 		<div>
 			<input id="closeExternalLink" type="submit" value="Close" title="Do not save changes"/>

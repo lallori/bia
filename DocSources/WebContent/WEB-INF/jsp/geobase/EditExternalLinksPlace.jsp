@@ -33,10 +33,12 @@
 				<c:param name="placeExternalLinksId" value="${currentExternalLink.placeExternalLinksId}" />
 			</c:url>
 		
-		<div>
-			<input id="externalLink_${currentExternalLink.placeExternalLinksId}" name="externalLink_${currentExternalLink.placeExternalLinksId}" class="input_40c_disabled" type="text" value="${currentExternalLink.description}" disabled="disabled" />
-			<a href="${DeleteExternalLink}" class="deleteIcon" title="Delete this entry"></a>
-			<a id="editValue" class="editValue" href="${EditExternalLink}" title="Edit this entry"></a>
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><input id="externalLink_${currentExternalLink.placeExternalLinksId}" name="externalLink_${currentExternalLink.placeExternalLinksId}" class="input_40c_disabled" type="text" value="${currentExternalLink.description}" disabled="disabled" /></div>
+				<div class="col_r"><a href="${DeleteExternalLink}" class="deleteIcon" title="Delete this entry"></a></div>
+				<div class="col_r"><a id="editValue" class="editValue" href="${EditExternalLink}" title="Edit this entry"></a></div>
+			</div>
 		</div>
 		</c:forEach>
 		

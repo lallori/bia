@@ -23,27 +23,42 @@
 	<form:form id="EditGeoCoorPlaceForm" method="post" cssClass="edit" action="${EditGeographicCoordinatesPlaceURL}">
 		<fieldset>
 		<legend><b>GEOGRAPHIC COORDINATES</b></legend>
-		
-		<div>
-			<label for="latitudeGeo" id="latitudeGeoLabel">Latitude</label>
-			<form:input id="latDegrees" path="degreeLatitude" class="input_2c" type="text" value="" maxlength="2"/>°
-            <form:input id="latMinutes" path="minuteLatitude" class="input_2c" type="text" value="" maxlength="2"/>'
-            <form:input id="latSeconds" path="secondLatitude" class="input_2c" type="text" value="" maxlength="2"/>''
-            <form:input id="latDirection" path="directionLatitude" class="input_1c" type="text" value="" maxlength="1"/>
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><label for="latitudeGeo" id="latitudeGeoLabel">Latitude</label></div>
+				<div class="col_l">
+					<form:input id="latDegrees" path="degreeLatitude" class="input_2c" type="text" value="" maxlength="2"/> °
+		            <form:input id="latMinutes" path="minuteLatitude" class="input_2c" type="text" value="" maxlength="2"/> '
+		            <form:input id="latSeconds" path="secondLatitude" class="input_2c" type="text" value="" maxlength="2"/> ''
+		            <form:input id="latDirection" path="directionLatitude" class="input_1c" type="text" value="" maxlength="1"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col_l"><label for="longitudeGeo" id="longitudeGeoLabel">Longitude</label></div>
+				<div class="col_l">
+					<form:input id="lonDegrees" path="degreeLongitude" class="input_2c" type="text" value="" maxlength="2"/> °
+		            <form:input id="lonMinutes" path="minuteLongitude" class="input_2c" type="text" value="" maxlength="2"/> '
+		            <form:input id="lonSeconds" path="secondLongitude" class="input_2c" type="text" value="" maxlength="2"/> ''
+		            <form:input id="lonDirection" path="directionLongitude" class="input_1c" type="text" value="" maxlength="1"/>
+				</div>
+			</div>
 		</div>
 		
-		<div>
-			<label for="longitudeGeo" id="longitudeGeoLabel">Longitude</label>
-            <form:input id="lonDegrees" path="degreeLongitude" class="input_2c" type="text" value="" maxlength="2"/>°
-            <form:input id="lonMinutes" path="minuteLongitude" class="input_2c" type="text" value="" maxlength="2"/>'
-            <form:input id="lonSeconds" path="secondLongitude" class="input_2c" type="text" value="" maxlength="2"/>''
-            <form:input id="lonDirection" path="directionLongitude" class="input_1c" type="text" value="" maxlength="1"/>
-		</div>
-		
-		<div style="margin-top:15px;">
-			<p>Finds Geo Coordinates on:</p>
-			<a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank" id="gettyTgn">Getty TGN</a>
-			<a href="${ShowGoogleMapsGeoCoorPlaceURL}" target="_blank" id="googleMaps">Google Maps</a>
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><b>Finds Geo Coordinates on:</b></div>
+			</div>
+			<div class="row">
+				<div class="col_l">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank" id="gettyTgn">Getty TGN</a>
+				</div>
+				<br />
+				<div class="col_l">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<a href="${ShowGoogleMapsGeoCoorPlaceURL}" target="_blank" id="googleMaps">Google Maps</a>
+				</div>
+			</div>
 		</div>
 		
 		<div>
