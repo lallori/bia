@@ -34,13 +34,18 @@
 			<c:url var="ShowTopicDescription" value="/src/docbase/ShowTopicDescription.do">
 				<c:param name="topicId" value="${currentTopicAndPlace.topic.topicId}" />
 			</c:url>
-			<div>
-      			<input id="topic_${currentTopicAndPlace.eplToId}" name="topic_${currentTopicAndPlace.eplToId}" class="input_35c_disabled" type="text" value="${currentTopicAndPlace}" disabled="disabled" />
-				<a class="deleteIcon" title="Delete this entry" href="${DeleteTopicDocument}"></a>
-				<a class="editValue" class="editValue" href="${EditTopicDocument}" title="Edit this entry"></a>
-				<c:if test="${not empty currentTopicAndPlace.topic}">
-				<a class="topicDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
-				</c:if>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l"><input id="topic_${currentTopicAndPlace.eplToId}" name="topic_${currentTopicAndPlace.eplToId}" class="input_35c_disabled" type="text" value="${currentTopicAndPlace}" disabled="disabled" /></div>
+					<div class="col_l"><a class="deleteIcon" title="Delete this entry" href="${DeleteTopicDocument}"></a></div>
+					<div class="col_l"><a class="editValue" class="editValue" href="${EditTopicDocument}" title="Edit this entry"></a></div>
+					<div class="col_l">
+						<c:if test="${not empty currentTopicAndPlace.topic}">
+						<a class="topicDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>
+						</c:if>
+					</div>
+				</div>
 			</div>
 		</c:forEach>
 			

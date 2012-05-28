@@ -14,12 +14,25 @@
 	<form:form id="EditExtractOrSynopsisDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>EXTRACT/SYNOPSIS</b></legend>
+			<div class="listForm">
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Extract</form:label>
+				</div>
+				<div class="row">
+					<form:textarea id="docExtract" path="docExtract" class="txtarea_big" />
+				</div>
 			
-			<div><form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Extract</form:label></div>
-			<div><form:textarea id="docExtract" path="docExtract" class="txtarea_big" /></div>
-			<br />
-			<div><form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis</form:label></div>
-			<div><form:textarea id="synopsis" path="synopsis" class="txtarea_big" /></div>
+				<br />
+			
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis</form:label>
+				</div>
+				<div class="row">
+					<form:textarea id="synopsis" path="synopsis" class="txtarea_big" />
+				</div>
+			</div>
 			
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />

@@ -9,8 +9,13 @@
 	<form:form id="EditFactCheckDocumentForm" method="post" cssClass="edit">
 		<fieldset>
 			<legend><b>FACT CHECK</b></legend>
-				
-			<div><form:textarea id="addLRes" path="addLRes" class="txtarea" /></div>
+			
+			<div class="listForm">
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+				</div>
+				<div class="row"><form:textarea id="addLRes" path="addLRes" class="txtarea" /></div>
+			</div>	
 			
 			<div>
 				<input id="close" type="submit" value="Close" title="do not save changes" class="button" />

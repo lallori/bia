@@ -16,71 +16,104 @@
 	<form:form id="EditDetailsDocumentForm" action="${editDetailsDocumentURL}" method="post" cssClass="edit">
 	<fieldset>
 			<legend><b>DOCUMENT DETAILS</b></legend>
-			<div>
-				<form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID ${command.entryId}</form:label>
-				<form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error">Volume (MDP)</form:label>
-				<form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/>
-			</div>
-
-			<div>
-				<form:label id="insertNumLabel" for="insertNum" path="insertNum" cssErrorClass="error">Insert/Part</form:label>
-				<form:input id="insertNum" path="insertNum" class="input_5c" />
-				<form:input id="insertLet" path="insertLet" class="input_5c" />
+			<div class="listForm">
+				<div class="row">
+					<div class="col_r"><form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID</div>
+					<div class="col_l">${command.entryId}</div></form:label>
+					<div class="col_r"><form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error">Volume (MDP)</form:label></div>
+					<div class="col_r"><form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/></div>
+				</div>
+				<div class="row">
+					<div class="col_r">
+						<a class="helpIcon" title="Text goes here">?</a>
+						<form:label id="insertNumLabel" for="insertNum" path="insertNum" cssErrorClass="error">Insert</form:label>
+					</div>
+					<div class="col_l"><form:input id="insertNum" path="insertNum" class="input_5c" /></div>
+					<div class="col_r">
+						<a class="helpIcon" title="A Part is a subsection of an Insert">?</a>
+						<form:label id="insertLetLabel" for="insertLet" path="insertLet" cssErrorClass="error">Part</form:label>
+					</div>
+					<div class="col_r"><form:input id="insertLet" path="insertLet" class="input_5c" /></div>
+				</div>
+				<div class="row">
+					<div class="col_r">
+						<a class="helpIcon" title="Text goes here">?</a>
+						<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error">Document starts at folio</form:label>
+					</div>
+					<div class="col_l"><form:input id="folioNum" path="folioNum" class="input_5c" /></div>
+					<div class="col_r"><form:label id="folioModLabel" for="folioMod" path="folioMod" cssErrorClass="error">If folio addenda</form:label></div>
+					<div class="col_r"><form:input id="folioMod" path="folioMod" class="input_5c" /></div>
+				</div>
 			</div>
 			
-			<div>
-				<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error">Document starts at folio</form:label>
-				<form:input id="folioNum" path="folioNum" class="input_5c" />
-				<form:input id="folioMod" path="folioMod" class="input_5c" />
-			</div>
-
-			<div>	
-				<form:label id="unpagedLabel" for="unpaged" path="unpaged" cssErrorClass="error">Unpaginated</form:label>
-				<form:checkbox id="unpaged" path="unpaged" class="checkboxPers2"/>
-				<form:label id="contDiscLabel" for="contDisc" path="contDisc" cssErrorClass="error">Nonconsecutive</form:label>
-				<form:checkbox id="contDisc" path="contDisc" class="checkboxPers1"/>
+			<div class="listForm">
+				<div class="row">
+					<div class="col_r">
+						<a class="helpIcon" title="Text goes here">?</a>
+						<form:label id="unpagedLabel" for="unpaged" path="unpaged" cssErrorClass="error">Unpaginated</form:label>
+						<form:checkbox id="unpaged" path="unpaged"/>
+					</div>
+					<div class="col_r">
+						<a class="helpIcon" title="Text goes here">?</a>
+						<form:label id="contDiscLabel" for="contDisc" path="contDisc" cssErrorClass="error">Nonconsecutive</form:label>
+						<form:checkbox id="contDisc" path="contDisc"/>
+					</div>
+				</div>
 			</div>
 			
 			<hr />
-
-			<div>
-				<form:label id="docTypologyLabel" for="docTypology"  path="docTypology" cssErrorClass="error">Document Typology (other than letter)</form:label>
-				<form:input id="docTypology" path="docTypology" class="input_45c"/>
-			</div>
 			
+			<div class="listForm">
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label id="docTypologyLabel" for="docTypology"  path="docTypology" cssErrorClass="error">Document Typology (other than letter)</form:label>
+					<form:input id="docTypology" path="docTypology" class="input_45c"/>
+				</div>
+			</div>
+
 			<hr />
-		
-			<div>
+			
+			<div class="listForm">
 				<b>Date:</b>
 				<br />
-				<form:label id="DocYearLabel" for="docYear" path="docYear" cssErrorClass="error">Year</form:label>
-				<form:input id="docYear" path="docYear" class="input_4c" value="" maxlength="4"/>
-				<form:label id="docMonthNumLabel" for="docMonthNum" path="docMonthNum" cssErrorClass="error">Month</form:label>
-				<form:select id="docMonthNum" path="docMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/>
-				<form:label  for="docDay" id="docDayLabel" path="docDay" cssErrorClass="error">Day</form:label>
-				<form:input id="docDay" path="docDay" class="input_2c" maxlength="2"/>
+				<div class="row">
+					<div class="col_r"><form:label id="DocYearLabel" for="docYear" path="docYear" cssErrorClass="error">Year</form:label></div>
+					<div class="col_l"><form:input id="docYear" path="docYear" class="input_4c" value="" maxlength="4"/></div>
+					<div class="col_r"><form:label id="docMonthNumLabel" for="docMonthNum" path="docMonthNum" cssErrorClass="error">Month</form:label></div>
+					<div class="col_l"><form:select id="docMonthNum" path="docMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+					<div class="col_r"><form:label  for="docDay" id="docDayLabel" path="docDay" cssErrorClass="error">Day</form:label></div>
+					<div class="col_r"><form:input id="docDay" path="docDay" class="input_2c" maxlength="2"/></div>
+				</div>
+				<div class="row">
+					<div class="col_r">
+						<a class="helpIcon" title="Text goes here">?</a>
+						<form:label id="yearModernLabel" for="yearModern" path="yearModern" cssErrorClass="error">Modern dating</form:label>
+					</div>
+					<div class="col_l"><form:input id="yearModern" path="yearModern" class="input_4c" maxlength="4"/></div>
+				</div>
 			</div>
 			
-			<div>
-				<form:label id="yearModernLabel" for="yearModern" path="yearModern" cssErrorClass="error">Modern dating</form:label>
-				<form:input id="yearModern" path="yearModern" class="input_4c" maxlength="4"/>
-			</div>
-			
-			<br />
-			<div>
-				<form:label  id="dateUnsLabel" for="dateUns" path="dateUns">Date Uncertain or Approximate?</form:label>
-				<form:checkbox id="dateUns" path="dateUns" class="checkboxDoc2"/>
-				<form:label  id="dateUndatedLabel" for="dateUndated" path="dateUndated">Undated</form:label>
-				<form:checkbox  id="dateUndated" path="dateUndated" class="checkboxDoc2"/>
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l">
+						<form:label  id="dateUnsLabel" for="dateUns" path="dateUns">Date Uncertain or Approximate?</form:label>
+						<form:checkbox id="dateUns" path="dateUns"/>
+					</div>
+					<div class="col_r">
+						<form:label  id="dateUndatedLabel" for="dateUndated" path="dateUndated">Undated</form:label>
+						<form:checkbox  id="dateUndated" path="dateUndated"/>
+					</div>
+				</div>
 			</div>
 			
 			<hr />
 			
-			<div>
-				<form:label for="dateNotes" id="dateNotesLabel" path="dateNotes">Date notes</form:label>
-			</div>
-			<div>
-				<form:textarea id="dateNotes" path="dateNotes" class="txtarea"/>
+			<div class="listForm">
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label for="dateNotes" id="dateNotesLabel" path="dateNotes">Date notes</form:label>
+					<form:textarea id="dateNotes" path="dateNotes" class="txtarea"/>
+				</div>
 			</div>
 			
 			<form:hidden id="transcribeFolioNum" path="transcribeFolioNum" />

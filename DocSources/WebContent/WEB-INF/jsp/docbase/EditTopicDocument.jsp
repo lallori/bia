@@ -24,17 +24,24 @@
 			</c:if>
 			<c:if test="${command.eplToId > 0}">
 				<legend><b>EDIT TOPIC</b></legend>
-			</c:if> 
-			<div>
-				<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic</form:label>
-				<form:input id="topicDescriptionAutoCompleter" path="topicDescription" cssClass="input_25c" />
-				<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories.">?</a>
-<!--			<a class="topicDescription" id="refreshDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>-->
-			</div>
-			<div>
-				<form:label id="placeDescriptionLabel" for="placeDescription" path="placeDescription" cssErrorClass="error">Topic Place</form:label>
-				<form:input id="placeDescriptionAutoCompleter" path="placeDescription" cssClass="input_39c" />
-			</div>
+			</c:if>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l">
+						<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories.">?</a>
+						<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic</form:label>
+					</div>
+					<div class="col_l">
+						<form:input id="topicDescriptionAutoCompleter" path="topicDescription" cssClass="input_25c" />
+						<!--<a class="topicDescription" id="refreshDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>-->
+					</div>
+				</div>
+				<div class="row">
+					<div class="col_l"><form:label id="placeDescriptionLabel" for="placeDescription" path="placeDescription" cssErrorClass="error">Topic Place</form:label></div>
+					<div class="col_l"><form:input id="placeDescriptionAutoCompleter" path="placeDescription" cssClass="input_39c" /></div>
+				</div>
+			</div> 
 			
 			<div>
 				<input id="closeTopic" type="submit" value="Close" title="do not save changes" class="button" />

@@ -38,66 +38,98 @@
 
 		<fieldset>
 		<legend><b>CORRESPONDENTS</b></legend>
-			<div>
-				<form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender</form:label>
-				<form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" />
-				<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
-				<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure" cssClass="checkboxPers2"/>
-				<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905 && command.document.senderPeople.personId != 198}">
-					<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"></a>
-				</c:if>
-				<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905 || command.document.senderPeople.personId == 198 || command.document.senderPeople.personId == null}">
-					<a title="Show this person record" id="personIcon" class="senderLinkPeople"></a>
-				</c:if>
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l"><form:label id="senderPeopleDescriptionLabel" for="senderPeopleDescription" path="senderPeopleDescription" cssErrorClass="error">Sender</form:label></div>
+					<div class="col_l"><form:input id="senderPeopleDescriptionAutoCompleter" path="senderPeopleDescription" cssClass="input_25c" /></div>
+					<div class="col_l">
+						<form:label id="senderPeopleUnsureLabel" for="senderPeopleUnsure" path="senderPeopleUnsure">Unsure?</form:label>
+						<form:checkbox id="senderPeopleUnsure" path="senderPeopleUnsure"/>
+					</div>
+					<div class="col_l">
+						<c:if test="${command.document.senderPeople.personId != 9285 && command.document.senderPeople.personId != 3905 && command.document.senderPeople.personId != 198}">
+							<a title="Show this person record" id="personIcon" class="senderLinkPeople" href="${CompareSenderURL}"></a>
+						</c:if>
+						<c:if test="${command.document.senderPeople.personId == 9285 || command.document.senderPeople.personId == 3905 || command.document.senderPeople.personId == 198 || command.document.senderPeople.personId == null}">
+							<a title="Show this person record" id="personIcon" class="senderLinkPeople"></a>
+						</c:if>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col_l"><form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From</form:label></div>
+					<div class="col_l"><form:input id="senderPlaceDescriptionAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" /></div>
+					<div class="col_l">
+						<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
+						<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure"/>
+					</div>
+					<div class="col_l">
+						<c:if test="${command.document.senderPlace.placeAllId != 53384 && command.document.senderPlace.placeAllId != 55627 && command.document.senderPlace.placeAllId != 54332}">
+							<a title="Show this place record" id="placeIcon" class="senderLinkPlace" href="${CompareFromURL}"></a>
+						</c:if>
+						<c:if test="${command.document.senderPlace.placeAllId == 53384 || command.document.senderPlace.placeAllId == 55627 || command.document.senderPlace.placeAllId == 54332 || command.document.senderPlace.placeAllId == 0}">
+							<a title="Show this place record" id="placeIcon" class="senderLinkPlace"></a>
+						</c:if>
+					</div>
+				</div>
 			</div>
-			<div>	
-				<form:label id="senderPlaceDescriptionLabel" for="senderPlaceDescription" path="senderPlaceDescription" cssErrorClass="error">From</form:label>
-				<form:input id="senderPlaceDescriptionAutoCompleter" path="senderPlaceDescription" cssClass="input_25c" />
-				<form:label id="senderPlaceUnsureLabel" for="senderPlaceUnsure" path="senderPlaceUnsure">Unsure?</form:label>
-				<form:checkbox id="senderPlaceUnsure" path="senderPlaceUnsure" cssClass="checkboxPers2"/>
-				<c:if test="${command.document.senderPlace.placeAllId != 53384 && command.document.senderPlace.placeAllId != 55627 && command.document.senderPlace.placeAllId != 54332}">
-					<a title="Show this place record" id="placeIcon" class="senderLinkPlace" href="${CompareFromURL}"></a>
-				</c:if>
-				<c:if test="${command.document.senderPlace.placeAllId == 53384 || command.document.senderPlace.placeAllId == 55627 || command.document.senderPlace.placeAllId == 54332 || command.document.senderPlace.placeAllId == 0}">
-					<a title="Show this place record" id="placeIcon" class="senderLinkPlace"></a>
-				</c:if>
-			</div>
+			
 			<br />
-			<div>
-				<form:label id="senderNotesLabel" for="sendNotes" path="sendNotes">Sender notes</form:label>
-				<form:textarea path="sendNotes" id="senderNotes" class="txtarea" name="senderNotes"/>
+			
+			<div class="listForm">
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label id="senderNotesLabel" for="sendNotes" path="sendNotes">Sender notes</form:label>
+				</div>
+				<div class="row">
+					<form:textarea path="sendNotes" id="senderNotes" class="txtarea" name="senderNotes"/>
+				</div>
 			</div>
 
 			<hr />
 			
-			<div>
-				<form:label id="recipientPeopleDescriptionLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error">Recipient</form:label>
-				<form:input id="recipientPeopleDescriptionAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/>
-				<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
-				<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure" cssClass="checkboxPers2"/>
-				<c:if test="${command.document.recipientPeople.personId != 9285 && command.document.recipientPeople.personId != 3905 && command.document.recipientPeople.personId != 198}">
-					<a title="Show this person record" id="personIcon" class="recipientLinkPeople" href="${CompareRecipientURL}"></a>
-				</c:if>
-				<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905 || command.document.recipientPeople.personId == 198 || command.document.recipientPeople.personId == 0}">
-					<a title="Show this person record" id="personIcon" class="recipientLinkPeople"></a>
-				</c:if>
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l"><form:label id="recipientPeopleDescriptionLabel" for="recipientPeopleDescription" path="recipientPeopleDescription" cssErrorClass="error">Recipient</form:label></div>
+					<div class="col_l"><form:input id="recipientPeopleDescriptionAutoCompleter" path="recipientPeopleDescription" cssClass="input_25c"/></div>
+					<div class="col_l">
+						<form:label id="recipientPeopleUnsureLabel" for="recipientPeopleUnsure" path="recipientPeopleUnsure">Unsure?</form:label>
+						<form:checkbox id="recipientPeopleUnsure" path="recipientPeopleUnsure"/>
+					</div>
+					<div class="col_l">
+						<c:if test="${command.document.recipientPeople.personId != 9285 && command.document.recipientPeople.personId != 3905 && command.document.recipientPeople.personId != 198}">
+							<a title="Show this person record" id="personIcon" class="recipientLinkPeople" href="${CompareRecipientURL}"></a>
+						</c:if>
+						<c:if test="${command.document.recipientPeople.personId == 9285 || command.document.recipientPeople.personId == 3905 || command.document.recipientPeople.personId == 198 || command.document.recipientPeople.personId == 0}">
+							<a title="Show this person record" id="personIcon" class="recipientLinkPeople"></a>
+						</c:if>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col_l"><form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">To</form:label></div>
+					<div class="col_l"><form:input id="recipientPlaceDescriptionAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" /></div>
+					<div class="col_l">
+						<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>
+						<form:checkbox id="recipientPlaceUnsure" path="recipientPlaceUnsure"/>
+					</div>
+					<div class="col_l">
+						<c:if test="${command.document.recipientPlace.placeAllId != 53384 && command.document.recipientPlace.placeAllId != 55627 && command.document.recipientPlace.placeAllId != 54332}">
+							<a title="Show this place record" id="placeIcon" class="recipientLinkPlace" href="${CompareToURL}"></a>
+						</c:if>
+						<c:if test="${command.document.recipientPlace.placeAllId == 53384 || command.document.recipientPlace.placeAllId == 55627 || command.document.recipientPlace.placeAllId == 54332 || command.document.recipientPlace.placeAllId == 0}">
+							<a title="Show this place record" id="placeIcon" class="recipientLinkPlace"></a>
+						</c:if>
+					</div>
+				</div>
 			</div>
-			<div>
-				<form:label id="recipientPlaceDescriptionLabel" for="recipientPlaceDescription" path="recipientPlaceDescription" cssErrorClass="error">To</form:label>
-				<form:input id="recipientPlaceDescriptionAutoCompleter" path="recipientPlaceDescription" cssClass="input_25c" />
-				<form:label id="recipientPlaceUnsureLabel" for="recipientPlaceUnsure" path="recipientPlaceUnsure">Unsure?</form:label>
-				<form:checkbox id="recipientPlaceUnsure" path="recipientPlaceUnsure" cssClass="checkboxPers2"/>
-				<c:if test="${command.document.recipientPlace.placeAllId != 53384 && command.document.recipientPlace.placeAllId != 55627 && command.document.recipientPlace.placeAllId != 54332}">
-					<a title="Show this place record" id="placeIcon" class="recipientLinkPlace" href="${CompareToURL}"></a>
-				</c:if>
-				<c:if test="${command.document.recipientPlace.placeAllId == 53384 || command.document.recipientPlace.placeAllId == 55627 || command.document.recipientPlace.placeAllId == 54332 || command.document.recipientPlace.placeAllId == 0}">
-					<a title="Show this place record" id="placeIcon" class="recipientLinkPlace"></a>
-				</c:if>
-			</div>
+			
 			<br />
-			<div>
-				<form:label for="recipNotes" id="recipientNotesLabel" path="recipNotes">Recipient notes</form:label>
-				<form:textarea path="recipNotes" id="recipientNotes" name="recipientNotes" class="txtarea"/>
+			
+			<div class="listForm">
+				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
+					<form:label for="recipNotes" id="recipientNotesLabel" path="recipNotes">Recipient notes</form:label>
+				</div>
+				<div class="row"><form:textarea path="recipNotes" id="recipientNotes" name="recipientNotes" class="txtarea"/></div>
 			</div>
 			
 			<form:hidden path="senderPeopleId"/>
@@ -119,11 +151,8 @@
 	<form:form id="PeopleCorrespondentsDocumentsForm" method="post" cssClass="edit">
 		<fieldset>	
 			<legend><b>PEOPLE</b></legend>
-			<br />
-			<div>
-				Individuals and corporate bodies indicated in the document extract:
-			</div>
-			<br />
+			<p>Individuals and corporate bodies indicated in the document extract:</p>
+			
 		<c:forEach items="${command.document.epLink}" var="currentPersonLinked">
 			<c:if test="${currentPersonLinked.docRole!= 'S' && currentPersonLinked.docRole != 'R'}">
 			<c:url var="EditPersonDocumentURL" value="/de/docbase/EditPersonDocument.do">
@@ -135,16 +164,21 @@
 				<c:param name="entryId" value="${currentPersonLinked.document.entryId}" />
 				<c:param name="epLinkId" value="${currentPersonLinked.epLinkId}" />
 			</c:url>
-
-			<div>
-				<input id="people_${currentPersonLinked.epLinkId}" name="people" class="input_35c_disabled" type="text" value="${currentPersonLinked.person.mapNameLf}" disabled="disabled"/>
-				<a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentURL}"></a>
-				<a class="editValue" href="${EditPersonDocumentURL}" title="Edit this entry"></a>
-				<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
-						<c:param name="personId"   value="${currentPersonLinked.person.personId}" />
-					</c:url>
-				<a title="Show this person record" id="personIcon" href="${ComparePersonURL}" class="linkPeople"></a>
+			
+			<div class="listForm">
+				<div class="row">
+					<div class="col_l"><input id="people_${currentPersonLinked.epLinkId}" name="people" class="input_35c_disabled" type="text" value="${currentPersonLinked.person.mapNameLf}" disabled="disabled"/></div>
+					<div class="col_l"><a class="deleteIcon" title="Delete this entry" href="${DeletePersonDocumentURL}"></a></div>
+					<div class="col_l"><a class="editValue" href="${EditPersonDocumentURL}" title="Edit this entry"></a></div>
+					<div class="col_l">
+						<c:url var="ComparePersonURL" value="/src/peoplebase/ComparePerson.do">
+							<c:param name="personId"   value="${currentPersonLinked.person.personId}" />
+						</c:url>
+						<a title="Show this person record" id="personIcon" href="${ComparePersonURL}" class="linkPeople"></a>
+					</div>
+				</div>
 			</div>
+			
 			</c:if>
 		</c:forEach>
 			<br>			
