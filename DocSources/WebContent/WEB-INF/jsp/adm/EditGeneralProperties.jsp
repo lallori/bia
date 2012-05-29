@@ -10,15 +10,17 @@
 <form:form id="generalPropertiesForm" method="post" cssClass="edit">
 	<fieldset>
 		<legend><b>GENERAL PROPERTIES</b></legend>
-	
-		<div style="margin-top:5px;">
-			<form:label id="websiteDomainLabel" for="websiteDomain" path="websiteDomain">Website domain</form:label>
-			<form:input id="websiteDomain" cssClass="input_24c" type="text" path="websiteDomain" />
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><form:label id="websiteDomainLabel" for="websiteDomain" path="websiteDomain">Website domain</form:label></div>
+				<div class="col_l"><form:input id="websiteDomain" cssClass="input_24c" type="text" path="websiteDomain" /></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label id="imagePathLabel" for="imagesPath" path="imagesPath">Images Path</form:label></div>
+				<div class="col_l"><form:input id="imagePath" cssClass="input_24c" type="text" path="imagesPath" /></div>
+			</div>
 		</div>
-		<div>
-			<form:label id="imagePathLabel" for="imagesPath" path="imagesPath">Images Path</form:label>
-			<form:input id="imagePath" cssClass="input_24c" type="text" path="imagesPath" />
-		</div>
+		
 		<div>
 			<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 			<input id="save" type="submit" value="Save" />
