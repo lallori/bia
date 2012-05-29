@@ -1701,6 +1701,11 @@ span.docId, span.placeId {
 	cursor:default;
 }
 
+.notPreferredIcon {
+	width:17px;
+	height:20px;
+}
+
 #TitlesOccupationsPersonForm .preferredIconEdit { /* Preferred Role icon */
 	position:relative;
 	float:left;
