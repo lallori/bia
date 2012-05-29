@@ -82,6 +82,7 @@ import org.springframework.transaction.annotation.Transactional;
  * action on document.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Service
 @Transactional(readOnly=true)
@@ -1240,6 +1241,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchLinkedDocumentsTopic(String place, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDocumentDAO().searchLinkedDocumentsTopic(place, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -1288,7 +1301,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Page searchTopicsRelatedDocument(String topic, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try{
-			return eplToLinkDAO.searchTopics(topic, paginationFilter);
+			return getEplToLinkDAO().searchTopics(topic, paginationFilter);
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}

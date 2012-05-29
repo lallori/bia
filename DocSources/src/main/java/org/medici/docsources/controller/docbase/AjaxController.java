@@ -57,6 +57,7 @@ import org.springframework.web.servlet.ModelAndView;
  * AJAX Controller for DocBase.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller("DocBaseAjaxController")
 public class AjaxController {
@@ -153,6 +154,69 @@ public class AjaxController {
 			model.put("entryId", "");
 		}
 		return new ModelAndView("responseOK", model);		
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/docbase/LinkedDocumentsTopic.json", method = RequestMethod.GET)
+	public ModelAndView ShowLinkedDocumentsTopic(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		
+		try{
+			page = getDocBaseService().searchLinkedDocumentsTopic(alias, paginationFilter);
+		}catch(ApplicationThrowable aex){
+			page = new Page(paginationFilter);
+		}
+		
+		List resultList = new ArrayList();
+		for (EplToLink currentEplToLink : (List<EplToLink>)page.getList()) {
+			List singleRow = new ArrayList();
+			singleRow.add(currentEplToLink.getPlace().getPlaceName());
+			if (currentEplToLink.getDocument().getSenderPeople() != null){
+				if(!currentEplToLink.getDocument().getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentEplToLink.getDocument().getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentEplToLink.getDocument().getRecipientPeople() != null){
+				if(!currentEplToLink.getDocument().getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentEplToLink.getDocument().getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+
+			singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+			
+			if (currentEplToLink.getDocument().getMDPAndFolio() != null){
+				singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>");				
+			}
+			else
+				singleRow.add("");
+			
+			
+			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
 	}
 
 	/**

@@ -41,6 +41,7 @@ import org.medici.docsources.domain.EplToLink;
  * EplToLink Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 
@@ -107,6 +108,6 @@ public interface EplToLinkDAO extends Dao<Integer, EplToLink> {
 	 * @return
 	 * @throws PersistenceException
 	 */
-	public Page searchTopicsPlace(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	public Map<String, Long> searchTopicsPlace(String placeToSearch) throws PersistenceException;
 
 }

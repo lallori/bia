@@ -461,11 +461,40 @@ public class HtmlUtils {
 		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
 		
 		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
-		anchorBegin.append(inputList.get(inputList.size() - 1).toString().substring(3, inputList.get(inputList.size() - 1).toString().indexOf("</b>")));
+		anchorBegin.append(inputList.get(0));
 		anchorBegin.append("\" class=\"showResult\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/src/docbase/CompareDocument.do?entryId=");
 		anchorBegin.append(entryId);
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
+	public static List<String> showTopicsDocumentRelated(List<String> inputList, String place) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuffer anchorBegin = new StringBuffer("<a title=\"");
+		anchorBegin.append(inputList.get(0));
+		anchorBegin.append("\" class=\"showResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/de/docbase/LinkedDocumentsTopic.do?placeAllId=");
+		anchorBegin.append(place + "&topicTitle=");
+		anchorBegin.append(inputList.get(0));
 		anchorBegin.append("\">");
 		String hrefEnd = "</a>";
 		

@@ -1,5 +1,5 @@
 /*
- * ShowTopicsPlaceController.java
+ * LinkedDocumentsTopicDocumentController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,17 +25,14 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.geobase;
+package org.medici.docsources.controller.docbase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.medici.docsources.command.geobase.ShowTopicsPlaceCommand;
-import org.medici.docsources.domain.Place;
-import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.geobase.GeoBaseService;
+import org.medici.docsources.command.docbase.LinkedDocumentsTopicDocumentCommand;
+import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -45,31 +42,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show topics place".
+ * Controller for action "Show documents related to a topic".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/de/geobase/ShowTopicsPlace")
-public class ShowTopicsPlaceController {
+@RequestMapping("/de/docbase/LinkedDocumentsTopic")
+public class LinkedDocumentsTopicDocumentController {
 	@Autowired
-	private GeoBaseService geoBaseService;
+	private DocBaseService docBaseService;
 	
 	/**
-	 * 
-	 * @return
+	 * @param docBaseService the docBaseService to set
 	 */
-	public GeoBaseService getGeoBaseService() {
-		return geoBaseService;
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
 	}
 
 	/**
-	 * 
-	 * @param geoBaseService
+	 * @return the docBaseService
 	 */
-	public void setGeoBaseService(GeoBaseService geoBaseService) {
-		this.geoBaseService = geoBaseService;
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
 	}
 
 	/**
@@ -79,30 +74,28 @@ public class ShowTopicsPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowTopicsPlaceCommand command, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") LinkedDocumentsTopicDocumentCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		Place place = new Place();
-		
 		if(command.getPlaceAllId() > 0){
-			try {
-				place = getGeoBaseService().findPlace(command.getPlaceAllId());
-								
-				List<String> outputFields = new ArrayList<String>(3);
-				outputFields.add("Topic");
-				outputFields.add("Linked Documents");
 												
-				model.put("outputFields", outputFields);
+			List<String> outputFields = new ArrayList<String>(6);
+			outputFields.add("Sender");
+			outputFields.add("Recipient");
+			outputFields.add("Date");
+			outputFields.add("Sender Location");
+			outputFields.add("Recipient Location");
+			outputFields.add("Volume / Folio");
 				
-				model.put("placeNameFull", place.getPlaceNameFull());
-				model.put("placeAllId", place.getPlaceAllId());
-				
-			} catch (ApplicationThrowable ath) {
-				new ModelAndView("error/ShowTopicsPlace", model);
-			}
+			model.put("outputFields", outputFields);
+
+			model.put("topicTitle", command.getTopicTitle());
+			model.put("placeAllId", command.getPlaceAllId());
+			
+			
 		}
 
-		return new ModelAndView("geobase/ShowTopicsPlace", model);
+		return new ModelAndView("docbase/LinkedDocumentsTopic", model);
 	}
 
 }

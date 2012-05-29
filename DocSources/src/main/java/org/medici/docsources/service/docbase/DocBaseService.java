@@ -60,6 +60,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * 
  * @author Lorenzo Pasquinelli (<a
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ *         @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public interface DocBaseService {
@@ -473,6 +474,15 @@ public interface DocBaseService {
 	 */
 	public void optimizeIndexDocument() throws ApplicationThrowable;
 
+	/**
+	 * 
+	 * @param place
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchLinkedDocumentsTopic(String place, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param entryId

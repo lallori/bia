@@ -52,6 +52,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * ...<br>
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface GeoBaseService {
 
@@ -463,11 +464,10 @@ public interface GeoBaseService {
 	/**
 	 * 
 	 * @param placeToSearch
-	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchTopicsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Map<String, Long> searchTopicsPlace(String placeToSearch) throws ApplicationThrowable;
 
 	/**
 	 * 

@@ -48,6 +48,7 @@ import org.springframework.stereotype.Repository;
  * <b>EplToLinkDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.EplToLink
  */
@@ -152,7 +153,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	 */
 	@Override
 	public Integer findNumberOfTopicsByPlaceAllId(Integer placeAllId) throws PersistenceException {
-		Query query = getEntityManager().createQuery("SELECT DISTINCT COUNT(eplToId) FROM EplToLink where place.placeAllId=:placeAllId");
+		Query query = getEntityManager().createQuery("SELECT COUNT(DISTINCT topic.topicTitle) FROM EplToLink where place.placeAllId=:placeAllId");
 		query.setParameter("placeAllId", placeAllId);
 		Long result = (Long) query.getSingleResult();
 		return new Integer(result.intValue());
@@ -200,39 +201,22 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
-	public Page searchTopicsPlace(String placeToSearch,	PaginationFilter paginationFilter) throws PersistenceException {
-		Page page = new Page(paginationFilter);
-		
+	public Map<String, Long> searchTopicsPlace(String placeToSearch) throws PersistenceException {
+		Map<String, Long> returnValues = new HashMap<String, Long>();
+		List tempValuesResult;
 		Query query = null;
-		String toSearch = new String("FROM EplToLink WHERE place.placeAllId=" + placeToSearch);
+		String toSearch = new String("SELECT topic.topicTitle, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE place.placeAllId=" + placeToSearch + " GROUP BY topic.topicTitle ORDER BY topic.topicTitle ASC");
 		
-		if(paginationFilter.getTotal() == null){
-			String countQuery = "SELECT COUNT(*) " + toSearch;
-			query = getEntityManager().createQuery(countQuery);
-			page.setTotal(new Long((Long) query.getSingleResult()));
+		query = getEntityManager().createQuery(toSearch);
+		tempValuesResult = query.getResultList();
+		for(Iterator i = tempValuesResult.iterator(); i.hasNext();){
+			Object[] data = (Object []) i.next();
+			returnValues.put((String) data[0], (Long) data[1]); 
 		}
 		
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
-		StringBuffer orderBySQL = new StringBuffer();
-		if(sortingCriterias.size() > 0){
-			orderBySQL.append(" ORDER BY ");
-			for (int i=0; i<sortingCriterias.size(); i++) {
-				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
-				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
-				if (i<(sortingCriterias.size()-1)) {
-					orderBySQL.append(", ");
-				} 
-			}
-		}
+		return returnValues;
 		
-		query = getEntityManager().createQuery(toSearch + orderBySQL);
-		
-		query.setFirstResult(paginationFilter.getFirstRecord());
-		query.setMaxResults(paginationFilter.getLength());
-		
-		page.setList(query.getResultList());
-		
-		return page;
 	}
 }

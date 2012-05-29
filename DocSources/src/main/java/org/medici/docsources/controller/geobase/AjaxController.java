@@ -30,6 +30,7 @@ package org.medici.docsources.controller.geobase;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,7 @@ import org.springframework.web.servlet.ModelAndView;
  * AJAX Controller for GeoBase.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller("GeoBaseAjaxController")
 public class AjaxController {
@@ -645,83 +647,34 @@ public class AjaxController {
 									     @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
-		Page page = null;
-		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		//Page page = null;
+		//PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		Map<String, Long> result = new HashMap<String, Long>();
 		
 		try{
-			page = getGeoBaseService().searchTopicsPlace(alias, paginationFilter);
+			result = getGeoBaseService().searchTopicsPlace(alias);
 		}catch(ApplicationThrowable aex){
-			page = new Page(paginationFilter);
+			
 		}
 		
 		List resultList = new ArrayList();
-		for (EplToLink currentEplToLink : (List<EplToLink>) page.getList()) {
+		for (Map.Entry<String, Long> currentElement : result.entrySet()) {
 			List singleRow = new ArrayList();
-			if (currentEplToLink.getDocument() != null){
-				if(currentEplToLink.getDocument().getSenderPeople() != null){
-					if(!currentEplToLink.getDocument().getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
-						singleRow.add(currentEplToLink.getDocument().getSenderPeople().getMapNameLf());
-					else
-						singleRow.add("Person Name Lost");
-				}else
-					singleRow.add("");
-				if (currentEplToLink.getDocument().getRecipientPeople() != null){
-					if(!currentEplToLink.getDocument().getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
-						singleRow.add(currentEplToLink.getDocument().getRecipientPeople().getMapNameLf());
-					else
-						singleRow.add("Person Name Lost");
-				}
-				else
-					singleRow.add("");
-				
-				if(currentEplToLink.getDocument().getYearModern() != null){
-					singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getYearModern(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+			if(currentElement.getKey() != null){
+				singleRow.add(currentElement.getKey());
+				if(currentElement.getValue() > 1){
+					singleRow.add(currentElement.getValue() + " documents");
 				}else{
-					singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
+					singleRow.add(currentElement.getValue() + " document");
 				}
-				
-				String senderPlace, recipientPlace;
-				if (currentEplToLink.getDocument().getSenderPlace() != null){
-					if(!currentEplToLink.getDocument().getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
-						senderPlace = currentEplToLink.getDocument().getSenderPlace().getPlaceName();
-					else
-						senderPlace = "Place Name Lost";
-				}
-				else
-					senderPlace = "-";
-				if (currentEplToLink.getDocument().getRecipientPlace() != null){
-					if(!currentEplToLink.getDocument().getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
-						recipientPlace = currentEplToLink.getDocument().getRecipientPlace().getPlaceName();
-					else
-						recipientPlace = "Place Name Lost";
-				}
-				else
-					recipientPlace = "-";
-				singleRow.add(senderPlace + " / " + recipientPlace);
-				
-				if (currentEplToLink.getTopic() != null)
-					singleRow.add(currentEplToLink.getTopic().getTopicTitle());
-				else
-					singleRow.add("");
-				
-				if (currentEplToLink.getDocument().getMDPAndFolio() != null){
-					if(currentEplToLink.getDocument().getVolume().getDigitized()){
-						singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
-					}else{
-						singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>");
-					}
-					
-				}
-				else
-					singleRow.add("");
-			}			
+			}
 			
-			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
+			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, alias));
 		}
 
 		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
+		model.put("iTotalDisplayRecords", result.size());
+		model.put("iTotalRecords", result.size());
 		model.put("aaData", resultList);
 		
 

@@ -44,6 +44,7 @@ import org.medici.docsources.domain.Document;
  * 
  * @author Lorenzo Pasquinelli (<a
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ *         @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface DocumentDAO extends Dao<Integer, Document> {
 
@@ -177,6 +178,15 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	public Page searchDocumentsRelatedVolume(String volumeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param placeToSearch
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchLinkedDocumentsTopic(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException;
 	
 	/**
 	 * 

@@ -62,6 +62,7 @@ import org.springframework.stereotype.Repository;
  * <b>DocumentDAOJpaImpl</b> is a default implementation of <b>DocumentDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.Document
  */
@@ -484,6 +485,15 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		page.setList(query.getResultList());
 		
 		return page;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchLinkedDocumentsTopic(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
