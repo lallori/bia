@@ -4,4 +4,4 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-				<p>Who am I? - <i><security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/><security:authorize ifNotGranted="ROLE_GUESTS">, <i><security:authentication property="principal.significantRoleDescription"/></i></security:authorize></i></p>
+				<p>Signed in as - <i><security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/><security:authorize ifNotGranted="ROLE_GUESTS">, <i><security:authentication property="principal.significantRoleDescription"/></i></security:authorize></i></p>
