@@ -10,27 +10,29 @@
 <form:form id="EditRecaptchaPropertiesForm" method="post" cssClass="edit">
 	<fieldset>
 		<legend><b>RECAPTCHA PROPERTIES</b></legend>
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><form:label path="domainName" for="domainName" id="domainNameLabel">Domain Name</form:label></div>
+				<div class="col_r"><form:input path="domainName" for="domainName" id="domainName" cssClass="input_35c" type="text" value=""/></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label path="privateKey" for="privateKey" id="privateKeyLabel">Private Key</form:label></div>
+				<div class="col_r"><form:input path="privateKey" for="privateKey" id="privateKey" cssClass="input_35c" type="text" value=""/></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label path="publicKey" for="publicKey" id="publicKeyLabel">Public Key</form:label></div>
+				<div class="col_r"><form:input path="publicKey" for="publicKey" id="publicKey" cssClass="input_35c" type="text" value=""/></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label path="serverUrl" for="serverUrl" id="serverUrlLabel">Server Url</form:label></div>
+				<div class="col_r"><form:input path="serverUrl" for="serverUrl" id="serverUrl" cssClass="input_35c" type="text" value=""/></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label path="siteIdentifier" for="siteIdentifier" id="siteIdentifierLabel">Site Identifier</form:label></div>
+				<div class="col_r"><form:input path="siteIdentifier" for="siteIdentifier" id="siteIdentifier" cssClass="input_35c" type="text" value=""/></div>
+			</div>
+		</div>
 		
-		<div style="margin-top:5px">
-			<form:label path="domainName" for="domainName" id="domainNameLabel">Domain Name</form:label>
-			<form:input path="domainName" for="domainName" id="domainName" cssClass="input_35c" type="text" value=""/>
-		</div>
-		<div>
-			<form:label path="privateKey" for="privateKey" id="privateKeyLabel">Private Key</form:label>
-			<form:input path="privateKey" for="privateKey" id="privateKey" cssClass="input_35c" type="text" value=""/>
-		</div>
-		<div>
-			<form:label path="publicKey" for="publicKey" id="publicKeyLabel">Public Key</form:label>
-			<form:input path="publicKey" for="publicKey" id="publicKey" cssClass="input_35c" type="text" value=""/>
-		</div>
-		<div>
-			<form:label path="serverUrl" for="serverUrl" id="serverUrlLabel">Server Url</form:label>
-			<form:input path="serverUrl" for="serverUrl" id="serverUrl" cssClass="input_35c" type="text" value=""/>
-		</div>
-		<div>
-			<form:label path="siteIdentifier" for="siteIdentifier" id="siteIdentifierLabel">Site Identifier</form:label>
-			<form:input path="siteIdentifier" for="siteIdentifier" id="siteIdentifier" cssClass="input_35c" type="text" value=""/>
-		</div>
 		<div>
 			<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 			<input id="save" type="submit" value="Save" />
