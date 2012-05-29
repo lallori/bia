@@ -106,7 +106,7 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r">
+					<div class="col_l">
 						<form:label id="cipherLabel" for="cipher" path="cipher" cssErrorClass="error">Some Docs in Cipher</form:label>
 						<form:select path="cipher" cssClass="selectform_short">
 							<form:option value="true">Yes</form:option>
@@ -119,7 +119,7 @@
 				<br />
 				
 				<div class="row">
-					<div class="col_r">
+					<div class="col_l">
 						<a class="helpIcon" title="Text goes here">?</a>
 						<form:label id="cipherNotesLabel" for="cipherNotes" path="cipherNotes" cssErrorClass="error">Cipher Notes</form:label>
 						<form:textarea path="cipherNotes" cssClass="txtarea"/><form:errors path="cipherNotes" cssClass="inputerrors"/>
