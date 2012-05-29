@@ -17,9 +17,7 @@
 <!-- 	<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/TableTools.css"/>" />  -->
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/styles/1024/js/jquery-ui-1.8.13.custom.css"/>" />
 		
-		<!--[if IE]>
-            <link rel="stylesheet" type="text/css" href="<c:url value="/styles/1024/MainContent_ie.css" />" />
-		<![endif]--> 
+		
 <!-- 
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/menu/AdministrationMenu.css" />" />
 		<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="<c:url value="/styles/1024/menu/MainMenu.css" />" />
