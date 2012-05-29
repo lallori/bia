@@ -10,40 +10,52 @@
 <form:form id="EditSchedonePropertiesForm" method="post" cssClass="edit">
 	<fieldset>
 		<legend><b>SCHEDONE</b></legend>
-		<div style="margin-top:5px">
-			<form:label path="istituto" for="istituto" id="istitutoLabel">Istituto</form:label>
-			<form:input path="istituto" for="istituto" id="istituto" cssClass="input_29c" type="text" value=""/>
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><form:label path="istituto" for="istituto" id="istitutoLabel">Istituto</form:label></div>
+				<div class="col_r"><form:input path="istituto" for="istituto" id="istituto" cssClass="input_35c" type="text" value=""/></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label path="fondo" for="fondo" id="fondoLabel">Supporto</form:label></div>
+				<div class="col_r"><form:input path="fondo" for="fondo" id="fondo" cssClass="input_35c" type="text" value=""/></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label path="legatura" for="legatura" id="legaturaLabel">Legatura</form:label></div>
+				<div class="col_r"><form:input path="legatura" for="legatura" id="legatura" cssClass="input_35c" type="text" value=""/></div>
+			</div>
 		</div>
-		<div>
-			<form:label path="fondo" for="fondo" id="fondoLabel">Supporto</form:label>
-			<form:input path="fondo" for="fondo" id="fondo" cssClass="input_29c" type="text" value=""/>
+		
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><form:label path="tipoRipresa" for="tipoRipresa" id="tipoRipresaLabel">Tipo di ripresa</form:label></div>
+				<div class="col_r"><form:input path="tipoRipresa" for="tipoRipresa" id="tipoRipresa" cssClass="input_23c" type="text" value=""/></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label path="coloreImmagine" for="coloreImmagine" id="coloreImmagineLabel">Colore immagine</form:label></div>
+				<div class="col_r"><form:input path="coloreImmagine" for="coloreImmagine" id="coloreImmagine" cssClass="input_23c" type="text" value=""/></div>
+			</div>
 		</div>
-		<div>
-			<form:label path="legatura" for="legatura" id="legaturaLabel">Legatura</form:label>
-			<form:input path="legatura" for="legatura" id="legatura" cssClass="input_29c" type="text" value=""/>
+		
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><form:label path="nomeFiles" for="nomeFiles" id="nomeFilesLabel">Nome files</form:label></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:textarea path="nomeFiles" for="nomeFiles" id="nomeFiles" cssClass="txtarea"></form:textarea></div>
+			</div>
 		</div>
-		<div>
-			<form:label path="tipoRipresa" for="tipoRipresa" id="tipoRipresaLabel">Tipo di ripresa</form:label>
-			<form:input path="tipoRipresa" for="tipoRipresa" id="tipoRipresa" cssClass="input_24c" type="text" value=""/>
+		
+		<div class="listForm">
+			<div class="row">
+				<div class="col_l"><form:label path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzioneLabel">Responsabile fotoriproduzione</form:label></div>
+				<div class="col_r"><form:input path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzione" cssClass="input_23c" type="text" value=""/></div>
+			</div>
+			<div class="row">
+				<div class="col_l"><form:label path="operatore" for="operatore" id="operatoreLabel">Operatore</form:label></div>
+				<div class="col_r"><form:input path="operatore" for="operatore" id="operatore" cssClass="input_23c" type="text" value=""/></div>
+			</div>
 		</div>
-		<div>
-			<form:label path="coloreImmagine" for="coloreImmagine" id="coloreImmagineLabel">Colore immagine</form:label>
-			<form:input path="coloreImmagine" for="coloreImmagine" id="coloreImmagine" cssClass="input_24c" type="text" value=""/>
-		</div>
-		<div style="margin-top:5px">
-			<form:label path="nomeFiles" for="nomeFiles" id="nomeFilesLabel">Nome files</form:label>
-		</div>
-		<div>
-			<form:textarea path="nomeFiles" for="nomeFiles" id="nomeFiles" cssClass="txtarea"></form:textarea>
-		</div>
-		<div>
-			<form:label path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzioneLabel">Responsabile fotoriproduzione</form:label>
-			<form:input path="responsabileFotoRiproduzione" for="responsabileFotoRiproduzione" id="responsabileFotoRiproduzione" cssClass="input_24c" type="text" value=""/>
-		</div>
-		<div>
-			<form:label path="operatore" for="operatore" id="operatoreLabel">Operatore</form:label>
-			<form:input path="operatore" for="operatore" id="operatore" cssClass="input_29c" type="text" value=""/>
-		</div>
+		
 		<div>
 			<input id="close" type="submit" value="Close" title="do not save changes" class="button" />
 			<input id="save" type="submit" value="Save" />
