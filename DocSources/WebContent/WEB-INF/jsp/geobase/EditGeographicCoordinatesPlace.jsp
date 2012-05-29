@@ -43,17 +43,17 @@
 				</div>
 			</div>
 		</div>
-		
+		<br />
 		<div class="listForm">
 			<div class="row">
 				<div class="col_l"><b>Finds Geo Coordinates on:</b></div>
 			</div>
+			<br />
 			<div class="row">
 				<div class="col_l">
 					<a class="helpIcon" title="Text goes here">?</a>
 					<a href="http://www.getty.edu/research/tools/vocabularies/tgn/" target="_blank" id="gettyTgn">Getty TGN</a>
 				</div>
-				<br />
 				<div class="col_l">
 					<a class="helpIcon" title="Text goes here">?</a>
 					<a href="${ShowGoogleMapsGeoCoorPlaceURL}" target="_blank" id="googleMaps">Google Maps</a>
