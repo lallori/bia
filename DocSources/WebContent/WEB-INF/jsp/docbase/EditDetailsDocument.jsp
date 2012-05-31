@@ -19,7 +19,7 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_r"><form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID</div>
-					<div class="col_l">${command.entryId}</div></form:label>
+					<div class="col_l"><span class="docId">${command.entryId}</span></div></form:label>
 					<div class="col_r"><form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error">Volume (MDP)</form:label></div>
 					<div class="col_r"><form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/></div>
 				</div>
