@@ -78,7 +78,7 @@ public class LinkedDocumentsTopicDocumentController {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if(command.getPlaceAllId() > 0){
-												
+								
 			List<String> outputFields = new ArrayList<String>(6);
 			outputFields.add("Sender");
 			outputFields.add("Recipient");
@@ -90,8 +90,7 @@ public class LinkedDocumentsTopicDocumentController {
 			model.put("outputFields", outputFields);
 
 			model.put("topicTitle", command.getTopicTitle());
-			model.put("placeAllId", command.getPlaceAllId());
-			
+			model.put("placeAllId", command.getPlaceAllId());			
 			
 		}
 

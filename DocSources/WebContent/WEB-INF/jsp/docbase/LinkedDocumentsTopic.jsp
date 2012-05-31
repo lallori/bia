@@ -24,8 +24,6 @@
 		//TableToolsInit.sSwfPath = "${zeroClipboard}";
 
 		$j(document).ready(function() {
-			
-			
 			//dynamic field management
 			$j("#showLinkedDocumentTopic${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
@@ -37,8 +35,8 @@
 				"bServerSide": true,
 				"iDisplayLength": 10,
 				"iDisplayStart": 0,
-				"oSearch": {"sSearch": "${placeAllId}"},
-				"sAjaxSource": "${ShowSenderDocumentsPlaceURL}",
+				"oSearch": {"sSearch": "${placeAllId}|${topicTitle}"},
+				"sAjaxSource": "${LinkedDocumentsTopicURL}",
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {
@@ -50,7 +48,7 @@
 					}); 					
 				},
 				"fnDrawCallback": function(){
-					$j("#senderFrom${placeAllId}").text(this.fnSettings()._iRecordsTotal + ' Records');
+					$j("#linkedDocumentsTopic${placeAllId}").text(this.fnSettings()._iRecordsTotal + ' Records');
 					
 					$j("tr.odd").mouseover(
 							function(){
@@ -82,7 +80,7 @@
 			});
 			
 			$j("#showLinkedDocumentTopic${placeAllId}_length").css('margin', '0 0 0 0');
-			$j("showLinkedDocumentTopic${placeAllId}_filter").remove();
+			$j("#showLinkedDocumentTopic${placeAllId}_filter").remove();
 
 			// We need to remove any previous live function
 			$j('.showResult').die();

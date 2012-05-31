@@ -491,9 +491,41 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchLinkedDocumentsTopic(String placeToSearch, PaginationFilter paginationFilter) throws PersistenceException {
-		// TODO Auto-generated method stub
-		return null;
+	public Page searchLinkedDocumentsTopic(String placeToSearch, String topicToSearch, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		Query query = null;
+		
+		String toSearch = new String("FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeAllId = " + placeToSearch + " AND topic.topicTitle LIKE '" + topicToSearch + "')");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 
 	/**

@@ -29,6 +29,7 @@ package org.medici.docsources.dao.epltolink;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -204,7 +205,7 @@ public class EplToLinkDAOJpaImpl extends JpaDao<Integer, EplToLink> implements E
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<String, Long> searchTopicsPlace(String placeToSearch) throws PersistenceException {
-		Map<String, Long> returnValues = new HashMap<String, Long>();
+		Map<String, Long> returnValues = new LinkedHashMap<String, Long>();
 		List tempValuesResult;
 		Query query = null;
 		String toSearch = new String("SELECT topic.topicTitle, COUNT(DISTINCT document.entryId) FROM EplToLink WHERE place.placeAllId=" + placeToSearch + " GROUP BY topic.topicTitle ORDER BY topic.topicTitle ASC");

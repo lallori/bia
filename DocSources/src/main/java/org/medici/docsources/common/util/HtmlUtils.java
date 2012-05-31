@@ -364,10 +364,22 @@ public class HtmlUtils {
 		String hrefEnd = "</a>";
 		
 		for (int i=0; i<inputList.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
-			stringBuffer.append(inputList.get(i));
-			stringBuffer.append(hrefEnd);
-			retValue.add(stringBuffer.toString());
+			if(i != inputList.size() - 1){
+				StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
+				stringBuffer.append(inputList.get(i));
+				stringBuffer.append(hrefEnd);
+				retValue.add(stringBuffer.toString());
+			}else{
+				StringBuffer topicsRelated = new StringBuffer("<a class=\"tabResult\" href=\"");
+				topicsRelated.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+				topicsRelated.append("/de/geobase/ShowTopicsPlace.do?placeAllId=");
+				topicsRelated.append(placeAllId);
+				topicsRelated.append("\">");
+				StringBuffer stringBuffer = new StringBuffer(topicsRelated.toString());
+				stringBuffer.append(inputList.get(i));
+				stringBuffer.append(hrefEnd);
+				retValue.add(stringBuffer.toString());				
+			}
 		}
 		
 		return retValue;

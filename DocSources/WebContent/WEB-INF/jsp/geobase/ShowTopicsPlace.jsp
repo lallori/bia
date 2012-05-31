@@ -30,11 +30,11 @@
 			$j("#showTopicsPlaceAllId${placeAllId} > thead > tr").append('<c:forEach items="${outputFields}" var="outputField"><c:out escapeXml="false" value="<th>${outputField}</th>"/></c:forEach>');
 
 			$j('#showTopicsPlaceAllId${placeAllId}').dataTable( {
-				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }], 
+				"aoColumnDefs": [ { "sWidth": "80%", "aTargets": [ "_all" ] }, {"sType": "string", "aTargets": [0]}],
+				"aaSortable": [[0, "asc"]],
 				"bDestroy" : true,
 				"bProcessing": true,
 				"bServerSide": true,
-				"iDisplayLength": 10,
 				"iDisplayStart": 0,
 				"oSearch": {"sSearch": "${placeAllId}"},
 				"sAjaxSource": "${ShowTopicsPlaceURL}",
@@ -82,13 +82,15 @@
 			
 			$j("#showTopicsPlaceAllId${placeAllId}_length").css('margin', '0 0 0 0');
 			$j("#showTopicsPlaceAllId${placeAllId}_filter").remove();
+			$j("#showTopicsPlaceAllId${placeAllId}_info").remove();
+			$j("#showTopicsPlaceAllId${placeAllId}_paginate").remove();
 
 			// We need to remove any previous live function
 			$j('.showResult').die();
 			 
 			
 			$j(".showResult").live('click', function() {
-				var tabName = $j(this).attr("title");
+				var tabName = $j(this).attr("title") + "- ${placeName}";
 				var numTab = 0;
 				
 				//Check if already exist a tab with this person

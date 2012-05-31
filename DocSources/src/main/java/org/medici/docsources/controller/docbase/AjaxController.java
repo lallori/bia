@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.Page;
@@ -44,6 +45,7 @@ import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.TopicList;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.docbase.DocBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,58 +166,97 @@ public class AjaxController {
 								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
 									     @RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
 		
 		Page page = null;
-		PaginationFilter paginationFilter = generatePaginationFilter(sortingColumnNumber, sortingDirection, firstRecord, length);
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
+		
+		String place = null, topic = null;
+		StringTokenizer stringTokenizer = new StringTokenizer(alias, "|");
+		if(stringTokenizer.countTokens() == 2){
+			place = stringTokenizer.nextToken();
+			topic = stringTokenizer.nextToken();
+		}
 		
 		try{
-			page = getDocBaseService().searchLinkedDocumentsTopic(alias, paginationFilter);
+			page = getDocBaseService().searchLinkedDocumentsTopic(place, topic, paginationFilter);
+			
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			stateDocumentsDigitized = getDocBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
 		}catch(ApplicationThrowable aex){
 			page = new Page(paginationFilter);
 		}
 		
 		List resultList = new ArrayList();
-		for (EplToLink currentEplToLink : (List<EplToLink>)page.getList()) {
+		for (Document currentDocument : (List<Document>)page.getList()) {
 			List singleRow = new ArrayList();
-			singleRow.add(currentEplToLink.getPlace().getPlaceName());
-			if (currentEplToLink.getDocument().getSenderPeople() != null){
-				if(!currentEplToLink.getDocument().getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
-					singleRow.add(currentEplToLink.getDocument().getSenderPeople().getMapNameLf());
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
 				else
 					singleRow.add("Person Name Lost");
 			}
 			else
 				singleRow.add("");
 			
-			if (currentEplToLink.getDocument().getRecipientPeople() != null){
-				if(!currentEplToLink.getDocument().getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
-					singleRow.add(currentEplToLink.getDocument().getRecipientPeople().getMapNameLf());
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
 				else
 					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if(currentDocument.getYearModern() != null){
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}else{
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}
+			
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+				}else{
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+				}
+				
 			}
 			else
 				singleRow.add("");
 
-			singleRow.add(DateUtils.getStringDateHTMLForTable(currentEplToLink.getDocument().getDocYear(), currentEplToLink.getDocument().getDocMonthNum(), currentEplToLink.getDocument().getDocDay()));
-			
-			if (currentEplToLink.getDocument().getMDPAndFolio() != null){
-				singleRow.add("<b>"+currentEplToLink.getDocument().getMDPAndFolio()+"</b>");				
-			}
-			else
-				singleRow.add("");
-			
-			
-			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, currentEplToLink.getDocument().getEntryId()));
+			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
 		}
-
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
-		
-
-		
-
+	
 		return new ModelAndView("responseOK", model);
 	}
 

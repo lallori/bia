@@ -30,7 +30,6 @@ package org.medici.docsources.controller.geobase;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +40,6 @@ import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SearchFilter.SearchType;
@@ -663,15 +661,15 @@ public class AjaxController {
 			if(currentElement.getKey() != null){
 				singleRow.add(currentElement.getKey());
 				if(currentElement.getValue() > 1){
-					singleRow.add(currentElement.getValue() + " documents");
+					singleRow.add(currentElement.getValue().toString());
 				}else{
-					singleRow.add(currentElement.getValue() + " document");
+					singleRow.add(currentElement.getValue().toString());
 				}
 			}
 			
 			resultList.add(HtmlUtils.showTopicsDocumentRelated(singleRow, alias));
 		}
-
+		
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", result.size());
 		model.put("iTotalRecords", result.size());
