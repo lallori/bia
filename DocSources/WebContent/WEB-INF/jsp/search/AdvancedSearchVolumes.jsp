@@ -267,7 +267,7 @@
 			$j('.visible').css('visibility','visible');
 		});
 		
-		$j("#volume").autocompleteGeneral({
+		var $volumeAutocomplete = $j("#volume").autocompleteGeneral({
 			serviceUrl: '${searchVolumeURL}',
 			minChars: 1,
 			delimiter: null,
@@ -279,6 +279,11 @@
 			onSelect: function(value, data){
 				
 			}
+		});
+		
+		$j("#volume").blur(function(){
+			$volumeAutocomplete.killSuggestions();
+			return false;
 		});
 		
 		$j("#volume").change(function(){
@@ -294,7 +299,7 @@
 				return false;
 		})
 		
-		$j("#volumeBetween").autocompleteGeneral({
+		var $volBetweenAutocomplete = $j("#volumeBetween").autocompleteGeneral({
 			serviceUrl: '${searchVolumeURL}',
 			minChars: 1,
 			delimiter: null,
@@ -306,6 +311,11 @@
 			onSelect: function(value, data){
 				
 			}
+		});
+		
+		$j("#volumeBetween").blur(function(){
+			$volBetweenAutocomplete.killSuggestions();
+			return false;
 		});
 	});
 </script>

@@ -192,7 +192,7 @@
 				$j.ajax({ type:"POST", url:'${AdvancedSearchCountURL}', data:$j("#yourEasySearchFilterForm").serialize(), async:false, success:function(json) {
 	 				// At this point we have count of total result. Review output page and put the total...
 	 				console.log("Advanced search result " + json.totalResult);
-	 				if(json.totalResult != 'undefined')
+	 				if(json.totalResult != undefined)
 	 					$j(".recordsNum").text(json.totalResult);
 	 				else
 	 					$j(".recordsNum").text("0");

@@ -330,7 +330,7 @@
 				$j('.visible').css('visibility','visible');
 			});
 			
-			$j("#person").autocompletePerson({
+			var $personAutocomplete = $j("#person").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
 				delimiter: null,
@@ -347,6 +347,11 @@
 				}
 			});
 			
+			$j("#person").blur(function(){
+				$personAutocomplete.killSuggestions();
+				return false;
+			});
+			
 			$j("#person").keyup(function(){
 				if($j("#personId").val() != '')
 					$j(".personAdd").attr("disabled","disabled");
@@ -358,7 +363,7 @@
 			});
 			
 			
-			$j("#place").autocompletePlace({
+			var $placeAutocomplete = $j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
 				delimiter: null,
@@ -375,6 +380,11 @@
 				}
 			});	
 			
+			$j("#place").blur(function(){
+				$placeAutocomplete.killSuggestions();
+				return false;
+			});
+			
 			$j("#place").keyup(function(){
 				if($j("#placeId").val() != '')
 					$j(".placeAdd").attr("disabled","disabled");
@@ -385,7 +395,7 @@
 				$j(".placeAdd").attr("disabled","disabled");
 			});
 			
-			$j("#sender").autocompletePerson({
+			var $senderAutocomplete = $j("#sender").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
 				delimiter: null,
@@ -402,6 +412,11 @@
 				}
 			});
 			
+			$j("#sender").blur(function(){
+				$senderAutocomplete.killSuggestions();
+				return false;
+			});
+			
 			$j("#sender").keyup(function(){
 				if($j("#senderId").val() != '')
 					$j(".senderAdd").attr("disabled","disabled");
@@ -412,7 +427,7 @@
 				$j(".senderAdd").attr("disabled","disabled");
 			});		
 			
-			$j("#from").autocompletePlace({
+			var $fromAutocomplete = $j("#from").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
 				delimiter: null,
@@ -429,6 +444,11 @@
 				}
 			});
 			
+			$j("#from").blur(function(){
+				$fromAutocomplete.killSuggestions();
+				return false;
+			});
+			
 			$j("#from").keyup(function(){
 				if($j("#fromId").val() != '')
 					$j(".fromAdd").attr("disabled","disabled");
@@ -439,7 +459,7 @@
 				$j(".fromAdd").attr("disabled","disabled");
 			});
 			
-			$j("#recipient").autocompletePerson({
+			var $recipientAutocomplete = $j("#recipient").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
 				delimiter: null,
@@ -454,7 +474,12 @@
 					$j(".recipientAdd").attr("disabled");
 					$j(".recipientAdd").prop("disabled", false);
 				}
-			});	
+			});
+			
+			$j("#recipient").blur(function(){
+				$recipientAutocomplete.killSuggestions();
+				return false;
+			});
 			
 			$j("#recipient").keyup(function(){
 				if($j("#recipientId").val() != '')
@@ -466,7 +491,7 @@
 				$j(".recipientAdd").attr("disabled","disabled");
 			});
 			
-			$j("#to").autocompletePlace({
+			var $toAutocomplete = $j("#to").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
 				delimiter: null,
@@ -483,6 +508,11 @@
 				}
 			});	
 			
+			$j("#to").blur(function(){
+				$toAutocomplete.killSuggestions();
+				return false;
+			});
+			
 			$j("#to").keyup(function(){
 				if($j("#toId").val() != '')
 					$j(".toAdd").attr("disabled","disabled");
@@ -493,7 +523,7 @@
 				$j(".toAdd").attr("disabled","disabled");
 			});
 			
-			$j("#refersTo").autocompletePerson({
+			var $refersToAutocomplete = $j("#refersTo").autocompletePerson({
 				serviceUrl: '${searchPersonURL}',
 				minChars: 3,
 				delimiter: null,
@@ -510,6 +540,11 @@
 				}
 			});
 			
+			$j("#refersTo").blur(function(){
+				$refersToAutocomplete.killSuggestions();
+				return false;
+			});
+			
 			$j("#refersTo").keyup(function(){
 				if($j("#refersToId").val() != '')
 					$j(".refersToAdd").attr("disabled","disabled");
@@ -520,7 +555,7 @@
 				$j(".refersToAdd").attr("disabled","disabled");
 			});
 			
-			$j("#topic").autocompleteGeneral({
+			var $topicAutocomplete = $j("#topic").autocompleteGeneral({
 				serviceUrl: '${searchTopicURL}',
 				minChars: 1,
 				delimiter: null,
@@ -537,12 +572,17 @@
 				}
 			});	
 			
+			$j("#topic").blur(function(){
+				$topicAutocomplete.killSuggestions();
+				return false;
+			});
+			
 			$j("#topicSearchForm").submit(function(){
 				$j("#topicId").val("");
 				$j(".topicAdd").attr("disabled","disabled");
 			});
 			
-			$j("#volume").autocompleteGeneral({
+			var $volumeAutocomplete = $j("#volume").autocompleteGeneral({
 				serviceUrl: '${searchVolumeURL}',
 				minChars: 1,
 				delimiter: null,
@@ -553,6 +593,11 @@
 				noCache: true,
 				onSelect: function(value, data){
 				}
+			});
+			
+			$j("#volume").blur(function(){
+				$volumeAutocomplete.killSuggestions();
+				return false;
 			});
 			
 			$j("#volume").change(function(){

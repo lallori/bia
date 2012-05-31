@@ -89,6 +89,31 @@
 				return false;
 			});
 			
+			$j('.tabResult').die();
+			$j('.tabResult').live('click', function(){
+				var tabName = "Topics " + $j(this).parent().parent().children().first().text();
+				var numTab = 0;
+				
+				//Check if already exist a tab with this person
+				var tabExist = false;
+				$j("#tabs ul li a").each(function(){
+					if(!tabExist)
+						numTab++;
+					if(this.text == tabName){
+						tabExist = true;
+					}
+				});
+				
+				if(!tabExist){
+					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				}else{
+					$j("#tabs").tabs("select", numTab-1);
+					return false;
+				}
+			});
+			
 			$j("#refine${command.searchUUID}").open({width: 960, height: 350, scrollbars: "yes"});
 			
 			$j("#tabLink").open({width: 960, height: 350, scrollbars: "yes"});			

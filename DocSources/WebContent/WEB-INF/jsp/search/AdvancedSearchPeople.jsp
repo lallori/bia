@@ -337,7 +337,7 @@
 			 return false;
 		 });
 		 
-		 $j("#place").autocompletePlace({
+		 var $placeAutocomplete = $j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
 				delimiter: null,
@@ -354,6 +354,11 @@
 				}
 			});	
 		 
+		 $j("#place").blur(function(){
+			$placeAutocomplete.killSuggestions();
+			return false;
+		 });
+		 
 		$j("#place").keyup(function(){
 			if($j("#placeId").val() != '')
 				$j(".placeAdd").attr("disabled","disabled");
@@ -364,7 +369,7 @@
 			$j(".placeAdd").attr("disabled","disabled");
 		});
 		 
-		$j("#occupation").AutocompleteTitle({
+		var $occupationAutocomplete = $j("#occupation").AutocompleteTitle({
 			 	serviceUrl:'${searchTitleOrOccupationURL}',
 			    minChars:3, 
 			    delimiter: null, // /(,|;)\s*/, // regex or character
@@ -379,6 +384,11 @@
 			    	$j(".occupationAdd").attr("disabled");
 			    	$j(".occupationAdd").prop("disabled", false);
 			    }
+		});
+		
+		$j("#occupation").blur(function(){
+			$occupationAutocomplete.killSuggestions();
+			return false;
 		});
 		
 		$j("#occupation").keyup(function(){

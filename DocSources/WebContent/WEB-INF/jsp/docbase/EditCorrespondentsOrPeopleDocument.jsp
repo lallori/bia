@@ -217,7 +217,7 @@
 				return false;
 			});
 	        
-	        $j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
+	        var $senderPeopleAutoComplete = $j('#senderPeopleDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchSenderPeopleURL}',
 			    minChars:3, 
 			    delimiter: null, // regex or character
@@ -238,6 +238,12 @@
 				    }
 			    }			    
 			  });
+	        
+	        //MD: Introduce this code for close the autocompleter on blur event
+	        $j('#senderPeopleDescriptionAutoCompleter').blur(function(){
+	        	$senderPeopleAutoComplete.killSuggestions();
+	        	return false;
+	        });
 			
 			$j('.senderLinkPeople').click(function(){
 				if($j('#senderPeopleDescriptionAutoCompleter').val() == '')
@@ -386,7 +392,6 @@
 			});
 
 			$j('#close').click(function() {
-				$j('.autocomplete').remove();
 				if($j("#modify").val() == 1){
 					$j('#EditCorrespondentsDocumentDiv').block({ message: $j('#question'), 
 						css: { 
