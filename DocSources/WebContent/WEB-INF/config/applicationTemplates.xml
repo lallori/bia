@@ -370,6 +370,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/EditTopicDocument.jsp"/>	
 	</definition>
 	
+	<definition name="docbase/LinkedDocumentsTopic" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/LinkedDocumentsTopic.jsp"/>
+	</definition>
+	
 	<definition name="docbase/PrintDocument" extends="template.printDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/PrintDocument.jsp"/>	
 	</definition>
