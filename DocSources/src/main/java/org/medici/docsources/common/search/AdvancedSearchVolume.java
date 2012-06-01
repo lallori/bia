@@ -750,7 +750,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		if(cipher.length() > 0){
 			StringBuffer cipherQuery = new StringBuffer("(");
 			if(cipher.equals("Yes")){
-				cipherQuery.append("(cipher=true)");
+				cipherQuery.append("(cipher!=false)");
 			}else if(cipher.equals("No")){
 				cipherQuery.append("(cipher=false)");
 			}
