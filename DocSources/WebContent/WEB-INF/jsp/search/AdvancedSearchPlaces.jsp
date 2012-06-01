@@ -35,23 +35,6 @@
 			<input type="hidden" id="category" value="Place Type">
 		</form>
 	</div>
-	
-	<h1 id="linkedTopicsH1"><a>Linked to Topics</a></h1>
-	<div>
-		<form id="linkedToTopicsSearchForm" method="post" class="edit">
-			<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Most documents are indexed to one or more Topic Categories, and each Topic is indexed to the related Places. By selecting a Topic, you will create a list here of the places that are associated with that topic in the indexed documents. For example, selecting the Topic 'Music and Musical Instruments' will produce a list of places that are linked to documents mentioning Music and Musical Instruments. This allows you to select those relevant to your research.">?</a>
-			<select id="linkedToTopicsSelect" name="linkedToTopicsSelect" class="selectform_Xlong">
-				<option value="Select a Topic" selected="selected">Select a Topic</option>
-				<c:forEach items="${topicsList}" var="topicList">
-					<option value="${topicList.topicId}">${topicList}</option>
-				</c:forEach>
-			</select>
-			<input type="hidden" id="linkedToTopics" name="linkedToTopics" type="text" value=""/>
-			<input type="hidden" id="linkedToTopicsId" name="linkedToTopicsId" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
-			<input type="hidden" id="category" value="Linked to Topics">
-		</form>
-	</div>
 
 	<h1 id="linkedPeopleH1"><a>Linked to People</a></h1>
 	<div>
@@ -93,18 +76,6 @@
 			 return false;
 		 });
 		
-		$j("#linkedToTopicsSelect").change(function(){
-			 if($j(this).val() != "Select a Topic"){
-			 	$j("#linkedToTopics").val($j(this).find("option:selected").text());
-			 	$j("#linkedToTopicsId").val($j(this).find("option:selected").val());
-			 }
-			 else{
-				 $j("#linkedToTopics").val("");
-				 $j("#linkedToTopicsId").val("");
-			 }
-			 return false;
-		 });
-		
 		$j("#linkedToPeopleSelect").change(function(){
 			 if($j(this).val() != "Select a Link Type")
 			 	$j("#linkedToPeople").val($j(this).val());
@@ -120,11 +91,6 @@
 		$j('#placeTypeH1').click(function(){
 			$j.scrollTo({top:'113px',left:'0px'}, 800 );
 			$j("#yourSearchFilterDiv").animate({"top": "70px"}, "slow");
-			return false;
-		});
-		$j('#linkedTopicsH1').click(function(){
-			$j.scrollTo({top:'140px',left:'0px'}, 800 );
-			$j("#yourSearchFilterDiv").animate({"top": "100px"}, "slow");
 			return false;
 		});
 		$j('#linkedPeopleH1').click(function(){

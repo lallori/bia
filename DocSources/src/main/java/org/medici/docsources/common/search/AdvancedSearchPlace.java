@@ -29,17 +29,13 @@ package org.medici.docsources.common.search;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
-
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
@@ -63,8 +59,8 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	
 	private List<String> placesName;
 	private List<String> placeType;
-	private List<Integer> linkedToTopicsId;
-	private List<String> linkedToTopics;
+//	private List<Integer> linkedToTopicsId;
+//	private List<String> linkedToTopics;
 	private List<String> linkedToPeople;
 	private Boolean logicalDelete;
 
@@ -77,8 +73,8 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		
 		placesName = new ArrayList<String>(0);
 		placeType = new ArrayList<String>(0);
-		linkedToTopicsId = new ArrayList<Integer>(0);
-		linkedToTopics = new ArrayList<String>(0);
+//		linkedToTopicsId = new ArrayList<Integer>(0);
+//		linkedToTopics = new ArrayList<String>(0);
 		linkedToPeople = new ArrayList<String>(0);
 		logicalDelete = Boolean.FALSE;
 	}
@@ -122,30 +118,31 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		}
 		
 		//Linked To Topics
-		if((command.getLinkedToTopics() != null) && (command.getLinkedToTopics().size() > 0)){
-			linkedToTopicsId = new ArrayList<Integer>(command.getLinkedToTopics().size());
-			
-			for(String singleWord: command.getLinkedToTopics()){
-				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
-				try{
-					if(stringTokenizer.countTokens() < 2){
-						continue;
-					}else if(stringTokenizer.countTokens() == 2){
-						String singleId = stringTokenizer.nextToken();
-						String singleText = stringTokenizer.nextToken();
-						
-						if(NumberUtils.isNumber(singleId)){
-							linkedToTopicsId.add(NumberUtils.createInteger(singleId));
-						}
-						linkedToTopics.add(URIUtil.decode(singleText, "UTF-8"));
-					}
-				}catch(NumberFormatException nex){
-				}catch(URIException e){
-				}
-			}
-		}else{
-			linkedToTopicsId = new ArrayList<Integer>(0);
-		}
+		//MD: Section deleted
+//		if((command.getLinkedToTopics() != null) && (command.getLinkedToTopics().size() > 0)){
+//			linkedToTopicsId = new ArrayList<Integer>(command.getLinkedToTopics().size());
+//			
+//			for(String singleWord: command.getLinkedToTopics()){
+//				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+//				try{
+//					if(stringTokenizer.countTokens() < 2){
+//						continue;
+//					}else if(stringTokenizer.countTokens() == 2){
+//						String singleId = stringTokenizer.nextToken();
+//						String singleText = stringTokenizer.nextToken();
+//						
+//						if(NumberUtils.isNumber(singleId)){
+//							linkedToTopicsId.add(NumberUtils.createInteger(singleId));
+//						}
+//						linkedToTopics.add(URIUtil.decode(singleText, "UTF-8"));
+//					}
+//				}catch(NumberFormatException nex){
+//				}catch(URIException e){
+//				}
+//			}
+//		}else{
+//			linkedToTopicsId = new ArrayList<Integer>(0);
+//		}
 		
 		//Linked To People
 		if((command.getLinkedToPeople() != null) && (command.getLinkedToPeople().size() > 0)){
@@ -187,33 +184,33 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		return linkedToPeople;
 	}
 
-	/**
-	 * @param linkedToTopicsId the linkedToTopicsId to set
-	 */
-	public void setLinkedToTopicsId(List<Integer> linkedToTopicsId) {
-		this.linkedToTopicsId = linkedToTopicsId;
-	}
+//	/**
+//	 * @param linkedToTopicsId the linkedToTopicsId to set
+//	 */
+//	public void setLinkedToTopicsId(List<Integer> linkedToTopicsId) {
+//		this.linkedToTopicsId = linkedToTopicsId;
+//	}
+//
+//	/**
+//	 * @return the linkedToTopicsId
+//	 */
+//	public List<Integer> getLinkedToTopicsId() {
+//		return linkedToTopicsId;
+//	}
 
-	/**
-	 * @return the linkedToTopicsId
-	 */
-	public List<Integer> getLinkedToTopicsId() {
-		return linkedToTopicsId;
-	}
-
-	/**
-	 * @param linkedToTopics the linkedToTopics to set
-	 */
-	public void setLinkedToTopics(List<String> linkedToTopics) {
-		this.linkedToTopics = linkedToTopics;
-	}
-
-	/**
-	 * @return the linkedToTopics
-	 */
-	public List<String> getLinkedToTopics() {
-		return linkedToTopics;
-	}
+//	/**
+//	 * @param linkedToTopics the linkedToTopics to set
+//	 */
+//	public void setLinkedToTopics(List<String> linkedToTopics) {
+//		this.linkedToTopics = linkedToTopics;
+//	}
+//
+//	/**
+//	 * @return the linkedToTopics
+//	 */
+//	public List<String> getLinkedToTopics() {
+//		return linkedToTopics;
+//	}
 
 	/**
 	 * @param placesName the placesName to set
@@ -315,24 +312,25 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		}
 		
 		//Linked to topics
-		if(linkedToTopicsId.size() > 0){
-			StringBuffer linkedToTopicsIdQuery = new StringBuffer("(");
-			for(int i = 0; i < linkedToTopicsId.size(); i++){
-				if(linkedToTopicsIdQuery.length() > 1){
-					linkedToTopicsIdQuery.append(" AND ");
-				}
-				linkedToTopicsIdQuery.append("(placeAllId IN (SELECT place.placeAllId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicId=");
-				linkedToTopicsIdQuery.append(linkedToTopicsId.get(i).toString());
-				linkedToTopicsIdQuery.append("))");
-			}
-			linkedToTopicsIdQuery.append(")");
-			if(!linkedToTopicsIdQuery.toString().equals("")){
-				if(jpaQuery.length() > 17){
-					jpaQuery.append(" AND ");
-				}
-				jpaQuery.append(linkedToTopicsIdQuery);
-			}
-		}
+		//MD: Section deleted
+//		if(linkedToTopicsId.size() > 0){
+//			StringBuffer linkedToTopicsIdQuery = new StringBuffer("(");
+//			for(int i = 0; i < linkedToTopicsId.size(); i++){
+//				if(linkedToTopicsIdQuery.length() > 1){
+//					linkedToTopicsIdQuery.append(" AND ");
+//				}
+//				linkedToTopicsIdQuery.append("(placeAllId IN (SELECT place.placeAllId FROM org.medici.docsources.domain.EplToLink WHERE topic.topicId=");
+//				linkedToTopicsIdQuery.append(linkedToTopicsId.get(i).toString());
+//				linkedToTopicsIdQuery.append("))");
+//			}
+//			linkedToTopicsIdQuery.append(")");
+//			if(!linkedToTopicsIdQuery.toString().equals("")){
+//				if(jpaQuery.length() > 17){
+//					jpaQuery.append(" AND ");
+//				}
+//				jpaQuery.append(linkedToTopicsIdQuery);
+//			}
+//		}
 		
 		//Linked to people
 		if(linkedToPeople.size() > 0){
@@ -416,18 +414,18 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 		}
 		
 		//Linked To Topics
-		if(linkedToTopicsId.size() > 0){
-			BooleanQuery linkedToTopicsIdQuery = new BooleanQuery();
-			for(int i = 0; i < linkedToTopicsId.size(); i++){
-				BooleanQuery singleLinkedToTopicsIdQuery = new BooleanQuery();
-				BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("eplToLinks.topic.topicId", linkedToTopicsId.get(i).toString())), Occur.MUST);
-				singleLinkedToTopicsIdQuery.add(booleanClause);
-				linkedToTopicsIdQuery.add(singleLinkedToTopicsIdQuery, Occur.MUST);
-			}
-			if(!linkedToTopicsIdQuery.toString().equals("")){
-				luceneQuery.add(linkedToTopicsIdQuery, Occur.MUST);
-			}
-		}
+//		if(linkedToTopicsId.size() > 0){
+//			BooleanQuery linkedToTopicsIdQuery = new BooleanQuery();
+//			for(int i = 0; i < linkedToTopicsId.size(); i++){
+//				BooleanQuery singleLinkedToTopicsIdQuery = new BooleanQuery();
+//				BooleanClause booleanClause = new BooleanClause(new TermQuery(new Term("eplToLinks.topic.topicId", linkedToTopicsId.get(i).toString())), Occur.MUST);
+//				singleLinkedToTopicsIdQuery.add(booleanClause);
+//				linkedToTopicsIdQuery.add(singleLinkedToTopicsIdQuery, Occur.MUST);
+//			}
+//			if(!linkedToTopicsIdQuery.toString().equals("")){
+//				luceneQuery.add(linkedToTopicsIdQuery, Occur.MUST);
+//			}
+//		}
 		
 		//TODO
 		//Linked To People
@@ -487,18 +485,18 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 			}
 		}
 		
-		if(!linkedToTopics.isEmpty()){
-			if(!toString.isEmpty()){
-				toString += "AND ";
-			}
-			toString += "Linked to Topics: ";
-			for(int i = 0; i < linkedToTopics.size(); i++){
-				if(i > 0){
-					toString += "AND ";
-				}
-				toString += linkedToTopics.get(i) + " ";
-			}
-		}
+//		if(!linkedToTopics.isEmpty()){
+//			if(!toString.isEmpty()){
+//				toString += "AND ";
+//			}
+//			toString += "Linked to Topics: ";
+//			for(int i = 0; i < linkedToTopics.size(); i++){
+//				if(i > 0){
+//					toString += "AND ";
+//				}
+//				toString += linkedToTopics.get(i) + " ";
+//			}
+//		}
 		
 		if(!linkedToPeople.isEmpty()){
 			if(!toString.isEmpty()){

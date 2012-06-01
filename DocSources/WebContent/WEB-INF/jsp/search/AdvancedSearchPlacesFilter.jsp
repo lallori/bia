@@ -34,17 +34,7 @@
 			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 		</c:forEach>
 		</div>
-		<c:if test="${(not empty searchFilter.filterData.linkedToTopics) && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
-		<div id="linkedToTopicsSearchDiv">
-		<c:forEach items="${searchFilter.filterData.linkedToTopics}" varStatus="iterator">
-			<div class="searchFilterDiv">
-				<span class="categorySearch">Linked to Topics: </span><span class="wordSearch">${searchFilter.filterData.linkedToTopics[iterator.index]}</span><a class="remove" href="#">(remove)</a>
-				<input type="hidden" value="${searchFilter.filterData.linkedToTopicsId[iterator.index]}|${searchFilter.filterData.linkedToTopics[iterator.index]}" name="linkedToTopics" />
-			</div>
-			<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
-		</c:forEach>
-		</div>
-		<c:if test="${(not empty searchFilter.filterData.linkedToPeople) && ((not empty searchFilter.filterData.linkedToTopics) || (not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+		<c:if test="${(not empty searchFilter.filterData.linkedToPeople) && ((not empty searchFilter.filterData.placeType) || (not empty searchFilter.filterData.placesName))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 		<div id="linkedToPeopleSearchDiv">
 		<c:forEach items="${searchFilter.filterData.linkedToPeople}" varStatus="iterator">
 			<div class="searchFilterDiv">
@@ -72,6 +62,17 @@
 
 <script type="text/javascript">
 		$j(document).ready(function() {
+			//MD: Inserted the partial count on windows opening, because if we refine a search we can view the count
+			$j.ajax({ type:"POST", url:'${AdvancedSearchCountURL}', data:$j("#yourEasySearchFilterForm").serialize(), async:false, success:function(json) {
+ 				// At this point we have count of total result. Review output page and put the total...
+ 				console.log("Advanced search result " + json.totalResult);
+ 				if(json.totalResult != undefined)
+ 					$j(".recordsNum").text(json.totalResult);
+ 				else
+ 					$j(".recordsNum").text("0");
+ 				return false;
+			}});
+			
 			$j(".remove").live('click', function(){
 				$j.ajax({ type:"POST", url:'${AdvancedSearchCountURL}', data:$j("#yourEasySearchFilterForm").serialize(), async:false, success:function(json) {
 	 				// At this point we have count of total result. Review output page and put the total...
