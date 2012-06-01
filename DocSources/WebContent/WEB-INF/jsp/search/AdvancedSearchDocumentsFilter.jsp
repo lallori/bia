@@ -188,6 +188,17 @@
 	</div>
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			//MD: Inserted the partial count on windows opening, because if we refine a search we can view the count
+			$j.ajax({ type:"POST", url:'${AdvancedSearchCountURL}', data:$j("#yourEasySearchFilterForm").serialize(), async:false, success:function(json) {
+ 				// At this point we have count of total result. Review output page and put the total...
+ 				console.log("Advanced search result " + json.totalResult);
+ 				if(json.totalResult != undefined)
+ 					$j(".recordsNum").text(json.totalResult);
+ 				else
+ 					$j(".recordsNum").text("0");
+ 				return false;
+			}});
+			
 			$j(".remove").live('click', function(){
 				$j.ajax({ type:"POST", url:'${AdvancedSearchCountURL}', data:$j("#yourEasySearchFilterForm").serialize(), async:false, success:function(json) {
 	 				// At this point we have count of total result. Review output page and put the total...
