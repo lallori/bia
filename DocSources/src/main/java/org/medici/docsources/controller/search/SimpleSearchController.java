@@ -109,6 +109,11 @@ public class SimpleSearchController {
 			command.setText(URIUtil.decode(command.getText(), "UTF-8"));
 		} catch (URIException e) {
 		}
+		model.put("yourSearch", command.getText());
+		
+		if(command.getText().contains("\"")){
+			command.setText(command.getText().replace("\"", "\\\""));
+		}
 		UUID uuid = UUID.randomUUID();
 		command.setSearchUUID(uuid.toString());
 		model.put("searchUUID", uuid.toString());

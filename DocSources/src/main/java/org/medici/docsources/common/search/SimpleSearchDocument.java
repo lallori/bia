@@ -114,7 +114,10 @@ public class SimpleSearchDocument extends SimpleSearch {
 	public String toJPAQuery() {
 		StringBuffer jpaQuery = new StringBuffer("FROM Document ");
 		
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
+		//MD: We need to re-convert the alias
+		alias = alias.replace("\\\"", "\"");
+		
+		String[] words = StringUtils.split(alias, " ");
 		
 		if (words.length >0) {
 			jpaQuery.append(" WHERE ");

@@ -98,6 +98,9 @@ public class SimpleSearchVolume extends SimpleSearch {
 	public String toJPAQuery() {
 		StringBuffer jpaQuery = new StringBuffer("FROM Volume ");
 		
+		//MD: We need to re-convert the alias
+		alias = alias.replace("\\\"", "\"");
+		
 		String[] words = RegExUtils.splitPunctuationAndSpaceChars(alias);
 		
 		if(words.length > 0){

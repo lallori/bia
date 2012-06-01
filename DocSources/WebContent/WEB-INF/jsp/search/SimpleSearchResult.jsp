@@ -42,7 +42,7 @@
 					colsort = [ { "sWidth": "80%", "aTargets": [ "_all" ], "bSortable": false, "aTargets": [2,3,4] }];
 				</c:when>
 			</c:choose>
-						
+			
 			$j('#${command.searchUUID}').dataTable( {
 				"aoColumnDefs": colsort,
 				"aaSorting": test,
@@ -138,7 +138,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Your search:
-		<font color="red" style="margin-left:5px">${command.text}</font></p>
+		<font color="red" style="margin-left:5px">${yourSearch}</font></p>
 		<p>Total record found:
 		<span class="recordsNum" id="recordsNum${command.searchUUID}"></span></p>
 		<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
