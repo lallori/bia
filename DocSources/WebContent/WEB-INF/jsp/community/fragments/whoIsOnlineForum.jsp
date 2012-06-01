@@ -4,9 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
- 				<div id="userDiv">
-					<img src="/DocSources/images/forum/img_user.png" alt="User" />
-					<a href="/DocSources/forum/userProfileVert.html" id="profile">User Profile</a>
-					<a href="/DocSources/forum/messages.html" id="userMessages">(<span>0</span> new messages)</a>
-					<a href="#" id="viewYourPosts">View your posts</a>
-				</div>
+					<div id="whoIsOnlineDiv">
+						<h1>WHO IS ONLINE</h1>
+						<p>In total there is <span id="userOnline">1</span> user online: <span id="userRegistered">0</span> registered, <span id="userHidden">0</span> hidden and <span id="userGuest">1</span> guest (based on users active over the past 5 minutes)</p>
+					</div>

@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -50,7 +51,13 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table ( name = "\"tblForumPost\"" ) 
-public class ForumPost {
+public class ForumPost implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7835012793497758978L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"id\"", length=10, nullable=false)

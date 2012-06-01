@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.userinformation;
 
+import javax.persistence.PersistenceException;
+
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.UserInformation;
 
@@ -36,5 +38,19 @@ import org.medici.docsources.domain.UserInformation;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface UserInformationDAO extends Dao<String, UserInformation> {
+
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public UserInformation getNewestMember() throws PersistenceException;
+
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Long countMembersForum() throws PersistenceException;
 
 }

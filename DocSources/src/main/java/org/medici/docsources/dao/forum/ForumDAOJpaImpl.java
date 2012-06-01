@@ -27,13 +27,18 @@
  */
 package org.medici.docsources.dao.forum;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.medici.docsources.common.util.ForumUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.Forum.Type;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -77,15 +82,85 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         stringBuffer.append(forum.getType());
         stringBuffer.append("' and forumParent ");
 
-        if (forum.getForumParent() == null)
+        if (forum.getId() == null)
         	stringBuffer.append(" is null");
         else {
         	stringBuffer.append("=");
-        	stringBuffer.append(forum.getForumParent().getId());
+        	stringBuffer.append(forum.getId());
         }
     	
         Query query = getEntityManager().createQuery(stringBuffer.toString());
 
         return query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<Integer, List<Forum>> findForumsGroupByCategory(List<Integer> categoriesIds) throws PersistenceException {
+		if (categoriesIds == null){
+			return new HashMap<Integer, List<Forum>>(0);
+		}
+
+		// we sort input categories...
+		Collections.sort(categoriesIds);
+
+		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, name asc
+		StringBuffer stringBuffer = new StringBuffer("FROM Forum WHERE type=:typeForum ");
+        stringBuffer.append(" and forumParent.id in (:forumParent) and forumParent.type=:forumParentTypeCategory ");
+        stringBuffer.append(" order by forumParent asc, name asc");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("typeForum", Type.FORUM);
+        query.setParameter("forumParent", categoriesIds);
+        query.setParameter("forumParentTypeCategory", Type.CATEGORY);
+
+        List<Forum> forumResult = (List<Forum>) query.getResultList();
+        
+        return ForumUtils.convertToHashMapByCategory(forumResult, categoriesIds);
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Forum> findSubForums(Integer parentForumId) throws PersistenceException {
+		if (parentForumId == null){
+			return new ArrayList<Forum>(0);
+		}
+
+		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, name asc
+		StringBuffer stringBuffer = new StringBuffer("FROM Forum WHERE type=:typeForum ");
+        stringBuffer.append(" and forumParent.id = :forumParentId and forumParent.type=:forumParentTypeForum ");
+        stringBuffer.append(" order by forumParent asc, name asc");
+    	
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        query.setParameter("typeForum", Type.FORUM);
+        query.setParameter("forumParentId", parentForumId);
+        query.setParameter("forumParentTypeForum", Type.FORUM);
+
+        return (List<Forum>) query.getResultList();
+  	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HashMap<String, Long> getTotalTopicsAndPosts() throws PersistenceException {
+		String queryString = "SELECT sum(topicsNumber), sum(postsNumber) FROM Forum";
+    	
+        Query query = getEntityManager().createQuery(queryString);
+
+        Object[] statisticsResult = (Object[]) query.getSingleResult();
+        
+        HashMap<String, Long> retValue = new HashMap<String, Long>(0);
+
+        retValue.put("topicsNumber", (Long) statisticsResult[0]);
+        retValue.put("postsNumber", (Long) statisticsResult[1]);
+
+        return retValue;
 	}
 }

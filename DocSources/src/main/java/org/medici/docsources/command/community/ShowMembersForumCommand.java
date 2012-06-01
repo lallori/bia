@@ -1,5 +1,5 @@
 /*
- * ShowForumCommand.java
+ * ShowMembersForumCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -32,21 +32,21 @@ package org.medici.docsources.command.community;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowForumCommand {
-	private Integer id;
+public class ShowMembersForumCommand {
+	private String letter;
 
 	/**
-	 * @param id the id to set
+	 * @param letter the letter to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setLetter(String letter) {
+		this.letter = letter;
 	}
 
 	/**
-	 * @return the id
+	 * @return the letter
 	 */
-	public Integer getId() {
-		return id;
+	public String getLetter() {
+		return letter;
 	}
 	
 }

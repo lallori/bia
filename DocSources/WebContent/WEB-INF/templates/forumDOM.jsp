@@ -33,20 +33,27 @@
 	<body>
 		<div id="layout">
 			<div id="map"></div>
-            
-			<tiles:insertAttribute name="search"/>
-             
-             <div id="top_bottom">
-             	<tiles:insertAttribute name="chronology"/>
-             	<tiles:insertAttribute name="user"/>
-             	<tiles:insertAttribute name="members"/>
-             </div>
-             
-             <div id="main">
-             	<tiles:insertAttribute name="main"/>
-                
-                <tiles:insertAttribute name="footer"/>
-           </div>
+
+			<div id="top_middle">
+				<tiles:insertAttribute name="search"/>
+			</div>
+
+			<div id="top_bottom">
+				<tiles:insertAttribute name="chronology"/>
+				<tiles:insertAttribute name="user"/>
+				<tiles:insertAttribute name="members"/>
+			</div>
+
+			<div id="main">
+				<div id="mainContent">
+					<tiles:insertAttribute name="main"/>
+				</div>
+
+				<div id="footer">
+					<tiles:insertAttribute name="whoIsOnline"/>
+					<tiles:insertAttribute name="statistics"/>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

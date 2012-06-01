@@ -27,6 +27,11 @@
  */
 package org.medici.docsources.dao.userinformation;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.UserInformation;
 import org.springframework.stereotype.Repository;
@@ -46,5 +51,36 @@ public class UserInformationDAOJpaImpl extends JpaDao<String, UserInformation> i
 	 * 
 	 */
 	private static final long serialVersionUID = 1193605850422464008L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserInformation getNewestMember() throws PersistenceException {
+        String queryString = "FROM UserInformation WHERE lastLoginDate is not null ORDER BY activationDate DESC";
+    	
+        Query query = getEntityManager().createQuery(queryString);
+    	
+		List<UserInformation> result = (List<UserInformation>) query.getResultList();
+			
+		if (result.size() > 0) {
+			return (UserInformation) result.get(0);
+		}
+        
+		return new UserInformation();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long countMembersForum() throws PersistenceException {
+        String queryString = "select count(account) FROM UserInformation WHERE lastLoginDate is not null";
+    	
+        Query query = getEntityManager().createQuery(queryString);
+    	
+        return (Long) query.getSingleResult();
+	}
 
 }

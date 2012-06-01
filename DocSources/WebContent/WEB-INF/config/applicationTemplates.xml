@@ -16,12 +16,13 @@
     
     <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp"/>
 
-	<definition name="template.forum" template="/WEB-INF/templates/forum.jsp">
+	<definition name="template.forum" template="/WEB-INF/templates/forumDOM.jsp">
 		<put-attribute name="search" value="/WEB-INF/jsp/community/fragments/searchForum.jsp"/>
-		<put-attribute name="chronology" value="/WEB-INF/jsp/community/fragments/chronologyUserForum.jsp"/>
+		<put-attribute name="chronology" value="/WEB-INF/jsp/community/fragments/chronologyForum.jsp"/>
 		<put-attribute name="user" value="/WEB-INF/jsp/community/fragments/userForum.jsp"/>
 		<put-attribute name="members" value="/WEB-INF/jsp/community/fragments/membersForum.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/jsp/community/fragments/footerForum.jsp"/>
+		<put-attribute name="whoIsOnline" value="/WEB-INF/jsp/community/fragments/whoIsOnlineForum.jsp"/>
+		<put-attribute name="statistics" value="/WEB-INF/jsp/community/fragments/statisticsForum.jsp"/>
 	</definition>
 
     <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
@@ -281,11 +282,11 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnVolume.jsp"/>
 	</definition>
 
-	<definition name="community/ShowIndexForum" extends="template.forum">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
+	<definition name="community/ShowCategoryForum" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCategoryForum.jsp"/>
 	</definition>
 
-	<definition name="community/ShowForum" extends="template.forum">
+	<definition name="community/ShowForum" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
 	</definition>
 

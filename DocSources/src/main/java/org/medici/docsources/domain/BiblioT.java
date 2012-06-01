@@ -54,7 +54,7 @@ import org.hibernate.search.annotations.Store;
 @Entity
 @Audited
 @Table ( name = "\"tblBiblioT\"" ) 
-public class BiblioT implements Serializable{
+public class BiblioT implements Serializable {
 	/**
 	 * 
 	 */

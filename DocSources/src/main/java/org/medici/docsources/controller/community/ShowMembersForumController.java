@@ -1,5 +1,5 @@
 /*
- * ShowIndexForumController.java
+ * ShowMembersForumController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -28,14 +28,9 @@
 package org.medici.docsources.controller.community;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.medici.docsources.command.community.ShowIndexForumCommand;
-import org.medici.docsources.common.util.ListBeanUtils;
-import org.medici.docsources.domain.Forum;
-import org.medici.docsources.domain.Forum.Type;
-import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.command.community.ShowMembersForumCommand;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,14 +40,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to view forum index page.
+ * Controller to view a categort forum page.
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/community/ShowIndexForum")
-public class ShowIndexForumController {
+@RequestMapping(value={"/community/ShowMembersForum"})
+public class ShowMembersForumController {
 	@Autowired
 	private CommunityService communityService;
 	
@@ -63,24 +58,24 @@ public class ShowIndexForumController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowIndexForumCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowMembersForumCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
+		/*
 		try {
-			List<Forum> categories = getCommunityService().getForumCategories(new Forum(Type.CATEGORY, null));
+			PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(),command.getLength());
+
+			
+			List<ForumAccess> categories = getCommunityService().getMembers(command.getLetter(), paginationFilter);
 			model.put("categories", categories);
 
-			HashMap<Integer, Forum> forums = new HashMap<Integer, Forum>(0);
+			HashMap<Integer, List<Forum>> forums = new HashMap<Integer, List<Forum>>(0);
 			
-			if (categories.size() > 0) {
-				forums = getCommunityService().getForumsGroupByCategory(ListBeanUtils.transformList(categories, "id"));
-			}
-			model.put("forums", forums);
 		}catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("error/ShowIndexForum", model);
 		}
+		*/
 
-		return new ModelAndView("community/ShowIndexForum", model);
+		return new ModelAndView("community/ShowMembersForum", model);
 	}
 
 	/**

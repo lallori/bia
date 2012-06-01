@@ -36,6 +36,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
+import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.dao.usermessage.UserMessageDAO;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.UserComment;
@@ -59,8 +60,9 @@ public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private ForumPostDAO forumPostDAO;   
 	@Autowired
-	private UserMessageDAO userMessageDAO;   
-
+	private UserInformationDAO UserInformationDAO;   
+	@Autowired
+	private UserMessageDAO userMessageDAO;
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -150,12 +152,12 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritDoc} 
 	 */
 	@Override
-	public List<Forum> getForumCategories(Forum forum) throws ApplicationThrowable {
+	public Forum getForum(Integer id) throws ApplicationThrowable {
 		try {
-			return getForumDAO().findForumCategories(forum);
+			return getForumDAO().find(id);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -179,9 +181,59 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HashMap<Integer, Forum> getForumsGroupByCategory(List<?> categoriesIds) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+	public HashMap<Integer, List<Forum>> getForumsGroupByCategory(List<Integer> categoriesIds) throws ApplicationThrowable {
+		try {
+			return getForumDAO().findForumsGroupByCategory(categoriesIds);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public HashMap<String, Object> getForumsStatistics() throws ApplicationThrowable {
+		try {
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.putAll(getForumDAO().getTotalTopicsAndPosts());
+			hashMap.put("newestMember", getUserInformationDAO().getNewestMember().getAccount());
+			hashMap.put("totalMembers", getUserInformationDAO().countMembersForum());
+			return hashMap;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable {
+		try {
+			return getForumDAO().findForumCategories(forum);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable {
+		try {
+			return getForumDAO().findSubForums(forumParentId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @return the userInformationDAO
+	 */
+	public UserInformationDAO getUserInformationDAO() {
+		return UserInformationDAO;
 	}
 
 	/**
@@ -235,6 +287,13 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
 		this.forumPostDAO = forumPostDAO;
+	}
+
+	/**
+	 * @param userInformationDAO the userInformationDAO to set
+	 */
+	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
+		UserInformationDAO = userInformationDAO;
 	}
 
 	/**

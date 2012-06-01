@@ -118,11 +118,11 @@ public interface CommunityService {
 
 	/**
 	 * 
-	 * @param forum
+	 * @param id
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public List<Forum> getForumCategories(Forum forum) throws ApplicationThrowable;
+	public Forum getForum(Integer id) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -130,7 +130,30 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public HashMap<Integer, Forum> getForumsGroupByCategory(List<?> categoriesIds) throws ApplicationThrowable;
+	public HashMap<Integer, List<Forum>> getForumsGroupByCategory(List<Integer> categoriesIds) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HashMap<String, Object> getForumsStatistics() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param integer
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
 
 	/**
 	 * 

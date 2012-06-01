@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -43,8 +44,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.apache.commons.lang.math.NumberUtils;
-
 /**
  * This class represents entity Forum.
  * 
@@ -53,12 +52,17 @@ import org.apache.commons.lang.math.NumberUtils;
  */
 @Entity
 @Table ( name = "\"tblForum\"" ) 
-public class Forum {
+public class Forum implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5735698070115951563L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="\"id\"", length=10, nullable=false)
 	private Integer id;
-	@Column (name="\"type\"", length=1, nullable=false)
+	@Column (name="\"type\"", length=10, nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Type type;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -83,7 +87,19 @@ public class Forum {
 	@Column (name="\"lastUpdate\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
-	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"entryId\"", nullable=true)
+	private Document document;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"peopleId\"", nullable=true)
+	private People person;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"placeAllId\"", nullable=true)
+	private Place place;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"summaryId\"", nullable=true)
+	private Volume volume;
+
 	public Forum() {
 		super();
 	}
@@ -276,15 +292,86 @@ public class Forum {
 		this.lastUpdate = lastUpdate;
 	}
 
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer("[");
+		stringBuffer.append("id=");
+		stringBuffer.append(getId());
+		stringBuffer.append(", name=");
+		stringBuffer.append(getName());
+		if (getForumParent() == null) {
+			stringBuffer.append(", parentId=null,");
+		} else {
+			stringBuffer.append(", parentId=");
+			stringBuffer.append(getForumParent().getId());
+		}
+		stringBuffer.append(", description=");
+		stringBuffer.append(getDescription());
+		stringBuffer.append("]");
+
+		return stringBuffer.toString();
+	}
+	/**
+	 * @param document the document to set
+	 */
+	public void setDocument(Document document) {
+		this.document = document;
+	}
+
+	/**
+	 * @return the document
+	 */
+	public Document getDocument() {
+		return document;
+	}
+	/**
+	 * @param person the person to set
+	 */
+	public void setPerson(People person) {
+		this.person = person;
+	}
+
+	/**
+	 * @return the person
+	 */
+	public People getPerson() {
+		return person;
+	}
+	/**
+	 * @param place the place to set
+	 */
+	public void setPlace(Place place) {
+		this.place = place;
+	}
+
+	/**
+	 * @return the place
+	 */
+	public Place getPlace() {
+		return place;
+	}
+	/**
+	 * @param volume the volume to set
+	 */
+	public void setVolume(Volume volume) {
+		this.volume = volume;
+	}
+
+	/**
+	 * @return the volume
+	 */
+	public Volume getVolume() {
+		return volume;
+	}
 	/**
 	 * 
 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
 	 *
 	 */
 	public static enum Type {
-		FORUM("F"),
-		CATEGORY("C"),
-		LINK("L");
+		FORUM("FORUM"),
+		CATEGORY("CATEGORY"),
+		LINK("LINK");
 		
 		private final String type;
 

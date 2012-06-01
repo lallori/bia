@@ -1,5 +1,5 @@
 /*
- * Person.java
+ * People.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 

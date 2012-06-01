@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.dao.forum;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -35,12 +36,41 @@ import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Forum;
 
 /**
- * ForumPost DAO.
+ * Forum DAO.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
 public interface ForumDAO extends Dao<Integer, Forum> {
 
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public List<Forum> findForumCategories(Forum forum) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param categoriesIds
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public HashMap<Integer, List<Forum>> findForumsGroupByCategory(List<Integer> categoriesIds) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param forumParentId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Forum> findSubForums(Integer forumParentId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public HashMap<String, Long> getTotalTopicsAndPosts() throws PersistenceException;
 }

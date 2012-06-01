@@ -1,5 +1,5 @@
 /*
- * ShowForumCommand.java
+ * ForumUtils.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,28 +25,47 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.community;
+package org.medici.docsources.common.util;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.medici.docsources.domain.Forum;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowForumCommand {
-	private Integer id;
+public class ForumUtils {
 
 	/**
-	 * @param id the id to set
+	 * 
+	 * @param forumResult
+	 * @param categoriesIds
+	 * @return
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public static HashMap<Integer, List<Forum>> convertToHashMapByCategory(List<Forum> forumResult, List<Integer> categoriesIds) {
+		HashMap<Integer, List<Forum>> hashMap = new HashMap<Integer, List<Forum>>(0);
+
+		if (categoriesIds == null) {
+			return hashMap;
+		}
+
+		for (Integer currentCategory : 	categoriesIds)  {
+			List<Forum> forums = new ArrayList<Forum>(0);
+			
+			for (Forum currentForum : forumResult) {
+				if (currentForum.getForumParent().getId().equals(currentCategory)) {
+					forums.add(currentForum);
+				}
+			}
+			
+			hashMap.put(currentCategory, forums);
+		}
+
+		return hashMap;
 	}
 
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-	
 }

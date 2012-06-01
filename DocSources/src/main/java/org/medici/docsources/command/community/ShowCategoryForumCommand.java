@@ -1,5 +1,5 @@
 /*
- * ShowForumCommand.java
+ * ShowCategoryForumCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -32,21 +32,20 @@ package org.medici.docsources.command.community;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowForumCommand {
+public class ShowCategoryForumCommand {
 	private Integer id;
 
 	/**
-	 * @param id the id to set
+	 * @param categoryId the categoryId to set
 	 */
-	public void setId(Integer id) {
+	public void setCategoryId(Integer id) {
 		this.id = id;
 	}
 
 	/**
-	 * @return the id
+	 * @return the categoryId
 	 */
 	public Integer getId() {
 		return id;
 	}
-	
 }
