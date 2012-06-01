@@ -215,7 +215,7 @@ public class AjaxController {
 			singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			singleRow.add(currentUserHistory.getAction().toString());
 			if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
-				singleRow.add(currentUserHistory.getDocument().getVolume().getMDP());
+				singleRow.add(currentUserHistory.getDocument().getMDPAndFolio());
 
 				if (currentUserHistory.getDocument().getSenderPeople() != null) {
 					singleRow.add(currentUserHistory.getDocument().getSenderPeople().toString());
@@ -233,8 +233,8 @@ public class AjaxController {
 			}  else if (currentUserHistory.getCategory().equals(Category.VOLUME)) {
 				singleRow.add(currentUserHistory.getVolume().getMDP());
 				singleRow.add((currentUserHistory.getVolume().getSerieList() == null) ? "" : currentUserHistory.getVolume().getSerieList().toString());
-				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getStartYear(), currentUserHistory.getVolume().getStartMonthNum(), currentUserHistory.getVolume().getStartDay()));
-				singleRow.add(DateUtils.getStringDate(currentUserHistory.getVolume().getEndYear(), currentUserHistory.getVolume().getEndMonthNum(), currentUserHistory.getVolume().getEndDay()));
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentUserHistory.getVolume().getStartYear(), currentUserHistory.getVolume().getStartMonthNum(), currentUserHistory.getVolume().getStartDay()));
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentUserHistory.getVolume().getEndYear(), currentUserHistory.getVolume().getEndMonthNum(), currentUserHistory.getVolume().getEndDay()));
 				if(currentUserHistory.getVolume().getDigitized().equals(Boolean.TRUE))
 					singleRow.add("YES");
 				else
@@ -295,7 +295,7 @@ public class AjaxController {
 		   if (currentUserHistory.getCategory().equals(Category.DOCUMENT)) {
 				singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
 			    singleRow.add(currentUserHistory.getAction().toString());
-			    singleRow.add(currentUserHistory.getDocument().getVolume().getMDP());
+			    singleRow.add(currentUserHistory.getDocument().getMDPAndFolio());
 			    resultList.add(HtmlUtils.showDocument(singleRow, currentUserHistory.getDocument().getEntryId()));
 		   } else if (currentUserHistory.getCategory().equals(Category.PEOPLE)) {
 			   	singleRow.add(simpleDateFormat.format(currentUserHistory.getDateAndTime()));
