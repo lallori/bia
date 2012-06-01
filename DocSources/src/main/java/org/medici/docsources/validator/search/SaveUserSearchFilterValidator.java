@@ -99,6 +99,9 @@ public class SaveUserSearchFilterValidator implements Validator {
 	private void validateSaveAction(SaveType saveType, String saveAs, Integer searchFilter, Errors errors) {
 		if(saveAs != null && saveType.equals(SaveType.newSearch)){
 			try{
+				if(saveAs.equals("")){
+					errors.reject("saveAs", "error.saveAs.invalid");
+				}
 				List<SearchFilter> userSearchFilters = getSearchService().getUserSearchFilters();
 				for(SearchFilter currentSearchFilter : userSearchFilters){
 					if(currentSearchFilter.getFilterName().toLowerCase().equals(saveAs.toLowerCase())){
