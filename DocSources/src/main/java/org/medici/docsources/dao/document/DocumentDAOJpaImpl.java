@@ -495,7 +495,11 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		Page page = new Page(paginationFilter);
 		Query query = null;
 		
-		String toSearch = new String("FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeAllId = " + placeToSearch + " AND topic.topicTitle LIKE '" + topicToSearch + "')");
+		String toSearch = "FROM Document WHERE entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeAllId = " + placeToSearch;
+		if (topicToSearch != null) {
+			toSearch += " AND topic.topicTitle LIKE '" + topicToSearch + "'";
+		}
+		toSearch+=")";
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;

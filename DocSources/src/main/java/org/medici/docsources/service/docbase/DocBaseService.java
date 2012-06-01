@@ -481,7 +481,7 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchLinkedDocumentsTopic(String place, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchLinkedDocumentsTopic(String place, String topic, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * 
