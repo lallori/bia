@@ -55,8 +55,8 @@ public class AdvancedSearchPlace extends AdvancedSearchAbstract {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5135090884608784944L;
-	
+	private static final long serialVersionUID = 3644033567435491386L;
+
 	private List<String> placesName;
 	private List<String> placeType;
 //	private List<Integer> linkedToTopicsId;

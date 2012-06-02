@@ -59,7 +59,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5135090884608784944L;
+	private static final long serialVersionUID = -4234252971238598397L;
 
 	private List<String> words;
 	private List<WordType> wordsTypes;

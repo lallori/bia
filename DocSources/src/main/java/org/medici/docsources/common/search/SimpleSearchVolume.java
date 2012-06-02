@@ -45,7 +45,7 @@ public class SimpleSearchVolume extends SimpleSearch {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5135090884608784944L;
+	private static final long serialVersionUID = -3768384416633997852L;
 	
 	private String alias; 
 

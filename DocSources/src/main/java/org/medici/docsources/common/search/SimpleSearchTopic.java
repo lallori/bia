@@ -1,5 +1,5 @@
 /*
- * SimpleSearchVolume.java
+ * SimpleSearchTopic.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -40,11 +40,11 @@ import org.medici.docsources.common.util.SimpleSearchUtils;
  *
  */
 public class SimpleSearchTopic implements Search {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5135090884608784944L;
-	
+	private static final long serialVersionUID = 3225527917284670921L;
 	private String alias; 
 
 	/**

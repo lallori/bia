@@ -43,7 +43,7 @@ public class SimpleSearchPeople extends SimpleSearch {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5135090884608784944L;
+	private static final long serialVersionUID = 483231406964703228L;
 	
 	private String alias; 
 

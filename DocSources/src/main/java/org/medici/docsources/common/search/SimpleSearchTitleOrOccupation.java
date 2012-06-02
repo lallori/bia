@@ -44,8 +44,8 @@ public class SimpleSearchTitleOrOccupation extends SimpleSearch {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5135090884608784944L;
-	
+	private static final long serialVersionUID = -7868927736853094973L;
+
 	private String alias; 
 
 	/**
