@@ -35,8 +35,10 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.UserComment;
 import org.medici.docsources.domain.UserMessage;
+import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -44,6 +46,14 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 public interface CommunityService {
+
+	/**
+	 * 
+	 * @param forumPost
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -86,6 +96,30 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param forumPost
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ForumPost findPost(Integer id) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getCategory(Forum category) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param entryId
 	 * @return
 	 * @throws ApplicationThrowable
@@ -107,7 +141,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public ArrayList<UserComment> getCommentsOnPlace(Integer placeAllId) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param summaryId
@@ -118,11 +152,27 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param forum
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getFirstCategory() throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param id
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public Forum getForum(Integer id) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<Forum> getForumsByType(Type type) throws ApplicationThrowable;
 
 	/**
 	 * 

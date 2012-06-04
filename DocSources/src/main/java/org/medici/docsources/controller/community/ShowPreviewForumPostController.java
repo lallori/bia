@@ -1,5 +1,5 @@
 /*
- * ShowForumController.java
+ * ShowPreviewForumPostController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,18 +27,11 @@
  */
 package org.medici.docsources.controller.community;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.medici.docsources.command.community.ShowForumCommand;
-import org.medici.docsources.common.util.ForumUtils;
-import org.medici.docsources.common.util.ListBeanUtils;
+import org.medici.docsources.command.community.ShowPreviewForumPostCommand;
 import org.medici.docsources.domain.Forum;
-import org.medici.docsources.domain.Forum.Type;
-import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,8 +47,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping(value={"/community/ShowForum"})
-public class ShowForumController {
+@RequestMapping(value={"/community/ShowPreviewForumPost"})
+public class ShowPreviewForumPostController {
 	@Autowired
 	private CommunityService communityService;
 	
@@ -66,50 +59,11 @@ public class ShowForumController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowForumCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowPreviewForumPostCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Forum forum = new Forum(); 
 
-		try {
-			if (command.getId() == null){
-				forum = getCommunityService().getFirstCategory();
-			} else {
-				forum = getCommunityService().getForum(command.getId());
-			}
-
-			if (forum.getType().equals(Type.CATEGORY)) {
-				model.put("category", forum);
-
-				List<Forum> subCategories = getCommunityService().getSubCategories(new Forum(forum.getId()));
-				model.put("subCategories", subCategories);
-
-				if (subCategories.size() > 0) {
-					HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
-					forumsHashMap = getCommunityService().getForumsGroupByCategory((List<Integer>)ListBeanUtils.transformList(subCategories, "id"));
-					model.put("forumsBySubCategories", forumsHashMap);
-				}
-			} else if (forum.getType().equals(Type.FORUM)) {
-				model.put("forum", forum);
-			}
-
-			List<Forum> subForums = new ArrayList<Forum>(0);
-			subForums = getCommunityService().getSubForums(forum.getId());
-			model.put("subForums", subForums);
-
-			HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
-			model.put("statisticsHashMap", statisticsHashMap);
-			
-			String forumChron = ForumUtils.getForumChronology(forum);
-			System.out.println(forumChron);
-		}catch (ApplicationThrowable applicationThrowable) {
-			return new ModelAndView("error/ShowForum", model);
-		}
-
-		if (ObjectUtils.toString(command.getCompleteDOM()).equals(Boolean.TRUE.toString())) {
-			return new ModelAndView("community/ShowForumCompleteDOM", model);
-		} else {
-			return new ModelAndView("community/ShowForum", model);
-		}
+		return new ModelAndView("community/ShowPreviewForumPost", model);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*
- * ForumCategory.java
+ * Forum.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -65,11 +65,14 @@ public class Forum implements Serializable {
 	@Column (name="\"type\"", length=10, nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Type type;
+	@Column (name="\"subType\"", length=10, nullable=false)
+	@Enumerated(EnumType.STRING)
+	private SubType subType;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="\"forumParent\"", nullable=true)
 	private Forum forumParent;
 	@Column (name="\"title\"", length=2000, nullable=false)
-	private String name;
+	private String title;
 	@Column (name="\"description\"", length=2000)
 	private String description;
 	@Column (name="\"status\"", length=2000)
@@ -87,6 +90,9 @@ public class Forum implements Serializable {
 	@Column (name="\"lastUpdate\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
+	@Column (name="\"dispositionOrder\"", length=10, columnDefinition="TINYINT default '0'")
+	private Integer dispositionOrder;
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"entryId\"", nullable=true)
 	private Document document;
@@ -116,26 +122,27 @@ public class Forum implements Serializable {
 
 	/**
 	 * 
-	 * @param forumId
-	 * @param parentForum
+	 * @param id
+	 * @param type
 	 */
-	public Forum(Integer forumId, Integer parentForum) {
+	public Forum(Integer id, Type type) {
 		super();
 		
-		setId(forumId);
-		setForumParent(new Forum(parentForum));
+		setId(id);
+		setType(type);
 	}
 
 	/**
 	 * 
-	 * @param type
+	 * @param forumId
 	 * @param parentForum
 	 */
-	public Forum(Type type, Integer parentForum) {
+	public Forum(Integer id, Type type, Integer parentForumId) {
 		super();
 		
+		setId(id);
 		setType(type);
-		setForumParent(new Forum(parentForum));
+		setForumParent(new Forum(parentForumId));
 	}
 
 	/**
@@ -181,17 +188,17 @@ public class Forum implements Serializable {
 	}
 
 	/**
-	 * @return the name
+	 * @return the title
 	 */
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param title the name to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	/**
@@ -292,13 +299,27 @@ public class Forum implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
+	/**
+	 * @param dispositionOrder the dispositionOrder to set
+	 */
+	public void setDispositionOrder(Integer dispositionOrder) {
+		this.dispositionOrder = dispositionOrder;
+	}
+
+	/**
+	 * @return the dispositionOrder
+	 */
+	public Integer getDispositionOrder() {
+		return dispositionOrder;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer("[");
 		stringBuffer.append("id=");
 		stringBuffer.append(getId());
 		stringBuffer.append(", name=");
-		stringBuffer.append(getName());
+		stringBuffer.append(getTitle());
 		if (getForumParent() == null) {
 			stringBuffer.append(", parentId=null,");
 		} else {
@@ -363,6 +384,45 @@ public class Forum implements Serializable {
 	public Volume getVolume() {
 		return volume;
 	}
+
+	/**
+	 * @param subType the subType to set
+	 */
+	public void setSubType(SubType subType) {
+		this.subType = subType;
+	}
+
+	/**
+	 * @return the subType
+	 */
+	public SubType getSubType() {
+		return subType;
+	}
+
+	/**
+	 * 
+	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+	 *
+	 */
+	public static enum SubType {
+		GENERIC("GENERIC"),
+		DOCUMENT("DOCUMENT"),
+		PEOPLE("PEOPLE"),
+		PLACE("PLACE"),
+		VOLUME("VOLUME");
+		
+		private final String subType;
+
+	    private SubType(String value) {
+	    	subType = value;
+	    }
+
+	    @Override
+	    public String toString(){
+	        return subType;
+	    }
+	}
+
 	/**
 	 * 
 	 * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)

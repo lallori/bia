@@ -1,5 +1,5 @@
 /*
- * ShowForumCommand.java
+ * EditForumPropertiesCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,43 +25,72 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.community;
+
+package org.medici.docsources.command.admin;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowForumCommand {
-	private Integer id;
-	private Boolean completeDOM;
+public class EditForumPropertiesCommand {
+	private String idForumDocument;
+	private String idForumPeople;
+	private String idForumPlace;
+	private String idForumVolume;
 
 	/**
-	 * @param id the id to set
+	 * @return the idForumDocument
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public String getIdForumDocument() {
+		return idForumDocument;
 	}
-
+	
 	/**
-	 * @return the id
+	 * @return the idForumPeople
 	 */
-	public Integer getId() {
-		return id;
+	public String getIdForumPeople() {
+		return idForumPeople;
 	}
-
+	
 	/**
-	 * @param completeDOM the completeDOM to set
+	 * @return the idForumPlace
 	 */
-	public void setCompleteDOM(Boolean completeDOM) {
-		this.completeDOM = completeDOM;
+	public String getIdForumPlace() {
+		return idForumPlace;
 	}
-
+	
 	/**
-	 * @return the completeDOM
+	 * @return the idForumVolume
 	 */
-	public Boolean getCompleteDOM() {
-		return completeDOM;
+	public String getIdForumVolume() {
+		return idForumVolume;
+	}
+	
+	/**
+	 * @param idForumDocument the idForumDocument to set
+	 */
+	public void setIdForumDocument(String idForumDocument) {
+		this.idForumDocument = idForumDocument;
+	}
+	
+	/**
+	 * @param idForumPeople the idForumPeople to set
+	 */
+	public void setIdForumPeople(String idForumPeople) {
+		this.idForumPeople = idForumPeople;
+	}
+	/**
+	 * @param idForumPlace the idForumPlace to set
+	 */
+	public void setIdForumPlace(String idForumPlace) {
+		this.idForumPlace = idForumPlace;
+	}
+	/**
+	 * @param idForumVolume the idForumVolume to set
+	 */
+	public void setIdForumVolume(String idForumVolume) {
+		this.idForumVolume = idForumVolume;
 	}
 	
 }

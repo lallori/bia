@@ -34,15 +34,8 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.admin.EditUserCommand;
-import org.medici.docsources.command.admin.ShowUserCommand;
-import org.medici.docsources.command.docbase.EditDetailsDocumentCommand;
-import org.medici.docsources.common.pagination.HistoryNavigator;
-import org.medici.docsources.domain.Document;
-import org.medici.docsources.domain.Image;
-import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserInformation;
-import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +93,7 @@ public class EditUserController {
 
 				userInformation = getAdminService().findUserInformation(command.getAccount());
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/ShowVolume", model);
+				return new ModelAndView("error/EditUser", model);
 			}
 		} else {
 			user.setAccount("");

@@ -36,10 +36,16 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
+import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.dao.usermessage.UserMessageDAO;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.UserHistory.Action;
+import org.medici.docsources.domain.UserHistory.Category;
+import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.UserComment;
+import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +54,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * This class is the default implementation of service responsible for every 
+ * action on community (forums, messages).
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 @Service
@@ -63,6 +72,9 @@ public class CommunityServiceImpl implements CommunityService {
 	private UserInformationDAO UserInformationDAO;   
 	@Autowired
 	private UserMessageDAO userMessageDAO;
+	@Autowired
+	private UserHistoryDAO userHistoryDAO;
+
 	/**
 	 * {@inheritDoc} 
 	 */
@@ -116,6 +128,18 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getCategory(Forum category) throws ApplicationThrowable {
+		try {
+			return getForumDAO().getCategory(category);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
 	 * {@inheritDoc} 
 	 */
 	@Override
@@ -155,6 +179,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc} 
 	 */
 	@Override
+	public Forum getFirstCategory() throws ApplicationThrowable {
+		try {
+			return getForumDAO().getFirstCategory();
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
 	public Forum getForum(Integer id) throws ApplicationThrowable {
 		try {
 			return getForumDAO().find(id);
@@ -175,6 +211,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public ForumPostDAO getForumPostDAO() {
 		return forumPostDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Forum> getForumsByType(Type type) throws ApplicationThrowable {
+		try {
+			return getForumDAO().getForumsByType(type);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -211,7 +259,7 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public List<Forum> getSubCategories(Forum forum) throws ApplicationThrowable {
 		try {
-			return getForumDAO().findForumCategories(forum);
+			return getForumDAO().findSubCategories(forum);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -301,5 +349,71 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
 		this.userMessageDAO = userMessageDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
+		try {
+			forumPost.setId(null);
+
+			getForumPostDAO().persist(forumPost);
+
+			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
+			
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable {
+		try {
+			forumPost.setId(null);
+
+			getForumPostDAO().persist(forumPost);
+
+			getUserHistoryDAO().persist(new UserHistory("Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
+			
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost findPost(Integer id) throws ApplicationThrowable {
+		try {
+			ForumPost forumPost = getForumPostDAO().find(id);
+			
+			getUserHistoryDAO().persist(new UserHistory("Show post", Action.VIEW, Category.FORUM_POST, forumPost));
+
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
 	}
 }

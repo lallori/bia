@@ -1,5 +1,5 @@
 /*
- * EditIIPImagePropertiesController.java
+ * EditForumPostController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,17 +25,19 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.controller.admin;
+package org.medici.docsources.controller.community;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.admin.EditIIPImagePropertiesCommand;
-import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.docsources.command.community.EditForumPostCommand;
+import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.exception.ApplicationThrowable;
-import org.medici.docsources.service.admin.AdminService;
+import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -47,34 +49,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Edit Email Properties".
+ * Controller to edit a post.
+ * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
- * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/admin/EditIIPImageProperties")
-public class EditIIPImagePropertiesController {
+@RequestMapping(value={"/community/EditPostForum"})
+public class EditForumPostController {
 	@Autowired
-	private AdminService adminService;
+	private CommunityService communityService;
 	@Autowired(required = false)
-	@Qualifier("editIIPImagePropertiesValidator")
+	@Qualifier("editPostForumValidator")
 	private Validator validator;
-
-	/**
-	 * @return the adminService
-	 */
-	public AdminService getAdminService() {
-		return adminService;
-	}
-
-	/**
-	 * @return the validator
-	 */
-	public Validator getValidator() {
-		return validator;
-	}
-
+	
 	/**
 	 * 
 	 * @param command
@@ -82,57 +70,77 @@ public class EditIIPImagePropertiesController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditIIPImagePropertiesCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditForumPostCommand command, BindingResult result) {
 		getValidator().validate(command, result);
-
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
+			ForumPost forumPost = new ForumPost(command.getId());
+			forumPost.setText(command.getText());
+			forumPost.setSubject(command.getSubject());
+
 			try {
-				HashMap<String, String> hashMap = new HashMap<String, String>();
-				hashMap.put("iipimage.reverseproxy.fcgi.path", command.getServerFcgiBinPath());
-				hashMap.put("iipimage.reverseproxy.host", command.getServerHostName());
-				hashMap.put("iipimage.reverseproxy.port", command.getServerPort());
-				hashMap.put("iipimage.reverseproxy.protocol", command.getServerProtocol());
-				hashMap.put("iipimage.reverseproxy.version", command.getServerVersion());
-				
-				getAdminService().updateApplicationProperties(hashMap);
-
-				// We need to refresh ApplicationPropertyManager...
-				ApplicationPropertyManager.refreshProperties();
+				if (command.getId().equals(0)) {
+					forumPost.setDateCreated(new Date());
+					forumPost = getCommunityService().addNewPost(forumPost);
+					model.put("forumPost", forumPost);
+				} else {
+					forumPost = getCommunityService().editPost(forumPost);
+					model.put("forumPost", forumPost);
+				}
+				return new ModelAndView("community/ShowPostForum", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/IIPImageProperties", model);
+				return new ModelAndView("error/EditPostForum", model);
 			}
-
-			return new ModelAndView("admin/ShowIIPImageProperties", model);
 		}
 	}
-
-	/**
-	 * @param adminService the adminService to set
-	 */
-	public void setAdminService(AdminService adminService) {
-		this.adminService = adminService;
-	}
-
+		
 	/**
 	 * 
-	 * @param command
+	 * @param request
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditIIPImagePropertiesCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditForumPostCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		Forum forum = new Forum(); 
 
-		command.setServerFcgiBinPath(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
-		command.setServerHostName(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
-		command.setServerPort(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
-		command.setServerProtocol(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
-		command.setServerVersion(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.version"));
+		if ((command != null) && (command.getId() > 0)) {
+			ForumPost forumPost = new ForumPost();
 
-		return new ModelAndView("admin/EditIIPImageProperties", model);
+			try {
+				forumPost = getCommunityService().findPost(command.getId());
+				model.put("forumPost", forumPost);
+			} catch (ApplicationThrowable applicationThrowable) {
+				return new ModelAndView("error/EditPostForum", model);
+				
+			}
+			command.setForumId(forum.getForumParent().getId());
+			command.setSubject(forumPost.getSubject());
+			command.setText(forumPost.getText());
+		} else {
+			command.setSubject("");
+			command.setText("");
+		}
+
+		return new ModelAndView("community/EditForumPost", model);
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
 	}
 
 	/**
@@ -140,5 +148,12 @@ public class EditIIPImagePropertiesController {
 	 */
 	public void setValidator(Validator validator) {
 		this.validator = validator;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
 	}
 }

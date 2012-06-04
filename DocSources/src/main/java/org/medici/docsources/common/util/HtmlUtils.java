@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.SearchFilter.SearchType;
@@ -48,6 +49,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public class HtmlUtils {
 
+	/**
+	 * 
+	 * @param placeGeographicCoordinates
+	 * @return
+	 */
 	public static String generateLinkGoogleMaps(PlaceGeographicCoordinates placeGeographicCoordinates){
 		String link = "http://maps.google.com/maps?q=";
 		Double latitude = placeGeographicCoordinates.getMinuteLatitude().doubleValue() * 60 + placeGeographicCoordinates.getSecondLatitude().doubleValue();
@@ -203,6 +209,45 @@ public class HtmlUtils {
 		}
 
 		return url;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getShowForumUrl(Forum forum) {
+		StringBuffer stringBuffer = new StringBuffer("<a href=\"");
+		stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuffer.append("/community/ShowForum.do?id=");
+		stringBuffer.append(forum.getId());
+		stringBuffer.append("&\" class=\"forum\" />");
+		stringBuffer.append(forum.getTitle());
+		stringBuffer.append("</a>");
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getShowForumIndexUrl(Forum forum) {
+		if (forum == null) {
+			return "";
+		}
+
+		StringBuffer stringBuffer = new StringBuffer("<img src=\"");
+		stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuffer.append("/images/forum/img_chronology.png\" alt=\"Chronology\" />\n");
+		stringBuffer.append("<a href=\"");
+		stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		stringBuffer.append("/community/ShowForum.do?id=");
+		stringBuffer.append(forum.getId());
+		stringBuffer.append("\" class=\"boardIndex\">");
+		stringBuffer.append(forum.getTitle());
+		stringBuffer.append("</a>");
+
+		return stringBuffer.toString();
 	}
 
 	/**

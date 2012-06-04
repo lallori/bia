@@ -26,4 +26,10 @@
         <function-class>org.medici.docsources.common.util.JSTLFunctions</function-class>
         <function-signature>java.lang.String toString(java.util.List)</function-signature>
     </function>
+
+    <function>
+        <name>getForumChronology</name>
+        <function-class>org.medici.docsources.common.util.JSTLFunctions</function-class>
+        <function-signature>java.lang.String getForumChronology(org.medici.docsources.domain.Forum)</function-signature>
+    </function>
 </taglib>

@@ -89,6 +89,13 @@ public class UserHistory implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"summaryId\"", nullable=true)
 	private Volume volume;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"forumId\"", nullable=true)
+	private Forum forum;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"forumPostId\"", nullable=true)
+	private ForumPost forumPost;
+
 	@Column (name="\"searchData\"", nullable=true)
 	@Lob
 	private Search searchData;
@@ -269,6 +276,34 @@ public class UserHistory implements Serializable {
 	}
 
 	/**
+	 * @param forum the forum to set
+	 */
+	public void setForum(Forum forum) {
+		this.forum = forum;
+	}
+
+	/**
+	 * @return the forum
+	 */
+	public Forum getForum() {
+		return forum;
+	}
+
+	/**
+	 * @param forumPost the forumPost to set
+	 */
+	public void setForumPost(ForumPost forumPost) {
+		this.forumPost = forumPost;
+	}
+
+	/**
+	 * @return the forumPost
+	 */
+	public ForumPost getForumPost() {
+		return forumPost;
+	}
+
+	/**
 	 * @param searchData the searchData to set
 	 */
 	public void setSearchData(Search searchData) {
@@ -352,6 +387,8 @@ public class UserHistory implements Serializable {
 		PEOPLE("People"),
 		PLACE("Place"),
 		VOLUME("Volume"),
+		FORUM("Forum"),
+		FORUM_POST("ForumPost"),
 		SEARCH_DOCUMENT("SearchDocument"),
 		SEARCH_PEOPLE("SearchPeople"),
 		SEARCH_PLACE("SearchPlace"),

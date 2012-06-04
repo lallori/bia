@@ -32,6 +32,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.docsources.domain.Forum;
 
 /**
   * Utility class to provides custom jstl functions.
@@ -87,5 +88,14 @@ public final class JSTLFunctions {
      */
     public static String getApplicationProperty(String propertyName) {
     	return ApplicationPropertyManager.getApplicationProperty(propertyName);
+    }
+    
+    /**
+     * 
+     * @param forum
+     * @return
+     */
+    public static String getForumChronology(Forum forum){
+    	return ForumUtils.getForumChronology(forum);
     }
 }

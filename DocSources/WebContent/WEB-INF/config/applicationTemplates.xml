@@ -175,6 +175,7 @@
 		<put-attribute name="recaptcha" value="/WEB-INF/jsp/adm/ShowRecaptchaProperties.jsp"/>
  		<put-attribute name="iip" value="/WEB-INF/jsp/adm/ShowIIPImageProperties.jsp"/>
  		<put-attribute name="schedone" value="/WEB-INF/jsp/adm/ShowSchedoneProperties.jsp"/>
+ 		<put-attribute name="forum" value="/WEB-INF/jsp/adm/ShowForumProperties.jsp"/>
 	</definition>
 
 	<definition name="admin/ShowGeneralProperties" extends="template.partialDOM">
@@ -282,8 +283,8 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnVolume.jsp"/>
 	</definition>
 
-	<definition name="community/ShowCategoryForum" extends="template.forum">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCategoryForum.jsp"/>
+	<definition name="community/ShowForumCompleteDOM" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
 	</definition>
 
 	<definition name="community/ShowForum" extends="template.partialDOM">

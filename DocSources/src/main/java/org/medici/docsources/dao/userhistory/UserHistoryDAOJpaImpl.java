@@ -326,7 +326,12 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 			case VOLUME:
 				stringBuffer.append(" AND volume.summaryId=:primaryKeyId");
 				break;
-	
+			case FORUM:
+				stringBuffer.append(" AND forum.id=:primaryKeyId");
+				break;
+			case FORUM_POST:
+				stringBuffer.append(" AND forumPost.id=:primaryKeyId");
+				break;
 			default:
 				break;
 		}
@@ -368,6 +373,12 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 				break;
 			case VOLUME:
 				stringBuffer.append(" AND volume.summaryId=:primaryKeyId");
+				break;
+			case FORUM:
+				stringBuffer.append(" AND forum.id=:primaryKeyId");
+				break;
+			case FORUM_POST:
+				stringBuffer.append(" AND forumPost.id=:primaryKeyId");
 				break;
 			default:
 				break;
@@ -440,33 +451,38 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	public UserHistory findNextCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException {
 		// -- Next
 		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory > 15 and entryId is not null ORDER BY idUserHistory ASC LIMIT 1
-		StringBuffer queryString = new StringBuffer("FROM UserHistory WHERE username='");
-		queryString.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		queryString.append("'");
-		queryString.append(" AND idUserHistory > ");
-		queryString.append(idUserHistory);        
+		StringBuffer stringBuffer = new StringBuffer("FROM UserHistory WHERE username='");
+		stringBuffer.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		stringBuffer.append("'");
+		stringBuffer.append(" AND idUserHistory > ");
+		stringBuffer.append(idUserHistory);        
 
         switch (category) {
 			case DOCUMENT:
-				queryString.append(" AND document is not null ");
+				stringBuffer.append(" AND document is not null ");
 				break;
 			case PEOPLE:
-				queryString.append(" AND person is not null ");
+				stringBuffer.append(" AND person is not null ");
 				break;
 			case PLACE:
-				queryString.append(" AND place is not null ");
+				stringBuffer.append(" AND place is not null ");
 				break;
 			case VOLUME:
-				queryString.append(" AND volume is not null ");
+				stringBuffer.append(" AND volume is not null ");
 				break;
-	
+			case FORUM:
+				stringBuffer.append(" AND forum is not null ");
+				break;
+			case FORUM_POST:
+				stringBuffer.append(" AND forumPost is not null ");
+				break;
 			default:
 				break;
 		}
 	
-	    queryString.append(" ORDER BY idUserHistory ASC LIMIT 1");
+        stringBuffer.append(" ORDER BY idUserHistory ASC LIMIT 1");
 	
-	    Query query = getEntityManager().createQuery(queryString.toString());	
+	    Query query = getEntityManager().createQuery(stringBuffer.toString());	
         query.setMaxResults(1);
 
         List<UserHistory> result = query.getResultList();
@@ -514,33 +530,39 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 	public UserHistory findPreviousCategoryHistoryCursor(Category category, Integer idUserHistory) throws PersistenceException {
 		// -- Previous
 		// SELECT * FROM tblUserHistory WHERE username='lpasquinelli' AND idUserHistory < 15 and entryId is not null ORDER BY idUserHistory DESC LIMIT 1
-		StringBuffer queryString = new StringBuffer("FROM UserHistory WHERE username='");
-		queryString.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-		queryString.append("'");
-		queryString.append(" AND idUserHistory < ");
-		queryString.append(idUserHistory);
+		StringBuffer stringBuffer = new StringBuffer("FROM UserHistory WHERE username='");
+		stringBuffer.append(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		stringBuffer.append("'");
+		stringBuffer.append(" AND idUserHistory < ");
+		stringBuffer.append(idUserHistory);
         
         switch (category) {
 			case DOCUMENT:
-				queryString.append(" AND document is not null ");
+				stringBuffer.append(" AND document is not null ");
 				break;
 			case PEOPLE:
-				queryString.append(" AND person is not null ");
+				stringBuffer.append(" AND person is not null ");
 				break;
 			case PLACE:
-				queryString.append(" AND place is not null ");
+				stringBuffer.append(" AND place is not null ");
 				break;
 			case VOLUME:
-				queryString.append(" AND volume is not null ");
+				stringBuffer.append(" AND volume is not null ");
 				break;
-	
+			case FORUM:
+				stringBuffer.append(" AND forum is not null ");
+				break;
+			case FORUM_POST:
+				stringBuffer.append(" AND forumPost is not null ");
+				break;
+
 			default:
 				break;
 		}
 
-        queryString.append(" ORDER BY idUserHistory DESC LIMIT 1");
+        stringBuffer.append(" ORDER BY idUserHistory DESC LIMIT 1");
 
-        Query query = getEntityManager().createQuery(queryString.toString());
+        Query query = getEntityManager().createQuery(stringBuffer.toString());
         query.setMaxResults(1);
         //query.setParameter("username", ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
         //query.setParameter("idUserHistory", idUserHistory);
@@ -829,6 +851,32 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 					} else if (lastUserHistory.getCategory().equals(Category.VOLUME)) {
 						// if volume is not the same, we persist action 
 						if (!lastUserHistory.getVolume().getSummaryId().equals(entity.getVolume().getSummaryId())) {
+							super.persist(entity);
+						} else {
+							// if volume is not the same, we persist action
+							if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+								super.persist(entity);
+							} else if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.DELETE))) {
+								super.persist(entity);
+							}
+							//otherwise we dont' persist
+						}				
+					}  else if (lastUserHistory.getCategory().equals(Category.FORUM)) {
+						// if volume is not the same, we persist action 
+						if (!lastUserHistory.getForum().getId().equals(entity.getForum().getId())) {
+							super.persist(entity);
+						} else {
+							// if volume is not the same, we persist action
+							if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+								super.persist(entity);
+							} else if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.DELETE))) {
+								super.persist(entity);
+							}
+							//otherwise we dont' persist
+						}				
+					} else if (lastUserHistory.getCategory().equals(Category.FORUM_POST)) {
+						// if volume is not the same, we persist action 
+						if (!lastUserHistory.getForumPost().getId().equals(entity.getForumPost().getId())) {
 							super.persist(entity);
 						} else {
 							// if volume is not the same, we persist action

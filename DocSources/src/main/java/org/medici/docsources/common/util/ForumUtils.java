@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.Forum.Type;
 
 /**
  * 
@@ -68,4 +69,20 @@ public class ForumUtils {
 		return hashMap;
 	}
 
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 */
+	public static String getForumChronology(Forum forum) {
+		if (forum.getForumParent() == null) {
+			return HtmlUtils.getShowForumIndexUrl(forum);
+		}
+
+		if (forum.getType().equals(Type.CATEGORY)) {
+			return getForumChronology(forum.getForumParent());
+		}
+		
+		return getForumChronology(forum.getForumParent()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowForumUrl(forum) + "</span>";
+	}
 }

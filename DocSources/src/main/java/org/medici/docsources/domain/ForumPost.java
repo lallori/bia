@@ -82,6 +82,24 @@ public class ForumPost implements Serializable {
 	private String subject;
 	@Column (name="\"text\"", length=75000)
 	private String text;
+
+	/**
+	 * Default constructor
+	 */
+	public ForumPost() {
+		super();
+	}
+
+	/**
+	 * 
+	 * @param id2
+	 */
+	public ForumPost(Integer id) {
+		super();
+		
+		setId(id);
+	}
+
 	/**
 	 * @return the id
 	 */

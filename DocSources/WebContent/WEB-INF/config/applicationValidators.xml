@@ -3,7 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
-
 	<!-- Admin base Validator -->
 	<bean id="editRecaptchaPropertiesValidator" class="org.medici.docsources.validator.admin.EditRecaptchaPropertiesValidator">
         <description>Edit Recaptcha Properties Validator.</description>
@@ -13,6 +12,10 @@
         <description>Edit Email Properties Validator.</description>
 	</bean>
 
+	<bean id="editForumPropertiesValidator" class="org.medici.docsources.validator.admin.EditForumPropertiesValidator">
+        <description>Edit Forum Properties Validator.</description>
+	</bean>
+	
 	<bean id="editGeneralPropertiesValidator" class="org.medici.docsources.validator.admin.EditGeneralPropertiesValidator">
         <description>Edit General Properties Validator.</description>
 	</bean>
@@ -25,6 +28,10 @@
         <description>Edit User Validator.</description>
 	</bean>
 
+	<!-- Community base Validator -->
+	<bean id="editForumPostValidator" class="org.medici.docsources.validator.community.EditForumPostValidator">
+		<description>Edit Forum Post Validator.</description>
+	</bean>
 	<!-- Digitization base Validator -->
 	<bean id="editDetailsSchedoneValitor" class="org.medici.docsources.validator.digitization.EditDetailsSchedoneValidator">
         <description>Edit Details Schedone Validator.</description>

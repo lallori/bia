@@ -69,18 +69,26 @@ public class ShowCategoryForumController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		try {
-			List<Forum> categories = getCommunityService().getSubCategories(new Forum(Type.CATEGORY, command.getId()));
-			model.put("categories", categories);
-
-			if (categories.size() > 0) {
-				HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
-				forumsHashMap = getCommunityService().getForumsGroupByCategory((List<Integer>)ListBeanUtils.transformList(categories, "id"));
-				model.put("forumsHashMap", forumsHashMap);
+			Forum category = null;
+			if (command.getId() == null){
+				category = getCommunityService().getFirstCategory();
 			} else {
-				List<Forum> forums = new ArrayList<Forum>(0);
-				forums = getCommunityService().getSubForums(new Integer(0));
-				model.put("forums", forums);
+				category = getCommunityService().getCategory(new Forum(command.getId(), Type.CATEGORY));
 			}
+			model.put("category", category);
+
+			List<Forum> subCategories = getCommunityService().getSubCategories(new Forum(category.getId(), Type.CATEGORY));
+			model.put("subCategories", subCategories);
+
+			if (subCategories.size() > 0) {
+				HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
+				forumsHashMap = getCommunityService().getForumsGroupByCategory((List<Integer>)ListBeanUtils.transformList(subCategories, "id"));
+				model.put("forumsBySubCategories", forumsHashMap);
+			}
+
+			List<Forum> forums = new ArrayList<Forum>(0);
+			forums = getCommunityService().getSubForums(category.getId());
+			model.put("subForums", forums);
 
 			HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
 			model.put("statisticsHashMap", statisticsHashMap);

@@ -1,5 +1,5 @@
 /*
- * ShowForumCommand.java
+ * ShowPreviewForumPostCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -32,36 +32,6 @@ package org.medici.docsources.command.community;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowForumCommand {
-	private Integer id;
-	private Boolean completeDOM;
+public class ShowPreviewForumPostCommand {
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param completeDOM the completeDOM to set
-	 */
-	public void setCompleteDOM(Boolean completeDOM) {
-		this.completeDOM = completeDOM;
-	}
-
-	/**
-	 * @return the completeDOM
-	 */
-	public Boolean getCompleteDOM() {
-		return completeDOM;
-	}
-	
 }

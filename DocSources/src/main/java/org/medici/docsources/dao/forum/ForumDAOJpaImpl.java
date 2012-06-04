@@ -107,12 +107,12 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		// we sort input categories...
 		Collections.sort(categoriesIds);
 
-		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, name asc
-		StringBuffer stringBuffer = new StringBuffer("FROM Forum WHERE type=:typeForum ");
-        stringBuffer.append(" and forumParent.id in (:forumParent) and forumParent.type=:forumParentTypeCategory ");
-        stringBuffer.append(" order by forumParent asc, name asc");
+		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
+		String jpql = "FROM Forum WHERE type=:typeForum " +
+        " and forumParent.id in (:forumParent) and forumParent.type=:forumParentTypeCategory " +
+        " order by forumParent asc, title asc";
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(jpql);
         query.setParameter("typeForum", Type.FORUM);
         query.setParameter("forumParent", categoriesIds);
         query.setParameter("forumParentTypeCategory", Type.CATEGORY);
@@ -127,23 +127,102 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Forum> findSubCategories(Forum forum) throws PersistenceException {
+		if (forum == null){
+			return new ArrayList<Forum>(0);
+		}
+
+		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
+		String jpql = "FROM Forum WHERE type=:type and forumParent.id = :parentId " +
+		" and forumParent.type=:parentType order by dispositionOrder asc";
+    	
+        Query query = getEntityManager().createQuery(jpql);
+        query.setParameter("type", Type.CATEGORY);
+        query.setParameter("parentId", forum.getId());
+        query.setParameter("parentType", Type.CATEGORY);
+
+        return (List<Forum>) query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Forum> findSubForums(Integer parentForumId) throws PersistenceException {
 		if (parentForumId == null){
 			return new ArrayList<Forum>(0);
 		}
 
-		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, name asc
-		StringBuffer stringBuffer = new StringBuffer("FROM Forum WHERE type=:typeForum ");
-        stringBuffer.append(" and forumParent.id = :forumParentId and forumParent.type=:forumParentTypeForum ");
-        stringBuffer.append(" order by forumParent asc, name asc");
+		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
+		String jpql = "FROM Forum WHERE type=:typeForum  and forumParent.id = :forumParentId " +
+		"and forumParent.type=:forumParentTypeForum order by dispositionOrder asc";
     	
-        Query query = getEntityManager().createQuery(stringBuffer.toString());
+        Query query = getEntityManager().createQuery(jpql);
         query.setParameter("typeForum", Type.FORUM);
         query.setParameter("forumParentId", parentForumId);
         query.setParameter("forumParentTypeForum", Type.FORUM);
 
         return (List<Forum>) query.getResultList();
   	}
+	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Forum getCategory(Forum category) throws PersistenceException {
+		if (category == null) {
+			return null;
+		}
+
+		String stringQuery = "FROM Forum WHERE type=:typeForum  and id = :categoryId";
+    	
+        Query query = getEntityManager().createQuery(stringQuery);
+        query.setParameter("typeForum", Type.CATEGORY);
+        query.setParameter("categoryId", category.getId());
+
+        List<Forum> list = query.getResultList();
+		if (list.size() == 0) { 
+			return null;
+		} else {
+			return (Forum) query.getResultList().get(0);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Forum getFirstCategory() throws PersistenceException {
+		String stringQuery = "FROM Forum WHERE type=:typeForum order by id asc";
+    	
+        Query query = getEntityManager().createQuery(stringQuery);
+        query.setParameter("typeForum", Type.CATEGORY);
+
+        List<Forum> list = query.getResultList();
+		if (list.size() == 0) { 
+			return null;
+		} else {
+			return (Forum) query.getResultList().get(0);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Forum> getForumsByType(Type type) throws PersistenceException {
+		String queryString = "FROM Forum WHERE type=:typeForum ";
+
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("typeForum", type);
+
+        return query.getResultList();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -151,7 +230,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	@Override
 	public HashMap<String, Long> getTotalTopicsAndPosts() throws PersistenceException {
 		String queryString = "SELECT sum(topicsNumber), sum(postsNumber) FROM Forum";
-    	
+
         Query query = getEntityManager().createQuery(queryString);
 
         Object[] statisticsResult = (Object[]) query.getSingleResult();

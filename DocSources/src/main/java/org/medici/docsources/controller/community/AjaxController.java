@@ -37,7 +37,9 @@ import javax.servlet.http.HttpSession;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
+import org.medici.docsources.common.util.ForumUtils;
 import org.medici.docsources.common.util.HtmlUtils;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.domain.UserMessage.UserMessageCategory;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -71,7 +73,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/community/CheckNewMessages", method = RequestMethod.GET)
-	public ModelAndView FindSchedone() {
+	public ModelAndView checkNewMessages() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		try{
@@ -87,6 +89,33 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);		
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/community/GetForumChronology", method = RequestMethod.GET)
+	public ModelAndView showForumChronology(@RequestParam(value="id", required=false) Integer id) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		Forum forum = new Forum();
+		
+		try{
+			if (id != null ) {
+				forum = getCommunityService().getForum(id);
+			} else {
+				forum = getCommunityService().getFirstCategory();
+			}
+
+			model.put("id", forum.getId().toString());
+			model.put("title", forum.getTitle());
+			model.put("chronology", ForumUtils.getForumChronology(forum));
+		}catch(ApplicationThrowable th){
+			model.put("error", th.getMessage());
+		}
+
+		return new ModelAndView("responseOK", model);		
+	}
+	
 	/**
 	 * 
 	 * @param httpSession

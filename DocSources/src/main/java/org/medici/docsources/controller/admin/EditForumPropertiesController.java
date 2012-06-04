@@ -28,14 +28,18 @@
 package org.medici.docsources.controller.admin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.medici.docsources.command.admin.EditIIPImagePropertiesCommand;
+import org.medici.docsources.command.admin.EditForumPropertiesCommand;
 import org.medici.docsources.common.property.ApplicationPropertyManager;
+import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.admin.AdminService;
+import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -53,12 +57,28 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/admin/EditIIPImageProperties")
-public class EditIIPImagePropertiesController {
+@RequestMapping("/admin/EditForumProperties")
+public class EditForumPropertiesController {
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private CommunityService communityService;
+	/**
+	 * @return the communityService
+	 */
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+
+	/**
+	 * @param communityService the communityService to set
+	 */
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
 	@Autowired(required = false)
-	@Qualifier("editIIPImagePropertiesValidator")
+	@Qualifier("editForumPropertiesValidator")
 	private Validator validator;
 
 	/**
@@ -82,28 +102,26 @@ public class EditIIPImagePropertiesController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditIIPImagePropertiesCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditForumPropertiesCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 
 		if (result.hasErrors()) {
 			return setupForm(command);
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
-
 			try {
 				HashMap<String, String> hashMap = new HashMap<String, String>();
-				hashMap.put("iipimage.reverseproxy.fcgi.path", command.getServerFcgiBinPath());
-				hashMap.put("iipimage.reverseproxy.host", command.getServerHostName());
-				hashMap.put("iipimage.reverseproxy.port", command.getServerPort());
-				hashMap.put("iipimage.reverseproxy.protocol", command.getServerProtocol());
-				hashMap.put("iipimage.reverseproxy.version", command.getServerVersion());
+				hashMap.put("forum.identifier.document", command.getIdForumDocument());
+				hashMap.put("forum.identifier.people", command.getIdForumPeople());
+				hashMap.put("forum.identifier.place", command.getIdForumPlace());
+				hashMap.put("forum.identifier.volume", command.getIdForumVolume());
 				
 				getAdminService().updateApplicationProperties(hashMap);
 
 				// We need to refresh ApplicationPropertyManager...
 				ApplicationPropertyManager.refreshProperties();
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/IIPImageProperties", model);
+				return new ModelAndView("error/EditDetailsDocument", model);
 			}
 
 			return new ModelAndView("admin/ShowIIPImageProperties", model);
@@ -123,16 +141,23 @@ public class EditIIPImagePropertiesController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") EditIIPImagePropertiesCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditForumPropertiesCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		command.setServerFcgiBinPath(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.fcgi.path"));
-		command.setServerHostName(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.host"));
-		command.setServerPort(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.port"));
-		command.setServerProtocol(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.protocol"));
-		command.setServerVersion(ApplicationPropertyManager.getApplicationProperty("iipimage.reverseproxy.version"));
+		try {
+			List<Forum> forums = getCommunityService().getForumsByType(Type.FORUM);
+			
+			model.put("forums", forums);
+		} catch (ApplicationThrowable applicationThrowable) {
+			return new ModelAndView("error/EditForumProperties", model);
+		}
+		
+		command.setIdForumDocument(ApplicationPropertyManager.getApplicationProperty("forum.identifier.document"));
+		command.setIdForumPeople(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people"));
+		command.setIdForumPlace(ApplicationPropertyManager.getApplicationProperty("forum.identifier.place"));
+		command.setIdForumVolume(ApplicationPropertyManager.getApplicationProperty("forum.identifier.volume"));
 
-		return new ModelAndView("admin/EditIIPImageProperties", model);
+		return new ModelAndView("admin/EditForumProperties", model);
 	}
 
 	/**

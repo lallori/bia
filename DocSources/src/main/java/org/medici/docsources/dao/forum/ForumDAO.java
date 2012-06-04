@@ -34,6 +34,7 @@ import javax.persistence.PersistenceException;
 
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.Forum.Type;
 
 /**
  * Forum DAO.
@@ -61,11 +62,42 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 
 	/**
 	 * 
+	 * @param forum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Forum> findSubCategories(Forum forum) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param forumParentId
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public List<Forum> findSubForums(Integer forumParentId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param category
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getCategory(Forum category) throws PersistenceException;
+
+	/**
+	 * 
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getFirstCategory() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param forum
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Forum> getForumsByType(Type type) throws PersistenceException;
 
 	/**
 	 * 
