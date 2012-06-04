@@ -10,17 +10,17 @@
 		<h3>${volumeSummary.carteggio}</h3>
 		<div class="list">
 			<div class="row">
-				<div class="item">Folio count</div> 
-				<div class="value"><b>${volumeSummary.total}</b></div> 
+				<div class="item"><i>Folio</i> count</div> 
+				<div class="value"><b>${volumeSummary.totalCarta}</b></div> 
 			</div>
 			<div class="row">
 				<div class="item"><i>Index of Names</i> count</div> 
 				<div class="value"><b>${volumeSummary.totalRubricario}</b></div> 
 			</div>
-			<div class="row">
-				<div class="item"><i>Folio</i> count</div> 
-				<div class="value"><b>${volumeSummary.totalCarta}</b></div> 
-			</div>
+<!-- 			<div class="row"> -->
+<!-- 				<div class="item"><i>Folio</i> count</div>  -->
+<%-- 				<div class="value"><b>${volumeSummary.total}</b></div>  --%>
+<!-- 			</div> -->
 			<%-- <div class="row">
 				<div class="item"><i>Index of Appendix</i> count</div> 
 				<div class="value"><b>${volumeSummary.totalAppendix}</b></div> 
