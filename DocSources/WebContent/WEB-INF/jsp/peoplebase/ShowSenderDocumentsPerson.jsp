@@ -6,10 +6,17 @@
 
 	<c:url var="ShowSenderDocumentsRelatedPersonURL" value="/src/peoplebase/ShowSenderDocumentsRelatedPerson.json"></c:url>
 	
+	<c:url var="AdvancedSearchRefineURL" value="/src/AdvancedSearch.do">
+		<c:param name="searchUUID" value="${UUID}" />
+		<c:param name="searchType" value="DOCUMENT" />
+	</c:url>
+	
 	<div class="yourSearchDiv">
 		<p>Sender Documents indexed to <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
 		<p>Total record found: <span id="senderRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
+	
+	<a id="refineSender${personId}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showSenderDocumentsPersonId${personId}">
 		<thead>
@@ -111,6 +118,8 @@
 					return false;
 				}
 			});
+			
+			$j("#refineSender${personId}").open({width: 960, height: 350, scrollbars: "yes"});
 
 		} );
 	</script>

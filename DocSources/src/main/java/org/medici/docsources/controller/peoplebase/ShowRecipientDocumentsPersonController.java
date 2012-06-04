@@ -28,15 +28,23 @@
 package org.medici.docsources.controller.peoplebase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.medici.docsources.command.peoplebase.ShowDocumentsPersonCommand;
+import org.medici.docsources.common.search.AdvancedSearchDocument;
 import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.SearchFilter;
+import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,6 +56,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Show documents person".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/peoplebase/ShowRecipientDocumentsPerson")
@@ -78,8 +87,9 @@ public class ShowRecipientDocumentsPersonController {
 	 * @param result
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowDocumentsPersonCommand command, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowDocumentsPersonCommand command, BindingResult result, HttpSession session) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		People person = new People();
@@ -100,6 +110,28 @@ public class ShowRecipientDocumentsPersonController {
 
 				model.put("mapNameLf", person.getMapNameLf());
 				model.put("personId", person.getPersonId());
+				
+				//MD: The following code is to refine the search
+				String searchUUID = UUID.randomUUID().toString();
+				model.put("UUID", searchUUID);
+				SearchFilter searchFilter = new SearchFilter(0, SearchType.DOCUMENT);
+				searchFilter.setDateCreated(new Date());
+				searchFilter.setDateUpdated(new Date());
+				searchFilter.setId(new Integer(0));
+				AdvancedSearchDocument advancedSearchDocument = new AdvancedSearchDocument();
+				List<Integer> recipientId = new ArrayList<Integer>();
+				recipientId.add(person.getPersonId());
+				List<String> recipientName = new ArrayList<String>();
+				recipientName.add(person.getMapNameLf());
+				advancedSearchDocument.setRecipientId(recipientId);
+				advancedSearchDocument.setRecipient(recipientName);
+				searchFilter.setFilterData(advancedSearchDocument);
+				searchFilter.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+				// we get our map which contains all user's filter used at runtime.
+				HashMap<String, SearchFilter> searchFilterMap = (session.getAttribute("searchFilterMap") != null) ? (HashMap<String, SearchFilter>)session.getAttribute("searchFilterMap") : new HashMap<String, SearchFilter>(0);
+				searchFilterMap.put(searchUUID, searchFilter);
+				session.setAttribute("searchFilterMap", searchFilterMap);
+				
 				
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/ShowRecipientDocumentsPerson", model);
