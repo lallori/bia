@@ -52,6 +52,7 @@ import org.medici.docsources.common.util.VolumeUtils;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class AdvancedSearchDocument extends AdvancedSearchAbstract {
@@ -89,6 +90,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 	private List<Integer> toId;
 	private List<String> topics;
 	private List<Integer> topicsId;
+	private List<Integer> topicsPlaceId;
+	private List<String> topicsPlace;
 	private List<String> volumes;
 	private List<String> volumesBetween;
 	private List<VolumeType> volumesTypes;
@@ -122,6 +125,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		synopsis = new ArrayList<String>(0);
 		topics = new ArrayList<String>(0);
 		topicsId = new ArrayList<Integer>(0);
+		topicsPlaceId = new ArrayList<Integer>(0);
+		topicsPlace = new ArrayList<String>(0);
 		datesTypes = new ArrayList<AdvancedSearchDocument.DateType>(0);
 		datesYear = new ArrayList<Integer>(0);
 		datesMonth = new ArrayList<Integer>(0);
@@ -342,6 +347,34 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		return topicsId;
 	}
 	
+	/**
+	 * @return the topicsPlaceId
+	 */
+	public List<Integer> getTopicsPlaceId() {
+		return topicsPlaceId;
+	}
+
+	/**
+	 * @param topicsPlaceId the topicsPlaceId to set
+	 */
+	public void setTopicsPlaceId(List<Integer> topicsPlaceId) {
+		this.topicsPlaceId = topicsPlaceId;
+	}
+
+	/**
+	 * @return the topicsPlace
+	 */
+	public List<String> getTopicsPlace() {
+		return topicsPlace;
+	}
+
+	/**
+	 * @param topicsPlace the topicsPlace to set
+	 */
+	public void setTopicsPlace(List<String> topicsPlace) {
+		this.topicsPlace = topicsPlace;
+	}
+
 	/**
 	 * @return the volumes
 	 */
@@ -770,6 +803,50 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 		} else {
 			topicsId = new ArrayList<Integer>(0);
 			topics = new ArrayList<String>(0);
+		}
+		
+		//Topics Place
+		// Place
+		if ((command.getTopicPlace() != null) && (command.getTopicPlace().size() >0)) {
+			topicsPlaceId = new ArrayList<Integer>(command.getTopicPlace().size());
+			topicsPlace = new ArrayList<String>(command.getTopicPlace().size());
+			
+			for (String singleWord : command.getTopicPlace()) {
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
+				
+				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
+				try {
+					if (stringTokenizer.countTokens() == 0) {
+						continue;
+					} else if (stringTokenizer.countTokens() == 1) {
+						// string format is |text
+						topicsPlaceId.add(new Integer(0));
+						topicsPlace.add(URIUtil.decode(stringTokenizer.nextToken(), "UTF-8"));
+					} else if (stringTokenizer.countTokens() == 2) {
+						// string format is number|text
+						String singleId = stringTokenizer.nextToken();
+						String singleText = stringTokenizer.nextToken();
+						// Check if field is correct
+						if (NumberUtils.isNumber(singleId)) { 
+							topicsPlaceId.add(NumberUtils.createInteger(singleId));
+						} else {
+							//Empty placeId is equal to 0
+							topicsPlaceId.add(new Integer(0));
+						}
+						topicsPlace.add(URIUtil.decode(singleText, "UTF-8"));
+					} else {
+						// we skip field
+					}
+				} catch (NumberFormatException nex) {
+				} catch (URIException e) {
+					topicsPlaceId.remove(topicsPlaceId.size()-1);
+				}
+			}
+		} else {
+			topicsPlaceId = new ArrayList<Integer>(0);
+			topicsPlace = new ArrayList<String>(0);
 		}
 
 		//Date
@@ -1455,7 +1532,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					
 					refersToIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.personId=");
 					refersToIdQuery.append(refersToId.get(i).toString());
-					refersToIdQuery.append("))");
+					refersToIdQuery.append(" AND docRole IS NULL))");
 				} else {
 					if (refersToQuery.length()>0) {
 						refersToQuery.append(" AND ");
@@ -1463,7 +1540,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					
 					refersToQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EpLink WHERE person.mapNameLf like '%");
 					refersToQuery.append(refersTo.get(i).toLowerCase().replace("'", "''"));
-					refersToQuery.append("%'))");
+					refersToQuery.append("%' AND docRole IS NULL))");
 				}
 			}
 			refersToIdQuery.append(")");
@@ -1564,6 +1641,40 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(topicsQuery);
+			}
+		}
+		
+		//Topic Place
+		if (topicsPlaceId.size() > 0){
+			StringBuffer topicsPlaceIdQuery = new StringBuffer("(");
+			StringBuffer topicsPlaceQuery = new StringBuffer("(");
+			for(int i = 0;i < topicsPlaceId.size(); i++){
+				if(topicsPlaceIdQuery.length() > 1){
+					topicsPlaceIdQuery.append(" AND ");
+				}
+				if(topicsPlaceId.get(i) > 0){
+					topicsPlaceIdQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeAllId=");
+					topicsPlaceIdQuery.append(topicsPlaceId.get(i).toString());
+					topicsPlaceIdQuery.append(")");
+				}else{
+					topicsPlaceQuery.append("entryId IN (SELECT document.entryId FROM org.medici.docsources.domain.EplToLink WHERE place.placeName like '%");
+					topicsPlaceQuery.append(topicsPlace.get(i));
+					topicsPlaceQuery.append("%')");
+				}
+			}
+			topicsPlaceIdQuery.append(")");
+			topicsPlaceQuery.append(")");
+			if (!topicsPlaceIdQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(topicsPlaceIdQuery);
+			}
+			if (!topicsPlaceQuery.toString().equals("()")) {
+				if(jpaQuery.length() > 20){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(topicsPlaceQuery);
 			}
 		}
 

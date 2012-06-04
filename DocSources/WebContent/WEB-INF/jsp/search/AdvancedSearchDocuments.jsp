@@ -114,10 +114,24 @@
 			<div class="documents">
 				<form id="topicSearchForm" method="post" class="edit">
 					<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
-					<input type="text" id="topic" name="topic" class="input_25c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicAdd" disabled="disabled">
+					<select id="topicSelect" name="topicSelect" class="selectForm_Xlong">
+						<option value="Select a Topic" selected="selected">Select a Topic</option>
+						<c:forEach items="${topicsList}" var="topicList">
+							<option value="${topicList.topicId}">${topicList}</option>
+						</c:forEach>
+					</select>
+<!-- 					<input type="text" id="topic" name="topic" class="input_25c"/>AUTOCOMPLETE -->
+					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicAdd">
 					<input type="hidden" id="category" value="Topics">
-					<input type="hidden" id="topicId" value="">
+					<input type="hidden" id="topic" name="topic" type="text" value=""/>
+					<input type="hidden" id="topicId" value=""/>
+				</form>
+				<form id="topicPlaceSearchForm" method="post" class="edit">
+					<a class="helpIcon" title="">?</a>
+					<input type="text" id="topicPlace" class="input_24c"/><!-- AUTOCOMPLETE -->
+					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicPlaceAdd" disabled="disabled">
+					<input type="hidden" id="category" value="topic Place">
+					<input type="hidden" id="topicPlaceId" value="">
 				</form>
 			</div>
 
@@ -275,6 +289,7 @@
 			$j("#extractSearchForm").advancedSearchForm();
 			$j("#synopsisSearchForm").advancedSearchForm();
 			$j("#topicSearchForm").advancedSearchForm();
+			$j("#topicPlaceSearchForm").advancedSearchForm();
 			$j("#dateSearchForm").advancedSearchForm();
 			$j("#volumeSearchForm").advancedSearchForm();
 			$j("#folioSearchForm").advancedSearchForm();
@@ -555,31 +570,75 @@
 				$j(".refersToAdd").attr("disabled","disabled");
 			});
 			
-			var $topicAutocomplete = $j("#topic").autocompleteGeneral({
-				serviceUrl: '${searchTopicURL}',
-				minChars: 1,
+			$j("#topicSelect").change(function(){
+				 if($j(this).val() != "Select a Topic"){
+				 	$j("#topic").val($j(this).find("option:selected").text());
+				 	$j("#topicId").val($j(this).find("option:selected").val());
+				 }
+				 else{
+					 $j("#topic").val("");
+					 $j("#topicId").val("");
+				 }
+				 return false;
+			 });
+			
+// 			var $topicAutocomplete = $j("#topic").autocompleteGeneral({
+// 				serviceUrl: '${searchTopicURL}',
+// 				minChars: 1,
+// 				delimiter: null,
+// 				maxHeight: 400,
+// 				width: 200,
+// 				zIndex: 9999,
+// 				deferRequestBy: 0,
+// 				noCache: true,
+// 				onSelect: function(value, data){
+// 					$j(".topicAdd").removeAttr("disabled");
+// 					$j('#topicId').val(data);
+// 					$j(".topicAdd").attr("disabled");
+// 					$j(".topicAdd").prop("disabled", false);
+// 				}
+// 			});	
+			
+// 			$j("#topic").blur(function(){
+// 				$topicAutocomplete.killSuggestions();
+// 				return false;
+// 			});
+			
+// 			$j("#topicSearchForm").submit(function(){
+// 				$j("#topicId").val("");
+// 				$j(".topicAdd").attr("disabled","disabled");
+// 			});
+
+			var $topicPlaceAutocomplete = $j("#topicPlace").autocompletePlace({
+				serviceUrl: '${searchPlaceURL}',
+				minChars: 3,
 				delimiter: null,
 				maxHeight: 400,
-				width: 200,
+				width: 450,
 				zIndex: 9999,
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-					$j(".topicAdd").removeAttr("disabled");
-					$j('#topicId').val(data);
-					$j(".topicAdd").attr("disabled");
-					$j(".topicAdd").prop("disabled", false);
+					$j(".topicPlaceAdd").removeAttr("disabled");
+					$j('#topicPlaceId').val(data);
+					$j(".topicPlaceAdd").attr("disabled");
+					$j(".topicPlaceAdd").prop("disabled", false);
 				}
 			});	
 			
-			$j("#topic").blur(function(){
-				$topicAutocomplete.killSuggestions();
+			$j("#topicPlace").blur(function(){
+				$placeAutocomplete.killSuggestions();
 				return false;
 			});
 			
-			$j("#topicSearchForm").submit(function(){
-				$j("#topicId").val("");
-				$j(".topicAdd").attr("disabled","disabled");
+			$j("#topicPlace").keyup(function(){
+				if($j("#topicPlaceId").val() != '')
+					$j(".topicPlaceAdd").attr("disabled","disabled");
+			});
+			
+			$j("#topicPlaceSearchForm").submit(function(){
+				$j("#topicPlaceId").val("");
+				$j(".topicPlaceAdd").attr("disabled","disabled");
 			});
 			
 			var $volumeAutocomplete = $j("#volume").autocompleteGeneral({
@@ -628,10 +687,10 @@
 				}
 			});
 			
-			$j("#topic").keyup(function(){
-				if($j("#topicId").val() != '')
-					$j(".topicAdd").attr("disabled","disabled");
-			});
+// 			$j("#topic").keyup(function(){
+// 				if($j("#topicId").val() != '')
+// 					$j(".topicAdd").attr("disabled","disabled");
+// 			});
 			
 			$j('#wordSearch').click(function(){
 					$j.scrollTo({top:'0px',left:'0px'}, 800 );

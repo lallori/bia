@@ -53,6 +53,7 @@ public class AdvancedSearchCommand {
 	private List<String> extract;
 	private List<String> synopsis;
 	private List<String> topic;
+	private List<String> topicPlace;
 	private List<String> person;
 	private List<String> place;
 	private List<String> sender;
@@ -278,6 +279,20 @@ public class AdvancedSearchCommand {
 		this.topic = topic;
 	}
 	
+	/**
+	 * @param topicPlace the topicPlace to set
+	 */
+	public void setTopicPlace(List<String> topicPlace) {
+		this.topicPlace = topicPlace;
+	}
+
+	/**
+	 * @return the topicPlace
+	 */
+	public List<String> getTopicPlace() {
+		return topicPlace;
+	}
+
 	/**
 	 * @return the person
 	 */

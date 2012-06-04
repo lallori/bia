@@ -67,6 +67,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Advanced Search".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/src/AdvancedSearch")
@@ -172,6 +173,12 @@ public class AdvancedSearchController {
 		model.put("searchFilter", searchFilter);
 		
 		if (searchFilter.getSearchType().equals(SearchType.DOCUMENT)) {
+			try{
+				topicsList = getSearchService().getTopicsList();
+				model.put("topicsList", topicsList);
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("error/AdvancedSearchDocuments", model);
+			}			
 			return new ModelAndView("search/AdvancedSearchDocuments", model);
 		} else if (searchFilter.getSearchType().equals(SearchType.PEOPLE)) {
 			return new ModelAndView("search/AdvancedSearchPeople", model);
@@ -179,8 +186,6 @@ public class AdvancedSearchController {
 			try{
 				placeTypes = getSearchService().getPlaceTypes();
 				model.put("placeTypes", placeTypes);
-				topicsList = getSearchService().getTopicsList();
-				model.put("topicsList", topicsList);
 			}catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/AdvancedSearchPlaces", model);
 			}
