@@ -494,7 +494,7 @@ $('.searchResult').live('click', function() {
 	position: relative;
 	display: inline;
 	float: left;
-	width:110px;
+	width:100px;
 }
 
 /*Top level menu link items style*/
@@ -516,8 +516,8 @@ $('.searchResult').live('click', function() {
 	margin-left:20px;
 }
 
-.entrymenu {
-	margin-left:20px;
+.entryMenu {
+	margin-left:14px;
 }
 
 #entryMenu:hover{
@@ -528,12 +528,8 @@ $('.searchResult').live('click', function() {
 	background-image:url(/DocSources/images/1024/button_advsearch.png);
 	background-repeat:no-repeat;
 	display:block;
-	width: 115px;
+	width: 125px;
 	height:64px;
-}
-
-.advsearchMenu{
-	margin-left:30px;
 }
 	
 #advsearchMenu:hover{
@@ -549,7 +545,7 @@ $('.searchResult').live('click', function() {
 }
 
 .myHistoryMenu{
-	margin-left:30px;
+	margin-left:28px;
 }
 
 #myHistoryMenu:hover{
@@ -564,10 +560,6 @@ $('.searchResult').live('click', function() {
 	height:64px;
 }
 
-.myprofileMenu{
-	margin-left:10px;
-}
-
 #myprofileMenu:hover{
 	background-image:url(/DocSources/images/1024/button_myprofileRollover.png);
 }
@@ -578,10 +570,6 @@ $('.searchResult').live('click', function() {
 	display:block;
 	width:99px;
 	height:64px;
-}
-
-.messagesMenu{
-	margin-left:5px;
 }
 
 #messagesMenu:hover{
@@ -595,6 +583,23 @@ $('.searchResult').live('click', function() {
 	font-weight: bold;
 	text-align: right;
 	
+}
+
+#helpMenu{
+	background-image:url(/DocSources/images/1024/button_help.png);
+	background-repeat:no-repeat;
+	display:block;
+	width:99px;
+	height:64px;
+}
+
+.helpMenu{
+	margin-left:0px;
+}
+
+
+#helpMenu:hover{
+	background-image:url(/DocSources/images/1024/button_helpRollover.png);
 }
 
 #logoutMenu{
@@ -668,7 +673,7 @@ $('.searchResult').live('click', function() {
 
 #EntryMenuDiv h1, #VetMenuDiv h1, #ActionsMenuDiv h1, #savedSearchFiltersDiv h1, #DeleteThisRecordDiv h1, #YesDeleteThisRecordDiv h1{
 	text-align:center;
-	font-size:11px;
+	font-size: 12px;
 	font-weight:normal;
 }
 
@@ -755,17 +760,63 @@ $('.searchResult').live('click', function() {
 	text-decoration:none;
 }
 
+/* BASIC SEARCH - MODAL WINDOW */
+
+#basicSearchDiv h1{
+	font-size:12px;
+	text-align:center;
+}
+
+#basicSearchDiv h1 span{
+	color:#900;
+	font-size:12px;
+}
+
+#basicSearchDiv .list {
+	display: table;
+	margin: 20px 0 0 134px;
+	width: 200px;
+	font-size: 12px;
+	line-height: 21px;
+	text-align: center;
+	border: 1px solid #DCC0BA;
+	border-radius: 4px;
+	color:#6F6B69;
+}
+
+#basicSearchDiv .list .col{
+	border-bottom: 1px solid #DCC0BA;
+	display:table-cell;
+}
+
+#basicSearchDiv .list a{
+	text-decoration:none;
+}
+
+#basicSearchDiv .list a:hover{
+	text-decoration:underline;
+}
+
+#basicSearchDiv .list a span{
+	color:#B7958F;
+}
+
+#basicSearchDiv #close {
+	margin: 20px 0 0 209px;
+	position:absolute;
+}
+
 
 /* VET MENU - MODAL WINDOW */
 
 
-#VetMenuDiv #close{
+#VetMenuDiv #close {
 	margin:420px 0 0 340px;
 	position:absolute;
 }
 
 
-#VetMenuDiv #SetReadtToBeVet{
+#VetMenuDiv #SetReadtToBeVet {
 	background-image:url(/DocSources/images/1024/button_set.png);
 	margin: 380px 0 5px 150px;
 	position:absolute;

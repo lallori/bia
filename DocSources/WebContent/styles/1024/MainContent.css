@@ -563,6 +563,9 @@ item a{
 	width:52px;
 	height:22px;
 	border:none;
+	text-align: center;
+	padding-top: 3px;
+	background-repeat: no-repeat;
 }
 
 .button_medium {
@@ -2824,14 +2827,14 @@ a.refreshVolumeExplorer {
 }
 
 #userProfile h3{
-	font-size:14px;
-	margin: 0 0 9px 5px;
+	font-size: 15px;
+	margin: 11px 0 2px 5px;
 	padding: 0;
 }
 
 #userProfile { /* My Profile Div Container */
 	float:left;
-	margin:0 0 0 10px;
+	 margin: 0 0 0 15px;
 }
 
 #userProfile a{
@@ -2844,10 +2847,11 @@ a.refreshVolumeExplorer {
 	width:128px;
 	height: 340px;
 	float:left;
+	margin-top: 18px;
 }
 
 #imgUserProfile { /* User image profile */
-	margin:7px 0 0 9px;
+	margin: 7px 0 0 9px;
 	background-image:url(/DocSources/images/1024/img_user.jpg);
 	width:111px;
 	height:145px;
@@ -2857,14 +2861,25 @@ a.refreshVolumeExplorer {
 	font-size:11px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
 	width:220px;
-	height: 150px;
-	float:right;
+	height: 130px;
+	padding-top: 3px;
+	float: left;
+	margin-left: 90px;
 }
 
 #helpProfile h1, #aboutmapProfile h1{
 	text-align:center;
-	color:#6D2323;
-	margin: 10px 0 10px 0;
+	margin: 13px 0 10px 5px;
+	width: 202px;
+	border-bottom: 1px solid #BDBDBD;
+	padding-bottom: 7px;
+}
+
+#helpProfile ul, #aboutmapProfile ul{
+	list-style:none;
+	line-height: 22px;
+	padding: 0;
+	color: #000;
 }
 
 #EditUserProfileDiv { 
@@ -2892,9 +2907,9 @@ form#EditUserProfileForm span{
 
 #EditUserProfileDiv .list {
 	float: left;
-	width: 300px;
+	width: 470px;
 	line-height: 20px;
-	margin: 0px 0 0 35px;
+	margin: 15px 0 0 63px;
 }
 
 #EditUserProfileDiv .list .row {
@@ -2907,22 +2922,38 @@ form#EditUserProfileForm span{
 }
 
 #helpProfile a, #aboutmapProfile a{	/* Help ancors (User Manual, Download Manual, Help Videos) */
-	line-height:18px;
 	text-decoration:none;
-	color:#900;
-	margin-left: 15px;
-}
+	margin-left: 35px;	
+	color: #000;}
 
 #aboutmapProfile { /* Help Div Container */
-	font-size:11px;
 	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
 	width:220px;
-	height:100px;
-	float:right;
+	height: 130px;
+	padding-top: 3px;
+	float: right;
+	margin-right: 100px;
+	margin-bottom: 30px;
 }
 
 #aboutmapProfile a:hover, #helpProfile a:hover{ /* Help ancors rollover */
 	text-decoration:underline;
+}
+
+#credits {
+	height: 210px !important;
+	height /**/: 220px;
+	overflow: auto !important;
+	width: 670px;
+	margin-left: 35px;
+	text-align: justify;
+	color: #6F6B69;
+	font-size: 11px;
+	line-height: 18px;
+}
+
+#closeHelp {
+	margin-left: 340px;
 }
 
 #modalBoxCloseDivProfile {
@@ -2954,7 +2985,7 @@ form#EditUserProfileForm span{
 	width:122px;
 	height:23px;
 	float:left;
-	margin: 97px 0 0 5px;
+	margin: 79px 0 0 5px;
 	text-decoration:none;
 	color:#6D5C4D;
 	padding:4px 0 0 0;
@@ -4736,7 +4767,12 @@ h3.systemManagement {
 }
 
 #description {
-	padding: 10px 20px 0 20px;
+	padding: 10px 0 0 20px;
+	width: 910px;
+}
+
+#adressLabel {
+	margin-left: 20px;
 }
 
 #description ul{
