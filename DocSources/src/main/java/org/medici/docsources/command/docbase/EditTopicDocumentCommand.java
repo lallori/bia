@@ -43,7 +43,6 @@ public class EditTopicDocumentCommand {
 	private String placeDescription;
 	private String placePrefered;
 	private Integer placeId;
-	private String topicDescription;
 	private Integer topicId;
 
 	/**
@@ -81,13 +80,6 @@ public class EditTopicDocumentCommand {
 	 */
 	public Integer getPlaceId() {
 		return placeId;
-	}
-
-	/**
-	 * @return the topicDescription
-	 */
-	public String getTopicDescription() {
-		return topicDescription;
 	}
 
 	/**
@@ -132,13 +124,6 @@ public class EditTopicDocumentCommand {
 	 */
 	public void setPlaceId(Integer placeId) {
 		this.placeId = placeId;
-	}
-
-	/**
-	 * @param topicDescription the topicDescription to set
-	 */
-	public void setTopicDescription(String topicDescription) {
-		this.topicDescription = topicDescription;
 	}
 
 	/**

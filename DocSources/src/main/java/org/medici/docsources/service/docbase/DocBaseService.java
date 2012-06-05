@@ -467,6 +467,13 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<TopicList> getTopicsList() throws ApplicationThrowable;
 
 	/**
 	 * 

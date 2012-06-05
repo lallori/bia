@@ -53,6 +53,13 @@ public interface TopicsListDAO extends Dao<Integer, TopicList> {
 	public List<TopicList> findTopicsList() throws PersistenceException;
 	
 	/**
+	 * This method return all the topicList excluding topic that can not inserted
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<TopicList> findTopicsListForUsers() throws PersistenceException;
+	
+	/**
 	 * This method searches for topics which could be related to a document which contains 
 	 * a text parameter (String alias) and returns a list of {@link org.medici.docsources.domain.TopicList}.
 	 * 

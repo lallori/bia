@@ -29,6 +29,7 @@ package org.medici.docsources.controller.docbase;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -100,7 +101,7 @@ public class EditTopicDocumentController {
 
 			EplToLink eplToLink = new EplToLink(command.getEplToId());
 			eplToLink.setDocument(new Document(command.getEntryId()));
-			if (!ObjectUtils.toString(command.getTopicDescription()).equals("")) {
+			if (command.getTopicId() > 0) {
 				eplToLink.setTopic(new TopicList(command.getTopicId()));
 			} else {
 				eplToLink.setTopic(null);
@@ -142,12 +143,13 @@ public class EditTopicDocumentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditTopicDocumentCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		List<TopicList> topicsList = null;
+		
 		if ((command != null) && (command.getEntryId() > 0)) {
 
 			if (command.getEplToId().equals(0)) {
 				command.setPlaceDescription(null);
 				command.setPlaceId(null);
-				command.setTopicDescription(null);
 				command.setTopicId(null);
 			} else {
 				try {
@@ -162,15 +164,20 @@ public class EditTopicDocumentController {
 					}
 
 					if (eplToLink.getTopic() != null) {
-						command.setTopicDescription(eplToLink.getTopic().getTopicTitle());
 						command.setTopicId(eplToLink.getTopic().getTopicId());
 					}else {
-						command.setTopicDescription(null);
 						command.setTopicId(null);
 					}
 				} catch (ApplicationThrowable applicationThrowable) {
 					return new ModelAndView("error/EditTopicDocument", model);
 				}
+			}
+			
+			try{
+				topicsList = getDocBaseService().getTopicsList();
+				model.put("topicsList", topicsList);
+			}catch(ApplicationThrowable ath){
+				return new ModelAndView("error/EditTopicDocument", model);
 			}
 
 			return new ModelAndView("docbase/EditTopicDocument", model);
@@ -182,7 +189,6 @@ public class EditTopicDocumentController {
 			}
 			command.setEplToId(null);
 			command.setDateCreated(new Date());
-			command.setTopicDescription(null);
 			command.setTopicId(null);
 			command.setPlaceDescription(null);
 			command.setPlaceId(null);

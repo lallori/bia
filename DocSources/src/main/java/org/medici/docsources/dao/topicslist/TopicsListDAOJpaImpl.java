@@ -100,6 +100,17 @@ public class TopicsListDAOJpaImpl extends JpaDao<Integer, TopicList> implements 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TopicList> findTopicsListForUsers() throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM TopicList WHERE topicId!=43 ORDER BY topicTitle");
+		
+		return query.getResultList();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public List<TopicList> searchTopicLinkableToDocument(List<Integer> topicIdList, String alias) throws PersistenceException {

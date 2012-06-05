@@ -1208,6 +1208,18 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public SynExtractDAO getSynExtractDAO() {
 		return synExtractDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<TopicList> getTopicsList() throws ApplicationThrowable {
+		try{
+			return getTopicsListDAO().findTopicsListForUsers();
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * @return the topicsListDAO

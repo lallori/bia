@@ -30,10 +30,11 @@
 				<div class="row">
 					<div class="col_l">
 						<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories.">?</a>
-						<form:label id="topicDescriptionLabel" for="topicDescription" path="topicDescription" cssErrorClass="error">Topic</form:label>
+						<form:label id="topicDescriptionLabel" for="topicId" path="topicId" cssErrorClass="error">Topic</form:label>
 					</div>
 					<div class="col_l">
-						<form:input id="topicDescriptionAutoCompleter" path="topicDescription" cssClass="input_25c" />
+						<form:select path="topicId" id="topicId" cssClass="selectform_XLlong" items="${topicsList}" itemValue="topicId" itemLabel="topicTitle" />
+<%-- 						<form:input id="topicDescriptionAutoCompleter" path="topicDescription" cssClass="input_25c" /> --%>
 						<!--<a class="topicDescription" id="refreshDescription" title="TOPIC DESCRIPTION" href="${ShowTopicDescription}"></a>-->
 					</div>
 				</div>
@@ -50,15 +51,14 @@
 		</fieldset>	
 
 		<form:hidden path="eplToId"/>
-		<form:hidden path="topicId"/>
 		<form:hidden path="placeId"/>
 		<form:hidden path="placePrefered"/>
 		<form:hidden path="entryId"/>
 	</form:form>
 
-	<c:url var="searchTopicLinkableToDocumentURL" value="/de/docbase/SearchTopicLinkableToDocument.json">
-		<c:param name="entryId" value="${command.entryId}" />
-	</c:url>
+<%-- 	<c:url var="searchTopicLinkableToDocumentURL" value="/de/docbase/SearchTopicLinkableToDocument.json"> --%>
+<%-- 		<c:param name="entryId" value="${command.entryId}" /> --%>
+<%-- 	</c:url> --%>
 
 	<c:url var="searchPlaceLinkableToTopicDocumentURL" value="/de/docbase/SearchPlaceLinkableToTopicDocument.json">
 		<c:param name="entryId" value="${command.entryId}" />
@@ -70,26 +70,26 @@
 		$j(document).ready(function() {
 			$j.scrollTo("#EditTopicDocumentForm");
 			
-			var topicDescription = $j('#topicDescriptionAutoCompleter').autocompleteGeneral({ 
-			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
-			    minChars:1, 
-			    delimiter: /(,|;)\s*/, // regex or character
-			    maxHeight:400,
-			    width:250,
-			    zIndex: 9999,
-			    deferRequestBy: 0, //miliseconds
-			    noCache: true, //default is false, set to true to disable caching
-			    onSelect: function(value, data){ 
-					var oldTopic = $j('#topicId').val();
-					$j('#topicId').val(data);
-					var link = $j('#refreshDescription').attr('href');
-					if(oldTopic == '')
-						link += data;
-					else
-						link = link.replace(oldTopic, data);
-					$j('#refreshDescription').attr('href', link); 
-				}
-			  });
+// 			var topicDescription = $j('#topicDescriptionAutoCompleter').autocompleteGeneral({ 
+// 			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
+// 			    minChars:1, 
+// 			    delimiter: /(,|;)\s*/, // regex or character
+// 			    maxHeight:400,
+// 			    width:250,
+// 			    zIndex: 9999,
+// 			    deferRequestBy: 0, //miliseconds
+// 			    noCache: true, //default is false, set to true to disable caching
+// 			    onSelect: function(value, data){ 
+// 					var oldTopic = $j('#topicId').val();
+// 					$j('#topicId').val(data);
+// 					var link = $j('#refreshDescription').attr('href');
+// 					if(oldTopic == '')
+// 						link += data;
+// 					else
+// 						link = link.replace(oldTopic, data);
+// 					$j('#refreshDescription').attr('href', link); 
+// 				}
+// 			  });
 
 			var placeDescription = $j('#placeDescriptionAutoCompleter').autocompletePlace({ 
 			    serviceUrl:'${searchPlaceLinkableToTopicDocumentURL}',
@@ -110,7 +110,6 @@
 			
 
 			$j('#closeTopic').click(function() { 
-				topicDescription.killSuggestions();
 				placeDescription.killSuggestions();
 	            $j('#EditTopicDocumentDiv').block({ message: $j('#question'),
 	            	css: { 
