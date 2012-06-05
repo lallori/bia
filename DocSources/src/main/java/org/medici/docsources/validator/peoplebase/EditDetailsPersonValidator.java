@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.validator.peoplebase;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.medici.docsources.command.peoplebase.EditDetailsPersonCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.peoplebase.PeopleBaseService;
@@ -85,7 +86,7 @@ public class EditDetailsPersonValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		EditDetailsPersonCommand editDetailsPersonCommand = (EditDetailsPersonCommand) object;
 		validatePersonId(editDetailsPersonCommand.getPersonId(), errors);
-		validateDates(editDetailsPersonCommand.getBornYear(), editDetailsPersonCommand.getBornMonth(), editDetailsPersonCommand.getBornDay(), editDetailsPersonCommand.getDeathYear(), editDetailsPersonCommand.getDeathMonth(), editDetailsPersonCommand.getDeathDay(), errors);
+		validateDates(editDetailsPersonCommand.getBornYear(), editDetailsPersonCommand.getActiveStart(), editDetailsPersonCommand.getBornMonth(), editDetailsPersonCommand.getBornDay(), editDetailsPersonCommand.getDeathYear(), editDetailsPersonCommand.getActiveEnd(), editDetailsPersonCommand.getDeathMonth(), editDetailsPersonCommand.getDeathDay(), errors);
 	}
 
 	/**
@@ -110,36 +111,46 @@ public class EditDetailsPersonValidator implements Validator {
 		}
 	}
 	
-	private void validateDates(Integer bornYear, Integer bornMonthNum, Integer bornDay, Integer deathYear, Integer deathMonthNum, Integer deathDay,Errors errors) {
+	private void validateDates(Integer bornYear, String activeStart, Integer bornMonthNum, Integer bornDay, Integer deathYear, String activeEnd, Integer deathMonthNum, Integer deathDay,Errors errors) {
 		if (!errors.hasErrors()) {
 			if (bornYear != null) {
 				if ((bornYear < 1200) || (bornYear > 1750)) {
-					errors.reject("bornYear", "error.bornYear.invalid");
+					errors.rejectValue("bornYear", "error.bornYear.invalid");
+				}
+			}
+			if(activeStart != null && NumberUtils.isNumber(activeStart)){
+				if((NumberUtils.createInteger(activeStart) < 1200) || (NumberUtils.createInteger(activeStart) > 1750)){
+					errors.rejectValue("activeStart", "error.activeStart.invalid");
 				}
 			}
 			if (bornMonthNum != null) {
 				if ((bornMonthNum <1) || (bornMonthNum >12)) {
-					errors.reject("bornMonth", "error.bornMonthNum.invalid");
+					errors.rejectValue("bornMonth", "error.bornMonthNum.invalid");
 				}
 			}
 			if (bornDay != null) {
 				if ((bornDay < 0) || (bornDay > 31)) {
-					errors.reject("bornDay", "error.bornDay.invalid");
+					errors.rejectValue("bornDay", "error.bornDay.invalid");
 				}
 			}
 			if (deathYear != null) {
 				if ((deathYear < 1200) || (deathYear > 1850)) {
-					errors.reject("deathYear", "error.deathYear.invalid");
+					errors.rejectValue("deathYear", "error.deathYear.invalid");
+				}
+			}
+			if(activeEnd != null && NumberUtils.isNumber(activeEnd)){
+				if((NumberUtils.createInteger(activeEnd) < 1200) || (NumberUtils.createInteger(activeEnd) > 1850)){
+					errors.rejectValue("activeEnd", "error.activeEnd.invalid");
 				}
 			}
 			if (deathMonthNum != null) {
 				if ((deathMonthNum <1) || (deathMonthNum >12)) {
-					errors.reject("deathMonth", "error.deathMonthNum.invalid");
+					errors.rejectValue("deathMonth", "error.deathMonthNum.invalid");
 				}
 			}
 			if (deathDay != null) {
 				if ((deathDay < 0) || (deathDay > 31)) {
-					errors.reject("deathDay", "error.deathDay.invalid");
+					errors.rejectValue("deathDay", "error.deathDay.invalid");
 				}
 			}
 		}
