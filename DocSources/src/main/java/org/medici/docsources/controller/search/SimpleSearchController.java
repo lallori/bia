@@ -52,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 @Controller
@@ -104,7 +105,7 @@ public class SimpleSearchController {
 	@RequestMapping(method = {RequestMethod.POST})
 	public ModelAndView processSubmit(@ModelAttribute("command") SimpleSearchCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		// This number is used to generate an unique id for new search 
+		 
 		try {
 			command.setText(URIUtil.decode(command.getText(), "UTF-8"));
 		} catch (URIException e) {
@@ -114,6 +115,7 @@ public class SimpleSearchController {
 		if(command.getText().contains("\"")){
 			command.setText(command.getText().replace("\"", "\\\""));
 		}
+		// This number is used to generate an unique id for new search
 		UUID uuid = UUID.randomUUID();
 		command.setSearchUUID(uuid.toString());
 		model.put("searchUUID", uuid.toString());

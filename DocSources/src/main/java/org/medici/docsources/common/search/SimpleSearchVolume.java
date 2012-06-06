@@ -113,7 +113,9 @@ public class SimpleSearchVolume extends SimpleSearch {
 			jpaQuery.append(words[0]);
 			jpaQuery.append(")");
 		}else{
-			return null;
+			jpaQuery.append("(volLetExt like '");
+			jpaQuery.append(words[0]);
+			jpaQuery.append("')");
 		}
 //			jpaQuery.append("(ccondition like '%");
 //			jpaQuery.append(words[i] + "%') OR ");

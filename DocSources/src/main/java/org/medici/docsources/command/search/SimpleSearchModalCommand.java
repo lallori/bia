@@ -1,5 +1,5 @@
 /*
- * SimpleSearch.java
+ * SimpleSearchModalCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,9 +25,7 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.common.search;
-
-import java.io.Serializable;
+package org.medici.docsources.command.search;
 
 /**
  * 
@@ -35,25 +33,20 @@ import java.io.Serializable;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
-public abstract class SimpleSearch implements Search {
+public class SimpleSearchModalCommand {
+	private String text;
 
 	/**
-	 * 
+	 * @param text the text to set
 	 */
-	private static final long serialVersionUID = 2202182527085038993L;
-
-	public static enum SimpleSearchPerimeter implements Serializable {
-		ALL("ALL"), EXTRACT("EXTRACT"), SYNOPSIS("SYNOPSIS"), VOLUME("VOLUME"), PEOPLE("PEOPLE"), PLACE("PLACE");
-		
-		private final String searchType;
-
-	    private SimpleSearchPerimeter(String value) {
-	    	searchType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return searchType;
-	    }
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
 	}
 }

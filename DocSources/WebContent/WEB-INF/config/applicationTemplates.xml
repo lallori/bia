@@ -91,6 +91,10 @@
     <definition name="menu/ShowEntryMenuModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowEntryMenuModalWindow.jsp"/>
 	</definition>
+	
+	<definition name="menu/ShowHelpModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowHelpModalWindow.jsp" />
+	</definition>
 
     <definition name="menu/ShowVetMenuModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/menu/ShowVetMenuModalWindow.jsp"/>
@@ -831,6 +835,10 @@
 
 	<definition name="search/ShowUserSearchFiltersModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/search/ShowUserSearchFiltersModalWindow.jsp"/>	
+	</definition>
+	
+	<definition name="search/SimpleSearchModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/search/SimpleSearchModalWindow.jsp" />
 	</definition>
 
 	<definition name="search/SimpleSearchResult" extends="template.partialDOM">

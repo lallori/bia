@@ -1,7 +1,7 @@
 /*
- * SimpleSearch.java
- *
- * Developed by The Medici Archive Project Inc. (2010-2012)
+ * ShowHelpModalWindowController.java
+ * 
+ * Developed by Medici Archive Project (2010-2012).
  * 
  * This file is part of DocSources.
  * 
@@ -24,36 +24,32 @@
  * resulting executable to be covered by the GNU General Public License.
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
+ * 
  */
-package org.medici.docsources.common.search;
+package org.medici.docsources.controller.menu;
 
-import java.io.Serializable;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
+ * Controller for action "Show Help Modal Window".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
- *
  */
-public abstract class SimpleSearch implements Search {
-
+@Controller
+@RequestMapping("/de/ShowHelp")
+public class ShowHelpModalWindowController {
 	/**
 	 * 
+	 * @param volumeId
+	 * @return
 	 */
-	private static final long serialVersionUID = 2202182527085038993L;
-
-	public static enum SimpleSearchPerimeter implements Serializable {
-		ALL("ALL"), EXTRACT("EXTRACT"), SYNOPSIS("SYNOPSIS"), VOLUME("VOLUME"), PEOPLE("PEOPLE"), PLACE("PLACE");
-		
-		private final String searchType;
-
-	    private SimpleSearchPerimeter(String value) {
-	    	searchType = value;
-	    }
-
-	    @Override
-	    public String toString(){
-	        return searchType;
-	    }
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView setupPage(){
+		return new ModelAndView("menu/ShowHelpModalWindow");
 	}
+
 }

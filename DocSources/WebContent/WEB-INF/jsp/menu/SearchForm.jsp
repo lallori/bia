@@ -4,19 +4,30 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="SimpleSearchModalURL" value="/src/SimpleSearchModal.do" />
+
 				<div id="searchForm">
 					<form id="SearchForm" action="<c:url value="/src/SimpleSearch.do"/>" method="post">
-						Search in <select id="simpleSearchPerimeter" name="simpleSearchPerimeter" class="select">
-										<option value="EXTRACT" selected>Document Extracts</option>
-										<option value="SYNOPSIS" selected>Document Synopsis</option>
+						<div class="listSearch">
+							<div class="row">
+								<div class="col_l">Simple Search in</div>
+								<div class="col_r"><select id="simpleSearchPerimeter" name="simpleSearchPerimeter" class="select">
+										<option value="ALL" selected="selected">All</option>
+										<option value="EXTRACT">Document Extracts</option>
+										<option value="SYNOPSIS">Document Synopsis</option>
 										<option value="VOLUME">Volumes</option>
 										<option value="PEOPLE">People</option>
 										<option value="PLACE">Places</option>
-								</select>
-						<a class="helpIcon" title="Perform your search in Document Synopsis">?</a>
-  						<br/>
-						for <input id="text" name="text" type="text" value=""/>
-						<input id="search" type="submit" title="submit form" value="Go"/>
+								</select></div>
+								<div class="col_l"><a class="helpIcon" title="Perform your search in Document Synopsis">?</a></div>
+							</div>
+						</div>
+  						<div class="listSearch">
+  							<div class="row">
+								<div class="col_r">for</div><div class="col_r"><input id="text" name="text" type="text" value=""/></div>
+								<div class="col_r"><input id="search" type="submit" title="submit form" value="Go"/></div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<script type="text/javascript">
@@ -70,6 +81,10 @@
 						
 						$j("#SearchForm").submit(function() {
 							var title = $j('#simpleSearchPerimeter').find('option:selected').text();
+							if(title == 'All'){
+								Modalbox.show('${SimpleSearchModalURL}' + '?text=' + $j("#text").val(), {title: "BASIC SEARCH", width: 500, height: 260});
+								return false;
+							}
 							if(title == 'Document Synopsis'){
 								title = "Document Synopsis"
 							}else{
