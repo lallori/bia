@@ -31,18 +31,25 @@ body {
 
 #footer {
 	width:600px;
-	height:53px;
-	margin:600px 0 0 215px;
+	height: 95px;
+	margin: 546px 0 0 211px;
 	position:absolute;
-/* 	background:url(/DocSources/images/1024/img_logoLoginUser.png) no-repeat; */
+	background:url(/DocSources/images/1024/img_logoLoginUser.png) no-repeat;
+}
+
+.mellon {
+	position: absolute;
+	margin: 0 0 0 140px;
 }
 
 .dga {
-	float:left;
+	position: absolute;
+	margin: 50px 0 0 0;
 }
 
 .archivio {
-	float:right;
+	margin: 50px 0 0 270px;
+	position: absolute;
 }
 
 

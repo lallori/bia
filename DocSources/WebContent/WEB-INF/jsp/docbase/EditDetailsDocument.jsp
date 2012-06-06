@@ -18,7 +18,7 @@
 			<legend><b>DOCUMENT DETAILS</b></legend>
 			<div class="listForm">
 				<div class="row">
-					<div class="col_r"><form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID</div>
+					<div class="col_r"><a class="helpIcon">?</a><form:label id="entryIdLabel" for="entryId" path="entryId" cssErrorClass="error">Doc ID</div>
 					<div class="col_l"><span class="docId">${command.entryId}</span></div></form:label>
 					<div class="col_r"><form:label id="volumeLabel" for="volume" path="volume" cssErrorClass="error">Volume (MDP)</form:label></div>
 					<div class="col_r"><form:input id="volume" path="volume" cssClass="input_5c" maxlength="5"/></div>
@@ -41,7 +41,7 @@
 						<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error">Document starts at folio</form:label>
 					</div>
 					<div class="col_l"><form:input id="folioNum" path="folioNum" class="input_5c" /></div>
-					<div class="col_r"><form:label id="folioModLabel" for="folioMod" path="folioMod" cssErrorClass="error">If folio addenda</form:label></div>
+					<div class="col_r"><a class="helpIcon">?</a><form:label id="folioModLabel" for="folioMod" path="folioMod" cssErrorClass="error">If folio addenda</form:label></div>
 					<div class="col_r"><form:input id="folioMod" path="folioMod" class="input_5c" /></div>
 				</div>
 			</div>

@@ -32,8 +32,13 @@
 	<definition name="template.main" template="/WEB-INF/templates/main.jsp">
 		<put-attribute name="searchForm" value="/WEB-INF/jsp/menu/SearchForm.jsp" />
 		<put-attribute name="lastEntryMenu" value="/WEB-INF/jsp/menu/LastEntry.jsp" />
+		<put-attribute name="advancedSearchMenu" value="/WEB-INF/jsp/menu/AdvancedSearch.jsp" />
 		<put-attribute name="dataEntryMenu" value="/WEB-INF/jsp/menu/DataEntry.jsp" />
-		<put-attribute name="profileMenu" value="/WEB-INF/jsp/menu/Profile.jsp" />
+		<put-attribute name="communityForumsMenu" value="/WEB-INF/jsp/menu/CommunityForums.jsp" />
+		<put-attribute name="historyMenu" value="/WEB-INF/jsp/menu/MyHistory.jsp" />
+		<put-attribute name="profileMenu" value="/WEB-INF/jsp/menu/MyProfile.jsp" />
+		<put-attribute name="helpMenu" value="/WEB-INF/jsp/menu/Help.jsp" />
+		<put-attribute name="logoutMenu" value="/WEB-INF/jsp/menu/Logout.jsp" />
 		<put-attribute name="administratorMenu" value="/WEB-INF/jsp/menu/Administrator.jsp" />
 		<put-attribute name="digitizationMenu" value="/WEB-INF/jsp/menu/Digitization.jsp" />
 		<put-attribute name="whoAmIMenu" value="/WEB-INF/jsp/menu/WhoAmI.jsp" />

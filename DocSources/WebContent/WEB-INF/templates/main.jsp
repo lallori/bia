@@ -135,8 +135,13 @@
 			<div id="top_middle">
 				<div id="mainmenu" class="menumain">
 					<ul>
+<tiles:insertAttribute name="advancedSearchMenu" />					
 <tiles:insertAttribute name="dataEntryMenu" />
+<tiles:insertAttribute name="communityForumsMenu" />
+<tiles:insertAttribute name="historyMenu" />
 <tiles:insertAttribute name="profileMenu" />
+<tiles:insertAttribute name="helpMenu" />
+<tiles:insertAttribute name="logoutMenu" />
 					</ul>
 				</div>
 			</div>

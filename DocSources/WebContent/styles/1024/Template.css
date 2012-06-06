@@ -198,7 +198,7 @@ a {
 	margin:0 0 0 7px;
 }
 
-a:hover.helpIcon { /* Help symbol "?" */
+#SearchForm a:hover.helpIcon { /* Help symbol "?" */
 	border: 1px solid #2e83ff;
 	color:  #363636; 
 	background-color: #ebf3ff; 
@@ -210,7 +210,7 @@ a:hover.helpIcon { /* Help symbol "?" */
 
 
 #text {
-	width: 177px;
+	width: 216px;
 	margin: 5px 4px 0 5px;
 }
 
@@ -327,13 +327,24 @@ a:hover.helpIcon { /* Help symbol "?" */
 /*
 /* ----------------------------------- USER INTERFACE MENU (#top_bottom) --------------------------------- */
 
-#administrationModule { /* Administration Module */
-	margin: 6px 0 0 16px;
-	position: absolute;
+#top_bottom ul {
+	list-style:none;
+	margin: 5px 0 0 0;
 	font-size: 11px;
 }
 
-#administrationModule:hover { /* Administration Module */
+#top_bottom ul li {
+	float:left;
+	padding-right: 40px;
+}
+
+#top_bottom ul li span{
+	color: #B40404;
+	margin-left:5px;
+	font-weight:bold;
+}
+
+#top_bottom ul li a:hover { /* Administration Module */
 	text-decoration:none;
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
@@ -345,9 +356,6 @@ a:hover.helpIcon { /* Help symbol "?" */
 #digitizationModule {
 	background-repeat:no-repeat;
 	text-decoration:none;
-	position: absolute;
-	margin: 6px 0 0 188px;
-	font-size: 11px;
 }
 
 #digitizationModule:hover { /* Administration Module */
@@ -358,7 +366,7 @@ a:hover.helpIcon { /* Help symbol "?" */
 }
 
 #top_bottom p{ /* top_bottom (Who am I?) */
-	margin-top:5px;
+	margin-top: 0;
 	float:right;
 	padding-right:30px;
 	font-size: 11px;
@@ -513,11 +521,10 @@ $('.searchResult').live('click', function() {
 	display:block;
 	width:99px;
 	height:64px;
-	margin-left:20px;
 }
 
 .entryMenu {
-	margin-left:14px;
+	margin-left: 3px;
 }
 
 #entryMenu:hover{
@@ -528,7 +535,7 @@ $('.searchResult').live('click', function() {
 	background-image:url(/DocSources/images/1024/button_advsearch.png);
 	background-repeat:no-repeat;
 	display:block;
-	width: 125px;
+	width: 99px;
 	height:64px;
 }
 	
@@ -545,11 +552,27 @@ $('.searchResult').live('click', function() {
 }
 
 .myHistoryMenu{
-	margin-left:28px;
+	margin-left: 19px;
 }
 
 #myHistoryMenu:hover{
 	background-image:url(/DocSources/images/1024/button_chronologyRollover.png);
+}
+
+#forumsMenu{
+	background-image:url(/DocSources/images/1024/button_forums.png);
+	background-repeat:no-repeat;
+	display:block;
+	width:99px;
+	height:64px;
+}
+
+.forumsMenu{
+	margin-left: 13px;
+}
+
+#forumsMenu:hover{
+	background-image:url(/DocSources/images/1024/button_forumsRollover.png);
 }
 
 #myprofileMenu{
@@ -562,14 +585,6 @@ $('.searchResult').live('click', function() {
 
 #myprofileMenu:hover{
 	background-image:url(/DocSources/images/1024/button_myprofileRollover.png);
-}
-
-#messagesMenu{
-	background-image:url(/DocSources/images/1024/button_messages.png);
-	background-repeat:no-repeat;
-	display:block;
-	width:99px;
-	height:64px;
 }
 
 #messagesMenu:hover{

@@ -151,21 +151,43 @@
         <div id="map_canvas"></div>
         
         <div id="coordinatesDiv">
-            <form id="latitudeForm" method="post" class="edit">
-                <label for="latLabel" id="latLabel"><b>Latitude:</b></label>
-                <input type="text" id="lat" name="lat" value="" class="input_20c">
-                <br>
-                <label for="lat_degLabel" id="lat_degLabel">Deg/min/sec</label>
-                <input type="text" name="lat_deg" id="lat_deg" value="" class="input_20c"><br/>
-            </form>
+            <form id="latlongForm" method="post" class="edit">
+            	<div class="listForm">
+                        <div class="row">
+                            <div class="col_l"><label for="latLabel" id="latLabel"><b>Latitude:</b></label></div>
+                            <div class="col_l"><input type="text" id="lat" name="lat" value="" class="input_20c"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col_l"><label for="lat_degLabel" id="lat_degLabel">Deg/min/sec</label></div>
+                            <div class="col_l"><input type="text" name="lat_deg" id="lat_deg" value="" class="input_20c"></div>
+                        </div>
+                        
+                        <br/>    
+           
+                        <div class="row">
+                            <div class="col_l"><label for="lngLabel" id="lngLabel"><b>Longitude:</b></label></div>
+                            <div class="col_l"><input type="text" id="lng" name="lng" value="" class="input_20c"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col_l"><label for="long_degLabel" id="long_degLabel">Deg/min/sec</label></div>
+                            <div class="col_l"><input type="text" name="long_deg" id="long_deg" value="" class="input_20c"></div>
+                        </div>
+                </div>
+                
+                <br/>
+                
+        		<p>Assign coordinates to:</p>
             
-            <form id="latitudeForm" method="post" class="edit">	
-                <label for="lngLabel" id="lngLabel"><b>Longitude:</b></label>
-                <input type="text" id="lng" name="lng" value="" class="input_20c">	
-                <br>
-                <label for="long_degLabel" id="long_degLabel">Deg/min/sec</label>
-                <input type="text" name="long_deg" id="long_deg" value="" class="input_20c">
-            </form>
-        </div>
+                <div id="geoTitle">
+                    <h3>A Coruna</h3>
+                    <h4>A Coruna / Galicia / Espana / Europe</h4>
+                    <h5>TGN Place</h5>
+                    <h7>Inhabited place</h7>
+                </div>
+            
+            	<input class="button_small" type="submit" value="Assign" title="Assign coordinates to this place" />
+           </form>
+     	</div>
+   
     </body>
 </html>

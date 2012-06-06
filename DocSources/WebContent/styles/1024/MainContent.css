@@ -59,7 +59,6 @@ h5{ /* Data Entry main fields Title */
 	margin:0 7px 10px 15px;
 	position:absolute;
 	color:#6d5c4d;
-	text-decoration:underline;
 }
 
 #geoTitle h5 {
@@ -195,7 +194,7 @@ span.h7 {
 	text-align:center;
 }
 
-#showComments { /* Actions Menu Button */
+#comments { /* Actions Menu Button */
 	background: url(/DocSources/images/1024/button_bodyleftmenu_large.png) no-repeat;
 	font-size: 11px;
 	padding:2px 0 0 0;
@@ -385,9 +384,7 @@ span.h7 {
 	display: table;
 	margin:0 0 0 30px;
 	width:63%; 
-	
- 	
- 	 	font-size: 12px;
+	font-size: 12px;
 	line-height: 18px;
 }
 
@@ -488,9 +485,6 @@ item a{
 	min-height:100px;!important
 }
 
-
-
-
 /* Title Divs */
 
 #body_right #documentTitle, #body_right #volumeTitle, #body_right #personTitle, #body_right #geoTitle{
@@ -506,6 +500,10 @@ item a{
 	padding: 8px 0 8px 0;
 	width: 475px;
 	background-color: #FAF4F4;
+}
+
+#documentTitle {
+	min-height: 160px;
 }
 
 
@@ -539,12 +537,17 @@ item a{
 	width: 525px;
 }
 
-.listForm .col_r,  .listFormProfile .col_r{ /* Sub-fields title cell */
+.listSearch { /* Whole display list */
+	display: table;
+	width: 275px;
+}
+
+.listForm .col_r,  .listFormProfile .col_r, .listSearch .col_r{ /* Sub-fields title cell */
 	display: table-cell;
 	text-align:right;
 }
 
-.listForm .col_l, .listFormProfile .col_l { /* Sub-fields title cell */
+.listForm .col_l, .listFormProfile .col_l, .listSearch .col_l { /* Sub-fields title cell */
 	display: table-cell;
 	text-align:left;
 }
@@ -573,7 +576,7 @@ item a{
 	height: 22px;
 	background-image: url(/DocSources/images/1024/button_medium.png);
 	background-repeat: no-repeat;
-	padding: 2px 0 0 0;
+	padding: 3px 0 0 0;
 	cursor: pointer;
 	text-align: center;
 }
@@ -629,6 +632,7 @@ item a{
     width:485px;
     position:absolute;
 	border-radius:4px;
+	-moz-border-radius: 4px;
 }
 
 #loadingDiv2 { /* Animated Gif that shows up when saving each edit section when two sections are open simultanously */
@@ -643,9 +647,8 @@ item a{
 
 fieldset {  /* FORM BACKGROUND */
 	border: 1px solid #DCC0BA;
-	-moz-border-radius: 4px;
 	border-radius: 4px;	
-	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 	background-color:#F2E6E5;
 	padding-left:30px;
 	min-height: 70px;	
@@ -1582,9 +1585,18 @@ input.file {
 }
 
 
-#DocumentImageNotDigitDiv, #DocumentImageDigitDiv { /* Document image digitized or to be digitized */
+#DocumentImageNotDigitDiv { /* Document image digitized or to be digitized */
     float:right; 
-    margin: 10px 20px 0 0;
+    margin: 2px 15px 0 0;
+    z-index:1;
+    height:160px;
+    width:120px;
+    text-align:center;
+}
+
+#DocumentImageDigitDiv { /* Document image digitized or to be digitized */
+    float:right; 
+    margin: 0 10px 0 0;
     z-index:1;
     height:160px;
     width:120px;
@@ -1612,12 +1624,27 @@ input.file {
 	cursor:default;
 }
 
+p.notDigitized {
+	color:#900;
+	margin:40px 0 0 10px;
+}
+
+#documentTitle #text {
+	width: 315px;
+	float: left;
+}
+
+#DocumentImageDigitDiv img {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
 #ShowDocumentInManuscriptViewer { /* Bottom left icon  */
 	width:50px;
 	height:55px;
 	background:url(/DocSources/images/1024/button_openVolExplorer.png) bottom no-repeat;
 	cursor:pointer;
-	float:left;
+	position: absolute;
 }
 
 #ShowDocumentInVolumeExplorer { /* Bottom right icon  */
@@ -1625,7 +1652,17 @@ input.file {
 	height:55px;
 	background:url(/DocSources/images/1024/button_showManuscViewer.png) bottom no-repeat;
 	cursor:pointer;
-	float:right;
+	position: absolute;
+	margin-left: 55px;
+}
+
+#CompareDocument { /* Bottom right icon  */
+	width:75px;
+	height:55px;
+	background:url(/DocSources/images/1024/button_compare.png) bottom no-repeat;
+	cursor:pointer;
+	margin-left: 121px;
+	position: absolute;
 }
 
 .list span.unsure {
@@ -2601,13 +2638,10 @@ a.refreshVolumeExplorer {
 /* -- modal Window -- */
 
 #createPlace{
-	width:700px;
-	margin-left:-10px;
 }
 
 #createPlace h1{
 	text-align:center;
-	font-size:11px;
 	font-weight:normal;
 }
 
@@ -2623,7 +2657,7 @@ a.refreshVolumeExplorer {
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	position:absolute;
-	margin:20px 0 0 30px;
+	margin: 20px 0 0 20px;
 }
 
 #createPlace #mapPlace{
@@ -2633,7 +2667,7 @@ a.refreshVolumeExplorer {
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	position:absolute;
-	margin:20px 0 0 265px;
+	margin: 20px 0 0 255px;
 }
 
 #createPlace #mapSite{
@@ -2643,7 +2677,7 @@ a.refreshVolumeExplorer {
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	position:absolute;
-	margin:20px 0 0 500px;
+	margin: 20px 0 0 490px;
 }
 
 #createPlace #tgnPlace #AddNewTgnPlace {
@@ -2771,7 +2805,8 @@ a.refreshVolumeExplorer {
 
 #notes {
 	position:absolute;
-	margin:270px 0 0 130px;
+	margin:270px 0 0 0;
+	width:750px;
 }
 
 #notes p{
@@ -2847,7 +2882,7 @@ a.refreshVolumeExplorer {
 	width:128px;
 	height: 340px;
 	float:left;
-	margin-top: 18px;
+	margin-top: 10px;
 }
 
 #imgUserProfile { /* User image profile */
@@ -2857,34 +2892,10 @@ a.refreshVolumeExplorer {
 	height:145px;
 }
 
-#helpProfile { /* Help Div Container */
-	font-size:11px;
-	background:url(/DocSources/images/1024/bg_helpssystemaboutmap.jpg) no-repeat;
-	width:220px;
-	height: 130px;
-	padding-top: 3px;
-	float: left;
-	margin-left: 90px;
-}
-
-#helpProfile h1, #aboutmapProfile h1{
-	text-align:center;
-	margin: 13px 0 10px 5px;
-	width: 202px;
-	border-bottom: 1px solid #BDBDBD;
-	padding-bottom: 7px;
-}
-
-#helpProfile ul, #aboutmapProfile ul{
-	list-style:none;
-	line-height: 22px;
-	padding: 0;
-	color: #000;
-}
-
 #EditUserProfileDiv { 
 	width:600px;
-	margin: 0 0 0 120px;
+	
+ 	margin: 25px 0 0 120px;
 }
 
 form#EditUserProfileForm { 
@@ -2933,7 +2944,7 @@ form#EditUserProfileForm span{
 	padding-top: 3px;
 	float: right;
 	margin-right: 100px;
-	margin-bottom: 30px;
+	margin-bottom: 25px;
 }
 
 #aboutmapProfile a:hover, #helpProfile a:hover{ /* Help ancors rollover */
@@ -2941,8 +2952,8 @@ form#EditUserProfileForm span{
 }
 
 #credits {
-	height: 210px !important;
-	height /**/: 220px;
+	height: 170px !important;
+	height /**/: 180px;
 	overflow: auto !important;
 	width: 670px;
 	margin-left: 35px;
@@ -2954,6 +2965,7 @@ form#EditUserProfileForm span{
 
 #closeHelp {
 	margin-left: 340px;
+	margin-top: 18px;
 }
 
 #modalBoxCloseDivProfile {
@@ -3155,6 +3167,36 @@ form#EditUserProfileForm span{
 	margin: 5px 0 0 15px;
 	border:none;
 	cursor:pointer;
+}
+
+
+
+/* --------------------------------------------------------------------------------- */
+/*
+/* ------------------- HELP ------------------------ */
+
+
+#helpFiles { /* Help Div Container */
+	width:220px;
+	height: 130px;
+	padding-top: 3px;
+	float: left;
+	margin-left: 90px;
+}
+
+#helpFiles h1, #aboutMap h1{
+	text-align:center;
+	margin: 13px 0 10px 5px;
+	width: 202px;
+	border-bottom: 1px solid #BDBDBD;
+	padding-bottom: 7px;
+}
+
+#helpFiles ul, #aboutMap ul{
+	list-style:none;
+	line-height: 22px;
+	padding: 0;
+	color: #000;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -3432,6 +3474,7 @@ div.title a.helpIcon{ /* Help symbol "?" */
 	opacity:0.9; /* Chrome, Safari */
 	-moz-opacity: 0.9; /* FireFox */
 	filter:alpha(opacity=90); /* IE */
+	text-decoration: none;
 }
 
 
@@ -4091,6 +4134,36 @@ table#savedSearchFiltersForm.display {
 /* -------------------------------------------------------------------------- */
 /*
 /*
+/* -------------------------- COMMENTS MODAL ----------------------------- */
+
+#commentsDiv {
+	width: 150px;
+	margin: 10px 0 0 10px;
+}
+
+#showCommentsDiv, #reportDiv {
+	width: 150px;
+	height: 35px;
+}
+
+#showComments, #reportProblem {
+	float: right;
+}
+
+#commentsDiv #close {
+	margin: 5px 0 0 50px;
+}
+
+#commentsDiv a:hover{
+	text-decoration:none;
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */
+}
+
+/* -------------------------------------------------------------------------- */
+/*
+/*
 /* -------------------------- COMUNITY COMMENTS ----------------------------- */
 
 #commentButtons {
@@ -4261,6 +4334,7 @@ ul#network a {
 	margin-left: 10px;
 	background-color: #B7958F;
 	border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 .moreInfo {
