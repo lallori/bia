@@ -2947,26 +2947,7 @@ form#EditUserProfileForm span{
 	margin-bottom: 25px;
 }
 
-#aboutmapProfile a:hover, #helpProfile a:hover{ /* Help ancors rollover */
-	text-decoration:underline;
-}
 
-#credits {
-	height: 170px !important;
-	height /**/: 180px;
-	overflow: auto !important;
-	width: 670px;
-	margin-left: 35px;
-	text-align: justify;
-	color: #6F6B69;
-	font-size: 11px;
-	line-height: 18px;
-}
-
-#closeHelp {
-	margin-left: 340px;
-	margin-top: 18px;
-}
 
 #modalBoxCloseDivProfile {
 	margin:400px 0 0 400px;
@@ -3175,28 +3156,96 @@ form#EditUserProfileForm span{
 /*
 /* ------------------- HELP ------------------------ */
 
+#helpDiv {
+	width: 535px;
+	height: 215px;
+	margin: 0;
+}
 
-#helpFiles { /* Help Div Container */
+#helpFiles, #aboutMap { /* Help Div Container */
 	width:220px;
-	height: 130px;
-	padding-top: 3px;
+	height: 170px;
+	padding-top: 15px;
+	margin-left: 46px;
 	float: left;
-	margin-left: 90px;
+}
+
+#helpFilesTitle,  #aboutMapTitle{
+	width: 170px;
+	height: 80px;
+	background-color:#EFE0DE;
+	border: 1px solid #D3B0A9;
+	border-radius: 4px 4px 0 0;
+}
+
+#helpFilesIcon {
+	width: 37px;
+	height: 37px;
+	background-image:url(/DocSources/images/1024/img_help.png);
+	margin: 10px 0 0 66px;
 }
 
 #helpFiles h1, #aboutMap h1{
 	text-align:center;
-	margin: 13px 0 10px 5px;
-	width: 202px;
-	border-bottom: 1px solid #BDBDBD;
+	margin: 8px 0 0 0;
+	width: 170px;
 	padding-bottom: 7px;
+	font-size: 14px;
+	color: #87655E;
 }
 
-#helpFiles ul, #aboutMap ul{
-	list-style:none;
+#aboutMapIcon {
+	width: 37px;
+	height: 37px;
+	background-image:url(/DocSources/images/1024/img_helpMap.png);
+	margin: 10px 0 0 66px;
+}
+
+#helpFiles ul, #aboutMap ul {
+	list-style: none;
 	line-height: 22px;
-	padding: 0;
-	color: #000;
+	padding: 5px;
+	color: black;
+	width: 160px;
+	margin: 0;
+	border-left: 1px dashed #D3B0A9;
+	border-right: 1px dashed #D3B0A9;
+	border-bottom: 1px dashed #D3B0A9;
+	min-height:90px;
+}
+
+#aboutmapProfile a:hover, #helpProfile a:hover{ /* Help ancors rollover */
+	text-decoration:underline;
+}
+
+#credits {
+	height: 150px !important;
+	height /**/: 160px;
+	overflow: auto !important;
+	width: 415px;
+	margin-left: 47px;
+	text-align: justify;
+	color: #6F6B69;
+	font-size: 11px;
+	line-height: 16px;
+	margin-top: 224px;
+	border: 1px solid #D3B0A9;
+	border-radius: 4px;
+	padding: 11px;
+	margin-top: 20px;
+}
+
+#credits p.title {
+	padding-top: 0;
+	margin-top: 0;
+	color: #87655E;
+	font-size: 12px;
+	height: 15px;
+}
+
+#closeHelp {
+	margin-left: 245px;
+	margin-top: 18px;
 }
 
 /* -------------------------------------------------------------------------- */

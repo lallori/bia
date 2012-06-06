@@ -13,7 +13,8 @@
     </definition>
         
     <definition name="template.document" template="/WEB-INF/templates/document.jsp"/>
-    
+    <definition name="template.documentNew" template="/WEB-INF/templates/documentNew.jsp"/>
+  
     <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp"/>
 
 	<definition name="template.forum" template="/WEB-INF/templates/forumDOM.jsp">
@@ -403,6 +404,17 @@
 	
 	<definition name="docbase/ShowDocument" extends="template.document">
 		<put-attribute name="menu" value="/WEB-INF/jsp/docbase/ShowMenuDocument.jsp"/>
+		<put-attribute name="summary" value="/WEB-INF/jsp/docbase/ShowSummaryDocument.jsp"/>
+		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
+		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
+		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
+		<put-attribute name="topics" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
+		<put-attribute name="extract" value="/WEB-INF/jsp/docbase/ShowExtractOrSynopsisDocument.jsp"/>
+	</definition>
+	
+	<definition name="docbase/ShowDocumentNew" extends="template.documentNew">
+		<put-attribute name="menu" value="/WEB-INF/jsp/docbase/ShowMenuDocument.jsp"/>
+		<put-attribute name="summary" value="/WEB-INF/jsp/docbase/ShowSummaryDocument.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/ShowDetailsDocument.jsp"/>
 		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
 		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>
@@ -450,8 +462,9 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowVettingChronologyDocumentModalWindow.jsp"/>
 	</definition>
 	
-	<definition name="docbase/TranscribeAndContextualizeDocument" extends="template.document">
+	<definition name="docbase/TranscribeAndContextualizeDocument" extends="template.documentNew">
 		<put-attribute name="menu" value="/WEB-INF/jsp/docbase/ShowMenuDocument.jsp"/>
+		<put-attribute name="summary" value="/WEB-INF/jsp/docbase/ShowSummaryDocument.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/docbase/EditDetailsDocument.jsp"/>
 		<put-attribute name="factcheck" value="/WEB-INF/jsp/docbase/ShowFactCheckDocument.jsp"/>
 		<put-attribute name="correspondents" value="/WEB-INF/jsp/docbase/ShowCorrespondentsOrPeopleDocument.jsp"/>

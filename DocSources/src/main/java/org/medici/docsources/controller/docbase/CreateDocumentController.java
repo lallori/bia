@@ -97,7 +97,7 @@ public class CreateDocumentController {
 
 		model.put("document", document);
 
-		return new ModelAndView("docbase/ShowDocument", model);
+		return new ModelAndView("docbase/ShowDocumentNew", model);
 	}
 
 	/**

@@ -4,10 +4,6 @@
 
 <tiles:insertAttribute name="summary"/>
 
-<tiles:insertAttribute name="extract"/>
-
-<br />
-
 <tiles:insertAttribute name="details"/>
 
 <br />
@@ -17,6 +13,10 @@
 <br />
 
 <tiles:insertAttribute name="correspondents"/>
+
+<br />
+
+<tiles:insertAttribute name="extract"/>
 
 <br />
 
