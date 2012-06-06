@@ -5,7 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="EditUserProfileURL" value="/user/EditUserProfile.do" />
-<c:url var="UserManualURL" value="/manual/DataEntryManual.html" />
 
 <div id="myProfile">
 	<div id="userProfile">

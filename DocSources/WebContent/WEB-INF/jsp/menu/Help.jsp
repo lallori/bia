@@ -4,9 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<%--<c:url var="ChoiceAdvancedSearchURL" value="/src/ChoiceAdvancedSearch.do"/> --%>
+<c:url var="HelpURL" value="/help/helpModalWindow.jsp"/>
 
-				<li class="helpMenu"><a id="helpMenu" href="#"></a></li>
+				<li class="helpMenu"><a id="helpMenu" href="${HelpURL}"></a></li>
 				<script type="text/javascript">
 					$j(document).ready(function() {
 						$j("#helpMenu").click(function() {															
