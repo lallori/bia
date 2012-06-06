@@ -4,13 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="HelpURL" value="/help/helpModalWindow.jsp"/>
+<c:url var="HelpURL" value="/de/ShowHelp.do"/>
 
 				<li class="helpMenu"><a id="helpMenu" href="${HelpURL}"></a></li>
 				<script type="text/javascript">
 					$j(document).ready(function() {
 						$j("#helpMenu").click(function() {															
-							Modalbox.show($j(this).attr("href"), {title: "HELP", width: 750, height: 325});return false;
+							Modalbox.show($j(this).attr("href"), {title: "HELP", width: 550, height: 500});return false;
 						});							   	
 					});
 				</script>						
