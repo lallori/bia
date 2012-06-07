@@ -12,7 +12,7 @@
 	
 	<div class="background" id="EditGeoCoorPlaceDiv">
 		<div class="title">
-			<h5>GEOGRAPHIC COORDINATES</h5>
+			<h5>GEOGRAPHIC COORDINATES<a class="helpIcon" title="Text">?</a></h5>
 	 		<c:if test="${place.placeAllId > 0 && place.prefFlag == 'P'}">
 	 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				<a title="Edit Geographic Coordinates" href="${EditGeographicCoordinatesPlaceURL}" class="editButton" id="EditGeoCoorPlace"></a>

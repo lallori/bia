@@ -5,11 +5,11 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_DIGITIZATION_TECHNICIANS">
-		<li><a href="<c:url value="/digitization/ShowDigitizationModule.do"/>" id="digitizationModule">Digitization Module</a></li>
+		<li><a id="messagesMenu" href="#" target="_blank">My Messages</a><span>(3)</span></li>
 	</security:authorize>
 	
 	<script>
-	$j("#digitizationModule").click(function() {
-		Modalbox.show($j(this).attr("href"), {title: "DIGITIZATION MODULE", width: 350, height: 190});return false;}
-	);
+	$j("#messagesMenu").click(function() {
+		//Modalbox.show($j(this).attr("href"), {title: "DIGITIZATION MODULE", width: 350, height: 190});return false;}
+	});
 	</script>

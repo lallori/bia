@@ -10,7 +10,7 @@
 
 <div class="background" id="EditTopicsPlaceDiv">
 	<div class="title">
-		<h5>TOPICS LIST </h5>
+		<h5>TOPICS LIST<a class="helpIcon" title="Text">?</a></h5>
 	</div>
 	<div class="list">	
 		<div class="row">

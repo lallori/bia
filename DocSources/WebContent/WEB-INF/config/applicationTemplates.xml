@@ -42,6 +42,7 @@
 		<put-attribute name="logoutMenu" value="/WEB-INF/jsp/menu/Logout.jsp" />
 		<put-attribute name="administratorMenu" value="/WEB-INF/jsp/menu/Administrator.jsp" />
 		<put-attribute name="digitizationMenu" value="/WEB-INF/jsp/menu/Digitization.jsp" />
+		<put-attribute name="messagesMenu" value="/WEB-INF/jsp/menu/Messages.jsp" />
 		<put-attribute name="whoAmIMenu" value="/WEB-INF/jsp/menu/WhoAmI.jsp" />
 	</definition>
     

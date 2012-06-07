@@ -14,7 +14,7 @@
 
 <div class="background" id="EditSendRecipPlaceDiv">
 	<div class="title">
-		<h5>SENDERS and RECIPIENTS </h5>
+		<h5>SENDERS and RECIPIENTS<a class="helpIcon" title="Text">?</a></h5>
 	</div>
 	
 	<div class="list">	

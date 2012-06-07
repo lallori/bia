@@ -26,7 +26,7 @@
 				<legend><b>PLACE DETAILS</b></legend>
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><label id="placeIDLabel" for="placeAllId">Place ID: </label></div>
+						<div class="col_l"><a class="helpIcon" title="Text">?</a><label id="placeIDLabel" for="placeAllId">Place ID: </label></div>
 						<div class="col_l"><i>Fills in automatically</i></div>
 					</div>
 				
@@ -73,17 +73,17 @@
 				
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><form:label for="placeTypeLabel" path="plType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label></div>
-						<div class="col_l"><form:select path="plType" cssClass="selectform_Llong" items="${placeTypes}"/></div>
+						<div class="col_l"><a class="helpIcon" title="Text">?</a><form:label for="placeTypeLabel" path="plType" cssErrorClass="error" id="placeTypeLabel">Place Type</form:label></div>
+						<div class="col_l"><form:select path="plType" cssClass="selectform_XXXlong" items="${placeTypes}"/></div>
 					</div>
 					<div class="row">
-						<div class="col_l"><form:label for="placeParentLabel" path="plParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label></div>
-						<div class="col_l"><form:input id="placeParentAutoCompleter" path="plParent" cssClass="input_35c"/></div>
+						<div class="col_l"><a class="helpIcon" title="Text">?</a><form:label for="placeParentLabel" path="plParent" cssErrorClass="error" id="placeParentLabel">Place Parent</form:label></div>
+						<div class="col_l"><form:input id="placeParentAutoCompleter" path="plParent" cssClass="input_30c"/></div>
 					</div>
 				</div>
 				
 				<div class="listForm">
-					<div class="row"><form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label></div>
+					<div class="row"><a class="helpIcon" title="Text">?</a><form:label for="placeNotesLabel" path="placesMemo" cssErrorClass="error" id="placeNotesLabel">Place Notes</form:label></div>
 					<div class="row"><form:textarea path="placesMemo" cssClass="txtarea" id="placeNotes"/></div>
 				</div>
 

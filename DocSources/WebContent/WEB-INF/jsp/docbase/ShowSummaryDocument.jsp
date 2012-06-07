@@ -64,9 +64,14 @@
 			  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
 				</c:otherwise>
 			</c:choose>
-			<c:if test="${document.docYear != null || document.docMonthNum != null || document.docDay != null}">
-				<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
-			</c:if>
+			<c:choose>
+				<c:when test="${document.docYear != null || document.docMonthNum != null || document.docDay != null}">
+					<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+				</c:when>
+				<c:otherwise>
+					<br />
+				</c:otherwise>
+			</c:choose>
 			<c:if test="${not empty image}">
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 							<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>

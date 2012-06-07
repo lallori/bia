@@ -22,7 +22,7 @@
 
 <div class="background" id="EditBirthDeathPlaceDiv">
 	<div class="title">
-		<h5>BIRTH and DEATH PLACE </h5>
+		<h5>BIRTH and DEATH PLACE<a class="helpIcon" title="Text">?</a></h5>
 	</div>
 	
 	<div class="list">	

@@ -111,9 +111,6 @@
 			});
 			
 			
-			if (navigator.appVersion.indexOf("Mac")!=-1)
-				document.write('<link href="/DocSources/styles/1024/MainContent_mac.css" rel="stylesheet" type="text/css">');
-			
 			if (navigator.appVersion.indexOf("Linux")!=-1)
 				document.write('<link href="/DocSources/styles/1024/MainContent_linux.css" rel="stylesheet" type="text/css">');
 			 
@@ -146,8 +143,11 @@
 				</div>
 			</div>
 			<div id="top_bottom" class="docs">
+			<ul>
 <tiles:insertAttribute name="administratorMenu"/>
 <tiles:insertAttribute name="digitizationMenu"/>
+<tiles:insertAttribute name="messagesMenu" />
+			</ul>
 <tiles:insertAttribute name="whoAmIMenu"/>
 			</div>
 <tiles:insertAttribute name="main"/>

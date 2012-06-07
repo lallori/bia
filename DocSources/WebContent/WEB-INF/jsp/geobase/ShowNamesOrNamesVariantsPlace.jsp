@@ -13,7 +13,7 @@
 	
 	<div class="background" id="EditNamePlaceDiv">
 		<div class="title">
-			<h5>NAME or NAME VARIANTS</h5>
+			<h5>NAME or NAME VARIANTS<a class="helpIcon" title="Text">?</a></h5>
 			<c:if test="${place.placeAllId > 0}">
 		 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 				<a id="EditNamePlace" href="${EditNamesOrNameVariantsPlaceURL}" class="editButton" title="Edit Name or Name Variants"></a><span id="loading"/>

@@ -31,7 +31,7 @@
 		<a id="vettingHistory" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
 		</security:authorize>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="menuActions" href="${ShowMenuActionsDocumentURL}">Actions</a>
+		<a id="menuActions" href="${ShowMenuActionsDocumentURL}">Delete</a>
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintDocumentURL}" title="Print this record"></a>
 		<a id="buttonPDF" href="#" title="Save this record as PDF"></a>

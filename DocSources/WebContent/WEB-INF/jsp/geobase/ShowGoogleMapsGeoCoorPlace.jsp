@@ -179,10 +179,21 @@
         		<p>Assign coordinates to:</p>
             
                 <div id="geoTitle">
-                    <h3>A Coruna</h3>
-                    <h4>A Coruna / Galicia / Espana / Europe</h4>
-                    <h5>TGN Place</h5>
-                    <h7>Inhabited place</h7>
+                    <h3>${place.placeName}</h3>
+                    <h4>${place.placeNameFull}</h4>
+                    <c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
+            		<h5>TGN Place record</h5>
+        			</c:if>
+        			<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
+        			<h5>TGN Place record (updated by MAP)</h5>
+        			</c:if>
+        			<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
+					<h5>MAP Place record</h5>
+					</c:if>
+        			<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
+					<h5>MAP Site or Subsite record</h5>
+					</c:if>
+                    <h7>${place.plType}</h7>
                 </div>
             
             	<input class="button_small" type="submit" value="Assign" title="Assign coordinates to this place" />
@@ -191,3 +202,16 @@
    
     </body>
 </html>
+
+<script type="text/javascript">
+		$j(document).ready(function() {
+			$j("#latlongForm").submit(function(){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					if ($j(html).find(".inputerrors").length > 0){
+					}else{
+						window.opener.$j("#body_left").html(html);
+					}
+				}});
+					
+			});
+		});

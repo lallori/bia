@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 			
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-				<a href="<c:url value="/admin/ShowAdministrationModule.do" />" id="administrationModule">Administration Module</a>
+				<li><a href="<c:url value="/admin/ShowAdministrationModule.do" />" id="administrationModule">Administration Module</a></li>
 			</security:authorize>
 			
 			<script type="text/javascript">
