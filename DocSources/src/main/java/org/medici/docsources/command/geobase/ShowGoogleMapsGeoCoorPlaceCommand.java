@@ -40,7 +40,127 @@ import javax.validation.constraints.NotNull;
 public class ShowGoogleMapsGeoCoorPlaceCommand {
 	@NotNull
 	private Integer placeAllId;
+	private Integer degreeLatitude;
+	private Integer minuteLatitude;
+	private Integer secondLatitude;
+	private String directionLatitude;
+	private Integer degreeLongitude;
+	private Integer minuteLongitude;
+	private Integer secondLongitude;
+	private String directionLongitude;
 	
+	/**
+	 * @return the degreeLatitude
+	 */
+	public Integer getDegreeLatitude() {
+		return degreeLatitude;
+	}
+
+	/**
+	 * @param degreeLatitude the degreeLatitude to set
+	 */
+	public void setDegreeLatitude(Integer degreeLatitude) {
+		this.degreeLatitude = degreeLatitude;
+	}
+
+	/**
+	 * @return the minuteLatitude
+	 */
+	public Integer getMinuteLatitude() {
+		return minuteLatitude;
+	}
+
+	/**
+	 * @param minuteLatitude the minuteLatitude to set
+	 */
+	public void setMinuteLatitude(Integer minuteLatitude) {
+		this.minuteLatitude = minuteLatitude;
+	}
+
+	/**
+	 * @return the secondLatitude
+	 */
+	public Integer getSecondLatitude() {
+		return secondLatitude;
+	}
+
+	/**
+	 * @param secondLatitude the secondLatitude to set
+	 */
+	public void setSecondLatitude(Integer secondLatitude) {
+		this.secondLatitude = secondLatitude;
+	}
+
+	/**
+	 * @return the directionLatitude
+	 */
+	public String getDirectionLatitude() {
+		return directionLatitude;
+	}
+
+	/**
+	 * @param directionLatitude the directionLatitude to set
+	 */
+	public void setDirectionLatitude(String directionLatitude) {
+		this.directionLatitude = directionLatitude;
+	}
+
+	/**
+	 * @return the degreeLongitude
+	 */
+	public Integer getDegreeLongitude() {
+		return degreeLongitude;
+	}
+
+	/**
+	 * @param degreeLongitude the degreeLongitude to set
+	 */
+	public void setDegreeLongitude(Integer degreeLongitude) {
+		this.degreeLongitude = degreeLongitude;
+	}
+
+	/**
+	 * @return the minuteLongitude
+	 */
+	public Integer getMinuteLongitude() {
+		return minuteLongitude;
+	}
+
+	/**
+	 * @param minuteLongitude the minuteLongitude to set
+	 */
+	public void setMinuteLongitude(Integer minuteLongitude) {
+		this.minuteLongitude = minuteLongitude;
+	}
+
+	/**
+	 * @return the secondLongitude
+	 */
+	public Integer getSecondLongitude() {
+		return secondLongitude;
+	}
+
+	/**
+	 * @param secondLongitude the secondLongitude to set
+	 */
+	public void setSecondLongitude(Integer secondLongitude) {
+		this.secondLongitude = secondLongitude;
+	}
+
+	/**
+	 * @return the directionLongitude
+	 */
+	public String getDirectionLongitude() {
+		return directionLongitude;
+	}
+
+	/**
+	 * @param directionLongitude the directionLongitude to set
+	 */
+	public void setDirectionLongitude(String directionLongitude) {
+		this.directionLongitude = directionLongitude;
+	}
+
 	/**
 	 * @param placeId the placeId to set
 	 */

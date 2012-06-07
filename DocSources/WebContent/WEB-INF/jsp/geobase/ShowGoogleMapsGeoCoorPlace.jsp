@@ -34,6 +34,27 @@
 			if(lonAbs > (180 * 1000000)) {  alert(' Degrees Longitude must be in the range of -180 to 180. '); document.getElementById("long_deg").value='';  lonAbs=0; }
 			document.getElementById("lat_deg").value = ((Math.floor(latAbs / 1000000) * signlat) + '\u00B0 ' + Math.floor(  ((latAbs/1000000) - Math.floor(latAbs/1000000)) * 60)  + '\' ' +  ( 	Math.floor(((((latAbs/1000000) - Math.floor(latAbs/1000000)) * 60) - Math.floor(((latAbs/1000000) - Math.floor(latAbs/1000000)) * 60)) * 100000) *60/100000 ).toFixed(0) + '\"'  );
 			document.getElementById("long_deg").value = ((Math.floor(lonAbs / 1000000) * signlon) + '\u00B0 ' + Math.floor(  ((lonAbs/1000000) - Math.floor(lonAbs/1000000)) * 60)  + '\' ' +  ( Math.floor(((((lonAbs/1000000) - Math.floor(lonAbs/1000000)) * 60) - Math.floor(((lonAbs/1000000) - Math.floor(lonAbs/1000000)) * 60)) * 100000) *60/100000 ).toFixed(0) + '\"'  );
+			//MAP
+			//Latitude direction and degree
+			if(signlat < 0){
+				$j("#directionLatitude").val("S");
+			}else{
+				$j("#directionLatitude").val("N");
+			}
+			$j("#degreeLatitude").val((Math.floor(latAbs / 1000000)));
+			$j("#minuteLatitude").val(Math.floor(  ((latAbs/1000000) - Math.floor(latAbs/1000000)) * 60));
+			$j("#secondLatitude").val(( 	Math.floor(((((latAbs/1000000) - Math.floor(latAbs/1000000)) * 60) - Math.floor(((latAbs/1000000) - Math.floor(latAbs/1000000)) * 60)) * 100000) *60/100000 ).toFixed(0));
+			
+			//Longitude direction and degree
+			if(signlon < 0){
+				$j("#directionLongitude").val("W");
+			}else{
+				$j("#directionLongitude").val("E");
+			}
+			$j("#degreeLongitude").val((Math.floor(lonAbs / 1000000)));
+			$j("#minuteLongitude").val(Math.floor(  ((lonAbs/1000000) - Math.floor(lonAbs/1000000)) * 60));
+			$j("#secondLongitude").val(( Math.floor(((((lonAbs/1000000) - Math.floor(lonAbs/1000000)) * 60) - Math.floor(((lonAbs/1000000) - Math.floor(lonAbs/1000000)) * 60)) * 100000) *60/100000 ).toFixed(0));
+			
 			
 			}
         </script>
@@ -60,7 +81,7 @@
 			
 			function initialize(){
 			//MAP
-			var latlng = new google.maps.LatLng(41.659,-4.714);
+			var latlng = new google.maps.LatLng('${latitude}','${longitude}');
 			var options = {
 			zoom: 16,
 			center: latlng,
@@ -151,7 +172,7 @@
         <div id="map_canvas"></div>
         
         <div id="coordinatesDiv">
-            <form id="latlongForm" method="post" class="edit">
+            <form:form id="latlongForm" method="post" class="edit">
             	<div class="listForm">
                         <div class="row">
                             <div class="col_l"><label for="latLabel" id="latLabel"><b>Latitude:</b></label></div>
@@ -195,9 +216,18 @@
 					</c:if>
                     <h7>${place.plType}</h7>
                 </div>
+                
+                <form:hidden path="degreeLatitude"/>
+                <form:hidden path="minuteLatitude"/>
+                <form:hidden path="secondLatitude"/>
+                <form:hidden path="directionLatitude"/>
+                <form:hidden path="degreeLongitude"/>
+                <form:hidden path="minuteLongitude"/>
+                <form:hidden path="secondLongitude"/>
+                <form:hidden path="directionLongitude"/>
             
             	<input class="button_small" type="submit" value="Assign" title="Assign coordinates to this place" />
-           </form>
+           </form:form>
      	</div>
    
     </body>

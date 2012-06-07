@@ -31,7 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.command.geobase.ShowGoogleMapsGeoCoorPlaceCommand;
+import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.geobase.GeoBaseService;
@@ -63,6 +65,87 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 	public GeoBaseService getGeoBaseService() {
 		return geoBaseService;
 	}
+	
+	/**
+	 * 
+	 * @param placeId
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@ModelAttribute("command") ShowGoogleMapsGeoCoorPlaceCommand command, BindingResult result) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		PlaceGeographicCoordinates placeGeographicCoordinates;
+		try{
+			placeGeographicCoordinates = getGeoBaseService().findPlaceGeographicCoordinates(command.getPlaceAllId());
+		}catch(ApplicationThrowable ath){
+			return new ModelAndView("error/ShowGoogleMapsGeoCoorPlace");
+		}
+		
+		placeGeographicCoordinates.setPlace(new Place(command.getPlaceAllId()));
+		
+		if(command.getDegreeLatitude() != null)
+			placeGeographicCoordinates.setDegreeLatitude(command.getDegreeLatitude());
+		else
+			placeGeographicCoordinates.setDegreeLatitude(0);
+		if(command.getMinuteLatitude() != null)
+			placeGeographicCoordinates.setMinuteLatitude(command.getMinuteLatitude());
+		else
+			placeGeographicCoordinates.setMinuteLatitude(0);
+		if(command.getSecondLatitude() != null)
+			placeGeographicCoordinates.setSecondLatitude(command.getSecondLatitude());
+		else
+			placeGeographicCoordinates.setSecondLatitude(0);
+		if(command.getDirectionLatitude() != null)
+			placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude());
+		else
+			placeGeographicCoordinates.setDirectionLatitude("N");
+		if(command.getDegreeLongitude() != null)
+			placeGeographicCoordinates.setDegreeLongitude(command.getDegreeLongitude());
+		else
+			placeGeographicCoordinates.setDegreeLongitude(0);
+		if(command.getMinuteLongitude() != null)
+			placeGeographicCoordinates.setMinuteLongitude(command.getMinuteLongitude());
+		else
+			placeGeographicCoordinates.setMinuteLongitude(0);
+		if(command.getSecondLongitude() != null)
+			placeGeographicCoordinates.setSecondLongitude(command.getSecondLongitude());
+		else
+			placeGeographicCoordinates.setSecondLongitude(0);
+		if(command.getDirectionLongitude() != null)
+			placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude());
+		else
+			placeGeographicCoordinates.setDirectionLongitude("E");
+		
+		try{
+			Place place = null;
+			if(placeGeographicCoordinates.getId() == null || placeGeographicCoordinates.getId().equals(0)){
+				place = getGeoBaseService().addNewPlaceGeographicCoordinates(placeGeographicCoordinates);
+			}else{
+				place = getGeoBaseService().editPlaceGeographicCoordinates(placeGeographicCoordinates);
+			}
+			model.put("place", place);
+			
+			model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(place.getPlaceAllId()));
+			model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(place.getPlaceAllId()));
+			model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(place.getPlaceAllId()));
+			model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(place.getPlaceAllId()));
+			model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(place.getPlaceAllId()));
+			model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
+			model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
+			model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
+			
+			HistoryNavigator historyNavigator = getGeoBaseService().getHistoryNavigator(place);
+			model.put("historyNavigator", historyNavigator);
+
+			return new ModelAndView("geobase/ShowPlace", model);
+		}catch(ApplicationThrowable ath){
+			return new ModelAndView("error/ShowGoogleMapsGeoCoorPlace");
+		}
+		
+		
+	}
 
 	/**
 	 * 
@@ -79,7 +162,7 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") ShowGoogleMapsGeoCoorPlaceCommand command, BindingResult result) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowGoogleMapsGeoCoorPlaceCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		Place place = new Place();
@@ -94,6 +177,27 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 		}else{
 			place.setPlaceAllId(0);
 			place.setResearcher(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getInitials());
+		}
+		if(place.getPlaceGeographicCoordinates() != null){
+			Double latitude = place.getPlaceGeographicCoordinates().getMinuteLatitude().doubleValue() * 60 + place.getPlaceGeographicCoordinates().getSecondLatitude().doubleValue();
+			latitude = latitude / 3600;
+			latitude = place.getPlaceGeographicCoordinates().getDegreeLatitude().doubleValue() + latitude;
+			if(place.getPlaceGeographicCoordinates().getDirectionLatitude().equals("S")){
+				model.put("latitude", "-" + latitude.toString());
+			}else{
+				model.put("latitude", latitude.toString());
+			}
+			Double longitude = place.getPlaceGeographicCoordinates().getMinuteLongitude().doubleValue() * 60 + place.getPlaceGeographicCoordinates().getSecondLongitude().doubleValue();
+			longitude = longitude / 3600;
+			longitude = place.getPlaceGeographicCoordinates().getDegreeLongitude().doubleValue() + longitude;
+			if(place.getPlaceGeographicCoordinates().getDirectionLongitude().equals("W")){
+				model.put("longitude", "-" + longitude.toString());
+			}else{
+				model.put("longitude", longitude.toString());
+			}
+		}else{
+			model.put("latitude", "41.659");
+			model.put("longitude", "-4.714");
 		}
 		
 		model.put("place", place);
