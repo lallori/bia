@@ -54,7 +54,7 @@
 			</div>
 			
 			<div id="footer">
-				<a href="http://www.mellon.org" target="_blank" class="mellon"><img src="<c:url value="/images/1024/img_mellon.png" alt="The Andrew W. Mellon Foundation" /></a>
+				<a href="http://www.mellon.org" target="_blank" class="mellon"><img src="<c:url value="/images/1024/img_mellon.png"/>" alt="The Andrew W. Mellon Foundation" /></a>
 				<a href="http://www.archivi.beniculturali.it" target="_blank" class="dga"><img src="<c:url value="/images/1024/img_dga.png"/>" alt="DGA" /></a>
 				<a href="http://www.archiviodistato.firenze.it" target="_blank" class="archivio"><img src="<c:url value="/images/1024/img_archivio.png"/>" alt="Archivio di Stato di Firenze"></a>
 			</div>
