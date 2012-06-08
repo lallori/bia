@@ -146,6 +146,51 @@
 			calcdeg();
 			});
 			
+			//MAP
+			
+			
+			var delay = (function(){
+				  var timer = 0;
+				  return function(callback, ms){
+				    clearTimeout (timer);
+				    timer = setTimeout(callback, ms);
+				  };
+				})();
+			
+			delay(function(){
+				geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						$j('#lat').val(marker.getPosition().lat().toFixed(4));
+						$j('#lng').val(marker.getPosition().lng().toFixed(4));
+						calcdeg();
+					}
+				});
+				
+				$j("#address").val('${place.placeName}, ${place.plParent}');
+				$j("#address").autocomplete("search", '${place.placeName}, ${place.plParent}');
+				}, 1000 );
+			
+			if (status == google.maps.GeocoderStatus.OK) {
+				$j('#lat').val(marker.getPosition().lat().toFixed(4));
+				$j('#lng').val(marker.getPosition().lng().toFixed(4));
+				calcdeg();
+			}
+						
+			$j("#latlongForm").submit(function(){
+				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
+					if ($j(html).find(".inputerrors").length > 0){
+					}else{
+						var urlToShowPlace = "/DocSources/src/geobase/ShowPlace.do?placeAllId=${command.placeAllId}";
+						window.opener.$j("#body_left").load(urlToShowPlace);
+						window.blur();
+						window.opener.focus();
+						window.close();
+						return false;
+					}
+				}});
+					
+			});
+			
 			})
         </script>
     
@@ -232,16 +277,3 @@
    
     </body>
 </html>
-
-<script type="text/javascript">
-		$j(document).ready(function() {
-			$j("#latlongForm").submit(function(){
-				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					if ($j(html).find(".inputerrors").length > 0){
-					}else{
-						window.opener.$j("#body_left").html(html);
-					}
-				}});
-					
-			});
-		});

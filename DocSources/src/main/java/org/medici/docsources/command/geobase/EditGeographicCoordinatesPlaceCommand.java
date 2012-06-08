@@ -31,11 +31,13 @@ package org.medici.docsources.command.geobase;
  * Command bean for action "edit geographic coordinates".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.EditDetailsPlaceController.docsources.controller.geobase.ModifyPlaceController
  */
 public class EditGeographicCoordinatesPlaceCommand {
 	private Integer placeAllId;
+	private Integer placeGeographicCoordinatesId;
 	private Integer degreeLatitude;
 	private Integer minuteLatitude;
 	private Integer secondLatitude;
@@ -174,5 +176,20 @@ public class EditGeographicCoordinatesPlaceCommand {
 	 */
 	public String getDirectionLongitude() {
 		return directionLongitude;
+	}
+
+	/**
+	 * @param placeGeographicCoordinatesId the placeGeographicCoordinatesId to set
+	 */
+	public void setPlaceGeographicCoordinatesId(
+			Integer placeGeographicCoordinatesId) {
+		this.placeGeographicCoordinatesId = placeGeographicCoordinatesId;
+	}
+
+	/**
+	 * @return the placeGeographicCoordinatesId
+	 */
+	public Integer getPlaceGeographicCoordinatesId() {
+		return placeGeographicCoordinatesId;
 	}
 }

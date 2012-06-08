@@ -76,13 +76,8 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 	public ModelAndView processSubmit(@ModelAttribute("command") ShowGoogleMapsGeoCoorPlaceCommand command, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		PlaceGeographicCoordinates placeGeographicCoordinates;
-		try{
-			placeGeographicCoordinates = getGeoBaseService().findPlaceGeographicCoordinates(command.getPlaceAllId());
-		}catch(ApplicationThrowable ath){
-			return new ModelAndView("error/ShowGoogleMapsGeoCoorPlace");
-		}
-		
+		PlaceGeographicCoordinates placeGeographicCoordinates = new PlaceGeographicCoordinates(command.getPlaceGeographicCoordinatesId());
+				
 		placeGeographicCoordinates.setPlace(new Place(command.getPlaceAllId()));
 		
 		if(command.getDegreeLatitude() != null)
@@ -120,7 +115,7 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 		
 		try{
 			Place place = null;
-			if(placeGeographicCoordinates.getId() == null || placeGeographicCoordinates.getId().equals(0)){
+			if(command.getPlaceGeographicCoordinatesId() == null || command.getPlaceGeographicCoordinatesId().equals(0)){
 				place = getGeoBaseService().addNewPlaceGeographicCoordinates(placeGeographicCoordinates);
 			}else{
 				place = getGeoBaseService().editPlaceGeographicCoordinates(placeGeographicCoordinates);
@@ -195,9 +190,10 @@ public class ShowGoogleMapsGeoCoorPlaceController {
 			}else{
 				model.put("longitude", longitude.toString());
 			}
+			
+			command.setPlaceGeographicCoordinatesId(place.getPlaceGeographicCoordinates().getId());
 		}else{
-			model.put("latitude", "41.659");
-			model.put("longitude", "-4.714");
+			command.setPlaceGeographicCoordinatesId(0);
 		}
 		
 		model.put("place", place);

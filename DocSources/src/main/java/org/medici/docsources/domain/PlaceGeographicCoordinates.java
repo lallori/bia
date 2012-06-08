@@ -63,6 +63,7 @@ import org.hibernate.search.annotations.TokenizerDef;
  * PlaceGeographicCoordinates entity.
  *
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Entity
 @Indexed
@@ -104,7 +105,6 @@ public class PlaceGeographicCoordinates implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@MapsId 
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"PLACEALLID\"", nullable=false)
 	@ContainedIn
@@ -153,9 +153,9 @@ public class PlaceGeographicCoordinates implements Serializable{
 	 * 
 	 * @param placeAllId
 	 */
-	public PlaceGeographicCoordinates(Integer placeAllId){
+	public PlaceGeographicCoordinates(Integer id){
 		super();
-		setId(placeAllId);
+		setId(id);
 	}
 
 	/**

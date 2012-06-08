@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
@@ -339,10 +338,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Place editPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
 		try{
-			PlaceGeographicCoordinates placeGeographicCoordinatesToUpdate = getPlaceGeographicCoordinatesDAO().findByPlaceAllId(placeGeographicCoordinates.getId());
-			BeanUtils.copyProperties(placeGeographicCoordinatesToUpdate, placeGeographicCoordinates);
+			PlaceGeographicCoordinates placeGeographicCoordinatesToUpdate = getPlaceGeographicCoordinatesDAO().find(placeGeographicCoordinates.getId());
 			placeGeographicCoordinatesToUpdate.setId(placeGeographicCoordinates.getId());
+			placeGeographicCoordinatesToUpdate.setDegreeLatitude(placeGeographicCoordinates.getDegreeLatitude());
+			placeGeographicCoordinatesToUpdate.setMinuteLatitude(placeGeographicCoordinates.getMinuteLatitude());
+			placeGeographicCoordinatesToUpdate.setSecondLatitude(placeGeographicCoordinates.getSecondLatitude());
+			placeGeographicCoordinatesToUpdate.setDirectionLatitude(placeGeographicCoordinates.getDirectionLatitude());
+			placeGeographicCoordinatesToUpdate.setDegreeLongitude(placeGeographicCoordinates.getDegreeLongitude());
+			placeGeographicCoordinatesToUpdate.setMinuteLongitude(placeGeographicCoordinates.getMinuteLongitude());
+			placeGeographicCoordinatesToUpdate.setSecondLongitude(placeGeographicCoordinates.getSecondLongitude());
+			placeGeographicCoordinatesToUpdate.setDirectionLongitude(placeGeographicCoordinates.getDirectionLongitude());
 			getPlaceGeographicCoordinatesDAO().merge(placeGeographicCoordinatesToUpdate);
+			getPlaceDAO().refresh(placeGeographicCoordinatesToUpdate.getPlace());
 			
 			Place place = placeGeographicCoordinatesToUpdate.getPlace();
 			

@@ -52,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Controller for action "Place: Edit Names or Name Variants".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
 @RequestMapping("/de/geobase/EditGeographicCoordinatesPlace")
@@ -181,6 +182,8 @@ public class EditGeographicCoordinatesPlaceController {
 			
 			try{
 				placeGeographicCoordinates = getGeoBaseService().findPlaceGeographicCoordinates(command.getPlaceAllId());
+				
+				command.setPlaceGeographicCoordinatesId(placeGeographicCoordinates.getId());
 			}catch(ApplicationThrowable th){
 				return new ModelAndView("error/EditGeographicCoordinates", model);
 			}
@@ -192,6 +195,8 @@ public class EditGeographicCoordinatesPlaceController {
 			command.setMinuteLongitude(placeGeographicCoordinates.getMinuteLongitude());
 			command.setSecondLongitude(placeGeographicCoordinates.getSecondLongitude());
 			command.setDirectionLongitude(placeGeographicCoordinates.getDirectionLongitude());
+		}else{
+			command.setPlaceGeographicCoordinatesId(0);
 		}
 
 		return new ModelAndView("geobase/EditGeographicCoordinatesPlace", model);

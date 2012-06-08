@@ -40,6 +40,7 @@ import javax.validation.constraints.NotNull;
 public class ShowGoogleMapsGeoCoorPlaceCommand {
 	@NotNull
 	private Integer placeAllId;
+	private Integer placeGeographicCoordinatesId;
 	private Integer degreeLatitude;
 	private Integer minuteLatitude;
 	private Integer secondLatitude;
@@ -173,6 +174,21 @@ public class ShowGoogleMapsGeoCoorPlaceCommand {
 	 */
 	public Integer getPlaceAllId() {
 		return placeAllId;
+	}
+
+	/**
+	 * @param placeGeographicCoordinatesId the placeGeographicCoordinatesId to set
+	 */
+	public void setPlaceGeographicCoordinatesId(
+			Integer placeGeographicCoordinatesId) {
+		this.placeGeographicCoordinatesId = placeGeographicCoordinatesId;
+	}
+
+	/**
+	 * @return the placeGeographicCoordinatesId
+	 */
+	public Integer getPlaceGeographicCoordinatesId() {
+		return placeGeographicCoordinatesId;
 	}
 
 		

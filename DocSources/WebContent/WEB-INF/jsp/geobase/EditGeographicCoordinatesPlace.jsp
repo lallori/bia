@@ -15,6 +15,7 @@
 		
 		<c:url var="ShowGoogleMapsGeoCoorPlaceURL" value="/de/geobase/ShowGoogleMapsGeoCoorPlace.do">
 			<c:param name="placeAllId" value="${command.placeAllId}" />
+			<c:param name="placeGeographicCoordinatesId" value="${command.placeGeographicCoordinatesId}" />
 		</c:url>
 	</security:authorize>
 	
@@ -143,7 +144,7 @@
 		});
 		
 		$j("#gettyTgn").open({width: 960, height: 350, scrollbars: "yes"});
-		$j("#googleMaps").open({width: 960, height: 350, scrollbars: "yes"});
+		$j("#googleMaps").open({width: screen.width, height: screen.height, scrollbars: "yes"});
 	</script>
 	
 	<div id="question" style="display:none; cursor: default"> 
