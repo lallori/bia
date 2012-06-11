@@ -102,11 +102,11 @@
 				<div class="listForm">
 					<div class="row">
 						<div class="col_r">
-							<form:label for="bornApprox" id="bornApproxLabel" path="bornApprox" cssErrorClass="error">Approx</form:label>
+							<form:label for="bornApprox" id="bornApproxLabel" path="bornApprox" cssErrorClass="error">Approx.</form:label>
 							<form:checkbox path="bornApprox" id="bornApprox1"/>
 						</div>
 						<div class="col_r">
-							<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error">BC?</form:label>
+							<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error">B.C.?</form:label>
 							<form:checkbox id="bornDateBc1" path="bornDateBc"/>
 						</div>
 					</div>
@@ -147,11 +147,11 @@
 				<div class="listForm">
 					<div class="row">
 						<div class="col_r">
-							<form:label for="deathApprox" id="deathApproxLabel" path="deathApprox" cssErrorClass="error">Approx</form:label>
+							<form:label for="deathApprox" id="deathApproxLabel" path="deathApprox" cssErrorClass="error">Approx.</form:label>
 							<form:checkbox path="deathApprox" id="deathApprox" />
 						</div>
 						<div class="col_r">
-							<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error">BC?</form:label>
+							<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error">B.C.?</form:label>
 							<form:checkbox id="deathDateBc" path="deathDateBc"/>
 						</div>
 					</div>
