@@ -53,11 +53,11 @@
 					<div class="col_r"><form:label id="startDayLabel" for="startDay" path="startDay" cssErrorClass="error">Day</form:label></div>
 					<div class="col_l"><form:input path="startDay" cssClass="input_2c" maxlength="2"/></div>
 					<div class="col_r">
-						<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error">Approx</form:label>
+						<form:label id="startApproxLabel" for="startApprox" path="startApprox" cssErrorClass="error">Approx.</form:label>
 						<form:checkbox path="startApprox" id="startApprox1"/>
 					</div>
 					<div class="col_r">
-						<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error">Uns</form:label>
+						<form:label id="startUnsLabel" for="startUns" path="startUns" cssErrorClass="error">Uns.</form:label>
 						<form:checkbox path="startUns" id="startUns1"/>
 					</div>
 				</div>
