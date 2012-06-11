@@ -101,8 +101,16 @@
 			$j('.searchResult').live('click', function() {
 				//$j(this).parent().parent().css('background-color','#b0addd');
 				$j("#body_left").load($j(this).attr("href"));
+				$j.scrollTo("#body_left");
 				return false;
 			}); 
+			
+			//MD: This code is for click in any space inside a row
+			$j("#${command.searchUUID} tbody tr").live('click', function(){
+				$j("#body_left").load($j(this).children().children().attr("href"));
+				$j.scrollTo("#body_left");
+				return false;
+			});
 			
 			$j('.tabResult').die();
 			$j('.tabResult').live('click', function(){
