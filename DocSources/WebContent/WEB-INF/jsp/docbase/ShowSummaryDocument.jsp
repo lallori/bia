@@ -44,6 +44,29 @@
 	<%-- Editing Document Record --%>
 	<c:if test="${document.volume != null}">
 	<div id="documentTitle">
+		<c:if test="${not empty image}">
+					<div id="DocumentImageDigitDiv">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
+						</security:authorize>
+						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+							<span class="register">To see this Document you must register</span>
+							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+						</security:authorize>
+					</div>
+				</c:if>
+			<c:if test="${empty image}">
+				<div id="DocumentImageNotDigitDiv">
+					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+						<span>To be digitized</span>
+						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+					</security:authorize>
+					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
+						<span class="register">To see this Document you must register</span>
+						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
+					</security:authorize>
+				</div>
+			</c:if>
 		<div id="text">
 			<h3>Volume: <a href="${CompareVolumeURL}" class="linkVolume" title="View Volume n.${document.volume.volNum}${document.volume.volLetExt} file">${document.volume.volNum}${document.volume.volLetExt}</a></h3>
 			<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
@@ -70,42 +93,26 @@
 				</c:when>
 				<c:otherwise>
 					<br />
+					<br />
 				</c:otherwise>
 			</c:choose>
 			<c:if test="${not empty image}">
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<div id="icons">
+						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
 							<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>
 							<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
 						</security:authorize>
-						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
 							<span class="register">To see this Document you must register</span>
 							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
 						</security:authorize>
-			</c:if>
-		</div>
-			<c:if test="${not empty image}">
-					<div id="DocumentImageDigitDiv">
-						<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
-						</security:authorize>
-						<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-							<span class="register">To see this Document you must register</span>
-							<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
-						</security:authorize>
-					</div>
-				</c:if>
-			<c:if test="${empty image}">
-				<div id="DocumentImageNotDigitDiv">
-					<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-						<span>To be digitized</span>
-						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
-					</security:authorize>
-					<security:authorize ifNotGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-						<span class="register">To see this Document you must register</span>
-						<img src="<c:url value="/images/1024/img_document.png"/>" alt="Document" width="120px" height="160px">
-					</security:authorize>
 				</div>
 			</c:if>
+			<c:if test="${image == null}">
+        		<p class="notDigitized">This document is not digitized yet</p>
+         	</c:if>
+		</div>
+			
 		</c:if>
 			
 			

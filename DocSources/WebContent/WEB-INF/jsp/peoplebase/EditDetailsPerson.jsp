@@ -27,7 +27,7 @@
 							<a class="helpIcon" title="Text goes here">?</a>
 							<form:label for="first" path="first" id ="firstLabel" cssErrorClass="error" title="First or Given Name"><u>First Name</u></form:label>
 						</div>
-						<div class="col_l"><form:input path="first" id="first" cssClass="input_18c" /></div>
+						<div class="col_l"><form:input path="first" id="first" cssClass="input_14c" /></div>
 						<div class="col_r">
 							<a class="helpIcon" title="Text goes here">?</a>
 							<form:label for="sucNum" path="sucNum" id="sucNumLabel" cssErrorClass="error" title="Succession Number. E.g., 'I' in Cosimo I de'Medici">Succes. Number</form:label>

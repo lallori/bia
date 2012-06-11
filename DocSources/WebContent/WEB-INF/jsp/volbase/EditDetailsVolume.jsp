@@ -15,7 +15,7 @@
 						<a class="helpIcon" title="Text goes here">?</a>
 						<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error"><i>Carteggio</i></form:label>
 					</div>
-					<div class="col_r"><form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_39c" /></div>
+					<div class="col_r"><form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_35c" /></div>
 				</div>
 			</div>
 			

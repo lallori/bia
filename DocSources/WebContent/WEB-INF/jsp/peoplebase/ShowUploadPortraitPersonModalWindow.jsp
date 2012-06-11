@@ -9,15 +9,18 @@
 	</c:url>
 	
 	<form id="EditPortraitPersonForm" action="${UploadPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
-	       <div>
-	       		<label for="browseLabel" id="browseLabel">Browse</label>	
-	       	    <input id="browse" name="browse" type="file" class="input_28c"/>
-	       </div>
-	       <div>
-	       	    <label for="link" id="linkLabel">Link</label>
-	       	    <input id="link" name="link" class="input_40c" type="text" value="http://" />
-	       </div>
-	       <div>
-	       	    <input id="save" type="submit" value="Save" />
-	       </div>
+	`	   <div class="listForm">
+              <div class="row">
+                          <div class="col_l"><label for="browse" id="browseLabel">Browse</label></div>
+                              <div class="col_l"><input id="browse" name="browse" class="input_28c" type="file" value="" size="30"/></div>
+                      </div>
+                      <div class="row">
+                          <div class="col_l"><label for="link" id="linkLabel">Link</label></div>
+                             <div class="col_l"><input id="link" name="link" class="input_40c" type="text" value="http://" /></div>
+                     </div>
+              </div>    
+              <div>
+                     <input id="save" type="submit" value="Save" />
+             </div>
+	       
 	   </form>
