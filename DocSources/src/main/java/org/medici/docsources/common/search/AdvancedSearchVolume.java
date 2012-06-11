@@ -75,6 +75,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	private List<String> volumesBetween;
 	private Boolean digitized;
 	private List<String> languages;
+	private List<String> otherLang;
 	private String cipher;
 	private String index;
 	private List<String> fromVolume;
@@ -109,6 +110,20 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 	 */
 	public void setLanguages(List<String> languages) {
 		this.languages = languages;
+	}
+
+	/**
+	 * @param otherLang the otherLang to set
+	 */
+	public void setOtherLang(List<String> otherLang) {
+		this.otherLang = otherLang;
+	}
+
+	/**
+	 * @return the otherLang
+	 */
+	public List<String> getOtherLang() {
+		return otherLang;
 	}
 
 	/**
@@ -229,6 +244,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 		volumesBetween = new ArrayList<String>(0);
 		digitized = null;
 		languages = new ArrayList<String>(0);
+		otherLang = new ArrayList<String>(0);
 		cipher = new String();
 		index = new String();
 		fromVolume = new ArrayList<String>(0);
@@ -340,6 +356,14 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 			languages.addAll(command.getLanguages());
 		}else{
 			languages = new ArrayList<String>(0);
+		}
+		
+		//Other Languages
+		if(command.getOtherLang() != null && command.getOtherLang().size() > 0){
+			otherLang = new ArrayList<String>(command.getOtherLang().size());
+			otherLang.addAll(command.getOtherLang());
+		}else{
+			otherLang = new ArrayList<String>(0);
 		}
 		
 		//Cypher
@@ -743,6 +767,26 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 					jpaQuery.append(" AND ");
 				}
 				jpaQuery.append(languagesQuery);
+			}
+		}
+		
+		//Other Languages
+		if(otherLang.size() > 0){
+			StringBuffer otherLangQuery = new StringBuffer("(");
+			for(int i = 0; i < otherLang.size(); i++){
+				if(otherLangQuery.length() > 1){
+					otherLangQuery.append(" AND ");
+				}
+				otherLangQuery.append("otherLang LIKE '%");
+				otherLangQuery.append(otherLang.get(i));
+				otherLangQuery.append("%'");
+			}
+			otherLangQuery.append(")");
+			if(!otherLangQuery.toString().equals("")){
+				if(jpaQuery.length() > 18){
+					jpaQuery.append(" AND ");
+				}
+				jpaQuery.append(otherLangQuery);
 			}
 		}
 		

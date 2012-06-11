@@ -71,6 +71,7 @@ public class AdvancedSearchCommand {
 	
 	private String digitized;
 	private List<String> languages;
+	private List<String> otherLang;
 	private List<String> context;
 	private List<String> fromVolume;
 	private List<String> toVolume;
@@ -515,6 +516,20 @@ public class AdvancedSearchCommand {
 	 */
 	public List<String> getLanguages() {
 		return languages;
+	}
+
+	/**
+	 * @param otherLang the otherLang to set
+	 */
+	public void setOtherLang(List<String> otherLang) {
+		this.otherLang = otherLang;
+	}
+
+	/**
+	 * @return the otherLang
+	 */
+	public List<String> getOtherLang() {
+		return otherLang;
 	}
 
 	/**
