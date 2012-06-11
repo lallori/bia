@@ -29,12 +29,14 @@
 			
 			<div class="listForm">
 				<div class="row">
+					<a class="helpIcon" title="Text goes here">?</a>
 					<div class="col_l"><form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">Add Title &amp; Occ:</form:label></div>
-					<div class="col_r"><form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_34c"/></div>
+					<div class="col_r"><form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_33c"/></div>
 				</div>
 				<div class="row">
 					<div class="col_l"></div>
 					<div class="col_r">
+						<a class="helpIcon" title="Text goes here">?</a>
 						<form:label id="preferredRoleLabel" for="preferredRole" path="preferredRole" cssErrorClass="error">Preferred role</form:label>
 						<form:checkbox id="preferredRole1" path="preferredRole" />
 					</div>

@@ -65,7 +65,7 @@ a {
 }
 
 #map { /* THE MEDICI ARCHIVE PROJECT top left image Container */
-	width:270px;
+	width: 255px;
 	height:165px;
 	position:absolute;
 	background:url(/DocSources/images/1024/img_map.png) no-repeat;
@@ -84,7 +84,7 @@ a {
 	width:745px;
 	height:64px;
 	margin-top:95px;
-	margin-left:255px;
+	margin-left: 247px;
 	position:absolute;
 	background-image:url(/DocSources/images/1024/bg_mainmenu.png);
 	background-repeat:no-repeat;
@@ -94,7 +94,7 @@ a {
 #top_bottom { /* USER INTERFACE MENU Container*/
 	width:1000px;
 	height:23px;
-	margin-top:158px;
+	margin-top: 158px;
 	position:absolute;
 	background-image:url(/DocSources/images/1024/bg_userinterface.png);
 }
@@ -154,7 +154,7 @@ a {
 #searchForm { /* Search Form Container */
 	width: 250px;
 	height:80px;
-	margin: 17px 0 0 17px;
+	margin: 17px 0 0 10px;
 	position:absolute;
 }
 
@@ -226,7 +226,7 @@ a {
 #lastentry { /* Shortcut Menu Container */
 	width:435px;
 	height:90px;
-	margin:10px 0 0 300px;
+	margin: 10px 0 0 310px;
 	position:absolute;
 	list-style:none;
 	float:left;
@@ -254,7 +254,7 @@ a {
 	width:100px;
 	top:10px;
 	height:85px;
-	padding-left:10px;
+	padding-left: 10px;
 }
 
 #menulastentry #last_doc a:hover {
@@ -329,19 +329,24 @@ a {
 
 #top_bottom ul {
 	list-style:none;
-	margin: 5px 0 0 0;
+	margin: 6px 0 0 0;
 	font-size: 11px;
 }
 
 #top_bottom ul li {
 	float:left;
 	padding-right: 40px;
+	font-size: 11PX;
 }
 
 #top_bottom ul li span{
 	color: #B40404;
 	margin-left:5px;
 	font-weight:bold;
+}
+
+#top_bottom ul li a {
+        font-size: 11px;
 }
 
 #top_bottom ul li a:hover { /* Administration Module */

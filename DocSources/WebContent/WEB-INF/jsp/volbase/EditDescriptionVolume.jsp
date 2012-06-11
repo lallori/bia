@@ -35,7 +35,7 @@
 					<div class="col_r"><form:select path="folsNumbrd" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="folsNumbrd" cssClass="inputerrors"/></div>
 				</div>
 				<div class="row">
-					<div class="col_r"><form:label id="folioCountLabel" for="folioCount" path="folioCount" cssErrorClass="error">Folio Count</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="Text goes here">?</a><form:label id="folioCountLabel" for="folioCount" path="folioCount" cssErrorClass="error">Folio Count</form:label></div>
 					<div class="col_l"><form:input path="folioCount" cssClass="input_10c"/><form:errors path="ccondition" cssClass="inputerrors"/></div>
 					<div class="col_r"><form:label id="oldAlphaIndexLabel" for="oldAlphaIndex" path="oldAlphaIndex" cssErrorClass="error">Index of Names</form:label></div>
 					<div class="col_r"><form:select path="oldAlphaIndex" cssClass="selectform_short"><form:option value="true">Yes</form:option><form:option value="false">No</form:option></form:select><form:errors path="oldAlphaIndex" cssClass="inputerrors"/></div>
@@ -60,7 +60,7 @@
 			<hr />
 				
 			<div>
-				<label for="languages" id="languagesLabel" >Languages:</label>
+				<a class="helpIcon" title="Text goes here">?</a><label for="languages" id="languagesLabel" > Languages:</label>
 			</div>
 			<div class="listForm">
 				<div class="row">

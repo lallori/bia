@@ -19,6 +19,7 @@
 			<legend>
 				<b>FATHER</b></legend>
 				<div>
+					<a class="helpIcon" title="Text goes here">?</a>
 					<form:label id="fatherDescriptionLabel" for="fatherDescription" path="fatherDescription" cssErrorClass="error">Name:</form:label>
 					<form:input id="fatherAutocompleter" path="fatherDescription" cssClass="input_25c" />
 				</div>

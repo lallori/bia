@@ -77,7 +77,7 @@
 				<b>Date:</b>
 				<br />
 				<div class="row">
-					<div class="col_r"><form:label id="DocYearLabel" for="docYear" path="docYear" cssErrorClass="error">Year</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="Text goes here">?</a><form:label id="DocYearLabel" for="docYear" path="docYear" cssErrorClass="error">Year</form:label></div>
 					<div class="col_l"><form:input id="docYear" path="docYear" class="input_4c" value="" maxlength="4"/></div>
 					<div class="col_r"><form:label id="docMonthNumLabel" for="docMonthNum" path="docMonthNum" cssErrorClass="error">Month</form:label></div>
 					<div class="col_l"><form:select id="docMonthNum" path="docMonthNum" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>

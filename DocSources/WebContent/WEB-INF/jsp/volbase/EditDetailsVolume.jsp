@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="col_r"><form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error" >Volume/Filza (MDP)</form:label></div>
 					<div class="col_l"><form:input path="volNum" cssClass="input_5c" maxlength="5"/></div>
-					<div class="col_r"><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="Text goes here">?</a><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension</form:label></div>
 					<div class="col_r"><form:input path="volLetExt" size="1" maxlength="1"  cssClass="input_1c"/></div>
 				</div>
 			</div>

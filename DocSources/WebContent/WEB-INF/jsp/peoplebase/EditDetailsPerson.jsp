@@ -106,6 +106,7 @@
 							<form:checkbox path="bornApprox" id="bornApprox1"/>
 						</div>
 						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
 							<form:label for="bornDateBc" id="bornDateBcLabel" path="bornDateBc" cssErrorClass="error">B.C.?</form:label>
 							<form:checkbox id="bornDateBc1" path="bornDateBc"/>
 						</div>
@@ -151,6 +152,7 @@
 							<form:checkbox path="deathApprox" id="deathApprox" />
 						</div>
 						<div class="col_r">
+							<a class="helpIcon" title="Text goes here">?</a>
 							<form:label for="deathDateBc" id="deathDateBcLabel" path="deathDateBc" cssErrorClass="error">B.C.?</form:label>
 							<form:checkbox id="deathDateBc" path="deathDateBc"/>
 						</div>
