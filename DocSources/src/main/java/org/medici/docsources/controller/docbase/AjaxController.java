@@ -250,7 +250,7 @@ public class AjaxController {
 			else
 				singleRow.add("");
 
-			resultList.add(HtmlUtils.showDocument(singleRow, currentDocument.getEntryId()));
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
 		}
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());

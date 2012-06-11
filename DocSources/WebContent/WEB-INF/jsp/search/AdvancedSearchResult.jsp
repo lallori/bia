@@ -86,6 +86,7 @@
 			// Result links have a specific class style on which we attach click live. 
 			$j('.searchResult').live('click', function() {
 				$j("#body_left").load($j(this).attr("href"));
+				$j.scrollTo("#body_left");
 				return false;
 			});
 			

@@ -59,21 +59,6 @@
 					<div class="value">no.</div>					
 				</div>
 			</div>
-			
-		<div id="helpProfile">
-			<h1>HELP SYSTEM</h1>
-			<a href="${UserManualURL}" target="_blank">User Manual (HTML version)</a><br />
-			<a href="">Download Manual (PDF version)</a><br />
-			<a href="">Help Videos</a>
-		</div>
-	
-		<div id="aboutmapProfile">
-			<h1>ABOUT MAP</h1>
-			<a href="#">News from MAP</a><br />
-			<a href="#">MAP website</a><br />
-			<a href="#">MAP online courses</a><br />
-			<a href="#">MAP Forums</a>
-		</div>
 	</div>
 </div>
 	

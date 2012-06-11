@@ -128,19 +128,6 @@
 				}});
 				return false;
 			});
-
-			$j('#close').click(function(e) {
-				$j('#EditGeoCoorPlaceForm').block({ message: $j('#question'),
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				}); 
-	            return false;
-			});
 		});
 		
 		$j("#gettyTgn").open({width: 960, height: 350, scrollbars: "yes"});

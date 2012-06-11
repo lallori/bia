@@ -10,47 +10,71 @@
 <div id="accordion">
 	<h1 id="placeNameH1"><a>Place Name</a></h1>
 	<div>
-		<form id="placeNameSearchForm" method="post" class="edit">
-			<a class="helpIcon" title="You can search here for place names using either whole or partial words (without accents).">?</a>
-			<input id="placeName" name="placeName" class="input_20c" type="text" value=""/>
-<!-- 			<label for="stressSense" id="placeNameType">Stress sense</label> -->
-<!-- 			<input type="checkbox" name="stressSense" class="checkbox4"/> -->
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
-			<input type="hidden" id="category" value="Place Name">
-		</form>
-	</div>
+		<div class="listAdvSearch">
+			<form id="placeNameSearchForm" method="post" class="edit">
+	           	<div class="row">
+	               	<div class="col_l">
+	               		<a class="helpIcon" title="You can search here for place names using either whole or partial words (without accents).">?</a>
+						<input id="placeName" name="placeName" class="input_20c" type="text" value=""/>
+			<!-- 		<label for="stressSense" id="placeNameType">Stress sense</label> -->
+			<!-- 		<input type="checkbox" name="stressSense" class="checkbox4"/> -->
+	               	</div>
+	               	<div class="col_r">
+	               		<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+						<input type="hidden" id="category" value="Place Name">
+	               	</div>
+	            </div>
+            </form>
+        </div>
+    </div>
 	
 	<h1 id="placeTypeH1"><a>Place Type</a></h1>
 	<div>
-		<form id="placeTypeSearchForm" method="post" class="edit">
-			<a class="helpIcon" title="These Place Types are assigned to geographical place names in the Getty Thesaurus of Geographic Names. Most places in the Documentary Sources database are of the type 'Inhabited Place' (that is to say, cities, towns and villages.)">?</a>
-			<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_Xlong">
-				<option value="Select a Place Type" selected="selected">Select a Place Type</option>
-				<c:forEach items="${placeTypes}" var="placeType">
-					<option value="${placeType}">${placeType}</option>
-				</c:forEach>
-			</select>
-			<input type="hidden" id="placeType" name="placeType" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
-			<input type="hidden" id="category" value="Place Type">
-		</form>
+		<div class="listAdvSearch">
+			<form id="placeTypeSearchForm" method="post" class="edit">
+	           	<div class="row">
+	               	<div class="col_l">
+	               		<a class="helpIcon" title="These Place Types are assigned to geographical place names in the Getty Thesaurus of Geographic Names. Most places in the Documentary Sources database are of the type 'Inhabited Place' (that is to say, cities, towns and villages.)">?</a>
+						<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_XXXlong">
+							<option value="Select a Place Type" selected="selected">Select a Place Type</option>
+							<c:forEach items="${placeTypes}" var="placeType">
+								<option value="${placeType}">${placeType}</option>
+							</c:forEach>
+						</select>
+	               	</div>
+	               	<div class="col_r">
+	               		<input type="hidden" id="placeType" name="placeType" type="text" value=""/>
+						<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+						<input type="hidden" id="category" value="Place Type">
+	               	</div>
+	            </div>
+            </form>
+        </div>
 	</div>
 
 	<h1 id="linkedPeopleH1"><a>Linked to People</a></h1>
 	<div>
-		<form id="linkedToPeopleSearchForm" method="post" class="edit">
-			<a class="helpIcon" title="You can refine your Places search by specifying 'Sender Location', 'Recipient Location', 'Birth Place', or 'Death Place'. The resulting hit list will include a link to the biographical records for the people who meet your criteria.">?</a>
-			<select id="linkedToPeopleSelect" name="linkedToPeopleSelect" class="selectform_MXlong">
-				<option value="Select a Link Type" selected="selected">Select a Link Type</option>
-				<option value="Sender Location">Sender Location</option>
-				<option value="Recipient Location">Recipient Location</option>
-				<option value="Birth Place">Birth Place</option>
-				<option value="Death Place">Death Place</option>
-			</select>
-			<input type="hidden" id="linkedToPeople" name="linkedToPeople" type="text" value=""/>
-			<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
-			<input type="hidden" id="category" value="Linked to People">
-		</form>
+		<div class="listAdvSearch">
+			<form id="linkedToPeopleSearchForm" method="post" class="edit">
+	           	<div class="row">
+	               	<div class="col_l">
+	               		<a class="helpIcon" title="You can refine your Places search by specifying 'Sender Location', 'Recipient Location', 'Birth Place', or 'Death Place'. The resulting hit list will include a link to the biographical records for the people who meet your criteria.">?</a>
+						<select id="linkedToPeopleSelect" name="linkedToPeopleSelect" class="selectform_MXlong">
+							<option value="Select a Link Type" selected="selected">Select a Link Type</option>
+							<option value="Sender Location">Sender Location</option>
+							<option value="Recipient Location">Recipient Location</option>
+							<option value="Birth Place">Birth Place</option>
+							<option value="Death Place">Death Place</option>
+						</select>
+	               	</div>
+	               	<div class="col_r">
+	               		<input type="hidden" id="linkedToPeople" name="linkedToPeople" type="text" value=""/>
+						<input type="submit" id="addSearchFilter" value="Add" title="Add this to your search filter">
+						<input type="hidden" id="category" value="Linked to People">
+	               	</div>
+	            </div>
+            </form>
+        </div> 
 	</div>
 </div>
 </div>

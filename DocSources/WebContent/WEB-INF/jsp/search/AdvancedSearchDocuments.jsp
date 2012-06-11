@@ -3,207 +3,342 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-
+<!-- 
+		    	<div class="listAdvSearch">
+		           	<div class="row">
+		               	<div class="col_l"></div>
+		            </div>
+		        </div> 
+		    -->
 	<div id="customSearchFilterDiv">
 		<h1 class="advSearchTitle">Create your custom search filter</h1>
 		<div id="accordion">
 			<h1 id="wordSearch"><a>Word search</a></h1>
 			<div class="documents">
-				<form id="wordSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-					<input type="text" id="word" name="word" class="input_15c" value="" />
-					in 
-					<select id="wordType" name="wordType" class="selectform_LXlong">
-						<option value="SynopsisAndExtract" selected="selected">Synopsis and Extract</option>
-						<option value="Synopsis">Document Synopsis</option>
-						<option value="Extract">Document Extract</option>				
-					</select>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
-					<input type="hidden" id="category" value="Word Search">
-				</form>
+				<div class="listAdvSearch">
+					<form id="wordSearchForm" method="post" class="edit">
+			           	<div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
+								<input type="text" id="word" name="word" class="input_15c" value="" />
+			               	</div>
+			               	<div class="col_l">in</div>
+			               	<div class="col_l">
+			               		<select id="wordType" name="wordType" class="selectform_LXlong">
+									<option value="SynopsisAndExtract" selected="selected">Synopsis and Extract</option>
+									<option value="Synopsis">Document Synopsis</option>
+									<option value="Extract">Document Extract</option>				
+								</select>
+			               	</div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
+								<input type="hidden" id="category" value="Word Search">
+			               	</div>
+			            </div>
+		            </form>
+		        </div>
 			</div>
 			
 			<h1 id="peoplePlaces"><a><i>search on</i> People &amp; Places</a></h1>
 		    <div class="documents">
-		    	<form id="personSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="General Person Search: search here for documents related to person name either if it is a sender, a recipient and/or referenced in a document.">?</a>
-					<label for="person" id="personLabel">Person</label> 
-					<input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="personAdd" disabled="disabled">
-					<input type="hidden" id="category" value="Person">
-					<input type="hidden" id="personId" value="">
-				</form>
-		        
-		        <form id="placeSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="General Place Search: search here for a document realated to place either if it is attached to a sender, a recipient and/or to a document topic.">?</a>
-					<label for="place" id="placeLabel">Place</label> 
-					<input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="placeAdd" disabled="disabled">
-					<input type="hidden" id="category" value="Place">
-					<input type="hidden" id="placeId" value="">
-				</form>
-				
+		    	<div class="listAdvSearch">
+		    		<form id="personSearchForm" method="post" class="edit">
+			           	<div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="General Person Search: search here for documents related to person name either if it is a sender, a recipient and/or referenced in a document.">?</a>
+								<label for="person" id="personLabel">Person</label>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE --></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="personAdd" disabled="disabled">
+								<input type="hidden" id="category" value="Person">
+								<input type="hidden" id="personId" value="">
+			               	</div>
+			            </div>
+		            </form>
+		            
+		            <form id="placeSearchForm" method="post" class="edit">
+			            <div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="General Place Search: search here for a document realated to place either if it is attached to a sender, a recipient and/or to a document topic.">?</a>
+								<label for="place" id="placeLabel">Place</label>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE --></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="placeAdd" disabled="disabled">
+								<input type="hidden" id="category" value="Place">
+								<input type="hidden" id="placeId" value="">
+			               	</div>
+			            </div>
+		            </form>
+		        </div>
+
 				<hr />
 				
-				<form id="senderSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Search documents sent FROM Person/Organization.">?</a>
-					<label for="sender" id="senderLabel">Sender Name</label> 
-					<input type="text" id="sender" class="input_24c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="senderAdd" disabled="disabled">
-					<input type="hidden" id="category" value="Sender">
-					<input type="hidden" id="senderId" value="">
-				</form>
-				
-				<form id="fromSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Search documents sent FROM Place/Location.">?</a>
-					<label for="from" id="fromLabel">Place From</label> 
-					<input type="text" id="from" name="from" class="input_24c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="fromAdd" disabled="disabled">
-					<input type="hidden" id="category" value="From">
-					<input type="hidden" id="fromId" value="">
-				</form>
-				
-				<form id="recipientSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Search documents sent TO Person/Organization.">?</a>
-					<label for="recipientSearch" id="recipientSearchLabel">Recipient Name</label> 
-					<input type="text" id="recipient" name="recipient" class="input_24c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="recipientAdd" disabled="disabled">
-					<input type="hidden" id="category" value="Recipient">
-					<input type="hidden" id="recipientId" value="">
-				</form>
-				
-				<form id="toSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Search documents sent Place/Location.">?</a>
-					<label for="to" id="toSearchLabel">Place To</label> 
-					<input type="text" id="to" name="to" class="input_24c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="toAdd" disabled="disabled">
-					<input type="hidden" id="category" value="To">
-					<input type="hidden" id="toId" value="">
-				</form>
-				
-				<form id="refersToSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Search documents in which this Person's name is mentioned.">?</a>
-					<label for="refersTo" id="refersToLabel">Refers to</label> 
-					<input type="text" id="refersTo" name="refersTo" class="input_24c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="refersToAdd" disabled="disabled">
-					<input type="hidden" id="category" value="Referers To">
-					<input type="hidden" id="refersToId" value="">
-				</form>
-		    </div>
+				<div class="listAdvSearch">
+					<form id="senderSearchForm" method="post" class="edit">
+			           	<div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="Search documents sent FROM Person/Organization.">?</a>
+								<label for="sender" id="senderLabel">Sender Name</label> 
+			               	</div>
+			               	<div class="col_l"><input type="text" id="sender" class="input_24c"/><!-- AUTOCOMPLETE --></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="senderAdd" disabled="disabled">
+								<input type="hidden" id="category" value="Sender">
+								<input type="hidden" id="senderId" value="">
+			               	</div>
+			            </div>
+		            </form>
+		            
+		            <form id="fromSearchForm" method="post" class="edit">
+			            <div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="Search documents sent FROM Place/Location.">?</a>
+								<label for="from" id="fromLabel">Place From</label>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="from" name="from" class="input_24c"/><!-- AUTOCOMPLETE --></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="fromAdd" disabled="disabled">
+								<input type="hidden" id="category" value="From">
+								<input type="hidden" id="fromId" value="">
+			               	</div>
+			            </div>
+		            </form>
+		            
+					<form id="recipientSearchForm" method="post" class="edit">
+			            <div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="Search documents sent TO Person/Organization.">?</a>
+								<label for="recipientSearch" id="recipientSearchLabel">Recipient Name</label>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="recipient" name="recipient" class="input_24c"/><!-- AUTOCOMPLETE --></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="recipientAdd" disabled="disabled">
+								<input type="hidden" id="category" value="Recipient">
+								<input type="hidden" id="recipientId" value="">
+			               	</div>
+			            </div>
+		            </form>
+		            
+		            <form id="toSearchForm" method="post" class="edit">
+			            <div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="Search documents sent Place/Location.">?</a>
+								<label for="to" id="toSearchLabel">Place To</label>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="to" name="to" class="input_24c"/><!-- AUTOCOMPLETE --></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="toAdd" disabled="disabled">
+								<input type="hidden" id="category" value="To">
+								<input type="hidden" id="toId" value="">
+			               	</div>
+			            </div>
+		            </form>
+		            
+					<form id="refersToSearchForm" method="post" class="edit">
+			            <div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="Search documents in which this Person's name is mentioned.">?</a>
+								<label for="refersTo" id="refersToLabel">Refers to</label>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="refersTo" name="refersTo" class="input_24c"/><!-- AUTOCOMPLETE --></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="refersToAdd" disabled="disabled">
+								<input type="hidden" id="category" value="Referers To">
+								<input type="hidden" id="refersToId" value="">
+			               	</div>
+			            </div>
+		            </form>
+		        </div>
+			</div>
 		
 			<h1 id="extractSynopsis"><a><i>in</i> Extract and/or Synopsis</a></h1>
 			<div class="documents">
-				<form id="extractSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="That text will explain...">?</a>
-					<label for="extract" id="extractLabel">Extract</label><br />
-					<textarea id="extract" name="extract" class="txtadvsearch"></textarea>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
-					<input type="hidden" id="category" value="Extract">
-				</form>
-				<br />
-				<form id="synopsisSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="That text will explain...">?</a>
-					<label for="synopsis" id="synopsisLabel">Synopsis</label><br />
-					<textarea id="synopsis" name="synopsis" class="txtadvsearch"></textarea>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
-					<input type="hidden" id="category" value="Synopsys">
-				</form>
+				<div class="listAdvSearch">
+					<form id="extractSearchForm" method="post" class="edit">
+			           	<div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="That text will explain...">?</a>
+								<label for="extract" id="extractLabel">Extract</label>
+			               	</div>
+			            </div>
+			            <div class="row">
+			               	<div class="col_l"><textarea id="extract" name="extract" class="txtadvsearch"></textarea></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
+								<input type="hidden" id="category" value="Extract">
+			               	</div>
+			            </div>
+		            </form>
+		            
+		            <form id="synopsisSearchForm" method="post" class="edit">
+			            <div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="That text will explain...">?</a>
+								<label for="synopsis" id="synopsisLabel">Synopsis</label>
+			               	</div>
+			            </div>
+			            <div class="row">
+			               	<div class="col_l"><textarea id="synopsis" name="synopsis" class="txtadvsearch"></textarea></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter">
+								<input type="hidden" id="category" value="Synopsys">
+			               	</div>
+			            </div>
+		            </form>
+		        </div>
 			</div>
 			
 			<h1 id="topicsSearch"><a><i>with</i> Topics</a></h1>
 			<div class="documents">
-				<form id="topicSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
-					<select id="topicSelect" name="topicSelect" class="selectForm_Xlong">
-						<option value="Select a Topic" selected="selected">Select a Topic</option>
-						<c:forEach items="${topicsList}" var="topicList">
-							<option value="${topicList.topicId}">${topicList}</option>
-						</c:forEach>
-					</select>
-<!-- 					<input type="text" id="topic" name="topic" class="input_25c"/>AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicAdd">
-					<input type="hidden" id="category" value="Topics">
-					<input type="hidden" id="topic" name="topic" type="text" value=""/>
-					<input type="hidden" id="topicId" value=""/>
-				</form>
-				<form id="topicPlaceSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="">?</a>
-					<input type="text" id="topicPlace" class="input_24c"/><!-- AUTOCOMPLETE -->
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicPlaceAdd" disabled="disabled">
-					<input type="hidden" id="category" value="topic Place">
-					<input type="hidden" id="topicPlaceId" value="">
-				</form>
+				<div class="listAdvSearch">
+					<form id="topicSearchForm" method="post" class="edit">
+			           	<div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
+								<select id="topicSelect" name="topicSelect" class="selectForm_Xlong">
+									<option value="Select a Topic" selected="selected">Select a Topic</option>
+									<c:forEach items="${topicsList}" var="topicList">
+										<option value="${topicList.topicId}">${topicList}</option>
+									</c:forEach>
+								</select>
+			               	</div>
+			               	<div class="col_r">
+			               		<!-- <input type="text" id="topic" name="topic" class="input_25c"/>AUTOCOMPLETE -->
+								<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicAdd">
+								<input type="hidden" id="category" value="Topics">
+								<input type="hidden" id="topic" name="topic" type="text" value=""/>
+								<input type="hidden" id="topicId" value=""/>
+			               	</div>
+			            </div>
+		            </form>
+		            
+		            <form id="topicPlaceSearchForm" method="post" class="edit">
+			            <div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="">?</a>
+								<input type="text" id="topicPlace" class="input_24c"/><!-- AUTOCOMPLETE -->
+			               	</div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicPlaceAdd" disabled="disabled">
+								<input type="hidden" id="category" value="topic Place">
+								<input type="hidden" id="topicPlaceId" value="">
+			               	</div>
+			            </div>
+		            </form>
+		        </div>
 			</div>
 
 			<h1 id="dateRange"><a>Date Range</a></h1>
 			<div class="documents">
-				<form id="dateSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
-					<select id="dateType" name="dateType" class="selectform_Llong">
-						<option value="From">Written from</option>
-						<option value="Before">Written before</option>
-						<option value="Between">Written between</option>
-						<option value="InOn">Written in/on</option>
-					</select>
-					<input type="text" id="dateYear" class="input_4c" maxlength="4" value="yyyy"/>
-					<select id="dateMonth" name="dateMonth" class="selectform">
-						<c:forEach items="${months}" var="month">
-							<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
-						</c:forEach>
-					</select>
-					<input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="addDateRange">
-					<input type="hidden" id="category" value="Date">
-					<p class="invisible">and</p>
-	                <input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/>
-	                <select id="dateMonthBetween" name="dateMonthBetween" class="selectform" style="visibility:hidden">
-						<c:forEach items="${months}" var="month">
-							<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
-						</c:forEach>
-	                </select>
-	                <input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/>
-				</form>
+				<div class="listAdvSearch">
+					<form id="dateSearchForm" method="post" class="edit">
+			           	<div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
+								<select id="dateType" name="dateType" class="selectform_Llong">
+									<option value="From">Written from</option>
+									<option value="Before">Written before</option>
+									<option value="Between">Written between</option>
+									<option value="InOn">Written in/on</option>
+								</select>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="dateYear" class="input_4c" maxlength="4" value="yyyy"/></div>
+			               	<div class="col_l">
+			               		<select id="dateMonth" name="dateMonth" class="selectform">
+									<c:forEach items="${months}" var="month">
+										<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
+									</c:forEach>
+								</select>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="dateDay" name="dateDay" class="input_2c" maxlength="2" value="dd"/></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="visible">
+								<input type="hidden" id="category" value="Date">
+			               	</div>
+			            </div>
+			            
+			            <div class="row">
+			               	<div class="col_l"><p class="invisible">and</p></div>
+			               	<div class="col_l"><input id="dateYearBetween" name="dateYearBetween" class="input_4c" type="text" value="yyyy" maxlength="4" style="visibility:hidden"/></div>
+			               	<div class="col_l">
+			               		<select id="dateMonthBetween" name="dateMonthBetween" class="selectform" style="visibility:hidden">
+									<c:forEach items="${months}" var="month">
+										<option value="${month.monthNum}" selected="selected">${month.monthName}</option>
+									</c:forEach>
+				                </select>
+			               	</div>
+			               	<div class="col_l"><input id="dateDayBetween" name="dateDayBetween" class="input_2c" type="text" value="dd" maxlength="2" style="visibility:hidden"/></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="invisible">
+			               	</div>
+			            </div>
+		            </form>
+		        </div>
 			</div>
 			
 			<h1 id="volumeSearch"><a><i>in</i> Volume and/or Folio</a></h1>
 			<div class="documents">
 				<h3>Volume</h3>
-				<form id="volumeSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
-					<select id="volumeType" name="volumeType" class="selectform_long">
-						<option value="Exactly" selected="selected">Exactly</option>
-						<option value="Between">Between</option>
-					</select>
-					<input type="text" id="volume"  name="volume" class="input_5c"/><!-- AUTOCOMPLETE -->
-					<p class="invisibleVol">and</p>
-					<input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" style="visibility:hidden"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="volumeAdd" disabled="disabled">
-					<input type="hidden" id="category" value="Volume">
-				</form>
-				
-				<h3>Folio</h3>
-				<form id="folioSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Text will go here">?</a>
-					<select id="folioType" name="folioType" class="selectform_long">
-						<option value="Exactly" selected="selected">Exactly</option>
-						<option value="Between">Between</option>
-					</select>
-					<input type="text" id="folio" name="folio" class="input_5c" maxlength="5" />
-					<p class="invisibleFol">and</p>
-					<input id="folioBetween" name="folioBetween" class="input_5c" type="text" style="visibility:hidden"/>
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
-					<input type="hidden" id="category" value="Folio">
-				</form>
+				<div class="listAdvSearch">
+					<form id="volumeSearchForm" method="post" class="edit">
+			           	<div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+								<select id="volumeType" name="volumeType" class="selectform_long">
+									<option value="Exactly" selected="selected">Exactly</option>
+									<option value="Between">Between</option>
+								</select>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="volume"  name="volume" class="input_5c"/><!-- AUTOCOMPLETE --></div>
+			               	<div class="col_l"><p class="invisibleVol">and</p></div>
+			               	<div class="col_l"><input id="volumeBetween" name="volumeBetween" class="input_5c" type="text" style="visibility:hidden"/></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="volumeAdd" disabled="disabled">
+								<input type="hidden" id="category" value="Volume">
+			               	</div>
+			            </div>
+			        </form>
+			            
+			        <h3>Folio</h3>
+			        <form id="folioSearchForm" method="post" class="edit">
+			            <div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="Text will go here">?</a>
+								<select id="folioType" name="folioType" class="selectform_long">
+									<option value="Exactly" selected="selected">Exactly</option>
+									<option value="Between">Between</option>
+								</select>
+			               	</div>
+			               	<div class="col_l"><input type="text" id="folio" name="folio" class="input_5c" maxlength="5" /></div>
+			               	<div class="col_l"><p class="invisibleFol">and</p></div>
+			               	<div class="col_l"><input id="folioBetween" name="folioBetween" class="input_5c" type="text" style="visibility:hidden"/></div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+								<input type="hidden" id="category" value="Folio">
+			               	</div>
+			            </div>
+		            </form>
+		        </div>
 			</div>
 			
 			<h1 id="docIdSearch"><a>Doc ID</a></h1>
 			<div class="documents">
-				<form id="docIdSearchForm" method="post" class="edit">
-					<a class="helpIcon" title="Text will go here">?</a>
-					<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
-					<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
-					<input type="hidden" id="category" value="Doc Id">
-				</form>			
+				<div class="listAdvSearch">
+					<form id="docIdSearchForm" method="post" class="edit">
+			           	<div class="row">
+			               	<div class="col_l">
+			               		<a class="helpIcon" title="Text will go here">?</a>
+								<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
+			               	</div>
+			               	<div class="col_r">
+			               		<input type="submit" id="addSearchFilter" value="Add" title="Add this word search to your search filter">
+								<input type="hidden" id="category" value="Doc Id">
+			               	</div>
+			            </div>
+		            </form>
+		        </div>
 			</div>
 		</div>
 	</div>

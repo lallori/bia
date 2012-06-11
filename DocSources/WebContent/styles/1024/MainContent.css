@@ -542,17 +542,23 @@ item a{
 	width: 275px;
 }
 
-.listForm .col_r,  .listFormProfile .col_r, .listSearch .col_r{ /* Sub-fields title cell */
+.listAdvSearch { /* Whole display list */
+	display: table;
+	margin: 5px 0 0 3px;
+	width: 440px;
+}
+
+.listForm .col_r,  .listFormProfile .col_r, .listSearch .col_r, .listAdvSearch .col_r{ /* Sub-fields title cell */
 	display: table-cell;
 	text-align:right;
 }
 
-.listForm .col_l, .listFormProfile .col_l, .listSearch .col_l { /* Sub-fields title cell */
+.listForm .col_l, .listFormProfile .col_l, .listSearch .col_l, .listAdvSearch .col_l { /* Sub-fields title cell */
 	display: table-cell;
 	text-align:left;
 }
 
-.listForm .row .helpIcon {
+.listForm .row .helpIcon, .listAdvSearch .row .helpIcon {
 	margin-right: 5px;
 }
 
@@ -1341,7 +1347,7 @@ textarea {
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 12px;
     height: 40px;
-    margin: 8px 7px 15px 0;
+    margin: 15px 7px 0 0;
     padding: 5px 10px;
     resize: none;
     width: 330px;
@@ -1367,7 +1373,7 @@ textarea {
 hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	margin:10px 0 10px 0;
 	padding:0;
-	width:415px;
+	width:442px;
 	color:#DCC0BA;
 	background-color:#DCC0BA;
 	height:1px;
@@ -3418,6 +3424,10 @@ form#EditUserProfileForm span{
 	margin:0 0 30px 0;
 }
 
+#customSearchFilterDiv form {
+	display: table-row-group;
+}
+
 
 #accordion #addSearchFilter { /* Add button */
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
@@ -3425,20 +3435,21 @@ form#EditUserProfileForm span{
 	height:22px;
 	border:none;
 	cursor:pointer;
-	margin: 5px 0 0 29px;
+	/*margin: 5px 0 0 29px;*/
 }
 
 #placeNameSearchForm #addSearchFilter {
-	margin: 5px 0 0 175px;
+	/*margin: 5px 0 0 175px;*/
 }
 
 #occupation {
 	width:241px;
 }
 
+
 #personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #refersToSearchForm #addSearchFilter, #placeSearchForm #addSearchFilter{
-	float:none;
-	margin-left: 49px;
+	/*float:none;
+	margin-left: 49px;*/
     padding: 0;
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:12px;
@@ -3446,13 +3457,13 @@ form#EditUserProfileForm span{
 }
 
 #dateYearBetween {
-	margin-left:176px;
+	/*margin-left:176px;*/
 	visibility:hidden;
 }
 
 #dateSearchForm p {
 	visibility:hidden; 
-	margin:0 0 0 260px;
+	margin:0 0 0 145px;
 }
 
 #volumeSearchForm p, #folioSearchForm p {
@@ -3921,7 +3932,7 @@ table#savedSearchFiltersForm.display {
 
 
 /* ------------- DOCUMENT SEARCH ------------------ */
-/* Input Label positions */
+/* Input Label positions 
 
 #topicSearchForm #addSearchFilter {
 	margin:0 0 0 107px;
@@ -3979,20 +3990,6 @@ table#savedSearchFiltersForm.display {
 	 margin: 0 0 0 275px;
 }
 
-.txtadvsearch {
-	width: 270px;
-	height:70px;
-	border: 1px solid #e6d0c6;
-	background-color: #fbf7f4;
-	color: #000000;
-	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:11px;
-	padding:5px 10px 5px 10px;
-	margin: 5px 0px 5px 0px;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-}
-
 #personLabel {
 	margin-right: 27px;
 }
@@ -4016,6 +4013,21 @@ table#savedSearchFiltersForm.display {
 #refersToLabel {
 	margin-right: 42px;
 }
+*/
+
+.txtadvsearch {
+	width: 270px;
+	height:70px;
+	border: 1px solid #e6d0c6;
+	background-color: #fbf7f4;
+	color: #000000;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:11px;
+	padding:5px 10px 5px 10px;
+	margin: 5px 0px 5px 0px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+}
 
 /* ------------- VOLUME SEARCH ------------------ */
 /* Input Label positions 
@@ -4024,14 +4036,14 @@ table#savedSearchFiltersForm.display {
 	margin-left:7px;
 }
 
-*/
+
 
 #languagesSearchForm #languagesLabel {
 	margin:0 0 0 7px;
 	float:none;
 }
 
-.volumes #volumeSearchForm #addSearchFilter { /* Add button */
+.volumes #volumeSearchForm #addSearchFilter { /* Add button 
 	margin: 5px 0 0 115px;
 }
 
@@ -4102,8 +4114,8 @@ table#savedSearchFiltersForm.display {
 
 /* ------------------------------------------------- */
 /*
-/* ------------- PEOPLE SEARCH ------------------ */
-/* Input Label positions */
+/* ------------- PEOPLE SEARCH ------------------ 
+/* Input Label positions 
 
 #namePartsSearchForm #addSearchFilter {
 	margin: 5px 0 0 20px;
@@ -4153,8 +4165,8 @@ table#savedSearchFiltersForm.display {
 
 /* ------------------------------------------------- */
 /*
-/* ------------- PLACE SEARCH ------------------ */
-/* Input Label positions */
+/* ------------- PLACE SEARCH ------------------ 
+/* Input Label positions 
 
 #placeNameSearchForm #addSearchFilter {
 	margin:5px 0 0 40px;

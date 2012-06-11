@@ -12,7 +12,7 @@
 				<script type="text/javascript">
 					$j(document).ready(function() {					   	
 						$j("#myprofileMenu").click(function() {
-							Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 760, height: 440});return false;}																	
+							Modalbox.show($j(this).attr("href"), {title: "MY PROFILE", width: 760, height: 470});return false;}																	
 						);	
 					});
 				</script>						
