@@ -113,7 +113,7 @@
 			<div id="EditPortraitPersonDiv">
 				<div id="imgPortraitPerson"></div>
 				<p style="text-align:center"><b>Portrait</b></p>
-				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
+				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS, COMMUNITY_USERS">
 				<c:if test="${person.personId != 0}">
 					<a id="uploadPortrait" href="#">Upload Portrait</a>
 				</c:if>
