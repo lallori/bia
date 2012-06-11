@@ -216,11 +216,11 @@
 		            
 		            <form id="topicPlaceSearchForm" method="post" class="edit">
 			            <div class="row">
-			               	<div class="col_l">
+			               	<div class="col_l"><br>
 			               		<a class="helpIcon" title="">?</a>
-								<input type="text" id="topicPlace" class="input_24c"/><!-- AUTOCOMPLETE -->
+			               		Place<input type="text" id="topicPlace" class="input_24c"/><!-- AUTOCOMPLETE -->
 			               	</div>
-			               	<div class="col_r">
+			               	<div class="col_r"><br>
 			               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="topicPlaceAdd" disabled="disabled">
 								<input type="hidden" id="category" value="topic Place">
 								<input type="hidden" id="topicPlaceId" value="">
