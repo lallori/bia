@@ -63,7 +63,17 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(searchFilter.filterData.cipher.length() != 0) && ((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.otherLang) && ((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<div id="otherLangSearchDiv">
+			<c:forEach items="${searchFilter.filterData.otherLang}" varStatus="iterator">
+				<div class="searchFilterDiv">
+					<span class="categorySearch">Other Language: </span><span class="wordSearch">${searchFilter.filterData.otherLang[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<input type="hidden" value="${searchFilter.filterData.otherLang[iterator.index]}" name="otherLang">
+				</div>
+				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
+			</c:forEach>
+			</div>
+			<c:if test="${(searchFilter.filterData.cipher.length() != 0) && ((not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="cipherSearchDiv">
 			<c:if test="${searchFilter.filterData.cipher.length() != 0}">
 				<div class="searchFilterDiv">
@@ -72,7 +82,7 @@
 				</div>
 			</c:if>
 			</div>
-			<c:if test="${(searchFilter.filterData.index.length() != 0) && ((searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(searchFilter.filterData.index.length() != 0) && ((searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="indexSearchDiv">
 			<c:if test="${searchFilter.filterData.index.length() != 0}">
 				<div class="searchFilterDiv">
@@ -81,7 +91,7 @@
 				</div>
 			</c:if>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.fromVolume) && ((searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.fromVolume) && ((searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="fromVolumeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.fromVolume}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -91,7 +101,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.toVolume) && ((not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.toVolume) && ((not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="toVolumeSearchDiv">
 			<c:forEach items="${searchFilter.filterData.toVolume}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -101,7 +111,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.context) && ((not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.context) && ((not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang))}"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="contextSearchDiv">
 			<c:forEach items="${searchFilter.filterData.context}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -111,7 +121,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<c:if test="${(not empty searchFilter.filterData.inventario) && ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
+			<c:if test="${(not empty searchFilter.filterData.inventario) && ((not empty searchFilter.filterData.context) || (not empty searchFilter.filterData.toVolume) || (not empty searchFilter.filterData.fromVolume) || (searchFilter.filterData.index.length() != 0) || (searchFilter.filterData.cipher.length() != 0) || (not empty searchFilter.filterData.volumes) || (not empty searchFilter.filterData.languages) || (not empty searchFilter.filterData.otherLang)) }"><hr><p class="andOrNotAdvancedSearchCenter">And</p><hr></c:if>
 			<div id="inventarioSearchDiv">
 			<c:forEach items="${searchFilter.filterData.inventario}" varStatus="iterator">
 				<div class="searchFilterDiv">
@@ -121,10 +131,9 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<div class="yourSearchDiv">
-				<p>Record found:
-				<span class="recordsNum"></span></p>
-			</div>
+			<p class="yourSearchDiv">Record found:
+			<span class="recordsNum"></span></p>
+			
 			<br>
 			<br>
 			<a class="saveButton" href="#">Save</a>

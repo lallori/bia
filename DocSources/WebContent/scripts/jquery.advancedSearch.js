@@ -36,7 +36,7 @@
 	$.advancedSearchForm = {};
 
 	$.advancedSearchForm.defaults = {
-		"AdvancedSearchCountURL" : "/DocSources/src/AdvancedSearchCount.json",
+		"AdvancedSearchCountURL" : "/DocSources/src/AdvancedSearchCount.json"
 
 	};
 
