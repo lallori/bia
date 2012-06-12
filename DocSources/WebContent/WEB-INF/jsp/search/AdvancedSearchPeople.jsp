@@ -445,6 +445,7 @@
 			
 		$j("#placeSearchForm").submit(function(){
 			$j("#placeId").val("");
+			$j("#place").val("");
 			$j(".placeAdd").attr("disabled","disabled");
 		});
 		 
