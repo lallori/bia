@@ -111,7 +111,7 @@
 				$j.scrollTo("#body_left");
 				return false;
 			});
-			
+
 			$j('.tabResult').die();
 			$j('.tabResult').live('click', function(){
 				var tabName = "Topics " + $j(this).parent().parent().children().first().text();
