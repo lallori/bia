@@ -278,6 +278,7 @@
 			</div>
 
 <c:url var="searchVolumeURL" value="/src/SearchVolume.json"/>
+<c:url var="searchOtherLangURL" value="/src/SearchOtherLang.json"/>
 
 <script type="text/javascript">
 	$j(document).ready(function() {
@@ -437,24 +438,24 @@
 				return false;
 		});
 		
-		var $volBetweenAutocomplete = $j("#volumeBetween").autocompleteGeneral({
-			serviceUrl: '${searchVolumeURL}',
-			minChars: 1,
-			delimiter: null,
-			maxHeight: 400,
-			width: 200,
-			zIndex: 9999,
-			deferRequestBy: 0,
-			noCache: true,
-			onSelect: function(value, data){
+// 		var $volBetweenAutocomplete = $j("#volumeBetween").autocompleteGeneral({
+// 			serviceUrl: '${searchVolumeURL}',
+// 			minChars: 1,
+// 			delimiter: null,
+// 			maxHeight: 400,
+// 			width: 200,
+// 			zIndex: 9999,
+// 			deferRequestBy: 0,
+// 			noCache: true,
+// 			onSelect: function(value, data){
 				
-			}
-		});
+// 			}
+// 		});
 		
-		$j("#volumeBetween").blur(function(){
-			$volBetweenAutocomplete.killSuggestions();
-			return false;
-		});
+// 		$j("#volumeBetween").blur(function(){
+// 			$volBetweenAutocomplete.killSuggestions();
+// 			return false;
+// 		});
 		
 		var $otherLangAutocomplete = $j("#otherLang").autocompleteGeneral({
 			serviceUrl: '${searchOtherLangURL}',

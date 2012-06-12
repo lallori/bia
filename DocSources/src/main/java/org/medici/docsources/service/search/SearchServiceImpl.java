@@ -409,6 +409,18 @@ public class SearchServiceImpl implements SearchService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<String> searchOtherLang(String query) throws ApplicationThrowable {
+		try{
+			return getVolumeDAO().searchOtherLang(query);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page searchPeople(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getPeopleDAO().searchMYSQL(searchContainer, paginationFilter);

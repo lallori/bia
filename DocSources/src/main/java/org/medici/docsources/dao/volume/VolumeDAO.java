@@ -72,6 +72,14 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	public Volume findVolume(Integer volNum, String volLetExt) throws PersistenceException;
 
 	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<String> searchOtherLang(String query) throws PersistenceException;
+	
+	/**
 	 * This method searches volumes which contains the parameters set in {@link org.medici.docsources.common.search}
 	 * object and return a result page.
 	 * 

@@ -179,6 +179,14 @@ public interface SearchService {
 	
 	/**
 	 * 
+	 * @param query
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public List<String> searchOtherLang(String query) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
 	 * @return

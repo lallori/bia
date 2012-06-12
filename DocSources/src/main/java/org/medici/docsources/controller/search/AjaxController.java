@@ -478,6 +478,31 @@ public class AjaxController {
 	public VolBaseService getVolBaseService() {
 		return volBaseService;
 	}
+	
+	/**
+	 * This method returns a list of volume numbers. 
+	 *  
+	 * @param query Search string filled by user
+	 * 
+	 * @return ModelAndView containing linkable topics.
+	 */
+	@RequestMapping(value = "/src/SearchOtherLang", method = RequestMethod.GET)
+	public ModelAndView searchOtherLang(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<String> otherLang = getSearchService().searchOtherLang(query);
+			model.put("query", query);
+			model.put("count", otherLang.size());
+			model.put("data", otherLang);
+			model.put("suggestions", otherLang);
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
 
 	/**
 	 * This method returns a list of person. It's used in autocompleter of advanced search. 

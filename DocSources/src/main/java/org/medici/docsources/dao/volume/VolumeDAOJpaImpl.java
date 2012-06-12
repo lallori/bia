@@ -28,8 +28,6 @@
 package org.medici.docsources.dao.volume;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -43,24 +41,17 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
-import org.apache.lucene.search.WildcardQuery;
 import org.hibernate.ejb.HibernateEntityManager;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.transform.Transformers;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.search.Search;
-import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
@@ -152,6 +143,25 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 			return result.get(0);
 		} else {
 			return null;
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> searchOtherLang(String query) throws PersistenceException {
+		// TODO Auto-generated method stub
+		StringBuffer stringBuffer = new StringBuffer("SELECT DISTINCT otherLang FROM Volume WHERE otherLang LIKE'%");
+		stringBuffer.append(query.toLowerCase());
+		stringBuffer.append("%'");
+		Query result = getEntityManager().createQuery(stringBuffer.toString());
+		if(result.getResultList().size() == 0){
+			return null;
+		}else{
+			List<String> otherLang = result.getResultList();
+			return otherLang;
 		}
 	}
 
