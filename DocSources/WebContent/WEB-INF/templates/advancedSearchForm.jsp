@@ -79,11 +79,13 @@
 		</script>
 	</head>
 	
+<%-- each search filter has its advancedSearch_top so each file has his customized top block --%>
+<%--	
 	<body>
-		<div id="advancedSearch">
-			<div id="advancedSearch_top">
-			</div>
-			<div id="body_left">
+	<div id="advancedSearch">
+		<div id="advancedSearch_top">SEARCH FOR DOCUMENTS</div>
+		<div id="body_left">
+	--%>
 				<tiles:insertAttribute name="advancedSearchForm"/>
 			</div>
 			
