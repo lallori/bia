@@ -11,7 +11,6 @@
     
     <context:component-scan base-package="org.medici.docsources.controller"/>
     
-	<!--  http://localhost:8080/DocSourcesProject -->
 	<mvc:annotation-driven/>
 	
 	<mvc:interceptors>
@@ -79,7 +78,7 @@
 		</mvc:interceptor>
 
 	    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-	        <description>Interceptor per la modifica del locale su singola richiesta.</description>
+	        <description>Interceptor to change locale on single request.</description>
 	        <property name="paramName" value="locale"/>
 	    </bean>
 		
@@ -95,6 +94,7 @@
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="mediaTypes">
 			<map>
+				<entry key="html" value="text/html"/>
 				<entry key="json" value="application/json" />
 				<entry key="xml" value="application/xml" />
 			</map>
@@ -111,7 +111,7 @@
 				</bean>
 			</list>
 		</property>
-		<property name="defaultContentType" ref="jsonMediaType" />
+		<property name="defaultContentType" ref="htmlMediaType" />
 		<property name="ignoreAcceptHeader" value="true" />
 	</bean>
 
@@ -123,6 +123,14 @@
 		<constructor-arg value="application/json" />
 	</bean>
 	
+	<bean id="htmlMediaType" class="org.springframework.http.MediaType" factory-method="parseMediaType">
+		<constructor-arg value="text/html" />
+	</bean>
+
+	<bean id="xmlMediaType" class="org.springframework.http.MediaType" factory-method="parseMediaType">
+		<constructor-arg value="text/xml" />
+	</bean>
+
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>

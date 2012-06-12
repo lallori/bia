@@ -107,7 +107,7 @@
 	</pluginRepositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<hibernate.version>3.6.0.Final</hibernate.version>
+		<hibernate.version>3.6.10.Final</hibernate.version>
 		<hibernatesearch.version>3.4.1.Final</hibernatesearch.version>
 		<hibernatevalidator.version>4.1.0.Final</hibernatevalidator.version>
 		<oscache.version>3.6.0.Final</oscache.version>
@@ -115,12 +115,9 @@
 		<jstl.version>1.1.2</jstl.version>
 		<mysql.version>5.1.17</mysql.version>
 		<recaptcha4j.version>0.0.7</recaptcha4j.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
-		<springdao.version>2.0.8</springdao.version>
-		<springjmx.version>2.0.8</springjmx.version>
+		<spring.version>3.1.1.RELEASE</spring.version>
 		<springldap.version>1.3.1.RELEASE</springldap.version>
 		<springsecurity.version>3.0.5.RELEASE</springsecurity.version>
-		<springsupport.version>2.0.8</springsupport.version>
 		<tiles.version>2.2.1</tiles.version>
 	</properties>
 	<organization>
@@ -552,21 +549,9 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-dao</artifactId>
-			<version>${springdao.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.springframework.ldap</groupId>
-			<artifactId>spring-ldap</artifactId>
-			<version>${springldap.version}</version>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>org.springframework.ldap</groupId>
 			<artifactId>spring-ldap-core</artifactId>
@@ -576,11 +561,6 @@
 			<groupId>org.springframework.ldap</groupId>
 			<artifactId>spring-ldap-core-tiger</artifactId>
 			<version>${springldap.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jmx</artifactId>
-			<version>${springjmx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -624,8 +604,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-support</artifactId>
-			<version>2.0.8</version>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
