@@ -107,39 +107,40 @@ public class SimpleSearchVolume extends SimpleSearch {
 			jpaQuery.append(" WHERE ");
 		}
 		
-//		for(int i = 0; i < words.length; i++){
-		if(NumberUtils.isNumber(words[0])){
-			jpaQuery.append("(volNum = ");
-			jpaQuery.append(words[0]);
-			jpaQuery.append(")");
-		}else{
-			jpaQuery.append("(volLetExt like '");
-			jpaQuery.append(words[0]);
-			jpaQuery.append("')");
-		}
-//			jpaQuery.append("(ccondition like '%");
-//			jpaQuery.append(words[i] + "%') OR ");
-//			jpaQuery.append("(ccontext like '%");
-//			jpaQuery.append(words[i] + "%') OR ");
-//			jpaQuery.append("(orgNotes like '%");
-//			jpaQuery.append(words[i] + "%') OR ");
-//			jpaQuery.append("(recips like '%");
-//			jpaQuery.append(words[i] + "%') OR ");
-//			jpaQuery.append("(senders like '%");
-//			jpaQuery.append(words[i] + "%') OR ");
-//			jpaQuery.append("(serieList.title like '%");
-//			jpaQuery.append(words[i] + "%') OR ");
-//			jpaQuery.append("(serieList.subTitle1 like '%");
-//			jpaQuery.append(words[i] + "%') OR ");
-//			jpaQuery.append("(serieList.subTitle2 like '%");
-//			jpaQuery.append(words[i] + "%')");
+		for(int i = 0; i < words.length; i++){
+			if(NumberUtils.isNumber(words[0])){
+				jpaQuery.append("(volNum = ");
+				jpaQuery.append(words[0]);
+				jpaQuery.append(")");
+			}else{
+				if(words[0].length() == 1){
+					jpaQuery.append("(volLetExt like '");
+					jpaQuery.append(words[0]);
+					jpaQuery.append("')");
+				}else{
+					jpaQuery.append("(ccondition like '%");
+					jpaQuery.append(words[i] + "%') OR ");
+					jpaQuery.append("(ccontext like '%");
+					jpaQuery.append(words[i] + "%') OR ");
+					jpaQuery.append("(orgNotes like '%");
+					jpaQuery.append(words[i] + "%') OR ");
+					jpaQuery.append("(recips like '%");
+					jpaQuery.append(words[i] + "%') OR ");
+					jpaQuery.append("(senders like '%");
+					jpaQuery.append(words[i] + "%') OR ");
+					jpaQuery.append("(serieList.title like '%");
+					jpaQuery.append(words[i] + "%') OR ");
+					jpaQuery.append("(serieList.subTitle1 like '%");
+					jpaQuery.append(words[i] + "%') OR ");
+					jpaQuery.append("(serieList.subTitle2 like '%");
+					jpaQuery.append(words[i] + "%')");
+				}
+			}
+			if(i < (words.length - 1)){
+				jpaQuery.append(" AND ");
+			}
 			
-				
-//			if(i < (words.length - 1)){
-//				jpaQuery.append(" AND ");
-//			}
-//		}
-		
+		}
 		return jpaQuery.toString();
 	}
 
