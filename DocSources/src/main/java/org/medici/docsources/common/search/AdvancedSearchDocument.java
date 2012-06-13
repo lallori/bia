@@ -579,6 +579,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			from = new ArrayList<String>(command.getFrom().size());
 			
 			for (String singleWord : command.getFrom()) {
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
+				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if (stringTokenizer.countTokens() == 0) {
@@ -657,6 +661,10 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			to = new ArrayList<String>(command.getTo().size());
 			
 			for (String singleWord : command.getTo()) {
+				//MD: This is for refine search when the URLencoder change the space in "+" and the special character "ç" in "%E7"
+				singleWord = singleWord.replace("+", "%20");
+				singleWord = singleWord.replace("%E7", "ç");
+				
 				StringTokenizer stringTokenizer = new StringTokenizer(singleWord, "|");
 				try {
 					if (stringTokenizer.countTokens() == 0) {
