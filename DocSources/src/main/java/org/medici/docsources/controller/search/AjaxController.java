@@ -32,10 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.medici.docsources.command.search.AdvancedSearchCommand;
 import org.medici.docsources.common.pagination.Page;
@@ -492,10 +490,20 @@ public class AjaxController {
 
 		try {
 			List<String> otherLang = getSearchService().searchOtherLang(query);
+			//MD: This code is to separate the other Languages
+			List<String> separatedLang = new ArrayList<String>();
+			for(String currentString : otherLang){
+				String [] comma = currentString.split(",\\s*");
+				for(int i = 0; i < comma.length; i++){
+					if(!separatedLang.contains(comma[i])){
+						separatedLang.add(comma[i]);
+					}
+				}
+			}
 			model.put("query", query);
-			model.put("count", otherLang.size());
-			model.put("data", otherLang);
-			model.put("suggestions", otherLang);
+			model.put("count", separatedLang.size());
+			model.put("data", separatedLang);
+			model.put("suggestions", separatedLang);
 
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
@@ -960,10 +968,7 @@ public class AjaxController {
 
 		try {
 			//MD: We search volumes only in volume number 
-			if(NumberUtils.isNumber(searchText))
-				page = getSearchService().searchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
-			else
-				page = new Page(paginationFilter);
+			page = getSearchService().searchVolumes(new SimpleSearchVolume(searchText), paginationFilter);
 
 			// Lorenzo Pasquinelli : Now digitized information on volume is a property of volume entity ... We can comment next code
 			// stateVolumesDigitized = getVolBaseService().getVolumesDigitizedState((List<Integer>)ListBeanUtils.transformList(page.getList(), "volNum"), (List<String>)ListBeanUtils.transformList(page.getList(), "volLetExt"));
