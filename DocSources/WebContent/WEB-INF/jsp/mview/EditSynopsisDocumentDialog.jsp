@@ -22,8 +22,14 @@
 		$j(document).ready(function() {
 			$j("#EditSynopsisDocumentDiv").dialog("option" , "position" , [$j("#EditExtractDocumentDiv").dialog("option" , "width") + 8 , "middle"]);
 			
+			$j("#EditSynopsisDocumentForm :input").change(function(){
+				$j("#editModify").val(1);
+				return false;
+			});
+			
 			$j("#saveSynopsis").click(function (){
 				if (synopsisChanged) {
+					$j("#editModify").val(0);
 					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
 							$j("#EditSynopsisDocumentDiv").html(html);
 							synopsisChanged=false;
@@ -35,6 +41,7 @@
 			});
 			$j("#saveSynopsisExit").click(function (){
 				if (synopsisChanged) {
+					$j("#editModify").val(0);
 					$j.ajax({ type:"POST", url:$j("#EditSynopsisDocumentForm").attr("action"), data:$j("#EditSynopsisDocumentForm").serialize(), async:false, success:function(html) { 
 						$j("#EditSynopsisDocumentDiv").html(html);
 						synopsisChanged=false;

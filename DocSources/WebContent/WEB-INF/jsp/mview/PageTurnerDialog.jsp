@@ -189,16 +189,17 @@
 	</div>
 	
 	<div id="exitDiv">
-		<a id="exitButton" href="#" class="transcribe" onClick="$j('#exit').dialog('open');" style="cursor: pointer;">Exit</a>
+		<a id="exitButton" href="#" class="transcribe" style="cursor: pointer;">Exit</a>
+		<input type="hidden" id="editModify" value="" />
 	</div>
 </div>
 
 	<div id="exit" title="Alert" style="display:none">
 		<c:if test="${command.modeEdit == true}">
-			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?</p>
+			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?</p>
 		</c:if> 
 		<c:if test="${command.modeEdit == false}">
-			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer?</p>
+			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer?</p>
 		</c:if> 
 	</div>
 
@@ -353,6 +354,11 @@
 			
 			$j('#exitButton').click(function() {
 				$j('#exit').dialog('open');
+				if($j("#editModify").val() == 1){
+					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?");
+				}else{
+					$j("#closeMessage").text("Are you sure you want to close your Manuscript Trascriber/Viewer?");
+				}
 				return false;
 			});
 			
