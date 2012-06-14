@@ -99,8 +99,23 @@
 			
 			// Result links have a specific class style on which we attach click live. 
 			$j('.searchResult').live('click', function() {
-				//$j(this).parent().parent().css('background-color','#b0addd');
 				$j("#body_left").load($j(this).attr("href"));
+				
+				$j("#${command.searchUUID} tbody").find("tr.selected td.selected").addClass("sorting_1");
+				$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").css('background-color','#DCC0BA');
+				$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").css('background-color','#EAD9D6');
+				$j("#${command.searchUUID} tbody").find("tr.selected td.selected").removeClass("selected");
+				
+					
+				$j("#${command.searchUUID} tbody").find("tr.selected").removeClass("selected");
+				var tr = $j(this).parent().parent();
+				$j(tr).addClass("selected");
+				
+				var tdSort = $j(tr).find("td.sorting_1");
+				$j(tdSort).removeClass("sorting_1");
+				$j(tdSort).addClass("selected");
+				
+				
 				$j.scrollTo("#body_left");
 				return false;
 			}); 
@@ -108,6 +123,22 @@
 			//MD: This code is for click in any space inside a row
 			$j("#${command.searchUUID} tbody tr").live('click', function(){
 				$j("#body_left").load($j(this).children().children().attr("href"));
+				
+				$j("#${command.searchUUID} tbody").find("tr.selected td.selected").addClass("sorting_1");
+				$j("#${command.searchUUID} tbody").find("tr.odd.selected td.selected").css('background-color','#DCC0BA');
+				$j("#${command.searchUUID} tbody").find("tr.even.selected td.selected").css('background-color','#EAD9D6');
+				$j("#${command.searchUUID} tbody").find("tr.selected td.selected").removeClass("selected");
+				
+					
+				$j("#${command.searchUUID} tbody").find("tr.selected").removeClass("selected");
+				
+				$j(this).addClass("selected");
+				
+				var tdSort = $j(this).find("td.sorting_1");
+				$j(tdSort).removeClass("sorting_1");
+				$j(tdSort).addClass("selected");
+				//$j(this).css('background-color','#b0addd');
+				
 				$j.scrollTo("#body_left");
 				return false;
 			});
