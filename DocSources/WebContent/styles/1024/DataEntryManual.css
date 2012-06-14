@@ -46,7 +46,7 @@ h4 {
 
 #cover, #index { /* Wrappers */
 	width:950px;
-	height:750px;
+	height: 1000px;
 	margin:0px auto 0 auto;
 	padding:0px;
 	top:0px;
@@ -55,9 +55,10 @@ h4 {
 
 #chapter1, #chapter2, #chapter3, #chapter4, #chapter5, #chapter6 {
 	height:auto;
-	margin-top:50px;
+	margin: 250px auto 0 auto;
 	padding:25px;
 	text-align:justify;
+	width: 950px;
 }
 
 a{
@@ -108,7 +109,6 @@ a.link {
 	display:inline;
 	background-image:url(/DocSources/images/1024/button_medium.png);
 	background-repeat:no-repeat;
-	font-size:11px;
 	padding:4px 0 0 0;
 	text-align:center;
 }
@@ -121,19 +121,19 @@ a:hover {
 
 .backToIndex {
 	position:fixed;
-	width:122px;
-	height:23px;
+	width: 120px;
+	height: 21px;
 	text-align:center;
 	padding-top:4px;
 	bottom:5px;
 	right:5px;
-	background:url(/DocSources/images/1024/button_medium_dark.png) no-repeat;
-	color:#6D5C4D;
+	color: #F6EDEC;
 	margin: 0 15px 0 0;
 	z-index: 100;
 	box-shadow: 0 0 15px #f6edec;
-	background-color: #F6EDEC;
+	background-color: #666EA4;
 	border: 2px solid #F6EDEC;
+	border-radius: 7px;
 }
 
 .backToIndex:hover {
@@ -147,7 +147,7 @@ a:hover {
 
 #index  {
 	padding:25px;
-	height:auto;
+	height: 1200px;
 }
 
 #index ul{
@@ -161,8 +161,8 @@ a:hover {
 	padding:0;
 	color: #6F6B69;
 	text-align: center;
-	margin-top: -10px;
 	text-decoration: underline;
+	margin-bottom: 25px;
 }
 
 #index .subtitle{

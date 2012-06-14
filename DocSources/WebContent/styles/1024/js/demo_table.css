@@ -237,6 +237,7 @@ tr.even {
 
 tr.odd:hover, tr.odd td.sorting_1:hover, tr.even:hover, tr.even td.sorting_1:hover  {
     background-color: #b0addd;
+	cursor: pointer;
 }
 
 
@@ -614,9 +615,13 @@ div.box {
 }
 
 a:hover {
-	text-decoration:underline;
+	text-decoration:none;
 }
 
 #myCategoryDocumentsHistoryTable_paginate, #myCategoryPlacesHistoryTable_paginate, #myCategoryPeopleHistoryTable_paginate, #myCategoryVolumesHistoryTable_paginate {
 	display:none;
+}
+
+tr.selected, td.selected{
+	background-color: #b0addd;
 }

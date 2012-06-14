@@ -506,6 +506,10 @@ item a{
 	min-height: 160px;
 }
 
+#geoTitle {
+	min-height: 160px;
+}
+
 
 /* ----------------------------------------------------- */ 
 /*
@@ -578,7 +582,7 @@ item a{
 }
 
 .button_medium {
-	width: 122px;
+	width: 127px;
 	height: 22px;
 	background-image: url(/DocSources/images/1024/button_medium.png);
 	background-repeat: no-repeat;
@@ -598,7 +602,7 @@ item a{
 }
 
 .showCompare {
-	width: 122px;
+	width: 127px;
 	height: 22px;
 	background-image: url(/DocSources/images/1024/button_medium.png);
 	background-repeat: no-repeat;
@@ -1373,7 +1377,7 @@ textarea {
 hr { /* Horizontal Line used to separate areas inside the Edit Forms */
 	margin:10px 0 10px 0;
 	padding:0;
-	width:442px;
+	width:415px;
 	color:#DCC0BA;
 	background-color:#DCC0BA;
 	height:1px;
@@ -1910,7 +1914,7 @@ span.docId, span.placeId {
 }
 
 #uploadPortrait {
-	width: 122px;
+	width: 127px;
 	height: 22px;
 	display: inline;
 	background-image: url(/DocSources/images/1024/button_medium.png);
@@ -2773,27 +2777,52 @@ a.refreshVolumeExplorer {
 	margin: 10px 0 0 30px;
 }
 
-#PlaceMapDiv { /* Place map */
+#placeImageDiv { /* Place map */
     float:right; 
     margin-right:15px;
     z-index:1;
     height:160px;
     width:120px;
     text-align:center;
-	margin-top: 0;
+    margin-top: 0;
 }
 
-#PlaceMapDiv span {
+#geoTitle p {
+    margin:53px 0 5px 10px
+}
+
+#placeImageDiv .PlaceMap {
+	position: absolute;
+	font-size: 11px;
+	text-shadow: 1px 1px 0 white;
+	margin: 148px 0 0 -22px;
+	width: 152px;
+	background:url(/DocSources/images/1024/button_bodyleftmenu_xlarge.png) no-repeat;
+	height:17px;
+}
+
+
+
+#placeImageDiv img {
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#placeImageDiv img.shadow {
+	box-shadow: 0 0 10px #A4A4A4;
+	margin-top: 9px;
+}
+
+#placeImageDiv span {
     color: #C0272D;
     height: 60px;
     position: absolute;
-    margin-top: 70px;
+    margin-top: 50px;
     width: 70px;
-	text-shadow:1px 1px 1px #999;
-	font-size:11px;
-	text-align:center;
-	moz-margin-left: 25px;
-	margin-left: 25px;
+    text-shadow: 1px 1px 1px #888;
+    font-size:11px;
+    text-align:center;
+    margin-left: 20px;
 }
 
 #PlaceMapDiv a.PlaceMap {
@@ -3366,18 +3395,39 @@ form#EditUserProfileForm span{
 	margin:25px 0 0 80px;
 }
 
+#createFilterDiv {
+	margin-left: 81px;
+	margin-top: 10px;
+}
+
 #createFilter {
-	position:absolute;
-	margin:6px;
+	position: absolute;
+	margin: -4px 0 0 4px;
 }
 
 #advancedSearch #advancedSearch_top { /* Advances Search window Title */
-    font-size: 16px;
-    font-weight: bold;
     height: 20px;
-    margin: 10px 0 0 370px;
+    margin: 10px 0 0 0;
     text-align: center;
-    width: 250px;
+    width: 944px;
+	height:60px;
+}
+
+#advancedSearch_top h1 {
+	font-size: 16px;
+	color:#6F6B69;
+	font-weight: bold;
+}
+
+#advancedSearch_top p {
+	font-size: 12px;
+	color:#6F6B69;
+}
+
+#advancedSearch_top h1 {
+	font-size: 16px;
+	color:#6F6B69;
+	font-weight: bold;
 }
 
 #customSearchFilterDiv h1.advSearchTitle {
@@ -3444,11 +3494,6 @@ form#EditUserProfileForm span{
 	height:22px;
 	border:none;
 	cursor:pointer;
-	/*margin: 5px 0 0 29px;*/
-}
-
-#placeNameSearchForm #addSearchFilter {
-	/*margin: 5px 0 0 175px;*/
 }
 
 #occupation {
@@ -3457,16 +3502,13 @@ form#EditUserProfileForm span{
 
 
 #personSearchForm #addSearchFilter, #senderSearchForm #addSearchFilter, #fromSearchForm #addSearchFilter, #recipientSearchForm #addSearchFilter, #toSearchForm #addSearchFilter, #refersToSearchForm #addSearchFilter, #placeSearchForm #addSearchFilter{
-	/*float:none;
-	margin-left: 49px;*/
-    padding: 0;
+	   padding: 0;
 	background: url(/DocSources/images/1024/button_small.png) no-repeat;
 	font-size:12px;
     text-align:center;
 }
 
 #dateYearBetween {
-	/*margin-left:176px;*/
 	visibility:hidden;
 }
 
@@ -3943,88 +3985,6 @@ table#savedSearchFiltersForm.display {
 
 
 /* ------------- DOCUMENT SEARCH ------------------ */
-/* Input Label positions 
-
-#topicSearchForm #addSearchFilter {
-	margin:0 0 0 107px;
-}
-
-#wordSearchForm #addSearchFilter {
-	margin: 0 0 0 29px;
-}
-
-#volumeSearchLabel {
-	margin-left:23px;
-}
-
-#fromDateSearchLabel {
-	margin-left:12px;
-}
-
-#toDateSearchLabel {
-	margin-left:27px;
-}
-
-#fromDateDaySearch, #toDateDaySearch {
-	margin-left:2px;
-}
-
-#dateSearchForm #addSearchFilter {
-	margin: 5px 0 0 20px;
-}
-
-#extractSearchForm #extractSearchLabel, #synopsisSearchForm #synopsisSearchLabel {
-	margin:5px 0 0 5px;
-}
-
-#extractSearchForm .txtadvsearch, #synopsisSearchForm .txtadvsearch{
-	margin:5px 0px 0 25px;
-	width: 320px;
-	height:150px;
-	resize: none;
-}
-
-#extractSearchForm #addSearchFilter, #synopsisSearchForm #addSearchFilter{
-	margin:70px 0 0 0;
-	float: right;
-}
-
-.documents #dateSearchForm #addSearchFilter {
-	margin:0 0 0 10px;
-}
-
-.documents #volumeSearchForm #addSearchFilter, .documents #folioSearchForm #addSearchFilter {
-	margin: 0 0 0 90px;
-}
-
-#docIdSearchForm #addSearchFilter {
-	 margin: 0 0 0 275px;
-}
-
-#personLabel {
-	margin-right: 27px;
-}
-
-#placeLabel {
-	margin-right: 36px;
-}
-
-#senderLabel {
-	margin-right: 13px;
-}
-
-#fromSearchForm #fromLabel {
-	margin-right: 27px;
-}
-
-#toSearchLabel {
-	margin-right: 45px;
-}
-
-#refersToLabel {
-	margin-right: 42px;
-}
-*/
 
 .txtadvsearch {
 	width: 270px;
@@ -4038,169 +3998,6 @@ table#savedSearchFiltersForm.display {
 	margin: 5px 0px 5px 0px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
-}
-
-/* ------------- VOLUME SEARCH ------------------ */
-/* Input Label positions 
-
-#personLabel, #placeLabel, #senderLabel, #toSearchLabel, #refersToLabel, #recipientSearchLabel, #fromSearchForm #fromLabel, #fromVolumeSearchForm #fromLabel, #toVolumeSearchForm #toLabel, #digitizedSearchForm #digitizedLabel, #cipherSearchForm #cipherLabel, #indexSearchForm #indexLabel, #inventarioSearchForm #inventarioLabel, #extractLabel, #synopsisLabel,  #contextSearchForm #contextLabel{
-	margin-left:7px;
-}
-
-
-
-#languagesSearchForm #languagesLabel {
-	margin:0 0 0 7px;
-	float:none;
-}
-
-.volumes #volumeSearchForm #addSearchFilter { /* Add button 
-	margin: 5px 0 0 115px;
-}
-
-.volumes #dateSearchForm #addSearchFilter { 
-	margin: 5px 0 0 15px;
-}
-
-#fromVolumeSearchForm #addSearchFilter, #toVolumeSearchForm #addSearchFilter, #toVolumeSearchForm #addSearchFilter, #contextSearchForm #addSearchFilter, #inventarioSearchForm #addSearchFilter { 
-	float:right;
-	margin: 23px 0 0;
-}
-
-#digitizedSearchForm #addSearchFilter { 
-	margin: 5px 0 0 195px;
-} 
-
-#cipherSearchForm #addSearchFilter, #indexSearchForm #addSearchFilter { 
-	margin: 5px 0 0 197px;
-} 
-
-#customSearchFilterDiv hr {
-	width: 440px;
-}
-
-#contextSearchForm #contextLabel {
-	margin-right: 30px;
-}
-
-#languagesSearchForm #frenchLabel, #languagesSearchForm #germanLabel {
-	margin-left:15px;
-}
-
-#languagesSearchForm #italianLabel {
-	margin-left: 25px;
-} 
-
-#languagesSearchForm #spanishLabel {
-	margin-left: 111px;
-}
-
-#languagesSearchForm #latinLabel {
-	margin-left: 25px;
-}
-
-#languagesSearchForm #englishLabel{
-	margin-left: 19px;
-}
-
-#cipherSearchForm #cipherLabel {
-	margin-right: 47px;
-}
-
-#digitizedSearchForm #digitizedLabel {
-	margin-right: 35px;
-}
-
-#toVolumeSearchForm #toLabel {
-	margin-right: 70px;
-}
-
-#fromVolumeSearchForm #fromLabel {
-	margin-right: 53px;
-}
-
-#languagesSearchForm, #digitizedSearchForm {
-	margin-bottom:5px
-}
-
-/* ------------------------------------------------- */
-/*
-/* ------------- PEOPLE SEARCH ------------------ 
-/* Input Label positions 
-
-#namePartsSearchForm #addSearchFilter {
-	margin: 5px 0 0 20px;
-}
-
-.people #dateSearchForm #addSearchFilter {
-	margin: 5px 0 0 20px;
-}
-
-#roleCategorySearchForm #addSearchFilter, #occupationSearchForm #addSearchFilter {
-	margin: 5px 0 0 100px;
-}
-
-#genderSearchForm #addSearchFilter {
-	margin-left: 244px;
-}
-
-.people #placeSearchForm #addSearchFilter {
-	margin: 5px 0 0 28px;
-}
-
-#occupationWordSearchForm #addSearchFilter {
-	margin: 5px 0 0 177px;
-} 
-
-#researchNotesSearchForm #addSearchFilter{
-	margin: 5px 0 0 175px;
-}
-
-#namePartsSearchLabel {
-	margin-left:3px;
-}
-
-#dateRangeSearchLabel {
-	margin-left:6px;
-}
-
-#genderSearchForm #genderLabel {
-	margin-left:6px;
-}
-
-#placeSearchLabel {
-	margin-left:;
-}
-
-.
-
-/* ------------------------------------------------- */
-/*
-/* ------------- PLACE SEARCH ------------------ 
-/* Input Label positions 
-
-#placeNameSearchForm #addSearchFilter {
-	margin:5px 0 0 40px;
-}
-
-#placeTypeSearchForm #addSearchFilter, #linkedToTopicsSearchForm #addSearchFilter, #linkedToPeopleSearchForm #addSearchFilter {
-	margin: 5px 0 0 150px;
-}
-
-#linkedToPeopleSearchForm #addSearchFilter {
-	margin: 5px 0 0 200px;
-}
-
-#placeNameSearchLabel {
-	margin-left:21px;
-}
-
-#placeTypeSearchLabel {
-	margin-left:27px;
-}
-
-#linkedToTopicsSearchLabel  {
-	margin-left:1px;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -4668,7 +4465,7 @@ ul#network a {
 }
 
 #AddNewDigitizedVolumeDiv .activate {
-	background-image: url("/DocSources/images/1024/button_medium.png");
+	background-image: url(/DocSources/images/1024/button_medium.png);
     background-repeat: no-repeat;
     cursor: pointer;
     display: inline;
@@ -4679,7 +4476,7 @@ ul#network a {
 	width: 65px;
 	text-decoration:none;
 	color: #6D5C4D;
-	width: 122px;
+	width: 127px;
 	padding: 3px 0 0 0;
 }
 
@@ -4954,7 +4751,7 @@ h3.systemManagement {
 .refine { /* Refine this search button on Search Results Tab */
  	float: right;
 	margin: 20px 0 0 10px;
-	width: 122px;
+	width: 127px;
 	height: 22px;
 	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
 	text-align: center;
@@ -4964,7 +4761,7 @@ h3.systemManagement {
 .print {
 	float: left;
 	margin: 15px 0 0 0;
-	width: 122px;
+	width: 127px;
 	height: 22px;
 	background: url(/DocSources/images/1024/button_medium.png) no-repeat;
 	text-align: center;
@@ -4995,8 +4792,9 @@ h3.systemManagement {
 	margin-left: 10px;
 }
 
-#yourEasySearchFilterForm .yourSearchDiv {
-	width: 330px;
+#advancedSearch #body_right #yourEasySearchFilterForm p.yourSearchDiv {
+	width: 340px;
+	padding-left: 5px;
 }
 
 .tabLink { /* The word used on the research */
@@ -5217,39 +5015,39 @@ h3.systemManagement {
 }
 
 #generalHistory {
-    background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
+    background: url(/DocSources/images/1024/button_medium.png) no-repeat scroll 0 0 transparent;
     cursor: pointer;
     float: left;
     height: 22px;
 	padding: 4px 0 0;
 	text-align: center;
-    width: 122px;
+    width: 127px;
 }
 
 #categoryHistory {
-    background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
+    background: url(/DocSources/images/1024/button_medium.png) no-repeat scroll 0 0 transparent;
     cursor: pointer;
 	float:right;
     height: 22px;
     margin: 0;
     padding: 4px 0 0;
     text-align: center;
-    width: 122px;
+    width: 127px;
 }
 
 #eraseHistory {
-    background: url("/DocSources/images/1024/button_medium.png") no-repeat scroll 0 0 transparent;
+    background: url(/DocSources/images/1024/button_medium.png) no-repeat scroll 0 0 transparent;
     cursor: pointer;
 	float:left;
     height: 22px;
     margin-left: 12px;
     padding: 4px 0 0;
     text-align: center;
-    width: 122px;
+    width: 127px;
 }
 
 #goBackToMyHistory {
-	background: url("/DocSources/images/1024/button_small.png") no-repeat scroll 0 0 transparent;
+	background: url(/DocSources/images/1024/button_small.png) no-repeat scroll 0 0 transparent;
     cursor: pointer;
     float: left;
     height: 22px;

@@ -31,6 +31,16 @@
 			<%-- Editing Place Records --%>
 			<c:if test="${place.placeAllId != 0}">
 				<div id="geoTitle">
+					<div id="placeImageDiv">
+						<c:if test="${linkGoogleMaps != null}">
+							<a href="${linkGoogleMaps}" target="_blank" title="Show on Google Maps"><img src="<c:url value="/images/1024/img_googleMap.jpg"/>" alt="Place" class="shadow"></a>
+						</c:if>
+						<c:if test="${linkGoogleMaps == null }">
+							<span>Not attached to Google Maps</span>
+							<a class="PlaceMap" href="#">Assign Geo Coordinates</a>
+							<img src="<c:url value="/images/1024/img_place.png" />" alt="Place">
+						</c:if>
+					</div>
         			<h3>${place.placeName}</h3>
 					<h4>${place.placeNameFull}</h4>
 					<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
@@ -70,13 +80,6 @@
 				</security:authorize>
 			</div>
 			
-			<div id="PlaceMapDiv">
-				<img src="<c:url value="/images/1024/img_place.png"/>" alt="Place" width="120px" height="160px">
-				<c:if test="${linkGoogleMaps != null}">
-					<a class="placeMap" href="${linkGoogleMaps}" target="_blank">View this place on Google Maps</a>
-				</c:if>
-			</div>
-		
 			<div class="listDetails">
 				<div class="row">
 					<div class="item">Place ID</div> 

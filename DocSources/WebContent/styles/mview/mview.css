@@ -1,10 +1,103 @@
+
+body {
+	margin: 0;
+	background-color: black;
+}
+
+.button_mini {
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/1024/button_mini.png);
+	font-size:11px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	background-color:transparent;
+	text-decoration: none;
+	color: #6F6B69;
+}
+
+.button_small {
+	cursor:pointer;
+	background-color:transparent;
+	background-image:url(/DocSources/images/1024/button_small.png);
+	width:52px;
+	height:22px;
+	border:none;
+	text-align: center;
+	padding-top: 4px;
+	background-repeat: no-repeat;
+	border: none;
+	background-color:transparent;
+	text-decoration: none;
+	color: #6F6B69;
+}
+
+.button_medium {
+	width: 122px;
+	height: 22px;
+	background-image: url(/DocSources/images/1024/button_medium.png);
+	background-repeat: no-repeat;
+	padding: 4px 0 0 0;
+	cursor: pointer;
+	text-align: center;
+	border: none;
+	background-color: transparent;
+	text-decoration: none;
+	color: #6F6B69;
+}
+
+input[type=submit].button_medium, input[type=submit].button_small {
+	padding: 1px 0 0 0;
+}
+
+input { /* INPUT text */
+	font-size: 12px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+	margin: 5px 0 5px 5px;
+}
+
+.input_5c { /* input for 5 characters */ 
+	width: 45px;
+}
+
+.list { /* Whole display list */
+	display: table;
+	width:100%; 
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.row { /* Single row */
+	display: table-row;
+}
+
+.list .col_r{ /* Sub-fields title cell */
+	display: table-cell;
+	text-align:right;
+}
+
+.list .col_l{ /* Sub-fields title cell */
+	display: table-cell;
+	text-align:left;
+}
+
+
 /* 
 
 Manuscript Viewer css
 html version
 */
 
-#EditExtractDocumentDiv #EditExtractDocumentForm textarea, #EditSynopsisDocumentDiv #EditSynopsisDocumentForm textarea,  #EditPersonalNotesForm textarea, #EditPersonalNotesForm #personalNotes{
+#EditExtractDocumentDiv #EditExtractDocumentForm textarea, #EditSynopsisDocumentDiv #EditSynopsisDocumentForm textarea,  #EditPersonalNotesForm textarea, #EditPersonalNotesForm #personalNotes, #EditTranscriptionForm #transcription{
 	border: 1px solid #e6d0c6;
 	background-color: #fbf7f4;
 	font-family:Georgia, "Times New Roman", Times, serif;
@@ -15,13 +108,34 @@ html version
 	color: #000000;
 	width: 98%;
 	height:90%;
+	text-align:justify;
+	resize:none;
 }
 
-#EditSynopsisDocumentDiv, #EditExtractDocumentDiv, #EditPersonalNotesDiv, #EditExtractDocumentForm, #EditSynopsisDocumentForm, #DialogPersonalNotesDiv, #EditPersonalNotesForm {
+#EditSynopsisDocumentDiv, #EditExtractDocumentDiv, #EditPersonalNotesDiv, #EditExtractDocumentForm, #EditSynopsisDocumentForm, #DialogPersonalNotesDiv, #EditPersonalNotesForm, #EditTranscriptionForm, #CompareManuscriptDiv, #CompareManuscriptForm {
 	position:relative;
 	margin:0 auto 0 auto;
 	height:97%;
 	font-size: 12px;
+}
+
+#PageTurnerVerticalDiv {
+	width: 120px;
+	height: 330px;
+}
+
+/* ---------- Title bar --------- */
+
+#rotateVertical {
+	margin-left: 283px;
+	border: 1px solid transparent;
+}
+
+#rotateVertical:hover {
+	cursor: pointer;
+	border: 1px solid #DCC0BA;
+	border-radius: 4px;
+	background-color:#f4e9e8;
 }
 
 /* ---------- Buttons --------- */
@@ -38,11 +152,17 @@ html version
 	margin: 8px 0 0 215px;
 }
 
+#PageTurnerVerticalDiv #prevNextButtons {
+	width: 90px;
+	margin-top: 20px;
+	margin-left: 18px;
+}
+
 #EditPersonalNotesDiv #prevButton img, #EditPersonalNotesDiv #nextButton img, #EditPersonalNotesDiv #personalNotesDiv img, #EditPersonalNotesDiv #exitDiv img{
 	border:none;
 }
 
-#EditPersonalNotesDiv #prevButton a {
+#EditPersonalNotesDiv #prevButton a,  #PageTurnerVerticalDiv #prevButton a{
 	float:left;
 	background:url(/DocSources/images/mview/button_lastRecord_pageTurner.png) no-repeat;
 	padding:4px 0 0 4px;
@@ -55,7 +175,7 @@ html version
 	cursor: pointer;
 }
 
-#EditPersonalNotesDiv #nextButton a {
+#EditPersonalNotesDiv #nextButton a, #PageTurnerVerticalDiv #nextButton a {
 	float:right;
 	background:url(/DocSources/images/mview/button_nextRecord_pageTurner.png) no-repeat;
 	width:35px;
@@ -73,13 +193,18 @@ html version
 	filter:alpha(opacity=50); /* IE */ !important
 }
 
+#PageTurnerVerticalDiv #transcribeDiv {
+	width: 121px;
+	height: 115px;
+}
+
 a.transcribe {
-	background:url(/DocSources/images/mview/button_large.png) no-repeat;
+	background:url(/DocSources/images/mview/button_medium.png) no-repeat;
 	padding:4px 0 0 0;
 	text-align:center;
 	margin: 10px 0 0 0;
 	float:left;
-	width:182px;
+	width:122px;
 	height:22px;
 	cursor:auto;
 	text-decoration: none;
@@ -90,7 +215,6 @@ a.transcribe {
 .transcribeMessage {
 	color:#F00;
 	position:absolute;
-	margin-top: 5px;
 	text-decoration:none;
 	width:182px;
 	height:36px;
@@ -98,11 +222,47 @@ a.transcribe {
 	padding-top: 4px;
 }
 
+#PageTurnerVerticalDiv #transcribeDiv .transcribeMessage {
+	width: 120px;
+}
+
+#PageTurnerVerticalDiv #transcribeDiv #transcribe {
+	position: absolute;
+}
+
 
 /* ---- Show Allready Transcribed Document ----- */
 
 #showAlreadyTranscribed.transcribe, #extractTranscribe.transcribe  { /* Volume Summary button on Page Turner Panel */
-	margin: 53px 0 0 0px;
+	margin: 53px 0 0 35px;
+}
+
+#PageTurnerVerticalDiv #showAlreadyTranscribed { /* Volume Summary button on Page Turner Panel */
+	 margin: 75px 0 0 0px;
+	position: absolute;
+}
+
+/* ---- Trascription ----- */
+
+#showTranscription {
+	margin: 25px 0 0 35px;
+}
+
+#PageTurnerVerticalDiv #showTranscription {
+	margin: 45px 0 0 0;
+}
+
+#showSynopsis {
+	float: left;
+}
+
+#editTranscription {
+	float: right;
+}
+
+#EditTranscriptionForm textarea#transcription[disabled] {
+	border: none;
+	background-color:#F6EDEC;
 }
 
 
@@ -123,6 +283,10 @@ a.transcribe {
 
 #volumeSummary.transcribe { /* Volume Summary button on Page Turner Pannel */
 	margin: 3px 0 0 329px;
+}
+
+#PageTurnerVerticalDiv #volumeSummary {
+	margin: 115px 0 0 0;
 }
 
 #volumeSummary:hover { /* Volume Summary button on Rollover */
@@ -208,6 +372,10 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin: 40px 0 0 328px;
 }
 
+#PageTurnerVerticalDiv #indexNames {
+	margin: 115px 0 0 46px;
+}
+
 #indexNames:hover { /* Index of Names button on Rollover */
 	opacity:0.5;
 }
@@ -285,16 +453,31 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin: 58px 0 0 165px;
 }
 
-#EditPersonalNotesDiv #folioMoveTo #moveToFolioForm { /* Move to folio FORM */
+#EditPersonalNotesDiv #folioMoveTo #moveToFolioForm{ /* Move to folio FORM */
 	width:150px;
 	display:inline;
 	color:#6d5c4d;
 	float:right;
 }
 
+#PageTurnerVerticalDiv #folioMoveTo #moveToFolioForm{ /* Move to folio FORM in VERTICAL MODE */
+	width:120px;
+	display:inline;
+	color:#6d5c4d;
+	float:left;
+	margin:23px 0 0 5px;
+}
+
 #EditPersonalNotesDiv #folioMoveTo .folioLabel { /* "Move to folio" <label> ID  */
 	font-size: 12px;
 	margin:0 0 0 33px;
+	position:absolute;
+	color:#6d5c4d;
+}
+
+#PageTurnerVerticalDiv #folioMoveTo .folioLabel { /* "Move to folio" <label> ID in VERTICAL MODE  */
+	font-size: 12px;
+	margin:0;
 	position:absolute;
 	color:#6d5c4d;
 }
@@ -313,9 +496,37 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	padding:3px;
 }
 
+#PageTurnerVerticalDiv #folioMoveTo .input_4cFolio { /* "Move to folio" <input> ID in VERTICAL MODE  */
+	margin: -2px 0 0 39px;
+	position:absolute;
+	width: 30px;
+	font-size:11px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	border: 1px solid #DCC0BA;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	background-color: #fbf7f4;
+	color: #6d5c4d;
+	padding:3px;
+}
+
 
 #EditPersonalNotesDiv #folioMoveTo #go { /* "Move to folio" <input> GO button ID  */
 	margin: -5px 0 0 110px;
+	width:22px;
+	height:22px;
+	background-image:url(/DocSources/images/mview/button_mini.png);
+	font-size: 12px;
+	padding:0 0 0 2px;
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	cursor:pointer;
+	color:#6F6B69;
+}
+
+#PageTurnerVerticalDiv #folioMoveTo #go { /* "Move to folio" <input> GO button ID in VERTICAL MODE  */
+	margin: -5px 0 0 92px;
 	width:22px;
 	height:22px;
 	background-image:url(/DocSources/images/mview/button_mini.png);
@@ -346,8 +557,28 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	font-size:11px;
 }
 
+#PageTurnerVerticalDiv a#personalNotesButton{
+	margin: 117px 0 0 95px;
+	position:absolute;
+	background:url(/DocSources/images/mview/button_personalNotes.png) no-repeat;
+	padding:4px 0 0 0;
+	text-align:center;
+	text-decoration:none;
+	color:#6F6B69;
+	width:27px;
+	height:32px;
+	font-size:11px;
+	cursor:pointer;
+}
+
 #EditPersonalNotesDiv #personalNotesDiv a.transcribe{
 	margin: 7px 0 0 403px;
+}
+
+a:hover#personalNotesButton {
+	opacity:0.5; /* FireFox, Chrome, Safari */
+	-moz-opacity: 0.5;
+	filter:alpha(opacity=50); /* IE */ !important
 }
 
 
@@ -371,6 +602,11 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 
 #EditPersonalNotesDiv #exitDiv a.transcribe{
 	margin: 53px 0 0 390px;
+}
+
+#PageTurnerVerticalDiv a#exitButton{
+	margin: 185px 0 0 35px;
+	position:absolute;
 }
 
 /* ---------------- */
@@ -401,9 +637,24 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 	margin: 6px 0 0 375px;
 }
 
+#PageTurnerVerticalDiv #line, #PageTurnerVerticalDiv #line2 {
+	width:120px;
+	height:1px;
+	background-color:#E6D0C6;
+}
+
+#PageTurnerVerticalDiv #line2 {
+	position:absolute;
+	margin-top: 170px;
+}
+
 /* ---------------- */
 /*
 /* ---- Edit Extract ----- */
+
+#EditExtractDocumentDiv #editSynopsis, #EditExtractDocumentDiv #saveAndExit {
+	margin-left: 10px;
+}
 
 #EditExtractDocumentDiv #saveExtract {
 	float:left;
@@ -434,6 +685,10 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 /* ---------------- */
 /*
 /* ---- Edit Synopsis ----- */
+
+#EditSynopsisDocumentDiv #saveAndExit {
+	margin-left: 150px;
+}
 
 #EditSynopsisDocumentDiv #saveSynopsis {
 	float:left;
@@ -514,7 +769,11 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 
 .ui-widget .ui-widget { font-size: 11px; }
 
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family:Georgia, "Times New Roman", Times, serif; font-size: 11px; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { 
+	font-family:Georgia, "Times New Roman", Times, serif; 
+	font-size: 12px;
+	color: #6F6B69; 
+}
 
 .ui-button-text {
 	background-image:url(/DocSources/images/mview/images/saveExtract.png);
