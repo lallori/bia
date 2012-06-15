@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.command.admin;
 
+import org.medici.docsources.domain.User.UserRole;
+
 /**
  * Command bean for action "show user".
  * 
@@ -38,6 +40,15 @@ package org.medici.docsources.command.admin;
 public class EditUserCommand {
 	/** User's Account **/
 	private String account;
+	
+	private String newAccount;
+	
+	private String firstName;
+	private String middleName;
+	private String lastName;
+	private String password;
+//	private Date accExpirTime;
+	private UserRole userRole;
 
 	/**
 	 * This method returns account property.
@@ -53,5 +64,103 @@ public class EditUserCommand {
 	 */
 	public void setAccount(String account) {
 		this.account = account;
+	}
+
+	/**
+	 * @param firstName the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+	/**
+	 * @param middleName the middleName to set
+	 */
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	/**
+	 * @return the middleName
+	 */
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+//	/**
+//	 * @param accExpirTime the accExpirTime to set
+//	 */
+//	public void setAccExpirTime(Date accExpirTime) {
+//		this.accExpirTime = accExpirTime;
+//	}
+//
+//	/**
+//	 * @return the accExpirTime
+//	 */
+//	public Date getAccExpirTime() {
+//		return accExpirTime;
+//	}
+
+	/**
+	 * @param userRole the userRole to set
+	 */
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
+	/**
+	 * @return the userRole
+	 */
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	/**
+	 * @param newAcount the newAcount to set
+	 */
+	public void setNewAccount(String newAccount) {
+		this.newAccount = newAccount;
+	}
+
+	/**
+	 * @return the newAcount
+	 */
+	public String getNewAccount() {
+		return newAccount;
 	}
 }

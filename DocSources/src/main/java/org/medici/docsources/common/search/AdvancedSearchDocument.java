@@ -1542,7 +1542,7 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 					refersToIdQuery.append(refersToId.get(i).toString());
 					refersToIdQuery.append(" AND docRole IS NULL))");
 				} else {
-					if (refersToQuery.length()>0) {
+					if (refersToQuery.length()>1) {
 						refersToQuery.append(" AND ");
 					}
 					

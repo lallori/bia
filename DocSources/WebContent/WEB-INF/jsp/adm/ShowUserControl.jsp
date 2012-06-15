@@ -4,18 +4,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<%-- 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS"> --%>
-<%-- 		<c:url var="" 	value=""> --%>
-<%-- 			<c:param name=""   	value="" /> --%>
-<%-- 		</c:url> --%>
-<%-- 	</security:authorize> --%>
+	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
+		<c:url var="EditUserControlURL" 	value="/admin/EditUserControl.do">
+			<c:param name="account"   	value="${user.account}" />
+		</c:url>
+	</security:authorize>
 	
 	
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
 	<div id="EditUserControlDiv" class="background">
 	<div class="title">
 		<h5>USER CONTROL</h5>
-		<a id="EditUserControl" class="editButton" href="" title="Edit User Control"></a>
+		<a id="EditUserControl" class="editButton" href="${EditUserControlURL}" title="Edit User Control"></a>
 	</div>
 	
 	<div class="list">
@@ -47,18 +47,17 @@
 		</div>
 		<div class="row">
 			<div class="item37">Account Expiration Time</div> 
-			<div class="value">july 22 2012</div>
+			<div class="value">${userInformation.expirationDate}</div>
 		</div>
     </div>   
 </div>
 
 <script type="text/javascript">
-// 	$j(document).ready(function() {
-// 		$j("#EditUserControl").click(
-// 				function(){
-// 					$j("#EditUserControlDiv").load($j(this).attr("href"));
-// 					return false;
-// 				});
-// 	});
+	$j(document).ready(function() {
+		$j("#EditUserControl").click(function(){
+			$j("#EditUserControlDiv").load($j(this).attr("href"));
+			return false;
+		});
+	});
 </script>
 </security:authorize>

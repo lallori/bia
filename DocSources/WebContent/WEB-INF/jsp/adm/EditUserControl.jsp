@@ -5,84 +5,147 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-		<c:url var="" 	value="">
-			<c:param name=""   	value="" />
+		<c:url var="ShowUserURL" 	value="/admin/ShowUser.do">
+			<c:param name="account"   	value="${command.account}" />
 		</c:url>
+		
+		<c:url var="EditUserURL" value="/admin/EditUserControl.do" />
 	</security:authorize>
 	
 	
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS">
-	<div id="EditUserControlDiv" class="background">
-	<div class="title">
-		<h5>USER CONTROL</h5>
-		<a id="EditUserControl" class="editButton" href="" title="Edit User Control"></a>
-	</div>
-	
-	<div class="list">
-		<div class="row">
-			<div class="item37">Username</div> 
-			<div class="value">AA</div> 
-		</div>
-		<div class="row">
-			<div class="item37">First Name</div>
-			<div class="value">Alessio</div>
-		</div>
-		<div class="row">
-			<div class="item37">Last Name</div>
-            <div class="value">Assonitis</div>
-		</div>
+	<form:form id="EditUserControlForm" method="post" class="edit">
+	<fieldset>
+		<legend><b>USER CONTROL</b></legend>
+		<div class="listForm">
+        	<div class="row">
+            	<div class="col_l"><form:label for="account" id="userNameLabel" path="newAccount">Username</form:label></div>
+            	<div class="col_l"><form:input id="account" name="account" cssClass="input_14c" path="newAccount"/></div>
+        	</div>
         <div class="row">
-			<div class="item37">New Password</div> 
-			<div class="value"></div>
-		</div>
+            <div class="col_l"><form:label for="firstName" id="firstNameLabel" path="firstName">First Name</form:label></div>
+            <div class="col_l"><form:input id="firstName" name="firstName" class="input_14c" type="text" value="" path="firstName"/></div>
+            <div class="col_r"><form:label for="middleName" id="middleNameLabel" path="middleName">Middle Name</form:label></div>
+            <div class="col_r"><form:input id="middleName" name="middleName" class="input_14c" type="text" value="" path="middleName"/></div>
+        </div>
         <div class="row">
-			<div class="item37">Password expires</div> 
-			<div class="value">march 03 2012</div>
-		</div>
-		<div class="row">
-			<div class="item37">Group policies</div> 
-			<div class="value">Onsite Fellow</div>
-		</div>
-		<div class="row">
-			<div class="item37">Account Expiration Time</div> 
-			<div class="value">july 22 2012</div>
-		</div>
-    </div>   
-</div>
+            <div class="col_l"><form:label for="lastName" id="lastNameLabel" path="lastName">Last Name</form:label></div>
+            <div class="col_l"><form:input id="lastName" name="lastName" class="input_14c" type="text" value="" path="lastName"/></div>
+        </div>
+    </div>
+    
+    <hr />
+    
+    <div class="listForm">
+        <div class="row">
+            <div class="col_l"><form:label for="newPassword" id="newPasswordLabel" path="password">New password</form:label></div>
+            <div class="col_l"><form:input id="newPassword" name="newPassword" class="input_8c" type="password" value="" path="password"/></div>
+            <div class="col_r">
+            	<label for="unmask" id="unmaskLabel">Unmask</label>
+        		<input type="checkbox" name="unmaskLabel" class="checkboxPers2"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col_l"><label for="passwordExpires" id="passwordExpiresLabel">Password Expires</label></div>
+            <div class="col_l"><input id="passwordExpires" name="passwordExpires" class="input_8c" type="text" value=""/></div>
+            <div class="col_r">
+            	<label for="forcePswdChange" id="forcePswdChangeLabel">Force Password Change
+                <input type="checkbox" name="forcePswdChange" class="checkboxPers2"/>
+            </div>
+        </div>
+   	</div>
+    
+    <hr />
+    
+    <div class="listForm">
+        <div class="row">
+            <div class="col_l"><label for="groupPolicies" id="groupPoliciesLabel">Group policies</label></div>
+            <div class="col_r">
+            	<form:select id="groupPolicies" name="groupPolicies" cssClass="selectform_Xlong" path="userRole" items="${userRoles}" />
+            </div>
+        </div>
+    </div>
+    <div class="listForm">
+        <div class="row">
+<%--             <div class="col_l"><form:label for="accExpirTime" id="accExpirTimeLabel" path="accExpirTime">Account Expiration Time</form:label></div> --%>
+<%--             <div class="col_l"><form:input id="accExpirTime" name="accExpirTime" class="input_8c" type="text" value="" path="accExpirTime"/></div> --%>
+            <div class="col_r">
+            	<label for="lockAccount" id="lockAccountLabel">Lock account</label>
+				<input type="checkbox" name="lockAccount" class="checkboxPers1"/>
+            </div>
+        </div>
+    </div>
 
-<br /><br />
+    <div>
+		<input id="close" type="submit" value="Close" title="Do not save changes" />
+		<input id="save" class="save" type="submit" value="Save" />
+	</div>
+	<input type="hidden" value="" id="modify" />
+</fieldset>	
+</form:form>
 
-<div id="EditEmailControlDiv" class="background">
-	<div class="title">
-		<h5>EMAIL CONTROL</h5>
-		<a id="EditEmailControl" class="editButton" href="/DocSources/adm/EditEmailControl.html" title="Edit Email Control"></a>
-	</div>
-	<div class="list">
-		<div class="row">
-			<div class="item37">Email adress</div> 
-			<div class="value">assonitis@yahoo.com</div>
-		</div>
-		<div class="row">
-			<div class="item37">Edit display</div> 
-			<div class="value">Hide my email from everyone</div>
-		</div>
-		<div class="row">
-			<div class="item37">Recive notification by email</div> 
-			<div class="value">Deactivated</div>
-		</div>
-	</div>
+<script type="text/javascript">
+	$j(document).ready(function() {
+		$j("#EditUserControlForm :input").change(function(){
+			$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+			return false;
+		});
+		
+		$j("#EditUserControlForm").submit(function (){
+			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+				$j("#body_left").html(html);
+			}});
+		});
+		
+		$j("#close").click(function(){
+			if($j("#modify").val() == 1){
+				$j("#EditUserControlForm").block({ message: $j("#question"),
+					css: { 
+						border: 'none', 
+						padding: '5px',
+						boxShadow: '1px 1px 10px #666',
+						'-webkit-box-shadow': '1px 1px 10px #666'
+						} ,
+						overlayCSS: { backgroundColor: '#999' }	
+				});
+				return false;
+			}else{
+				$j.ajax({ url: '${ShowUserURL}', cache: false, success:function(html) { 
+					$j("#body_left").html(html);
+				}});
+				return false;
+			}
+		});
+	});
+</script>
+
+<div id="question" style="display:none; cursor: default"> 
+	<h1>Discard changes?</h1> 
+	<input type="button" id="yes" value="Yes" /> 
+	<input type="button" id="no" value="No" /> 
 </div>
 
 <script type="text/javascript">
 	$j(document).ready(function() {
-		$j("#EditUserControl").click(
-				function(){
-					$j("#EditUserControlDiv").load($j(this).attr("href"));return false;});
-			
-		$j("#EditEmailControl").click(
-				function(){
-					$j("#EditEmailControlDiv").load($j(this).attr("href"));return false;});
+		$j('#no').click(function() { 
+			$j.unblockUI();
+			$j(".blockUI").fadeOut("slow");
+			$j("#question").hide();
+			// Block is attached to form otherwise this block does not function when we use in transcribe and contextualize document
+			$j("#EditUserControlForm").append($j("#question"));
+			$j(".blockUI").remove();
+			return false; 
+		}); 
+        
+		$j('#yes').click(function() { 
+			$j.ajax({ url: '${ShowUserURL}', cache: false, success:function(html) { 
+				$j("#body_left").html(html);
+			}});
+				
+			return false; 
+		}); 
+     	
 	});
 </script>
 </security:authorize>

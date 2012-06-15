@@ -82,7 +82,35 @@
 									/* Do whatever additional processing you want on the callback, then tell DataTables */
 									fnCallback(json)                                                                      
 								} );                                                                                      
-							}                                                                                             
+							},
+							"fnDrawCallback" : function(){
+								$j("tr.odd").mouseover(
+										function(){
+											$j(this).find("td.sorting_1").css('background-color','#b0addd');
+											return false;
+										}
+								);
+								
+								$j("tr.odd").mouseout(
+										function(){
+											$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+											return false;
+										}
+								);
+								$j("tr.even").mouseover(
+										function(){
+											$j(this).find("td.sorting_1").css('background-color','#b0addd');
+											return false;
+										}
+								);
+								
+								$j("tr.even").mouseout(
+										function(){
+											$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+											return false;
+										}
+								);
+							}
 						} );
 					</c:when>
 					<c:when test="${command.category == 'DOCUMENT'}">
@@ -114,7 +142,35 @@
 									/* Do whatever additional processing you want on the callback, then tell DataTables */
 									fnCallback(json)                                                                      
 								} );                                                                                      
-							}                                                                                             
+							},
+							"fnDrawCallback" : function(){
+								$j("tr.odd").mouseover(
+										function(){
+											$j(this).find("td.sorting_1").css('background-color','#b0addd');
+											return false;
+										}
+								);
+								
+								$j("tr.odd").mouseout(
+										function(){
+											$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+											return false;
+										}
+								);
+								$j("tr.even").mouseover(
+										function(){
+											$j(this).find("td.sorting_1").css('background-color','#b0addd');
+											return false;
+										}
+								);
+								
+								$j("tr.even").mouseout(
+										function(){
+											$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+											return false;
+										}
+								);
+							}
 						} );	
 					</c:when>
 					<c:when test="${command.category == 'VOLUME'}">
@@ -148,7 +204,35 @@
 								/* Do whatever additional processing you want on the callback, then tell DataTables */
 								fnCallback(json)                                                                      
 							} );                                                                                      
-						}                                                                                             
+						},
+						"fnDrawCallback" : function(){
+							$j("tr.odd").mouseover(
+									function(){
+										$j(this).find("td.sorting_1").css('background-color','#b0addd');
+										return false;
+									}
+							);
+							
+							$j("tr.odd").mouseout(
+									function(){
+										$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+										return false;
+									}
+							);
+							$j("tr.even").mouseover(
+									function(){
+										$j(this).find("td.sorting_1").css('background-color','#b0addd');
+										return false;
+									}
+							);
+							
+							$j("tr.even").mouseout(
+									function(){
+										$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+										return false;
+									}
+							);
+						}
 					} );	
 				</c:when>
 				<c:when test="${command.category == 'PLACE'}">
@@ -179,7 +263,35 @@
 							/* Do whatever additional processing you want on the callback, then tell DataTables */
 							fnCallback(json)                                                                      
 						} );                                                                                      
-					}                                                                                             
+					},
+					"fnDrawCallback" : function(){
+						$j("tr.odd").mouseover(
+								function(){
+									$j(this).find("td.sorting_1").css('background-color','#b0addd');
+									return false;
+								}
+						);
+						
+						$j("tr.odd").mouseout(
+								function(){
+									$j(this).find("td.sorting_1").css('background-color','#DCC0BA');
+									return false;
+								}
+						);
+						$j("tr.even").mouseover(
+								function(){
+									$j(this).find("td.sorting_1").css('background-color','#b0addd');
+									return false;
+								}
+						);
+						
+						$j("tr.even").mouseout(
+								function(){
+									$j(this).find("td.sorting_1").css('background-color','#EAD9D6');
+									return false;
+								}
+						);
+					}
 				} );
 			</c:when>
 			</c:choose>

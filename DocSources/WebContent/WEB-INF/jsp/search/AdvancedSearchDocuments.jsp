@@ -88,7 +88,7 @@
 					               	</div>
 					               	<div class="col_l"><input type="text" id="sender" class="input_24c"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="senderAdd" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="senderAdd">
 										<input type="hidden" id="category" value="Sender">
 										<input type="hidden" id="senderId" value="">
 					               	</div>
@@ -118,7 +118,7 @@
 					               	</div>
 					               	<div class="col_l"><input type="text" id="recipient" name="recipient" class="input_24c"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="recipientAdd" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="recipientAdd">
 										<input type="hidden" id="category" value="Recipient">
 										<input type="hidden" id="recipientId" value="">
 					               	</div>
@@ -148,7 +148,7 @@
 					               	</div>
 					               	<div class="col_l"><input type="text" id="refersTo" name="refersTo" class="input_24c"/><!-- AUTOCOMPLETE --></div>
 					               	<div class="col_r">
-					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="refersToAdd" disabled="disabled">
+					               		<input type="submit" id="addSearchFilter" value="Add" title="Add to your search filter" class="refersToAdd">
 										<input type="hidden" id="category" value="Referers To">
 										<input type="hidden" id="refersToId" value="">
 					               	</div>
@@ -506,7 +506,10 @@
 			});
 			
 			$j("#person").blur(function(){
-				$personAutocomplete.killSuggestions();
+				//MD: This fix is for Chrome
+				if($j(".autocomplete").css('display') != "block"){
+					$personAutocomplete.killSuggestions();
+				}
 				return false;
 			});
 			
@@ -563,10 +566,10 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-					$j(".senderAdd").removeAttr("disabled");
+// 					$j(".senderAdd").removeAttr("disabled");
 					$j('#senderId').val(data);
-					$j(".senderAdd").attr("disabled");
-					$j(".senderAdd").prop("disabled", false);
+// 					$j(".senderAdd").attr("disabled");
+// 					$j(".senderAdd").prop("disabled", false);
 				}
 			});
 			
@@ -575,14 +578,14 @@
 				return false;
 			});
 			
-			$j("#sender").keyup(function(){
-				if($j("#senderId").val() != '')
-					$j(".senderAdd").attr("disabled","disabled");
-			});
+// 			$j("#sender").keyup(function(){
+// 				if($j("#senderId").val() != '')
+// 					$j(".senderAdd").attr("disabled","disabled");
+// 			});
 			
 			$j("#senderSearchForm").submit(function(){
 				$j("#senderId").val("");
-				$j(".senderAdd").attr("disabled","disabled");
+// 				$j(".senderAdd").attr("disabled","disabled");
 			});		
 			
 			var $fromAutocomplete = $j("#from").autocompletePlace({
@@ -627,10 +630,10 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-					$j(".recipientAdd").removeAttr("disabled");
+// 					$j(".recipientAdd").removeAttr("disabled");
 					$j('#recipientId').val(data);
-					$j(".recipientAdd").attr("disabled");
-					$j(".recipientAdd").prop("disabled", false);
+// 					$j(".recipientAdd").attr("disabled");
+// 					$j(".recipientAdd").prop("disabled", false);
 				}
 			});
 			
@@ -639,14 +642,14 @@
 				return false;
 			});
 			
-			$j("#recipient").keyup(function(){
-				if($j("#recipientId").val() != '')
-					$j(".recipientAdd").attr("disabled","disabled");
-			});
+// 			$j("#recipient").keyup(function(){
+// 				if($j("#recipientId").val() != '')
+// 					$j(".recipientAdd").attr("disabled","disabled");
+// 			});
 			
 			$j("#recipientSearchForm").submit(function(){
 				$j("#recipientId").val("");
-				$j(".recipientAdd").attr("disabled","disabled");
+// 				$j(".recipientAdd").attr("disabled","disabled");
 			});
 			
 			var $toAutocomplete = $j("#to").autocompletePlace({
@@ -691,10 +694,10 @@
 				deferRequestBy: 0,
 				noCache: true,
 				onSelect: function(value, data){
-					$j(".refersToAdd").removeAttr("disabled");
+// 					$j(".refersToAdd").removeAttr("disabled");
 					$j('#refersToId').val(data);
-					$j(".refersToAdd").attr("disabled");
-					$j(".refersToAdd").prop("disabled", false);
+// 					$j(".refersToAdd").attr("disabled");
+// 					$j(".refersToAdd").prop("disabled", false);
 				}
 			});
 			
@@ -703,14 +706,14 @@
 				return false;
 			});
 			
-			$j("#refersTo").keyup(function(){
-				if($j("#refersToId").val() != '')
-					$j(".refersToAdd").attr("disabled","disabled");
-			});
+// 			$j("#refersTo").keyup(function(){
+// 				if($j("#refersToId").val() != '')
+// 					$j(".refersToAdd").attr("disabled","disabled");
+// 			});
 			
 			$j("#refersToSearchForm").submit(function(){
 				$j("#refersToId").val("");
-				$j(".refersToAdd").attr("disabled","disabled");
+// 				$j(".refersToAdd").attr("disabled","disabled");
 			});
 			
 			$j("#topicSelect").change(function(){

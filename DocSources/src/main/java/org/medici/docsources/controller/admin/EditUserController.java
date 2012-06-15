@@ -27,7 +27,9 @@
  */
 package org.medici.docsources.controller.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -35,6 +37,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.admin.EditUserCommand;
 import org.medici.docsources.domain.User;
+import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.admin.AdminService;
@@ -57,7 +60,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/admin/EditUser")
+@RequestMapping("/admin/EditUserControl")
 public class EditUserController {
 	@Autowired
 	private AdminService adminService;
@@ -80,7 +83,7 @@ public class EditUserController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("requestCommand") EditUserCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") EditUserCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		// This is user stored on LDAP
 		User user = new User();
@@ -92,15 +95,27 @@ public class EditUserController {
 				user = getAdminService().findUser(command.getAccount());
 
 				userInformation = getAdminService().findUserInformation(command.getAccount());
+				command.setAccount(user.getAccount());
+				command.setFirstName(user.getFirstName());
+				command.setLastName(user.getLastName());
+				command.setPassword(user.getPassword());
+				command.setUserRole(user.getUserRoles().get(0));
+				if(userInformation != null){
+//					command.setAccExpirTime(userInformation.getExpirationDate());
+				}
+				command.setNewAccount(user.getAccount());
+				
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditUser", model);
 			}
 		} else {
-			user.setAccount("");
+			command.setAccount("");
+			command.setFirstName("");
+			command.setLastName("");
+			command.setPassword("");
 		}
-
-		model.put("user", user);
-		model.put("userInformation", userInformation);
+		
+		model.put("userRoles", User.UserRole.values());
 		
 		return new ModelAndView("admin/EditUser", model);
 	}
@@ -114,16 +129,27 @@ public class EditUserController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			User user = new User(command.getAccount());
+			User user = new User(command.getNewAccount());
 			UserInformation userInformation = new UserInformation(command.getAccount());
-
+			user.setFirstName(command.getFirstName());
+			user.setLastName(command.getLastName());
+			List<UserRole> userRole = new ArrayList<UserRole>();
+			userRole.add(command.getUserRole());
+			user.setUserRoles(userRole);
+			
+			//userInformation.setExpirationDate(command.getAccExpirTime());
+			
 			try {
-				getAdminService().editUser(user, userInformation);
+				if(getAdminService().findUser(command.getNewAccount()) != null){
+					getAdminService().editUser(user, userInformation);
+				}else{
+//					getAdminService().addNewUser(user, userInformation);
+				}
 				
 				model.put("user", user);
 				model.put("userInformation", userInformation);
 				
-				return new ModelAndView("admin/EditUser", model);
+				return new ModelAndView("admin/ShowUser", model);
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditUser", model);
 			}
