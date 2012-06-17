@@ -12,10 +12,10 @@
         <link rel="stylesheet" type="text/css" href="/DocSources/styles/forum/forum.css" />
         <link rel="stylesheet" type="text/css" media="all" href="/DocSources/styles/1024/js/jquery-ui-1.8.13.custom.css" />
         
-        <script type="text/javascript" src="<c:url value="/scripts/jquery.min.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/scripts/jquery.scrollTo-min.js"/>"></script>	
-        <script type="text/javascript" src="<c:url value="/scripts/jquery-ui.min.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/scripts/jquery.dialogextend.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.scrollTo-min.js"/>"></script>	
+        <script type="text/javascript" src="<c:url value="/scripts/forum/jquery-ui.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/scripts/forum/jquery.dialogextend.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/scripts/forum/tinyeditor.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/forum/packed.js"/>"></script>
         

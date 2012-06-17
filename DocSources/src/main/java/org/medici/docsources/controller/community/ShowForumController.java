@@ -32,12 +32,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.community.ShowForumCommand;
 import org.medici.docsources.common.util.ForumUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +69,20 @@ public class ShowForumController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowForumCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowForumCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Forum forum = new Forum(); 
 
 		try {
+			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+			
+			if (userInformation != null) {
+				if (userInformation.getForumJoinedDate() == null) {
+					userInformation = getCommunityService().joinUserOnForum();
+					httpSession.setAttribute("userInformation", userInformation);
+				}
+			}
+			
 			if (command.getId() == null){
 				forum = getCommunityService().getFirstCategory();
 			} else {

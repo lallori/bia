@@ -27,13 +27,20 @@
  */
 package org.medici.docsources.controller.community;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.medici.docsources.command.community.ShowPreviewForumPostCommand;
-import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumPost;
+import org.medici.docsources.domain.UserInformation;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,8 +48,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to view a forum .
- * It manages View and request's elaboration process.
+ * Controller to preview a forum post.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
@@ -54,14 +60,35 @@ public class ShowPreviewForumPostController {
 	
 	/**
 	 * 
-	 * @param request
-	 * @param model
+	 * @param command
+	 * @param result
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowPreviewForumPostCommand command) {
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@ModelAttribute("command") ShowPreviewForumPostCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Forum forum = new Forum(); 
+
+		try {
+			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+			
+			if (userInformation != null) {
+				if (userInformation.getForumJoinedDate() == null) {
+					userInformation = getCommunityService().joinUserOnForum();
+					httpSession.setAttribute("userInformation", userInformation);
+				}
+			}
+		}catch (ApplicationThrowable applicationThrowable) {
+			return new ModelAndView("error/ShowPreviewForumPost", model);
+		}
+		
+		
+		ForumPost forumPost = new ForumPost(command.getId());
+		forumPost.setText(command.getText());
+		forumPost.setSubject(command.getSubject());
+		forumPost.setDateCreated(new Date());
+		forumPost.setUsername(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+
+		model.put("forumPost", forumPost);
 
 		return new ModelAndView("community/ShowPreviewForumPost", model);
 	}

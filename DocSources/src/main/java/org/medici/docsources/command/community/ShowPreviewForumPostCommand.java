@@ -1,5 +1,5 @@
 /*
- * ShowPreviewForumPostCommand.java
+ * EditForumPostCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -33,5 +33,71 @@ package org.medici.docsources.command.community;
  *
  */
 public class ShowPreviewForumPostCommand {
+	private Integer id;
+	private Integer parentPostId;
+	private Integer forumId;
+	private String subject;
+	private String text;
+	
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	/**
+	 * @return the parentPostId
+	 */
+	public Integer getParentPostId() {
+		return parentPostId;
+	}
+	/**
+	 * @param parentPostId the parentPostId to set
+	 */
+	public void setParentPostId(Integer parentPostId) {
+		this.parentPostId = parentPostId;
+	}
+	/**
+	 * @return the forumId
+	 */
+	public Integer getForumId() {
+		return forumId;
+	}
+	/**
+	 * @param forumId the forumId to set
+	 */
+	public void setForumId(Integer forumId) {
+		this.forumId = forumId;
+	}
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+		return text;
+	}
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
+	/**
+	 * @param subject the subject to set
+	 */
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	/**
+	 * @return the subject
+	 */
+	public String getSubject() {
+		return subject;
+	}
 
 }

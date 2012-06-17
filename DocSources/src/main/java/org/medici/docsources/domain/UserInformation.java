@@ -74,6 +74,10 @@ public class UserInformation implements Serializable {
 	private Boolean locked;
 	@Column (name="\"registrationDate\"")
 	private Date registrationDate;
+	@Column (name="\"forumNumberOfPost\"", nullable=false, columnDefinition="BIGINT default '0'")
+	private Long forumNumberOfPost;
+	@Column (name="\"forumJoinedDate\"", nullable=true)
+	private Date forumJoinedDate;
 
 	/**
 	 * 
@@ -260,4 +264,42 @@ public class UserInformation implements Serializable {
 		this.registrationDate = registrationDate;
 	}
 
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer("[account=");
+		stringBuffer.append(getAccount());
+		stringBuffer.append(", active=");
+		stringBuffer.append(getActive());
+		stringBuffer.append("]");
+		return super.toString();
+	}
+
+
+	/**
+	 * @param forumJoinedDate the forumJoinedDate to set
+	 */
+	public void setForumJoinedDate(Date forumJoinedDate) {
+		this.forumJoinedDate = forumJoinedDate;
+	}
+
+	/**
+	 * @return the forumJoinedDate
+	 */
+	public Date getForumJoinedDate() {
+		return forumJoinedDate;
+	}
+
+	/**
+	 * @param forumNumberOfPost the forumNumberOfPost to set
+	 */
+	public void setForumNumberOfPost(Long forumNumberOfPost) {
+		this.forumNumberOfPost = forumNumberOfPost;
+	}
+
+	/**
+	 * @return the forumNumberOfPost
+	 */
+	public Long getForumNumberOfPost() {
+		return forumNumberOfPost;
+	}
 }

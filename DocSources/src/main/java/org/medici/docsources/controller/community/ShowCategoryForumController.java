@@ -32,9 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.medici.docsources.command.community.ShowCategoryForumCommand;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
@@ -65,10 +68,19 @@ public class ShowCategoryForumController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowCategoryForumCommand command) {
+	public ModelAndView setupForm(@ModelAttribute("command") ShowCategoryForumCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		
 		try {
+			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+			
+			if (userInformation != null) {
+				if (userInformation.getForumJoinedDate() == null) {
+					userInformation = getCommunityService().joinUserOnForum();
+					httpSession.setAttribute("userInformation", userInformation);
+				}
+			}
+			
 			Forum category = null;
 			if (command.getId() == null){
 				category = getCommunityService().getFirstCategory();

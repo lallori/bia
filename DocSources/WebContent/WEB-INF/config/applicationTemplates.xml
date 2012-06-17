@@ -278,6 +278,10 @@
 	<!-- Administration Module END -->
 
 	<!-- Community Module BEGIN -->
+	<definition name="community/EditForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/EditForumPost.jsp"/>
+	</definition>
+
 	<definition name="community/ShowMessagesByCategory" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
 	</definition>
@@ -306,6 +310,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
 	</definition>
 
+	<definition name="community/ShowPreviewForumPost" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowPreviewForumPost.jsp"/>
+	</definition>
+	
 	<definition name="community/ShowTopicForum" extends="template.forum">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowTopicForum.jsp"/>
 	</definition>

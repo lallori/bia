@@ -28,6 +28,7 @@
 package org.medici.docsources.service.community;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,9 +47,12 @@ import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.domain.UserComment;
 import org.medici.docsources.domain.UserHistory;
+import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,11 +73,29 @@ public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private ForumPostDAO forumPostDAO;   
 	@Autowired
-	private UserInformationDAO UserInformationDAO;   
+	private UserHistoryDAO userHistoryDAO;   
+	@Autowired
+	private UserInformationDAO UserInformationDAO;
 	@Autowired
 	private UserMessageDAO userMessageDAO;
-	@Autowired
-	private UserHistoryDAO userHistoryDAO;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
+		try {
+			forumPost.setId(null);
+
+			getForumPostDAO().persist(forumPost);
+
+			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
+			
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc} 
@@ -125,6 +147,40 @@ public class CommunityServiceImpl implements CommunityService {
 	public void deleteMessage(Integer userMessageId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable {
+		try {
+			forumPost.setId(null);
+
+			getForumPostDAO().persist(forumPost);
+
+			getUserHistoryDAO().persist(new UserHistory("Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
+			
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost findPost(Integer id) throws ApplicationThrowable {
+		try {
+			ForumPost forumPost = getForumPostDAO().find(id);
+			
+			getUserHistoryDAO().persist(new UserHistory("Show post", Action.VIEW, Category.FORUM_POST, forumPost));
+
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -278,6 +334,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @return the userHistoryDAO
+	 */
+	public UserHistoryDAO getUserHistoryDAO() {
+		return userHistoryDAO;
+	}
+
+	/**
 	 * @return the userInformationDAO
 	 */
 	public UserInformationDAO getUserInformationDAO() {
@@ -289,6 +352,26 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public UserMessageDAO getUserMessageDAO() {
 		return userMessageDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public UserInformation joinUserOnForum() throws ApplicationThrowable {
+		try {
+			UserInformation userInformation = getUserInformationDAO().find(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+			
+			if (userInformation != null) {
+				userInformation.setForumJoinedDate(new Date());
+			}
+			
+			getUserInformationDAO().merge(userInformation);
+			return userInformation;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -338,6 +421,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * @param userHistoryDAO the userHistoryDAO to set
+	 */
+	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
+		this.userHistoryDAO = userHistoryDAO;
+	}
+
+	/**
 	 * @param userInformationDAO the userInformationDAO to set
 	 */
 	public void setUserInformationDAO(UserInformationDAO userInformationDAO) {
@@ -349,71 +439,5 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public void setUserMessageDAO(UserMessageDAO userMessageDAO) {
 		this.userMessageDAO = userMessageDAO;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
-		try {
-			forumPost.setId(null);
-
-			getForumPostDAO().persist(forumPost);
-
-			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
-			
-			return forumPost;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable {
-		try {
-			forumPost.setId(null);
-
-			getForumPostDAO().persist(forumPost);
-
-			getUserHistoryDAO().persist(new UserHistory("Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
-			
-			return forumPost;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ForumPost findPost(Integer id) throws ApplicationThrowable {
-		try {
-			ForumPost forumPost = getForumPostDAO().find(id);
-			
-			getUserHistoryDAO().persist(new UserHistory("Show post", Action.VIEW, Category.FORUM_POST, forumPost));
-
-			return forumPost;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * @param userHistoryDAO the userHistoryDAO to set
-	 */
-	public void setUserHistoryDAO(UserHistoryDAO userHistoryDAO) {
-		this.userHistoryDAO = userHistoryDAO;
-	}
-
-	/**
-	 * @return the userHistoryDAO
-	 */
-	public UserHistoryDAO getUserHistoryDAO() {
-		return userHistoryDAO;
 	}
 }

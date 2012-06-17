@@ -51,11 +51,14 @@
 						<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 							<c:param name="id" value="${forum.id}"/>
 						</c:url>
-
+						<c:url var="EditPostForumURL" value="/community/EditPostForum.do">
+							<c:param name="id" value="0"/>
+							<c:param name="forumId" value="${forum.id}"/>
+						</c:url>
 						<h2>${forum.title}</h2>
 						
 						<div id="topicActions">
-							<a href="/DocSources/forum/newPost.html" class="buttonMedium" id="newTopic">New Topic</a>
+							<a href="${EditPostForumURL}" class="buttonMedium" id="newTopic">New Topic</a>
 						    <div id="searchThisForumFormDiv">
 						        <form id="SearchForm" action="/DocSources/src/SimpleSearch.do" method="post">
 						            <input id="text" name="text" type="text" value="Search this forum...">
@@ -172,6 +175,12 @@
 							// Result links have a specific class style on which we attach click live. 
 							$j('.boardIndex').live('click', function() {
 								$j("#mainContent").load($j(this).attr("href"));
+								return false;
+							});
+							
+							$j('#newTopic').click(function (){
+								$j("#mainContent").load($j(this).attr("href"));
+								$j("#tabs").tabs("load", $j("#tabs").tabs("option", "selected"));
 								return false;
 							});
 						});
