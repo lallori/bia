@@ -34,6 +34,7 @@ import org.springframework.ldap.core.DistinguishedName;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  */
 public class LdapUtils {
@@ -70,9 +71,10 @@ public class LdapUtils {
 			return new DistinguishedName("");
 
 		StringBuffer fullUserRoleDistinguishedName = new StringBuffer(ldapConfiguration.getRoleAttribute());
-		fullUserRoleDistinguishedName.append("=");
+		fullUserRoleDistinguishedName.append("=\"");
+		fullUserRoleDistinguishedName.append("cn=");
 		fullUserRoleDistinguishedName.append(role);
-		fullUserRoleDistinguishedName.append(",");
+		fullUserRoleDistinguishedName.append("\",");
 		fullUserRoleDistinguishedName.append(ldapConfiguration.getUsersDN());
 		fullUserRoleDistinguishedName.append(",");
 		fullUserRoleDistinguishedName.append(ldapConfiguration.getBaseDN());
@@ -110,9 +112,9 @@ public class LdapUtils {
 			return new DistinguishedName("");
 
 		StringBuffer userRoleDistinguishedName = new StringBuffer(ldapConfiguration.getRoleAttribute());
-		userRoleDistinguishedName.append("=");
+		userRoleDistinguishedName.append("=\"cn=");
 		userRoleDistinguishedName.append(role);
-		userRoleDistinguishedName.append(",");
+		userRoleDistinguishedName.append("\",");
 		userRoleDistinguishedName.append(ldapConfiguration.getUsersDN());
 
 		return new DistinguishedName(userRoleDistinguishedName.toString());

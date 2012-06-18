@@ -481,10 +481,11 @@ public class UserDaoLdapImpl implements UserDAO {
 	public void persistUserRoles(String account, List<User.UserRole> userRoles) {
 		if ((account == null) || (userRoles == null))
 			return;
+		
+		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 
 		for (User.UserRole singleRole : userRoles) {
-			DirContextOperations context = ldapTemplate.lookupContext(LdapUtils.userRoleDistinguishedName(getLdapConfiguration(),singleRole.name()));
-			context.addAttributeValue("member", LdapUtils.fullUserDistinguishedName(getLdapConfiguration(), account));
+			context.addAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
 		}
 	}
 
@@ -506,7 +507,7 @@ public class UserDaoLdapImpl implements UserDAO {
 
 		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 		
-		User user = new User();
+		User user = findUser(account);
 		mapUserToContext(user, context);
 		getLdapTemplate().modifyAttributes(context);
 		

@@ -133,6 +133,7 @@ public class EditUserController {
 			UserInformation userInformation = new UserInformation(command.getAccount());
 			user.setFirstName(command.getFirstName());
 			user.setLastName(command.getLastName());
+			user.setInitials(command.getFirstName().charAt(0) + "" + command.getLastName().charAt(0));
 			List<UserRole> userRole = new ArrayList<UserRole>();
 			userRole.add(command.getUserRole());
 			user.setUserRoles(userRole);
