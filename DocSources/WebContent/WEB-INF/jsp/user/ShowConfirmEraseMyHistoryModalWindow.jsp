@@ -5,23 +5,24 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+	<c:url var="EraseMyHistoryURL" value="/user/EraseMyHistory.do"/>
+
 	<c:url var="ShowMyHistoryURL" value="/user/ShowMyHistory.do"/>
 
-	<div id="yesWindow"> 
-	<p style="text-align:center">Your History has been erased</p>
+	<div id="eraseHistoryWindow"> 
+		<p style="text-align:center">Are your sure you want to erase your History?</p>
 	    <div class="yesNoButtons">
-	        <a class="close" title="Close my History Window">Close</a>
-	        <a class="goBack" href="${ShowMyHistoryURL}" title="Go back to my History">Go back</a>
+	        <a class="yes" href="${EraseMyHistoryURL}" title="Yes, erase all my History">Yes</a>
+	        <a class="no" href="${ShowMyHistoryURL}" title="No, go back to my History">No</a>
 	    </div>
 	</div>
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			$j(".close").click(function(){
-				Modalbox.hide();
-				return false;
+			$j(".yes").click(function() {
+				Modalbox.show($j(this).attr("href"), {title: "ERASE HISTORY", width: 300, height: 120});return false;
 			});
-			$j(".goBack").click(function() {
+			$j(".no").click(function() {															
 				Modalbox.show($j(this).attr("href"), {title: "RESEARCH HISTORY", width: 750, height: 415});
 				return false;
 			});
