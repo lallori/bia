@@ -121,6 +121,7 @@ CREATE TABLE docsources.tblPlaceType (
 
 ALTER TABLE `docsources`.`persistent_logins` ENGINE = InnoDB ;
 ALTER TABLE `docsources`.`tblAccessLog` ENGINE = InnoDB ;
+ALTER TABLE `docsources`.`tblAccessLog` CHANGE COLUMN `informations` `informations` LONGTEXT NULL DEFAULT NULL AFTER `httpMethod`;
 ALTER TABLE `docsources`.`tblPRCLink`RENAME TO `docsources`.`tblPrcLink`;
 
 ALTER TABLE `tblEPLTOLink` CHANGE COLUMN `EPLTOID#` `EPLTOID` INT(10) NOT NULL AUTO_INCREMENT FIRST;
