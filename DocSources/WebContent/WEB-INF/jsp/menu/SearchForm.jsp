@@ -14,12 +14,12 @@
 								<div class="col_r"><select id="simpleSearchPerimeter" name="simpleSearchPerimeter" class="select">
 										<option value="ALL">All</option>
 										<option value="EXTRACT"  selected="selected">Document Extracts</option>
-										<option value="SYNOPSIS">Document Synopsis</option>
+										<option value="SYNOPSIS">Document Synopses</option>
 										<option value="VOLUME">Volumes</option>
 										<option value="PEOPLE">People</option>
 										<option value="PLACE">Places</option>
 								</select></div>
-								<div class="col_l"><a class="helpIcon" title="Perform your search in Document Synopsis">?</a></div>
+								<div class="col_l"><a class="helpIcon" title="<fmt:message key="basicsearch"></fmt:message>">?</a></div>
 							</div>
 						</div>
   						<div class="listSearch">

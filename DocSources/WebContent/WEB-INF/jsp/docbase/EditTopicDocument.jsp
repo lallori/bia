@@ -29,7 +29,7 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
-						<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories.">?</a>
+						<a class="helpIcon" title="<fmt:message key="docbase.topics.edit"></fmt:message>">?</a>
 						<form:label id="topicDescriptionLabel" for="topicId" path="topicId" cssErrorClass="error">Topic</form:label>
 					</div>
 					<div class="col_l">

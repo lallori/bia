@@ -16,7 +16,7 @@
 			<legend><b>EXTRACT/SYNOPSIS</b></legend>
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="Text goes here">?</a>
+					<a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.extract"></fmt:message>">?</a>
 					<form:label for="docExtract" id="docExtractLabel" path="docExtract" cssErrorClass="error">Extract</form:label>
 				</div>
 				<div class="row">
@@ -26,7 +26,7 @@
 				<br />
 			
 				<div class="row">
-					<a class="helpIcon" title="Text goes here">?</a>
+					<a class="helpIcon" title="<fmt:message key="docbase.extractsynopsys.edit.synopsis"></fmt:message>">?</a>
 					<form:label for="synopsis" path="synopsis" id="synopsisLabel" cssErrorClass="error">Synopsis</form:label>
 				</div>
 				<div class="row">
