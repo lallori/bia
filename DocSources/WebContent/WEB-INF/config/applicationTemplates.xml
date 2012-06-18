@@ -2,20 +2,20 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-
-    <definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp">
-    </definition>
     
-    <definition name="template.compare" template="/WEB-INF/templates/compare.jsp" />
+	<definition name="template.advancedSearchForm" template="/WEB-INF/templates/advancedSearchForm.jsp"/>
 
-    <definition name="template.completeDOM" template="/WEB-INF/templates/completeDOM.jsp">
-        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
-    </definition>
-        
-    <definition name="template.document" template="/WEB-INF/templates/document.jsp"/>
-    <definition name="template.documentNew" template="/WEB-INF/templates/documentNew.jsp"/>
-  
-    <definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp"/>
+	<definition name="template.compare" template="/WEB-INF/templates/compare.jsp" />
+
+	<definition name="template.completeDOM" template="/WEB-INF/templates/completeDOM.jsp">
+		<put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
+	</definition>
+
+	<definition name="template.document" template="/WEB-INF/templates/document.jsp"/>
+
+	<definition name="template.documentNew" template="/WEB-INF/templates/documentNew.jsp"/>
+	
+	<definition name="template.emptyDOM" template="/WEB-INF/templates/emptyDOM.jsp"/>
 
 	<definition name="template.forum" template="/WEB-INF/templates/forumDOM.jsp">
 		<put-attribute name="search" value="/WEB-INF/jsp/community/fragments/searchForum.jsp"/>
@@ -26,9 +26,9 @@
 		<put-attribute name="statistics" value="/WEB-INF/jsp/community/fragments/statisticsForum.jsp"/>
 	</definition>
 
-    <definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
-        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
-    </definition>
+	<definition name="template.loginDOM" template="/WEB-INF/templates/loginDOM.jsp">
+	<put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
+	</definition>
 
 	<definition name="template.main" template="/WEB-INF/templates/main.jsp">
 		<put-attribute name="searchForm" value="/WEB-INF/jsp/menu/SearchForm.jsp" />
@@ -45,7 +45,7 @@
 		<put-attribute name="messagesMenu" value="/WEB-INF/jsp/menu/Messages.jsp" />
 		<put-attribute name="whoAmIMenu" value="/WEB-INF/jsp/menu/WhoAmI.jsp" />
 	</definition>
-    
+
 	<definition name="template.manuscriptViewerFlash" template="/WEB-INF/templates/manuscriptViewerFlash.jsp" />
 
 	<definition name="template.manuscriptViewerHtml" template="/WEB-INF/templates/manuscriptViewerHtml.jsp" />
@@ -54,35 +54,35 @@
 
 	<definition name="template.partialDOM" template="/WEB-INF/templates/partialDOM.jsp" />
 
-    <definition name="template.person" template="/WEB-INF/templates/person.jsp" />
-    
+	<definition name="template.person" template="/WEB-INF/templates/person.jsp" />
+
 	<definition name="template.place" template="/WEB-INF/templates/place.jsp" />
-	
+
 	<definition name="template.properties" template="/WEB-INF/templates/properties.jsp" />
 
-    <definition name="template.printDOM" template="/WEB-INF/templates/printDOM.jsp">
-    	<put-attribute name="footer" value="/WEB-INF/jsp/fragments/printFooter.jsp" />
-    </definition>
+	<definition name="template.printDOM" template="/WEB-INF/templates/printDOM.jsp">
+		<put-attribute name="footer" value="/WEB-INF/jsp/fragments/printFooter.jsp" />
+	</definition>
 
-    <definition name="template.registerDOM" template="/WEB-INF/templates/registerDOM.jsp">
-        <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
-    </definition>
+	<definition name="template.registerDOM" template="/WEB-INF/templates/registerDOM.jsp">
+	  <put-attribute name="footer" value="/WEB-INF/jsp/fragments/Footer.jsp" />
+	</definition>
 
 	<definition name="template.schedone" template="/WEB-INF/templates/schedone.jsp" />
 
-    <definition name="template.shareDOM" template="/WEB-INF/templates/shareDOM.jsp"/>
+	<definition name="template.shareDOM" template="/WEB-INF/templates/shareDOM.jsp"/>
 
-    <definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
-    
-    <definition name="template.user" template="/WEB-INF/templates/user.jsp" />
-    
+	<definition name="template.volume" template="/WEB-INF/templates/volume.jsp" />
+
+	<definition name="template.user" template="/WEB-INF/templates/user.jsp" />
+
 	<!-- Various definitions -->
 	<definition name="empty" extends="template.emptyDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/fragments/Empty.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/Empty.jsp"/>
     </definition>
 
    	<definition name="error/ActivateUser" extends="template.registerDOM">
-        <put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/jsp/error/ActivateUser.jsp"/>
     </definition>
 
     <definition name="error/ResetUserPassword" extends="template.completeDOM">
