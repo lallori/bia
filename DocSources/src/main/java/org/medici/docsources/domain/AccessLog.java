@@ -67,7 +67,7 @@ public class AccessLog implements Serializable {
 	private String httpMethod;
 	@Column (name="\"action\"", length=1000, nullable=false)
 	private String action;
-	@Column (name="\"informations\"", length=3000)
+	@Column (name="\"informations\"", columnDefinition="LONGTEXT")
 	private String informations;
 	@Column (name="\"errors\"", length=3000)
 	private String errors;
