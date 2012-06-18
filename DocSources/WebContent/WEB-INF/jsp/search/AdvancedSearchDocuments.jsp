@@ -23,7 +23,7 @@
 							<form id="wordSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.wordsearch"></fmt:message>">?</a>
 										<input type="text" id="word" name="word" class="input_15c" value="" />
 					               	</div>
 					               	<div class="col_l">in</div>
@@ -49,7 +49,7 @@
 				    		<form id="personSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="General Person Search: search here for documents related to person name either if it is a sender, a recipient and/or referenced in a document.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.person"></fmt:message>">?</a>
 										<label for="person" id="personLabel">Person</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="person" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE --></div>
@@ -64,7 +64,7 @@
 				            <form id="placeSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="General Place Search: search here for a document realated to place either if it is attached to a sender, a recipient and/or to a document topic.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.place"></fmt:message>">?</a>
 										<label for="place" id="placeLabel">Place</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="place" name="place" class="input_25c" value=""/><!-- AUTOCOMPLETE --></div>
@@ -83,7 +83,7 @@
 							<form id="senderSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="Search documents sent FROM Person/Organization.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.sender"></fmt:message>">?</a>
 										<label for="sender" id="senderLabel">Sender Name</label> 
 					               	</div>
 					               	<div class="col_l"><input type="text" id="sender" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -98,7 +98,7 @@
 				            <form id="fromSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="Search documents sent FROM Place/Location.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.from"></fmt:message>">?</a>
 										<label for="from" id="fromLabel">Place From</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="from" name="from" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -113,7 +113,7 @@
 							<form id="recipientSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="Search documents sent TO Person/Organization.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.recipient"></fmt:message>">?</a>
 										<label for="recipientSearch" id="recipientSearchLabel">Recipient Name</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="recipient" name="recipient" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -128,7 +128,7 @@
 				            <form id="toSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="Search documents sent Place/Location.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.to"></fmt:message>">?</a>
 										<label for="to" id="toSearchLabel">Place To</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="to" name="to" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -143,7 +143,7 @@
 							<form id="refersToSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="Search documents in which this Person's name is mentioned.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.peopleandplaces.refersto"></fmt:message>">?</a>
 										<label for="refersTo" id="refersToLabel">Refers to</label>
 					               	</div>
 					               	<div class="col_l"><input type="text" id="refersTo" name="refersTo" class="input_24c"/><!-- AUTOCOMPLETE --></div>
@@ -163,7 +163,7 @@
 							<form id="extractSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="That text will explain...">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.extractorsynopsis.extract"></fmt:message>">?</a>
 										<label for="extract" id="extractLabel">Extract</label>
 					               	</div>
 					            </div>
@@ -179,7 +179,7 @@
 				            <form id="synopsisSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="That text will explain...">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.extractorsynopsis.synopsis"></fmt:message>">?</a>
 										<label for="synopsis" id="synopsisLabel">Synopsis</label>
 					               	</div>
 					            </div>
@@ -200,7 +200,7 @@
 							<form id="topicSearchForm" method="post" class="edit">
 					           	<div class="row">
 					           		<div class="col_l">
-					           			<a class="helpIcon" title="A set of 42 Topic Categories related to the arts and humanities defines the scope of this database. Each document in the system is indexed to the relevant Topic Categories and also to the geographical places relevant to those Topic Categories. For example, a letter sent from Florence to Madrid mentioning a musical performance in Ferrara will be indexed under Topics to 'Music and Musical Instruments - Firenze', 'Music and Musical Instruments - Madrid' and 'Music and Musical Instruments - Ferrara'.">?</a>
+					           			<a class="helpIcon" title="<fmt:message key="advsearch.documents.topics"></fmt:message>">?</a>
 					           			<label for="topicSelect" id="topicSelectLabel">Select a Topic</label>
 					           		</div>
 					               	<div class="col_l">
@@ -222,7 +222,7 @@
 				            <form id="topicPlaceSearchForm" method="post" class="edit">
 					            <div class="row">
 					            	<div class="col_l">
-					            		<a class="helpIcon" title="">?</a>
+					            		<a class="helpIcon" title="<fmt:message key="advsearch.documents.topics.place"></fmt:message>">?</a>
 					            		<label for="topicPlace" id="topicPlaceLabel">Related to Place</label>
 					            	</div>
 					               	<div class="col_l">
@@ -244,7 +244,7 @@
 							<form id="dateSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.daterange"></fmt:message>">?</a>
 										<select id="dateType" name="dateType" class="selectform_Llong">
 											<option value="From">Written from</option>
 											<option value="Before">Written before</option>
@@ -293,7 +293,7 @@
 							<form id="volumeSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="This is the shelf number or call number assigned by the Archivio di Stato di Firenze to each volume of documents in the Medici Granducal Archive (Archivio Mediceo del Principato). This is the number that is used when ordering that volume for consultation in the Archivio and when citing it in publications.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.volumeorfolio.volume"></fmt:message>">?</a>
 										<select id="volumeType" name="volumeType" class="selectform_long">
 											<option value="Exactly" selected="selected">Exactly</option>
 											<option value="Between">Between</option>
@@ -313,7 +313,7 @@
 					        <form id="folioSearchForm" method="post" class="edit">
 					            <div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="Text will go here">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.documents.volumeorfolio.folio"></fmt:message>">?</a>
 										<select id="folioType" name="folioType" class="selectform_long">
 											<option value="Exactly" selected="selected">Exactly</option>
 											<option value="Between">Between</option>
@@ -337,7 +337,7 @@
 							<form id="docIdSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="Text will go here">?</a>
+					               		<a class="helpIcon" title=<fmt:message key="advsearch.documents.docid"></fmt:message>">?</a>
 										<input id="docId" name="docId" class="input_7c" type="text" maxlength="5" />
 					               	</div>
 					               	<div class="col_r">

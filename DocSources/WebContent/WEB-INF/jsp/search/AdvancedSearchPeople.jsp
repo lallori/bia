@@ -17,7 +17,7 @@
 						<form id="namePartsSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="Names are broken down into their component parts in order to help identify individuals who may have been referred to by a variety of names. Each person therefore has various distinct name records in order to track 'Given Names', 'Appellatives', 'Family Names', 'Married Names' and 'Patronymics'. You should enter name parts without modifiers (e.g. Agnolo instead of d'Agnolo or di Agnolo). You can select a specific name type to further limit the name search. Women's 'maiden' names are categorized as 'Family' names.">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.nameparts"></fmt:message>">?</a>
 									<input id="nameParts" name="nameParts" class="input_20c" type="text" value=""/>
 				               	</div>
 				               	<div class="col_l">in</div>
@@ -47,7 +47,7 @@
 			    		<form id="roleCategorySearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="The subjects of some biographical entries are categorized as 'Groups', with the 'Gender' specified as 'X'. This includes entities such as academies and confraternities (even if their membership was made up of a single gender), and families when they are mentioned collectively in a document.">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.titleoccupation.selectarolecategory"></fmt:message>">?</a>
 									<select id="roleCategorySelect" name="roleCategorySelect" class="selectform_XXXlong">
 						                    <option value="Select a Role Category" selected="selected">Select a Role Category</option>
 						                        <optgroup label="ARTISTS and ARTISANS">
@@ -152,7 +152,7 @@
 			        <form id="occupationWordSearchForm" method="post" class="edit">
 			            <div class="row">
 			               	<div class="col_l">
-			               		<a class="helpIcon" title="...">?</a>
+			               		<a class="helpIcon" title="<fmt:message key="advsearch.people.titleoccupation.wordsearchintitleoccupation"></fmt:message>">?</a>
 								<input id="occupationWord" name="occupationWord" class="input_20c" type="text" value=""/>
 			               	</div>
 			               	<div class="col_r">
@@ -171,7 +171,7 @@
 			        <form id="occupationSearchForm" method="post" class="edit">
 				        <div class="row">
 				        	<div class="col_l">
-				        		<a class="helpIcon" title="Use this autocomplater textfield to find a particular title or occupation name. Plase note that a most of titles or occupations  are written in their own language, so try using the  appropriate language rather than English or Italian.">?</a>
+				        		<a class="helpIcon" title="<fmt:message key="advsearch.people.titleoccupation.matchthexatcttitleoccupation"></fmt:message>">?</a>
 								<input id="occupation" name="occupation" class="input_25c" type="text" value=""/><!-- AUTOCOMPLETE -->
 				        	</div>
 				        	<div class="col_r">
@@ -190,7 +190,7 @@
 						<form id="genderSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="...">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.persondetailsandvitalstatistics.gender"></fmt:message>">?</a>
 									<label for="gender" id="genderLabel">Gender</label>
 				               	</div>
 				               	<div class="col_l">
@@ -211,7 +211,7 @@
 			           	<form id="placeSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="That text will explain...">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.persondetailsandvitalstatistics.birthdeathplace"></fmt:message>">?</a>
 									<select id="placeType" name="placeType" class="selectform_MXlong">
 										<option value="Birth/Death Place" selected="selected">Birth/Death Place</option>
 										<option value="Birth Place">Birth Place</option>
@@ -232,7 +232,7 @@
 			           	<form id="dateSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="When searching dates, you should enter the year according to modern (i.e. Roman) reckoning (with the new year beginning on 1 January), even when seeking documents dated according to Florentine reckoning (with the new year beginning on 25 March).">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.persondetailsandvitalstatistics.bornanddeathdate"></fmt:message>">?</a>
 									<select id="dateType" name="dateType" class="selectform_Llong">
 										<option value="Born after" selected="selected" >Born after</option>
 										<option value="Dead by">Dead by</option>
@@ -278,7 +278,7 @@
 						<form id="researchNotesSearchForm" method="post" class="edit">
 				           	<div class="row">
 				               	<div class="col_l">
-				               		<a class="helpIcon" title="Search here for words (in English) that appear in the Research Notes field.">?</a>
+				               		<a class="helpIcon" title="<fmt:message key="advsearch.people.researchnotes"></fmt:message>">?</a>
 									<input id="researchNotes" name="researchNotes" class="input_20c" type="text" value=""/>
 				               	</div>
 				               	<div class="col_r">

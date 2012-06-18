@@ -18,7 +18,7 @@
 							<form id="placeNameSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="You can search here for place names using either whole or partial words (without accents).">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.places.placename"></fmt:message>">?</a>
 										<input id="placeName" name="placeName" class="input_20c" type="text" value=""/>
 							<!-- 		<label for="stressSense" id="placeNameType">Stress sense</label> -->
 							<!-- 		<input type="checkbox" name="stressSense" class="checkbox4"/> -->
@@ -38,7 +38,7 @@
 							<form id="placeTypeSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="These Place Types are assigned to geographical place names in the Getty Thesaurus of Geographic Names. Most places in the Documentary Sources database are of the type 'Inhabited Place' (that is to say, cities, towns and villages.)">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.places.placetype.selectaplacetype"></fmt:message>">?</a>
 										<select id="placeTypeSelect" name="placeTypeSelect" class="selectform_XXXlong">
 											<option value="Select a Place Type" selected="selected">Select a Place Type</option>
 											<c:forEach items="${placeTypes}" var="placeType">
@@ -62,7 +62,7 @@
 							<form id="linkedToPeopleSearchForm" method="post" class="edit">
 					           	<div class="row">
 					               	<div class="col_l">
-					               		<a class="helpIcon" title="You can refine your Places search by specifying 'Sender Location', 'Recipient Location', 'Birth Place', or 'Death Place'. The resulting hit list will include a link to the biographical records for the people who meet your criteria.">?</a>
+					               		<a class="helpIcon" title="<fmt:message key="advsearch.places.linkedtopeople.selectalinktype.senderlocation"></fmt:message>">?</a>
 										<select id="linkedToPeopleSelect" name="linkedToPeopleSelect" class="selectform_MXlong">
 											<option value="Select a Link Type" selected="selected">Select a Link Type</option>
 											<option value="Sender Location">Sender Location</option>
