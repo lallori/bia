@@ -37,7 +37,7 @@
 				</div>
 				<div class="row">
 					<div class="col_r">
-						<a class="helpIcon" title="<fmt:message key="docbase.details.edit.part"></fmt:message>">?</a>
+						<a class="helpIcon" title="<fmt:message key="docbase.details.edit.documentstartsatfolio"></fmt:message>">?</a>
 						<form:label id="folioNumLabel" for="folioNum" path="folioNum" cssErrorClass="error">Document starts at folio</form:label>
 					</div>
 					<div class="col_l"><form:input id="folioNum" path="folioNum" class="input_5c" /></div>
