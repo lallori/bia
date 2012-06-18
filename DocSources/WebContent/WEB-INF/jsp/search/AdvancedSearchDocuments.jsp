@@ -505,13 +505,26 @@
 				}
 			});
 			
-			$j("#person").blur(function(){
-				//MD: This fix is for Chrome
-				if($j(".autocomplete").css('display') != "block"){
-					$personAutocomplete.killSuggestions();
-				}
+			//MD: To fix bug in Chrome
+			$j("h1").click(function(){
+				$personAutocomplete.killSuggestions();
+				$placeAutocomplete.killSuggestions();
+				$senderAutocomplete.killSuggestions();
+				$fromAutocomplete.killSuggestions();
+				$recipientAutocomplete.killSuggestions();
+				$toAutocomplete.killSuggestions();
+				$refersToAutocomplete.killSuggestions();
+				$topicPlaceAutocomplete.killSuggestions();
+				$volumeAutocomplete.killSuggestions();
 				return false;
 			});
+			
+// 			$j("#person").blur(function(){
+//				MD: This fix is for Chrome
+// 				if($j(".peoplePlaces").children().css('display') != "block"){
+// 					$personAutocomplete.killSuggestions();
+// 				}
+// 			});
 			
 			$j("#person").keyup(function(){
 				if($j("#personId").val() != '')
@@ -541,10 +554,10 @@
 				}
 			});	
 			
-			$j("#place").blur(function(){
-				$placeAutocomplete.killSuggestions();
-				return false;
-			});
+// 			$j("#place").blur(function(){
+// 				$placeAutocomplete.killSuggestions();
+// 				return false;
+// 			});
 			
 			$j("#place").keyup(function(){
 				if($j("#placeId").val() != '')
@@ -573,10 +586,10 @@
 				}
 			});
 			
-			$j("#sender").blur(function(){
-				$senderAutocomplete.killSuggestions();
-				return false;
-			});
+// 			$j("#sender").blur(function(){
+// 				$senderAutocomplete.killSuggestions();
+// 				return false;
+// 			});
 			
 // 			$j("#sender").keyup(function(){
 // 				if($j("#senderId").val() != '')
@@ -605,10 +618,10 @@
 				}
 			});
 			
-			$j("#from").blur(function(){
-				$fromAutocomplete.killSuggestions();
-				return false;
-			});
+// 			$j("#from").blur(function(){
+// 				$fromAutocomplete.killSuggestions();
+// 				return false;
+// 			});
 			
 			$j("#from").keyup(function(){
 				if($j("#fromId").val() != '')
@@ -637,10 +650,10 @@
 				}
 			});
 			
-			$j("#recipient").blur(function(){
-				$recipientAutocomplete.killSuggestions();
-				return false;
-			});
+// 			$j("#recipient").blur(function(){
+// 				$recipientAutocomplete.killSuggestions();
+// 				return false;
+// 			});
 			
 // 			$j("#recipient").keyup(function(){
 // 				if($j("#recipientId").val() != '')
@@ -669,10 +682,10 @@
 				}
 			});	
 			
-			$j("#to").blur(function(){
-				$toAutocomplete.killSuggestions();
-				return false;
-			});
+// 			$j("#to").blur(function(){
+// 				$toAutocomplete.killSuggestions();
+// 				return false;
+// 			});
 			
 			$j("#to").keyup(function(){
 				if($j("#toId").val() != '')
@@ -701,10 +714,10 @@
 				}
 			});
 			
-			$j("#refersTo").blur(function(){
-				$refersToAutocomplete.killSuggestions();
-				return false;
-			});
+// 			$j("#refersTo").blur(function(){
+// 				$refersToAutocomplete.killSuggestions();
+// 				return false;
+// 			});
 			
 // 			$j("#refersTo").keyup(function(){
 // 				if($j("#refersToId").val() != '')
@@ -772,10 +785,10 @@
 				}
 			});	
 			
-			$j("#topicPlace").blur(function(){
-				$placeAutocomplete.killSuggestions();
-				return false;
-			});
+// 			$j("#topicPlace").blur(function(){
+// 				$topicPlaceAutocomplete.killSuggestions();
+// 				return false;
+// 			});
 			
 			$j("#topicPlace").keyup(function(){
 				if($j("#topicPlaceId").val() != '')
@@ -800,10 +813,10 @@
 				}
 			});
 			
-			$j("#volume").blur(function(){
-				$volumeAutocomplete.killSuggestions();
-				return false;
-			});
+// 			$j("#volume").blur(function(){
+// 				$volumeAutocomplete.killSuggestions();
+// 				return false;
+// 			});
 			
 			$j("#volume").change(function(){
 				if($j(this).val() != ''){
