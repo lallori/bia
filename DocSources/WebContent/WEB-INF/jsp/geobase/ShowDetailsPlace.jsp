@@ -37,7 +37,9 @@
 						</c:if>
 						<c:if test="${linkGoogleMaps == null }">
 							<span>Not attached to Google Maps</span>
-							<a class="PlaceMap" href="#">Assign Geo Coordinates</a>
+							<c:if test="${place.prefFlag == 'P'}">
+								<a class="PlaceMap" href="#">Assign Geo Coordinates</a>
+							</c:if>
 							<img src="<c:url value="/images/1024/img_place.png" />" alt="Place">
 						</c:if>
 					</div>
