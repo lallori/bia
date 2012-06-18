@@ -19,7 +19,7 @@
 										<option value="PEOPLE">People</option>
 										<option value="PLACE">Places</option>
 								</select></div>
-								<div class="col_l"><a class="helpIcon" title="<fmt:message key="basicsearch"></fmt:message>">?</a></div>
+								<div class="col_l"><a class="helpIcon" title="<fmt:message key="basicsearch.all"></fmt:message>">?</a></div>
 							</div>
 						</div>
   						<div class="listSearch">
@@ -39,8 +39,16 @@
 						
 						$j("#simpleSearchPerimeter").change(function(){
 							
+							if($j(this).find('option:selected').val() == 'ALL'){
+								$j(".helpIcon").attr('title', '<fmt:message key="basicsearch.all"></fmt:message>');
+								$j('.helpIcon').tooltip({
+									track: true,
+									fade: 350 
+								});
+							}
+							
 							if($j(this).find('option:selected').val() == 'EXTRACT'){
-								$j(".helpIcon").attr('title', 'Perform your search in Document Extracts');
+								$j(".helpIcon").attr('title', '<fmt:message key="basicsearch.documents.extract"></fmt:message>');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 
@@ -48,7 +56,7 @@
 							}
 							
 							if($j(this).find('option:selected').val() == 'SYNOPSIS'){
-								$j(".helpIcon").attr('title', 'Perform your search in Document Synopsis');
+								$j(".helpIcon").attr('title', '<fmt:message key="basicsearch.documents.synopsis"></fmt:message>');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 
@@ -57,21 +65,21 @@
 							
 							
 							if($j(this).find('option:selected').val() == 'VOLUME'){
-								$j(".helpIcon").attr('title', 'Which Volume fields are we looking into?');
+								$j(".helpIcon").attr('title', '<fmt:message key="basicsearch.volumes"></fmt:message>');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 
 								});
 							}
 							if($j(this).find('option:selected').val() == 'PEOPLE'){
-								$j(".helpIcon").attr('title', 'Which Person fields are we looking into?');
+								$j(".helpIcon").attr('title', '<fmt:message key="basicsearch.people"></fmt:message>');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 
 								});
 							}
 							if($j(this).find('option:selected').val() == 'PLACE'){
-								$j(".helpIcon").attr('title', 'Which Place fields are we looking into?');
+								$j(".helpIcon").attr('title', '<fmt:message key="basicsearch.places"></fmt:message>');
 								$j('.helpIcon').tooltip({
 									track: true,
 									fade: 350 

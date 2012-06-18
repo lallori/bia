@@ -109,7 +109,7 @@
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>
 			</c:forEach>
 			</div>
-			<p class="yourSearchDiv">Record found:
+			<p class="yourSearchDiv">Records found:
 			<span class="recordsNum"></span></p>
 			
 			<br />

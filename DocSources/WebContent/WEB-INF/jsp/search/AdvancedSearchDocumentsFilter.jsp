@@ -183,7 +183,7 @@
 			</c:forEach>
 			</div>
 			
-			<p class="yourSearchDiv">Record found:
+			<p class="yourSearchDiv">Records Found:
 			<span class="recordsNum"></span></p>
 			
 			<br>

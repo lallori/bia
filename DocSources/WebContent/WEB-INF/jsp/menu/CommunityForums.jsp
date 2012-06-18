@@ -4,13 +4,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<%-- <c:url var="ChoiceAdvancedSearchURL" value="/src/ChoiceAdvancedSearch.do"/> --%>
+<c:url var="ShowForumURL" value="/community/ShowForum.do?completeDOM=true"/>
 
-				<li class="forumsMenu"><a id="forumsMenu" href="#"></a></li>
+				<li class="forumsMenu"><a id="forumsMenu" href="${ShowForumURL}" target="_blank"></a></li>
 				<script type="text/javascript">
-					$j(document).ready(function() {
-						$j("#forumsMenu").click(function() {															
-							
+					$j(document).ready(function() {														
+							$j("#forumsMenu").open({scrollbars: "yes"});
+							return false;
 						});							   	
 					});
 				</script>						
