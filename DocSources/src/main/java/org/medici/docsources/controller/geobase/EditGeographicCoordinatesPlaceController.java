@@ -34,6 +34,7 @@ import javax.validation.Valid;
 
 import org.medici.docsources.command.geobase.EditGeographicCoordinatesPlaceCommand;
 import org.medici.docsources.common.pagination.HistoryNavigator;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -112,7 +113,7 @@ public class EditGeographicCoordinatesPlaceController {
 			else
 				placeGeographicCoordinates.setSecondLatitude(0);
 			if(command.getDirectionLatitude() != null)
-				placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude());
+				placeGeographicCoordinates.setDirectionLatitude(command.getDirectionLatitude().toUpperCase());
 			else
 				placeGeographicCoordinates.setDirectionLatitude("N");
 			if(command.getDegreeLongitude() != null)
@@ -128,7 +129,7 @@ public class EditGeographicCoordinatesPlaceController {
 			else
 				placeGeographicCoordinates.setSecondLongitude(0);
 			if(command.getDirectionLongitude() != null)
-				placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude());
+				placeGeographicCoordinates.setDirectionLongitude(command.getDirectionLongitude().toUpperCase());
 			else
 				placeGeographicCoordinates.setDirectionLongitude("E");
 			
@@ -149,6 +150,11 @@ public class EditGeographicCoordinatesPlaceController {
 				model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(place.getPlaceAllId()));
 				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(place.getPlaceAllId()));
 				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(place.getPlaceAllId()));
+				
+				if(place.getPlaceGeographicCoordinates() != null)
+					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
+				else
+					model.put("linkGoogleMaps", null);
 				
 				HistoryNavigator historyNavigator = getGeoBaseService().getHistoryNavigator(place);
 				model.put("historyNavigator", historyNavigator);

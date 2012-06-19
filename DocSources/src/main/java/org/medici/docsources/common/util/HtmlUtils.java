@@ -59,18 +59,18 @@ public class HtmlUtils {
 		Double latitude = placeGeographicCoordinates.getMinuteLatitude().doubleValue() * 60 + placeGeographicCoordinates.getSecondLatitude().doubleValue();
 		latitude = latitude / 3600;
 		latitude = placeGeographicCoordinates.getDegreeLatitude().doubleValue() + latitude;
-		if(placeGeographicCoordinates.getDirectionLatitude().equals("N")){
+		if(placeGeographicCoordinates.getDirectionLatitude().toUpperCase().equals("N")){
 			link += "+" + latitude.toString();
-		}else if(placeGeographicCoordinates.getDirectionLatitude().equals("S")){
+		}else if(placeGeographicCoordinates.getDirectionLatitude().toUpperCase().equals("S")){
 			link += "-" + latitude.toString();
 		}
 		link += ",";
 		Double longitude = placeGeographicCoordinates.getMinuteLongitude().doubleValue() * 60 + placeGeographicCoordinates.getSecondLongitude().doubleValue();
 		longitude = longitude / 3600;
 		longitude = placeGeographicCoordinates.getDegreeLongitude().doubleValue() + longitude;
-		if(placeGeographicCoordinates.getDirectionLongitude().equals("E")){
+		if(placeGeographicCoordinates.getDirectionLongitude().toUpperCase().equals("E")){
 			link += "+" + longitude.toString();
-		}else if(placeGeographicCoordinates.getDirectionLongitude().equals("W")){
+		}else if(placeGeographicCoordinates.getDirectionLongitude().toUpperCase().equals("W")){
 			link += "-" + longitude.toString();
 		}
 		return link;
