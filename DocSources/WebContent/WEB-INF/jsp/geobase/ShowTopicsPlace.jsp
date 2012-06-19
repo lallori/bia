@@ -8,7 +8,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Document Topics Indexed to <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
-		<p>Total record found: <span id="docTopic${placeAllId}" class="recordsNum"></span></p>
+		<p>Total records found: <span id="docTopic${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showTopicsPlaceAllId${placeAllId}">

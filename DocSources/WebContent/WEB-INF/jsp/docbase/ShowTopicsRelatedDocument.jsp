@@ -13,7 +13,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Documents indexed with topic: <font color="red" style="margin-left:5px">"${topicTitle}"</font></p>
-		<p>Total record found: <span id="docIndexedWith${topicId}" class="recordsNum"></span></p>
+		<p>Total records found: <span id="docIndexedWith${topicId}" class="recordsNum"></span></p>
 	</div>
 	
 	<a id="refine${command.searchUUID}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>

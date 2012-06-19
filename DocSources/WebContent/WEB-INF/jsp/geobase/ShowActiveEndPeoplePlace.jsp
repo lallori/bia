@@ -9,7 +9,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Active End in <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
-		<p>Total Record found: <span id="activeEndIn${placeAllId}" class="recordsNum"></span></p>
+		<p>Total records found: <span id="activeEndIn${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showActiveEndPeoplePlaceAllId${placeAllId}">

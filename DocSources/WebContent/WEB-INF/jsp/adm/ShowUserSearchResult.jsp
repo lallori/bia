@@ -12,7 +12,7 @@
 	
 <!-- 	<div class="yourSearchDiv"> -->
 <%-- 		<p> <font color="red" style="margin-left:5px"></font></p> --%>
-<%-- 		<p>Total record found: <span id="" class="recordsNum"></span></p> --%>
+<%-- 		<p>Total records found: <span id="" class="recordsNum"></span></p> --%>
 <!-- 	</div> -->
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="userSearchTable">

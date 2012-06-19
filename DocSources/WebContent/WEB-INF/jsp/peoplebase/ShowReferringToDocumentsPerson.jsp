@@ -13,7 +13,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Documents referred to <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
-		<p>Total record found: <span id="referringToRecordsNum${personId}" class="recordsNum"></span></p>
+		<p>Total records found: <span id="referringToRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
 	
 	<a id="refineReferringTo${personId}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>

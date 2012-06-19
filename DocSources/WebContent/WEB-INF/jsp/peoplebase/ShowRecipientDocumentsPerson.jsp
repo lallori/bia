@@ -13,7 +13,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Recipient Documents indexed to <font color="red" style="margin-left:5px">"${mapNameLf}"</font></p>
-		<p>Total record found: <span id="recipientRecordsNum${personId}" class="recordsNum"></span></p>
+		<p>Total records found: <span id="recipientRecordsNum${personId}" class="recordsNum"></span></p>
 	</div>
 	
 	<a id="refineRecipient${personId}" class="refine" href="${AdvancedSearchRefineURL}">Refine this search</a>

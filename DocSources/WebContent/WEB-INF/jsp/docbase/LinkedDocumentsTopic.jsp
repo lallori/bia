@@ -8,7 +8,7 @@
 	
 	<div class="yourSearchDiv">
 		<p>Topic: <font color="red" style="margin-left:5px">"${topicTitle}"</font></p>
-		<p>Total record found: <span id="linkedDocumentsTopic${placeAllId}" class="recordsNum"></span></p>
+		<p>Total records found: <span id="linkedDocumentsTopic${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	
 	<table cellpadding="0" cellspacing="0" border="0" class="display"  id="showLinkedDocumentTopic${placeAllId}">
