@@ -491,20 +491,24 @@ public class AjaxController {
 		try {
 			List<String> otherLang = getSearchService().searchOtherLang(query);
 			//MD: This code is to separate the other Languages
-			List<String> separatedLang = new ArrayList<String>();
-			for(String currentString : otherLang){
-				String [] comma = currentString.split(",\\s*");
-				for(int i = 0; i < comma.length; i++){
-					if(!separatedLang.contains(comma[i])){
-						separatedLang.add(comma[i]);
+			List<String> separatedLang = new ArrayList<String>(0);
+			if(otherLang != null){
+				for(String currentString : otherLang){
+					String [] comma = currentString.split(",\\s*");
+					for(int i = 0; i < comma.length; i++){
+						if(!separatedLang.contains(comma[i])){
+							separatedLang.add(comma[i]);
+						}
 					}
 				}
+				model.put("count", separatedLang.size());
+				model.put("data", separatedLang);
+			}else{
+				model.put("count", 0);
+				model.put("data", null);				
 			}
-			model.put("query", query);
-			model.put("count", separatedLang.size());
-			model.put("data", separatedLang);
+			model.put("query", query);		
 			model.put("suggestions", separatedLang);
-
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);
 		}
