@@ -41,7 +41,6 @@ h3.details { /* AlreadyPresent....html */
 h4 { /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 	text-align: left;
 	font-size: 12px;
-	font-style: italic;
 	padding: 10px 0 0 10px;
 	color: #6F6B69;
 	width: 320px;
@@ -51,6 +50,7 @@ h4 { /* TGN PLACE Title, MAP PLACE Title, MAP SITE OR SUBSITE Title */
 span.h4 {
 	padding:10px 0 0 10px;
 	color: #666EA4;
+	font-style: italic;
 }
 
 h5{ /* Data Entry main fields Title */
@@ -68,6 +68,15 @@ h5{ /* Data Entry main fields Title */
 	color: red;
 	text-decoration: none;
 	font-weight: normal;
+}
+
+#text h5 {
+	color:#900;
+	font-size: 12px;
+	display: block;
+	margin: 10px 0 0 10px;
+	position:relative;
+	font-weight:normal;
 }
 
 h2 { /* Error Text 403, 404, 500, 503*/
@@ -118,7 +127,7 @@ span.h7 {
 	width:16px;
     height:11px;
     display:inline;
-    margin:3px 0 auto 203px;
+    margin: 3px 0 auto 240px;
     background-image:url(/DocSources/images/1024/img_loading.gif);
     position:absolute;
     visibility: hidden;
@@ -139,6 +148,11 @@ span.h7 {
 	right: -10px;
 	text-align:right;
 	font-style:italic;
+}
+
+#docid {
+	position: absolute;
+	top: 27px;
 }
 
 #buttonShareLink { /* Share/Link Button */
@@ -368,7 +382,7 @@ span.h7 {
 	width:45px;
 	height:23px;
 	position:absolute;
-	margin: -25px 0 0 204px;
+	margin: -25px 0 0 235px;
 	display:inline;
 }
 
@@ -1640,7 +1654,7 @@ p.notDigitized {
 	margin: 15px 0 0 10px;
 }
 
-#documentTitle #text {
+#documentTitle #text, #geoTitle #text {
 	width: 315px;
 }
 
@@ -1786,7 +1800,7 @@ span.docId, span.placeId {
 	width:40px;
 	height:22px;
 	position:absolute;
-	margin:-9px 0 0 190px;
+	margin: -9px 0 0 220px;
 	display:inline;
 }
 
@@ -1795,7 +1809,7 @@ span.docId, span.placeId {
 	width:85px;
 	height:22px;
 	position:absolute;
-	margin: -8px 0 0 255px;
+	margin: -8px 0 0 270px;
 	display:inline;
 }
 
@@ -3413,21 +3427,17 @@ form#EditUserProfileForm span{
 	height:60px;
 }
 
-#advancedSearch_top h1 {
+#advancedSearch_top h1, #searchWindow_top h1 {
 	font-size: 16px;
 	color:#6F6B69;
 	font-weight: bold;
+	text-align: center;
 }
 
-#advancedSearch_top p {
+#advancedSearch_top p, #searchWindow_top p {
 	font-size: 12px;
 	color:#6F6B69;
-}
-
-#advancedSearch_top h1 {
-	font-size: 16px;
-	color:#6F6B69;
-	font-weight: bold;
+	text-align: center;
 }
 
 #customSearchFilterDiv h1.advSearchTitle {
@@ -4223,7 +4233,7 @@ ul#network a {
 /* -------------------------------------------------------------------------- */
 /*
 /*
-/* -------------------------------------------------------------- DIGITIZATION MODULE ------------------------------------------------------------- */
+/* ------------------------------------------------- DIGITIZATION MODULE ------------------------------------------------ */
 
 /* ---------------- Modal Window ------------- */
 
@@ -4256,7 +4266,7 @@ ul#network a {
 	filter:alpha(opacity=90); /* IE */
 }
 
-#digitizationModalDiv #CreateCatalog, #digitizationModalDiv #AddNewFilza, #digitizationModalDiv #BrowseFilze{
+#digitizationModalDiv #CreateSchedone, #digitizationModalDiv #ActivateFilza, #digitizationModalDiv #BrowseFilze{
 	background:url(/DocSources/images/1024/button_Xlarge.png) no-repeat;
 	text-align:center;
 	padding-top:4px;
@@ -4266,23 +4276,23 @@ ul#network a {
 	margin:-5px 0 0 10px;
 }
 
-#CreateCatalog p, #AddNewFilza p, #BrowseFilze p {
+#CreateSchedone p, #ActivateFilza p, #BrowseFilze p {
 	margin: 0;
 }
 
-#digitizationModalDiv #CreateCatalog:hover, #digitizationModalDiv #AddNewFilza:hover, #digitizationModalDiv #BrowseFilze:hover {
+#digitizationModalDiv #CreateSchedone:hover, #digitizationModalDiv #ActivateFilza:hover, #digitizationModalDiv #BrowseFilze:hover {
 	opacity:0.5; /* FireFox, Chrome, Safari */
 	-moz-opacity: 0.5;
 	text-decoration:none;
 	filter:alpha(opacity=50); /* IE */ !important
 }
 
-#digitizationModalDiv #CreateCatalogDiv {
+#digitizationModalDiv #CreateSchedoneDiv {
 	width:300px;
 	margin:20px 0 0 20px;
 }
 
-#digitizationModalDiv #AddNewFilzaDiv {
+#digitizationModalDiv #ActivateFilzaDiv {
 	width:300px;
 	margin:20px 0 0 20px;
 }
@@ -4290,6 +4300,36 @@ ul#network a {
 #digitizationModalDiv #BrowseFilzeDiv {
 	width:300px;
 	margin:20px 0 0 20px;
+}
+
+/* Browse or Search "Schedoni" */
+
+#browseSearchSchedoni #search, #activateDeactivateVolume #search {
+	background: url(/DocSources/images/1024/button_small.png) no-repeat;
+	width: 52px;
+	height: 22px;
+	border: none;
+	cursor: pointer;
+	margin-left: 5px;
+}
+
+#browseContent .listAdvSearch {
+	display: table;
+	margin: 5px 0 0 3px;
+	width: 285px;
+	margin: 30px auto 0 auto;
+}
+
+
+/* Activate */
+
+#activate, #deactivate {
+	position: absolute;
+	margin: 10px 0 0 50px;
+}
+
+#activateDiv #close, #deactivateDiv #close {
+	margin: 45px 0 0 110px;
 }
 
 /* ------------------------------------ CREATE NEW CATALOG DESCRIPTION ------------------------------------ */
@@ -4337,113 +4377,6 @@ ul#network a {
 
 #EditSchedoneDetailsDiv {
 	margin-top: 40px;
-}
-
-/* Schedone details 
-#dimensioniBaseLabel {
-	margin-right: 70px;
-}
-
-#carteMancantiLabel {
-	margin-right: 16px;
-}
-
-#cartulazioneLabel {
-	margin-right: 33px;
-}
-
-#supportoLabel {
-	margin-right: 55px;
-}
-
-#legaturaLabel {
-	margin-right: 54px;
-}
-
-#dateEstremeLabel {
-	margin-right: 31px;
-}
-
-#dataFineAnno {
-	margin-left: 141px;
-}
-
-#numeroUnitaLabel {
-	margin-right: 56px;
-}
-
-#unitaLabel {
-	margin-right: 3px;
-}
-
-#unita {
-	margin-right: 69px;
-}
-
-#serieLabel {
-	margin-right: 77px;
-}
-
-#fondoLabel {
-	margin-right: 71px;
-}
-
-#istitutoLabel {
-	margin-right: 63px;
-}
-
-#dimensioniAltezzaLabel {
-	margin-right: 56px;
-}
-
-#tipoRipresaLabel {
-	margin-right: 65px;
-}
-
-#coloreImmagineLabel {
-	margin-right: 21px;
-}
-
-#risoluzioneLabel {
-	margin-right: 66px;
-}
-
-#daRipresaLabel {
-	margin-right: 117px;
-}
-
-#operatoreLabel {
-	margin-right: 49px;
-}
-
-#responsabileFotoRiproduzioneLabel {
-	 margin-right: 20px;
-}
-
-/* TIFF images 
-
-#formatoLabel {
-	margin-right: 39px;
-}
-
-#compressioneLabel {
-	margin-right: 10px;
-}
-
-#numeroImmaginiLabel {
-	margin-right: 65px;
-}
-
-#dimensioneMediaImmaginiLabel {
-	margin-right: 42px;
-}
-
-#dimensioneMediaImmagini, #dimensioneTotaleImmagini {
-	margin: 5px 3px 5px 5px;
-}
-
-#dimensioneTotaleImmaginiLabel {
-	margin-right: 45px;
 }
 
 /* ------------------------------------ ADD NEW DIGITIZED VOLUME ------------------------------------ */
@@ -4709,6 +4642,12 @@ h3.systemManagement {
 	margin-top:10px;
 }
 
+#coordinatesDiv #geoTitle h4{
+	width:240px;
+}
+
+
+
 #description {
 	padding: 10px 0 0 20px;
 	width: 910px;
@@ -4890,7 +4829,7 @@ h3.systemManagement {
 /* -------------------------------------------------------------------------- */
 /*
 /*
-/* -------------------------------------------------------------- MY HISTORY ------------------------------------------------------------- */
+/* -------------------------------------------------- MY HISTORY --------------------------------------------------------- */
 
 #myHistoryDiv { /* Chronology Content Div */
 	width: 730px;

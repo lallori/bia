@@ -20,21 +20,23 @@
 	
 	<div id="geoDiv">
 		<div id="geoTitle">
-			<h3>${place.placeName}</h3>
-			<h4>${place.placeNameFull}</h4>
-			<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
-            	<h5>TGN Place record</h5>
-        	</c:if>
-        	<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
-        		<h5>TGN Place record (updated by MAP)</h5>
-        	</c:if>
-        	<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
-				<h5>MAP Place record</h5>
-			</c:if>
-        	<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
-				<h5>MAP Site or Subsite record</h5>
-			</c:if>
-			<h7>${place.plType}</h7>
+			<div id="text">
+				<h3>${place.placeName}</h3>
+				<h4>${place.placeNameFull}</h4>
+				<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
+	            	<h5>TGN Place record</h5>
+	        	</c:if>
+	        	<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
+	        		<h5>TGN Place record (updated by MAP)</h5>
+	        	</c:if>
+	        	<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
+					<h5>MAP Place record</h5>
+				</c:if>
+	        	<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
+					<h5>MAP Site or Subsite record</h5>
+				</c:if>
+				<h7>${place.plType}</h7>
+			</div>
 		</div>
 		
 		<div id="EditDetailsPlaceDiv" class="background">

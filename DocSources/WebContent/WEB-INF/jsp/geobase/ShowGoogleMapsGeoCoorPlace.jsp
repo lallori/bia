@@ -219,25 +219,36 @@
         <div id="coordinatesDiv">
             <form:form id="latlongForm" method="post" class="edit">
             	<div class="listForm">
-                        <div class="row">
+                   <%-- <div class="row">
                             <div class="col_l"><label for="latLabel" id="latLabel"><b>Latitude:</b></label></div>
                             <div class="col_l"><input type="text" id="lat" name="lat" value="" class="input_20c"></div>
                         </div>
                         <div class="row">
                             <div class="col_l"><label for="lat_degLabel" id="lat_degLabel">Deg/min/sec</label></div>
                             <div class="col_l"><input type="text" name="lat_deg" id="lat_deg" value="" class="input_20c"></div>
+                        </div> --%>
+                        
+                         <div class="row">
+                            <div class="col_l"><label for="latLabel" id="latLabel"><b>Latitude:</b></label></div>
+                            <div class="col_l"><input type="text" id="lat_deg" name="lat" value="" class="input_20c"></div>
                         </div>
                         
                         <br/>    
            
-                        <div class="row">
+                   <%-- <div class="row">
                             <div class="col_l"><label for="lngLabel" id="lngLabel"><b>Longitude:</b></label></div>
                             <div class="col_l"><input type="text" id="lng" name="lng" value="" class="input_20c"></div>
                         </div>
                         <div class="row">
                             <div class="col_l"><label for="long_degLabel" id="long_degLabel">Deg/min/sec</label></div>
                             <div class="col_l"><input type="text" name="long_deg" id="long_deg" value="" class="input_20c"></div>
+                        </div> --%>
+                        
+                        <div class="row">
+                            <div class="col_l"><label for="lngLabel" id="lngLabel"><b>Longitude:</b></label></div>
+                            <div class="col_l"><input type="text" id="long_deg" name="lng" value="" class="input_20c"></div>
                         </div>
+                        
                 </div>
                 
                 <br/>
@@ -245,21 +256,23 @@
         		<p>Assign coordinates to:</p>
             
                 <div id="geoTitle">
-                    <h3>${place.placeName}</h3>
-                    <h4>${place.placeNameFull}</h4>
-                    <c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
-            		<h5>TGN Place record</h5>
-        			</c:if>
-        			<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
-        			<h5>TGN Place record (updated by MAP)</h5>
-        			</c:if>
-        			<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
-					<h5>MAP Place record</h5>
-					</c:if>
-        			<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
-					<h5>MAP Site or Subsite record</h5>
-					</c:if>
-                    <h7>${place.plType}</h7>
+                	<div id="text">
+	                    <h3>${place.placeName}</h3>
+	                    <h4>${place.placeNameFull}</h4>
+	                    <c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
+	            		<h5>TGN Place record</h5>
+	        			</c:if>
+	        			<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
+	        			<h5>TGN Place record (updated by MAP)</h5>
+	        			</c:if>
+	        			<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
+						<h5>MAP Place record</h5>
+						</c:if>
+	        			<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
+						<h5>MAP Site or Subsite record</h5>
+						</c:if>
+	                    <h7>${place.plType}</h7>
+	                </div>             
                 </div>
                 
                 <form:hidden path="degreeLatitude"/>

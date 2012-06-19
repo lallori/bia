@@ -51,34 +51,36 @@
 <div id="geoCompareDiv">
 			<c:if test="${place.placeAllId != 0}">
 				<div id="geoTitle">
-					<h3>${place.placeName}</h3>
-					<h4>${place.placeNameFull}</h4>
-					<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
-            		<h5>TGN Place record</h5>
-        			</c:if>
-        			<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
-        			<h5>TGN Place record (updated by MAP)</h5>
-        			</c:if>
-        			<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
-					<h5>MAP Place record</h5>
-					</c:if>
-        			<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
-					<h5>MAP Site or Subsite record</h5>
-					</c:if>
-					<h7>${place.plType}</h7>
-					<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
-						<p style="margin:20px 0 5px 10px">To compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
-					</c:if>
-					<c:if test="${place.prefFlag == 'V'}">
-						<br />
-						<div style="margin-left:8px">
-								<c:forEach items="${placeNames}" var="currentName">
-									<c:if test="${currentName.prefFlag == 'P'}">
-										<p style="margin:0 0 5px 10px"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
-									</c:if>
-								</c:forEach>
-						</div>
-					</c:if>
+					<div id="text">
+						<h3>${place.placeName}</h3>
+						<h4>${place.placeNameFull}</h4>
+						<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
+	            		<h5>TGN Place record</h5>
+	        			</c:if>
+	        			<c:if test="${place.geogKey >= 1000000  && place.plSource == 'MAPPLACE'}">
+	        			<h5>TGN Place record (updated by MAP)</h5>
+	        			</c:if>
+	        			<c:if test="${place.plSource == 'MAPPLACE' && (place.geogKey >= 100000 && place.geogKey < 400000) }">
+						<h5>MAP Place record</h5>
+						</c:if>
+	        			<c:if test="${place.plSource == 'MAPSITE' || (place.geogKey >= 400000 && place.geogKey < 1000000) }">
+						<h5>MAP Site or Subsite record</h5>
+						</c:if>
+						<h7>${place.plType}</h7>
+						<c:if test="${place.plSource == 'TGN' || place.geogKey >= 1000000}">
+							<p style="margin:20px 0 5px 10px">To compare this place data to the Getty TGN source <a class="link" href="http://www.getty.edu/research/tools/vocabularies/tgn/index.html" target="_blank">click here</a></p>		
+						</c:if>
+						<c:if test="${place.prefFlag == 'V'}">
+							<br />
+							<div style="margin-left:8px">
+									<c:forEach items="${placeNames}" var="currentName">
+										<c:if test="${currentName.prefFlag == 'P'}">
+											<p style="margin:0 0 5px 10px"><font color="red">'${place.placeName}' is a Variant Name for '${currentName.placeName}'. Click on the 'Principal' name to visualize ${currentName.placeName} and all the values and fields connected to it.</font></p>
+										</c:if>
+									</c:forEach>
+							</div>
+						</c:if>
+					</div>
 				</div>
 			</c:if>
 	

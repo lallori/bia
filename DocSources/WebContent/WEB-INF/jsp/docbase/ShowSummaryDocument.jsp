@@ -74,22 +74,26 @@
 				<%-- Recipient empty --%>
 				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
 			 		<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? ' - (Unsure)':'' }</h7>
 			 		<h4>TO: <span class="h4">(Not Entered)</span></h4>
 				</c:when>
 				<%-- Sender empty --%>
 				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
 			 		<h4>FROM:<span class="h4">(Not Entered)</span></h4>
 			 		<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+			 		<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
 				</c:when>
 				<%-- Sender and Recipient filled in --%>
 				<c:otherwise>
 			  		<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+					<h7>${document.senderPlace.placeNameFull} ${document.senderPlaceUnsure ? '(Unsure)':'' }</h7>
 			  		<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+					<h7>${document.recipientPlace.placeNameFull} ${document.recipientPlaceUnsure ? '(Unsure)':'' }</h7>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${document.docYear != null || document.docMonthNum != null || document.docDay != null}">
-					<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+					<h5>${document.docYear} ${document.docMonthNum} ${document.docDay}</h5>
 				</c:when>
 				<c:otherwise>
 					<br />
@@ -109,6 +113,7 @@
 				</div>
 			</c:if>
 			<c:if test="${image == null}">
+				<br>
         		<p class="notDigitized">This document is not digitized yet</p>
          	</c:if>
 		</div>
