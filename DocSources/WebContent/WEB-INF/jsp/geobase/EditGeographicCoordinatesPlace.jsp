@@ -28,18 +28,18 @@
 			<div class="row">
 				<div class="col_l"><label for="latitudeGeo" id="latitudeGeoLabel">Latitude</label></div>
 				<div class="col_l">
-					<form:input id="latDegrees" path="degreeLatitude" class="input_2c" type="text" value="" maxlength="2"/> °
-		            <form:input id="latMinutes" path="minuteLatitude" class="input_2c" type="text" value="" maxlength="2"/> '
-		            <form:input id="latSeconds" path="secondLatitude" class="input_2c" type="text" value="" maxlength="2"/> ''
+					<form:input id="latDegrees" path="degreeLatitude" class="input_2c" type="text" value="" maxlength="3"/> °
+		            <form:input id="latMinutes" path="minuteLatitude" class="input_2c" type="text" value="" maxlength="3"/> '
+		            <form:input id="latSeconds" path="secondLatitude" class="input_2c" type="text" value="" maxlength="3"/> ''
 		            <form:input id="latDirection" path="directionLatitude" class="input_1c" type="text" value="" maxlength="1"/>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col_l"><label for="longitudeGeo" id="longitudeGeoLabel">Longitude</label></div>
 				<div class="col_l">
-					<form:input id="lonDegrees" path="degreeLongitude" class="input_2c" type="text" value="" maxlength="2"/> °
-		            <form:input id="lonMinutes" path="minuteLongitude" class="input_2c" type="text" value="" maxlength="2"/> '
-		            <form:input id="lonSeconds" path="secondLongitude" class="input_2c" type="text" value="" maxlength="2"/> ''
+					<form:input id="lonDegrees" path="degreeLongitude" class="input_2c" type="text" value="" maxlength="3"/> °
+		            <form:input id="lonMinutes" path="minuteLongitude" class="input_2c" type="text" value="" maxlength="3"/> '
+		            <form:input id="lonSeconds" path="secondLongitude" class="input_2c" type="text" value="" maxlength="3"/> ''
 		            <form:input id="lonDirection" path="directionLongitude" class="input_1c" type="text" value="" maxlength="1"/>
 				</div>
 			</div>
