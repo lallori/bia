@@ -262,6 +262,7 @@
     suggest: function() {
       if (this.suggestions.length === 0) {
         this.hide();
+        $(this.el).css('background-image', '').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
         return;
       }
 
@@ -273,12 +274,17 @@
       mOver = function(xi) { return function() { me.activate(xi); }; };
       mClick = function(xi) { return function() { me.select(xi); }; };
       this.container.hide().empty();
-      for (i = 0; i < len; i++) {
-        s = this.suggestions[i];
-        div = $((me.selectedIndex === i ? '<div class="selected"' : '<div') + ' title="' + s + '">' + f(s, this.data[i], v) + '</div>');
-        div.mouseover(mOver(i));
-        div.click(mClick(i));
-        this.container.append(div);
+      if (len ==0) {
+    	  message = 'Not found.';
+    	  this.container.append(message);
+      }else{
+    	  for (i = 0; i < len; i++) {
+    		  s = this.suggestions[i];
+    		  div = $((me.selectedIndex === i ? '<div class="selected"' : '<div') + ' title="' + s + '">' + f(s, this.data[i], v) + '</div>');
+    		  div.mouseover(mOver(i));
+    		  div.click(mClick(i));
+    		  this.container.append(div);
+    	  }
       }
       this.enabled = true;
       this.container.show();
