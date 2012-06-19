@@ -9,8 +9,7 @@
 				<li class="forumsMenu"><a id="forumsMenu" href="${ShowForumURL}" target="_blank"></a></li>
 				<script type="text/javascript">
 					$j(document).ready(function() {														
-							$j("#forumsMenu").open({scrollbars: "yes"});
-							return false;
-						});							   	
+						$j("#forumsMenu").open({scrollbars: "yes"});
+						return false;							   	
 					});
 				</script>						
