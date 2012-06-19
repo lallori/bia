@@ -485,7 +485,7 @@ public class UserDaoLdapImpl implements UserDAO {
 		DirContextOperations context = getLdapTemplate().lookupContext(LdapUtils.userDistinguishedName(getLdapConfiguration(), account));
 
 		for (User.UserRole singleRole : userRoles) {
-			context.addAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
+			context.setAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
 		}
 	}
 
@@ -511,9 +511,11 @@ public class UserDaoLdapImpl implements UserDAO {
 		mapUserToContext(user, context);
 		getLdapTemplate().modifyAttributes(context);
 		
+		
 		for (User.UserRole singleRole : user.getUserRoles()) {
-			context.removeAttributeValue("member", LdapUtils.fullUserRoleDistinguishedName(getLdapConfiguration(), singleRole.toString()));
+			context.removeAttributeValue("member", "cn=" + singleRole);
 		}
+		getLdapTemplate().modifyAttributes(context);
 	}
 
 	/**

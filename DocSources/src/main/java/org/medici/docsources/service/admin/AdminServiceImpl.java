@@ -95,7 +95,7 @@ public class AdminServiceImpl implements AdminService {
 				getUserDAO().removeAllUserRoles(userToUpdate.getAccount());
 				userToUpdate.setUserRoles(user.getUserRoles());
 				getUserDAO().merge(userToUpdate);
-				getUserDAO().persistUserRoles(userToUpdate.getAccount(), userToUpdate.getUserRoles());
+//				getUserDAO().persistUserRoles(userToUpdate.getAccount(), userToUpdate.getUserRoles());
 //			}
 			
 			UserInformation userInformationToUpdate = getUserInformationDAO().find(userInformation.getAccount());
