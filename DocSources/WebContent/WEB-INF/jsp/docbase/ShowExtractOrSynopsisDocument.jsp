@@ -74,6 +74,12 @@
 			$j("#extract").html($j("#extract").text().replace(/\n\r?/g, '<br />'));
 
 			$j("#synopsis").html($j("#synopsis").text().replace(/\n\r?/g, '<br />'));
+			
+			$j('#extract').expander({
+	                slicePoint: 500,
+	                expandText: 'Click here to read more',
+	                userCollapseText: 'Click here to hide text'
+	            });
 
 		});
 	</script>

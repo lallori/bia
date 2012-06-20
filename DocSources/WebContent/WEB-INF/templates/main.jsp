@@ -79,6 +79,7 @@
 		<script type="text/javascript" src="<c:url value="/scripts/jquery.scrollTo.js"/>"></script>
 		<!-- <script type="text/javascript" src="<c:url value="/scripts/TableTools.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/scripts/ZeroClipboard.js"/>"></script> -->
+		<script type="text/javascript" src="/DocSources/scripts/jquery.expander.js"></script>
 		
 		<script type="text/javascript">
 	           window.onbeforeunload = function() {
