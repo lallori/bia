@@ -230,6 +230,7 @@
                         
                          <div class="row">
                             <div class="col_l"><label for="latLabel" id="latLabel"><b>Latitude:</b></label></div>
+                            <div class="col_l"><input type="hidden" id="lat" name="lat" value="" class="input_20c"></div>
                             <div class="col_l"><input type="text" id="lat_deg" name="lat" value="" class="input_20c"></div>
                         </div>
                         
@@ -246,6 +247,7 @@
                         
                         <div class="row">
                             <div class="col_l"><label for="lngLabel" id="lngLabel"><b>Longitude:</b></label></div>
+                            <div class="col_l"><input type="hidden" id="lng" name="lng" value="" class="input_20c"></div>
                             <div class="col_l"><input type="text" id="long_deg" name="lng" value="" class="input_20c"></div>
                         </div>
                         
