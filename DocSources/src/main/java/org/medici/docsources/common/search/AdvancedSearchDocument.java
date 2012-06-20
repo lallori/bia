@@ -1846,7 +1846,8 @@ public class AdvancedSearchDocument extends AdvancedSearchAbstract {
 			for(int i = 0; i < docIds.size(); i++){
 				if(StringUtils.isNumeric(docIds.get(i))){
 					if(docIdQuery.length() > 1){
-						docIdQuery.append(" AND ");
+						//MD: I need to append an "OR" clause instead an "AND"
+						docIdQuery.append(" OR ");
 					}
 					docIdQuery.append("(entryId=");
 					docIdQuery.append(docIds.get(i));
