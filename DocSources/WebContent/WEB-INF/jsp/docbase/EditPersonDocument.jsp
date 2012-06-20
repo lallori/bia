@@ -36,6 +36,7 @@
 				<input id="closePerson" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>
+			<input type="hidden" value="" id="modifyPerson" />
 		</fieldset>	
 
 		<form:hidden path="epLinkId"/>
@@ -51,6 +52,11 @@
 	    $j(document).ready(function() { 
 	    	//$j.scrollTo("#EditPersonDocumentForm");
 	    	
+	    	$j("#EditPersonDocumentForm :input").change(function(){
+				$j("#modifyPerson").val(1); <%-- //set the hidden field if an element is modified --%>
+				return false;
+			});
+	    	
 	    	var peopleDescription = $j('#personDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${searchPersonLinkableToDocumentURL}',
 			    minChars:3, 
@@ -63,18 +69,24 @@
 			    onSelect: function(value, data){ $j('#personId').val(data); }
 			  });
 
-			$j('#closePerson').click(function(e) {
-				$j('.autocomplete').remove();
-				$j('#EditPersonDocumentDiv').block({ message: $j('#questionPerson'),
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				}); 
-	            return false;
+			$j('#closePerson').click(function() {
+				peopleDescription.killSuggestions();
+				if($j("#modifyPerson").val() == 1){
+					$j('#EditPersonDocumentDiv').block({ message: $j('#questionPerson'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
+	            	return false;
+				}else{
+					$j("#EditPersonDocumentDiv").html('');				
+					
+					return false;
+				}
 			});
 
 			$j("#EditPersonDocumentForm").submit(function (){

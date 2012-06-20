@@ -48,6 +48,7 @@
 				<input id="closeTopic" type="submit" value="Close" title="do not save changes" class="button" />
 				<input id="save" type="submit" value="Save" class="button"/>
 			</div>		
+			<input type="hidden" value="" id="modify"/>
 		</fieldset>	
 
 		<form:hidden path="eplToId"/>
@@ -69,6 +70,11 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			$j.scrollTo("#EditTopicDocumentForm");
+			
+			$j("#EditTopicDocumentForm :input").change(function(){
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+				return false;
+			});
 			
 // 			var topicDescription = $j('#topicDescriptionAutoCompleter').autocompleteGeneral({ 
 // 			    serviceUrl:'${searchTopicLinkableToDocumentURL}',
@@ -111,16 +117,24 @@
 
 			$j('#closeTopic').click(function() { 
 				placeDescription.killSuggestions();
-	            $j('#EditTopicDocumentDiv').block({ message: $j('#question'),
-	            	css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-	            }); 
-	            return false;
+				if($j("#modify").val() == 1){
+	            	$j('#EditTopicDocumentDiv').block({ message: $j('#question'),
+	            		css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+	            	}); 
+	            	return false;
+				}else{
+					$j.ajax({ url: '${EditTopicsDocumentURL}', cache: false, success:function(html) { 
+						$j("#EditTopicsDocumentDiv").html(html);
+					}});
+						
+					return false;
+				}
 			});
 
 			$j('.helpIcon').tooltip({

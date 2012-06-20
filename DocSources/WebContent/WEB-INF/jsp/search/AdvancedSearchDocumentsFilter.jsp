@@ -18,7 +18,7 @@
 			<div id="wordSearchDiv">
 			<c:forEach items="${searchFilter.filterData.words}" varStatus="iterator">
 				<div class="searchFilterDiv">
-					<span class="categorySearch">Word Search in <fmt:message key="search.documents.wordType.${searchFilter.filterData.wordsTypes[iterator.index]}" />: </span><span class="wordSearch">${searchFilter.filterData.words[iterator.index]}</span><a class="remove" href="#">(remove)</a>
+					<span class="categorySearch">Word Search in <fmt:message key="advsearch.documents.wordType.${searchFilter.filterData.wordsTypes[iterator.index]}" />: </span><span class="wordSearch">${searchFilter.filterData.words[iterator.index]}</span><a class="remove" href="#">(remove)</a>
 					<input type="hidden" value="${searchFilter.filterData.wordsTypes[iterator.index]}|${searchFilter.filterData.words[iterator.index]}" name="word">
 				</div>
 				<c:if test="${!iterator.last}"><p class="andOrNotAdvancedSearch">And</p></c:if>

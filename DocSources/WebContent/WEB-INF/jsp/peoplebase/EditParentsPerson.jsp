@@ -101,6 +101,8 @@
 					<input id="save" type="submit" value="Save" class="button"/>
 				</div>
 				
+				<input type="hidden" value="" id="modify" />
+				
 				<form:hidden path="fatherRecordId"/>
 				<form:hidden path="fatherPersonId"/>
 				<form:hidden path="motherRecordId"/>
@@ -129,6 +131,11 @@
 		$j(document).ready(function() {
 			$j.scrollTo("#EditParentsPersonForm");
 			
+			$j("#EditParentsPersonForm :input").change(function(){
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+				return false;
+			});
+			
 			$j("#EditDetailsPerson").css('visibility', 'hidden');
 			$j("#EditNamesPerson").css('visibility', 'hidden');
 	        $j("#EditTitlesOrOccupationsPerson").css('visibility', 'hidden'); 
@@ -136,19 +143,7 @@
 			$j("#EditSpousesPerson").css('visibility', 'hidden');
 	        $j("#EditResearchNotesPerson").css('visibility', 'hidden'); 
 	        
-	        $j('#close').click(function() {
-	        	$j(".autocomplete").remove();
-	        	$j("#EditParentsPersonDiv").block({ message: $j("#question"),
-	        		css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-	        	});
-	        	return false;
-			});
+	        
 	        
 	        $j("#bornMonthFather, #bornYearFather, #bornDayFather, #bornMonthMother, #bornYearMother, #bornDayMother").attr("disabled", "disabled");
 			$j("#deathMonthFather, #deathYearFather, #deathDayFather, #deathMonthMother, #deathYearMother, #deathDayMother").attr("disabled", "disabled");
@@ -259,6 +254,28 @@
 						$j("#body_left").load('${ShowPersonURL}');
 					}})
 					return false;
+				}
+			});
+			
+			$j('#close').click(function() {
+				fatherDescription.killSuggestions();
+				motherDescription.killSuggestions();
+				if($j("#modify").val() == 1){
+	        		$j("#EditParentsPersonDiv").block({ message: $j("#question"),
+	        			css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+	        		});
+	        		return false;
+				}else{
+					$j.ajax({ url: '${ShowPersonURL}', cache: false, success:function(html) { 
+						$j("#body_left").html(html);
+					}});					
+					return false; 
 				}
 			});
 

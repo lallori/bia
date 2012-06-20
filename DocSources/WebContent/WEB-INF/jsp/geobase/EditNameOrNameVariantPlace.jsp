@@ -43,12 +43,19 @@
 			<input id="save" type="submit" value="Save" />
 		</div>
 		
+		<input type="hidden" value="" id="modify" />
+		
 	</fieldset>	
 	</form:form>
 
 <security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#EditNamePlaceForm :input").change(function(){
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+				return false;
+			});
+			
 			$j("#EditDetailsPlace").css('visibility', 'hidden');
 			$j("#EditGeoCoorPlace").css('visibility', 'hidden'); 
 			$j("#EditExtLinkPlace").css('visibility', 'hidden');
@@ -56,16 +63,24 @@
 			$j('#nameType').attr('disabled', 'disabled');
 			
 			$j('#closeName').click(function(e) {
-				$j('#EditNameVariantPlaceDiv').block({ message: $j('#question'),
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				}); 
-	            return false;
+				if($j("#modify").val() == 1){
+					$j('#EditNameVariantPlaceDiv').block({ message: $j('#question'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
+	            	return false;
+				}else{
+					$j.ajax({ url: '${EditNamesOrNamesVariantsPlaceURL}', cache: false, success:function(html) { 
+						$j("#EditNamePlaceDiv").html(html);
+					}});
+
+					return false;
+				}
 			});
 			
 			$j("#EditNamePlaceForm").submit(function (){

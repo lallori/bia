@@ -29,9 +29,8 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="Text goes here">?</a>
-					<div class="col_l"><form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">Add Title &amp; Occ:</form:label></div>
-					<div class="col_r"><form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_33c"/></div>
+					<div class="col_l"><a class="helpIcon" title="Text goes here">?</a><form:label id="titleOrOccupationDescriptionLabel" for="titleOrOccupationDescription" path="titleOrOccupationDescription" cssErrorClass="error">Add Title &amp; Occ:</form:label></div>
+					<div class="col_r"><form:input id="titleAutocomplete" path="titleOrOccupationDescription" cssClass="input_29c"/></div>
 				</div>
 				<div class="row">
 					<div class="col_l"></div>
@@ -96,6 +95,8 @@
 				<input type="submit" value="Save" id="save">
 			</div>
 			
+			<input type="hidden" value="" id="modify" />
+			
 		</fieldset>	
 	</form:form>
 	
@@ -105,6 +106,11 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			
+			$j("#EditTitleOrOccupationPersonForm :input").change(function(){
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+				return false;
+			});
 			
 				$j("#save").click(function(){
 	        		$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
@@ -124,17 +130,25 @@
 			});
 
 			$j('#closeTitle').click(function() {
-				$j('.autocomplete').remove();
-				$j("#EditTitleOrOccupationPersonDiv").block({ message: $j("#question"),
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				});
-				return false;
+				titleOrOccupationDescription.killSuggestions();
+				if($j("#modify").val() == 1){
+					$j("#EditTitleOrOccupationPersonDiv").block({ message: $j("#question"),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					});
+					return false;
+				}else{
+					$j.ajax({ url: '${EditTitlesOrOccupationsPersonURL}', cache: false, success:function(html) { 
+						$j("#EditTitlesOrOccupationsPersonDiv").html(html);
+					}});
+						
+					return false;
+				}
 			});
 
 			$j("#EditTitleOrOccupationPersonForm").submit(function (){

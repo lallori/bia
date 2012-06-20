@@ -66,6 +66,7 @@
 				<input id="closeSpouse" type="submit" value="Close" title="do not save changes" class="button" />
 				<input type="submit" value="Save" id="save">
 			</div>
+			<input type="hidden" value="" id="modify" />
 		</fieldset>	
 		
 		<form:hidden path="marriageId" />
@@ -81,6 +82,11 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j("#EditSpousePersonForm :input").change(function(){
+				$j("#modify").val(1); <%-- //set the hidden field if an element is modified --%>
+				return false;
+			});
+			
 			var spouseDescription = $j('#spouseDescriptionAutoCompleter').autocompletePerson({ 
 			    serviceUrl:'${SearchSpouseLinkableToPersonURL}',
 			    minChars:3, 
@@ -130,17 +136,25 @@
 			  });
 
 			$j('#closeSpouse').click(function() {
-				$j('.autocomplete').remove();
-				$j('#EditSpousePersonDiv').block({ message: $j('#question'),
-					css: { 
-						border: 'none', 
-						padding: '5px',
-						boxShadow: '1px 1px 10px #666',
-						'-webkit-box-shadow': '1px 1px 10px #666'
-						} ,
-						overlayCSS: { backgroundColor: '#999' }	
-				}); 
-				return false;
+				spouseDescription.killSuggestions();
+				if($j("#modify").val() == 1){
+					$j('#EditSpousePersonDiv').block({ message: $j('#question'),
+						css: { 
+							border: 'none', 
+							padding: '5px',
+							boxShadow: '1px 1px 10px #666',
+							'-webkit-box-shadow': '1px 1px 10px #666'
+							} ,
+							overlayCSS: { backgroundColor: '#999' }	
+					}); 
+					return false;
+				}else{
+					$j.ajax({ url: '${EditSpousesPersonURL}', cache: false, success:function(html) { 
+						$j("#EditSpousesPersonDiv").html(html);
+					}});
+						
+					return false;
+				}
 			});
 			
 			$j("#EditSpousePersonForm").submit(function (){
