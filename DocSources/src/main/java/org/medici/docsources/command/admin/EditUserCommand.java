@@ -47,7 +47,13 @@ public class EditUserCommand {
 	private String middleName;
 	private String lastName;
 	private String password;
+	private Integer yearPassExp;
+	private Integer monthPassExp;
+	private Integer dayPassExp;
 //	private Date accExpirTime;
+	private Integer yearExpirTime;
+	private Integer monthExpirTime;
+	private Integer dayExpirTime;
 	private UserRole userRole;
 
 	/**
@@ -137,6 +143,48 @@ public class EditUserCommand {
 //	}
 
 	/**
+	 * @return the yearPassExp
+	 */
+	public Integer getYearPassExp() {
+		return yearPassExp;
+	}
+
+	/**
+	 * @param yearPassExp the yearPassExp to set
+	 */
+	public void setYearPassExp(Integer yearPassExp) {
+		this.yearPassExp = yearPassExp;
+	}
+
+	/**
+	 * @return the monthPassExp
+	 */
+	public Integer getMonthPassExp() {
+		return monthPassExp;
+	}
+
+	/**
+	 * @param monthPassExp the monthPassExp to set
+	 */
+	public void setMonthPassExp(Integer monthPassExp) {
+		this.monthPassExp = monthPassExp;
+	}
+
+	/**
+	 * @return the dayPassExp
+	 */
+	public Integer getDayPassExp() {
+		return dayPassExp;
+	}
+
+	/**
+	 * @param dayPassExp the dayPassExp to set
+	 */
+	public void setDayPassExp(Integer dayPassExp) {
+		this.dayPassExp = dayPassExp;
+	}
+
+	/**
 	 * @param userRole the userRole to set
 	 */
 	public void setUserRole(UserRole userRole) {
@@ -162,5 +210,47 @@ public class EditUserCommand {
 	 */
 	public String getNewAccount() {
 		return newAccount;
+	}
+
+	/**
+	 * @return the yearExpirTime
+	 */
+	public Integer getYearExpirTime() {
+		return yearExpirTime;
+	}
+
+	/**
+	 * @param yearExpirTime the yearExpirTime to set
+	 */
+	public void setYearExpirTime(Integer yearExpirTime) {
+		this.yearExpirTime = yearExpirTime;
+	}
+
+	/**
+	 * @return the monthExpirTime
+	 */
+	public Integer getMonthExpirTime() {
+		return monthExpirTime;
+	}
+
+	/**
+	 * @param monthExpirTime the monthExpirTime to set
+	 */
+	public void setMonthExpirTime(Integer monthExpirTime) {
+		this.monthExpirTime = monthExpirTime;
+	}
+
+	/**
+	 * @return the dayExpirTime
+	 */
+	public Integer getDayExpirTime() {
+		return dayExpirTime;
+	}
+
+	/**
+	 * @param dayExpirTime the dayExpirTime to set
+	 */
+	public void setDayExpirTime(Integer dayExpirTime) {
+		this.dayExpirTime = dayExpirTime;
 	}
 }

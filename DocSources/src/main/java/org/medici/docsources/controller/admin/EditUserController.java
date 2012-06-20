@@ -28,6 +28,7 @@
 package org.medici.docsources.controller.admin;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.medici.docsources.command.admin.EditUserCommand;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.User.UserRole;
 import org.medici.docsources.domain.UserInformation;
@@ -85,10 +87,18 @@ public class EditUserController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditUserCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		List<Month> months = null;
 		// This is user stored on LDAP
 		User user = new User();
 		// UserInformation contains additional user information as activation state, lock state 
 		UserInformation userInformation = new UserInformation();
+		
+		try {
+			months = getAdminService().getMonths();
+			model.put("months", months);
+		} catch (ApplicationThrowable ath) {
+			return new ModelAndView("error/ShowDocument", model);
+		}
 
 		if (StringUtils.isNotBlank(command.getAccount())) {
 			try {
@@ -101,6 +111,15 @@ public class EditUserController {
 				command.setPassword(user.getPassword());
 				command.setUserRole(user.getUserRoles().get(0));
 				if(userInformation != null){
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(userInformation.getExpirationDate());
+					command.setYearExpirTime(cal.get(Calendar.YEAR));
+					command.setMonthExpirTime(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
+					command.setDayExpirTime(cal.get(Calendar.DAY_OF_MONTH));
+					cal.setTime(userInformation.getExpirationPasswordDate());
+					command.setYearPassExp(cal.get(Calendar.YEAR));
+					command.setMonthPassExp(new Month(cal.get(Calendar.MONTH) + 1).getMonthNum());
+					command.setDayPassExp(cal.get(Calendar.DAY_OF_MONTH));
 //					command.setAccExpirTime(userInformation.getExpirationDate());
 				}
 				command.setNewAccount(user.getAccount());
@@ -138,6 +157,14 @@ public class EditUserController {
 			userRole.add(command.getUserRole());
 			user.setUserRoles(userRole);
 			
+			
+			//TODO
+			Calendar cal = Calendar.getInstance();
+			cal.set(command.getYearExpirTime(), command.getMonthExpirTime() - 1, command.getDayExpirTime());
+			userInformation.setExpirationDate(cal.getTime());
+			cal.set(command.getYearPassExp(), command.getMonthPassExp() - 1, command.getDayExpirTime());
+			userInformation.setExpirationPasswordDate(cal.getTime());
+			//userInformation.setExpirationDate(Calendar.getInstance().getTime());
 			//userInformation.setExpirationDate(command.getAccExpirTime());
 			
 			try {

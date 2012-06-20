@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -82,6 +83,16 @@ public interface AdminService {
 	 * @throws org.medici.docsources.exception.ApplicationThrowable Exception throwed if an error is occured.
 	 */
 	public Page findUsers(User user, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * Extracts all months available.
+	 *  
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.Month}
+	 * object
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 * 
+	 */
+	public List<Month> getMonths() throws ApplicationThrowable;
 
 	/**
 	 * 

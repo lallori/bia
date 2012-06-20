@@ -47,8 +47,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col_l"><label for="passwordExpires" id="passwordExpiresLabel">Password Expires</label></div>
-            <div class="col_l"><input id="passwordExpires" name="passwordExpires" class="input_8c" type="text" value=""/></div>
+        	<b>Password Expires:</b>
+			<br />
+            <div class="col_r"><form:label id="yearPassExpLabel" for="yearPassExp" path="yearPassExp" cssErrorClass="error">Year</form:label></div>
+			<div class="col_l"><form:input id="yearPassExp" path="yearPassExp" class="input_4c" value="" maxlength="4"/></div>
+			<div class="col_r"><form:label id="monthPassExpLabel" for="monthPassExp" path="monthPassExp" cssErrorClass="error">Month</form:label></div>
+			<div class="col_l"><form:select id="monthPassExp" path="monthPassExp" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+			<div class="col_r"><form:label  for="dayPassExp" id="dayPassExpLabel" path="dayPassExp" cssErrorClass="error">Day</form:label></div>
+			<div class="col_r"><form:input id="dayPassExp" path="dayPassExp" class="input_2c" maxlength="2"/></div>
             <div class="col_r">
             	<label for="forcePswdChange" id="forcePswdChangeLabel">Force Password Change
                 <input type="checkbox" name="forcePswdChange" class="checkboxPers2"/>
@@ -67,9 +73,19 @@
         </div>
     </div>
     <div class="listForm">
+    	<b>Account Expiration Time:</b>
+		<br />
         <div class="row">
 <%--             <div class="col_l"><form:label for="accExpirTime" id="accExpirTimeLabel" path="accExpirTime">Account Expiration Time</form:label></div> --%>
-<%--             <div class="col_l"><form:input id="accExpirTime" name="accExpirTime" class="input_8c" type="text" value="" path="accExpirTime"/></div> --%>
+<%--             <div class="col_l"><form:input id="yearExpirTime" name="accExpirTime" class="input_8c" type="text" value="" path="accExpirTime"/></div> --%>
+			<div class="col_r"><form:label id="yearExpirTimeLabel" for="yearExpirTime" path="yearExpirTime" cssErrorClass="error">Year</form:label></div>
+			<div class="col_l"><form:input id="yearExpirTime" path="yearExpirTime" class="input_4c" value="" maxlength="4"/></div>
+			<div class="col_r"><form:label id="monthExpirTimeLabel" for="monthExpirTime" path="monthExpirTime" cssErrorClass="error">Month</form:label></div>
+			<div class="col_l"><form:select id="monthExpirTime" path="monthExpirTime" cssClass="selectform_long" items="${months}" itemValue="monthNum" itemLabel="monthName"/></div>
+			<div class="col_r"><form:label  for="dayExpirTime" id="dayExpirTimeLabel" path="dayExpirTime" cssErrorClass="error">Day</form:label></div>
+			<div class="col_r"><form:input id="dayExpirTime" path="dayExpirTime" class="input_2c" maxlength="2"/></div>
+		</div>
+		<div class="row">
             <div class="col_r">
             	<label for="lockAccount" id="lockAccountLabel">Lock account</label>
 				<input type="checkbox" name="lockAccount" class="checkboxPers1"/>

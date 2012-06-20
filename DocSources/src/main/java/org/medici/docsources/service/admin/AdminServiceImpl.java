@@ -37,9 +37,11 @@ import java.util.Map.Entry;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.applicationproperty.ApplicationPropertyDAO;
+import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.user.UserDAO;
 import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.domain.ApplicationProperty;
+import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.User;
 import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -59,6 +61,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
+	@Autowired
+	private MonthDAO monthDAO;
 	
 	@Autowired(required = false)
 	@Qualifier("userDaoLdapImpl")
@@ -171,6 +175,36 @@ public class AdminServiceImpl implements AdminService {
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
 		return applicationPropertyDAO;
+	}
+	
+	/**
+	 * @return the monthDAO
+	 */
+	public MonthDAO getMonthDAO() {
+		return monthDAO;
+	}
+
+	/**
+	 * @param monthDAO the monthDAO to set
+	 */
+	public void setMonthDAO(MonthDAO monthDAO) {
+		this.monthDAO = monthDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Month> getMonths() throws ApplicationThrowable {
+		try {
+			List<Month> months = getMonthDAO().getAllMonths();
+			
+			months.add(0, new Month(null, ""));
+			
+			return months;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
