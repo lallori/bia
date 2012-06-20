@@ -123,36 +123,5 @@
 			});
 
 			$j("#ShowDocumentInManuscriptViewer").open({width: screen.width, height: screen.height, scrollbars: false});
-			
-			
-			$j(".linkVolume").click(function() {
-				var tabN = $j(this).text();
-				tabName = 'Volume  ' 
-				tabName += tabN;
-				var numTab = 0;
-				
-				if(tabName.length > 20){
-					tabName = tabName.substring(0,17) + "...";
-				}
-				
-				//Check if already exist a tab with this Volume
-				var tabExist = false;
-				$j("#tabs ul li a").each(function(){
-					if(!tabExist)
-						numTab++;
-					if(this.text == tabName){
-						tabExist = true;
-					}
-				});
-				
-				if(!tabExist){
-					$j( "#tabs" ).tabs( "add" , $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
-					return false;
-				}else{
-					$j("#tabs").tabs("select", numTab-1);
-					return false;
-				}
-			});
 		});
 	</script>
