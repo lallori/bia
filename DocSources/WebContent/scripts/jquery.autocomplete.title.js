@@ -317,6 +317,8 @@
         this.rolesCatMinor = response.rolesCatMinor;
         this.suggest(); 
       }
+      // we remove the loading image...
+      $(this.el).css('background-image', '').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
     },
 
     activate: function(index) {

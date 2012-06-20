@@ -243,7 +243,6 @@
         // Additional arrays...
         this.prefFlags = cr.prefFlags;
         this.plTypes = cr.plTypes;
-        
         this.suggest();
       } else if (!this.isBadQuery(q)) {
         me = this;
@@ -294,8 +293,9 @@
       }
 
       this.enabled = true;
-      this.container.show();v
+      this.container.show();
       //unload waiting image..
+      
       $(this.el).css('background-image', '').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
 
     },
@@ -315,8 +315,10 @@
         this.data = response.data;
         this.prefFlags = response.prefFlags;
         this.plTypes = response.plTypes;
-        this.suggest(); 
+        this.suggest();
       }
+      //unload waiting image..
+      $(this.el).css('background-image', '').css('backgroundRepeat','no-repeat').css('backgroundPosition','right');
     },
 
     activate: function(index) {
