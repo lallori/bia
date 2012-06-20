@@ -5,20 +5,21 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div id="digitizationModalDiv">
-	<div id="CreateCatalogDiv">
+	<div id="CreateSchedoneDiv">
         <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="CreateCatalog" href="<c:url value="/digitization/CreateSchedone.do"/>"><p>Create new "Schedone"</p></a>
+        <a id="CreateSchedone" href="<c:url value="/digitization/CreateSchedone.do"/>"><p>Create new "Schedone"</p></a>
 	</div>
     
-    <div id="AddNewFilzaDiv">
+     <div id="BrowseFilzeDiv">
         <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="AddNewFilza" href="<c:url value="/digitization/AddDigitizedVolume.do"/>"><p>Add new Digitized Volume (Filza)</p></a>
+        <a id="BrowseFilze" href="<c:url value="/digitization/ShowSearchDigitizedVolumes.do"/>"><p>Browse or search "Sechedoni"</p></a>
+	</div>
+    
+    <div id="ActivateFilzaDiv">
+        <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
+        <a id="ActivateFilza" href="<c:url value="/digitization/AddDigitizedVolume.do"/>"><p>Activate or deactivate Volume</p></a>
     </div>
     
-    <div id="BrowseFilzeDiv">
-        <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="BrowseFilze" href="<c:url value="/digitization/BrowseDigitizedVolumes.do"/>"><p>Browse Digitized Volumes (Filze)</p></a>
-	</div>
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close" style="margin:22px 0 0 145px"/>
 </div>
 
@@ -35,32 +36,40 @@
 			Modalbox.hide(); 
 			return false;
 		});
-		$j("#BrowseFilze").click(function(){
-			//$j("#body_right").load($j(this).attr("href"));
-			var tabTitle = "Browse Digitized Volumes";
-			var numTab = 0;
-			var tabExist = false;
-			$j("#tabs ul li a").each(function(){
-				var toTest = "";
-				toTest += this.text;
-				if(!tabExist)
-					numTab++;
-				if(toTest == tabTitle){
-					tabExist = true;
-				}
-			});
+// 		$j("#BrowseFilze").click(function(){
+// 			$j("#body_right").load($j(this).attr("href"));
+// 			var tabTitle = "Browse Digitized Volumes";
+// 			var numTab = 0;
+// 			var tabExist = false;
+// 			$j("#tabs ul li a").each(function(){
+// 				var toTest = "";
+// 				toTest += this.text;
+// 				if(!tabExist)
+// 					numTab++;
+// 				if(toTest == tabTitle){
+// 					tabExist = true;
+// 				}
+// 			});
 			
-			if(!tabExist){
-				$j( "#tabs" ).tabs("add", $j(this).attr("href"), tabTitle + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
-				$j("#tabs").tabs("select", $j("#tabs").tabs("length") - 1);
-				Modalbox.hide();
-				return false;
-			}else{
-				$j("#tabs").tabs("select", numTab - 1);
-				Modalbox.hide();
-				return false;
-			}
+// 			if(!tabExist){
+// 				$j( "#tabs" ).tabs("add", $j(this).attr("href"), tabTitle + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+// 				$j("#tabs").tabs("select", $j("#tabs").tabs("length") - 1);
+// 				Modalbox.hide();
+// 				return false;
+// 			}else{
+// 				$j("#tabs").tabs("select", numTab - 1);
+// 				Modalbox.hide();
+// 				return false;
+// 			}
+// 		});
+
+		$j("#BrowseFilze").open({width: 500, height: 130, scrollbars: "yes"});
+		$j("#BrowseFilze").click(function(){
+			Modalbox.hide();
+			return false;
 		});
+		
+		
 		$j("#close").click(function(){
 			Modalbox.hide();
 			return false;

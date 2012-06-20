@@ -348,6 +348,10 @@
 	<definition name="digitization/EditTiffImagesSchedone" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditTiffImagesSchedone.jsp"/>
 	</definition>
+	
+	<definition name="digitization/ShowSearchDigitizedVolumes" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowSearchDigitizedVolumes.jsp"/>
+	</definition>
 
     <definition name="digitization/ShowDigitizationModuleModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowDigitizationModuleModalWindow.jsp"/>
