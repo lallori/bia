@@ -5,6 +5,9 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="BrowseDigitizedVolumesURL" value="/digitization/BrowseDigitizedVolumes.json">
+		<c:param name="searchType" value="${command.searchType}" />
+		<c:param name="volNum" value="${command.volNum}" />
+		<c:param name="volNumBetween" value="${command.volNumBetween}" />
 	</c:url>
 
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>

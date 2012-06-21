@@ -43,6 +43,10 @@ public class SchedoneSearch implements GenericSearch {
 	private static final long serialVersionUID = -5135090884608784944L;
 	
 	private String alias; 
+	
+	private String searchType;
+	private Integer volNum;
+	private Integer volNumBetween;
 
 	/**
 	 * 
@@ -61,12 +65,46 @@ public class SchedoneSearch implements GenericSearch {
 			setAlias(text.toLowerCase());
 		}
 	}
+	
+	public SchedoneSearch(String searchType, Integer volNum, Integer volNumBetween){
+		super();
+		if(!StringUtils.isEmpty(searchType)){
+			setSearchType(searchType);
+		}
+		if(volNum != null){
+			setVolNum(volNum);
+		}
+		if(volNumBetween != null){
+			setVolNumBetween(volNumBetween);
+		}
+	}
 
 	/**
 	 * @return the alias
 	 */
 	public String getAlias() {
 		return alias;
+	}
+
+	/**
+	 * @return the searchType
+	 */
+	public String getSearchType() {
+		return searchType;
+	}
+
+	/**
+	 * @return the volNum
+	 */
+	public Integer getVolNum() {
+		return volNum;
+	}
+
+	/**
+	 * @return the volNumBetween
+	 */
+	public Integer getVolNumBetween() {
+		return volNumBetween;
 	}
 
 	/**
@@ -87,6 +125,27 @@ public class SchedoneSearch implements GenericSearch {
 	}
 
 	/**
+	 * @param searchType the searchType to set
+	 */
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	/**
+	 * @param volNum the volNum to set
+	 */
+	public void setVolNum(Integer volNum) {
+		this.volNum = volNum;
+	}
+
+	/**
+	 * @param volNumBetween the volNumBetween to set
+	 */
+	public void setVolNumBetween(Integer volNumBetween) {
+		this.volNumBetween = volNumBetween;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -98,8 +157,17 @@ public class SchedoneSearch implements GenericSearch {
 		if (words.length >0) {
 			jpaQuery.append(" WHERE ");
 			// TODO : ...
-		}
-		
+		}else{
+			if(searchType.equals("Exactly")){
+				jpaQuery.append(" WHERE volNum=");
+				jpaQuery.append(getVolNum());				
+			}else if(searchType.equals("Between")){
+				jpaQuery.append(" WHERE volNum>=");
+				jpaQuery.append(getVolNum());
+				jpaQuery.append(" AND volNum <=");
+				jpaQuery.append(getVolNumBetween());
+			}
+		}		
 		return jpaQuery.toString();
 	}
 

@@ -28,8 +28,15 @@
  */
 package org.medici.docsources.controller.digitization;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.medici.docsources.command.digitization.ShowSearchDigitizedVolumesCommand;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,6 +51,44 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/digitization/ShowSearchDigitizedVolumes")
 public class ShowSearchDigitizedVolumesController {
+	
+	/**
+	 * This controller act as a dispatcher for result view.
+	 *  
+	 * @param command
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = {RequestMethod.POST})
+	public ModelAndView processSubmit(@ModelAttribute("command") ShowSearchDigitizedVolumesCommand command, BindingResult result) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		// This number is used to generate an unique id for new search 
+		UUID uuid = UUID.randomUUID();
+		command.setSearchUUID(uuid.toString());
+		model.put("searchUUID", uuid.toString());
+		
+
+		// Add outputFields;
+		List<String> outputFields = getOutputFields();
+		model.put("outputFields", outputFields);
+		return new ModelAndView("digitization/BrowseDigitizedVolumes",model);
+	}
+
+	/**
+	 * This method return a list of output fields.
+	 * 
+	 * @return
+	 */
+	private List<String> getOutputFields() {
+		List<String> outputFields = null;
+
+		outputFields = new ArrayList<String>(6);
+		outputFields.add("Filza N. (MDP)");
+		outputFields.add("Schedone");
+		outputFields.add("Digitized");
+		return outputFields;
+	}
+	
 	/**
 	 * 
 	 * @param volumeId

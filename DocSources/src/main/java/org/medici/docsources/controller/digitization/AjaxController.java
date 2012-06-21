@@ -35,6 +35,7 @@ import java.util.Map;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SchedoneSearch;
+import org.medici.docsources.common.search.SimpleSearchVolume;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -106,7 +107,9 @@ public class AjaxController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/digitization/BrowseDigitizedVolumes.json", method = RequestMethod.GET)
-	public ModelAndView browseDigitizedVolumes(@RequestParam(value="alias", required=false) String alias,
+	public ModelAndView browseDigitizedVolumes(@RequestParam(value="searchType", required=false) String searchType,
+											@RequestParam(value="volNum", required=false) Integer volNum,
+											@RequestParam(value="volNumBetween", required=false) Integer volNumBetween,
 								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -117,16 +120,21 @@ public class AjaxController {
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection);
 
 		try {
-			page = getDigitizationService().searchSchedones(new SchedoneSearch(alias), paginationFilter);
+			page = getDigitizationService().searchSchedones(new SchedoneSearch(searchType, volNum, volNumBetween), paginationFilter);
 			
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
 
 
-		List<List<String>> resultList = new ArrayList<List<String>>();
+		List resultList = new ArrayList();
+		List<Schedone> schedoni = (List<Schedone>)page.getList();
+		if(searchType.equals("Exactly")){
+			List singleRow = new ArrayList();
+			
+		}
 		for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
-			List<String> singleRow = new ArrayList<String>();
+			List singleRow = new ArrayList();
 			// MDP
 			singleRow.add(HtmlUtils.showSchedoneMDP(currentSchedone));         
 			// Catalog Description

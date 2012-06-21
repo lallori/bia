@@ -34,6 +34,7 @@ package org.medici.docsources.command.digitization;
  *
  */
 public class ShowSearchDigitizedVolumesCommand {
+	private String searchUUID;
 	private String searchType;
 	private Integer volNum;
 	private Integer volNumBetween;
@@ -72,6 +73,18 @@ public class ShowSearchDigitizedVolumesCommand {
 	 */
 	public void setVolNumBetween(Integer volNumBetween) {
 		this.volNumBetween = volNumBetween;
+	}
+	/**
+	 * @param searchUUID the searchUUID to set
+	 */
+	public void setSearchUUID(String searchUUID) {
+		this.searchUUID = searchUUID;
+	}
+	/**
+	 * @return the searchUUID
+	 */
+	public String getSearchUUID() {
+		return searchUUID;
 	}
 
 	

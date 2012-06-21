@@ -30,6 +30,8 @@
 </head>
 <body>
 
+<c:url var="SearchSchedoniURL" value="/digitization/ShowSearchDigitizedVolumes.do"/> 
+
 
 <div id="searchWindow">
 	<div id="searchWindow_top">
@@ -37,7 +39,7 @@
     </div>
     <div id="browseContent">
     	<div class="listAdvSearch">
-        	<form:form id="browseSearchSchedoni" method="post" class="edit">
+        	<form:form id="browseSearchSchedoni" method="post" class="edit" action="${SearchSchedoniURL}">
             	<div class="row">
                 	<div class="col_l">
                     	<form:select id="volumeType" name="volumeType" class="selectform_long" path="searchType">
@@ -71,11 +73,14 @@
 							   $j('#volumeSearch').css('visibility','visible'); 
 						}
 			   });	
-			$j("#search").click(function(){
-						window.opener.$j("#body_right").load('/DocSources/dm/Risultati.html');
-						window.close();						
-						return false;}
-						);	
+			$j("#browseSearchSchedoni").submit(function(){
+				var formSubmitURL = $j(this).attr("action") + '?' + $j(this).serialize();
+				window.opener.$j("#tabs").tabs("add", formSubmitURL, "Schedoni</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+				window.opener.$j("#tabs").tabs("select", window.opener.$j("#tabs").tabs("length")-1);
+				window.close();
+				
+				return false;
+			});
 		});
 		</script>
 </body>
