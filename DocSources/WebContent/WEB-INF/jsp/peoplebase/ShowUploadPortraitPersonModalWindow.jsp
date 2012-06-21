@@ -9,7 +9,7 @@
 	</c:url>
 	
 	<form id="EditPortraitPersonForm" action="${UploadPortraitPersonURL}" method="post" class="edit" enctype="multipart/form-data">
-	`	   <div class="listForm">
+		   <div class="listForm">
               <div class="row">
                           <div class="col_l"><label for="browse" id="browseLabel">Browse</label></div>
                               <div class="col_l"><input id="browse" name="browse" class="input_28c" type="file" value="" size="30"/></div>
