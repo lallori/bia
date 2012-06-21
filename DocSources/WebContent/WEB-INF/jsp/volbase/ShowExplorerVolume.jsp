@@ -286,7 +286,7 @@
 
 				var $dialogVolumeSummary = $j('<div id="DialogVolumeSummaryDiv"></div>').dialog({
 					resizable: false,
-					width: 550,
+					width: 500,
 					height: 600, 
 					modal: true,
 					autoOpen : false,
@@ -297,7 +297,8 @@
 					overlay: {
 						backgroundColor: '#000',
 						opacity: 0.5
-					}
+					},
+					title: "VOLUME SUMMARY"
 				});
 				
 				$j("#volumeSummary${volumeExplorer.summaryId}").click(function(){

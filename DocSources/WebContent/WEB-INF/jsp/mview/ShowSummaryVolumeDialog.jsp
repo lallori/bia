@@ -10,7 +10,7 @@
 		<h3>${volumeSummary.carteggio}</h3>
 		<div class="list">
 			<div class="row">
-				<div class="item"><i>Folio</i> count</div> 
+				<div class="item">Folio count</div> 
 				<div class="value"><b>${volumeSummary.totalCarta}</b></div> 
 			</div>
 			<div class="row">
@@ -36,10 +36,10 @@
 			<div class="row">
 				<div class="item">Missing Folios count</div> 
 				<div class="valueMissingFolios">${volumeSummary.totalMissingFolios}</div> 
-			</div>
-			<div class="row">--%>
-				<div class="item"><i>Missing Folios</i></div> 
-				<div class="value"><b>${fn2:toString(volumeSummary.missingFolios)}</b></div> 
+			</div> --%>
+			<div class="row">
+				<div class="item">Missing Folios</div> 
+				<div class="valueMissingFolios"><b>${fn2:toString(volumeSummary.missingFolios)}</b></div> 
 			</div>
 			<div class="row">
 				<div class="item">Folio addenda<br />(bis, ter, quater, etc.)</div> 
