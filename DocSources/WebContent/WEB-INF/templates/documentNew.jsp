@@ -2,7 +2,7 @@
 
 <tiles:insertAttribute name="menu"/>
 
-<tiles:insertAttribute name="summary"/>
+<br />
 
 <tiles:insertAttribute name="details"/>
 
