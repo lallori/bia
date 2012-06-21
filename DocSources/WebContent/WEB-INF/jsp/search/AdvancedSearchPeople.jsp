@@ -416,6 +416,13 @@
 			 return false;
 		 });
 		 
+		//MD: To fix bug in Chrome
+		$j("h1").click(function(){
+			$placeAutocomplete.killSuggestions();
+			$occupationAutocomplete.killSuggestions();
+			return false;
+		});
+		 
 		 var $placeAutocomplete = $j("#place").autocompletePlace({
 				serviceUrl: '${searchPlaceURL}',
 				minChars: 3,
@@ -433,10 +440,10 @@
 				}
 			});	
 		 
-		 $j("#place").blur(function(){
-			$placeAutocomplete.killSuggestions();
-			return false;
-		 });
+// 		 $j("#place").blur(function(){
+// 			$placeAutocomplete.killSuggestions();
+// 			return false;
+// 		 });
 		 
 		$j("#place").keyup(function(){
 			if($j("#placeId").val() != '')
@@ -466,10 +473,10 @@
 			    }
 		});
 		
-		$j("#occupation").blur(function(){
-			$occupationAutocomplete.killSuggestions();
-			return false;
-		});
+// 		$j("#occupation").blur(function(){
+// 			$occupationAutocomplete.killSuggestions();
+// 			return false;
+// 		});
 		
 		$j("#occupation").keyup(function(){
 			if($j("#occupationId").val() != '')
