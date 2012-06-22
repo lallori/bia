@@ -25,7 +25,7 @@
 
 <script>
 	$j(document).ready(function() {
-		$j("#CreateCatalog").click(function(){
+		$j("#CreateSchedone").click(function(){
 			$j("#body_left").load($j(this).attr("href"));
 			$j("#menu_actions").load("/DocSources/dm/menuDigitization.html");
 			Modalbox.hide(); 

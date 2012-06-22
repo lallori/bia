@@ -42,6 +42,7 @@ import org.medici.docsources.domain.Volume;
  * Volume Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface VolumeDAO extends Dao<Integer, Volume> {
 
@@ -98,6 +99,16 @@ public interface VolumeDAO extends Dao<Integer, Volume> {
 	 * @throws PersistenceException
 	 */
 	public List<Volume> searchVolumes(String query) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volLetExt
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchVolumesByDigitization(Integer volNum, Integer volNumBetween, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * This method searches volumes which contains text input parameter in one of his fields

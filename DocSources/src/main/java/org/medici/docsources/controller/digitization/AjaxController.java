@@ -35,9 +35,10 @@ import java.util.Map;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SchedoneSearch;
-import org.medici.docsources.common.search.SimpleSearchVolume;
 import org.medici.docsources.common.util.HtmlUtils;
+import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  * AJAX Controller for Digitization.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller("DigitizationAjaxController")
 public class AjaxController {
@@ -105,7 +107,7 @@ public class AjaxController {
 	 * @param length
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@RequestMapping(value = "/digitization/BrowseDigitizedVolumes.json", method = RequestMethod.GET)
 	public ModelAndView browseDigitizedVolumes(@RequestParam(value="searchType", required=false) String searchType,
 											@RequestParam(value="volNum", required=false) Integer volNum,
@@ -115,39 +117,92 @@ public class AjaxController {
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		Map<Integer, Boolean> ifSchedone = new HashMap<Integer, Boolean>();
+		Map<String, Boolean> ifDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>();
 
 		Page page = null;
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection);
 
 		try {
-			page = getDigitizationService().searchSchedones(new SchedoneSearch(searchType, volNum, volNumBetween), paginationFilter);
+			if(searchType.equals("Exactly")){
+				page = getDigitizationService().searchVolumes(volNum, volNum, paginationFilter);
+				
+				ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNum);
+			}else if(searchType.equals("Between")){
+				page = getDigitizationService().searchVolumes(volNum, volNumBetween, paginationFilter);
+				
+				ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNumBetween);
+			}else if(searchType.equals("All")){
+				page = getDigitizationService().searchSchedones(new SchedoneSearch(), paginationFilter);
+				
+				for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
+					volNums.add(currentSchedone.getVolNum());
+					volLetExts.add(currentSchedone.getVolLetExt());
+				}
+				
+				ifDigitized = getDigitizationService().findVolumesDigitizedBySchedoni(volNums, volLetExts);
+			}
+			
+//			page = getDigitizationService().searchSchedones(new SchedoneSearch(searchType, volNum, volNumBetween), paginationFilter);
 			
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
 
-
 		List resultList = new ArrayList();
-		List<Schedone> schedoni = (List<Schedone>)page.getList();
-		if(searchType.equals("Exactly")){
-			List singleRow = new ArrayList();
-			
+		if(searchType.equals("Exactly") || searchType.equals("Between")){
+			for(Volume currentVolume : (List<Volume>)page.getList()){
+				List singleRow = new ArrayList();
+				//MDP
+				singleRow.add(currentVolume.getMDP());
+				//Schedone
+				if(ifSchedone.get(currentVolume.getVolNum())){
+					singleRow.add("YES");
+				}else{
+					singleRow.add("NO");
+				}
+				//Digitized
+				if(currentVolume.getDigitized()){
+					singleRow.add("YES");
+				}else{
+					singleRow.add("NO");
+				}
+				
+				resultList.add(singleRow);
+			}
+		}else if(searchType.equals("All")){
+			for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
+				List singleRow = new ArrayList();
+				//MDP
+				singleRow.add(HtmlUtils.showSchedoneMDP(currentSchedone));
+				//Schedone
+				singleRow.add("YES");
+				//Digitized
+				if(ifDigitized.get(VolumeUtils.toMDPFormat(currentSchedone.getVolNum(), currentSchedone.getVolLetExt()))){
+					singleRow.add("YES");
+				}else{
+					singleRow.add("NO");
+				}
+				resultList.add(singleRow);
+			}
 		}
-		for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
-			List singleRow = new ArrayList();
-			// MDP
-			singleRow.add(HtmlUtils.showSchedoneMDP(currentSchedone));         
-			// Catalog Description
-			singleRow.add(HtmlUtils.showSchedoneDescription(currentSchedone));
-			// Active
-			singleRow.add(HtmlUtils.showSchedoneActive(currentSchedone));      
-			// Edit it
-			singleRow.add(HtmlUtils.showSchedoneEditIt(currentSchedone));      
-			// Deactive it
-			singleRow.add(HtmlUtils.showSchedoneDeactivateIt(currentSchedone));     
-
-			resultList.add(singleRow);
-		}
+//		for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
+//			List singleRow = new ArrayList();
+//			// MDP
+//			singleRow.add(HtmlUtils.showSchedoneMDP(currentSchedone));         
+//			// Catalog Description
+//			singleRow.add(HtmlUtils.showSchedoneDescription(currentSchedone));
+//			// Active
+//			singleRow.add(HtmlUtils.showSchedoneActive(currentSchedone));      
+//			// Edit it
+//			singleRow.add(HtmlUtils.showSchedoneEditIt(currentSchedone));      
+//			// Deactive it
+//			singleRow.add(HtmlUtils.showSchedoneDeactivateIt(currentSchedone));     
+//
+//			resultList.add(singleRow);
+//		}
 		
 		model.put("iEcho", "1");
 		model.put("iTotalDisplayRecords", page.getTotal());

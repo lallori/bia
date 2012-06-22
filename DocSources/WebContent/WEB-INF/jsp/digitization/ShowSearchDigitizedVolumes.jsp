@@ -43,7 +43,7 @@
             	<div class="row">
                 	<div class="col_l">
                     	<form:select id="volumeType" name="volumeType" class="selectform_long" path="searchType">
-                        	<option value="Exactyly" selected="selected">Exactly</option>
+                        	<option value="Exactly" selected="selected">Exactly</option>
                             <option value="Between">Between</option>
                             <option value="All">All</option>
                         </form:select>

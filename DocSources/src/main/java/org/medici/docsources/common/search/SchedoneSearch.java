@@ -29,11 +29,11 @@ package org.medici.docsources.common.search;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.Query;
-import org.medici.docsources.common.util.RegExUtils;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  *
  */
 public class SchedoneSearch implements GenericSearch {
@@ -152,12 +152,12 @@ public class SchedoneSearch implements GenericSearch {
 	public String toJPAQuery() {
 		StringBuffer jpaQuery = new StringBuffer("FROM Schedone ");
 		
-		String[] words = RegExUtils.splitPunctuationAndSpaceChars(getAlias());
-		
-		if (words.length >0) {
-			jpaQuery.append(" WHERE ");
-			// TODO : ...
-		}else{
+//		String[] words = RegExUtils.splitPunctuationAndSpaceChars(getAlias());
+//		
+//		if (words.length >0) {
+//			jpaQuery.append(" WHERE ");
+//			// TODO : ...
+//		}else{
 			if(searchType.equals("Exactly")){
 				jpaQuery.append(" WHERE volNum=");
 				jpaQuery.append(getVolNum());				
@@ -167,7 +167,7 @@ public class SchedoneSearch implements GenericSearch {
 				jpaQuery.append(" AND volNum <=");
 				jpaQuery.append(getVolNumBetween());
 			}
-		}		
+//		}		
 		return jpaQuery.toString();
 	}
 

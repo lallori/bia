@@ -337,6 +337,50 @@ public class VolumeDAOJpaImpl extends JpaDao<Integer, Volume> implements VolumeD
 
 		return page;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchVolumesByDigitization(Integer volNum, Integer volNumBetween, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		//String toSearch = new String("FROM People WHERE personId IN (SELECT DISTINCT person.personId FROM org.medici.docsources.domain.PoLink WHERE titleOccList.titleOccId=" + titleOccToSearch + ")");
+		//MD: The next query is builded for test if is possible order result by date of Title Occupation
+		String toSearch = new String("FROM Volume WHERE volNum>=" + volNum + " AND volNum<=" + volNumBetween);
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+		//MD: We have a pagination filter already parameterized
+		//paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 
 	@Override
 	public Integer updateNewDigitizedVolume(List<Integer> summaryIds) throws PersistenceException {

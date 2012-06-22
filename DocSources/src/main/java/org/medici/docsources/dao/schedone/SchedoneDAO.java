@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.dao.schedone;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 
 import org.medici.docsources.dao.Dao;
@@ -37,6 +39,7 @@ import org.medici.docsources.domain.Schedone;
  * 
  * @author Lorenzo Pasquinelli (<a
  *         href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ *         @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface SchedoneDAO extends Dao<Integer, Schedone> {
 
@@ -47,4 +50,13 @@ public interface SchedoneDAO extends Dao<Integer, Schedone> {
 	 * @throws PersistenceException
 	 */
 	public Schedone findBySummaryId(Integer summaryId) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volNumBetween
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public List<Schedone> findByVolumesNumber(Integer volNum, Integer volNumBetween) throws PersistenceException;
 }

@@ -27,7 +27,10 @@
  */
 package org.medici.docsources.dao.schedone;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -39,6 +42,7 @@ import org.springframework.stereotype.Repository;
  * <b>SchedoneDAOJpaImpl</b> is a default implementation of <b>SchedoneDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.Schedone
  */
@@ -107,5 +111,18 @@ public class SchedoneDAOJpaImpl extends JpaDao<Integer, Schedone> implements Sch
 		}
 
 		return paginationFilter;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Schedone> findByVolumesNumber(Integer volNum, Integer volNumBetween) throws PersistenceException {
+		Query query = getEntityManager().createQuery("FROM Schedone WHERE volNum>=:volNum AND volNum<=:volNumBetween ORDER BY volNum");
+		query.setParameter("volNum", volNum);
+		query.setParameter("volNumBetween", volNumBetween);
+		
+		return (List<Schedone>) query.getResultList();
 	}
 }

@@ -28,6 +28,7 @@
 package org.medici.docsources.service.digitization;
 
 import java.util.List;
+import java.util.Map;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
@@ -39,6 +40,7 @@ import org.medici.docsources.exception.ApplicationThrowable;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface DigitizationService {
 
@@ -88,6 +90,23 @@ public interface DigitizationService {
 	 * @return
 	 */
 	public Schedone findSchedone(Integer schedoneId) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volNumBetween
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<Integer, Boolean> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param volNums
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Map<String, Boolean> findVolumesDigitizedBySchedoni(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -104,4 +123,13 @@ public interface DigitizationService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchSchedones(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param searchContainer
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public Page searchVolumes(Integer volNum, Integer volNumBetween, PaginationFilter paginationFilter) throws ApplicationThrowable;
 }

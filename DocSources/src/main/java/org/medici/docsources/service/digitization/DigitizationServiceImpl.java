@@ -27,13 +27,18 @@
  */
 package org.medici.docsources.service.digitization;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
+import org.medici.docsources.common.util.VolumeUtils;
+import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
+import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -45,14 +50,19 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Service
 @Transactional(readOnly=true)
 public class DigitizationServiceImpl implements DigitizationService {
 	@Autowired
+	private ImageDAO imageDAO;
+	@Autowired
 	private MonthDAO monthDAO;
 	@Autowired
 	private SchedoneDAO schedoneDAO;
+	@Autowired
+	private VolumeDAO volumeDAO;
 
 	/**
 	 * {@inheritDoc}
@@ -185,6 +195,56 @@ public class DigitizationServiceImpl implements DigitizationService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Integer, Boolean> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable {
+		try{
+			Map<Integer, Boolean> result = new HashMap<Integer, Boolean>();
+			for(int i = volNum; i <= volNumBetween; i++){
+				result.put(i, Boolean.FALSE);
+			}
+			List<Schedone> resultList = getSchedoneDAO().findByVolumesNumber(volNum, volNumBetween);
+			if(resultList != null){
+				for(Schedone currentSchedone : resultList){
+					result.put(currentSchedone.getVolNum(), Boolean.TRUE);
+				}
+			}
+			return result;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<String, Boolean> findVolumesDigitizedBySchedoni(List<Integer> volNums, List<String> volLetExts) throws ApplicationThrowable {
+		try{
+			Map<String, Boolean> result = new HashMap<String, Boolean>();
+			for(int i = 0; i < volNums.size(); i++){
+				result.put(VolumeUtils.toMDPFormat(volNums.get(i), volLetExts.get(i)), Boolean.FALSE);
+			}
+			List<String> resultList = getImageDAO().findVolumesDigitized(volNums, volLetExts);
+			
+			for(String MDP : resultList){
+				result.put(MDP, Boolean.TRUE);
+			}
+			return result;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @return the imageDAO
+	 */
+	public ImageDAO getImageDAO() {
+		return imageDAO;
+	}
 
 	/**
 	 * @return the monthDAO
@@ -216,6 +276,13 @@ public class DigitizationServiceImpl implements DigitizationService {
 	}
 
 	/**
+	 * @return the volumeDAO
+	 */
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -225,6 +292,25 @@ public class DigitizationServiceImpl implements DigitizationService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchVolumes(Integer volNum, Integer volNumBetween, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getVolumeDAO().searchVolumesByDigitization(volNum, volNumBetween, paginationFilter);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @param imageDAO the imageDAO to set
+	 */
+	public void setImageDAO(ImageDAO imageDAO) {
+		this.imageDAO = imageDAO;
 	}
 
 	/**
@@ -239,6 +325,13 @@ public class DigitizationServiceImpl implements DigitizationService {
 	 */
 	public void setSchedoneDAO(SchedoneDAO schedoneDAO) {
 		this.schedoneDAO = schedoneDAO;
+	}
+
+	/**
+	 * @param volumeDAO the volumeDAO to set
+	 */
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
 	}
 
 }
