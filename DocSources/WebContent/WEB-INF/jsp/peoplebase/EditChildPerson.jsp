@@ -30,7 +30,7 @@
 			</legend>
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="Text goes here">?</a>
+					<a class="helpIcon" title="<fmt:message key="peoplebase.addchild.edit.childname"></fmt:message>">?</a>
 					<div class="col_r"><form:label id="childDescriptionLabel" for="childDescription" path="childDescription" cssErrorClass="error">Name</form:label></div>
 					<div class="col_l"><form:input id="childDescriptionAutoCompleter" path="childDescription" class="input_30c" /></div>
 				</div>

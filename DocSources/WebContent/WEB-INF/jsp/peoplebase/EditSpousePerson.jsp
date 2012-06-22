@@ -28,7 +28,7 @@
 			<c:if test="${command.personId == command.wifeId}">
 				<div class="listForm">
 					<div class="row">
-						<div class="col_l"><a class="helpIcon" title="Text goes here">?</a><form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error">Name</form:label></div>
+						<div class="col_l"><a class="helpIcon" title="<fmt:message key="peoplebase.addspouse.edit.spousename"></fmt:message>">?</a><form:label id="husbandDescriptionLabel" for="husbandDescription" path="husbandDescription" cssErrorClass="error">Name</form:label></div>
 						<div class="col_l">
 							<form:input id="spouseDescriptionAutoCompleter" path="husbandDescription" cssClass="input_25c" />
 							<form:hidden path="husbandId"/>

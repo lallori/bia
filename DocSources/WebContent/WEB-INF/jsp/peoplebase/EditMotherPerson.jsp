@@ -19,7 +19,7 @@
 			<legend>
 				<b>MOTHER</b></legend>
 				<div>
-					<a class="helpIcon" title="Text goes here">?</a>
+					<a class="helpIcon" title="<fmt:message key="peoplebase.parents.edit.mothername"></fmt:message>">?</a>
 					<form:label id="motherDescriptionLabel" for="motherDescription" path="motherDescription" cssErrorClass="error">Name:</form:label>
 					<form:input id="motherAutocompleter" path="motherDescription" cssClass="input_25c" />
 				</div>
