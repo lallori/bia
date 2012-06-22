@@ -12,7 +12,7 @@
 			<div class="listForm">
 				<div class="row">
 					<div class="col_l">
-						<a class="helpIcon" title="Text goes here">?</a>
+						<a class="helpIcon" title="<fmt:message key="volbase.details.edit.carteggio"></fmt:message>">?</a>
 						<form:label id="seriesRefDescriptionLabel" for="seriesRefDescription" path="seriesRefDescription" cssErrorClass="error"><i>Carteggio</i></form:label>
 					</div>
 					<div class="col_r"><form:input id="seriesRefDescriptionAutoCompleter" path="seriesRefDescription" cssClass="input_35c" /></div>
@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="col_r"><form:label id="volNumLabel" for="volNum" path="volNum" cssErrorClass="error" >Volume/Filza (MDP)</form:label></div>
 					<div class="col_l"><form:input path="volNum" cssClass="input_5c" maxlength="5"/></div>
-					<div class="col_r"><a class="helpIcon" title="Text goes here">?</a><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension</form:label></div>
+					<div class="col_r"><a class="helpIcon" title="<fmt:message key="volbase.details.edit.volumeextension"></fmt:message>">?</a><form:label id="volLetExtLabel" for="volLetExt" path="volLetExt" cssErrorClass="error">Volume extension</form:label></div>
 					<div class="col_r"><form:input path="volLetExt" size="1" maxlength="1"  cssClass="input_1c"/></div>
 				</div>
 			</div>
@@ -53,7 +53,7 @@
 			
 			<div class="listForm">
 				<div class="row">
-					<a class="helpIcon" title="Text goes here">?</a>
+					<a class="helpIcon" title="<fmt:message key="volbase.details.edit.datenotes"></fmt:message>">?</a>
 					<form:label id="dateNotesLabel" for="dateNotes" path="dateNotes" cssErrorClass="error">Date notes</form:label>
 				</div>
 				<div class="row">
