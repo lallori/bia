@@ -11,6 +11,43 @@
 
     <context:component-scan base-package="org.medici.docsources"/>
 
+	<bean id="logDAOAdvice" class="org.medici.docsources.audit.LogDAOAdvice" />
+	<bean id="logServiceAdvice" class="org.medici.docsources.audit.LogServiceAdvice" />
+	<bean id="logValidatorAdvice" class="org.medici.docsources.audit.LogValidatorAdvice" />
+
+    <aop:config>
+        <aop:pointcut id="daoOperation" expression="execution(* org.medici.docsources.dao..*DAO*.*(..))"/>
+        <aop:pointcut id="serviceOperation" expression="execution(* org.medici.docsources.service..*Service*.*(..))"/>
+        <aop:pointcut id="schedulerOperation" expression="execution(* org.medici.docsources.scheduler..*Job.*(..))"/>
+       	<aop:pointcut id="validatorOperation" expression="execution(* org.medici.docsources.validator..*Validator.validate(..))"/>
+		<aop:advisor pointcut-ref="daoOperation" advice-ref="logDAOAdvice" />
+        <!-- <aop:advisor pointcut-ref="schedulerOperation" advice-ref="txAdvice"/>-->
+		<aop:advisor pointcut-ref="serviceOperation" advice-ref="logServiceAdvice" />
+        <!-- <aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice"/> -->
+		<aop:advisor pointcut-ref="validatorOperation" advice-ref="logValidatorAdvice" />
+    </aop:config>
+
+<!-- 
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="activate*"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="find*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="REQUIRED"/>
+            <tx:method name="merge*" propagation="REQUIRED"/>
+            <tx:method name="index*" />
+            <tx:method name="persist*" propagation="REQUIRED"/>
+            <tx:method name="register*" propagation="REQUIRED"/>
+            <tx:method name="save*" />
+            <tx:method name="search*" propagation="REQUIRED"/>
+            <tx:method name="send*" />
+            <tx:method name="trace*" propagation="REQUIRED"/>
+            <tx:method name="update*" />
+        </tx:attributes>
+    </tx:advice>
+
 	<tx:annotation-driven/>
-	   
+	 -->  
 </beans>

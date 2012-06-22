@@ -11,6 +11,18 @@
 
     <context:component-scan base-package="org.medici.docsources"/>
 
+    <bean id="adminService" class="org.medici.docsources.service.admin.AdminServiceImpl">
+    	<description>Service that manages every information on admin process (users, properties).</description>
+    </bean>
+    
+    <bean id="communityService" class="org.medici.docsources.service.community.CommunityServiceImpl">
+    	<description>Service that manages every information on community process (comments, private messages).</description>
+    </bean>
+
+    <bean id="digitizationService" class="org.medici.docsources.service.digitization.DigitizationServiceImpl">
+    	<description>Service that manages every information on digitization process.</description>
+    </bean>
+
     <bean id="docBaseService" class="org.medici.docsources.service.docbase.DocBaseServiceImpl">
     	<description>Service that manages documents informations.</description>
     </bean>
@@ -27,6 +39,10 @@
     	<description>Service that manages mail.</description>
     </bean>
 
+    <bean id="manuscriptViewerService" class="org.medici.docsources.service.manuscriptviewer.ManuscriptViewerServiceImpl">
+    	<description>Service that manages manuscript informations.</description>
+    </bean>
+    
     <bean id="peopleBaseService" class="org.medici.docsources.service.peoplebase.PeopleBaseServiceImpl">
     	<description>Service that manages peoples informations.</description>
     </bean>
