@@ -69,18 +69,19 @@ public class AjaxController {
 	 * @param summaryId
 	 * @return
 	 */
-	@RequestMapping(value = "/src/geobase/getLinkedForum", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/geobase/GetLinkedForum", method = RequestMethod.GET)
 	public ModelAndView getLinkedForum(@RequestParam(value="placeAllId") Integer placeAllId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		try {
 			Forum forum = getGeoBaseService().getPlaceForum(placeAllId);
 			if (forum != null) {
-				model.put("isPresent", Boolean.TRUE);
-				model.put("forumId", forum.getId());
+				model.put("isPresent", Boolean.TRUE.toString());
+				model.put("forumId", forum.getId().toString());
 				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
+				model.put("forumUrlCompleteDOM", HtmlUtils.getShowForumCompleteDOMUrl(forum));
 			} else {
-				model.put("isPresent", Boolean.FALSE);
+				model.put("isPresent", Boolean.FALSE.toString());
 			}
 		} catch (ApplicationThrowable aex) {
 			return new ModelAndView("responseKO", model);

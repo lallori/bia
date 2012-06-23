@@ -192,7 +192,7 @@ public class AjaxController {
 	 * @param summaryId
 	 * @return
 	 */
-	@RequestMapping(value = "/src/volbase/getLinkedForum", method = RequestMethod.GET)
+	@RequestMapping(value = "/src/volbase/GetLinkedForum", method = RequestMethod.GET)
 	public ModelAndView getLinkedForum(@RequestParam(value="summaryId") Integer summaryId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
@@ -200,11 +200,12 @@ public class AjaxController {
 			Forum forum = getVolBaseService().getVolumeForum(summaryId);
 			
 			if (forum != null) {
-				model.put("isPresent", Boolean.TRUE);
-				model.put("forumId", forum.getId());
+				model.put("isPresent", Boolean.TRUE.toString());
+				model.put("forumId", forum.getId().toString());
 				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
+				model.put("forumUrlCompleteDOM", HtmlUtils.getShowForumCompleteDOMUrl(forum));
 			} else {
-				model.put("isPresent", Boolean.FALSE);
+				model.put("isPresent", Boolean.FALSE.toString());
 			}
 
 		} catch (ApplicationThrowable aex) {

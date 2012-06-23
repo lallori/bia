@@ -213,9 +213,26 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param forum
 	 * @return
 	 */
-	public static String getShowForumUrl(Forum forum) {
+	public static Object getShowForumCompleteDOMUrl(Forum forum) {
+		StringBuffer stringBuffer = new StringBuffer("");
+		if (forum != null) {
+			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuffer.append("/community/ShowForum.do?id=");
+			stringBuffer.append(forum.getId());
+			stringBuffer.append("&completeDOM=true");
+		}
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getShowForumHrefUrl(Forum forum) {
 		StringBuffer stringBuffer = new StringBuffer("<a href=\"");
 		if (forum != null) {
 			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
@@ -231,7 +248,6 @@ public class HtmlUtils {
 
 		return stringBuffer.toString();
 	}
-
 	/**
 	 * 
 	 * @return
@@ -257,6 +273,22 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param forum
+	 * @return
+	 */
+	public static String getShowForumUrl(Forum forum) {
+		StringBuffer stringBuffer = new StringBuffer("");
+		if (forum != null) {
+			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuffer.append("/community/ShowForum.do?id=");
+			stringBuffer.append(forum.getId());
+		}
+
+		return stringBuffer.toString();
+	}
+	
+	/**
+	 * 
 	 * @param inputList
 	 * @param entryId
 	 * @return
@@ -271,7 +303,7 @@ public class HtmlUtils {
 
 		return url;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -297,7 +329,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -325,7 +357,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param senderUser
@@ -339,7 +371,7 @@ public class HtmlUtils {
 		anchor.append("\">text</a>");
 
 		return anchor.toString();	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -368,7 +400,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	public static List<String> showPeopleRelated(List<String> inputList, Integer personId){
 		if (inputList == null)
 			return null;
@@ -434,7 +466,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param currentSchedone
@@ -449,7 +481,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param currentSchedone
@@ -509,7 +541,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -537,7 +569,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -570,6 +602,32 @@ public class HtmlUtils {
 	/**
 	 * 
 	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
+	public static List<String> showUser(List<String> inputList, String account) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		String anchorBegin = "<a class=\"searchResult\" href=\"";
+		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
+		anchorBegin += "/admin/ShowUser.do?account=";
+		anchorBegin += account;
+		anchorBegin += "\">";
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
 	 * @param idFilter
 	 * @return
 	 */
@@ -595,32 +653,6 @@ public class HtmlUtils {
 		return retValue;
 	}
 
-	/**
-	 * 
-	 * @param inputList
-	 * @param entryId
-	 * @return
-	 */
-	public static List<String> showUser(List<String> inputList, String account) {
-		if (inputList == null)
-			return null;
-
-		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
-		
-		String anchorBegin = "<a class=\"searchResult\" href=\"";
-		anchorBegin += ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath();
-		anchorBegin += "/admin/ShowUser.do?account=";
-		anchorBegin += account;
-		anchorBegin += "\">";
-		String hrefEnd = "</a>";
-		
-		for (int i=0; i<inputList.size(); i++) {
-			retValue.add(anchorBegin + inputList.get(i) + hrefEnd);
-		}
-		
-		return retValue;
-	}
-	
 	/**
 	 * 
 	 * @param inputList

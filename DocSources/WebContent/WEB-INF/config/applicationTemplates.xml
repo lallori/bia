@@ -370,6 +370,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ChoiceStartFolioModalWindow.jsp"/>
 	</definition>
 
+	<definition name="docbase/CreatedDocumentForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/CreatedDocumentForumModalWindow.jsp"/>
+	</definition>
+	
 	<definition name="docbase/CompareDocument" extends="template.compare">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/CompareDocument.jsp"/>
 	</definition>
@@ -416,6 +420,10 @@
 
 	<definition name="docbase/ShareDocument" extends="template.shareDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShareDocument.jsp"/>	
+	</definition>
+
+	<definition name="docbase/ShowConfirmCreateDocumentForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowConfirmCreateDocumentForumModalWindow.jsp"/>
 	</definition>
 
 	<definition name="docbase/ShowConfirmDeleteDocument" extends="template.partialDOM">
@@ -513,6 +521,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CreatePlaceMenuModal.jsp"/>
 	</definition>
 	
+	<definition name="geobase/CreatedPlaceForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/CreatedPlaceForumModalWindow.jsp"/>
+	</definition>
+
 	<definition name="geobase/EditDetailsPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/EditDetailsPlace.jsp"/>
 	</definition>
@@ -565,10 +577,6 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowMenuActionsPlace.jsp"/>
 	</definition>
 
-	<definition name="geobase/ShowMenuCommentsPlaceModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuCommentsPlaceModalWindow.jsp"/>
-	</definition>
-
 	<definition name="geobase/ShowPlace" extends="template.place">
 		<put-attribute name="menu" value="/WEB-INF/jsp/geobase/ShowMenuPlace.jsp"/>
 		<put-attribute name="details" value="/WEB-INF/jsp/geobase/ShowDetailsPlace.jsp"/>
@@ -593,6 +601,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowBirthPeoplePlace.jsp" />
 	</definition>
 	
+	<definition name="geobase/ShowConfirmCreatePlaceForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowConfirmCreatePlaceForumModalWindow.jsp"/>
+	</definition>
+
 	<definition name="geobase/ShowDeathPeoplePlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowDeathPeoplePlace.jsp" />
 	</definition>
@@ -678,6 +690,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ComparePerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/CreatePersonForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreatePersonForumModalWindow.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/EditChildPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/EditChildPerson.jsp"/>
 	</definition>
@@ -738,6 +754,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/SharePerson.jsp"/>	
 	</definition>
 
+	<definition name="peoplebase/ShowConfirmCreatePersonForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowConfirmCreatePersonForumModalWindow.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/ShowChildrenPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowChildrenPerson.jsp"/>
 	</definition>
@@ -764,10 +784,6 @@
 
 	<definition name="peoplebase/ShowMenuActionsPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowMenuActionsPerson.jsp"/>
-	</definition>
-
-	<definition name="peoplebase/ShowMenuCommentsPersonModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuCommentsPersonModalWindow.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">
@@ -887,6 +903,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/CompareVolume.jsp"/>
 	</definition>
 
+	<definition name="volbase/CreatedVolumeForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/CreatedVolumeForumModalWindow.jsp"/>
+	</definition>
+
 	<definition name="volbase/EditContextVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/EditContextVolume.jsp"/>
 	</definition>
@@ -913,6 +933,10 @@
 	
 	<definition name="volbase/ShowContextVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowContextVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowConfirmCreateVolumeForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowConfirmCreateVolumeForumModalWindow.jsp"/>
 	</definition>
 
 	<definition name="volbase/ShowConfirmDeleteVolume" extends="template.partialDOM">
@@ -949,10 +973,6 @@
 
 	<definition name="volbase/ShowMenuActionsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowMenuActionsVolume.jsp"/>
-	</definition>
-
-	<definition name="volbase/ShowMenuCommentsVolumeModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowMenuCommentsVolumeModalWindow.jsp"/>
 	</definition>
 
 	<definition name="volbase/ShowVolume" extends="template.volume">

@@ -192,13 +192,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Override
 	public Forum addNewDocumentForum(Document document) throws ApplicationThrowable {
 		try {
-			document = getDocumentDAO().find(document.getEntryId());
-
-			Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.document")));
+			//this control is mandatory to prevent duplication records on forum
+			Forum forum = getForumDAO().getForumDocument(document.getEntryId());
 			
-			Forum forum = getForumDAO().addNewDocumentForum(parentForum, document);
-			
-			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			if (forum == null) {
+				document = getDocumentDAO().find(document.getEntryId());
+				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.document")));
+				forum = getForumDAO().addNewDocumentForum(parentForum, document);
+				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			}
 
 			return forum;
 		} catch (Throwable th) {

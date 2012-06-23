@@ -82,7 +82,7 @@ public class ShowConfirmCreateVolumeForumController {
 			
 		}
 
-		return new ModelAndView("volbase/ShowConfirmCreateVolumeForumModalWindow", model);
+		return new ModelAndView("volbase/CreatedVolumeForumModalWindow", model);
 	}
 
 	/**

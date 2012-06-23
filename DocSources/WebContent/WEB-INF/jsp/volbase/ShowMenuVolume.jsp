@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="GetLinkedForumURL" value="/src/volbase/GetLinkedForumURL.json">
+	<c:url var="GetLinkedForumURL" value="/src/volbase/GetLinkedForum.json">
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
 	<c:url var="PrintVolumeURL" value="/src/volbase/PrintVolume.do">
@@ -50,12 +50,13 @@
 		$j("#comments").click(function() {
 			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
 				if (json.isPresent == 'true') {
-					$j("#comments").attr('href', json.forumUrl);
+					$j("#comments").attr('href', json.forumUrlCompleteDOM);
 					$j("#comments").open({scrollbars: "yes"});
 				} else {
-					Modalbox.show('${ShowConfirmCreateVolumeForumURL}', {title: "COMMENTS", width: 200, height: 150});return false;
+					Modalbox.show('${ShowConfirmCreateVolumeForumURL}', {title: "COMMENTS", width: 450, height: 150});
 				}
 			}});
+			return false;
 		});
 		
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });

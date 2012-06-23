@@ -83,6 +83,6 @@ public class ForumUtils {
 			return getForumChronology(forum.getForumParent());
 		}
 		
-		return getForumChronology(forum.getForumParent()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowForumUrl(forum) + "</span>";
+		return getForumChronology(forum.getForumParent()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowForumHrefUrl(forum) + "</span>";
 	}
 }

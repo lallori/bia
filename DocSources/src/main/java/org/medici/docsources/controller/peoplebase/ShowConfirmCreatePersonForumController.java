@@ -83,7 +83,7 @@ public class ShowConfirmCreatePersonForumController {
 			
 		}
 
-		return new ModelAndView("peoplebase/ShowMenuCommentsPersonModalWindow", model);
+		return new ModelAndView("peoplebase/CreatedPersonForumModalWindow", model);
 	}
 	
 	/**
@@ -96,7 +96,7 @@ public class ShowConfirmCreatePersonForumController {
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowConfirmCreatePersonForumCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		return new ModelAndView("peoplebase/ShowMenuCommentsPersonModalWindow", model);
+		return new ModelAndView("peoplebase/ShowConfirmCreatePersonForumModalWindow", model);
 	}
 
 	/**

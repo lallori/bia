@@ -130,8 +130,20 @@ public class UserHistory implements Serializable {
 			setPlace((Place)object);
 		} else if (category.equals(Category.VOLUME)) {
 			setVolume((Volume)object);
-		} else {
+		} else if (category.equals(Category.SEARCH_DOCUMENT)) {
 			setSearchData((Search) object);
+		} else if (category.equals(Category.SEARCH_PEOPLE)) {
+			setSearchData((Search) object);
+		} else if (category.equals(Category.SEARCH_PLACE)) {
+			setSearchData((Search) object);
+		} else if (category.equals(Category.SEARCH_VOLUME)) {
+			setSearchData((Search) object);
+		} else if (category.equals(Category.FORUM)) {
+			setForum((Forum) object);
+		} else if (category.equals(Category.FORUM_POST)) {
+			setForumPost((ForumPost) object);
+		} else {
+			// do nothing...
 		}
 	}
 

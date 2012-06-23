@@ -46,13 +46,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show Confirm Create VolumeForum".
+ * Controller for action "Show Confirm Create Place Forum".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/peoplebase/ShowConfirmCreatePlaceForum")
+@RequestMapping("/src/geobase/ShowConfirmCreatePlaceForum")
 public class ShowConfirmCreatePlaceForumController {
 	@Autowired
 	private GeoBaseService geoBaseService;
@@ -75,7 +75,7 @@ public class ShowConfirmCreatePlaceForumController {
 			
 		}
 
-		return new ModelAndView("volbase/ShowConfirmCreateVolumeForumModalWindow", model);
+		return new ModelAndView("geobase/CreatedPlaceForumModalWindow", model);
 	}
 
 	/**

@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="GetLinkedForumURL" value="/src/volbase/GetLinkedForumURL.json">
+	<c:url var="GetLinkedForumURL" value="/src/peoplebase/GetLinkedForum.json">
 		<c:param name="personId"   value="${person.personId}" />
 	</c:url>
 	<c:url var="PrintPersonURL" value="/src/peoplebase/PrintPerson.do">
@@ -50,12 +50,13 @@
 		$j("#comments").click(function() {
 			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
 				if (json.isPresent == 'true') {
-					$j("#comments").attr('href', json.forumUrl);
+					$j("#comments").attr('href', json.forumUrlCompleteDOM);
 					$j("#comments").open({scrollbars: "yes"});
 				} else {
-					Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 200, height: 150});return false;
+					Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 450, height: 150});
 				}
 			}});
+			return false;
 		});
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 		

@@ -1,5 +1,5 @@
 /*
- * ShowConfirmCreateVolumeForumController.java
+ * ShowConfirmCreateDocumentForumController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -31,6 +31,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.medici.docsources.command.docbase.ShowConfirmCreateDocumentForumCommand;
+import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.exception.ApplicationThrowable;
+import org.medici.docsources.service.docbase.DocBaseService;
 import org.medici.docsources.service.volbase.VolBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,18 +51,10 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/src/docbase/ShowMenuCommentsDocument")
+@RequestMapping("/src/docbase/ShowConfirmCreateDocumentForum")
 public class ShowConfirmCreateDocumentForumController {
 	@Autowired
-	private VolBaseService volBaseService;
-
-
-	/**
-	 * @return the volBaseService
-	 */
-	public VolBaseService getVolBaseService() {
-		return volBaseService;
-	}
+	private DocBaseService docBaseService;
 
 	/**
 	 * 
@@ -68,8 +65,16 @@ public class ShowConfirmCreateDocumentForumController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@ModelAttribute("requestCommand") ShowConfirmCreateDocumentForumCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		try {
+			Document document = new Document(command.getEntryId());
+			Forum forum = getDocBaseService().addNewDocumentForum(document);
+			model.put("forum", forum);
+		}catch (ApplicationThrowable applicationThrowable) {
+			
+		}
 
-		return new ModelAndView("docbase/ShowConfirmCreateDocumentForumModalWindow", model);
+		return new ModelAndView("docbase/CreatedDocumentForumModalWindow", model);
 	}
 
 	/**
@@ -86,9 +91,16 @@ public class ShowConfirmCreateDocumentForumController {
 	}
 
 	/**
-	 * @param volBaseService the volBaseService to set
+	 * @param docBaseService the docBaseService to set
 	 */
-	public void setVolBaseService(VolBaseService volBaseService) {
-		this.volBaseService = volBaseService;
+	public void setDocBaseService(DocBaseService docBaseService) {
+		this.docBaseService = docBaseService;
+	}
+
+	/**
+	 * @return the docBaseService
+	 */
+	public DocBaseService getDocBaseService() {
+		return docBaseService;
 	}
 }

@@ -104,6 +104,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setPlace(null);
 		forum.setVolume(null);
 		
+		forum.setDispositionOrder(new Integer(0));
 		forum.setPostsNumber(new Integer(0));
 		forum.setStatus(Status.ONLINE);
 		forum.setTopicsNumber(new Integer(0));
@@ -132,6 +133,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setPlace(null);
 		forum.setVolume(null);
 		
+		forum.setDispositionOrder(new Integer(0));
 		forum.setPostsNumber(new Integer(0));
 		forum.setStatus(Status.ONLINE);
 		forum.setTopicsNumber(new Integer(0));
@@ -162,6 +164,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setPlace(place);
 		forum.setVolume(null);
 		
+		forum.setDispositionOrder(new Integer(0));
 		forum.setPostsNumber(new Integer(0));
 		forum.setStatus(Status.ONLINE);
 		forum.setTopicsNumber(new Integer(0));
@@ -192,13 +195,17 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		forum.setPlace(null);
 		forum.setVolume(volume);
 		
+		forum.setDispositionOrder(new Integer(0));
 		forum.setPostsNumber(new Integer(0));
 		forum.setStatus(Status.ONLINE);
 		forum.setTopicsNumber(new Integer(0));
 		forum.setType(Type.FORUM);
-		forum.setSubType(SubType.PEOPLE);
+		forum.setSubType(SubType.VOLUME);
 
 		getEntityManager().persist(forum);
+
+		forumParent.setTopicsNumber(forumParent.getTopicsNumber()+1);
+		getEntityManager().merge(forumParent);
 
         return forum;
 	}
@@ -391,6 +398,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
         List<Forum> list = query.getResultList();
 		if (list.size() == 0) { 
+			logger.error("No first category found. Please check Forum database tables.");
 			return null;
 		} else {
 			return (Forum) query.getResultList().get(0);
@@ -402,7 +410,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@Override
 	public Forum getForumDocument(Integer entryId) throws PersistenceException {
-		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and document=:entryId ";
+		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and document.entryId=:entryId ";
 
         Query query = getEntityManager().createQuery(queryString);
         query.setParameter("typeForum", Type.FORUM);
@@ -425,7 +433,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@Override
 	public Forum getForumPerson(Integer personId) throws PersistenceException {
-		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and person=:personId ";
+		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and person.personId=:personId ";
 		
 		Query query = getEntityManager().createQuery(queryString);
 		query.setParameter("typeForum", Type.FORUM);
@@ -448,7 +456,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@Override
 	public Forum getForumPlace(Integer placeAllId) throws PersistenceException {
-		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and place=:placeAllId ";
+		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and place.placeAllId=:placeAllId ";
 
         Query query = getEntityManager().createQuery(queryString);
         query.setParameter("typeForum", Type.FORUM);
@@ -485,7 +493,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 */
 	@Override
 	public Forum getForumVolume(Integer summaryId) throws PersistenceException {
-		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and volume=:summaryId ";
+		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and volume.summaryId=:summaryId ";
 
         Query query = getEntityManager().createQuery(queryString);
         query.setParameter("typeForum", Type.FORUM);

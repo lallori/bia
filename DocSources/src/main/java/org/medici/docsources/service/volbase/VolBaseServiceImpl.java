@@ -178,13 +178,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 	@Override
 	public Forum addNewVolumeForum(Volume volume) throws ApplicationThrowable {
 		try {
-			volume = getVolumeDAO().find(volume.getSummaryId());
+			Forum forum = getForumDAO().getForumVolume(volume.getSummaryId());
 
-			Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.volume")));
-			
-			Forum forum = getForumDAO().addNewVolumeForum(parentForum, volume);
-
-			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			//this control is mandatory to prevent duplication records on forum
+			if (forum == null) {
+				volume = getVolumeDAO().find(volume.getSummaryId());
+				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.volume")));
+				forum = getForumDAO().addNewVolumeForum(parentForum, volume);
+				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			}
 
 			return forum;
 		} catch (Throwable th) {

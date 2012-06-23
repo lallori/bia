@@ -216,13 +216,16 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	@Override
 	public Forum addNewPersonForum(People person) throws ApplicationThrowable {
 		try {
-			person = getPeopleDAO().find(person.getPersonId());
+			Forum forum = getForumDAO().getForumPerson(person.getPersonId());
 
-			Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
-			
-			Forum forum = getForumDAO().addNewPersonForum(parentForum, person);
-			
-			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			//this control is mandatory to prevent duplication records on forum
+			if (forum == null) {
+				person = getPeopleDAO().find(person.getPersonId());
+				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
+				forum = getForumDAO().addNewPersonForum(parentForum, person);
+				
+				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			}
 
 			return forum;
 		} catch (Throwable th) {

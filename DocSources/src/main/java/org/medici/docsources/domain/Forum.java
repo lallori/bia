@@ -80,7 +80,7 @@ public class Forum implements Serializable {
 	private String title;
 	@Column (name="\"description\"", length=2000)
 	private String description;
-	@Column (name="\"status\"", length=2000)
+	@Column (name="\"status\"")
 	private Status status;
 	@Column (name="\"postsNumber\"")
 	private Integer postsNumber;

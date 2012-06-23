@@ -175,13 +175,15 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	@Override
 	public Forum addNewPlaceForum(Place place) throws ApplicationThrowable {
 		try {
-			place = getPlaceDAO().find(place.getPlaceAllId());
+			Forum forum = getForumDAO().getForumPlace(place.getPlaceAllId());
 
-			Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.place")));
-			
-			Forum forum = getForumDAO().addNewPlaceForum(parentForum, place);
-			
-			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			//this control is mandatory to prevent duplication records on forum
+			if (forum == null) {
+				place = getPlaceDAO().find(place.getPlaceAllId());
+				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.place")));
+				forum = getForumDAO().addNewPlaceForum(parentForum, place);
+				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			}
 
 			return forum;
 		} catch (Throwable th) {
