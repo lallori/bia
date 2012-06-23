@@ -6,7 +6,7 @@
 
 				<div id="searchForm">
 					<form id="SearchForm" action="/DocSources/src/SimpleSearch.do" method="post">
-                        <input id="searchText" name="text" type="text" value="Search...">
+                        <input id="searchText" name="searchText" type="text" value="Search...">
                         <input id="search" type="submit" title="Search" value="Search"/>
 					</form>
 				</div>

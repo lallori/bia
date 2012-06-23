@@ -4,17 +4,23 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowVettingChronologyPersonURL" value="/de/peoplebase/ShowVettingChronologyPerson.do">
+	<c:url var="GetLinkedForumURL" value="/src/volbase/GetLinkedForumURL.json">
+		<c:param name="personId"   value="${person.personId}" />
+	</c:url>
+	<c:url var="PrintPersonURL" value="/src/peoplebase/PrintPerson.do">
+		<c:param name="personId" value="${person.personId}" />
+	</c:url>
+	<c:url var="SharePersonURL" value="/src/peoplebase/SharePerson.do">
+		<c:param name="personId"   value="${person.personId}" />
+	</c:url>
+	<c:url var="ShowConfirmCreatePersonForumURL" value="/src/peoplebase/ShowConfirmCreatePersonForum.do">
 		<c:param name="personId"   value="${person.personId}" />
 	</c:url>
 	<c:url var="ShowMenuActionsPersonURL" value="/de/peoplebase/ShowMenuActionsPerson.do">
 		<c:param name="personId"   value="${person.personId}" />
 	</c:url>
-	<c:url var="SharePersonURL" value="/src/peoplebase/SharePerson.do">
+	<c:url var="ShowVettingChronologyPersonURL" value="/de/peoplebase/ShowVettingChronologyPerson.do">
 		<c:param name="personId"   value="${person.personId}" />
-	</c:url>
-	<c:url var="PrintPersonURL" value="/src/peoplebase/PrintPerson.do">
-		<c:param name="personId" value="${person.personId}" />
 	</c:url>
 
 	<div id="topBodyLeftMenuDiv">
@@ -30,6 +36,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="vettingHistory" href="${ShowVettingChronologyPersonURL}">Vetting History</a>
 		</security:authorize>
+		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="menuActions" href="${ShowMenuActionsPersonURL}">Delete</a>
 		</security:authorize>
@@ -40,6 +47,16 @@
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#comments").click(function() {
+			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+				if (json.isPresent == 'true') {
+					$j("#comments").attr('href', json.forumUrl);
+					$j("#comments").open({scrollbars: "yes"});
+				} else {
+					Modalbox.show('${ShowConfirmCreatePersonForumURL}', {title: "COMMENTS", width: 200, height: 150});return false;
+				}
+			}});
+		});
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#buttonShareLink").click(function() {

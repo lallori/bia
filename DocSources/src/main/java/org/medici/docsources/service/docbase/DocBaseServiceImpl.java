@@ -34,10 +34,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.HistoryNavigator;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.EpLinkUtils;
@@ -48,6 +50,7 @@ import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
 import org.medici.docsources.dao.factchecks.FactChecksDAO;
+import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
@@ -60,6 +63,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
@@ -87,10 +91,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly=true)
 public class DocBaseServiceImpl implements DocBaseService {
-	private final Logger logger = Logger.getLogger(this.getClass());
-
 	@Autowired
 	private DocumentDAO documentDAO;
+
 	@Autowired
 	private EpLinkDAO epLinkDAO;
 	@Autowired
@@ -98,7 +101,10 @@ public class DocBaseServiceImpl implements DocBaseService {
 	@Autowired
 	private FactChecksDAO factChecksDAO;
 	@Autowired
+	private ForumDAO forumDAO;
+	@Autowired
 	private ImageDAO imageDAO;
+	private final Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
 	private MonthDAO monthDAO;
 	@Autowired
@@ -177,6 +183,27 @@ public class DocBaseServiceImpl implements DocBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Forum addNewDocumentForum(Document document) throws ApplicationThrowable {
+		try {
+			document = getDocumentDAO().find(document.getEntryId());
+
+			Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.document")));
+			
+			Forum forum = getForumDAO().addNewDocumentForum(parentForum, document);
+			
+			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+
+			return forum;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
 	}
 
 	/**
@@ -701,7 +728,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -725,7 +752,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -918,7 +945,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -930,7 +957,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1022,10 +1049,43 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findCategoryHistoryFromEntity(Category.DOCUMENT, document.getEntryId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+
+	/**
 	 * @return the documentDAO
 	 */
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getDocumentForum(Integer entryId) throws ApplicationThrowable {
+		try{
+			return getForumDAO().getForumDocument(entryId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**
@@ -1057,7 +1117,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public EpLinkDAO getEpLinkDAO() {
 		return epLinkDAO;
 	}
-
+	
 	/**
 	 * @return the eplToLinkDAO
 	 */
@@ -1073,26 +1133,12 @@ public class DocBaseServiceImpl implements DocBaseService {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return the forumDAO
 	 */
-	@Override
-	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable {
-		HistoryNavigator historyNavigator = new HistoryNavigator();
-		try {
-			UserHistory userHistory = getUserHistoryDAO().findCategoryHistoryFromEntity(Category.DOCUMENT, document.getEntryId());
-			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			
-			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
-			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
-		}catch(Throwable th){
-			logger.error(th);
-		}
-
-		return historyNavigator;
+	public ForumDAO getForumDAO() {
+		return forumDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1187,7 +1233,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * @return the peopleDAO
 	 */
@@ -1208,7 +1254,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public SynExtractDAO getSynExtractDAO() {
 		return synExtractDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1227,7 +1273,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 	public TopicsListDAO getTopicsListDAO() {
 		return topicsListDAO;
 	}
-
+	
 	/**
 	 * @return the userHistoryDAO
 	 */
@@ -1253,7 +1299,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1265,7 +1311,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1306,7 +1352,7 @@ public class DocBaseServiceImpl implements DocBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1345,6 +1391,13 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public void setFactChecksDAO(FactChecksDAO factChecksDAO) {
 		this.factChecksDAO = factChecksDAO;
+	}
+
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
 	}
 
 	/**

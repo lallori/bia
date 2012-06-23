@@ -1,5 +1,5 @@
 /*
- * ShowForumCommand.java
+ * ShowMenuActionsVolumeRequestCommand.java
  *
  * Developed by The Medici Archive Project Inc. (2010-2012)
  * 
@@ -25,91 +25,46 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.command.community;
+package org.medici.docsources.command.volbase;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.validation.constraints.NotNull;
 
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  *
  */
-public class ShowForumCommand {
-	private Integer id;
-	private Integer firstRecord;
-	private Integer length;
-	private Long total;
+public class ShowConfirmCreateVolumeForumCommand {
+	@NotNull
+	private Integer summaryId;
+	private Integer forumId;
+
 	/**
-	 * @return the firstRecord
+	 * @param summaryId the summaryId to set
 	 */
-	public Integer getFirstRecord() {
-		return firstRecord;
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
 	}
 
 	/**
-	 * @param firstRecord the firstRecord to set
+	 * @return the summaryId
 	 */
-	public void setFirstRecord(Integer firstRecord) {
-		this.firstRecord = firstRecord;
+	public Integer getSummaryId() {
+		return summaryId;
 	}
 
 	/**
-	 * @return the length
+	 * @param forumId the forumId to set
 	 */
-	public Integer getLength() {
-		return length;
+	public void setForumId(Integer forumId) {
+		this.forumId = forumId;
 	}
 
 	/**
-	 * @param length the length to set
+	 * @return the forumId
 	 */
-	public void setLength(Integer length) {
-		this.length = length;
+	public Integer getForumId() {
+		return forumId;
 	}
 
-	/**
-	 * @return the total
-	 */
-	public Long getTotal() {
-		return total;
-	}
-
-	/**
-	 * @param total the total to set
-	 */
-	public void setTotal(Long total) {
-		this.total = total;
-	}
-
-	private Boolean completeDOM;
-
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param completeDOM the completeDOM to set
-	 */
-	public void setCompleteDOM(Boolean completeDOM) {
-		this.completeDOM = completeDOM;
-	}
-
-	/**
-	 * @return the completeDOM
-	 */
-	public Boolean getCompleteDOM() {
-		return completeDOM;
-	}
-	
 }

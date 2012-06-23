@@ -40,6 +40,7 @@ import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.PoLink;
 import org.medici.docsources.domain.RoleCat;
@@ -66,12 +67,84 @@ public class AjaxController {
 	private PeopleBaseService peopleBaseService;
 
 	/**
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/src/peoplebase/getLinkedForum", method = RequestMethod.GET)
+	public ModelAndView getLinkedForum(@RequestParam(value="personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Forum forum = getPeopleBaseService().getPersonForum(personId);
+			if (forum != null) {
+				model.put("isPresent", Boolean.TRUE);
+				model.put("forumId", forum.getId());
+				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
+			} else {
+				model.put("isPresent", Boolean.FALSE);
+			}
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * 
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	private PaginationFilter generatePaginationFilterForTitleOcc(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+			case 0:
+				paginationFilter.addSortingCriteria("p.mapNameLf", sortingDirection);
+				break;
+			case 1:
+				paginationFilter.addSortingCriteria("p.gender", sortingDirection);
+				paginationFilter.addSortingCriteria("p.mapNameLf", sortingDirection);
+				break;
+			case 2:
+				paginationFilter.addSortingCriteria("p.bornYear", sortingDirection);
+				//Month is an entity, so we don't have field with suffix 
+				paginationFilter.addSortingCriteria("p.bornMonth.monthNum", sortingDirection);
+				paginationFilter.addSortingCriteria("p.bornDay", sortingDirection);
+				break;
+			case 3:
+				paginationFilter.addSortingCriteria("p.deathYear", sortingDirection);
+				//Month is an entity, so we don't have field with suffix 
+				paginationFilter.addSortingCriteria("p.deathMonth.monthNum", sortingDirection);
+				paginationFilter.addSortingCriteria("p.deathDay", sortingDirection);
+				break;
+			case 4:
+				paginationFilter.addSortingCriteria("t.startYear", sortingDirection);
+				break;
+			case 5:
+				paginationFilter.addSortingCriteria("t.endYear", sortingDirection);
+			default:
+				paginationFilter.addSortingCriteria("p.mapNameLf", "asc");
+				break;
+			}		
+		}
+		
+		return paginationFilter;
+	}
+
+
+	/**
 	 * @return the peopleBaseService
 	 */
 	public PeopleBaseService getPeopleBaseService() {
 		return peopleBaseService;
 	}
-
 
 	/**
 	 * This method returns a list of ipotetical children for a person. 
@@ -208,7 +281,7 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-
+	
 	/**
 	 * This method returns a list of ipotetical senders. 
 	 *  
@@ -278,7 +351,7 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
 	/**
 	 * This method returns a list of ipotetical recipients. 
 	 *  
@@ -342,79 +415,6 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 
-	/**
-	 * This method returns specific information on father. 
-	 * 
-	 * @param personId
-	 * @return
-	 */
-	@RequestMapping(value = "/de/peoplebase/ShowFatherDetails", method = RequestMethod.GET)
-	public ModelAndView showFatherDetails(@RequestParam("personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			People person = getPeopleBaseService().findPerson(personId);
-			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
-			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
-			model.put("bornMonth", (person.getBornMonth() != null ) ? person.getBornMonth().toString() : "");
-			model.put("bornDay", (person.getBornDay() != null ) ? person.getBornDay().toString() : "");
-			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
-			model.put("deathMonth", (person.getDeathMonth() != null ) ? person.getDeathMonth().toString() : "");
-			model.put("deathDay", (person.getDeathDay() != null ) ? person.getDeathDay().toString() : "");
-			model.put("bioNotes", (person.getBioNotes() != null ) ? person.getBioNotes().toString() : "");
-			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-
-	/**
-	 * This method returns specific information on mother. 
-	 * 
-	 * @param personId
-	 * @return
-	 */
-	@RequestMapping(value = "/de/peoplebase/ShowMotherDetails", method = RequestMethod.GET)
-	public ModelAndView showMotherDetails(@RequestParam("personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			People person = getPeopleBaseService().findPerson(personId);
-			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
-			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
-			model.put("bornMonth", (person.getBornMonth() != null ) ? person.getBornMonth().toString() : "");
-			model.put("bornDay", (person.getBornDay() != null ) ? person.getBornDay().toString() : "");
-			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
-			model.put("deathMonth", (person.getDeathMonth() != null ) ? person.getDeathMonth().toString() : "");
-			model.put("deathDay", (person.getDeathDay() != null ) ? person.getDeathDay().toString() : "");
-			model.put("bioNotes", (person.getBioNotes() != null ) ? person.getBioNotes().toString() : "");
-			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-	
-	@RequestMapping(value = "/de/peoplebase/ShowSpouseDetails", method = RequestMethod.GET)
-	public ModelAndView showSpouseDetails(@RequestParam("personId") Integer personId) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			People person = getPeopleBaseService().findPerson(personId);
-			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
-			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
-			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
-			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/src/peoplebase/ShowDocumentsRelatedPerson.json", method = RequestMethod.GET)
 	public ModelAndView ShowDocumentsRelatedPerson(@RequestParam(value="sSearch") String alias,
@@ -567,6 +567,62 @@ public class AjaxController {
 		model.put("iTotalRecords", page.getTotal());
 		model.put("aaData", resultList);
 		
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns specific information on father. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/ShowFatherDetails", method = RequestMethod.GET)
+	public ModelAndView showFatherDetails(@RequestParam("personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person = getPeopleBaseService().findPerson(personId);
+			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
+			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
+			model.put("bornMonth", (person.getBornMonth() != null ) ? person.getBornMonth().toString() : "");
+			model.put("bornDay", (person.getBornDay() != null ) ? person.getBornDay().toString() : "");
+			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
+			model.put("deathMonth", (person.getDeathMonth() != null ) ? person.getDeathMonth().toString() : "");
+			model.put("deathDay", (person.getDeathDay() != null ) ? person.getDeathDay().toString() : "");
+			model.put("bioNotes", (person.getBioNotes() != null ) ? person.getBioNotes().toString() : "");
+			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns specific information on mother. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/peoplebase/ShowMotherDetails", method = RequestMethod.GET)
+	public ModelAndView showMotherDetails(@RequestParam("personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person = getPeopleBaseService().findPerson(personId);
+			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
+			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
+			model.put("bornMonth", (person.getBornMonth() != null ) ? person.getBornMonth().toString() : "");
+			model.put("bornDay", (person.getBornDay() != null ) ? person.getBornDay().toString() : "");
+			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
+			model.put("deathMonth", (person.getDeathMonth() != null ) ? person.getDeathMonth().toString() : "");
+			model.put("deathDay", (person.getDeathDay() != null ) ? person.getDeathDay().toString() : "");
+			model.put("bioNotes", (person.getBioNotes() != null ) ? person.getBioNotes().toString() : "");
+			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
 		return new ModelAndView("responseOK", model);
 	}
 	
@@ -911,6 +967,23 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 	
+	@RequestMapping(value = "/de/peoplebase/ShowSpouseDetails", method = RequestMethod.GET)
+	public ModelAndView showSpouseDetails(@RequestParam("personId") Integer personId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			People person = getPeopleBaseService().findPerson(personId);
+			model.put("personId", (person.getPersonId() != null ) ? person.getPersonId().toString() : "");
+			model.put("bornYear", (person.getBornYear() != null ) ? person.getBornYear().toString() : "");
+			model.put("deathYear", (person.getDeathYear() != null ) ? person.getDeathYear().toString() : "");
+			model.put("gender", (person.getGender() != null) ? person.getGender().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
 	/**
 	 * This method performs a simple search on people dictionary.
 	 * 
@@ -969,52 +1042,5 @@ public class AjaxController {
 		model.put("aaData", resultList);
 		
 		return new ModelAndView("responseOK", model);
-	}
-	
-	/**
-	 * 
-	 * @param searchType
-	 * @param sortingColumnNumber
-	 * @param sortingDirection
-	 * @param firstRecord
-	 * @param length
-	 * @return
-	 */
-	private PaginationFilter generatePaginationFilterForTitleOcc(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
-
-		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
-			switch (sortingColumnNumber) {
-			case 0:
-				paginationFilter.addSortingCriteria("p.mapNameLf", sortingDirection);
-				break;
-			case 1:
-				paginationFilter.addSortingCriteria("p.gender", sortingDirection);
-				paginationFilter.addSortingCriteria("p.mapNameLf", sortingDirection);
-				break;
-			case 2:
-				paginationFilter.addSortingCriteria("p.bornYear", sortingDirection);
-				//Month is an entity, so we don't have field with suffix 
-				paginationFilter.addSortingCriteria("p.bornMonth.monthNum", sortingDirection);
-				paginationFilter.addSortingCriteria("p.bornDay", sortingDirection);
-				break;
-			case 3:
-				paginationFilter.addSortingCriteria("p.deathYear", sortingDirection);
-				//Month is an entity, so we don't have field with suffix 
-				paginationFilter.addSortingCriteria("p.deathMonth.monthNum", sortingDirection);
-				paginationFilter.addSortingCriteria("p.deathDay", sortingDirection);
-				break;
-			case 4:
-				paginationFilter.addSortingCriteria("t.startYear", sortingDirection);
-				break;
-			case 5:
-				paginationFilter.addSortingCriteria("t.endYear", sortingDirection);
-			default:
-				paginationFilter.addSortingCriteria("p.mapNameLf", "asc");
-				break;
-			}		
-		}
-		
-		return paginationFilter;
 	}
 }

@@ -4,17 +4,23 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowVettingChronologyVolumeURL" value="/de/volbase/ShowVettingChronologyVolume.do">
-		<c:param name="summaryId"   value="${volume.summaryId}" />
-	</c:url>
-	<c:url var="ShowMenuActionsVolumeURL" value="/de/volbase/ShowMenuActionsVolume.do">
-		<c:param name="summaryId"   value="${volume.summaryId}" />
-	</c:url>
-	<c:url var="ShareVolumeURL" value="/src/volbase/ShareVolume.do">
+	<c:url var="GetLinkedForumURL" value="/src/volbase/GetLinkedForumURL.json">
 		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
 	<c:url var="PrintVolumeURL" value="/src/volbase/PrintVolume.do">
 		<c:param name="summaryId" value="${volume.summaryId}" />
+	</c:url>
+	<c:url var="ShareVolumeURL" value="/src/volbase/ShareVolume.do">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
+	</c:url>
+	<c:url var="ShowConfirmCreateVolumeForumURL" value="/src/volbase/ShowConfirmCreateVolumeForum.do">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
+	</c:url>
+	<c:url var="ShowMenuActionsVolumeURL" value="/src/volbase/ShowMenuActionsVolume.do">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
+	</c:url>
+	<c:url var="ShowVettingChronologyVolumeURL" value="/de/volbase/ShowVettingChronologyVolume.do">
+		<c:param name="summaryId"   value="${volume.summaryId}" />
 	</c:url>
 
 	<div id="topBodyLeftMenuDiv">
@@ -30,6 +36,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="vettingHistory" href="${ShowVettingChronologyVolumeURL}">Vetting History</a>
 		</security:authorize>
+		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="menuActions" href="${ShowMenuActionsVolumeURL}">Delete</a>
 		</security:authorize>
@@ -40,6 +47,17 @@
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#comments").click(function() {
+			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+				if (json.isPresent == 'true') {
+					$j("#comments").attr('href', json.forumUrl);
+					$j("#comments").open({scrollbars: "yes"});
+				} else {
+					Modalbox.show('${ShowConfirmCreateVolumeForumURL}', {title: "COMMENTS", width: 200, height: 150});return false;
+				}
+			}});
+		});
+		
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 
 		$j("#buttonShareLink").click(function() {										

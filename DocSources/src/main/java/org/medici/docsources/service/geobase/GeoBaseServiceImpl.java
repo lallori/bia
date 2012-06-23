@@ -32,14 +32,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
+import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
@@ -47,6 +50,7 @@ import org.medici.docsources.dao.placeexternallinks.PlaceExternalLinksDAO;
 import org.medici.docsources.dao.placegeographiccoordinates.PlaceGeographicCoordinatesDAO;
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
@@ -74,9 +78,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class GeoBaseServiceImpl implements GeoBaseService {
 	@Autowired
 	private DocumentDAO documentDAO;
-
 	@Autowired
 	private EplToLinkDAO eplToLinkDAO;
+	@Autowired
+	private ForumDAO forumDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -168,6 +173,27 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
+	public Forum addNewPlaceForum(Place place) throws ApplicationThrowable {
+		try {
+			place = getPlaceDAO().find(place.getPlaceAllId());
+
+			Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.place")));
+			
+			Forum forum = getForumDAO().addNewPlaceForum(parentForum, place);
+			
+			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+
+			return forum;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public Place addNewPlaceGeographicCoordinates(PlaceGeographicCoordinates placeGeographicCoordinates)throws ApplicationThrowable {
 		try{
 			PlaceGeographicCoordinates placeGeographicCoordinatesToPersist = new PlaceGeographicCoordinates(null);
@@ -193,7 +219,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -305,7 +331,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
-	}
+	}	
 	
 	/**
 	 * {@inheritDoc}
@@ -329,7 +355,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
 		}
-	}	
+	}
 	
 	/**
 	 * {@inheritDoc}
@@ -378,7 +404,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -390,7 +416,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -402,7 +428,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -414,7 +440,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -436,6 +462,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		}
 	}
 	
+	
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -448,8 +476,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
-	
 	
 	/**
 	 * {@inheritDoc}
@@ -491,9 +517,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Integer, Long> findNumbersOfFromToDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
+	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
 		try{
-			Map<Integer, Long> docsRel = getDocumentDAO().findNumbersOfDocumentsRelatedPlace(placeAllIds);
+			Map<Integer, Long> docsRel = getEplToLinkDAO().findNumbersOfDocumentsInTopicsByPlace(placeAllIds);
 			return docsRel;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -504,9 +530,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Integer, Long> findNumbersOfDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
+	public Map<Integer, Long> findNumbersOfFromToDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable {
 		try{
-			Map<Integer, Long> docsRel = getEplToLinkDAO().findNumbersOfDocumentsInTopicsByPlace(placeAllIds);
+			Map<Integer, Long> docsRel = getDocumentDAO().findNumbersOfDocumentsRelatedPlace(placeAllIds);
 			return docsRel;
 		}catch(Throwable th){
 			throw new ApplicationThrowable(th);
@@ -553,7 +579,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -567,7 +593,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -593,7 +619,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+		
 	/**
 	 * {@inheritDoc}
 	 */
@@ -605,7 +631,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-		
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -617,7 +643,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -643,7 +669,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -656,7 +682,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -669,6 +695,29 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getCategoryHistoryNavigator(Place place) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PLACE, place.getPlaceAllId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
 
 	/**
 	 * @return the documentDAO
@@ -676,7 +725,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
 	}
-	
+
 	@Override
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
@@ -702,6 +751,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public EplToLinkDAO getEplToLinkDAO() {
 		return eplToLinkDAO;
 	}
+	
+	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -726,29 +782,6 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 		return historyNavigator;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public HistoryNavigator getCategoryHistoryNavigator(Place place) throws ApplicationThrowable {
-		HistoryNavigator historyNavigator = new HistoryNavigator();
-		try {
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PLACE, place.getPlaceAllId());
-			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			
-			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
-			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
-
-			return historyNavigator;
-		}catch(Throwable th){
-			logger.error(th);
-		}
-
-		return historyNavigator;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -801,6 +834,18 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	}
 
 	/**
+	 * 
+	 */
+	@Override
+	public Forum getPlaceForum(Integer placeAllId) throws ApplicationThrowable {
+		try{
+			return getForumDAO().getForumPlace(placeAllId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
 	 * @return the placeGeographicCoordinatesDAO
 	 */
 	public PlaceGeographicCoordinatesDAO getPlaceGeographicCoordinatesDAO() {
@@ -813,14 +858,14 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	public PlaceTypeDAO getPlaceTypeDAO() {
 		return placeTypeDAO;
 	}
-
+	
 	/**
 	 * @return the userHistoryDAO
 	 */
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -853,7 +898,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -877,7 +922,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -889,7 +934,7 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -998,6 +1043,13 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public void setEplToLinkDAO(EplToLinkDAO eplToLinkDAO) {
 		this.eplToLinkDAO = eplToLinkDAO;
+	}
+
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
 	}
 
 	/**

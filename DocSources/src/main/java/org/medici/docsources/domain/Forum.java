@@ -29,7 +29,9 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -40,9 +42,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * This class represents entity Forum.
@@ -106,6 +111,9 @@ public class Forum implements Serializable {
 	@JoinColumn(name="\"summaryId\"", nullable=true)
 	private Volume volume;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "forum", cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	private Set<ForumPost> forumPost;
+	
 	public Forum() {
 		super();
 	}
@@ -313,6 +321,23 @@ public class Forum implements Serializable {
 		return dispositionOrder;
 	}
 
+	/**
+	 * @param subType the subType to set
+	 */
+	public void setSubType(SubType subType) {
+		this.subType = subType;
+	}
+
+	/**
+	 * @return the subType
+	 */
+	public SubType getSubType() {
+		return subType;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer("[");
@@ -386,17 +411,17 @@ public class Forum implements Serializable {
 	}
 
 	/**
-	 * @param subType the subType to set
+	 * @param forumPost the forumPost to set
 	 */
-	public void setSubType(SubType subType) {
-		this.subType = subType;
+	public void setForumPost(Set<ForumPost> forumPost) {
+		this.forumPost = forumPost;
 	}
 
 	/**
-	 * @return the subType
+	 * @return the forumPost
 	 */
-	public SubType getSubType() {
-		return subType;
+	public Set<ForumPost> getForumPost() {
+		return forumPost;
 	}
 
 	/**

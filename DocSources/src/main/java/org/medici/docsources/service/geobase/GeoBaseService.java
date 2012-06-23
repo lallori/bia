@@ -34,6 +34,7 @@ import java.util.Map;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
@@ -55,6 +56,13 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface GeoBaseService {
+	/**
+	 * 
+	 * @param place
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum addNewPlaceForum(Place place) throws ApplicationThrowable;
 
 	/**
 	 * Adds a new {@link org.medici.docsources.domain.Place} entry.
@@ -98,13 +106,21 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Place deletePlace(Integer placeAllId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param placeExternalLinks
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public void deletePlaceExternalLinks(PlaceExternalLinks placeExternalLinks) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getPlaceForum(Integer placeAllId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -227,7 +243,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<Integer, Long> findNumbersOfFromToDocumentsRelated(List<Integer> placeAllIds) throws ApplicationThrowable;
-	
+		
 	/**
 	 * 
 	 * @param placeAllIds
@@ -235,7 +251,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<Integer, Long> findNumbersOfPeopleRelated(List<Integer> placeAllIds) throws ApplicationThrowable;
-		
+
 	/**
 	 * 
 	 * @param placeId
@@ -251,7 +267,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public PlaceExternalLinks findPlaceExternalLinks(Integer placeAllId, Integer placeExternalLinksId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param placeId
@@ -259,6 +275,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Place findPlaceForHierarchy(Integer placeId) throws ApplicationThrowable;
+	
 	
 	/**
 	 * 
@@ -277,7 +294,6 @@ public interface GeoBaseService {
 	 */
 	public PlaceGeographicCoordinates findPlaceGeographicCoordinates(Integer placeAllId) throws ApplicationThrowable;
 	
-	
 	/**
 	 * 
 	 * @param geogKey
@@ -286,14 +302,14 @@ public interface GeoBaseService {
 	 */
 	public List<Place> findPlaceNames(Integer geogKey) throws ApplicationThrowable;
 	
+	
 	/**
 	 * 
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public List<PlaceType> findPlaceTypes() throws ApplicationThrowable;
-	
-	
+
 	/**
 	 * 
 	 * @throws ApplicationThrowable
@@ -311,12 +327,20 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexPlaceGeographicCoordinates() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @throws ApplicationThrowable
 	 */
 	public void generateIndexPlaceType() throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param place
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getCategoryHistoryNavigator(Place place) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -328,7 +352,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param idUserHistory
@@ -336,14 +360,6 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Object getHistoryNavigator(Integer idUserHistory) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param place
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public HistoryNavigator getCategoryHistoryNavigator(Place place) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -367,7 +383,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchActiveEndPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param placeToSearch
@@ -376,7 +392,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchActiveStartPeoplePlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param placeToSearch
@@ -393,7 +409,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchBornPlace(String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param placeToSearch
@@ -410,7 +426,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Place> searchDeathPlace(String query) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param query
@@ -435,7 +451,7 @@ public interface GeoBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Page searchRecipientDocumentsPlace(String placeToSearch, PaginationFilter paginationFilter) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param query

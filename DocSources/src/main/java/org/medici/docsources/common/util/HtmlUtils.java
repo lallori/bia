@@ -217,12 +217,17 @@ public class HtmlUtils {
 	 */
 	public static String getShowForumUrl(Forum forum) {
 		StringBuffer stringBuffer = new StringBuffer("<a href=\"");
-		stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		stringBuffer.append("/community/ShowForum.do?id=");
-		stringBuffer.append(forum.getId());
-		stringBuffer.append("&\" class=\"forum\" />");
-		stringBuffer.append(forum.getTitle());
-		stringBuffer.append("</a>");
+		if (forum != null) {
+			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuffer.append("/community/ShowForum.do?id=");
+			stringBuffer.append(forum.getId());
+			stringBuffer.append("&\" class=\"forum\" />");
+			stringBuffer.append(forum.getTitle());
+			stringBuffer.append("</a>");
+		} else {
+			stringBuffer.append("&\" class=\"forum\" />");
+			stringBuffer.append("</a>");
+		}
 
 		return stringBuffer.toString();
 	}

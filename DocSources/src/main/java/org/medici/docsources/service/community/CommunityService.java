@@ -50,6 +50,15 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param forum
+	 * @param parentForum
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum addNewForum(Forum forum, Forum parentForum) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param forumPost
 	 * @return
 	 * @throws ApplicationThrowable
@@ -69,23 +78,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public UserComment createNewComment(UserComment userComment) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param userComment
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
 	public UserComment createNewMessage(UserMessage userMessage) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param userComment
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public UserComment deleteComment(Integer commentId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -205,6 +198,14 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param integer
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable;
 
 	/**
 	 * 

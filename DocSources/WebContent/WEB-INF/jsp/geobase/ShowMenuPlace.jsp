@@ -4,17 +4,26 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowVettingChronologyPlaceURL" value="/de/peoplebase/ShowVettingChronologyPlace.do">
+	<c:url var="GetLinkedForumURL" value="/src/geobase/GetLinkedForumURL.json">
+		<c:param name="placeAllId"   value="${place.placeAllId}" />
+	</c:url>
+	<c:url var="PrintPlaceURL" value="/src/geobase/PrintPlace.do">
+		<c:param name="placeAllId" value="${place.placeAllId}" />
+	</c:url>
+	<c:url var="SharePlaceURL" value="/src/geobase/SharePlace.do">
+		<c:param name="placeAllId"   value="${place.placeAllId}" />
+	</c:url>
+	<c:url var="ShowConfirmCreatePlaceForumURL" value="/src/geobase/ShowConfirmCreatePlaceForum.do">
 		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
 	<c:url var="ShowMenuActionsPlaceURL" value="/de/geobase/ShowMenuActionsPlace.do">
 		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
-	<c:url var="SharePlaceURL" value="/src/geobase/SharePlace.do">
+	<c:url var="ShowMenuCommentsPlaceURL" value="/src/geobase/ShowMenuCommentsPlace.do">
 		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
-	<c:url var="PrintPlaceURL" value="/src/geobase/PrintPlace.do">
-		<c:param name="placeAllId" value="${place.placeAllId}" />
+	<c:url var="ShowVettingChronologyPlaceURL" value="/de/peoplebase/ShowVettingChronologyPlace.do">
+		<c:param name="placeAllId"   value="${place.placeAllId}" />
 	</c:url>
 
 	<div id="topBodyLeftMenuDiv">
@@ -30,6 +39,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="vettingHistory" href="${ShowVettingChronologyPlaceURL}">Vetting History</a>
 		</security:authorize>
+		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="menuActions" href="${ShowMenuActionsPlaceURL}">Delete</a>
 		</security:authorize>
@@ -40,6 +50,17 @@
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#comments").click(function() {
+			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+				if (json.isPresent == 'true') {
+					$j("#comments").attr('href', json.forumUrl);
+					$j("#comments").open({scrollbars: "yes"});
+				} else {
+					Modalbox.show('${ShowConfirmCreatePlaceForumURL}', {title: "COMMENTS", width: 200, height: 150});return false;
+				}
+			}});
+		});
+
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 		
 		$j("#buttonShareLink").click(function() {

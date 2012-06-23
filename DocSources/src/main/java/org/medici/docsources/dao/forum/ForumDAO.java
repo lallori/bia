@@ -32,9 +32,15 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.Volume;
 
 /**
  * Forum DAO.
@@ -43,6 +49,74 @@ import org.medici.docsources.domain.Forum.Type;
  * 
  */
 public interface ForumDAO extends Dao<Integer, Forum> {
+
+	/**
+	 * 
+	 * @param forumParent
+	 * @param person
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum addNewDocumentForum(Forum forumParent, Document document) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param forumParent
+	 * @param person
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum addNewPersonForum(Forum forumParent, People person) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param forumParent
+	 * @param person
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum addNewPlaceForum(Forum forumParent, Place place) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param forumParent
+	 * @param person
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum addNewVolumeForum(Forum forumParent, Volume volume) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getForumDocument(Integer entryId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getForumPerson(Integer personId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getForumPlace(Integer placeAllId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getForumVolume(Integer summaryId) throws PersistenceException;
 
 	/**
 	 * 
@@ -75,6 +149,15 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public List<Forum> findSubForums(Integer forumParentId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param forumParentId
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findSubForums(Integer parentForumId, PaginationFilter paginationFilter) throws PersistenceException;
 
 	/**
 	 * 

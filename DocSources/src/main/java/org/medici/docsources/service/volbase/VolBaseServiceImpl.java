@@ -33,22 +33,26 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.common.property.ApplicationPropertyManager;
 import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.DocumentUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
+import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
 import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
@@ -80,6 +84,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class VolBaseServiceImpl implements VolBaseService {
 	@Autowired
 	private DocumentDAO documetDAO;
+	@Autowired
+	private ForumDAO forumDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -165,6 +171,26 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Forum addNewVolumeForum(Volume volume) throws ApplicationThrowable {
+		try {
+			volume = getVolumeDAO().find(volume.getSummaryId());
+
+			Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.volume")));
+			
+			Forum forum = getForumDAO().addNewVolumeForum(parentForum, volume);
+
+			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+
+			return forum;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}		
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -220,7 +246,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		return linkedDocuments;
 	}
-
+	
 	@Override
 	public Volume compareVolume(Integer summaryId) throws ApplicationThrowable {
 		try {
@@ -233,7 +259,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -445,7 +471,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -479,7 +505,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -491,7 +517,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -549,6 +575,29 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public HistoryNavigator getCategoryHistoryNavigator(Volume volume) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.VOLUME, volume.getSummaryId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
 		try{
@@ -566,12 +615,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * @return the documetDAO
 	 */
 	public DocumentDAO getDocumetDAO() {
 		return documetDAO;
+	}
+	
+	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
 	}
 
 	/**
@@ -601,29 +657,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HistoryNavigator getCategoryHistoryNavigator(Volume volume) throws ApplicationThrowable {
-		HistoryNavigator historyNavigator = new HistoryNavigator();
-		try {
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.VOLUME, volume.getSummaryId());
-			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			
-			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
-			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
-
-			return historyNavigator;
-		}catch(Throwable th){
-			logger.error(th);
-		}
-
-		return historyNavigator;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public HistoryNavigator getHistoryNavigator(Volume volume) throws ApplicationThrowable {
 		HistoryNavigator historyNavigator = new HistoryNavigator();
 		try {
@@ -642,7 +675,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 
 		return historyNavigator;
 	}
-
+	
 	/**
 	 * @return the imageDAO
 	 */
@@ -656,7 +689,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public MonthDAO getMonthDAO() {
 		return monthDAO;
 	}
-	
+
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -672,6 +706,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+
 
 	/**
 	 * @return the catalogDAO
@@ -695,8 +730,7 @@ public class VolBaseServiceImpl implements VolBaseService {
 	public UserHistoryDAO getUserHistoryDAO() {
 		return userHistoryDAO;
 	}
-
-
+	
 	/**
 	 * @return the volumeDAO
 	 */
@@ -728,7 +762,21 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getVolumeForum(Integer summaryId) throws ApplicationThrowable {
+		try{
+			return getForumDAO().getForumVolume(summaryId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -768,7 +816,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -780,7 +827,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -807,12 +853,22 @@ public class VolBaseServiceImpl implements VolBaseService {
 		}
 	}
 
+
 	/**
 	 * @param documetDAO the documetDAO to set
 	 */
 	public void setDocumetDAO(DocumentDAO documetDAO) {
 		this.documetDAO = documetDAO;
 	}
+
+
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
+	}
+
 
 	/**
 	 * @param imageDAO the imageDAO to set
@@ -887,7 +943,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		
 		return volumeToUnDelete;
 	}
-
 
 	/**
 	 * {@inheritDoc}

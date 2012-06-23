@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.HistoryNavigator;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.VolumeExplorer;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
@@ -65,6 +66,14 @@ public interface VolBaseService {
 	public Volume addNewVolume(Volume volume) throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param volume
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum addNewVolumeForum(Volume volume) throws ApplicationThrowable;
+
+	/**
 	 * This method checks if {@link org.medici.docsources.domain.Volume} identified 
 	 * by his summaryId has been digitized. Control is implemented by searching  
 	 * {@link org.medici.docsources.domain.Image} entity.
@@ -74,7 +83,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
-	public Boolean checkVolumeDigitized(Integer summaryId) throws ApplicationThrowable;
+	public Boolean checkVolumeDigitized(Integer summaryId) throws ApplicationThrowable; 
 
 	/**
 	 * This method checks if {@link org.medici.docsources.domain.Volume} identified 
@@ -87,8 +96,8 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 * 
 	 */
-	public Boolean checkVolumeDigitized(Integer volNum, String volLetExt) throws ApplicationThrowable; 
-
+	public Boolean checkVolumeDigitized(Integer volNum, String volLetExt) throws ApplicationThrowable;
+	
 	/**
 	 * This method checks if {@link org.medici.docsources.domain.Volume} identified 
 	 * by his summaryId has some linked documents.
@@ -98,7 +107,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public boolean checkVolumeHasLinkedDocuments(Integer summaryId) throws ApplicationThrowable;
-	
+
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
 	 * by his unique identifier.
@@ -137,6 +146,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume editCorrespondentsVolume(Volume volume) throws ApplicationThrowable;
+	
 
 	/**
 	 * This method modify description of an existing {@link org.medici.docsources.domain.Volume}.
@@ -146,7 +156,6 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume editDescriptionVolume(Volume volume) throws ApplicationThrowable;
-	
 
 	/**
 	 * This method modify details of an existing {@link org.medici.docsources.domain.Volume}.
@@ -184,7 +193,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume findVolume(Integer summaryId) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method will search an existing {@link org.medici.docsources.domain.Volume} 
 	 * by his volNum and volLetExt identifier.
@@ -196,7 +205,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public Volume findVolume(Integer volNum, String volLetExt) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param summaryId
@@ -228,7 +237,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public void generateIndexSerieList() throws ApplicationThrowable;
-
+	
 	/**
 	 * This method generates lucene index for entity {@link org.medici.docsources.domain.Volume}.
 	 * 
@@ -236,7 +245,15 @@ public interface VolBaseService {
 	 * 
 	 */
 	public void generateIndexVolume() throws ApplicationThrowable;
-	
+
+	/**
+	 * 
+	 * @param volume
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getCategoryHistoryNavigator(Volume volume) throws ApplicationThrowable;
+
 	/**
 	 * 
 	 * @param volNums
@@ -247,7 +264,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param historyId
@@ -255,14 +272,6 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public HistoryNavigator getHistoryNavigator(Integer historyId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param volume
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public HistoryNavigator getCategoryHistoryNavigator(Volume volume) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -271,6 +280,7 @@ public interface VolBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public HistoryNavigator getHistoryNavigator(Volume volume) throws ApplicationThrowable;
+
 	
 	/**
 	 * This method extracts all months available.
@@ -281,7 +291,7 @@ public interface VolBaseService {
 	 * 
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
-
+	
 	
 	/**
 	 * 
@@ -291,8 +301,15 @@ public interface VolBaseService {
 	 * 
 	 */
 	public VolumeExplorer getVolumeExplorer(VolumeExplorer volumeExplorer) throws ApplicationThrowable;
-	
-	
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getVolumeForum(Integer summaryId) throws ApplicationThrowable;
+
 	/**
 	 * This method searches if the volumes are digitized
 	 * 

@@ -98,6 +98,26 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum addNewForum(Forum forum, Forum parentForum) throws ApplicationThrowable {
+		try {
+			forum.setId(null);
+
+			parentForum = getForumDAO().find(parentForum.getId());
+			
+			forum.setForumParent(parentForum);
+
+			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+			
+			return forum;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
 	 * {@inheritDoc} 
 	 */
 	@Override
@@ -114,27 +134,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public UserComment createNewComment(UserComment userComment) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc} 
-	 */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Override
 	public UserComment createNewMessage(UserMessage userMessage) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc} 
-	 */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
-	@Override
-	public UserComment deleteComment(Integer commentId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -328,6 +328,18 @@ public class CommunityServiceImpl implements CommunityService {
 	public List<Forum> getSubForums(Integer forumParentId) throws ApplicationThrowable {
 		try {
 			return getForumDAO().findSubForums(forumParentId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getSubForums(Integer forumParentId, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try {
+			return getForumDAO().findSubForums(forumParentId, paginationFilter);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}

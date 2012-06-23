@@ -40,6 +40,7 @@ import org.medici.docsources.common.util.DateUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.SearchFilter.SearchType;
@@ -63,6 +64,93 @@ public class AjaxController {
 	@Autowired
 	private GeoBaseService geoBaseService;
 
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 */
+	@RequestMapping(value = "/src/geobase/getLinkedForum", method = RequestMethod.GET)
+	public ModelAndView getLinkedForum(@RequestParam(value="placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Forum forum = getGeoBaseService().getPlaceForum(placeAllId);
+			if (forum != null) {
+				model.put("isPresent", Boolean.TRUE);
+				model.put("forumId", forum.getId());
+				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
+			} else {
+				model.put("isPresent", Boolean.FALSE);
+			}
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * 
+	 * @param searchType
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private PaginationFilter generatePaginationFilter(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
+
+		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
+			switch (sortingColumnNumber) {
+				case 0:
+					paginationFilter.addSortingCriteria("document.senderPeople.mapNameLf", sortingDirection);
+					break;
+				case 1:
+					paginationFilter.addSortingCriteria("document.recipientPeople.mapNameLf", sortingDirection);
+					break;
+				case 2:
+					paginationFilter.addSortingCriteria("document.sortableDateInt", sortingDirection);
+//					paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
+//					//Month is an entity, so we don't have field with suffix 
+//					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", sortingDirection);
+//					paginationFilter.addSortingCriteria("document.docDay", sortingDirection);
+					break;
+				case 3:
+					paginationFilter.addSortingCriteria("document.senderPlace.placeName", sortingDirection);
+					paginationFilter.addSortingCriteria("document.recipientPlace.placeName", sortingDirection);
+					break;
+				case 4:
+					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
+					paginationFilter.addSortingCriteria("document.sortableDateInt", sortingDirection);
+//					paginationFilter.addSortingCriteria("document.docYear", "asc");
+//					//Month is an entity, so we don't have field with suffix 
+//					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", "asc");
+//					paginationFilter.addSortingCriteria("document.docDay", "asc");
+					break;
+				case 5:
+					paginationFilter.addSortingCriteria("document.volume.volNum", sortingDirection);
+					paginationFilter.addSortingCriteria("document.volume.volLetExt", sortingDirection);
+					paginationFilter.addSortingCriteria("document.folioNum", sortingDirection);
+					paginationFilter.addSortingCriteria("document.folioMod", sortingDirection);
+					break;
+				default:
+					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
+					break;
+			}		
+		}
+		
+		return paginationFilter;
+	}
+	
+	/**
+	 * @return the geoBaseService
+	 */
+	public GeoBaseService getGeoBaseService() {
+		return geoBaseService;
+	}
+	
 	/**
 	 * This method returns a list of ipotetical senders places. 
 	 *  
@@ -124,7 +212,7 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-	
+
 	/**
 	 * This method returns a list of parent places linkable to a place. 
 	 *  
@@ -145,6 +233,37 @@ public class AjaxController {
 		
 		try {
 			List<Place> places = getGeoBaseService().searchPlaceParent(query);
+			model.put("query", query);
+			model.put("count", places.size());
+			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
+			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
+			model.put("prefFlags", ListBeanUtils.transformList(places, "prefFlag"));
+			model.put("plTypes", ListBeanUtils.transformList(places, "plType"));
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns a list of ipotetical recipients places. 
+	 *  
+	 * @param text Text to search in ...
+	 * @return ModelAndView containing recipients.
+	 */
+	@RequestMapping(value = "/de/geobase/SearchRecipientPlace", method = RequestMethod.GET)
+	public ModelAndView searchRecipients(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			query = new String(query.getBytes(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			
+		}
+		
+		try {
+			List<Place> places = getGeoBaseService().searchRecipientsPlace(query);
 			model.put("query", query);
 			model.put("count", places.size());
 			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
@@ -188,78 +307,12 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);
 	}
-
-	/**
-	 * This method returns a list of ipotetical recipients places. 
-	 *  
-	 * @param text Text to search in ...
-	 * @return ModelAndView containing recipients.
-	 */
-	@RequestMapping(value = "/de/geobase/SearchRecipientPlace", method = RequestMethod.GET)
-	public ModelAndView searchRecipients(@RequestParam("query") String query) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			query = new String(query.getBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			
-		}
-		
-		try {
-			List<Place> places = getGeoBaseService().searchRecipientsPlace(query);
-			model.put("query", query);
-			model.put("count", places.size());
-			model.put("data", ListBeanUtils.transformList(places, "placeAllId"));
-			model.put("suggestions", ListBeanUtils.transformList(places, "placeNameFull"));
-			model.put("prefFlags", ListBeanUtils.transformList(places, "prefFlag"));
-			model.put("plTypes", ListBeanUtils.transformList(places, "plType"));
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
 	
 	/**
-	 * This method returns specific information on Birth Place. 
-	 * 
-	 * @param personId
-	 * @return
+	 * @param geoBaseService the geoBaseService to set
 	 */
-	@RequestMapping(value = "/de/geobase/ShowBirthPlaceDetails", method = RequestMethod.GET)
-	public ModelAndView showBirthPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			Place place = getGeoBaseService().findPlace(placeAllId);
-			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
-			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-	
-	/**
-	 * This method returns specific information on Death Place. 
-	 * 
-	 * @param personId
-	 * @return
-	 */
-	@RequestMapping(value = "/de/geobase/ShowDeathPlaceDetails", method = RequestMethod.GET)
-	public ModelAndView showDeathPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			Place place = getGeoBaseService().findPlace(placeAllId);
-			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
-			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
+	public void setGeoBaseService(GeoBaseService geoBaseService) {
+		this.geoBaseService = geoBaseService;
 	}
 	
 	/**
@@ -271,8 +324,8 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/geobase/ShowActiveStartPeoplePlace.json", method = RequestMethod.GET)
-	public ModelAndView ShowActiveStartPeoplePlace(@RequestParam(value="sSearch") String alias,
+	@RequestMapping(value = "/de/geobase/ShowActiveEndPeoplePlace.json", method = RequestMethod.GET)
+	public ModelAndView ShowActiveEndPeoplePlace(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -282,7 +335,7 @@ public class AjaxController {
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
 		try {
-			page = getGeoBaseService().searchActiveStartPeoplePlace(alias, paginationFilter);
+			page = getGeoBaseService().searchActiveEndPeoplePlace(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -315,8 +368,8 @@ public class AjaxController {
 	 * @param length
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/geobase/ShowActiveEndPeoplePlace.json", method = RequestMethod.GET)
-	public ModelAndView ShowActiveEndPeoplePlace(@RequestParam(value="sSearch") String alias,
+	@RequestMapping(value = "/de/geobase/ShowActiveStartPeoplePlace.json", method = RequestMethod.GET)
+	public ModelAndView ShowActiveStartPeoplePlace(@RequestParam(value="sSearch") String alias,
 			 								  @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
 			 								  @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
 			 								  @RequestParam(value="iDisplayStart") Integer firstRecord,
@@ -326,7 +379,7 @@ public class AjaxController {
 
 		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.PEOPLE);
 		try {
-			page = getGeoBaseService().searchActiveEndPeoplePlace(alias, paginationFilter);
+			page = getGeoBaseService().searchActiveStartPeoplePlace(alias, paginationFilter);
 		} catch (ApplicationThrowable aex) {
 			page = new Page(paginationFilter);
 		}
@@ -395,6 +448,27 @@ public class AjaxController {
 	}
 	
 	/**
+	 * This method returns specific information on Birth Place. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/geobase/ShowBirthPlaceDetails", method = RequestMethod.GET)
+	public ModelAndView showBirthPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
 	 * This method performs a simple search on people dictionary.
 	 * 
 	 * @param model
@@ -438,101 +512,44 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 	
-	@SuppressWarnings({"rawtypes", "unchecked" })
-	@RequestMapping(value = "/de/geobase/ShowSenderDocumentsPlace.json", method = RequestMethod.GET)
-	public ModelAndView ShowSenderDocumentsPlace(@RequestParam(value="sSearch") String alias,
-										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
-								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
-								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
-									     @RequestParam(value="iDisplayLength") Integer length) {
+	/**
+	 * This method returns specific information on Death Place. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/geobase/ShowDeathPlaceDetails", method = RequestMethod.GET)
+	public ModelAndView showDeathPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
-		Page page = null;
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
-		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
-		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
-		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
-		
-		try{
-			page = getGeoBaseService().searchSenderDocumentsPlace(alias, paginationFilter);
-			
-			for(Document currentDocument : (List<Document>)page.getList()){
-				volNums.add(currentDocument.getVolume().getVolNum());
-				volLetExts.add(currentDocument.getVolume().getVolLetExt());
-				folioNums.add(currentDocument.getFolioNum());
-				folioMods.add(currentDocument.getFolioMod());
-			}
-			
-			stateDocumentsDigitized = getGeoBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
-		}catch(ApplicationThrowable aex){
-			page = new Page(paginationFilter);
-		}
-		
-		List resultList = new ArrayList();
-		for (Document currentDocument : (List<Document>)page.getList()) {
-			List singleRow = new ArrayList();
-			if (currentDocument.getSenderPeople() != null){
-				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
-					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
-				else
-					singleRow.add("Person Name Lost");
-			}
-			else
-				singleRow.add("");
-			
-			if (currentDocument.getRecipientPeople() != null){
-				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
-					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
-				else
-					singleRow.add("Person Name Lost");
-			}
-			else
-				singleRow.add("");
-			
-			if(currentDocument.getYearModern() != null){
-				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}else{
-				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
-			}
-			
-			if (currentDocument.getSenderPlace() != null){
-				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
-					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
-				else
-					singleRow.add("Place Name Lost");
-			}
-			else
-				singleRow.add("");
-			
-			if (currentDocument.getRecipientPlace() != null){
-				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
-					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
-				else
-					singleRow.add("Place Name Lost");
-			}
-			else
-				singleRow.add("");
-			
-			if (currentDocument.getMDPAndFolio() != null){
-				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
-				}else{
-					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
-				}			
-			}
-			else
-				singleRow.add("");
 
-			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
 		}
 
-		model.put("iEcho", "1");
-		model.put("iTotalDisplayRecords", page.getTotal());
-		model.put("iTotalRecords", page.getTotal());
-		model.put("aaData", resultList);
-		
+		return new ModelAndView("responseOK", model);
+	}
+	
+	/**
+	 * This method returns specific information on Place linkable to topic. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/geobase/ShowPlaceLinkableToTopicDocument", method = RequestMethod.GET)
+	public ModelAndView showPlaceLinkableToTopicDocument(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
 
-		
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
 
 		return new ModelAndView("responseOK", model);
 	}
@@ -636,6 +653,147 @@ public class AjaxController {
 		return new ModelAndView("responseOK", model);
 	}
 	
+	/**
+	 * This method returns specific information on recipient Place. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/geobase/ShowRecipientPlaceDetails", method = RequestMethod.GET)
+	public ModelAndView showRecipientPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	@SuppressWarnings({"rawtypes", "unchecked" })
+	@RequestMapping(value = "/de/geobase/ShowSenderDocumentsPlace.json", method = RequestMethod.GET)
+	public ModelAndView ShowSenderDocumentsPlace(@RequestParam(value="sSearch") String alias,
+										 @RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 @RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 @RequestParam(value="iDisplayStart") Integer firstRecord,
+									     @RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		Page page = null;
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord, length, sortingColumnNumber, sortingDirection, SearchType.DOCUMENT);
+		Map<String, Boolean> stateDocumentsDigitized = new HashMap<String, Boolean>();
+		List<Integer> volNums = new ArrayList<Integer>(), folioNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>(), folioMods = new ArrayList<String>();
+		
+		try{
+			page = getGeoBaseService().searchSenderDocumentsPlace(alias, paginationFilter);
+			
+			for(Document currentDocument : (List<Document>)page.getList()){
+				volNums.add(currentDocument.getVolume().getVolNum());
+				volLetExts.add(currentDocument.getVolume().getVolLetExt());
+				folioNums.add(currentDocument.getFolioNum());
+				folioMods.add(currentDocument.getFolioMod());
+			}
+			
+			stateDocumentsDigitized = getGeoBaseService().getDocumentsDigitizedState(volNums, volLetExts, folioNums, folioMods);
+		}catch(ApplicationThrowable aex){
+			page = new Page(paginationFilter);
+		}
+		
+		List resultList = new ArrayList();
+		for (Document currentDocument : (List<Document>)page.getList()) {
+			List singleRow = new ArrayList();
+			if (currentDocument.getSenderPeople() != null){
+				if(!currentDocument.getSenderPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getSenderPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPeople() != null){
+				if(!currentDocument.getRecipientPeople().getMapNameLf().equals("Person Name Lost, Not Indicated or Unidentifiable"))
+					singleRow.add(currentDocument.getRecipientPeople().getMapNameLf());
+				else
+					singleRow.add("Person Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if(currentDocument.getYearModern() != null){
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getYearModern(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}else{
+				singleRow.add(DateUtils.getStringDateHTMLForTable(currentDocument.getDocYear(), currentDocument.getDocMonthNum(), currentDocument.getDocDay()));
+			}
+			
+			if (currentDocument.getSenderPlace() != null){
+				if(!currentDocument.getSenderPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getSenderPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getRecipientPlace() != null){
+				if(!currentDocument.getRecipientPlace().getPlaceName().equals("Place Name Lost, Not Indicated or Unidentifable"))
+					singleRow.add(currentDocument.getRecipientPlace().getPlaceName());
+				else
+					singleRow.add("Place Name Lost");
+			}
+			else
+				singleRow.add("");
+			
+			if (currentDocument.getMDPAndFolio() != null){
+				if(stateDocumentsDigitized.get(currentDocument.getMDPAndFolio())){
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>&nbsp<img src=\"/DocSources/images/1024/img_digitized_small_document.png\">");
+				}else{
+					singleRow.add("<b>"+currentDocument.getMDPAndFolio()+"</b>");
+				}			
+			}
+			else
+				singleRow.add("");
+
+			resultList.add(HtmlUtils.showDocumentRelated(singleRow, currentDocument.getEntryId()));
+		}
+
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+
+		
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * This method returns specific information on sender Place. 
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	@RequestMapping(value = "/de/geobase/ShowSenderPlaceDetails", method = RequestMethod.GET)
+	public ModelAndView showSenderPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Place place = getGeoBaseService().findPlace(placeAllId);
+			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
+			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+	
 	@SuppressWarnings({"rawtypes", "unchecked" })
 	@RequestMapping(value = "/de/geobase/ShowTopicsPlace.json", method = RequestMethod.GET)
 	public ModelAndView ShowTopicsPlace(@RequestParam(value="sSearch") String alias,
@@ -679,137 +837,6 @@ public class AjaxController {
 		
 
 		return new ModelAndView("responseOK", model);
-	}
-	
-	/**
-	 * This method returns specific information on sender Place. 
-	 * 
-	 * @param personId
-	 * @return
-	 */
-	@RequestMapping(value = "/de/geobase/ShowSenderPlaceDetails", method = RequestMethod.GET)
-	public ModelAndView showSenderPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			Place place = getGeoBaseService().findPlace(placeAllId);
-			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
-			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-	
-	/**
-	 * This method returns specific information on recipient Place. 
-	 * 
-	 * @param personId
-	 * @return
-	 */
-	@RequestMapping(value = "/de/geobase/ShowRecipientPlaceDetails", method = RequestMethod.GET)
-	public ModelAndView showRecipientPlaceDetails(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			Place place = getGeoBaseService().findPlace(placeAllId);
-			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
-			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-	
-	/**
-	 * This method returns specific information on Place linkable to topic. 
-	 * 
-	 * @param personId
-	 * @return
-	 */
-	@RequestMapping(value = "/de/geobase/ShowPlaceLinkableToTopicDocument", method = RequestMethod.GET)
-	public ModelAndView showPlaceLinkableToTopicDocument(@RequestParam("placeAllId") Integer placeAllId) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		try {
-			Place place = getGeoBaseService().findPlace(placeAllId);
-			model.put("placeAllId", (place.getPlaceAllId() != null ) ? place.getPlaceAllId().toString() : "");
-			model.put("prefFlag", (place.getPrefFlag() != null ) ? place.getPrefFlag().toString() : "");
-		} catch (ApplicationThrowable aex) {
-			return new ModelAndView("responseKO", model);
-		}
-
-		return new ModelAndView("responseOK", model);
-	}
-
-	/**
-	 * @param geoBaseService the geoBaseService to set
-	 */
-	public void setGeoBaseService(GeoBaseService geoBaseService) {
-		this.geoBaseService = geoBaseService;
-	}
-
-	/**
-	 * @return the geoBaseService
-	 */
-	public GeoBaseService getGeoBaseService() {
-		return geoBaseService;
-	}
-	
-	/**
-	 * 
-	 * @param searchType
-	 * @param sortingColumnNumber
-	 * @param sortingDirection
-	 * @param firstRecord
-	 * @param length
-	 * @return
-	 */
-	private PaginationFilter generatePaginationFilter(Integer sortingColumnNumber, String sortingDirection, Integer firstRecord, Integer length) {
-		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length);
-
-		if (!ObjectUtils.toString(sortingColumnNumber).equals("")) {
-			switch (sortingColumnNumber) {
-				case 0:
-					paginationFilter.addSortingCriteria("document.senderPeople.mapNameLf", sortingDirection);
-					break;
-				case 1:
-					paginationFilter.addSortingCriteria("document.recipientPeople.mapNameLf", sortingDirection);
-					break;
-				case 2:
-					paginationFilter.addSortingCriteria("document.sortableDateInt", sortingDirection);
-//					paginationFilter.addSortingCriteria("document.docYear", sortingDirection);
-//					//Month is an entity, so we don't have field with suffix 
-//					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", sortingDirection);
-//					paginationFilter.addSortingCriteria("document.docDay", sortingDirection);
-					break;
-				case 3:
-					paginationFilter.addSortingCriteria("document.senderPlace.placeName", sortingDirection);
-					paginationFilter.addSortingCriteria("document.recipientPlace.placeName", sortingDirection);
-					break;
-				case 4:
-					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
-					paginationFilter.addSortingCriteria("document.sortableDateInt", sortingDirection);
-//					paginationFilter.addSortingCriteria("document.docYear", "asc");
-//					//Month is an entity, so we don't have field with suffix 
-//					paginationFilter.addSortingCriteria("document.docMonthNum.monthNum", "asc");
-//					paginationFilter.addSortingCriteria("document.docDay", "asc");
-					break;
-				case 5:
-					paginationFilter.addSortingCriteria("document.volume.volNum", sortingDirection);
-					paginationFilter.addSortingCriteria("document.volume.volLetExt", sortingDirection);
-					paginationFilter.addSortingCriteria("document.folioNum", sortingDirection);
-					paginationFilter.addSortingCriteria("document.folioMod", sortingDirection);
-					break;
-				default:
-					paginationFilter.addSortingCriteria("topic.topicTitle", sortingDirection);
-					break;
-			}		
-		}
-		
-		return paginationFilter;
 	}
 
 }

@@ -38,6 +38,7 @@ import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
@@ -64,6 +65,13 @@ import org.medici.docsources.exception.ApplicationThrowable;
  * 
  */
 public interface DocBaseService {
+	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum addNewDocumentForum(Document document) throws ApplicationThrowable;
 
 	/**
 	 * Adds a new {@link org.medici.docsources.domain.Document} entry.
@@ -116,6 +124,14 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document addNewTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param entryId
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Forum getDocumentForum(Integer entryId) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -249,7 +265,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document editSynopsisDocument(SynExtract synExtract) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method modify topics of an existing
 	 * {@link org.medici.docsources.domain.Document}.
@@ -259,7 +275,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document editTopicDocument(EplToLink eplToLink) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param entryId
@@ -268,7 +284,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<EpLink> findCorrespondentsPeopleDocument(Integer entryId) throws ApplicationThrowable;
-
+	
 	/**
 	 * This method searches an existing document by his unique identifiers.
 	 * 
@@ -278,7 +294,8 @@ public interface DocBaseService {
 	 * 
 	 */
 	public Document findDocument(Integer entryId) throws ApplicationThrowable;
-	
+
+
 	/**
 	 * This method searches an existing document by the volume and folio numbers.
 	 * 
@@ -290,7 +307,6 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public Document findDocument(Integer volNum, String volLetExt, Integer folioNum, String folioMod) throws ApplicationThrowable;
-
 
 	/**
 	 * 
@@ -415,6 +431,14 @@ public interface DocBaseService {
 	public void generateIndexTopicList() throws ApplicationThrowable;
 
 	/**
+	 * 
+	 * @param document
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable;
+	
+	/**
 	 * This method searches if the documents are digitized
 	 * 
 	 * @param volNums
@@ -432,16 +456,8 @@ public interface DocBaseService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public HistoryNavigator getCategoryHistoryNavigator(Document document) throws ApplicationThrowable;
-	
-	/**
-	 * 
-	 * @param document
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
 	public HistoryNavigator getHistoryNavigator(Document document) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param idUserHistory
@@ -467,7 +483,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<Month> getMonths() throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @return
@@ -480,7 +496,7 @@ public interface DocBaseService {
 	 * @throws ApplicationThrowable
 	 */
 	public void optimizeIndexDocument() throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param place
@@ -519,7 +535,7 @@ public interface DocBaseService {
 	 * 
 	 */
 	public List<TopicList> searchTopicLinkableToDocument(Integer entryId, String query) throws ApplicationThrowable;
-	
+
 	/**
 	 * 
 	 * @param topic

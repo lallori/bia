@@ -9,24 +9,40 @@
 <c:url var="ShowPreviewForumPostURL" value="/community/ShowPreviewForumPost.do"/>
 						
 <h1 style="margin-bottom:20px;">POST A NEW TOPIC</h1>
-	<form:form id="EditForumPost" method="post" class="edit">
+	<form:form id="EditForumPost" method="POST" class="edit">
 		<div>
 	        <label for="subject" id="subjectLabel">Subject</label>
 	        <input id="subject" name="subject" class="input_25c" type="text" value=""/>
 	    </div>
 	    <div>
 	    	<label for="topic" id="topicLabel">Topic</label>
-			<textarea id="text" style="width:1000px; height:300px"></textarea>
+			<textarea id="topicText" name="topicText" style="width:1000px; height:300px"></textarea>
 	    </div>
 	    
-	    <input type="submit" value="Submit" class="buttonSmall" id="submit">
+	    <input type="submit" value="Submit" class="buttonSmall" id="submit" onclick="instance.post();">
 	    <a href="#" id="preview" class="buttonSmall">Preview</a>
-	</form:form>
 
-	<div id="postTable" style="display:none; margin-top:15px">
-	</div>
 <script type="text/javascript">
+	$j("#topicText").htmlbox({
+		toolbars:[[
+		// Cut, Copy, Paste
+		"separator","cut","copy","paste",
+		// Undo, Redo
+		"separator","undo","redo",
+		// Bold, Italic, Underline, Strikethrough, Sup, Sub
+		"separator","bold","italic","underline","strike","sup","sub",
+		// Left, Right, Center, Justify
+		"separator","justify","left","center","right",
+		// Ordered List, Unordered List, Indent, Outdent
+		"separator","ol","ul","indent","outdent",
+		// Hyperlink, Remove Hyperlink, Image
+		"separator","link","unlink","image"
+		]],
+		about:false
+	});
+
 	$j(document).ready(function() {
+
 		$j('#preview').click(function(){
  			$j.ajax({ type:"POST", url:"${ShowPreviewForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(html) {
  				$j("#postTable").html(html);
@@ -36,38 +52,19 @@
 			$j.scrollTo({top:'300px',left:'0px'}, 800 );
          });
 	});	
+
 </script>
 
-<script type="text/javascript">
-	new TINY.editor.edit('editor',{
-		id:'text',
-		width:920,
-		height:250,
-		cssclass:'te',
-		controlclass:'tecontrol',
-		rowclass:'teheader',
-		dividerclass:'tedivider',
-		controls:['bold','italic','underline','strikethrough','|','subscript','superscript','|',
-				  'orderedlist','unorderedlist','|','outdent','indent','|','leftalign',
-				  'centeralign','rightalign','blockjustify','|','unformat','|','undo','redo','n',
-				  'font','size','style','|','image','hr','link','unlink','|','cut','copy','paste','print'],
-		footer:false,
-		fonts:['Georgia','Arial','Trebuchet MS'],
-		xhtml:false,
-		cssfile:'forum.css',
-		bodyid:'editor',
-		footerclass:'tefooter',
-		toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'},
-		resize:{cssclass:'resize'}
-	});
-</script>
+	</form:form>
 
+	<div id="postTable" style="display:none; margin-top:15px">
+	</div>
 <script>
 	$j(function() {
-		$j('#submit').click(function(){
+		/*$j('#submit').click(function(){
 			$j('#messagePosted').dialog('open');
 			return false;
-		});
+		});*/
 		
 		$j( "#messagePosted" ).dialog({
 			  autoOpen : false,

@@ -76,20 +76,20 @@
 						            <div class="four">LAST POST</div>
 						        </div>
 
-							<c:forEach items="${subForums}" var="currentForum" varStatus="status">
+							<c:forEach items="${subForumsPage.list}" var="currentForum" varStatus="status">
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
 						                <a href="/DocSources/forum/viewSubForums.html" id="viewTopic">${currentForum.title}</a>
 						                <span>${currentForum.description}</span>
 						            </div>
-						            <div class="two">5</div>
+						            <div class="two">${currentForum.forumPost.size}</div>
 						            <div class="three">35</div>
 						            <div class="four">by <a href="#" id="userName" class="link">aga11</a><span class="date">Wed Mar 17, 2012 5:42 pm</span></div>
 						        </div>
 						    </c:forEach>
 
-							<c:if test="${empty forums}">
+							<c:if test="${empty subForumsPage.list}">
 								<div class="rowLast">						            
 									<div class="one">
 						            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">

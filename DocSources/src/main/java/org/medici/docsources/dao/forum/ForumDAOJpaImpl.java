@@ -29,16 +29,28 @@ package org.medici.docsources.dao.forum;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.common.util.ForumUtils;
 import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.Document;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.Forum.Status;
+import org.medici.docsources.domain.Forum.SubType;
 import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.People;
+import org.medici.docsources.domain.Place;
+import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -71,6 +83,125 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 5977718269527833285L;
+
+	private final Logger logger = Logger.getLogger(this.getClass());
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum addNewDocumentForum(Forum forumParent, Document document) throws PersistenceException {
+		Forum forum = new Forum();
+		forum.setDateCreated(new Date());
+		forum.setTitle(document.toString());
+		forum.setDescription(document.toString());
+		forum.setForumParent(forumParent);
+		forum.setLastPost(null);
+		forum.setLastUpdate(new Date());
+
+		forum.setDocument(document);
+		forum.setPerson(null);
+		forum.setPlace(null);
+		forum.setVolume(null);
+		
+		forum.setPostsNumber(new Integer(0));
+		forum.setStatus(Status.ONLINE);
+		forum.setTopicsNumber(new Integer(0));
+		forum.setType(Type.FORUM);
+		forum.setSubType(SubType.DOCUMENT);
+
+		getEntityManager().persist(forum);
+
+        return forum;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum addNewPersonForum(Forum forumParent, People person) throws PersistenceException {
+		Forum forum = new Forum();
+		forum.setDateCreated(new Date());
+		forum.setDescription(person.getMapNameLf());
+		forum.setForumParent(forumParent);
+		forum.setLastPost(null);
+		forum.setLastUpdate(new Date());
+
+		forum.setDocument(null);
+		forum.setPerson(person);
+		forum.setPlace(null);
+		forum.setVolume(null);
+		
+		forum.setPostsNumber(new Integer(0));
+		forum.setStatus(Status.ONLINE);
+		forum.setTopicsNumber(new Integer(0));
+		forum.setType(Type.FORUM);
+		forum.setTitle(person.getMapNameLf());
+		forum.setSubType(SubType.PEOPLE);
+
+		getEntityManager().persist(forum);
+
+        return forum;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum addNewPlaceForum(Forum forumParent, Place place) throws PersistenceException {
+		Forum forum = new Forum();
+		forum.setDateCreated(new Date());
+		forum.setDescription(place.getPlaceNameFull());
+		forum.setTitle(place.getPlaceNameFull());
+		forum.setForumParent(forumParent);
+		forum.setLastPost(null);
+		forum.setLastUpdate(new Date());
+
+		forum.setDocument(null);
+		forum.setPerson(null);
+		forum.setPlace(place);
+		forum.setVolume(null);
+		
+		forum.setPostsNumber(new Integer(0));
+		forum.setStatus(Status.ONLINE);
+		forum.setTopicsNumber(new Integer(0));
+		forum.setType(Type.FORUM);
+		forum.setSubType(SubType.PLACE);
+
+		getEntityManager().persist(forum);
+
+        return forum;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum addNewVolumeForum(Forum forumParent, Volume volume) throws PersistenceException {
+		Forum forum = new Forum();
+		forum.setDateCreated(new Date());
+		forum.setDescription(volume.getSerieList().toString());
+		forum.setTitle(volume.getSerieList().toString());
+
+		forum.setForumParent(forumParent);
+		forum.setLastPost(null);
+		forum.setLastUpdate(new Date());
+
+		forum.setDocument(null);
+		forum.setPerson(null);
+		forum.setPlace(null);
+		forum.setVolume(volume);
+		
+		forum.setPostsNumber(new Integer(0));
+		forum.setStatus(Status.ONLINE);
+		forum.setTopicsNumber(new Integer(0));
+		forum.setType(Type.FORUM);
+		forum.setSubType(SubType.PEOPLE);
+
+		getEntityManager().persist(forum);
+
+        return forum;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -166,6 +297,62 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         return (List<Forum>) query.getResultList();
   	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findSubForums(Integer parentForumId, PaginationFilter paginationFilter) throws PersistenceException {
+		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
+		String queryString = "FROM Forum WHERE type=:typeForum  and forumParent.id = :forumParentId " +
+		"and forumParent.type=:forumParentTypeForum";
+
+		// We prepare object of return method.
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		// We set size of result.
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + queryString;
+	        
+			query = getEntityManager().createQuery(countQuery);
+	        query.setParameter("typeForum", Type.FORUM);
+	        query.setParameter("forumParentId", parentForumId);
+	        query.setParameter("forumParentTypeForum", Type.FORUM);
+
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		String jpql = queryString + orderBySQL.toString();
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql );
+        query.setParameter("typeForum", Type.FORUM);
+        query.setParameter("forumParentId", parentForumId);
+        query.setParameter("forumParentTypeForum", Type.FORUM);
+        
+        // We set pagination  
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+
+		// We set search result on return method
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -213,6 +400,75 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
+	public Forum getForumDocument(Integer entryId) throws PersistenceException {
+		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and document=:entryId ";
+
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("typeForum", Type.FORUM);
+        query.setParameter("subTypeForum", SubType.DOCUMENT);
+        query.setParameter("entryId", entryId);
+
+        List<Forum> list = (List<Forum>) query.getResultList();
+        
+        if (list.size()==1) {
+        	return list.get(0);
+        } else if (list.size()>1) {
+        	logger.error("Found more than one forum for document with entryId " + entryId);
+        }
+
+        return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getForumPerson(Integer personId) throws PersistenceException {
+		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and person=:personId ";
+		
+		Query query = getEntityManager().createQuery(queryString);
+		query.setParameter("typeForum", Type.FORUM);
+		query.setParameter("subTypeForum", SubType.PEOPLE);
+		query.setParameter("personId", personId);
+		
+		List<Forum> list = (List<Forum>) query.getResultList();
+		
+		if (list.size()==1) {
+			return list.get(0);
+		} else if (list.size()>1) {
+			logger.error("Found more than one forum for person with personId " +personId);
+		}
+		
+		return null;	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getForumPlace(Integer placeAllId) throws PersistenceException {
+		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and place=:placeAllId ";
+
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("typeForum", Type.FORUM);
+        query.setParameter("subTypeForum", SubType.PLACE);
+        query.setParameter("placeAllId", placeAllId);
+
+        List<Forum> list = (List<Forum>) query.getResultList();
+        
+        if (list.size()==1) {
+        	return list.get(0);
+        } else if (list.size()>1) {
+        	logger.error("Found more than one forum for place with id " +placeAllId);
+        }
+
+        return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Forum> getForumsByType(Type type) throws PersistenceException {
@@ -222,6 +478,29 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         query.setParameter("typeForum", type);
 
         return query.getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getForumVolume(Integer summaryId) throws PersistenceException {
+		String queryString = "FROM Forum WHERE type=:typeForum and subType=:subTypeForum and volume=:summaryId ";
+
+        Query query = getEntityManager().createQuery(queryString);
+        query.setParameter("typeForum", Type.FORUM);
+        query.setParameter("subTypeForum", SubType.VOLUME);
+        query.setParameter("summaryId", summaryId);
+
+        List<Forum> list = (List<Forum>) query.getResultList();
+        
+        if (list.size()==1) {
+        	return list.get(0);
+        } else if (list.size()>1) {
+        	logger.error("Found more than one forum for volume with summaryId " +summaryId);
+        }
+
+        return null;
 	}
 
 	/**

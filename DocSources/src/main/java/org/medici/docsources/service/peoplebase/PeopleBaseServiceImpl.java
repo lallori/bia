@@ -56,6 +56,7 @@ import org.medici.docsources.dao.bibliot.BiblioTDAO;
 import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
+import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.marriage.MarriageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
@@ -68,6 +69,7 @@ import org.medici.docsources.dao.titleoccslist.TitleOccsListDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.AltName.NameType;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Parent;
@@ -100,19 +102,16 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	private AltNameDAO altNameDAO;
 	@Autowired
 	private ApplicationPropertyDAO applicationPropertyDAO;
-
 	@Autowired
 	private BiblioTDAO biblioTDAO;
-	
 	@Autowired
 	private BioRefLinkDAO bioRefLinkDAO;
-	
 	@Autowired
 	private DocumentDAO documentDAO;
-	
 	@Autowired 
 	private EpLinkDAO epLinkDAO;
-	
+	@Autowired
+	private ForumDAO forumDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	
@@ -215,6 +214,27 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
+	public Forum addNewPersonForum(People person) throws ApplicationThrowable {
+		try {
+			person = getPeopleDAO().find(person.getPersonId());
+
+			Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
+			
+			Forum forum = getForumDAO().addNewPersonForum(parentForum, person);
+			
+			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
+
+			return forum;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
 	public People addNewMarriagePerson(Marriage marriage) throws ApplicationThrowable {
 		try {
 			// Set marriageId to null to use generator value
@@ -254,7 +274,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -379,7 +399,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -534,7 +554,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -553,7 +573,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}	
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -983,7 +1003,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1007,7 +1027,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1078,7 +1098,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1114,7 +1134,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1163,7 +1183,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1179,7 +1199,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1193,7 +1213,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1207,7 +1227,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1219,7 +1239,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1231,7 +1251,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1369,13 +1389,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
-	 * @param applicationPropertyDAO the applicationPropertyDAO to set
-	 */
-	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
-		this.applicationPropertyDAO = applicationPropertyDAO;
-	}
-
-	/**
 	 * @return the applicationPropertyDAO
 	 */
 	public ApplicationPropertyDAO getApplicationPropertyDAO() {
@@ -1397,12 +1410,35 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HistoryNavigator getCategoryHistoryNavigator(People person) throws ApplicationThrowable {
+		HistoryNavigator historyNavigator = new HistoryNavigator();
+		try {
+			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PEOPLE, person.getPersonId());
+			
+			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
+			
+			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
+			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
+
+			return historyNavigator;
+		}catch(Throwable th){
+			logger.error(th);
+		}
+
+		return historyNavigator;
+	}
+	
+	/**
 	 * @return the documentDAO
 	 */
 	public DocumentDAO getDocumentDAO() {
 		return documentDAO;
 	}
-	
+
 	@Override
 	public Map<String, Boolean> getDocumentsDigitizedState(List<Integer> volNums, List<String> volLetExts, List<Integer> folioNums, List<String> folioMods) throws ApplicationThrowable {
 		Map<String, Boolean> retValue = new HashMap<String, Boolean>();
@@ -1430,6 +1466,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @return the forumDAO
+	 */
+	public ForumDAO getForumDAO() {
+		return forumDAO;
+	}
+	
+	/**
 	 * 
 	 */
 	@Override
@@ -1452,29 +1495,6 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		return historyNavigator;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public HistoryNavigator getCategoryHistoryNavigator(People person) throws ApplicationThrowable {
-		HistoryNavigator historyNavigator = new HistoryNavigator();
-		try {
-			UserHistory userHistory = getUserHistoryDAO().findHistoryFromEntity(Category.PEOPLE, person.getPersonId());
-			
-			UserHistory previousUserHistory = getUserHistoryDAO().findPreviousCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			UserHistory nextUserHistory = getUserHistoryDAO().findNextCategoryHistoryCursor(userHistory.getCategory(), userHistory.getIdUserHistory());
-			
-			historyNavigator.setPreviousHistoryUrl(HtmlUtils.getHistoryNavigatorPreviousPageUrl(previousUserHistory));
-			historyNavigator.setNextHistoryUrl(HtmlUtils.getHistoryNavigatorNextPageUrl(nextUserHistory));
-
-			return historyNavigator;
-		}catch(Throwable th){
-			logger.error(th);
-		}
-
-		return historyNavigator;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1558,14 +1578,26 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public ParentDAO getParentDAO() {
 		return parentDAO;
 	}
-
+	
 	/**
 	 * @return the peopleDAO
 	 */
 	public PeopleDAO getPeopleDAO() {
 		return peopleDAO;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Forum getPersonForum(Integer personId) throws ApplicationThrowable {
+		try{
+			return getForumDAO().getForumPerson(personId);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
 	/**
 	 * @return the placeDAO
 	 */
@@ -1579,7 +1611,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public PoLinkDAO getPoLinkDAO() {
 		return poLinkDAO;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1598,14 +1630,14 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	public RoleCatDAO getRoleCatDAO() {
 		return roleCatDAO;
 	}
-	
+
 	/**
 	 * @return the titleOccsListDAO
 	 */
 	public TitleOccsListDAO getTitleOccsListDAO() {
 		return titleOccsListDAO;
 	}
-
+	
 	/**
 	 * @return the userHistoryDAO
 	 */
@@ -1621,7 +1653,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1671,7 +1703,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1720,7 +1752,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1732,7 +1764,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1756,7 +1788,7 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 			throw new ApplicationThrowable(th);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1825,6 +1857,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	}
 
 	/**
+	 * @param applicationPropertyDAO the applicationPropertyDAO to set
+	 */
+	public void setApplicationPropertyDAO(ApplicationPropertyDAO applicationPropertyDAO) {
+		this.applicationPropertyDAO = applicationPropertyDAO;
+	}
+
+	/**
 	 * @param biblioTDAO the biblioTDAO to set
 	 */
 	public void setBiblioTDAO(BiblioTDAO biblioTDAO) {
@@ -1850,6 +1889,13 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	 */
 	public void setEpLinkDAO(EpLinkDAO epLinkDAO) {
 		this.epLinkDAO = epLinkDAO;
+	}
+
+	/**
+	 * @param forumDAO the forumDAO to set
+	 */
+	public void setForumDAO(ForumDAO forumDAO) {
+		this.forumDAO = forumDAO;
 	}
 
 	/**

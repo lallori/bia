@@ -21,7 +21,7 @@
     	<ul>
         	<li><a href="#" id="userName" class="link">${userInformation.account}</a></li>
             <li><security:authentication property="principal.significantRoleDescription"/></li>
-            <li>Posts: <span>${userInformation.account}</span></li>
+            <li>Posts: <span>${userInformation.forumNumberOfPost}</span></li>
             <li>Joined: <span>${userInformation.forumJoinedDate}</span></li>
         </ul>
     </div>

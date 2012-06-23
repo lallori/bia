@@ -35,10 +35,12 @@ import java.util.Map;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.DateUtils;
+import org.medici.docsources.common.util.ForumUtils;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.domain.Document;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.SearchFilter.SearchType;
 import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
@@ -180,6 +182,33 @@ public class AjaxController {
 			model.put("volume", (inputVolume != null) ? inputVolume : "");
 			model.put("summaryId", "");
 			model.put("volumeDigitized", "false");
+		}
+
+		return new ModelAndView("responseOK", model);
+	}
+
+	/**
+	 * 
+	 * @param summaryId
+	 * @return
+	 */
+	@RequestMapping(value = "/src/volbase/getLinkedForum", method = RequestMethod.GET)
+	public ModelAndView getLinkedForum(@RequestParam(value="summaryId") Integer summaryId) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			Forum forum = getVolBaseService().getVolumeForum(summaryId);
+			
+			if (forum != null) {
+				model.put("isPresent", Boolean.TRUE);
+				model.put("forumId", forum.getId());
+				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
+			} else {
+				model.put("isPresent", Boolean.FALSE);
+			}
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
 		}
 
 		return new ModelAndView("responseOK", model);

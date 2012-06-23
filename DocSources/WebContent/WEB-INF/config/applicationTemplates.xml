@@ -352,7 +352,6 @@
 	<definition name="digitization/ShowSearchDigitizedVolumes" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowSearchDigitizedVolumes.jsp"/>
 	</definition>
-
     <definition name="digitization/ShowDigitizationModuleModalWindow" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowDigitizationModuleModalWindow.jsp"/>
 	</definition>
@@ -475,6 +474,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuActionsDocument.jsp"/>
 	</definition>
 
+	<definition name="docbase/ShowMenuCommentsDocumentModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuCommentsDocumentModalWindow.jsp"/>
+	</definition>
+
 	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowTopicsDocument.jsp"/>
 	</definition>
@@ -560,6 +563,10 @@
 
 	<definition name="geobase/ShowMenuActionsPlace" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/geobase/ShowMenuActionsPlace.jsp"/>
+	</definition>
+
+	<definition name="geobase/ShowMenuCommentsPlaceModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuCommentsPlaceModalWindow.jsp"/>
 	</definition>
 
 	<definition name="geobase/ShowPlace" extends="template.place">
@@ -759,6 +766,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowMenuActionsPerson.jsp"/>
 	</definition>
 
+	<definition name="peoplebase/ShowMenuCommentsPersonModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuCommentsPersonModalWindow.jsp"/>
+	</definition>
+
 	<definition name="peoplebase/ShowNamesPerson" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ShowNamesPerson.jsp"/>
 	</definition>
@@ -938,6 +949,10 @@
 
 	<definition name="volbase/ShowMenuActionsVolume" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowMenuActionsVolume.jsp"/>
+	</definition>
+
+	<definition name="volbase/ShowMenuCommentsVolumeModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/volbase/ShowMenuCommentsVolumeModalWindow.jsp"/>
 	</definition>
 
 	<definition name="volbase/ShowVolume" extends="template.volume">

@@ -55,25 +55,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class TranscribeAndContextualizeDocumentController {
 	@Autowired
 	private DocBaseService docBaseService;
-	@Autowired(required = false)
-	@Qualifier("editDetailsDocumentValidator")
-	private Validator validator;
 
 	/**
 	 * @return the docBaseService
 	 */
 	public DocBaseService getDocBaseService() {
 		return docBaseService;
-	}
-
-	/**
-	 * This method returns the Validator class used by Controller to make
-	 * business validation.
-	 * 
-	 * @return
-	 */
-	public Validator getValidator() {
-		return validator;
 	}
 
 	/**
@@ -133,13 +120,5 @@ public class TranscribeAndContextualizeDocumentController {
 			return new ModelAndView("error/EditDetailsDocument", model);
 		}
 
-	}
-
-	/**
-	 * 
-	 * @param validator
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
 	}
 }

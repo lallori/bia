@@ -4,18 +4,25 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="ShowVettingChronologyDocumentURL" value="/de/docbase/ShowVettingChronologyDocument.do">
-		<c:param name="entryId"   value="${document.entryId}" />
-	</c:url>
-	<c:url var="ShowMenuActionsDocumentURL" value="/de/docbase/ShowMenuActionsDocument.do">
-		<c:param name="entryId"   value="${document.entryId}" />
-	</c:url>
-	<c:url var="ShareDocumentURL" value="/src/docbase/ShareDocument.do">
+	<c:url var="GetLinkedForumURL" value="/src/docbase/GetLinkedForumURL.json">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
 	<c:url var="PrintDocumentURL" value="/src/docbase/PrintDocument.do">
 		<c:param name="entryId" value="${document.entryId}" />
 	</c:url>
+	<c:url var="ShareDocumentURL" value="/src/docbase/ShareDocument.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
+	<c:url var="ShowConfirmCreateDocumentForumURL" value="/src/docbase/ShowConfirmCreateDocumentForum.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
+	<c:url var="ShowMenuActionsDocumentURL" value="/de/docbase/ShowMenuActionsDocument.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
+	<c:url var="ShowVettingChronologyDocumentURL" value="/de/docbase/ShowVettingChronologyDocument.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
+
 		
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
@@ -31,6 +38,7 @@
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="vettingHistory" href="${ShowVettingChronologyDocumentURL}">Vetting History</a>
 		</security:authorize>
+		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 		<a id="menuActions" href="${ShowMenuActionsDocumentURL}">Delete</a>
 		</security:authorize>
@@ -41,6 +49,17 @@
 	
 	<script type="text/javascript">
 	$j(document).ready(function() {
+		$j("#comments").click(function() {
+			$j.ajax({ url: '${GetLinkedForumURL}', cache: false, success:function(json) {
+				if (json.isPresent == 'true') {
+					$j("#comments").attr('href', json.forumUrl);
+					$j("#comments").open({scrollbars: "yes"});
+				} else {
+					Modalbox.show('${ShowConfirmCreateDocumentForumURL}', {title: "COMMENTS", width: 200, height: 150});return false;
+				}
+			}});
+		});
+
 		$j('#buttonShareLink').tooltip({track: true, fade: 350, showURL: false });
 
 		$j("#buttonShareLink").click(function() {										

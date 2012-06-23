@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.controller.community;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +35,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.community.ShowForumCommand;
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.util.ForumUtils;
 import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Forum;
@@ -75,7 +76,7 @@ public class ShowForumController {
 
 		try {
 			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
-			
+
 			if (userInformation != null) {
 				if (userInformation.getForumJoinedDate() == null) {
 					userInformation = getCommunityService().joinUserOnForum();
@@ -104,9 +105,15 @@ public class ShowForumController {
 				model.put("forum", forum);
 			}
 
-			List<Forum> subForums = new ArrayList<Forum>(0);
-			subForums = getCommunityService().getSubForums(forum.getId());
-			model.put("subForums", subForums);
+			if (command.getLength() == null) {
+				command.setLength(10);
+			}
+
+			PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), command.getLength(), command.getTotal());
+			paginationFilter.addSortingCriteria("dispositionOrder", "asc");
+			
+			Page page = getCommunityService().getSubForums(forum.getId(), paginationFilter);
+			model.put("subForumsPage", page);
 
 			HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
 			model.put("statisticsHashMap", statisticsHashMap);
