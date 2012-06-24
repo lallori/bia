@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.service.community;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -114,38 +113,6 @@ public interface CommunityService {
 
 	/**
 	 * 
-	 * @param entryId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public ArrayList<UserComment> getCommentsOnDocument(Integer entryId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param personId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public ArrayList<UserComment> getCommentsOnPerson(Integer personId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param placeAllId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public ArrayList<UserComment> getCommentsOnPlace(Integer placeAllId) throws ApplicationThrowable;
-
-	/**
-	 * 
-	 * @param summaryId
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public ArrayList<UserComment> getCommentsOnVolume(Integer summaryId) throws ApplicationThrowable;
-
-	/**
-	 * 
 	 * @param forum
 	 * @return
 	 * @throws ApplicationThrowable
@@ -224,11 +191,11 @@ public interface CommunityService {
 
 	/**
 	 * 
-	 * @param userComment
+	 * @param forumPost
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public UserComment replyComment(UserComment userComment, Integer parentUserCommentId) throws ApplicationThrowable;
+	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
 
 	/**
 	 * 

@@ -1,5 +1,5 @@
 /*
- * EditForumPostValidator.java
+ * ReplyForumPostValidator.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,7 +27,7 @@
  */
 package org.medici.docsources.validator.community;
 
-import org.medici.docsources.command.community.EditForumPostCommand;
+import org.medici.docsources.command.community.ReplyForumPostCommand;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ import org.springframework.validation.Validator;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
  */
-public class EditForumPostValidator implements Validator {
+public class ReplyForumPostValidator implements Validator {
 	@Autowired
 	private CommunityService communityService;
 
@@ -68,7 +68,7 @@ public class EditForumPostValidator implements Validator {
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class givenClass) {
-		return givenClass.equals(EditForumPostCommand.class);
+		return givenClass.equals(ReplyForumPostCommand.class);
 	}
 
 	/**
@@ -81,9 +81,9 @@ public class EditForumPostValidator implements Validator {
 	 * @param errors contextual state about the validation process (never null)
 	 */
 	public void validate(Object object, Errors errors) {
-		EditForumPostCommand editForumPostCommand = (EditForumPostCommand) object;
+		ReplyForumPostCommand replyForumPostCommand = (ReplyForumPostCommand) object;
 		
-		validateForum(editForumPostCommand.getForumId(), errors);
+		validateForum(replyForumPostCommand.getForumId(), errors);
 	}
 
 	public void validateForum(Integer forumId, Errors errors) {

@@ -51,7 +51,7 @@
 						<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
 							<c:param name="id" value="${forum.id}"/>
 						</c:url>
-						<c:url var="EditPostForumURL" value="/community/EditPostForum.do">
+						<c:url var="EditForumPostURL" value="/community/EditForumPost.do">
 							<c:param name="id" value="0"/>
 							<c:param name="forumId" value="${forum.id}"/>
 						</c:url>
@@ -59,7 +59,7 @@
 						
 						<div id="topicActions">
 							<c:if test="${forum.option.canHaveThreads}">
-							<a href="${EditPostForumURL}" class="buttonMedium" id="newTopic">New Topic</a>
+							<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
 							</c:if>
 						    <div id="searchThisForumFormDiv">
 						        <form id="SearchForm" action="/DocSources/src/SimpleSearch.do" method="post">
@@ -143,7 +143,7 @@
 						
 						<div id="topicActions">
 							<c:if test="${forum.option.canHaveThreads}">
-							<a href="${EditPostForumURL}" class="buttonMedium" id="newTopic">New Topic</a>
+							<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
 							</c:if>
 						    <div id="jumpToDiv">
 						    	Jump to:

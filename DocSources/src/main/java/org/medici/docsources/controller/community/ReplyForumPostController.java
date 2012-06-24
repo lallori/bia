@@ -1,5 +1,5 @@
 /*
- * ShowCategoryForumController.java
+ * ReplyForumPostController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -27,88 +27,97 @@
  */
 package org.medici.docsources.controller.community;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
-import org.medici.docsources.command.community.ShowCategoryForumCommand;
-import org.medici.docsources.common.util.ListBeanUtils;
+import org.medici.docsources.command.community.ReplyForumPostCommand;
 import org.medici.docsources.domain.Forum;
-import org.medici.docsources.domain.UserInformation;
-import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.ForumPost;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller to view a forum category.
+ * Controller to reply a post.
  * It manages View and request's elaboration process.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping(value={"/community/", "/community/ShowCategoryForum"})
-public class ShowCategoryForumController {
+@RequestMapping(value={"/community/ReplyForumPost"})
+public class ReplyForumPostController {
 	@Autowired
 	private CommunityService communityService;
+	@Autowired(required = false)
+	@Qualifier("replyForumPostValidator")
+	private Validator validator;
 	
+	/**
+	 * 
+	 * @param command
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") ReplyForumPostCommand command, BindingResult result, HttpServletRequest httpServletRequest) {
+		getValidator().validate(command, result);
+		if (result.hasErrors()) {
+			return setupForm(command);
+		} else {
+			Map<String, Object> model = new HashMap<String, Object>();
+
+			ForumPost forumPost = new ForumPost();
+			forumPost.setIpAddress(httpServletRequest.getRemoteAddr());
+			forumPost.setText(command.getText());
+			forumPost.setSubject(command.getSubject());
+			forumPost.setParentPost(new ForumPost(command.getParentPostId()));
+			forumPost.setForum(new Forum(command.getForumId()));
+
+			try {
+				forumPost = getCommunityService().replyPost(forumPost);
+				model.put("forumPost", forumPost);
+				return new ModelAndView("response/ForumPostMessageOK", model);
+			} catch (ApplicationThrowable ath) {
+				return new ModelAndView("response/ForumPostMessageKO", model);
+			}
+		}
+	}
+		
 	/**
 	 * 
 	 * @param request
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupForm(@ModelAttribute("command") ShowCategoryForumCommand command, HttpSession httpSession) {
+	public ModelAndView setupForm(@ModelAttribute("command") ReplyForumPostCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		
+
+		ForumPost postToReply = new ForumPost();
+
 		try {
-			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
+			postToReply = getCommunityService().findPost(command.getParentPostId());
+		} catch (ApplicationThrowable applicationThrowable) {
+			return new ModelAndView("error/EditPostForum", model);
 			
-			if (userInformation != null) {
-				if (userInformation.getForumJoinedDate() == null) {
-					userInformation = getCommunityService().joinUserOnForum();
-					httpSession.setAttribute("userInformation", userInformation);
-				}
-			}
-			
-			Forum category = null;
-			if (command.getId() == null){
-				category = getCommunityService().getFirstCategory();
-			} else {
-				category = getCommunityService().getCategory(new Forum(command.getId(), Type.CATEGORY));
-			}
-			model.put("category", category);
-
-			List<Forum> subCategories = getCommunityService().getSubCategories(new Forum(category.getId(), Type.CATEGORY));
-			model.put("subCategories", subCategories);
-
-			if (subCategories.size() > 0) {
-				HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
-				forumsHashMap = getCommunityService().getForumsGroupByCategory((List<Integer>)ListBeanUtils.transformList(subCategories, "id"));
-				model.put("forumsBySubCategories", forumsHashMap);
-			}
-
-			List<Forum> forums = new ArrayList<Forum>(0);
-			forums = getCommunityService().getSubForums(category.getId());
-			model.put("subForums", forums);
-
-			HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
-			model.put("statisticsHashMap", statisticsHashMap);
-		}catch (ApplicationThrowable applicationThrowable) {
-			return new ModelAndView("error/ShowIndexForum", model);
 		}
+		command.setForumId(postToReply.getForum().getId());
+		command.setParentPostId(postToReply.getParentPost().getId());
+		command.setSubject(postToReply.getSubject());
+		command.setText(postToReply.getText());
 
-		return new ModelAndView("community/ShowCategoryForum", model);
+		return new ModelAndView("community/EditForumPost", model);
 	}
 
 	/**
@@ -123,5 +132,19 @@ public class ShowCategoryForumController {
 	 */
 	public CommunityService getCommunityService() {
 		return communityService;
+	}
+
+	/**
+	 * @param validator the validator to set
+	 */
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
+	/**
+	 * @return the validator
+	 */
+	public Validator getValidator() {
+		return validator;
 	}
 }

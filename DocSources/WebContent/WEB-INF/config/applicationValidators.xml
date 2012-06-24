@@ -32,6 +32,11 @@
 	<bean id="editForumPostValidator" class="org.medici.docsources.validator.community.EditForumPostValidator">
 		<description>Edit Forum Post Validator.</description>
 	</bean>
+
+	<bean id="replyForumPostValidator" class="org.medici.docsources.validator.community.ReplyForumPostValidator">
+		<description>Edit Forum Post Validator.</description>
+	</bean>
+
 	<!-- Digitization base Validator -->
 	<bean id="editDetailsSchedoneValitor" class="org.medici.docsources.validator.digitization.EditDetailsSchedoneValidator">
         <description>Edit Details Schedone Validator.</description>

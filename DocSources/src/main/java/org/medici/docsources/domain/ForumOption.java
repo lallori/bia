@@ -79,13 +79,31 @@ public class ForumOption implements Serializable {
 	private Boolean canDeleteThreads;
 
 	/**
-	 * Default constructor
+	 * Default constructor. 
+	 * 
+	 * Every permission is setted to false
 	 */
 	public ForumOption() {
 		super();
+
+		setCanHaveSubCategory(Boolean.FALSE);
+		setCanHaveSubForum(Boolean.FALSE);
+		setCanHaveThreads(Boolean.FALSE);
+		setCanView(Boolean.FALSE);
+		setCanOnlyViewOwnThreads(Boolean.FALSE);
+		setCanDownloadAttachments(Boolean.FALSE);
+		setCanPostReplys(Boolean.FALSE);
+		setCanPostAttachments(Boolean.FALSE);
+		setCanRateThreads(Boolean.FALSE);
+		setCanEditPosts(Boolean.FALSE);
+		setCanDeletePosts(Boolean.FALSE);
+		setCanDeleteThreads(Boolean.FALSE);	
 	}
 
 	/**
+	 * Constructor with forum Identifier key.
+	 * 
+	 * Every permission is setted to false
 	 * 
 	 * @param forumId
 	 */
@@ -94,9 +112,23 @@ public class ForumOption implements Serializable {
 		if (forumId != null) {
 			setForum(new Forum(forumId));
 		}
+
+		setCanHaveSubCategory(Boolean.FALSE);
+		setCanHaveSubForum(Boolean.FALSE);
+		setCanHaveThreads(Boolean.FALSE);
+		setCanView(Boolean.FALSE);
+		setCanOnlyViewOwnThreads(Boolean.FALSE);
+		setCanDownloadAttachments(Boolean.FALSE);
+		setCanPostReplys(Boolean.FALSE);
+		setCanPostAttachments(Boolean.FALSE);
+		setCanRateThreads(Boolean.FALSE);
+		setCanEditPosts(Boolean.FALSE);
+		setCanDeletePosts(Boolean.FALSE);
+		setCanDeleteThreads(Boolean.FALSE);
 	}
 
 	/**
+	 * Constructor with forum object.
 	 * 
 	 * @param forum
 	 */
@@ -105,6 +137,19 @@ public class ForumOption implements Serializable {
 		if (forum != null) {
 			setForum(forum);
 		}
+
+		setCanHaveSubCategory(Boolean.FALSE);
+		setCanHaveSubForum(Boolean.FALSE);
+		setCanHaveThreads(Boolean.FALSE);
+		setCanView(Boolean.FALSE);
+		setCanOnlyViewOwnThreads(Boolean.FALSE);
+		setCanDownloadAttachments(Boolean.FALSE);
+		setCanPostReplys(Boolean.FALSE);
+		setCanPostAttachments(Boolean.FALSE);
+		setCanRateThreads(Boolean.FALSE);
+		setCanEditPosts(Boolean.FALSE);
+		setCanDeletePosts(Boolean.FALSE);
+		setCanDeleteThreads(Boolean.FALSE);
 	}
 
 	/**

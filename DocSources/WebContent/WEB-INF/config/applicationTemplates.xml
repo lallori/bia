@@ -992,27 +992,42 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/KO.jsp"/>
 	</definition>
 
+	<definition name="response/ForumPostMessageOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ForumPostMessageOK.jsp"></put-attribute>
+	</definition>
+
+	<definition name="response/ForumPostMessageKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ForumPostMessageKO.jsp"></put-attribute>
+	</definition>
+
 	<definition name="response/DeleteDocumentOK" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteDocumentOK.jsp"/>
 	</definition>
+
 	<definition name="response/DeleteDocumentKO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteDocumentKO.jsp"/>
 	</definition>
+
 	<definition name="response/DeletePlaceOK" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePlaceOK.jsp"/>
 	</definition>
+
 	<definition name="response/DeletePlaceKO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePlaceKO.jsp"/>
 	</definition>
+
 	<definition name="response/DeletePersonOK" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePersonOK.jsp"/>
 	</definition>
+
 	<definition name="response/DeletePersonKO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeletePersonKO.jsp"/>
 	</definition>
+
 	<definition name="response/DeleteVolumeOK" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteVolumeOK.jsp"/>
 	</definition>
+
 	<definition name="response/DeleteVolumeKO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeleteVolumeKO.jsp"/>
 	</definition>

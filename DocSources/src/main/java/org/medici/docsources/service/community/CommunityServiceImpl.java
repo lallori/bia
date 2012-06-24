@@ -27,7 +27,6 @@
  */
 package org.medici.docsources.service.community;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -106,7 +105,12 @@ public class CommunityServiceImpl implements CommunityService {
 	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
 		try {
 			forumPost.setId(null);
-
+			
+			Forum forum = getForumDAO().find(forumPost.getForum().getId());
+			forumPost.setForum(forum);
+			forumPost.setDateCreated(new Date());
+			forumPost.setLastUpdate(new Date());
+			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 			getForumPostDAO().persist(forumPost);
 
 			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
@@ -157,6 +161,16 @@ public class CommunityServiceImpl implements CommunityService {
 		try {
 			forumPost.setId(null);
 
+			Forum forum = getForumDAO().find(forumPost.getForum().getId());
+
+			forumPost.setForum(forum);
+			forumPost.setDateCreated(new Date());
+			forumPost.setLastUpdate(new Date());
+			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			if (forumPost.getParentPost() != null) {
+				forumPost.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getId()));
+			}
+
 			getForumPostDAO().persist(forumPost);
 
 			getUserHistoryDAO().persist(new UserHistory("Edit post", Action.MODIFY, Category.FORUM_POST, forumPost));
@@ -199,42 +213,6 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public ArrayList<UserComment> getCommentsOnDocument(Integer entryId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public ArrayList<UserComment> getCommentsOnPerson(Integer personId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public ArrayList<UserComment> getCommentsOnPlace(Integer placeAllId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc} 
-	 */
-	@Override
-	public ArrayList<UserComment> getCommentsOnVolume(Integer summaryId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc} 
-	 */
-	@Override
 	public Forum getFirstCategory() throws ApplicationThrowable {
 		try {
 			return getForumDAO().getFirstCategory();
@@ -260,18 +238,6 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public ForumDAO getForumDAO() {
 		return forumDAO;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Page getForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
-		try {
-			return getForumPostDAO().findForumPost(forum, paginationFilterPost);
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
 	}
 
 	/**
@@ -316,6 +282,18 @@ public class CommunityServiceImpl implements CommunityService {
 			hashMap.put("newestMember", getUserInformationDAO().getNewestMember().getAccount());
 			hashMap.put("totalMembers", getUserInformationDAO().countMembersForum());
 			return hashMap;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
+		try {
+			return getForumPostDAO().findForumPost(forum, paginationFilterPost);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -403,19 +381,39 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public UserComment replyComment(UserComment userComment, Integer parentUserCommentId) throws ApplicationThrowable {
+	public UserComment replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * {@inheritDoc} 
+	 * {@inheritDoc}
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public UserComment replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable {
+		try {
+			forumPost.setId(null);
+			
+			Forum forum = getForumDAO().find(forumPost.getForum().getId());
+			
+			ForumPost parentPost = getForumPostDAO().find(forumPost.getParentPost().getId());
+			forumPost.setForum(forum);
+			forumPost.setDateCreated(new Date());
+			forumPost.setLastUpdate(new Date());
+			forumPost.setParentPost(parentPost);
+			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			getForumPostDAO().persist(forumPost);
+			
+			parentPost.setTotalReply(parentPost.getTotalReply()+1);
+			getForumPostDAO().merge(parentPost);
+
+			getUserHistoryDAO().persist(new UserHistory("Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
+			
+			return forumPost;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

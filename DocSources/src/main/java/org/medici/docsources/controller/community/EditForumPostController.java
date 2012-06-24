@@ -27,10 +27,10 @@
  */
 package org.medici.docsources.controller.community;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.medici.docsources.command.community.EditForumPostCommand;
@@ -55,12 +55,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  */
 @Controller
-@RequestMapping(value={"/community/EditPostForum"})
+@RequestMapping(value={"/community/EditForumPost"})
 public class EditForumPostController {
 	@Autowired
 	private CommunityService communityService;
 	@Autowired(required = false)
-	@Qualifier("editPostForumValidator")
+	@Qualifier("editForumPostValidator")
 	private Validator validator;
 	
 	/**
@@ -70,7 +70,7 @@ public class EditForumPostController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditForumPostCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@Valid @ModelAttribute("command") EditForumPostCommand command, BindingResult result, HttpServletRequest httpServletRequest) {
 		getValidator().validate(command, result);
 		if (result.hasErrors()) {
 			return setupForm(command);
@@ -78,21 +78,25 @@ public class EditForumPostController {
 			Map<String, Object> model = new HashMap<String, Object>();
 
 			ForumPost forumPost = new ForumPost(command.getId());
+			forumPost.setIpAddress(httpServletRequest.getRemoteAddr());
 			forumPost.setText(command.getText());
 			forumPost.setSubject(command.getSubject());
+			forumPost.setForum(new Forum(command.getForumId()));
+			if (command.getParentPostId() != null) {
+				forumPost.setParentPost(new ForumPost(command.getParentPostId()));
+			}
 
 			try {
 				if (command.getId().equals(0)) {
-					forumPost.setDateCreated(new Date());
 					forumPost = getCommunityService().addNewPost(forumPost);
 					model.put("forumPost", forumPost);
 				} else {
 					forumPost = getCommunityService().editPost(forumPost);
 					model.put("forumPost", forumPost);
 				}
-				return new ModelAndView("community/ShowPostForum", model);
+				return new ModelAndView("response/ForumPostMessageOK", model);
 			} catch (ApplicationThrowable ath) {
-				return new ModelAndView("error/EditPostForum", model);
+				return new ModelAndView("response/ForumPostMessageKO", model);
 			}
 		}
 	}
@@ -106,7 +110,6 @@ public class EditForumPostController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") EditForumPostCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Forum forum = new Forum(); 
 
 		if ((command != null) && (command.getId() > 0)) {
 			ForumPost forumPost = new ForumPost();
@@ -118,7 +121,10 @@ public class EditForumPostController {
 				return new ModelAndView("error/EditPostForum", model);
 				
 			}
-			command.setForumId(forum.getForumParent().getId());
+			command.setForumId(forumPost.getForum().getId());
+			if (forumPost.getParentPost() != null) {
+				command.setParentPostId(forumPost.getParentPost().getId());
+			}
 			command.setSubject(forumPost.getSubject());
 			command.setText(forumPost.getText());
 		} else {
