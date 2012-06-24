@@ -197,8 +197,9 @@ public class VolBaseServiceImpl implements VolBaseService {
 				forumOption.setCanEditPosts(Boolean.TRUE);
 				forumOption.setCanPostReplys(Boolean.TRUE);
 				getForumOptionDAO().persist(forumOption);
-				
-				recursiveUpdateTopicsNumber(parentForum);
+
+				// thisi method call is mandatory to increment topic number on parent forum
+				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
 
 				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
@@ -207,21 +208,6 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}		
-	}
-
-	/**
-	 * 
-	 * @param parentForum
-	 */
-	private void recursiveUpdateTopicsNumber(Forum parentForum) {
-		if (parentForum.getForumParent() ==null) {
-			return;
-		}
-		
-		parentForum.setPostsNumber(parentForum.getPostsNumber());
-		getForumDAO().merge(parentForum);
-		
-		recursiveUpdateTopicsNumber(parentForum.getForumParent());
 	}
 
 	/**

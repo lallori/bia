@@ -236,6 +236,9 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				forumOption.setCanPostReplys(Boolean.TRUE);
 				getForumOptionDAO().persist(forumOption);
 
+				// thisi method call is mandatory to increment topic number on parent forum
+				getForumDAO().recursiveIncreaseTopicsNumber(parentForum);
+
 				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
 

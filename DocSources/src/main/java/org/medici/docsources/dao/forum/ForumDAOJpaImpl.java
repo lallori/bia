@@ -52,6 +52,8 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <b>ForumDAOJpaImpl</b> is a default implementation of <b>ForumDAO</b>.
@@ -204,9 +206,6 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 
 		getEntityManager().persist(forum);
 
-		forumParent.setTopicsNumber(forumParent.getTopicsNumber()+1);
-		getEntityManager().merge(forumParent);
-
         return forum;
 	}
 
@@ -350,7 +349,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         query.setParameter("forumParentTypeForum", Type.FORUM);
 
         // We set pagination  
-		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setFirstResult(paginationFilter.getFirstRecord()-1);
 		query.setMaxResults(paginationFilter.getLength());
 
 		// We manage sorting (this manages sorting on multiple fields)
@@ -530,5 +529,66 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         retValue.put("postsNumber", (Long) statisticsResult[1]);
 
         return retValue;
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveDecreasePostsNumber(Forum forum) throws PersistenceException {
+		if (forum == null) {
+			return;
+		}
+		
+		forum.setPostsNumber(forum.getPostsNumber()-1);
+		merge(forum);
+		
+		recursiveDecreasePostsNumber(forum.getForumParent());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveIncreasePostsNumber(Forum forum) {
+		if (forum == null) {
+			return;
+		}
+		
+		forum.setPostsNumber(forum.getPostsNumber()+1);
+		merge(forum);
+		
+		recursiveIncreasePostsNumber(forum.getForumParent());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveDecreaseTopicsNumber(Forum forum) throws PersistenceException {
+		if (forum == null) {
+			return;
+		}
+		
+		forum.setTopicsNumber(forum.getTopicsNumber()-1);
+		merge(forum);
+		
+		recursiveIncreaseTopicsNumber(forum.getForumParent());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recursiveIncreaseTopicsNumber(Forum forum) {
+		if (forum == null) {
+			return;
+		}
+		
+		forum.setTopicsNumber(forum.getTopicsNumber()+1);
+		merge(forum);
+		
+		recursiveIncreaseTopicsNumber(forum.getForumParent());
 	}
 }

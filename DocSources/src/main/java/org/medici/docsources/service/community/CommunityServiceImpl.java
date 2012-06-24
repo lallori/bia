@@ -44,7 +44,6 @@ import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.domain.ForumPost;
-import org.medici.docsources.domain.UserComment;
 import org.medici.docsources.domain.UserHistory;
 import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.domain.UserMessage;
@@ -113,6 +112,8 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 			getForumPostDAO().persist(forumPost);
 
+			getForumDAO().recursiveIncreasePostsNumber(forum);
+
 			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
 			return forumPost;
@@ -138,7 +139,7 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public UserComment createNewMessage(UserMessage userMessage) throws ApplicationThrowable {
+	public UserMessage createNewMessage(UserMessage userMessage) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -377,11 +378,10 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	/**
-	 * {@inheritDoc} 
+	 * {@inheritDoc}
 	 */
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
 	@Override
-	public UserComment replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable {
+	public UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -407,6 +407,8 @@ public class CommunityServiceImpl implements CommunityService {
 			
 			parentPost.setTotalReply(parentPost.getTotalReply()+1);
 			getForumPostDAO().merge(parentPost);
+
+			getForumDAO().recursiveIncreasePostsNumber(forum);
 
 			getUserHistoryDAO().persist(new UserHistory("Reply to post", Action.CREATE, Category.FORUM_POST, forumPost));
 			

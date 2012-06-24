@@ -41,6 +41,8 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.Volume;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Forum DAO.
@@ -85,38 +87,6 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 	 * @throws PersistenceException
 	 */
 	public Forum addNewVolumeForum(Forum forumParent, Volume volume) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param entryId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Forum getForumDocument(Integer entryId) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param personId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Forum getForumPerson(Integer personId) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param placeAllId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Forum getForumPlace(Integer placeAllId) throws PersistenceException;
-
-	/**
-	 * 
-	 * @param summaryId
-	 * @return
-	 * @throws PersistenceException
-	 */
-	public Forum getForumVolume(Integer summaryId) throws PersistenceException;
 
 	/**
 	 * 
@@ -176,6 +146,30 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 
 	/**
 	 * 
+	 * @param entryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getForumDocument(Integer entryId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param personId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getForumPerson(Integer personId) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param placeAllId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getForumPlace(Integer placeAllId) throws PersistenceException;
+
+	/**
+	 * 
 	 * @param forum
 	 * @return
 	 * @throws PersistenceException
@@ -184,8 +178,43 @@ public interface ForumDAO extends Dao<Integer, Forum> {
 
 	/**
 	 * 
+	 * @param summaryId
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Forum getForumVolume(Integer summaryId) throws PersistenceException;
+
+	/**
+	 * 
 	 * @return
 	 * @throws PersistenceException
 	 */
 	public HashMap<String, Long> getTotalTopicsAndPosts() throws PersistenceException;
+
+	/**
+	 * 
+	 * @param parentForum
+	 * @throws PersistenceException
+	 */
+	public void recursiveDecreasePostsNumber(Forum parentForum) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param parentForum
+	 */
+	public void recursiveDecreaseTopicsNumber(Forum parentForum) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param parentForum
+	 * @throws PersistenceException
+	 */
+	public void recursiveIncreasePostsNumber(Forum parentForum) throws PersistenceException;
+
+	/**
+	 * 
+	 * @param parentForum
+	 * @throws PersistenceException
+	 */
+	public void recursiveIncreaseTopicsNumber(Forum parentForum)throws PersistenceException;
 }

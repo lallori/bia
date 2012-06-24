@@ -690,8 +690,8 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/ComparePerson.jsp"/>
 	</definition>
 
-	<definition name="peoplebase/CreatePersonForumModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreatePersonForumModalWindow.jsp"/>
+	<definition name="peoplebase/CreatedPersonForumModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/peoplebase/CreatedPersonForumModalWindow.jsp"/>
 	</definition>
 
 	<definition name="peoplebase/EditChildPerson" extends="template.partialDOM">

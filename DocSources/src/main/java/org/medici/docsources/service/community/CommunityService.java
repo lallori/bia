@@ -35,7 +35,6 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
-import org.medici.docsources.domain.UserComment;
 import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.domain.Forum.Type;
@@ -77,7 +76,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public UserComment createNewMessage(UserMessage userMessage) throws ApplicationThrowable;
+	public UserMessage createNewMessage(UserMessage userMessage) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -203,7 +202,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public UserComment replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
+	public UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
 
 	/**
 	 * 
