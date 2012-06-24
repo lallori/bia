@@ -43,11 +43,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * This class represents entity Forum.
@@ -110,6 +109,10 @@ public class Forum implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"summaryId\"", nullable=true)
 	private Volume volume;
+
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"id\"", nullable=true)
+	private ForumOption option;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "forum", cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<ForumPost> forumPost;
@@ -357,6 +360,7 @@ public class Forum implements Serializable {
 
 		return stringBuffer.toString();
 	}
+
 	/**
 	 * @param document the document to set
 	 */
@@ -408,6 +412,20 @@ public class Forum implements Serializable {
 	 */
 	public Volume getVolume() {
 		return volume;
+	}
+
+	/**
+	 * @param forumOption the forumOption to set
+	 */
+	public void setOption(ForumOption forumOption) {
+		this.option = forumOption;
+	}
+
+	/**
+	 * @return the forumOption
+	 */
+	public ForumOption getOption() {
+		return option;
 	}
 
 	/**

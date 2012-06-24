@@ -51,6 +51,7 @@ import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
 import org.medici.docsources.dao.factchecks.FactChecksDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
+import org.medici.docsources.dao.forumoption.ForumOptionDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
@@ -64,6 +65,7 @@ import org.medici.docsources.domain.EpLink;
 import org.medici.docsources.domain.EplToLink;
 import org.medici.docsources.domain.FactChecks;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumOption;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.People;
@@ -102,6 +104,8 @@ public class DocBaseServiceImpl implements DocBaseService {
 	private FactChecksDAO factChecksDAO;
 	@Autowired
 	private ForumDAO forumDAO;
+	@Autowired
+	private ForumOptionDAO forumOptionDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -199,6 +203,15 @@ public class DocBaseServiceImpl implements DocBaseService {
 				document = getDocumentDAO().find(document.getEntryId());
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.document")));
 				forum = getForumDAO().addNewDocumentForum(parentForum, document);
+				
+				ForumOption forumOption = new ForumOption(forum);
+				forumOption.setCanHaveThreads(Boolean.TRUE);
+				forumOption.setCanDeletePosts(Boolean.TRUE);
+				forumOption.setCanDeleteThreads(Boolean.TRUE);
+				forumOption.setCanEditPosts(Boolean.TRUE);
+				forumOption.setCanPostReplys(Boolean.TRUE);
+				getForumOptionDAO().persist(forumOption);
+				
 				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
 
@@ -1139,6 +1152,20 @@ public class DocBaseServiceImpl implements DocBaseService {
 	 */
 	public ForumDAO getForumDAO() {
 		return forumDAO;
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
 	}
 
 	/**

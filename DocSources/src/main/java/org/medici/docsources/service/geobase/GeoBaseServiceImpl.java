@@ -43,6 +43,7 @@ import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.epltolink.EplToLinkDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
+import org.medici.docsources.dao.forumoption.ForumOptionDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.people.PeopleDAO;
 import org.medici.docsources.dao.place.PlaceDAO;
@@ -51,6 +52,7 @@ import org.medici.docsources.dao.placegeographiccoordinates.PlaceGeographicCoord
 import org.medici.docsources.dao.placetype.PlaceTypeDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumOption;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.PlaceExternalLinks;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
@@ -82,6 +84,8 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	private EplToLinkDAO eplToLinkDAO;
 	@Autowired
 	private ForumDAO forumDAO;
+	@Autowired
+	private ForumOptionDAO forumOptionDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -182,6 +186,15 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 				place = getPlaceDAO().find(place.getPlaceAllId());
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.place")));
 				forum = getForumDAO().addNewPlaceForum(parentForum, place);
+				
+				ForumOption forumOption = new ForumOption(forum);
+				forumOption.setCanHaveThreads(Boolean.TRUE);
+				forumOption.setCanDeletePosts(Boolean.TRUE);
+				forumOption.setCanDeleteThreads(Boolean.TRUE);
+				forumOption.setCanEditPosts(Boolean.TRUE);
+				forumOption.setCanPostReplys(Boolean.TRUE);
+				getForumOptionDAO().persist(forumOption);
+
 				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
 
@@ -759,6 +772,20 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 	 */
 	public ForumDAO getForumDAO() {
 		return forumDAO;
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
 	}
 
 	/**

@@ -16,14 +16,14 @@
 	    </div>
 	    <div>
 	    	<label for="topic" id="topicLabel">Topic</label>
-			<textarea id="topicText" name="topicText" style="width:1000px; height:300px"></textarea>
+			<textarea id="text" name="text" style="width:1000px; height:300px"></textarea>
 	    </div>
 	    
 	    <input type="submit" value="Submit" class="buttonSmall" id="submit" onclick="instance.post();">
 	    <a href="#" id="preview" class="buttonSmall">Preview</a>
 
 <script type="text/javascript">
-	$j("#topicText").htmlbox({
+	$j("#text").htmlbox({
 		toolbars:[[
 		// Cut, Copy, Paste
 		"separator","cut","copy","paste",

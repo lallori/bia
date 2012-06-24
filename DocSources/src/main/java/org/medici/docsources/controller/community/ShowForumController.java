@@ -27,6 +27,7 @@
  */
 package org.medici.docsources.controller.community;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,6 @@ import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.community.ShowForumCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.common.util.ForumUtils;
-import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Type;
 import org.medici.docsources.domain.UserInformation;
@@ -93,33 +92,53 @@ public class ShowForumController {
 			if (forum.getType().equals(Type.CATEGORY)) {
 				model.put("category", forum);
 
-				List<Forum> subCategories = getCommunityService().getSubCategories(new Forum(forum.getId()));
-				model.put("subCategories", subCategories);
+				if (forum.getOption().getCanHaveSubCategory()) {
+					List<Forum> subCategories = getCommunityService().getSubCategories(new Forum(forum.getId()));
+					model.put("subCategories", subCategories);
 
-				if (subCategories.size() > 0) {
+					//SubForums are extracted only if category is enabled to subForum...
+					List<Integer> subCategoriesIdsEnabledToSubForums = new ArrayList<Integer>(0);
+					for (Forum category : subCategories) {
+						if (category.getOption().getCanHaveSubForum()) {
+							subCategoriesIdsEnabledToSubForums.add(category.getId());
+						}
+					}
+
 					HashMap<Integer, List<Forum>> forumsHashMap = new HashMap<Integer, List<Forum>>(0);
-					forumsHashMap = getCommunityService().getForumsGroupByCategory((List<Integer>)ListBeanUtils.transformList(subCategories, "id"));
+					forumsHashMap = getCommunityService().getForumsGroupByCategory(subCategoriesIdsEnabledToSubForums);
 					model.put("forumsBySubCategories", forumsHashMap);
 				}
 			} else if (forum.getType().equals(Type.FORUM)) {
 				model.put("forum", forum);
 			}
 
-			if (command.getLength() == null) {
-				command.setLength(10);
+			if (forum.getOption().getCanHaveSubForum()) {
+				if (command.getForumLength() == null) {
+					command.setForumLength(10);
+				}
+
+				PaginationFilter paginationFilterForum = new PaginationFilter(command.getForumFirstRecord(), command.getForumLength(), command.getForumTotal());
+				paginationFilterForum.addSortingCriteria("dispositionOrder", "asc");
+				
+				Page page = getCommunityService().getSubForums(forum.getId(), paginationFilterForum);
+				model.put("subForumsPage", page);
 			}
 
-			PaginationFilter paginationFilter = new PaginationFilter(command.getFirstRecord(), command.getLength(), command.getTotal());
-			paginationFilter.addSortingCriteria("dispositionOrder", "asc");
-			
-			Page page = getCommunityService().getSubForums(forum.getId(), paginationFilter);
-			model.put("subForumsPage", page);
-
-			HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
-			model.put("statisticsHashMap", statisticsHashMap);
-			
-			String forumChron = ForumUtils.getForumChronology(forum);
-			System.out.println(forumChron);
+			if (forum.getOption().getCanHaveThreads()) {
+				if (command.getPostLength() == null) {
+					command.setPostLength(10);
+				}
+	
+				// secondo paginationFilter to manage post results..
+				PaginationFilter paginationFilterPost = new PaginationFilter(command.getPostFirstRecord(), command.getPostLength(), command.getPostTotal());
+				paginationFilterPost.addSortingCriteria("id", "asc");
+	
+				Page postPage = getCommunityService().getForumThreads(forum, paginationFilterPost);
+				model.put("postPage", postPage);
+				
+				HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
+				model.put("statisticsHashMap", statisticsHashMap);
+			}
 		}catch (ApplicationThrowable applicationThrowable) {
 			return new ModelAndView("error/ShowForum", model);
 		}

@@ -344,19 +344,21 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		
 		String jpql = queryString + orderBySQL.toString();
 		logger.info("JPQL Query : " + jpql);
-		query = getEntityManager().createQuery(jpql );
+		query = getEntityManager().createQuery(jpql);
         query.setParameter("typeForum", Type.FORUM);
         query.setParameter("forumParentId", parentForumId);
         query.setParameter("forumParentTypeForum", Type.FORUM);
-        
+
         // We set pagination  
 		query.setFirstResult(paginationFilter.getFirstRecord());
 		query.setMaxResults(paginationFilter.getLength());
 
 		// We manage sorting (this manages sorting on multiple fields)
+		List<Forum> list = (List<Forum>) query.getResultList();
 
 		// We set search result on return method
-		page.setList(query.getResultList());
+		page.setList(list);
+		page.setPageSize(page.getList().size());
 		
 		return page;
 	}

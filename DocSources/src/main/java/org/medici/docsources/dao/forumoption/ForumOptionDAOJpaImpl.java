@@ -1,5 +1,5 @@
 /*
- * ForumPostDAO.java
+ * ForumOptionDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,29 +25,29 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.forumpost;
+package org.medici.docsources.dao.forumoption;
 
-import javax.persistence.PersistenceException;
-
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.dao.Dao;
-import org.medici.docsources.domain.Forum;
-import org.medici.docsources.domain.ForumPost;
+import org.apache.log4j.Logger;
+import org.medici.docsources.dao.JpaDao;
+import org.medici.docsources.domain.ForumOption;
+import org.springframework.stereotype.Repository;
 
 /**
- * ForumPost DAO.
+ * <b>ForumOptionDAOJpaImpl</b> is a default implementation of <b>ForumOptionDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * 
+ * @see org.medici.docsources.domain.Forum
+ * {@link http://yensdesign.com/2008/10/making-mysql-forum-database-from-scratch/}
+ * 
  */
-public interface ForumPostDAO extends Dao<Integer, ForumPost> {
+@Repository
+public class ForumOptionDAOJpaImpl extends JpaDao<Integer, ForumOption> implements ForumOptionDAO {
 
 	/**
 	 * 
-	 * @param forum
-	 * @param paginationFilterPost
-	 * @return
-	 * @throws PersistenceException
 	 */
-	Page findForumPost(Forum forum, PaginationFilter paginationFilterPost) throws PersistenceException;
+	private static final long serialVersionUID = 4184936684174304244L;
+
+	private final Logger logger = Logger.getLogger(this.getClass());
 }

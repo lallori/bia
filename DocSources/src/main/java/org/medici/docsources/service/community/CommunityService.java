@@ -186,6 +186,15 @@ public interface CommunityService {
 	/**
 	 * 
 	 * @param forum
+	 * @param paginationFilterPost
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page getForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forum
 	 * @return
 	 * @throws ApplicationThrowable
 	 */

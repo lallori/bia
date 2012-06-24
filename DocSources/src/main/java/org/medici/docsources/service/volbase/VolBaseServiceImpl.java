@@ -46,6 +46,7 @@ import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
+import org.medici.docsources.dao.forumoption.ForumOptionDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
@@ -53,6 +54,7 @@ import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumOption;
 import org.medici.docsources.domain.Image;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.SerieList;
@@ -86,6 +88,8 @@ public class VolBaseServiceImpl implements VolBaseService {
 	private DocumentDAO documetDAO;
 	@Autowired
 	private ForumDAO forumDAO;
+	@Autowired
+	private ForumOptionDAO forumOptionDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -185,6 +189,15 @@ public class VolBaseServiceImpl implements VolBaseService {
 				volume = getVolumeDAO().find(volume.getSummaryId());
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.volume")));
 				forum = getForumDAO().addNewVolumeForum(parentForum, volume);
+				
+				ForumOption forumOption = new ForumOption(forum);
+				forumOption.setCanHaveThreads(Boolean.TRUE);
+				forumOption.setCanDeletePosts(Boolean.TRUE);
+				forumOption.setCanDeleteThreads(Boolean.TRUE);
+				forumOption.setCanEditPosts(Boolean.TRUE);
+				forumOption.setCanPostReplys(Boolean.TRUE);
+				getForumOptionDAO().persist(forumOption);
+
 				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
 
@@ -971,5 +984,19 @@ public class VolBaseServiceImpl implements VolBaseService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
 	}
 }

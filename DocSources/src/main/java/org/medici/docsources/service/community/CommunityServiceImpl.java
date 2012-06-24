@@ -83,24 +83,6 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
-		try {
-			forumPost.setId(null);
-
-			getForumPostDAO().persist(forumPost);
-
-			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
-			
-			return forumPost;
-		} catch (Throwable th) {
-			throw new ApplicationThrowable(th);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Forum addNewForum(Forum forum, Forum parentForum) throws ApplicationThrowable {
 		try {
 			forum.setId(null);
@@ -112,6 +94,24 @@ public class CommunityServiceImpl implements CommunityService {
 			getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
 			
 			return forum;
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
+		try {
+			forumPost.setId(null);
+
+			getForumPostDAO().persist(forumPost);
+
+			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
+			
+			return forumPost;
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -260,6 +260,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public ForumDAO getForumDAO() {
 		return forumDAO;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
+		try {
+			return getForumPostDAO().findForumPost(forum, paginationFilterPost);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

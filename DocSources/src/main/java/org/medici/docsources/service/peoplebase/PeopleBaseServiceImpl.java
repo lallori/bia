@@ -57,6 +57,7 @@ import org.medici.docsources.dao.bioreflink.BioRefLinkDAO;
 import org.medici.docsources.dao.document.DocumentDAO;
 import org.medici.docsources.dao.eplink.EpLinkDAO;
 import org.medici.docsources.dao.forum.ForumDAO;
+import org.medici.docsources.dao.forumoption.ForumOptionDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.marriage.MarriageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
@@ -70,6 +71,7 @@ import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.domain.AltName;
 import org.medici.docsources.domain.AltName.NameType;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumOption;
 import org.medici.docsources.domain.Marriage;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.domain.Parent;
@@ -112,6 +114,8 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 	private EpLinkDAO epLinkDAO;
 	@Autowired
 	private ForumDAO forumDAO;
+	@Autowired
+	private ForumOptionDAO forumOptionDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	
@@ -223,7 +227,15 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 				person = getPeopleDAO().find(person.getPersonId());
 				Forum parentForum = getForumDAO().find(NumberUtils.createInteger(ApplicationPropertyManager.getApplicationProperty("forum.identifier.people")));
 				forum = getForumDAO().addNewPersonForum(parentForum, person);
-				
+
+				ForumOption forumOption = new ForumOption(forum);
+				forumOption.setCanHaveThreads(Boolean.TRUE);
+				forumOption.setCanDeletePosts(Boolean.TRUE);
+				forumOption.setCanDeleteThreads(Boolean.TRUE);
+				forumOption.setCanEditPosts(Boolean.TRUE);
+				forumOption.setCanPostReplys(Boolean.TRUE);
+				getForumOptionDAO().persist(forumOption);
+
 				getUserHistoryDAO().persist(new UserHistory("Create new forum", Action.CREATE, Category.FORUM, forum));
 			}
 
@@ -1475,6 +1487,20 @@ public class PeopleBaseServiceImpl implements PeopleBaseService {
 		return forumDAO;
 	}
 	
+	/**
+	 * @param forumOptionDAO the forumOptionDAO to set
+	 */
+	public void setForumOptionDAO(ForumOptionDAO forumOptionDAO) {
+		this.forumOptionDAO = forumOptionDAO;
+	}
+
+	/**
+	 * @return the forumOptionDAO
+	 */
+	public ForumOptionDAO getForumOptionDAO() {
+		return forumOptionDAO;
+	}
+
 	/**
 	 * 
 	 */

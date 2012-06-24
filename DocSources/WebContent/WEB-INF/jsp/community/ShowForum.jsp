@@ -58,7 +58,9 @@
 						<h2>${forum.title}</h2>
 						
 						<div id="topicActions">
+							<c:if test="${forum.option.canHaveThreads}">
 							<a href="${EditPostForumURL}" class="buttonMedium" id="newTopic">New Topic</a>
+							</c:if>
 						    <div id="searchThisForumFormDiv">
 						        <form id="SearchForm" action="/DocSources/src/SimpleSearch.do" method="post">
 						            <input id="text" name="text" type="text" value="Search this forum...">
@@ -67,6 +69,7 @@
 						    </div>
 						</div>
 
+					<c:if test="${not empty subForumsPage.list}">
 						<div id="forumTable">
 						    <div class="list">
 						        <div class="rowFirst">
@@ -89,23 +92,59 @@
 						        </div>
 						    </c:forEach>
 
-							<c:if test="${empty subForumsPage.list}">
-								<div class="rowLast">						            
+							<div class="rowLast">						            
+								<div class="one">
+					            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
+					                <a id="viewTopic">No threads available</a>
+					                <span>${currentForum.description}</span>
+					            </div>
+					            <div class="two">0</div>
+					            <div class="three">0</div>
+					            <div class="four">empty forum</div>
+					        </div>
+						    </div>
+						</div>
+					</c:if>	
+
+						<div id="forumTable">
+						    <div class="list">
+						        <div class="rowFirst">
+						            <div class="one">POST</div>
+						            <div class="two">REPLY</div>
+						            <div class="three">VIEWS</div>
+						            <div class="four">LAST POST</div>
+						        </div>
+
+							<c:forEach items="${postPage.list}" var="currentPost" varStatus="status">
+								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
-						                <a id="viewTopic">No threads available</a>
-						                <span>${currentForum.description}</span>
+						                <a href="/DocSources/forum/viewSubForums.html" id="viewTopic">${currentPost.subject}</a>
+						                <span>subtitle</span>
 						            </div>
-						            <div class="two">0</div>
-						            <div class="three">0</div>
-						            <div class="four">empty forum</div>
+						            <div class="two">${currentPost.totalReply}</div>
+						            <div class="three">-</div>
+						            <div class="four">by <a href="#" id="userName" class="link">${currentPost.lastPost.username}</a><span class="date">${currentPost.lastPost.dateCreated}</span></div>
 						        </div>
-							</c:if>
-						    </div>
-						</div>	
+						    </c:forEach>
 
+							<div class="rowLast">						            
+								<div class="one">
+					            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
+					                <a id="viewTopic">No topics available</a>
+					                <span>${currentForum.description}</span>
+					            </div>
+					            <div class="two">0</div>
+					            <div class="three">0</div>
+					            <div class="four">empty forum</div>
+					        </div>
+						    </div>
+						</div>
+						
 						<div id="topicActions">
-							<a href="#" class="buttonMedium" id="newTopic">New Topic</a>
+							<c:if test="${forum.option.canHaveThreads}">
+							<a href="${EditPostForumURL}" class="buttonMedium" id="newTopic">New Topic</a>
+							</c:if>
 						    <div id="jumpToDiv">
 						    	Jump to:
 						        <form id="jumpToForm" action="/DocSources/src/SimpleSearch.do" method="post">
@@ -118,42 +157,6 @@
 						</div>
 
 						<a href="/DocSources/forum/index.html" class="returnTo"> Return to <span>Board Index</span></a>
-
-						<c:forEach items="${subCategories}" var="currentCategory" varStatus="status">
-							<div id="forumTable">
-								<div class="list">
-									<div class="rowFirst">
-										<div class="one">${currentCategory.title}</div>
-										<div class="two">TOPICS</div>
-										<div class="three">POSTS</div>
-										<div class="four">LAST POST</div>
-									</div>
-	
-								<c:set var="forums" value="${forumsBySubCategories[currentCategory.id]}"/>
-	
-								<c:forEach items="${forums}" var="currentForum" varStatus="status">
-									<c:url var="forumURL" value="/community/ShowForum.do">
-										<c:param name="id" value="${currentForum.id}" />
-									</c:url>
-									<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">
-									<div class="one">
-										<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
-										<a href="${forumURL}" class="forum">${currentForum.title}</a>
-										<span>Description of this forum</span>
-									</div>
-									<div class="two">${currentForum.topicsNumber}</div>
-									<div class="three">${currentForum.postsNumber}</div>
-								<c:if test="${not empty currentForum.lastPost}">
-									<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.username}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
-								</c:if>
-								<c:if test="${empty currentForum.lastPost}">
-									<div class="four">empty forum</span></div>
-								</c:if>
-									</div>
-	                           	</c:forEach>
-								</div>
-							</div>
-						</c:forEach>
 					</c:if>
 
 					<script>

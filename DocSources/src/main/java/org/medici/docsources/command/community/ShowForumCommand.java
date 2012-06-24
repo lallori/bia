@@ -36,80 +36,111 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 public class ShowForumCommand {
 	private Integer id;
-	private Integer firstRecord;
-	private Integer length;
-	private Long total;
-	/**
-	 * @return the firstRecord
-	 */
-	public Integer getFirstRecord() {
-		return firstRecord;
-	}
-
-	/**
-	 * @param firstRecord the firstRecord to set
-	 */
-	public void setFirstRecord(Integer firstRecord) {
-		this.firstRecord = firstRecord;
-	}
-
-	/**
-	 * @return the length
-	 */
-	public Integer getLength() {
-		return length;
-	}
-
-	/**
-	 * @param length the length to set
-	 */
-	public void setLength(Integer length) {
-		this.length = length;
-	}
-
-	/**
-	 * @return the total
-	 */
-	public Long getTotal() {
-		return total;
-	}
-
-	/**
-	 * @param total the total to set
-	 */
-	public void setTotal(Long total) {
-		this.total = total;
-	}
-
 	private Boolean completeDOM;
 
+	private Integer forumFirstRecord;
+	private Integer forumLength;
+	private Long forumTotal;
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	private Integer postFirstRecord;
+	private Integer postLength;
+	private Long postTotal;
 	/**
 	 * @return the id
 	 */
 	public Integer getId() {
 		return id;
 	}
-
 	/**
-	 * @param completeDOM the completeDOM to set
+	 * @param id the id to set
 	 */
-	public void setCompleteDOM(Boolean completeDOM) {
-		this.completeDOM = completeDOM;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-
 	/**
 	 * @return the completeDOM
 	 */
 	public Boolean getCompleteDOM() {
 		return completeDOM;
 	}
+	/**
+	 * @param completeDOM the completeDOM to set
+	 */
+	public void setCompleteDOM(Boolean completeDOM) {
+		this.completeDOM = completeDOM;
+	}
+	/**
+	 * @return the forumFirstRecord
+	 */
+	public Integer getForumFirstRecord() {
+		return forumFirstRecord;
+	}
+	/**
+	 * @param forumFirstRecord the forumFirstRecord to set
+	 */
+	public void setForumFirstRecord(Integer forumFirstRecord) {
+		this.forumFirstRecord = forumFirstRecord;
+	}
+	/**
+	 * @return the forumLength
+	 */
+	public Integer getForumLength() {
+		return forumLength;
+	}
+	/**
+	 * @param forumLength the forumLength to set
+	 */
+	public void setForumLength(Integer forumLength) {
+		this.forumLength = forumLength;
+	}
+	/**
+	 * @return the forumTotal
+	 */
+	public Long getForumTotal() {
+		return forumTotal;
+	}
+	/**
+	 * @param forumTotal the forumTotal to set
+	 */
+	public void setForumTotal(Long forumTotal) {
+		this.forumTotal = forumTotal;
+	}
+	/**
+	 * @return the postFirstRecord
+	 */
+	public Integer getPostFirstRecord() {
+		return postFirstRecord;
+	}
+	/**
+	 * @param postFirstRecord the postFirstRecord to set
+	 */
+	public void setPostFirstRecord(Integer postFirstRecord) {
+		this.postFirstRecord = postFirstRecord;
+	}
+	/**
+	 * @return the postLength
+	 */
+	public Integer getPostLength() {
+		return postLength;
+	}
+	/**
+	 * @param postLength the postLength to set
+	 */
+	public void setPostLength(Integer postLength) {
+		this.postLength = postLength;
+	}
+	/**
+	 * @return the postTotal
+	 */
+	public Long getPostTotal() {
+		return postTotal;
+	}
+	/**
+	 * @param postTotal the postTotal to set
+	 */
+	public void setPostTotal(Long postTotal) {
+		this.postTotal = postTotal;
+	}
+
 	
 }

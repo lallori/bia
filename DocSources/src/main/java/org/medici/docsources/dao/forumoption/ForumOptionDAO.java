@@ -1,5 +1,5 @@
 /*
- * ForumPostDAO.java
+ * ForumOptionDAO.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,29 +25,16 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.forumpost;
+package org.medici.docsources.dao.forumoption;
 
-import javax.persistence.PersistenceException;
-
-import org.medici.docsources.common.pagination.Page;
-import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
-import org.medici.docsources.domain.Forum;
-import org.medici.docsources.domain.ForumPost;
+import org.medici.docsources.domain.ForumOption;
 
 /**
- * ForumPost DAO.
+ * Forum Option DAO.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * 
  */
-public interface ForumPostDAO extends Dao<Integer, ForumPost> {
-
-	/**
-	 * 
-	 * @param forum
-	 * @param paginationFilterPost
-	 * @return
-	 * @throws PersistenceException
-	 */
-	Page findForumPost(Forum forum, PaginationFilter paginationFilterPost) throws PersistenceException;
+public interface ForumOptionDAO extends Dao<Integer, ForumOption> {
 }
