@@ -19,40 +19,10 @@
 	</ul>
 	
 	<div id="documentTitle">
-		<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
-		<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
-		<c:choose>
-			<%-- Recipient empty --%>
-			<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
-				<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
-				<h4>TO: <span class="h4">(Not Entered)</span></h4>
-			</c:when>
-			<%-- Sender empty --%>
-			<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
-				<h4>FROM:<span class="h4">(Not Entered)</span></h4>
-				<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
-			</c:when>
-			<%-- Sender and Recipient filled in --%>
-			<c:otherwise>
-				<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
-				<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
-			</c:otherwise>
-		</c:choose>
-		<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
-	</div>
-			
-
-	<div id="EditDetailsDocumentDiv" class="background">
-		<div class="title">
-			<h5>DOCUMENT DETAILS </h5>
-		</div>
-
 		<c:if test="${not empty image}">
 			<div id="DocumentImageDigitDiv">
 				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 					<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120&"/>">
-					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a><br>
-					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
 				</security:authorize>
 			</div>
 		</c:if>
@@ -63,6 +33,62 @@
 				</security:authorize>
 			</div>
 		</c:if>
+		<div id="text">
+			<h3>Volume: ${document.volume.volNum}${document.volume.volLetExt}</h3>
+			<h3>Folio: ${document.folioNum}${document.folioMod}</h3>
+			<c:choose>
+				<%-- Recipient empty --%>
+				<c:when test="${document.senderPeople.mapNameLf != null} && ${document.recipientPeople.mapNameLf == null}">
+					<h4>FROM: <span class="h4">${document.senderPeople.mapNameLf}</span></h4>
+					<h4>TO: <span class="h4">(Not Entered)</span></h4>
+				</c:when>
+				<%-- Sender empty --%>
+				<c:when test="${document.senderPeople.mapNameLf == null} && ${document.recipientPeople.mapNameLf != null}">
+					<h4>FROM:<span class="h4">(Not Entered)</span></h4>
+					<h4>TO: <span class="h4">${document.recipientPeople.mapNameLf}</span></h4>
+				</c:when>
+				<%-- Sender and Recipient filled in --%>
+				<c:otherwise>
+					<h4>FROM:<span class="h4"> ${document.senderPeople.mapNameLf}</span></h4>
+					<h4>TO:<span class="h4"> ${document.recipientPeople.mapNameLf}</span></h4>
+				</c:otherwise>
+			</c:choose>
+			<h7>${document.docYear} ${document.docMonthNum} ${document.docDay}</h7>
+			<div id="icons">
+				<c:if test="${not empty image}">
+					<a id="ShowDocumentInManuscriptViewer" href="${ShowDocumentInManuscriptViewerURL}" title="Show this document in the Manuscript Viewer"></a>
+					<a id="ShowDocumentInVolumeExplorer" href="${ShowDocumentExplorerURL}" title="Show preview in the Right Split-screen"></a>
+				</c:if>
+			</div>
+		</div>
+	</div>
+	
+	<div id="EditExtractOrSynopsisDocumentDiv" class="background">
+		<div class="title">
+			<h5>EXTRACT/SYNOPSIS </h5>
+		</div>
+		
+		<div class="list">
+			<div class="row">
+				<div class="item">Extract</div>
+				<div class="value80" id="extract">${document.synExtract.docExtract}</div>
+			</div>
+			<div class="row">
+				<div class="item">Synopsis</div>
+				<div class="value80" id="synopsis">${document.synExtract.synopsis}</div>
+			</div>
+		</div>
+	</div>
+	
+	<br /><br />
+			
+
+	<div id="EditDetailsDocumentDiv" class="background">
+		<div class="title">
+			<h5>DOCUMENT DETAILS </h5>
+		</div>
+
+		
 		
 		<div class="listDetails">
 			<div class="row">
@@ -104,6 +130,19 @@
 	</div>
 	
 	<br /><br />
+	
+	<div id="EditFactChecksDocumentDiv" class="background">
+			<div class="title">
+				<h5>FACT CHECK </h5>
+			</div>
+			<div class="list">
+				<div class="row">
+					<div class="valueHilight">${document.factChecks.addLRes}</div>
+				</div>
+			</div>
+		</div>
+		
+		<br /><br />
 	
 	<div id="EditCorrespondentsDocumentDiv" class="background">
 		<div class="title">
@@ -171,25 +210,6 @@
 		</div>
 	</div>
 
-	<br /><br />
-
-	<div id="EditExtractOrSynopsisDocumentDiv" class="background">
-		<div class="title">
-			<h5>EXTRACT/SYNOPSIS </h5>
-		</div>
-		
-		<div class="list">
-			<div class="row">
-				<div class="item">Extract</div>
-				<div class="value80" id="extract">${document.synExtract.docExtract}</div>
-			</div>
-			<div class="row">
-				<div class="item">Synopsis</div>
-				<div class="value80" id="synopsis">${document.synExtract.synopsis}</div>
-			</div>
-		</div>
-	</div>
-	
 	<br /><br />
 	
 	<div id="EditTopicsDocumentDiv" class="background">
