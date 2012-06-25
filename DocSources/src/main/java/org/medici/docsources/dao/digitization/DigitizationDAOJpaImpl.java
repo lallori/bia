@@ -27,6 +27,15 @@
  */
 package org.medici.docsources.dao.digitization;
 
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
+import org.medici.docsources.common.pagination.PaginationFilter.Order;
+import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
 import org.medici.docsources.domain.Digitization;
 import org.springframework.stereotype.Repository;
@@ -36,6 +45,7 @@ import org.springframework.stereotype.Repository;
  * <b>DigitizationDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  * 
  * @see org.medici.docsources.domain.Digitization
  */
@@ -61,4 +71,45 @@ public class DigitizationDAOJpaImpl extends JpaDao<Integer, Digitization> implem
 	 *  class--serialVersionUID fields are not useful as inherited members. 
 	 */
 	private static final long serialVersionUID = 3853467802112011017L;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchActiveVolumes(Integer volNum, Integer volNumBetween, Boolean activated, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM Digitization WHERE volNum >= " + volNum + " AND volNum <= " + volNumBetween + " AND active = " + activated);
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+//		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
 }

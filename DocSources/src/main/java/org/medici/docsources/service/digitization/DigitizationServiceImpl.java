@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
 import org.medici.docsources.common.util.VolumeUtils;
+import org.medici.docsources.dao.digitization.DigitizationDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
@@ -55,6 +56,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly=true)
 public class DigitizationServiceImpl implements DigitizationService {
+	@Autowired
+	private DigitizationDAO digitizationDAO;
 	@Autowired
 	private ImageDAO imageDAO;
 	@Autowired
@@ -240,6 +243,13 @@ public class DigitizationServiceImpl implements DigitizationService {
 	}
 
 	/**
+	 * @return the digitizationDAO
+	 */
+	public DigitizationDAO getDigitizationDAO() {
+		return digitizationDAO;
+	}
+
+	/**
 	 * @return the imageDAO
 	 */
 	public ImageDAO getImageDAO() {
@@ -281,6 +291,27 @@ public class DigitizationServiceImpl implements DigitizationService {
 	public VolumeDAO getVolumeDAO() {
 		return volumeDAO;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchActiveVolumes(Integer volNum, Integer volNumBetween, Boolean activated, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDigitizationDAO().searchActiveVolumes(volNum, volNumBetween, activated, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchAllActiveVolumes(PaginationFilter paginationFilter) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -304,6 +335,13 @@ public class DigitizationServiceImpl implements DigitizationService {
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
+	}
+
+	/**
+	 * @param digitizationDAO the digitizationDAO to set
+	 */
+	public void setDigitizationDAO(DigitizationDAO digitizationDAO) {
+		this.digitizationDAO = digitizationDAO;
 	}
 
 	/**

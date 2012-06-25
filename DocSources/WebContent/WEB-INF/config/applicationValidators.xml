@@ -53,6 +53,14 @@
 	<bean id="editTiffImagesSchedoneValidator" class="org.medici.docsources.validator.digitization.EditTiffImagesSchedoneValidator">
         <description>Edit Tiff Images Schedone Validator.</description>
 	</bean>
+	
+	<bean id="showSearchActivatedVolumesValidator" class="org.medici.docsources.validator.digitization.ShowSearchActivatedVolumesValidator">
+		<description>Show Search Activated Volumes Validator</description>
+	</bean>
+	
+	<bean id="showSearchDigitizedVolumesValidator" class="org.medici.docsources.validator.digitization.ShowSearchDigitizedVolumesValidator">
+		<description>Show Search Digitized Volumes Validator</description>
+	</bean>
 
 	<!-- Document base Validator -->
 	<bean id="deleteDocumentValidator" class="org.medici.docsources.validator.docbase.DeleteDocumentValidator">

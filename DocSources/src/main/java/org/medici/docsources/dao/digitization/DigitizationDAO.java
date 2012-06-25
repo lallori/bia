@@ -27,6 +27,10 @@
  */
 package org.medici.docsources.dao.digitization;
 
+import javax.persistence.PersistenceException;
+
+import org.medici.docsources.common.pagination.Page;
+import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.dao.Dao;
 import org.medici.docsources.domain.Digitization;
 
@@ -34,7 +38,18 @@ import org.medici.docsources.domain.Digitization;
  * Digitization Dao.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
+ * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 public interface DigitizationDAO extends Dao<Integer, Digitization> {
+	
+	/**
+	 * 
+	 * @param volNum
+	 * @param volNumBetween
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchActiveVolumes(Integer volNum, Integer volNumBetween, Boolean activated, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

@@ -37,6 +37,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SchedoneSearch;
 import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.common.util.VolumeUtils;
+import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -96,11 +97,127 @@ public class AjaxController {
 
 		return new ModelAndView("responseOK", model);		
 	}
+	
+	/**
+	 * 
+	 * @param searchType
+	 * @param volNum
+	 * @param volNumBetween
+	 * @param active
+	 * @param sortingColumnNumber
+	 * @param sortingDirection
+	 * @param firstRecord
+	 * @param length
+	 * @return
+	 */
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@RequestMapping(value = "/digitization/BrowseActivatedVolumes.json", method = RequestMethod.GET)
+	public ModelAndView browseActivatedVolumes(@RequestParam(value="searchType", required=false) String searchType,
+											@RequestParam(value="volNum", required=false) Integer volNum,
+											@RequestParam(value="volNumBetween", required=false) Integer volNumBetween,
+											@RequestParam(value="active", required=false) String active,
+								   		 	@RequestParam(value="iSortCol_0", required=false) Integer sortingColumnNumber,
+								   		 	@RequestParam(value="sSortDir_0", required=false) String sortingDirection,
+								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
+								   		 	@RequestParam(value="iDisplayLength") Integer length) {
+		Map<String, Object> model = new HashMap<String, Object>();
+		Map<Integer, Boolean> ifSchedone = new HashMap<Integer, Boolean>();
+		//TODO
+		Boolean activated = Boolean.FALSE;
+		
+		List<Integer> volNums = new ArrayList<Integer>();
+		List<String> volLetExts = new ArrayList<String>();
+
+		Page page = null;
+		PaginationFilter paginationFilter = new PaginationFilter(firstRecord,length, sortingColumnNumber, sortingDirection);
+
+		try {
+			if(searchType.equals("Exactly")){
+				page = getDigitizationService().searchActiveVolumes(volNum, volNum, activated, paginationFilter);
+				
+				ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNum);
+			}else if(searchType.equals("Between")){
+				page = getDigitizationService().searchActiveVolumes(volNum, volNumBetween, activated, paginationFilter);
+				
+				ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNumBetween);
+			}else if(searchType.equals("All")){
+//				page = getDigitizationService().searchAllActiveVolumes(new SchedoneSearch(), paginationFilter);
+//				
+//				for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
+//					volNums.add(currentSchedone.getVolNum());
+//					volLetExts.add(currentSchedone.getVolLetExt());
+//				}
+				
+			}
+			
+//			page = getDigitizationService().searchSchedones(new SchedoneSearch(searchType, volNum, volNumBetween), paginationFilter);
+			
+		} catch (ApplicationThrowable aex) {
+			page = new Page(paginationFilter);
+		}
+
+		List resultList = new ArrayList();
+		if(searchType.equals("Exactly") || searchType.equals("Between")){
+			for(Digitization currentDigitization : (List<Digitization>)page.getList()){
+				List singleRow = new ArrayList();
+				//MDP
+				singleRow.add(currentDigitization.getVolNum() + currentDigitization.getVolLetExt());
+				//Schedone
+				if(ifSchedone.get(currentDigitization.getVolNum())){
+					singleRow.add("YES");
+				}else{
+					singleRow.add("NO");
+				}
+				//Active
+				if(currentDigitization.getActive()){
+					singleRow.add("YES");
+				}else{
+					singleRow.add("NO");
+				}
+				
+				resultList.add(singleRow);
+			}
+		}else if(searchType.equals("All")){
+			for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
+				List singleRow = new ArrayList();
+				//MDP
+				singleRow.add(HtmlUtils.showSchedoneMDP(currentSchedone));
+				//Schedone
+				singleRow.add("YES");
+				//Digitized
+				
+				resultList.add(singleRow);
+			}
+		}
+//		for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
+//			List singleRow = new ArrayList();
+//			// MDP
+//			singleRow.add(HtmlUtils.showSchedoneMDP(currentSchedone));         
+//			// Catalog Description
+//			singleRow.add(HtmlUtils.showSchedoneDescription(currentSchedone));
+//			// Active
+//			singleRow.add(HtmlUtils.showSchedoneActive(currentSchedone));      
+//			// Edit it
+//			singleRow.add(HtmlUtils.showSchedoneEditIt(currentSchedone));      
+//			// Deactive it
+//			singleRow.add(HtmlUtils.showSchedoneDeactivateIt(currentSchedone));     
+//
+//			resultList.add(singleRow);
+//		}
+		
+		model.put("iEcho", "1");
+		model.put("iTotalDisplayRecords", page.getTotal());
+		model.put("iTotalRecords", page.getTotal());
+		model.put("aaData", resultList);
+		
+		return new ModelAndView("responseOK", model);		
+	}
 
 	/**
 	 * 
-	 * @param httpSession
-	 * @param alias
+	 * @param searchType
+	 * @param volNum
+	 * @param volNumBetween
 	 * @param sortingColumnNumber
 	 * @param sortingDirection
 	 * @param firstRecord

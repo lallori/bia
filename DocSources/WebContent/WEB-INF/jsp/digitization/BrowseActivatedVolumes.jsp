@@ -4,10 +4,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-	<c:url var="BrowseDigitizedVolumesURL" value="/digitization/BrowseDigitizedVolumes.json">
+	<c:url var="BrowseActivatedVolumesURL" value="/digitization/BrowseActivatedVolumes.json">
 		<c:param name="searchType" value="${command.searchType}" />
 		<c:param name="volNum" value="${command.volNum}" />
 		<c:param name="volNumBetween" value="${command.volNumBetween}" />
+		<c:param name="active" value="${command.active}" />
 	</c:url>
 
 	<c:url var="zeroClipboard" value="/swf/ZeroClipboard.swf"/>
@@ -36,7 +37,7 @@
 				"iDisplayLength": 10,                                                                         
 				"iDisplayStart": 0,                                                                           
 				"oSearch": {"sSearch": ""},                                                                   
-				"sAjaxSource": "${BrowseDigitizedVolumesURL}",                                           
+				"sAjaxSource": "${BrowseActivatedVolumesURL}",                                           
 				"sDom": 'T<"clear">lfrtip',
 				"sPaginationType": "full_numbers",
 				"fnServerData": function ( sSource, aoData, fnCallback ) {

@@ -329,6 +329,10 @@
 	<!-- Community Module END -->
 
     <!-- Digitization Module BEGIN -->
+    <definition name="digitization/BrowseActivatedVolumes" extends="template.partialDOM">
+    	<put-attribute name="main" value="/WEB-INF/jsp/digitization/BrowseActivatedVolumes.jsp"/>
+    </definition>
+    
 	<definition name="digitization/BrowseDigitizedVolumes" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/digitization/BrowseDigitizedVolumes.jsp"/>
     </definition>
@@ -347,6 +351,10 @@
 
 	<definition name="digitization/EditTiffImagesSchedone" extends="template.partialDOM">
         <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditTiffImagesSchedone.jsp"/>
+	</definition>
+	
+	<definition name="digitization/ShowSearchActivatedVolumes" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowSearchActivatedVolumes.jsp"/>
 	</definition>
 	
 	<definition name="digitization/ShowSearchDigitizedVolumes" extends="template.partialDOM">

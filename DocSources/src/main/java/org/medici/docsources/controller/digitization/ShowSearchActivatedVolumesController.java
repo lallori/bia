@@ -1,5 +1,5 @@
 /*
- * ShowSearchDigitizedVolumesController.java
+ * ShowSearchActivatedVolumesController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.medici.docsources.command.digitization.ShowSearchDigitizedVolumesCommand;
+import org.medici.docsources.command.digitization.ShowSearchActivatedVolumesCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -46,16 +46,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show Browse Digitized Volumes Modal".
+ * Controller for action "Show Search Activated Volumes Modal".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/digitization/ShowSearchDigitizedVolumes")
-public class ShowSearchDigitizedVolumesController {
+@RequestMapping("/digitization/ShowSearchActivatedVolumes")
+public class ShowSearchActivatedVolumesController {
 	@Autowired(required = false)
-	@Qualifier("showSearchDigitizedVolumesValidator")
+	@Qualifier("showSearchActivatedVolumesValidator")
 	private Validator validator;
 	
 	/**
@@ -73,11 +73,11 @@ public class ShowSearchDigitizedVolumesController {
 	 * @return
 	 */
 	@RequestMapping(method = {RequestMethod.POST})
-	public ModelAndView processSubmit(@ModelAttribute("command") ShowSearchDigitizedVolumesCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@ModelAttribute("command") ShowSearchActivatedVolumesCommand command, BindingResult result) {
 		getValidator().validate(command, result);
 		
 		if(result.hasErrors()){
-			return new ModelAndView("error/BrowseDigitizedVolumes");
+			return new ModelAndView("error/BrowseActivatedVolumes");
 		}else{
 			Map<String, Object> model = new HashMap<String, Object>();
 			// This number is used to generate an unique id for new search 
@@ -89,7 +89,7 @@ public class ShowSearchDigitizedVolumesController {
 			// Add outputFields;
 			List<String> outputFields = getOutputFields();
 			model.put("outputFields", outputFields);
-			return new ModelAndView("digitization/BrowseDigitizedVolumes",model);
+			return new ModelAndView("digitization/BrowseActivatedVolumes",model);
 		}
 	}
 
@@ -104,7 +104,7 @@ public class ShowSearchDigitizedVolumesController {
 		outputFields = new ArrayList<String>(6);
 		outputFields.add("Filza N. (MDP)");
 		outputFields.add("Schedone");
-		outputFields.add("Digitized");
+		outputFields.add("Active");
 		return outputFields;
 	}
 	
@@ -114,9 +114,9 @@ public class ShowSearchDigitizedVolumesController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupPage(@ModelAttribute("command") ShowSearchDigitizedVolumesCommand command){
+	public ModelAndView setupPage(@ModelAttribute("command") ShowSearchActivatedVolumesCommand command){
 		
-		return new ModelAndView("digitization/ShowSearchDigitizedVolumes");
+		return new ModelAndView("digitization/ShowSearchActivatedVolumes");
 	}
 
 	/**

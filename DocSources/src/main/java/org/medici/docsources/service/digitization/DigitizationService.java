@@ -117,6 +117,24 @@ public interface DigitizationService {
 
 	/**
 	 * 
+	 * @param volNum
+	 * @param volNumBetween
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchActiveVolumes(Integer volNum, Integer volNumBetween, Boolean activated, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
+	 * @param paginationFilter
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page searchAllActiveVolumes(PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param searchContainer
 	 * @param paginationFilter
 	 * @return
