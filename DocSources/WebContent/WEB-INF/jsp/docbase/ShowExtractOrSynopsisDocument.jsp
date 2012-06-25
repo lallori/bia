@@ -79,7 +79,11 @@
 	                slicePoint: 500,
 	                expandText: 'Click here to read more',
 	                userCollapseText: 'Click here to hide text'
-	            });
+	        });
+			
+			$j(".read-less").click(function(){
+				$j.scrollTo("#EditExtractOrSynopsisDocumentDiv");
+			});
 
 		});
 	</script>
