@@ -288,13 +288,19 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 	}
 
+	@Override
+	public Page getForumThread(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Page getForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
 		try {
-			return getForumPostDAO().findForumPost(forum, paginationFilterPost);
+			return getForumPostDAO().findForumThreads(forum, paginationFilterPost);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -405,7 +411,7 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 			getForumPostDAO().persist(forumPost);
 			
-			parentPost.setTotalReply(parentPost.getTotalReply()+1);
+			parentPost.setReplyNumber(parentPost.getReplyNumber()+1);
 			getForumPostDAO().merge(parentPost);
 
 			getForumDAO().recursiveIncreasePostsNumber(forum);

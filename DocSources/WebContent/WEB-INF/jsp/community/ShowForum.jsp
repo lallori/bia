@@ -93,8 +93,8 @@
 						                <span>${currentForum.description}</span>
 						            </div>
 						            <div class="two">${currentForum.topicsNumber}</div>
-						            <div class="three">35</div>
-						            <div class="four">by <a href="#" id="userName" class="link">aga11</a><span class="date">Wed Mar 17, 2012 5:42 pm</span></div>
+						            <div class="three">0</div>
+						            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.username}</a><span class="date">Wed Mar 17, 2012 5:42 pm</span></div>
 						        </div>
 						    </c:forEach>
 						</c:if>
@@ -127,15 +127,18 @@
 
 						<c:if test="${not empty postPage.list}">
 							<c:forEach items="${postPage.list}" var="currentPost" varStatus="status">
+								<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
+									<c:param name="forumId" value="${forum.id}"/>
+								</c:url>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
-						            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
-						                <a href="/DocSources/forum/viewSubForums.html" id="viewTopic">${currentPost.subject}</a>
+						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentPost.subject}</a>
 						                <span>subtitle</span>
 						            </div>
-						            <div class="two">${currentPost.totalReply}</div>
+						            <div class="two">${currentPost.replyNumber}</div>
 						            <div class="three">-</div>
-						            <div class="four">by <a href="#" id="userName" class="link">${currentPost.lastPost.username}</a><span class="date">${currentPost.lastPost.dateCreated}</span></div>
+						            <div class="four">by <a href="#" id="userName" class="link"></a><span class="date"></span></div>
 						        </div>
 						    </c:forEach>
 						</c:if>
@@ -181,9 +184,9 @@
 								$j(".forum").css('visibility','visible');
 			    			}});
 
-							$j('.forum').die();
+							$j('.forumHref').die();
 							// Result links have a specific class style on which we attach click live. 
-							$j('.forum').live('click', function() {
+							$j('.forumHref').live('click', function() {
 								$j("#mainContent").load($j(this).attr("href"));
 								return false;
 							});

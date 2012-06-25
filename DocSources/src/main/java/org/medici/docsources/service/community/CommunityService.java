@@ -156,6 +156,15 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
+	public Page getForumThread(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forum
+	 * @param paginationFilterPost
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	public Page getForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
 
 	/**
@@ -190,19 +199,19 @@ public interface CommunityService {
 
 	/**
 	 * 
-	 * @param forumPost
-	 * @return
-	 * @throws ApplicationThrowable
-	 */
-	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
-
-	/**
-	 * 
 	 * @param userComment
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
 	public UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
+
+	/**
+	 * 
+	 * @param forumPost
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable;
 
 	/**
 	 * 

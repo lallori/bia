@@ -80,7 +80,7 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page findForumPost(Forum forum, PaginationFilter paginationFilter) throws PersistenceException {
+	public Page findForumThreads(Forum forum, PaginationFilter paginationFilter) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
 		String queryString = "FROM ForumPost WHERE forum.id = :forumId and parentPost is null ";
 
@@ -121,8 +121,66 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
         query.setParameter("forumId", forum.getId());
 
         // We set pagination  
-		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setFirstResult(paginationFilter.getFirstRecord()-1);
 		query.setMaxResults(paginationFilter.getLength());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<ForumPost> list = (List<ForumPost>) query.getResultList();
+
+		// We set search result on return method
+		page.setList(list);
+		page.setPageSize(page.getList().size());
+		
+		return page;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public Page findForumThread(Forum forum, PaginationFilter paginationFilterPost) throws PersistenceException {
+		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
+		String queryString = "FROM ForumPost WHERE forum.id = :forumId and parentPost is null ";
+
+		// We prepare object of return method.
+		Page page = new Page(paginationFilterPost);
+		
+		if (forum == null) {
+			return page;
+		}
+		
+		Query query = null;
+		// We set size of result.
+		if (paginationFilterPost.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + queryString;
+	        
+			query = getEntityManager().createQuery(countQuery);
+	        query.setParameter("forumId", forum.getId());
+
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+
+		List<SortingCriteria> sortingCriterias = paginationFilterPost.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if (sortingCriterias.size() > 0) {
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		String jpql = queryString + orderBySQL.toString();
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql);
+        query.setParameter("forumId", forum.getId());
+
+        // We set pagination  
+		query.setFirstResult(paginationFilterPost.getFirstRecord()-1);
+		query.setMaxResults(paginationFilterPost.getLength());
 
 		// We manage sorting (this manages sorting on multiple fields)
 		List<ForumPost> list = (List<ForumPost>) query.getResultList();

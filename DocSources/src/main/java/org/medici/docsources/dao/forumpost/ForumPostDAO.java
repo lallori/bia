@@ -43,11 +43,22 @@ import org.medici.docsources.domain.ForumPost;
 public interface ForumPostDAO extends Dao<Integer, ForumPost> {
 
 	/**
+	 * Returns list of threads on a specific forum.
 	 * 
 	 * @param forum
 	 * @param paginationFilterPost
 	 * @return
 	 * @throws PersistenceException
 	 */
-	Page findForumPost(Forum forum, PaginationFilter paginationFilterPost) throws PersistenceException;
+	public Page findForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws PersistenceException;
+
+	/**
+	 * Returns a specific thread on input forum.
+	 * 
+	 * @param forum
+	 * @param paginationFilterPost
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page findForumThread(Forum forum, PaginationFilter paginationFilterPost) throws PersistenceException;
 }

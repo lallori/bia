@@ -33,5 +33,80 @@ package org.medici.docsources.command.community;
  *
  */
 public class ShowTopicForumCommand {
+	private Integer forumId;
+	private Boolean completeDOM;
 
+	private Integer postFirstRecord;
+	private Integer postLength;
+	private Long postTotal;
+
+	/**
+	 * @return the forumId
+	 */
+	public Integer getForumId() {
+		return forumId;
+	}
+	
+	/**
+	 * @param forumId the forumId to set
+	 */
+	public void setForumId(Integer forumId) {
+		this.forumId = forumId;
+	}
+	
+	/**
+	 * @return the completeDOM
+	 */
+	public Boolean getCompleteDOM() {
+		return completeDOM;
+	}
+	
+	/**
+	 * @param completeDOM the completeDOM to set
+	 */
+	public void setCompleteDOM(Boolean completeDOM) {
+		this.completeDOM = completeDOM;
+	}
+	
+	/**
+	 * @return the postFirstRecord
+	 */
+	public Integer getPostFirstRecord() {
+		return postFirstRecord;
+	}
+	
+	/**
+	 * @param postFirstRecord the postFirstRecord to set
+	 */
+	public void setPostFirstRecord(Integer postFirstRecord) {
+		this.postFirstRecord = postFirstRecord;
+	}
+	
+	/**
+	 * @return the postLength
+	 */
+	public Integer getPostLength() {
+		return postLength;
+	}
+	
+	/**
+	 * @param postLength the postLength to set
+	 */
+	public void setPostLength(Integer postLength) {
+		this.postLength = postLength;
+	}
+	
+	/**
+	 * @return the postTotal
+	 */
+	public Long getPostTotal() {
+		return postTotal;
+	}
+	
+	/**
+	 * @param postTotal the postTotal to set
+	 */
+	public void setPostTotal(Long postTotal) {
+		this.postTotal = postTotal;
+	}
 }

@@ -82,8 +82,8 @@ public class ForumPost implements Serializable {
 	private String subject;
 	@Column (name="\"text\"", length=75000)
 	private String text;
-	@Column (name="\"totalReply\"")
-	private Integer totalReply;
+	@Column (name="\"replyNumber\"")
+	private Integer replyNumber;
 
 	/**
 	 * Default constructor
@@ -212,17 +212,17 @@ public class ForumPost implements Serializable {
 	}
 
 	/**
-	 * @param totalReply the totalReply to set
+	 * @param replyNumber the replyNumber to set
 	 */
-	public void setTotalReply(Integer totalReply) {
-		this.totalReply = totalReply;
+	public void setReplyNumber(Integer replyNumber) {
+		this.replyNumber = replyNumber;
 	}
 
 	/**
-	 * @return the totalReply
+	 * @return the replyNumber
 	 */
-	public Integer getTotalReply() {
-		return totalReply;
+	public Integer getReplyNumber() {
+		return replyNumber;
 	}
 
 }
