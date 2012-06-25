@@ -30,7 +30,7 @@
 									<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">
 									<div class="one">
 										<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry" />
-										<a href="${forumURL}" class="forum">${currentForum.title}</a>
+										<a href="${forumURL}" class="forumHref">${currentForum.title}</a>
 											<span>Description of this forum</span>
 										</div>
 										<div class="two">${currentForum.topicsNumber}</div>
@@ -89,7 +89,7 @@
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowForumURL}" class="forum">${currentForum.title}</a>
+						                <a href="${ShowForumURL}" class="forumHref">${currentForum.title}</a>
 						                <span>${currentForum.description}</span>
 						            </div>
 						            <div class="two">${currentForum.topicsNumber}</div>
