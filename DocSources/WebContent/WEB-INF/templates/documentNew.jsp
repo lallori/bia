@@ -4,6 +4,10 @@
 
 <br />
 
+<h2 class="addNew">ADD New - Document Record</h2>
+
+<br />
+
 <tiles:insertAttribute name="details"/>
 
 <br />

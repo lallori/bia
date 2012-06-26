@@ -99,41 +99,36 @@
 	<c:url var="ShowDocumentURL" value="/src/docbase/ShowDocument.do">
 			<c:param name="entryId"   value="${command.entryId}" />
 		</c:url>
+		
+<%-- 	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" > --%>
+<%-- 		<c:param name="entryId" value="${command.entryId}" /> --%>
+<%-- 	</c:url> --%>
 
 	<c:url var="EditExtractDialogUrl" value="/de/mview/EditExtractDocumentDialog.do" />
+	
+<%-- 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" > --%>
+<%-- 		<c:param name="entryId" value="${command.entryId}" /> --%>
+<%-- 	</c:url> --%>
 
 	<c:url var="EditSynopsisDialogUrl" value="/de/mview/EditSynopsisDocumentDialog.do" />
 
-
-<div id="PageTurnerVerticalDiv">
+<div id="EditPersonalNotesDiv">
 	<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
 	<div id="transcribeDiv">
-	
-		<!--  Rubricario (Index of Names), Guardie, or Coperte - you can't trascribe these kind of items -->
 		<span id="unvailableTranscribe" class="transcribeMessage" style="visibility: hidden;">Transcription is available for folios only.</span>
-		
-		<!--  This document has already been transcribed, you can decide whether see its transcription or see its record-->
 		<a id="alreadyTranscribe" class="transcribeMessage" style="visibility: hidden;">Document already transcribed</a>
-		<a id="showTranscription" href="#" class="transcribe" title="Show this document transcription" style="visibility: hidden;">Show transcription</a>
-		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
-		
-		<!--  This document has not been transcribed-->
-		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="button_medium" style="visibility: hidden; cursor: pointer">Transcribe </a>
-		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Set this as <font style="font-style:italic;">Start folio</font></a>
-		
-		<!--  This document has a record in the database but it is not transcribed-->
-		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;">This document has been entered but not transcribed
-		<a id="extractTranscribe" href="#" title="Transcribe extract" class="transcribe" style="visibility: hidden; cursor: pointer;" >Transcribe</a>
-		
-		
+		<a id="notExtract" class="transcribeMessage" style="visibility: hidden;"><font color="green">This document has been entered but not transcribed</font>
+		<a id="extractTranscribe" href="#" style="visibility: hidden; cursor: pointer;" title="Transcribe extract" class="transcribe">Transcribe this document</a>
+		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  style="visibility: hidden; cursor: pointer" class="transcribe">Show this document record</a>
+		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Transcribe this document</a>
+		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Choose this as "Start folio"</a>
 		<input type="hidden" id="currentEntryId" value="${command.entryId}" />
 		<input type="hidden" id="currentImageOrder" value="${command.imageOrder}" />
-    </div>
-	</security:authorize>
+	</div>
+	</security:authorize>	  
+	<div id="line3"></div>
 
-	<div id="line"></div>
-
-	<div id="prevNextButtons">
+	<div id="prevNextButtons" class="transcribe">
 	    <div id="prevButton">
 		<c:if test="${command.imageOrder == 1}">
 	    	<a id="previous" title="Previous Folio"></a>
@@ -155,7 +150,19 @@
 		</div>
 	</div>
 	
-	<div id="folioMoveTo">
+	<c:if test="${command.totalRubricario > 0}">
+		<div>
+    		<a id="indexNames" href="${indexOfNamesURL}" class="transcribe" title="Index of Names" style="cursor: pointer;"></a>
+    	</div>
+    </c:if>
+
+	<div>
+		<a id="volumeSummary" href="${VolumeSummaryDialogURL}" class="transcribe" title="Volume Summary" style="cursor: pointer;"></a>
+	</div>
+
+	<div id="line" class="transcribe"></div>
+	
+	<div id="folioMoveTo" class="transcribe">
 		<form:form id="moveToFolioForm" method="post" class="edit" action="${PageTurnerDialogURL}">
 			<label for="imageProgTypeNum" id="imageProgTypeNumLabel" class="folioLabel">folio </label>
 			<input id="imageProgTypeNum" class="input_4cFolio" type="text" value="" name="imageProgTypeNum" />
@@ -175,23 +182,19 @@
 		</form:form>
 	</div>
 	
+	<div id="line2" class="transcribe"></div>
 	
-	<a id="volumeSummary" href="#" onClick="$j('#volumeSummaryWindow').dialog('open');" title="Volume Summary"></a>
-    
-    <c:if test="${command.totalRubricario > 0}">
-        <a id="indexNames" href="${indexOfNamesURL}" title="Index of Names" style="cursor: pointer;"></a>
-    </c:if>
-    
-	<a id="personalNotesButton" href="#" title="Personal Notes" style="cursor: pointer;"></a>
-    
-    <div id="line2"></div>
-    
-	<a id="exitButton" href="#" class="button_small" style="cursor: pointer;">Exit</a>
-	<input type="hidden" id="editModify" value="" />
+	<div id="personalNotesDiv">
+		<a id="personalNotesButton" href="#" class="transcribe" title="Personal Notes" style="cursor: pointer;"></a>
+	</div>
 	
+	<div id="exitDiv">
+		<a id="exitButton" href="#" class="transcribe" style="cursor: pointer;">Exit</a>
+		<input type="hidden" id="editModify" value="" />
+	</div>
 </div>
 
-<div id="exit" title="Alert" style="display:none">
+	<div id="exit" title="Alert" style="display:none">
 		<c:if test="${command.modeEdit == true}">
 			<p id="closeMessage"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to close your Manuscript Trascriber/Viewer without saving your work?</p>
 		</c:if> 
@@ -200,7 +203,14 @@
 		</c:if> 
 	</div>
 
+	<div id="notFound" title="Alert" style="display:none">
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This folio is not present/missing/not available. Check the volume summary.</p>
+	</div>
 
+	<form:form id="transcribeForm" class="edit">
+		<input type="hidden" id="transcribeImage" value="" />
+		<input type="hidden" id="startImage" value="" />
+	</form:form>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -457,7 +467,7 @@
 				return false;
 			});
 			
-			$j('#choiceThisFolioStart').click(function() {	
+			$j('#choiceThisFolioStart').click(function() {
 				$j("#choiceThisFolioStart").css('visibility', 'visible');
 				$j("#readyToTranscribe").css('visibility', 'hidden');
 				imageDocumentFolioStart=currentImage;

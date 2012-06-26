@@ -26,7 +26,9 @@
 		
 	<div id="topBodyLeftMenuDiv">
 		<div id="createdby">Created by ${document.researcher} <fmt:formatDate pattern="MM/dd/yyyy" value="${document.dateCreated}" /></div>
-		<div id="docid">Doc ID ${document.entryId == 0 ? '' : document.entryId}</div>
+		<c:if test="${document.entryId != 0}">
+			<div id="docid">Doc ID ${document.entryId == 0 ? '' : document.entryId}</div>
+		</c:if>
 		<security:authorize ifNotGranted="ROLE_GUESTS">
 			<c:if test="${(not empty historyNavigator.previousHistoryUrl)}"> 
 				<a id="lastRecord" title="Go back to your last Record" href="${historyNavigator.previousHistoryUrl}"></a>

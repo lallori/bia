@@ -112,16 +112,18 @@ html version
 	resize:none;
 }
 
-#EditSynopsisDocumentDiv, #EditExtractDocumentDiv, #EditPersonalNotesDiv, #EditExtractDocumentForm, #EditSynopsisDocumentForm, #DialogPersonalNotesDiv, #EditPersonalNotesForm, #EditTranscriptionForm, #CompareManuscriptDiv, #CompareManuscriptForm {
+#EditSynopsisDocumentDiv, #EditExtractDocumentDiv, #EditPersonalNotesDiv, #EditExtractDocumentForm, #EditSynopsisDocumentForm, #DialogPersonalNotesDiv, #EditPersonalNotesForm, #EditTranscriptionForm, #CompareManuscriptDiv, #CompareManuscriptForm, #PageTurnerVerticalDiv {
 	position:relative;
 	margin:0 auto 0 auto;
-	height:97%;
+	height: 97%;
 	font-size: 12px;
 }
 
 #PageTurnerVerticalDiv {
-	width: 120px;
-	height: 330px;
+	position:relative;
+	margin:0 auto 0 auto;
+	height: 95%;
+	font-size: 12px;
 }
 
 /* ---------- Title bar --------- */
@@ -131,7 +133,12 @@ html version
 	border: 1px solid transparent;
 }
 
-#rotateVertical:hover {
+#rotateHorizontal {
+	border: 1px solid transparent;
+	margin-left: -5px;
+}
+
+#rotateVertical:hover, #rotateHorizontal:hover {
 	cursor: pointer;
 	border: 1px solid #DCC0BA;
 	border-radius: 4px;
@@ -154,8 +161,9 @@ html version
 
 #PageTurnerVerticalDiv #prevNextButtons {
 	width: 90px;
-	margin-top: 20px;
-	margin-left: 18px;
+	margin-top: 130px;
+	margin-left: 15px;
+	position: absolute;
 }
 
 #EditPersonalNotesDiv #prevButton img, #EditPersonalNotesDiv #nextButton img, #EditPersonalNotesDiv #personalNotesDiv img, #EditPersonalNotesDiv #exitDiv img{
@@ -187,15 +195,16 @@ html version
 	color:#6F6B69;
 }
 
-#EditPersonalNotesDiv #prevNextButtons #prevButton a:hover, #EditPersonalNotesDiv #prevNextButtons #nextButton a:hover, #cleanNotes:hover, #EditPersonalNotesDiv #rubricarioMoveTo #goR:hover, #EditPersonalNotesDiv #folioMoveTo #go:hover, #EditExtractDocumentDiv #saveExtract:hover, #EditPersonalNotesDiv #personalNotesDiv a:hover, #EditPersonalNotesDiv #exitDiv a:hover, #EditExtractDocumentDiv #saveAndEditSynopsis:hover, #EditSynopsisDocumentDiv #saveSynopsis:hover, #EditSynopsisDocumentDiv #saveSynopsisExit:hover, #DialogPersonalNotesDiv #saveNotes:hover{
-	opacity:0.5; /* FireFox, Chrome, Safari */
+
+#exitButton:hover, #personalNotesDiv a:hover, #indexNames:hover, #volumeSummary:hover, #showAlreadyTranscribed:hover, #showTranscription:hover, #nextButton a:hover, #prevButton a:hover, #go:hover{
+	opacity:0.5; /* FireFox, Chrome, Safari  */
 	-moz-opacity: 0.5;
 	filter:alpha(opacity=50); /* IE */ !important
+	cursor:pointer;
 }
 
-#PageTurnerVerticalDiv #transcribeDiv {
-	width: 121px;
-	height: 115px;
+#exitButton, #personalNotesDiv a, #indexNames, #volumeSummary, #showAlreadyTranscribed, #showTranscription, #nextButton, #prevButton a, #go{
+	cursor:pointer;
 }
 
 a.transcribe {
@@ -210,6 +219,10 @@ a.transcribe {
 	text-decoration: none;
 	color: #6F6B69;
 	position:absolute;
+}
+
+.transcribeMessage:hover {
+	cursor:text;
 }
 
 .transcribeMessage {
@@ -230,15 +243,53 @@ a.transcribe {
 	position: absolute;
 }
 
+#extractTranscribe {
+	position: absolute;
+}
+
+#readyToTranscribe {
+	margin-top: 15px;
+	position: absolute;
+}
+
+#choiceThisFolioStart {
+        margin-top: 60px;
+}
+
+#notExtract {
+	color: green;
+}
+
+.inputerrors { /* Error Span messages */
+	color:#900;
+	font-size: 11px;
+	text-align:right;
+	padding:1px 4px 1px 4px;
+	width:auto;
+	border:1px solid #900;
+	float: right;
+	border-radius:4px;
+	-moz-border-radius: 4px;
+}
+
+#PageTurnerVerticalDiv .inputerrors {
+	margin: 206px 0 0 0;
+}	
+
 
 /* ---- Show Allready Transcribed Document ----- */
 
-#showAlreadyTranscribed.transcribe, #extractTranscribe.transcribe  { /* Volume Summary button on Page Turner Panel */
-	margin: 53px 0 0 35px;
+#showAlreadyTranscribed.transcribe   { /* Volume Summary button on Page Turner Panel */
+	 margin: 53px 0 0 35px;
 }
 
 #PageTurnerVerticalDiv #showAlreadyTranscribed { /* Volume Summary button on Page Turner Panel */
 	 margin: 75px 0 0 0px;
+	position: absolute;
+}
+
+#PageTurnerVerticalDiv #extractTranscribe { /* Volume Summary button on Page Turner Panel */
+	 margin: 65px 0 0 0px;
 	position: absolute;
 }
 
@@ -286,7 +337,7 @@ a.transcribe {
 }
 
 #PageTurnerVerticalDiv #volumeSummary {
-	margin: 115px 0 0 0;
+	margin: 227px 0 0 0;
 }
 
 #volumeSummary:hover { /* Volume Summary button on Rollover */
@@ -373,7 +424,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #PageTurnerVerticalDiv #indexNames {
-	margin: 115px 0 0 46px;
+	margin: 227px 0 0 46px;
 }
 
 #indexNames:hover { /* Index of Names button on Rollover */
@@ -462,10 +513,9 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 
 #PageTurnerVerticalDiv #folioMoveTo #moveToFolioForm{ /* Move to folio FORM in VERTICAL MODE */
 	width:120px;
-	display:inline;
 	color:#6d5c4d;
-	float:left;
-	margin:23px 0 0 5px;
+	position: absolute;
+	margin: 181px 0 0 2px;
 }
 
 #EditPersonalNotesDiv #folioMoveTo .folioLabel { /* "Move to folio" <label> ID  */
@@ -558,7 +608,7 @@ h5{ /* DOCUMENT DETAILS Title, PERSON DETAILS Title */
 }
 
 #PageTurnerVerticalDiv a#personalNotesButton{
-	margin: 117px 0 0 95px;
+	margin: 230px 0 0 91px;
 	position:absolute;
 	background:url(/DocSources/images/mview/button_personalNotes.png) no-repeat;
 	padding:4px 0 0 0;
@@ -605,7 +655,7 @@ a:hover#personalNotesButton {
 }
 
 #PageTurnerVerticalDiv a#exitButton{
-	margin: 185px 0 0 35px;
+	margin: 300px 0 0 35px;
 	position:absolute;
 }
 
@@ -643,9 +693,14 @@ a:hover#personalNotesButton {
 	background-color:#E6D0C6;
 }
 
+#PageTurnerVerticalDiv #line {
+	position:absolute;
+	margin-top: 110px;
+}
+
 #PageTurnerVerticalDiv #line2 {
 	position:absolute;
-	margin-top: 170px;
+	margin-top: 280px;
 }
 
 /* ---------------- */
