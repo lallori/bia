@@ -36,11 +36,13 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.dao.forum.ForumDAO;
 import org.medici.docsources.dao.forumpost.ForumPostDAO;
+import org.medici.docsources.dao.forumtopic.ForumTopicDAO;
 import org.medici.docsources.dao.userhistory.UserHistoryDAO;
 import org.medici.docsources.dao.userinformation.UserInformationDAO;
 import org.medici.docsources.dao.usermessage.UserMessageDAO;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.UserHistory.Action;
 import org.medici.docsources.domain.UserHistory.Category;
 import org.medici.docsources.domain.ForumPost;
@@ -71,6 +73,8 @@ public class CommunityServiceImpl implements CommunityService {
 	@Autowired
 	private ForumPostDAO forumPostDAO;   
 	@Autowired
+	private ForumTopicDAO forumTopicDAO;   
+	@Autowired
 	private UserHistoryDAO userHistoryDAO;   
 	@Autowired
 	private UserInformationDAO UserInformationDAO;
@@ -83,9 +87,9 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public Forum addNewForum(Forum forum, Forum parentForum) throws ApplicationThrowable {
 		try {
-			forum.setId(null);
+			forum.setForumId(null);
 
-			parentForum = getForumDAO().find(parentForum.getId());
+			parentForum = getForumDAO().find(parentForum.getForumId());
 			
 			forum.setForumParent(parentForum);
 
@@ -103,16 +107,42 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public ForumPost addNewPost(ForumPost forumPost) throws ApplicationThrowable {
 		try {
-			forumPost.setId(null);
-			
-			Forum forum = getForumDAO().find(forumPost.getForum().getId());
+			forumPost.setPostId(null);
+			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 			forumPost.setForum(forum);
+			
+			if (forumPost.getTopic().getTopicId() == 0) {
+				ForumTopic forumTopic = new ForumTopic(null);
+				forumTopic.setForum(forum);
+				forumTopic.setDateCreated(new Date());
+				forumTopic.setLastUpdate(forumPost.getTopic().getDateCreated());
+				forumTopic.setIpAddress(forumPost.getIpAddress());
+				forumTopic.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				forumTopic.setSubject(forumPost.getSubject());
+				forumTopic.setTotalReplies(new Integer(0));
+				forumTopic.setTotalViews(new Integer(0));
+				forumTopic.setLastPost(null);
+				forumTopic.setFirstPost(null);
+				
+				getForumTopicDAO().persist(forumTopic);
+				
+				forumPost.setTopic(forumTopic);
+			} else {
+				forumPost.setTopic(getForumTopicDAO().find(forumPost.getTopic().getTopicId()));
+			}
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
 			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 			getForumPostDAO().persist(forumPost);
 
 			getForumDAO().recursiveIncreasePostsNumber(forum);
+
+			forum.setLastPost(forumPost);
+			getForumDAO().merge(forum);
+			
+			forumPost.getTopic().setLastPost(forumPost);
+			forumPost.getTopic().setTotalReplies(forumPost.getTopic().getTotalReplies() +1);
+			getForumTopicDAO().merge(forumPost.getTopic());
 
 			getUserHistoryDAO().persist(new UserHistory("Create new post", Action.CREATE, Category.FORUM_POST, forumPost));
 			
@@ -160,16 +190,16 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public ForumPost editPost(ForumPost forumPost) throws ApplicationThrowable {
 		try {
-			forumPost.setId(null);
+			forumPost.setPostId(null);
 
-			Forum forum = getForumDAO().find(forumPost.getForum().getId());
+			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 
 			forumPost.setForum(forum);
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
 			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
 			if (forumPost.getParentPost() != null) {
-				forumPost.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getId()));
+				forumPost.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getPostId()));
 			}
 
 			getForumPostDAO().persist(forumPost);
@@ -252,6 +282,18 @@ public class CommunityServiceImpl implements CommunityService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Page getForumPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
+		try {
+			return getForumPostDAO().findPostsFromTopic(forumTopic, paginationFilterPost);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<Forum> getForumsByType(Type type) throws ApplicationThrowable {
 		try {
 			return getForumDAO().getForumsByType(type);
@@ -288,19 +330,35 @@ public class CommunityServiceImpl implements CommunityService {
 		}
 	}
 
+	/**
+	 * 
+	 * @param forumTopic
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
 	@Override
-	public Page getForumThread(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+	public ForumTopic getForumTopic(ForumTopic forumTopic) throws ApplicationThrowable {
+		try {
+			return getForumTopicDAO().findForumTopic(forumTopic);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+
+	/**
+	 * @return the forumTopicDAO
+	 */
+	public ForumTopicDAO getForumTopicDAO() {
+		return forumTopicDAO;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page getForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable {
+	public Page getForumTopics(Forum forum, PaginationFilter paginationFilterTopics) throws ApplicationThrowable {
 		try {
-			return getForumPostDAO().findForumThreads(forum, paginationFilterPost);
+			return getForumTopicDAO().findForumTopics(forum, paginationFilterTopics);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -399,11 +457,11 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	public ForumPost replyPost(ForumPost forumPost) throws ApplicationThrowable {
 		try {
-			forumPost.setId(null);
+			forumPost.setPostId(null);
 			
-			Forum forum = getForumDAO().find(forumPost.getForum().getId());
+			Forum forum = getForumDAO().find(forumPost.getForum().getForumId());
 			
-			ForumPost parentPost = getForumPostDAO().find(forumPost.getParentPost().getId());
+			ForumPost parentPost = getForumPostDAO().find(forumPost.getParentPost().getPostId());
 			forumPost.setForum(forum);
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
@@ -448,6 +506,13 @@ public class CommunityServiceImpl implements CommunityService {
 	 */
 	public void setForumPostDAO(ForumPostDAO forumPostDAO) {
 		this.forumPostDAO = forumPostDAO;
+	}
+
+	/**
+	 * @param forumTopicDAO the forumTopicDAO to set
+	 */
+	public void setForumTopicDAO(ForumTopicDAO forumTopicDAO) {
+		this.forumTopicDAO = forumTopicDAO;
 	}
 
 	/**

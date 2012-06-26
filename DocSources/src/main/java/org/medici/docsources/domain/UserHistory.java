@@ -93,6 +93,9 @@ public class UserHistory implements Serializable {
 	@JoinColumn(name="\"forumId\"", nullable=true)
 	private Forum forum;
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"forumTopicId\"", nullable=true)
+	private ForumTopic forumTopic;
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"forumPostId\"", nullable=true)
 	private ForumPost forumPost;
 
@@ -140,6 +143,8 @@ public class UserHistory implements Serializable {
 			setSearchData((Search) object);
 		} else if (category.equals(Category.FORUM)) {
 			setForum((Forum) object);
+		} else if (category.equals(Category.FORUM_TOPIC)) {
+			setForumTopic((ForumTopic) object);
 		} else if (category.equals(Category.FORUM_POST)) {
 			setForumPost((ForumPost) object);
 		} else {
@@ -302,6 +307,20 @@ public class UserHistory implements Serializable {
 	}
 
 	/**
+	 * @param forumTopic the forumTopic to set
+	 */
+	public void setForumTopic(ForumTopic forumTopic) {
+		this.forumTopic = forumTopic;
+	}
+
+	/**
+	 * @return the forumTopic
+	 */
+	public ForumTopic getForumTopic() {
+		return forumTopic;
+	}
+
+	/**
 	 * @param forumPost the forumPost to set
 	 */
 	public void setForumPost(ForumPost forumPost) {
@@ -400,6 +419,7 @@ public class UserHistory implements Serializable {
 		PLACE("Place"),
 		VOLUME("Volume"),
 		FORUM("Forum"),
+		FORUM_TOPIC("ForumTopic"),
 		FORUM_POST("ForumPost"),
 		SEARCH_DOCUMENT("SearchDocument"),
 		SEARCH_PEOPLE("SearchPeople"),

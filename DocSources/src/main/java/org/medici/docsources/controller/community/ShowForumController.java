@@ -83,24 +83,24 @@ public class ShowForumController {
 				}
 			}
 			
-			if (command.getId() == null){
+			if (command.getForumId() == null){
 				forum = getCommunityService().getFirstCategory();
 			} else {
-				forum = getCommunityService().getForum(command.getId());
+				forum = getCommunityService().getForum(command.getForumId());
 			}
 
 			if (forum.getType().equals(Type.CATEGORY)) {
 				model.put("category", forum);
 
 				if (forum.getOption().getCanHaveSubCategory()) {
-					List<Forum> subCategories = getCommunityService().getSubCategories(new Forum(forum.getId()));
+					List<Forum> subCategories = getCommunityService().getSubCategories(new Forum(forum.getForumId()));
 					model.put("subCategories", subCategories);
 
 					//SubForums are extracted only if category is enabled to subForum...
 					List<Integer> subCategoriesIdsEnabledToSubForums = new ArrayList<Integer>(0);
 					for (Forum category : subCategories) {
 						if (category.getOption().getCanHaveSubForum()) {
-							subCategoriesIdsEnabledToSubForums.add(category.getId());
+							subCategoriesIdsEnabledToSubForums.add(category.getForumId());
 						}
 					}
 
@@ -120,21 +120,21 @@ public class ShowForumController {
 				PaginationFilter paginationFilterForum = new PaginationFilter(command.getForumFirstRecord(), command.getForumLength(), command.getForumTotal());
 				paginationFilterForum.addSortingCriteria("dispositionOrder", "asc");
 				
-				Page page = getCommunityService().getSubForums(forum.getId(), paginationFilterForum);
+				Page page = getCommunityService().getSubForums(forum.getForumId(), paginationFilterForum);
 				model.put("subForumsPage", page);
 			}
 
-			if (forum.getOption().getCanHaveThreads()) {
+			if (forum.getOption().getCanHaveTopics()) {
 				if (command.getPostLength() == null) {
 					command.setPostLength(10);
 				}
 	
 				// secondo paginationFilter to manage post results..
 				PaginationFilter paginationFilterPost = new PaginationFilter(command.getPostFirstRecord(), command.getPostLength(), command.getPostTotal());
-				paginationFilterPost.addSortingCriteria("id", "asc");
+				paginationFilterPost.addSortingCriteria("forumId", "asc");
 	
-				Page postPage = getCommunityService().getForumThreads(forum, paginationFilterPost);
-				model.put("postPage", postPage);
+				Page postPage = getCommunityService().getForumTopics(forum, paginationFilterPost);
+				model.put("topicsPage", postPage);
 				
 				HashMap<String, Object> statisticsHashMap = getCommunityService().getForumsStatistics();
 				model.put("statisticsHashMap", statisticsHashMap);

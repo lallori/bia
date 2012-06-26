@@ -26,7 +26,8 @@
 	    <a href="#" id="preview" class="buttonSmall">Preview</a>
 	    <form:hidden path="parentPostId"/>
 	    <form:hidden path="forumId"/>
-	    <form:hidden path="id"/>
+	    <form:hidden path="topicId"/>
+	    <form:hidden path="postId"/>
 
 <script type="text/javascript">
 	$j("#text").htmlbox({

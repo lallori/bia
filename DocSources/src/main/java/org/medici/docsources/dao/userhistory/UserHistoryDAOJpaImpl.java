@@ -863,7 +863,20 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 						}				
 					}  else if (lastUserHistory.getCategory().equals(Category.FORUM)) {
 						// if volume is not the same, we persist action 
-						if (!lastUserHistory.getForum().getId().equals(entity.getForum().getId())) {
+						if (!lastUserHistory.getForum().getForumId().equals(entity.getForum().getForumId())) {
+							super.persist(entity);
+						} else {
+							// if volume is not the same, we persist action
+							if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.MODIFY))) {
+								super.persist(entity);
+							} else if ((lastUserHistory.getAction().equals(Action.VIEW)) && (entity.getAction().equals(Action.DELETE))) {
+								super.persist(entity);
+							}
+							//otherwise we dont' persist
+						}				
+					} else if (lastUserHistory.getCategory().equals(Category.FORUM_TOPIC)) {
+						// if volume is not the same, we persist action 
+						if (!lastUserHistory.getForumTopic().getTopicId().equals(entity.getForumTopic().getTopicId())) {
 							super.persist(entity);
 						} else {
 							// if volume is not the same, we persist action
@@ -876,7 +889,7 @@ public class UserHistoryDAOJpaImpl extends JpaDao<Integer, UserHistory> implemen
 						}				
 					} else if (lastUserHistory.getCategory().equals(Category.FORUM_POST)) {
 						// if volume is not the same, we persist action 
-						if (!lastUserHistory.getForumPost().getId().equals(entity.getForumPost().getId())) {
+						if (!lastUserHistory.getForumPost().getPostId().equals(entity.getForumPost().getPostId())) {
 							super.persist(entity);
 						} else {
 							// if volume is not the same, we persist action

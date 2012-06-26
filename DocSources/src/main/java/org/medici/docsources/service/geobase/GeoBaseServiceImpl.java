@@ -188,9 +188,9 @@ public class GeoBaseServiceImpl implements GeoBaseService {
 				forum = getForumDAO().addNewPlaceForum(parentForum, place);
 				
 				ForumOption forumOption = new ForumOption(forum);
-				forumOption.setCanHaveThreads(Boolean.TRUE);
+				forumOption.setCanHaveTopics(Boolean.TRUE);
 				forumOption.setCanDeletePosts(Boolean.TRUE);
-				forumOption.setCanDeleteThreads(Boolean.TRUE);
+				forumOption.setCanDeleteTopics(Boolean.TRUE);
 				forumOption.setCanEditPosts(Boolean.TRUE);
 				forumOption.setCanPostReplys(Boolean.TRUE);
 				getForumOptionDAO().persist(forumOption);

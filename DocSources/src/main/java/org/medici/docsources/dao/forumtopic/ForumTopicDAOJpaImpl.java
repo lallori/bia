@@ -1,5 +1,5 @@
 /*
- * ForumPostDAOJpaImpl.java
+ * ForumTopicDAOJpaImpl.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -25,7 +25,7 @@
  * This exception does not however invalidate any other reasons why the
  * executable file might be covered by the GNU General Public License.
  */
-package org.medici.docsources.dao.forumpost;
+package org.medici.docsources.dao.forumtopic;
 
 import java.util.List;
 
@@ -38,12 +38,12 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.pagination.PaginationFilter.Order;
 import org.medici.docsources.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.docsources.dao.JpaDao;
-import org.medici.docsources.domain.ForumPost;
+import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumTopic;
 import org.springframework.stereotype.Repository;
 
 /**
- * <b>ForumPostDAOJpaImpl</b> is a default implementation of <b>ForumPostDAO</b>.
+ * <b>ForumTopicDAOJpaImpl</b> is a default implementation of <b>ForumTopicDAO</b>.
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * 
@@ -52,7 +52,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements ForumPostDAO {
+public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements ForumTopicDAO {
 	
 	/**
 	 * 
@@ -80,29 +80,57 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page findPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilter) throws PersistenceException {
+	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String queryString = "FROM ForumPost WHERE topic.topicId = :topicId ";
+		String queryString = "FROM ForumTopic WHERE topicId = :idTopic ";
+
+		if (forumTopic == null) {
+			return null;
+		}
+		
+		Query query = null;
+		String jpql = queryString;
+		logger.info("JPQL Query : " + jpql);
+		query = getEntityManager().createQuery(jpql);
+        query.setParameter("topicId", forumTopic.getTopicId());
+
+		// We manage sorting (this manages sorting on multiple fields)
+		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
+
+		if (list.size() ==0) { 
+			return null;
+		} else {
+			return (ForumTopic) list.get(0);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page findForumTopics(Forum forum, PaginationFilter paginationFilterPost) throws PersistenceException {
+		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
+		String queryString = "FROM ForumTopic WHERE forum.forumId = :forumId ";
 
 		// We prepare object of return method.
-		Page page = new Page(paginationFilter);
+		Page page = new Page(paginationFilterPost);
 		
-		if (forumTopic == null) {
+		if (forum == null) {
 			return page;
 		}
 		
 		Query query = null;
 		// We set size of result.
-		if (paginationFilter.getTotal() == null) {
+		if (paginationFilterPost.getTotal() == null) {
 			String countQuery = "SELECT COUNT(*) " + queryString;
 	        
 			query = getEntityManager().createQuery(countQuery);
-	        query.setParameter("topicId", forumTopic.getTopicId());
+	        query.setParameter("forumId", forum.getForumId());
 
 			page.setTotal(new Long((Long) query.getSingleResult()));
 		}
 
-		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		List<SortingCriteria> sortingCriterias = paginationFilterPost.getSortingCriterias();
 		StringBuffer orderBySQL = new StringBuffer();
 		if (sortingCriterias.size() > 0) {
 			orderBySQL.append(" ORDER BY ");
@@ -118,14 +146,14 @@ public class ForumPostDAOJpaImpl extends JpaDao<Integer, ForumPost> implements F
 		String jpql = queryString + orderBySQL.toString();
 		logger.info("JPQL Query : " + jpql);
 		query = getEntityManager().createQuery(jpql);
-        query.setParameter("topicId", forumTopic.getTopicId());
+        query.setParameter("forumId", forum.getForumId());
 
         // We set pagination  
-		query.setFirstResult(paginationFilter.getFirstRecord()-1);
-		query.setMaxResults(paginationFilter.getLength());
+		query.setFirstResult(paginationFilterPost.getFirstRecord()-1);
+		query.setMaxResults(paginationFilterPost.getLength());
 
 		// We manage sorting (this manages sorting on multiple fields)
-		List<ForumPost> list = (List<ForumPost>) query.getResultList();
+		List<ForumTopic> list = (List<ForumTopic>) query.getResultList();
 
 		// We set search result on return method
 		page.setList(list);

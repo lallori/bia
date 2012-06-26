@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 public class ShowForumCommand {
-	private Integer id;
+	private Integer forumId;
 	private Boolean completeDOM;
 
 	private Integer forumFirstRecord;
@@ -45,102 +45,116 @@ public class ShowForumCommand {
 	private Integer postFirstRecord;
 	private Integer postLength;
 	private Long postTotal;
+
 	/**
-	 * @return the id
+	 * @return the forumId
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getForumId() {
+		return forumId;
 	}
+	
 	/**
-	 * @param id the id to set
+	 * @param forumId the forumId to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setForumId(Integer forumId) {
+		this.forumId = forumId;
 	}
+	
 	/**
 	 * @return the completeDOM
 	 */
 	public Boolean getCompleteDOM() {
 		return completeDOM;
 	}
+	
 	/**
 	 * @param completeDOM the completeDOM to set
 	 */
 	public void setCompleteDOM(Boolean completeDOM) {
 		this.completeDOM = completeDOM;
 	}
+	
 	/**
 	 * @return the forumFirstRecord
 	 */
 	public Integer getForumFirstRecord() {
 		return forumFirstRecord;
 	}
+	
 	/**
 	 * @param forumFirstRecord the forumFirstRecord to set
 	 */
 	public void setForumFirstRecord(Integer forumFirstRecord) {
 		this.forumFirstRecord = forumFirstRecord;
 	}
+	
 	/**
 	 * @return the forumLength
 	 */
 	public Integer getForumLength() {
 		return forumLength;
 	}
+	
 	/**
 	 * @param forumLength the forumLength to set
 	 */
 	public void setForumLength(Integer forumLength) {
 		this.forumLength = forumLength;
 	}
+	
 	/**
 	 * @return the forumTotal
 	 */
 	public Long getForumTotal() {
 		return forumTotal;
 	}
+	
 	/**
 	 * @param forumTotal the forumTotal to set
 	 */
 	public void setForumTotal(Long forumTotal) {
 		this.forumTotal = forumTotal;
 	}
+	
 	/**
 	 * @return the postFirstRecord
 	 */
 	public Integer getPostFirstRecord() {
 		return postFirstRecord;
 	}
+	
 	/**
 	 * @param postFirstRecord the postFirstRecord to set
 	 */
 	public void setPostFirstRecord(Integer postFirstRecord) {
 		this.postFirstRecord = postFirstRecord;
 	}
+	
 	/**
 	 * @return the postLength
 	 */
 	public Integer getPostLength() {
 		return postLength;
 	}
+	
 	/**
 	 * @param postLength the postLength to set
 	 */
 	public void setPostLength(Integer postLength) {
 		this.postLength = postLength;
 	}
+	
 	/**
 	 * @return the postTotal
 	 */
 	public Long getPostTotal() {
 		return postTotal;
 	}
+	
 	/**
 	 * @param postTotal the postTotal to set
 	 */
 	public void setPostTotal(Long postTotal) {
 		this.postTotal = postTotal;
 	}
-
-	
 }

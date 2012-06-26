@@ -29,9 +29,7 @@ package org.medici.docsources.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -47,6 +45,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 
 /**
  * This class represents entity Forum.
@@ -64,8 +63,8 @@ public class Forum implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"id\"", length=10, nullable=false)
-	private Integer id;
+	@Column (name="\"forumId\"", length=10, nullable=false)
+	private Integer forumId;
 	@Column (name="\"type\"", length=10, nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Type type;
@@ -111,12 +110,12 @@ public class Forum implements Serializable {
 	private Volume volume;
 
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="\"id\"", nullable=true)
+	@JoinColumn(name="\"forumId\"", nullable=true)
 	private ForumOption option;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "forum", cascade={CascadeType.PERSIST, CascadeType.MERGE})
-	private Set<ForumPost> forumPost;
-	
+	@OneToMany(mappedBy = "forum")
+	private List<ForumTopic> forumTopics;
+
 	public Forum() {
 		super();
 	}
@@ -128,7 +127,7 @@ public class Forum implements Serializable {
 	public Forum(Integer forumId) {
 		super();
 		
-		setId(forumId);
+		setForumId(forumId);
 	}
 
 	/**
@@ -136,10 +135,10 @@ public class Forum implements Serializable {
 	 * @param id
 	 * @param type
 	 */
-	public Forum(Integer id, Type type) {
+	public Forum(Integer forumId, Type type) {
 		super();
 		
-		setId(id);
+		setForumId(forumId);
 		setType(type);
 	}
 
@@ -148,26 +147,26 @@ public class Forum implements Serializable {
 	 * @param forumId
 	 * @param parentForum
 	 */
-	public Forum(Integer id, Type type, Integer parentForumId) {
+	public Forum(Integer forumId, Type type, Integer parentForumId) {
 		super();
 		
-		setId(id);
+		setForumId(forumId);
 		setType(type);
 		setForumParent(new Forum(parentForumId));
 	}
 
 	/**
-	 * @return the id
+	 * @return the forumId
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getForumId() {
+		return forumId;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setForumId(Integer forumId) {
+		this.forumId= forumId;
 	}
 
 	/**
@@ -345,14 +344,14 @@ public class Forum implements Serializable {
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer("[");
 		stringBuffer.append("id=");
-		stringBuffer.append(getId());
+		stringBuffer.append(getForumId());
 		stringBuffer.append(", name=");
 		stringBuffer.append(getTitle());
 		if (getForumParent() == null) {
-			stringBuffer.append(", parentId=null,");
+			stringBuffer.append(", forumId=null,");
 		} else {
-			stringBuffer.append(", parentId=");
-			stringBuffer.append(getForumParent().getId());
+			stringBuffer.append(", parentForumId=");
+			stringBuffer.append(getForumParent().getForumId());
 		}
 		stringBuffer.append(", description=");
 		stringBuffer.append(getDescription());
@@ -429,17 +428,17 @@ public class Forum implements Serializable {
 	}
 
 	/**
-	 * @param forumPost the forumPost to set
+	 * @param forumTopics the forumTopics to set
 	 */
-	public void setForumPost(Set<ForumPost> forumPost) {
-		this.forumPost = forumPost;
+	public void setForumTopics(List<ForumTopic> forumTopics) {
+		this.forumTopics = forumTopics;
 	}
 
 	/**
-	 * @return the forumPost
+	 * @return the forumTopics
 	 */
-	public Set<ForumPost> getForumPost() {
-		return forumPost;
+	public List<ForumTopic> getForumTopics() {
+		return forumTopics;
 	}
 
 	/**

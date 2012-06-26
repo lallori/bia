@@ -52,8 +52,6 @@ import org.medici.docsources.domain.People;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.domain.Volume;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <b>ForumDAOJpaImpl</b> is a default implementation of <b>ForumDAO</b>.
@@ -219,11 +217,11 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
         stringBuffer.append(forum.getType());
         stringBuffer.append("' and forumParent ");
 
-        if (forum.getId() == null)
+        if (forum.getForumId() == null)
         	stringBuffer.append(" is null");
         else {
         	stringBuffer.append("=");
-        	stringBuffer.append(forum.getId());
+        	stringBuffer.append(forum.getForumId());
         }
     	
         Query query = getEntityManager().createQuery(stringBuffer.toString());
@@ -270,12 +268,12 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		}
 
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String jpql = "FROM Forum WHERE type=:type and forumParent.id = :parentId " +
+		String jpql = "FROM Forum WHERE type=:type and forumParent.forumId = :parentId " +
 		" and forumParent.type=:parentType order by dispositionOrder asc";
     	
         Query query = getEntityManager().createQuery(jpql);
         query.setParameter("type", Type.CATEGORY);
-        query.setParameter("parentId", forum.getId());
+        query.setParameter("parentId", forum.getForumId());
         query.setParameter("parentType", Type.CATEGORY);
 
         return (List<Forum>) query.getResultList();
@@ -292,7 +290,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 		}
 
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String jpql = "FROM Forum WHERE type=:typeForum  and forumParent.id = :forumParentId " +
+		String jpql = "FROM Forum WHERE type=:typeForum  and forumParent.forumId = :forumParentId " +
 		"and forumParent.type=:forumParentTypeForum order by dispositionOrder asc";
     	
         Query query = getEntityManager().createQuery(jpql);
@@ -372,11 +370,11 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 			return null;
 		}
 
-		String stringQuery = "FROM Forum WHERE type=:typeForum  and id = :categoryId";
+		String stringQuery = "FROM Forum WHERE type=:typeForum  and forumId = :categoryId";
     	
         Query query = getEntityManager().createQuery(stringQuery);
         query.setParameter("typeForum", Type.CATEGORY);
-        query.setParameter("categoryId", category.getId());
+        query.setParameter("categoryId", category.getForumId());
 
         List<Forum> list = query.getResultList();
 		if (list.size() == 0) { 
@@ -392,7 +390,7 @@ public class ForumDAOJpaImpl extends JpaDao<Integer, Forum> implements ForumDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Forum getFirstCategory() throws PersistenceException {
-		String stringQuery = "FROM Forum WHERE type=:typeForum order by id asc";
+		String stringQuery = "FROM Forum WHERE type=:typeForum order by forumId asc";
     	
         Query query = getEntityManager().createQuery(stringQuery);
         query.setParameter("typeForum", Type.CATEGORY);

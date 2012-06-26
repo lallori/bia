@@ -95,18 +95,18 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = "/community/GetForumChronology", method = RequestMethod.GET)
-	public ModelAndView showForumChronology(@RequestParam(value="id", required=false) Integer id) {
+	public ModelAndView showForumChronology(@RequestParam(value="forumId", required=false) Integer forumId) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Forum forum = new Forum();
 		
 		try{
-			if (id != null ) {
-				forum = getCommunityService().getForum(id);
+			if (forumId != null ) {
+				forum = getCommunityService().getForum(forumId);
 			} else {
 				forum = getCommunityService().getFirstCategory();
 			}
 
-			model.put("id", forum.getId().toString());
+			model.put("forumId", forum.getForumId().toString());
 			model.put("title", forum.getTitle());
 			model.put("chronology", ForumUtils.getForumChronology(forum));
 		}catch(ApplicationThrowable th){

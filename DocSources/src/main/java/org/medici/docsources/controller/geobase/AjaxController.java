@@ -77,7 +77,7 @@ public class AjaxController {
 			Forum forum = getGeoBaseService().getPlaceForum(placeAllId);
 			if (forum != null) {
 				model.put("isPresent", Boolean.TRUE.toString());
-				model.put("forumId", forum.getId().toString());
+				model.put("forumId", forum.getForumId().toString());
 				model.put("forumUrl", HtmlUtils.getShowForumUrl(forum));
 				model.put("forumUrlCompleteDOM", HtmlUtils.getShowForumCompleteDOMUrl(forum));
 			} else {

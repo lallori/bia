@@ -33,80 +33,97 @@ package org.medici.docsources.command.community;
  *
  */
 public class ShowTopicForumCommand {
-	private Integer forumId;
 	private Boolean completeDOM;
+	private Integer topicId;
+	private Integer forumId;
+	private Integer postId;
 
-	private Integer postFirstRecord;
-	private Integer postLength;
-	private Long postTotal;
-
-	/**
-	 * @return the forumId
-	 */
-	public Integer getForumId() {
-		return forumId;
-	}
-	
-	/**
-	 * @param forumId the forumId to set
-	 */
-	public void setForumId(Integer forumId) {
-		this.forumId = forumId;
-	}
-	
+	private Integer postsFirstRecord;
+	private Integer postsLength;
+	private Long postsTotal;
 	/**
 	 * @return the completeDOM
 	 */
 	public Boolean getCompleteDOM() {
 		return completeDOM;
 	}
-	
 	/**
 	 * @param completeDOM the completeDOM to set
 	 */
 	public void setCompleteDOM(Boolean completeDOM) {
 		this.completeDOM = completeDOM;
 	}
-	
 	/**
-	 * @return the postFirstRecord
+	 * @return the topicId
 	 */
-	public Integer getPostFirstRecord() {
-		return postFirstRecord;
+	public Integer getTopicId() {
+		return topicId;
 	}
-	
 	/**
-	 * @param postFirstRecord the postFirstRecord to set
+	 * @param topicId the topicId to set
 	 */
-	public void setPostFirstRecord(Integer postFirstRecord) {
-		this.postFirstRecord = postFirstRecord;
+	public void setTopicId(Integer topicId) {
+		this.topicId = topicId;
 	}
-	
 	/**
-	 * @return the postLength
+	 * @return the forumId
 	 */
-	public Integer getPostLength() {
-		return postLength;
+	public Integer getForumId() {
+		return forumId;
 	}
-	
 	/**
-	 * @param postLength the postLength to set
+	 * @param forumId the forumId to set
 	 */
-	public void setPostLength(Integer postLength) {
-		this.postLength = postLength;
+	public void setForumId(Integer forumId) {
+		this.forumId = forumId;
 	}
-	
 	/**
-	 * @return the postTotal
+	 * @return the postId
 	 */
-	public Long getPostTotal() {
-		return postTotal;
+	public Integer getPostId() {
+		return postId;
 	}
-	
 	/**
-	 * @param postTotal the postTotal to set
+	 * @param postId the postId to set
 	 */
-	public void setPostTotal(Long postTotal) {
-		this.postTotal = postTotal;
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
+	/**
+	 * @return the postsFirstRecord
+	 */
+	public Integer getPostsFirstRecord() {
+		return postsFirstRecord;
+	}
+	/**
+	 * @param postsFirstRecord the postsFirstRecord to set
+	 */
+	public void setPostsFirstRecord(Integer postsFirstRecord) {
+		this.postsFirstRecord = postsFirstRecord;
+	}
+	/**
+	 * @return the postsLength
+	 */
+	public Integer getPostsLength() {
+		return postsLength;
+	}
+	/**
+	 * @param postsLength the postsLength to set
+	 */
+	public void setPostsLength(Integer postsLength) {
+		this.postsLength = postsLength;
+	}
+	/**
+	 * @return the postsTotal
+	 */
+	public Long getPostsTotal() {
+		return postsTotal;
+	}
+	/**
+	 * @param postsTotal the postsTotal to set
+	 */
+	public void setPostsTotal(Long postsTotal) {
+		this.postsTotal = postsTotal;
+	}
+
 }

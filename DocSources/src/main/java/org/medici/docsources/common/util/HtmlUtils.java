@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
 import org.medici.docsources.domain.Forum;
+import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.SearchFilter.SearchType;
@@ -220,8 +221,8 @@ public class HtmlUtils {
 		StringBuffer stringBuffer = new StringBuffer("");
 		if (forum != null) {
 			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuffer.append("/community/ShowForum.do?id=");
-			stringBuffer.append(forum.getId());
+			stringBuffer.append("/community/ShowForum.do?forumId=");
+			stringBuffer.append(forum.getForumId());
 			stringBuffer.append("&completeDOM=true");
 		}
 
@@ -236,8 +237,8 @@ public class HtmlUtils {
 		StringBuffer stringBuffer = new StringBuffer("<a href=\"");
 		if (forum != null) {
 			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuffer.append("/community/ShowForum.do?id=");
-			stringBuffer.append(forum.getId());
+			stringBuffer.append("/community/ShowForum.do?forumId=");
+			stringBuffer.append(forum.getForumId());
 			stringBuffer.append("&\" class=\"forum\" />");
 			stringBuffer.append(forum.getTitle());
 			stringBuffer.append("</a>");
@@ -262,8 +263,8 @@ public class HtmlUtils {
 		stringBuffer.append("/images/forum/img_chronology.png\" alt=\"Chronology\" />\n");
 		stringBuffer.append("<a href=\"");
 		stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-		stringBuffer.append("/community/ShowForum.do?id=");
-		stringBuffer.append(forum.getId());
+		stringBuffer.append("/community/ShowForum.do?forumId=");
+		stringBuffer.append(forum.getForumId());
 		stringBuffer.append("\" class=\"boardIndex\">");
 		stringBuffer.append(forum.getTitle());
 		stringBuffer.append("</a>");
@@ -273,6 +274,22 @@ public class HtmlUtils {
 
 	/**
 	 * 
+	 * @param forumTopic
+	 * @return
+	 */
+	public static String getShowForumTopicHrefUrl(ForumTopic forumTopic) {
+		StringBuffer stringBuffer = new StringBuffer("");
+		if (forumTopic != null) {
+			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+			stringBuffer.append("/community/ShowForumTopic.do?topicId=");
+			stringBuffer.append(forumTopic.getTopicId());
+		}
+
+		return stringBuffer.toString();
+	}
+	
+	/**
+	 * 
 	 * @param forum
 	 * @return
 	 */
@@ -280,13 +297,13 @@ public class HtmlUtils {
 		StringBuffer stringBuffer = new StringBuffer("");
 		if (forum != null) {
 			stringBuffer.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
-			stringBuffer.append("/community/ShowForum.do?id=");
-			stringBuffer.append(forum.getId());
+			stringBuffer.append("/community/ShowForum.do?forumId=");
+			stringBuffer.append(forum.getForumId());
 		}
 
 		return stringBuffer.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -303,7 +320,7 @@ public class HtmlUtils {
 
 		return url;
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -329,7 +346,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -357,7 +374,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param senderUser
@@ -371,7 +388,7 @@ public class HtmlUtils {
 		anchor.append("\">text</a>");
 
 		return anchor.toString();	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -425,7 +442,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param singleRow
@@ -466,7 +483,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param currentSchedone
@@ -526,7 +543,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-
+	
 	/**
 	 * 
 	 * @param currentSchedone
@@ -541,7 +558,7 @@ public class HtmlUtils {
 
 		return anchor.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList
@@ -598,7 +615,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-
+	
 	/**
 	 * 
 	 * @param inputList
@@ -624,7 +641,7 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
-	
+
 	/**
 	 * 
 	 * @param inputList

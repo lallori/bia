@@ -81,7 +81,7 @@ public class ReplyForumPostController {
 			forumPost.setIpAddress(httpServletRequest.getRemoteAddr());
 			forumPost.setText(command.getText());
 			forumPost.setSubject(command.getSubject());
-			forumPost.setParentPost(new ForumPost(command.getParentPostId()));
+			//forumPost.setParentPost(new ForumPost(command.getParentPostId()));
 			forumPost.setForum(new Forum(command.getForumId()));
 
 			try {
@@ -112,8 +112,8 @@ public class ReplyForumPostController {
 			return new ModelAndView("error/EditPostForum", model);
 			
 		}
-		command.setForumId(postToReply.getForum().getId());
-		command.setParentPostId(postToReply.getParentPost().getId());
+		command.setForumId(postToReply.getForum().getForumId());
+		//command.setParentPostId(postToReply.getParentPost().getId());
 		command.setSubject(postToReply.getSubject());
 		command.setText(postToReply.getText());
 

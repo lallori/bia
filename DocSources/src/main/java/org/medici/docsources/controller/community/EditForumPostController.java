@@ -36,6 +36,7 @@ import javax.validation.Valid;
 import org.medici.docsources.command.community.EditForumPostCommand;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
+import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,17 +78,15 @@ public class EditForumPostController {
 		} else {
 			Map<String, Object> model = new HashMap<String, Object>();
 
-			ForumPost forumPost = new ForumPost(command.getId());
+			ForumPost forumPost = new ForumPost(command.getPostId());
+			forumPost.setForum(new Forum(command.getForumId()));
+			forumPost.setTopic(new ForumTopic(command.getTopicId()));
 			forumPost.setIpAddress(httpServletRequest.getRemoteAddr());
 			forumPost.setText(command.getText());
 			forumPost.setSubject(command.getSubject());
-			forumPost.setForum(new Forum(command.getForumId()));
-			if (command.getParentPostId() != null) {
-				forumPost.setParentPost(new ForumPost(command.getParentPostId()));
-			}
 
 			try {
-				if (command.getId().equals(0)) {
+				if (command.getPostId().equals(0)) {
 					forumPost = getCommunityService().addNewPost(forumPost);
 					model.put("forumPost", forumPost);
 				} else {
@@ -111,20 +110,20 @@ public class EditForumPostController {
 	public ModelAndView setupForm(@ModelAttribute("command") EditForumPostCommand command) {
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if ((command != null) && (command.getId() > 0)) {
+		if ((command.getPostId() != null) && (command.getPostId() > 0)) {
 			ForumPost forumPost = new ForumPost();
 
 			try {
-				forumPost = getCommunityService().findPost(command.getId());
+				forumPost = getCommunityService().findPost(command.getPostId());
 				model.put("forumPost", forumPost);
 			} catch (ApplicationThrowable applicationThrowable) {
 				return new ModelAndView("error/EditPostForum", model);
 				
 			}
-			command.setForumId(forumPost.getForum().getId());
-			if (forumPost.getParentPost() != null) {
+			command.setForumId(forumPost.getForum().getForumId());
+			/*if (forumPost.getParentPost() != null) {
 				command.setParentPostId(forumPost.getParentPost().getId());
-			}
+			}*/
 			command.setSubject(forumPost.getSubject());
 			command.setText(forumPost.getText());
 		} else {

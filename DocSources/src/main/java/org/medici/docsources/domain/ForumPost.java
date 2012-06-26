@@ -38,7 +38,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -60,10 +59,16 @@ public class ForumPost implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column (name="\"id\"", length=10, nullable=false)
-	private Integer id;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name="\"parentPost\"", nullable=true)
+	@Column (name="\"postId\"", length=10, nullable=false)
+	private Integer postId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name="\"forum\"", nullable=true)
+	private Forum forum;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name="\"topic\"", nullable=true)
+	private ForumTopic topic;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="\"parentPost\"", nullable=true)
 	private ForumPost parentPost;
 	@Column (name="\"username\"", length=64, nullable=false)
 	private String username;
@@ -73,9 +78,6 @@ public class ForumPost implements Serializable {
 	@Column (name="\"lastUpdate\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="\"forum\"")
-	private Forum forum;
 	@Column (name="\"ipAddress\"", length=50, nullable=false)
 	private String ipAddress;
 	@Column (name="\"subject\"", length=64, nullable=false)
@@ -96,36 +98,38 @@ public class ForumPost implements Serializable {
 	 * 
 	 * @param id2
 	 */
-	public ForumPost(Integer id) {
+	public ForumPost(Integer postId) {
 		super();
 		
-		setId(id);
+		setPostId(postId);
 	}
 
 	/**
-	 * @return the id
+	 * @return the postId
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getPostId() {
+		return postId;
 	}
 	/**
-	 * @param id the id to set
+	 * @param postId the postId to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 	/**
-	 * @return the parentPost
+	 * @param topic the topic to set
 	 */
-	public ForumPost getParentPost() {
-		return parentPost;
+	public void setTopic(ForumTopic topic) {
+		this.topic = topic;
 	}
+
 	/**
-	 * @param parentPost the parentPost to set
+	 * @return the topic
 	 */
-	public void setParentPost(ForumPost parentPost) {
-		this.parentPost = parentPost;
+	public ForumTopic getTopic() {
+		return topic;
 	}
+
 	/**
 	 * @return the username
 	 */
@@ -174,6 +178,20 @@ public class ForumPost implements Serializable {
 	public void setForum(Forum forum) {
 		this.forum = forum;
 	}
+	/**
+	 * @param parentPost the parentPost to set
+	 */
+	public void setParentPost(ForumPost parentPost) {
+		this.parentPost = parentPost;
+	}
+
+	/**
+	 * @return the parentPost
+	 */
+	public ForumPost getParentPost() {
+		return parentPost;
+	}
+
 	/**
 	 * @return the ipAddress
 	 */

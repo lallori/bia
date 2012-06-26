@@ -35,6 +35,7 @@ import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.UserMessageSearch;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumPost;
+import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.domain.UserMessage;
 import org.medici.docsources.domain.Forum.Type;
@@ -100,7 +101,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public ForumPost findPost(Integer id) throws ApplicationThrowable;
+	public ForumPost findPost(Integer postId) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -128,6 +129,15 @@ public interface CommunityService {
 
 	/**
 	 * 
+	 * @param forumTopic
+	 * @param paginationFilterPost
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Page getForumPostsFromTopic(ForumTopic forumTopic, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
+
+	/**
+	 * 
 	 * @param forum
 	 * @return
 	 * @throws ApplicationThrowable
@@ -152,11 +162,10 @@ public interface CommunityService {
 	/**
 	 * 
 	 * @param forum
-	 * @param paginationFilterPost
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getForumThread(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
+	public ForumTopic getForumTopic(ForumTopic forumTopic) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -165,7 +174,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page getForumThreads(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
+	public Page getForumTopics(Forum forum, PaginationFilter paginationFilterPost) throws ApplicationThrowable;
 
 	/**
 	 * 
@@ -204,7 +213,7 @@ public interface CommunityService {
 	 * @throws ApplicationThrowable
 	 */
 	public UserMessage replyMessage(UserMessage userMessage, Integer parentUserMessageId) throws ApplicationThrowable;
-
+	
 	/**
 	 * 
 	 * @param forumPost

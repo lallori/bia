@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<c:url var="ShowForumURL" value="/community/ShowForum.do">
-		<c:param name="id"          value="${forum.id}" />
+		<c:param name="forumId"          value="${forum.forumId}" />
 		<c:param name="CompleteDOM" value="true"/>
 	</c:url>
 	

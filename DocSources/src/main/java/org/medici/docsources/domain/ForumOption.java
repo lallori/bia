@@ -51,32 +51,32 @@ public class ForumOption implements Serializable {
 	private static final long serialVersionUID = 23669109119824327L;
 	@Id
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="\"id\"")
+	@JoinColumn(name="\"forumId\"")
 	private Forum forum;
 	@Column (name="\"canHaveSubCategory\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canHaveSubCategory;
 	@Column (name="\"canHaveSubForum\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canHaveSubForum;
-	@Column (name="\"canHaveThreads\"", length=1, columnDefinition="tinyint default 0", nullable=false)
-	private Boolean canHaveThreads;
+	@Column (name="\"canHaveTopics\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean canHaveTopics;
 	@Column (name="\"canView\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canView;
-	@Column (name="\"canOnlyViewOwnThreads\"", length=1, columnDefinition="tinyint default 0", nullable=false)
-	private Boolean canOnlyViewOwnThreads;
+	@Column (name="\"canOnlyViewOwnTopics\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean canOnlyViewOwnTopics;
 	@Column (name="\"canDownloadAttachments\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canDownloadAttachments;
 	@Column (name="\"canPostReplys\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canPostReplys;
 	@Column (name="\"canPostAttachments\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canPostAttachments;
-	@Column (name="\"canRateThreads\"", length=1, columnDefinition="tinyint default 0", nullable=false)
-	private Boolean canRateThreads;
+	@Column (name="\"canRateTopics\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean canRateTopics;
 	@Column (name="\"canEditPosts\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canEditPosts;
 	@Column (name="\"canDeletePosts\"", length=1, columnDefinition="tinyint default 0", nullable=false)
 	private Boolean canDeletePosts;
-	@Column (name="\"canDeleteThreads\"", length=1, columnDefinition="tinyint default 0", nullable=false)
-	private Boolean canDeleteThreads;
+	@Column (name="\"canDeleteTopics\"", length=1, columnDefinition="tinyint default 0", nullable=false)
+	private Boolean canDeleteTopics;
 
 	/**
 	 * Default constructor. 
@@ -88,16 +88,16 @@ public class ForumOption implements Serializable {
 
 		setCanHaveSubCategory(Boolean.FALSE);
 		setCanHaveSubForum(Boolean.FALSE);
-		setCanHaveThreads(Boolean.FALSE);
+		setCanHaveTopics(Boolean.FALSE);
 		setCanView(Boolean.FALSE);
-		setCanOnlyViewOwnThreads(Boolean.FALSE);
+		setCanOnlyViewOwnTopics(Boolean.FALSE);
 		setCanDownloadAttachments(Boolean.FALSE);
 		setCanPostReplys(Boolean.FALSE);
 		setCanPostAttachments(Boolean.FALSE);
-		setCanRateThreads(Boolean.FALSE);
+		setCanRateTopics(Boolean.FALSE);
 		setCanEditPosts(Boolean.FALSE);
 		setCanDeletePosts(Boolean.FALSE);
-		setCanDeleteThreads(Boolean.FALSE);	
+		setCanDeleteTopics(Boolean.FALSE);	
 	}
 
 	/**
@@ -115,16 +115,16 @@ public class ForumOption implements Serializable {
 
 		setCanHaveSubCategory(Boolean.FALSE);
 		setCanHaveSubForum(Boolean.FALSE);
-		setCanHaveThreads(Boolean.FALSE);
+		setCanHaveTopics(Boolean.FALSE);
 		setCanView(Boolean.FALSE);
-		setCanOnlyViewOwnThreads(Boolean.FALSE);
+		setCanOnlyViewOwnTopics(Boolean.FALSE);
 		setCanDownloadAttachments(Boolean.FALSE);
 		setCanPostReplys(Boolean.FALSE);
 		setCanPostAttachments(Boolean.FALSE);
-		setCanRateThreads(Boolean.FALSE);
+		setCanRateTopics(Boolean.FALSE);
 		setCanEditPosts(Boolean.FALSE);
 		setCanDeletePosts(Boolean.FALSE);
-		setCanDeleteThreads(Boolean.FALSE);
+		setCanDeleteTopics(Boolean.FALSE);
 	}
 
 	/**
@@ -140,16 +140,16 @@ public class ForumOption implements Serializable {
 
 		setCanHaveSubCategory(Boolean.FALSE);
 		setCanHaveSubForum(Boolean.FALSE);
-		setCanHaveThreads(Boolean.FALSE);
+		setCanHaveTopics(Boolean.FALSE);
 		setCanView(Boolean.FALSE);
-		setCanOnlyViewOwnThreads(Boolean.FALSE);
+		setCanOnlyViewOwnTopics(Boolean.FALSE);
 		setCanDownloadAttachments(Boolean.FALSE);
 		setCanPostReplys(Boolean.FALSE);
 		setCanPostAttachments(Boolean.FALSE);
-		setCanRateThreads(Boolean.FALSE);
+		setCanRateTopics(Boolean.FALSE);
 		setCanEditPosts(Boolean.FALSE);
 		setCanDeletePosts(Boolean.FALSE);
-		setCanDeleteThreads(Boolean.FALSE);
+		setCanDeleteTopics(Boolean.FALSE);
 	}
 
 	/**
@@ -209,31 +209,31 @@ public class ForumOption implements Serializable {
 	}
 
 	/**
-	 * @return the canHaveThreads
+	 * @return the canHaveTopics
 	 */
-	public Boolean getCanHaveThreads() {
-		return canHaveThreads;
+	public Boolean getCanHaveTopics() {
+		return canHaveTopics;
 	}
 
 	/**
-	 * @param canHaveThreads the canHaveThreads to set
+	 * @param canHaveTopics the canHaveTopics to set
 	 */
-	public void setCanHaveThreads(Boolean canHaveThreads) {
-		this.canHaveThreads = canHaveThreads;
+	public void setCanHaveTopics(Boolean canHaveTopics) {
+		this.canHaveTopics = canHaveTopics;
 	}
 
 	/**
 	 * @return the canOnlyViewOwnThreads
 	 */
-	public Boolean getCanOnlyViewOwnThreads() {
-		return canOnlyViewOwnThreads;
+	public Boolean getCanOnlyViewOwnTopics() {
+		return canOnlyViewOwnTopics;
 	}
 
 	/**
-	 * @param canOnlyViewOwnThreads the canOnlyViewOwnThreads to set
+	 * @param canOnlyViewOwnTopics the canOnlyViewOwnTopics to set
 	 */
-	public void setCanOnlyViewOwnThreads(Boolean canOnlyViewOwnThreads) {
-		this.canOnlyViewOwnThreads = canOnlyViewOwnThreads;
+	public void setCanOnlyViewOwnTopics(Boolean canOnlyViewOwnTopics) {
+		this.canOnlyViewOwnTopics = canOnlyViewOwnTopics;
 	}
 
 	/**
@@ -279,17 +279,17 @@ public class ForumOption implements Serializable {
 	}
 
 	/**
-	 * @return the canRateThreads
+	 * @return the canRateTopics
 	 */
-	public Boolean getCanRateThreads() {
-		return canRateThreads;
+	public Boolean getCanRateTopics() {
+		return canRateTopics;
 	}
 
 	/**
-	 * @param canRateThreads the canRateThreads to set
+	 * @param canRateTopics the canRateTopics to set
 	 */
-	public void setCanRateThreads(Boolean canRateThreads) {
-		this.canRateThreads = canRateThreads;
+	public void setCanRateTopics(Boolean canRateTopics) {
+		this.canRateTopics = canRateTopics;
 	}
 
 	/**
@@ -323,15 +323,15 @@ public class ForumOption implements Serializable {
 	/**
 	 * @return the canDeleteThreads
 	 */
-	public Boolean getCanDeleteThreads() {
-		return canDeleteThreads;
+	public Boolean getCanDeleteTopics() {
+		return canDeleteTopics;
 	}
 
 	/**
-	 * @param canDeleteThreads the canDeleteThreads to set
+	 * @param canDeleteTopics the canDeleteTopics to set
 	 */
-	public void setCanDeleteThreads(Boolean canDeleteThreads) {
-		this.canDeleteThreads = canDeleteThreads;
+	public void setCanDeleteTopics(Boolean canDeleteTopics) {
+		this.canDeleteTopics = canDeleteTopics;
 	}
 
 	/**
@@ -342,33 +342,31 @@ public class ForumOption implements Serializable {
 		StringBuffer stringBuffer = new StringBuffer("[");
 		stringBuffer.append("id=");
 		if (getForum() ==null)
-		stringBuffer.append((getForum() ==null) ? null : getForum().getId());
+		stringBuffer.append((getForum() ==null) ? null : getForum().getForumId());
 		stringBuffer.append(", canHaveSubCategory=");
 		stringBuffer.append(getCanHaveSubCategory());
 		stringBuffer.append(", canHaveSubForum=");
 		stringBuffer.append(getCanHaveSubForum());
-		stringBuffer.append(", canHaveThreads=");
-		stringBuffer.append(getCanHaveThreads());
+		stringBuffer.append(", canHaveTopics=");
+		stringBuffer.append(getCanHaveTopics());
 		stringBuffer.append(", canView=");
 		stringBuffer.append(getCanView());
-		stringBuffer.append(", canOnlyViewOwnThreads=");
-		stringBuffer.append(getCanOnlyViewOwnThreads());
-		stringBuffer.append(", canOnlyViewOwnThreads=");
-		stringBuffer.append(getCanOnlyViewOwnThreads());
+		stringBuffer.append(", canOnlyViewOwnTopics=");
+		stringBuffer.append(getCanOnlyViewOwnTopics());
 		stringBuffer.append(", canDownloadAttachments=");
 		stringBuffer.append(getCanDownloadAttachments());
 		stringBuffer.append(", canPostReplys=");
 		stringBuffer.append(getCanPostReplys());
 		stringBuffer.append(", canPostAttachments=");
 		stringBuffer.append(getCanPostAttachments());
-		stringBuffer.append(", canRateThreads=");
-		stringBuffer.append(getCanRateThreads());
+		stringBuffer.append(", canRateTopics=");
+		stringBuffer.append(getCanRateTopics());
 		stringBuffer.append(", canEditPosts=");
 		stringBuffer.append(getCanEditPosts());
+		stringBuffer.append(", canDeleteTopics=");
+		stringBuffer.append(getCanDeleteTopics());
 		stringBuffer.append(", canDeletePosts=");
 		stringBuffer.append(getCanDeletePosts());
-		stringBuffer.append(", canDeleteThreads=");
-		stringBuffer.append(getCanDeleteThreads());
 		stringBuffer.append("]");
 
 		return stringBuffer.toString();

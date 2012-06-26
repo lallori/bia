@@ -5,7 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 	<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
-		<c:param name="id" value="${category.id}"/>
+		<c:param name="forumId" value="${category.forumId}"/>
 	</c:url>
 
 
@@ -21,11 +21,11 @@
 										<div class="four">LAST POST</div>
 									</div>
 	
-								<c:set var="forums" value="${forumsBySubCategories[currentCategory.id]}"/>
+								<c:set var="forums" value="${forumsBySubCategories[currentCategory.forumId]}"/>
 	
 								<c:forEach items="${forums}" var="currentForum" varStatus="status">
 									<c:url var="forumURL" value="/community/ShowForum.do">
-										<c:param name="id" value="${currentForum.id}" />
+										<c:param name="forumId" value="${currentForum.forumId}" />
 									</c:url>
 									<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">
 									<div class="one">
@@ -51,16 +51,17 @@
 
 				<c:if test="${not empty forum}">
 						<c:url var="ShowForumChronologyURL" value="/community/GetForumChronology.json">
-							<c:param name="id" value="${forum.id}"/>
+							<c:param name="forumId" value="${forum.forumId}"/>
 						</c:url>
 						<c:url var="EditForumPostURL" value="/community/EditForumPost.do">
-							<c:param name="id" value="0"/>
-							<c:param name="forumId" value="${forum.id}"/>
+							<c:param name="postId" value="0"/>
+							<c:param name="forumId" value="${forum.forumId}"/>
+							<c:param name="topicId" value="0"/>
 						</c:url>
 						<h2>${forum.title}</h2>
 						
 						<div id="topicActions">
-							<c:if test="${forum.option.canHaveThreads}">
+							<c:if test="${forum.option.canHaveTopics}">
 							<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
 							</c:if>
 						    <div id="searchThisForumFormDiv">
@@ -84,7 +85,7 @@
 						<c:if test="${not empty subForumsPage.list}">
 							<c:forEach items="${subForumsPage.list}" var="currentForum" varStatus="status">
 								<c:url var="ShowForumURL" value="/community/ShowForum.do">
-										<c:param name="id" value="${currentForum.id}" />
+										<c:param name="forumId" value="${currentForum.forumId}" />
 								</c:url>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
@@ -103,7 +104,7 @@
 								<div class="rowLast">						            
 									<div class="one">
 						            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
-						                <a id="viewTopic">No threads available</a>
+						                <a id="viewTopic">No forums available</a>
 						                <span>${currentForum.description}</span>
 						            </div>
 						            <div class="two">0</div>
@@ -115,35 +116,36 @@
 						</div>
 					</c:if>	
 
-					<c:if test="${forum.option.canHaveThreads}">
+					<c:if test="${forum.option.canHaveTopics}">
 						<div id="forumTable">
 						    <div class="list">
 						        <div class="rowFirst">
-						            <div class="one">POST</div>
+						            <div class="one">TOPIC</div>
 						            <div class="two">REPLY</div>
 						            <div class="three">VIEWS</div>
 						            <div class="four">LAST POST</div>
 						        </div>
 
-						<c:if test="${not empty postPage.list}">
-							<c:forEach items="${postPage.list}" var="currentPost" varStatus="status">
-								<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
-									<c:param name="forumId" value="${forum.id}"/>
+						<c:if test="${not empty topicsPage.list}">
+							<c:forEach items="${topicsPage.list}" var="currentTopic" varStatus="status">
+								<c:url var="ShowTopicForumURL" value="/community/ShowTopic.do">
+									<c:param name="topicId" value="${currentTopic.topicId}"/>
+									<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
 								</c:url>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
 						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
-						                <a href="${ShowTopicForumURL}" class="forumHref">${currentPost.subject}</a>
+						                <a href="${ShowTopicForumURL}" class="forumHref">${currentTopic.subject}</a>
 						                <span>subtitle</span>
 						            </div>
-						            <div class="two">${currentPost.replyNumber}</div>
+						            <div class="two">${currentTopic.totalReplies}</div>
 						            <div class="three">-</div>
-						            <div class="four">by <a href="#" id="userName" class="link"></a><span class="date"></span></div>
+						            <div class="four">by <a href="#" id="userName" class="link">currentTopic.lastPost.username</a><span class="date">currentTopic.lastPost.username</span></div>
 						        </div>
 						    </c:forEach>
 						</c:if>
 
-							<c:if test="${empty postPage.list}">
+							<c:if test="${empty topicsPage.list}">
 								<div class="rowLast">						            
 									<div class="one">
 						            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
@@ -160,7 +162,7 @@
 					</c:if>
 				</c:if>
 						<div id="topicActions">
-							<c:if test="${forum.option.canHaveThreads}">
+							<c:if test="${forum.option.canHaveTopics}">
 							<a href="${EditForumPostURL}" class="buttonMedium" id="newTopic">New Topic</a>
 							</c:if>
 						    <div id="jumpToDiv">

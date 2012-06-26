@@ -33,36 +33,41 @@ package org.medici.docsources.command.community;
  *
  */
 public class EditForumPostCommand {
-	private Integer id;
-	private Integer parentPostId;
+	private Integer postId;
 	private Integer forumId;
+	private Integer topicId;
+	private Integer parentPostId;
 	private String subject;
 	private String text;
 	
 	/**
-	 * @return the id
+	 * @return the postId
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getPostId() {
+		return postId;
 	}
+
 	/**
-	 * @param id the id to set
+	 * @param postId the postId to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
+
 	/**
 	 * @return the parentPostId
 	 */
 	public Integer getParentPostId() {
 		return parentPostId;
 	}
+	
 	/**
 	 * @param parentPostId the parentPostId to set
 	 */
 	public void setParentPostId(Integer parentPostId) {
 		this.parentPostId = parentPostId;
 	}
+	
 	/**
 	 * @return the forumId
 	 */
@@ -75,29 +80,46 @@ public class EditForumPostCommand {
 	public void setForumId(Integer forumId) {
 		this.forumId = forumId;
 	}
+	
 	/**
 	 * @return the text
 	 */
 	public String getText() {
 		return text;
 	}
+	
 	/**
 	 * @param text the text to set
 	 */
 	public void setText(String text) {
 		this.text = text;
 	}
+	
 	/**
 	 * @param subject the subject to set
 	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+	
 	/**
 	 * @return the subject
 	 */
 	public String getSubject() {
 		return subject;
 	}
+	
+	/**
+	 * @param topicId the topicId to set
+	 */
+	public void setTopicId(Integer topicId) {
+		this.topicId = topicId;
+	}
 
+	/**
+	 * @return the topicId
+	 */
+	public Integer getTopicId() {
+		return topicId;
+	}
 }

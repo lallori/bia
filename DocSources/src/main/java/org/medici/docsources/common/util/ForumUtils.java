@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.Forum.Type;
+import org.medici.docsources.domain.ForumTopic;
 
 /**
  * 
@@ -58,7 +59,7 @@ public class ForumUtils {
 			List<Forum> forums = new ArrayList<Forum>(0);
 			
 			for (Forum currentForum : forumResult) {
-				if (currentForum.getForumParent().getId().equals(currentCategory)) {
+				if (currentForum.getForumParent().getForumId().equals(currentCategory)) {
 					forums.add(currentForum);
 				}
 			}
@@ -84,5 +85,14 @@ public class ForumUtils {
 		}
 		
 		return getForumChronology(forum.getForumParent()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowForumHrefUrl(forum) + "</span>";
+	}
+
+	/**
+	 * 
+	 * @param forumTopic
+	 * @return
+	 */
+	public static String getForumChronology(ForumTopic forumTopic) {
+		return getForumChronology(forumTopic.getForum()) + "<span class=\"arrowForum\">&rarr; " + HtmlUtils.getShowForumTopicHrefUrl(forumTopic) + "</span>";
 	}
 }
