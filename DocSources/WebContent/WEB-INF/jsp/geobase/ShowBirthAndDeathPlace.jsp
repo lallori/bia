@@ -27,10 +27,10 @@
 	
 	<div class="list">	
 		<div class="row">
-			<div class="value"><c:if test="${birthPlace != 0}"><a id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Birth</a></c:if><c:if test="${birthPlace == 0}">0 Birth</c:if>      <c:if test="${activeStartPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Start</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Start</c:if></div>
+			<div class="value"><c:if test="${birthPlace != 0}"><a id="linkSearch" class="birth" href="${ShowBirthPeoplePlaceURL}">${birthPlace} Births</a></c:if><c:if test="${birthPlace == 0}">0 Births</c:if>      <c:if test="${activeStartPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveStartPeoplePlaceURL}">${activeStartPlace} Active Starts</a></c:if><c:if test="${activeStartPlace == 0}">0 Active Starts</c:if></div>
 		</div>
 		<div class="row">
-			<div class="value"><c:if test="${deathPlace != 0}"><a id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Death</a></c:if><c:if test="${deathPlace == 0}">0 Death</c:if>      <c:if test="${activeEndPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active End</a></c:if><c:if test="${activeEndPlace == 0}">0 Active End</c:if></div>
+			<div class="value"><c:if test="${deathPlace != 0}"><a id="linkSearch" class="death" href="${ShowDeathPeoplePlaceURL}">${deathPlace} Deaths</a></c:if><c:if test="${deathPlace == 0}">0 Deaths</c:if>      <c:if test="${activeEndPlace != 0}"><a id="linkSearch" class="activeStart" href="${ShowActiveEndPeoplePlaceURL}">${activeEndPlace} Active Ends</a></c:if><c:if test="${activeEndPlace == 0}">0 Active Ends</c:if></div>
 		</div>
 	</div>
 </div>

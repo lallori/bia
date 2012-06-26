@@ -82,7 +82,7 @@
 				</security:authorize>
 			</div>
 			
-			<div class="listDetails">
+			<div class="list">
 				<div class="row">
 					<div class="item">Place ID</div> 
 					<div class="value">${place.placeAllId}</div> 

@@ -24,7 +24,7 @@
 				<div class="value"><a id="linkSearch" class="topics" href="${ShowTopicsPlaceURL}">${docInTopics} Document on ${topicsPlace} Topics</a></div>
 			</c:if>
 			<c:if test="${topicsPlace == 0 || topicsPlace == null}">
-				<div class="value">0 Document on 0 Topic</div>
+				<div class="value">0 Documents on 0 Topics</div>
 			</c:if>
 		</div>
 	</div>

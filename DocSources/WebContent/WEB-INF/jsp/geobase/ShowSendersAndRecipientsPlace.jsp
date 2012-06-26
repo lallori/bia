@@ -26,7 +26,7 @@
 				<div class="value"><a id="linkSearch" class="sender" href="${ShowSenderDocumentsPlaceURL}">${senderPlace} Sender</a></div>
 			</c:if>
 			<c:if test="${senderPlace == 0 || senderPlace == null}">
-				<div class="value">0 Sender</div>
+				<div class="value">0 Senders</div>
 			</c:if>
 		</div>
 		<div class="row">
@@ -37,7 +37,7 @@
 				<div class="value"><a id="linkSearch" class="recipient" href="${ShowRecipientDocumentsPlaceURL}">${recipientPlace} Recipient</a></div>
 			</c:if>
 			<c:if test="${recipientPlace == 0 || recipientPlace == null}">
-				<div class="value">0 Recipient</div>
+				<div class="value">0 Recipients</div>
 			</c:if>
 		</div>
 	</div>
