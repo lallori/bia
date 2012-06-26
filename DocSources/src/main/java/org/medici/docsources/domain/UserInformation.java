@@ -50,7 +50,7 @@ public class UserInformation implements Serializable {
 	private static final long serialVersionUID = -8860668022533693786L;
 
 	@Id
-	@Column (name="\"account\"", length=30, nullable=false)
+	@Column (name="\"account\"", length=64, nullable=false)
 	private String account;
 	@Column (name="\"activationDate\"")
 	private Date activationDate;

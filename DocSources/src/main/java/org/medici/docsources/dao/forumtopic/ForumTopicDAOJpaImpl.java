@@ -82,7 +82,7 @@ public class ForumTopicDAOJpaImpl extends JpaDao<Integer, ForumTopic> implements
 	@Override
 	public ForumTopic findForumTopic(ForumTopic forumTopic) throws PersistenceException {
 		//select * from tblForum where type = 'FORUM' and forumParent in () group by forumParent order by forumParent asc, title asc
-		String queryString = "FROM ForumTopic WHERE topicId = :idTopic ";
+		String queryString = "FROM ForumTopic WHERE topicId = :topicId ";
 
 		if (forumTopic == null) {
 			return null;

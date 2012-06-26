@@ -115,9 +115,10 @@ public class CommunityServiceImpl implements CommunityService {
 				ForumTopic forumTopic = new ForumTopic(null);
 				forumTopic.setForum(forum);
 				forumTopic.setDateCreated(new Date());
-				forumTopic.setLastUpdate(forumPost.getTopic().getDateCreated());
+				forumTopic.setLastUpdate(forumTopic.getDateCreated());
 				forumTopic.setIpAddress(forumPost.getIpAddress());
-				forumTopic.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+				
+				forumTopic.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 				forumTopic.setSubject(forumPost.getSubject());
 				forumTopic.setTotalReplies(new Integer(0));
 				forumTopic.setTotalViews(new Integer(0));
@@ -132,7 +133,7 @@ public class CommunityServiceImpl implements CommunityService {
 			}
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
-			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			getForumPostDAO().persist(forumPost);
 
 			getForumDAO().recursiveIncreasePostsNumber(forum);
@@ -197,7 +198,7 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.setForum(forum);
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
-			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			if (forumPost.getParentPost() != null) {
 				forumPost.setParentPost(getForumPostDAO().find(forumPost.getParentPost().getPostId()));
 			}
@@ -466,7 +467,7 @@ public class CommunityServiceImpl implements CommunityService {
 			forumPost.setDateCreated(new Date());
 			forumPost.setLastUpdate(new Date());
 			forumPost.setParentPost(parentPost);
-			forumPost.setUsername((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()));
+			forumPost.setUserInformation(getUserInformationDAO().find((((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername())));
 			getForumPostDAO().persist(forumPost);
 			
 			parentPost.setReplyNumber(parentPost.getReplyNumber()+1);

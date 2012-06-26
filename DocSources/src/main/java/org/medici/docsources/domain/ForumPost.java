@@ -38,6 +38,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -62,16 +63,17 @@ public class ForumPost implements Serializable {
 	@Column (name="\"postId\"", length=10, nullable=false)
 	private Integer postId;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name="\"forum\"", nullable=true)
+	@JoinColumn (name="\"forumId\"", nullable=true)
 	private Forum forum;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name="\"topic\"", nullable=true)
+	@JoinColumn (name="\"topicId\"", nullable=true)
 	private ForumTopic topic;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="\"parentPost\"", nullable=true)
+	@JoinColumn(name="\"parentPostId\"", nullable=true)
 	private ForumPost parentPost;
-	@Column (name="\"username\"", length=64, nullable=false)
-	private String username;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"", nullable=true)
+	private UserInformation userInformation;
 	@Column (name="\"dateCreated\"")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
@@ -130,18 +132,21 @@ public class ForumPost implements Serializable {
 		return topic;
 	}
 
+
 	/**
-	 * @return the username
+	 * @param userInformation the userInformation to set
 	 */
-	public String getUsername() {
-		return username;
+	public void setUserInformation(UserInformation userInformation) {
+		this.userInformation = userInformation;
 	}
+
 	/**
-	 * @param username the username to set
+	 * @return the userInformation
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public UserInformation getUserInformation() {
+		return userInformation;
 	}
+
 	/**
 	 * @return the dateCreated
 	 */

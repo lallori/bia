@@ -33,7 +33,9 @@ package org.medici.docsources.command.community;
  *
  */
 public class ReplyForumPostCommand {
+	private Integer postId;
 	private Integer parentPostId;
+	private Integer topicId;
 	private Integer forumId;
 	private String subject;
 	private String text;

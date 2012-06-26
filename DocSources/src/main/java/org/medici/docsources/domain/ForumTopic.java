@@ -76,8 +76,9 @@ public class ForumTopic implements Serializable {
 	private Type type;
 	@Column(name = "hasAttachment")
 	private Boolean hasAttachment;
-	@Column (name="\"username\"", length=64, nullable=false)
-	private String username;
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="\"account\"", nullable=true)
+	private UserInformation userInformation;
 	@Column (name="\"ipAddress\"", length=50, nullable=false)
 	private String ipAddress;
 	@Column(name = "subject")
@@ -213,17 +214,17 @@ public class ForumTopic implements Serializable {
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param userInformation the userInformation to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserInformation(UserInformation userInformation) {
+		this.userInformation = userInformation;
 	}
 
 	/**
-	 * @return the username
+	 * @return the userInformation
 	 */
-	public String getUsername() {
-		return username;
+	public UserInformation getUserInformation() {
+		return userInformation;
 	}
 
 	/**

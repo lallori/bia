@@ -36,7 +36,6 @@ import org.apache.commons.lang.ObjectUtils;
 import org.medici.docsources.command.community.ShowTopicForumCommand;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
-import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.UserInformation;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -69,7 +68,6 @@ public class ShowTopicForumController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView setupForm(@ModelAttribute("command") ShowTopicForumCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Forum forum = new Forum(); 
 
 		try {
 			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");

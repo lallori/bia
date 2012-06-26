@@ -67,10 +67,9 @@ public class ShowPreviewForumPostController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView processSubmit(@ModelAttribute("command") ShowPreviewForumPostCommand command, HttpSession httpSession) {
 		Map<String, Object> model = new HashMap<String, Object>();
+		UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
 
 		try {
-			UserInformation userInformation = (UserInformation) httpSession.getAttribute("userInformation");
-			
 			if (userInformation != null) {
 				if (userInformation.getForumJoinedDate() == null) {
 					userInformation = getCommunityService().joinUserOnForum();
@@ -86,7 +85,7 @@ public class ShowPreviewForumPostController {
 		forumPost.setText(command.getText());
 		forumPost.setSubject(command.getSubject());
 		forumPost.setDateCreated(new Date());
-		forumPost.setUsername(((DocSourcesLdapUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		forumPost.setUserInformation(userInformation);
 
 		model.put("forumPost", forumPost);
 
