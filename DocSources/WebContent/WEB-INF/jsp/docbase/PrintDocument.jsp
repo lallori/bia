@@ -57,6 +57,7 @@
 	
 	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
 	
+	<%-- <!-- su due colonne -->
 	<h5>Extract/Synopsis</h5>
 	<table>
 	    <tr> 
@@ -68,6 +69,28 @@
 			<td width="150" class="value">${document.synExtract.synopsis}</td>
 		</tr>
 	</table>
+	
+	--%>
+	
+	<h5>Extract/Synopsis</h5>
+	<table>
+        <tr> 
+        	<td width="100%">Document Extract</td>
+        </tr>
+        <tr>
+        	<td width="100%" class="value">${document.synExtract.docExtract}</td>
+        </tr>
+        <tr>
+        	<td width="100%"></td>
+        </tr>
+        <tr>
+			<td width="100%">Document Synopsis</td>
+        </tr>
+        <tr> 
+        	<td width="100%" class="value">${document.synExtract.synopsis}</td>
+        </tr>
+	</table>
+		
 	
 	<img src="<c:url value="/images/1024/img_hr_print.png"/>" style="margin:10px 0 10px 85px"/>
 	
