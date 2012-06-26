@@ -294,27 +294,11 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowMessagesByCategory.jsp"/>
 	</definition>
 
-	<definition name="community/ShowCommentsOnDocument" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnDocument.jsp"/>
-	</definition>
-
-	<definition name="community/ShowCommentsOnPeople" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnPeople.jsp"/>
-	</definition>
-
-	<definition name="community/ShowCommentsOnPlace" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnPlace.jsp"/>
-	</definition>
-
-	<definition name="community/ShowCommentsOnVolume" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowCommentsOnVolume.jsp"/>
-	</definition>
-
-	<definition name="community/ShowForumCompleteDOM" extends="template.forum">
+	<definition name="community/ShowForum" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
 	</definition>
 
-	<definition name="community/ShowForum" extends="template.partialDOM">
+	<definition name="community/ShowForumCompleteDOM" extends="template.forum">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowForum.jsp"/>
 	</definition>
 
@@ -322,10 +306,14 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowPreviewForumPost.jsp"/>
 	</definition>
 	
-	<definition name="community/ShowTopicForum" extends="template.forum">
+	<definition name="community/ShowTopicForum" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowTopicForum.jsp"/>
 	</definition>
-
+	
+	<definition name="community/ShowTopicForumCompleteDOM" extends="template.forum">
+		<put-attribute name="main" value="/WEB-INF/jsp/community/ShowTopicForum.jsp"/>
+	</definition>
+	
 	<!-- Community Module END -->
 
     <!-- Digitization Module BEGIN -->
@@ -488,10 +476,6 @@
 	
 	<definition name="docbase/ShowMenuActionsDocument" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuActionsDocument.jsp"/>
-	</definition>
-
-	<definition name="docbase/ShowMenuCommentsDocumentModalWindow" extends="template.partialDOM">
-		<put-attribute name="main" value="/WEB-INF/jsp/docbase/ShowMenuCommentsDocumentModalWindow.jsp"/>
 	</definition>
 
 	<definition name="docbase/ShowTopicsDocument" extends="template.partialDOM">

@@ -36,7 +36,7 @@
 										<div class="two">${currentForum.topicsNumber}</div>
 										<div class="three">${currentForum.postsNumber}</div>
 										<c:if test="${not empty currentForum.lastPost}">
-										<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.username}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
+										<div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.userInformation.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 										</c:if>
 										<c:if test="${empty currentForum.lastPost}">
 										<div class="four">empty forum</span></div>
@@ -85,7 +85,7 @@
 						<c:if test="${not empty subForumsPage.list}">
 							<c:forEach items="${subForumsPage.list}" var="currentForum" varStatus="status">
 								<c:url var="ShowForumURL" value="/community/ShowForum.do">
-										<c:param name="forumId" value="${currentForum.forumId}" />
+									<c:param name="forumId" value="${currentForum.forumId}" />
 								</c:url>
 								<div class="<c:if test="${not status.last}">row</c:if><c:if test="${status.last}">rowLast</c:if>">						            
 									<div class="one">
@@ -95,7 +95,7 @@
 						            </div>
 						            <div class="two">${currentForum.topicsNumber}</div>
 						            <div class="three">0</div>
-						            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.username}</a><span class="date">Wed Mar 17, 2012 5:42 pm</span></div>
+						            <div class="four">by <a href="#" id="userName" class="link">${currentForum.lastPost.userInformation.account}</a><span class="date">${currentForum.lastPost.lastUpdate}</span></div>
 						        </div>
 						    </c:forEach>
 						</c:if>
@@ -128,7 +128,7 @@
 
 						<c:if test="${not empty topicsPage.list}">
 							<c:forEach items="${topicsPage.list}" var="currentTopic" varStatus="status">
-								<c:url var="ShowTopicForumURL" value="/community/ShowTopic.do">
+								<c:url var="ShowTopicForumURL" value="/community/ShowTopicForum.do">
 									<c:param name="topicId" value="${currentTopic.topicId}"/>
 									<c:param name="forumId" value="${currentTopic.forum.forumId}"/>
 								</c:url>
@@ -140,7 +140,7 @@
 						            </div>
 						            <div class="two">${currentTopic.totalReplies}</div>
 						            <div class="three">-</div>
-						            <div class="four">by <a href="#" id="userName" class="link">currentTopic.lastPost.username</a><span class="date">currentTopic.lastPost.username</span></div>
+						            <div class="four">by <a href="#" id="userName" class="link">${currentTopic.lastPost.userInformation.account}</a><span class="date">${currentTopic.lastPost.lastUpdate}</span></div>
 						        </div>
 						    </c:forEach>
 						</c:if>
@@ -148,7 +148,7 @@
 							<c:if test="${empty topicsPage.list}">
 								<div class="rowLast">						            
 									<div class="one">
-						            	<img src="/DocSources/images/forum/img_forum.png" alt="entry">
+						            	<img src="<c:url value="/images/forum/img_forum.png"/>" alt="entry">
 						                <a id="viewTopic">No topics available</a>
 						                <span>${currentForum.description}</span>
 						            </div>
