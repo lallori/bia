@@ -121,28 +121,54 @@
 				}).dialogExtend({"minimize" : true});;
 				
 				
-				var $pageTurner = $j('<div id="PageTurnerDiv"></div>')
-				.dialog({
-					autoOpen: true,
-					resizable: false,
-					width: 470,
-					height: 112,
-					minWidth: 470,
-					minHeight: 112,                                                                                                                                                         
-					title: 'PAGE TURNER',
-					position: ['right','middle'],                                                                                                                                                       
-					closeOnEscape: false,
-					maximized:false,
+// 				var $pageTurner = $j('<div id="PageTurnerDiv"></div>')
+// 				.dialog({
+// 					autoOpen: true,
+// 					resizable: false,
+// 					width: 470,
+// 					height: 112,
+// 					minWidth: 470,
+// 					minHeight: 112,                                                                                                                                                         
+// 					title: 'PAGE TURNER',
+// 					position: ['right','middle'],                                                                                                                                                       
+// 					closeOnEscape: false,
+// 					maximized:false,
 					
-					open: function(event, ui) { 
-						$j(".ui-dialog-titlebar-close").hide(); 
-                		$(this).load('${PageTurnerDialogUrl}');
-               		},
-					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
-					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
-				}).dialogExtend({"minimize" : true});
+// 					open: function(event, ui) { 
+// 						$j(".ui-dialog-titlebar-close").hide(); 
+//                 		$(this).load('${PageTurnerDialogUrl}');
+//                		},
+// 					dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+// 					dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+// 				}).dialogExtend({"minimize" : true});
 			
 	
-			});
+// 			});
+			
+			var $pageTurner = $j('<div id="PageTurnerVerticalDiv"></div>')
+			.dialog({                                                                                                                                                                   
+				autoOpen: true,
+				resizable: false,
+				width: 140,
+				height: 375, 
+				minWidth: 140,
+				maxWidth: 140,
+				maxHeight: 375,
+				
+				                                                                                                                                                         
+				//title: 'Page T.',
+				title: 'Page Turner',
+				position: ['left','middle'],                                                                                                                                                       
+				closeOnEscape: false,
+				open: function(event, ui) { 
+					$j(".ui-dialog-titlebar-close").hide();
+					$j("#PageTurnerVerticalDiv").prev().append("<img src='/DocSources/images/mview/button_rotateHorizontal.png' id='rotateHorizontal' title='Horizontal Page Turner'/>");
+            		$(this).load('${PageTurnerDialogUrl}');
+           			},
+				dragStart: function(event, ui) {$j(".ui-widget-content").css('opacity', 0.30);},
+				dragStop: function(event, ui) {$j(".ui-widget-content").css('opacity', 1);}
+			}).dialogExtend({"minimize" : true}); 
+
+		});
 
 		</script>
