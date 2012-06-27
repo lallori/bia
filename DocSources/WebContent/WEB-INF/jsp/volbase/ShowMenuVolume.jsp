@@ -41,7 +41,7 @@
 		<a id="menuActions" href="${ShowMenuActionsVolumeURL}">Delete</a>
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintVolumeURL}" title="Print this record"></a>
-		<a id="buttonPDF" href="#" title="Save this record as PDF"></a>
+	<%-- <a id="buttonMarkedList" href="#" title="Add this record to Marked List"></a> --%>
 		<a id="buttonShareLink" href="${ShareVolumeURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	

@@ -19,6 +19,12 @@
 	<c:url var="ShowMenuActionsDocumentURL" value="/de/docbase/ShowMenuActionsDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
+	<c:url var="ShowConfirmDeleteDocumentURL" value="/de/docbase/ShowConfirmDeleteDocument.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
+	<c:url var="ShowConfirmUndeleteDocumentURL" value="/de/docbase/ShowConfirmUndeleteDocument.do">
+		<c:param name="entryId"   value="${document.entryId}" />
+	</c:url>
 	<c:url var="ShowVettingChronologyDocumentURL" value="/de/docbase/ShowVettingChronologyDocument.do">
 		<c:param name="entryId"   value="${document.entryId}" />
 	</c:url>
@@ -42,10 +48,16 @@
 		</security:authorize>
 		<a id="comments" href="#">Comments</a>
 		<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-		<a id="menuActions" href="${ShowMenuActionsDocumentURL}">Delete</a>
+		<%-- <a id="menuActions" href="${ShowMenuActionsDocumentURL}">Delete</a>--%>
+			<c:if test="${!document.logicalDelete}">
+				<a id="menuActions" href="${ShowConfirmDeleteDocumentURL}">Delete</a>
+			</c:if>	
+			<c:if test="${document.logicalDelete}">
+				<a id="menuActions" href="${ShowConfirmUndeleteDocumentURL}">Undelete</a>
+			</c:if>	
 		</security:authorize>
 		<a id="buttonPrint" href="${PrintDocumentURL}" title="Print this record"></a>
-		<a id="buttonPDF" href="#" title="Save this record as PDF"></a>
+	<%-- <a id="buttonMarkedList" href="#" title="Add this record to Marked List"></a> --%>
 		<a id="buttonShareLink" href="${ShareDocumentURL}" title="Use this to share this content / record / annotation across annotation clients and collections / applications such as: Zotero, Lore, Co-Annotea, Pliny, etc.">Share/Link</a>
 	</div>
 	
