@@ -80,7 +80,7 @@
 					credit: credit
 				});
 
-// 				var $pageTurner = $j('<div></div>')
+// 				var $pageTurner = $j('<div>PageTurnerHorizontalDiv</div>')
 // 				.dialog({                                                                                                                                                                   
 // 					autoOpen: true,
 // 					resizable: false,

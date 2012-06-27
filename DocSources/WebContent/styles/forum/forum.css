@@ -149,7 +149,7 @@ h2 {
 	height: 80px;
 }
 
-#text { /* Input type text in Search Form */
+#searchText { /* Input type text in Search Form */
 	width: 177px;
 	margin: 0 4px 0 5px;
 }
@@ -398,6 +398,9 @@ a.returnTo {
 
 .list .rowLast .one p {
 	margin: 0 0 0 31px;
+}
+
+.forumHref {
 }
 
 
