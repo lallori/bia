@@ -18,8 +18,7 @@
 	        <form:input id="subject" path="subject" cssClass="input_4c"></form:input>
 	    </div>
 	    <div>
-	    	<label for="topic" id="topicLabel">Topic</label>
-			<textarea id="text" name="text" style="width:1000px; height:300px"></textarea>
+			<textarea id="htmlbox" name="text" style="width:970px; height:300px"></textarea>
 	    </div>
 	    
 	    <input type="submit" value="Submit" class="buttonSmall" id="submit" onclick="instance.post();">
@@ -30,47 +29,64 @@
 	    <form:hidden path="postId"/>
 
 <script type="text/javascript">
-	$j("#text").htmlbox({
-		toolbars:[[
-		// Cut, Copy, Paste
-		"separator","cut","copy","paste",
-		// Undo, Redo
-		"separator","undo","redo",
-		// Bold, Italic, Underline, Strikethrough, Sup, Sub
-		"separator","bold","italic","underline","strike","sup","sub",
-		// Left, Right, Center, Justify
-		"separator","justify","left","center","right",
-		// Ordered List, Unordered List, Indent, Outdent
-		"separator","ol","ul","indent","outdent",
-		// Hyperlink, Remove Hyperlink, Image
-		"separator","link","unlink","image"
-		]],
-		about:false
-	});
-
-	$j(document).ready(function() {
-		$j('#submit').click(function(){
- 			$j.ajax({ type:"POST", url:"${EditForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(json) {
-				$("#messagePosted").empty().html(response).dialog('open');
-			}});
-
- 			$j('#postTable').css('display','inherit');
-			$j.scrollTo({top:'300px',left:'0px'}, 800 );
-			return false;
+		$j("#htmlbox").htmlbox({
+		    toolbars:[[
+		    // Cut, Copy, Paste
+		    "separator","cut","copy","paste",
+		    // Undo, Redo
+		    "separator","undo","redo",
+		    // Bold, Italic, Underline, Strikethrough, Sup, Sub
+		    "separator","bold","italic","underline","strike","sup","sub",
+		    // Left, Right, Center, Justify
+		    "separator","justify","left","center","right",
+		    // Ordered List, Unordered List, Indent, Outdent
+		    "separator","ol","ul","indent","outdent",
+		    // Hyperlink, Remove Hyperlink, Image
+		    "separator","link","unlink","image"
+		    
+		    ]],
+		    css:"body{font-family:georgia;font-size:12px;background:#FBF7F4;}",
+		    about:false,
+		    icons:"silk",
+		    skin: "gray"
 		});
 
-		$j('#preview').click(function(){
- 			$j.ajax({ type:"POST", url:"${ShowPreviewForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(html) {
- 				$j("#postTable").html(html);
-			}});
+		var delay = (function(){
+		       var timer = 0;
+		       return function(callback, ms){
+		         clearTimeout (timer);
+		         timer = setTimeout(callback, ms);
+		       };
+			 })();
+		                                
+		delay(function(){
+		           $j("#htmlbox_wrap").css({
+		                    "border-color":"#DCC0BA",
+		                    "background":"#DCC0BA"
+		           });
+					}, 1 );		
+		
+		$j(document).ready(function() {
+			$j('#submit').click(function(){
+	 			$j.ajax({ type:"POST", url:"${EditForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(json) {
+					$("#messagePosted").empty().html(response).dialog('open');
+				}});
 
- 			$j('#postTable').css('display','inherit');
-			$j.scrollTo({top:'300px',left:'0px'}, 800 );
-			return false;
+	 			$j('#postTable').css('display','inherit');
+				$j.scrollTo({top:'300px',left:'0px'}, 800 );
+				return false;
+			});
+
+			$j('#preview').click(function(){
+	 			$j.ajax({ type:"POST", url:"${ShowPreviewForumPostURL}", data:$j("#EditForumPost").serialize(), async:false, success:function(html) {
+	 				$j("#postTable").html(html);
+				}});
+
+	 			$j('#postTable').css('display','inherit');
+				$j.scrollTo({top:'300px',left:'0px'}, 800 );
+				return false;
+			});
 		});
-
-	});	
-
 </script>
 
 	</form:form>
