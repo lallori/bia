@@ -14,9 +14,9 @@
         <a id="userManagement" href="<c:url value="/admin/ShowUserManagement.do" />"><p>User Management</p></a>
 	</div>
     
-    <div id="reportsRevisionsDiv">
-        <a id="reportsRevisions" href="/DocSources/adm/ReportsRevisions.html"><p>Reports and Revisions</p></a>
-    </div>
+<!--     <div id="reportsRevisionsDiv"> -->
+<!--         <a id="reportsRevisions" href="/DocSources/adm/ReportsRevisions.html"><p>Reports and Revisions</p></a> -->
+<!--     </div> -->
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
 
