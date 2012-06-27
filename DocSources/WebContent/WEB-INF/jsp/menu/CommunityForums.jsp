@@ -7,9 +7,4 @@
 <c:url var="ShowForumURL" value="/community/ShowForum.do?completeDOM=true"/>
 
 				<li class="forumsMenu"><a id="forumsMenu" href="${ShowForumURL}" target="_blank"></a></li>
-				<script type="text/javascript">
-					$j(document).ready(function() {														
-						$j("#forumsMenu").open({scrollbars: "yes"});
-						return false;							   	
-					});
-				</script>						
+								
