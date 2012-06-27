@@ -6,18 +6,18 @@
 
 <div id="digitizationModalDiv">
 	<div id="CreateSchedoneDiv">
-        <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="CreateSchedone" href="<c:url value="/digitization/CreateSchedone.do"/>"><p>Create new "Schedone"</p></a>
+        <a class="helpIcon" title="<fmt:message key="digitization.modalmenu.createschedoni"></fmt:message>">?</a>
+        <a id="CreateSchedone" href="<c:url value="/digitization/CreateSchedone.do"/>">Create new "Schedone"</a>
 	</div>
     
      <div id="BrowseFilzeDiv">
-        <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="BrowseFilze" href="<c:url value="/digitization/ShowSearchDigitizedVolumes.do"/>"><p>Browse or search "Sechedoni"</p></a>
+        <a class="helpIcon" title="<fmt:message key="digitization.modalmenu.searchschedoni"></fmt:message>">?</a>
+        <a id="BrowseFilze" href="<c:url value="/digitization/ShowSearchDigitizedVolumes.do"/>">Browse or search "Schedoni"</a>
 	</div>
     
     <div id="ActivateFilzaDiv">
-        <a class="helpIcon" title="Search here for words (in English) that appear in document synopses and/or words (in the original language and with the original spelling) that appear in document extracts.">?</a>
-        <a id="ActivateFilza" href="<c:url value="/digitization/ShowSearchActivatedVolumes.do"/>"><p>Activate or deactivate Volume</p></a>
+        <a class="helpIcon" title="<fmt:message key="digitization.modalmenu.activatedeactivatedigitizedvolume"></fmt:message>">?</a>
+        <a id="ActivateFilza" href="<c:url value="/digitization/ShowSearchActivatedVolumes.do"/>">Activate or deactivate Digitized Volume</a>
     </div>
     
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close" style="margin:22px 0 0 145px"/>

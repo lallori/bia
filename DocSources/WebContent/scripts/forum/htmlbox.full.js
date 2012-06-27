@@ -24,7 +24,7 @@ $.fn.htmlbox=function(options){
 	var d={
 	    toolbars:[["bold","italic","underline"]],      // Buttons
 		//idir:"./images/",// HtmlBox Image Directory, This is needed for the images to work
-	    idir:"/DocSources/images/forum/htmlbox/",// HtmlBox Image Directory, This is needed for the images to work
+		idir:"/DocSources/images/forum/htmlbox/",// HtmlBox Image Directory, This is needed for the images to work
 		icons:"default",  // Icon set
 		about:true,
 		skin:"default",  // Skin, silver
