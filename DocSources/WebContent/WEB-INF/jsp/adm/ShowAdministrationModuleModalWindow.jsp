@@ -15,7 +15,7 @@
 	</div>
     
 <!--     <div id="reportsRevisionsDiv"> -->
-<!--         <a id="reportsRevisions" href="/DocSources/adm/ReportsRevisions.html"><p>Reports and Revisions</p></a> -->
+<!--         <a id="reportsRevisions" href="/DocSources/adm/ReportsRevisions.html">Reports and Revisions</a> -->
 <!--     </div> -->
 	<input id="close" type="submit" title="Close Digitization Module window" value="Close"/>
 </div>
