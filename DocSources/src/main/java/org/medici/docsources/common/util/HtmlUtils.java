@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.medici.docsources.common.pagination.DocumentExplorer;
+import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Forum;
 import org.medici.docsources.domain.ForumTopic;
 import org.medici.docsources.domain.PlaceGeographicCoordinates;
@@ -302,6 +303,58 @@ public class HtmlUtils {
 		}
 
 		return stringBuffer.toString();
+	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param digitization
+	 * @return
+	 */
+	public static List<String> showDigitizedVolumeActiveIt(List<String> inputList, Digitization digitization){
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"showModal\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/digitization/ShowActivateVolumeModal.do?id=");
+		anchorBegin.append(digitization.getId());
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		for (int i=0; i<inputList.size(); i++) {
+			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
+			stringBuffer.append(inputList.get(i));
+			stringBuffer.append(hrefEnd);
+			retValue.add(stringBuffer.toString());
+		}
+		
+		return retValue;
+	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param digitization
+	 * @return
+	 */
+	public static List<String> showDigitizedVolumeDeactiveIt(List<String> inputList, Digitization digitization){
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"showModal\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/digitization/ShowDeactivateVolumeModal.do?id=");
+		anchorBegin.append(digitization.getId());
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		for (int i=0; i<inputList.size(); i++) {
+			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
+			stringBuffer.append(inputList.get(i));
+			stringBuffer.append(hrefEnd);
+			retValue.add(stringBuffer.toString());
+		}
+		
+		return retValue;
 	}
 
 	/**

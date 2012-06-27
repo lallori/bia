@@ -341,6 +341,10 @@
         <put-attribute name="main" value="/WEB-INF/jsp/digitization/EditTiffImagesSchedone.jsp"/>
 	</definition>
 	
+	<definition name="digitization/ShowActivateVolumeModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowActivateVolumeModalWindow.jsp" />
+	</definition>
+	
 	<definition name="digitization/ShowSearchActivatedVolumes" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowSearchActivatedVolumes.jsp"/>
 	</definition>
@@ -977,6 +981,14 @@
 	<!-- VolBase Module END -->
 
 	<!-- Generic Response START -->
+	<definition name="response/ActivateVolumeOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ActivateVolumeOK.jsp"/>
+	</definition>
+	
+	<definition name="response/ActivateVolumeKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ActivateVolumeKO.jsp"/>
+	</definition>
+	
 	<definition name="response/OK" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/OK.jsp"/>
 	</definition>

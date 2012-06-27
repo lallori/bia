@@ -51,5 +51,14 @@ public interface DigitizationDAO extends Dao<Integer, Digitization> {
 	 * @throws PersistenceException
 	 */
 	public Page searchActiveVolumes(Integer volNum, Integer volNumBetween, Boolean activated, PaginationFilter paginationFilter) throws PersistenceException;
+	
+	/**
+	 * 
+	 * @param activated
+	 * @param paginationFilter
+	 * @return
+	 * @throws PersistenceException
+	 */
+	public Page searchAllActiveVolumes(Boolean activated, PaginationFilter paginationFilter) throws PersistenceException;
 
 }

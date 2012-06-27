@@ -40,6 +40,7 @@ import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
+import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -66,6 +67,20 @@ public class DigitizationServiceImpl implements DigitizationService {
 	private SchedoneDAO schedoneDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Digitization activationOrDeactivationVolume(Digitization digitization) throws ApplicationThrowable {
+		try{
+			getDigitizationDAO().merge(digitization);
+			return digitization;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+		
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -184,6 +199,19 @@ public class DigitizationServiceImpl implements DigitizationService {
 			throw new ApplicationThrowable(th);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Digitization findActivateVolumeDigitized(Integer id) throws ApplicationThrowable {
+		try{
+			Digitization digitization = getDigitizationDAO().find(id);
+			return digitization;
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -203,16 +231,16 @@ public class DigitizationServiceImpl implements DigitizationService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Integer, Boolean> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable {
+	public Map<Integer, Schedone> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable {
 		try{
-			Map<Integer, Boolean> result = new HashMap<Integer, Boolean>();
+			Map<Integer, Schedone> result = new HashMap<Integer, Schedone>();
 			for(int i = volNum; i <= volNumBetween; i++){
-				result.put(i, Boolean.FALSE);
+				result.put(i, new Schedone(0));
 			}
 			List<Schedone> resultList = getSchedoneDAO().findByVolumesNumber(volNum, volNumBetween);
 			if(resultList != null){
 				for(Schedone currentSchedone : resultList){
-					result.put(currentSchedone.getVolNum(), Boolean.TRUE);
+					result.put(currentSchedone.getVolNum(), currentSchedone);
 				}
 			}
 			return result;
@@ -308,9 +336,12 @@ public class DigitizationServiceImpl implements DigitizationService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Page searchAllActiveVolumes(PaginationFilter paginationFilter) throws ApplicationThrowable {
-		// TODO Auto-generated method stub
-		return null;
+	public Page searchAllActiveVolumes(Boolean activated, PaginationFilter paginationFilter) throws ApplicationThrowable {
+		try{
+			return getDigitizationDAO().searchAllActiveVolumes(activated, paginationFilter);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
 	}
 
 	/**

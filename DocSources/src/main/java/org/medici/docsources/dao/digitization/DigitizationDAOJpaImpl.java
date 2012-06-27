@@ -80,7 +80,52 @@ public class DigitizationDAOJpaImpl extends JpaDao<Integer, Digitization> implem
 		Page page = new Page(paginationFilter);
 		
 		Query query = null;
-		String toSearch = new String("FROM Digitization WHERE volNum >= " + volNum + " AND volNum <= " + volNumBetween + " AND active = " + activated);
+		String toSearch = new String("FROM Digitization WHERE volNum >= " + volNum + " AND volNum <= " + volNumBetween);
+		if(activated)
+			toSearch.concat(" AND active = 1");
+		else
+			toSearch.concat(" AND active = 0");
+		
+		if(paginationFilter.getTotal() == null){
+			String countQuery = "SELECT COUNT(*) " + toSearch;
+			query = getEntityManager().createQuery(countQuery);
+			page.setTotal(new Long((Long) query.getSingleResult()));
+		}
+		
+//		paginationFilter = generatePaginationFilterMYSQL(paginationFilter);
+		
+		List<SortingCriteria> sortingCriterias = paginationFilter.getSortingCriterias();
+		StringBuffer orderBySQL = new StringBuffer();
+		if(sortingCriterias.size() > 0){
+			orderBySQL.append(" ORDER BY ");
+			for (int i=0; i<sortingCriterias.size(); i++) {
+				orderBySQL.append(sortingCriterias.get(i).getColumn() + " ");
+				orderBySQL.append((sortingCriterias.get(i).getOrder().equals(Order.ASC) ? " ASC " : " DESC " ));
+				if (i<(sortingCriterias.size()-1)) {
+					orderBySQL.append(", ");
+				} 
+			}
+		}
+		
+		query = getEntityManager().createQuery(toSearch + orderBySQL);
+		
+		query.setFirstResult(paginationFilter.getFirstRecord());
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page searchAllActiveVolumes(Boolean activated, PaginationFilter paginationFilter) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		Query query = null;
+		String toSearch = new String("FROM Digitization WHERE active = " + activated);
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;

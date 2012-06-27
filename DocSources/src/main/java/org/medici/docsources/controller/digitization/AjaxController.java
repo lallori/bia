@@ -121,9 +121,13 @@ public class AjaxController {
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Map<Integer, Boolean> ifSchedone = new HashMap<Integer, Boolean>();
-		//TODO
-		Boolean activated = Boolean.FALSE;
+		Map<Integer, Schedone> ifSchedone = new HashMap<Integer, Schedone>();
+
+		Boolean activated;
+		if(active.equals("Yes"))
+			activated = Boolean.TRUE;
+		else
+			activated = Boolean.FALSE;
 		
 		List<Integer> volNums = new ArrayList<Integer>();
 		List<String> volLetExts = new ArrayList<String>();
@@ -141,13 +145,16 @@ public class AjaxController {
 				
 				ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNumBetween);
 			}else if(searchType.equals("All")){
-//				page = getDigitizationService().searchAllActiveVolumes(new SchedoneSearch(), paginationFilter);
-//				
-//				for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
-//					volNums.add(currentSchedone.getVolNum());
-//					volLetExts.add(currentSchedone.getVolLetExt());
-//				}
+				page = getDigitizationService().searchAllActiveVolumes(activated, paginationFilter);
 				
+				for (Digitization currentDigitization : (List<Digitization>)page.getList()) {
+					volNums.add(currentDigitization.getVolNum());
+					volLetExts.add(currentDigitization.getVolLetExt());
+				}
+				
+				if(volNums != null && volNums.size() > 0){
+					ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNums.get(0), volNums.get(volNums.size() - 1));
+				}
 			}
 			
 //			page = getDigitizationService().searchSchedones(new SchedoneSearch(searchType, volNum, volNumBetween), paginationFilter);
@@ -157,36 +164,33 @@ public class AjaxController {
 		}
 
 		List resultList = new ArrayList();
-		if(searchType.equals("Exactly") || searchType.equals("Between")){
-			for(Digitization currentDigitization : (List<Digitization>)page.getList()){
-				List singleRow = new ArrayList();
-				//MDP
-				singleRow.add(currentDigitization.getVolNum() + currentDigitization.getVolLetExt());
-				//Schedone
-				if(ifSchedone.get(currentDigitization.getVolNum())){
-					singleRow.add("YES");
-				}else{
-					singleRow.add("NO");
-				}
-				//Active
-				if(currentDigitization.getActive()){
-					singleRow.add("YES");
-				}else{
-					singleRow.add("NO");
-				}
-				
-				resultList.add(singleRow);
+		for(Digitization currentDigitization : (List<Digitization>)page.getList()){
+			List singleRow = new ArrayList();
+			//MDP
+			if(currentDigitization.getVolLetExt() != null){
+				singleRow.add(currentDigitization.getVolNum().toString() + currentDigitization.getVolLetExt().toString());
+			}else{
+				singleRow.add(currentDigitization.getVolNum().toString());
 			}
-		}else if(searchType.equals("All")){
-			for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
-				List singleRow = new ArrayList();
-				//MDP
-				singleRow.add(HtmlUtils.showSchedoneMDP(currentSchedone));
-				//Schedone
+			
+			//Schedone
+			Schedone currentSchedone = ifSchedone.get(currentDigitization.getVolNum());
+			if(currentSchedone.getSchedoneId() != 0){
 				singleRow.add("YES");
-				//Digitized
-				
-				resultList.add(singleRow);
+			}else{
+				singleRow.add("NO");
+			}
+			//Active
+			if(currentDigitization.getActive()){
+				singleRow.add("YES");
+			}else{
+				singleRow.add("NO");
+			}
+			
+			if(currentDigitization.getActive()){
+				resultList.add(HtmlUtils.showDigitizedVolumeDeactiveIt(singleRow, currentDigitization));
+			}else{				
+				resultList.add(HtmlUtils.showDigitizedVolumeActiveIt(singleRow, currentDigitization));
 			}
 		}
 //		for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
@@ -234,7 +238,7 @@ public class AjaxController {
 								   		 	@RequestParam(value="iDisplayStart") Integer firstRecord,
 								   		 	@RequestParam(value="iDisplayLength") Integer length) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		Map<Integer, Boolean> ifSchedone = new HashMap<Integer, Boolean>();
+		Map<Integer, Schedone> ifSchedone = new HashMap<Integer, Schedone>();
 		Map<String, Boolean> ifDigitized = new HashMap<String, Boolean>();
 		List<Integer> volNums = new ArrayList<Integer>();
 		List<String> volLetExts = new ArrayList<String>();
@@ -275,7 +279,8 @@ public class AjaxController {
 				//MDP
 				singleRow.add(currentVolume.getMDP());
 				//Schedone
-				if(ifSchedone.get(currentVolume.getVolNum())){
+				Schedone currentSchedone = ifSchedone.get(currentVolume.getVolNum());
+				if(currentSchedone.getSchedoneId() != 0){
 					singleRow.add("YES");
 				}else{
 					singleRow.add("NO");
@@ -287,7 +292,11 @@ public class AjaxController {
 					singleRow.add("NO");
 				}
 				
-				resultList.add(singleRow);
+				if(currentSchedone.getSchedoneId() != 0){
+					resultList.add(HtmlUtils.showSchedoneDescription(currentSchedone));
+				}else{				
+					resultList.add(singleRow);
+				}
 			}
 		}else if(searchType.equals("All")){
 			for (Schedone currentSchedone : (List<Schedone>)page.getList()) {

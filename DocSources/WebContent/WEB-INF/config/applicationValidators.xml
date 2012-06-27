@@ -38,7 +38,7 @@
 	</bean>
 
 	<!-- Digitization base Validator -->
-	<bean id="editDetailsSchedoneValitor" class="org.medici.docsources.validator.digitization.EditDetailsSchedoneValidator">
+	<bean id="editDetailsSchedoneValidator" class="org.medici.docsources.validator.digitization.EditDetailsSchedoneValidator">
         <description>Edit Details Schedone Validator.</description>
 	</bean>
 	

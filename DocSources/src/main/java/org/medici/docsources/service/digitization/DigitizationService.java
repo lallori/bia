@@ -33,6 +33,7 @@ import java.util.Map;
 import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.Search;
+import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
 import org.medici.docsources.exception.ApplicationThrowable;
@@ -44,6 +45,13 @@ import org.medici.docsources.exception.ApplicationThrowable;
  */
 public interface DigitizationService {
 
+	/**
+	 * 
+	 * @param id
+	 * @throws ApplicationThrowable
+	 */
+	public Digitization activationOrDeactivationVolume(Digitization digitization) throws ApplicationThrowable;
+	
 	/**
 	 * 
 	 * @param schedone
@@ -86,6 +94,14 @@ public interface DigitizationService {
 
 	/**
 	 * 
+	 * @param id
+	 * @return
+	 * @throws ApplicationThrowable
+	 */
+	public Digitization findActivateVolumeDigitized(Integer id) throws ApplicationThrowable;
+	
+	/**
+	 * 
 	 * @param schedoneId
 	 * @return
 	 */
@@ -98,7 +114,7 @@ public interface DigitizationService {
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Map<Integer, Boolean> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable;
+	public Map<Integer, Schedone> findSchedoniMapByVolume(Integer volNum, Integer volNumBetween) throws ApplicationThrowable;
 	
 	/**
 	 * 
@@ -127,11 +143,12 @@ public interface DigitizationService {
 	
 	/**
 	 * 
+	 * @param activated
 	 * @param paginationFilter
 	 * @return
 	 * @throws ApplicationThrowable
 	 */
-	public Page searchAllActiveVolumes(PaginationFilter paginationFilter) throws ApplicationThrowable;
+	public Page searchAllActiveVolumes(Boolean activated, PaginationFilter paginationFilter) throws ApplicationThrowable;
 	
 	/**
 	 * 
