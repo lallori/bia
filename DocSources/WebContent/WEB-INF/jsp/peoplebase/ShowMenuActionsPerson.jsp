@@ -12,14 +12,16 @@
 	</c:url>
 		
 	<div id="ActionsMenuDiv">
-		<h1>Use the buttons below to perform one of these predefined actions:</h1>
-		
 		<c:if test="${!person.logicalDelete}">
-		<a id="deletePeopleBase" href="${DeletePersonURL}">Delete this person record</a>
+			<h1>Are you sure you want to delete this person record?</h1>		
+			<a id="deletePeopleBase" href="${DeletePersonURL}">Delete this person record</a>
 		</c:if>	
 		<c:if test="${person.logicalDelete}">
-		<a id="undeletePeopleBase" href="${UndeletePersonURL}">Undelete this person record</a>
-		</c:if>					
+			<h1>Are you sure you want to undelete this person record?</h1>
+			<a id="undeletePeopleBase" href="${UndeletePersonURL}">Undelete this person record</a>
+		</c:if>	
+		<br>
+		<br>				
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</div>
 
