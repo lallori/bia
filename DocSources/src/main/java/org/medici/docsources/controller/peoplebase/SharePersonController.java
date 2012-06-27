@@ -91,6 +91,15 @@ public class SharePersonController {
 			List<People> children = getPeopleBaseService().findChildrenPerson(person.getPersonId());
 			model.put("children", children);
 			
+			Integer senderDocsRelated = getPeopleBaseService().findNumberOfSenderDocumentsRelated(person.getPersonId());
+			
+			Integer recipientDocsRelated = getPeopleBaseService().findNumberOfRecipientDocumentsRelated(person.getPersonId());
+			
+			Integer referringDocsRelated = getPeopleBaseService().findNumberOfReferringDocumentsRelated(person.getPersonId());
+			
+			Integer docsRelated = senderDocsRelated + recipientDocsRelated + referringDocsRelated;
+			model.put("docsRelated", docsRelated);
+			
 		} catch (ApplicationThrowable ath) {
 			new ModelAndView("error/SharePerson", model);
 		}

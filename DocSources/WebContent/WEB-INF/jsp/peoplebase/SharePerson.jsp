@@ -36,6 +36,12 @@
 		<c:if test="${person.activeEnd == null}">
 			<h7>DEATH: <span class="h7">${person.deathYear} ${person.deathMonth} ${person.deathDay}</span></h7>
 		</c:if>
+		<c:if test="${docsRelated != 0 && docsRelated != 1}">
+			<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span></p>
+		</c:if>
+		<c:if test="${docsRelated == 1}">
+			<p>Documents related to this person entry: <span class="num_docs">${docsRelated}</span></p>
+		</c:if>
 	</div>
 	
 	<div id="EditDetailsPersonDiv" class="background">
@@ -46,13 +52,8 @@
 		<div id="EditPortraitPersonDiv">
 			<div id="imgPortraitPerson"></div>
 			<p style="text-align:center"><b>Portrait</b></p>
-			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_ONSITE_FELLOWS, ROLE_DISTANT_FELLOWS">
-			<c:if test="${person.personId != 0}">
-				<a id="uploadPortrait" href="#">Upload Portrait</a>
-			</c:if>
-			</security:authorize>
 		</div>
-		<h3>${person.mapNameLf}</h3>
+		
 		<div class="listDetails">
 			<div class="row">
 					<div class="item">Gender</div> <div class="value">${person.gender}</div>
