@@ -7,11 +7,11 @@
 		
 <div id="administrationModalDiv">
 	<div id="systemWideDiv">
-        <a id="systemWide" href="<c:url value="/admin/ShowApplicationProperties.do" />"><p>System-Wide Properties</p></a>
+        <a id="systemWide" href="<c:url value="/admin/ShowApplicationProperties.do" />">System-Wide Properties</a>
 	</div>
     
 	<div id="userManagementDiv">
-        <a id="userManagement" href="<c:url value="/admin/ShowUserManagement.do" />"><p>User Management</p></a>
+        <a id="userManagement" href="<c:url value="/admin/ShowUserManagement.do" />">User Management</a>
 	</div>
     
 <!--     <div id="reportsRevisionsDiv"> -->
