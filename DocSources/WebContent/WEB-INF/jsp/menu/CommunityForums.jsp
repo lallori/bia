@@ -6,6 +6,6 @@
 
 <c:url var="ShowForumURL" value="/community/ShowForum.do?completeDOM=true"/>
 
-
-	<a id="open" href="${ShowForumURL}" target="_blank"></a></li>
+	
+	<li class="forumsMenu"><a id="open" href="${ShowForumURL}" target="_blank"></a></li>
 								

@@ -118,7 +118,7 @@
 		<a id="showAlreadyTranscribed" href="${ShowDocumentURL}" title="Show this document record"  class="transcribe" style="visibility: hidden;">Show this record</a>
 		
 		<!--  This document has not been transcribed-->
-		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="button_medium" style="visibility: hidden; cursor: pointer">Transcribe </a>
+		<a id="readyToTranscribe" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Transcribe </a>
 		<a id="choiceThisFolioStart" href="#" title="Transcribe this document" class="transcribe" style="visibility: hidden; cursor: pointer">Set this as <font style="font-style:italic;">Start folio</font></a>
 		
 		<!--  This document has a record in the database but it is not transcribed-->

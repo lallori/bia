@@ -27,13 +27,12 @@
  */
 package org.medici.docsources.controller.geobase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.medici.docsources.command.geobase.PrintPlaceRequestCommand;
-import org.medici.docsources.domain.EplToLink;
+import org.medici.docsources.common.util.HtmlUtils;
 import org.medici.docsources.domain.Place;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.security.DocSourcesLdapUserDetailsImpl;
@@ -90,12 +89,19 @@ public class PrintPlaceController {
 		if(command.getPlaceAllId() > 0){
 			try {
 				place = getGeoBaseService().findPlace(command.getPlaceAllId());
-				List<Integer> documentsInTopics = new ArrayList<Integer>();
-				for(EplToLink currentTopic : place.getEplToLinks()){
-					if(!documentsInTopics.contains(currentTopic.getDocument().getEntryId()))
-						documentsInTopics.add(currentTopic.getDocument().getEntryId());
-				}
-				model.put("docInTopics", documentsInTopics.size());
+				model.put("topicsPlace", getGeoBaseService().findNumberOfTopicsPlace(command.getPlaceAllId()));
+				model.put("docInTopics", getGeoBaseService().findNumberOfDocumentsInTopicsPlace(command.getPlaceAllId()));
+				model.put("senderPlace", getGeoBaseService().findNumberOfSenderDocumentsPlace(command.getPlaceAllId()));
+				model.put("recipientPlace", getGeoBaseService().findNumberOfRecipientDocumentsPlace(command.getPlaceAllId()));
+				model.put("birthPlace", getGeoBaseService().findNumberOfBirthInPlace(command.getPlaceAllId()));
+				model.put("activeStartPlace", getGeoBaseService().findNumberOfActiveStartInPlace(command.getPlaceAllId()));
+				model.put("deathPlace", getGeoBaseService().findNumberOfDeathInPlace(command.getPlaceAllId()));
+				model.put("activeEndPlace", getGeoBaseService().findNumberOfActiveEndInPlace(command.getPlaceAllId()));
+				
+				if(place.getPlaceGeographicCoordinates() != null)
+					model.put("linkGoogleMaps", HtmlUtils.generateLinkGoogleMaps(place.getPlaceGeographicCoordinates()));
+				else
+					model.put("linkGoogleMaps", null);
 			} catch (ApplicationThrowable ath) {
 				new ModelAndView("error/PrintPlace", model);
 			}

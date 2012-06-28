@@ -156,7 +156,5 @@
 			<p style="margin:0 0 5px 10px"><font color="red">This place is a Variant Name for '${currentName.placeName}'. Find the 'Principal' name to visualize ${currentName.placeName} geographic coordinates</font></p>
 		</c:if>
 	</c:forEach>
-	
-	</c:if>
 	   
     <img src="/DocSources/images/1024/img_hr_print.png" style="margin:10px 0 10px 85px"/>
