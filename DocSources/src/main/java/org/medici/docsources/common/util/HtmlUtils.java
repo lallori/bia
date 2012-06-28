@@ -312,7 +312,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static List<String> showDigitizedVolumeActiveIt(List<String> inputList, Digitization digitization){
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"showModal\" href=\"");
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"showActivateModal\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/digitization/ShowActivateVolumeModal.do?id=");
 		anchorBegin.append(digitization.getId());
@@ -338,7 +338,7 @@ public class HtmlUtils {
 	 * @return
 	 */
 	public static List<String> showDigitizedVolumeDeactiveIt(List<String> inputList, Digitization digitization){
-		StringBuffer anchorBegin = new StringBuffer("<a class=\"showModal\" href=\"");
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"showDeactivateModal\" href=\"");
 		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchorBegin.append("/digitization/ShowDeactivateVolumeModal.do?id=");
 		anchorBegin.append(digitization.getId());
@@ -536,6 +536,35 @@ public class HtmlUtils {
 		
 		return retValue;
 	}
+	
+	/**
+	 * 
+	 * @param inputList
+	 * @param entryId
+	 * @return
+	 */
+	public static List<String> showSchedone(List<String> inputList, Schedone schedone) {
+		if (inputList == null)
+			return null;
+
+		ArrayList<String> retValue = new ArrayList<String>(inputList.size());
+		
+		StringBuffer anchorBegin = new StringBuffer("<a class=\"searchResult\" href=\"");
+		anchorBegin.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
+		anchorBegin.append("/digitization/ShowSchedone.do?schedoneId=");
+		anchorBegin.append(schedone.getSchedoneId());
+		anchorBegin.append("\">");
+		String hrefEnd = "</a>";
+		
+		for (int i=0; i<inputList.size(); i++) {
+			StringBuffer stringBuffer = new StringBuffer(anchorBegin.toString());
+			stringBuffer.append(inputList.get(i));
+			stringBuffer.append(hrefEnd);
+			retValue.add(stringBuffer.toString());
+		}
+		
+		return retValue;
+	}
 
 	/**
 	 * 
@@ -607,7 +636,11 @@ public class HtmlUtils {
 		anchor.append(((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getContextPath());
 		anchor.append("/digitization/ShowSchedone.do?schedoneId=");
 		anchor.append(currentSchedone.getSchedoneId());
-		anchor.append("\">" + currentSchedone.getVolNum() + currentSchedone.getVolLetExt() + "</a>");
+		if(currentSchedone.getVolLetExt() == null){
+			anchor.append("\">" + currentSchedone.getVolNum() + "</a>");
+		}else{
+			anchor.append("\">" + currentSchedone.getVolNum() + currentSchedone.getVolLetExt() + "</a>");
+		}
 
 		return anchor.toString();
 	}

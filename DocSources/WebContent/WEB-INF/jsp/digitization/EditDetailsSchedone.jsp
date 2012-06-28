@@ -139,14 +139,14 @@
 						<a class="helpIcon" title="use millimeters not inches">?</a>
 	            		<form:label for="dimensioniBase" path="dimensioniBase" id ="dimensioniBaseLabel" cssErrorClass="error" title="Dimensioni Base">Dimensioni Base</form:label>
 					</div>
-					<div class="col_r"><form:input path="dimensioniBase" id="dimensioniBase" cssClass="input_5c" /></div>
+					<div class="col_r"><form:input path="dimensioniBase" id="dimensioniBase" cssClass="input_5c" /> mm</div>
 				</div>
 				<div class="row">
 					<div class="col_l">
 						 <a class="helpIcon" title="use millimeters not inches">?</a>
 	            		 <form:label for="dimensioniAltezza" path="dimensioniAltezza" id ="dimensioniAltezzaLabel" cssErrorClass="error" title="Dimensioni Altezza">Dimensioni Altezza</form:label>
 					</div>
-					<div class="col_r"><form:input path="dimensioniAltezza" id="dimensioniAltezza" cssClass="input_5c" /></div>
+					<div class="col_r"><form:input path="dimensioniAltezza" id="dimensioniAltezza" cssClass="input_5c" /> mm</div>
 				</div>
 				<div class="row">
 					<div class="col_l">
@@ -206,14 +206,16 @@
 					<div class="col_r"><form:input path="operatore" id="operatore" cssClass="input_23c" /></div>
 				</div>
 			</div>
-
-	        <div>
+			
+			<div>
 	            <input id="close" type="submit" value="Close" title="Do not save changes" />
 	            <input id="save" class="save" type="submit" value="Save" />
 	        </div>
 	        <input type="hidden" value="" id="modify" />
 	    </fieldset>
 	</form:form>
+	
+	<c:url var="searchSeriesListUrl" value="/digitization/SearchSeriesList.json"/>
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
@@ -225,6 +227,18 @@
 			$j("#EditTiffImagesSchedone").css('visibility', 'hidden'); 
 	        $j("#EditJpegImagesSchedone").css('visibility', 'hidden'); 
 	        $j("#EditPDFImagesSchedone").css('visibility', 'hidden'); 
+	        
+	        var a = $j('#serie').autocompleteGeneral({ 
+			    serviceUrl:'${searchSeriesListUrl}',
+			    minChars:1, 
+			    delimiter: /(,|;)\s*/, // regex or character
+			    maxHeight:400,
+			    width:600,
+			    zIndex: 9999,
+			    deferRequestBy: 0, //miliseconds
+			    noCache: true, //default is false, set to true to disable caching
+			    onSelect: function(value, data){  }
+			});
 			
 			 $j("#save").click(function(){
 		        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
@@ -247,7 +261,7 @@
 	        
 			$j("#EditDetailsSchedoneForm").submit(function (){
 				$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) { 
-					$j("#EditDetailsSchedoneDiv").html(html);
+					$j("#body_left").html(html);
 				}});
 				return false;
 			});

@@ -82,9 +82,9 @@ public class DigitizationDAOJpaImpl extends JpaDao<Integer, Digitization> implem
 		Query query = null;
 		String toSearch = new String("FROM Digitization WHERE volNum >= " + volNum + " AND volNum <= " + volNumBetween);
 		if(activated)
-			toSearch.concat(" AND active = 1");
+			toSearch = toSearch.concat(" AND active = 1");
 		else
-			toSearch.concat(" AND active = 0");
+			toSearch = toSearch.concat(" AND active = 0");
 		
 		if(paginationFilter.getTotal() == null){
 			String countQuery = "SELECT COUNT(*) " + toSearch;

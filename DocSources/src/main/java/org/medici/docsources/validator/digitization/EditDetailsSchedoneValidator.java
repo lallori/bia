@@ -27,7 +27,12 @@
  */
 package org.medici.docsources.validator.digitization;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.medici.docsources.command.digitization.EditDetailsSchedoneCommand;
+import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.digitization.DigitizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
@@ -80,8 +85,34 @@ public class EditDetailsSchedoneValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		EditDetailsSchedoneCommand editDetailsSchedoneCommand = (EditDetailsSchedoneCommand) object;
-		editDetailsSchedoneCommand.getSchedoneId();
+		validateSchedone(editDetailsSchedoneCommand.getSchedoneId(), editDetailsSchedoneCommand.getNumeroUnita(), errors);
 		// TODO : implement validation logic
-		
+	}
+	
+	/**
+	 * 
+	 * @param schedoneId
+	 * @param errors
+	 */
+	public void validateSchedone(Integer schedoneId, Integer volNum, Errors errors){
+		if(!errors.hasErrors()){
+			if(schedoneId > 0){
+				try{
+					if(getDigitizationService().findSchedone(schedoneId) == null){
+						errors.reject("schedoneId", "error.schedone.notfound");
+					}else{
+						if(volNum != null){
+							Map<Integer, Schedone> ifSchedone = new HashMap<Integer, Schedone>();
+							ifSchedone = getDigitizationService().findSchedoniMapByVolume(volNum, volNum);
+							if(ifSchedone.get(volNum) == null){
+								errors.reject("volNum", "error.volNum.alreadyPresent");
+							}
+						}
+					}
+				}catch(ApplicationThrowable ath){
+					errors.reject("schedoneId", "error.schedone.notfound");
+				}
+			}
+		}
 	}
 }

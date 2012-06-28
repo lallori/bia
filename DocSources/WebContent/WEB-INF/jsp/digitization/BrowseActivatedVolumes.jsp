@@ -79,13 +79,19 @@
 			});
 
 			// We need to remove any previous live function
-			$j('.showModal').die();
+			$j('.showActivateModal').die();
+			$j('.showDeactivateModal').die();
 			
 			// Result links have a specific class style on which we attach click live. 
-			$j('.showModal').live('click', function() {
+			$j('.showActivateModal').live('click', function() {
 				Modalbox.show($j(this).attr("href"), {title: "ACTIVATE", width: 300, height: 110});
 				return false;
 			}); 
+			
+			$j('.showDeactivateModal').live('click', function(){
+				Modalbox.show($j(this).attr("href"), {title: "DEACTIVATE", width: 300, height: 110});
+				return false;
+			});
 
 			$j(".dataTables_filter").css('visibility', 'hidden');
 

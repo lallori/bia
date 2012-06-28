@@ -158,6 +158,7 @@ public class SchedoneSearch implements GenericSearch {
 //			jpaQuery.append(" WHERE ");
 //			// TODO : ...
 //		}else{
+		if(searchType != null){
 			if(searchType.equals("Exactly")){
 				jpaQuery.append(" WHERE volNum=");
 				jpaQuery.append(getVolNum());				
@@ -167,6 +168,7 @@ public class SchedoneSearch implements GenericSearch {
 				jpaQuery.append(" AND volNum <=");
 				jpaQuery.append(getVolNumBetween());
 			}
+		}
 //		}		
 		return jpaQuery.toString();
 	}

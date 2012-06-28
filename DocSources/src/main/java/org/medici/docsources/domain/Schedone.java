@@ -31,6 +31,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -92,7 +94,7 @@ public class Schedone {
 	private String descrizioneContenuto;
 	@Column (name="\"DESCRIZIONE_CONTENUTO_ENG\"", length=1000)
 	private String descrizioneContenutoEng;
-	@Column (name="\"LEGATURA\"", length=50)
+	@Column (name="\"LEGATURA\"", length=255)
 	private String legatura;
 	@Column (name="\"SUPPORTO\"", length=50)
 	private String supporto;
@@ -118,8 +120,6 @@ public class Schedone {
 	private String coloreImmagine;
 	@Column (name="\"RISOLUZIONE\"", length=50)
 	private String risoluzione;
-	@Column (name="\"FORMATO\"", length=50)
-	private String formato;
 	@Column (name="\"NOME_FILES\"", length=50)
 	private String nomeFiles;
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_TIFF\"")
@@ -130,6 +130,12 @@ public class Schedone {
 	private Long dimTotaleImmaginiTiff;
 	@Column (name="\"COMPRESSIONE_TIFF\"", length=50)
 	private String compressioneTiff;
+	@Column (name="\"FORMATO_MEDIA_IMMAGINI_TIFF\"", length=2)
+	@Enumerated(EnumType.STRING)
+	private Formato formatoMediaImmaginiTiff;
+	@Column (name="\"FORMATO_TOTALE_IMMAGINI_TIFF\"", length=2)
+	@Enumerated(EnumType.STRING)
+	private Formato formatoTotaleImmaginiTiff;
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_JPEG\"")
 	private Integer numeroTotaleImmaginiJpeg;
 	@Column (name="\"DIM_MEDIA_IMMAGINI_JPEG\"")
@@ -138,6 +144,12 @@ public class Schedone {
 	private Long dimTotaleImmaginiJpeg;
 	@Column (name="\"COMPRESSIONE_JPEG\"", length=50)
 	private String compressioneJpeg;
+	@Column (name="\"FORMATO_MEDIA_IMMAGINI_JPEG\"", length=2)
+	@Enumerated(EnumType.STRING)
+	private Formato formatoMediaImmaginiJpeg;
+	@Column (name="\"FORMATO_TOTALE_IMMAGINI_JPEG\"", length=2)
+	@Enumerated(EnumType.STRING)
+	private Formato formatoTotaleImmaginiJpeg;
 	@Column (name="\"NUMERO_TOTALE_IMMAGINI_PDF\"")
 	private Integer numeroTotaleImmaginiPdf;
 	@Column (name="\"DIM_MEDIA_IMMAGINI_PDF\"")
@@ -146,6 +158,12 @@ public class Schedone {
 	private Long dimTotaleImmaginiPdf;
 	@Column (name="\"COMPRESSIONE_PDF\"", length=50)
 	private String compressionePdf;
+	@Column (name="\"FORMATO_MEDIA_IMMAGINI_PDF\"", length=2)
+	@Enumerated(EnumType.STRING)
+	private Formato formatoMediaImmaginiPdf;
+	@Column (name="\"FORMATO_TOTALE_IMMAGINI_PDF\"", length=2)
+	@Enumerated(EnumType.STRING)
+	private Formato formatoTotaleImmaginiPDF;
 	@Column (name="\"RESPONSABILE_FOTORIPRODUZIONE\"", length=50)
 	private String responsabileFotoRiproduzione;
 	@Column (name="\"TIPO_RIPRESA\"", length=50)
@@ -637,20 +655,6 @@ public class Schedone {
 	}
 
 	/**
-	 * @return the formato
-	 */
-	public String getFormato() {
-		return formato;
-	}
-	
-	/**
-	 * @param formato the formato to set
-	 */
-	public void setFormato(String formato) {
-		this.formato = formato;
-	}
-	
-	/**
 	 * @return the nomeFiles
 	 */
 	public String getNomeFiles() {
@@ -707,6 +711,34 @@ public class Schedone {
 	}
 
 	/**
+	 * @return the formatoMediaImmaginiTiff
+	 */
+	public Formato getFormatoMediaImmaginiTiff() {
+		return formatoMediaImmaginiTiff;
+	}
+
+	/**
+	 * @param formatoMediaImmaginiTiff the formatoMediaImmaginiTiff to set
+	 */
+	public void setFormatoMediaImmaginiTiff(Formato formatoMediaImmaginiTiff) {
+		this.formatoMediaImmaginiTiff = formatoMediaImmaginiTiff;
+	}
+
+	/**
+	 * @return the formatoTotaleImmaginiTiff
+	 */
+	public Formato getFormatoTotaleImmaginiTiff() {
+		return formatoTotaleImmaginiTiff;
+	}
+
+	/**
+	 * @param formatoTotaleImmaginiTiff the formatoTotaleImmaginiTiff to set
+	 */
+	public void setFormatoTotaleImmaginiTiff(Formato formatoTotaleImmaginiTiff) {
+		this.formatoTotaleImmaginiTiff = formatoTotaleImmaginiTiff;
+	}
+
+	/**
 	 * @return the numeroTotaleImmaginiJpeg
 	 */
 	public Integer getNumeroTotaleImmaginiJpeg() {
@@ -749,6 +781,34 @@ public class Schedone {
 	}
 
 	/**
+	 * @return the formatoMediaImmaginiJpeg
+	 */
+	public Formato getFormatoMediaImmaginiJpeg() {
+		return formatoMediaImmaginiJpeg;
+	}
+
+	/**
+	 * @param formatoMediaImmaginiJpeg the formatoMediaImmaginiJpeg to set
+	 */
+	public void setFormatoMediaImmaginiJpeg(Formato formatoMediaImmaginiJpeg) {
+		this.formatoMediaImmaginiJpeg = formatoMediaImmaginiJpeg;
+	}
+
+	/**
+	 * @return the formatoTotaleImmaginiJpeg
+	 */
+	public Formato getFormatoTotaleImmaginiJpeg() {
+		return formatoTotaleImmaginiJpeg;
+	}
+
+	/**
+	 * @param formatoTotaleImmaginiJpeg the formatoTotaleImmaginiJpeg to set
+	 */
+	public void setFormatoTotaleImmaginiJpeg(Formato formatoTotaleImmaginiJpeg) {
+		this.formatoTotaleImmaginiJpeg = formatoTotaleImmaginiJpeg;
+	}
+
+	/**
 	 * @return the numeroTotaleImmaginiPdf
 	 */
 	public Integer getNumeroTotaleImmaginiPdf() {
@@ -788,6 +848,34 @@ public class Schedone {
 	 */
 	public void setDimTotaleImmaginiPdf(Long dimTotaleImmaginiPdf) {
 		this.dimTotaleImmaginiPdf = dimTotaleImmaginiPdf;
+	}
+
+	/**
+	 * @return the formatoMediaImmaginiPdf
+	 */
+	public Formato getFormatoMediaImmaginiPdf() {
+		return formatoMediaImmaginiPdf;
+	}
+
+	/**
+	 * @param formatoMediaImmaginiPdf the formatoMediaImmaginiPdf to set
+	 */
+	public void setFormatoMediaImmaginiPdf(Formato formatoMediaImmaginiPdf) {
+		this.formatoMediaImmaginiPdf = formatoMediaImmaginiPdf;
+	}
+
+	/**
+	 * @return the formatoTotaleImmaginiPDF
+	 */
+	public Formato getFormatoTotaleImmaginiPDF() {
+		return formatoTotaleImmaginiPDF;
+	}
+
+	/**
+	 * @param formatoTotaleImmaginiPDF the formatoTotaleImmaginiPDF to set
+	 */
+	public void setFormatoTotaleImmaginiPDF(Formato formatoTotaleImmaginiPDF) {
+		this.formatoTotaleImmaginiPDF = formatoTotaleImmaginiPDF;
 	}
 
 	/**
@@ -928,5 +1016,20 @@ public class Schedone {
 	 */
 	public Date getDataUltimoAggiornamento() {
 		return dataUltimoAggiornamento;
+	}
+	
+	public static enum Formato {
+		MB("Mb"), KB("Kb"), GB("Gb");
+		
+		private final String formato;
+		
+		private Formato(String value){
+			formato = value;
+		}
+		
+		@Override
+		public String toString(){
+			return formato;
+		}
 	}
 }

@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 	<div id="activateVolume">
-		<h1>Volume activated.</h1>
+		<h1>Volume not activated.</h1>
 		
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close" style="margin:60px 0 0 90px;"/>
 	</div>

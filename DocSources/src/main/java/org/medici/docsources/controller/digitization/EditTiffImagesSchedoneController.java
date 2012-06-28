@@ -117,6 +117,8 @@ public class EditTiffImagesSchedoneController {
 
 			try {
 				schedone = getDigitizationService().findSchedone(command.getSchedoneId());
+				
+				model.put("formato", Schedone.Formato.values());
 			} catch (ApplicationThrowable ath) {
 				return new ModelAndView("error/EditPdfImagesSchedone", model);
 			} finally {

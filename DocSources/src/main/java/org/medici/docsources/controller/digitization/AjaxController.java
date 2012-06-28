@@ -36,9 +36,11 @@ import org.medici.docsources.common.pagination.Page;
 import org.medici.docsources.common.pagination.PaginationFilter;
 import org.medici.docsources.common.search.SchedoneSearch;
 import org.medici.docsources.common.util.HtmlUtils;
+import org.medici.docsources.common.util.ListBeanUtils;
 import org.medici.docsources.common.util.VolumeUtils;
 import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
+import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.domain.Volume;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.digitization.DigitizationService;
@@ -293,7 +295,7 @@ public class AjaxController {
 				}
 				
 				if(currentSchedone.getSchedoneId() != 0){
-					resultList.add(HtmlUtils.showSchedoneDescription(currentSchedone));
+					resultList.add(HtmlUtils.showSchedone(singleRow, currentSchedone));
 				}else{				
 					resultList.add(singleRow);
 				}
@@ -311,7 +313,7 @@ public class AjaxController {
 				}else{
 					singleRow.add("NO");
 				}
-				resultList.add(singleRow);
+				resultList.add(HtmlUtils.showSchedone(singleRow, currentSchedone));
 			}
 		}
 //		for (Schedone currentSchedone : (List<Schedone>)page.getList()) {
@@ -336,5 +338,28 @@ public class AjaxController {
 		model.put("aaData", resultList);
 		
 		return new ModelAndView("responseOK", model);		
+	}
+	
+	/**
+	 * This method returns a list of seriesList. 
+	 *  
+	 * @param text Text to search in title, subTitle1 and subTitle2
+	 * @return ModelAndView containing seriesList.
+	 */
+	@RequestMapping(value = "/digitization/SearchSeriesList.json", method = RequestMethod.GET)
+	public ModelAndView searchSeriesList(@RequestParam("query") String query) {
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		try {
+			List<SerieList> series = getDigitizationService().searchSeriesList(query);
+			model.put("query", query);
+			model.put("data", ListBeanUtils.transformList(series, "seriesRefNum"));
+			model.put("suggestions", ListBeanUtils.toStringListWithConcatenationFields(series, "title/subTitle1/subTitle2", "/", "/", Boolean.TRUE));
+
+		} catch (ApplicationThrowable aex) {
+			return new ModelAndView("responseKO", model);
+		}
+
+		return new ModelAndView("responseOK", model);
 	}
 }

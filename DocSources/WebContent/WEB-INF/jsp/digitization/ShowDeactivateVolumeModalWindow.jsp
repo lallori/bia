@@ -5,19 +5,23 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div id="activateDiv">
-	<a id="deactivate" class="button_large" href="#">Deactivate this volume</a>
-	<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+	<form:form id="deactivateForm" method="post" cssClass="edit">
+		<input type="submit" id="deactivate" class="button_large"value="Deactivate this volume" title="Deactivate this volume"/>
+		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
+	</form:form>
 </div>
 
 <script>
 	$j(document).ready(function() {
-		$j("#close").click(
-					function(){
-							Modalbox.hide(); return false;
-							});
-		$j("#deactivate").click(
-					function(){
-							Modalbox.hide(); return false;
-							});
+		$j("#close").click(	function(){
+			Modalbox.hide();
+			return false;
 		});
+		$j("#deactivateForm").submit(function(){
+			$j.ajax({ type:"POST", url:$j(this).attr("action"), data:$j(this).serialize(), async:false, success:function(html) {
+				$j("#activateDiv").html(html);
+			}});
+			return false;
+		});
+	});
 </script>

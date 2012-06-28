@@ -95,6 +95,7 @@ public class EditDetailsSchedoneController {
 			schedone.setFondo(command.getFondo());
 			schedone.setSerie(command.getSerie());
 			schedone.setNumeroUnita(command.getNumeroUnita());
+			schedone.setVolNum(command.getNumeroUnita());
 			schedone.setDataInizioAnno(command.getDataInizioAnno());
 			schedone.setDataInizioMese((command.getDataInizioMese() != null) ? new Month(command.getDataInizioMese()) : null);
 			schedone.setDataInizioGiorno(command.getDataInizioGiorno());

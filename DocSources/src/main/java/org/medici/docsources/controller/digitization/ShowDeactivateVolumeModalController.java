@@ -1,5 +1,5 @@
 /*
- * ShowActivateVolumeModalController.java
+ * ShowDeactivateVolumeModalController.java
  * 
  * Developed by Medici Archive Project (2010-2012).
  * 
@@ -30,7 +30,7 @@ package org.medici.docsources.controller.digitization;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.medici.docsources.command.digitization.ShowActivateVolumeModalCommand;
+import org.medici.docsources.command.digitization.ShowDeactivateVolumeModalCommand;
 import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.medici.docsources.service.digitization.DigitizationService;
@@ -43,14 +43,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for action "Show Activate Volume Modal".
+ * Controller for action "Show Deactivate Volume Modal".
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
  * @author Matteo Doni (<a href=mailto:donimatteo@gmail.com>donimatteo@gmail.com</a>)
  */
 @Controller
-@RequestMapping("/digitization/ShowActivateVolumeModal")
-public class ShowActivateVolumeModalController {
+@RequestMapping("/digitization/ShowDeactivateVolumeModal")
+public class ShowDeactivateVolumeModalController {
 	@Autowired
 	private DigitizationService digitizationService;
 	
@@ -63,22 +63,22 @@ public class ShowActivateVolumeModalController {
 	}
 
 	@RequestMapping(method = {RequestMethod.POST})
-	public ModelAndView processSubmit(@ModelAttribute("command") ShowActivateVolumeModalCommand command, BindingResult result) {
+	public ModelAndView processSubmit(@ModelAttribute("command") ShowDeactivateVolumeModalCommand command, BindingResult result) {
 				
 		if(result.hasErrors()){
-			return new ModelAndView("error/ActivateVolumeKO");
+			return new ModelAndView("error/DeactivateVolumeKO");
 		}else{
 			Map<String, Object> model = new HashMap<String, Object>();
 			try{
 				if(command.getId() != 0){
 					Digitization digitization = getDigitizationService().findActivateVolumeDigitized(command.getId());
-					digitization.setActive(Boolean.TRUE);
+					digitization.setActive(Boolean.FALSE);
 					digitization = getDigitizationService().activationOrDeactivationVolume(digitization);
 				}
 				
-				return new ModelAndView("response/ActivateVolumeOK",model);
+				return new ModelAndView("response/DeactivateVolumeOK",model);
 			}catch(ApplicationThrowable ath){
-				return new ModelAndView("error/ActivateVolumeKO", model);
+				return new ModelAndView("error/DeactivateVolumeKO", model);
 			}
 		}
 	}
@@ -89,8 +89,8 @@ public class ShowActivateVolumeModalController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView setupPage(@ModelAttribute("command")ShowActivateVolumeModalCommand command, BindingResult result){
-		return new ModelAndView("digitization/ShowActivateVolumeModalWindow");
+	public ModelAndView setupPage(@ModelAttribute("command")ShowDeactivateVolumeModalCommand command, BindingResult result){
+		return new ModelAndView("digitization/ShowDeactivateVolumeModalWindow");
 	}
 
 	/**

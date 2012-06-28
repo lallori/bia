@@ -345,6 +345,10 @@
 		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowActivateVolumeModalWindow.jsp" />
 	</definition>
 	
+	<definition name="digitization/ShowDeactivateVolumeModalWindow" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowDeactivateVolumeModalWindow.jsp" />
+	</definition>
+	
 	<definition name="digitization/ShowSearchActivatedVolumes" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/digitization/ShowSearchActivatedVolumes.jsp"/>
 	</definition>
@@ -987,6 +991,14 @@
 	
 	<definition name="response/ActivateVolumeKO" extends="template.partialDOM">
 		<put-attribute name="main" value="/WEB-INF/jsp/fragments/ActivateVolumeKO.jsp"/>
+	</definition>
+	
+	<definition name="response/DeactivateVolumeOK" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeactivateVolumeOK.jsp"/>
+	</definition>
+	
+	<definition name="response/DeactivateVolumeKO" extends="template.partialDOM">
+		<put-attribute name="main" value="/WEB-INF/jsp/fragments/DeactivateVolumeKO.jsp"/>
 	</definition>
 	
 	<definition name="response/OK" extends="template.partialDOM">

@@ -39,10 +39,12 @@ import org.medici.docsources.dao.digitization.DigitizationDAO;
 import org.medici.docsources.dao.image.ImageDAO;
 import org.medici.docsources.dao.month.MonthDAO;
 import org.medici.docsources.dao.schedone.SchedoneDAO;
+import org.medici.docsources.dao.serieslist.SeriesListDAO;
 import org.medici.docsources.dao.volume.VolumeDAO;
 import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,6 +67,8 @@ public class DigitizationServiceImpl implements DigitizationService {
 	private MonthDAO monthDAO;
 	@Autowired
 	private SchedoneDAO schedoneDAO;
+	@Autowired
+	private SeriesListDAO seriesListDAO;
 	@Autowired
 	private VolumeDAO volumeDAO;
 	
@@ -89,6 +93,7 @@ public class DigitizationServiceImpl implements DigitizationService {
 	@Override
 	public Schedone addNewSchedone(Schedone schedone) throws ApplicationThrowable {
 		try {
+			schedone.setSchedoneId(null);
 			getSchedoneDAO().persist(schedone);
 			
 			return schedone;
@@ -314,6 +319,13 @@ public class DigitizationServiceImpl implements DigitizationService {
 	}
 
 	/**
+	 * @return the seriesListDAO
+	 */
+	public SeriesListDAO getSeriesListDAO() {
+		return seriesListDAO;
+	}
+
+	/**
 	 * @return the volumeDAO
 	 */
 	public VolumeDAO getVolumeDAO() {
@@ -360,6 +372,18 @@ public class DigitizationServiceImpl implements DigitizationService {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable {
+		try{
+			return getSeriesListDAO().findSeries(alias);
+		}catch(Throwable th){
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Page searchVolumes(Integer volNum, Integer volNumBetween, PaginationFilter paginationFilter) throws ApplicationThrowable {
 		try {
 			return getVolumeDAO().searchVolumesByDigitization(volNum, volNumBetween, paginationFilter);
@@ -397,10 +421,16 @@ public class DigitizationServiceImpl implements DigitizationService {
 	}
 
 	/**
+	 * @param seriesListDAO the seriesListDAO to set
+	 */
+	public void setSeriesListDAO(SeriesListDAO seriesListDAO) {
+		this.seriesListDAO = seriesListDAO;
+	}
+
+	/**
 	 * @param volumeDAO the volumeDAO to set
 	 */
 	public void setVolumeDAO(VolumeDAO volumeDAO) {
 		this.volumeDAO = volumeDAO;
 	}
-
 }

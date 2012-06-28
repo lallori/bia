@@ -27,6 +27,8 @@
  */
 package org.medici.docsources.command.digitization;
 
+import org.medici.docsources.domain.Schedone.Formato;
+
 /**
  * 
  * @author Lorenzo Pasquinelli (<a href=mailto:l.pasquinelli@gmail.com>l.pasquinelli@gmail.com</a>)
@@ -37,6 +39,10 @@ public class EditTiffImagesSchedoneCommand {
 	private Integer numeroTotaleImmaginiTiff;
 	private Long dimMediaImmaginiTiff;
 	private Long dimTotaleImmaginiTiff;
+	private String compressioneTiff;
+	private Formato formatoMediaImmaginiTiff;
+	private Formato formatoTotaleImmaginiTiff;
+	
 	/**
 	 * @return the schedoneId
 	 */
@@ -84,6 +90,42 @@ public class EditTiffImagesSchedoneCommand {
 	 */
 	public void setDimTotaleImmaginiTiff(Long dimTotaleImmaginiTiff) {
 		this.dimTotaleImmaginiTiff = dimTotaleImmaginiTiff;
+	}
+	/**
+	 * @return the compressioneTiff
+	 */
+	public String getCompressioneTiff() {
+		return compressioneTiff;
+	}
+	/**
+	 * @param compressioneTiff the compressioneTiff to set
+	 */
+	public void setCompressioneTiff(String compressioneTiff) {
+		this.compressioneTiff = compressioneTiff;
+	}
+	/**
+	 * @return the formatoMediaImmaginiTiff
+	 */
+	public Formato getFormatoMediaImmaginiTiff() {
+		return formatoMediaImmaginiTiff;
+	}
+	/**
+	 * @param formatoMediaImmaginiTiff the formatoMediaImmaginiTiff to set
+	 */
+	public void setFormatoMediaImmaginiTiff(Formato formatoMediaImmaginiTiff) {
+		this.formatoMediaImmaginiTiff = formatoMediaImmaginiTiff;
+	}
+	/**
+	 * @return the formatoTotaleImmaginiTiff
+	 */
+	public Formato getFormatoTotaleImmaginiTiff() {
+		return formatoTotaleImmaginiTiff;
+	}
+	/**
+	 * @param formatoTotaleImmaginiTiff the formatoTotaleImmaginiTiff to set
+	 */
+	public void setFormatoTotaleImmaginiTiff(Formato formatoTotaleImmaginiTiff) {
+		this.formatoTotaleImmaginiTiff = formatoTotaleImmaginiTiff;
 	}
 	
 }

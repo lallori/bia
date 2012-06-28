@@ -36,6 +36,7 @@ import org.medici.docsources.common.search.Search;
 import org.medici.docsources.domain.Digitization;
 import org.medici.docsources.domain.Schedone;
 import org.medici.docsources.domain.Month;
+import org.medici.docsources.domain.SerieList;
 import org.medici.docsources.exception.ApplicationThrowable;
 
 /**
@@ -158,6 +159,15 @@ public interface DigitizationService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
 	 */
 	public Page searchSchedones(Search searchContainer, PaginationFilter paginationFilter) throws ApplicationThrowable;
+	
+	/**
+	 * This method searches for existing {@link org.medici.docsources.domain.SerieList}.
+	 * 
+	 * @param alias Text to search inside description fields of {@link org.medici.docsources.domain.SerieList}
+	 * @return {@link java.util.List} of {@link org.medici.docsources.domain.SerieList}
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request.
+	 */
+	public List<SerieList> searchSeriesList(String alias) throws ApplicationThrowable;
 	
 	/**
 	 * 

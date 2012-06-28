@@ -4,11 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="ShowActivateVolumeModalURL" value="/digitization/ShowActivateVolumeModal.json"/>
-
 <div id="activateDiv">
 	<form:form id="activateForm" method="post" cssClass="edit">
-		<input type="submit" id="activate" cssClass="button_large" value="Activate this volume" title="Activate this volume">
+		<input type="submit" id="activate" class="button_large" value="Activate this volume" title="Activate this volume"/>
 		<input id="close" type="submit" title="Close Actions Menu window" value="Close"/>
 	</form:form>
 </div>

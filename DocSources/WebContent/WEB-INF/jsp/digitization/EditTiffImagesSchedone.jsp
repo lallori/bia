@@ -17,46 +17,68 @@
 	<div id="loadingDiv"></div>
 	<form:form id="EditEditTiffImagesForm" action="${editTiffImagesSchedoneURL}" method="post" cssClass="edit">
 	    <fieldset>
-	    <legend><b>HIGH RESOLUTION IMAGES (TIFFS)</b></legend>
-	        <div style="margin-top:5px">
-	            <a class="helpIcon" title="In che formato sono le immagini ad alta risoluzione (default is TIFF)">?</a>
-	            <form:label for="formato" path="formato" id ="formatoLabel" cssErrorClass="error" title="Formato">Formato</form:label>
-				<form:input path="formato" id="formato" cssClass="input_4c_disabled" />
+	    <legend><b>TIFF IMAGES</b></legend>
+	    <div class="listForm">
+	        <div class="row">
+	        	<div class="col_l">
+	            	<a class="helpIcon" title="In che formato sono le immagini ad alta risoluzione (default is TIFF)">?</a>
+	            	<label for="formato" id ="formatoLabel" title="Formato">Formato</label>
+	            </div>
+	            <div class="col_r">
+					<input id="formato" class="input_4c_disabled" value="TIFF" disabled="disabled"/>
+				</div>
 	        </div>
-	        <div>
-	            <a class="helpIcon" title="Che compressione hanno queste immagini (dafault is 1:1)">?</a>
-	            <form:label for="compressioneTiff" path="compressioneTiff" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
-				<form:input path="compressioneTiff" id="compressione" cssClass="input_4c_disabled" />
+	        <div class="row">
+	        	<div class="col_l">
+	            	<a class="helpIcon" title="Che compressione hanno queste immagini (dafault is 1:1)">?</a>
+	            	<form:label for="compressioneTiff" path="compressioneTiff" id ="compressioneLabel" cssErrorClass="error" title="Compressione">Compressione</form:label>
+	            </div>
+	            <div class="col_r">
+					<form:input path="compressioneTiff" id="compressione" cssClass="input_4c_disabled" />
+				</div>
 	        </div>
+	    </div> 
 	        
-	        <hr />
+	    <hr />
 	
+	    <div class="listForm">
+	    	<div class="row"> 
+	        	<div class="col_l">
+	        		<a class="helpIcon" title="Numero esatto di immagini in alta risoluzione prodotte per questa filza (compresi i test)">?</a>
+	        		<form:label for="numeroTotaleImmaginiTiff" path="numeroTotaleImmaginiTiff" id ="numeroImmaginiLabel" cssErrorClass="error" title="Numero totale Immagini">Numero totale immagini</form:label>
+	        	</div>
+	        	<div class="col_r">
+					<form:input path="numeroTotaleImmaginiTiff" id="numeroImmagini" cssClass="input_10c" />
+				</div>
+			</div>
+			<div class="row">
+	            <div class="col_l">
+	            	<a class="helpIcon" title="Dimensione Media delle immagini (usare script adeguato per calcolare)">?</a>
+	           		<form:label for="dimMediaImmaginiTiff" path="dimMediaImmaginiTiff" id ="dimensioneMediaImmaginiLabel" cssErrorClass="error" title="Dimensione Media Immagini">Dimensione media immagini</form:label>
+	           	</div>
+	           	<div class="col_r">
+					<form:input path="dimMediaImmaginiTiff" id="dimensioneMediaImmagini" cssClass="input_10c" />
+	            	<form:select id="formatoMediaImmagini" path="formatoMediaImmaginiTiff" cssClass="selectform_short" items="${formato}"/>
+	            	<%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Mb--%>
+	            </div>
+	        </div>
+	        <div class="row">
+	        	<div class="col_l">
+	            	<a class="helpIcon" title="Dimensione Totale delle immagini (usare script adeguato per calcolare)">?</a>
+	            	<form:label for="dimTotaleImmaginiTiff" path="dimTotaleImmaginiTiff" id ="dimensioneTotaleImmaginiLabel" cssErrorClass="error" title="Dimensione Totale Immagini">Dimensione totale immagini</form:label>
+	            </div>
+	            <div class="col_r">
+					<form:input path="dimTotaleImmaginiTiff" id="dimTotaleImmaginiTiff" cssClass="input_10c" />
+					<form:select id="formatoTotaleImmagini" path="formatoTotaleImmaginiTiff" cssClass="selectform_short" items="${formato}"/>
+	            	<%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Gb--%>
+	            </div>
+	        </div>
+	    </div>   
 	        
-	        <div>
-	        	<a class="helpIcon" title="Numero esatto di immagini in alta risoluzione prodotte per questa filza (compresi i test)">?</a>
-	        	<form:label for="numeroTotaleImmaginiTiff" path="numeroTotaleImmaginiTiff" id ="numeroImmaginiLabel" cssErrorClass="error" title="Numero totale Immagini">Numero totale immagini</form:label>
-				<form:input path="numeroTotaleImmaginiTiff" id="numeroImmagini" cssClass="input_4c_disabled" />
-	        </div>
-	        <div>
-	            <a class="helpIcon" title="Dimensione Media delle immagini (usare script adeguato per calcolare)">?</a>
-	            <form:label for="dimMediaImmaginiTiff" path="dimMediaImmaginiTiff" id ="dimensioneMediaImmaginiLabel" cssErrorClass="error" title="Dimensione Media Immagini">Dimensione media immagini</form:label>
-				<form:input path="dimMediaImmaginiTiff" id="dimensioneMediaImmagini" cssClass="input_10c" />
-	            <form:select id="formatoMediaImmagini" path="formatoMediaImmagini" cssClass="selectform_short" items="${}" itemValue="" itemLabel=""/>
-	            <%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Mb--%>
-	        </div>
-	        <div>
-	            <a class="helpIcon" title="Dimensione Totale delle immagini (usare script adeguato per calcolare)">?</a>
-	            <form:label for="dimTotaleImmaginiTiff" path="dimTotaleImmaginiTiff" id ="dimensioneTotaleImmaginiLabel" cssErrorClass="error" title="Dimensione Totale Immagini">Dimensione totale immagini</form:label>
-				<form:input path="dimTotaleImmaginiTiff" id="dimTotaleImmaginiTiff" cssClass="input_10c" />
-				<form:select id="formatoTotaleImmagini" path="formatoTotaleImmagini" cssClass="selectform_short" items="${}" itemValue="" itemLabel=""/>
-	        	<select id="formatoTotaleImmagini" name="formatoTotaleImmagini" class="selectform_short">
-	            <%-- the items variable for this select tag must be set. The tree values are Mb, Kb, and Gb, default is Gb--%>
-	        </div>
-	        
-	        <div>
-	            <input id="close" type="submit" value="Close" title="Do not save changes" />
-	            <input id="save" class="save" type="submit" value="Save" />
-	        </div>
+	    <div>
+	    	<input id="close" type="submit" value="Close" title="Do not save changes" />
+	        <input id="save" class="save" type="submit" value="Save" />
+	    </div>
 	
 	    </fieldset>
 	</form:form>
@@ -65,14 +87,17 @@
 	<script type="text/javascript">
 		$j(document).ready(function() {
 			<%-- Initialize input type dates default values --%>
-			<%-- TO BE DONE--%>
-			
-			
+			<%-- TO BE DONE--%>			
 			$j("#EditDetailsSchedone").css('visibility', 'hidden');
 			$j("#EditTiffImagesSchedone").css('visibility', 'hidden'); 
 	        $j("#EditJpegImagesSchedone").css('visibility', 'hidden'); 
 	        $j("#EditPDFImagesSchedone").css('visibility', 'hidden'); 
 			
+	        $j("#formatoMediaImmagini option:eq(0)").attr('selected', 'selected');
+	        
+	        $j("#formatoTotaleImmagini option:eq(2)").attr('selected', 'selected');
+	        
+	        
 			 $j("#save").click(function(){
 		        	$j("#loadingDiv").css('height', $j("#loadingDiv").parent().height());
 		        	$j("#loadingDiv").css('visibility', 'visible');
